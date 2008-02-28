@@ -210,10 +210,348 @@ class dynaformEditor extends WebResource
 		$G_PUBLISH->AddContent('panel-tab',G::LoadTranslation("ID_JAVASCRIPTS"),'dynaformEditor[7]','dynaformEditor.changeToJavascripts','dynaformEditor.saveCurrentView');
 		$G_PUBLISH->AddContent('panel-tab',G::LoadTranslation("ID_PROPERTIES"),'dynaformEditor[8]','dynaformEditor.changeToProperties','dynaformEditor.saveCurrentView');
 		$G_PUBLISH->AddContent('panel-close');
-		$G_HEADER->addScriptFile('/jscore/dynaformEditor/core/dynaformEditor.js');
+		/*$G_HEADER->addScriptFile('/jscore/dynaformEditor/core/dynaformEditor.js');*/
+		/*$G_HEADER->addScriptCode('var dynaformEditor = {};leimnud.event.add(window,"load",function(){dynaformEditor={
+	A:"",
+	dynUid:"",
+	ajax:"",
+	currentView:"preview",
+	views:[],
+	toolbar:{},
+	htmlEditorLoaded:false,
+	loadPressLoaded:true,
+	codePressLoaded:false,
+	_run:function()
+	{alert("despues");
+		//LOADING PARTS
+		this.toolbar = document.getElementById("fields_Toolbar")
+		mainPanel.elements.headerBar.style.backgroundColor="#CBDAEF";
+		mainPanel.elements.headerBar.style.borderBottom="1px solid #808080";
+		mainPanel.elements.headerBar.appendChild(this.toolbar);
+		mainPanel.events.remove = function(){
+		}
+		this.refresh_preview();
+	},
+	_review:function()
+	{
+
+	},
+	save:function(){
+		try {
+			this.saveCurrentView();
+		} catch (e) {
+			alert(e);
+		}
+		this.saveProperties();
+		res=this.ajax.save(this.A,this.dynUid);
+		if (res==0) {
+			alert(G_STRINGS.ID_SAVED);
+		}
+		else
+		{
+			G.alert(res["*message"]);
+		}
+	},
+	close:function()
+	{
+		var modified=this.ajax.is_modified(this.A,this.dynUid);
+		if (typeof(modified)==="boolean")
+		{
+			if (!modified || confirm(G_STRINGS.ID_EXIT_WITHOUT_SAVING))
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+		else
+		{
+			if (typeof(modified["*message"])==="string") G.alert(modified["*message"]);
+			return false;
+		}
+	},
+	// Save functions
+	saveCurrentView:function()
+	{
+		switch(this.currentView)
+		{
+			case "xmlcode":
+				this.saveXmlCode();
+				break;
+			case "htmlcode":
+				this.saveHtmlCode();
+				break;
+			case "javascripts":
+				this.saveJavascript();
+				break;
+		}
+	},
+	saveXmlCode:function()
+	{
+//		var xmlCode = getField("XML").value;
+		var xmlCode = this.getXMLCode();
+		var todoRefreshXmlCode = xmlCode === null;
+		if (todoRefreshXmlCode) return;
+		var res = this.ajax.set_xmlcode(this.A,xmlCode);
+		if (res!=="") G.alert(res);
+	},
+	saveHtmlCode:function()
+	{
+		var htmlCode = getField("HTML");
+		todoRefreshHtmlCode = htmlCode === null;
+		if (todoRefreshHtmlCode) return;
+		var response=this.ajax.set_htmlcode(this.A,htmlCode.value);
+		if (response) G.alert(response["*message"],"Error");
+	},
+	saveJavascript:function()
+	{
+		var field=getField("JS_LIST","dynaforms_JSEditor");
+		var code=this.getJSCode();
+		if (field.value)
+		{
+			var res=this.ajax.set_javascript(this.A,field.value,code);
+			if (typeof(res["*message"])==="string")
+			{
+				G.alert(res["*message"]);
+			}
+		}
+	},
+	saveProperties:function()
+	{
+		var form=this.views["properties"].getElementsByTagName("form")[0];
+		var post=ajax_getForm(form);
+		var response=this.ajax.set_properties(this.A,this.dynUid,post);
+		if (response!=0)
+		{
+			G.alert(response["*message"]);
+		}
+	},
+	// Change view point functions
+	changeToPreview:function()
+	{
+		if (this.currentView!="preview")this.refresh_preview();
+		this.currentView="preview";
+	},
+	changeToXmlCode:function()
+	{
+		this.refresh_xmlcode();
+		this.currentView="xmlcode";
+	  if (this.loadPressLoaded && !XMLCodePress)
+	  {
+		  startXMLCodePress();
+	  }
+	},
+	changeToHtmlCode:function()
+	{
+		this.refresh_htmlcode();
+		this.currentView="htmlcode";
+	},
+	changeToFieldsList:function()
+	{
+		this.refreshFieldsList();
+		this.currentView="fieldslist";
+	},
+	changeToJavascripts:function()
+	{
+		this.currentView="javascripts";
+		this.refreshJavascripts();
+	  if (this.loadPressLoaded && !JSCodePress)
+	  {
+		  startJSCodePress();
+	  }
+	},
+	changeToProperties:function()
+	{
+		this.currentView="properties";
+	},
+	// Refresh functions
+	refreshCurrentView:function()
+	{
+		switch(this.currentView)
+		{
+			case "preview":this.refresh_preview();break;
+			case "htmlcode":this.refresh_htmlcode();break;
+			case "xmlcode":this.refresh_xmlcode();break;
+			case "fieldslist":this.refreshFieldsList();break;
+			case "javascripts":this.refreshJavascripts();break;
+			case "properties":this.refreshProperties();break;
+		}
+	},
+	refresh_preview:function()
+	{
+		var editorPreview = document.getElementById("editorPreview");
+		var	todoRefreshPreview = editorPreview === null;
+		if (todoRefreshPreview) return;
+		editorPreview.innerHTML = this.ajax.render_preview(this.A);
+		var myScripts = editorPreview.getElementsByTagName("SCRIPT");
+		this.runScripts(myScripts);
+		delete myScripts;
+	},
+	refresh_htmlcode:function()
+	{
+		var dynaformEditorHTML = this.views["htmlcode"];
+		if (this.htmlEditorLoaded)
+		{
+			var response=this.ajax.get_htmlcode(this.A);
+			response={"html":response,
+				"error":((typeof(response)==="string")?0:response)};
+		}
+		else
+		{
+			var response=this.ajax.render_htmledit(this.A);
+		}
+		if ((response.error==0) && (this.htmlEditorLoaded))
+		{
+			window._editorHTML.doc.body.innerHTML=response.html;
+			html_html2();
+			html2_html();
+		}
+		else if ((response.error==0) && (!this.htmlEditorLoaded))
+		{
+			dynaformEditorHTML.innerHTML=response.html;
+			this.runScripts(dynaformEditorHTML.getElementsByTagName("SCRIPT"));
+			this.htmlEditorLoaded=true;
+		}
+		else
+		{
+			dynaformEditorHTML.innerHTML=response.html;
+			this.runScripts(dynaformEditorHTML.getElementsByTagName("SCRIPT"));
+			G.alert(response.error["*message"],"Error");
+		}
+	},
+	refresh_xmlcode:function()
+	{
+		var response=this.ajax.get_xmlcode(this.A);
+		if (response.error===0)
+		{
+			//xmlCode.value = response.xmlcode;
+			this.setXMLCode(response.xmlcode);
+		}
+		else
+		{
+			G.alert(response.error["*message"],"Error");
+		}
+	},
+	refreshFieldsList:function() {
+		ZHluYWZvcm1zL2ZpZWxkc19MaXN0LnhtbA______.refresh();
+	},
+	getJSCode:function()
+	{
+		if (JSCodePress)
+		{
+			return JSCodePress.getCode();
+		}
+		else
+		{
+			return getField("JS","dynaforms_JSEditor").value;
+		}
+	},
+	setJSCode:function(newCode)
+	{
+		if (JSCodePress)
+		{
+//			JSCodePress.setCode(newCode);
+			JSCodePress.edit(newCode,"javascript");
+		}
+		else
+		{
+			var code=getField("JS","dynaforms_JSEditor");
+			code.value=newCode;
+		}
+	},
+	getXMLCode:function()
+	{
+		if (XMLCodePress)
+		{
+			return XMLCodePress.getCode();
+		}
+		else
+		{
+			return getField("XML","dynaforms_XmlEditor").value;
+		}
+	},
+	setXMLCode:function(newCode)
+	{
+		if (XMLCodePress)
+		{
+//			XMLCodePress.setCode(newCode);
+			XMLCodePress.edit(newCode,"html");
+		}
+		else
+		{
+			var code=getField("XML","dynaforms_XmlEditor");
+			code.value=newCode;
+		}
+	},
+	refreshJavascripts:function()
+	{
+		var field=getField("JS_LIST","dynaforms_JSEditor");
+		var res=this.ajax.get_javascripts(this.A,field.value);
+		if (typeof(res["*message"])==="undefined")
+		{
+			while(field.options.length>0) field.remove(0);
+			for(var i=0;i<res.aOptions.length;i++)
+			{
+				var optn = document.createElement ("OPTION");
+				optn.text = res.aOptions[i].value;
+				optn.value = res.aOptions[i].key;
+				field.options[i]=optn;
+			}
+			this.setJSCode(res.sCode);
+		}
+		else
+		{
+			G.alert(response.error["*message"],"Error");
+		}
+	},
+	refreshProperties:function()
+	{
+		var form=this.views["properties"].getElementsByTagName("form")[0];
+		var prop=this.ajax.get_properties(this.A,this.dynUid);
+		getField("A","dynaforms_Properties").value=prop.A;
+		getField("DYN_UID","dynaforms_Properties").value=prop.DYN_UID;
+		getField("PRO_UID","dynaforms_Properties").value=prop.PRO_UID;
+		getField("DYN_TITLE","dynaforms_Properties").value=prop.DYN_TITLE;
+		getField("DYN_TYPE","dynaforms_Properties").value=prop.DYN_TYPE;
+		getField("DYN_DESCRIPTION","dynaforms_Properties").value=prop.DYN_DESCRIPTION;
+		getField("WIDTH","dynaforms_Properties").value=prop.WIDTH;
+		getField("ENABLETEMPLATE","dynaforms_Properties").checked=(prop.ENABLETEMPLATE=="1");
+		getField("MODE","dynaforms_Properties").value=prop.MODE;
+	},
+	// Internal functions
+	runScripts:function(scripts)
+	{
+		var myScripts=[];
+		for(var rr=0; rr < scripts.length ; rr++){
+			myScripts.push(scripts[rr].innerHTML);
+		}
+		for(var rr=0; rr < myScripts.length ; rr++){
+			try {
+				if (myScripts[rr]!=="")
+					if (window.execScript)
+							window.execScript( myScripts[rr], "javascript" );
+						else
+							window.setTimeout( myScripts[rr], 0 );
+			} catch (e) {
+				alert(e.description);
+			}
+		}
+		delete myScripts;
+	}
+}
+dynaformEditor.views["preview"]=document.getElementById("dynaformEditor[3]");
+dynaformEditor.views["xmlcode"]=document.getElementById("dynaformEditor[4]");
+dynaformEditor.views["htmlcode"]=document.getElementById("dynaformEditor[5]");
+dynaformEditor.views["fieldslist"]=document.getElementById("dynaformEditor[6]");
+dynaformEditor.views["javascripts"]=document.getElementById("dynaformEditor[7]");
+dynaformEditor.views["properties"]=document.getElementById("dynaformEditor[8]");
+loadEditor();
+});');*/
 		$G_HEADER->addScriptFile('/js/dveditor/core/dveditor.js');
 		$G_HEADER->addScriptFile('/codepress/codepress.js',1);
-		$G_HEADER->addScriptCode('leimnud.event.add(window,"load",function(){' .
+		/*$G_HEADER->addScriptCode('leimnud.event.add(window,"load",function(){' .
 				'dynaformEditor.views["preview"]=document.getElementById("dynaformEditor[3]");' .
 				'dynaformEditor.views["xmlcode"]=document.getElementById("dynaformEditor[4]");' .
 				'dynaformEditor.views["htmlcode"]=document.getElementById("dynaformEditor[5]");' .
@@ -221,7 +559,7 @@ class dynaformEditor extends WebResource
 				'dynaformEditor.views["javascripts"]=document.getElementById("dynaformEditor[7]");' .
 				'dynaformEditor.views["properties"]=document.getElementById("dynaformEditor[8]");' .
 				'loadEditor();' .
-				'});');
+				'});');*/
 		G::RenderPage( "publish-treeview" );
 	}
 	function _getFilename($file)
