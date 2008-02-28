@@ -390,39 +390,59 @@ var processmap=function(){
 				this.data.build.title();
 				this.data.render.text();
 			},
-			deleteDerivation:function(uid)
+			deleteDerivation:function(uid,rec,spec)
 			{
 				var task = this.data.db.task[this.tools.getIndexOfUid(uid)];
+				spec	 = (typeof spec!=="number")?false:spec;
 				var deri = task.derivation;
 				for(var i=0;i<deri.to.length;i++)
 				{
-					if(deri.to[i].task==="-1" || deri.to[i].task==="-2")
+					if(spec===false || (spec!==false && spec===i))
 					{
-
-					}
-					else
-					{
-						deri.to[i].object.line.remove();
-						this.observers.lineas.unregister(deri.to[i].object.indexObserver);
-					}
-					if(deri.type===5)
-					{
-						var toTask = this.data.db.task[this.tools.getIndexOfUid(deri.to[i].task)];
-						toTask.object.inJoin = toTask.object.inJoin-1;
-						if(toTask.object.inJoin===0)
+						if(deri.to[i].task==="-1" || deri.to[i].task==="-2")
 						{
-							this.parent.dom.setStyle(toTask.object.elements.init,{
-								backgroundPosition:"0 0",
-								background:""
-							});
+	
+						}
+						else
+						{
+							deri.to[i].object.line.remove();
+								this.observers.lineas.unregister(deri.to[i].object.indexObserver);
+						}
+						if(deri.type===5)
+						{
+							var toTask = this.data.db.task[this.tools.getIndexOfUid(deri.to[i].task)];
+							toTask.object.inJoin = toTask.object.inJoin-1;
+							if(toTask.object.inJoin===0)
+							{
+								this.parent.dom.setStyle(toTask.object.elements.init,{
+									backgroundPosition:"0 0",
+									background:""
+								});
+							}
 						}
 					}
-
 				}
 				this.parent.dom.setStyle(task.object.elements.derivation,{
 					background:""
 				});
 				task.derivation={to:[]};
+
+				/* Delete derivation recursive */
+				if(rec)
+				{
+					var tdb = this.data.db.task;
+					for(var i=0;i<tdb.length;i++)
+					{
+						var der = tdb[i].derivation.to || [];
+						for(var j=0;j<der.length;j++)
+						{
+							if(der[j].task===uid)
+							{
+								this.data.render.deleteDerivation(tdb[i].uid,false,j);
+							}
+						}
+					}
+				}
 			},
 			preDerivation:function(uid)
 			{
@@ -809,7 +829,7 @@ var processmap=function(){
 							{
 								data.object.drag.flush();
 								this.dropables.derivation.unregister(data.object.dropIndex);
-								this.data.render.deleteDerivation(data.uid);
+								this.data.render.deleteDerivation(data.uid,true);
 								this.parent.dom.remove(data.object.elements);
 								var r = new leimnud.module.rpc.xmlhttp({
 									url:this.options.dataServer,
