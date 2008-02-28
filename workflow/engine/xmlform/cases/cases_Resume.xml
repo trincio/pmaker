@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm
+  name="cases_Resume"
+  type="xmlform"
+  width="500px"
+  labelWidth="100px"
+>
+
+<TITLE1 type="title">
+  <en>Case Resume</en>
+  <es>Resumen del Caso</es>
+</TITLE1>
+
+<TITLE type="text" mode="view">
+  <en>Case Title</en>
+</TITLE>
+
+<CREATOR type="text" mode="view">
+  <en>Creator</en>
+</CREATOR>
+
+<CREATE_DATE type="text" mode="view">
+  <en>Create Date</en>
+  <es>Fecha de Creación</es>
+</CREATE_DATE>
+
+<UPDATE_DATE type="text" mode="view">
+  <en>Last Update</en>
+  <es>Ultima Actualización</es>
+</UPDATE_DATE>
+
+<STATUS type="text" mode="view">
+  <en>Status</en>
+  <es>Estado</es>
+</STATUS>
+
+</dynaForm>

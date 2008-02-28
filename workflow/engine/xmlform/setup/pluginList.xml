@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm
+  width         = "680"
+>
+<id type="text" colWidth="20" titleAlign="left" align="left" >
+  <en>#</en>
+</id>
+<title type="text" colWidth="150" titleAlign="left" align="left" >
+  <en>Plugin Name ( Class Name )</en>
+</title>
+
+<description type="text" colWidth="400" titleAlign="left" align="left" >
+  <en>Description</en>
+</description>
+
+<enabled type="link" value="@#enabled" link="@#url" colWidth="40" align="center" >
+  <en></en>
+</enabled>
+
+<linkEditValue type="link" value="@#linkEditValue" link="@#urlEdit" colWidth="40" align="center" >
+  <en></en>
+</linkEditValue>
+
+</dynaForm>

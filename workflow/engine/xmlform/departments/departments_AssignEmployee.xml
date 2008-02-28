@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm name="departments_AssignEmployee" type="xmlform" width="400px" >
+
+<DEP_UID type="hidden"/>
+<DEP_USERS type="listbox" style="width:120px;">
+select USR_UID, USR_USERNAME FROM USERS WHERE USR_DEPARTMENT &lt;&gt; '@#DEP_UID'
+  <es>Lista de usuarios</es>
+  <en>Users list</en>
+</DEP_USERS>
+
+<BSUBMIT type="button" onclick="assignDepartmentUser(this.form);">
+  <es>Asignar</es>
+  <en>Assign</en>
+</BSUBMIT>
+
+</dynaForm>

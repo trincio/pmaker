@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm name="setup/weekend" width="450" xmlform_type="NORMAL">
+<TITLE9592 type="title" group="9">
+  <es>Fin de semana</es>
+  <en>Weekend days</en>
+  <fa>WEEKEND DAYS</fa>
+</TITLE9592>
+<MONDAY type="checkbox" group="1">
+  <es>Lunes</es>
+  <en>Monday</en>
+  <fa>دوشنبه</fa>
+</MONDAY>
+<TUESDAY type="checkbox" group="1">
+  <es>Martes</es>
+  <en>Tuesday</en>
+  <fa>سه شنبه</fa>
+</TUESDAY>
+<WEDNESDAY type="checkbox" group="1">
+  <es>Miércoles</es>
+  <en>Wednesday</en>
+  <fa>چهارشنبه</fa>
+</WEDNESDAY>
+<THURSDAY type="checkbox" group="1">
+  <es>Jueves</es>
+  <en>Thursday</en>
+  <fa>پنجشنبه</fa>
+</THURSDAY>
+<FRIDAY type="checkbox" group="1">
+  <es>Viernes</es>
+  <en>Friday</en>
+  <fa>جمعه</fa>
+</FRIDAY>
+<SATURDAY type="checkbox" group="1">
+  <es>Sábado</es>
+  <en>Saturday</en>
+  <fa>شنبه</fa>
+</SATURDAY>
+<SUNDAY type="checkbox" group="1">
+  <es>Domingo</es>
+  <en>Sunday</en>
+  <fa>یکشنبه</fa>
+</SUNDAY>
+<BSUBMIT type="button" onclick="on_submit(this.form)" group="1">
+  <es>Aceptar</es>
+  <en>Accept</en>
+  <fa>پذيرش</fa>
+</BSUBMIT>
+</dynaForm>

@@ -1,0 +1,1343 @@
+body
+{
+	//background-color:buttonface;
+	background-color:#F7F7F7;
+	color:black;
+}
+.basicTable {
+  font-family: Tahoma, Verdana, Arial, sans-serif ;
+  font-size: 10pt;
+  padding: 1px;
+  border-collapse: collapse;
+  empty-cells: show;
+}
+.pm_separator{
+	height: -1px;
+}
+form{
+margin: 0px;
+}
+INPUT {
+  font-family: Tahoma, Verdana, Arial, sans-serif ;
+  font-size: 10pt;
+}
+
+.Header {
+  background-color: #006BaE;
+  font-family: Tahoma, Verdana, Arial, sans-serif ;
+  font-size: 10pt;
+  border-collapse: collapse;
+  border: 1px solid #000000;
+  width: 100%;
+ }
+
+.Header tr {
+  color: #000;
+  text-align: center;
+  padding: 3px;
+  width: 100%;
+  white-space: nowrap;
+  }
+
+.Header td {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 2px;
+  padding-right: 2px;
+  }
+
+.Header a:link {
+  color: #ffffff;
+  }
+
+.Header a:visited {
+  color: #ffffff;
+  }
+
+.Header a:hover, .Caption a:active {
+  color: #ffffff; text-decoration: none;
+  }
+
+.HeaderLeft {
+  background-image: url('/images/HeaderLeft.gif');
+  }
+
+.HeaderRight {
+  background-image: url('/images/HeaderRight.gif');
+  }
+
+.HeaderLeft img{
+  width: 3px;
+  }
+
+.HeaderRight img{
+  width: 9px;
+  }
+
+.Footer {
+	font-family: Tahoma;
+	font-size: 10px;
+	color: #000000;
+}
+
+.FooterLink{
+  font-family: Tahoma;
+	text-decoration: none;
+	font-size: 11px;
+	color: #005791;
+	font-weight: bold;
+}
+
+/* Record Options */
+.Record {
+  font-family: Tahoma, Verdana, Arial, sans-serif ;
+  font-size: 10pt;
+  margin: 0px;
+  border: 0px solid #006BaE;
+  width: 100%;
+}
+
+
+.FormButton {
+  border-right: solid 0px #efefef;
+  padding-left: 10px;
+  padding-right: 5px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+/**
+ * Styles for leimnud.module.panel
+ *
+ **/
+/**
+ * leimnud.panel, Theme: firefox
+ *
+ * */
+.panel_containerWindow___firefox{
+	border:1px solid #A3A2BC;
+}
+.panel_frontend___firefox, .panel_backend___firefox, .panel_iframe___firefox{
+	width:100%;
+	height:100%;
+	position:absolute;
+	background-color:white;
+	overflow:hidden;
+	z-index:1;
+	top:0px;
+	left:0px;
+}
+.panel_frontend___firefox{
+	background-color:#fafafa;
+	z-index:2;
+}
+.panel_titleBar___firefox{
+	position:relative;
+	height:20px;
+	overflow:hidden;
+	background-color:white;
+	background:url(/core/jscripts/maborak/core/images/panel.bg.title.gif);
+	background-repeat:repeat-x;
+	border-bottom:1px solid #DBE0E5;
+
+}
+.panel_title___firefox{
+	text-align:center;
+	width:100%;
+	height:100%;
+	color:black;
+	font:bold 8pt tahoma,MiscFixed;
+	padding-left:5px;
+	padding-top:3px;
+	z-index:1;
+}
+.panel_roll___firefox, .panel_close___firefox{
+	position:absolute;
+	top:4;
+	font:normal 0pt tahoma;
+	padding:0px;
+	border:0px solid red;
+	z-index:2;
+	cursor:pointer;
+}
+.panel_close___firefox{
+	cursor:pointer;
+	background:url(/core/jscripts/maborak/core/images/panel.close.static.gif);
+}
+.panel_shadow___firefox{
+	position:absolute;
+	background-color:#CCCCCC;
+}
+
+.panel_tabH___firefox{
+	position:absolute;
+}
+.panel_tabOptionH___firefox{
+	text-align:center;
+	font:normal 8pt Tahoma,MiscFixed;
+	/*border:1px solid #A3A2BC;
+	border: 1px solid #FF9900;*/
+	position:absolute;
+/*	background-color:#FFE6BF;*/
+	cursor:pointer;
+	color:black;
+}
+.panel_tabOptionOverH___firefox{
+	font:normal 8pt Tahoma,MiscFixed;
+	cursor:pointer;
+	text-align:center;
+	border:1px solid #FF9900;
+	color:#666666;
+	background-color:white;
+}
+.panel_tabOptionSelectedH___firefox, .panel_tabOptionSelectedOverH___firefox{
+	font:normal 8pt Tahoma,MiscFixed;
+	border: 1px solid #FF9900;
+	border-bottom:1px solid #FFF;
+	background-color: #FBFFF2;
+	color:#000000;
+	text-align: center;
+	position: absolute;
+
+}
+.panel_tabOptionSelectedOverH___firefox{
+	color:#EA560F;
+}
+
+.panel_tab___firefox{
+	position:absolute;
+}
+.panel_tabOption___firefox,.panel_tabOptionOver___firefox, .panel_tabOptionSelected___firefox,.panel_tabOptionSelectedOver___firefox{
+	text-align:left;
+	font:normal 8pt Tahoma,MiscFixed;
+	border:1px solid #A3A2BC;
+	position:absolute;
+}
+.panel_tabOption___firefox{
+	background-color:#EEEEEE;
+	font:normal 8pt Tahoma,MiscFixed;
+	cursor:pointer;
+}
+.panel_tabOptionOver___firefox{
+	background-color:#FFFFFF;
+	font:normal 8pt Tahoma,MiscFixed;
+	cursor:pointer;
+	text-align:left;
+	border:1px solid #A3A2BC;
+	color:#666666;
+}
+.panel_tabOptionSelected___firefox, .panel_tabOptionSelectedOver___firefox{
+	font:normal 8pt Tahoma,MiscFixed;
+	border:1px solid #A3A2BC;
+	border-right:1px solid #FFF;
+	background-color:white;
+	font-weight:bold;
+	color:#000000;
+}
+.panel_tabOptionSelectedOver___firefox{
+	color:#EA560F;
+}
+.panel_content___firefox{
+	position:relative;
+	color:black;
+	font:normal 8pt Tahoma,MiscFixed;
+	text-align:justify;
+	border:1px solid #A3A2BC;
+	background-color:white;
+	overflow:auto;
+}
+.panel_statusBar___firefox{
+	position:relative;
+	overflow:hidden;
+	width:100%;
+	font:normal 8pt Tahoma,MiscFixed;
+	padding:0px;
+	margin:0px;
+	border-top:1px solid #DBE0E5;
+	height:20px;
+	background-color:white;
+}
+.panel_status___firefox
+{
+	text-align:left;
+	padding:2;
+	padding-left:5px;
+	color:#666666;
+}
+/**
+ * leimnud.panel Theme: firefox
+ * EOF
+ */
+
+.treeNode
+{
+  background-color:#ffffff;
+  font-family: Tahoma, Verdana, Arial, sans-serif ;
+  font-size: 8pt;
+  padding:4px 4px 4px 0px;
+}
+.treeNodeSelected{
+  background-color:#E3E2FC;
+  font-family: Tahoma, Verdana, Arial, sans-serif ;
+  font-size: 8pt;
+  padding:4px 4px 4px 0px;
+}
+.treeNodeAlternate
+{
+  background-color:#ffffff;
+  font-family: Tahoma, Verdana, Arial, sans-serif ;
+  font-size: 8pt;
+  padding:4px 4px 4px 0px;
+}
+.treeContent
+{
+  font-family: Tahoma, Verdana, Arial, sans-serif ;
+  font-size: 8pt;
+  background-color:#ffffff;
+  border: 1px solid #CDD0C7;
+  padding-top:1px;
+}
+.treeplus
+{
+  font-family:Courier New, Courier, mono;
+  padding-left:1px;
+  padding-right:1px;
+  padding-top:0px;
+  padding-bottom:1px;
+  line-height:10px;
+  border:1px solid black;
+  cursor:pointer;
+}
+.treeminus
+{
+  zoom:100%;
+  font-family:Courier New, Courier, mono;
+  padding-left:1px;
+  padding-right:0px;
+  padding-top:0px;
+  padding-bottom:1px;
+  line-height:10px;
+  border:1px solid black;
+  cursor:pointer;
+}
+.treepoint
+{
+  zoom:100%;
+  font-family:Courier New, Courier, mono;
+  padding-left:1px;
+  padding-right:0px;
+  padding-top:0px;
+  padding-bottom:1px;
+  line-height:10px;
+  border:1px solid black;
+  cursor:pointer;
+}
+table.tb_derivation{
+	width:100%;
+	font:normal 8pt Tahoma,MiscFixed;
+	padding:10px;
+}
+td.tb_derivation_param{
+	text-align:right;
+	font:normal 8pt Tahoma,MiscFixed;
+	width:40%;
+	padding:5px;
+	vertical-align:middle;
+	color:#252835;
+}
+td.tb_derivation_value{
+	text-align:left;
+	font:normal 8pt Tahoma,MiscFixed;
+	width:60%;
+	padding:5px;
+	vertical-align:middle;
+}
+table.tb_derivation input, table.tb_derivation select{
+	font:normal 8pt Tahoma,MiscFixed;
+}
+table.tb_derivation input{
+	border-width:1px;
+}
+div.processmap_buildingBlock *
+{
+	font:normal 8pt Tahoma,MiscFixed;
+}
+div.processmap_buildingBlock input
+{
+	width:100%;
+	border-width:1px;
+	padding-top:10px;
+	padding-bottom:10px;
+	padding-left:15px;
+	text-align:left;
+}
+
+/* leimnud.app.menuRight CSS begin */
+.app_menuRight_container___firefox
+{
+	position:absolute;
+	border:1px solid #808080;
+	background-color:#D4D0C8;
+	overflow:hidden;
+	z-index:10000;
+}
+.app_menuRight_shadow___firefox
+{
+	position:absolute;
+	border:1px solid #000;
+	background-color:#000;
+	overflow:hidden;
+	z-index:9999;
+	opacity:0.2;
+	filter:alpha(opacity=20);
+}
+.app_menuRight_separator___firefox
+{
+	padding:0;
+	margin:3;
+	position:relative;
+	cursor:default;
+	border-top:1px solid #808080;
+	border-bottom:1px solid white;
+	overflow:hidden;
+}
+.app_menuRight_option___firefox, .app_menuRight_option_over___firefox
+{
+	padding:1;
+	margin:1;
+	position:relative;
+	cursor:default;
+	color:black;
+	background-color:"";
+	height:22;
+	overflow:hidden;
+}
+.app_menuRight_option_over___firefox
+{
+	color:white;
+	background-color:#0A246A;
+}
+.app_menuRight_option_image___firefox, .app_menuRight_option_image_over___firefox
+{
+	width	:22;
+	height	:100%;
+	padding	:0;
+	position:absolute;
+	overflow:hidden;
+	cursor	:default;
+	left	:0;
+	top	:0;
+}
+.app_menuRight_option_image_element___firefox
+{
+
+}
+.app_menuRight_option_text___firefox
+{
+	padding	:0;
+	font	:normal 8pt Tahoma,MiscFixed;
+	position:absolute;
+	cursor	:default;
+	left	:22;
+	top	:4;
+	overflow:hidden;
+}
+/* Theme processmaker */
+.app_menuRight_container___processmaker
+{
+	position:absolute;
+	border:1px solid #868686;
+	background-color:#FAFAFA;
+	overflow:hidden;
+	z-index:10000;
+}
+.app_menuRight_shadow___processmaker
+{
+	position:absolute;
+	border:1px solid black;
+	background-color:black;
+	overflow:hidden;
+	z-index:9999;
+	opacity:0.2;
+	filter:alpha(opacity=20);
+}
+.app_menuRight_separator___processmaker
+{
+	padding:0;
+	margin-left:30px;
+	margin-right:5px;
+	position:relative;
+	cursor:default;
+	border-top:1px solid #C5C5C5;
+	border-bottom:0px solid red;
+	overflow:hidden;
+}
+.app_menuRight_option___processmaker, .app_menuRight_option_over___processmaker, .app_menuRight_optionNull___processmaker 
+
+{
+	padding:0;
+	margin:0;
+	position:relative;
+	cursor:default;
+	color:black;
+	background-color:"";
+	height:29;
+	overflow:hidden;
+	border:0px solid #FBFFF2;
+}
+.app_menuRight_option_over___processmaker
+{
+	/*background-image:url(/images/onmouseSilver.jpg);*/
+	background-color:#DCF1FC;
+	background-repeat:repeat-x;
+}
+.app_menuRight_option_image___processmaker, .app_menuRight_option_image_over___processmaker, .app_menuRight_option_imageNull___processmaker
+{
+	width	:26;
+	height	:31;
+	padding	:0;
+	position:absolute;
+	overflow:hidden;
+	cursor	:default;
+	left	:0;
+	top	:0;
+	background-color:#E9EEEE;
+	border-right:1px solid #C5C5C5;
+}
+.app_menuRight_option_image_over___processmaker
+{
+	background-color:#E9EEEE;
+	border-right-width:1px;
+}
+.app_menuRight_option_image_element___processmaker
+{
+	position:absolute;
+	top:2;
+}
+.app_menuRight_option_text___processmaker
+{
+	padding	:0;
+	font	:normal 8pt Tahoma,MiscFixed;
+	color	:#003366;
+	position:absolute;
+	cursor	:default;
+	left	:30;
+	top	:8;
+	overflow:hidden;
+}
+.app_menuRight_optionNull___processmaker
+{
+
+}
+.app_menuRight_option_imageNull___processmaker
+{
+	width	:26px;
+}
+
+/* leimnud.app.menuRight CSS end */
+
+/* Processmaker CSS  begin */
+.pm_separator___processmaker
+{
+
+}
+.pm_separatorOn___processmaker
+{
+
+}
+.pm_separatorOff___processmaker,.pm_separatorOn___processmaker
+{
+	height: 7px;
+	cursor:pointer;
+	text-align:center;
+	overflow:hidden;
+}
+.pm_separatorDOff___processmaker,.pm_separatorDOn___processmaker, .pm_separatorOver___processmaker, .pm_separatorOut___processmaker
+{
+	height:7px;
+	width:100%;
+	background-color:#C1D2EE;
+	background-color:buttonface;
+	border-color:buttonhighlight buttonshadow buttonshadow buttonhighlight;
+	border-style:solid;
+	border-width:1px 0pt;
+	overflow:hidden;
+}
+.pm_separatorDOff___processmaker
+{
+	background:url(/js/maborak/core/images/separator.up.gif);
+	background-repeat:no-repeat;
+	background-position:50% 2;
+
+}
+.pm_separatorDOn___processmaker
+{
+	background:url(/js/maborak/core/images/separator.down.gif);
+	background-repeat:no-repeat;
+	background-position:50% 50%;
+}
+.pm_separatorOver___processmaker
+{
+	background-color:#C1D2EE;
+}
+.pm_separatorOut___processmaker
+{
+	background-color:buttonface;
+}
+
+/* Processmaker CSS  end */
+/* processmap Theme.Task begin */
+/*theme firefox begin*/
+.processmap_task___firefox
+{
+	position	: absolute;
+	height		: 30;
+	width		: 150;
+	background-color: #006699;
+	border		: 1px solid #006699;
+	z-index		: 10;
+	overflow	: hidden;
+	cursor		: move;
+}
+.processmap_task_label___firefox
+{
+	color:white;
+	text-align:center;
+	cursor:text;
+	padding-top:11;
+}
+.processmap_text___firefox
+{
+	position	: absolute;
+	cursor		: move;
+	background-color:red;
+}
+.processmap_title___firefox
+{
+
+}
+	/*theme firefox end*/
+
+	/*theme processmap begin*/
+.processmap_task___processmaker
+{
+	position	: absolute;
+	height		: 40;
+	height		: 38;
+	width		: 171;
+	width		: 164;
+	z-index		: 10;
+	overflow	: hidden;
+	cursor		: move;
+	/*background	: url(/js/processmap/core/images/bg_task.gif);
+	background	: url(/images/fondotask.png);*/
+	//background-color:#006699;
+	//background-color:#6F6F6F;
+	background	: url(/images/borderTask.gif);
+	background-color:#0576C4;
+	vertical-align:middle;
+	display:table-cell;
+}
+.processmap_task_label___processmaker
+{
+	color:#FFF;
+	text-align:center;
+	/*position:absolute;*/
+	margin:10;
+	vertical-align:middle;
+	cursor:move;
+}
+.processmap_text___processmaker
+{
+	position	: absolute;
+	z-index		: 10;
+	cursor		: move;
+	font		: bold 8pt Tahoma,MiscFixed;
+}
+.processmap_title___processmaker
+{
+	position	:absolute;
+	cursor		:move;
+	font		:bold 13pt Tahoma,MiscFixed;
+}
+	/*theme processmap end*/
+.processmap_toolbarItem___processmaker
+{
+	margin:0px;
+	border:1px solid #CEC6B5;
+	background:#EFEFEF url(/images/dynamicForm/toolbar.buttonbg.gif) repeat-x scroll 0%;
+}
+.processmap_toolbarItem___processmaker:hover
+{
+	margin:0px;
+	background-color:buttonface;
+	border-color:buttonhighlight buttonshadow buttonshadow buttonhighlight;
+	border-style:solid;
+	/*border-width:1px 0pt;*/
+	border:1px solid #316AC5;
+	background:#C1D2EE;
+	background-color: #C1D2EE;
+
+
+}
+/* processmap Theme.Task end */
+
+/* processmap Theme.Panels begin */
+.panel_containerWindow___processmaker{
+	border: 1px solid #C0C0C0;
+	border: 1px solid #1983BD;
+	border: 1px solid #66667E;
+	oveflow:hidden;
+	/*border: 1px solid #5394BF;
+	border-left:1px solid #8BBDDF;
+	border-top:1px solid #8BBDDF;*/
+}
+.panel_modal___processmaker{
+	top	:0px;
+	left	:0px;
+	background-color:black;
+}
+.panel_iframe___processmaker{
+	width:100%;
+	height:100%;
+	position:absolute;
+	background-color:white;
+	overflow:hidden;
+	z-index:1;
+	top:0px;
+	left:0px;
+}
+.panel_backend___processmaker{
+	width:100%;
+	height:100%;
+	position:absolute;
+	background-color:white;
+	overflow:hidden;
+	z-index:1;
+	top:0px;
+	left:0px;
+}
+.panel_frontend___processmaker{
+	/*width: 100%;*/
+	height: 100%;
+	position: absolute;
+	background-color: #E8F2F7;
+	background-color:#E0DFE3;
+	/*background-color:#59A5D9;*/
+	overflow: hidden;
+	z-index: 2;
+	top: 0px;
+	left: 0px;
+}
+.panel_titleBar___processmaker{
+	position:relative;
+	height:23px;
+	overflow:hidden;
+	background-color:white;
+	background-image: url('/images/panel_title.jpg');
+	background-image: url('/js/maborak/core/images/panel.bg.title.1x23.gif');
+	background-repeat:repeat-x;
+	background-position:0 -1;
+	border-bottom:0px solid #DBE0E5;
+}
+.panel_title___processmaker{
+	text-align: center;
+	width: 100%;
+	height: 23px;
+	color: #000;
+	/*color:#FFF;*/
+	font: bold 8pt tahoma, MiscFixed;
+	padding-left: 5px;
+	padding-top: 5px;
+	z-index: 1;
+}
+.panel_close___processmaker{
+	position:absolute;
+	top:4;
+	font:normal 0pt tahoma;
+	padding:0px;
+	border:0px solid red;
+	z-index:2;
+	cursor:pointer;
+	background:url(/js/maborak/core/images/panel.close.static.gif);
+}
+.panel_roll___processmaker{
+	position:absolute;
+	top:4;
+	font:normal 0pt tahoma;
+	padding:0px;
+	border:0px solid red;
+	z-index:2;
+	cursor:pointer;
+	background:url(/js/maborak/core/images/roll.static.gif);
+	background-repeat:no-repeat;
+}
+.panel_resize___processmaker{
+	position:absolute;
+	right:1px;
+	bottom:1px;
+	width:11px;
+	height:11px;
+	overflow:hidden;
+	background:url(/js/maborak/core/images/panel.resize.11x11.png?rand=234);
+	background-repeat:no-repeat;
+}
+.panel_headerBar___processmaker{
+	position:relative;
+	height:25px;
+	overflow:hidden;
+	background-color:transparent;
+}
+.panel_shadow___processmaker{
+	position:absolute;
+	background-color:#000;
+}
+.panel_tab___processmaker{
+	position:absolute;
+	z-index:3;
+	overflow:hidden;
+}
+
+
+.panel_tabH___processmaker{
+	position:absolute;
+}
+.panel_tabOptionH___processmaker{
+	text-align:center;
+	font:normal 8pt Tahoma,MiscFixed;
+	position:absolute;
+	cursor:pointer;
+	border:1px solid #919B9C;
+	background-color:#F9F9F9;
+	color:black;
+	height:20px;
+	max-height:9px;
+	overflow:hidden;
+	-moz-border-radius-topleft:5px;
+	-moz-border-radius-topright:5px;
+}
+.panel_tabOptionOverH___processmaker{
+	cursor:pointer;
+}
+.panel_tabOptionSelectedH___processmaker, .panel_tabOptionOverH___processmaker, .panel_tabOptionSelectedOverH___processmaker{
+	font:normal 8pt Tahoma,MiscFixed;
+	border: 1px solid #FF9900;
+	border: 1px solid #919B9C;
+	border-bottom:1px solid #F9F9F9;
+	border-top-color:#E68B2C;
+	background-color: #FBFFF2;
+	background-color: #F9F9F9;
+	color:#000000;
+	text-align: center;
+	position: absolute;
+	background-image: url('/js/maborak/core/images/panel.tabSelected.1x3.gif');
+	background-repeat:repeat-x;
+	background-position:0 -1;
+	height:22px;
+	max-height:10px;
+	overflow:hidden;
+/*	-moz-border-radius-topleft:4px;
+	-moz-border-radius-topright:4px;*/
+
+}
+.panel_tabOptionSelectedOverH___processmaker{
+}
+
+
+
+
+.panel_tabOption___processmaker{
+	text-align:left;
+	font:normal 8pt Tahoma,MiscFixed;
+	border:1px solid #A3A2BC;
+	border: 1px solid #FF9900;
+	position:absolute;
+	background-color:#FFE6BF;
+	cursor:pointer;
+	color:black;
+}
+.panel_tabOptionOver___processmaker{
+	font:normal 8pt Tahoma,MiscFixed;
+	cursor:pointer;
+	text-align:left;
+	border:1px solid #FF9900;
+	color:#666666;
+	background-color:white;
+}
+.panel_tabOptionSelected___processmaker, .panel_tabOptionSelectedOver___processmaker{
+	font:bold 8pt Tahoma,MiscFixed;
+	border: 1px solid #FF9900;
+	border-right:1px solid #FFF;
+	background-color: #FBFFF2;
+	color:#000000;
+	text-align: left;
+	position: absolute;
+
+}
+.panel_tabOptionSelectedOver___processmaker{
+	color:#EA560F;
+
+
+}
+.panel_content___processmaker{
+	position: relative;
+	color: black;
+	font: normal 8pt Tahoma,MiscFixed;
+	text-align: justify;
+	border: 1px solid #A3A2BC;
+	border: 1px solid #FF9900;
+	border: 1px solid #919B9C;
+	/*border-left:1px solid #1983BD;
+	border-top:1px solid #1983BD;
+	border-right:1px solid #59A5D9;
+	border-bottom:1px solid #59A5D9;*/
+	background-color: #E8F2F7;
+	background-color: #FFFFFF;
+	background-color: #F9F9F9;
+	overflow: auto;
+	padding:0px;
+}
+.panel_statusBar___processmaker{
+	position:relative;
+	overflow:hidden;
+	width:100%;
+	font:normal 8pt Tahoma,MiscFixed;
+	padding:0px;
+	margin:0px;
+	height:20px;
+	/*background-color:white;*/
+	background-color:transparent;
+}
+.panel_status___processmaker
+{
+	text-align:center;
+	padding:2;
+	padding-left:5px;
+	color:#666666;
+	height:100%;
+}
+/* processmap Theme.Panels end */
+
+
+/* Xml Forms */
+
+.borderForm {
+	background-color: #FFFFFF;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #808080;
+	width: auto;
+}
+
+.FormTitle {
+	font-family: Tahoma;
+	font-size: 11px;
+	color: #005791;
+	padding-left: 8px;
+	border: 1px solid #808080;
+	background-color: #E5E5E2;
+	text-align: left;
+	font-weight: bold;
+	z-index: auto;
+	height: 20px;
+	padding-top: 4px;
+}
+.FormSubTitle {
+	font-family: Tahoma;
+	font-size: 11px;
+	color: #005791;
+	padding-left: 8px;
+	border:none;
+	border-bottom: 1px solid #808080;
+	background-color: #E5E5E2;
+	text-align: left;
+	font-weight: bold;
+	z-index: auto;
+	height: 20px;
+	padding-top: 4px;
+}
+.FormLabel {
+	background-color: #F6F6F6;
+	font-family: Tahoma;
+	font-size: 11px;
+	color: #005FB9;
+	vertical-align:top;
+	text-align: right;
+	padding-right: 8px;
+	padding-left: 8px;
+	line-height: 24px;
+}
+.FormFieldContent{
+	font-family: Tahoma;
+	font-size: 11px;
+	color: #535353;
+}
+.FormField {
+	font-family: Tahoma;
+	font-size: 11px;
+	color: #535353;
+	background-color: #ffffff;
+	border: 1px solid #A7A6AA;
+	height: 18px;
+	text-align: left;
+	padding-top: 1px;
+	padding-left: 4px;
+}
+.FormRequiredTextMessage
+{
+	font-family: Tahoma;
+	font-size: 11px;
+	color: #535353;
+	background-color: #ffffff;
+	height: 18px;
+	text-align: left;
+	padding-top: 1px;
+	padding-left: 4px;
+}
+.FormCheck {
+	font-family: Tahoma;
+	font-size: 11px;
+	color: #333333;
+}
+
+.FormTextArea {
+	font-family: Tahoma;
+	font-size: 11px;
+	color: #535353;
+	background-color: #FFFFFF;
+	padding-left: 3px;
+	vertical-align: middle;
+	overflow:auto;
+}
+
+select.FormField {
+	padding-left: 0px;
+}
+
+.GridBackground{
+	background-color: #F6F6F6;
+	font-family: Tahoma;
+	font-size: 11px;
+	color: #005FB9;
+	text-align: center;
+}
+.GridLink{
+	font-family: Tahoma;
+	font-size: 11px;
+	color: #005FB9;
+	vertical-align: middle;
+	padding-left: 8px;
+	text-decoration: underline;
+}
+.GridHeader {
+	font-family: Tahoma;
+	font-size: 11px;
+	color: #005791;
+	padding-left: 8px;
+	border: 1px solid #808080;
+	background-color: #E5E5E2;
+	text-align: left;
+	font-weight: bold;
+	z-index: auto;
+	height: 20px;
+	padding-top: 4px;
+}
+.GridLabel {
+	background-color: #F6F6F6;
+	font-family: Tahoma;
+	font-size: 11px;
+	color: #005FB9;
+	text-align: right;
+	padding-right: 8px;
+}
+
+.tableOption {
+	font-family: Tahoma;
+	text-decoration: none;
+	font-size: 11px;
+	color: #005791;
+	font-weight: bold;
+}
+
+/* Xml Forms */
+
+/* Menues */
+
+
+TD.mainMenu {
+  background-image: url(/images/blueBackgroundMenu.jpg);
+	background-repeat: repeat-x;
+	height: 22px;
+	left: 46px;
+	top: 72px;
+}
+
+A.mainMenu {
+	font-family: Tahoma;
+	font-size: 11px;
+	color: #FFFFFF;
+	font-weight: bold;
+	padding-top: 6px;
+	text-transform:uppercase;
+  text-decoration: none;
+}
+A.mainMenu:hover {
+  color: #D3D3D3;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+TD.SelectedMenu{
+	background-image: url(/images/silverBackgroundMenuSelected.jpg);
+	background-repeat: repeat-x;
+	top: 72px;
+	height: 26px;
+}
+A.SelectedMenu {
+	vertical-align: middle;
+	font-family: Tahoma;
+	font-size: 11px;
+	font-weight: bold;
+	color: #005791;
+	text-align: center;
+	padding-top: 6px;
+	text-transform:uppercase;
+  text-decoration: none;
+}
+
+.SelectedMenu:hover {
+	vertical-align: middle;
+	font-family: Tahoma;
+	font-size: 11px;
+	font-weight: bold;
+	color: #005791;
+	text-align: center;
+	padding-top: 6px;
+	text-transform:uppercase;
+  text-decoration: none;
+}
+
+
+TD.subMenu {
+	background-image: url('/images/silverBackgroundSubMenu.jpg');
+	background-repeat: repeat-x;
+	height: 26px;
+}
+
+A.subMenu {
+	font-family: Tahoma;
+	font-size: 10px;
+	color: #005791;
+	font-weight: bold;
+	padding-top: 5px;
+	text-transform:uppercase;
+	text-decoration: none;
+}
+
+A.subMenu:hover {
+  font-family: Tahoma;
+	font-size: 10px;
+	color: #092148;
+	font-weight: bold;
+	padding-top: 5px;
+	text-transform:uppercase;
+	text-decoration: none;
+}
+
+TD.selectedSubMenu {
+	background-image: url('/images/silverBackgroundSubMenu.jpg');
+	background-repeat: repeat-x;
+	height: 26px;
+	left: 46px;
+	top: 98px;
+}
+
+A.selectedSubMenu {
+	font-family: Tahoma;
+	font-size: 10px;
+	color: #005791;
+	font-weight: bold;
+	padding-top: 5px;
+	text-transform:uppercase;
+	text-decoration: none;
+}
+
+A.selectedSubMenu:hover {
+	font-family: Tahoma;
+	font-size: 10px;
+	color: #005791;
+	font-weight: bold;
+	padding-top: 5px;
+	text-transform:uppercase;
+	text-decoration: none;
+}
+
+
+/* Menues */
+
+
+/* Paged Table */
+
+.pagedTable {
+  empty-cells: show;
+  border-collapse:collapse;
+	border: 1px solid #333333;
+}
+
+TD.pagedTableHeader {
+	border-width: 1px;
+	border-color: #333333;
+	background-image: url('/images/silverBackgroundTableTitle.jpg');
+	background-repeat: repeat-x;
+	height: 24px;
+	border-top: 1px solid #333333;
+	border-bottom: 1px solid #333333;
+}
+
+A.pagedTableHeader {
+	font-family: Tahoma;
+	font-size: 11px;
+	color: #005791;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.Row1 td {
+	background-color: #F7F9F8;
+	height: 24px;
+	font-family: Tahoma;
+	font-size: 11px;
+	color: #333333;
+	border-bottom-style: 1;
+	border-bottom-width: 1px;
+	border-bottom-color: #FFFFFF;
+	padding-left: 5px;
+}
+.Row2 td {
+	background-color: #EFEFEF;
+	font-family: Tahoma;
+	font-size: 11px;
+	color: #333333;
+	border-bottom-style: 1;
+	border-bottom-width: 1px;
+	border-bottom-color: #CCCCCC;
+	height: 24px;
+	padding-left: 5px;
+}
+.RowPointer td {
+	background-color: #EAF8FD;
+	font-family: Tahoma;
+	font-size: 11px;
+	color: #333333;
+	border-top:1px solid #979B9C;
+	border-bottom:1px solid #979B9C;
+	height: 24px;
+	padding-left: 5px;
+	}
+.RowMark td {
+	background-color: #EAF8FD;
+	font-family: Tahoma;
+	font-size: 11px;
+	font-weight: bold;
+	color: #333333;
+	border-top:1px solid #979B9C;
+	border-bottom:1px solid #979B9C;
+	height: 24px;
+	padding-left: 5px;
+	}
+A.firstPage {
+	background-image: url('/images/firstPage.gif');
+	background-repeat: no-repeat;
+	background-position: center bottom;
+	padding-left:21px;
+	padding-top:20px;
+	line-height:40px;
+	text-decoration:none;
+}
+A.noFirstPage {
+	background-image: url('/images/firstPage.gif');
+	background-repeat: no-repeat;
+	background-position: center bottom;
+	padding-left:21px;
+	padding-top:20px;
+	line-height:40px;
+	text-decoration:none;
+}
+A.previousPage {
+	background-image: url('/images/previousPage.gif');
+	background-repeat: no-repeat;
+	background-position: center bottom;
+	padding-left:21px;
+	padding-top:20px;
+	line-height:40px;
+	text-decoration:none;
+}
+A.noPreviousPage {
+	background-image: url('/images/previousPage.gif');
+	background-repeat: no-repeat;
+	background-position: center bottom;
+	padding-left:21px;
+	padding-top:20px;
+	line-height:40px;
+	text-decoration:none;
+}
+A.nextPage {
+	background-image: url('/images/nextPage.gif');
+	background-repeat: no-repeat;
+	background-position: center bottom;
+	padding-left:21px;
+	padding-top:20px;
+	line-height:40px;
+	text-decoration:none;
+}
+A.noNextPage {
+	background-image: url('/images/nextPage.gif');
+	background-repeat: no-repeat;
+	background-position: center bottom;
+	padding-left:21px;
+	padding-top:20px;
+	line-height:40px;
+	text-decoration:none;
+}
+A.lastPage {
+	background-image: url('/images/lastPage.gif');
+	background-repeat: no-repeat;
+	background-position: center bottom;
+	padding-left:21px;
+	padding-top:20px;
+	line-height:40px;
+	text-decoration:none;
+}
+A.noLastPage {
+	background-image: url('/images/lastPage.gif');
+	background-repeat: no-repeat;
+	background-position: center bottom;
+	padding-left:21px;
+	padding-top:20px;
+	line-height:40px;
+	text-decoration:none;
+}
+.pagedTableFooter {
+	font-family: Tahoma;
+	font-size: 10px;
+	color: #0074C3;
+}
+
+/* Paged Table */
+
+
+/* ToolBar */
+.toolButton {
+  margin:0;
+  padding:0;
+  background:none;
+  border:none;
+	padding-top: 4px;
+	padding-bottom: 1px;
+	padding-left: 0px;
+	cursor:hand;
+}
+.toolbarBackground {
+}

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<dynaForm type="xmlmenu">
+
+<MNU_ADD type="link" value='' link="#" onclick="window.location = 'processes_New';return false;" colAlign="left" colWidth="35">
+  <en>New</en>
+  <es>Nuevo</es>
+</MNU_ADD>
+
+<PAGED_TABLE_ID type="private"/>
+<PAGED_TABLE_FAST_SEARCH type="FastSearch" label="@G::LoadTranslation(ID_SEARCH)"/>
+<!--<MNU_SEARCH type="link" value='' link="appNew" onclick="showHideSearch('@#SEARCH_FILTER_FORM',this); return false;" colAlign="right" colWidth="130">
+  <en>Advanced Search</en>
+  <es>Buscar Avanzado</es>
+</MNU_SEARCH>
+-->
+<SEARCH_FILTER_FORM type="private"/>
+
+</dynaForm>

@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<dynaForm type="pagetable"
+  sql="SELECT USR_UID, CONCAT(USR_LASTNAME, ' ', USR_FIRSTNAME) AS USR_COMPLETENAME, USR_EMAIL, USR_ROLE, USR_DUE_DATE, '@#VIEW' AS USR_VIEW, '@#EDIT' AS USR_EDIT, '@#DELETE' AS USR_DELETE, '@#CONFIRM' AS USR_CONFIRM FROM USERS WHERE USR_STATUS NOT IN ('CLOSED') ORDER BY USR_USERNAME"
+  sqlConnection=""
+  deleteRow="0"
+  menu="users/users_Options"
+  filterForm="users/users_Search"
+  searchBy="CONCAT(USR_LASTNAME, ' ', USR_FIRSTNAME) | USR_EMAIL"
+>
+<USR_COMPLETENAME type="text" titlealign="left" align="left" colWidth="200">
+  <en>Full Name</en>
+  <es>Nombre completo</es>
+</USR_COMPLETENAME>
+<USR_EMAIL type="text" titlealign="left" align="left" colWidth="190">
+  <en>E-Mail</en>
+  <es>E-Mail</es>
+</USR_EMAIL>
+<USR_ROLE type="text" titlealign="left" align="left" colWidth="180">
+  <en>Role</en>
+  <es>Rol</es>
+</USR_ROLE>
+<USR_DUE_DATE type="text" titlealign="left" align="left" colWidth="120">
+  <en>Due Date</en>
+  <es>Fecha de expiración</es>
+</USR_DUE_DATE>
+<USR_VIEW type="link" colWidth="50" value="@#USR_VIEW" link="users_View?USR_UID=@#USR_UID">
+  <en></en>
+  <es></es>
+</USR_VIEW>
+<USR_EDIT type="link" colWidth="50" value="@#USR_EDIT" link="users_Edit?USR_UID=@#USR_UID">
+  <en></en>
+  <es></es>
+</USR_EDIT>
+<USR_DELETE type="link" colWidth="50" value="@#USR_DELETE" link="#" onclick="deleteUser('@#USR_UID');return false;">
+  <en></en>
+  <es></es>
+</USR_DELETE>
+<!--<USR_STATUS style="background-color:red;" type="link" titlealign="left" align="left" colWidth="60" value="@#USR_STATUS" link="users_ChangeStatus?USR_UID=@#USR_UID">
+  <en></en>
+  <es></es>
+</USR_STATUS>-->
+</dynaForm>

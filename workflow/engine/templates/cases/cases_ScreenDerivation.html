@@ -1,0 +1,149 @@
+<td align="center">
+
+<DIV id="publisherContent[1]" style="; margin:0px;" align="center" >
+  <form name="frmDerivation" id="frmDerivation" action="cases_Derivate" method="POST" class="formDefault" style="margin:0px;">
+  <input type="hidden" name="form[ROU_TYPE]" id="form[ROU_TYPE]" value="{$PROCESS.ROU_TYPE}">
+
+  <div class="borderForm" style="width:500px; padding-left:0; padding-right:0; border-width:1;">
+		<div class="boxTop"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+		
+    <div class="content" style="height:100%;" >
+	  <table width="99%">
+      <tr>
+        <td valign='top'>
+          <table cellspacing="0" cellpadding="0" border="0" width="100%">
+           <tr>
+             <td colspan="2" class="withoutLabel">
+             <table width='100%' cellspacing="0" cellpadding="0">
+
+  <tr>
+  <td valign='top' class='tableOption' width='33%' align="left">
+   <table cellspacing="0" cellpadding="0" width='100%' >
+    <tr>
+      <td class='tableOption' align="left" width="120">
+        <img src="/images/bulletButton.gif" width="6" />&nbsp;
+        <a class="tableOption" href='{$PREVIOUS_PAGE}' id="form[DYN_BACKWARD]" name="form[DYN_BACKWARD]" onclick="">Previous Step</a>
+
+      </td>
+      <td class='tableOption'>&nbsp;</td>
+    </tr>
+   </table>
+  </td>
+  <td valign='top'  class='tableOption'>
+   <table cellspacing="0" cellpadding="0" width='100%'>
+    <tr>
+    </tr>
+
+   </table>
+  </td>
+  <td valign='top'>
+  </td>
+</tr>
+</table>
+
+</td>
+  </tr>
+  <tr>
+    <td class='FormTitle' colspan="2" align="">Assign Task</td>
+  </tr>
+  
+	{foreach key=id item=data from=$TASK}
+ 	 <tr height="5">
+      <td>&nbsp;</td>
+    </tr>
+    {if $PROCESS.ROU_TYPE eq 'SELECT'}
+    <form name="frmDerivation{$id}" id="frmDerivation{$id}" action="cases_Derivate" method="POST" class="formDefault" method="post" style="margin:0px;">
+    <input type="hidden" name="form[ROU_TYPE]" id="form[ROU_TYPE]" value="{$PROCESS.ROU_TYPE}">
+    <tr>
+   	 	<td class="FormLabel" width="100">Option {$id}:</td>
+        <td class="FormFieldContent">{$data.ROU_CONDITION }</td>
+    </tr>
+    {/if}
+  	<tr>
+  		<td class="FormLabel" width="100">Next Task:</td>
+      <td class="FormFieldContent">{$data.NEXT_TASK.TAS_TITLE}{$data.NEXT_TASK.TAS_HIDDEN_FIELD}</td>
+  	</tr>
+  
+    {if $data.NEXT_TASK.USR_UID neq ''}
+      <tr>
+   	 	<td class="FormLabel" width="100">Employee:</td>
+        <td class="FormFieldContent">{$data.NEXT_TASK.USR_UID}{$data.NEXT_TASK.USR_HIDDEN_FIELD}</td>
+   	 </tr>
+    {else}
+    	<tr>
+    		 <td class="FormLabel" width="100">
+         </td><td class="FormFieldContent"> ?????? {$data.NEXT_TASK.TAS_TITLE}
+           <input type="hidden" name="form[TASKS][{$id}][USR_UID]" id="form[TASKS][{$id}][USR_UID]" value="">
+         </td>
+    	</tr>
+    {/if}
+  
+ 	 <tr height="0">
+      <td> {$data.NEXT_TASK.TAS_ASSIGN_TYPE}{$data.NEXT_TASK.TAS_DEF_PROC_CODE}{$data.NEXT_TASK.DEL_PRIORITY}</td>
+    </tr>
+   
+    {if $PROCESS.ROU_TYPE eq 'SELECT'}
+    <tr>
+  		<td colspan="2" align="center">
+      <input type="submit" name="btnContinue" id="btnContinue" value="Continue with option {$id} " ></td>
+    </tr>
+    </form>
+    {/if}
+	{/foreach}  
+
+  {if $PROCESS.ERROR eq '' && $PROCESS.ROU_TYPE neq 'SELECT' }
+	<tr>
+		<td colspan="2" align="center">
+      <input type="submit" name="btnContinue" id="btnContinue" value="Continue {$PROCESS.DISABLED}" ></td>
+	</tr>
+	{/if}
+                                                                                                                                       </table>
+        </td>
+      </tr>
+    </table>
+    		</div>
+		<div class="boxBottom"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+  </div>
+
+
+
+{if $PROCESS.ROU_TYPE neq 'SELECT'}
+  </form>
+{/if}
+
+<script type="text/javascript">
+{literal}
+var showUsers = function(sTask)
+{
+	if (sTask == '')
+	{
+		document.getElementById('spanUSR_UID').innerHTML = '';
+		document.getElementById('btnContinue').disabled  = true;
+	}
+	else
+	{
+		var aTask = sTask.split('|');
+		document.getElementById('form[TASKS][1][TAS_UID]').value           = aTask[0];
+		document.getElementById('form[TASKS][1][TAS_ASSIGN_TYPE]').value   = aTask[2];
+		document.getElementById('form[TASKS][1][TAS_DEF_PROC_CODE]').value = aTask[3];
+		document.getElementById('form[TASKS][1][DEL_PRIORITY]').value      = aTask[4];
+		var oRPC = new leimnud.module.rpc.xmlhttp({
+      url   : '../cases/cases_Ajax',
+      async : false,
+      method: 'POST',
+      args  : 'action=showUsers&TAS_UID=' + aTask[0] + '&USR_UID=' + aTask[1] + '&TAS_ASSIGN_TYPE=' + aTask[2] + '&TAS_ASSIGN_VARIABLE=' + aTask[5]
+    });
+    oRPC.make();
+    document.getElementById('spanUSR_UID').innerHTML = oRPC.xmlhttp.responseText;
+    if (document.getElementById('_ERROR_'))
+    {
+		  document.getElementById('btnContinue').disabled = true;
+	  }
+	  else
+	  {
+	  	document.getElementById('btnContinue').disabled = false;
+	  }
+	}
+};
+{/literal}
+</script>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm type="xmlmenu">
+<GRP_UID type="private"/>
+<MNU_ADD_EMPLOYE type="link" value='' link="#" onclick="addUserGroup('@#GRP_UID'); return false;" colAlign="left" colWidth="150">
+  <en>Assign Employee</en>
+  <es>Asignar empleado</es>
+</MNU_ADD_EMPLOYE>
+<!--<MNU_ADD type="link" value='' link="#" onclick="addGroup(); return false;" colAlign="right" colWidth="35">
+  <en>Add_group</en>
+  <es>Agregar_grupo</es>
+</MNU_ADD>
+-->
+<PAGED_TABLE_ID type="private"/>
+<PAGED_TABLE_FAST_SEARCH type="FastSearch" label="@G::LoadTranslation(ID_SEARCH)"/>
+<js type="javascript" replaceTags="1">
+  function addGroup(){
+    @#PAGED_TABLE_ID.updateField('ds', 'Add new group', 500, 170);
+  }
+  function saveGroup( form ) {
+    ajax_post( form.action, form, 'POST');
+    currentPopupWindow.remove();
+    @#PAGED_TABLE_ID.refresh();
+  }
+  function saveUserGroup( form ) {
+    if (!currentGroup) return ;
+    ajax_post( form.action + '?GRP_UID=' + currentGroup, form , 'POST' );
+    currentPopupWindow.remove();
+    refreshTree();
+    @#PAGED_TABLE_ID.refresh();
+  }
+</js>
+<!-- 
+<MNU_SEARCH type="link" value='' link="#" onclick="showHideSearch('@#SEARCH_FILTER_FORM',this); return false;" colAlign="right" colWidth="130">
+  <en>Advanced Search</en>
+  <es>Buscar Avanzado</es>
+</MNU_SEARCH> -->
+<SEARCH_FILTER_FORM type="private"/>
+</dynaForm>

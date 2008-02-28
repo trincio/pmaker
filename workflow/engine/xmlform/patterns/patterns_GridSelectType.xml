@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm
+  name="patterns_GridSelectType"
+  type="grid"
+  width="100%"
+>
+
+<ROU_NEXT_TASK type="dropdown">
+SELECT TAS_UID, CON_VALUE FROM TASK LEFT JOIN CONTENT ON (TAS_UID = CON_ID AND CON_CATEGORY = 'TAS_TITLE' AND CON_LANG = '@#LANG') WHERE PRO_UID = '@#PROCESS'
+  <en>Next Task
+    <option name="-1">End of process</option>
+    <!--<option name="-2">Leaf task</option>-->
+  </en>
+  <es>Siguiente tarea
+    <option name="-1">Fin de proceso</option>
+    <!--<option name="-2">Tarea colgante</option>-->
+  </es>
+</ROU_NEXT_TASK>
+
+<ROU_CONDITION type="text" size="35" maxlength="255">
+  <en>Description</en>
+  <es>Descripción</es>
+</ROU_CONDITION>
+
+<!--<ROU_TO_LAST_USER type="dropdown">
+  <en>Selection of executant
+    <option name="FALSE">Rules and user groups</option>
+    <option name="TRUE">Last executant of the task</option>
+  </en>
+  <es>Siguiente tarea
+    <option name="FALSE">Fin de proceso</option>
+    <option name="TRUE">Tarea colgante</option>
+  </es>
+</ROU_TO_LAST_USER>-->
+
+</dynaForm>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm
+  name="dynaforms_Edit"
+  type="xmlform"
+  width="98%"
+  labelWidth="62px"
+>
+
+<STEP_UID type="hidden" showInTable="0"/>
+
+<PRO_UID type="hidden" showInTable="0"/>
+
+<TAS_UID type="hidden" showInTable="0"/>
+
+<STEP_CONDITION type="textarea" cols="45" rows="5" >
+  <en>Condition</en>
+  <es>Description</es>
+</STEP_CONDITION>
+
+<ACCEPT type="button" onclick="saveCondition(this.form);">
+  <en>Save</en>
+  <es>Guardar</es>
+</ACCEPT>
+
+</dynaForm>

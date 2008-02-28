@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm name="organizationalChart" ajaxSubmit="1" width="640px">
+
+<TITLES type="title" group="4">
+  <es>Árbol organizacional</es>
+  <en>OrganizationalChart</en>
+</TITLES>
+
+<!--<toolbar type="toolbar" xmlfile="departments/toolBar">
+  <es></es>
+  <en></en>
+</toolbar>-->
+
+<CHART type="OrganizationalChart" style="overflow:scroll;height:400px;width:600px;" borderStyle="3px solid black" fontStyle="10pt" contextmenu="popupMenu_departmentContext">
+  <es>Árbol organizacional</es>
+  <en>OrganizationalChart</en>
+</CHART>
+<!--
+<MANAGER type="dropdown" style="width:120px;">
+  select USR_UID, USR_USERNAME FROM USERS
+  <es>Manager</es>
+  <en>Manager</en>
+</MANAGER>
+
+<USERS type="grid" xmlGrid="departments/departmentUsers">
+  <es>Usuarios del Departamento</es>
+  <en>Department Users</en>
+</USERS>
+
+<BSUBMIT type="submit">
+  <es>Aceptar</es>
+  <en>Accept</en>
+  <fa>اضافه کردن</fa>
+</BSUBMIT>
+-->
+<AJAXSERVER type="phpVariable"/>
+
+<JS type="javascript" replaceTags="1"><![CDATA[
+function addDepartment( target ) {
+  regexp= /\[(\w+)\]$/
+  result = regexp.exec(target.id);
+  if (!(result && result.length>=2)) return false;
+  var id=result[1];
+  ajax_function('@#AJAXSERVER', 'addDepartment', 'parent='+id);
+  window.location.href = window.location.href;
+}
+function delDepartment( target ) {
+  regexp= /\[(\w+)\]$/
+  result = regexp.exec(target.id);
+  if (!(result && result.length>=2)) return false;
+  var id=result[1];
+  ajax_function('@#AJAXSERVER', 'delDepartment', 'id='+id);
+  window.location.href = window.location.href;
+}
+function proDepartment( target ) {
+  regexp= /\[(\w+)\]$/
+  result = regexp.exec(target.id);
+  if (!(result && result.length>=2)) return false;
+  var id=result[1];
+  loadPage('properties?DEP_UID='+id, 0, 0 );
+}
+function update111(btn) {
+  ajax_post('department_Update', btn.form, 'POST' );
+  mainPanel.remove();
+  //currentPopupWindow.remove();
+  window.location.href = window.location.href;
+  return false;
+}
+]]></JS>
+
+
+</dynaForm>

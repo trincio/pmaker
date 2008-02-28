@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm type="xmlmenu">
+
+<MNU_ADD type="link" value='' link="#" onclick="triggerNew(); return false;" colAlign="left" colWidth="35">
+  <en>New</en>
+  <es>Nuevo</es>
+</MNU_ADD>
+
+<!--<PAGED_TABLE_FAST_SEARCH type="FastSearch" label="@G::LoadTranslation(ID_SEARCH)"/>-->
+
+<PRO_UID type="private"/>
+
+<triggersEdit type="private" defaultValue="../triggers/triggers_Edit"/>
+
+<triggersDelete type="private" defaultValue="../triggers/triggers_Delete"/>
+
+<PAGED_TABLE_ID type="private"/>
+
+<JS type="javascript" replaceTags="1">
+function triggerNew()
+{
+  popupWindow('@G::LoadTranslation(ID_NEW_TRIGGERS)', '@G::encryptlink(@#triggersEdit)?PRO_UID=@%PRO_UID' , 500, 310);
+}
+
+function triggerEdit(sUID)
+{
+  popupWindow('@G::LoadTranslation(ID_EDIT_TRIGGERS)', '@G::encryptlink(@#triggersEdit)?TRI_UID=' + sUID , 500, 310);
+}
+
+function triggerSave(form)
+{
+  ajax_post(form.action, form, 'POST');
+  currentPopupWindow.remove();
+  @#PAGED_TABLE_ID.refresh();
+}
+
+function triggerDelete(sUID)
+{
+  new leimnud.module.app.confirm().make({
+    label:'@G::LoadTranslation(ID_MSG_CONFIRM_DELETE_TRIGGER)',
+    action:function()
+    {
+      ajax_function('@G::encryptlink(@#triggersDelete)', '', 'TRI_UID=' + sUID, 'POST');
+      @#PAGED_TABLE_ID.refresh();
+    }.extend(this)
+  });
+}
+</JS>
+
+<!-- Default Search option -->
+<!--<MNU_SEARCH type="link" value='' link="#" onclick="showHideSearch('@#SEARCH_FILTER_FORM',this);return false;" colAlign="right" colWidth="130">
+  <en>Advanced Search</en>
+  <es>Buscar Avanzado</es>
+</MNU_SEARCH>-->
+
+<SEARCH_FILTER_FORM type="private"/>
+
+</dynaForm>

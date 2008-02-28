@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm
+  name="cases_CannotInitiateCase"
+  type="xmlform"
+  width="600px"
+  labelWidth="200px"
+>
+
+<TITLE type="title">
+  <en>Start a new case</en>
+  <es>Iniciar nuevo caso</es>
+</TITLE>
+
+<DESCRIPTION type="label">
+  <en>You cannot initiate a new case.</en>
+  <es>Uds. no puede iniciar un caso.</es>
+</DESCRIPTION>
+
+</dynaForm>

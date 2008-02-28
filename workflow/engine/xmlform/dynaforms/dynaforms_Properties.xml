@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm
+  name="dynaforms_Properties"
+  type="xmlform"
+  width="450"
+>
+
+<PME_PROPERTIES_TITLE type="title">
+  <en>Properties</en>
+  <es>Propiedades</es>
+</PME_PROPERTIES_TITLE>
+
+<DYN_UID type="hidden" showInTable="0"/>
+<PRO_UID type="hidden" showInTable="0"/>
+<A type="hidden" showInTable="0"/>
+
+<DYN_TITLE type="text" maxlength="32" size ="32">
+  <en>Dynaform</en>
+  <es>Dynaform</es>
+</DYN_TITLE>
+
+<DYN_TYPE type="dropdown" colWidth="80" align="center">
+  <en>Type
+  <option name="xmlform">Master Form</option>
+  <option name="grid">Grid</option>
+  </en>
+  <es>Tipo
+  <option name="xmlform">Formulario Maestro</option>
+  <option name="grid">Grilla</option>
+  </es>
+</DYN_TYPE>
+
+<DYN_DESCRIPTION type="textarea" cols="32" rows="12">
+  <en>Description</en>
+  <es>Descripción</es>
+</DYN_DESCRIPTION>
+
+<SUBTITLE type="subtitle" enableHTML="1">
+  <en>Others</en>
+  <es>Otras</es>
+</SUBTITLE>
+
+<WIDTH type="text" maxlength="10" size ="15">
+  <en>Width</en>
+  <es>Ancho</es>
+</WIDTH>
+
+<MODE type="dropdown" colWidth="80" align="center">
+  <en>Mode
+  <option name="edit">Edit</option>
+  <option name="view">View</option>
+  </en>
+  <es>Modo
+  <option name="edit">Edit</option>
+  <option name="view">View</option>
+  </es>
+</MODE>
+
+<ENABLETEMPLATE type="checkbox" value="1" defaultvalue="0" labelOnRight="0">
+  <en>Enable Template</en>
+  <es>Habilitar template</es>
+</ENABLETEMPLATE>
+
+<PME_PROP_APPLY type="button" onclick="dynaformEditor.saveProperties();">
+  <en>Apply</en>
+  <es>Aplicar</es>
+</PME_PROP_APPLY>
+<PME_PROP_REVERT type="button" onclick="dynaformEditor.refreshProperties();">
+  <en>Revert</en>
+  <es>Deshacer</es>
+</PME_PROP_REVERT>
+<sdfsdf type="javascript">
+function orderButtons() {
+  var propertiesDiv = document.getElementById('dynaformEditor[8]');
+  var a=getField('PME_PROP_REVERT','dynaforms_Properties');
+  var b=getField('PME_PROP_APPLY','dynaforms_Properties');
+  a.parentNode.insertBefore(b,a);
+  propertiesDiv.style.visibility='';
+}
+orderButtons();
+getField("ENABLETEMPLATE","dynaforms_Properties").onclick=function()
+{
+	getField("PME_HTML_ENABLETEMPLATE","dynaforms_HtmlEditor").checked=this.checked;
+}
+</sdfsdf>
+</dynaForm>

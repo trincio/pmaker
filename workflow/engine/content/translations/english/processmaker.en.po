@@ -1,0 +1,15 @@
+msgid "" 
+msgstr "" 
+"Project-Id-Version: PM 4.0.1\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2007-12-06 09:30+0100 \n"
+"Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
+"Language-Team: Colosa Developers Team <developers@colosa.com>\n"
+"MIME-Version: 1.0 \n"
+"Content-Type: text/plain; charset=utf-8 \n"
+"Content-Transfer_Encoding: 8bit\n"
+"X-Poedit-Language: English\n"
+"X-Poedit-Country: UNITED STATES\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: TRANSLATION/LABEL/LOGIN 

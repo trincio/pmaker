@@ -1,0 +1,79 @@
+{php}
+  global $G_SUB_MENU;
+  global $G_ID_SUB_MENU_SELECTED;
+	if ($G_SUB_MENU != '')
+	{
+		$G_MENU = new Menu;
+		$G_MENU->Load($G_SUB_MENU);
+		$G_MENU->optionOn = $G_SUB_MENU_SELECTED;
+		$G_MENU->id_optionOn = $G_ID_SUB_MENU_SELECTED;
+		$G_MENU->Class = 'subMnu';
+		if (is_array($G_MENU->Options))
+		{
+			for ($ncount = 0; $ncount < $G_MENU->OptionCount(); $ncount++)
+			{
+				$target = $G_MENU->Options[$ncount];
+				if ($G_MENU->Types[$ncount] == 'absolute')
+				{
+				  $target = G::encryptLink(str_replace('sys' . SYS_TEMP, SYS_TEMP, $G_MENU->Options[$ncount]));
+				}
+				if ($G_MENU->Types[$ncount] != 'absolute')
+				{
+				  if (defined('SYS_SYS'))
+				  {
+					  $target = '/sys' . SYS_TEMP . G::encryptLink('/' . SYS_LANG . '/' . SYS_SKIN . '/' . $G_MENU->Options[$ncount]);
+					}
+					else
+					{
+					  $target = '/sys/' . G::encryptLink(SYS_LANG . '/' . SYS_SKIN . '/' . $G_MENU->Options[$ncount]);
+					}
+				}
+				$label = $G_MENU->Labels[$ncount];
+				if ($G_MENU->id_optionOn != '')
+				{
+					$onMenu = ($G_MENU->Id[$ncount] == $G_MENU->id_optionOn ? true : false);
+				}
+				else
+				{
+					$onMenu = ($ncount == $G_MENU->optionOn ? true : false);
+				}
+				$classname = ($onMenu ? 'selectedSubMenu' : 'subMenu');
+				if ( $G_MENU->Classes[$ncount] != '')
+				{
+				  $classname = $G_MENU->Classes[$ncount];
+				}
+				if($G_MENU->Icons[$ncount]!=''){
+					{/php}
+	      	  <td height="23" align="right" valign="middle" nowrap="nowrap" class="{php}echo $classname;{/php}">
+	      	  	<a href="#" onclick="{php}echo $G_MENU->JS[$ncount];{/php} " class="{php}echo $classname;{/php}"><img src="{php}echo $G_MENU->Icons[$ncount];{/php}" border="0"/></a></td>
+	      	  <td height="23" align="left" valign="middle" nowrap="nowrap" class="{php}echo $classname;{/php}">
+	      	    <a href="#" onclick="{php}echo $G_MENU->JS[$ncount];{/php} " class="{php}echo $classname;{/php}"><b>{php}echo ($label);{/php}<b>&nbsp;&nbsp;</a>
+	      	  </td>
+					{php}
+				}else{
+		    	if ($onMenu)
+		    	{
+		    	{/php}
+	      	  <td height="23" align="center" valign="middle" nowrap="nowrap" class="{php}echo $classname;{/php}">
+	      	    <img src="/images/bulletSubMenu.jpg" /><a href="{php}echo $target;{/php}" class="{php}echo $classname;{/php}">&nbsp;&nbsp;<b>{php}echo ($label);{/php}<b>&nbsp;&nbsp;</a>
+	      	  </td>
+	  	  	{php}
+	  	  	}
+	  			else
+	  			{
+	  	  	{/php}
+	      	  <td height="23" align="center" valign="middle" nowrap="nowrap" class="{php}echo $classname;{/php}">
+	      	    <a href="{php}echo $target;{/php}" class="{php}echo $classname;{/php}" >&nbsp;&nbsp;{php}echo ($label);{/php}&nbsp;&nbsp;</a>
+	      	  </td>
+	      	{php}
+	      	}
+	      }
+	      if (($ncount + 1) < $G_MENU->OptionCount())
+	      {
+	        print '<td class="subMenu" width="10">&nbsp;&nbsp;&nbsp;<td>';
+	      }
+	    }
+	  }
+	}
+
+{/php}

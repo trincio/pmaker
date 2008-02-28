@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm name="tasks_Labels" width="99%" mode="edit" enableTemplate="0" border="0" height="305px">
+
+<TAS_UID type="hidden" />
+
+<INDEX type="hidden" />
+
+<IFORM type="hidden" />
+
+<TAS_DEF_TITLE type="textarea" required="1" cols="38" rows="3" group="1">
+  <en>Case Title</en>
+  <es>Título del caso</es>
+</TAS_DEF_TITLE>
+
+<TAS_DEF_DESCRIPTION type="textarea" required="1" cols="38" rows="3" group="1">
+  <en>Case Description</en>
+  <es>Descripción del caso</es>
+</TAS_DEF_DESCRIPTION>
+
+<TAS_DEF_PROC_CODE type="textarea" required="1" cols="38" rows="3" group="1">
+  <en>Case Status</en>
+  <es>Estado del Caso</es>
+</TAS_DEF_PROC_CODE>
+
+<!--<SEND_EMAIL type="checkbox" value="TRUE" group="1">
+  <en>Notify case finalitation to every case owner</en>
+  <es>Notificar finalización de caso a todos los dueños del caso</es>
+</SEND_EMAIL>
+
+<TAS_DEF_MESSAGE type="textarea" required="1" cols="38" rows="3" group="1">
+  <en>Derivation message</en>
+  <es>Mensaje de derivación</es>
+</TAS_DEF_MESSAGE>-->
+
+<JS type="javascript">
+/* Recovery data */
+if (aTaskFlag[5])
+{
+  getField('TAS_DEF_TITLE').value       = oTaskData.TAS_DEF_TITLE;
+  getField('TAS_DEF_DESCRIPTION').value = oTaskData.TAS_DEF_DESCRIPTION;
+  getField('TAS_DEF_PROC_CODE').value   = oTaskData.TAS_DEF_PROC_CODE;
+  //getField('SEND_EMAIL').checked        = (oTaskData.SEND_EMAIL == 'TRUE' ? true : false);
+  //getField('TAS_DEF_MESSAGE').value     = oTaskData.TAS_DEF_MESSAGE;
+}
+else
+{
+  saveDataTaskTemporal(6);
+  aTaskFlag[5] = true;
+}
+
+/*leimnud.event.add(document.getElementById('form[SEND_EMAIL]'), 'click', function() {
+  var oAux = document.getElementById('form[TAS_DEF_MESSAGE]');
+  if (!document.getElementById('form[SEND_EMAIL]').checked)
+  {
+    document.getElementById('form[TAS_DEF_MESSAGE]').value = '';
+    hideRowById('TAS_DEF_MESSAGE');
+  }
+  else
+  {
+     showRowById('TAS_DEF_MESSAGE');
+  }
+});
+if (document.getElementById('form[TAS_DEF_MESSAGE]').value != '')
+{
+  document.getElementById('form[SEND_EMAIL]').checked = true;
+  showRowById('TAS_DEF_MESSAGE');
+}
+else
+{
+  hideRowById('TAS_DEF_MESSAGE');
+}*/
+</JS>
+
+</dynaForm>

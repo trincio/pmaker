@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm
+  name="cases_InputDocument"
+  type="xmlform"
+  width="400px"
+  labelWidth="100px"
+>
+
+<__DYNAFORM_OPTIONS type="xmlmenu" xmlfile="gulliver/dynaforms_Options">
+  <es></es>
+  <en></en>
+</__DYNAFORM_OPTIONS>
+
+<INP_DOC_TITLE type="caption">
+  <en>Input document</en>
+  <es>Documento requerido</es>
+</INP_DOC_TITLE>
+
+<INP_DOC_FORM_NEEDED type="dropdown" colWidth="80" titleAlign="left" align="left" mode="view">
+  <en>Document Type
+  <option name ='VIRTUAL'>Digital</option>
+  <option name ='REAL'>Printed</option>
+  <option name ='VREAL'>Digital/Printed</option>
+  </en>
+  <es>Tipo
+  <option name ='VIRTUAL'>Impreso</option>
+  <option name ='REAL'>Digital</option>
+  <option name ='VREAL'>Digital/Impreso</option>
+  </es>
+</INP_DOC_FORM_NEEDED>
+
+<INP_DOC_ORIGINAL type="dropdown" colWidth="80" titleAlign="left" align="left" mode="view">
+  <en>Format
+  <option name ='ORIGINAL'>Original</option>
+  <option name ='COPYLEGAL'>Legal Copy</option>
+  <option name ='COPY'>Copy</option>
+  </en>
+  <es>Formato
+  <option name ='ORIGINAL'>Original</option>
+  <option name ='COPY'>Copia</option>
+  <option name ='COPYLEGAL'>Copia legalizada</option>
+  </es>
+</INP_DOC_ORIGINAL>
+
+<!--<INP_DOC_PUBLISHED type="dropdown" colWidth="80" titleAlign="left" align="left" mode="view">
+  <en>Access type
+  <option name ='PRIVATE'>Private</option>
+  <option name ='PUBLIC'>Public</option>
+  </en>
+  <es>Tipo de acceso
+  <option name ='PRIVATE'>Privado</option>
+  <option name ='PUBLIC'>Público</option>
+  </es>
+</INP_DOC_PUBLISHED>-->
+
+<INP_DOC_DESCRIPTION type="caption">
+  <en>Description</en>
+  <es>Descripción</es>
+</INP_DOC_DESCRIPTION>
+
+<APP_DOC_COMMENT type="caption">
+  <en>Comments</en>
+  <es>Comentarios</es>
+</APP_DOC_COMMENT>
+
+<VIEW type="phpVariable"/>
+
+<FILE type="phpVariable"/>
+
+<APP_DOC_FILENAME type="link" value="@#VIEW" link="@#FILE" target="_blank">
+  <en>File</en>
+  <es>Archivo</es>
+</APP_DOC_FILENAME>
+
+<NEXT_STEP type="button" onclick="nextStep(this.form);">
+  <en>Next step</en>
+  <es>Siguiente paso</es>
+</NEXT_STEP>
+
+<JS type="javascript">
+leimnud.event.add(window, 'load', function() {
+  if (getField('INP_DOC_FORM_NEEDED').value == 'VIRTUAL') {
+    hideRow('INP_DOC_ORIGINAL');
+  }
+});
+
+var nextStep = function(oForm)
+{
+  oForm.action = 'cases_NextStep';
+  oForm.submit();
+};
+</JS>
+
+</dynaForm>

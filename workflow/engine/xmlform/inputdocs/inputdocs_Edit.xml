@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm
+  name="inputdocs_Edit"
+  type="xmlform"
+  width="100%"
+>
+
+<PRO_UID type="hidden" showInTable="0"/>
+
+<INP_DOC_UID type="hidden" showInTable="0"/>
+
+<TITLE type="title" group="1">
+  <en>Input Document Information</en>
+  <es>Input Document Information</es>
+</TITLE>
+
+<INP_DOC_TITLE type="text" maxlength="100" size="40" colWidth="200" titleAlign="left" align="left" dataCompareField="T.CON_VALUE" dataCompareType="contains" >
+  <en>Input document</en>
+  <es>Documento requerido</es>
+</INP_DOC_TITLE>
+
+<INP_DOC_FORM_NEEDED type="dropdown" colWidth="80" titleAlign="left" align="left" dataCompareField="INP_DOC_FORM_NEEDED" dataCompareType="=" >
+  <en>Document Type
+  <option name ='VIRTUAL'>Digital</option>
+  <option name ='REAL'>Printed</option>
+  <option name ='VREAL'>Digital/Printed</option>
+  </en>
+  <es>Tipo de Documento
+  <option name ='VIRTUAL'>Impreso</option>
+  <option name ='REAL'>Digital</option>
+  <option name ='VREAL'>Digital/Impreso</option>
+  </es>
+</INP_DOC_FORM_NEEDED>
+
+<INP_DOC_ORIGINAL type="dropdown" colWidth="80" titleAlign="left" align="left" dataCompareField="INP_DOC_ORIGINAL" dataCompareType="=" >
+  <en>Format
+  <option name ='ORIGINAL'>Original</option>
+  <option name ='COPYLEGAL'>Legal Copy</option>
+  <option name ='COPY'>Copy</option>
+  </en>
+  <es>Formato
+  <option name ='ORIGINAL'>Original</option>
+  <option name ='COPY'>Copia</option>
+  <option name ='COPYLEGAL'>Copia legalizada</option>
+  </es>
+</INP_DOC_ORIGINAL>
+
+<!--<INP_DOC_PUBLISHED type="dropdown" colWidth="80" titleAlign="left" align="left" dataCompareField="INP_DOC_PUBLISHED" dataCompareType="=" >
+  <en>Access type
+  <option name ='PRIVATE'>Private</option>
+  <option name ='PUBLIC'>Public</option>
+  </en>
+  <es>Tipo de acceso
+  <option name ='PRIVATE'>Privado</option>
+  <option name ='PUBLIC'>Público</option>
+  </es>
+</INP_DOC_PUBLISHED>-->
+
+<INP_DOC_DESCRIPTION type="textarea" rows="5" cols="38" colWidth="200" titleAlign="left" align="left" dataCompareField="D.CON_VALUE" dataCompareType="contains" >
+  <en>Description</en>
+  <es>Descripción</es>
+</INP_DOC_DESCRIPTION>
+
+<ACCEPT type="button" onclick="inputdocsSave( this.form );">
+  <en>Save</en>
+  <es>Guardar</es>
+</ACCEPT>
+
+<JS type="javascript">
+leimnud.event.add(getField('INP_DOC_FORM_NEEDED'), 'change', function() {
+  if (getField('INP_DOC_FORM_NEEDED').value == 'VIRTUAL') {
+    hideRow('INP_DOC_ORIGINAL');
+  }
+  else {
+    showRow('INP_DOC_ORIGINAL');
+  }
+});
+if (getField('INP_DOC_FORM_NEEDED').value == 'VIRTUAL') {
+  hideRow('INP_DOC_ORIGINAL');
+}
+</JS>
+
+</dynaForm>

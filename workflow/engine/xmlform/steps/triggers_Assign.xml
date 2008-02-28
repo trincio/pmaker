@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm
+  name="triggers_Assign"
+  type="xmlform"
+  width="100%"
+>
+
+<LANG type="private" />
+
+<UIDS type="private" />
+
+<PROCESS type="private" />
+
+<action type="hidden" />
+
+<STEP_UID type="hidden" />
+
+<TITLE type="title" group="1">
+  <en>Available Triggers</en>
+  <es>Available Triggers</es>
+</TITLE>
+
+<TRI_UID type="dropdown" colWidth="80" align="center">
+SELECT TRI_UID, CON_VALUE FROM `TRIGGERS` LEFT JOIN CONTENT ON (TRI_UID = CON_ID AND CON_CATEGORY = 'TRI_TITLE' AND CON_LANG = '@#LANG') WHERE TRI_UID NOT IN (@#UIDS) AND PRO_UID = '@#PROCESS'
+<en>Triggers</en>
+<es>Disparadores</es>
+</TRI_UID>
+
+<ST_TYPE type="hidden" />
+
+<ST_CONDITION type="textarea" required="0" cols="32" rows="3">
+<en>Condition</en>
+<es>Condición</es>
+</ST_CONDITION>
+
+<ASSIGN type="button" onclick="assignTrigger(this.form);">
+<en>Assign</en>
+<es>Asignar</es>
+</ASSIGN>
+
+<JS type="javascript" replaceTags="1">
+function assignTrigger(oForm)
+{
+  ajax_post(oForm.action, oForm, 'POST');
+  var sStep = document.getElementById('form[STEP_UID]').value;
+  var sType = document.getElementById('form[ST_TYPE]').value;
+  currentPopupWindow.remove();
+  showTriggers('@#STEP_UID', sType);
+}
+</JS>
+
+</dynaForm>

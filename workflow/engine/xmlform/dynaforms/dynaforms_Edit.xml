@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm
+  name="dynaforms_Edit"
+  type="xmlform"
+  width="100%"
+>
+
+<DYN_UID type="hidden" showInTable="0"/>
+
+<PRO_UID type="hidden" showInTable="0"/>
+
+<TITLE type="title" group="1">
+  <en>Dynaform Information</en>
+  <es>Dynaform Information</es>
+</TITLE>
+
+<DYN_TITLE type="text" maxlength="32" size ="32">
+  <en>Dynaform</en>
+  <es>Dynaform</es>
+</DYN_TITLE>
+
+<DYN_TYPE type="dropdown" colWidth="80" align="center">
+  <en>Type
+  <option name="xmlform">Master form</option>
+  <option name="grid">Grid</option>
+  </en>
+  <es>Tipo
+  <option name="xmlform">Formulario maestro</option>
+  <option name="grid">Grilla</option>
+  </es>
+</DYN_TYPE>
+
+<DYN_DESCRIPTION type="textarea" cols="35" rows="12" >
+  <en>Description</en>
+  <es>Descripción</es>
+</DYN_DESCRIPTION>
+
+
+<ACCEPT type="button" onclick="dynaformSave( this.form );">
+  <en>Save</en>
+  <es>Guardar</es>
+</ACCEPT>
+
+</dynaForm>

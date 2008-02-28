@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm
+  name="reset"
+  type="xmlform"
+  width="100%"
+>
+<PME_A type="hidden" />
+<PME_TYPE type="hidden" />
+<PME_TITLE type="title" enableHTML="1">
+  <en>Properties</en>
+  <es>Propiedades</es>
+</PME_TITLE>
+<PME_XMLNODE_NAME type="text" size="32" maxlength="64" validate="Field" dependentFields="PME_VALIDATE_NAME" required="1">
+
+  <en>Field Name</en>
+  <es>Nombre de Campo</es>
+</PME_XMLNODE_NAME>
+<PME_VALIDATE_NAME type="hidden" sqlConnection="XMLDB">
+SELECT XMLNODE_NAME, TYPE FROM dynaForm WHERE XMLNODE_NAME = @@PME_XMLNODE_NAME
+</PME_VALIDATE_NAME>
+
+<PME_LABEL type="text" maxlength="50" size="50">
+  <en>Label</en>
+  <es>Etiqueta</es>
+</PME_LABEL>
+
+<PME_SUBTITLE type="subtitle" enableHTML="1">
+  <en>Appearance</en>
+  <es>Apariencia</es>
+</PME_SUBTITLE>
+
+<PME_GROUP type="text" maxlength="10" size="10" validate="Int" defaultvalue="0" group="2">
+
+  <en>Group</en>
+  <es>Group</es>
+</PME_GROUP>
+<!--<PME_MODE type="dropdown" defaultvalue="edit">
+
+  <en>Mode
+    <option name="edit">Edit</option>
+    <option name="view">View</option>
+  </en>
+  <es>Modo
+    <option name="edit">Edición</option>
+    <option name="view">Vista</option>
+  </es>
+</PME_MODE>-->
+<!--
+<PME_ENABLEHTML type="checkbox" falseValue="0" value="1" defaultvalue="0" labelOnRight="0">
+
+  <en>EnableHtml</en>
+  <es>EnableHtml</es>
+</PME_ENABLEHTML>
+-->
+<PME_STYLE type="text" maxlength="" size="50">
+
+  <en>Style</en>
+  <es>Style</es>
+</PME_STYLE>
+
+<PME_ACCEPT type="button" onclick="fieldsSave( this.form );">
+  <en>Save</en>
+  <es>Guardar</es>
+</PME_ACCEPT>
+
+<PME_JS type="javascript"><![CDATA[
+var fieldForm="reset";
+var fieldName=getField("PME_XMLNODE_NAME",fieldForm);
+var savedFieldName=fieldName.value;
+var pme_validating;
+fieldName.focus();
+fieldName.select();
+leimnud.event.add(fieldName, 'change', {method:verifyFieldName, instance:fieldName, event:true});
+function verifyFieldName(){
+  pme_validating=true;
+  setTimeout('verifyFieldName1();',0);
+  return true;
+}
+function verifyFieldName1(){
+  var newFieldName=fieldName.value;
+  var validatedFieldName=getField("PME_VALIDATE_NAME",fieldForm).value;
+  var valid=(newFieldName!=='')&&(((newFieldName!==savedFieldName)&&(validatedFieldName===''))||((newFieldName===savedFieldName)));
+  if (valid)
+    getField("PME_ACCEPT",fieldForm).disabled=false;
+  else
+    getField("PME_ACCEPT",fieldForm).disabled=true;
+  pme_validating=false;
+  return valid;
+}
+]]></PME_JS>
+</dynaForm>

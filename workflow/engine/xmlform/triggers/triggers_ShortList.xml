@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm
+  sqlConnection=""
+  menu="triggers/triggers_Options"
+  width="100%"
+  rowsPerPage="4"
+>
+
+<TRI_UID type="hidden" showInTable="0"/>
+
+<TRI_TITLE type="text" colWidth="350" titleAlign="left" align="left">
+  <en>Triggers</en>
+  <es>Disparadores</es>
+</TRI_TITLE>
+
+<EDIT type="link" colWidth="40" value="@G::LoadTranslation(ID_EDIT)" link="#" onclick="triggerEdit(@QTRI_UID);return false;"/>
+
+<DELETE type="link" colWidth="40" value="@G::LoadTranslation(ID_DELETE)" link="#" onclick="triggerDelete(@QTRI_UID);return false;"/>
+
+<!-- FILTER FORM -->
+<SEARCH type="button" onclick="pagedTableFilter(this.form);" showInTable="0">
+  <en>Apply Filter</en>
+  <es>Filtrar</es>
+</SEARCH>
+
+<PAGED_TABLE_ID type="private" showInTable="0"/>
+
+<JSFILTER type="javascript" replaceTags="1" showInTable="0">
+function pagedTableFilter(form) {
+  @#PAGED_TABLE_ID.doFilter(form);
+}
+</JSFILTER>
+
+</dynaForm>

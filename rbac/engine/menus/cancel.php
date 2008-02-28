@@ -1,0 +1,24 @@
+<?php
+
+global $G_TMP_MENU;
+global $G_BACK_PAGE;
+
+$G_TMP_MENU->AddRawOption( $G_BACK_PAGE);
+
+switch ( SYS_LANG ) {
+  case "es" : 
+    $G_TMP_MENU->Labels = Array (
+    "Cancelar"
+    );
+    break;
+  case "po" : 
+    $G_TMP_MENU->Labels = Array (
+    "Cancelar"
+    );
+    break;
+  default : 
+    $G_TMP_MENU->Labels = Array (
+    "Cancel"
+    );
+}
+?>
