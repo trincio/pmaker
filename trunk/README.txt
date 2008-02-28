@@ -31,6 +31,7 @@ shoud be disabled. See How to disable SELINUX for additional instructions.
 Likewise PHP should be configured with more than 30 MB in the parameter memory_limit. ProcessMaker 
 ideally uses 120 MB in this parameter. See How to change the PHP "memory_limit" parameter 
 for additional instructions.
+Magic quotes in php.ini must be in Off
 
 Installation
 ------------
