@@ -1,0 +1,5329 @@
+msgid "" 
+msgstr "" 
+"Project-Id-Version: PM 4.0.1\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2007-11-28 09:57+0100 \n"
+"Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
+"Language-Team: Colosa Developers Team <developers@colosa.com>\n"
+"MIME-Version: 1.0 \n"
+"Content-Type: text/plain; charset=utf-8 \n"
+"Content-Transfer_Encoding: 8bit\n"
+"X-Poedit-Language: Spanish\n"
+"X-Poedit-Country: UNITED STATES\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: TRANSLATION/LABEL/LOGIN 
+# TRANSLATION/LABEL/LOGIN 
+msgid "Login" 
+msgstr "Login" 
+
+#: TRANSLATION/LABEL/CASES 
+# TRANSLATION/LABEL/CASES 
+msgid "Cases" 
+msgstr "Cases" 
+
+#: TRANSLATION/LABEL/ID_USER_HAVENT_RIGHTS_PAGE 
+# TRANSLATION/LABEL/ID_USER_HAVENT_RIGHTS_PAGE 
+msgid "User haven't rights in this page" 
+msgstr "User haven't rights in this page" 
+
+#: TRANSLATION/LABEL/ID_WRONG_PASS 
+# TRANSLATION/LABEL/ID_WRONG_PASS 
+msgid "Incorrect User Password" 
+msgstr "Incorrect User Password" 
+
+#: TRANSLATION/LABEL/ABOUT 
+# TRANSLATION/LABEL/ABOUT 
+msgid "About" 
+msgstr "About" 
+
+#: TRANSLATION/JAVASCRIPT/test 
+# TRANSLATION/JAVASCRIPT/test 
+msgid "ghsd" 
+msgstr "ghsd" 
+
+#: TRANSLATION/JAVASCRIPT/new 
+# TRANSLATION/JAVASCRIPT/new 
+msgid "Alert!!!!" 
+msgstr "Alert!!!!" 
+
+#: TRANSLATION/JAVASCRIPT/new23 
+# TRANSLATION/JAVASCRIPT/new23 
+msgid "Alert's" 
+msgstr "Alert's" 
+
+#: TRANSLATION/LABEL/ID_AVAILABLE_TRIGGERS 
+# TRANSLATION/LABEL/ID_AVAILABLE_TRIGGERS 
+msgid "Available Triggers" 
+msgstr "Available Triggers" 
+
+#: TRANSLATION/LABEL/ID_LOGOUT 
+# TRANSLATION/LABEL/ID_LOGOUT 
+msgid "Log out" 
+msgstr "Log out" 
+
+#: TRANSLATION/LABEL/ID_MY_ACCOUNT 
+# TRANSLATION/LABEL/ID_MY_ACCOUNT 
+msgid "My account" 
+msgstr "My account" 
+
+#: TRANSLATION/LABEL/ID_USERS 
+# TRANSLATION/LABEL/ID_USERS 
+msgid "Users" 
+msgstr "Users" 
+
+#: TRANSLATION/LABEL/ID_CASES 
+# TRANSLATION/LABEL/ID_CASES 
+msgid "[LABEL/ID_CASES] Cases" 
+msgstr "Cases" 
+
+#: TRANSLATION/LABEL/ID_APPLICATIONS 
+# TRANSLATION/LABEL/ID_APPLICATIONS 
+msgid "Processes" 
+msgstr "Processes" 
+
+#: TRANSLATION/LABEL/ID_RULES_AND_USER_GROUPS 
+# TRANSLATION/LABEL/ID_RULES_AND_USER_GROUPS 
+msgid "Rules and user groups" 
+msgstr "Rules and user groups" 
+
+#: TRANSLATION/LABEL/ID_ADD_USER_OF_TASK 
+# TRANSLATION/LABEL/ID_ADD_USER_OF_TASK 
+msgid "Last executant of the task" 
+msgstr "Last executant of the task" 
+
+#: TRANSLATION/LABEL/ID_END_OF_PROCESS 
+# TRANSLATION/LABEL/ID_END_OF_PROCESS 
+msgid "End of process" 
+msgstr "End of process" 
+
+#: TRANSLATION/LABEL/ID_TAREA_COLGANTE 
+# TRANSLATION/LABEL/ID_TAREA_COLGANTE 
+msgid "Leaf task" 
+msgstr "Leaf task" 
+
+#: TRANSLATION/LABEL/ID_OUTPUT_DOCUMENTS 
+# TRANSLATION/LABEL/ID_OUTPUT_DOCUMENTS 
+msgid "Output Documents" 
+msgstr "Output Documents" 
+
+#: TRANSLATION/LABEL/ID_MSG_CONFIRM_DELETE_OUTDOC 
+# TRANSLATION/LABEL/ID_MSG_CONFIRM_DELETE_OUTDOC 
+msgid "Do you want to delete this output document ?" 
+msgstr "Do you want to delete this output document ?" 
+
+#: TRANSLATION/LABEL/ID_NO_RECORDS_FOUND 
+# TRANSLATION/LABEL/ID_NO_RECORDS_FOUND 
+msgid "No records found" 
+msgstr "No records found" 
+
+#: TRANSLATION/LABEL/ID_DYNAFORMS 
+# TRANSLATION/LABEL/ID_DYNAFORMS 
+msgid "DynaForms" 
+msgstr "DynaForms" 
+
+#: TRANSLATION/LABEL/ID_DYNAFORM_EDITOR 
+# TRANSLATION/LABEL/ID_DYNAFORM_EDITOR 
+msgid "Dynaform Editor" 
+msgstr "Dynaform Editor" 
+
+#: TRANSLATION/LABEL/ID_MSG_CONFIRM_RESET_TEMPLATE 
+# TRANSLATION/LABEL/ID_MSG_CONFIRM_RESET_TEMPLATE 
+msgid "Are you sure to restore the default template ?" 
+msgstr "Are you sure to restore the default template ?" 
+
+#: TRANSLATION/LABEL/ID_ADD_FIELD 
+# TRANSLATION/LABEL/ID_ADD_FIELD 
+msgid "Add field" 
+msgstr "Add field" 
+
+#: TRANSLATION/LABEL/ID_EDIT_FIELD 
+# TRANSLATION/LABEL/ID_EDIT_FIELD 
+msgid "Edit Field" 
+msgstr "Edit Field" 
+
+#: TRANSLATION/LABEL/ID_DELETE_FIELD_SURE 
+# TRANSLATION/LABEL/ID_DELETE_FIELD_SURE 
+msgid "The field will be deleted, Are you sure ?" 
+msgstr "The field will be deleted, Are you sure ?" 
+
+#: TRANSLATION/LABEL/ID_EDIT 
+# TRANSLATION/LABEL/ID_EDIT 
+msgid "Edit" 
+msgstr "Edit" 
+
+#: TRANSLATION/LABEL/ID_DELETE 
+# TRANSLATION/LABEL/ID_DELETE 
+msgid "Delete" 
+msgstr "Delete" 
+
+#: TRANSLATION/LABEL/ID_UP 
+# TRANSLATION/LABEL/ID_UP 
+msgid "Up" 
+msgstr "Up" 
+
+#: TRANSLATION/LABEL/ID_DOWN 
+# TRANSLATION/LABEL/ID_DOWN 
+msgid "Down" 
+msgstr "Down" 
+
+#: TRANSLATION/LABEL/ID_PAGE 
+# TRANSLATION/LABEL/ID_PAGE 
+msgid "Page" 
+msgstr "Page" 
+
+#: TRANSLATION/LABEL/ID_NEW_DYNAFORM 
+# TRANSLATION/LABEL/ID_NEW_DYNAFORM 
+msgid "New dynaform" 
+msgstr "New dynaform" 
+
+#: TRANSLATION/LABEL/ID_EDIT_DYNAFORM 
+# TRANSLATION/LABEL/ID_EDIT_DYNAFORM 
+msgid "Edit DynaForm" 
+msgstr "Edit DynaForm" 
+
+#: TRANSLATION/LABEL/ID_MSG_CONFIRM_DELETE_DYNAFORM 
+# TRANSLATION/LABEL/ID_MSG_CONFIRM_DELETE_DYNAFORM 
+msgid "Do you want to delete this Dynaform ?" 
+msgstr "Do you want to delete this Dynaform ?" 
+
+#: TRANSLATION/LABEL/ID_ADD_MESSAGE 
+# TRANSLATION/LABEL/ID_ADD_MESSAGE 
+msgid "Add message" 
+msgstr "Add message" 
+
+#: TRANSLATION/LABEL/ID_MESSAGES 
+# TRANSLATION/LABEL/ID_MESSAGES 
+msgid "Messages" 
+msgstr "Messages" 
+
+#: TRANSLATION/LABEL/ID_MSG_CONFIRM_DELETE_MESSAGE 
+# TRANSLATION/LABEL/ID_MSG_CONFIRM_DELETE_MESSAGE 
+msgid "Do you want to delete this message?" 
+msgstr "Do you want to delete this message?" 
+
+#: TRANSLATION/LABEL/ID_ACTIVE 
+# TRANSLATION/LABEL/ID_ACTIVE 
+msgid "Active" 
+msgstr "Active" 
+
+#: TRANSLATION/LABEL/ID_INACTIVE 
+# TRANSLATION/LABEL/ID_INACTIVE 
+msgid "Inactive" 
+msgstr "Inactive" 
+
+#: TRANSLATION/LABEL/ID_MSG_CONFIRM_DELETE_PROCESS 
+# TRANSLATION/LABEL/ID_MSG_CONFIRM_DELETE_PROCESS 
+msgid "Do you want to delete this process ?" 
+msgstr "Do you want to delete this process ?" 
+
+#: TRANSLATION/LABEL/ID_VIEW 
+# TRANSLATION/LABEL/ID_VIEW 
+msgid "View" 
+msgstr "View" 
+
+#: TRANSLATION/LABEL/ID_MSG_CONFIRM_DELETE_USER 
+# TRANSLATION/LABEL/ID_MSG_CONFIRM_DELETE_USER 
+msgid "Do you want to delete this user ?" 
+msgstr "Do you want to delete this user ?" 
+
+#: TRANSLATION/LABEL/ID_USERS_LIST 
+# TRANSLATION/LABEL/ID_USERS_LIST 
+msgid "Users List" 
+msgstr "Users List" 
+
+#: TRANSLATION/LABEL/ID_GROUP_USERS 
+# TRANSLATION/LABEL/ID_GROUP_USERS 
+msgid "Groups" 
+msgstr "Groups" 
+
+#: TRANSLATION/LABEL/ID_USER_REGISTERED 
+# TRANSLATION/LABEL/ID_USER_REGISTERED 
+msgid "User name already exists" 
+msgstr "User name already exists" 
+
+#: TRANSLATION/LABEL/ID_MSG_ERROR_USR_USERNAME 
+# TRANSLATION/LABEL/ID_MSG_ERROR_USR_USERNAME 
+msgid "User name required!" 
+msgstr "User name required!" 
+
+#: TRANSLATION/LABEL/ID_MSG_ERROR_DUE_DATE 
+# TRANSLATION/LABEL/ID_MSG_ERROR_DUE_DATE 
+msgid "Due date required!" 
+msgstr "Due date required!" 
+
+#: TRANSLATION/LABEL/ID_NEW_PASS_SAME_OLD_PASS 
+# TRANSLATION/LABEL/ID_NEW_PASS_SAME_OLD_PASS 
+msgid "The New Password and the Confirm Password fields must be the same!" 
+msgstr "The New Password and the Confirm Password fields must be the same!" 
+
+#: TRANSLATION/LABEL/ID_NEW_INPUTDOCS 
+# TRANSLATION/LABEL/ID_NEW_INPUTDOCS 
+msgid "New input document" 
+msgstr "New input document" 
+
+#: TRANSLATION/LABEL/ID_EDIT_INPUTDOCS 
+# TRANSLATION/LABEL/ID_EDIT_INPUTDOCS 
+msgid "Edit input document" 
+msgstr "Edit input document" 
+
+#: TRANSLATION/LABEL/ID_MSG_CONFIRM_DELETE_DOCUMENT 
+# TRANSLATION/LABEL/ID_MSG_CONFIRM_DELETE_DOCUMENT 
+msgid "Do you want to delete this document ?" 
+msgstr "Do you want to delete this document ?" 
+
+#: TRANSLATION/LABEL/ID_NEW_TRIGGERS 
+# TRANSLATION/LABEL/ID_NEW_TRIGGERS 
+msgid "New Trigger" 
+msgstr "New Trigger" 
+
+#: TRANSLATION/LABEL/ID_EDIT_TRIGGERS 
+# TRANSLATION/LABEL/ID_EDIT_TRIGGERS 
+msgid "Edit Trigger" 
+msgstr "Edit Trigger" 
+
+#: TRANSLATION/LABEL/ID_MSG_CONFIRM_DELETE_TRIGGER 
+# TRANSLATION/LABEL/ID_MSG_CONFIRM_DELETE_TRIGGER 
+msgid "Do you want to delete this trigger?" 
+msgstr "Do you want to delete this trigger?" 
+
+#: TRANSLATION/LABEL/ID_GROUP 
+# TRANSLATION/LABEL/ID_GROUP 
+msgid "Group" 
+msgstr "Group" 
+
+#: TRANSLATION/LABEL/ID_DE_ASSIGN 
+# TRANSLATION/LABEL/ID_DE_ASSIGN 
+msgid "Of-to assign" 
+msgstr "Of-to assign" 
+
+#: TRANSLATION/LABEL/ID_MSG_CONFIRM_DEASIGN_USER_MESSAGE 
+# TRANSLATION/LABEL/ID_MSG_CONFIRM_DEASIGN_USER_MESSAGE 
+msgid "Are you sure to of-to assign this user?" 
+msgstr "Are you sure to of-to assign this user?" 
+
+#: TRANSLATION/LABEL/ID_MSG_ERROR_PRO_TITLE 
+# TRANSLATION/LABEL/ID_MSG_ERROR_PRO_TITLE 
+msgid "Process title required!" 
+msgstr "Process title required!" 
+
+#: TRANSLATION/LABEL/ID_TASK 
+# TRANSLATION/LABEL/ID_TASK 
+msgid "Task" 
+msgstr "Task" 
+
+#: TRANSLATION/LABEL/ID_CONDITION 
+# TRANSLATION/LABEL/ID_CONDITION 
+msgid "Condition" 
+msgstr "Condition" 
+
+#: TRANSLATION/LABEL/ID_MSG_CONFIRM_DELETE_WEBBOT 
+# TRANSLATION/LABEL/ID_MSG_CONFIRM_DELETE_WEBBOT 
+msgid "Are you sure to delete this webbot?" 
+msgstr "Are you sure to delete this webbot?" 
+
+#: TRANSLATION/LABEL/ID_DYNAFORM_EDITOR_SAVE_CHANGES 
+# TRANSLATION/LABEL/ID_DYNAFORM_EDITOR_SAVE_CHANGES 
+msgid "¿Do you want to save changes in" 
+msgstr "¿Do you want to save changes in" 
+
+#: TRANSLATION/LABEL/ID_REQUEST_DOCUMENTS 
+# TRANSLATION/LABEL/ID_REQUEST_DOCUMENTS 
+msgid "Input Documents" 
+msgstr "Input Documents" 
+
+#: TRANSLATION/LABEL/ID_WEBBOT 
+# TRANSLATION/LABEL/ID_WEBBOT 
+msgid "Webbots" 
+msgstr "Webbots" 
+
+#: TRANSLATION/LABEL/ID_ADD 
+# TRANSLATION/LABEL/ID_ADD 
+msgid "Add" 
+msgstr "Add" 
+
+#: TRANSLATION/LABEL/ID_USER_HAVENT_RIGHTS_SYSTEM 
+# TRANSLATION/LABEL/ID_USER_HAVENT_RIGHTS_SYSTEM 
+msgid "User haven't rights to log In this system" 
+msgstr "User haven't rights to log In this system" 
+
+#: TRANSLATION/LABEL/ID_START_CASE 
+# TRANSLATION/LABEL/ID_START_CASE 
+msgid "Start Case" 
+msgstr "Start Case" 
+
+#: TRANSLATION/LABEL/ID_NEW_GROUP 
+# TRANSLATION/LABEL/ID_NEW_GROUP 
+msgid "New Group" 
+msgstr "New Group" 
+
+#: TRANSLATION/LABEL/ID_MEMBERS 
+# TRANSLATION/LABEL/ID_MEMBERS 
+msgid "Members" 
+msgstr "Members" 
+
+#: TRANSLATION/LABEL/ID_MSG_CONFIRM_DELETE_GROUP 
+# TRANSLATION/LABEL/ID_MSG_CONFIRM_DELETE_GROUP 
+msgid "Do you want to delete this group ?" 
+msgstr "Do you want to delete this group ?" 
+
+#: TRANSLATION/APP_STATUS/DRAFT 
+# TRANSLATION/APP_STATUS/DRAFT 
+msgid "Draft" 
+msgstr "Draft" 
+
+#: TRANSLATION/LABEL/ID_INCORRECT_EMAIL 
+# TRANSLATION/LABEL/ID_INCORRECT_EMAIL 
+msgid "Your E-mail address is not a valid E-mail address." 
+msgstr "Your E-mail address is not a valid E-mail address." 
+
+#: TRANSLATION/LABEL/ID_USER_NOT_REGISTERED 
+# TRANSLATION/LABEL/ID_USER_NOT_REGISTERED 
+msgid "User not registered!" 
+msgstr "User not registered!" 
+
+#: TRANSLATION/LABEL/ID_USER_INACTIVE 
+# TRANSLATION/LABEL/ID_USER_INACTIVE 
+msgid "User inactive!" 
+msgstr "User inactive!" 
+
+#: TRANSLATION/LABEL/ID_CANNOT_CHANGE_STATUS_ADMIN_USER 
+# TRANSLATION/LABEL/ID_CANNOT_CHANGE_STATUS_ADMIN_USER 
+msgid "Can't change the status of administrator!" 
+msgstr "Can't change the status of administrator!" 
+
+#: TRANSLATION/LABEL/ID_CANNOT_DELETE_ADMIN_USER 
+# TRANSLATION/LABEL/ID_CANNOT_DELETE_ADMIN_USER 
+msgid "Can't delete the administrator!" 
+msgstr "Can't delete the administrator!" 
+
+#: TRANSLATION/LABEL/ID_ASSIGN 
+# TRANSLATION/LABEL/ID_ASSIGN 
+msgid "Assign" 
+msgstr "Assign" 
+
+#: TRANSLATION/LABEL/ID_ASSIGN_SCREEN 
+# TRANSLATION/LABEL/ID_ASSIGN_SCREEN 
+msgid "Assign Screen" 
+msgstr "Assign Screen" 
+
+#: TRANSLATION/LABEL/ID_ASSIGN_TASK 
+# TRANSLATION/LABEL/ID_ASSIGN_TASK 
+msgid "Assign Task" 
+msgstr "Assign Task" 
+
+#: TRANSLATION/LABEL/ID_UPLOAD 
+# TRANSLATION/LABEL/ID_UPLOAD 
+msgid "Upload" 
+msgstr "Upload" 
+
+#: TRANSLATION/LABEL/ID_GENERATE 
+# TRANSLATION/LABEL/ID_GENERATE 
+msgid "Generate" 
+msgstr "Generate" 
+
+#: TRANSLATION/LABEL/ID_CONFIRM_DELETE_ELEMENT 
+# TRANSLATION/LABEL/ID_CONFIRM_DELETE_ELEMENT 
+msgid "Do you want to delete this element?" 
+msgstr "Do you want to delete this element?" 
+
+#: TRANSLATION/DASHBOARD/7 
+# TRANSLATION/DASHBOARD/7 
+msgid "Approval of consolidated tasks" 
+msgstr "Aprobación de tareas consolidadas" 
+
+#: TRANSLATION/DEL_PRIORITY/0 
+# TRANSLATION/DEL_PRIORITY/0 
+msgid "Low" 
+msgstr "Baja" 
+
+#: TRANSLATION/DEL_PRIORITY/1 
+# TRANSLATION/DEL_PRIORITY/1 
+msgid "Medium" 
+msgstr "Media" 
+
+#: TRANSLATION/DEL_PRIORITY/2 
+# TRANSLATION/DEL_PRIORITY/2 
+msgid "High" 
+msgstr "Alta" 
+
+#: TRANSLATION/LABEL/ID_ATTACH 
+# TRANSLATION/LABEL/ID_ATTACH 
+msgid "Attach" 
+msgstr "Attach" 
+
+#: TRANSLATION/LABEL/ID_MSG_CONFIRM_DELETE_CASES 
+# TRANSLATION/LABEL/ID_MSG_CONFIRM_DELETE_CASES 
+msgid "Are you sure to delete this case?" 
+msgstr "Are you sure to delete this case?" 
+
+#: TRANSLATION/LABEL/ID_ALL 
+# TRANSLATION/LABEL/ID_ALL 
+msgid "All" 
+msgstr "All" 
+
+#: TRANSLATION/LABEL/ID_CANCELLED 
+# TRANSLATION/LABEL/ID_CANCELLED 
+msgid "Cancelled" 
+msgstr "Cancelled" 
+
+#: TRANSLATION/LABEL/ID_FINISHED 
+# TRANSLATION/LABEL/ID_FINISHED 
+msgid "Finished" 
+msgstr "Finished" 
+
+#: TRANSLATION/LABEL/ID_PAUSED 
+# TRANSLATION/LABEL/ID_PAUSED 
+msgid "On hold" 
+msgstr "On hold" 
+
+#: TRANSLATION/LABEL/ID_DERIVED 
+# TRANSLATION/LABEL/ID_DERIVED 
+msgid "Sent" 
+msgstr "Sent" 
+
+#: TRANSLATION/LABEL/ID_NOT_SENT 
+# TRANSLATION/LABEL/ID_NOT_SENT 
+msgid "Not sent" 
+msgstr "Not sent" 
+
+#: TRANSLATION/LABEL/ID_DRAFT 
+# TRANSLATION/LABEL/ID_DRAFT 
+msgid "[LABEL/ID_DRAFT] Draft" 
+msgstr "Draft" 
+
+#: TRANSLATION/LABEL/ID_COMPLETED 
+# TRANSLATION/LABEL/ID_COMPLETED 
+msgid "Completed" 
+msgstr "Completed" 
+
+#: TRANSLATION/LABEL/ID_TO_DO 
+# TRANSLATION/LABEL/ID_TO_DO 
+msgid "To do" 
+msgstr "To do" 
+
+#: TRANSLATION/LABEL/ID_PLEASE_ENTER_COMMENTS 
+# TRANSLATION/LABEL/ID_PLEASE_ENTER_COMMENTS 
+msgid "Please enter the comments!" 
+msgstr "Please enter the comments!" 
+
+#: TRANSLATION/LABEL/ID_PLEASE_SELECT_FILE 
+# TRANSLATION/LABEL/ID_PLEASE_SELECT_FILE 
+msgid "Please select the file to attach!" 
+msgstr "Please select the file to attach!" 
+
+#: TRANSLATION/LABEL/ID_PROPERTIES 
+# TRANSLATION/LABEL/ID_PROPERTIES 
+msgid "Properties" 
+msgstr "Properties" 
+
+#: TRANSLATION/LABEL/ID_EMPTY 
+# TRANSLATION/LABEL/ID_EMPTY 
+msgid "empty" 
+msgstr "empty" 
+
+#: TRANSLATION/LABEL/ID_SELECT 
+# TRANSLATION/LABEL/ID_SELECT 
+msgid "Select" 
+msgstr "Select" 
+
+#: TRANSLATION/LABEL/ID_SEARCH 
+# TRANSLATION/LABEL/ID_SEARCH 
+msgid "Search" 
+msgstr "Search" 
+
+#: TRANSLATION/LABEL/ID_REQUIRED_FIELD 
+# TRANSLATION/LABEL/ID_REQUIRED_FIELD 
+msgid "Required Field" 
+msgstr "Required Field" 
+
+#: TRANSLATION/LABEL/ID_TRIGGERS 
+# TRANSLATION/LABEL/ID_TRIGGERS 
+msgid "Triggers" 
+msgstr "Triggers" 
+
+#: TRANSLATION/LABEL/ID_OPEN 
+# TRANSLATION/LABEL/ID_OPEN 
+msgid "Open" 
+msgstr "Open" 
+
+#: TRANSLATION/LABEL/ID_STEPS 
+# TRANSLATION/LABEL/ID_STEPS 
+msgid "Steps" 
+msgstr "Steps" 
+
+#: TRANSLATION/LABEL/ID_INFORMATION 
+# TRANSLATION/LABEL/ID_INFORMATION 
+msgid "Information" 
+msgstr "Information" 
+
+#: TRANSLATION/LABEL/ID_ACTIONS 
+# TRANSLATION/LABEL/ID_ACTIONS 
+msgid "Actions" 
+msgstr "Actions" 
+
+#: TRANSLATION/LABEL/ID_PROCESS_INFORMATION 
+# TRANSLATION/LABEL/ID_PROCESS_INFORMATION 
+msgid "Process Information" 
+msgstr "Process Information" 
+
+#: TRANSLATION/LABEL/ID_TASK_INFORMATION 
+# TRANSLATION/LABEL/ID_TASK_INFORMATION 
+msgid "Task Information" 
+msgstr "Task Information" 
+
+#: TRANSLATION/LABEL/ID_CANCEL_CASE 
+# TRANSLATION/LABEL/ID_CANCEL_CASE 
+msgid "Cancel Case" 
+msgstr "Cancel Case" 
+
+#: groups/groups_Search.xml?USR_USERNAME 
+# groups/groups_Search.xml 
+# text - USR_USERNAME 
+msgid "User name" 
+msgstr "Nombre de usuario" 
+
+#: groups/groups_Search.xml?SEARCH 
+# groups/groups_Search.xml 
+# button - SEARCH 
+msgid "Apply Filter" 
+msgstr "Filtrar" 
+
+#: groups/groups_Edit.xml?title 
+# groups/groups_Edit.xml 
+# title - title 
+msgid "Group Information" 
+msgstr "Información del Grupo" 
+
+#: groups/groups_Edit.xml?GROUP_TITLE 
+# groups/groups_Edit.xml 
+# text - GROUP_TITLE 
+msgid "Name" 
+msgstr "Nombre" 
+
+#: groups/groups_Edit.xml?GROUP_STATUS 
+# groups/groups_Edit.xml 
+# dropdown - GROUP_STATUS 
+msgid "Status" 
+msgstr "Estado" 
+
+#: groups/groups_Edit.xml?button 
+# groups/groups_Edit.xml 
+# button - button 
+msgid "Save" 
+msgstr "Guardar" 
+
+#: groups/groups_AddUser.xml?title 
+# groups/groups_AddUser.xml 
+# title - title 
+msgid "User" 
+msgstr "Usuario" 
+
+#: groups/groups_AddUser.xml?USR_UID 
+# groups/groups_AddUser.xml 
+# dropdown - USR_UID 
+msgid "[groups/groups_AddUser.xml?USR_UID] User" 
+msgstr "Usuario" 
+
+#: groups/groups_AddUser.xml?button 
+# groups/groups_AddUser.xml 
+# button - button 
+msgid "Accept" 
+msgstr "Accept" 
+
+#: groups/groups_List.xml?title 
+# groups/groups_List.xml 
+# title - title 
+msgid "Group properties" 
+msgstr "Propiedades del grupo" 
+
+#: groups/groups_List.xml?GROUP_TITLE 
+# groups/groups_List.xml 
+# text - GROUP_TITLE 
+msgid "[groups/groups_List.xml?GROUP_TITLE] Group" 
+msgstr "Grupo" 
+
+#: groups/groups_List.xml?GROUP_STATUS 
+# groups/groups_List.xml 
+# dropdown - GROUP_STATUS 
+msgid "[groups/groups_List.xml?GROUP_STATUS] Status" 
+msgstr "Estado" 
+
+#: groups/groups_List.xml?button 
+# groups/groups_List.xml 
+# button - button 
+msgid "[groups/groups_List.xml?button] Accept" 
+msgstr "Accept" 
+
+#: groups/groups_Options.xml?MNU_ADD_EMPLOYE 
+# groups/groups_Options.xml 
+# link - MNU_ADD_EMPLOYE 
+msgid "Assign Employee" 
+msgstr "Asignar empleado" 
+
+#: groups/groups_Options.xml?MNU_SEARCH 
+# groups/groups_Options.xml 
+# link - MNU_SEARCH 
+msgid "Advanced Search" 
+msgstr "Buscar Avanzado" 
+
+#: groups/groups_UsersList.xml?title 
+# groups/groups_UsersList.xml 
+# title - title 
+msgid "[groups/groups_UsersList.xml?title] Group properties" 
+msgstr "Propiedades del grupo" 
+
+#: groups/groups_UsersList.xml?USR_USERNAME 
+# groups/groups_UsersList.xml 
+# text - USR_USERNAME 
+msgid "[groups/groups_UsersList.xml?USR_USERNAME] User" 
+msgstr "Usuario" 
+
+#: groups/groups_UsersList.xml?USR_STATUS 
+# groups/groups_UsersList.xml 
+# dropdown - USR_STATUS 
+msgid "[groups/groups_UsersList.xml?USR_STATUS] Status" 
+msgstr "Estado" 
+
+#: groups/groups_UsersList.xml?button 
+# groups/groups_UsersList.xml 
+# button - button 
+msgid "[groups/groups_UsersList.xml?button] Accept" 
+msgstr "Accept" 
+
+#: tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_TYPE 
+# tasks/tasks_AssignmentRules.xml 
+# radiogroup - TAS_ASSIGN_TYPE 
+msgid "Incoming Assigment type" 
+msgstr "Tipo de Asignación recibida" 
+
+#: tasks/tasks_Permissions.xml?TAS_SUBTITLE1 
+# tasks/tasks_Permissions.xml 
+# subtitle - TAS_SUBTITLE1 
+msgid "Exceptions Handling" 
+msgstr "Gestión de Excepciones" 
+
+#: tasks/tasks_Permissions.xml?TAS_CAN_CANCEL 
+# tasks/tasks_Permissions.xml 
+# checkbox - TAS_CAN_CANCEL 
+msgid "Case can be canceled by assigned user" 
+msgstr "El usuario asignado puede cancelar el caso" 
+
+#: tasks/tasks_Permissions.xml?TAS_CAN_PAUSE 
+# tasks/tasks_Permissions.xml 
+# checkbox - TAS_CAN_PAUSE 
+msgid "Case can be paused by assigned user" 
+msgstr "El usuario asignado puede pausar el caso" 
+
+#: tasks/tasks_Permissions.xml?TAS_TYPE 
+# tasks/tasks_Permissions.xml 
+# checkbox - TAS_TYPE 
+msgid "Allow arbitrary transfer (Ad hoc)" 
+msgstr "Permitir transferencia arbitraria (Ad hoc)" 
+
+#: tasks/tasks_Permissions.xml?TAS_CAN_SEND_MESSAGE 
+# tasks/tasks_Permissions.xml 
+# checkbox - TAS_CAN_SEND_MESSAGE 
+msgid "Assigned user can send messages" 
+msgstr "El usuario asignado puede enviar mensajes" 
+
+#: tasks/tasks_Permissions.xml?TAS_SUBTITLE2 
+# tasks/tasks_Permissions.xml 
+# subtitle - TAS_SUBTITLE2 
+msgid "Permissions for attached files" 
+msgstr "Permisos para archivos adjuntos" 
+
+#: tasks/tasks_Permissions.xml?TAS_CAN_UPLOAD 
+# tasks/tasks_Permissions.xml 
+# checkbox - TAS_CAN_UPLOAD 
+msgid "Enable step for uploading additional" 
+msgstr "Habilitar paso para adjuntar archivos adicionales" 
+
+#: tasks/tasks_Permissions.xml?TAS_VIEW_UPLOAD 
+# tasks/tasks_Permissions.xml 
+# checkbox - TAS_VIEW_UPLOAD 
+msgid "Assigned user can see Additional Document" 
+msgstr "El usuario asignado puede ver los documentos adicionales" 
+
+#: tasks/tasks_Permissions.xml?TAS_VIEW_ADDITIONAL_DOCUMENTATION 
+# tasks/tasks_Permissions.xml 
+# checkbox - TAS_VIEW_ADDITIONAL_DOCUMENTATION 
+msgid "Assigned user can see input documents" 
+msgstr "El usuario asignado puede ver los Documentos Requeridos" 
+
+#: tasks/tasks_Permissions.xml?TAS_SUBTITLE3 
+# tasks/tasks_Permissions.xml 
+# subtitle - TAS_SUBTITLE3 
+msgid "Permissions for output documents" 
+msgstr "Permisos para documentos generados" 
+
+#: tasks/tasks_Permissions.xml?TAS_CAN_DELETE_DOCS 
+# tasks/tasks_Permissions.xml 
+# dropdown - TAS_CAN_DELETE_DOCS 
+msgid "Existing output documents can be" 
+msgstr "Los documentos generados existentes pueden ser" 
+
+#: tasks/tasks_Labels.xml?TAS_DEF_TITLE 
+# tasks/tasks_Labels.xml 
+# textarea - TAS_DEF_TITLE 
+msgid "Case Title" 
+msgstr "Título del caso" 
+
+#: tasks/tasks_Labels.xml?TAS_DEF_DESCRIPTION 
+# tasks/tasks_Labels.xml 
+# textarea - TAS_DEF_DESCRIPTION 
+msgid "Case Description" 
+msgstr "Descripción del caso" 
+
+#: tasks/tasks_Labels.xml?TAS_DEF_PROC_CODE 
+# tasks/tasks_Labels.xml 
+# textarea - TAS_DEF_PROC_CODE 
+msgid "Case Status" 
+msgstr "Estado del Caso" 
+
+#: tasks/tasks_Labels.xml?SEND_EMAIL 
+# tasks/tasks_Labels.xml 
+# checkbox - SEND_EMAIL 
+msgid "Notify case finalitation to every case owner" 
+msgstr "Notificar finalización de caso a todos los dueños del caso" 
+
+#: tasks/tasks_Labels.xml?TAS_DEF_MESSAGE 
+# tasks/tasks_Labels.xml 
+# textarea - TAS_DEF_MESSAGE 
+msgid "Derivation message" 
+msgstr "Mensaje de derivación" 
+
+#: tasks/tasks_TimingControl.xml?TAS_DURATION 
+# tasks/tasks_TimingControl.xml 
+# text - TAS_DURATION 
+msgid "Task duration" 
+msgstr "Duracón de la tarea" 
+
+#: tasks/tasks_TimingControl.xml?TAS_TIMEUNIT 
+# tasks/tasks_TimingControl.xml 
+# dropdown - TAS_TIMEUNIT 
+msgid "Unit time" 
+msgstr "Unidad de tiempo" 
+
+#: tasks/tasks_TimingControl.xml?TAS_TYPE_DAY 
+# tasks/tasks_TimingControl.xml 
+# dropdown - TAS_TYPE_DAY 
+msgid "Days to enter" 
+msgstr "Días a contabilizar" 
+
+#: tasks/tasks_TimingControl.xml?TAS_TRANSFER_FLY 
+# tasks/tasks_TimingControl.xml 
+# checkbox - TAS_TRANSFER_FLY 
+msgid "Modify Task duration during assignment" 
+msgstr "Permitir modificar la duración de la siguiente tarea" 
+
+#: tasks/tasks_Definition.xml?TAS_TITLE 
+# tasks/tasks_Definition.xml 
+# text - TAS_TITLE 
+msgid "Title" 
+msgstr "Título" 
+
+#: tasks/tasks_Definition.xml?TAS_DESCRIPTION 
+# tasks/tasks_Definition.xml 
+# textarea - TAS_DESCRIPTION 
+msgid "Description" 
+msgstr "Descripción" 
+
+#: tasks/tasks_Definition.xml?TAS_START 
+# tasks/tasks_Definition.xml 
+# checkbox - TAS_START 
+msgid "Starting task" 
+msgstr "Tarea inicial" 
+
+#: tasks/tasks_Owner.xml?TAS_OWNER_APP 
+# tasks/tasks_Owner.xml 
+# dropdown - TAS_OWNER_APP 
+msgid "Set task performer as" 
+msgstr "Definir ejecutante de esta tarea como" 
+
+#: departments/departments_Options.xml?MNU_ADD 
+# departments/departments_Options.xml 
+# link - MNU_ADD 
+msgid "Assign&nbsp;Employee" 
+msgstr "Asignar&nbsp;Empleado" 
+
+#: departments/departments_Options.xml?MNU_SEARCH 
+# departments/departments_Options.xml 
+# link - MNU_SEARCH 
+msgid "[departments/departments_Options.xml?MNU_SEARCH] Advanced Search" 
+msgstr "Buscar Avanzado" 
+
+#: departments/organizationalChart.xml?TITLES 
+# departments/organizationalChart.xml 
+# title - TITLES 
+msgid "OrganizationalChart" 
+msgstr "Árbol organizacional" 
+
+#: departments/organizationalChart.xml?CHART 
+# departments/organizationalChart.xml 
+# organizationalchart - CHART 
+msgid "[departments/organizationalChart.xml?CHART] OrganizationalChart" 
+msgstr "Árbol organizacional" 
+
+#: departments/departments_Users.xml?USR_UID 
+# departments/departments_Users.xml 
+# dropdown - USR_UID 
+msgid "[departments/departments_Users.xml?USR_UID] Name" 
+msgstr "Nombre" 
+
+#: departments/popupMenu.xml?ADD_DEPARTMENT 
+# departments/popupMenu.xml 
+# popupoption - ADD_DEPARTMENT 
+msgid "Add department" 
+msgstr "Add department" 
+
+#: departments/popupMenu.xml?DEL_DEPARTMENT 
+# departments/popupMenu.xml 
+# popupoption - DEL_DEPARTMENT 
+msgid "Delete department" 
+msgstr "Delete department" 
+
+#: departments/popupMenu.xml?PROPERTIES 
+# departments/popupMenu.xml 
+# popupoption - PROPERTIES 
+msgid "[departments/popupMenu.xml?PROPERTIES] Properties" 
+msgstr "Properties" 
+
+#: departments/properties.xml?TITLES 
+# departments/properties.xml 
+# title - TITLES 
+msgid "Department Properties" 
+msgstr "Propiedades del departamento" 
+
+#: departments/properties.xml?DEP_TITLE 
+# departments/properties.xml 
+# text - DEP_TITLE 
+msgid "[departments/properties.xml?DEP_TITLE] Title" 
+msgstr "Título" 
+
+#: departments/properties.xml?DEP_PARENT 
+# departments/properties.xml 
+# dropdown - DEP_PARENT 
+msgid "Parent" 
+msgstr "Padre" 
+
+#: departments/properties.xml?DEP_MANAGER 
+# departments/properties.xml 
+# dropdown - DEP_MANAGER 
+msgid "Manager" 
+msgstr "Manager" 
+
+#: departments/properties.xml?DEP_STATUS 
+# departments/properties.xml 
+# dropdown - DEP_STATUS 
+msgid "[departments/properties.xml?DEP_STATUS] Status" 
+msgstr "Estado" 
+
+#: departments/properties.xml?DEP_REF_CODE 
+# departments/properties.xml 
+# textarea - DEP_REF_CODE 
+msgid "Ref Code" 
+msgstr "Ref Code" 
+
+#: departments/properties.xml?BSUBMIT 
+# departments/properties.xml 
+# button - BSUBMIT 
+msgid "[departments/properties.xml?BSUBMIT] Accept" 
+msgstr "Aceptar" 
+
+#: departments/departments_AssignEmployee.xml?DEP_USERS 
+# departments/departments_AssignEmployee.xml 
+# listbox - DEP_USERS 
+msgid "Users list" 
+msgstr "Lista de usuarios" 
+
+#: departments/departments_AssignEmployee.xml?BSUBMIT 
+# departments/departments_AssignEmployee.xml 
+# button - BSUBMIT 
+msgid "[departments/departments_AssignEmployee.xml?BSUBMIT] Assign" 
+msgstr "Asignar" 
+
+#: triggers/triggers_ShortList.xml?TRI_TITLE 
+# triggers/triggers_ShortList.xml 
+# text - TRI_TITLE 
+msgid "[triggers/triggers_ShortList.xml?TRI_TITLE] Triggers" 
+msgstr "Disparadores" 
+
+#: triggers/triggers_ShortList.xml?SEARCH 
+# triggers/triggers_ShortList.xml 
+# button - SEARCH 
+msgid "[triggers/triggers_ShortList.xml?SEARCH] Apply Filter" 
+msgstr "Filtrar" 
+
+#: triggers/triggers_Options.xml?MNU_ADD 
+# triggers/triggers_Options.xml 
+# link - MNU_ADD 
+msgid "New" 
+msgstr "Nuevo" 
+
+#: triggers/triggers_Edit.xml?TITLE 
+# triggers/triggers_Edit.xml 
+# title - TITLE 
+msgid "Trigger Information" 
+msgstr "Trigger Information" 
+
+#: triggers/triggers_Edit.xml?TRI_TITLE 
+# triggers/triggers_Edit.xml 
+# text - TRI_TITLE 
+msgid "[triggers/triggers_Edit.xml?TRI_TITLE] Title" 
+msgstr "Título" 
+
+#: triggers/triggers_Edit.xml?TRI_DESCRIPTION 
+# triggers/triggers_Edit.xml 
+# textarea - TRI_DESCRIPTION 
+msgid "[triggers/triggers_Edit.xml?TRI_DESCRIPTION] Description" 
+msgstr "Descripción" 
+
+#: triggers/triggers_Edit.xml?TRI_WEBBOT 
+# triggers/triggers_Edit.xml 
+# textarea - TRI_WEBBOT 
+msgid "Script" 
+msgstr "Script" 
+
+#: triggers/triggers_Edit.xml?SAVE 
+# triggers/triggers_Edit.xml 
+# button - SAVE 
+msgid "[triggers/triggers_Edit.xml?SAVE] Save" 
+msgstr "Guardar" 
+
+#: gulliver/dynaforms_Options.xml?DYN_FIRST 
+# gulliver/dynaforms_Options.xml 
+# link - DYN_FIRST 
+msgid "First" 
+msgstr "Inicio" 
+
+#: gulliver/dynaforms_Options.xml?DYN_BACKWARD 
+# gulliver/dynaforms_Options.xml 
+# link - DYN_BACKWARD 
+msgid "Backward" 
+msgstr "Atrás" 
+
+#: gulliver/dynaforms_Options.xml?DYN_FORWARD 
+# gulliver/dynaforms_Options.xml 
+# link - DYN_FORWARD 
+msgid "Forward" 
+msgstr "Avanzar" 
+
+#: gulliver/dynaforms_Options.xml?DYN_LAST 
+# gulliver/dynaforms_Options.xml 
+# link - DYN_LAST 
+msgid "Last" 
+msgstr "Último" 
+
+#: gulliver/pagedTable_Options.xml?MNU_SEARCH 
+# gulliver/pagedTable_Options.xml 
+# link - MNU_SEARCH 
+msgid "[gulliver/pagedTable_Options.xml?MNU_SEARCH] Advanced Search" 
+msgstr "Buscar Avanzado" 
+
+#: steps/triggersCondition_Edit.xml?ST_CONDITION 
+# steps/triggersCondition_Edit.xml 
+# textarea - ST_CONDITION 
+msgid "[steps/triggersCondition_Edit.xml?ST_CONDITION] Condition" 
+msgstr "Condición" 
+
+#: steps/triggersCondition_Edit.xml?SAVE 
+# steps/triggersCondition_Edit.xml 
+# button - SAVE 
+msgid "[steps/triggersCondition_Edit.xml?SAVE] Save" 
+msgstr "Guardar" 
+
+#: steps/triggersAfter_List.xml?CON_VALUE 
+# steps/triggersAfter_List.xml 
+# text - CON_VALUE 
+msgid "[steps/triggersAfter_List.xml?CON_VALUE] Title" 
+msgstr "Título" 
+
+#: steps/triggersAfter_Options.xml?MNU_ADD 
+# steps/triggersAfter_Options.xml 
+# link - MNU_ADD 
+msgid "[steps/triggersAfter_Options.xml?MNU_ADD] Add" 
+msgstr "Adicionar" 
+
+#: steps/conditions_List.xml?STEP_NAME 
+# steps/conditions_List.xml 
+# text - STEP_NAME 
+msgid "Step Name" 
+msgstr "Nombre del paso" 
+
+#: steps/conditions_List.xml?STEP_CONDITION 
+# steps/conditions_List.xml 
+# text - STEP_CONDITION 
+msgid "[steps/conditions_List.xml?STEP_CONDITION] Condition" 
+msgstr "Condición" 
+
+#: steps/conditions_List.xml?SEARCH 
+# steps/conditions_List.xml 
+# button - SEARCH 
+msgid "[steps/conditions_List.xml?SEARCH] Apply Filter" 
+msgstr "Filtrar" 
+
+#: steps/triggersBefore_List.xml?CON_VALUE 
+# steps/triggersBefore_List.xml 
+# text - CON_VALUE 
+msgid "[steps/triggersBefore_List.xml?CON_VALUE] Title" 
+msgstr "Título" 
+
+#: steps/triggersBefore_Options.xml?MNU_ADD 
+# steps/triggersBefore_Options.xml 
+# link - MNU_ADD 
+msgid "[steps/triggersBefore_Options.xml?MNU_ADD] Add" 
+msgstr "Adicionar" 
+
+#: steps/steps_New.xml?STEP_TYPE_OBJ_FORM 
+# steps/steps_New.xml 
+# dropdown - STEP_TYPE_OBJ_FORM 
+msgid "Type" 
+msgstr "Tipo" 
+
+#: steps/steps_New.xml?DYNAFORM 
+# steps/steps_New.xml 
+# dropdown - DYNAFORM 
+msgid "Dynaform" 
+msgstr "Dynaform" 
+
+#: steps/steps_New.xml?INPUT_DOCUMENT 
+# steps/steps_New.xml 
+# dropdown - INPUT_DOCUMENT 
+msgid "[steps/steps_New.xml?INPUT_DOCUMENT] Dynaform" 
+msgstr "Dynaform" 
+
+#: steps/steps_New.xml?OUTPUT_DOCUMENT 
+# steps/steps_New.xml 
+# dropdown - OUTPUT_DOCUMENT 
+msgid "[steps/steps_New.xml?OUTPUT_DOCUMENT] Dynaform" 
+msgstr "Dynaform" 
+
+#: steps/steps_New.xml?MESSAGE 
+# steps/steps_New.xml 
+# dropdown - MESSAGE 
+msgid "[steps/steps_New.xml?MESSAGE] Dynaform" 
+msgstr "Dynaform" 
+
+#: steps/steps_New.xml?ACCEPT 
+# steps/steps_New.xml 
+# button - ACCEPT 
+msgid "[steps/steps_New.xml?ACCEPT] Save" 
+msgstr "Guardar" 
+
+#: steps/triggers_NoAssign.xml?MESSAGE 
+# steps/triggers_NoAssign.xml 
+# subtitle - MESSAGE 
+msgid "All the triggers available were assigned!" 
+msgstr "Todos los disparadores disponibles fueron asignados!" 
+
+#: steps/triggers_NoAssign.xml?ClOSE 
+# steps/triggers_NoAssign.xml 
+# button - ClOSE 
+msgid "Close" 
+msgstr "Cerrar" 
+
+#: steps/steps_List.xml?STEP_NAME_OBJ 
+# steps/steps_List.xml 
+# text - STEP_NAME_OBJ 
+msgid "[steps/steps_List.xml?STEP_NAME_OBJ] Dynaform" 
+msgstr "Dynaform" 
+
+#: steps/steps_List.xml?STEP_TYPE_OBJ 
+# steps/steps_List.xml 
+# dropdown - STEP_TYPE_OBJ 
+msgid "[steps/steps_List.xml?STEP_TYPE_OBJ] Type" 
+msgstr "Tipo" 
+
+#: steps/steps_List.xml?SEARCH 
+# steps/steps_List.xml 
+# button - SEARCH 
+msgid "[steps/steps_List.xml?SEARCH] Apply Filter" 
+msgstr "Filtrar" 
+
+#: steps/steps_Options.xml?MNU_ADD 
+# steps/steps_Options.xml 
+# link - MNU_ADD 
+msgid "[steps/steps_Options.xml?MNU_ADD] New" 
+msgstr "Nuevo" 
+
+#: steps/triggers_Assign.xml?TITLE 
+# steps/triggers_Assign.xml 
+# title - TITLE 
+msgid "[steps/triggers_Assign.xml?TITLE] Available Triggers" 
+msgstr "Available Triggers" 
+
+#: steps/triggers_Assign.xml?TRI_UID 
+# steps/triggers_Assign.xml 
+# dropdown - TRI_UID 
+msgid "[steps/triggers_Assign.xml?TRI_UID] Triggers" 
+msgstr "Disparadores" 
+
+#: steps/triggers_Assign.xml?ST_CONDITION 
+# steps/triggers_Assign.xml 
+# textarea - ST_CONDITION 
+msgid "[steps/triggers_Assign.xml?ST_CONDITION] Condition" 
+msgstr "Condición" 
+
+#: steps/triggers_Assign.xml?ASSIGN 
+# steps/triggers_Assign.xml 
+# button - ASSIGN 
+msgid "[steps/triggers_Assign.xml?ASSIGN] Assign" 
+msgstr "Asignar" 
+
+#: steps/conditions_Edit.xml?STEP_CONDITION 
+# steps/conditions_Edit.xml 
+# textarea - STEP_CONDITION 
+msgid "[steps/conditions_Edit.xml?STEP_CONDITION] Condition" 
+msgstr "Description" 
+
+#: steps/conditions_Edit.xml?ACCEPT 
+# steps/conditions_Edit.xml 
+# button - ACCEPT 
+msgid "[steps/conditions_Edit.xml?ACCEPT] Save" 
+msgstr "Guardar" 
+
+#: cases/cases_AttachInputDocument1.xml?INP_DOC_TITLE 
+# cases/cases_AttachInputDocument1.xml 
+# caption - INP_DOC_TITLE 
+msgid "Input document" 
+msgstr "Documento requerido" 
+
+#: cases/cases_AttachInputDocument1.xml?INP_DOC_FORM_NEEDED 
+# cases/cases_AttachInputDocument1.xml 
+# dropdown - INP_DOC_FORM_NEEDED 
+msgid "[cases/cases_AttachInputDocument1.xml?INP_DOC_FORM_NEEDED] Type" 
+msgstr "Tipo" 
+
+#: cases/cases_AttachInputDocument1.xml?INP_DOC_ORIGINAL 
+# cases/cases_AttachInputDocument1.xml 
+# dropdown - INP_DOC_ORIGINAL 
+msgid "Original" 
+msgstr "Original" 
+
+#: cases/cases_AttachInputDocument1.xml?INP_DOC_PUBLISHED 
+# cases/cases_AttachInputDocument1.xml 
+# dropdown - INP_DOC_PUBLISHED 
+msgid "Access type" 
+msgstr "Tipo de acceso" 
+
+#: cases/cases_AttachInputDocument1.xml?INP_DOC_DESCRIPTION 
+# cases/cases_AttachInputDocument1.xml 
+# caption - INP_DOC_DESCRIPTION 
+msgid "[cases/cases_AttachInputDocument1.xml?INP_DOC_DESCRIPTION] Description" 
+msgstr "Descripción" 
+
+#: cases/cases_AttachInputDocument1.xml?APP_DOC_FILENAME 
+# cases/cases_AttachInputDocument1.xml 
+# file - APP_DOC_FILENAME 
+msgid "File" 
+msgstr "Archivo" 
+
+#: cases/cases_AttachInputDocument1.xml?SAVE 
+# cases/cases_AttachInputDocument1.xml 
+# button - SAVE 
+msgid "[cases/cases_AttachInputDocument1.xml?SAVE] Save" 
+msgstr "Guardar" 
+
+#: cases/cases_AttachInputDocument1.xml?NEXT_STEP 
+# cases/cases_AttachInputDocument1.xml 
+# button - NEXT_STEP 
+msgid "Next step" 
+msgstr "Siguiente paso" 
+
+#: cases/cases_AttachInputDocument2.xml?INP_DOC_TITLE 
+# cases/cases_AttachInputDocument2.xml 
+# caption - INP_DOC_TITLE 
+msgid "[cases/cases_AttachInputDocument2.xml?INP_DOC_TITLE] Input document" 
+msgstr "Documento requerido" 
+
+#: cases/cases_AttachInputDocument2.xml?INP_DOC_FORM_NEEDED 
+# cases/cases_AttachInputDocument2.xml 
+# dropdown - INP_DOC_FORM_NEEDED 
+msgid "[cases/cases_AttachInputDocument2.xml?INP_DOC_FORM_NEEDED] Type" 
+msgstr "Tipo" 
+
+#: cases/cases_AttachInputDocument2.xml?INP_DOC_ORIGINAL 
+# cases/cases_AttachInputDocument2.xml 
+# dropdown - INP_DOC_ORIGINAL 
+msgid "[cases/cases_AttachInputDocument2.xml?INP_DOC_ORIGINAL] Original" 
+msgstr "Original" 
+
+#: cases/cases_AttachInputDocument2.xml?INP_DOC_PUBLISHED 
+# cases/cases_AttachInputDocument2.xml 
+# dropdown - INP_DOC_PUBLISHED 
+msgid "[cases/cases_AttachInputDocument2.xml?INP_DOC_PUBLISHED] Access type" 
+msgstr "Tipo de acceso" 
+
+#: cases/cases_AttachInputDocument2.xml?INP_DOC_DESCRIPTION 
+# cases/cases_AttachInputDocument2.xml 
+# caption - INP_DOC_DESCRIPTION 
+msgid "[cases/cases_AttachInputDocument2.xml?INP_DOC_DESCRIPTION] Description" 
+msgstr "Descripción" 
+
+#: cases/cases_AttachInputDocument2.xml?APP_DOC_COMMENT 
+# cases/cases_AttachInputDocument2.xml 
+# textarea - APP_DOC_COMMENT 
+msgid "Comments" 
+msgstr "Comentarios" 
+
+#: cases/cases_AttachInputDocument2.xml?SAVE 
+# cases/cases_AttachInputDocument2.xml 
+# button - SAVE 
+msgid "[cases/cases_AttachInputDocument2.xml?SAVE] Save" 
+msgstr "Guardar" 
+
+#: cases/cases_AttachInputDocument2.xml?NEXT_STEP 
+# cases/cases_AttachInputDocument2.xml 
+# button - NEXT_STEP 
+msgid "[cases/cases_AttachInputDocument2.xml?NEXT_STEP] Next step" 
+msgstr "Siguiente paso" 
+
+#: cases/cases_Edit.xml?APP_TITLE 
+# cases/cases_Edit.xml 
+# text - APP_TITLE 
+msgid "Case" 
+msgstr "Caso" 
+
+#: cases/cases_Edit.xml?APP_TAS_TITLE 
+# cases/cases_Edit.xml 
+# text - APP_TAS_TITLE 
+msgid "[cases/cases_Edit.xml?APP_TAS_TITLE] Task" 
+msgstr "Tarea" 
+
+#: cases/cases_Edit.xml?APP_PRO_TITLE 
+# cases/cases_Edit.xml 
+# text - APP_PRO_TITLE 
+msgid "Process" 
+msgstr "Proceso" 
+
+#: cases/cases_Edit.xml?APP_DEL_PREVIOUS_USER 
+# cases/cases_Edit.xml 
+# text - APP_DEL_PREVIOUS_USER 
+msgid "Sent by" 
+msgstr "Derivado desde" 
+
+#: cases/cases_Edit.xml?APP_DEL_TASK_DUE_DATE 
+# cases/cases_Edit.xml 
+# date - APP_DEL_TASK_DUE_DATE 
+msgid "Due Date" 
+msgstr "Fecha vencimiento" 
+
+#: cases/cases_Edit.xml?APP_UPDATE_DATE 
+# cases/cases_Edit.xml 
+# date - APP_UPDATE_DATE 
+msgid "Last Modification" 
+msgstr "Última modificación" 
+
+#: cases/cases_Edit.xml?APP_DEL_PRIORITY 
+# cases/cases_Edit.xml 
+# text - APP_DEL_PRIORITY 
+msgid "Priority" 
+msgstr "Prioridad" 
+
+#: cases/cases_Edit.xml?ACCEPT 
+# cases/cases_Edit.xml 
+# button - ACCEPT 
+msgid "[cases/cases_Edit.xml?ACCEPT] Save" 
+msgstr "Guardar" 
+
+#: cases/cases_AttachInputDocument3.xml?INP_DOC_TITLE 
+# cases/cases_AttachInputDocument3.xml 
+# caption - INP_DOC_TITLE 
+msgid "[cases/cases_AttachInputDocument3.xml?INP_DOC_TITLE] Input document" 
+msgstr "Documento requerido" 
+
+#: cases/cases_AttachInputDocument3.xml?INP_DOC_FORM_NEEDED 
+# cases/cases_AttachInputDocument3.xml 
+# dropdown - INP_DOC_FORM_NEEDED 
+msgid "[cases/cases_AttachInputDocument3.xml?INP_DOC_FORM_NEEDED] Type" 
+msgstr "Tipo" 
+
+#: cases/cases_AttachInputDocument3.xml?INP_DOC_ORIGINAL 
+# cases/cases_AttachInputDocument3.xml 
+# dropdown - INP_DOC_ORIGINAL 
+msgid "[cases/cases_AttachInputDocument3.xml?INP_DOC_ORIGINAL] Original" 
+msgstr "Original" 
+
+#: cases/cases_AttachInputDocument3.xml?INP_DOC_PUBLISHED 
+# cases/cases_AttachInputDocument3.xml 
+# dropdown - INP_DOC_PUBLISHED 
+msgid "[cases/cases_AttachInputDocument3.xml?INP_DOC_PUBLISHED] Access type" 
+msgstr "Tipo de acceso" 
+
+#: cases/cases_AttachInputDocument3.xml?INP_DOC_DESCRIPTION 
+# cases/cases_AttachInputDocument3.xml 
+# caption - INP_DOC_DESCRIPTION 
+msgid "[cases/cases_AttachInputDocument3.xml?INP_DOC_DESCRIPTION] Description" 
+msgstr "Descripción" 
+
+#: cases/cases_AttachInputDocument3.xml?APP_DOC_COMMENT 
+# cases/cases_AttachInputDocument3.xml 
+# textarea - APP_DOC_COMMENT 
+msgid "[cases/cases_AttachInputDocument3.xml?APP_DOC_COMMENT] Comments" 
+msgstr "Comentarios" 
+
+#: cases/cases_AttachInputDocument3.xml?APP_DOC_FILENAME 
+# cases/cases_AttachInputDocument3.xml 
+# file - APP_DOC_FILENAME 
+msgid "[cases/cases_AttachInputDocument3.xml?APP_DOC_FILENAME] File" 
+msgstr "Archivo" 
+
+#: cases/cases_AttachInputDocument3.xml?SAVE 
+# cases/cases_AttachInputDocument3.xml 
+# button - SAVE 
+msgid "[cases/cases_AttachInputDocument3.xml?SAVE] Save" 
+msgstr "Guardar" 
+
+#: cases/cases_AttachInputDocument3.xml?NEXT_STEP 
+# cases/cases_AttachInputDocument3.xml 
+# button - NEXT_STEP 
+msgid "[cases/cases_AttachInputDocument3.xml?NEXT_STEP] Next step" 
+msgstr "Siguiente paso" 
+
+#: cases/cases_New.xml?TITLE 
+# cases/cases_New.xml 
+# title - TITLE 
+msgid "Star a new case" 
+msgstr "Iniciar nuevo caso" 
+
+#: cases/cases_New.xml?DESCRIPTION 
+# cases/cases_New.xml 
+# label - DESCRIPTION 
+msgid "Select the process you want to start." 
+msgstr "Seleccione el proceso que desea iniciar." 
+
+#: cases/cases_New.xml?TAS_UID 
+# cases/cases_New.xml 
+# dropdown - TAS_UID 
+msgid "[cases/cases_New.xml?TAS_UID] Process" 
+msgstr "Proceso" 
+
+#: cases/cases_New.xml?START 
+# cases/cases_New.xml 
+# submit - START 
+msgid "Start" 
+msgstr "Iniciar" 
+
+#: cases/cases_ViewInputDocument1.xml?INP_DOC_TITLE 
+# cases/cases_ViewInputDocument1.xml 
+# caption - INP_DOC_TITLE 
+msgid "[cases/cases_ViewInputDocument1.xml?INP_DOC_TITLE] Input document" 
+msgstr "Documento requerido" 
+
+#: cases/cases_ViewInputDocument1.xml?INP_DOC_FORM_NEEDED 
+# cases/cases_ViewInputDocument1.xml 
+# dropdown - INP_DOC_FORM_NEEDED 
+msgid "[cases/cases_ViewInputDocument1.xml?INP_DOC_FORM_NEEDED] Type" 
+msgstr "Tipo" 
+
+#: cases/cases_ViewInputDocument1.xml?INP_DOC_ORIGINAL 
+# cases/cases_ViewInputDocument1.xml 
+# dropdown - INP_DOC_ORIGINAL 
+msgid "[cases/cases_ViewInputDocument1.xml?INP_DOC_ORIGINAL] Original" 
+msgstr "Original" 
+
+#: cases/cases_ViewInputDocument1.xml?INP_DOC_PUBLISHED 
+# cases/cases_ViewInputDocument1.xml 
+# dropdown - INP_DOC_PUBLISHED 
+msgid "[cases/cases_ViewInputDocument1.xml?INP_DOC_PUBLISHED] Access type" 
+msgstr "Tipo de acceso" 
+
+#: cases/cases_ViewInputDocument1.xml?INP_DOC_DESCRIPTION 
+# cases/cases_ViewInputDocument1.xml 
+# caption - INP_DOC_DESCRIPTION 
+msgid "[cases/cases_ViewInputDocument1.xml?INP_DOC_DESCRIPTION] Description" 
+msgstr "Descripción" 
+
+#: cases/cases_ViewInputDocument1.xml?APP_DOC_FILENAME 
+# cases/cases_ViewInputDocument1.xml 
+# link - APP_DOC_FILENAME 
+msgid "[cases/cases_ViewInputDocument1.xml?APP_DOC_FILENAME] File" 
+msgstr "Archivo" 
+
+#: cases/cases_ViewInputDocument1.xml?NEXT_STEP 
+# cases/cases_ViewInputDocument1.xml 
+# button - NEXT_STEP 
+msgid "[cases/cases_ViewInputDocument1.xml?NEXT_STEP] Next step" 
+msgstr "Siguiente paso" 
+
+#: cases/cases_List.xml?APP_TITLE 
+# cases/cases_List.xml 
+# text - APP_TITLE 
+msgid "[cases/cases_List.xml?APP_TITLE] Case" 
+msgstr "Caso" 
+
+#: cases/cases_List.xml?APP_TAS_TITLE 
+# cases/cases_List.xml 
+# text - APP_TAS_TITLE 
+msgid "[cases/cases_List.xml?APP_TAS_TITLE] Task" 
+msgstr "Tarea" 
+
+#: cases/cases_List.xml?APP_PRO_TITLE 
+# cases/cases_List.xml 
+# text - APP_PRO_TITLE 
+msgid "[cases/cases_List.xml?APP_PRO_TITLE] Process" 
+msgstr "Proceso" 
+
+#: cases/cases_List.xml?APP_DEL_PREVIOUS_USER 
+# cases/cases_List.xml 
+# text - APP_DEL_PREVIOUS_USER 
+msgid "[cases/cases_List.xml?APP_DEL_PREVIOUS_USER] Sent by" 
+msgstr "Derivado desde" 
+
+#: cases/cases_List.xml?APP_DEL_TASK_DUE_DATE 
+# cases/cases_List.xml 
+# date - APP_DEL_TASK_DUE_DATE 
+msgid "[cases/cases_List.xml?APP_DEL_TASK_DUE_DATE] Due Date" 
+msgstr "Fecha vencimiento" 
+
+#: cases/cases_List.xml?APP_UPDATE_DATE 
+# cases/cases_List.xml 
+# date - APP_UPDATE_DATE 
+msgid "[cases/cases_List.xml?APP_UPDATE_DATE] Last Modification" 
+msgstr "Última modificación" 
+
+#: cases/cases_List.xml?DEL_FINISH_DATE 
+# cases/cases_List.xml 
+# date - DEL_FINISH_DATE 
+msgid "Finish Date" 
+msgstr "Fecha de Finalización" 
+
+#: cases/cases_List.xml?DEL_INIT_DATE 
+# cases/cases_List.xml 
+# date - DEL_INIT_DATE 
+msgid "Start Date" 
+msgstr "Fecha de Inicio" 
+
+#: cases/cases_List.xml?APP_DEL_PRIORITY 
+# cases/cases_List.xml 
+# text - APP_DEL_PRIORITY 
+msgid "[cases/cases_List.xml?APP_DEL_PRIORITY] Priority" 
+msgstr "Prioridad" 
+
+#: cases/cases_List.xml?SEARCH 
+# cases/cases_List.xml 
+# button - SEARCH 
+msgid "[cases/cases_List.xml?SEARCH] Apply Filter" 
+msgstr "Filtrar" 
+
+#: cases/cases_Options.xml?MNU_NEW 
+# cases/cases_Options.xml 
+# link - MNU_NEW 
+msgid "@G::LoadTranslation(ID_START_CASE)" 
+msgstr "@G::LoadTranslation(ID_START_CASE)" 
+
+#: cases/cases_Options.xml?MNU_SEARCH 
+# cases/cases_Options.xml 
+# link - MNU_SEARCH 
+msgid "[cases/cases_Options.xml?MNU_SEARCH] Advanced Search" 
+msgstr "Buscar Avanzado" 
+
+#: cases/cases_ViewInputDocument2.xml?INP_DOC_TITLE 
+# cases/cases_ViewInputDocument2.xml 
+# caption - INP_DOC_TITLE 
+msgid "[cases/cases_ViewInputDocument2.xml?INP_DOC_TITLE] Input document" 
+msgstr "Documento requerido" 
+
+#: cases/cases_ViewInputDocument2.xml?INP_DOC_FORM_NEEDED 
+# cases/cases_ViewInputDocument2.xml 
+# dropdown - INP_DOC_FORM_NEEDED 
+msgid "[cases/cases_ViewInputDocument2.xml?INP_DOC_FORM_NEEDED] Type" 
+msgstr "Tipo" 
+
+#: cases/cases_ViewInputDocument2.xml?INP_DOC_ORIGINAL 
+# cases/cases_ViewInputDocument2.xml 
+# dropdown - INP_DOC_ORIGINAL 
+msgid "[cases/cases_ViewInputDocument2.xml?INP_DOC_ORIGINAL] Original" 
+msgstr "Original" 
+
+#: cases/cases_ViewInputDocument2.xml?INP_DOC_PUBLISHED 
+# cases/cases_ViewInputDocument2.xml 
+# dropdown - INP_DOC_PUBLISHED 
+msgid "[cases/cases_ViewInputDocument2.xml?INP_DOC_PUBLISHED] Access type" 
+msgstr "Tipo de acceso" 
+
+#: cases/cases_ViewInputDocument2.xml?INP_DOC_DESCRIPTION 
+# cases/cases_ViewInputDocument2.xml 
+# caption - INP_DOC_DESCRIPTION 
+msgid "[cases/cases_ViewInputDocument2.xml?INP_DOC_DESCRIPTION] Description" 
+msgstr "Descripción" 
+
+#: cases/cases_ViewInputDocument2.xml?APP_DOC_COMMENT 
+# cases/cases_ViewInputDocument2.xml 
+# caption - APP_DOC_COMMENT 
+msgid "[cases/cases_ViewInputDocument2.xml?APP_DOC_COMMENT] Comments" 
+msgstr "Comentarios" 
+
+#: cases/cases_ViewInputDocument2.xml?NEXT_STEP 
+# cases/cases_ViewInputDocument2.xml 
+# button - NEXT_STEP 
+msgid "[cases/cases_ViewInputDocument2.xml?NEXT_STEP] Next step" 
+msgstr "Siguiente paso" 
+
+#: cases/cases_ViewOutputDocument1.xml?OUT_DOC_TITLE 
+# cases/cases_ViewOutputDocument1.xml 
+# caption - OUT_DOC_TITLE 
+msgid "Output document" 
+msgstr "Documento requerido" 
+
+#: cases/cases_ViewOutputDocument1.xml?OUT_DOC_DESCRIPTION 
+# cases/cases_ViewOutputDocument1.xml 
+# caption - OUT_DOC_DESCRIPTION 
+msgid "[cases/cases_ViewOutputDocument1.xml?OUT_DOC_DESCRIPTION] Description" 
+msgstr "Descripción" 
+
+#: cases/cases_ViewOutputDocument1.xml?APP_DOC_CREATE_DATE 
+# cases/cases_ViewOutputDocument1.xml 
+# caption - APP_DOC_CREATE_DATE 
+msgid "Create Date" 
+msgstr "Fecha de Creación" 
+
+#: cases/cases_ViewOutputDocument1.xml?APP_DOC_FILENAME1 
+# cases/cases_ViewOutputDocument1.xml 
+# link - APP_DOC_FILENAME1 
+msgid "File (.doc)" 
+msgstr "Archivo (.doc)" 
+
+#: cases/cases_ViewOutputDocument1.xml?APP_DOC_FILENAME2 
+# cases/cases_ViewOutputDocument1.xml 
+# link - APP_DOC_FILENAME2 
+msgid "File (.pdf)" 
+msgstr "Archivo (.pdf)" 
+
+#: cases/cases_ViewOutputDocument1.xml?NEXT_STEP 
+# cases/cases_ViewOutputDocument1.xml 
+# button - NEXT_STEP 
+msgid "[cases/cases_ViewOutputDocument1.xml?NEXT_STEP] Next step" 
+msgstr "Siguiente paso" 
+
+#: cases/cases_ViewInputDocument3.xml?INP_DOC_TITLE 
+# cases/cases_ViewInputDocument3.xml 
+# caption - INP_DOC_TITLE 
+msgid "[cases/cases_ViewInputDocument3.xml?INP_DOC_TITLE] Input document" 
+msgstr "Documento requerido" 
+
+#: cases/cases_ViewInputDocument3.xml?INP_DOC_FORM_NEEDED 
+# cases/cases_ViewInputDocument3.xml 
+# dropdown - INP_DOC_FORM_NEEDED 
+msgid "[cases/cases_ViewInputDocument3.xml?INP_DOC_FORM_NEEDED] Type" 
+msgstr "Tipo" 
+
+#: cases/cases_ViewInputDocument3.xml?INP_DOC_ORIGINAL 
+# cases/cases_ViewInputDocument3.xml 
+# dropdown - INP_DOC_ORIGINAL 
+msgid "[cases/cases_ViewInputDocument3.xml?INP_DOC_ORIGINAL] Original" 
+msgstr "Original" 
+
+#: cases/cases_ViewInputDocument3.xml?INP_DOC_PUBLISHED 
+# cases/cases_ViewInputDocument3.xml 
+# dropdown - INP_DOC_PUBLISHED 
+msgid "[cases/cases_ViewInputDocument3.xml?INP_DOC_PUBLISHED] Access type" 
+msgstr "Tipo de acceso" 
+
+#: cases/cases_ViewInputDocument3.xml?INP_DOC_DESCRIPTION 
+# cases/cases_ViewInputDocument3.xml 
+# caption - INP_DOC_DESCRIPTION 
+msgid "[cases/cases_ViewInputDocument3.xml?INP_DOC_DESCRIPTION] Description" 
+msgstr "Descripción" 
+
+#: cases/cases_ViewInputDocument3.xml?APP_DOC_COMMENT 
+# cases/cases_ViewInputDocument3.xml 
+# caption - APP_DOC_COMMENT 
+msgid "[cases/cases_ViewInputDocument3.xml?APP_DOC_COMMENT] Comments" 
+msgstr "Comentarios" 
+
+#: cases/cases_ViewInputDocument3.xml?APP_DOC_FILENAME 
+# cases/cases_ViewInputDocument3.xml 
+# link - APP_DOC_FILENAME 
+msgid "[cases/cases_ViewInputDocument3.xml?APP_DOC_FILENAME] File" 
+msgstr "Archivo" 
+
+#: cases/cases_ViewInputDocument3.xml?NEXT_STEP 
+# cases/cases_ViewInputDocument3.xml 
+# button - NEXT_STEP 
+msgid "[cases/cases_ViewInputDocument3.xml?NEXT_STEP] Next step" 
+msgstr "Siguiente paso" 
+
+#: cases/cases_ProcessInformation.xml?PRO_TITLE 
+# cases/cases_ProcessInformation.xml 
+# text - PRO_TITLE 
+msgid "[cases/cases_ProcessInformation.xml?PRO_TITLE] Title" 
+msgstr "Título" 
+
+#: cases/cases_ProcessInformation.xml?PRO_DESCRIPTION 
+# cases/cases_ProcessInformation.xml 
+# textarea - PRO_DESCRIPTION 
+msgid "[cases/cases_ProcessInformation.xml?PRO_DESCRIPTION] Description" 
+msgstr "Descripción" 
+
+#: cases/cases_TaskInformation.xml?TAS_TITLE 
+# cases/cases_TaskInformation.xml 
+# text - TAS_TITLE 
+msgid "[cases/cases_TaskInformation.xml?TAS_TITLE] Title" 
+msgstr "Título" 
+
+#: cases/cases_TaskInformation.xml?TAS_DESCRIPTION 
+# cases/cases_TaskInformation.xml 
+# textarea - TAS_DESCRIPTION 
+msgid "[cases/cases_TaskInformation.xml?TAS_DESCRIPTION] Description" 
+msgstr "Descripción" 
+
+#: setup/mailTest.xml?TITLE6171 
+# setup/mailTest.xml 
+# title - TITLE6171 
+msgid "Test Email" 
+msgstr "" 
+
+#: setup/mailTest.xml?TEST_EMAIL 
+# setup/mailTest.xml 
+# text - TEST_EMAIL 
+msgid "Send to :" 
+msgstr "" 
+
+#: setup/mailTest.xml?BTEST 
+# setup/mailTest.xml 
+# button - BTEST 
+msgid "Test" 
+msgstr "" 
+
+#: setup/mail.xml?TITLE6171 
+# setup/mail.xml 
+# title - TITLE6171 
+msgid "Email Settings" 
+msgstr "" 
+
+#: setup/mail.xml?MAILER 
+# setup/mail.xml 
+# dropdown - MAILER 
+msgid "Method" 
+msgstr "" 
+
+#: setup/mail.xml?HOST 
+# setup/mail.xml 
+# text - HOST 
+msgid "Server" 
+msgstr "" 
+
+#: setup/mail.xml?PORT 
+# setup/mail.xml 
+# text - PORT 
+msgid "Port" 
+msgstr "" 
+
+#: setup/mail.xml?TIMEOUT 
+# setup/mail.xml 
+# text - TIMEOUT 
+msgid "Timeout" 
+msgstr "" 
+
+#: setup/mail.xml?SMTPAUTH 
+# setup/mail.xml 
+# yesno - SMTPAUTH 
+msgid "Requires Authentication" 
+msgstr "" 
+
+#: setup/mail.xml?USERNAME 
+# setup/mail.xml 
+# text - USERNAME 
+msgid "Email Account" 
+msgstr "" 
+
+#: setup/mail.xml?PASSWORD 
+# setup/mail.xml 
+# password - PASSWORD 
+msgid "Password" 
+msgstr "" 
+
+#: setup/mail.xml?BSUBMIT 
+# setup/mail.xml 
+# submit - BSUBMIT 
+msgid "[setup/mail.xml?BSUBMIT] Save" 
+msgstr "" 
+
+#: setup/mail.xml?BTEST 
+# setup/mail.xml 
+# button - BTEST 
+msgid "[setup/mail.xml?BTEST] Test" 
+msgstr "" 
+
+#: setup/holidayList.xml?UID 
+# setup/holidayList.xml 
+# link - UID 
+msgid "UID" 
+msgstr "UID" 
+
+#: setup/holidayList.xml?DATE 
+# setup/holidayList.xml 
+# text - DATE 
+msgid "Date" 
+msgstr "Fecha" 
+
+#: setup/holidayList.xml?DESCRIPTION 
+# setup/holidayList.xml 
+# text - DESCRIPTION 
+msgid "[setup/holidayList.xml?DESCRIPTION] Description" 
+msgstr "Descripcion" 
+
+#: setup/holidayList.xml?DELETE 
+# setup/holidayList.xml 
+# link - DELETE 
+msgid "[setup/holidayList.xml?DELETE] Delete" 
+msgstr "" 
+
+#: setup/weekend.xml?TITLE9592 
+# setup/weekend.xml 
+# title - TITLE9592 
+msgid "Weekend days" 
+msgstr "Fin de semana" 
+
+#: setup/weekend.xml?MONDAY 
+# setup/weekend.xml 
+# checkbox - MONDAY 
+msgid "Monday" 
+msgstr "Lunes" 
+
+#: setup/weekend.xml?TUESDAY 
+# setup/weekend.xml 
+# checkbox - TUESDAY 
+msgid "Tuesday" 
+msgstr "Martes" 
+
+#: setup/weekend.xml?WEDNESDAY 
+# setup/weekend.xml 
+# checkbox - WEDNESDAY 
+msgid "Wednesday" 
+msgstr "Miércoles" 
+
+#: setup/weekend.xml?THURSDAY 
+# setup/weekend.xml 
+# checkbox - THURSDAY 
+msgid "Thursday" 
+msgstr "Jueves" 
+
+#: setup/weekend.xml?FRIDAY 
+# setup/weekend.xml 
+# checkbox - FRIDAY 
+msgid "Friday" 
+msgstr "Viernes" 
+
+#: setup/weekend.xml?SATURDAY 
+# setup/weekend.xml 
+# checkbox - SATURDAY 
+msgid "Saturday" 
+msgstr "Sábado" 
+
+#: setup/weekend.xml?SUNDAY 
+# setup/weekend.xml 
+# checkbox - SUNDAY 
+msgid "Sunday" 
+msgstr "Domingo" 
+
+#: setup/weekend.xml?BSUBMIT 
+# setup/weekend.xml 
+# button - BSUBMIT 
+msgid "[setup/weekend.xml?BSUBMIT] Accept" 
+msgstr "Aceptar" 
+
+#: setup/language.xml?TITLE 
+# setup/language.xml 
+# title - TITLE 
+msgid "Language" 
+msgstr "Lenguaje" 
+
+#: setup/language.xml?LEX_VALUE 
+# setup/language.xml 
+# dropdown - LEX_VALUE 
+msgid "[setup/language.xml?LEX_VALUE] Language" 
+msgstr "Lenguaje" 
+
+#: setup/language.xml?BSUBMIT 
+# setup/language.xml 
+# button - BSUBMIT 
+msgid "[setup/language.xml?BSUBMIT] Add" 
+msgstr "Añadir" 
+
+#: setup/holidayListMenu.xml?MNU_NEW 
+# setup/holidayListMenu.xml 
+# link - MNU_NEW 
+msgid "[setup/holidayListMenu.xml?MNU_NEW] New" 
+msgstr "" 
+
+#: setup/workPeriod.xml?TITLE9592 
+# setup/workPeriod.xml 
+# title - TITLE9592 
+msgid "[setup/workPeriod.xml?TITLE9592] Weekend days" 
+msgstr "" 
+
+#: setup/workPeriod.xml?SUNDAY 
+# setup/workPeriod.xml 
+# checkbox - SUNDAY 
+msgid "[setup/workPeriod.xml?SUNDAY] Sunday" 
+msgstr "" 
+
+#: setup/workPeriod.xml?MONDAY 
+# setup/workPeriod.xml 
+# checkbox - MONDAY 
+msgid "[setup/workPeriod.xml?MONDAY] Monday" 
+msgstr "" 
+
+#: setup/workPeriod.xml?TUESDAY 
+# setup/workPeriod.xml 
+# checkbox - TUESDAY 
+msgid "[setup/workPeriod.xml?TUESDAY] Tuesday" 
+msgstr "" 
+
+#: setup/workPeriod.xml?WEDNESDAY 
+# setup/workPeriod.xml 
+# checkbox - WEDNESDAY 
+msgid "[setup/workPeriod.xml?WEDNESDAY] Wednesday" 
+msgstr "" 
+
+#: setup/workPeriod.xml?THURSDAY 
+# setup/workPeriod.xml 
+# checkbox - THURSDAY 
+msgid "[setup/workPeriod.xml?THURSDAY] Thursday" 
+msgstr "" 
+
+#: setup/workPeriod.xml?FRIDAY 
+# setup/workPeriod.xml 
+# checkbox - FRIDAY 
+msgid "[setup/workPeriod.xml?FRIDAY] Friday" 
+msgstr "" 
+
+#: setup/workPeriod.xml?SATURDAY 
+# setup/workPeriod.xml 
+# checkbox - SATURDAY 
+msgid "[setup/workPeriod.xml?SATURDAY] Saturday" 
+msgstr "" 
+
+#: setup/workPeriod.xml?titulo 
+# setup/workPeriod.xml 
+# title - titulo 
+msgid "First Period" 
+msgstr "" 
+
+#: setup/workPeriod.xml?initPeriod1 
+# setup/workPeriod.xml 
+# dropdown - initPeriod1 
+msgid "Start time" 
+msgstr "" 
+
+#: setup/workPeriod.xml?endPeriod1 
+# setup/workPeriod.xml 
+# dropdown - endPeriod1 
+msgid "End time" 
+msgstr "" 
+
+#: setup/workPeriod.xml?titulo2 
+# setup/workPeriod.xml 
+# title - titulo2 
+msgid "Second period" 
+msgstr "" 
+
+#: setup/workPeriod.xml?initPeriod2 
+# setup/workPeriod.xml 
+# dropdown - initPeriod2 
+msgid "[setup/workPeriod.xml?initPeriod2] Start time" 
+msgstr "" 
+
+#: setup/workPeriod.xml?endPeriod2 
+# setup/workPeriod.xml 
+# dropdown - endPeriod2 
+msgid "[setup/workPeriod.xml?endPeriod2] End time" 
+msgstr "" 
+
+#: setup/workPeriod.xml?BSUBMIT 
+# setup/workPeriod.xml 
+# submit - BSUBMIT 
+msgid "[setup/workPeriod.xml?BSUBMIT] Accept" 
+msgstr "" 
+
+#: setup/location.xml?DESCRIPTION 
+# setup/location.xml 
+# text - DESCRIPTION 
+msgid "Region" 
+msgstr "Región" 
+
+#: setup/location.xml?BSUBMIT 
+# setup/location.xml 
+# button - BSUBMIT 
+msgid "[setup/location.xml?BSUBMIT] Add" 
+msgstr "Añadir" 
+
+#: setup/location.xml?TITLE 
+# setup/location.xml 
+# title - TITLE 
+msgid "[setup/location.xml?TITLE] Region" 
+msgstr "Región" 
+
+#: setup/location.xml?USR_COUNTRY 
+# setup/location.xml 
+# dropdown - USR_COUNTRY 
+msgid "COUNTRIES" 
+msgstr "PAIS" 
+
+#: setup/location.xml?USR_CITY 
+# setup/location.xml 
+# dropdown - USR_CITY 
+msgid "CITY" 
+msgstr "CIUDAD" 
+
+#: setup/location.xml?ADD_CITY 
+# setup/location.xml 
+# button - ADD_CITY 
+msgid "Add city" 
+msgstr "Agregar ciudad" 
+
+#: setup/location.xml?USR_SUBMIT 
+# setup/location.xml 
+# submit - USR_SUBMIT 
+msgid "ACCEPT" 
+msgstr "ACEPTAR" 
+
+#: setup/holiday.xml?TITLES 
+# setup/holiday.xml 
+# title - TITLES 
+msgid "Holiday" 
+msgstr "" 
+
+#: setup/holiday.xml?DATE 
+# setup/holiday.xml 
+# date - DATE 
+msgid "[setup/holiday.xml?DATE] Date" 
+msgstr "" 
+
+#: setup/holiday.xml?DESCRIPTION 
+# setup/holiday.xml 
+# text - DESCRIPTION 
+msgid "[setup/holiday.xml?DESCRIPTION] Description" 
+msgstr "" 
+
+#: setup/holiday.xml?BSUBMIT 
+# setup/holiday.xml 
+# button - BSUBMIT 
+msgid "[setup/holiday.xml?BSUBMIT] Accept" 
+msgstr "" 
+
+#: setup/language_table.xml?TITLE 
+# setup/language_table.xml 
+# title - TITLE 
+msgid "[setup/language_table.xml?TITLE] Language" 
+msgstr "Lenguaje" 
+
+#: setup/language_table.xml?LEX_VALUE 
+# setup/language_table.xml 
+# dropdown - LEX_VALUE 
+msgid "[setup/language_table.xml?LEX_VALUE] Language" 
+msgstr "Lenguaje" 
+
+#: setup/language_table.xml?BSUBMIT 
+# setup/language_table.xml 
+# button - BSUBMIT 
+msgid "[setup/language_table.xml?BSUBMIT] Add" 
+msgstr "Añadir" 
+
+#: patterns/patterns_Current.xml?TITLE 
+# patterns/patterns_Current.xml 
+# title - TITLE 
+msgid "Workflow Pattern" 
+msgstr "Workflow Pattern" 
+
+#: patterns/patterns_Current.xml?ROU_TYPE 
+# patterns/patterns_Current.xml 
+# dropdown - ROU_TYPE 
+msgid "[patterns/patterns_Current.xml?ROU_TYPE] Type" 
+msgstr "Tipo" 
+
+#: patterns/patterns_Current.xml?ROU_NEXT_TASK 
+# patterns/patterns_Current.xml 
+# dropdown - ROU_NEXT_TASK 
+msgid "Next Task" 
+msgstr "Siguiente tarea" 
+
+#: patterns/patterns_Current.xml?ROU_TO_LAST_USER 
+# patterns/patterns_Current.xml 
+# dropdown - ROU_TO_LAST_USER 
+msgid "Selection of executant" 
+msgstr "Siguiente tarea" 
+
+#: patterns/patterns_Current.xml?SAVE 
+# patterns/patterns_Current.xml 
+# button - SAVE 
+msgid "[patterns/patterns_Current.xml?SAVE] Save" 
+msgstr "Save" 
+
+#: patterns/patterns_GridParallelType.xml?ROU_NEXT_TASK 
+# patterns/patterns_GridParallelType.xml 
+# dropdown - ROU_NEXT_TASK 
+msgid "[patterns/patterns_GridParallelType.xml?ROU_NEXT_TASK] Next Task" 
+msgstr "Siguiente tarea" 
+
+#: patterns/patterns_GridSelectType.xml?ROU_NEXT_TASK 
+# patterns/patterns_GridSelectType.xml 
+# dropdown - ROU_NEXT_TASK 
+msgid "[patterns/patterns_GridSelectType.xml?ROU_NEXT_TASK] Next Task" 
+msgstr "Siguiente tarea" 
+
+#: patterns/patterns_GridSelectType.xml?ROU_CONDITION 
+# patterns/patterns_GridSelectType.xml 
+# text - ROU_CONDITION 
+msgid "[patterns/patterns_GridSelectType.xml?ROU_CONDITION] Description" 
+msgstr "Descripción" 
+
+#: patterns/patterns_GridSelectType.xml?ROU_TO_LAST_USER 
+# patterns/patterns_GridSelectType.xml 
+# dropdown - ROU_TO_LAST_USER 
+msgid "[patterns/patterns_GridSelectType.xml?ROU_TO_LAST_USER] Selection of executant" 
+msgstr "Siguiente tarea" 
+
+#: patterns/patterns_GridParallelByEvaluationType.xml?ROU_NEXT_TASK 
+# patterns/patterns_GridParallelByEvaluationType.xml 
+# dropdown - ROU_NEXT_TASK 
+msgid "[patterns/patterns_GridParallelByEvaluationType.xml?ROU_NEXT_TASK] Next Task" 
+msgstr "Siguiente tarea" 
+
+#: patterns/patterns_GridParallelByEvaluationType.xml?ROU_CONDITION 
+# patterns/patterns_GridParallelByEvaluationType.xml 
+# text - ROU_CONDITION 
+msgid "[patterns/patterns_GridParallelByEvaluationType.xml?ROU_CONDITION] Condition" 
+msgstr "Condición" 
+
+#: patterns/patterns_GridEvaluateType.xml?ROU_NEXT_TASK 
+# patterns/patterns_GridEvaluateType.xml 
+# dropdown - ROU_NEXT_TASK 
+msgid "[patterns/patterns_GridEvaluateType.xml?ROU_NEXT_TASK] Next Task" 
+msgstr "Siguiente tarea" 
+
+#: patterns/patterns_GridEvaluateType.xml?ROU_CONDITION 
+# patterns/patterns_GridEvaluateType.xml 
+# text - ROU_CONDITION 
+msgid "[patterns/patterns_GridEvaluateType.xml?ROU_CONDITION] Condition" 
+msgstr "Condición" 
+
+#: patterns/patterns_GridEvaluateType.xml?ROU_TO_LAST_USER 
+# patterns/patterns_GridEvaluateType.xml 
+# dropdown - ROU_TO_LAST_USER 
+msgid "[patterns/patterns_GridEvaluateType.xml?ROU_TO_LAST_USER] Selection of executant" 
+msgstr "Siguiente tarea" 
+
+#: users/users_ShortOptionsAdhoc.xml?MNU_ASSIGN 
+# users/users_ShortOptionsAdhoc.xml 
+# link - MNU_ASSIGN 
+msgid "[users/users_ShortOptionsAdhoc.xml?MNU_ASSIGN] Assign" 
+msgstr "Asignar" 
+
+#: users/users_ShortOptionsAdhoc.xml?MNU_CHANGE 
+# users/users_ShortOptionsAdhoc.xml 
+# link - MNU_CHANGE 
+msgid "View Users who are not for Adhoc" 
+msgstr "Ver Usuarios que no son para Adhoc" 
+
+#: users/users_AvailableUsers.xml?TITLE1 
+# users/users_AvailableUsers.xml 
+# title - TITLE1 
+msgid "Assign users group or user" 
+msgstr "Asignar grupo de usuarios o usuario" 
+
+#: users/users_AvailableUsers.xml?USR_UID 
+# users/users_AvailableUsers.xml 
+# dropdown - USR_UID 
+msgid "Available users groups and users" 
+msgstr "Grupos de usuario y usuarios disponibles" 
+
+#: users/users_AvailableUsers.xml?ASSIGN 
+# users/users_AvailableUsers.xml 
+# button - ASSIGN 
+msgid "[users/users_AvailableUsers.xml?ASSIGN] Assign" 
+msgstr "Asignar" 
+
+#: users/users_Search.xml?USR_COMPLETENAME 
+# users/users_Search.xml 
+# text - USR_COMPLETENAME 
+msgid "Full name" 
+msgstr "Nombres completo" 
+
+#: users/users_Search.xml?search 
+# users/users_Search.xml 
+# button - search 
+msgid "[users/users_Search.xml?search] Apply Filter" 
+msgstr "Filtrar" 
+
+#: users/users_NewOptions.xml?MNU 
+# users/users_NewOptions.xml 
+# link - MNU 
+msgid "Back to list" 
+msgstr "Volver al listado" 
+
+#: users/users_ShortList.xml?LABEL 
+# users/users_ShortList.xml 
+# text - LABEL 
+msgid "Group or User" 
+msgstr "Grupo o Usuario" 
+
+#: users/users_View.xml?TITLE1 
+# users/users_View.xml 
+# title - TITLE1 
+msgid "Personal Information" 
+msgstr "Información Personal" 
+
+#: users/users_View.xml?USR_FIRSTNAME 
+# users/users_View.xml 
+# text - USR_FIRSTNAME 
+msgid "First Name" 
+msgstr "Nombres" 
+
+#: users/users_View.xml?USR_LASTNAME 
+# users/users_View.xml 
+# text - USR_LASTNAME 
+msgid "Last Name" 
+msgstr "Apellidos" 
+
+#: users/users_View.xml?USR_USERNAME 
+# users/users_View.xml 
+# text - USR_USERNAME 
+msgid "User ID" 
+msgstr "ID de Usuario" 
+
+#: users/users_View.xml?USR_EMAIL 
+# users/users_View.xml 
+# text - USR_EMAIL 
+msgid "Email" 
+msgstr "Correo Electrónico" 
+
+#: users/users_View.xml?USR_ADDRESS 
+# users/users_View.xml 
+# text - USR_ADDRESS 
+msgid "Address" 
+msgstr "Dirección" 
+
+#: users/users_View.xml?USR_ZIP_CODE 
+# users/users_View.xml 
+# text - USR_ZIP_CODE 
+msgid "Zip Code" 
+msgstr "Código Postal" 
+
+#: users/users_View.xml?USR_COUNTRY 
+# users/users_View.xml 
+# dropdown - USR_COUNTRY 
+msgid "Country" 
+msgstr "País" 
+
+#: users/users_View.xml?USR_CITY 
+# users/users_View.xml 
+# dropdown - USR_CITY 
+msgid "State or Region" 
+msgstr "Departamento" 
+
+#: users/users_View.xml?USR_LOCATION 
+# users/users_View.xml 
+# dropdown - USR_LOCATION 
+msgid "Location" 
+msgstr "Ciudad o Localidad" 
+
+#: users/users_View.xml?USR_PHONE 
+# users/users_View.xml 
+# text - USR_PHONE 
+msgid "Phone" 
+msgstr "Teléfono(s)" 
+
+#: users/users_View.xml?USR_POSITION 
+# users/users_View.xml 
+# text - USR_POSITION 
+msgid "Position" 
+msgstr "Cargo" 
+
+#: users/users_View.xml?USR_DUE_DATE 
+# users/users_View.xml 
+# date - USR_DUE_DATE 
+msgid "Expiration Date" 
+msgstr "Fecha de Expiración" 
+
+#: users/users_View.xml?USR_STATUS 
+# users/users_View.xml 
+# dropdown - USR_STATUS 
+msgid "[users/users_View.xml?USR_STATUS] Status" 
+msgstr "Estado" 
+
+#: users/users_View.xml?USR_ROLE 
+# users/users_View.xml 
+# dropdown - USR_ROLE 
+msgid "Role" 
+msgstr "Rol" 
+
+#: users/users_View.xml?USR_GRACE_DAYS_1 
+# users/users_View.xml 
+# text - USR_GRACE_DAYS_1 
+msgid "Days threshold for yellow light" 
+msgstr "Límite para Casos en luz amarilla" 
+
+#: users/users_View.xml?USR_GRACE_DAYS_2 
+# users/users_View.xml 
+# text - USR_GRACE_DAYS_2 
+msgid "Days threshold for red light" 
+msgstr "Límite para Casos en luz roja" 
+
+#: users/users_View.xml?TITLE2 
+# users/users_View.xml 
+# title - TITLE2 
+msgid "Additional Information" 
+msgstr "Información adicional" 
+
+#: users/users_View.xml?USR_PHOTO 
+# users/users_View.xml 
+# image - USR_PHOTO 
+msgid "Photo" 
+msgstr "Fotografia" 
+
+#: users/users_View.xml?USR_RESUME 
+# users/users_View.xml 
+# link - USR_RESUME 
+msgid "Resume" 
+msgstr "Curriculum" 
+
+#: users/users_List.xml?USR_COMPLETENAME 
+# users/users_List.xml 
+# text - USR_COMPLETENAME 
+msgid "Full Name" 
+msgstr "Nombre completo" 
+
+#: users/users_List.xml?USR_EMAIL 
+# users/users_List.xml 
+# text - USR_EMAIL 
+msgid "E-Mail" 
+msgstr "E-Mail" 
+
+#: users/users_List.xml?USR_ROLE 
+# users/users_List.xml 
+# text - USR_ROLE 
+msgid "[users/users_List.xml?USR_ROLE] Role" 
+msgstr "Rol" 
+
+#: users/users_List.xml?USR_DUE_DATE 
+# users/users_List.xml 
+# text - USR_DUE_DATE 
+msgid "[users/users_List.xml?USR_DUE_DATE] Due Date" 
+msgstr "Fecha de expiración" 
+
+#: users/users_ShortOptions.xml?MNU_ASSIGN 
+# users/users_ShortOptions.xml 
+# link - MNU_ASSIGN 
+msgid "[users/users_ShortOptions.xml?MNU_ASSIGN] Assign" 
+msgstr "Asignar" 
+
+#: users/users_ShortOptions.xml?MNU_CHANGE 
+# users/users_ShortOptions.xml 
+# link - MNU_CHANGE 
+msgid "View Users for Adhoc" 
+msgstr "Ver Usuarios para Adhoc" 
+
+#: users/myInfoView.xml?TITLE9689 
+# users/myInfoView.xml 
+# title - TITLE9689 
+msgid "[users/myInfoView.xml?TITLE9689] Personal Information" 
+msgstr "Información Personal" 
+
+#: users/myInfoView.xml?USR_FIRSTNAME 
+# users/myInfoView.xml 
+# text - USR_FIRSTNAME 
+msgid "[users/myInfoView.xml?USR_FIRSTNAME] First Name" 
+msgstr "Nombres" 
+
+#: users/myInfoView.xml?USR_LASTNAME 
+# users/myInfoView.xml 
+# text - USR_LASTNAME 
+msgid "[users/myInfoView.xml?USR_LASTNAME] Last Name" 
+msgstr "Apellidos" 
+
+#: users/myInfoView.xml?USR_USERNAME 
+# users/myInfoView.xml 
+# text - USR_USERNAME 
+msgid "[users/myInfoView.xml?USR_USERNAME] User ID" 
+msgstr "ID de Usuario" 
+
+#: users/myInfoView.xml?USR_EMAIL 
+# users/myInfoView.xml 
+# text - USR_EMAIL 
+msgid "[users/myInfoView.xml?USR_EMAIL] Email" 
+msgstr "Correo Electrónico" 
+
+#: users/myInfoView.xml?USR_ADDRESS 
+# users/myInfoView.xml 
+# text - USR_ADDRESS 
+msgid "[users/myInfoView.xml?USR_ADDRESS] Address" 
+msgstr "Dirección" 
+
+#: users/myInfoView.xml?USR_ZIP_CODE 
+# users/myInfoView.xml 
+# text - USR_ZIP_CODE 
+msgid "[users/myInfoView.xml?USR_ZIP_CODE] Zip Code" 
+msgstr "Código Postal" 
+
+#: users/myInfoView.xml?USR_COUNTRY 
+# users/myInfoView.xml 
+# dropdown - USR_COUNTRY 
+msgid "[users/myInfoView.xml?USR_COUNTRY] Country" 
+msgstr "País" 
+
+#: users/myInfoView.xml?USR_CITY 
+# users/myInfoView.xml 
+# dropdown - USR_CITY 
+msgid "[users/myInfoView.xml?USR_CITY] State or Region" 
+msgstr "Departamento" 
+
+#: users/myInfoView.xml?USR_LOCATION 
+# users/myInfoView.xml 
+# dropdown - USR_LOCATION 
+msgid "[users/myInfoView.xml?USR_LOCATION] Location" 
+msgstr "Ciudad o Localidad" 
+
+#: users/myInfoView.xml?USR_PHONE 
+# users/myInfoView.xml 
+# text - USR_PHONE 
+msgid "[users/myInfoView.xml?USR_PHONE] Phone" 
+msgstr "Teléfono(s)" 
+
+#: users/myInfoView.xml?USR_POSITION 
+# users/myInfoView.xml 
+# text - USR_POSITION 
+msgid "[users/myInfoView.xml?USR_POSITION] Position" 
+msgstr "Cargo" 
+
+#: users/myInfoView.xml?USR_DUE_DATE 
+# users/myInfoView.xml 
+# date - USR_DUE_DATE 
+msgid "[users/myInfoView.xml?USR_DUE_DATE] Expiration Date" 
+msgstr "Fecha de Expiración" 
+
+#: users/myInfoView.xml?USR_STATUS 
+# users/myInfoView.xml 
+# dropdown - USR_STATUS 
+msgid "[users/myInfoView.xml?USR_STATUS] Status" 
+msgstr "Estado" 
+
+#: users/myInfoView.xml?USR_ROLE 
+# users/myInfoView.xml 
+# dropdown - USR_ROLE 
+msgid "[users/myInfoView.xml?USR_ROLE] Role" 
+msgstr "Rol" 
+
+#: users/myInfoView.xml?USR_GRACE_DAYS_1 
+# users/myInfoView.xml 
+# text - USR_GRACE_DAYS_1 
+msgid "[users/myInfoView.xml?USR_GRACE_DAYS_1] Days threshold for yellow light" 
+msgstr "Límite para Casos en luz amarilla" 
+
+#: users/myInfoView.xml?USR_GRACE_DAYS_2 
+# users/myInfoView.xml 
+# text - USR_GRACE_DAYS_2 
+msgid "[users/myInfoView.xml?USR_GRACE_DAYS_2] Days threshold for red light" 
+msgstr "Límite para Casos en luz roja" 
+
+#: users/myInfoView.xml?TITLECHP 
+# users/myInfoView.xml 
+# title - TITLECHP 
+msgid "Change Password" 
+msgstr "Cambiar Password" 
+
+#: users/myInfoView.xml?USR_NEW_PASS 
+# users/myInfoView.xml 
+# password - USR_NEW_PASS 
+msgid "New Password" 
+msgstr "Contraseña nueva" 
+
+#: users/myInfoView.xml?USR_CNF_PASS 
+# users/myInfoView.xml 
+# password - USR_CNF_PASS 
+msgid "Confirm Password" 
+msgstr "Confirmación" 
+
+#: users/myInfoView.xml?TITLEADD 
+# users/myInfoView.xml 
+# title - TITLEADD 
+msgid "[users/myInfoView.xml?TITLEADD] Additional Information" 
+msgstr "Información adicional" 
+
+#: users/myInfoView.xml?USR_PHOTO 
+# users/myInfoView.xml 
+# image - USR_PHOTO 
+msgid "[users/myInfoView.xml?USR_PHOTO] Photo" 
+msgstr "Fotografia" 
+
+#: users/myInfoView.xml?USR_RESUME 
+# users/myInfoView.xml 
+# link - USR_RESUME 
+msgid "[users/myInfoView.xml?USR_RESUME] Resume" 
+msgstr "Curriculum" 
+
+#: users/myInfoView.xml?SUBMIT3 
+# users/myInfoView.xml 
+# button - SUBMIT3 
+msgid "[users/myInfoView.xml?SUBMIT3] Save" 
+msgstr "Guardar" 
+
+#: users/myInfo.xml?TITLE9689 
+# users/myInfo.xml 
+# title - TITLE9689 
+msgid "[users/myInfo.xml?TITLE9689] Personal Information" 
+msgstr "Información Personal" 
+
+#: users/myInfo.xml?USR_FIRSTNAME 
+# users/myInfo.xml 
+# text - USR_FIRSTNAME 
+msgid "[users/myInfo.xml?USR_FIRSTNAME] First Name" 
+msgstr "Nombres" 
+
+#: users/myInfo.xml?USR_LASTNAME 
+# users/myInfo.xml 
+# text - USR_LASTNAME 
+msgid "[users/myInfo.xml?USR_LASTNAME] Last Name" 
+msgstr "Apellidos" 
+
+#: users/myInfo.xml?USR_USERNAME 
+# users/myInfo.xml 
+# text - USR_USERNAME 
+msgid "[users/myInfo.xml?USR_USERNAME] User ID" 
+msgstr "ID de Usuario" 
+
+#: users/myInfo.xml?USR_EMAIL 
+# users/myInfo.xml 
+# text - USR_EMAIL 
+msgid "[users/myInfo.xml?USR_EMAIL] Email" 
+msgstr "Correo Electrónico" 
+
+#: users/myInfo.xml?USR_ADDRESS 
+# users/myInfo.xml 
+# text - USR_ADDRESS 
+msgid "[users/myInfo.xml?USR_ADDRESS] Address" 
+msgstr "Dirección" 
+
+#: users/myInfo.xml?USR_ZIP_CODE 
+# users/myInfo.xml 
+# text - USR_ZIP_CODE 
+msgid "[users/myInfo.xml?USR_ZIP_CODE] Zip Code" 
+msgstr "Código Postal" 
+
+#: users/myInfo.xml?USR_COUNTRY 
+# users/myInfo.xml 
+# dropdown - USR_COUNTRY 
+msgid "[users/myInfo.xml?USR_COUNTRY] Country" 
+msgstr "País" 
+
+#: users/myInfo.xml?USR_CITY 
+# users/myInfo.xml 
+# dropdown - USR_CITY 
+msgid "[users/myInfo.xml?USR_CITY] State or Region" 
+msgstr "Departamento" 
+
+#: users/myInfo.xml?USR_LOCATION 
+# users/myInfo.xml 
+# dropdown - USR_LOCATION 
+msgid "[users/myInfo.xml?USR_LOCATION] Location" 
+msgstr "Ciudad o Localidad" 
+
+#: users/myInfo.xml?USR_PHONE 
+# users/myInfo.xml 
+# text - USR_PHONE 
+msgid "[users/myInfo.xml?USR_PHONE] Phone" 
+msgstr "Teléfono(s)" 
+
+#: users/myInfo.xml?USR_POSITION 
+# users/myInfo.xml 
+# text - USR_POSITION 
+msgid "[users/myInfo.xml?USR_POSITION] Position" 
+msgstr "Cargo" 
+
+#: users/myInfo.xml?USR_DUE_DATE 
+# users/myInfo.xml 
+# date - USR_DUE_DATE 
+msgid "[users/myInfo.xml?USR_DUE_DATE] Expiration Date" 
+msgstr "Fecha de Expiración" 
+
+#: users/myInfo.xml?USR_STATUS 
+# users/myInfo.xml 
+# dropdown - USR_STATUS 
+msgid "[users/myInfo.xml?USR_STATUS] Status" 
+msgstr "Estado" 
+
+#: users/myInfo.xml?USR_ROLE 
+# users/myInfo.xml 
+# dropdown - USR_ROLE 
+msgid "[users/myInfo.xml?USR_ROLE] Role" 
+msgstr "Rol" 
+
+#: users/myInfo.xml?USR_GRACE_DAYS_1 
+# users/myInfo.xml 
+# text - USR_GRACE_DAYS_1 
+msgid "[users/myInfo.xml?USR_GRACE_DAYS_1] Days threshold for yellow light" 
+msgstr "Límite para Casos en luz amarilla" 
+
+#: users/myInfo.xml?USR_GRACE_DAYS_2 
+# users/myInfo.xml 
+# text - USR_GRACE_DAYS_2 
+msgid "[users/myInfo.xml?USR_GRACE_DAYS_2] Days threshold for red light" 
+msgstr "Límite para Casos en luz roja" 
+
+#: users/myInfo.xml?TITLECHP 
+# users/myInfo.xml 
+# title - TITLECHP 
+msgid "[users/myInfo.xml?TITLECHP] Change Password" 
+msgstr "Cambiar Password" 
+
+#: users/myInfo.xml?USR_NEW_PASS 
+# users/myInfo.xml 
+# password - USR_NEW_PASS 
+msgid "[users/myInfo.xml?USR_NEW_PASS] New Password" 
+msgstr "Contraseña nueva" 
+
+#: users/myInfo.xml?USR_CNF_PASS 
+# users/myInfo.xml 
+# password - USR_CNF_PASS 
+msgid "[users/myInfo.xml?USR_CNF_PASS] Confirm Password" 
+msgstr "Confirmación" 
+
+#: users/myInfo.xml?TITLEADD 
+# users/myInfo.xml 
+# title - TITLEADD 
+msgid "[users/myInfo.xml?TITLEADD] Additional Information" 
+msgstr "Información adicional" 
+
+#: users/myInfo.xml?USR_RESUME 
+# users/myInfo.xml 
+# file - USR_RESUME 
+msgid "[users/myInfo.xml?USR_RESUME] Resume" 
+msgstr "Curriculum" 
+
+#: users/myInfo.xml?USR_PHOTO 
+# users/myInfo.xml 
+# file - USR_PHOTO 
+msgid "[users/myInfo.xml?USR_PHOTO] Photo" 
+msgstr "Fotografia" 
+
+#: users/myInfo.xml?SUBMIT3 
+# users/myInfo.xml 
+# button - SUBMIT3 
+msgid "[users/myInfo.xml?SUBMIT3] Save" 
+msgstr "Guardar" 
+
+#: users/users_Edit.xml?TITLE1 
+# users/users_Edit.xml 
+# title - TITLE1 
+msgid "[users/users_Edit.xml?TITLE1] Personal Information" 
+msgstr "Información Personal" 
+
+#: users/users_Edit.xml?USR_FIRSTNAME 
+# users/users_Edit.xml 
+# text - USR_FIRSTNAME 
+msgid "[users/users_Edit.xml?USR_FIRSTNAME] First Name" 
+msgstr "Nombres" 
+
+#: users/users_Edit.xml?USR_LASTNAME 
+# users/users_Edit.xml 
+# text - USR_LASTNAME 
+msgid "[users/users_Edit.xml?USR_LASTNAME] Last Name" 
+msgstr "Apellidos" 
+
+#: users/users_Edit.xml?USR_USERNAME 
+# users/users_Edit.xml 
+# text - USR_USERNAME 
+msgid "[users/users_Edit.xml?USR_USERNAME] User ID" 
+msgstr "ID de Usuario" 
+
+#: users/users_Edit.xml?USR_EMAIL 
+# users/users_Edit.xml 
+# text - USR_EMAIL 
+msgid "[users/users_Edit.xml?USR_EMAIL] Email" 
+msgstr "Correo Electrónico" 
+
+#: users/users_Edit.xml?USR_ADDRESS 
+# users/users_Edit.xml 
+# text - USR_ADDRESS 
+msgid "[users/users_Edit.xml?USR_ADDRESS] Address" 
+msgstr "Dirección" 
+
+#: users/users_Edit.xml?USR_ZIP_CODE 
+# users/users_Edit.xml 
+# text - USR_ZIP_CODE 
+msgid "[users/users_Edit.xml?USR_ZIP_CODE] Zip Code" 
+msgstr "Código Postal" 
+
+#: users/users_Edit.xml?USR_COUNTRY 
+# users/users_Edit.xml 
+# dropdown - USR_COUNTRY 
+msgid "[users/users_Edit.xml?USR_COUNTRY] Country" 
+msgstr "País" 
+
+#: users/users_Edit.xml?USR_CITY 
+# users/users_Edit.xml 
+# dropdown - USR_CITY 
+msgid "[users/users_Edit.xml?USR_CITY] State or Region" 
+msgstr "Departamento" 
+
+#: users/users_Edit.xml?USR_LOCATION 
+# users/users_Edit.xml 
+# dropdown - USR_LOCATION 
+msgid "[users/users_Edit.xml?USR_LOCATION] Location" 
+msgstr "Ciudad o Localidad" 
+
+#: users/users_Edit.xml?USR_PHONE 
+# users/users_Edit.xml 
+# text - USR_PHONE 
+msgid "[users/users_Edit.xml?USR_PHONE] Phone" 
+msgstr "Teléfono(s)" 
+
+#: users/users_Edit.xml?USR_POSITION 
+# users/users_Edit.xml 
+# text - USR_POSITION 
+msgid "[users/users_Edit.xml?USR_POSITION] Position" 
+msgstr "Cargo" 
+
+#: users/users_Edit.xml?USR_DUE_DATE 
+# users/users_Edit.xml 
+# date - USR_DUE_DATE 
+msgid "[users/users_Edit.xml?USR_DUE_DATE] Expiration Date" 
+msgstr "Fecha de Expiración" 
+
+#: users/users_Edit.xml?USR_STATUS 
+# users/users_Edit.xml 
+# dropdown - USR_STATUS 
+msgid "[users/users_Edit.xml?USR_STATUS] Status" 
+msgstr "Estado" 
+
+#: users/users_Edit.xml?USR_ROLE 
+# users/users_Edit.xml 
+# dropdown - USR_ROLE 
+msgid "[users/users_Edit.xml?USR_ROLE] Role" 
+msgstr "Rol" 
+
+#: users/users_Edit.xml?USR_GRACE_DAYS_1 
+# users/users_Edit.xml 
+# text - USR_GRACE_DAYS_1 
+msgid "[users/users_Edit.xml?USR_GRACE_DAYS_1] Days threshold for yellow light" 
+msgstr "Límite para Casos en luz amarilla" 
+
+#: users/users_Edit.xml?USR_GRACE_DAYS_2 
+# users/users_Edit.xml 
+# text - USR_GRACE_DAYS_2 
+msgid "[users/users_Edit.xml?USR_GRACE_DAYS_2] Days threshold for red light" 
+msgstr "Límite para Casos en luz roja" 
+
+#: users/users_Edit.xml?TITLE2 
+# users/users_Edit.xml 
+# title - TITLE2 
+msgid "[users/users_Edit.xml?TITLE2] Change Password" 
+msgstr "Cambiar Password" 
+
+#: users/users_Edit.xml?USR_NEW_PASS 
+# users/users_Edit.xml 
+# password - USR_NEW_PASS 
+msgid "[users/users_Edit.xml?USR_NEW_PASS] New Password" 
+msgstr "Contraseña nueva" 
+
+#: users/users_Edit.xml?USR_CNF_PASS 
+# users/users_Edit.xml 
+# password - USR_CNF_PASS 
+msgid "[users/users_Edit.xml?USR_CNF_PASS] Confirm Password" 
+msgstr "Confirmación" 
+
+#: users/users_Edit.xml?TITLE3 
+# users/users_Edit.xml 
+# title - TITLE3 
+msgid "[users/users_Edit.xml?TITLE3] Additional Information" 
+msgstr "Información adicional" 
+
+#: users/users_Edit.xml?USR_RESUME 
+# users/users_Edit.xml 
+# file - USR_RESUME 
+msgid "[users/users_Edit.xml?USR_RESUME] Resume" 
+msgstr "Curriculum" 
+
+#: users/users_Edit.xml?USR_PHOTO 
+# users/users_Edit.xml 
+# file - USR_PHOTO 
+msgid "[users/users_Edit.xml?USR_PHOTO] Photo" 
+msgstr "Fotografia" 
+
+#: users/users_Edit.xml?SUBMIT 
+# users/users_Edit.xml 
+# button - SUBMIT 
+msgid "[users/users_Edit.xml?SUBMIT] Save" 
+msgstr "Guardar" 
+
+#: users/users_New.xml?TITLE1 
+# users/users_New.xml 
+# title - TITLE1 
+msgid "[users/users_New.xml?TITLE1] Personal Information" 
+msgstr "Información Personal" 
+
+#: users/users_New.xml?USR_FIRSTNAME 
+# users/users_New.xml 
+# text - USR_FIRSTNAME 
+msgid "[users/users_New.xml?USR_FIRSTNAME] First Name" 
+msgstr "Nombres" 
+
+#: users/users_New.xml?USR_LASTNAME 
+# users/users_New.xml 
+# text - USR_LASTNAME 
+msgid "[users/users_New.xml?USR_LASTNAME] Last Name" 
+msgstr "Apellidos" 
+
+#: users/users_New.xml?USR_USERNAME 
+# users/users_New.xml 
+# text - USR_USERNAME 
+msgid "User ID (*)" 
+msgstr "ID de Usuario (*)" 
+
+#: users/users_New.xml?USR_EMAIL 
+# users/users_New.xml 
+# text - USR_EMAIL 
+msgid "[users/users_New.xml?USR_EMAIL] Email" 
+msgstr "Correo Electrónico" 
+
+#: users/users_New.xml?USR_ADDRESS 
+# users/users_New.xml 
+# text - USR_ADDRESS 
+msgid "[users/users_New.xml?USR_ADDRESS] Address" 
+msgstr "Dirección" 
+
+#: users/users_New.xml?USR_ZIP_CODE 
+# users/users_New.xml 
+# text - USR_ZIP_CODE 
+msgid "[users/users_New.xml?USR_ZIP_CODE] Zip Code" 
+msgstr "Código Postal" 
+
+#: users/users_New.xml?USR_COUNTRY 
+# users/users_New.xml 
+# dropdown - USR_COUNTRY 
+msgid "[users/users_New.xml?USR_COUNTRY] Country" 
+msgstr "País" 
+
+#: users/users_New.xml?USR_CITY 
+# users/users_New.xml 
+# dropdown - USR_CITY 
+msgid "[users/users_New.xml?USR_CITY] State or Region" 
+msgstr "Departamento" 
+
+#: users/users_New.xml?USR_LOCATION 
+# users/users_New.xml 
+# dropdown - USR_LOCATION 
+msgid "[users/users_New.xml?USR_LOCATION] Location" 
+msgstr "Ciudad o Localidad" 
+
+#: users/users_New.xml?USR_PHONE 
+# users/users_New.xml 
+# text - USR_PHONE 
+msgid "[users/users_New.xml?USR_PHONE] Phone" 
+msgstr "Teléfono(s)" 
+
+#: users/users_New.xml?USR_POSITION 
+# users/users_New.xml 
+# text - USR_POSITION 
+msgid "[users/users_New.xml?USR_POSITION] Position" 
+msgstr "Cargo" 
+
+#: users/users_New.xml?USR_DUE_DATE 
+# users/users_New.xml 
+# date - USR_DUE_DATE 
+msgid "[users/users_New.xml?USR_DUE_DATE] Expiration Date" 
+msgstr "Fecha de Expiración" 
+
+#: users/users_New.xml?USR_STATUS 
+# users/users_New.xml 
+# dropdown - USR_STATUS 
+msgid "[users/users_New.xml?USR_STATUS] Status" 
+msgstr "Estado" 
+
+#: users/users_New.xml?USR_ROLE 
+# users/users_New.xml 
+# dropdown - USR_ROLE 
+msgid "[users/users_New.xml?USR_ROLE] Role" 
+msgstr "Rol" 
+
+#: users/users_New.xml?USR_GRACE_DAYS_1 
+# users/users_New.xml 
+# text - USR_GRACE_DAYS_1 
+msgid "[users/users_New.xml?USR_GRACE_DAYS_1] Days threshold for yellow light" 
+msgstr "Límite para Casos en luz amarilla" 
+
+#: users/users_New.xml?USR_GRACE_DAYS_2 
+# users/users_New.xml 
+# text - USR_GRACE_DAYS_2 
+msgid "[users/users_New.xml?USR_GRACE_DAYS_2] Days threshold for red light" 
+msgstr "Límite para Casos en luz roja" 
+
+#: users/users_New.xml?TITLE2 
+# users/users_New.xml 
+# title - TITLE2 
+msgid "[users/users_New.xml?TITLE2] Additional Information" 
+msgstr "Información adicional" 
+
+#: users/users_New.xml?USR_RESUME 
+# users/users_New.xml 
+# file - USR_RESUME 
+msgid "[users/users_New.xml?USR_RESUME] Resume" 
+msgstr "Curriculum" 
+
+#: users/users_New.xml?USR_PHOTO 
+# users/users_New.xml 
+# file - USR_PHOTO 
+msgid "[users/users_New.xml?USR_PHOTO] Photo" 
+msgstr "Fotografia" 
+
+#: users/users_New.xml?SUBMIT 
+# users/users_New.xml 
+# button - SUBMIT 
+msgid "[users/users_New.xml?SUBMIT] Save" 
+msgstr "Guardar" 
+
+#: users/users_ViewOptions.xml?MNU 
+# users/users_ViewOptions.xml 
+# link - MNU 
+msgid "[users/users_ViewOptions.xml?MNU] Back to list" 
+msgstr "Volver al listado" 
+
+#: users/myInfoOptionsView.xml?MNU_EDIT 
+# users/myInfoOptionsView.xml 
+# link - MNU_EDIT 
+msgid "Cancel" 
+msgstr "Cancelar" 
+
+#: users/users_ShortList2.xml?LABEL 
+# users/users_ShortList2.xml 
+# text - LABEL 
+msgid "[users/users_ShortList2.xml?LABEL] Group or User" 
+msgstr "Grupo o Usuario" 
+
+#: users/users_ShortListAdhoc.xml?LABEL 
+# users/users_ShortListAdhoc.xml 
+# text - LABEL 
+msgid "[users/users_ShortListAdhoc.xml?LABEL] Group or User" 
+msgstr "Grupo o Usuario" 
+
+#: users/users_Options.xml?MNU_ADD 
+# users/users_Options.xml 
+# link - MNU_ADD 
+msgid "[users/users_Options.xml?MNU_ADD] New" 
+msgstr "Nuevo" 
+
+#: users/myInfoOptions.xml?MNU_EDIT 
+# users/myInfoOptions.xml 
+# link - MNU_EDIT 
+msgid "[users/myInfoOptions.xml?MNU_EDIT] Edit" 
+msgstr "Editar" 
+
+#: users/users_ShortOptions2.xml?MNU_ASSIGN 
+# users/users_ShortOptions2.xml 
+# link - MNU_ASSIGN 
+msgid "[users/users_ShortOptions2.xml?MNU_ASSIGN] Assign" 
+msgstr "Asignar" 
+
+#: dynaforms/fields/checkgroup.xml?PME_TITLE 
+# dynaforms/fields/checkgroup.xml 
+# title - PME_TITLE 
+msgid "[dynaforms/fields/checkgroup.xml?PME_TITLE] Properties" 
+msgstr "Propiedades" 
+
+#: dynaforms/fields/checkgroup.xml?PME_XMLNODE_NAME 
+# dynaforms/fields/checkgroup.xml 
+# text - PME_XMLNODE_NAME 
+msgid "Field Name" 
+msgstr "Nombre de Campo" 
+
+#: dynaforms/fields/checkgroup.xml?PME_LABEL 
+# dynaforms/fields/checkgroup.xml 
+# text - PME_LABEL 
+msgid "Label" 
+msgstr "Etiqueta" 
+
+#: dynaforms/fields/checkgroup.xml?PME_SUBTITLE3 
+# dynaforms/fields/checkgroup.xml 
+# subtitle - PME_SUBTITLE3 
+msgid "Behaviour" 
+msgstr "Comportamiento" 
+
+#: dynaforms/fields/checkgroup.xml?PME_DEFAULTVALUE 
+# dynaforms/fields/checkgroup.xml 
+# text - PME_DEFAULTVALUE 
+msgid "Default Value" 
+msgstr "Default Value" 
+
+#: dynaforms/fields/checkgroup.xml?PME_SUBTITLE 
+# dynaforms/fields/checkgroup.xml 
+# subtitle - PME_SUBTITLE 
+msgid "Appearance" 
+msgstr "Apariencia" 
+
+#: dynaforms/fields/checkgroup.xml?PME_GROUP 
+# dynaforms/fields/checkgroup.xml 
+# text - PME_GROUP 
+msgid "[dynaforms/fields/checkgroup.xml?PME_GROUP] Group" 
+msgstr "Group" 
+
+#: dynaforms/fields/checkgroup.xml?PME_MODE 
+# dynaforms/fields/checkgroup.xml 
+# dropdown - PME_MODE 
+msgid "Mode" 
+msgstr "Modo" 
+
+#: dynaforms/fields/checkgroup.xml?PME_STYLE 
+# dynaforms/fields/checkgroup.xml 
+# text - PME_STYLE 
+msgid "Style" 
+msgstr "Style" 
+
+#: dynaforms/fields/checkgroup.xml?PME_SUBTITLE2 
+# dynaforms/fields/checkgroup.xml 
+# subtitle - PME_SUBTITLE2 
+msgid "Data" 
+msgstr "Datos" 
+
+#: dynaforms/fields/checkgroup.xml?PME_SQLCONNECTION 
+# dynaforms/fields/checkgroup.xml 
+# text - PME_SQLCONNECTION 
+msgid "Sql Connection" 
+msgstr "Conexión Sql" 
+
+#: dynaforms/fields/checkgroup.xml?PME_XMLNODE_VALUE 
+# dynaforms/fields/checkgroup.xml 
+# textarea - PME_XMLNODE_VALUE 
+msgid "Sql" 
+msgstr "Sql" 
+
+#: dynaforms/fields/checkgroup.xml?PME_ACCEPT 
+# dynaforms/fields/checkgroup.xml 
+# button - PME_ACCEPT 
+msgid "[dynaforms/fields/checkgroup.xml?PME_ACCEPT] Save" 
+msgstr "Guardar" 
+
+#: dynaforms/fields/title.xml?PME_TITLE 
+# dynaforms/fields/title.xml 
+# title - PME_TITLE 
+msgid "[dynaforms/fields/title.xml?PME_TITLE] Properties" 
+msgstr "Propiedades" 
+
+#: dynaforms/fields/title.xml?PME_XMLNODE_NAME 
+# dynaforms/fields/title.xml 
+# text - PME_XMLNODE_NAME 
+msgid "[dynaforms/fields/title.xml?PME_XMLNODE_NAME] Field Name" 
+msgstr "Nombre de Campo" 
+
+#: dynaforms/fields/title.xml?PME_LABEL 
+# dynaforms/fields/title.xml 
+# text - PME_LABEL 
+msgid "[dynaforms/fields/title.xml?PME_LABEL] Label" 
+msgstr "Etiqueta" 
+
+#: dynaforms/fields/title.xml?PME_SUBTITLE 
+# dynaforms/fields/title.xml 
+# subtitle - PME_SUBTITLE 
+msgid "[dynaforms/fields/title.xml?PME_SUBTITLE] Appearance" 
+msgstr "Apariencia" 
+
+#: dynaforms/fields/title.xml?PME_GROUP 
+# dynaforms/fields/title.xml 
+# text - PME_GROUP 
+msgid "[dynaforms/fields/title.xml?PME_GROUP] Group" 
+msgstr "Group" 
+
+#: dynaforms/fields/title.xml?PME_ENABLEHTML 
+# dynaforms/fields/title.xml 
+# checkbox - PME_ENABLEHTML 
+msgid "Enable Html" 
+msgstr "Enable Html" 
+
+#: dynaforms/fields/title.xml?PME_ACCEPT 
+# dynaforms/fields/title.xml 
+# button - PME_ACCEPT 
+msgid "[dynaforms/fields/title.xml?PME_ACCEPT] Save" 
+msgstr "Guardar" 
+
+#: dynaforms/fields/reset.xml?PME_TITLE 
+# dynaforms/fields/reset.xml 
+# title - PME_TITLE 
+msgid "[dynaforms/fields/reset.xml?PME_TITLE] Properties" 
+msgstr "Propiedades" 
+
+#: dynaforms/fields/reset.xml?PME_XMLNODE_NAME 
+# dynaforms/fields/reset.xml 
+# text - PME_XMLNODE_NAME 
+msgid "[dynaforms/fields/reset.xml?PME_XMLNODE_NAME] Field Name" 
+msgstr "Nombre de Campo" 
+
+#: dynaforms/fields/reset.xml?PME_LABEL 
+# dynaforms/fields/reset.xml 
+# text - PME_LABEL 
+msgid "[dynaforms/fields/reset.xml?PME_LABEL] Label" 
+msgstr "Etiqueta" 
+
+#: dynaforms/fields/reset.xml?PME_SUBTITLE 
+# dynaforms/fields/reset.xml 
+# subtitle - PME_SUBTITLE 
+msgid "[dynaforms/fields/reset.xml?PME_SUBTITLE] Appearance" 
+msgstr "Apariencia" 
+
+#: dynaforms/fields/reset.xml?PME_GROUP 
+# dynaforms/fields/reset.xml 
+# text - PME_GROUP 
+msgid "[dynaforms/fields/reset.xml?PME_GROUP] Group" 
+msgstr "Group" 
+
+#: dynaforms/fields/reset.xml?PME_STYLE 
+# dynaforms/fields/reset.xml 
+# text - PME_STYLE 
+msgid "[dynaforms/fields/reset.xml?PME_STYLE] Style" 
+msgstr "Style" 
+
+#: dynaforms/fields/reset.xml?PME_ACCEPT 
+# dynaforms/fields/reset.xml 
+# button - PME_ACCEPT 
+msgid "[dynaforms/fields/reset.xml?PME_ACCEPT] Save" 
+msgstr "Guardar" 
+
+#: dynaforms/fields/listbox.xml?PME_TITLE 
+# dynaforms/fields/listbox.xml 
+# title - PME_TITLE 
+msgid "[dynaforms/fields/listbox.xml?PME_TITLE] Properties" 
+msgstr "Propiedades" 
+
+#: dynaforms/fields/listbox.xml?PME_XMLNODE_NAME 
+# dynaforms/fields/listbox.xml 
+# text - PME_XMLNODE_NAME 
+msgid "[dynaforms/fields/listbox.xml?PME_XMLNODE_NAME] Field Name" 
+msgstr "Nombre de Campo" 
+
+#: dynaforms/fields/listbox.xml?PME_LABEL 
+# dynaforms/fields/listbox.xml 
+# text - PME_LABEL 
+msgid "[dynaforms/fields/listbox.xml?PME_LABEL] Label" 
+msgstr "Etiqueta" 
+
+#: dynaforms/fields/listbox.xml?PME_SUBTITLE3 
+# dynaforms/fields/listbox.xml 
+# subtitle - PME_SUBTITLE3 
+msgid "[dynaforms/fields/listbox.xml?PME_SUBTITLE3] Behaviour" 
+msgstr "Comportamiento" 
+
+#: dynaforms/fields/listbox.xml?PME_REQUIRED 
+# dynaforms/fields/listbox.xml 
+# checkbox - PME_REQUIRED 
+msgid "Required" 
+msgstr "Required" 
+
+#: dynaforms/fields/listbox.xml?PME_DEFAULTVALUE 
+# dynaforms/fields/listbox.xml 
+# text - PME_DEFAULTVALUE 
+msgid "[dynaforms/fields/listbox.xml?PME_DEFAULTVALUE] Default Value" 
+msgstr "Default Value" 
+
+#: dynaforms/fields/listbox.xml?PME_SUBTITLE 
+# dynaforms/fields/listbox.xml 
+# subtitle - PME_SUBTITLE 
+msgid "[dynaforms/fields/listbox.xml?PME_SUBTITLE] Appearance" 
+msgstr "Apariencia" 
+
+#: dynaforms/fields/listbox.xml?PME_SIZE 
+# dynaforms/fields/listbox.xml 
+# text - PME_SIZE 
+msgid "Size" 
+msgstr "Size" 
+
+#: dynaforms/fields/listbox.xml?PME_GROUP 
+# dynaforms/fields/listbox.xml 
+# text - PME_GROUP 
+msgid "[dynaforms/fields/listbox.xml?PME_GROUP] Group" 
+msgstr "Group" 
+
+#: dynaforms/fields/listbox.xml?PME_MODE 
+# dynaforms/fields/listbox.xml 
+# dropdown - PME_MODE 
+msgid "[dynaforms/fields/listbox.xml?PME_MODE] Mode" 
+msgstr "Modo" 
+
+#: dynaforms/fields/listbox.xml?PME_STYLE 
+# dynaforms/fields/listbox.xml 
+# text - PME_STYLE 
+msgid "[dynaforms/fields/listbox.xml?PME_STYLE] Style" 
+msgstr "Style" 
+
+#: dynaforms/fields/listbox.xml?PME_SUBTITLE2 
+# dynaforms/fields/listbox.xml 
+# subtitle - PME_SUBTITLE2 
+msgid "[dynaforms/fields/listbox.xml?PME_SUBTITLE2] Data" 
+msgstr "Datos" 
+
+#: dynaforms/fields/listbox.xml?PME_SQLCONNECTION 
+# dynaforms/fields/listbox.xml 
+# text - PME_SQLCONNECTION 
+msgid "[dynaforms/fields/listbox.xml?PME_SQLCONNECTION] Sql Connection" 
+msgstr "Conexión Sql" 
+
+#: dynaforms/fields/listbox.xml?PME_XMLNODE_VALUE 
+# dynaforms/fields/listbox.xml 
+# textarea - PME_XMLNODE_VALUE 
+msgid "[dynaforms/fields/listbox.xml?PME_XMLNODE_VALUE] Sql" 
+msgstr "Sql" 
+
+#: dynaforms/fields/listbox.xml?PME_ACCEPT 
+# dynaforms/fields/listbox.xml 
+# button - PME_ACCEPT 
+msgid "[dynaforms/fields/listbox.xml?PME_ACCEPT] Save" 
+msgstr "Guardar" 
+
+#: dynaforms/fields/text.xml?PME_TITLE 
+# dynaforms/fields/text.xml 
+# title - PME_TITLE 
+msgid "[dynaforms/fields/text.xml?PME_TITLE] Properties" 
+msgstr "Propiedades" 
+
+#: dynaforms/fields/text.xml?PME_XMLNODE_NAME 
+# dynaforms/fields/text.xml 
+# text - PME_XMLNODE_NAME 
+msgid "[dynaforms/fields/text.xml?PME_XMLNODE_NAME] Field Name" 
+msgstr "Nombre de Campo" 
+
+#: dynaforms/fields/text.xml?PME_LABEL 
+# dynaforms/fields/text.xml 
+# text - PME_LABEL 
+msgid "[dynaforms/fields/text.xml?PME_LABEL] Label" 
+msgstr "Etiqueta" 
+
+#: dynaforms/fields/text.xml?PME_SUBTITLE3 
+# dynaforms/fields/text.xml 
+# subtitle - PME_SUBTITLE3 
+msgid "[dynaforms/fields/text.xml?PME_SUBTITLE3] Behaviour" 
+msgstr "Comportamiento" 
+
+#: dynaforms/fields/text.xml?PME_MAXLENGTH 
+# dynaforms/fields/text.xml 
+# text - PME_MAXLENGTH 
+msgid "Max. Length" 
+msgstr "Max. Length" 
+
+#: dynaforms/fields/text.xml?PME_VALIDATE 
+# dynaforms/fields/text.xml 
+# dropdown - PME_VALIDATE 
+msgid "Validate" 
+msgstr "Validate" 
+
+#: dynaforms/fields/text.xml?PME_MASK 
+# dynaforms/fields/text.xml 
+# text - PME_MASK 
+msgid "Mask" 
+msgstr "Mask" 
+
+#: dynaforms/fields/text.xml?PME_STRTO 
+# dynaforms/fields/text.xml 
+# dropdown - PME_STRTO 
+msgid "Text transform to" 
+msgstr "Transformar texto a" 
+
+#: dynaforms/fields/text.xml?PME_REQUIRED 
+# dynaforms/fields/text.xml 
+# checkbox - PME_REQUIRED 
+msgid "[dynaforms/fields/text.xml?PME_REQUIRED] Required" 
+msgstr "Required" 
+
+#: dynaforms/fields/text.xml?PME_READONLY 
+# dynaforms/fields/text.xml 
+# checkbox - PME_READONLY 
+msgid "Read Only" 
+msgstr "Read Only" 
+
+#: dynaforms/fields/text.xml?PME_DEPENDENTFIELDS 
+# dynaforms/fields/text.xml 
+# listbox - PME_DEPENDENTFIELDS 
+msgid "Dependent Fields" 
+msgstr "Dependent Fields" 
+
+#: dynaforms/fields/text.xml?PME_DEFAULTVALUE 
+# dynaforms/fields/text.xml 
+# text - PME_DEFAULTVALUE 
+msgid "[dynaforms/fields/text.xml?PME_DEFAULTVALUE] Default Value" 
+msgstr "Default Value" 
+
+#: dynaforms/fields/text.xml?PME_SUBTITLE 
+# dynaforms/fields/text.xml 
+# subtitle - PME_SUBTITLE 
+msgid "[dynaforms/fields/text.xml?PME_SUBTITLE] Appearance" 
+msgstr "Apariencia" 
+
+#: dynaforms/fields/text.xml?PME_SIZE 
+# dynaforms/fields/text.xml 
+# text - PME_SIZE 
+msgid "[dynaforms/fields/text.xml?PME_SIZE] Size" 
+msgstr "Size" 
+
+#: dynaforms/fields/text.xml?PME_GROUP 
+# dynaforms/fields/text.xml 
+# text - PME_GROUP 
+msgid "[dynaforms/fields/text.xml?PME_GROUP] Group" 
+msgstr "Group" 
+
+#: dynaforms/fields/text.xml?PME_MODE 
+# dynaforms/fields/text.xml 
+# dropdown - PME_MODE 
+msgid "[dynaforms/fields/text.xml?PME_MODE] Mode" 
+msgstr "Modo" 
+
+#: dynaforms/fields/text.xml?PME_STYLE 
+# dynaforms/fields/text.xml 
+# text - PME_STYLE 
+msgid "[dynaforms/fields/text.xml?PME_STYLE] Style" 
+msgstr "Style" 
+
+#: dynaforms/fields/text.xml?PME_SUBTITLE2 
+# dynaforms/fields/text.xml 
+# subtitle - PME_SUBTITLE2 
+msgid "[dynaforms/fields/text.xml?PME_SUBTITLE2] Data" 
+msgstr "Datos" 
+
+#: dynaforms/fields/text.xml?PME_SQLCONNECTION 
+# dynaforms/fields/text.xml 
+# text - PME_SQLCONNECTION 
+msgid "[dynaforms/fields/text.xml?PME_SQLCONNECTION] Sql Connection" 
+msgstr "Conexión Sql" 
+
+#: dynaforms/fields/text.xml?PME_XMLNODE_VALUE 
+# dynaforms/fields/text.xml 
+# textarea - PME_XMLNODE_VALUE 
+msgid "[dynaforms/fields/text.xml?PME_XMLNODE_VALUE] Sql" 
+msgstr "Sql" 
+
+#: dynaforms/fields/text.xml?PME_ACCEPT 
+# dynaforms/fields/text.xml 
+# button - PME_ACCEPT 
+msgid "[dynaforms/fields/text.xml?PME_ACCEPT] Save" 
+msgstr "Guardar" 
+
+#: dynaforms/fields/checkbox.xml?PME_TITLE 
+# dynaforms/fields/checkbox.xml 
+# title - PME_TITLE 
+msgid "[dynaforms/fields/checkbox.xml?PME_TITLE] Properties" 
+msgstr "Propiedades" 
+
+#: dynaforms/fields/checkbox.xml?PME_XMLNODE_NAME 
+# dynaforms/fields/checkbox.xml 
+# text - PME_XMLNODE_NAME 
+msgid "[dynaforms/fields/checkbox.xml?PME_XMLNODE_NAME] Field Name" 
+msgstr "Nombre de Campo" 
+
+#: dynaforms/fields/checkbox.xml?PME_LABEL 
+# dynaforms/fields/checkbox.xml 
+# text - PME_LABEL 
+msgid "[dynaforms/fields/checkbox.xml?PME_LABEL] Label" 
+msgstr "Etiqueta" 
+
+#: dynaforms/fields/checkbox.xml?PME_SUBTITLE3 
+# dynaforms/fields/checkbox.xml 
+# subtitle - PME_SUBTITLE3 
+msgid "[dynaforms/fields/checkbox.xml?PME_SUBTITLE3] Behaviour" 
+msgstr "Comportamiento" 
+
+#: dynaforms/fields/checkbox.xml?PME_VALUE 
+# dynaforms/fields/checkbox.xml 
+# text - PME_VALUE 
+msgid "Value" 
+msgstr "Value" 
+
+#: dynaforms/fields/checkbox.xml?PME_FALSEVALUE 
+# dynaforms/fields/checkbox.xml 
+# text - PME_FALSEVALUE 
+msgid "Value if not checked" 
+msgstr "Valor si no esta activado" 
+
+#: dynaforms/fields/checkbox.xml?PME_DEFAULTVALUE 
+# dynaforms/fields/checkbox.xml 
+# checkbox - PME_DEFAULTVALUE 
+msgid "[dynaforms/fields/checkbox.xml?PME_DEFAULTVALUE] Default Value" 
+msgstr "Default Value" 
+
+#: dynaforms/fields/checkbox.xml?PME_SUBTITLE 
+# dynaforms/fields/checkbox.xml 
+# subtitle - PME_SUBTITLE 
+msgid "[dynaforms/fields/checkbox.xml?PME_SUBTITLE] Appearance" 
+msgstr "Apariencia" 
+
+#: dynaforms/fields/checkbox.xml?PME_GROUP 
+# dynaforms/fields/checkbox.xml 
+# text - PME_GROUP 
+msgid "[dynaforms/fields/checkbox.xml?PME_GROUP] Group" 
+msgstr "Group" 
+
+#: dynaforms/fields/checkbox.xml?PME_MODE 
+# dynaforms/fields/checkbox.xml 
+# dropdown - PME_MODE 
+msgid "[dynaforms/fields/checkbox.xml?PME_MODE] Mode" 
+msgstr "Modo" 
+
+#: dynaforms/fields/checkbox.xml?PME_STYLE 
+# dynaforms/fields/checkbox.xml 
+# text - PME_STYLE 
+msgid "[dynaforms/fields/checkbox.xml?PME_STYLE] Style" 
+msgstr "Style" 
+
+#: dynaforms/fields/checkbox.xml?PME_LABELONRIGHT 
+# dynaforms/fields/checkbox.xml 
+# checkbox - PME_LABELONRIGHT 
+msgid "Label on the right side" 
+msgstr "Etiqueta a la derecha" 
+
+#: dynaforms/fields/checkbox.xml?PME_ENABLEHTML 
+# dynaforms/fields/checkbox.xml 
+# checkbox - PME_ENABLEHTML 
+msgid "[dynaforms/fields/checkbox.xml?PME_ENABLEHTML] Enable Html" 
+msgstr "Enable Html" 
+
+#: dynaforms/fields/checkbox.xml?PME_ACCEPT 
+# dynaforms/fields/checkbox.xml 
+# button - PME_ACCEPT 
+msgid "[dynaforms/fields/checkbox.xml?PME_ACCEPT] Save" 
+msgstr "Guardar" 
+
+#: dynaforms/fields/currency.xml?PME_TITLE 
+# dynaforms/fields/currency.xml 
+# title - PME_TITLE 
+msgid "[dynaforms/fields/currency.xml?PME_TITLE] Properties" 
+msgstr "Propiedades" 
+
+#: dynaforms/fields/currency.xml?PME_XMLNODE_NAME 
+# dynaforms/fields/currency.xml 
+# text - PME_XMLNODE_NAME 
+msgid "[dynaforms/fields/currency.xml?PME_XMLNODE_NAME] Field Name" 
+msgstr "Nombre de Campo" 
+
+#: dynaforms/fields/currency.xml?PME_LABEL 
+# dynaforms/fields/currency.xml 
+# text - PME_LABEL 
+msgid "[dynaforms/fields/currency.xml?PME_LABEL] Label" 
+msgstr "Etiqueta" 
+
+#: dynaforms/fields/currency.xml?PME_SUBTITLE3 
+# dynaforms/fields/currency.xml 
+# subtitle - PME_SUBTITLE3 
+msgid "[dynaforms/fields/currency.xml?PME_SUBTITLE3] Behaviour" 
+msgstr "Comportamiento" 
+
+#: dynaforms/fields/currency.xml?PME_MAXLENGTH 
+# dynaforms/fields/currency.xml 
+# text - PME_MAXLENGTH 
+msgid "[dynaforms/fields/currency.xml?PME_MAXLENGTH] Max. Length" 
+msgstr "Max. Length" 
+
+#: dynaforms/fields/currency.xml?PME_CURRENCY 
+# dynaforms/fields/currency.xml 
+# text - PME_CURRENCY 
+msgid "Currency" 
+msgstr "Currency" 
+
+#: dynaforms/fields/currency.xml?PME_VALIDATE 
+# dynaforms/fields/currency.xml 
+# dropdown - PME_VALIDATE 
+msgid "[dynaforms/fields/currency.xml?PME_VALIDATE] Validate" 
+msgstr "Validate" 
+
+#: dynaforms/fields/currency.xml?PME_MASK 
+# dynaforms/fields/currency.xml 
+# text - PME_MASK 
+msgid "[dynaforms/fields/currency.xml?PME_MASK] Mask" 
+msgstr "Mask" 
+
+#: dynaforms/fields/currency.xml?PME_REQUIRED 
+# dynaforms/fields/currency.xml 
+# checkbox - PME_REQUIRED 
+msgid "[dynaforms/fields/currency.xml?PME_REQUIRED] Required" 
+msgstr "Required" 
+
+#: dynaforms/fields/currency.xml?PME_READONLY 
+# dynaforms/fields/currency.xml 
+# checkbox - PME_READONLY 
+msgid "[dynaforms/fields/currency.xml?PME_READONLY] Read Only" 
+msgstr "Read Only" 
+
+#: dynaforms/fields/currency.xml?PME_DEFAULTVALUE 
+# dynaforms/fields/currency.xml 
+# text - PME_DEFAULTVALUE 
+msgid "[dynaforms/fields/currency.xml?PME_DEFAULTVALUE] Default Value" 
+msgstr "Default Value" 
+
+#: dynaforms/fields/currency.xml?PME_SUBTITLE 
+# dynaforms/fields/currency.xml 
+# subtitle - PME_SUBTITLE 
+msgid "[dynaforms/fields/currency.xml?PME_SUBTITLE] Appearance" 
+msgstr "Apariencia" 
+
+#: dynaforms/fields/currency.xml?PME_SIZE 
+# dynaforms/fields/currency.xml 
+# text - PME_SIZE 
+msgid "[dynaforms/fields/currency.xml?PME_SIZE] Size" 
+msgstr "Size" 
+
+#: dynaforms/fields/currency.xml?PME_GROUP 
+# dynaforms/fields/currency.xml 
+# text - PME_GROUP 
+msgid "[dynaforms/fields/currency.xml?PME_GROUP] Group" 
+msgstr "Group" 
+
+#: dynaforms/fields/currency.xml?PME_MODE 
+# dynaforms/fields/currency.xml 
+# dropdown - PME_MODE 
+msgid "[dynaforms/fields/currency.xml?PME_MODE] Mode" 
+msgstr "Modo" 
+
+#: dynaforms/fields/currency.xml?PME_STYLE 
+# dynaforms/fields/currency.xml 
+# text - PME_STYLE 
+msgid "[dynaforms/fields/currency.xml?PME_STYLE] Style" 
+msgstr "Style" 
+
+#: dynaforms/fields/currency.xml?PME_SUBTITLE2 
+# dynaforms/fields/currency.xml 
+# subtitle - PME_SUBTITLE2 
+msgid "[dynaforms/fields/currency.xml?PME_SUBTITLE2] Data" 
+msgstr "Datos" 
+
+#: dynaforms/fields/currency.xml?PME_SQLCONNECTION 
+# dynaforms/fields/currency.xml 
+# text - PME_SQLCONNECTION 
+msgid "[dynaforms/fields/currency.xml?PME_SQLCONNECTION] Sql Connection" 
+msgstr "Conexión Sql" 
+
+#: dynaforms/fields/currency.xml?PME_XMLNODE_VALUE 
+# dynaforms/fields/currency.xml 
+# textarea - PME_XMLNODE_VALUE 
+msgid "[dynaforms/fields/currency.xml?PME_XMLNODE_VALUE] Sql" 
+msgstr "Sql" 
+
+#: dynaforms/fields/currency.xml?PME_ACCEPT 
+# dynaforms/fields/currency.xml 
+# button - PME_ACCEPT 
+msgid "[dynaforms/fields/currency.xml?PME_ACCEPT] Save" 
+msgstr "Guardar" 
+
+#: dynaforms/fields/javascript.xml?PME_TITLE 
+# dynaforms/fields/javascript.xml 
+# title - PME_TITLE 
+msgid "[dynaforms/fields/javascript.xml?PME_TITLE] Properties" 
+msgstr "Propiedades" 
+
+#: dynaforms/fields/javascript.xml?PME_XMLNODE_NAME 
+# dynaforms/fields/javascript.xml 
+# text - PME_XMLNODE_NAME 
+msgid "[dynaforms/fields/javascript.xml?PME_XMLNODE_NAME] Field Name" 
+msgstr "Nombre de Campo" 
+
+#: dynaforms/fields/javascript.xml?PME_CODE 
+# dynaforms/fields/javascript.xml 
+# textarea - PME_CODE 
+msgid "Code" 
+msgstr "Código" 
+
+#: dynaforms/fields/javascript.xml?PME_ACCEPT 
+# dynaforms/fields/javascript.xml 
+# button - PME_ACCEPT 
+msgid "[dynaforms/fields/javascript.xml?PME_ACCEPT] Save" 
+msgstr "Guardar" 
+
+#: dynaforms/fields/_options.xml?NAME 
+# dynaforms/fields/_options.xml 
+# text - NAME 
+msgid "[dynaforms/fields/_options.xml?NAME] Value" 
+msgstr "Valor" 
+
+#: dynaforms/fields/_options.xml?LABEL_EN 
+# dynaforms/fields/_options.xml 
+# text - LABEL_EN 
+msgid "Label (en)" 
+msgstr "" 
+
+#: dynaforms/fields/hidden.xml?PME_TITLE 
+# dynaforms/fields/hidden.xml 
+# title - PME_TITLE 
+msgid "[dynaforms/fields/hidden.xml?PME_TITLE] Properties" 
+msgstr "Propiedades" 
+
+#: dynaforms/fields/hidden.xml?PME_XMLNODE_NAME 
+# dynaforms/fields/hidden.xml 
+# text - PME_XMLNODE_NAME 
+msgid "[dynaforms/fields/hidden.xml?PME_XMLNODE_NAME] Field Name" 
+msgstr "Nombre de Campo" 
+
+#: dynaforms/fields/hidden.xml?PME_DEFAULTVALUE 
+# dynaforms/fields/hidden.xml 
+# text - PME_DEFAULTVALUE 
+msgid "[dynaforms/fields/hidden.xml?PME_DEFAULTVALUE] Default Value" 
+msgstr "Default Value" 
+
+#: dynaforms/fields/hidden.xml?PME_SUBTITLE2 
+# dynaforms/fields/hidden.xml 
+# subtitle - PME_SUBTITLE2 
+msgid "[dynaforms/fields/hidden.xml?PME_SUBTITLE2] Data" 
+msgstr "Datos" 
+
+#: dynaforms/fields/hidden.xml?PME_SQLCONNECTION 
+# dynaforms/fields/hidden.xml 
+# text - PME_SQLCONNECTION 
+msgid "[dynaforms/fields/hidden.xml?PME_SQLCONNECTION] Sql Connection" 
+msgstr "Conexión Sql" 
+
+#: dynaforms/fields/hidden.xml?PME_XMLNODE_VALUE 
+# dynaforms/fields/hidden.xml 
+# textarea - PME_XMLNODE_VALUE 
+msgid "[dynaforms/fields/hidden.xml?PME_XMLNODE_VALUE] Sql" 
+msgstr "Sql" 
+
+#: dynaforms/fields/hidden.xml?PME_ACCEPT 
+# dynaforms/fields/hidden.xml 
+# button - PME_ACCEPT 
+msgid "[dynaforms/fields/hidden.xml?PME_ACCEPT] Save" 
+msgstr "Guardar" 
+
+#: dynaforms/fields/subtitle.xml?PME_TITLE 
+# dynaforms/fields/subtitle.xml 
+# title - PME_TITLE 
+msgid "[dynaforms/fields/subtitle.xml?PME_TITLE] Properties" 
+msgstr "Propiedades" 
+
+#: dynaforms/fields/subtitle.xml?PME_XMLNODE_NAME 
+# dynaforms/fields/subtitle.xml 
+# text - PME_XMLNODE_NAME 
+msgid "[dynaforms/fields/subtitle.xml?PME_XMLNODE_NAME] Field Name" 
+msgstr "Nombre de Campo" 
+
+#: dynaforms/fields/subtitle.xml?PME_LABEL 
+# dynaforms/fields/subtitle.xml 
+# text - PME_LABEL 
+msgid "[dynaforms/fields/subtitle.xml?PME_LABEL] Label" 
+msgstr "Etiqueta" 
+
+#: dynaforms/fields/subtitle.xml?PME_SUBTITLE 
+# dynaforms/fields/subtitle.xml 
+# subtitle - PME_SUBTITLE 
+msgid "[dynaforms/fields/subtitle.xml?PME_SUBTITLE] Appearance" 
+msgstr "Apariencia" 
+
+#: dynaforms/fields/subtitle.xml?PME_GROUP 
+# dynaforms/fields/subtitle.xml 
+# text - PME_GROUP 
+msgid "[dynaforms/fields/subtitle.xml?PME_GROUP] Group" 
+msgstr "Group" 
+
+#: dynaforms/fields/subtitle.xml?PME_ENABLEHTML 
+# dynaforms/fields/subtitle.xml 
+# checkbox - PME_ENABLEHTML 
+msgid "[dynaforms/fields/subtitle.xml?PME_ENABLEHTML] Enable Html" 
+msgstr "Enable Html" 
+
+#: dynaforms/fields/subtitle.xml?PME_ACCEPT 
+# dynaforms/fields/subtitle.xml 
+# button - PME_ACCEPT 
+msgid "[dynaforms/fields/subtitle.xml?PME_ACCEPT] Save" 
+msgstr "Guardar" 
+
+#: dynaforms/fields/dropdown.xml?PME_TITLE 
+# dynaforms/fields/dropdown.xml 
+# title - PME_TITLE 
+msgid "[dynaforms/fields/dropdown.xml?PME_TITLE] Properties" 
+msgstr "Propiedades" 
+
+#: dynaforms/fields/dropdown.xml?PME_XMLNODE_NAME 
+# dynaforms/fields/dropdown.xml 
+# text - PME_XMLNODE_NAME 
+msgid "[dynaforms/fields/dropdown.xml?PME_XMLNODE_NAME] Field Name" 
+msgstr "Nombre de Campo" 
+
+#: dynaforms/fields/dropdown.xml?PME_LABEL 
+# dynaforms/fields/dropdown.xml 
+# text - PME_LABEL 
+msgid "[dynaforms/fields/dropdown.xml?PME_LABEL] Label" 
+msgstr "Etiqueta" 
+
+#: dynaforms/fields/dropdown.xml?PME_SUBTITLE3 
+# dynaforms/fields/dropdown.xml 
+# subtitle - PME_SUBTITLE3 
+msgid "[dynaforms/fields/dropdown.xml?PME_SUBTITLE3] Behaviour" 
+msgstr "Comportamiento" 
+
+#: dynaforms/fields/dropdown.xml?PME_REQUIRED 
+# dynaforms/fields/dropdown.xml 
+# checkbox - PME_REQUIRED 
+msgid "[dynaforms/fields/dropdown.xml?PME_REQUIRED] Required" 
+msgstr "Required" 
+
+#: dynaforms/fields/dropdown.xml?PME_READONLY 
+# dynaforms/fields/dropdown.xml 
+# checkbox - PME_READONLY 
+msgid "[dynaforms/fields/dropdown.xml?PME_READONLY] Read Only" 
+msgstr "Read Only" 
+
+#: dynaforms/fields/dropdown.xml?PME_DEPENDENTFIELDS 
+# dynaforms/fields/dropdown.xml 
+# listbox - PME_DEPENDENTFIELDS 
+msgid "[dynaforms/fields/dropdown.xml?PME_DEPENDENTFIELDS] Dependent Fields" 
+msgstr "Dependent Fields" 
+
+#: dynaforms/fields/dropdown.xml?PME_DEFAULTVALUE 
+# dynaforms/fields/dropdown.xml 
+# text - PME_DEFAULTVALUE 
+msgid "[dynaforms/fields/dropdown.xml?PME_DEFAULTVALUE] Default Value" 
+msgstr "Default Value" 
+
+#: dynaforms/fields/dropdown.xml?PME_SUBTITLE 
+# dynaforms/fields/dropdown.xml 
+# subtitle - PME_SUBTITLE 
+msgid "[dynaforms/fields/dropdown.xml?PME_SUBTITLE] Appearance" 
+msgstr "Apariencia" 
+
+#: dynaforms/fields/dropdown.xml?PME_GROUP 
+# dynaforms/fields/dropdown.xml 
+# text - PME_GROUP 
+msgid "[dynaforms/fields/dropdown.xml?PME_GROUP] Group" 
+msgstr "Group" 
+
+#: dynaforms/fields/dropdown.xml?PME_MODE 
+# dynaforms/fields/dropdown.xml 
+# dropdown - PME_MODE 
+msgid "[dynaforms/fields/dropdown.xml?PME_MODE] Mode" 
+msgstr "Modo" 
+
+#: dynaforms/fields/dropdown.xml?PME_STYLE 
+# dynaforms/fields/dropdown.xml 
+# text - PME_STYLE 
+msgid "[dynaforms/fields/dropdown.xml?PME_STYLE] Style" 
+msgstr "Style" 
+
+#: dynaforms/fields/dropdown.xml?PME_SUBTITLE2 
+# dynaforms/fields/dropdown.xml 
+# subtitle - PME_SUBTITLE2 
+msgid "[dynaforms/fields/dropdown.xml?PME_SUBTITLE2] Data" 
+msgstr "Datos" 
+
+#: dynaforms/fields/dropdown.xml?PME_SQLCONNECTION 
+# dynaforms/fields/dropdown.xml 
+# text - PME_SQLCONNECTION 
+msgid "[dynaforms/fields/dropdown.xml?PME_SQLCONNECTION] Sql Connection" 
+msgstr "Conexión Sql" 
+
+#: dynaforms/fields/dropdown.xml?PME_XMLNODE_VALUE 
+# dynaforms/fields/dropdown.xml 
+# textarea - PME_XMLNODE_VALUE 
+msgid "[dynaforms/fields/dropdown.xml?PME_XMLNODE_VALUE] Sql" 
+msgstr "Sql" 
+
+#: dynaforms/fields/dropdown.xml?PME_ACCEPT 
+# dynaforms/fields/dropdown.xml 
+# button - PME_ACCEPT 
+msgid "[dynaforms/fields/dropdown.xml?PME_ACCEPT] Save" 
+msgstr "Guardar" 
+
+#: dynaforms/fields/link.xml?PME_TITLE 
+# dynaforms/fields/link.xml 
+# title - PME_TITLE 
+msgid "[dynaforms/fields/link.xml?PME_TITLE] Properties" 
+msgstr "Propiedades" 
+
+#: dynaforms/fields/link.xml?PME_XMLNODE_NAME 
+# dynaforms/fields/link.xml 
+# text - PME_XMLNODE_NAME 
+msgid "[dynaforms/fields/link.xml?PME_XMLNODE_NAME] Field Name" 
+msgstr "Nombre de Campo" 
+
+#: dynaforms/fields/link.xml?PME_LABEL 
+# dynaforms/fields/link.xml 
+# text - PME_LABEL 
+msgid "[dynaforms/fields/link.xml?PME_LABEL] Label" 
+msgstr "Etiqueta" 
+
+#: dynaforms/fields/link.xml?PME_SUBTITLE3 
+# dynaforms/fields/link.xml 
+# subtitle - PME_SUBTITLE3 
+msgid "[dynaforms/fields/link.xml?PME_SUBTITLE3] Behaviour" 
+msgstr "Comportamiento" 
+
+#: dynaforms/fields/link.xml?PME_LINK 
+# dynaforms/fields/link.xml 
+# text - PME_LINK 
+msgid "Link" 
+msgstr "Link" 
+
+#: dynaforms/fields/link.xml?PME_VALUE 
+# dynaforms/fields/link.xml 
+# text - PME_VALUE 
+msgid "[dynaforms/fields/link.xml?PME_VALUE] Value" 
+msgstr "Value" 
+
+#: dynaforms/fields/link.xml?PME_SUBTITLE 
+# dynaforms/fields/link.xml 
+# subtitle - PME_SUBTITLE 
+msgid "[dynaforms/fields/link.xml?PME_SUBTITLE] Appearance" 
+msgstr "Apariencia" 
+
+#: dynaforms/fields/link.xml?PME_GROUP 
+# dynaforms/fields/link.xml 
+# text - PME_GROUP 
+msgid "[dynaforms/fields/link.xml?PME_GROUP] Group" 
+msgstr "Group" 
+
+#: dynaforms/fields/link.xml?PME_STYLE 
+# dynaforms/fields/link.xml 
+# text - PME_STYLE 
+msgid "[dynaforms/fields/link.xml?PME_STYLE] Style" 
+msgstr "Style" 
+
+#: dynaforms/fields/link.xml?PME_ACCEPT 
+# dynaforms/fields/link.xml 
+# button - PME_ACCEPT 
+msgid "[dynaforms/fields/link.xml?PME_ACCEPT] Save" 
+msgstr "Guardar" 
+
+#: dynaforms/fields/yesno.xml?PME_TITLE 
+# dynaforms/fields/yesno.xml 
+# title - PME_TITLE 
+msgid "[dynaforms/fields/yesno.xml?PME_TITLE] Properties" 
+msgstr "Propiedades" 
+
+#: dynaforms/fields/yesno.xml?PME_XMLNODE_NAME 
+# dynaforms/fields/yesno.xml 
+# text - PME_XMLNODE_NAME 
+msgid "[dynaforms/fields/yesno.xml?PME_XMLNODE_NAME] Field Name" 
+msgstr "Nombre de Campo" 
+
+#: dynaforms/fields/yesno.xml?PME_LABEL 
+# dynaforms/fields/yesno.xml 
+# text - PME_LABEL 
+msgid "[dynaforms/fields/yesno.xml?PME_LABEL] Label" 
+msgstr "Etiqueta" 
+
+#: dynaforms/fields/yesno.xml?PME_SUBTITLE3 
+# dynaforms/fields/yesno.xml 
+# subtitle - PME_SUBTITLE3 
+msgid "[dynaforms/fields/yesno.xml?PME_SUBTITLE3] Behaviour" 
+msgstr "Comportamiento" 
+
+#: dynaforms/fields/yesno.xml?PME_REQUIRED 
+# dynaforms/fields/yesno.xml 
+# checkbox - PME_REQUIRED 
+msgid "[dynaforms/fields/yesno.xml?PME_REQUIRED] Required" 
+msgstr "Required" 
+
+#: dynaforms/fields/yesno.xml?PME_READONLY 
+# dynaforms/fields/yesno.xml 
+# checkbox - PME_READONLY 
+msgid "[dynaforms/fields/yesno.xml?PME_READONLY] Read Only" 
+msgstr "Read Only" 
+
+#: dynaforms/fields/yesno.xml?PME_DEFAULTVALUE 
+# dynaforms/fields/yesno.xml 
+# dropdown - PME_DEFAULTVALUE 
+msgid "[dynaforms/fields/yesno.xml?PME_DEFAULTVALUE] Default Value" 
+msgstr "Default Value" 
+
+#: dynaforms/fields/yesno.xml?PME_SUBTITLE 
+# dynaforms/fields/yesno.xml 
+# subtitle - PME_SUBTITLE 
+msgid "[dynaforms/fields/yesno.xml?PME_SUBTITLE] Appearance" 
+msgstr "Apariencia" 
+
+#: dynaforms/fields/yesno.xml?PME_GROUP 
+# dynaforms/fields/yesno.xml 
+# text - PME_GROUP 
+msgid "[dynaforms/fields/yesno.xml?PME_GROUP] Group" 
+msgstr "Group" 
+
+#: dynaforms/fields/yesno.xml?PME_MODE 
+# dynaforms/fields/yesno.xml 
+# dropdown - PME_MODE 
+msgid "[dynaforms/fields/yesno.xml?PME_MODE] Mode" 
+msgstr "Modo" 
+
+#: dynaforms/fields/yesno.xml?PME_STYLE 
+# dynaforms/fields/yesno.xml 
+# text - PME_STYLE 
+msgid "[dynaforms/fields/yesno.xml?PME_STYLE] Style" 
+msgstr "Style" 
+
+#: dynaforms/fields/yesno.xml?PME_ACCEPT 
+# dynaforms/fields/yesno.xml 
+# button - PME_ACCEPT 
+msgid "[dynaforms/fields/yesno.xml?PME_ACCEPT] Save" 
+msgstr "Guardar" 
+
+#: dynaforms/fields/password.xml?PME_TITLE 
+# dynaforms/fields/password.xml 
+# title - PME_TITLE 
+msgid "[dynaforms/fields/password.xml?PME_TITLE] Properties" 
+msgstr "Propiedades" 
+
+#: dynaforms/fields/password.xml?PME_XMLNODE_NAME 
+# dynaforms/fields/password.xml 
+# text - PME_XMLNODE_NAME 
+msgid "[dynaforms/fields/password.xml?PME_XMLNODE_NAME] Field Name" 
+msgstr "Nombre de Campo" 
+
+#: dynaforms/fields/password.xml?PME_LABEL 
+# dynaforms/fields/password.xml 
+# text - PME_LABEL 
+msgid "[dynaforms/fields/password.xml?PME_LABEL] Label" 
+msgstr "Etiqueta" 
+
+#: dynaforms/fields/password.xml?PME_SUBTITLE3 
+# dynaforms/fields/password.xml 
+# subtitle - PME_SUBTITLE3 
+msgid "[dynaforms/fields/password.xml?PME_SUBTITLE3] Behaviour" 
+msgstr "Comportamiento" 
+
+#: dynaforms/fields/password.xml?PME_MAXLENGTH 
+# dynaforms/fields/password.xml 
+# text - PME_MAXLENGTH 
+msgid "[dynaforms/fields/password.xml?PME_MAXLENGTH] Max. Length" 
+msgstr "Max. Length" 
+
+#: dynaforms/fields/password.xml?PME_REQUIRED 
+# dynaforms/fields/password.xml 
+# checkbox - PME_REQUIRED 
+msgid "[dynaforms/fields/password.xml?PME_REQUIRED] Required" 
+msgstr "Required" 
+
+#: dynaforms/fields/password.xml?PME_READONLY 
+# dynaforms/fields/password.xml 
+# checkbox - PME_READONLY 
+msgid "[dynaforms/fields/password.xml?PME_READONLY] Read Only" 
+msgstr "Read Only" 
+
+#: dynaforms/fields/password.xml?PME_SUBTITLE 
+# dynaforms/fields/password.xml 
+# subtitle - PME_SUBTITLE 
+msgid "[dynaforms/fields/password.xml?PME_SUBTITLE] Appearance" 
+msgstr "Apariencia" 
+
+#: dynaforms/fields/password.xml?PME_SIZE 
+# dynaforms/fields/password.xml 
+# text - PME_SIZE 
+msgid "[dynaforms/fields/password.xml?PME_SIZE] Size" 
+msgstr "Size" 
+
+#: dynaforms/fields/password.xml?PME_GROUP 
+# dynaforms/fields/password.xml 
+# text - PME_GROUP 
+msgid "[dynaforms/fields/password.xml?PME_GROUP] Group" 
+msgstr "Group" 
+
+#: dynaforms/fields/password.xml?PME_MODE 
+# dynaforms/fields/password.xml 
+# dropdown - PME_MODE 
+msgid "[dynaforms/fields/password.xml?PME_MODE] Mode" 
+msgstr "Modo" 
+
+#: dynaforms/fields/password.xml?PME_STYLE 
+# dynaforms/fields/password.xml 
+# text - PME_STYLE 
+msgid "[dynaforms/fields/password.xml?PME_STYLE] Style" 
+msgstr "Style" 
+
+#: dynaforms/fields/password.xml?PME_ACCEPT 
+# dynaforms/fields/password.xml 
+# button - PME_ACCEPT 
+msgid "[dynaforms/fields/password.xml?PME_ACCEPT] Save" 
+msgstr "Guardar" 
+
+#: dynaforms/fields/submit.xml?PME_TITLE 
+# dynaforms/fields/submit.xml 
+# title - PME_TITLE 
+msgid "[dynaforms/fields/submit.xml?PME_TITLE] Properties" 
+msgstr "Propiedades" 
+
+#: dynaforms/fields/submit.xml?PME_XMLNODE_NAME 
+# dynaforms/fields/submit.xml 
+# text - PME_XMLNODE_NAME 
+msgid "[dynaforms/fields/submit.xml?PME_XMLNODE_NAME] Field Name" 
+msgstr "Nombre de Campo" 
+
+#: dynaforms/fields/submit.xml?PME_LABEL 
+# dynaforms/fields/submit.xml 
+# text - PME_LABEL 
+msgid "[dynaforms/fields/submit.xml?PME_LABEL] Label" 
+msgstr "Etiqueta" 
+
+#: dynaforms/fields/submit.xml?PME_SUBTITLE 
+# dynaforms/fields/submit.xml 
+# subtitle - PME_SUBTITLE 
+msgid "[dynaforms/fields/submit.xml?PME_SUBTITLE] Appearance" 
+msgstr "Apariencia" 
+
+#: dynaforms/fields/submit.xml?PME_GROUP 
+# dynaforms/fields/submit.xml 
+# text - PME_GROUP 
+msgid "[dynaforms/fields/submit.xml?PME_GROUP] Group" 
+msgstr "Group" 
+
+#: dynaforms/fields/submit.xml?PME_STYLE 
+# dynaforms/fields/submit.xml 
+# text - PME_STYLE 
+msgid "[dynaforms/fields/submit.xml?PME_STYLE] Style" 
+msgstr "Style" 
+
+#: dynaforms/fields/submit.xml?PME_ACCEPT 
+# dynaforms/fields/submit.xml 
+# button - PME_ACCEPT 
+msgid "[dynaforms/fields/submit.xml?PME_ACCEPT] Save" 
+msgstr "Guardar" 
+
+#: dynaforms/fields/radiogroupview.xml?XMLNODE_NAME 
+# dynaforms/fields/radiogroupview.xml 
+# text - XMLNODE_NAME 
+msgid "Field name" 
+msgstr "Nombre de campo" 
+
+#: dynaforms/fields/radiogroupview.xml?LABEL 
+# dynaforms/fields/radiogroupview.xml 
+# text - LABEL 
+msgid "[dynaforms/fields/radiogroupview.xml?LABEL] Label" 
+msgstr "Etiqueta" 
+
+#: dynaforms/fields/radiogroupview.xml?REQUIRED 
+# dynaforms/fields/radiogroupview.xml 
+# checkbox - REQUIRED 
+msgid "[dynaforms/fields/radiogroupview.xml?REQUIRED] Required" 
+msgstr "Required" 
+
+#: dynaforms/fields/radiogroupview.xml?DEFAULTVALUE 
+# dynaforms/fields/radiogroupview.xml 
+# text - DEFAULTVALUE 
+msgid "[dynaforms/fields/radiogroupview.xml?DEFAULTVALUE] Default Value" 
+msgstr "Default Value" 
+
+#: dynaforms/fields/radiogroupview.xml?SUBTITLE 
+# dynaforms/fields/radiogroupview.xml 
+# subtitle - SUBTITLE 
+msgid "[dynaforms/fields/radiogroupview.xml?SUBTITLE] Appearance" 
+msgstr "Apariencia" 
+
+#: dynaforms/fields/radiogroupview.xml?GROUP 
+# dynaforms/fields/radiogroupview.xml 
+# text - GROUP 
+msgid "[dynaforms/fields/radiogroupview.xml?GROUP] Group" 
+msgstr "Group" 
+
+#: dynaforms/fields/radiogroupview.xml?ENABLEHTML 
+# dynaforms/fields/radiogroupview.xml 
+# checkbox - ENABLEHTML 
+msgid "EnableHtml" 
+msgstr "EnableHtml" 
+
+#: dynaforms/fields/radiogroupview.xml?STYLE 
+# dynaforms/fields/radiogroupview.xml 
+# text - STYLE 
+msgid "[dynaforms/fields/radiogroupview.xml?STYLE] Style" 
+msgstr "Style" 
+
+#: dynaforms/fields/radiogroupview.xml?ACCEPT 
+# dynaforms/fields/radiogroupview.xml 
+# button - ACCEPT 
+msgid "[dynaforms/fields/radiogroupview.xml?ACCEPT] Save" 
+msgstr "Guardar" 
+
+#: dynaforms/fields/radiogroup.xml?PME_TITLE 
+# dynaforms/fields/radiogroup.xml 
+# title - PME_TITLE 
+msgid "[dynaforms/fields/radiogroup.xml?PME_TITLE] Properties" 
+msgstr "Propiedades" 
+
+#: dynaforms/fields/radiogroup.xml?PME_XMLNODE_NAME 
+# dynaforms/fields/radiogroup.xml 
+# text - PME_XMLNODE_NAME 
+msgid "[dynaforms/fields/radiogroup.xml?PME_XMLNODE_NAME] Field Name" 
+msgstr "Nombre de Campo" 
+
+#: dynaforms/fields/radiogroup.xml?PME_LABEL 
+# dynaforms/fields/radiogroup.xml 
+# text - PME_LABEL 
+msgid "[dynaforms/fields/radiogroup.xml?PME_LABEL] Label" 
+msgstr "Etiqueta" 
+
+#: dynaforms/fields/radiogroup.xml?PME_SUBTITLE3 
+# dynaforms/fields/radiogroup.xml 
+# subtitle - PME_SUBTITLE3 
+msgid "[dynaforms/fields/radiogroup.xml?PME_SUBTITLE3] Behaviour" 
+msgstr "Comportamiento" 
+
+#: dynaforms/fields/radiogroup.xml?PME_REQUIRED 
+# dynaforms/fields/radiogroup.xml 
+# checkbox - PME_REQUIRED 
+msgid "[dynaforms/fields/radiogroup.xml?PME_REQUIRED] Required" 
+msgstr "Required" 
+
+#: dynaforms/fields/radiogroup.xml?PME_DEFAULTVALUE 
+# dynaforms/fields/radiogroup.xml 
+# text - PME_DEFAULTVALUE 
+msgid "[dynaforms/fields/radiogroup.xml?PME_DEFAULTVALUE] Default Value" 
+msgstr "Default Value" 
+
+#: dynaforms/fields/radiogroup.xml?PME_SUBTITLE 
+# dynaforms/fields/radiogroup.xml 
+# subtitle - PME_SUBTITLE 
+msgid "[dynaforms/fields/radiogroup.xml?PME_SUBTITLE] Appearance" 
+msgstr "Apariencia" 
+
+#: dynaforms/fields/radiogroup.xml?PME_GROUP 
+# dynaforms/fields/radiogroup.xml 
+# text - PME_GROUP 
+msgid "[dynaforms/fields/radiogroup.xml?PME_GROUP] Group" 
+msgstr "Group" 
+
+#: dynaforms/fields/radiogroup.xml?PME_MODE 
+# dynaforms/fields/radiogroup.xml 
+# dropdown - PME_MODE 
+msgid "[dynaforms/fields/radiogroup.xml?PME_MODE] Mode" 
+msgstr "Modo" 
+
+#: dynaforms/fields/radiogroup.xml?PME_STYLE 
+# dynaforms/fields/radiogroup.xml 
+# text - PME_STYLE 
+msgid "[dynaforms/fields/radiogroup.xml?PME_STYLE] Style" 
+msgstr "Style" 
+
+#: dynaforms/fields/radiogroup.xml?PME_SUBTITLE2 
+# dynaforms/fields/radiogroup.xml 
+# subtitle - PME_SUBTITLE2 
+msgid "[dynaforms/fields/radiogroup.xml?PME_SUBTITLE2] Data" 
+msgstr "Datos" 
+
+#: dynaforms/fields/radiogroup.xml?PME_SQLCONNECTION 
+# dynaforms/fields/radiogroup.xml 
+# text - PME_SQLCONNECTION 
+msgid "[dynaforms/fields/radiogroup.xml?PME_SQLCONNECTION] Sql Connection" 
+msgstr "Conexión Sql" 
+
+#: dynaforms/fields/radiogroup.xml?PME_XMLNODE_VALUE 
+# dynaforms/fields/radiogroup.xml 
+# textarea - PME_XMLNODE_VALUE 
+msgid "[dynaforms/fields/radiogroup.xml?PME_XMLNODE_VALUE] Sql" 
+msgstr "Sql" 
+
+#: dynaforms/fields/radiogroup.xml?PME_ACCEPT 
+# dynaforms/fields/radiogroup.xml 
+# button - PME_ACCEPT 
+msgid "[dynaforms/fields/radiogroup.xml?PME_ACCEPT] Save" 
+msgstr "Guardar" 
+
+#: dynaforms/fields/button.xml?PME_TITLE 
+# dynaforms/fields/button.xml 
+# title - PME_TITLE 
+msgid "[dynaforms/fields/button.xml?PME_TITLE] Properties" 
+msgstr "Propiedades" 
+
+#: dynaforms/fields/button.xml?PME_XMLNODE_NAME 
+# dynaforms/fields/button.xml 
+# text - PME_XMLNODE_NAME 
+msgid "[dynaforms/fields/button.xml?PME_XMLNODE_NAME] Field Name" 
+msgstr "Nombre de Campo" 
+
+#: dynaforms/fields/button.xml?PME_LABEL 
+# dynaforms/fields/button.xml 
+# text - PME_LABEL 
+msgid "[dynaforms/fields/button.xml?PME_LABEL] Label" 
+msgstr "Etiqueta" 
+
+#: dynaforms/fields/button.xml?PME_SUBTITLE 
+# dynaforms/fields/button.xml 
+# subtitle - PME_SUBTITLE 
+msgid "[dynaforms/fields/button.xml?PME_SUBTITLE] Appearance" 
+msgstr "Apariencia" 
+
+#: dynaforms/fields/button.xml?PME_GROUP 
+# dynaforms/fields/button.xml 
+# text - PME_GROUP 
+msgid "[dynaforms/fields/button.xml?PME_GROUP] Group" 
+msgstr "Group" 
+
+#: dynaforms/fields/button.xml?PME_STYLE 
+# dynaforms/fields/button.xml 
+# text - PME_STYLE 
+msgid "[dynaforms/fields/button.xml?PME_STYLE] Style" 
+msgstr "Style" 
+
+#: dynaforms/fields/button.xml?PME_ACCEPT 
+# dynaforms/fields/button.xml 
+# button - PME_ACCEPT 
+msgid "[dynaforms/fields/button.xml?PME_ACCEPT] Save" 
+msgstr "Guardar" 
+
+#: dynaforms/fields/percentage.xml?PME_TITLE 
+# dynaforms/fields/percentage.xml 
+# title - PME_TITLE 
+msgid "[dynaforms/fields/percentage.xml?PME_TITLE] Properties" 
+msgstr "Propiedades" 
+
+#: dynaforms/fields/percentage.xml?PME_XMLNODE_NAME 
+# dynaforms/fields/percentage.xml 
+# text - PME_XMLNODE_NAME 
+msgid "[dynaforms/fields/percentage.xml?PME_XMLNODE_NAME] Field Name" 
+msgstr "Nombre de Campo" 
+
+#: dynaforms/fields/percentage.xml?PME_LABEL 
+# dynaforms/fields/percentage.xml 
+# text - PME_LABEL 
+msgid "[dynaforms/fields/percentage.xml?PME_LABEL] Label" 
+msgstr "Etiqueta" 
+
+#: dynaforms/fields/percentage.xml?PME_SUBTITLE3 
+# dynaforms/fields/percentage.xml 
+# subtitle - PME_SUBTITLE3 
+msgid "[dynaforms/fields/percentage.xml?PME_SUBTITLE3] Behaviour" 
+msgstr "Comportamiento" 
+
+#: dynaforms/fields/percentage.xml?PME_MAXLENGTH 
+# dynaforms/fields/percentage.xml 
+# text - PME_MAXLENGTH 
+msgid "[dynaforms/fields/percentage.xml?PME_MAXLENGTH] Max. Length" 
+msgstr "Max. Length" 
+
+#: dynaforms/fields/percentage.xml?PME_VALIDATE 
+# dynaforms/fields/percentage.xml 
+# dropdown - PME_VALIDATE 
+msgid "[dynaforms/fields/percentage.xml?PME_VALIDATE] Validate" 
+msgstr "Validate" 
+
+#: dynaforms/fields/percentage.xml?PME_MASK 
+# dynaforms/fields/percentage.xml 
+# text - PME_MASK 
+msgid "[dynaforms/fields/percentage.xml?PME_MASK] Mask" 
+msgstr "Mask" 
+
+#: dynaforms/fields/percentage.xml?PME_REQUIRED 
+# dynaforms/fields/percentage.xml 
+# checkbox - PME_REQUIRED 
+msgid "[dynaforms/fields/percentage.xml?PME_REQUIRED] Required" 
+msgstr "Required" 
+
+#: dynaforms/fields/percentage.xml?PME_READONLY 
+# dynaforms/fields/percentage.xml 
+# checkbox - PME_READONLY 
+msgid "[dynaforms/fields/percentage.xml?PME_READONLY] Read Only" 
+msgstr "Read Only" 
+
+#: dynaforms/fields/percentage.xml?PME_DEFAULTVALUE 
+# dynaforms/fields/percentage.xml 
+# text - PME_DEFAULTVALUE 
+msgid "[dynaforms/fields/percentage.xml?PME_DEFAULTVALUE] Default Value" 
+msgstr "Default Value" 
+
+#: dynaforms/fields/percentage.xml?PME_SUBTITLE 
+# dynaforms/fields/percentage.xml 
+# subtitle - PME_SUBTITLE 
+msgid "[dynaforms/fields/percentage.xml?PME_SUBTITLE] Appearance" 
+msgstr "Apariencia" 
+
+#: dynaforms/fields/percentage.xml?PME_SIZE 
+# dynaforms/fields/percentage.xml 
+# text - PME_SIZE 
+msgid "[dynaforms/fields/percentage.xml?PME_SIZE] Size" 
+msgstr "Size" 
+
+#: dynaforms/fields/percentage.xml?PME_GROUP 
+# dynaforms/fields/percentage.xml 
+# text - PME_GROUP 
+msgid "[dynaforms/fields/percentage.xml?PME_GROUP] Group" 
+msgstr "Group" 
+
+#: dynaforms/fields/percentage.xml?PME_MODE 
+# dynaforms/fields/percentage.xml 
+# dropdown - PME_MODE 
+msgid "[dynaforms/fields/percentage.xml?PME_MODE] Mode" 
+msgstr "Modo" 
+
+#: dynaforms/fields/percentage.xml?PME_STYLE 
+# dynaforms/fields/percentage.xml 
+# text - PME_STYLE 
+msgid "[dynaforms/fields/percentage.xml?PME_STYLE] Style" 
+msgstr "Style" 
+
+#: dynaforms/fields/percentage.xml?PME_SUBTITLE2 
+# dynaforms/fields/percentage.xml 
+# subtitle - PME_SUBTITLE2 
+msgid "[dynaforms/fields/percentage.xml?PME_SUBTITLE2] Data" 
+msgstr "Datos" 
+
+#: dynaforms/fields/percentage.xml?PME_SQLCONNECTION 
+# dynaforms/fields/percentage.xml 
+# text - PME_SQLCONNECTION 
+msgid "[dynaforms/fields/percentage.xml?PME_SQLCONNECTION] Sql Connection" 
+msgstr "Conexión Sql" 
+
+#: dynaforms/fields/percentage.xml?PME_XMLNODE_VALUE 
+# dynaforms/fields/percentage.xml 
+# textarea - PME_XMLNODE_VALUE 
+msgid "[dynaforms/fields/percentage.xml?PME_XMLNODE_VALUE] Sql" 
+msgstr "Sql" 
+
+#: dynaforms/fields/percentage.xml?PME_ACCEPT 
+# dynaforms/fields/percentage.xml 
+# button - PME_ACCEPT 
+msgid "[dynaforms/fields/percentage.xml?PME_ACCEPT] Save" 
+msgstr "Guardar" 
+
+#: dynaforms/fields/date.xml?PME_TITLE 
+# dynaforms/fields/date.xml 
+# title - PME_TITLE 
+msgid "[dynaforms/fields/date.xml?PME_TITLE] Properties" 
+msgstr "Propiedades" 
+
+#: dynaforms/fields/date.xml?PME_XMLNODE_NAME 
+# dynaforms/fields/date.xml 
+# text - PME_XMLNODE_NAME 
+msgid "[dynaforms/fields/date.xml?PME_XMLNODE_NAME] Field Name" 
+msgstr "Nombre de Campo" 
+
+#: dynaforms/fields/date.xml?PME_LABEL 
+# dynaforms/fields/date.xml 
+# text - PME_LABEL 
+msgid "[dynaforms/fields/date.xml?PME_LABEL] Label" 
+msgstr "Etiqueta" 
+
+#: dynaforms/fields/date.xml?PME_SUBTITLE3 
+# dynaforms/fields/date.xml 
+# subtitle - PME_SUBTITLE3 
+msgid "[dynaforms/fields/date.xml?PME_SUBTITLE3] Behaviour" 
+msgstr "Comportamiento" 
+
+#: dynaforms/fields/date.xml?PME_STARTDATE 
+# dynaforms/fields/date.xml 
+# date - PME_STARTDATE 
+msgid "[dynaforms/fields/date.xml?PME_STARTDATE] Start Date" 
+msgstr "Start Date" 
+
+#: dynaforms/fields/date.xml?PME_ENDDATE 
+# dynaforms/fields/date.xml 
+# date - PME_ENDDATE 
+msgid "End Date" 
+msgstr "End Date" 
+
+#: dynaforms/fields/date.xml?PME_AFTERDATE 
+# dynaforms/fields/date.xml 
+# date - PME_AFTERDATE 
+msgid "After Date" 
+msgstr "After Date" 
+
+#: dynaforms/fields/date.xml?PME_BEFOREDATE 
+# dynaforms/fields/date.xml 
+# date - PME_BEFOREDATE 
+msgid "Before Date" 
+msgstr "Before Date" 
+
+#: dynaforms/fields/date.xml?PME_FORMAT 
+# dynaforms/fields/date.xml 
+# text - PME_FORMAT 
+msgid "Format" 
+msgstr "Format" 
+
+#: dynaforms/fields/date.xml?PME_MASK 
+# dynaforms/fields/date.xml 
+# text - PME_MASK 
+msgid "[dynaforms/fields/date.xml?PME_MASK] Mask" 
+msgstr "Mask" 
+
+#: dynaforms/fields/date.xml?PME_REQUIRED 
+# dynaforms/fields/date.xml 
+# checkbox - PME_REQUIRED 
+msgid "[dynaforms/fields/date.xml?PME_REQUIRED] Required" 
+msgstr "Required" 
+
+#: dynaforms/fields/date.xml?PME_READONLY 
+# dynaforms/fields/date.xml 
+# checkbox - PME_READONLY 
+msgid "[dynaforms/fields/date.xml?PME_READONLY] Read Only" 
+msgstr "Read Only" 
+
+#: dynaforms/fields/date.xml?PME_DEFAULTVALUE 
+# dynaforms/fields/date.xml 
+# text - PME_DEFAULTVALUE 
+msgid "[dynaforms/fields/date.xml?PME_DEFAULTVALUE] Default Value" 
+msgstr "Default Value" 
+
+#: dynaforms/fields/date.xml?PME_SUBTITLE 
+# dynaforms/fields/date.xml 
+# subtitle - PME_SUBTITLE 
+msgid "[dynaforms/fields/date.xml?PME_SUBTITLE] Appearance" 
+msgstr "Apariencia" 
+
+#: dynaforms/fields/date.xml?PME_SIZE 
+# dynaforms/fields/date.xml 
+# text - PME_SIZE 
+msgid "[dynaforms/fields/date.xml?PME_SIZE] Size" 
+msgstr "Size" 
+
+#: dynaforms/fields/date.xml?PME_GROUP 
+# dynaforms/fields/date.xml 
+# text - PME_GROUP 
+msgid "[dynaforms/fields/date.xml?PME_GROUP] Group" 
+msgstr "Group" 
+
+#: dynaforms/fields/date.xml?PME_MODE 
+# dynaforms/fields/date.xml 
+# dropdown - PME_MODE 
+msgid "[dynaforms/fields/date.xml?PME_MODE] Mode" 
+msgstr "Modo" 
+
+#: dynaforms/fields/date.xml?PME_STYLE 
+# dynaforms/fields/date.xml 
+# text - PME_STYLE 
+msgid "[dynaforms/fields/date.xml?PME_STYLE] Style" 
+msgstr "Style" 
+
+#: dynaforms/fields/date.xml?PME_ACCEPT 
+# dynaforms/fields/date.xml 
+# button - PME_ACCEPT 
+msgid "[dynaforms/fields/date.xml?PME_ACCEPT] Save" 
+msgstr "Guardar" 
+
+#: dynaforms/fields/textarea.xml?PME_TITLE 
+# dynaforms/fields/textarea.xml 
+# title - PME_TITLE 
+msgid "[dynaforms/fields/textarea.xml?PME_TITLE] Properties" 
+msgstr "Propiedades" 
+
+#: dynaforms/fields/textarea.xml?PME_XMLNODE_NAME 
+# dynaforms/fields/textarea.xml 
+# text - PME_XMLNODE_NAME 
+msgid "[dynaforms/fields/textarea.xml?PME_XMLNODE_NAME] Field Name" 
+msgstr "Nombre de Campo" 
+
+#: dynaforms/fields/textarea.xml?PME_LABEL 
+# dynaforms/fields/textarea.xml 
+# text - PME_LABEL 
+msgid "[dynaforms/fields/textarea.xml?PME_LABEL] Label" 
+msgstr "Etiqueta" 
+
+#: dynaforms/fields/textarea.xml?PME_SUBTITLE3 
+# dynaforms/fields/textarea.xml 
+# subtitle - PME_SUBTITLE3 
+msgid "[dynaforms/fields/textarea.xml?PME_SUBTITLE3] Behaviour" 
+msgstr "Comportamiento" 
+
+#: dynaforms/fields/textarea.xml?PME_REQUIRED 
+# dynaforms/fields/textarea.xml 
+# checkbox - PME_REQUIRED 
+msgid "[dynaforms/fields/textarea.xml?PME_REQUIRED] Required" 
+msgstr "Required" 
+
+#: dynaforms/fields/textarea.xml?PME_READONLY 
+# dynaforms/fields/textarea.xml 
+# checkbox - PME_READONLY 
+msgid "[dynaforms/fields/textarea.xml?PME_READONLY] Read Only" 
+msgstr "Read Only" 
+
+#: dynaforms/fields/textarea.xml?PME_DEFAULTVALUE 
+# dynaforms/fields/textarea.xml 
+# textarea - PME_DEFAULTVALUE 
+msgid "[dynaforms/fields/textarea.xml?PME_DEFAULTVALUE] Default Value" 
+msgstr "Default Value" 
+
+#: dynaforms/fields/textarea.xml?PME_SUBTITLE 
+# dynaforms/fields/textarea.xml 
+# subtitle - PME_SUBTITLE 
+msgid "[dynaforms/fields/textarea.xml?PME_SUBTITLE] Appearance" 
+msgstr "Apariencia" 
+
+#: dynaforms/fields/textarea.xml?PME_ROWS 
+# dynaforms/fields/textarea.xml 
+# text - PME_ROWS 
+msgid "Rows" 
+msgstr "Rows" 
+
+#: dynaforms/fields/textarea.xml?PME_COLS 
+# dynaforms/fields/textarea.xml 
+# text - PME_COLS 
+msgid "Columns" 
+msgstr "Columns" 
+
+#: dynaforms/fields/textarea.xml?PME_GROUP 
+# dynaforms/fields/textarea.xml 
+# text - PME_GROUP 
+msgid "[dynaforms/fields/textarea.xml?PME_GROUP] Group" 
+msgstr "Group" 
+
+#: dynaforms/fields/textarea.xml?PME_MODE 
+# dynaforms/fields/textarea.xml 
+# dropdown - PME_MODE 
+msgid "[dynaforms/fields/textarea.xml?PME_MODE] Mode" 
+msgstr "Modo" 
+
+#: dynaforms/fields/textarea.xml?PME_STYLE 
+# dynaforms/fields/textarea.xml 
+# text - PME_STYLE 
+msgid "[dynaforms/fields/textarea.xml?PME_STYLE] Style" 
+msgstr "Style" 
+
+#: dynaforms/fields/textarea.xml?PME_SUBTITLE2 
+# dynaforms/fields/textarea.xml 
+# subtitle - PME_SUBTITLE2 
+msgid "[dynaforms/fields/textarea.xml?PME_SUBTITLE2] Data" 
+msgstr "Datos" 
+
+#: dynaforms/fields/textarea.xml?PME_SQLCONNECTION 
+# dynaforms/fields/textarea.xml 
+# text - PME_SQLCONNECTION 
+msgid "[dynaforms/fields/textarea.xml?PME_SQLCONNECTION] Sql Connection" 
+msgstr "Conexión Sql" 
+
+#: dynaforms/fields/textarea.xml?PME_XMLNODE_VALUE 
+# dynaforms/fields/textarea.xml 
+# textarea - PME_XMLNODE_VALUE 
+msgid "[dynaforms/fields/textarea.xml?PME_XMLNODE_VALUE] Sql" 
+msgstr "Sql" 
+
+#: dynaforms/fields/textarea.xml?PME_ACCEPT 
+# dynaforms/fields/textarea.xml 
+# button - PME_ACCEPT 
+msgid "[dynaforms/fields/textarea.xml?PME_ACCEPT] Save" 
+msgstr "Guardar" 
+
+#: dynaforms/fields/file.xml?PME_TITLE 
+# dynaforms/fields/file.xml 
+# title - PME_TITLE 
+msgid "[dynaforms/fields/file.xml?PME_TITLE] Properties" 
+msgstr "Propiedades" 
+
+#: dynaforms/fields/file.xml?PME_XMLNODE_NAME 
+# dynaforms/fields/file.xml 
+# text - PME_XMLNODE_NAME 
+msgid "[dynaforms/fields/file.xml?PME_XMLNODE_NAME] Field Name" 
+msgstr "Nombre de Campo" 
+
+#: dynaforms/fields/file.xml?PME_LABEL 
+# dynaforms/fields/file.xml 
+# text - PME_LABEL 
+msgid "[dynaforms/fields/file.xml?PME_LABEL] Label" 
+msgstr "Etiqueta" 
+
+#: dynaforms/fields/file.xml?PME_SUBTITLE 
+# dynaforms/fields/file.xml 
+# subtitle - PME_SUBTITLE 
+msgid "[dynaforms/fields/file.xml?PME_SUBTITLE] Appearance" 
+msgstr "Apariencia" 
+
+#: dynaforms/fields/file.xml?PME_GROUP 
+# dynaforms/fields/file.xml 
+# text - PME_GROUP 
+msgid "[dynaforms/fields/file.xml?PME_GROUP] Group" 
+msgstr "Group" 
+
+#: dynaforms/fields/file.xml?PME_ACCEPT 
+# dynaforms/fields/file.xml 
+# button - PME_ACCEPT 
+msgid "[dynaforms/fields/file.xml?PME_ACCEPT] Save" 
+msgstr "Guardar" 
+
+#: dynaforms/fields_Options.xml?MNU_SEARCH 
+# dynaforms/fields_Options.xml 
+# link - MNU_SEARCH 
+msgid "[dynaforms/fields_Options.xml?MNU_SEARCH] Advanced Search" 
+msgstr "Buscar Avanzado" 
+
+#: dynaforms/fields_ShortList.xml?XMLNODE_NAME 
+# dynaforms/fields_ShortList.xml 
+# text - XMLNODE_NAME 
+msgid "[dynaforms/fields_ShortList.xml?XMLNODE_NAME] Field name" 
+msgstr "Nombre de campo" 
+
+#: dynaforms/fields_ShortList.xml?SEARCH 
+# dynaforms/fields_ShortList.xml 
+# button - SEARCH 
+msgid "[dynaforms/fields_ShortList.xml?SEARCH] Apply Filter" 
+msgstr "Filtrar" 
+
+#: dynaforms/dynaforms_XmlEditor.xml?XML 
+# dynaforms/dynaforms_XmlEditor.xml 
+# textarea - XML 
+msgid "XML" 
+msgstr "XML" 
+
+#: dynaforms/dynaforms_HtmlEditor.xml?HTML 
+# dynaforms/dynaforms_HtmlEditor.xml 
+# html - HTML 
+msgid "HTML" 
+msgstr "HTML" 
+
+#: dynaforms/dynaforms_List.xml?DYN_TITLE 
+# dynaforms/dynaforms_List.xml 
+# text - DYN_TITLE 
+msgid "[dynaforms/dynaforms_List.xml?DYN_TITLE] Dynaform" 
+msgstr "Dynaform" 
+
+#: dynaforms/dynaforms_List.xml?DYN_TYPE 
+# dynaforms/dynaforms_List.xml 
+# dropdown - DYN_TYPE 
+msgid "[dynaforms/dynaforms_List.xml?DYN_TYPE] Type" 
+msgstr "Tipo" 
+
+#: dynaforms/dynaforms_List.xml?DYN_DESCRIPTION 
+# dynaforms/dynaforms_List.xml 
+# textarea - DYN_DESCRIPTION 
+msgid "[dynaforms/dynaforms_List.xml?DYN_DESCRIPTION] Description" 
+msgstr "Descripción" 
+
+#: dynaforms/dynaforms_List.xml?SEARCH 
+# dynaforms/dynaforms_List.xml 
+# button - SEARCH 
+msgid "[dynaforms/dynaforms_List.xml?SEARCH] Apply Filter" 
+msgstr "Filtrar" 
+
+#: dynaforms/dynaform_Fields.xml?XMLNODE_NAME 
+# dynaforms/dynaform_Fields.xml 
+# text - XMLNODE_NAME 
+msgid "Field" 
+msgstr "Campo" 
+
+#: dynaforms/dynaform_Fields.xml?TYPE 
+# dynaforms/dynaform_Fields.xml 
+# dropdown - TYPE 
+msgid "[dynaforms/dynaform_Fields.xml?TYPE] Type" 
+msgstr "Tipo" 
+
+#: dynaforms/dynaform_Fields.xml?SEARCH 
+# dynaforms/dynaform_Fields.xml 
+# button - SEARCH 
+msgid "[dynaforms/dynaform_Fields.xml?SEARCH] Apply Filter" 
+msgstr "Filtrar" 
+
+#: dynaforms/fields_List.xml?XMLNODE_NAME 
+# dynaforms/fields_List.xml 
+# text - XMLNODE_NAME 
+msgid "[dynaforms/fields_List.xml?XMLNODE_NAME] Field Name" 
+msgstr "Nombre de Campo" 
+
+#: dynaforms/fields_List.xml?TYPE 
+# dynaforms/fields_List.xml 
+# dropdown - TYPE 
+msgid "[dynaforms/fields_List.xml?TYPE] Type" 
+msgstr "Tipo" 
+
+#: dynaforms/fields_List.xml?SEARCH 
+# dynaforms/fields_List.xml 
+# button - SEARCH 
+msgid "[dynaforms/fields_List.xml?SEARCH] Apply Filter" 
+msgstr "Filtrar" 
+
+#: dynaforms/dynaforms_JSEditor.xml?JS_LIST 
+# dynaforms/dynaforms_JSEditor.xml 
+# dropdown - JS_LIST 
+msgid "Section" 
+msgstr "Sección" 
+
+#: dynaforms/dynaforms_JSEditor.xml?JS 
+# dynaforms/dynaforms_JSEditor.xml 
+# textarea - JS 
+msgid "[dynaforms/dynaforms_JSEditor.xml?JS] Code" 
+msgstr "Código" 
+
+#: dynaforms/dynaforms_Edit.xml?TITLE 
+# dynaforms/dynaforms_Edit.xml 
+# title - TITLE 
+msgid "Dynaform Information" 
+msgstr "Dynaform Information" 
+
+#: dynaforms/dynaforms_Edit.xml?DYN_TITLE 
+# dynaforms/dynaforms_Edit.xml 
+# text - DYN_TITLE 
+msgid "[dynaforms/dynaforms_Edit.xml?DYN_TITLE] Dynaform" 
+msgstr "Dynaform" 
+
+#: dynaforms/dynaforms_Edit.xml?DYN_TYPE 
+# dynaforms/dynaforms_Edit.xml 
+# dropdown - DYN_TYPE 
+msgid "[dynaforms/dynaforms_Edit.xml?DYN_TYPE] Type" 
+msgstr "Tipo" 
+
+#: dynaforms/dynaforms_Edit.xml?DYN_DESCRIPTION 
+# dynaforms/dynaforms_Edit.xml 
+# textarea - DYN_DESCRIPTION 
+msgid "[dynaforms/dynaforms_Edit.xml?DYN_DESCRIPTION] Description" 
+msgstr "Descripción" 
+
+#: dynaforms/dynaforms_Edit.xml?ACCEPT 
+# dynaforms/dynaforms_Edit.xml 
+# button - ACCEPT 
+msgid "[dynaforms/dynaforms_Edit.xml?ACCEPT] Save" 
+msgstr "Guardar" 
+
+#: dynaforms/dynaforms_Editor.xml?title 
+# dynaforms/dynaforms_Editor.xml 
+# title - title 
+msgid "<table cellpadding=0 cellspacing=0 width=100% style=background-color:transparent>
+    <tr>
+      <td  class='FormTitle'>Preview</td>
+      <td align=right><img id=processbar src=/images/dynamicForm/processbar.gif style=display:none/></td>
+    </tr>
+  </table>" 
+msgstr "" 
+
+#: dynaforms/fields_Edit.xml?XMLNODE_NAME 
+# dynaforms/fields_Edit.xml 
+# text - XMLNODE_NAME 
+msgid "[dynaforms/fields_Edit.xml?XMLNODE_NAME] Field name" 
+msgstr "Nombre de campo" 
+
+#: dynaforms/fields_Edit.xml?TYPE 
+# dynaforms/fields_Edit.xml 
+# dropdown - TYPE 
+msgid "[dynaforms/fields_Edit.xml?TYPE] Type" 
+msgstr "Tipo" 
+
+#: dynaforms/fields_Edit.xml?DEFAULTVALUE 
+# dynaforms/fields_Edit.xml 
+# text - DEFAULTVALUE 
+msgid "Default value" 
+msgstr "Valor por defecto" 
+
+#: dynaforms/fields_Edit.xml?LABEL 
+# dynaforms/fields_Edit.xml 
+# text - LABEL 
+msgid "[dynaforms/fields_Edit.xml?LABEL] Label" 
+msgstr "Etiqueta" 
+
+#: dynaforms/fields_Edit.xml?ACCEPT 
+# dynaforms/fields_Edit.xml 
+# button - ACCEPT 
+msgid "[dynaforms/fields_Edit.xml?ACCEPT] Save" 
+msgstr "Guardar" 
+
+#: dynaforms/dynaforms_ShortList.xml?DYN_TITLE 
+# dynaforms/dynaforms_ShortList.xml 
+# text - DYN_TITLE 
+msgid "[dynaforms/dynaforms_ShortList.xml?DYN_TITLE] Dynaform" 
+msgstr "Dynaform" 
+
+#: dynaforms/dynaforms_ShortList.xml?SEARCH 
+# dynaforms/dynaforms_ShortList.xml 
+# button - SEARCH 
+msgid "[dynaforms/dynaforms_ShortList.xml?SEARCH] Apply Filter" 
+msgstr "Filtrar" 
+
+#: dynaforms/dynaforms_Options.xml?MNU_ADD 
+# dynaforms/dynaforms_Options.xml 
+# link - MNU_ADD 
+msgid "[dynaforms/dynaforms_Options.xml?MNU_ADD] New" 
+msgstr "Nuevo" 
+
+#: dynaforms/dynaforms_Properties.xml?PME_PROPERTIES_TITLE 
+# dynaforms/dynaforms_Properties.xml 
+# title - PME_PROPERTIES_TITLE 
+msgid "[dynaforms/dynaforms_Properties.xml?PME_PROPERTIES_TITLE] Properties" 
+msgstr "Propiedades" 
+
+#: dynaforms/dynaforms_Properties.xml?DYN_TITLE 
+# dynaforms/dynaforms_Properties.xml 
+# text - DYN_TITLE 
+msgid "[dynaforms/dynaforms_Properties.xml?DYN_TITLE] Dynaform" 
+msgstr "Dynaform" 
+
+#: dynaforms/dynaforms_Properties.xml?DYN_TYPE 
+# dynaforms/dynaforms_Properties.xml 
+# dropdown - DYN_TYPE 
+msgid "[dynaforms/dynaforms_Properties.xml?DYN_TYPE] Type" 
+msgstr "Tipo" 
+
+#: dynaforms/dynaforms_Properties.xml?DYN_DESCRIPTION 
+# dynaforms/dynaforms_Properties.xml 
+# textarea - DYN_DESCRIPTION 
+msgid "[dynaforms/dynaforms_Properties.xml?DYN_DESCRIPTION] Description" 
+msgstr "Descripción" 
+
+#: dynaforms/dynaforms_Properties.xml?SUBTITLE 
+# dynaforms/dynaforms_Properties.xml 
+# subtitle - SUBTITLE 
+msgid "Others" 
+msgstr "Otras" 
+
+#: dynaforms/dynaforms_Properties.xml?WIDTH 
+# dynaforms/dynaforms_Properties.xml 
+# text - WIDTH 
+msgid "Width" 
+msgstr "Ancho" 
+
+#: dynaforms/dynaforms_Properties.xml?MODE 
+# dynaforms/dynaforms_Properties.xml 
+# dropdown - MODE 
+msgid "[dynaforms/dynaforms_Properties.xml?MODE] Mode" 
+msgstr "Modo" 
+
+#: dynaforms/dynaforms_Properties.xml?ENABLETEMPLATE 
+# dynaforms/dynaforms_Properties.xml 
+# checkbox - ENABLETEMPLATE 
+msgid "Enable Template" 
+msgstr "Habilitar template" 
+
+#: dynaforms/dynaforms_Properties.xml?PME_PROP_APPLY 
+# dynaforms/dynaforms_Properties.xml 
+# button - PME_PROP_APPLY 
+msgid "Apply" 
+msgstr "Aplicar" 
+
+#: dynaforms/dynaforms_Properties.xml?PME_PROP_REVERT 
+# dynaforms/dynaforms_Properties.xml 
+# button - PME_PROP_REVERT 
+msgid "Revert" 
+msgstr "Deshacer" 
+
+#: processes/processes_Options.xml?MNU_ADD 
+# processes/processes_Options.xml 
+# link - MNU_ADD 
+msgid "[processes/processes_Options.xml?MNU_ADD] New" 
+msgstr "Nuevo" 
+
+#: processes/processes_Options.xml?MNU_SEARCH 
+# processes/processes_Options.xml 
+# link - MNU_SEARCH 
+msgid "[processes/processes_Options.xml?MNU_SEARCH] Advanced Search" 
+msgstr "Buscar Avanzado" 
+
+#: processes/processes_View.xml?TITLE1 
+# processes/processes_View.xml 
+# title - TITLE1 
+msgid "[processes/processes_View.xml?TITLE1] Process Information" 
+msgstr "Información del Proceso" 
+
+#: processes/processes_View.xml?PRO_TITLE 
+# processes/processes_View.xml 
+# text - PRO_TITLE 
+msgid "[processes/processes_View.xml?PRO_TITLE] Title" 
+msgstr "Título" 
+
+#: processes/processes_View.xml?PRO_DESCRIPTION 
+# processes/processes_View.xml 
+# textarea - PRO_DESCRIPTION 
+msgid "[processes/processes_View.xml?PRO_DESCRIPTION] Description" 
+msgstr "Descripción" 
+
+#: processes/processes_List.xml?PRO_TITLE 
+# processes/processes_List.xml 
+# text - PRO_TITLE 
+msgid "[processes/processes_List.xml?PRO_TITLE] Title" 
+msgstr "Título" 
+
+#: processes/processes_List.xml?PRO_DESCRIPTION 
+# processes/processes_List.xml 
+# text - PRO_DESCRIPTION 
+msgid "[processes/processes_List.xml?PRO_DESCRIPTION] Description" 
+msgstr "Descripción" 
+
+#: processes/processes_List.xml?PRO_STATUS 
+# processes/processes_List.xml 
+# link - PRO_STATUS 
+msgid "[processes/processes_List.xml?PRO_STATUS] Status" 
+msgstr "Estado" 
+
+#: processes/processes_ViewOptions.xml?MNU 
+# processes/processes_ViewOptions.xml 
+# link - MNU 
+msgid "[processes/processes_ViewOptions.xml?MNU] Back to list" 
+msgstr "Volver al listado" 
+
+#: processes/processes_Properties.xml?TITLE1 
+# processes/processes_Properties.xml 
+# title - TITLE1 
+msgid "[processes/processes_Properties.xml?TITLE1] Process Information" 
+msgstr "Información del Proceso" 
+
+#: processes/processes_Properties.xml?PRO_TITLE 
+# processes/processes_Properties.xml 
+# text - PRO_TITLE 
+msgid "[processes/processes_Properties.xml?PRO_TITLE] Title" 
+msgstr "Título" 
+
+#: processes/processes_Properties.xml?PRO_DESCRIPTION 
+# processes/processes_Properties.xml 
+# textarea - PRO_DESCRIPTION 
+msgid "[processes/processes_Properties.xml?PRO_DESCRIPTION] Description" 
+msgstr "Descripción" 
+
+#: processes/processes_Properties.xml?SUBMIT 
+# processes/processes_Properties.xml 
+# button - SUBMIT 
+msgid "[processes/processes_Properties.xml?SUBMIT] Save" 
+msgstr "Guardar" 
+
+#: processes/processes_Edit.xml?TITLE1 
+# processes/processes_Edit.xml 
+# title - TITLE1 
+msgid "[processes/processes_Edit.xml?TITLE1] Process Information" 
+msgstr "Información del Proceso" 
+
+#: processes/processes_Edit.xml?PRO_TITLE 
+# processes/processes_Edit.xml 
+# text - PRO_TITLE 
+msgid "[processes/processes_Edit.xml?PRO_TITLE] Title" 
+msgstr "Título" 
+
+#: processes/processes_Edit.xml?PRO_DESCRIPTION 
+# processes/processes_Edit.xml 
+# textarea - PRO_DESCRIPTION 
+msgid "[processes/processes_Edit.xml?PRO_DESCRIPTION] Description" 
+msgstr "Descripción" 
+
+#: processes/processes_Edit.xml?SUBMIT 
+# processes/processes_Edit.xml 
+# button - SUBMIT 
+msgid "[processes/processes_Edit.xml?SUBMIT] Save" 
+msgstr "Guardar" 
+
+#: processes/processes_NewOptions.xml?MNU 
+# processes/processes_NewOptions.xml 
+# link - MNU 
+msgid "[processes/processes_NewOptions.xml?MNU] Back to list" 
+msgstr "Volver al listado" 
+
+#: processes/processes_Search.xml?PRO_UID 
+# processes/processes_Search.xml 
+# text - PRO_UID 
+msgid "[processes/processes_Search.xml?PRO_UID] UID" 
+msgstr "UID" 
+
+#: processes/processes_Search.xml?PRO_TITLE 
+# processes/processes_Search.xml 
+# text - PRO_TITLE 
+msgid "[processes/processes_Search.xml?PRO_TITLE] Title" 
+msgstr "Título" 
+
+#: processes/processes_Search.xml?PRO_DESCRIPTION 
+# processes/processes_Search.xml 
+# text - PRO_DESCRIPTION 
+msgid "[processes/processes_Search.xml?PRO_DESCRIPTION] Description" 
+msgstr "Descripción" 
+
+#: processes/processes_Search.xml?search 
+# processes/processes_Search.xml 
+# button - search 
+msgid "[processes/processes_Search.xml?search] Apply Filter" 
+msgstr "Filtrar" 
+
+#: processes/processes_New.xml?TITLE1 
+# processes/processes_New.xml 
+# title - TITLE1 
+msgid "[processes/processes_New.xml?TITLE1] Process Information" 
+msgstr "Información del Proceso" 
+
+#: processes/processes_New.xml?PRO_TITLE 
+# processes/processes_New.xml 
+# text - PRO_TITLE 
+msgid "[processes/processes_New.xml?PRO_TITLE] Title" 
+msgstr "Título" 
+
+#: processes/processes_New.xml?PRO_DESCRIPTION 
+# processes/processes_New.xml 
+# textarea - PRO_DESCRIPTION 
+msgid "[processes/processes_New.xml?PRO_DESCRIPTION] Description" 
+msgstr "Descripción" 
+
+#: processes/processes_New.xml?SUBMIT 
+# processes/processes_New.xml 
+# button - SUBMIT 
+msgid "[processes/processes_New.xml?SUBMIT] Save" 
+msgstr "Guardar" 
+
+#: messages/messages_ShortList.xml?MESS_TITLE 
+# messages/messages_ShortList.xml 
+# text - MESS_TITLE 
+msgid "[messages/messages_ShortList.xml?MESS_TITLE] Output document" 
+msgstr "Documento requerido" 
+
+#: messages/messages_ShortList.xml?SEARCH 
+# messages/messages_ShortList.xml 
+# button - SEARCH 
+msgid "[messages/messages_ShortList.xml?SEARCH] Apply Filter" 
+msgstr "Filtrar" 
+
+#: messages/messages_List.xml?fMESS_TITLE 
+# messages/messages_List.xml 
+# text - fMESS_TITLE 
+msgid "[messages/messages_List.xml?fMESS_TITLE] Output document" 
+msgstr "Documento requerido" 
+
+#: messages/messages_List.xml?MESS_TYPE 
+# messages/messages_List.xml 
+# dropdown - MESS_TYPE 
+msgid "[messages/messages_List.xml?MESS_TYPE] Type" 
+msgstr "Tipo" 
+
+#: messages/messages_List.xml?fMESS_DESCRIPTION 
+# messages/messages_List.xml 
+# textarea - fMESS_DESCRIPTION 
+msgid "Content" 
+msgstr "Contenido" 
+
+#: messages/messages_List.xml?SEARCH 
+# messages/messages_List.xml 
+# button - SEARCH 
+msgid "[messages/messages_List.xml?SEARCH] Apply Filter" 
+msgstr "Filtrar" 
+
+#: messages/messages_Options.xml?MNU_ADD 
+# messages/messages_Options.xml 
+# link - MNU_ADD 
+msgid "[messages/messages_Options.xml?MNU_ADD] New" 
+msgstr "Nuevo" 
+
+#: messages/messages_Edit.xml?MESS_TITLE 
+# messages/messages_Edit.xml 
+# text - MESS_TITLE 
+msgid "Message Title" 
+msgstr "Título de Mensaje" 
+
+#: messages/messages_Edit.xml?MESS_TYPE 
+# messages/messages_Edit.xml 
+# dropdown - MESS_TYPE 
+msgid "Send as" 
+msgstr "Enviar como" 
+
+#: messages/messages_Edit.xml?MESS_DESCRIPTION 
+# messages/messages_Edit.xml 
+# textarea - MESS_DESCRIPTION 
+msgid "[messages/messages_Edit.xml?MESS_DESCRIPTION] Content" 
+msgstr "Contenido" 
+
+#: messages/messages_Edit.xml?ACCEPT 
+# messages/messages_Edit.xml 
+# button - ACCEPT 
+msgid "[messages/messages_Edit.xml?ACCEPT] Save" 
+msgstr "Guardar" 
+
+#: login/noViewPage.xml?title 
+# login/noViewPage.xml 
+# title - title 
+msgid "You don't have permission" 
+msgstr "You don't have permission" 
+
+#: login/noViewPage.xml?subtitle1 
+# login/noViewPage.xml 
+# subtitle - subtitle1 
+msgid "The account you are logged in under does not have enough security privileges to view this page" 
+msgstr "The account you are logged in under does not have enough security privileges to view this page" 
+
+#: login/noViewPage.xml?subtitle2 
+# login/noViewPage.xml 
+# subtitle - subtitle2 
+msgid "Please press back button to continue working with this system." 
+msgstr "Por favor presione el boton Regresar." 
+
+#: login/dbInfo.xml?DYNA_HEADER 
+# login/dbInfo.xml 
+# title - DYNA_HEADER 
+msgid "System Information" 
+msgstr "" 
+
+#: login/dbInfo.xml?FLUID 
+# login/dbInfo.xml 
+# caption - FLUID 
+msgid "ProcessMaker" 
+msgstr "" 
+
+#: login/dbInfo.xml?SYSTEM 
+# login/dbInfo.xml 
+# caption - SYSTEM 
+msgid "Operating System" 
+msgstr "" 
+
+#: login/dbInfo.xml?SERVER_SOFTWARE 
+# login/dbInfo.xml 
+# caption - SERVER_SOFTWARE 
+msgid "Web Server" 
+msgstr "" 
+
+#: login/dbInfo.xml?MYSQL 
+# login/dbInfo.xml 
+# caption - MYSQL 
+msgid "MySql" 
+msgstr "" 
+
+#: login/dbInfo.xml?PHP 
+# login/dbInfo.xml 
+# caption - PHP 
+msgid "PHP" 
+msgstr "" 
+
+#: login/dbInfo.xml?SERVER_NAME 
+# login/dbInfo.xml 
+# caption - SERVER_NAME 
+msgid "Server Name" 
+msgstr "" 
+
+#: login/dbInfo.xml?SERVER_ADDR 
+# login/dbInfo.xml 
+# caption - SERVER_ADDR 
+msgid "Server IP Address" 
+msgstr "" 
+
+#: login/dbInfo.xml?HTTP_USER_AGENT 
+# login/dbInfo.xml 
+# caption - HTTP_USER_AGENT 
+msgid "User's Browser" 
+msgstr "" 
+
+#: login/dbInfo.xml?IP 
+# login/dbInfo.xml 
+# caption - IP 
+msgid "User's Ip Address" 
+msgstr "" 
+
+#: login/dbInfo.xml?phptype 
+# login/dbInfo.xml 
+# caption - phptype 
+msgid "phptype:" 
+msgstr "" 
+
+#: login/dbInfo.xml?database 
+# login/dbInfo.xml 
+# caption - database 
+msgid "database:" 
+msgstr "" 
+
+#: login/dbInfo.xml?username 
+# login/dbInfo.xml 
+# caption - username 
+msgid "username:" 
+msgstr "" 
+
+#: login/dbInfo.xml?protocol 
+# login/dbInfo.xml 
+# caption - protocol 
+msgid "protocol:" 
+msgstr "" 
+
+#: login/dbInfo.xml?hostspec 
+# login/dbInfo.xml 
+# caption - hostspec 
+msgid "host:" 
+msgstr "" 
+
+#: login/sysLogin.xml?TITLE 
+# login/sysLogin.xml 
+# title - TITLE 
+msgid "[login/sysLogin.xml?TITLE] Login" 
+msgstr "Login" 
+
+#: login/sysLogin.xml?USR_USERNAME 
+# login/sysLogin.xml 
+# text - USR_USERNAME 
+msgid "[login/sysLogin.xml?USR_USERNAME] User" 
+msgstr "Usuario" 
+
+#: login/sysLogin.xml?USR_PASSWORD 
+# login/sysLogin.xml 
+# password - USR_PASSWORD 
+msgid "[login/sysLogin.xml?USR_PASSWORD] Password" 
+msgstr "Clave de Ingreso" 
+
+#: login/sysLogin.xml?USER_ENV 
+# login/sysLogin.xml 
+# text - USER_ENV 
+msgid "Workspace" 
+msgstr "Ambiente" 
+
+#: login/sysLogin.xml?BSUBMIT 
+# login/sysLogin.xml 
+# submit - BSUBMIT 
+msgid "[login/sysLogin.xml?BSUBMIT] Login" 
+msgstr "Ingresar" 
+
+#: login/login.xml?TITLE 
+# login/login.xml 
+# title - TITLE 
+msgid "[login/login.xml?TITLE] Login" 
+msgstr "Login" 
+
+#: login/login.xml?USR_USERNAME 
+# login/login.xml 
+# text - USR_USERNAME 
+msgid "[login/login.xml?USR_USERNAME] User" 
+msgstr "Usuario" 
+
+#: login/login.xml?USR_PASSWORD 
+# login/login.xml 
+# password - USR_PASSWORD 
+msgid "[login/login.xml?USR_PASSWORD] Password" 
+msgstr "Clave de Ingreso" 
+
+#: login/login.xml?USER_LANG 
+# login/login.xml 
+# dropdown - USER_LANG 
+msgid "[login/login.xml?USER_LANG] Language" 
+msgstr "Lenguaje" 
+
+#: login/login.xml?BSUBMIT 
+# login/login.xml 
+# submit - BSUBMIT 
+msgid "[login/login.xml?BSUBMIT] Login" 
+msgstr "Ingresar" 
+
+#: inputdocs/inputdocs_Options.xml?MNU_ADD 
+# inputdocs/inputdocs_Options.xml 
+# link - MNU_ADD 
+msgid "[inputdocs/inputdocs_Options.xml?MNU_ADD] New" 
+msgstr "Nuevo" 
+
+#: inputdocs/inputdocs_List.xml?INP_DOC_TITLE 
+# inputdocs/inputdocs_List.xml 
+# text - INP_DOC_TITLE 
+msgid "[inputdocs/inputdocs_List.xml?INP_DOC_TITLE] Input document" 
+msgstr "Documento requerido" 
+
+#: inputdocs/inputdocs_List.xml?INP_DOC_FORM_NEEDED 
+# inputdocs/inputdocs_List.xml 
+# dropdown - INP_DOC_FORM_NEEDED 
+msgid "[inputdocs/inputdocs_List.xml?INP_DOC_FORM_NEEDED] Type" 
+msgstr "Tipo" 
+
+#: inputdocs/inputdocs_List.xml?INP_DOC_ORIGINAL 
+# inputdocs/inputdocs_List.xml 
+# dropdown - INP_DOC_ORIGINAL 
+msgid "[inputdocs/inputdocs_List.xml?INP_DOC_ORIGINAL] Original" 
+msgstr "Original" 
+
+#: inputdocs/inputdocs_List.xml?INP_DOC_PUBLISHED 
+# inputdocs/inputdocs_List.xml 
+# dropdown - INP_DOC_PUBLISHED 
+msgid "[inputdocs/inputdocs_List.xml?INP_DOC_PUBLISHED] Access type" 
+msgstr "Tipo de acceso" 
+
+#: inputdocs/inputdocs_List.xml?INP_DOC_DESCRIPTION 
+# inputdocs/inputdocs_List.xml 
+# textarea - INP_DOC_DESCRIPTION 
+msgid "[inputdocs/inputdocs_List.xml?INP_DOC_DESCRIPTION] Description" 
+msgstr "Descripción" 
+
+#: inputdocs/inputdocs_List.xml?SEARCH 
+# inputdocs/inputdocs_List.xml 
+# button - SEARCH 
+msgid "[inputdocs/inputdocs_List.xml?SEARCH] Apply Filter" 
+msgstr "Filtrar" 
+
+#: inputdocs/inputdocs_ShortList.xml?INP_DOC_TITLE 
+# inputdocs/inputdocs_ShortList.xml 
+# text - INP_DOC_TITLE 
+msgid "[inputdocs/inputdocs_ShortList.xml?INP_DOC_TITLE] Input document" 
+msgstr "Documento requerido" 
+
+#: inputdocs/inputdocs_ShortList.xml?SEARCH 
+# inputdocs/inputdocs_ShortList.xml 
+# button - SEARCH 
+msgid "[inputdocs/inputdocs_ShortList.xml?SEARCH] Apply Filter" 
+msgstr "Filtrar" 
+
+#: inputdocs/inputdocs_Edit.xml?TITLE 
+# inputdocs/inputdocs_Edit.xml 
+# title - TITLE 
+msgid "Input Document Information" 
+msgstr "Input Document Information" 
+
+#: inputdocs/inputdocs_Edit.xml?INP_DOC_TITLE 
+# inputdocs/inputdocs_Edit.xml 
+# text - INP_DOC_TITLE 
+msgid "[inputdocs/inputdocs_Edit.xml?INP_DOC_TITLE] Input document" 
+msgstr "Documento requerido" 
+
+#: inputdocs/inputdocs_Edit.xml?INP_DOC_FORM_NEEDED 
+# inputdocs/inputdocs_Edit.xml 
+# dropdown - INP_DOC_FORM_NEEDED 
+msgid "[inputdocs/inputdocs_Edit.xml?INP_DOC_FORM_NEEDED] Type" 
+msgstr "Tipo" 
+
+#: inputdocs/inputdocs_Edit.xml?INP_DOC_ORIGINAL 
+# inputdocs/inputdocs_Edit.xml 
+# dropdown - INP_DOC_ORIGINAL 
+msgid "[inputdocs/inputdocs_Edit.xml?INP_DOC_ORIGINAL] Original" 
+msgstr "Original" 
+
+#: inputdocs/inputdocs_Edit.xml?INP_DOC_PUBLISHED 
+# inputdocs/inputdocs_Edit.xml 
+# dropdown - INP_DOC_PUBLISHED 
+msgid "[inputdocs/inputdocs_Edit.xml?INP_DOC_PUBLISHED] Access type" 
+msgstr "Tipo de acceso" 
+
+#: inputdocs/inputdocs_Edit.xml?INP_DOC_DESCRIPTION 
+# inputdocs/inputdocs_Edit.xml 
+# textarea - INP_DOC_DESCRIPTION 
+msgid "[inputdocs/inputdocs_Edit.xml?INP_DOC_DESCRIPTION] Description" 
+msgstr "Descripción" 
+
+#: inputdocs/inputdocs_Edit.xml?ACCEPT 
+# inputdocs/inputdocs_Edit.xml 
+# button - ACCEPT 
+msgid "[inputdocs/inputdocs_Edit.xml?ACCEPT] Save" 
+msgstr "Guardar" 
+
+#: outputdocs/outputdocs_Options.xml?MNU_ADD 
+# outputdocs/outputdocs_Options.xml 
+# link - MNU_ADD 
+msgid "[outputdocs/outputdocs_Options.xml?MNU_ADD] New" 
+msgstr "Nuevo" 
+
+#: outputdocs/outputdocs_List.xml?OUT_DOC_TITLE 
+# outputdocs/outputdocs_List.xml 
+# text - OUT_DOC_TITLE 
+msgid "[outputdocs/outputdocs_List.xml?OUT_DOC_TITLE] Output document" 
+msgstr "Documento requerido" 
+
+#: outputdocs/outputdocs_List.xml?OUT_DOC_FILENAME 
+# outputdocs/outputdocs_List.xml 
+# text - OUT_DOC_FILENAME 
+msgid "Filename" 
+msgstr "Nombre de Archivo" 
+
+#: outputdocs/outputdocs_List.xml?OUT_DOC_DESCRIPTION 
+# outputdocs/outputdocs_List.xml 
+# textarea - OUT_DOC_DESCRIPTION 
+msgid "[outputdocs/outputdocs_List.xml?OUT_DOC_DESCRIPTION] Description" 
+msgstr "Descripción" 
+
+#: outputdocs/outputdocs_List.xml?SEARCH 
+# outputdocs/outputdocs_List.xml 
+# button - SEARCH 
+msgid "[outputdocs/outputdocs_List.xml?SEARCH] Apply Filter" 
+msgstr "Filtrar" 
+
+#: outputdocs/outputdocs_ShortList.xml?OUT_DOC_TITLE 
+# outputdocs/outputdocs_ShortList.xml 
+# text - OUT_DOC_TITLE 
+msgid "[outputdocs/outputdocs_ShortList.xml?OUT_DOC_TITLE] Output document" 
+msgstr "Documento requerido" 
+
+#: outputdocs/outputdocs_ShortList.xml?SEARCH 
+# outputdocs/outputdocs_ShortList.xml 
+# button - SEARCH 
+msgid "[outputdocs/outputdocs_ShortList.xml?SEARCH] Apply Filter" 
+msgstr "Filtrar" 
+
+#: outputdocs/outputdocs_Edit.xml?TITLE 
+# outputdocs/outputdocs_Edit.xml 
+# title - TITLE 
+msgid "Output Document Information" 
+msgstr "Output Document Information" 
+
+#: outputdocs/outputdocs_Edit.xml?OUT_DOC_TITLE 
+# outputdocs/outputdocs_Edit.xml 
+# text - OUT_DOC_TITLE 
+msgid "[outputdocs/outputdocs_Edit.xml?OUT_DOC_TITLE] Output document" 
+msgstr "Documento requerido" 
+
+#: outputdocs/outputdocs_Edit.xml?OUT_DOC_FILENAME 
+# outputdocs/outputdocs_Edit.xml 
+# text - OUT_DOC_FILENAME 
+msgid "[outputdocs/outputdocs_Edit.xml?OUT_DOC_FILENAME] Filename" 
+msgstr "Nombre de Archivo" 
+
+#: outputdocs/outputdocs_Edit.xml?OUT_DOC_DESCRIPTION 
+# outputdocs/outputdocs_Edit.xml 
+# textarea - OUT_DOC_DESCRIPTION 
+msgid "[outputdocs/outputdocs_Edit.xml?OUT_DOC_DESCRIPTION] Description" 
+msgstr "Descripción" 
+
+#: outputdocs/outputdocs_Edit.xml?OUT_DOC_TEMPLATE 
+# outputdocs/outputdocs_Edit.xml 
+# html - OUT_DOC_TEMPLATE 
+msgid "Template" 
+msgstr "Template" 
+
+#: outputdocs/outputdocs_Edit.xml?ACCEPT 
+# outputdocs/outputdocs_Edit.xml 
+# button - ACCEPT 
+msgid "[outputdocs/outputdocs_Edit.xml?ACCEPT] Save" 
+msgstr "Guardar" 

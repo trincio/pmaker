@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm
+  name="dynaforms_HtmlEditor"
+  type="xmlform"
+  width="98%"
+  labelWidth="1px"
+  border="0"
+  enabletemplate="1"
+>
+
+<!--<toolbar type="toolbar" xmlfile="dynaforms/dynaforms_Toolbar"/>-->
+<URL type="phpvariable"/>
+<!--<HTML withoutLabel="1" type="textarea" rows="30" cols="60" defaultvalue="" group="0" style="white-space:pre-line;overflow:auto;width:100%;" enablehtml="0"><en/></HTML>-->
+<!--<HTML type="html" width="100%" height="400" toolbarSet="Basic"><en/></HTML>-->
+<HTML type="html" width="100%" height="350px" toolbarSet="toolbar2lines">
+<en>HTML View</en>
+<es>HTML View</es>
+</HTML>
+
+<PME_HTML_ENABLETEMPLATE type="checkbox" value="1" defaultvalue="0" labelOnRight="0">
+  <en>Enable HTML Editing</en>
+  <es>Habilitar Edición HTML</es>
+</PME_HTML_ENABLETEMPLATE>
+
+<PME_REFRESH_VIEW type="button" onclick="html2_html();">
+<en>Refresh View</en>
+<es>Refresh View</es>
+</PME_REFRESH_VIEW>
+
+<HTML2 type="textarea" cols="40" rows="16" style="width:100%">
+<en>HTML Code</en>
+<es>HTML Code</es>
+</HTML2>
+<PME_SYNCH_JS type="javascript">
+<![CDATA[
+  getField("HTML").onchange=function()
+  {
+    html_html2();
+  }
+  function html_html2()
+  {
+    if (window._editorHTML.doc.forms.length>0)
+    {
+      getField("HTML2").value=window._editorHTML.doc.forms[0].innerHTML;
+    }
+    else
+    {
+      getField("HTML2").value=getField("HTML").value;
+    }
+  }
+  function html2_html()
+  {
+    if (window._editorHTML.doc.forms.length>0)
+    {
+      window._editorHTML.doc.forms[0].innerHTML=getField("HTML2").value;
+      getField("HTML").value=getField("HTML2").value;
+    }
+    else
+    {
+      window._editorHTML.setHTML(getField("HTML2").value);
+      getField("HTML").value=getField("HTML2").value;
+    }
+  }
+  html_html2();
+]]>
+</PME_SYNCH_JS>
+<PME_RESIZE_JS type="javascript">
+function resizeHTMLEditor(){
+  try{
+    getField('HTML','dynaforms_HtmlEditor').style.height=
+    document.getElementById('dynaformEditor[4]').parentNode.clientHeight-32;
+   }catch(e){
+   }
+}
+resizeHTMLEditor();
+getField("PME_HTML_ENABLETEMPLATE","dynaforms_HtmlEditor").onclick=function()
+{
+	getField("ENABLETEMPLATE","dynaforms_Properties").checked=this.checked;
+	dynaformEditor.saveProperties();
+}
+</PME_RESIZE_JS>
+
+</dynaForm>

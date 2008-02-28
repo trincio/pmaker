@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm
+  name="triggers_NoAssign"
+  type="xmlform"
+  width="100%"
+>
+
+<MESSAGE type="subtitle" align="center">
+<en>All the triggers available were assigned!</en>
+<es>Todos los disparadores disponibles fueron asignados!</es>
+</MESSAGE>
+
+<ClOSE type="button" onclick="currentPopupWindow.remove();">
+<en>Close</en>
+<es>Cerrar</es>
+</ClOSE>
+
+</dynaForm>

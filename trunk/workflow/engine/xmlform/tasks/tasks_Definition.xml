@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm name="tasks_Definition" width="99%" mode="edit" border="0" enableTemplate="0" height="305px">
+
+<TAS_UID type="hidden" />
+
+<INDEX type="hidden" />
+
+<IFORM type="hidden" />
+
+<TAS_TITLE type="text" size="40" maxlength="255" defaultvalue="" required="1" group="1" dependentfields="" linkfield="" strto="" readonly="0" noshowingrid="0" readonlyingrid="0" totalizeable="0" sqlconnection="">
+  <en>Title</en>
+  <es>Título</es>
+</TAS_TITLE>
+
+<TAS_DESCRIPTION type="textarea" required="0" cols="38" rows="5" group="1">
+  <en>Description</en>
+  <es>Descripción</es>
+</TAS_DESCRIPTION>
+
+<TAS_START type="checkbox" value="TRUE" group="1">
+  <en>Starting task</en>
+  <es>Tarea inicial</es>
+</TAS_START>
+
+<JS type="javascript">
+Pm.tmp.propertiesPanel.events.remove = function() { bFunctionAlreadyAssigned = false; aTaskFlag = [false,false,false,false,false,false]; };
+
+/* Initialize panel buttons */
+if (!bFunctionAlreadyAssigned)
+{
+  leimnud.event.add(Pm.tmp.propertiesPanel.elements.statusBarButtons[0], 'click', function(){
+    aTaskFlag = [false,false,false,false,false,false];
+    saveTaskData(getField('TAS_UID').form, getField('IFORM').value, 2);
+  });
+  leimnud.event.add(Pm.tmp.propertiesPanel.elements.statusBarButtons[1], 'click', function(){
+    aTaskFlag = [false,false,false,false,false,false];
+    Pm.tmp.propertiesPanel.remove();
+  });
+  bFunctionAlreadyAssigned = true;
+}
+//alert(aTaskFlag);
+/* Recovery data */
+if (aTaskFlag[0])
+{
+  getField('TAS_TITLE').value       = oTaskData.TAS_TITLE;
+  getField('TAS_DESCRIPTION').value = oTaskData.TAS_DESCRIPTION;
+  getField('TAS_START').checked     = (oTaskData.TAS_START == 'TRUE' ? true : false);
+}
+else
+{
+  saveDataTaskTemporal(1);
+  aTaskFlag[0] = true;
+}
+</JS>
+
+</dynaForm>

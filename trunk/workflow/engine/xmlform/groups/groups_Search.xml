@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<dynaForm
+  cols="2"
+  name="groups_Search"
+  width="100%"
+>
+
+<USR_USERNAME type="text" dataCompareField="USR_USERNAME" dataCompareType="contains">
+  <en>User name</en>
+  <es>Nombre de usuario</es>
+</USR_USERNAME>
+
+<CUR_GRP_UID type="hidden" dataCompareField="GRP_UID" dataCompareType="=">
+  <en>User name</en>
+  <es>Nombre de usuario</es>
+</CUR_GRP_UID>
+<JSFILTER1 type="javascript" replaceTags="1">
+var currentPagedTable = @#PAGED_TABLE_ID;
+</JSFILTER1>
+
+<!-- ABOUT FILTER FORM
+The next fields has an special use with pagedTable.
+  SEARCH         : This is the button that executes the search or filtering.
+                   (Here you could change the text of the button.)
+  PAGED_TABLE_ID : This parameter is recieved from the pagedTable class
+                   that includes this filter form.
+  JSFILTER       : Javascript code that executes the filtering action.
+-->
+<SEARCH type="button" onclick="pagedTableFilter( this.form );">
+  <en>Apply Filter</en>
+  <es>Filtrar</es>
+</SEARCH>
+<PAGED_TABLE_ID type="private"/>
+<JSFILTER type="javascript" replaceTags="1">
+function pagedTableFilter( form ) {
+  @#PAGED_TABLE_ID.doFilter( form );
+}
+</JSFILTER>
+</dynaForm>

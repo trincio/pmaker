@@ -1,0 +1,6986 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm name="factoryLabels.xml" languages="2">
+<ID_REQUEST_DOCUMENTS>
+<es>Documentos Requeridos</es>
+<en>Input Documents</en>
+<fa>مستندات ورودي</fa>
+</ID_REQUEST_DOCUMENTS>
+<ID_WEBBOT>
+<es>Webbots</es>
+<en>Webbots</en>
+<fa>اسکریپ ها</fa>
+</ID_WEBBOT>
+<ID_CREATE_NEW_WEBBOT>
+<es>Crear nuevo Webbot</es>
+<en>Create new Webbot</en>
+<fa>ايجاد اسکریپ جديد</fa>
+</ID_CREATE_NEW_WEBBOT>
+<ID_UPLOAD_USER_MANUAL>
+<es>Subir Manual de Usuario</es>
+<en>Upload User Manual</en>
+<fa>بارگذاري راهنماي كاربر</fa>
+</ID_UPLOAD_USER_MANUAL>
+<ID_UPLOAD_ADMIN_MANUAL>
+<es>Subir Manual de Administrador</es>
+<en>Upload Administrator Manual</en>
+<fa>بارگذاري راهنماي مدير سيستم</fa>
+</ID_UPLOAD_ADMIN_MANUAL>
+<ID_UPLOAD_DEMO>
+<es>Subir Demo</es>
+<en>Upload Demo</en>
+<fa>بارگذاري نمايش</fa>
+</ID_UPLOAD_DEMO>
+<ID_ASSIGN_DOCUMENT>
+<es>Documento a Asignar</es>
+<en>Document Assign</en>
+<fa>تخصيص مستند</fa>
+</ID_ASSIGN_DOCUMENT>
+<ID_OUTPUTDOC_REQUIREDS>
+<es>Documentos Generados Requeridos</es>
+<en>Output Documents Required</en>
+<fa>مستند خروجي مورد نياز است</fa>
+</ID_OUTPUTDOC_REQUIREDS>
+<ID_DOCUMENTS_REQUIREDS>
+<es>Documentos Requeridos</es>
+<en>Documents Required</en>
+<fa>مستند مورد نياز است</fa>
+</ID_DOCUMENTS_REQUIREDS>
+<ID_WEBBOTS_REQUIREDS>
+<es>Webbots Requeridos</es>
+<en>Required Webbots</en>
+<fa>مورد نيازاسکریپ هاي</fa>
+</ID_WEBBOTS_REQUIREDS>
+<ID_REQUIRED_WEBBOT>
+<es>Webbot Requerido</es>
+<en>Required Webbot</en>
+<fa>اسکریپ موردنياز</fa>
+</ID_REQUIRED_WEBBOT>
+<ID_DYNA_ASSIGNED>
+<es>Dynaform Asignado</es>
+<en>Dynaform Assigned</en>
+<fa>فرم تخصيص داده شده</fa>
+</ID_DYNA_ASSIGNED>
+<ID_ASSIGN_DYNAFORM>
+<es>Asignar Dynaform</es>
+<en>Assign Dynaform</en>
+<fa>فرم را تخصيص دهيد</fa>
+</ID_ASSIGN_DYNAFORM>
+<ID_OUTPUT_DOCUMENTS>
+<es>Documentos Generados</es>
+<en>Output Documents</en>
+<fa>مستندات خروجي</fa>
+</ID_OUTPUT_DOCUMENTS>
+<ID_BUILDING_BLOCKS>
+<es>Elementos</es>
+<en>Building Blocks</en>
+<fa>بلوكهاي ساخت</fa>
+</ID_BUILDING_BLOCKS>
+<ID_EXTERNAL_INITIAL>
+<es>Inicio externo</es>
+<en>Web Entry</en>
+<fa>درگاه  وب</fa>
+</ID_EXTERNAL_INITIAL>
+<ID_EDIT_PROCESS>
+<es>Editar Proceso</es>
+<en>Edit Process</en>
+<fa>ويرايش فرآيند</fa>
+</ID_EDIT_PROCESS>
+<ID_TABLES>
+<es>Tablas</es>
+<en>Tables</en>
+<fa>جداول</fa>
+</ID_TABLES>
+<ID_STAGE>
+<es>Etapas</es>
+<en>Section Views</en>
+<fa>ديدگاه محدود</fa>
+</ID_STAGE>
+<ID_APPLICATION_OWNER>
+<es>Dueño del Caso</es>
+<en>Case Owner</en>
+<fa>مالك مورد</fa>
+</ID_APPLICATION_OWNER>
+<ID_MASTER>
+<es>Maestro</es>
+<en>Master</en>
+<fa>اصلي</fa>
+</ID_MASTER>
+<ID_TABLE_NAME>
+<es>Nombre de la tabla</es>
+<en>Table Name</en>
+<fa>نام جدول</fa>
+</ID_TABLE_NAME>
+<ID_FILE>
+<es>Archivo</es>
+<en>File</en>
+<fa>پرونده</fa>
+</ID_FILE>
+<ID_TO>
+<es>Para</es>
+<en>To</en>
+<fa>به</fa>
+</ID_TO>
+<ID_DAYS>
+<es>Días</es>
+<en>Days</en>
+<fa>روز</fa>
+</ID_DAYS>
+<ID_DOCUMENT>
+<es>Documento</es>
+<en>Document</en>
+<fa>مستند</fa>
+</ID_DOCUMENT>
+<ID_FLUJOGRAMA>
+<es>Flujograma</es>
+<en>Process Map</en>
+<fa>نقشه فرآيند</fa>
+</ID_FLUJOGRAMA>
+<ID_RULE_OF_DERIVATION>
+<es>Reglas de derivación</es>
+<en>Derivation Rules</en>
+<fa>نحوه هاي ارجاع كار</fa>
+</ID_RULE_OF_DERIVATION>
+<ID_ROUTE>
+<es>Regla de derivación</es>
+<en>Derivation rule</en>
+<fa>نحوه ارجاع كار</fa>
+</ID_ROUTE>
+<ID_TYPE_TASK>
+<es>Tipo de tarea</es>
+<en>Type of task</en>
+<fa>نوع كار</fa>
+</ID_TYPE_TASK>
+<ID_START_TASK>
+<es>Tarea inicial</es>
+<en>Start task</en>
+<fa>شروع كار</fa>
+</ID_START_TASK>
+<ID_INITIAL_TASK>
+<es>Tarea inicial</es>
+<en>Initial task</en>
+<fa>كار آغازين</fa>
+</ID_INITIAL_TASK>
+<ID_FINAL_TASK>
+<es>Tarea final</es>
+<en>Final task</en>
+<fa>كار  پاياني</fa>
+</ID_FINAL_TASK>
+<ID_DESCRIPTION_SUB_PROCESS>
+<es>Descripción de la Tarea</es>
+<en>Task Description</en>
+<fa>شرح</fa>
+</ID_DESCRIPTION_SUB_PROCESS>
+<ID_ALERT>
+<es>Alertas</es>
+<en>Alerts</en>
+<fa>هشدارها</fa>
+</ID_ALERT>
+<ID_EDIT>
+<es>Editar</es>
+<en>Edit</en>
+<fa>ويرايش</fa>
+</ID_EDIT>
+<ID_SELECT_FIELD_TYPE>
+<es>Seleccione el tipo de campo</es>
+<en>Select field type</en>
+<fa>انتخاب  نوع  فيلد</fa>
+</ID_SELECT_FIELD_TYPE>
+<ID_TEST>
+<es>Pruebe ahora</es>
+<en>Try it now!</en>
+<fa>امتحان كنيد</fa>
+</ID_TEST>
+<ID_MEMBERS_GROUP>
+<es>Miembros del grupo</es>
+<en>Group members</en>
+<fa>اعضاي گروه</fa>
+</ID_MEMBERS_GROUP>
+<USER_OR_GROUP>
+<es>Usuario o grupo a añadir</es>
+<en>User or group to add</en>
+<fa>كاربر يا گروه براي افزودن</fa>
+</USER_OR_GROUP>
+<ADD_USER_OR_GROUP>
+<es>Añadir usuario o grupo</es>
+<en>Add user or group</en>
+<fa>افزودن كاربر يا گروه</fa>
+</ADD_USER_OR_GROUP>
+<ID_ADD_EXTERNAL_USER>
+<es>Añadir usuario externo</es>
+<en>Add external user</en>
+<fa>افزودن كاربر خارجي</fa>
+</ID_ADD_EXTERNAL_USER>
+<USER_GROUP>
+<es>Usuario o Grupo</es>
+<en>User or Group</en>
+<fa>كاربر يا گروه</fa>
+</USER_GROUP>
+<ID_TOOLS>
+<es>Herramientas</es>
+<en>Tools</en>
+<fa>ابزارها</fa>
+</ID_TOOLS>
+<ID_EXPORT_PROCESS>
+<es>Exportar Proceso</es>
+<en>Export Process</en>
+<fa>صدور فرآيند</fa>
+</ID_EXPORT_PROCESS>
+<ID_YOU_ARE_HERE>
+<es>Tu estas aquí</es>
+<en>You are here</en>
+<fa>شما اينجا هستيد</fa>
+</ID_YOU_ARE_HERE>
+<ID_FORMAT>
+<es>Formato</es>
+<en>Format</en>
+<fa>فرمت</fa>
+</ID_FORMAT>
+<ID_TABLE_TYPE>
+<es>Tipo de Variables</es>
+<en>Variable type</en>
+<fa>نوع متغير</fa>
+</ID_TABLE_TYPE>
+<ID_DATABASE>
+<es>Conección a Base de Datos</es>
+<en>DB Connection</en>
+<fa>اتصالات پايگاه داده</fa>
+</ID_DATABASE>
+<ID_TABLE_CREATE>
+<es>CREAR TABLA</es>
+<en>CREATE TABLE</en>
+<fa>ايجاد جدول</fa>
+</ID_TABLE_CREATE>
+<UPDATE_FORMVARIABLES>
+<es>Actualizar Variables</es>
+<en>UPDATE DYNAFORM VARIABLES</en>
+<fa>به هنگام سازي متغيرهاي فرمها</fa>
+</UPDATE_FORMVARIABLES>
+<ID_GUID_PROCESS>
+<es>GUID del Proceso</es>
+<en>Process GUID</en>
+<fa>طراحي واسط كاربري گرافيكي فرآيند</fa>
+</ID_GUID_PROCESS>
+<ID_TYPE_EMAIL>
+<es>Tipo de correo</es>
+<en>Type of E-mail</en>
+<fa>نوع پست الكترونيك</fa>
+</ID_TYPE_EMAIL>
+<ID_DOWNLOAD_ODEPM>
+<es>Descargar Editor de Documentos de Salida</es>
+<en>Download Output Documents Editor</en>
+<fa>دريافت  ويراشگر مستندات</fa>
+</ID_DOWNLOAD_ODEPM>
+<ID_NEW_VERSION>
+<es>Versionamiento</es>
+<en>New Version</en>
+<fa>نسخه جديد</fa>
+</ID_NEW_VERSION>
+<WRG_NEW_REPORT>
+<es>Nuevo Reporte</es>
+<en>New Report</en>
+<fa>گزارش جديد</fa>
+</WRG_NEW_REPORT>
+<WRG_PROPERTIES_FOLDER>
+<es>Propiedades</es>
+<en>Properties</en>
+<fa>خصوصيات</fa>
+</WRG_PROPERTIES_FOLDER>
+<WRG_NEW_FOLDER>
+<es>Nueva Carpeta</es>
+<en>New Folder</en>
+<fa>پوشه جديد</fa>
+</WRG_NEW_FOLDER>
+<WRG_STEP1_TITLE>
+<es>Seleccione las tablas para el reporte</es>
+<en>Choose tables for the report</en>
+<fa>جداول گزارش را انتخاب نماييد</fa>
+</WRG_STEP1_TITLE>
+<WRG_PROCESS>
+<es>Procesos</es>
+<en>Process</en>
+<fa>فرآيند</fa>
+</WRG_PROCESS>
+<WRG_TABLE>
+<es>Tablas</es>
+<en>Tables</en>
+<fa>جداول</fa>
+</WRG_TABLE>
+<WRG_ADD>
+<es>Añadir</es>
+<en>Add</en>
+<fa>اضافه</fa>
+</WRG_ADD>
+<WRG_UP>
+<es>Subir</es>
+<en>Up</en>
+<fa>بالا</fa>
+</WRG_UP>
+<WRG_DOWN>
+<es>Bajar</es>
+<en>Down</en>
+<fa>پايين</fa>
+</WRG_DOWN>
+<WRG_BUTTON_CANCEL>
+<es>Cancelar</es>
+<en>Cancel</en>
+<fa>لغو</fa>
+</WRG_BUTTON_CANCEL>
+<WRG_BUTTON_NEXT>
+<es>Siguiente</es>
+<en>Next</en>
+<fa>بعدي</fa>
+</WRG_BUTTON_NEXT>
+<WRG_RUN_REPORT>
+<es>Ejecutar</es>
+<en>Run</en>
+<fa>اجرا</fa>
+</WRG_RUN_REPORT>
+<WRG_CHANGE_CRITERIA>
+<es>Cambiar Criterio</es>
+<en>Change Criteria</en>
+<fa>تغيير معيار</fa>
+</WRG_CHANGE_CRITERIA>
+<WRG_SAVE_REPORT>
+<es>Guardar Reporte</es>
+<en>Save Report</en>
+<fa>ثبت گزارش</fa>
+</WRG_SAVE_REPORT>
+<WRG_SAVE_SNAPSHOT>
+<es>Guardar Snapshot</es>
+<en>Save Snapshot</en>
+<fa>ثبت تصويرلحظه اي</fa>
+</WRG_SAVE_SNAPSHOT>
+<WRG_DELETE_REPORT>
+<es>Eliminar</es>
+<en>Delete</en>
+<fa>حذف</fa>
+</WRG_DELETE_REPORT>
+<WRG_PROPERTIES_REPORT>
+<es>Propiedades</es>
+<en>Properties</en>
+<fa>خصوصيات</fa>
+</WRG_PROPERTIES_REPORT>
+<WRG_EXPORT_EXCEL_REPORT>
+<es>Exportar</es>
+<en>Export</en>
+<fa>صدور</fa>
+</WRG_EXPORT_EXCEL_REPORT>
+<WRG_PERM_REPORT>
+<es>Permisos</es>
+<en>Permissions</en>
+<fa>مجوزها</fa>
+</WRG_PERM_REPORT>
+<WRG_GRAPH_WIZARD>
+<es>Agregar Gráfico</es>
+<en>Add Graph</en>
+<fa>افزودن نمودار</fa>
+</WRG_GRAPH_WIZARD>
+<WRG_REPORT_INFORMATION>
+<es>Información de Reporte</es>
+<en>Report Information</en>
+<fa>اطلاعات گزارش</fa>
+</WRG_REPORT_INFORMATION>
+<WRG_GRAPHICS_THUMB>
+<es>Gráficos</es>
+<en>Graphics</en>
+<fa>نمودارها</fa>
+</WRG_GRAPHICS_THUMB>
+<WRG_NAME_REPORT>
+<es>Nombre</es>
+<en>Name</en>
+<fa>نام</fa>
+</WRG_NAME_REPORT>
+<WRG_DESCRIPTION_REPORT>
+<es>Descripción</es>
+<en>Description</en>
+<fa>شرح</fa>
+</WRG_DESCRIPTION_REPORT>
+<WRG_AUTHOR_REPORT>
+<es>Autor</es>
+<en>Author</en>
+<fa>مولف</fa>
+</WRG_AUTHOR_REPORT>
+<WRG_TOTAL_REPORT>
+<es>Cantidad de Registros</es>
+<en>Results Count</en>
+<fa>شمارش نتايج</fa>
+</WRG_TOTAL_REPORT>
+<WRG_UPDATE_REPORT>
+<es>Actualizado</es>
+<en>Updated</en>
+<fa>به هنگام شده</fa>
+</WRG_UPDATE_REPORT>
+<WRG_DATE_REPORT>
+<es>Creado</es>
+<en>Created</en>
+<fa>ايجاد شده</fa>
+</WRG_DATE_REPORT>
+<WRG_MASTER_REPORT>
+<es>Reporte Principal</es>
+<en>Master Report</en>
+<fa>گزارش اصلي</fa>
+</WRG_MASTER_REPORT>
+<WRG_SNAP_REPORT>
+<es>Snapshot</es>
+<en>Snapshot</en>
+<fa>تصوير لحظه اي</fa>
+</WRG_SNAP_REPORT>
+<WRG_CLOSE_REPORT>
+<es>Cerrar Reporte</es>
+<en>Close Report</en>
+<fa>بستن گزارش</fa>
+</WRG_CLOSE_REPORT>
+<WRG_VIEW_GRAPH>
+<es>Ver</es>
+<en>View</en>
+<fa>مشاهده</fa>
+</WRG_VIEW_GRAPH>
+<WRG_EDIT_GRAPH>
+<es>Editar</es>
+<en>Edit</en>
+<fa>ويرايش</fa>
+</WRG_EDIT_GRAPH>
+<WRG_EXPORT_GRAPH>
+<es>Exportar</es>
+<en>Export</en>
+<fa>صدور</fa>
+</WRG_EXPORT_GRAPH>
+<WRG_DELETE_GRAPH>
+<es>Eliminar</es>
+<en>Delete</en>
+<fa>حذف</fa>
+</WRG_DELETE_GRAPH>
+<WRG_UNSAVED_REPORT>
+<es>No Guardado</es>
+<en>Unsaved</en>
+<fa>ذخيره نشده</fa>
+</WRG_UNSAVED_REPORT>
+<WRG_EXPIRES_REPORT>
+<es>Expira en</es>
+<en>Expires</en>
+<fa>منقضي مي شود</fa>
+</WRG_EXPIRES_REPORT>
+<WRG_CONFIRM_DELE_ROLE>
+<es>Está seguro de eliminar este rol?</es>
+<en>Are you sure to delete this role?</en>
+<fa>آيا از حذف اين نقش اطمينان داريد؟</fa>
+</WRG_CONFIRM_DELE_ROLE>
+<WRG_CONFIRM_DELE_REPORT>
+<es>Está seguro de eliminar este reporte?</es>
+<en>Are you sure to delete this report?</en>
+<fa>آيا از حذف اين گزارش اطمينان داريد؟</fa>
+</WRG_CONFIRM_DELE_REPORT>
+<WRG_CANT_DELE_REPORT>
+<es>No puede eliminar el reporte, existen Snapshots que dependen de él</es>
+<en>You can´t delete this report. There are Snapshots</en>
+<fa>نمي توانيد گزارش را حذف  نماييد چون تصاوير لحظه اي وجود دارند.</fa>
+</WRG_CANT_DELE_REPORT>
+<WRG_CONFIRM_DELE_GRP>
+<es>Está seguro de eliminar este gráfico?</es>
+<en>Are you sure to delete this graph?</en>
+<fa>آيا از حذف اين نمودار اطمينان داريد؟</fa>
+</WRG_CONFIRM_DELE_GRP>
+<WRG_CONFIRM_DELE_GRP_DASH>
+<es>Está seguro de quitar este gráfico del Dashboard?</es>
+<en>Are you sure to remove this graph from Dashboard?</en>
+<fa>آيا از حذف اين نمودار از ميز كار اطمينان داريد؟</fa>
+</WRG_CONFIRM_DELE_GRP_DASH>
+<WRG_TITLE_MAGNIFIED_VIEW>
+<es>Gráfico - Vista Amplificada</es>
+<en>Graph - Magnified View</en>
+<fa>نمودار - بزرگنمايي شده</fa>
+</WRG_TITLE_MAGNIFIED_VIEW>
+<WRG_TABLE_NAME_REPORT>
+<es>Nombre de la Tabla</es>
+<en>Table Name</en>
+<fa>نام جدول</fa>
+</WRG_TABLE_NAME_REPORT>
+<WRG_PREBUILT_1>
+<es>Resumen General por Procesos y tareas</es>
+<en>General summary by process and tasks</en>
+<fa>خلاصه كلي بر اساس  فرآيند و كارها</fa>
+</WRG_PREBUILT_1>
+<WRG_PREBUILT_2 date="2007-03-13 09:02:45">
+<es>Casos Pendientes por Departamento y / o funcionario</es>
+<en>Pending Processes by departments and/or employee</en>
+<fa>فرآيندهاي معوقه بر اساس دپارتمانها و / يا كارمندان</fa>
+</WRG_PREBUILT_2>
+<WRG_PREBUILT_3>
+<es>Casos pendientes por tarea</es>
+<en>Pending Processes by task</en>
+<fa>فرآيندهاي  معوقه بر اساس كار</fa>
+</WRG_PREBUILT_3>
+<WRG_PREBUILT_4>
+<es>Casos en pausa</es>
+<en>Processes on hold</en>
+<fa>فرِآيندهاي متوقف شده</fa>
+</WRG_PREBUILT_4>
+<WRG_PREBUILT_5>
+<es>Casos pendientes</es>
+<en>Pending Processes</en>
+<fa>فرآيندهاي معوقه</fa>
+</WRG_PREBUILT_5>
+<WRG_PREBUILT_6>
+<es>Gerencial por usuario</es>
+<en>Managerial report by user</en>
+<fa>گزارش مديريتي بر اساس كاربر</fa>
+</WRG_PREBUILT_6>
+<WRG_PREBUILT_7>
+<es>Gerencial por departamento</es>
+<en>Managerial report by department</en>
+<fa>گزارش مديريتي بر اساس دپارتمان</fa>
+</WRG_PREBUILT_7>
+<WRG_PREBUILT_8>
+<es>Nombre</es>
+<en>Name</en>
+<fa>نام</fa>
+</WRG_PREBUILT_8>
+<ID_EXTERNALS_USERS_GROUP>
+<es>Grupo de usuarios externos</es>
+<en>Externals users group</en>
+<fa>Externals users group</fa>
+</ID_EXTERNALS_USERS_GROUP>
+<ENTER_YOUR_REGISTRATION>
+<es>Ingrese el código mostrado</es>
+<en>Enter the code shown</en>
+<fa>كد نمايش داده شده را وارد نماييد</fa>
+</ENTER_YOUR_REGISTRATION>
+<VERIFY_YOUR_REGISTRATION>
+<es>Verifique su código de registro</es>
+<en>Verify Your Registration</en>
+<fa>ثبت نام خود را بازبيني نماييد</fa>
+</VERIFY_YOUR_REGISTRATION>
+<YOUR_ANSWER>
+<es>Su respuesta</es>
+<en>Your Answer</en>
+<fa>پاسخ شما</fa>
+</YOUR_ANSWER>
+<BIRTHDAY>
+<es>Fecha de Nacimiento</es>
+<en>Birthday</en>
+<fa>تاريخ تولد</fa>
+</BIRTHDAY>
+<SELECT_USR_STATUS>
+<es>Seleccione un Estado</es>
+<en>Select a State</en>
+<fa>يك ايالت را انتخاب نماييد</fa>
+</SELECT_USR_STATUS>
+<SELECT_USR_ROLE>
+<es>Seleccione un Rol</es>
+<en>Select a Role</en>
+<fa>يك نقش را انتخاب نماييد</fa>
+</SELECT_USR_ROLE>
+<SELECT_QUESTION>
+<es>Seleccione una Pregunta</es>
+<en>Select a Question</en>
+<fa>يك سوال انتخاب نماييد</fa>
+</SELECT_QUESTION>
+<SELECT_LOCATION>
+<es>Seleccione una Ubicación</es>
+<en>Select a Location</en>
+<fa>يك موقعيت مكاني را انتخاب نماييد</fa>
+</SELECT_LOCATION>
+<SELECT_CITY>
+<es>Seleccione una Ciudad</es>
+<en>Select a City</en>
+<fa>يك شهر را انتخاب نماييد</fa>
+</SELECT_CITY>
+<SELECT_COUNTRY>
+<es>Seleccione un País</es>
+<en>Select a Country</en>
+<fa>يك كشور را انتخاب نماييد</fa>
+</SELECT_COUNTRY>
+<IF_YOU_FORGET_PASS>
+<es>Si olvida su Contraseña</es>
+<en>If You Forget Your Password</en>
+<fa>اگر رمز عبور خود را فراموش كرده ايد</fa>
+</IF_YOU_FORGET_PASS>
+<SECURITY_QUESTION>
+<es>Pregunta de Seguridad</es>
+<en>Security Question</en>
+<fa>سوال امنيتي</fa>
+</SECURITY_QUESTION>
+<USR_USER_NAME>
+<es>Nombre de Usuario</es>
+<en>User ID</en>
+<fa>شناسه كاربري</fa>
+</USR_USER_NAME>
+<USR_FIRSTNAME>
+<es>Nombres</es>
+<en>First Name</en>
+<fa>نام</fa>
+</USR_FIRSTNAME>
+<USR_MIDNAME>
+<es>Segundo Nombre</es>
+<en>Middle Name</en>
+<fa>نام مياني</fa>
+</USR_MIDNAME>
+<USR_LASTNAME>
+<es>Apellido</es>
+<en>Last Name</en>
+<fa>نام فاميل</fa>
+</USR_LASTNAME>
+<USR_NAMES>
+<es>Nombres</es>
+<en>First Name</en>
+<fa>نام</fa>
+</USR_NAMES>
+<USR_EMAIL>
+<es>Correo electrónico</es>
+<en>E-mail</en>
+<fa>نشاني پست الكترونيكي</fa>
+</USR_EMAIL>
+<USR_PHONE>
+<es>Teléfono</es>
+<en>Phone</en>
+<fa>تلفن</fa>
+</USR_PHONE>
+<USR_FAX>
+<es>Fax</es>
+<en>Fax</en>
+<fa>فكس</fa>
+</USR_FAX>
+<USR_CELLULAR>
+<es>Celular</es>
+<en>Cell Phone</en>
+<fa>تلفون سلولي</fa>
+</USR_CELLULAR>
+<USR_ADDRESS>
+<es>Dirección</es>
+<en>Address</en>
+<fa>آدرس</fa>
+</USR_ADDRESS>
+<USR_CITY>
+<es>Ciudad</es>
+<en>City</en>
+<fa>شهر</fa>
+</USR_CITY>
+<USR_ZIP_CODE>
+<es>Código postal</es>
+<en>Zip Code</en>
+<fa>كد پستي</fa>
+</USR_ZIP_CODE>
+<ID_PERSONAL_INFORMATION>
+<es>Información Personsal</es>
+<en>Personal Information</en>
+<fa>اطلاعات شخصي</fa>
+</ID_PERSONAL_INFORMATION>
+<ID_ATTACH>
+<es>Adjuntar</es>
+<en>Attach</en>
+<fa>پيوست</fa>
+</ID_ATTACH>
+<ID_INFORMATION>
+<es>Información</es>
+<en>Information</en>
+<fa>اطلاعات</fa>
+</ID_INFORMATION>
+<ID_GENERATE_DOC>
+<es>Generar Documento</es>
+<en>Generate Document</en>
+<fa>توليد سند</fa>
+</ID_GENERATE_DOC>
+<ID_OPEN>
+<es>Abrir</es>
+<en>Open</en>
+<fa>باز كردن</fa>
+</ID_OPEN>
+<ID_SEE_MORE>
+<es>Ver más información</es>
+<en>See more information</en>
+<fa>مشاهده اطلاعات بيشتر</fa>
+</ID_SEE_MORE>
+<ID_CASE>
+<es>Caso</es>
+<en>Case</en>
+<fa>مورد كاري</fa>
+</ID_CASE>
+<ID_WHERE>
+<es>¿Donde estoy?</es>
+<en>Where am I?</en>
+<fa>كجا هستم؟</fa>
+</ID_WHERE>
+<ID_READ_WRITE>
+<es>Lectura y escritura</es>
+<en>Read &amp; Write</en>
+<fa>خواندن و نوشتن</fa>
+</ID_READ_WRITE>
+<ID_READ_ONLY>
+<es>Solamente lectura</es>
+<en>Read only</en>
+<fa>فقط خواندني</fa>
+</ID_READ_ONLY>
+<ID_FROM_USER>
+<es>por Usuario Externo</es>
+<en>from External User</en>
+<fa>از كاربر خارجي</fa>
+</ID_FROM_USER>
+<ID_FROM_FORM>
+<es>Un paso</es>
+<en>One Step</en>
+<fa>يك گام</fa>
+</ID_FROM_FORM>
+<ID_PROPERTIES>
+<es>Propiedades</es>
+<en>Properties</en>
+<fa>خصوصيات</fa>
+</ID_PROPERTIES>
+<ID_ADD_FORM>
+<es>Añadir Formulario</es>
+<en>Add Form</en>
+<fa>افزودن فرم</fa>
+</ID_ADD_FORM>
+<ID_DEL_FORM>
+<es>Eliminar Formulario</es>
+<en>Delete Form</en>
+<fa>حذف فرم</fa>
+</ID_DEL_FORM>
+<ID_ADD_FIELD>
+<es>Añadir campo</es>
+<en>Add field</en>
+<fa>اضافه كردن فيلد</fa>
+</ID_ADD_FIELD>
+<ID_DEL_FIELD>
+<es>Eliminar Campo</es>
+<en>Delete Field</en>
+<fa>حذف فيلد</fa>
+</ID_DEL_FIELD>
+<ID_SEARCH>
+<es>Buscar</es>
+<en>Search</en>
+<fa>جستجو</fa>
+</ID_SEARCH>
+<ID_GANTT>
+<es>Gantt</es>
+<en>Gantt</en>
+<fa>نمودار گانت</fa>
+</ID_GANTT>
+<ID_USER_ISNT_REGISTERED>
+<es>El usuario no está registrado</es>
+<en>The user is not registered</en>
+<fa>كاربر ثبت نشده</fa>
+</ID_USER_ISNT_REGISTERED>
+<ID_INCORRECT_PASS_FOR_USER>
+<es>Contraseña incorrecta</es>
+<en>Incorrect password</en>
+<fa>رمز عبور نادرست</fa>
+</ID_INCORRECT_PASS_FOR_USER>
+<ID_USER_CURRENTLY_INACTIVE>
+<es>Usuario inactivo</es>
+<en>Inactive user</en>
+<fa>كاربر غيرفعال</fa>
+</ID_USER_CURRENTLY_INACTIVE>
+<ID_WEBBOT_NAME_REQUIRED>
+<es>El nombre del Webbot es requerido</es>
+<en>Webbot name is required</en>
+<fa>نام اسکریپ الزامي است</fa>
+</ID_WEBBOT_NAME_REQUIRED>
+<ID_WS_WIZARD>
+<es>Web Service Wizard</es>
+<en>WebService Wizard</en>
+<fa>WebService اتوماتيك</fa>
+</ID_WS_WIZARD>
+<ID_WEBBOT_2>
+<es>Webbot</es>
+<en>Webbot</en>
+<fa>اسکریپ</fa>
+</ID_WEBBOT_2>
+<ID_WEBBOT_REQ>
+<es>Webbots Requeridos</es>
+<en>Required Webbots</en>
+<fa>اسکریپ هاي موردنياز</fa>
+</ID_WEBBOT_REQ>
+<ID_LISTA_DE_WEBBOTS>
+<es>Listado de Webbots</es>
+<en>Webbots List</en>
+<fa>فهرست اسکریپ ها</fa>
+</ID_LISTA_DE_WEBBOTS>
+<ID_EDIT_WEBBOT>
+<es>Editar Webbots</es>
+<en>edit Webbots</en>
+<fa>ويرايش اسکریپ ها</fa>
+</ID_EDIT_WEBBOT>
+<ID_TEST_WEBSERVICE>
+<es>Comprobar Web Service</es>
+<en>Test Web Service</en>
+<fa>آزمایشی Web Service</fa>
+</ID_TEST_WEBSERVICE>
+<ID_MESSAGES>
+<es>Mensajes</es>
+<en>Messages</en>
+<fa>پيغام ها</fa>
+</ID_MESSAGES>
+<ID_IMAGE>
+<es>Imagen</es>
+<en>Image</en>
+<fa>تصوير</fa>
+</ID_IMAGE>
+<ID_DELEGATE_APPLICATION>
+<es>Derivar Caso</es>
+<en>Assign Case</en>
+<fa>ارجاع كار</fa>
+</ID_DELEGATE_APPLICATION>
+<ID_CANCEL_APPLICATION>
+<es>Anular Caso</es>
+<en>Cancel Process</en>
+<fa>لغو فرآيند</fa>
+</ID_CANCEL_APPLICATION>
+<ID_SET_PAUSE>
+<es>Poner pausa</es>
+<en>Pause Process</en>
+<fa>توقف فرآيند</fa>
+</ID_SET_PAUSE>
+<ID_SEND_MESSAGE>
+<es>Enviar mensaje</es>
+<en>Send message</en>
+<fa>ارسال پيغام</fa>
+</ID_SEND_MESSAGE>
+<ID_UPLOAD>
+<es>Subir</es>
+<en>Upload</en>
+<fa>بارگزاري</fa>
+</ID_UPLOAD>
+<ID_LIST>
+<es>Listado</es>
+<en>List</en>
+<fa>فهرست</fa>
+</ID_LIST>
+<ID_CREATE>
+<es>Crear</es>
+<en>Create</en>
+<fa>ايجاد</fa>
+</ID_CREATE>
+<ID_DYNAFORMS>
+<es>DynaForms</es>
+<en>DynaForms</en>
+<fa>فرمهاي پويا</fa>
+</ID_DYNAFORMS>
+<ID_CANT_MOVE_UP_LANGUAGE>
+<es>Este idioma no puede subirse más.</es>
+<en>You can't move up this languange.</en>
+<fa>نمی توانید این زبان را بالاتر ببرید</fa>
+</ID_CANT_MOVE_UP_LANGUAGE>
+<ID_CANT_MOVE_DOWN_LANGUAGE>
+<es>Este idioma no puede bajarse más.</es>
+<en>You can't move down this languange.</en>
+<fa>نمی توانید این زبان را پایینتر ببرید</fa>
+</ID_CANT_MOVE_DOWN_LANGUAGE>
+<ID_CANT_MOVE_UP_REGION>
+<es>Esta Región no puede subirse más.</es>
+<en>You can't move up this region.</en>
+<fa>نمی توانید این ناحیه را بالاتر ببرید</fa>
+</ID_CANT_MOVE_UP_REGION>
+<ID_CANT_MOVE_DOWN_REGION>
+<es>Esta Región no puede bajarse más.</es>
+<en>You can't move down this region.</en>
+<fa>نمی توانید این ناحیه را پایینتر ببرید</fa>
+</ID_CANT_MOVE_DOWN_REGION>
+<ID_CANT_MOVE_UP_FIELD>
+<es>Este campo no puede subirse más.</es>
+<en>You can't move up this field.</en>
+<fa>اين فيلد را نمي توانيد بالاتر ببريد</fa>
+</ID_CANT_MOVE_UP_FIELD>
+<ID_CANT_MOVE_DOWN_FIELD>
+<es>Este campo no puede bajarse más.</es>
+<en>You can't move down this field.</en>
+<fa>اين فيلد را نمي توانيد پايين تر ببريد</fa>
+</ID_CANT_MOVE_DOWN_FIELD>
+<ID_CANT_MOVE_UP_STEP>
+<es>Este paso o  bloque de pasos  no puede subirse más.</es>
+<en>You can't move up this Step.</en>
+<fa>اين گام را نمي توانيد بالاتر ببريد</fa>
+</ID_CANT_MOVE_UP_STEP>
+<ID_CANT_MOVE_DOWN_STEP>
+<es>Este paso o  bloque de pasos  no puede bajarse más.</es>
+<en>You can't move down this Step.</en>
+<fa>اين گام رانمي توانيد پايين تر  ببريد</fa>
+</ID_CANT_MOVE_DOWN_STEP>
+<ID_CANT_MOVE_UP_TASK>
+<es>Esta Tarea o bloque de Tareas no puede subirse más.</es>
+<en>You can't move up this Task.</en>
+<fa>اين كار را نمي توانيد بالاتر ببريد</fa>
+</ID_CANT_MOVE_UP_TASK>
+<ID_CANT_MOVE_DOWN_TASK>
+<es>Esta Tarea o bloque de Tareas no puede bajarse más.</es>
+<en>You can't move down this Task.</en>
+<fa>اين كار رانمي توانيد پايين تر ببريد</fa>
+</ID_CANT_MOVE_DOWN_TASK>
+<ID_FIELD_UP>
+<es>Subir campo</es>
+<en>Field Up</en>
+<fa>فيلد به بالا</fa>
+</ID_FIELD_UP>
+<ID_FIELD_DOWN>
+<es>Bajar campo</es>
+<en>Field Down</en>
+<fa>فيلد به پايين</fa>
+</ID_FIELD_DOWN>
+<ID_FIELD_NAME>
+<es>Nombre de campo</es>
+<en>Field name</en>
+<fa>نام فيلد</fa>
+</ID_FIELD_NAME>
+<ID_STEP_UP>
+<es>Subir step</es>
+<en>Step Up</en>
+<fa>گام به بالا</fa>
+</ID_STEP_UP>
+<ID_STEP_DOWN>
+<es>Bajar step</es>
+<en>Step Down</en>
+<fa>گام به پايين</fa>
+</ID_STEP_DOWN>
+<ID_TASK_UP>
+<es>Subir</es>
+<en>Up</en>
+<fa>بالا</fa>
+</ID_TASK_UP>
+<ID_TASK_DOWN>
+<es>Bajar</es>
+<en>Down</en>
+<fa>پايين</fa>
+</ID_TASK_DOWN>
+<ID_PROCESS_COMPLEMENTS>
+<es>Complementos del Proceso</es>
+<en>Process complements</en>
+<fa>مكمل فرآيند</fa>
+</ID_PROCESS_COMPLEMENTS>
+<ID_CREATE_MESSAGE>
+<es>Crear mensaje</es>
+<en>Create message</en>
+<fa>ايجاد پيغام</fa>
+</ID_CREATE_MESSAGE>
+<ID_MESSAGE_EDIT>
+<es>Editar mensaje</es>
+<en>Edit message</en>
+<fa>ويرايش پيغام</fa>
+</ID_MESSAGE_EDIT>
+<ID_EDIT_TASK_DOCUMENTATION>
+<es>Editar Documentación (Manuales)</es>
+<en>Edit Task Documentation (Manuals)</en>
+<fa>ويرايش مستندات كار(راهنماها)</fa>
+</ID_EDIT_TASK_DOCUMENTATION>
+<ID_MESSAGE_LIST>
+<es>Listado de mensajes</es>
+<en>List of message</en>
+<fa>فهرست پيغام ها</fa>
+</ID_MESSAGE_LIST>
+<ID_DYNA_REQUIRED_LIST>
+<es>Listado de Dynaforms requeridos</es>
+<en>List of Dynaforms Required</en>
+<fa>فهرست فرمهاي مورد نياز</fa>
+</ID_DYNA_REQUIRED_LIST>
+<ID_ASSIGN>
+<es>Añadir</es>
+<en>Add</en>
+<fa>اضافه</fa>
+</ID_ASSIGN>
+<ID_DYNA_REQUIREDS>
+<es>Dynaforms requeridos</es>
+<en>Dynaforms Required</en>
+<fa>فرمهاي مورد نياز</fa>
+</ID_DYNA_REQUIREDS>
+<ID_DYNA_REQUIRED>
+<es>Dynaform requerido</es>
+<en>Dynaform Required</en>
+<fa>فرم مورد نياز</fa>
+</ID_DYNA_REQUIRED>
+<ID_PDF_REQUIRED_LIST>
+<es>Listado de PDFs requeridos</es>
+<en>List of PDFs Required</en>
+<fa>فهرست فايلهاي PDF مورد نياز</fa>
+</ID_PDF_REQUIRED_LIST>
+<ID_ADD_REQUIRED_PDF>
+<es>Añadir PDF requerido</es>
+<en>Add Required PDF</en>
+<fa>افزودن فايل PDF مورد نياز</fa>
+</ID_ADD_REQUIRED_PDF>
+<ID_RTF_REQUIRED_LIST>
+<es>Listado de RTFs requeridos</es>
+<en>List of RTFs Required</en>
+<fa>فهرست فايلهاي RTF مورد نياز</fa>
+</ID_RTF_REQUIRED_LIST>
+<ID_DOCUMENT_REQUIRED_LIST>
+<es>Listado de Documentos requeridos</es>
+<en>List of Documents Required</en>
+<fa>فهرست مستندات مورد نياز</fa>
+</ID_DOCUMENT_REQUIRED_LIST>
+<ID_ADD_REQUIRED_RTF>
+<es>Añadir RTF requerido</es>
+<en>Add Required RTF</en>
+<fa>افزودن فايل RTF مورد نياز</fa>
+</ID_ADD_REQUIRED_RTF>
+<ID_LISTED_ARE_REQUIRED_RTFS>
+<es>Listado de RTFs requeridos para la Tarea</es>
+<en>Listed are the required RTFs for the Task</en>
+<fa>فهرست فايلهاي RTF مورد نياز كار</fa>
+</ID_LISTED_ARE_REQUIRED_RTFS>
+<ID_LISTED_ARE_REQUIRED_DOCUMENTS>
+<es>Listado de documentos requeridos para la Tarea</es>
+<en>Listed are the required documents for the Task</en>
+<fa>فهرست مستندات مورد نياز كار</fa>
+</ID_LISTED_ARE_REQUIRED_DOCUMENTS>
+<ID_ADD_REQUIRED_DOCUMENTS>
+<es>Añadir documentación requerida</es>
+<en>Add Required Documents</en>
+<fa>افزودن مستندات مورد نياز</fa>
+</ID_ADD_REQUIRED_DOCUMENTS>
+<ID_TASK_ADD>
+<es>Añadir Tarea</es>
+<en>Add Task</en>
+<fa>افزودن كار</fa>
+</ID_TASK_ADD>
+<ID_REQUIRED_DOCUMENTS>
+<es>Documentación requerida</es>
+<en>Required Documents</en>
+<fa>مستندات مورد نياز</fa>
+</ID_REQUIRED_DOCUMENTS>
+<ID_TASK_EDIT>
+<es>Editar Tarea</es>
+<en>edit Task</en>
+<fa>ويرايش كار</fa>
+</ID_TASK_EDIT>
+<ID_TASKS_LIST>
+<es>Listado de Tareas</es>
+<en>List of Tasks</en>
+<fa>فهرست كارها</fa>
+</ID_TASKS_LIST>
+<ID_LIST_INIT_APP>
+<es>Inicio externo</es>
+<en>External Initiation</en>
+<fa>شروع از بيرون</fa>
+</ID_LIST_INIT_APP>
+<ID_INIT_FORM>
+<es>Inicio externo desde Formularios</es>
+<en>External Initiation from Forms</en>
+<fa>شروع خارجي از فرمها</fa>
+</ID_INIT_FORM>
+<ID_INIT_USER>
+<es>Inicio externo desde Usuarios</es>
+<en>External Initiation from Users</en>
+<fa>شروع خارجي از كاربران</fa>
+</ID_INIT_USER>
+<ID_PROCESS_DOCUMENTATION>
+<es>Documentar Proceso</es>
+<en>Process Documentation</en>
+<fa>مستندات فرآيند</fa>
+</ID_PROCESS_DOCUMENTATION>
+<ID_HEADER_AND_FOOTER>
+<es>Encabezado y Pie</es>
+<en>Header and Footer</en>
+<fa>تيتر و زیر نویس</fa>
+</ID_HEADER_AND_FOOTER>
+<ID_EDIT_HEADER_AND_FOOTER_FROM_DYNAFORM>
+<es>Editar Encabezado y Pie de Dynaform</es>
+<en>Edit Header and Footer from Dynaform</en>
+<fa>ويرايش تيتر و زیر نویس در فرم</fa>
+</ID_EDIT_HEADER_AND_FOOTER_FROM_DYNAFORM>
+<ID_EDIT_HEADER>
+<es>Editar Encabezado</es>
+<en>Edit Header</en>
+<fa>ويرايش سرتيتر</fa>
+</ID_EDIT_HEADER>
+<ID_EDIT_HEADER_VIEW>
+<es>Editar Encabezado de tipo lectura</es>
+<en>Edit Header View</en>
+<fa>ويرايش نماي سرتيتر</fa>
+</ID_EDIT_HEADER_VIEW>
+<ID_EDIT_FOOTER>
+<es>Editar pie</es>
+<en>Edit Footer</en>
+<fa>ويرايش زيرنويس</fa>
+</ID_EDIT_FOOTER>
+<ID_EDIT_FOOTER_VIEW>
+<es>Editar pie de tipo lectura</es>
+<en>Edit Footer View</en>
+<fa>ويرايش نماي زيرنويس</fa>
+</ID_EDIT_FOOTER_VIEW>
+<ID_DYNAFORM>
+<es>DynaForm</es>
+<en>DynaForm</en>
+<fa>فرم</fa>
+</ID_DYNAFORM>
+<ID_IMPORT_DYNAFORM>
+<es>Importar Dynaform</es>
+<en>Import Dynaform</en>
+<fa>وارد كردن فرم</fa>
+</ID_IMPORT_DYNAFORM>
+<ID_CREATE_DYNAFORM>
+<es>Crear Dynaform</es>
+<en>Create Dynaform</en>
+<fa>ايجاد فرم</fa>
+</ID_CREATE_DYNAFORM>
+<ID_EDIT_DYNAFORM>
+<es>Editar formulario</es>
+<en>Edit DynaForm</en>
+<fa>ويرايش فرم</fa>
+</ID_EDIT_DYNAFORM>
+<ID_DYNAFORMS_LIST>
+<es>Listado de Dynaforms</es>
+<en>List of Dynaforms</en>
+<fa>فهرست فرمها</fa>
+</ID_DYNAFORMS_LIST>
+<ID_PDF>
+<es>PDF</es>
+<en>PDF</en>
+<fa>PDF</fa>
+</ID_PDF>
+<ID_RTF>
+<es>RTF</es>
+<en>RTF</en>
+<fa>RTF</fa>
+</ID_RTF>
+<ID_CREATE_PDF>
+<es>Crear PDF</es>
+<en>Create PDF</en>
+<fa>ايجاد فايل PDF</fa>
+</ID_CREATE_PDF>
+<ID_EDIT_PDF>
+<es>Editar PDF</es>
+<en>Edit PDF</en>
+<fa>ويرايش فايل PDF</fa>
+</ID_EDIT_PDF>
+<ID_PDFS_LIST>
+<es>Listado de PDFs</es>
+<en>List of PDFs</en>
+<fa>فهرست فايلهاي PDF</fa>
+</ID_PDFS_LIST>
+<ID_CREATE_RTF>
+<es>Generar documento RTF</es>
+<en>Generate RTF document</en>
+<fa>توليد مستند با فرمت RTF</fa>
+</ID_CREATE_RTF>
+<ID_EDIT_RTF>
+<es>Editar RTF</es>
+<en>Edit RTF</en>
+<fa>ويرايش فايل RTF</fa>
+</ID_EDIT_RTF>
+<ID_OUTPUT_DOCUMENTS_LIST>
+<es>Listado de Documentos Generados</es>
+<en>List of Output Documents</en>
+<fa>فهرست مستندات خروجي</fa>
+</ID_OUTPUT_DOCUMENTS_LIST>
+<ID_RTFS_LIST>
+<es>Listado de RTFs</es>
+<en>List of RTFs</en>
+<fa>فهرست فايلهاي RTF</fa>
+</ID_RTFS_LIST>
+<ID_CREATE_DOCUMENT>
+<es>Crear Documento</es>
+<en>Create Document</en>
+<fa>ايجاد مستند</fa>
+</ID_CREATE_DOCUMENT>
+<ID_EDIT_DOCUMENT>
+<es>Editar Documento</es>
+<en>Edit Document</en>
+<fa>ويرايش مستند</fa>
+</ID_EDIT_DOCUMENT>
+<ID_DOCUMENTS_LIST>
+<es>Listado de Documentos</es>
+<en>List of Documents</en>
+<fa>فهرست مستندات</fa>
+</ID_DOCUMENTS_LIST>
+<ID_TASK_ORGANIZER>
+<es>Organizador de Tareas</es>
+<en>Task Organizer</en>
+<fa>سازمان دهنده كار</fa>
+</ID_TASK_ORGANIZER>
+<ID_PROCESS_ORGANIZER>
+<es>Organizador de Procesos</es>
+<en>Process Organizer</en>
+<fa>سازمان دهنده فرآيند</fa>
+</ID_PROCESS_ORGANIZER>
+<ID_RESOURCES>
+<es>Recursos</es>
+<en>Resources</en>
+<fa>منابع</fa>
+</ID_RESOURCES>
+<ID_CATEGORY>
+<es>Categoria</es>
+<en>Category</en>
+<fa>رده</fa>
+</ID_CATEGORY>
+<ID_COSTS>
+<es>Costo</es>
+<en>Costs</en>
+<fa>هزينه ها</fa>
+</ID_COSTS>
+<ID_SELL>
+<es>Vender</es>
+<en>Sell</en>
+<fa>فروش</fa>
+</ID_SELL>
+<ID_BUY>
+<es>Comprar</es>
+<en>Buy</en>
+<fa>خريد</fa>
+</ID_BUY>
+<ID_SELECT_FLUID>
+<es>Seleccione sus Procesos</es>
+<en>Select your Processes</en>
+<fa>فرآيند خود را انتخاب نماييد</fa>
+</ID_SELECT_FLUID>
+<ID_SELL_FLUIDS>
+<es>Comprar estos Procesos:</es>
+<en>Sell Processes:</en>
+<fa>فرآيندهاي فروش:</fa>
+</ID_SELL_FLUIDS>
+<ID_CLICK_SELECTION3>
+<es>* Haga click en el Proceso que desea seleccionar</es>
+<en>* Click on a process to make a selection</en>
+<fa>* براي انتخاب روي يك فرآيند كليك كنيد</fa>
+</ID_CLICK_SELECTION3>
+<ID_CLICK_DELETE_SELECTION2>
+<es>* Haga click en el Proceso que desea quitar de la selección</es>
+<en>* Click on a process to delete a selection</en>
+<fa>* براي حذف انتخاب روي يك فرآيند كليك كنيد</fa>
+</ID_CLICK_DELETE_SELECTION2>
+<ID_POSSIBLE_FLUIDS>
+<es>Procesos posibles:</es>
+<en>Possible Processes:</en>
+<fa>فرآيندهاي ممكن:</fa>
+</ID_POSSIBLE_FLUIDS>
+<ID_SELECT_THE_SELL_FLUIDS>
+<es>Por favor seleccione los procesos que desea vender</es>
+<en>Please select the Processes that you want to sell</en>
+<fa>ID_SELECT_THE_SELL_FLUIDS</fa>
+</ID_SELECT_THE_SELL_FLUIDS>
+<ID_INCORRECT_FORMAT>
+<es>No es posible poner este imagen. Verifique que esté en el formato correcto (GIF o JPEG).</es>
+<en>Can't show the image. Check that it is in the correct format (GIF, JPEG).</en>
+<fa>مايش تصوير امكان پذير نمي باشد. فرمت آن را كنترل نمايد(GIF, JPEC)</fa>
+</ID_INCORRECT_FORMAT>
+<ID_INCORRECT_FORMAT_PDF>
+<es>No es posible subir el archivo. Verifique que esté en el formato correcto (PDF).</es>
+<en>Can't upload the file. Check that it is in the correct format (PDF).</en>
+<fa>بارگذاري فايل امكان پذير نمي باشد. فرمت آن را كنترل نماييد(PDF)</fa>
+</ID_INCORRECT_FORMAT_PDF>
+<ID_EXPORTED>
+<es>exportado</es>
+<en>exported</en>
+<fa>صادر شده</fa>
+</ID_EXPORTED>
+<ID_BLUE>
+<es>azul</es>
+<en>blue</en>
+<fa>آبي</fa>
+</ID_BLUE>
+<ID_RED>
+<es>rojo</es>
+<en>red</en>
+<fa>قرمز</fa>
+</ID_RED>
+<ID_YELLOW>
+<es>Amarillo</es>
+<en>Yellow</en>
+<fa>زرد</fa>
+</ID_YELLOW>
+<ID_GREY>
+<es>gris</es>
+<en>grey</en>
+<fa>خاكستري</fa>
+</ID_GREY>
+<ID_GREEN>
+<es>verde</es>
+<en>green</en>
+<fa>سبز</fa>
+</ID_GREEN>
+<ID_SELECT_ICON>
+<es>Eligir Icono</es>
+<en>Select Icon</en>
+<fa>انتخاب آيكون</fa>
+</ID_SELECT_ICON>
+<ID_ICON>
+<es>Icono</es>
+<en>Icon</en>
+<fa>آيكون</fa>
+</ID_ICON>
+<ID_SELECT_COLOUR>
+<es>Eligir Color</es>
+<en>Select Colour</en>
+<fa>رنگ را انتخاب نماييد</fa>
+</ID_SELECT_COLOUR>
+<ID_COLOUR>
+<es>Color</es>
+<en>Colour</en>
+<fa>رنگ</fa>
+</ID_COLOUR>
+<ID_ADD>
+<es>Añadir</es>
+<en>Add</en>
+<fa>اضافه</fa>
+</ID_ADD>
+<ID_OPTIONS>
+<es>Opciones</es>
+<en>Options</en>
+<fa>انتخاب ها</fa>
+</ID_OPTIONS>
+<ID_OPTION>
+<es>Opción</es>
+<en>Option</en>
+<fa>انتخاب</fa>
+</ID_OPTION>
+<ID_ONDEMAND>
+<es>Por demanda</es>
+<en>OnDemand</en>
+<fa>برحسب تقاضا</fa>
+</ID_ONDEMAND>
+<ID_PROCESS_LIST>
+<es>Listado de procesos definidos</es>
+<en>Process List</en>
+<fa>فهرست فرآيند</fa>
+</ID_PROCESS_LIST>
+<ID_CLOSE>
+<es>Cerrar</es>
+<en>Close</en>
+<fa>بستن</fa>
+</ID_CLOSE>
+<ID_CLOSED>
+<es>Cerrado</es>
+<en>Closed</en>
+<fa>بسته شده</fa>
+</ID_CLOSED>
+<ID_EDIT_RTF_FORM>
+<es>Editar Formulario RTF</es>
+<en>Edit RTF Form</en>
+<fa>ويرايش فرم RTF</fa>
+</ID_EDIT_RTF_FORM>
+<ID_CREATE_RTF_FORM>
+<es>Crear Formulario RTF</es>
+<en>Create RTF Form</en>
+<fa>ايجاد فرم RTF</fa>
+</ID_CREATE_RTF_FORM>
+<ID_EDIT_PDF_FORM>
+<es>Editar Formulario PDF</es>
+<en>Edit PDF Form</en>
+<fa>ويرايش فرم PDF</fa>
+</ID_EDIT_PDF_FORM>
+<ID_CREATE_PDF_FORM>
+<es>Crear Formulario PDF</es>
+<en>Create PDF Form</en>
+<fa>ايجاد فرم PDF</fa>
+</ID_CREATE_PDF_FORM>
+<ID_HISTORY_DOCUMENTS>
+<es>Historial de documentos del Caso</es>
+<en>History of documents within Application</en>
+<fa>تاريخچه مستندات در برنامه</fa>
+</ID_HISTORY_DOCUMENTS>
+<ID_SAVE_NEXT_STEP>
+<es>Guardar y continuar</es>
+<en>Save &amp; Next Step</en>
+<fa>ثبت و رفتن به گام بعدي</fa>
+</ID_SAVE_NEXT_STEP>
+<ID_DONT_SAVE_NEXT_STEP>
+<es>Guardar y continuar</es>
+<en>Save &amp; Next Step</en>
+<fa>ثبت و رفتن به گام بعدي</fa>
+</ID_DONT_SAVE_NEXT_STEP>
+<ID_NEXT_STEP>
+<es>Siguiente</es>
+<en>Next Step</en>
+<fa>گام بعدي</fa>
+</ID_NEXT_STEP>
+<ID_UPLOAD_FILE>
+<es>Subir Archivos</es>
+<en>File Upload</en>
+<fa>انتخاب فايل براي بارگذاري</fa>
+</ID_UPLOAD_FILE>
+<ID_ATTACH_EMPTY>
+<es>Debe adjuntar un archivo</es>
+<en>Upload File is empty</en>
+<fa>فايل بارگذاري شده خالي لست</fa>
+</ID_ATTACH_EMPTY>
+<ID_ATTRIBUTES>
+<es>Atributos</es>
+<en>Attributes</en>
+<fa>صفات</fa>
+</ID_ATTRIBUTES>
+<ID_TO_UPLOAD>
+<es>Para subir un archivo presione el botón 'Examinar', seleccione el archivo y presione el botón 'Adjuntar'</es>
+<en>To upload file press 'Browse' button and then select the file and press 'Attach'</en>
+<fa>براي بارگذاري فايل از دكمه "انتخاب فايل" و سپس از دكمه "پيوست" استفاده نماييد</fa>
+</ID_TO_UPLOAD>
+<ID_UPLOAD_DOCUMENTS>
+<es>Subir archivos</es>
+<en>Upload Documents</en>
+<fa>بارگذاري مستندات</fa>
+</ID_UPLOAD_DOCUMENTS>
+<ID_REPRESENTATION>
+<es>Representación</es>
+<en>Representation</en>
+<fa>نمايش</fa>
+</ID_REPRESENTATION>
+<ID_DOCUMENT_OWNER>
+<es>Usuario dueño del documento</es>
+<en>Document Owner's</en>
+<fa>مالک مستند</fa>
+</ID_DOCUMENT_OWNER>
+<ID_DOCUMENT_TYPE>
+<es>Tipo de Documento</es>
+<en>Document Type</en>
+<fa>نوع مستند</fa>
+</ID_DOCUMENT_TYPE>
+<ID_DEFINED_TASK>
+<es>Tareas definidas para este Proceso</es>
+<en>Defined Tasks for this Process</en>
+<fa>تعيين كارهاي اين فرآيند</fa>
+</ID_DEFINED_TASK>
+<ID_TO_DO>
+<es>Pendientes</es>
+<en>To Do</en>
+<fa>برای انجام</fa>
+</ID_TO_DO>
+<ID_STEP>
+<es>Paso</es>
+<en>Step</en>
+<fa>گام</fa>
+</ID_STEP>
+<ID_STEPS>
+<es>Pasos</es>
+<en>Steps</en>
+<fa>گام ها</fa>
+</ID_STEPS>
+<ID_SUPPLEMENTAL_INFORMATION>
+<es>Información suplementaria</es>
+<en>Additional Information</en>
+<fa>اطلاعات تكميلي</fa>
+</ID_SUPPLEMENTAL_INFORMATION>
+<ID_VIEW_PROCESS_MAP>
+<es>Ver Flujograma</es>
+<en>View Process Map</en>
+<fa>مشاهده نقشه فرآيند</fa>
+</ID_VIEW_PROCESS_MAP>
+<ID_SELECT_NEXT_TASK>
+<es>Seleccione la siguiente Tarea de acuerdo a la condición actual del Caso</es>
+<en>Select Next Task</en>
+<fa>انتخاب كار بعدي</fa>
+</ID_SELECT_NEXT_TASK>
+<ID_REQUIRED_RTF>
+<es>La Tarea actual no se puede concluir porque falta generar los siguientes Formularios</es>
+<en>The current Task can not be completed because you have not created the following Output Forms</en>
+<fa>امكان تكميل كار جاري  به دليل عدم ايجاد فرمهاي خروجي زير وجود ندارد</fa>
+</ID_REQUIRED_RTF>
+<ID_REQUIRED_DOCUMENTATION>
+<es>La Tarea actual no se puede concluir porque falta la siguiente documentación requerida</es>
+<en>The current Task can not be completed because you are missing the following Required Documents</en>
+<fa>مكان تكميل كار جاري به دليل آنكه مستندات ضروري زير را فراموش كرده ايد وجود ندارد</fa>
+</ID_REQUIRED_DOCUMENTATION>
+<ID_INFORMATION_PROCESS>
+<es>Información del Proceso</es>
+<en>Process Information</en>
+<fa>اطلاعات فرآيند</fa>
+</ID_INFORMATION_PROCESS>
+<ID_MESSAGE_PREVIOUS_USER>
+<es>Mensaje del usuario anterior</es>
+<en>Message from Previous User</en>
+<fa>پيغام كاربر قبلي</fa>
+</ID_MESSAGE_PREVIOUS_USER>
+<ID_PROCESS_AGE>
+<es>Tiempo transcurrido del proceso</es>
+<en>Process Age</en>
+<fa>عمر فرآيند</fa>
+</ID_PROCESS_AGE>
+<ID_TITLE_GROUP_USER_ADHOC>
+<es>Definición de grupos de usuarios para derivación arbitraria</es>
+<en>User Group Definitions for arbitrary transfer</en>
+<fa>ID_TITLE_GROUP_USER_ADHOC</fa>
+</ID_TITLE_GROUP_USER_ADHOC>
+<ID_USERS_II>
+<es>usuarios</es>
+<en>users</en>
+<fa>كاربران</fa>
+</ID_USERS_II>
+<ID_REGION>
+<es>Región</es>
+<en>Region</en>
+<fa>ناحيه</fa>
+</ID_REGION>
+<ID_TOTAL_OWED_CLIENT_LA>
+<es>Deuda total por clientes de Latino América</es>
+<en>Total owed to clients in Latin America</en>
+<fa>كل بدهكاري به مشتريان در آمريكاي لاتين</fa>
+</ID_TOTAL_OWED_CLIENT_LA>
+<ID_TOTAL_OWED_CLIENT_NA>
+<es>Deuda total por clientes de Norte América</es>
+<en>Total owed to clients in North America</en>
+<fa>كل بدهكاري به مشتريان در آمريكاي شمالي</fa>
+</ID_TOTAL_OWED_CLIENT_NA>
+<ID_TOTAL_OWED_CLIENT_AP>
+<es>Deuda total por clientes de Asia Pacífico</es>
+<en>Total owed to clients in Asia Pacific</en>
+<fa>كل بدهكاري به مشتريان در شرق آسیا</fa>
+</ID_TOTAL_OWED_CLIENT_AP>
+<ID_TOTAL_OWED_CLIENT>
+<es>Deuda total por cliente</es>
+<en>Total owed to client</en>
+<fa>كل بدهكاري به مشتري</fa>
+</ID_TOTAL_OWED_CLIENT>
+<ID_TOTAL_OWED>
+<es>Deuda total</es>
+<en>Total Amount Owed</en>
+<fa>مبلغ كل بدهكاري</fa>
+</ID_TOTAL_OWED>
+<ID_CONTACT_NAME>
+<es>Nombre del contacto</es>
+<en>Contact Name</en>
+<fa>نام تماس</fa>
+</ID_CONTACT_NAME>
+<ID_CLIENT>
+<es>Cliente</es>
+<en>Client</en>
+<fa>مشتري</fa>
+</ID_CLIENT>
+<ID_COMPANY>
+<es>Empresa</es>
+<en>Company</en>
+<fa>شركت</fa>
+</ID_COMPANY>
+<ID_IPOP_NAME>
+<es>Nombre del Ipop</es>
+<en>Ipop Name</en>
+<fa>ID_IPOP_NAME</fa>
+</ID_IPOP_NAME>
+<ID_IPOP_ORIGEN>
+<es>Región del Ipop</es>
+<en>Ipop Region</en>
+<fa>ID_IPOP_ORIGEN</fa>
+</ID_IPOP_ORIGEN>
+<ID_IPOP_TOTAL_PAID>
+<es>Total Pagado</es>
+<en>Total Paid</en>
+<fa>مبلغ كل پرداختي</fa>
+</ID_IPOP_TOTAL_PAID>
+<ID_IPOP_BALANCE>
+<es>Saldo</es>
+<en>Balance</en>
+<fa>تراز</fa>
+</ID_IPOP_BALANCE>
+<ID_IPOP_TOTAL>
+<es>TOTAL</es>
+<en>TOTAL</en>
+<fa>كل</fa>
+</ID_IPOP_TOTAL>
+<ID_AP>
+<es>Asia Pacífico</es>
+<en>Asia Pacific</en>
+<fa>شرق آسیا</fa>
+</ID_AP>
+<ID_LA>
+<es>Latino América</es>
+<en>Latin America</en>
+<fa>آمريكاي لاتين</fa>
+</ID_LA>
+<ID_NA>
+<es>Norte América</es>
+<en>North America</en>
+<fa>آمريكاي شمالي</fa>
+</ID_NA>
+<ID_ASSIGNMENT>
+<es>Asignar</es>
+<en>Assignment</en>
+<fa>تخصيص</fa>
+</ID_ASSIGNMENT>
+<ID_IMPORT>
+<es>Importar</es>
+<en>Import</en>
+<fa>وارد كردن</fa>
+</ID_IMPORT>
+<ID_EXPORT>
+<es>Exportar</es>
+<en>Export</en>
+<fa>صدور</fa>
+</ID_EXPORT>
+<ID_CLICK_HERE>
+<es>[Haga clic para introducir etiqueta]</es>
+<en>[Click here]</en>
+<fa>[اينجا كليك كنيد]</fa>
+</ID_CLICK_HERE>
+<ID_TRANSFER_MESSAGE>
+<es>Por favor revise el Fluid, se le derivó el Caso Nº:</es>
+<en>Please review Fluid, you have a new task, Process No.</en>
+<fa>لطفا جريان كار را بررسي نماييد، كار جديدي براي شما وجود دارد، فرآيند شماره.</fa>
+</ID_TRANSFER_MESSAGE>
+<ID_MESSAGE2>
+<es>Mensaje enviado desde el Caso Nº:</es>
+<en>Message sent by Process No.</en>
+<fa>پيغام ارسال شده از فرآيند شماره.</fa>
+</ID_MESSAGE2>
+<ID_CANCEL_MESSAGE>
+<es>Se canceló el Caso Nº:</es>
+<en>Cancel the Process No.</en>
+<fa>فرآيند را لغو نماييد. فرآيند شماره.</fa>
+</ID_CANCEL_MESSAGE>
+<ID_FINISH2_MESSAGE>
+<es>Se finalizó la Tarea colgante del Caso Nº:</es>
+<en>Finish the pending Task in Case No.</en>
+<fa>كار معوقه را تكميل نماييد. در مورد شماره.</fa>
+</ID_FINISH2_MESSAGE>
+<ID_FINISH_MESSAGE>
+<es>Se finalizó el Caso Nº:</es>
+<en>Finish the Process No.</en>
+<fa>فرآيند را تكميل نماييد. شماره فرآيند.</fa>
+</ID_FINISH_MESSAGE>
+<ID_MANAGERIAL_REPORT_DEPARTMENT>
+<es>Reporte gerencial por departamento</es>
+<en>Managerial report by department</en>
+<fa>گزارش مديريتي براساس دپارتمان</fa>
+</ID_MANAGERIAL_REPORT_DEPARTMENT>
+<ID_MANAGERIAL_REPORT_USER>
+<es>Reporte gerencial por usuario</es>
+<en>Managerial report by user</en>
+<fa>گزارش مديريتي براساس كاربر</fa>
+</ID_MANAGERIAL_REPORT_USER>
+<ID_GENERAL_SUMARY_PROCESS>
+<es>Resumen general por Proceso y Tarea</es>
+<en>General summary by Process and Tasks</en>
+<fa>خلاصه فرآیند و كار</fa>
+</ID_GENERAL_SUMARY_PROCESS>
+<ID_FIRST_PAGE>
+<es>Primera Página</es>
+<en>First Page</en>
+<fa>صفحه اول</fa>
+</ID_FIRST_PAGE>
+<ID_PREVIOUS_PAGE>
+<es>Página Anterior</es>
+<en>Previous Page</en>
+<fa>صفحه قبلي</fa>
+</ID_PREVIOUS_PAGE>
+<ID_NEXT_PAGE>
+<es>Siguiente Página</es>
+<en>Next Page</en>
+<fa>صفحه بعدي</fa>
+</ID_NEXT_PAGE>
+<ID_LAST_PAGE>
+<es>Última Página</es>
+<en>Last Page</en>
+<fa>صفحه آخر</fa>
+</ID_LAST_PAGE>
+<ID_LAST_MESSAGE>
+<es>Último Mensaje</es>
+<en>Last Message</en>
+<fa>آخرين پيغام</fa>
+</ID_LAST_MESSAGE>
+<ID_PAGE>
+<es>Página</es>
+<en>Page</en>
+<fa>صفحه</fa>
+</ID_PAGE>
+<ID_OF_I>
+<es>de</es>
+<en>of</en>
+<fa>از</fa>
+</ID_OF_I>
+<ID_NEXT_I>
+<es>[Sig &amp;gt;&amp;gt;]</es>
+<en>[Next &amp;gt;&amp;gt;]</en>
+<fa>[ بعدي]</fa>
+</ID_NEXT_I>
+<ID_PREV_I>
+<es>[&amp;lt;&amp;lt; Ant]</es>
+<en>[&amp;lt;&amp;lt; Prev]</en>
+<fa>[قبلي ]</fa>
+</ID_PREV_I>
+<ID_PENDING_APPLICATION_TASK>
+<es>Casos pendientes por Tarea</es>
+<en>Pending Cases by Task</en>
+<fa>فرآيندهاي كاري معوقه براساس كار</fa>
+</ID_PENDING_APPLICATION_TASK>
+<ID_MINUTES>
+<es>Minutos</es>
+<en>Minutes</en>
+<fa>يادداشت ها</fa>
+</ID_MINUTES>
+<ID_HOURS>
+<es>Horas</es>
+<en>Hours</en>
+<fa>ساعت</fa>
+</ID_HOURS>
+<ID_TAS_DURATION>
+<es>Duración de la tarea (*)</es>
+<en>Task duration (*)</en>
+<fa>مدت انجام كار (*)</fa>
+</ID_TAS_DURATION>
+<ID_TAS_TYPE_DAY>
+<es>Duración de la tarea en</es>
+<en>Days</en>
+<fa>روز</fa>
+</ID_TAS_TYPE_DAY>
+<ID_TRANSFER_HISTORY>
+<es>Historial de Derivaciones</es>
+<en>Transfer History</en>
+<fa>تاريخچه انتقال</fa>
+</ID_TRANSFER_HISTORY>
+<ID_MESSAGE_HISTORY>
+<es>Historial de Mensajes</es>
+<en>Message History</en>
+<fa>تاريخچه پيغام</fa>
+</ID_MESSAGE_HISTORY>
+<ID_FIRST>
+<es>Inicio</es>
+<en>First</en>
+<fa>اولين</fa>
+</ID_FIRST>
+<ID_LAST_II>
+<es>Último</es>
+<en>Last</en>
+<fa>آخرين</fa>
+</ID_LAST_II>
+<ID_LAST>
+<es>Final</es>
+<en>Last</en>
+<fa>آخرين</fa>
+</ID_LAST>
+<ID_PREVIOUS>
+<es>Anterior</es>
+<en>Previous</en>
+<fa>قبلي</fa>
+</ID_PREVIOUS>
+<ID_NEXT>
+<es>Siguiente</es>
+<en>Next</en>
+<fa>بعدي</fa>
+</ID_NEXT>
+<ID_PREVIOUS_MESSAGE>
+<es>Mensaje anterior</es>
+<en>Previous message</en>
+<fa>پيغام قبلي</fa>
+</ID_PREVIOUS_MESSAGE>
+<ID_NEXT_MESSAGE>
+<es>Mensaje siguiente</es>
+<en>Next message</en>
+<fa>پيغام بعدي</fa>
+</ID_NEXT_MESSAGE>
+<ID_OK>
+<es>Aceptar</es>
+<en>OK</en>
+<fa>OK</fa>
+</ID_OK>
+<ID_NOT_EXIST_INITIAL_TASK>
+<es>Se debe seleccionar la tarea inicial</es>
+<en>No Initial Task was found.</en>
+<fa>كار آغازين پيدا نشد.</fa>
+</ID_NOT_EXIST_INITIAL_TASK>
+<ID_NOT_EXIST_URL>
+<es>Se debe introducir un URL</es>
+<en>Not exist URL</en>
+<fa>URL وجود ندارد</fa>
+</ID_NOT_EXIST_URL>
+<ID_NOT_EXIST_DYNAFORM>
+<es>Ya no existen formularios para la selección</es>
+<en>Not exist Dynaform task</en>
+<fa>فرمي براي كار وجود ندارد</fa>
+</ID_NOT_EXIST_DYNAFORM>
+<ID_ORDER_PROCESS>
+<es>Ordenar el Proceso</es>
+<en>Order Process</en>
+<fa>عمليات مرتب سازي</fa>
+</ID_ORDER_PROCESS>
+<ID_ORDER_TASK>
+<es>Ordenar Tareas</es>
+<en>Order Tasks</en>
+<fa>مرتب سازي كارها</fa>
+</ID_ORDER_TASK>
+<ID_ORDER_STEP>
+<es>Ordenar Pasos</es>
+<en>Order Steps</en>
+<fa>مرتب سازي گامها</fa>
+</ID_ORDER_STEP>
+<ID_ORDER_DYNAFORM>
+<es>Ordenar Dynaforms</es>
+<en>Order Dynaforms</en>
+<fa>مرتب سازي فرم ها</fa>
+</ID_ORDER_DYNAFORM>
+<ID_ORDER_FIELDS>
+<es>Ordenar Campos</es>
+<en>Order Fields</en>
+<fa>مرتب سازي فيلدها</fa>
+</ID_ORDER_FIELDS>
+<ID_ORDERING_XML>
+<es>Ordenar XML</es>
+<en>Order XML</en>
+<fa>مورد ويژه</fa>
+</ID_ORDERING_XML>
+<ID_NORMAL>
+<es>Normal</es>
+<en>Normal</en>
+<fa>نرمال</fa>
+</ID_NORMAL>
+<ID_ADHOC>
+<es>Arbitraria</es>
+<en>Adhoc</en>
+<fa>مورد ويژه</fa>
+</ID_ADHOC>
+<ID_DOUBLE>
+<es>Doble</es>
+<en>Double</en>
+<fa>دوبرابر</fa>
+</ID_DOUBLE>
+<ID_SIMPLE>
+<es>Simple</es>
+<en>Simple</en>
+<fa>ساده</fa>
+</ID_SIMPLE>
+<ID_FALSE>
+<es>No</es>
+<en>False</en>
+<fa>نادرست</fa>
+</ID_FALSE>
+<ID_TRUE>
+<es>Si</es>
+<en>True</en>
+<fa>صحيح</fa>
+</ID_TRUE>
+<ID_NEW>
+<es>Nuevo</es>
+<en>New</en>
+<fa>جديد</fa>
+</ID_NEW>
+<ID_VIEW_USER_MANUAL>
+<es>Manual de usuario</es>
+<en>User Manual</en>
+<fa>راهنماي كاربر</fa>
+</ID_VIEW_USER_MANUAL>
+<ID_VIEW_ADMIN_MANUAL>
+<es>Manual de administrador</es>
+<en>Administrator Manual</en>
+<fa>راهنماي مدير سيستم</fa>
+</ID_VIEW_ADMIN_MANUAL>
+<ID_VIEW_DEMO>
+<es>Descargar Demo</es>
+<en>Download Demo</en>
+<fa>دريافت نمونه نمايشي</fa>
+</ID_VIEW_DEMO>
+<ID_CHANGE_MANUAL>
+<es>Cambiar manual</es>
+<en>Change manual</en>
+<fa>تغییر دستی</fa>
+</ID_CHANGE_MANUAL>
+<ID_CHANGE_DEMO>
+<es>Cambiar demo</es>
+<en>Change demo</en>
+<fa>تغییر نمایش</fa>
+</ID_CHANGE_DEMO>
+<ID_CHILD_FORM>
+<es>Grilla</es>
+<en>Grid</en>
+<fa>Grid</fa>
+</ID_CHILD_FORM>
+<ID_SUB_FORM>
+<es>Grilla de vista</es>
+<en>Caption Grid</en>
+<fa>عنوان Grid</fa>
+</ID_SUB_FORM>
+<ID_UPDATE>
+<es>Actualizar</es>
+<en>Update</en>
+<fa>بروزرساني</fa>
+</ID_UPDATE>
+<ID_RETURN_SEARCH>
+<es>Iniciar Búsqueda</es>
+<en>Init to Search</en>
+<fa>بازگشت به جستجو</fa>
+</ID_RETURN_SEARCH>
+<ID_RETURN>
+<es>Retornar</es>
+<en>Cancel</en>
+<fa>انصراف</fa>
+</ID_RETURN>
+<ID_LINK>
+<es>Enlace</es>
+<en>Link</en>
+<fa>پيوند</fa>
+</ID_LINK>
+<ID_MAXLENGTH>
+<es>Caracteres</es>
+<en>maxlength</en>
+<fa>maxlength</fa>
+</ID_MAXLENGTH>
+<ID_MAXLENGTHI>
+<es>Filas</es>
+<en>maxlength</en>
+<fa>maxlength</fa>
+</ID_MAXLENGTHI>
+<ID_MAXLENGTHII>
+<es>Filas</es>
+<en>maxlength</en>
+<fa>maxlength</fa>
+</ID_MAXLENGTHII>
+<ID_MAXIMUM_LENGTH>
+<es>Longitud máxima</es>
+<en>Maximum length</en>
+<fa>حداكثر طول</fa>
+</ID_MAXIMUM_LENGTH>
+<ID_SIZEI>
+<es>Tamaño del campo</es>
+<en>size</en>
+<fa>اندازه</fa>
+</ID_SIZEI>
+<ID_SIZEII>
+<es>Cantidad</es>
+<en>size</en>
+<fa>اندازه</fa>
+</ID_SIZEII>
+<ID_SIZEIII>
+<es>Columnas</es>
+<en>size</en>
+<fa>اندازه</fa>
+</ID_SIZEIII>
+<ID_SIZEIV>
+<es>Columnas</es>
+<en>size</en>
+<fa>اندازه</fa>
+</ID_SIZEIV>
+<ID_VALIDATE>
+<es>Validación</es>
+<en>Validate</en>
+<fa>تاييد اعتبار</fa>
+</ID_VALIDATE>
+<ID_VALUES>
+<es>Valores</es>
+<en>Values</en>
+<fa>مقادير</fa>
+</ID_VALUES>
+<ID_AUTHOR>
+<es>Autor</es>
+<en>Author</en>
+<fa>مولف</fa>
+</ID_AUTHOR>
+<ID_UID>
+<es>UID</es>
+<en>UID</en>
+<fa>UID</fa>
+</ID_UID>
+<ID_YES>
+<es>Si</es>
+<en>Yes</en>
+<fa>بلي</fa>
+</ID_YES>
+<ID_YESNO>
+<es>Si/No</es>
+<en>Yes/No</en>
+<fa>بلي/خير</fa>
+</ID_YESNO>
+<ID_NOPE>
+<es>No</es>
+<en>No</en>
+<fa>خير</fa>
+</ID_NOPE>
+<ID_STAGE_LIST>
+<es>Listado de Etapas</es>
+<en>List of Section Views</en>
+<fa>فهرست ديدگاه هاي محدود</fa>
+</ID_STAGE_LIST>
+<ID_CITY>
+<es>Origen</es>
+<en>Origin</en>
+<fa>اصليت</fa>
+</ID_CITY>
+<ID_USER_INACTIVE>
+<es>El Usuario se encuentra inactivo</es>
+<en>The User is currently inactive</en>
+<fa>كاربر غير فعال مي باشد</fa>
+</ID_USER_INACTIVE>
+<ID_WRONG_PASS>
+<es>La Contraseña es Incorrecta para el Usuario</es>
+<en>Incorrect User Password</en>
+<fa>رمز عبور نادرست</fa>
+</ID_WRONG_PASS>
+<ID_USER_NOT_REGISTERED>
+<es>El Usuario no está registrado en el sistema</es>
+<en>The User is not registered in the system</en>
+<fa>كاربر در سيستم ثبت نشده</fa>
+</ID_USER_NOT_REGISTERED>
+<ID_NEW_PASS_SAME_OLD_PASS>
+<es>La contraseña y la confirmación deben ser iguales</es>
+<en>The New Password and the Confirm Password fields must be the same</en>
+<fa>فيلدهاي رمزعبور و تاييد آن بايد يكسان باشد</fa>
+</ID_NEW_PASS_SAME_OLD_PASS>
+<ID_WRONG_OLD_PASS>
+<es>La Contraseña antigua es incorrecta para el Usuario</es>
+<en>Incorrect Old Password for the User</en>
+<fa>رمز عبور قديمي كاربر نادرست است</fa>
+</ID_WRONG_OLD_PASS>
+<ID_CANT_REMOVE_USER>
+<es>Ud. no puede eliminar un usuario que tiene casos o esta asignado a un grupo de usuarios</es>
+<en>You can't remove a user with one or more Processes</en>
+<fa>نمي توانيد كاربري كه داراي يك يا تعداد بيشتري فرآيند مي باشد را حذف نماييد</fa>
+</ID_CANT_REMOVE_USER>
+<ID_USER_HAVENT_RIGHTS_SYSTEM>
+<es>El usuario no tiene permiso para ingresar al sistema</es>
+<en>User haven't rights to log In this system</en>
+<fa>كاربر مجاز به ورود به سيستم نمي باش</fa>
+</ID_USER_HAVENT_RIGHTS_SYSTEM>
+<ID_ENVIRONMENT_INACTIVE>
+<es>El ambiente se encuentra inactivo, contáctese con el administrador</es>
+<en>Environment inactive</en>
+<fa>محیط غیرفعال</fa>
+</ID_ENVIRONMENT_INACTIVE>
+<ID_USER_HAVENT_RIGHTS_PAGE>
+<es>El usuario no tiene permiso para ingresar a esta opcion</es>
+<en>User haven't rights in this page</en>
+<fa>كاربر اجازه ورود به اي صفحه را ندارد</fa>
+</ID_USER_HAVENT_RIGHTS_PAGE>
+<ID_USER_HAVENT_RIGHTS_APPLICATION>
+<es>El usuario no tiene permiso para iniciar un nuevo Caso</es>
+<en>User haven't rights to start a New Process</en>
+<fa>كاربر اجازه شروع فرآيند جديد را ندارد</fa>
+</ID_USER_HAVENT_RIGHTS_APPLICATION>
+<ID_FIELD_ID_EXIST>
+<es>Ya existe un campo con el mismo nombre</es>
+<en>There is another field with the same name</en>
+<fa>فيلد ديگري با اين نام قبلا تعريف شده</fa>
+</ID_FIELD_ID_EXIST>
+<ID_LOCATION_EXIST>
+<es>Ya existe una ubicación con el mismo nombre</es>
+<en>There is another location with the same name</en>
+<fa>محل ديگري قبلا با اين نام تعريف شده</fa>
+</ID_LOCATION_EXIST>
+<ID_TABLE_ID_EXIST>
+<es>Ya existe una tabla con el mismo nombre</es>
+<en>There is another table with the same name</en>
+<fa>جدول ديگري قبلا با اين نام تعريف شده</fa>
+</ID_TABLE_ID_EXIST>
+<ID_USER_ID_EXIST>
+<es>Ya existe un Usuario con el mismo Nombre de Usuario</es>
+<en>There is another User with the same User ID</en>
+<fa>كاربر ديگري با اين شناسه وجود دارد</fa>
+</ID_USER_ID_EXIST>
+<ID_INCORRECT_INFORMATION>
+<es>Información incorrecta</es>
+<en>Incorrect Information</en>
+<fa>اطلاعات نادرست</fa>
+</ID_INCORRECT_INFORMATION>
+<ID_PASS_CHANGED>
+<es>La Contraseña de inicio fue cambiada correctamente</es>
+<en>Password changed succesfully</en>
+<fa>رمز عبور با موفقيت تغيير يافت</fa>
+</ID_PASS_CHANGED>
+<ID_PASS_RESET>
+<es>La Contraseña de inicio fue reiniciada correctamente</es>
+<en>New password updated successfully</en>
+<fa>رمز عبور جديد با موفقيت به هنگام شد</fa>
+</ID_PASS_RESET>
+<ID_NEW_EMPLOYEE_CREATED>
+<es>Nuevo Empleado creado satisfactoriamente</es>
+<en>New Employee created successfully</en>
+<fa>كارمند جديد با موفقيت ايجاد شد</fa>
+</ID_NEW_EMPLOYEE_CREATED>
+<ID_NEW_CLIENT_CREATED>
+<es>Nuevo Cliente fue creado satisfactoriamente</es>
+<en>New Client created successfully</en>
+<fa>مشتري جديد با موفقيت ايجاد شد</fa>
+</ID_NEW_CLIENT_CREATED>
+<ID_EXPEDIENT>
+<es>Expediente</es>
+<en>Expedient</en>
+<fa>مناسب</fa>
+</ID_EXPEDIENT>
+<ID_RECURRENT>
+<es>Recurrente</es>
+<en>Recurrent</en>
+<fa>بازگشتي</fa>
+</ID_RECURRENT>
+<ID_INITIAL_USER>
+<es>Usuario Inicial</es>
+<en>Initial User</en>
+<fa>كاربر آغازين</fa>
+</ID_INITIAL_USER>
+<ID_REPORT_USER>
+<es>Usuario para Reportes</es>
+<en>Report User</en>
+<fa>كاربر گزارش</fa>
+</ID_REPORT_USER>
+<ID_INITIAL_DATE>
+<es>Fecha de ingreso</es>
+<en>Initial date</en>
+<fa>تاريخ شروع</fa>
+</ID_INITIAL_DATE>
+<ID_INITIAL_DATE_II>
+<es>Inicio</es>
+<en>Initial date</en>
+<fa>تاريخ شروع</fa>
+</ID_INITIAL_DATE_II>
+<ID_DATE_PAUSE>
+<es>Fecha de la pausa</es>
+<en>Pause date</en>
+<fa>تاريخ توقف</fa>
+</ID_DATE_PAUSE>
+<ID_TIME_ELAPSED>
+<es>Tiempo transcurrido</es>
+<en>Time elapsed</en>
+<fa>زمان سپري شده</fa>
+</ID_TIME_ELAPSED>
+<ID_AUTOMATED_BALANCED_DELEGATION>
+<es>Delegación Balanceada</es>
+<en>Automated Balanced Delegation</en>
+<fa>ارجاع متوازن خودكار</fa>
+</ID_AUTOMATED_BALANCED_DELEGATION>
+<ID_UNDEFINED_DELEGATION>
+<es>Ninguna condición es válida para la derivación de esta tarea \n Contáctese con el Administrador del Sistema \npara revisar la configuración de esta Tarea</es>
+<en>Invalid conditions for this task Please contact with your System Administrator to review task setup</en>
+<fa>شرايط اجراي كار نامعتبر مي باشد ، لطفا براي بازبيني نحوه تنظيم كار با مديرسيستم تماس بگيريد.</fa>
+</ID_UNDEFINED_DELEGATION>
+<ID_UNDEFINED_NEXT_TASK>
+<es>Tareas por seleccion manual no definidas. Revise la configuracion de esta tarea.</es>
+<en>Manual selection tasks not defined. Please review this task's settings.</en>
+<fa>انتخاب غيرخودكار كار تعريف نشده است. لطفا در تنظيمات اين كار تجديد نظر نماييد.</fa>
+</ID_UNDEFINED_NEXT_TASK>
+<ID_ANY_EMPLOYEE_FROM_DEPTO>
+<es>Cualquier empleado del departamento</es>
+<en>Any Employee from Department</en>
+<fa>يك كارمند از قسمت</fa>
+</ID_ANY_EMPLOYEE_FROM_DEPTO>
+<ID_ARENT_EMPLOYEE_IN_DEPTO>
+<es>No existen empleados en este departamento</es>
+<en>There are not exists employees in this department</en>
+<fa>كارمندي در اين دپارتمان وجود ندارد.</fa>
+</ID_ARENT_EMPLOYEE_IN_DEPTO>
+<ID_ERROR_GROUP_USER>
+<es>Debe seleccionar al menos un grupo o un usuario</es>
+<en>Group and User are empty</en>
+<fa>فيلدهاي گروه و كاربر خالي هستند</fa>
+</ID_ERROR_GROUP_USER>
+<ID_ERROR_UPLOAD_ICON>
+<es>No selecciono ningún ícono</es>
+<en>The File required</en>
+<fa>پرونده الزامي است.</fa>
+</ID_ERROR_UPLOAD_ICON>
+<ID_ERROR_UPLOAD_FILE>
+<es>No se pudo subir el archivo</es>
+<en>Error in upload File</en>
+<fa>خطا در بارگذاري پرونده</fa>
+</ID_ERROR_UPLOAD_FILE>
+<ID_ERROR_BAD_APP>
+<es>No existe ningún Caso con ese código</es>
+<en>The code is invalid</en>
+<fa>كد نامعتبر مي باشد</fa>
+</ID_ERROR_BAD_APP>
+<ID_ERROR_BAD_CODE>
+<es>La contraseña para este Caso es inválida</es>
+<en>The password is invalid</en>
+<fa>رمز عبور نامعتبر مي باشد</fa>
+</ID_ERROR_BAD_CODE>
+<ID_APPLICATION_CANT_BE_DELEGATED>
+<es>El Caso no puede ser derivado</es>
+<en>The case can't be delegated</en>
+<fa>امكان ارجاع پرونده وجود ندارد</fa>
+</ID_APPLICATION_CANT_BE_DELEGATED>
+<ID_SESSION_TIME_OUT>
+<es>Su sesión de sistema ha expirado. Por favor ingrese nuevamente al sistema</es>
+<en>Session Time Out.  You need log In again</en>
+<fa>زمان  كاربري سيستم سپري شده است. مجددا به سيستم وارد شويد.</fa>
+</ID_SESSION_TIME_OUT>
+<ID_INVALID_SESSION_RELOGIN>
+<es>Su sesión de sistema es inválida. Por favor ingrese nuevamente al sistema</es>
+<en>Invalid Session. Please re-log In</en>
+<fa>اربري سيستم فاقد اعتبار مي باشد.لطفا مجددا به سيستم وارد شويد.</fa>
+</ID_INVALID_SESSION_RELOGIN>
+<ID_INVALID_SESSION>
+<es>Su sesión de sistema es inválida</es>
+<en>Invalid Session. You haven't a valid session</en>
+<fa>اعتبار زمان استفاده از سيستم به پايان رسيده است. شما فاقد اعتبار كاربري هستيد.</fa>
+</ID_INVALID_SESSION>
+<ID_HAVENT_RIGHTS_APLLICATION>
+<es>Ud. no tiene permiso suficiente sobre el Caso</es>
+<en>You haven't rights on this Process</en>
+<fa>شما مجوز دسترسي به اين فرآيند را نداريد.</fa>
+</ID_HAVENT_RIGHTS_APLLICATION>
+<ID_APPLICATION_STARTED_BY>
+<es>Mis tareas</es>
+<en>My Tasks</en>
+<fa>كارها</fa>
+</ID_APPLICATION_STARTED_BY>
+<ID_MY_PROCESS_BOX>
+<es>Mis tareas</es>
+<en>My Process Box</en>
+<fa>كارهاي من</fa>
+</ID_MY_PROCESS_BOX>
+<ID_APPLICATION_PENDING_OF>
+<es>Casos Pendientes de</es>
+<en>Processes pending of</en>
+<fa>فرآيندهاي معوقه</fa>
+</ID_APPLICATION_PENDING_OF>
+<ID_APPLICATION_PENDING_OF_THE_GROUP>
+<es>Casos Pendientes del grupo</es>
+<en>Process pending of the group</en>
+<fa>به تعويق انداختن گروه فرآين</fa>
+</ID_APPLICATION_PENDING_OF_THE_GROUP>
+<ID_APPLICATION_PROCESSED_OF>
+<es>Casos atendidos de</es>
+<en>Processes processed of</en>
+<fa>فرآيندهاي پردازش شده</fa>
+</ID_APPLICATION_PROCESSED_OF>
+<ID_HAVENT_RIGHTS_VIEW_PAGE>
+<es>Ud. no tiene permiso suficiente para ver esta página</es>
+<en>You haven't rights to view this page</en>
+<fa>شما مجاز به مشاهده اين صفحه نيستيد.</fa>
+</ID_HAVENT_RIGHTS_VIEW_PAGE>
+<ID_SELECT_CRITERIA_FOR_SEARCH>
+<es>Seleccione un criterio para buscar Casos</es>
+<en>Select criteria for search Processes</en>
+<fa>معيار انتخاب فرآيندهاي جستجو را انتخاب نماييد.</fa>
+</ID_SELECT_CRITERIA_FOR_SEARCH>
+<ID_SELECT_CRITERIA_FOR_VISUALIZATION>
+<es>El proceso no tiene opciones de visualización para usuarios externos y supervisor. Contáctese con el administrador del sistema.</es>
+<en>The process does not have options of visualization for external users and supervisor. Contact with the administrator of the system.</en>
+<fa>مكان اعطاي قابليت مشاهده اطلاعات فرآيند به كاربران بيروني و سرپرست وجود ندارد. با مدير سيستم تماس بگيريد.</fa>
+</ID_SELECT_CRITERIA_FOR_VISUALIZATION>
+<ID_FILL_FORM_AGAIN>
+<es>Llenar nuevamente el formulario para efectuar la validación correspondiente</es>
+<en>Fill the form again in order to validate it</en>
+<fa>براي اعتبارسنجي فرم اطلاعات آنرا مجددا وارد نماييد.</fa>
+</ID_FILL_FORM_AGAIN>
+<ID_SOME_FIELDS_ARENT_SAME>
+<es>Algunos campos no son iguales</es>
+<en>Some fields arent the same</en>
+<fa>بعضي از فيلدها يكسان نيستند.</fa>
+</ID_SOME_FIELDS_ARENT_SAME>
+<ID_APPLICATION_PENDING>
+<es>Casos Pendientes</es>
+<en>Process pending</en>
+<fa>به تعويق انداختن فرآيند</fa>
+</ID_APPLICATION_PENDING>
+<ID_CANT_ORDER_TASK>
+<es>No es posible ordenar las tareas porque uno o varios campos se encuentran vacios.</es>
+<en>Can't order.</en>
+<fa>امكان مرتب سازي وجود ندارد</fa>
+</ID_CANT_ORDER_TASK>
+<ID_CANT_ORDER_DYNAFORM_LIST>
+<es>No fue posible ordenar los dynaforms porque uno o varios campos se encontraban vacios.</es>
+<en>Can't order.</en>
+<fa>امكان مرتب سازي وجود ندارد</fa>
+</ID_CANT_ORDER_DYNAFORM_LIST>
+<ID_CANT_ORDER_DYNAFORM>
+<es>No es posible ordenar los campos</es>
+<en>Can't order.</en>
+<fa>امكان مرتب سازي وجود ندارد</fa>
+</ID_CANT_ORDER_DYNAFORM>
+<ID_CANT_CREATE_PROCESS>
+<es>No es posible crear el proceso.</es>
+<en>Can't create process.</en>
+<fa>امكان ايجاد فرآيند وجود ندارد.</fa>
+</ID_CANT_CREATE_PROCESS>
+<ID_CANT_GENERATE_THE_FIELD>
+<es>No es posible generar</es>
+<en>Can't generate</en>
+<fa>امكان ايجاد فيلد وجود ندارد</fa>
+</ID_CANT_GENERATE_THE_FIELD>
+<ID_CANT_RELOAD_APPLICATION>
+<es>No es posible retornar al Caso.</es>
+<en>Can't reload Process.</en>
+<fa>امكان بارگذاري مجدد فرآيند وجود ندارد.</fa>
+</ID_CANT_RELOAD_APPLICATION>
+<ID_CANT_CREATE_WEB_ADDRES>
+<es>No es posible crear su Web Address porque ya existe uno con el mismo nombre.</es>
+<en>This Web Address already exists.  Please choose a different one.</en>
+<fa>اين آدرس وب از قبل موجود است. لطفا آدرس ديگري را وارد نماييد.</fa>
+</ID_CANT_CREATE_WEB_ADDRES>
+<ID_CANT_DELEGATE_APPLICATION>
+<es>No es posible derivar el Caso.</es>
+<en>Can't delegate Process.</en>
+<fa>امكان تخصيص فرآيند وجود ندارد.</fa>
+</ID_CANT_DELEGATE_APPLICATION>
+<ID_BASIC>
+<es>Child</es>
+<en>Child</en>
+<fa>فرزند</fa>
+</ID_BASIC>
+<ID_EXISTS_THIS_XML>
+<es>Ya existe un XML con el mismo nombre.</es>
+<en>There already exists a XML with the same name.</en>
+<fa>يك مستند XML با نام يكسان وجود دارد.</fa>
+</ID_EXISTS_THIS_XML>
+<ID_CANT_DELETE_PROCESS>
+<es>No es posible eliminar el proceso. Verifique que no hay Casos en el proceso.</es>
+<en>Can't delete process. Verify that is not used by an Process.</en>
+<fa>امكان حذف اين فرآيند وجود ندارد.كنترل كنيد كه توسط فرآيند ديگري در حال استفاده نباشد.</fa>
+</ID_CANT_DELETE_PROCESS>
+<ID_CANT_DELETE_RTF>
+<es>No es posible eliminar el formulario RTF. Verifique que no hay casos o tareas que usen este formulario.</es>
+<en>Can't delete RTF in use. Verify that is not used by an Process or a task.</en>
+<fa>امكان حذف مستند RTF در حال استفاده وجود ندارد.كنترل كنيد كه توسط فرآيند يا كار ديگري در حال استفاده نباشد.</fa>
+</ID_CANT_DELETE_RTF>
+<ID_CANT_DELETE_TASK>
+<es>No es posible eliminar la tarea. Verifique que no hay casos o Procesos que usen esta tarea.</es>
+<en>Can't delete the task. Check that is not used currently</en>
+<fa>امكان حذف مستند RTF در حال استفاده وجود ندارد. كنترل نماييد كه درحال حاضر مورداستفاده نباشد.</fa>
+</ID_CANT_DELETE_TASK>
+<ID_CANT_DELETE_DYNAFORM>
+<es>No es posible eliminar el Dynaform. Verifique que no hay tareas que usen este Dynaform.</es>
+<en>Can't delete the Dynaform. Check that is not used currently</en>
+<fa>امكان حذف فرآيند وجود ندارد.كنترل نماييد كه درحال حاضر مورد استفاده نباشد</fa>
+</ID_CANT_DELETE_DYNAFORM>
+<ID_CANT_DELETE_DOCUMENT>
+<es>No es posible eliminar el Documento. Verifique que no hay tareas que usen este Documento.</es>
+<en>Can't delete the Document. Check that is not used currently</en>
+<fa>مكان حذف مستند وجود ندارد.كنترل نماييد كه درحال حاضر مورد استفاده نباشد</fa>
+</ID_CANT_DELETE_DOCUMENT>
+<ID_FILE_NAME>
+<es>Nombre del archivo</es>
+<en>File name</en>
+<fa>نام پرونده</fa>
+</ID_FILE_NAME>
+<ID_DESCRIPTION>
+<es>Descripción</es>
+<en>Description</en>
+<fa>شرح</fa>
+</ID_DESCRIPTION>
+<ID_SIZE>
+<es>Tamaño</es>
+<en>Size</en>
+<fa>سايز</fa>
+</ID_SIZE>
+<ID_LAST_MODIFIED>
+<es>Última modificación</es>
+<en>Last modified</en>
+<fa>آخرين اصلاح</fa>
+</ID_LAST_MODIFIED>
+<ID_REMOVE>
+<es>Borrar</es>
+<en>Remove</en>
+<fa>حذف</fa>
+</ID_REMOVE>
+<ID_SAVE_CHANGES>
+<es>Guardar modificaciones</es>
+<en>Save changes</en>
+<fa>ثبت تغييرات</fa>
+</ID_SAVE_CHANGES>
+<ID_SAVE_II>
+<es>Guardar</es>
+<en>Save</en>
+<fa>ثبت</fa>
+</ID_SAVE_II>
+<ID_SAVE>
+<es>Guardar</es>
+<en>Save</en>
+<fa>ثبت</fa>
+</ID_SAVE>
+<ID_EDITION_ADVANCED>
+<es>Edición avanzada</es>
+<en>Advanced Edition</en>
+<fa>نسخه پيشرفته</fa>
+</ID_EDITION_ADVANCED>
+<ID_EDITION_ADVANCED_OF>
+<es>Edición avanzada de dynaform</es>
+<en>Advanced Edit of dynaform</en>
+<fa>ويرايش پيشرفته فرم</fa>
+</ID_EDITION_ADVANCED_OF>
+<ID_CREATE_NEW_FORM>
+<es>Crear nuevo formulario</es>
+<en>Create new form</en>
+<fa>ايجاد يك فرم جديد</fa>
+</ID_CREATE_NEW_FORM>
+<ID_DATA_NAME>
+<es>Nombre del campo</es>
+<en>Field name</en>
+<fa>نام فيلد</fa>
+</ID_DATA_NAME>
+<ID_ENABLE_ORDER>
+<es>Respetar el orden de los Dynaforms</es>
+<en>Enable the order</en>
+<fa>سفارش را فعال نماييد</fa>
+</ID_ENABLE_ORDER>
+<ID_DATA_TYPE>
+<es>Tipo de dato</es>
+<en>Data type</en>
+<fa>نوع داده</fa>
+</ID_DATA_TYPE>
+<ID_CREATE_FORM>
+<es>Crear formulario</es>
+<en>Create form</en>
+<fa>ايجاد فرم</fa>
+</ID_CREATE_FORM>
+<ID_NO>
+<es>No</es>
+<en>#</en>
+<fa>#</fa>
+</ID_NO>
+<ID_TEXT>
+<es>Texto</es>
+<en>Text</en>
+<fa>متن</fa>
+</ID_TEXT>
+<ID_DATE>
+<es>Fecha</es>
+<en>Date</en>
+<fa>تاريخ</fa>
+</ID_DATE>
+<ID_DATE_TIME>
+<es>Fecha y hora</es>
+<en>Datetime</en>
+<fa>زمان</fa>
+</ID_DATE_TIME>
+<ID_TIME>
+<es>Hora</es>
+<en>Time</en>
+<fa>دفعه</fa>
+</ID_TIME>
+<ID_TIMES>
+<es>Veces</es>
+<en>Times</en>
+<fa>دفعات</fa>
+</ID_TIMES>
+<ID_DROPDOWN_LIST>
+<es>Listado</es>
+<en>Dropdown lista</en>
+<fa>فهرست آبشاري</fa>
+</ID_DROPDOWN_LIST>
+<ID_DROPDOWN_SQL>
+<es>Búsqueda</es>
+<en>Dropdown sql</en>
+<fa>sql آبشاري</fa>
+</ID_DROPDOWN_SQL>
+<ID_DROPDOWN>
+<es>Cuadro combinado</es>
+<en>Dropdown</en>
+<fa>آبشاري</fa>
+</ID_DROPDOWN>
+<ID_PASSWORD>
+<es>Contraseña</es>
+<en>Password</en>
+<fa>رمز عبور</fa>
+</ID_PASSWORD>
+<ID_PASSWORD_CONFIRMATION>
+<es>Confirmación de la Contraseña</es>
+<en>Confirm Password</en>
+<fa>تاييد رمز عبور</fa>
+</ID_PASSWORD_CONFIRMATION>
+<ID_TEXT_AREA>
+<es>Área de texto</es>
+<en>Textarea</en>
+<fa>ناحيه متن</fa>
+</ID_TEXT_AREA>
+<ID_CHECKBOX>
+<es>Cuadro de selección</es>
+<en>Checkbox</en>
+<fa>چك باكس</fa>
+</ID_CHECKBOX>
+<ID_HIDDEN>
+<es>Oculto</es>
+<en>Hidden</en>
+<fa>مخفي</fa>
+</ID_HIDDEN>
+<ID_SUBMIT>
+<es>Aceptar</es>
+<en>Submit</en>
+<fa>تاييد</fa>
+</ID_SUBMIT>
+<ID_RESET>
+<es>Borrar</es>
+<en>Reset</en>
+<fa>تنظيم مجدد</fa>
+</ID_RESET>
+<ID_BUTTON>
+<es>Botón</es>
+<en>Button</en>
+<fa>دكمه</fa>
+</ID_BUTTON>
+<ID_ADD_OPTIONS>
+<es>Añadir opciones</es>
+<en>Add options</en>
+<fa>انتخابهاي افزودن</fa>
+</ID_ADD_OPTIONS>
+<ID_NOTHING>
+<es>Ninguna</es>
+<en>Nothing</en>
+<fa>هيچ چيز</fa>
+</ID_NOTHING>
+<ID_ALPHABETIC>
+<es>Alfabeto</es>
+<en>Alphabetic</en>
+<fa>الفبايي</fa>
+</ID_ALPHABETIC>
+<ID_INTEGER>
+<es>Entero</es>
+<en>Integer</en>
+<fa>عدد صحيح</fa>
+</ID_INTEGER>
+<ID_MONEY_FLOAT>
+<es>Real, moneda</es>
+<en>Money, float</en>
+<fa>پول ، شناور</fa>
+</ID_MONEY_FLOAT>
+<ID_ANY_CHAR>
+<es>Cualquier letra</es>
+<en>Any char</en>
+<fa>هر نوع حرف</fa>
+</ID_ANY_CHAR>
+<ID_ALPHANUMERIC>
+<es>Alfanumérico</es>
+<en>Alphanumeric</en>
+<fa>الفباعددي</fa>
+</ID_ALPHANUMERIC>
+<ID_FIELD_3>
+<es>Campos</es>
+<en>Field options</en>
+<fa>انتخابهاي فيلد</fa>
+</ID_FIELD_3>
+<ID_FIELD_4>
+<es>Campo(s) del Dynaform  '</es>
+<en>Field of  '</en>
+<fa>فيلد'</fa>
+</ID_FIELD_4>
+<ID_FIELD_5>
+<es>Campo(s) de la Tabla  '</es>
+<en>Field of  '</en>
+<fa>فيلد'</fa>
+</ID_FIELD_5>
+<ID_NOT_REQUIRED_DYNAFORMS>
+<es>Dynaforms no requeridos</es>
+<en>Not Required Dynaforms</en>
+<fa>فرمهاي غيرضروري</fa>
+</ID_NOT_REQUIRED_DYNAFORMS>
+<ID_REQUIRED_FIELD_DYNAFORMS>
+<es>La Tarea actual no se puede concluir porque falta el llenado de los siguientes Formularios</es>
+<en>The current Task can not be completed because the following DynaForms are incomplete</en>
+<fa>بدليل ناقص بودن فرمهاي زير، امكان تكميل كار جاري وجود ندارد.</fa>
+</ID_REQUIRED_FIELD_DYNAFORMS>
+<ID_REQUIRED_DYNAFORMS>
+<es>Dynaforms requeridos</es>
+<en>Required Dynaforms</en>
+<fa>فرمهاي ضروري</fa>
+</ID_REQUIRED_DYNAFORMS>
+<ID_INITIAL_YEAR>
+<es>Año inicial (tamaño mínimo)</es>
+<en>Initial year (size)</en>
+<fa>سال آغازين(اندازه)</fa>
+</ID_INITIAL_YEAR>
+<ID_FINAL_YEAR>
+<es>Año final (tamaño máximo)</es>
+<en>Final year (maxlenght)</en>
+<fa>سال پاياني(طول حداكثر)</fa>
+</ID_FINAL_YEAR>
+<ID_INITIAL_YEARI>
+<es>Año inicial</es>
+<en>Initial year</en>
+<fa>سال آغازين</fa>
+</ID_INITIAL_YEARI>
+<ID_FINAL_YEARI>
+<es>Año final</es>
+<en>Final year</en>
+<fa>سال پاياني</fa>
+</ID_FINAL_YEARI>
+<ID_SQL>
+<es>Sql</es>
+<en>Sql</en>
+<fa>sql</fa>
+</ID_SQL>
+<ID_TH_OPTION>
+<es>Opción</es>
+<en>th option</en>
+<fa>انتخاب</fa>
+</ID_TH_OPTION>
+<ID_HEADER_FOOTER>
+<es>Encabezado y Pie</es>
+<en>Header &amp; Footer</en>
+<fa>سرتيتر و زيرنويس</fa>
+</ID_HEADER_FOOTER>
+<ID_LANGUAGE>
+<es>Lenguaje</es>
+<en>Language</en>
+<fa>زبان</fa>
+</ID_LANGUAGE>
+<ID_BODY_HEADER>
+<es>Encabezado</es>
+<en>Header</en>
+<fa>سرتيتر</fa>
+</ID_BODY_HEADER>
+<ID_BODY_FOOTER>
+<es>Pie</es>
+<en>Footer</en>
+<fa>زيرنويس</fa>
+</ID_BODY_FOOTER>
+<ID_LABELS>
+<es>Etiquetas</es>
+<en>Labels</en>
+<fa>برچسبها</fa>
+</ID_LABELS>
+<ID_LABEL>
+<es>Etiqueta</es>
+<en>Label</en>
+<fa>برچسب</fa>
+</ID_LABEL>
+<ID_NOT_EXIST_PROCESS>
+<es>No existe proceso</es>
+<en>The process is not exist</en>
+<fa>فرآيند موردنظر وجود ندارد</fa>
+</ID_NOT_EXIST_PROCESS>
+<ID_NO_STAGE>
+<es>No se puede eliminar la etapa</es>
+<en>You can't delete this stage</en>
+<fa>امكان حذف اين مرحله وجود ندارد</fa>
+</ID_NO_STAGE>
+<ID_EXIST_PROCESS>
+<es>Ya existe proceso</es>
+<en>Process it doesn't exists</en>
+<fa>فرآيند وجود ندارد</fa>
+</ID_EXIST_PROCESS>
+<ID_NOT_EXIST_LANGUAGE>
+<es>No hay el lenguaje</es>
+<en>The language not exist</en>
+<fa>زبان وجود ندارد.</fa>
+</ID_NOT_EXIST_LANGUAGE>
+<ID_GENERAL_INFORMATION>
+<es>Información general</es>
+<en>General information</en>
+<fa>اطلاعات عمومي</fa>
+</ID_GENERAL_INFORMATION>
+<ID_PHP_CODE>
+<es>Código PHP de inicialización</es>
+<en>PHP Initialization Code</en>
+<fa>كار</fa>
+</ID_PHP_CODE>
+<ID_SUB_PROCESS>
+<es>Tarea</es>
+<en>Task</en>
+<fa>نام كار</fa>
+</ID_SUB_PROCESS>
+<ID_TASK_NAME>
+<es>Nombre de la tarea</es>
+<en>Task name</en>
+<fa>نام گام</fa>
+</ID_TASK_NAME>
+<ID_STEP_NAME>
+<es>Nombre de step</es>
+<en>Step name</en>
+<fa>نوع گام</fa>
+</ID_STEP_NAME>
+<ID_STEP_TYPE>
+<es>Tipo de step</es>
+<en>Step type</en>
+<fa>نوع گام</fa>
+</ID_STEP_TYPE>
+<ID_NEXT_TASK>
+<es>Siguiente tarea</es>
+<en>Next task</en>
+<fa>كار بعدي</fa>
+</ID_NEXT_TASK>
+<ID_DEPARTAMENT>
+<es>Departamento</es>
+<en>Department</en>
+<fa>قسمت</fa>
+</ID_DEPARTAMENT>
+<ID_MESSAGE>
+<es>Mensaje</es>
+<en>Message</en>
+<fa>پيغام</fa>
+</ID_MESSAGE>
+<ID_TASK_DOCUMENTATION>
+<es>Documentación de la tarea</es>
+<en>Task Documentation</en>
+<fa>مستندات كار</fa>
+</ID_TASK_DOCUMENTATION>
+<ID_ADD_TASK_DOCUMENTATION>
+<es>Añadir Documentación a la tarea (Manuales)</es>
+<en>Add Task Documentation (Manuals)</en>
+<fa>اضافه كردن مستندات كار(دستورالعملها)</fa>
+</ID_ADD_TASK_DOCUMENTATION>
+<ID_MESSAGE_USER>
+<es>Añadir Usuarios o grupos de Usuarios</es>
+<en>Add Users or Usergroups</en>
+<fa>اضافه كردن كاربران يا گروههاي كاربران</fa>
+</ID_MESSAGE_USER>
+<ID_SEND_SAME_MESSAGE>
+<es>Enviar este mensaje a todos</es>
+<en>Send this message to everybody</en>
+<fa>اين پيغام را براي همه ارسال نماييد</fa>
+</ID_SEND_SAME_MESSAGE>
+<ID_CONTINUE>
+<es>Continuar</es>
+<en>Continue</en>
+<fa>ادامه</fa>
+</ID_CONTINUE>
+<ID_DEFAULT_RTF_GENERATED>
+<es>El archivo de Salida fue generado y está disponible en la ubicación</es>
+<en>Please click in the link below to get the default document</en>
+<fa>جهت دسترسي به مستند پيش فرض ،لطفا در لينك زير كليك كنيد</fa>
+</ID_DEFAULT_RTF_GENERATED>
+<ID_TITLE>
+<es>Título</es>
+<en>Title</en>
+<fa>عنوان</fa>
+</ID_TITLE>
+<ID_SUB_TITLE>
+<es>Subtítulo</es>
+<en>Subtitle</en>
+<fa>عنوان فرعي</fa>
+</ID_SUB_TITLE>
+<ID_MY_APPLICATIONS>
+<es>Mis casos</es>
+<en>My Cases</en>
+<fa>موردها</fa>
+</ID_MY_APPLICATIONS>
+<ID_MY_PENDINGS>
+<es>Mis pendientes</es>
+<en>My pending Process</en>
+<fa>فرآيند معوقه</fa>
+</ID_MY_PENDINGS>
+<ID_MY_PEOPLE>
+<es>Mi gente</es>
+<en>My people</en>
+<fa>افراد</fa>
+</ID_MY_PEOPLE>
+<ID_PROCESED_APPLICATIONS>
+<es>Casos atendidos</es>
+<en>Procesed Processes</en>
+<fa>فرآيندهاي پردازش شده</fa>
+</ID_PROCESED_APPLICATIONS>
+<ID_STATISTICS_OF>
+<es>Estadísticas de</es>
+<en>Statistics for</en>
+<fa>آمار</fa>
+</ID_STATISTICS_OF>
+<ID_FOR>
+<es>Para</es>
+<en>for</en>
+<fa>براي</fa>
+</ID_FOR>
+<ID_EVERY_PROCESS>
+<es>Todos los procesos</es>
+<en>All processes</en>
+<fa>همه فرآيندها</fa>
+</ID_EVERY_PROCESS>
+<ID_NO_APPLICATIONS>
+<es># de casos</es>
+<en># of cases</en>
+<fa>#  از موردها</fa>
+</ID_NO_APPLICATIONS>
+<ID_TOTAL>
+<es>Total</es>
+<en>Total</en>
+<fa>مجموع</fa>
+</ID_TOTAL>
+<ID_TODAY>
+<es>Hoy</es>
+<en>Today</en>
+<fa>امروز</fa>
+</ID_TODAY>
+<ID_DERIVED>
+<es>Derivados</es>
+<en>Sent</en>
+<fa>ارسال شده</fa>
+</ID_DERIVED>
+<ID_DERIVED_I>
+<es>Derivado</es>
+<en>Sent</en>
+<fa>ا رسال شده</fa>
+</ID_DERIVED_I>
+<ID_DERIVED_BY>
+<es>Derivado por</es>
+<en>Sent by</en>
+<fa>ارسال شده توسط</fa>
+</ID_DERIVED_BY>
+<ID_FINISHED>
+<es>Finalizados</es>
+<en>Finished</en>
+<fa>تمام شده</fa>
+</ID_FINISHED>
+<ID_FINISHED_1>
+<es>Finalizado</es>
+<en>Finished</en>
+<fa>تمام شده</fa>
+</ID_FINISHED_1>
+<ID_PENDING>
+<es>Pendientes</es>
+<en>Pending</en>
+<fa>معوقه</fa>
+</ID_PENDING>
+<ID_PENDING_APPLICATION>
+<es>Casos pendientes</es>
+<en>Pendings Tasks</en>
+<fa>كارهاي معوقه</fa>
+</ID_PENDING_APPLICATION>
+<ID_SET_GOAL>
+<es>Meta del día</es>
+<en>Daily Task Goal</en>
+<fa>هدف كار روزانه</fa>
+</ID_SET_GOAL>
+<ID_OLD_APPLICATION>
+<es>Caso más antiguo</es>
+<en>Oldest Task</en>
+<fa>قديميترين كار</fa>
+</ID_OLD_APPLICATION>
+<ID_OUT_DELAY>
+<es>Sin retraso</es>
+<en>No delay</en>
+<fa>بدون تاخير</fa>
+</ID_OUT_DELAY>
+<ID_NAME>
+<es>Nombre</es>
+<en>Name</en>
+<fa>نام</fa>
+</ID_NAME>
+<ID_NAME_USER>
+<es>Usuario</es>
+<en>User</en>
+<fa>كاربر</fa>
+</ID_NAME_USER>
+<ID_EXPIRATION_DATE>
+<es>Caduca</es>
+<en>Expiration date</en>
+<fa>تاريخ انقضا</fa>
+</ID_EXPIRATION_DATE>
+<ID_CURRENT_STATUS>
+<es>Estado actual</es>
+<en>Current status</en>
+<fa>وضعيت جاري</fa>
+</ID_CURRENT_STATUS>
+<ID_EMAIL>
+<es>E-Mail</es>
+<en>E-Mail</en>
+<fa>پست الكترونيك</fa>
+</ID_EMAIL>
+<ID_STATUS>
+<es>Estado</es>
+<en>Status</en>
+<fa>وضعيت</fa>
+</ID_STATUS>
+<ID_DURATION_DEL>
+<es>Duración Del.</es>
+<en>Duration Del.</en>
+<fa>حذف مدت زمان</fa>
+</ID_DURATION_DEL>
+<ID_DURATION_INI>
+<es>Duración Ini.</es>
+<en>Duration Ini.</en>
+<fa>ID_DURATION_INI</fa>
+</ID_DURATION_INI>
+<ID_DEPENDENT_DEPARTMENT>
+<es>Departamento dependiente</es>
+<en>Dependent department</en>
+<fa>قسمت</fa>
+</ID_DEPENDENT_DEPARTMENT>
+<ID_LOCATION>
+<es>Ubicación</es>
+<en>Location</en>
+<fa>مكان</fa>
+</ID_LOCATION>
+<ID_TYPE>
+<es>Tipo</es>
+<en>Type</en>
+<fa>نوع</fa>
+</ID_TYPE>
+<ID_INCLUDE>
+<es>Incluir</es>
+<en>Include</en>
+<fa>شامل</fa>
+</ID_INCLUDE>
+<ID_MANAGER>
+<es>Responsable</es>
+<en>Manager</en>
+<fa>مدير</fa>
+</ID_MANAGER>
+<ID_POSITION_II>
+<es>Posición</es>
+<en>Position</en>
+<fa>سمت</fa>
+</ID_POSITION_II>
+<ID_POSITION>
+<es>Cargo</es>
+<en>Position</en>
+<fa>سمت</fa>
+</ID_POSITION>
+<ID_UNLINK_DEPARTMENT>
+<es>Retirar departamento</es>
+<en>Unlink department</en>
+<fa>قسمت مجزا</fa>
+</ID_UNLINK_DEPARTMENT>
+<ID_UNLINK>
+<es>Retirar</es>
+<en>Unlink</en>
+<fa>مجزا</fa>
+</ID_UNLINK>
+<ID_UNLINK_EMPLOYEE>
+<es>Retirar funcionario</es>
+<en>unlink employee</en>
+<fa>كارمند</fa>
+</ID_UNLINK_EMPLOYEE>
+<ID_DOCUMENTS>
+<es>Documentos</es>
+<en>Documents</en>
+<fa>مستندات</fa>
+</ID_DOCUMENTS>
+<ID_OPTIONAL_DOCUMENT>
+<es>Documento opcional</es>
+<en>Optional Document</en>
+<fa>مستند اختياري</fa>
+</ID_OPTIONAL_DOCUMENT>
+<ID_REQUIRED>
+<es>Requerido</es>
+<en>Required</en>
+<fa>الزامی</fa>
+</ID_REQUIRED>
+<ID_COLUMNS>
+<es>Columnas</es>
+<en>Columns</en>
+<fa>ستونها</fa>
+</ID_COLUMNS>
+<ID_ROWS>
+<es>Filas</es>
+<en>Rows</en>
+<fa>سطرها</fa>
+</ID_ROWS>
+<ID_ORIGINALITY>
+<es>Originalidad</es>
+<en>Originality</en>
+<fa>اصليت</fa>
+</ID_ORIGINALITY>
+<ID_ADD_GROUP_USER>
+<es>Añadir usuarios y grupos</es>
+<en>Add Users and Groups</en>
+<fa>اضافه كردن كاربران و گروهها</fa>
+</ID_ADD_GROUP_USER>
+<ID_USER_GROUP>
+<es>Usuarios y grupos</es>
+<en>Users and Groups</en>
+<fa>كاربران و گروهها</fa>
+</ID_USER_GROUP>
+<ID_USER_GROUP_DEFINITION>
+<es>Definición de grupos de usuarios</es>
+<en>User Group Definitions</en>
+<fa>تعاريف گروه كاربران</fa>
+</ID_USER_GROUP_DEFINITION>
+<ID_ADD_USER>
+<es>Añadir Usuario</es>
+<en>Add User</en>
+<fa>اضافه نمودن كاربر</fa>
+</ID_ADD_USER>
+<ID_ADD_USER_II>
+<es>Añadir Usuarios</es>
+<en>Add Users</en>
+<fa>اضافه نمودن كاربران</fa>
+</ID_ADD_USER_II>
+<ID_PUBLISHED>
+<es>Publicación</es>
+<en>Published</en>
+<fa>چاپ شده</fa>
+</ID_PUBLISHED>
+<ID_PROCESS>
+<es>Proceso</es>
+<en>Process</en>
+<fa>فرآيند</fa>
+</ID_PROCESS>
+<ID_TIME_2>
+<es>Tiempo</es>
+<en>Time</en>
+<fa>زمان</fa>
+</ID_TIME_2>
+<ID_DYNAMIC_FORM>
+<es>Formulario dinámico</es>
+<en>Dynaform</en>
+<fa>فرم پويا</fa>
+</ID_DYNAMIC_FORM>
+<ID_EDIT_MODE>
+<es>Modo de edición</es>
+<en>Edit mode</en>
+<fa>مد پويا</fa>
+</ID_EDIT_MODE>
+<ID_MULTIPLE>
+<es>Múltiples</es>
+<en>Multiple</en>
+<fa>چندگانه</fa>
+</ID_MULTIPLE>
+<ID_VALIDATION>
+<es>Validación</es>
+<en>Validation</en>
+<fa>اعتبارسنجي</fa>
+</ID_VALIDATION>
+<ID_GLOBAL>
+<es>Global</es>
+<en>Global</en>
+<fa>سراسري</fa>
+</ID_GLOBAL>
+<ID_OPTIONAL>
+<es>Opcional</es>
+<en>Optional</en>
+<fa>اختياري</fa>
+</ID_OPTIONAL>
+<ID_PRINT_SKIN>
+<es>Skin de impresión</es>
+<en>Print skin</en>
+<fa>ID_PRINT_SKIN</fa>
+</ID_PRINT_SKIN>
+<ID_REQUIRED_RTF_II>
+<es>RTF requerido</es>
+<en>Required RTF</en>
+<fa>RTF الزامي</fa>
+</ID_REQUIRED_RTF_II>
+<ID_REQUIRED_PDF_II>
+<es>PDF requerido</es>
+<en>Required PDF</en>
+<fa>PDF الزامي</fa>
+</ID_REQUIRED_PDF_II>
+<ID_REQUIRED_DOCUMENT>
+<es>Documento requerido</es>
+<en>Required document</en>
+<fa>مستند الزامي</fa>
+</ID_REQUIRED_DOCUMENT>
+<ID_PDF_FORM>
+<es>Formulario PDF</es>
+<en>PDF form</en>
+<fa>فرم  PDF</fa>
+</ID_PDF_FORM>
+<ID_RTF_FORM>
+<es>Formulario RTF</es>
+<en>RTF form</en>
+<fa>فرم RTF</fa>
+</ID_RTF_FORM>
+<ID_TASK>
+<es>Tarea</es>
+<en>Task</en>
+<fa>كار</fa>
+</ID_TASK>
+<ID_TASKS>
+<es>Tareas</es>
+<en>Tasks</en>
+<fa>كارها</fa>
+</ID_TASKS>
+<ID_DOCUMENTATION>
+<es>Documentación</es>
+<en>Documentation</en>
+<fa>مستندات</fa>
+</ID_DOCUMENTATION>
+<ID_FORM_II>
+<es>Form</es>
+<en>Form</en>
+<fa>فرم</fa>
+</ID_FORM_II>
+<ID_FORM>
+<es>Formulario</es>
+<en>Form</en>
+<fa>فرم</fa>
+</ID_FORM>
+<ID_GROUP_USER>
+<es>Grupo de usuarios</es>
+<en>User group</en>
+<fa>گروه كاربري</fa>
+</ID_GROUP_USER>
+<ID_GROUP>
+<es>Grupo</es>
+<en>Group</en>
+<fa>گروه</fa>
+</ID_GROUP>
+<ID_GROUPS>
+<es>Grupos</es>
+<en>Groups</en>
+<fa>گروهها</fa>
+</ID_GROUPS>
+<ID_ARBITRARY_DERIVATION>
+<es>Derivación arbitraria</es>
+<en>Arbitrary transfer</en>
+<fa>انتقال اختياري</fa>
+</ID_ARBITRARY_DERIVATION>
+<ID_CHANGE_RULE_OF_DERIVATION>
+<es>Cambiar regla de derivación</es>
+<en>Change derivation rule</en>
+<fa>تغيير نحوه ارجاع كار</fa>
+</ID_CHANGE_RULE_OF_DERIVATION>
+<ID_LIST_RULE_OF_DERIVATION>
+<es>Listado de Reglas de derivación</es>
+<en>List of derivation rules</en>
+<fa>فهرست نحوه هاي ارجاع كار</fa>
+</ID_LIST_RULE_OF_DERIVATION>
+<ID_RULE_OF_DERIVATION_II>
+<es>Regla de derivación</es>
+<en>Rule of derivation</en>
+<fa>قانون نحوه ارجاع كار</fa>
+</ID_RULE_OF_DERIVATION_II>
+<ID_APPLICATION>
+<es>Caso</es>
+<en>Case</en>
+<fa>مورد</fa>
+</ID_APPLICATION>
+<ID_CURRENT_USER>
+<es>Usuario actual</es>
+<en>Current User</en>
+<fa>كاربر جاري</fa>
+</ID_CURRENT_USER>
+<ID_CURRENT_GROUP>
+<es>Grupo actual</es>
+<en>Current group</en>
+<fa>گروه جاري</fa>
+</ID_CURRENT_GROUP>
+<ID_CURRENCY>
+<es>Moneda</es>
+<en>Currency</en>
+<fa>واحد پول</fa>
+</ID_CURRENCY>
+<ID_CAPTION_CURRENCY>
+<es>Moneda (Etiqueta)</es>
+<en>Currency (Caption)</en>
+<fa>واحد پول(عنوان)</fa>
+</ID_CAPTION_CURRENCY>
+<ID_CAPTION_ONDEMAND>
+<es>Por demanda (Etiqueta)</es>
+<en>Ondemand (Caption)</en>
+<fa>بر حسب لزوم(عنوان)</fa>
+</ID_CAPTION_ONDEMAND>
+<ID_CAPTION_CHECKBOX>
+<es>Cuadro de selección (Etiqueta)</es>
+<en>Checkbox (Caption)</en>
+<fa>چك باكس (عنوان)</fa>
+</ID_CAPTION_CHECKBOX>
+<ID_CURRENT_DEPARTMENT>
+<es>Departamento actual</es>
+<en>Current Department</en>
+<fa>دپارتمان جاري</fa>
+</ID_CURRENT_DEPARTMENT>
+<ID_CREATED>
+<es>Creado</es>
+<en>Created</en>
+<fa>ايجاد شده</fa>
+</ID_CREATED>
+<ID_UPDATED>
+<es>Actualizado</es>
+<en>Updated</en>
+<fa>به هنگام شده</fa>
+</ID_UPDATED>
+<ID_CODE>
+<es>Código</es>
+<en>Code</en>
+<fa>كد</fa>
+</ID_CODE>
+<ID_NUMBER_PENDING>
+<es>Cantidad pendientes</es>
+<en>Pending Tasks</en>
+<fa>كارهاي معوقه</fa>
+</ID_NUMBER_PENDING>
+<ID_DAY_DELAY>
+<es>Días de retraso</es>
+<en>Days Delayed</en>
+<fa>روزهاي به تاخيرافتاده</fa>
+</ID_DAY_DELAY>
+<ID_OLD_PENDING>
+<es>Pendiente más antiguo</es>
+<en>Old Tasks</en>
+<fa>كارهاي قديمي</fa>
+</ID_OLD_PENDING>
+<ID_USE_GROUPS>
+<es>Usar Reglas</es>
+<en>Using Rules</en>
+<fa>قوانين استفاده</fa>
+</ID_USE_GROUPS>
+<ID_CONDITION>
+<es>Condición</es>
+<en>Condition</en>
+<fa>شرط</fa>
+</ID_CONDITION>
+<ID_STEP_CONDITION>
+<es>Condición de Pasos</es>
+<en>Step Condition</en>
+<fa>شرط گام</fa>
+</ID_STEP_CONDITION>
+<ID_NEXT_SUB_PROCESS>
+<es>Siguiente</es>
+<en>Next Task</en>
+<fa>كار بعدي</fa>
+</ID_NEXT_SUB_PROCESS>
+<ID_INITIAL>
+<es>Inicial</es>
+<en>Initial</en>
+<fa>آغازين</fa>
+</ID_INITIAL>
+<ID_ANY>
+<es>Cualquiera</es>
+<en>Any</en>
+<fa>هر</fa>
+</ID_ANY>
+<ID_ALERT_LEVEL>
+<es>Nivel</es>
+<en>Alert level</en>
+<fa>سطح اخطار</fa>
+</ID_ALERT_LEVEL>
+<ID_ACTION>
+<es>Acción</es>
+<en>Action</en>
+<fa>عمل</fa>
+</ID_ACTION>
+<ID_GENERAL_DATA_APPLICATION>
+<es>Datos generales del Caso</es>
+<en>General Process Data</en>
+<fa>داده كلي فرآيند</fa>
+</ID_GENERAL_DATA_APPLICATION>
+<ID_APPLICATIONS_TYPE>
+<es>Tipo de Caso</es>
+<en>Process type</en>
+<fa>نوع فرآيند</fa>
+</ID_APPLICATIONS_TYPE>
+<ID_REFERENCE>
+<es>Referencia</es>
+<en>Reference</en>
+<fa>مرجع</fa>
+</ID_REFERENCE>
+<ID_APPLICATIONS_STATUS>
+<es>Estado del Caso</es>
+<en>Process Status</en>
+<fa>وضعيت فرآيند</fa>
+</ID_APPLICATIONS_STATUS>
+<ID_APPLICATIONS_CODE>
+<es>Código del Caso</es>
+<en>Process Code</en>
+<fa>كد فرآيند</fa>
+</ID_APPLICATIONS_CODE>
+<ID_CREATION_DATE>
+<es>Fecha de creación</es>
+<en>Date Created</en>
+<fa>تاريخ ايجاد</fa>
+</ID_CREATION_DATE>
+<ID_LAST_UPDATE_DATE>
+<es>Fecha de última modificación</es>
+<en>Last update date</en>
+<fa>تاريخ آخرين بروز رساني</fa>
+</ID_LAST_UPDATE_DATE>
+<ID_CURRENT_TASK>
+<es>Tarea actual</es>
+<en>Current task</en>
+<fa>كار جاري</fa>
+</ID_CURRENT_TASK>
+<ID_OVERVIEW>
+<es>Información general</es>
+<en>Overview</en>
+<fa>نماي كلي</fa>
+</ID_OVERVIEW>
+<ID_TASK_DESCRIPTION>
+<es>Descripción de la tarea</es>
+<en>Task description</en>
+<fa>شرح كار</fa>
+</ID_TASK_DESCRIPTION>
+<ID_RELATED_DOCUMENTATION>
+<es>Documentos asociados</es>
+<en>Related Documents</en>
+<fa>مستندات مربوطه</fa>
+</ID_RELATED_DOCUMENTATION>
+<ID_REAL_DOCUMENT>
+<es>Documento real</es>
+<en>Real document</en>
+<fa>مستند واقعي</fa>
+</ID_REAL_DOCUMENT>
+<ID_ADDITIONAL_DOCUMENTATION>
+<es>Documento adicional</es>
+<en>Additional documentation</en>
+<fa>مستندات تكميلي</fa>
+</ID_ADDITIONAL_DOCUMENTATION>
+<ID_DYNAFORMS_1>
+<es>Formularios</es>
+<en>DynaForms</en>
+<fa>فرمها</fa>
+</ID_DYNAFORMS_1>
+<ID_UPLOAD_DOCUMENT>
+<es>Subir documento</es>
+<en>Upload document</en>
+<fa>بارگذاري مستند</fa>
+</ID_UPLOAD_DOCUMENT>
+<ID_DELETE_DOCUMENT>
+<es>Borrar documento</es>
+<en>Delete document</en>
+<fa>حذف مستند</fa>
+</ID_DELETE_DOCUMENT>
+<ID_OPEN_DOCUMENT>
+<es>Abrir documento</es>
+<en>Open document</en>
+<fa>بازكردن مستند</fa>
+</ID_OPEN_DOCUMENT>
+<ID_VIEW_PROPERTIES>
+<es>Ver detalles</es>
+<en>View properties</en>
+<fa>مشاهده متعلقات</fa>
+</ID_VIEW_PROPERTIES>
+<ID_VIEW_DYNAFORM>
+<es>Ver formulario</es>
+<en>View DynaForm</en>
+<fa>مشاهده فرم</fa>
+</ID_VIEW_DYNAFORM>
+<ID_NEW_SEARCH>
+<es>Nueva búsqueda</es>
+<en>New search</en>
+<fa>جستجوي جديد</fa>
+</ID_NEW_SEARCH>
+<ID_VIEW_RTF>
+<es>Ver documentos RTF</es>
+<en>View Documents RTF</en>
+<fa>مشاهده مستند RTF</fa>
+</ID_VIEW_RTF>
+<ID_VIEW_DOCUMENTS>
+<es>Ver documentos</es>
+<en>View documents</en>
+<fa>مشاهده مستندات</fa>
+</ID_VIEW_DOCUMENTS>
+<ID_NEW_DYNAFORM>
+<es>Nuevo formulario</es>
+<en>New dynaform</en>
+<fa>فرم جديد</fa>
+</ID_NEW_DYNAFORM>
+<ID_GENERATE_RTF_FORMS>
+<es>Generar formularios</es>
+<en>Generate RTF forms</en>
+<fa>ايجاد فرمهاي RTF</fa>
+</ID_GENERATE_RTF_FORMS>
+<ID_ALERT_TIMEOUT_I>
+<es>En el tiempo límite</es>
+<en>First alert</en>
+<fa>اولين اخطار</fa>
+</ID_ALERT_TIMEOUT_I>
+<ID_ALERT_TIMEOUT_II>
+<es>Antes del tiempo límite</es>
+<en>Second alert</en>
+<fa>دومين اخطار</fa>
+</ID_ALERT_TIMEOUT_II>
+<ID_ALERT_TIMEOUT_III>
+<es>Primera después del tiempo límite</es>
+<en>Third alert</en>
+<fa>سومين اخطار</fa>
+</ID_ALERT_TIMEOUT_III>
+<ID_EXPORT_USERS>
+<es>Exportar usuarios</es>
+<en>Export users</en>
+<fa>صادركردن كاربران</fa>
+</ID_EXPORT_USERS>
+<ID_IMPORT_USERS>
+<es>Importar usuarios</es>
+<en>Import Users</en>
+<fa>واردكردن كاربران</fa>
+</ID_IMPORT_USERS>
+<ID_CREATE_PROCESS>
+<es>Crear nuevo proceso</es>
+<en>Create new process</en>
+<fa>ايجاد فرآيندهاي جديد</fa>
+</ID_CREATE_PROCESS>
+<ID_OVERWRITE_PROCESS>
+<es>Sobrescribir proceso</es>
+<en>overwrite process</en>
+<fa>ID_OVERWRITE_PROCESS</fa>
+</ID_OVERWRITE_PROCESS>
+<ID_TITLE_ALERT_MESSAGE_FIRST>
+<es>Selección de destinatarios para el envio de mensajes de la alerta en el tiempo límite</es>
+<en>Selection of messages for first alert</en>
+<fa>انتخاب پيغامهاي اولين اخطار</fa>
+</ID_TITLE_ALERT_MESSAGE_FIRST>
+<ID_TITLE_ALERT_MESSAGE_SECOND>
+<es>Selección de destinatarios para el envio de mensajes de la alerta antes del tiempo límite</es>
+<en>Selection of messages for second alert</en>
+<fa>انتخاب پيغامهاي دومين اخطار</fa>
+</ID_TITLE_ALERT_MESSAGE_SECOND>
+<ID_TITLE_ALERT_MESSAGE_THREE>
+<es>Selección de destinatarios para el envio de mensajes de la primera alerta después del tiempo límite</es>
+<en>Selection of messages for third alert</en>
+<fa>انتخاب پيغامهاي سومين اخطار</fa>
+</ID_TITLE_ALERT_MESSAGE_THREE>
+<ID_TITLE_ALERT_MESSAGE_FOURTH>
+<es>Selección de destinatarios para el envio de mensajes de la segunda alerta después del tiempo límite</es>
+<en>Selection of messages for fourth alert</en>
+<fa>انتخاب پيغامهاي چهارمين اخطار</fa>
+</ID_TITLE_ALERT_MESSAGE_FOURTH>
+<ID_TITLE_ALERT_ASSIGNMENT_FIRST>
+<es>Selección de asignación para la primera alerta</es>
+<en>Selection of assignment for first alert</en>
+<fa>انتخاب تخصيص براي اولين اخطار</fa>
+</ID_TITLE_ALERT_ASSIGNMENT_FIRST>
+<ID_TITLE_ALERT_ASSIGNMENT_SECOND>
+<es>Selección de asignación para la segunda alerta</es>
+<en>Selection of assignment for second alert</en>
+<fa>انتخاب تخصيص براي دومين اخطار</fa>
+</ID_TITLE_ALERT_ASSIGNMENT_SECOND>
+<ID_TITLE_ALERT_ASSIGNMENT_THREE>
+<es>Selección de asignación para la tercera alerta</es>
+<en>Selection of assignment for third alert</en>
+<fa>انتخاب تخصيص براي سومين اخطار</fa>
+</ID_TITLE_ALERT_ASSIGNMENT_THREE>
+<ID_TITLE_ALERT_MSG_TYPE_FIRST>
+<es>Template para la primera alerta</es>
+<en>Template for first alert</en>
+<fa>قالب اولين اخطار</fa>
+</ID_TITLE_ALERT_MSG_TYPE_FIRST>
+<ID_TITLE_ALERT_MSG_TYPE_SECOND>
+<es>Template para la segunda alerta</es>
+<en>Template for second alert</en>
+<fa>قالب اولين اخطار</fa>
+</ID_TITLE_ALERT_MSG_TYPE_SECOND>
+<ID_TITLE_ALERT_MSG_TYPE_THREE>
+<es>Template para la tercera alerta</es>
+<en>Template for three alert</en>
+<fa>قالب سومين اخطار</fa>
+</ID_TITLE_ALERT_MSG_TYPE_THREE>
+<ID_ACEPT>
+<es>Aceptar</es>
+<en>Accept</en>
+<fa>قبول</fa>
+</ID_ACEPT>
+<ID_CONTEN_VARS>
+<es>Contenedor de variables</es>
+<en>Content vars</en>
+<fa>ID_CONTEN_VARS</fa>
+</ID_CONTEN_VARS>
+<ID_VIEW_VAR>
+<es>Ver variable</es>
+<en>View variables</en>
+<fa>متغيرهاي مشاهده</fa>
+</ID_VIEW_VAR>
+<ID_NEW_GROUP>
+<es>Grupo Nuevo</es>
+<en>New Group</en>
+<fa>گروه جديد</fa>
+</ID_NEW_GROUP>
+<ID_USER_NOT_EXIST>
+<es>no existe usuario</es>
+<en>user doesn't exists</en>
+<fa>كاربر وجود ندارد</fa>
+</ID_USER_NOT_EXIST>
+<ID_CREATE_USER>
+<es>Crear usuario</es>
+<en>Create user</en>
+<fa>ايجاد كاربر</fa>
+</ID_CREATE_USER>
+<ID_ALERT_TIMEOUT_IV>
+<es>Segunda después del tiempo límite</es>
+<en>Fourth Alert</en>
+<fa>اخطار چهارم</fa>
+</ID_ALERT_TIMEOUT_IV>
+<ID_JUST_CREATE_USERS>
+<es>No crear departamentos, sólo actualizar usuarios</es>
+<en>Don't create departments, Just update users.</en>
+<fa>خشهاي جديد ايجاد نكنيد، فقط اطلاعات كاربران را بروزرساني نماييد</fa>
+</ID_JUST_CREATE_USERS>
+<ID_CREATE_MISSING_DEP>
+<es>Crear departamentos que faltan</es>
+<en>Create departments when is missing</en>
+<fa>ايجاد دپارتمانها در صورت لزوم</fa>
+</ID_CREATE_MISSING_DEP>
+<ID_CREATE_NEW_CHART>
+<es>Eliminar organigrama actual y crear uno nuevo con la nueva estructura jerárquica</es>
+<en>Remove current organizational chart and create one with new hierarchy organizational</en>
+<fa>چارت سازماني فعلي را حذف نموده و چارت جديدي با سازماندهاي هرمي جديد ايجاد نماييد</fa>
+</ID_CREATE_NEW_CHART>
+<ID_READY_FOR_IMPORT>
+<es>Listo para importar</es>
+<en>Ready for Import</en>
+<fa>آماده براي وارد كردن</fa>
+</ID_READY_FOR_IMPORT>
+<ID_NO_DEPARTMENT>
+<es>No existe departamento para este usuario</es>
+<en>There isn't Department for this user</en>
+<fa>اين كاربر در دپارتماني تعريف نشده</fa>
+</ID_NO_DEPARTMENT>
+<ID_UPDATE_USER_DONE>
+<es>Actualización de Usuario.  Completado</es>
+<en>User Update. Done</en>
+<fa>به هنگام سازي اطلاعات كاربر انجام شد.</fa>
+</ID_UPDATE_USER_DONE>
+<ID_CREATE_USER_DONE>
+<es>Creación de Usuario. Completado</es>
+<en>User creation. Done</en>
+<fa>ايجاد كاربر انجام شد.</fa>
+</ID_CREATE_USER_DONE>
+<ID_CREATE_DEPART_DONE>
+<es>Creación de Departamento. Completado</es>
+<en>Department creation. Done</en>
+<fa>ايجاد قسمت سازماني انجام شد.</fa>
+</ID_CREATE_DEPART_DONE>
+<ID_CREATED_NEW_CHART>
+<es>Nuevo Organigrama creado satisfactoriamente</es>
+<en>New Organizational chart created sucessful</en>
+<fa>چارت سازماني جديد با موفقيت ايجاد شد</fa>
+</ID_CREATED_NEW_CHART>
+<ID_NRO>
+<es>Nº</es>
+<en>No.</en>
+<fa>خير.</fa>
+</ID_NRO>
+<ID_MESSAGE_TO>
+<es>Enviar alerta a</es>
+<en>Select user for the alert</en>
+<fa>انتخاب كاربر براي اخطار</fa>
+</ID_MESSAGE_TO>
+<ID_EDIT_HEADER_AND_FOOTER>
+<es>Editar Encabezado y Pie</es>
+<en>Edit Header and Footer</en>
+<fa>ويرايش سرتيتر و زيرنويس</fa>
+</ID_EDIT_HEADER_AND_FOOTER>
+<ID_HTML_EDIT>
+<es>Editor HTML</es>
+<en>HTML Edit</en>
+<fa>ويرايش HTML</fa>
+</ID_HTML_EDIT>
+<ID_PREVIEW>
+<es>Vista previa</es>
+<en>Preview</en>
+<fa>پيش نمايش</fa>
+</ID_PREVIEW>
+<ID_FIELD_NOT_EMPTY>
+<es>Este campo no puede estar en blanco</es>
+<en>This field can't be empty</en>
+<fa>اين فيلد نبايستي خالي بماند</fa>
+</ID_FIELD_NOT_EMPTY>
+<ID_COMMENTS_EMPTY>
+<es>El campo comentarios esta vacio</es>
+<en>Comments is empty</en>
+<fa>فيلد توضيحات خالي است</fa>
+</ID_COMMENTS_EMPTY>
+<ID_DESCRIPTION_EMPTY>
+<es>El campo descripción esta vacio</es>
+<en>Description is empty</en>
+<fa>فيلد شرح خالي است</fa>
+</ID_DESCRIPTION_EMPTY>
+<ID_TITLE_ASSIGNMENT>
+<es>Mis reasignaciones</es>
+<en>My assignament</en>
+<fa>وظايف محوله</fa>
+</ID_TITLE_ASSIGNMENT>
+<ID_PRINT>
+<es>Imprimir</es>
+<en>Print</en>
+<fa>چاپ</fa>
+</ID_PRINT>
+<ID_TASK_ALERT>
+<es>Alerta de tarea a tarea</es>
+<en>Alert from task to task</en>
+<fa>اخطار از كار به كار</fa>
+</ID_TASK_ALERT>
+<ID_PROCESS_OWNER>
+<es>Dueño del proceso</es>
+<en>Process owner</en>
+<fa>مالك فرآيند</fa>
+</ID_PROCESS_OWNER>
+<ID_NO_PROCESS_OWNER>
+<es>No existe Dueño del proceso, por favor contáctese con el Administrador del Sistema</es>
+<en>Process owner is not defined, Please contact your administrator</en>
+<fa>مالك فرآيند تعريف نشده است ، لطفا با مدير سيستم  خود تماس بگيريد</fa>
+</ID_NO_PROCESS_OWNER>
+<ID_NO_TASK_USER>
+<es>No se definió ningún Usuario para la próxima tarea,\n Por favor revise los formularios o contáctese con el Administrador del Sistema</es>
+<en>The user for the next Task is not defined, please check the Dynaforms or contact your administrator</en>
+<fa>كاربر كار بعدي تعريف نشده است. لطفا فرمها را كنترل نماييد يا با مدير سيستم خود تماس بگيريد.</fa>
+</ID_NO_TASK_USER>
+<ID_BOSS>
+<es>Jefe</es>
+<en>Boss</en>
+<fa>رئيس</fa>
+</ID_BOSS>
+<ID_INACTIVE>
+<es>Inactivo</es>
+<en>Inactive</en>
+<fa>غيرفعال</fa>
+</ID_INACTIVE>
+<ID_COPY_LEGAL>
+<es>Copia legal</es>
+<en>Legal copy</en>
+<fa>كپي قانوني</fa>
+</ID_COPY_LEGAL>
+<ID_COPY>
+<es>Copia</es>
+<en>Copy</en>
+<fa>كپي</fa>
+</ID_COPY>
+<ID_COPY_I>
+<es>Copiar</es>
+<en>Copy</en>
+<fa>كپي</fa>
+</ID_COPY_I>
+<ID_DELETE>
+<es>Borrar</es>
+<en>Delete</en>
+<fa>حذف</fa>
+</ID_DELETE>
+<ID_ORIGINAL>
+<es>Original</es>
+<en>Original</en>
+<fa>اصلي</fa>
+</ID_ORIGINAL>
+<ID_VIRTUAL>
+<es>Virtual</es>
+<en>Virtual</en>
+<fa>مچازي</fa>
+</ID_VIRTUAL>
+<ID_DIGITAL>
+<es>Digital</es>
+<en>Digital</en>
+<fa>ديجيتال</fa>
+</ID_DIGITAL>
+<ID_REAL>
+<es>Real</es>
+<en>Real</en>
+<fa>واقعي</fa>
+</ID_REAL>
+<ID_VREAL>
+<es>Virtual - Real</es>
+<en>VReal</en>
+<fa>ID_VREAL</fa>
+</ID_VREAL>
+<ID_STARTED>
+<es>Iniciado</es>
+<en>Started</en>
+<fa>شروع  شده</fa>
+</ID_STARTED>
+<ID_NOT_STARTED>
+<es>No iniciado</es>
+<en>Not Started</en>
+<fa>شروع نشده</fa>
+</ID_NOT_STARTED>
+<ID_UNIT>
+<es>Unidad</es>
+<en>Unit</en>
+<fa>واحد</fa>
+</ID_UNIT>
+<ID_HRS>
+<es>Horas</es>
+<en>Hour</en>
+<fa>ساعت</fa>
+</ID_HRS>
+<ID_COPY_FIELD>
+<es>Copiar campo</es>
+<en>Field copy</en>
+<fa>كپي فيلد</fa>
+</ID_COPY_FIELD>
+<ID_DELETE_FIELD>
+<es>Eliminar campo</es>
+<en>Delete Field</en>
+<fa>حذف فيلد</fa>
+</ID_DELETE_FIELD>
+<ID_MOVE_UP_FIELD>
+<es>Mover campo arriba</es>
+<en>Move up field</en>
+<fa>انتقال فيلد به بالا</fa>
+</ID_MOVE_UP_FIELD>
+<ID_MOVE_UP>
+<es>Mover arriba</es>
+<en>Move up</en>
+<fa>انتقال به بالا</fa>
+</ID_MOVE_UP>
+<ID_DOWN_UP_FIELD>
+<es>Mover campo abajo</es>
+<en>Move down field</en>
+<fa>انتقال فيلد به پايين</fa>
+</ID_DOWN_UP_FIELD>
+<ID_MOVE_DOWN>
+<es>Mover abajo</es>
+<en>Move down</en>
+<fa>انتقال به پايين</fa>
+</ID_MOVE_DOWN>
+<ID_CANCEL>
+<es>Cancelar</es>
+<en>Cancel</en>
+<fa>لغو</fa>
+</ID_CANCEL>
+<ID_CAPTION>
+<es>Etiqueta</es>
+<en>Caption</en>
+<fa>عنوان</fa>
+</ID_CAPTION>
+<ID_EDIT_TYPE_FIELD>
+<es>Editar tipo de dato</es>
+<en>Edit type of Field</en>
+<fa>ويرايش نوع فيلد</fa>
+</ID_EDIT_TYPE_FIELD>
+<ID_EDIT_FIELD>
+<es>Editar campo</es>
+<en>Edit Field</en>
+<fa>ويرايش فيلد</fa>
+</ID_EDIT_FIELD>
+<ID_EDIT_INFO>
+<es>Editar información de:</es>
+<en>Edit Info of:</en>
+<fa>ويرايش اطلاعات :</fa>
+</ID_EDIT_INFO>
+<ID_EDIT_LABEL>
+<es>Editar etiqueta</es>
+<en>Edit Label</en>
+<fa>ويراايش برچسب</fa>
+</ID_EDIT_LABEL>
+<ID_ALPHABET>
+<es>Alfabeto</es>
+<en>Alphabet</en>
+<fa>الفبا</fa>
+</ID_ALPHABET>
+<ID_ANY_CHARACTER>
+<es>Cualquier caracter</es>
+<en>Any character</en>
+<fa>هر نوع كاراكتر</fa>
+</ID_ANY_CHARACTER>
+<ID_ALPHA_NUMERIC>
+<es>Alfanumérico</es>
+<en>Alpha numeric</en>
+<fa>الفباعددي</fa>
+</ID_ALPHA_NUMERIC>
+<ID_DUPLICATE_TABLE>
+<es>Duplicar Tabla</es>
+<en>Copy All Table</en>
+<fa>كپي تمام جدول</fa>
+</ID_DUPLICATE_TABLE>
+<ID_DUPLICATE>
+<es>Duplicar</es>
+<en>Copy</en>
+<fa>كپي</fa>
+</ID_DUPLICATE>
+<ID_MSG_ERROR_EXP>
+<es>La fecha de expiración es requerida</es>
+<en>Expiration Date is required</en>
+<fa>تاريخ انقضا الزامي است</fa>
+</ID_MSG_ERROR_EXP>
+<ID_MSG_ERROR_CVV>
+<es>CVV es requerido</es>
+<en>CVV is required</en>
+<fa>CVV الزامي است</fa>
+</ID_MSG_ERROR_CVV>
+<ID_MSG_ERROR_CC>
+<es>El número de la tarjeta de crédito es requerido</es>
+<en>Credit Card Number is required</en>
+<fa>شماره كارت اعتباري الزامي است</fa>
+</ID_MSG_ERROR_CC>
+<ID_MSG_ERROR_USR_FIRSTNAME>
+<es>No se introdujo el nombre</es>
+<en>First name required</en>
+<fa>نام الزامي است</fa>
+</ID_MSG_ERROR_USR_FIRSTNAME>
+<ID_MSG_ERROR_USR_COUNTRY>
+<es>No se seleccionó el país</es>
+<en>Country is required</en>
+<fa>كشور الزامي است</fa>
+</ID_MSG_ERROR_USR_COUNTRY>
+<ID_MSG_ERROR_USR_STATE>
+<es>No se seleccionó el estado</es>
+<en>State is required</en>
+<fa>استان الزامي است</fa>
+</ID_MSG_ERROR_USR_STATE>
+<ID_MSG_ERROR_USR_CITY>
+<es>No se seleccionó la ciudad</es>
+<en>City is required</en>
+<fa>شهر الزامي است</fa>
+</ID_MSG_ERROR_USR_CITY>
+<ID_MSG_ERROR_USR_LOCATION>
+<es>No se seleccionó la ubicación</es>
+<en>Location is required</en>
+<fa>مكان الزامي است</fa>
+</ID_MSG_ERROR_USR_LOCATION>
+<ID_MSG_ERROR_USR_LASTNAME>
+<es>No se introdujo el apellido paterno</es>
+<en>Last name required</en>
+<fa>نام خانوادگي الزامي است</fa>
+</ID_MSG_ERROR_USR_LASTNAME>
+<ID_MSG_ERROR_USR_EMAIL>
+<es>No se introdujo el correo electrónico</es>
+<en>E-mail required</en>
+<fa>آدرس پست الكترونيك الزامي است</fa>
+</ID_MSG_ERROR_USR_EMAIL>
+<ID_MSG_ERROR_USR_PHONE>
+<es>No se introdujo el teléfono</es>
+<en>Phone required</en>
+<fa>شماره تلفن الزامي است</fa>
+</ID_MSG_ERROR_USR_PHONE>
+<ID_MSG_ERROR_USR_ADDRESS>
+<es>No se introdujo la dirección</es>
+<en>Address required</en>
+<fa>آدرس الزامي است</fa>
+</ID_MSG_ERROR_USR_ADDRESS>
+<ID_MSG_ERROR_MONTH>
+<es>No se selecionó el mes</es>
+<en>Month is required</en>
+<fa>ماه الزامي است</fa>
+</ID_MSG_ERROR_MONTH>
+<ID_MSG_ERROR_YEAR>
+<es>No se selecionó el año</es>
+<en>Year is required</en>
+<fa>سال الزامي است</fa>
+</ID_MSG_ERROR_YEAR>
+<ID_MSG_ERROR_DAY>
+<es>No se selecionó el día</es>
+<en>Day is required</en>
+<fa>روز الزامي است</fa>
+</ID_MSG_ERROR_DAY>
+<ID_MSG_ERROR_CODE>
+<es>No se introdujo el código</es>
+<en>Code required</en>
+<fa>كد الزامي است</fa>
+</ID_MSG_ERROR_CODE>
+<ID_MSG_ERROR_CODE1>
+<es>Código incorrecto</es>
+<en>Incorrect Code</en>
+<fa>كد ناصحيح</fa>
+</ID_MSG_ERROR_CODE1>
+<ID_MSG_ERROR_USR_ANSWER>
+<es>No se introdujo la respuesta</es>
+<en>Answer required</en>
+<fa>پاسخ الزامي است</fa>
+</ID_MSG_ERROR_USR_ANSWER>
+<ID_MSG_ERROR_USR_USER_NAME>
+<es>No se introdujo el Nombre de Usuario</es>
+<en>User ID is required</en>
+<fa>شناسه كاربر الزامي است</fa>
+</ID_MSG_ERROR_USR_USER_NAME>
+<ID_MSG_ERROR_USR_ROLE>
+<es>No se seleccionó el Role</es>
+<en>Role is required</en>
+<fa>نقش الزامي است</fa>
+</ID_MSG_ERROR_USR_ROLE>
+<ID_MSG_ERROR_USR_STATUS>
+<es>No se seleccionó el Estado</es>
+<en>Status is required</en>
+<fa>وضعيت الزامي است</fa>
+</ID_MSG_ERROR_USR_STATUS>
+<ID_MSG_ERROR_USR_QUESTION>
+<es>No se seleccionó la Pregunta de Seguridad</es>
+<en>Security Question required</en>
+<fa>سوال امنيتي الزامي است</fa>
+</ID_MSG_ERROR_USR_QUESTION>
+<ID_MSG_ERROR_USR_ZIP_CODE>
+<es>No se introdujo el Código Postal</es>
+<en>Zip Code required</en>
+<fa>Zip Code الزامي است</fa>
+</ID_MSG_ERROR_USR_ZIP_CODE>
+<ID_MSG_ERROR_USR_POSITION>
+<es>No se introdujo el cargo</es>
+<en>Position required</en>
+<fa>سمت الزامي است</fa>
+</ID_MSG_ERROR_USR_POSITION>
+<ID_MSG_ERROR_USR_USERNAME>
+<es>Nombre de Usuario requerido</es>
+<en>User name required</en>
+<fa>نام كاربر الزامي است</fa>
+</ID_MSG_ERROR_USR_USERNAME>
+<ID_MSG_ERROR_USR_OLD_PASS>
+<es>No se introdujo la contraseña antigua</es>
+<en>Old password required</en>
+<fa>رمز عبور قبلي الزامي است</fa>
+</ID_MSG_ERROR_USR_OLD_PASS>
+<ID_MSG_ERROR_USR_NEW_PASS>
+<es>No se introdujo la contraseña nueva</es>
+<en>New password required</en>
+<fa>رمز عبور جديد الزامي است</fa>
+</ID_MSG_ERROR_USR_NEW_PASS>
+<ID_MSG_ERROR_UNIVERSAL_PASS>
+<es>No se introdujo la contraseña universal para los usuarios</es>
+<en>Universal password is required</en>
+<fa>رمز عبور فراگير الزامي است</fa>
+</ID_MSG_ERROR_UNIVERSAL_PASS>
+<ID_MSG_ERROR_PASS>
+<es>No se introdujo la contraseña</es>
+<en>Password is required</en>
+<fa>رمز عبور الزامي است</fa>
+</ID_MSG_ERROR_PASS>
+<ID_MSG_ERROR_USR_CNF_PASS>
+<es>No se introdujo la confirmación</es>
+<en>Confirmation required</en>
+<fa>تاييد الزامي است</fa>
+</ID_MSG_ERROR_USR_CNF_PASS>
+<ID_MSG_ERROR_13_MINIMO>
+<es>Debe introducir por lo menos trece caracteres</es>
+<en>Minimum thirteen characters</en>
+<fa>حداقل 13 كاراكتر</fa>
+</ID_MSG_ERROR_13_MINIMO>
+<ID_MSG_ERROR_4_MINIMO>
+<es>Debe introducir por lo menos cuatro caracteres</es>
+<en>Minimum four characters</en>
+<fa>حداقل چهار كاراكتر</fa>
+</ID_MSG_ERROR_4_MINIMO>
+<ID_MSG_ERROR_3_MINIMO>
+<es>Debe introducir por lo menos tres caracteres</es>
+<en>Minimum three characters</en>
+<fa>حداقل سه كاراكتر</fa>
+</ID_MSG_ERROR_3_MINIMO>
+<ID_MSG_ERROR_USR_NUM_PASS>
+<es>Debe introducir por lo menos 6 caracteres</es>
+<en>Minimum six characters</en>
+<fa>حداقل شش كاراكتر</fa>
+</ID_MSG_ERROR_USR_NUM_PASS>
+<ID_MSG_ERROR_ENV_TITLE>
+<es>Debe introducir el nombre del ambiente</es>
+<en>Environment name required</en>
+<fa>نام محيط  الزامي است</fa>
+</ID_MSG_ERROR_ENV_TITLE>
+<ID_MSG_ERROR_ENV_DESCRIPTION>
+<es>Debe introducir la descripción del ambiente</es>
+<en>Description required</en>
+<fa>شرح الزامي است</fa>
+</ID_MSG_ERROR_ENV_DESCRIPTION>
+<ID_MSG_ERROR_PRO_TITLE>
+<es>Debe introducir el nombre del proceso!</es>
+<en>Process title required!</en>
+<fa>نام فرآيند الزامي است</fa>
+</ID_MSG_ERROR_PRO_TITLE>
+<ID_MSG_ERROR_PRO_DESCRIPTION>
+<es>Debe introducir la descripción del proceso</es>
+<en>Description required</en>
+<fa>شرح الزامي است</fa>
+</ID_MSG_ERROR_PRO_DESCRIPTION>
+<ID_MSG_ERROR_PRO_TIME>
+<es>Debe introducir los dias estimados del proceso</es>
+<en>Day estimated required</en>
+<fa>برآورد روز الزامي است</fa>
+</ID_MSG_ERROR_PRO_TIME>
+<ID_MSG_ERROR_TAS_TITLE>
+<es>Debe introducir el nombre de la tarea</es>
+<en>Task name required</en>
+<fa>نام كار الزامي است</fa>
+</ID_MSG_ERROR_TAS_TITLE>
+<ID_MSG_ERROR_TAS_DESCRIPTION>
+<es>Debe introducir la descripción de la tarea</es>
+<en>Description required</en>
+<fa>شرح الزامي است</fa>
+</ID_MSG_ERROR_TAS_DESCRIPTION>
+<ID_MSG_ERROR_TAS_TIME>
+<es>Debe introducir la duración de la tarea</es>
+<en>Duration estimated required</en>
+<fa>برآورد مدت زمان الزامي است</fa>
+</ID_MSG_ERROR_TAS_TIME>
+<ID_MSG_ERROR_TAS_TIME_UNIT>
+<es>Debe seleccionar la unidad para la duración de la tarea</es>
+<en>The Unit of duration estimated required</en>
+<fa>واحد مدت زمان برآورد شده الزامي است</fa>
+</ID_MSG_ERROR_TAS_TIME_UNIT>
+<ID_MSG_ERROR_PRO_TIME_UNIT>
+<es>Debe seleccionar la unidad para la duración del proceso</es>
+<en>The Unit of duration estimated required</en>
+<fa>واحد مدت زمان برآوردشده الزامي است</fa>
+</ID_MSG_ERROR_PRO_TIME_UNIT>
+<ID_MSG_ERROR_ALERT_TASKTOTASK_TIME>
+<es>Debe introducir la duración de la alerta</es>
+<en>Duration estimated required</en>
+<fa>مدت زمان برآوردشده الزامي است</fa>
+</ID_MSG_ERROR_ALERT_TASKTOTASK_TIME>
+<ID_MSG_ERROR_ALERT_TASKTOTASK_TIME_0>
+<es>La duración de la alerta debe ser mayor a 0</es>
+<en>Duration doesn't be 0</en>
+<fa>مدت زمان نبايد صفر باشد</fa>
+</ID_MSG_ERROR_ALERT_TASKTOTASK_TIME_0>
+<ID_MSG_ERROR__ALERT_TASKTOTASK_UNIT>
+<es>Debe seleccionar la unidad para la duración de la alerta</es>
+<en>The Unit of duration estimated required</en>
+<fa>واحد مدت زمان الزامي است</fa>
+</ID_MSG_ERROR__ALERT_TASKTOTASK_UNIT>
+<ID_MSG_ERROR_PAUSE_TIME>
+<es>Debe introducir la duración de la pausa</es>
+<en>Duration estimated required</en>
+<fa>برآورد مدت زمان الزامي است</fa>
+</ID_MSG_ERROR_PAUSE_TIME>
+<ID_MSG_ERROR_PAUSE_TIME_0>
+<es>La duración de la pausa debe ser mayor a 0</es>
+<en>Duration doesn't be 0</en>
+<fa>مدت زمان نبايستي صفر باشد</fa>
+</ID_MSG_ERROR_PAUSE_TIME_0>
+<ID_MSG_ERROR__PAUSE_UNIT>
+<es>Debe seleccionar la unidad para la duración de la pausa</es>
+<en>The Unit of duration estimated required</en>
+<fa>واحد مدت زمان برآورد شده الزامي است</fa>
+</ID_MSG_ERROR__PAUSE_UNIT>
+<ID_MSG_ERROR__PAUSE_COMMENT>
+<es>Debe introducir un comentario para la pausa</es>
+<en>The comment required</en>
+<fa>توضيح الزامي است</fa>
+</ID_MSG_ERROR__PAUSE_COMMENT>
+<ID_MSG_ERROR_REQ_TITLE>
+<es>Debe introducir el nombre del documento requerido</es>
+<en>Document name required</en>
+<fa>نام مستند الزامي است</fa>
+</ID_MSG_ERROR_REQ_TITLE>
+<ID_MSG_ERROR_REQ_DESCRIPTION>
+<es>Debe introducir la descripción del documento requerido</es>
+<en>Description required</en>
+<fa>شرح الزامي است</fa>
+</ID_MSG_ERROR_REQ_DESCRIPTION>
+<ID_MSG_ERROR_FILEINAME>
+<es>Debe introducir el nombre del campo</es>
+<en>File name required</en>
+<fa>نام پرونده الزامي است</fa>
+</ID_MSG_ERROR_FILEINAME>
+<ID_MSG_ERROR_FILENAME>
+<es>Debe introducir el nombre del archivo</es>
+<en>File name required</en>
+<fa>نام پرونده الزامي است</fa>
+</ID_MSG_ERROR_FILENAME>
+<ID_MSG_ERROR_TITLE_DOCUMENTATION>
+<es>Debe introducir el título del Documento</es>
+<en>Title required</en>
+<fa>عنوان الزامي است</fa>
+</ID_MSG_ERROR_TITLE_DOCUMENTATION>
+<ID_MSG_ERROR_DESCRIPTION_DOCUMENTATION>
+<es>Debe introducir la descripción del Documento</es>
+<en>Description required</en>
+<fa>شرح الزامي است</fa>
+</ID_MSG_ERROR_DESCRIPTION_DOCUMENTATION>
+<ID_MSG_ERROR_FILE_DOCUMENTATION>
+<es>Debe seleccionar un archivo</es>
+<en>File required</en>
+<fa>فايل الزامي است</fa>
+</ID_MSG_ERROR_FILE_DOCUMENTATION>
+<ID_MSG_ERROR_TITLE>
+<es>Debe introducir el título del Dynaform</es>
+<en>Title required</en>
+<fa>عنوان الزامي است</fa>
+</ID_MSG_ERROR_TITLE>
+<ID_MSG_ERROR_DESCRIPTION>
+<es>Debe introducir la descripción del Dynaform</es>
+<en>Description required</en>
+<fa>شرح الزامي است</fa>
+</ID_MSG_ERROR_DESCRIPTION>
+<ID_MSG_ERROR_RTF_FILENAME>
+<es>Debe seleccionar una pantilla</es>
+<en>Choose RTF</en>
+<fa>RTF را انتخاب نماييد</fa>
+</ID_MSG_ERROR_RTF_FILENAME>
+<ID_MSG_ERROR_RTF_TITLE>
+<es>Debe introducir el título del RTF</es>
+<en>Title required</en>
+<fa>عنوان الزامي است</fa>
+</ID_MSG_ERROR_RTF_TITLE>
+<ID_MSG_ERROR_RTF_DESCRIPTION>
+<es>Debe introducir la descripción del RTF</es>
+<en>Description required</en>
+<fa>شرح الزامي است</fa>
+</ID_MSG_ERROR_RTF_DESCRIPTION>
+<ID_MSG_ERROR_HOL_CHOOSE>
+<es>Debe seleccionar un día no laborable</es>
+<en>Choose a Holiday</en>
+<fa>يك روز تعطيل را انتخاب نماييد</fa>
+</ID_MSG_ERROR_HOL_CHOOSE>
+<ID_MSG_ERROR_HOL_DESCRIPTION>
+<es>Debe introducir la descripción del día no laborable</es>
+<en>Description required</en>
+<fa>شرح الزامي است</fa>
+</ID_MSG_ERROR_HOL_DESCRIPTION>
+<ID_MSG_ERROR_STAGE_DESCRIPTION>
+<es>Por favor ingrese el nombre de la etapa</es>
+<en>Please enter the stage name</en>
+<fa>لطفا نام مرحله را وارد نماييد</fa>
+</ID_MSG_ERROR_STAGE_DESCRIPTION>
+<ID_MSG_ERROR_CITY_DESCRIPTION>
+<es>Debe introducir la ciudad</es>
+<en>City required</en>
+<fa>شهر الزامي است</fa>
+</ID_MSG_ERROR_CITY_DESCRIPTION>
+<ID_MSG_ERROR_LOCATION_DESCRIPTION>
+<es>Debe introducir la ubicación</es>
+<en>Location required</en>
+<fa>مكان الزامي است</fa>
+</ID_MSG_ERROR_LOCATION_DESCRIPTION>
+<ID_MSG_ERROR_TABLE_DESCRIPTION>
+<es>Debe introducir el nombre de la tabla</es>
+<en>Tabla required</en>
+<fa>جدول الزامي است</fa>
+</ID_MSG_ERROR_TABLE_DESCRIPTION>
+<ID_MSG_ERROR_LANGUAGE_DESCRIPTION>
+<es>Debe introducir el lenguaje</es>
+<en>Language required</en>
+<fa>زبان الزامي است</fa>
+</ID_MSG_ERROR_LANGUAGE_DESCRIPTION>
+<ID_MSG_CONFIRM_DELETE_ALERT>
+<es>¿ Está seguro de borrar esta alerta ?</es>
+<en>Do you want to delete this Alert ?</en>
+<fa>آيا مايل به حذف اين اخطار مي باشيد ؟</fa>
+</ID_MSG_CONFIRM_DELETE_ALERT>
+<ID_MSG_CONFIRM_DELETE_TABLE>
+<es>¿ Está seguro de borrar esta Tabla ?</es>
+<en>Do you want to delete this Table ?</en>
+<fa>آيا مايل به حذف اين جدول مي باشيد ؟</fa>
+</ID_MSG_CONFIRM_DELETE_TABLE>
+<ID_MSG_CONFIRM_DELETE_STAGE>
+<es>¿ Está seguro de borrar esta Etapa ?</es>
+<en>Do you want to delete this Stage ?</en>
+<fa>آيا مايل به حذف اين مرحله مي باشيد ؟</fa>
+</ID_MSG_CONFIRM_DELETE_STAGE>
+<ID_MSG_CONFIRM_DELETE_DOCUMENT>
+<es>¿ Está seguro de borrar este documento?</es>
+<en>Do you want to delete this document ?</en>
+<fa>آيا مايل به حذف اين مستند مي باشيد ؟</fa>
+</ID_MSG_CONFIRM_DELETE_DOCUMENT>
+<ID_MSG_CONFIRM_DELETE_PROCESS>
+<es>¿ Está seguro de borrar este proceso?</es>
+<en>Do you want to delete this process ?</en>
+<fa>آيا مايل به حذف اين فرآيند مي باشيد ؟</fa>
+</ID_MSG_CONFIRM_DELETE_PROCESS>
+<ID_MSG_CONFIRM_DELETE_RTF>
+<es>¿ Está seguro de borrar este documento RTF ?</es>
+<en>Do you want to delete this file ?</en>
+<fa>آيا مايل به حذف اين پرونده مي باشيد ؟</fa>
+</ID_MSG_CONFIRM_DELETE_RTF>
+<ID_MSG_CONFIRM_DELETE_PDF>
+<es>¿ Está seguro de borrar este documento PDF ?</es>
+<en>Do you want to delete this file ?</en>
+<fa>آيا مايل به حذف اين پرونده مي باشيد ؟</fa>
+</ID_MSG_CONFIRM_DELETE_PDF>
+<ID_MSG_CONFIRM_DELETE_HOLIDAY>
+<es>¿ Está seguro de borrar este día no laborable ?</es>
+<en>Do you want to delete this holiday ?</en>
+<fa>آيا مايل به حذف اين روز تعطيل مي باشيد ؟</fa>
+</ID_MSG_CONFIRM_DELETE_HOLIDAY>
+<ID_MSG_CONFIRM_DELETE_INITITATEAPP>
+<es>¿ Está seguro de borrar este formulario ?</es>
+<en>Do you want to delete this form ?</en>
+<fa>آيا مايل به حذف اين فرم مي باشيد ؟</fa>
+</ID_MSG_CONFIRM_DELETE_INITITATEAPP>
+<ID_MSG_CONFIRM_DELETE_DYNAFORM>
+<es>¿ Está seguro de borrar este Dynaform ?</es>
+<en>Do you want to delete this Dynaform ?</en>
+<fa>آيا مايل به حذف اين فرم مي باشيد ؟</fa>
+</ID_MSG_CONFIRM_DELETE_DYNAFORM>
+<ID_MSG_CONFIRM_DELETE_USER_DEPT>
+<es>¿ Está seguro de borrar la asignación de este empleado ?</es>
+<en>Do you want to delete this link ?</en>
+<fa>آيا مايل به حذف اين لينك مي باشيد؟</fa>
+</ID_MSG_CONFIRM_DELETE_USER_DEPT>
+<ID_MSG_CONFIRM_DELETE_USER_GROUP>
+<es>¿ Está seguro de borrar la asignación de este empleado ?</es>
+<en>Do you want to delete this link ?</en>
+<fa>آيا مايل به حذف اين لينك مي باشيد؟</fa>
+</ID_MSG_CONFIRM_DELETE_USER_GROUP>
+<ID_MSG_CONFIRM_DELETE_TASK>
+<es>¿ Está seguro de borrar esta tarea ?</es>
+<en>Do you want to delete this task ?</en>
+<fa>آيا مايل به حذف اين كار مي باشيد؟</fa>
+</ID_MSG_CONFIRM_DELETE_TASK>
+<ID_MSG_CONFIRM_DELETE_FIELD>
+<es>¿ Está seguro de borrar este campo ?</es>
+<en>Do you want to delete this field ?</en>
+<fa>آيا مايل به حذف اين فيلد مي باشيد؟</fa>
+</ID_MSG_CONFIRM_DELETE_FIELD>
+<ID_MSG_CONFIRM_DELETE_GROUP>
+<es>¿ Está seguro de borrar la asignación de este grupo ?</es>
+<en>Do you want to delete this link ?</en>
+<fa>آيا مايل به حذف اين لينك مي باشيد؟</fa>
+</ID_MSG_CONFIRM_DELETE_GROUP>
+<ID_MSG_CONFIRM_DELETE_CITY>
+<es>¿ Está seguro de borrar esta ciudad ?</es>
+<en>Do you want to delete this city ?</en>
+<fa>آيا مايل به حذف اين شهر مي باشيد؟</fa>
+</ID_MSG_CONFIRM_DELETE_CITY>
+<ID_MSG_CONFIRM_DELETE_MESSAGE>
+<es>Está seguro de borrar este mensaje?</es>
+<en>Do you want to delete this message?</en>
+<fa>آیا مایل به حذف این پیغام هستید؟</fa>
+</ID_MSG_CONFIRM_DELETE_MESSAGE>
+<ID_MSG_CONFIRM_TASK_DOCUMENTATION>
+<es>¿ Está seguro de borrar este archivo ?</es>
+<en>Do you want to delete this file?</en>
+<fa>آيا مايل به حذف اين پرونده مي باشيد؟</fa>
+</ID_MSG_CONFIRM_TASK_DOCUMENTATION>
+<ID_MSG_CONFIRM_DELETE_LOCATION>
+<es>¿ Está seguro de borrar esta ubicación ?</es>
+<en>Do you want to delete this location ?</en>
+<fa>آيا مايل به حذف اين مكان مي باشيد؟</fa>
+</ID_MSG_CONFIRM_DELETE_LOCATION>
+<ID_MSG_CONFIRM_DELETE_LANGUAGE>
+<es>¿ Está seguro de borrar este lenguaje ?</es>
+<en>Do you want to delete this language ?</en>
+<fa>آيا مايل به حذف اين زبان مي باشيد؟</fa>
+</ID_MSG_CONFIRM_DELETE_LANGUAGE>
+<ID_MSG_CONFIRM_DELETE_USER>
+<es>¿ Está seguro de borrar este funcionario ?</es>
+<en>Do you want to delete this user ?</en>
+<fa>آيا مايل به حذف اين كاربر مي باشيد؟</fa>
+</ID_MSG_CONFIRM_DELETE_USER>
+<ID_MSG_CONFIRM_DELETE_REPORT>
+<es>¿ Está seguro de borrar este reporte ?</es>
+<en>Do you want to delete this report ?</en>
+<fa>آيا مايل به حذف اين گزارش مي باشيد؟</fa>
+</ID_MSG_CONFIRM_DELETE_REPORT>
+<ID_MSG_DUPLICATE_FIELD_I>
+<es>El ID</es>
+<en>ID</en>
+<fa>شناسه</fa>
+</ID_MSG_DUPLICATE_FIELD_I>
+<ID_MSG_DUPLICATE_FIELD_II>
+<es>ya existe !</es>
+<en>exist</en>
+<fa>وجود دارد</fa>
+</ID_MSG_DUPLICATE_FIELD_II>
+<ID_THE_CHARACTER>
+<es>El caracter</es>
+<en>The character</en>
+<fa>كاراكتر</fa>
+</ID_THE_CHARACTER>
+<ID_NOT_VALID>
+<es>no es válido para este campo</es>
+<en>is not valid for this field</en>
+<fa>براي اين فيلد معتبر نمي باشد</fa>
+</ID_NOT_VALID>
+<ID_ERROR_CALLING_CONTROL>
+<es>Error al llamado de control: no hay control especificado</es>
+<en>Error calling the control: no target control specified</en>
+<fa>ID_ERROR_CALLING_CONTROL</fa>
+</ID_ERROR_CALLING_CONTROL>
+<ID_TASK_PENDING>
+<es>Casos pendientes por tarea</es>
+<en>Task pending</en>
+<fa>تعویق کار</fa>
+</ID_TASK_PENDING>
+<ID_YOUR_CUSTOMIZE_REPORTS>
+<es>Tu reporte personalizado</es>
+<en>Customized Report</en>
+<fa>گزارش سفارشی شده</fa>
+</ID_YOUR_CUSTOMIZE_REPORTS>
+<ID_RPT_NO_RESULTS>
+<es>No se encontraron registros</es>
+<en>Sorry. No records found matching your report criteria</en>
+<fa>متاسفانه رکوردی منطبق با معیار گزارش شما یافت نشد</fa>
+</ID_RPT_NO_RESULTS>
+<ID_CUSTOMIZE_REPORTS>
+<es>Reportes personalizados</es>
+<en>Customized Reports</en>
+<fa>گزارشهای سفارشی شده</fa>
+</ID_CUSTOMIZE_REPORTS>
+<ID_POSSIBLE_FIELDS_VECTOR_Y>
+<es>Campo que se desplegará en el vector Y :</es>
+<en>Y Axis:</en>
+<fa>محور Y</fa>
+</ID_POSSIBLE_FIELDS_VECTOR_Y>
+<ID_POSSIBLE_FIELDS_VECTOR_X>
+<es>Campo que se desplegará en el vector X :</es>
+<en>X Axis:</en>
+<fa>محور X</fa>
+</ID_POSSIBLE_FIELDS_VECTOR_X>
+<ID_FUNCTION_FIELD>
+<es>Campo que se utilizará con la función :</es>
+<en>Function Used :</en>
+<fa>تابع مورد استفاده</fa>
+</ID_FUNCTION_FIELD>
+<ID_SHOW>
+<es>Mostrar</es>
+<en>Show</en>
+<fa>نمایش</fa>
+</ID_SHOW>
+<ID_START_OVER>
+<es>Volver a empezar</es>
+<en>start over</en>
+<fa>شروع دوباره</fa>
+</ID_START_OVER>
+<ID_CLICK_SELECTION2>
+<es>*Haga Clic en el campo que desea seleccionar</es>
+<en>*Click on a field to make a selection</en>
+<fa>برای انتخاب ، بر روی یک فیلد کلیک نمایید</fa>
+</ID_CLICK_SELECTION2>
+<ID_CLICK_DELETE_SELECTION>
+<es>*Haga Clic en el campo que desea quitar de la selección</es>
+<en>*Click on a field to delete a selection</en>
+<fa>برای حذف یک انتخاب بر روی یک فیلد کلیک نمایید</fa>
+</ID_CLICK_DELETE_SELECTION>
+<ID_SELECT_FIELD>
+<es>Por favor primero seleccione un campo.</es>
+<en>Please select a field first.</en>
+<fa>لطفا ابتدا یک فیلد را انتخاب نمایید.</fa>
+</ID_SELECT_FIELD>
+<ID_LIST_FIELDS>
+<es>Listado de Campos</es>
+<en>List of Fields</en>
+<fa>فهرست فیلدها</fa>
+</ID_LIST_FIELDS>
+<ID_LISTBOX>
+<es>Lista en cuadro</es>
+<en>Listbox</en>
+<fa>ID_LISTBOX</fa>
+</ID_LISTBOX>
+<ID_RADIOGROUP>
+<es>Grupo de radio de opciones</es>
+<en>Radio options group</en>
+<fa>ID_RADIOGROUP</fa>
+</ID_RADIOGROUP>
+<ID_FIELDS_II>
+<es>Campos</es>
+<en>Fields</en>
+<fa>فیلدها</fa>
+</ID_FIELDS_II>
+<ID_SORT_ORDER>
+<es>Ordenar por:</es>
+<en>Sort order:</en>
+<fa>ترتیب</fa>
+</ID_SORT_ORDER>
+<ID_BACK2>
+<es>Retornar</es>
+<en>&amp;nbsp;&amp;nbsp;Back&amp;nbsp;&amp;nbsp;</en>
+<fa>بازگشت</fa>
+</ID_BACK2>
+<ID_SHOW_FIELD_LABELS>
+<es>Mostrar Campos y Etiquetas</es>
+<en>Show Fields and Labels</en>
+<fa>نمایش فیلدها و برچسبها</fa>
+</ID_SHOW_FIELD_LABELS>
+<ID_MSG_ERROR_SAME_FIELD_XY>
+<es>El campo del vector X no puede ser igual al campo del vector Y</es>
+<en>The field X and the field Y are the same</en>
+<fa>فیلد X و فیلد Y همانند می باشند</fa>
+</ID_MSG_ERROR_SAME_FIELD_XY>
+<ID_MSG_ERROR_SAME_FIELD_YX>
+<es>El campo del vector Y no puede ser igual al campo del vector X</es>
+<en>The field Y and the field X are the same</en>
+<fa>فیلد Y و فیلد X همانند می باشند</fa>
+</ID_MSG_ERROR_SAME_FIELD_YX>
+<ID_MSG_ERROR_FIELD_X>
+<es>El campo del vector X esta en blanco</es>
+<en>The field X required</en>
+<fa>فیلدX الزامی است</fa>
+</ID_MSG_ERROR_FIELD_X>
+<ID_MSG_ERROR_FIELD_Y>
+<es>El campo del vector Y esta en blanco</es>
+<en>The field Y required</en>
+<fa>فیلد Yالزامی است</fa>
+</ID_MSG_ERROR_FIELD_Y>
+<ID_MSG_ERROR_FUNCTION_FIELD>
+<es>El campo que se utilizará con la función está en blanco</es>
+<en>The function field required</en>
+<fa>فیلد کارکرد الزامی است</fa>
+</ID_MSG_ERROR_FUNCTION_FIELD>
+<ID_RPT_COMBO_MSG_ERROR>
+<es>Debe seleccionar al menos un reporte.</es>
+<en>Please select at least one report.</en>
+<fa>لطفا حداق یک گزارش را انتخاب نمایید</fa>
+</ID_RPT_COMBO_MSG_ERROR>
+<ID_MSG_ERROR_REPORT_TYPE>
+<es>Debe seleccionar el tipo de reporte</es>
+<en>Report type required</en>
+<fa>نوع گزارش الزامی است</fa>
+</ID_MSG_ERROR_REPORT_TYPE>
+<ID_MSG_ERROR_FUNCTION>
+<es>La función está en blanco</es>
+<en>The function required</en>
+<fa>کارکرد الزامی است</fa>
+</ID_MSG_ERROR_FUNCTION>
+<ID_FIELD_X>
+<es>Campo X</es>
+<en>Field X</en>
+<fa>فیلد X</fa>
+</ID_FIELD_X>
+<ID_FIELD_Y>
+<es>Campo Y</es>
+<en>Field Y</en>
+<fa>فیلد Y</fa>
+</ID_FIELD_Y>
+<ID_NOT_SELECTED>
+<es>No seleccionado</es>
+<en>Not selected</en>
+<fa>انتخاب نشده</fa>
+</ID_NOT_SELECTED>
+<ID_COUNT>
+<es>Count</es>
+<en>Count</en>
+<fa>شمارش</fa>
+</ID_COUNT>
+<ID_SUM>
+<es>Sum</es>
+<en>Sum</en>
+<fa>جمع</fa>
+</ID_SUM>
+<ID_AVG>
+<es>Avg</es>
+<en>Avg</en>
+<fa>میانگین</fa>
+</ID_AVG>
+<ID_CONFIRM_CREATE_TABLE>
+<es>La tabla ya existe. Usted la quiere sobrescribir?</es>
+<en>This table exists. Do you want to overwrite it?</en>
+<fa>این جدول وجود دارد. آیا مایل به جایگزینی آن هستید؟</fa>
+</ID_CONFIRM_CREATE_TABLE>
+<ID_DIFFERENT_TABLE_NAME>
+<es>Por favor introduzca un nombre diferente para la tabla</es>
+<en>Please enter a different table name.</en>
+<fa>لطفا یک نام جدول متفاوت را وارد نمایید.</fa>
+</ID_DIFFERENT_TABLE_NAME>
+<ID_DIFFERENT_TABLE_NAME_2>
+<es>Por favor introduzca un nombre diferente para la tabla</es>
+<en>Please enter a different table name.</en>
+<fa>لطفا یک نام جدول متفاوت را وارد نمایید.</fa>
+</ID_DIFFERENT_TABLE_NAME_2>
+<ID_WORKING_DAYS>
+<es>Días hábiles</es>
+<en>Working days</en>
+<fa>روزهای کاری</fa>
+</ID_WORKING_DAYS>
+<ID_NEXT_WORKING_DAYS>
+<es>Días calendario</es>
+<en>Next_working_days</en>
+<fa>روزهای کاری آتی</fa>
+</ID_NEXT_WORKING_DAYS>
+<ID_WORKING_DAY>
+<es>Hábiles (Lunes - Viernes)</es>
+<en>Working days</en>
+<fa>روزهای کاری</fa>
+</ID_WORKING_DAY>
+<ID_NEXT_WORKING_DAY>
+<es>Calendario (Lunes - Domingo)</es>
+<en>Next_working_days</en>
+<fa>روزهای کاری آتی</fa>
+</ID_NEXT_WORKING_DAY>
+<ID_MANY_MAIN-J0IN>
+<es>Ya existe una tarea Main-Join, sólo es posible definir una tarea de este tipo</es>
+<en>You have a MAIN-JOIN task already, You can define just only one MAIN-JOIN task</en>
+<fa>ID_MANY_MAIN-J0IN</fa>
+</ID_MANY_MAIN-J0IN>
+<ID_NOT_EXPORT_GROUP>
+<es>No guardar el Grupo</es>
+<en>Don´t save the Group</en>
+<fa>گروه را ذخیره ننمایید</fa>
+</ID_NOT_EXPORT_GROUP>
+<ID_NOT_EXPORT_GROUP_II>
+<es>y pasar al siguiente</es>
+<en>and go to the next</en>
+<fa>و به مورد بعدی بروید</fa>
+</ID_NOT_EXPORT_GROUP_II>
+<ID_EXPORT_GROUP>
+<es>Guardar el Grupo</es>
+<en>Save the Group</en>
+<fa>گروه را ذخیره نمایید</fa>
+</ID_EXPORT_GROUP>
+<ID_EXPORT_GROUP_II>
+<es>y pasar al siguiente</es>
+<en>and go to the next</en>
+<fa>و به گروه بعدی بروید</fa>
+</ID_EXPORT_GROUP_II>
+<ID_CREATE_NEW_GROUP_WITH_ANOTHER_NAME>
+<es>Crear un nuevo grupo con otro nombre</es>
+<en>Create new group with another name</en>
+<fa>گروهی جدید با نامی دیگر ایجاد نمایید</fa>
+</ID_CREATE_NEW_GROUP_WITH_ANOTHER_NAME>
+<ID_NAME_NEW_GROUP>
+<es>Nombre del nuevo grupo</es>
+<en>Name of new group</en>
+<fa>نام گروه جدید</fa>
+</ID_NAME_NEW_GROUP>
+<ID_ADD_TO_GROUP>
+<es>Añadir al grupo</es>
+<en>Add to group</en>
+<fa>به گروه جدید اضافه نمایید</fa>
+</ID_ADD_TO_GROUP>
+<ID_USERS_IMPORTED>
+<es>Listado de usuarios importados</es>
+<en>Users imported</en>
+<fa>ورود اطلاعات کاربران انجام  شد</fa>
+</ID_USERS_IMPORTED>
+<ID_GROUP_IMPORTING>
+<es>Se concluyó con la importación de usuarios usted desea continuar con la importación de Grupo de usuarios?</es>
+<en>Do you want import Group of user?</en>
+<fa>آیا می خواهید گروه یا کاربر را وارد نمایید؟</fa>
+</ID_GROUP_IMPORTING>
+<ID_GROUP_IMPORTING_II>
+<es>Usted esta importando el grupo:</es>
+<en>you will import Group:</en>
+<fa>شما اطلاعات گروه را وارد خواهید نمود</fa>
+</ID_GROUP_IMPORTING_II>
+<ID_GROUP_IMPORTING_III>
+<es>Grupos a exportar este grupo es el número :</es>
+<en>Group for export this is the number :</en>
+<fa>شماره گروه تعیین شده برای صدور اطلاعات عبارتست از :</fa>
+</ID_GROUP_IMPORTING_III>
+<ID_GRID>
+<es>Rejilla</es>
+<en>Grid</en>
+<fa>جدول</fa>
+</ID_GRID>
+<ID_OF>
+<es>De</es>
+<en>Of</en>
+<fa>از</fa>
+</ID_OF>
+<ID_END_IMPORT>
+<es>Importación finalizada</es>
+<en>End import</en>
+<fa>پایان ورود اطلاعات کاربر</fa>
+</ID_END_IMPORT>
+<ID_TASK_RULE_PARALLEL>
+<es>No pueden ser opcionales todas las tareas seleccionadas</es>
+<en>Don't select whole task like optional</en>
+<fa>ID_TASK_RULE_PARALLEL</fa>
+</ID_TASK_RULE_PARALLEL>
+<ID_NOT_EXIST_USER_FOR_DERIVATION>
+<es>No existe ningún funcionario para realizar la derivación por favor contáctese con el administrador</es>
+<en>Not exist user for derivation</en>
+<fa>کاربری برای تعیین نحوه ارجاع وجود ندارد</fa>
+</ID_NOT_EXIST_USER_FOR_DERIVATION>
+<ID_NOT_EXIST_USER_FOR_DERIVATION_II>
+<es>No todas las tareas cuentan con funcionarios a los que se pueda realizar la derivación por favor contáctese con el administrador</es>
+<en>Not exist user for derivation</en>
+<fa>کاربری برای تعیین نحوه ارجاع وجود ندارد</fa>
+</ID_NOT_EXIST_USER_FOR_DERIVATION_II>
+<ID_FIN_PROCESO>
+<es>Fin del proceso (tarea final)</es>
+<en>End task</en>
+<fa>خاتمه کار</fa>
+</ID_FIN_PROCESO>
+<ID_TAREA_COLGANTE>
+<es>Tarea colgante</es>
+<en>Leaf task</en>
+<fa>کار فرعی</fa>
+</ID_TAREA_COLGANTE>
+<ID_NO_DERIVATE3>
+<es>No se puede finalizar el Caso, porque existen Tareas Colgantes que deben ser concluidas</es>
+<en>You can't Finish this Process because there are leaf tasks to be completed</en>
+<fa>به دلیل وجود کارهای فرعی تکمیل نشده شما نمی توانید این فرآیند را به پایان برسانید</fa>
+</ID_NO_DERIVATE3>
+<ID_MSG_ERROR_TITLE_DYNAFORM_EXPORT>
+<es>Debe introducir el nombre del archivo de Dynaforms</es>
+<en>Name required</en>
+<fa>نام الزامی است</fa>
+</ID_MSG_ERROR_TITLE_DYNAFORM_EXPORT>
+<ID_MSG_ERROR_TITLE_PROCESS_EXPORT>
+<es>Debe introducir el nombre del archivo de usuarios</es>
+<en>Name required</en>
+<fa>نام الزامی است</fa>
+</ID_MSG_ERROR_TITLE_PROCESS_EXPORT>
+<ID_MSG_ERROR_TITLE_DYNAFORM_EXPORT_FORM>
+<es>Debe introducir el nombre del archivo de formularios</es>
+<en>Name required</en>
+<fa>نام الزامی است</fa>
+</ID_MSG_ERROR_TITLE_DYNAFORM_EXPORT_FORM>
+<ID_MSG_ERROR_TITLE_PROCESS_EXPORT_FORM>
+<es>Debe introducir el nombre del archivo de formularios</es>
+<en>Name required</en>
+<fa>نام الزامی است</fa>
+</ID_MSG_ERROR_TITLE_PROCESS_EXPORT_FORM>
+<ID_MSG_ERROR_TITLE_GROUP>
+<es>Debe introducir el nombre del grupo</es>
+<en>Group name required</en>
+<fa>نام گروه الزامی است</fa>
+</ID_MSG_ERROR_TITLE_GROUP>
+<ID_MSG_ERROR_TITLE_DEP>
+<es>Debe introducir el nombre del departamento</es>
+<en>Department name required</en>
+<fa>نام قسمت الزامی است</fa>
+</ID_MSG_ERROR_TITLE_DEP>
+<ID_MSG_ERROR_SECOND_ALERT>
+<es>La tercera alerta no puede ser menor o igual a la segunga alerta</es>
+<en>The tird alert cannot be less or equak to the second alert</en>
+<fa>سومین اخطار نمی تواند کمتر یا مساوی با دومین اخطار باشد</fa>
+</ID_MSG_ERROR_SECOND_ALERT>
+<ID_MSG_ERROR_ASSIGNMENT_DAY>
+<es>No seleccionó la cantidad de días para realizar la reasignación</es>
+<en>You did not check the number of days for the reassignation</en>
+<fa>تعداد روزهای تخصیص مجدد کار راانتخاب نکرده اید.</fa>
+</ID_MSG_ERROR_ASSIGNMENT_DAY>
+<ID_MSG_ERROR_UNIT_BEFORE_ALERT>
+<es>No seleccionó la unidad de tiempo de la alerta antes del tiempo límite</es>
+<en>You did not check the time unit for the alert before the limit time</en>
+<fa>قبل از انتخاب حد زمان اخطار ، واحد زمان را انتخاب نکرده اید.</fa>
+</ID_MSG_ERROR_UNIT_BEFORE_ALERT>
+<ID_MSG_ERROR_UNIT_FIRST_ALERT>
+<es>No seleccionó la unidad de tiempo de la primera alerta después del tiempo límite</es>
+<en>You did not check the time unit for the first alert after the limit time</en>
+<fa>واحد زمان برای اولین اخطار بعد از حد زمان را انتخاب نکرده اید.</fa>
+</ID_MSG_ERROR_UNIT_FIRST_ALERT>
+<ID_MSG_ERROR_UNIT_RECURRENT_ALERT>
+<es>No seleccionó la unidad de tiempo de la alerta recurrente</es>
+<en>You did not check the time unit for recurrent alert</en>
+<fa>واحد زمان برای اخطار مجدد راانتخاب نکرده اید.</fa>
+</ID_MSG_ERROR_UNIT_RECURRENT_ALERT>
+<ID_MSG_ERROR_UNIT_SECOND_ALERT>
+<es>No seleccionó la unidad de tiempo de la segunda alerta después del tiempo límite</es>
+<en>You did not check the time unit for the second alert after the limit time</en>
+<fa>واحد زمان دومین اخطار بعد از حد زمان را انتخاب نکرده اید.</fa>
+</ID_MSG_ERROR_UNIT_SECOND_ALERT>
+<ID_RPT_SELECT_TABLE>
+<en>Please select the tables you would like to have in your report</en>
+<es>Por favor seleccione las tablas para realizar el reporte</es>
+<fa>ID_RPT_SELECT_TABLE</fa>
+</ID_RPT_SELECT_TABLE>
+<ID_RPT_TABLE>
+<en>Table</en>
+<es>Tabla</es>
+<fa>خطار:به دلیل عدم اتصال تمامی جداول انتخابی به یکدیگر ، گزارش شما نمی تواند ایجاد شود</fa>
+</ID_RPT_TABLE>
+<ID_RPT_ERR_TABLE>
+<es>Advertencia, tu reporte no puede ser creado por que no todas las tablas seleccionadas tienen relación entre ellas</es>
+<en>Warning, your report cannot be created because not all the tables selected have been connected to one another.</en>
+<fa>ID_RPT_ERR_TABLE</fa>
+</ID_RPT_ERR_TABLE>
+<ID_RPT_BUT_CONNECTION>
+<es>Añadir conexiónes</es>
+<en>Add connections</en>
+<fa>اضافه کردن اتصالها</fa>
+</ID_RPT_BUT_CONNECTION>
+<ID_RPT_TAB_CONNECTION>
+<es>Conectar con</es>
+<en>Connect with</en>
+<fa>اتصال با</fa>
+</ID_RPT_TAB_CONNECTION>
+<ID_RPT_CONNECT_TABLE>
+<es>Por favor conectar cada tabla</es>
+<en>Please connect each table</en>
+<fa>لطفا تمامی جداول را متصل نمایید</fa>
+</ID_RPT_CONNECT_TABLE>
+<ID_RPT_ERR_CONNECT>
+<es>Advertencia, una tabla está conectado consigo misma.</es>
+<en>Warning, a table is connected to itself.</en>
+<fa>اخطار: یک جدول به خودش متصل شده است.</fa>
+</ID_RPT_ERR_CONNECT>
+<ID_PATH>
+<es>Ruta</es>
+<en>Path</en>
+<fa>مسیر</fa>
+</ID_PATH>
+<ID_RPT_ERR_SIZE>
+<es>Advertencia, su reporte no puede ser creado por que seleccionó muchos campos. Por favor seleccione menos campos</es>
+<en>Warning, your report cannot be created because you have selected too many fields. Please select less fields.</en>
+<fa>خطار، به دلیل انتخاب تعداد فیلدهای زیادتر از حد مجاز امکان ایجاد گزارش شما وجود ندارد. لطفا تعداد فیلد کمتری را انتخاب نمایید.</fa>
+</ID_RPT_ERR_SIZE>
+<ID_PROCESS_ASSIGNED>
+<es>Enviados</es>
+<en>Assigned</en>
+<fa>تخصیص داده شده</fa>
+</ID_PROCESS_ASSIGNED>
+<ID_PROCESS_SUBORDINATES>
+<es>Tareas para subalternos</es>
+<en>Tasks for subordinates</en>
+<fa>کارهای پرسنل زیردست</fa>
+</ID_PROCESS_SUBORDINATES>
+<ID_EMTPY>
+<es>Vacio</es>
+<en>Empty</en>
+<fa>خالی</fa>
+</ID_EMTPY>
+<ID_UNSAVED_REPORTS>
+<es>Reportes no guardados</es>
+<en>Unsaved Reports</en>
+<fa>گزارشات ذخیره نشده</fa>
+</ID_UNSAVED_REPORTS>
+<ID_DATE_EXPIRE>
+<es>Expira (Días)</es>
+<en>Expires (Days)</en>
+<fa>منقضی می شود</fa>
+</ID_DATE_EXPIRE>
+<ID_LIST_OUTPUT_DOCUMENTS_QUESTION>
+<es>Con que variables desea generar el documento?</es>
+<en>Which variables do you want to include?</en>
+<fa>مایل به شامل شدن چه متغیرهایی هستید؟</fa>
+</ID_LIST_OUTPUT_DOCUMENTS_QUESTION>
+<ID_LIST_OUTPUT_DOCUMENTS_OPTION_1>
+<es>Todas la variables</es>
+<en>All Variables</en>
+<fa>همه متغیرها</fa>
+</ID_LIST_OUTPUT_DOCUMENTS_OPTION_1>
+<ID_LIST_OUTPUT_DOCUMENTS_OPTION_2>
+<es>Sólo las del Dynaform maestro</es>
+<en>Only Master DynaForm Variables (does not include child forms)</en>
+<fa>ها متغیرهای فرمهای اصلی ( شامل فرمهای زیرمجموعه نباشد)</fa>
+</ID_LIST_OUTPUT_DOCUMENTS_OPTION_2>
+<ID_NO_NEXT_USER_TO_BE_ASSIGNED>
+<es>No se puede asignar la siguiente tarea porque falta definir el usuario</es>
+<en>The system can not assign next task because next user is undefined</en>
+<fa>به دلیل عدم تعریف کاربر بعدی ، سیستم نمی تواند کار بعدی را تخصیص دهد</fa>
+</ID_NO_NEXT_USER_TO_BE_ASSIGNED>
+<WRG_DEL>
+<es>Eliminar</es>
+<en>Delete</en>
+<fa>حذف</fa>
+</WRG_DEL>
+<CONTACT_GROUP_NAME>
+<es>Nombre del Grupo de Contactos</es>
+<en>Contacts Group Name</en>
+<fa>نام گروه تماسها</fa>
+</CONTACT_GROUP_NAME>
+<EXPORT_TO_EXCEL_FILE>
+<es>Exportar a Archivo Excel</es>
+<en>Export to Excel File</en>
+<fa>صدور به فایل Excel</fa>
+</EXPORT_TO_EXCEL_FILE>
+<FIELDS_LIST>
+<es>Listado de Campos</es>
+<en>Fields List</en>
+<fa>فهرست فیلدها</fa>
+</FIELDS_LIST>
+<SELECTED_FIELDS>
+<es>Campos Seleccionados</es>
+<en>Selected Fields</en>
+<fa>فیلدهای انتخاب شده</fa>
+</SELECTED_FIELDS>
+<THIS_BETWEEN>
+<es>este entre</es>
+<en>this between</en>
+<fa>THIS_BETWEEN</fa>
+</THIS_BETWEEN>
+<BE>
+<es>Sea</es>
+<en>Be</en>
+<fa>BE</fa>
+</BE>
+<BE_OR_CONTAIN>
+<es>No sea</es>
+<en>Not be</en>
+<fa>BE_OR_CONTAIN</fa>
+</BE_OR_CONTAIN>
+<FIELDS_CANNOT_EMPTY>
+<es>Los campos no pueden estar vacios!</es>
+<en>The fields cannot be empty!</en>
+<fa>فیلدها نمی تواند خالی بمانند</fa>
+</FIELDS_CANNOT_EMPTY>
+<MALE>
+<es>Hombre</es>
+<en>Male</en>
+<fa>مرد</fa>
+</MALE>
+<FEMALE>
+<es>Mujer</es>
+<en>Female</en>
+<fa>زن</fa>
+</FEMALE>
+<ENGLISH>
+<es>Inglés</es>
+<en>English</en>
+<fa>انگلیسی</fa>
+</ENGLISH>
+<SPANISH>
+<es>Español</es>
+<en>Spanish</en>
+<fa>اسپانیایی</fa>
+</SPANISH>
+<DEUTCH>
+<es>Alemán</es>
+<en>Deutch</en>
+<fa>آلمانی</fa>
+</DEUTCH>
+<SAVE_NEW_CONTACTS>
+<es>Guardar el Nuevo Grupo de Contactos con los Siguientes Contactos</es>
+<en>Save the New Contacts Group With The Next Contacs</en>
+<fa>گروه تماسهای جدید را با تماسهای بعدی ذخیره</fa>
+</SAVE_NEW_CONTACTS>
+<IN_ALL>
+<es>Este contacto se encuentra incluido en todos los Grupos de Contacto</es>
+<en>This contact is including in all Contacts Groups</en>
+<fa>این تماس در تمامی گروههای تماس وجود دارد</fa>
+</IN_ALL>
+<ADD_TO_CONTACT_GROUP>
+<es>Añadir a este Grupo de Contactos</es>
+<en>Add to this Contacts Group</en>
+<fa>به این گروه تماسها اضافه شود</fa>
+</ADD_TO_CONTACT_GROUP>
+<ID_ADD_TO_OUTLOOK>
+<es>Agregar a Outlook</es>
+<en>Add to Outlook</en>
+<fa>به Outlook اضافه شود</fa>
+</ID_ADD_TO_OUTLOOK>
+<ID_ADD_TO_CONTACTS_GROUP>
+<es>Agregar a un Grupo</es>
+<en>Add to Contacts group</en>
+<fa>به گروههای تماس اضافه شود</fa>
+</ID_ADD_TO_CONTACTS_GROUP>
+<ID_CREATE_DATE>
+<es>Fecha de Creación</es>
+<en>Create Date</en>
+<fa>تاریخ تعریف شود</fa>
+</ID_CREATE_DATE>
+<ID_CONTACT_TITLE>
+<es>Trato</es>
+<en>Title</en>
+<fa>عنوان</fa>
+</ID_CONTACT_TITLE>
+<ID_CONTACT_FIRSTNAME>
+<es>Primer Nombre</es>
+<en>First Name</en>
+<fa>نام کوچک</fa>
+</ID_CONTACT_FIRSTNAME>
+<ID_CONTACT_MIDDLENAME>
+<es>Segundo Nombre</es>
+<en>Middle Name</en>
+<fa>نام وسط</fa>
+</ID_CONTACT_MIDDLENAME>
+<ID_NAMES>
+<es>Nombres</es>
+<en>First Name</en>
+<fa>نام کوچک</fa>
+</ID_NAMES>
+<ID_CONTACT_LASTNAME>
+<es>Apellidos</es>
+<en>Last Name</en>
+<fa>نام خانوادگی</fa>
+</ID_CONTACT_LASTNAME>
+<ID_CONTACT_BIRTHDAY>
+<es>Fecha de Nacimiento</es>
+<en>Birthday</en>
+<fa>تاریخ تولد</fa>
+</ID_CONTACT_BIRTHDAY>
+<ID_CONTACT_COUNTRY>
+<es>País</es>
+<en>Country</en>
+<fa>کشور</fa>
+</ID_CONTACT_COUNTRY>
+<ID_CONTACT_STATE>
+<es>Departamento o Estado</es>
+<en>State or Department</en>
+<fa>استان یا قسمت</fa>
+</ID_CONTACT_STATE>
+<ID_CONTACT_CITY>
+<es>Ciudad</es>
+<en>City</en>
+<fa>شهر</fa>
+</ID_CONTACT_CITY>
+<ID_CONTACT_ADDRESS>
+<es>Dirección</es>
+<en>Address</en>
+<fa>آدرس</fa>
+</ID_CONTACT_ADDRESS>
+<ID_CONTACT_POSTAL_CODE>
+<es>Casilla de Correo</es>
+<en>Postal Code</en>
+<fa>کد پستی</fa>
+</ID_CONTACT_POSTAL_CODE>
+<ID_CONTACT_TELEPHONE>
+<es>Teléfono</es>
+<en>Telephone</en>
+<fa>تلفن</fa>
+</ID_CONTACT_TELEPHONE>
+<ID_CONTACT_CELLULAR>
+<es>Nro. de Celular</es>
+<en>Cellular Phone Number</en>
+<fa>شماره تلفن موبایل</fa>
+</ID_CONTACT_CELLULAR>
+<ID_CONTACT_PAGER>
+<es>Localizador</es>
+<en>Pager</en>
+<fa>پیجر</fa>
+</ID_CONTACT_PAGER>
+<ID_CONTACT_FAX>
+<es>Fax</es>
+<en>Fax</en>
+<fa>فکس</fa>
+</ID_CONTACT_FAX>
+<ID_CONTACT_EMAIL>
+<es>E-Mail</es>
+<en>E-Mail</en>
+<fa>پست الکترونیک</fa>
+</ID_CONTACT_EMAIL>
+<ID_CONTACT_HOME_PAGE>
+<es>Sitio WEB</es>
+<en>Home Page</en>
+<fa>آدرس وبسایت</fa>
+</ID_CONTACT_HOME_PAGE>
+<ID_CONTACT_GENDER>
+<es>Género</es>
+<en>Gender</en>
+<fa>جنسیت</fa>
+</ID_CONTACT_GENDER>
+<ID_CONTACT_LANGUAGE>
+<es>Idioma</es>
+<en>Language</en>
+<fa>زبان</fa>
+</ID_CONTACT_LANGUAGE>
+<ID_CONTACT_OWNER>
+<es>Pertenece a (Departamento)</es>
+<en>Owner</en>
+<fa>مالک</fa>
+</ID_CONTACT_OWNER>
+<ID_CONTACT_POSTAL_RATE>
+<es>Tarifa Postal</es>
+<en>Postal Rate</en>
+<fa>هزینه  پستی</fa>
+</ID_CONTACT_POSTAL_RATE>
+<ID_CONTACT_SAVE_EXIT>
+<es>Guardar y Salir</es>
+<en>Save &amp; Exit</en>
+<fa>ذخیره و خروج</fa>
+</ID_CONTACT_SAVE_EXIT>
+<ID_CONTACT_SAVE_CONTINUE>
+<es>Guardar y luego introducir la Información de la empresa</es>
+<en>Save</en>
+<fa>ذخیره</fa>
+</ID_CONTACT_SAVE_CONTINUE>
+<ID_CONTACT_TITLE1>
+<es>Por Favor Ingrese la Información del Nuevo Contacto</es>
+<en>Please Entry the Information of the New Contact</en>
+<fa>لطفا اطلاعات تماس جدید را وارد نمایید</fa>
+</ID_CONTACT_TITLE1>
+<ID_CONTACT_TITLE2>
+<es>Por favor ingrese la información de la empresa del Nuevo Contacto</es>
+<en>Please entry the information of the Company from the New Contact</en>
+<fa>لطفا اطلاعات شرکت را از تماسهای جدید وارد نمایید</fa>
+</ID_CONTACT_TITLE2>
+<ID_CONTACT_LOCAL>
+<es>Local</es>
+<en>Local</en>
+<fa>محلی</fa>
+</ID_CONTACT_LOCAL>
+<ID_CONTACT_NATIONAL>
+<es>Nacional</es>
+<en>National</en>
+<fa>ملی</fa>
+</ID_CONTACT_NATIONAL>
+<ID_CONTACT_INTERNATIONAL>
+<es>Internacional</es>
+<en>International</en>
+<fa>بین المللی</fa>
+</ID_CONTACT_INTERNATIONAL>
+<ID_CONTACT_MESSAGE1>
+<es>Por favor revise la siguiente información:</es>
+<en>Please review the next information:</en>
+<fa>لطفا اطلاعات زیر را بازبینی نمایید:</fa>
+</ID_CONTACT_MESSAGE1>
+<ID_CONTACT_OTHER_COMPANY>
+<es>Otra empresa</es>
+<en>Other Company</en>
+<fa>شرکت دیگر</fa>
+</ID_CONTACT_OTHER_COMPANY>
+<ID_CONTACT_JOBTITLE>
+<es>Cargo</es>
+<en>Job Title</en>
+<fa>عنوان شغلی</fa>
+</ID_CONTACT_JOBTITLE>
+<ID_CONTACT_DEPARTMENT>
+<es>Departamento o Area</es>
+<en>Department</en>
+<fa>قسمت</fa>
+</ID_CONTACT_DEPARTMENT>
+<ID_CONTACT_REGIONAL>
+<es>Regional</es>
+<en>Regional</en>
+<fa>ناحیه ای</fa>
+</ID_CONTACT_REGIONAL>
+<ID_CONTACT_REGISTERED_COMPANIES>
+<es>Empresas registradas</es>
+<en>Registered Companies</en>
+<fa>شرکتهای ثبت شده</fa>
+</ID_CONTACT_REGISTERED_COMPANIES>
+<ID_CONTACT_COMPANY>
+<es>Nombre de la Empresa</es>
+<en>Company Name</en>
+<fa>نام شرکت</fa>
+</ID_CONTACT_COMPANY>
+<ID_CONTACT_COMPANY_HOME_PAGE>
+<es>Sitio WEB</es>
+<en>Home Page</en>
+<fa>آدرس وب سایت</fa>
+</ID_CONTACT_COMPANY_HOME_PAGE>
+<ID_CONTACT_COMPANY_EXIST>
+<es>La empresa existe o está en blanco!</es>
+<en>The Company Exists or Empty!</en>
+<fa>شرکت وجود دارد یا خالی است!</fa>
+</ID_CONTACT_COMPANY_EXIST>
+<ID_CONTACT_MESSAGE2>
+<es>Información Personal</es>
+<en>Personal information:</en>
+<fa>اطلاعات شخصی:</fa>
+</ID_CONTACT_MESSAGE2>
+<ID_CONTACT_MESSAGE3>
+<es>Información de la empresa:</es>
+<en>Company Information:</en>
+<fa>اطلاعات شرکت:</fa>
+</ID_CONTACT_MESSAGE3>
+<ID_CONTACT_MESSAGE4>
+<es>El Contacto Está Incluido en los Siguientes Grupos:</es>
+<en>The Contact is in the Next Groups:</en>
+<fa>تماس در گروههای زیر وجود دارد:</fa>
+</ID_CONTACT_MESSAGE4>
+<ID_CONTACT_MESSAGE5>
+<es>Que Campos Desea Guardar en el Archivo Excel?</es>
+<en>That Fields Wish To Save in the Excel File?</en>
+<fa>آیا مایل به ذخیره آن فیلدها در فایل Excel  می باشید؟</fa>
+</ID_CONTACT_MESSAGE5>
+<ID_CONTACT_MESSAGE6>
+<es>Información de la empresa</es>
+<en>Company Information:</en>
+<fa>اطلاعات شرکت:</fa>
+</ID_CONTACT_MESSAGE6>
+<ID_CONTACT_MESSAGE7>
+<es>Información</es>
+<en>Information</en>
+<fa>اطلاعات</fa>
+</ID_CONTACT_MESSAGE7>
+<ID_CONTACT_MESSAGE8>
+<es>Información complementaria de la empresa</es>
+<en>Company Information</en>
+<fa>اطلاعات شرکت</fa>
+</ID_CONTACT_MESSAGE8>
+<ID_CONTACT_MESSAGE9>
+<es>Referencias Generales</es>
+<en>General References</en>
+<fa>مرجعهای عمومی</fa>
+</ID_CONTACT_MESSAGE9>
+<ID_CONTACT_MESSAGE10>
+<es>Borrar Solamente el Grupo</es>
+<en>Only Delete the Group</en>
+<fa>فقط گروه حذف شود</fa>
+</ID_CONTACT_MESSAGE10>
+<ID_CONTACT_MESSAGE11>
+<es>Borrar el Grupo y los Contactos</es>
+<en>Delete the Contact Group and the Contacts</en>
+<fa>گروه تماس و تماسها حذف شود</fa>
+</ID_CONTACT_MESSAGE11>
+<ID_CONTACT_REMOVE_GROUP>
+<es>Quitar del grupo</es>
+<en>Remove from the group</en>
+<fa>از گروه حذف شود</fa>
+</ID_CONTACT_REMOVE_GROUP>
+<IN_ALL2>
+<es>Este Grupo Contiene Todos los Contactos Registrados</es>
+<en>This Group contain all Contacts</en>
+<fa>این گروه دربردارنده تمام تماسها است</fa>
+</IN_ALL2>
+<ADD_TO_CONTACT_GROUP2>
+<es>Añadir a este Grupo</es>
+<en>Add to this Contacts Group</en>
+<fa>به این گروه تماسها اضافه شود</fa>
+</ADD_TO_CONTACT_GROUP2>
+<ID_CONTACTS>
+<es>Contactos</es>
+<en>Contacts</en>
+<fa>تماسها</fa>
+</ID_CONTACTS>
+<ID_CONTACTS_NOT_IN_THE_GROUP>
+<es>Contactos que no se encuentran en este Grupo</es>
+<en>Contacts that are not in this Contacts Group</en>
+<fa>تماسهایی که در این گروه تماسها نیستند</fa>
+</ID_CONTACTS_NOT_IN_THE_GROUP>
+<ID_SELECT_CONTINENT>
+<es>[Seleccione un Continente o Región]</es>
+<en>[Select Continent or Region]</en>
+<fa>[قاره یا ناحیه را انتخاب نمایید]</fa>
+</ID_SELECT_CONTINENT>
+<ID_SELECT_COUNTRY>
+<es>[Seleccione un País]</es>
+<en>[Select Country]</en>
+<fa>[کشور را انتخاب نمایید]</fa>
+</ID_SELECT_COUNTRY>
+<ID_SELECT_STATE_>
+<es>[Seleccione un Departamento]</es>
+<en>[Select State]</en>
+<fa>[استان را انتخاب نمایید]</fa>
+</ID_SELECT_STATE_>
+<ID_CONTACT_TYPE>
+<es>Tipo de Contacto</es>
+<en>Contact Type</en>
+<fa>نوع تماس</fa>
+</ID_CONTACT_TYPE>
+<ID_CONTACT_GROUP>
+<es>Grupo de Contacto al que se incluirá</es>
+<en>Contact Group in which it will be included</en>
+<fa>گروه تماسی که در آن بایستی شامل شود</fa>
+</ID_CONTACT_GROUP>
+<ID_GIFT_TYPE>
+<es>Tipo de Envío</es>
+<en>Gift Type</en>
+<fa>نوع هدیه</fa>
+</ID_GIFT_TYPE>
+<ID_CONTAIN>
+<es>Contenga</es>
+<en>Contain</en>
+<fa>دربردارنده</fa>
+</ID_CONTAIN>
+<ID_NOT_CONTAIN>
+<es>No Contenga</es>
+<en>Not Contain</en>
+<fa>دربردارنده</fa>
+</ID_NOT_CONTAIN>
+<ID_CONTACT_REPRESENTATIVE>
+<es>Representante de la empresa</es>
+<en>Representative of the Company</en>
+<fa>نماینده شرکت</fa>
+</ID_CONTACT_REPRESENTATIVE>
+<ID_CONTACT_CONTINENT>
+<es>Continente o Región</es>
+<en>Continent or Region</en>
+<fa>قار یا ناحیه</fa>
+</ID_CONTACT_CONTINENT>
+<ID_AND>
+<es>y</es>
+<en>and</en>
+<fa>و</fa>
+</ID_AND>
+<ID_NATIONALITY>
+<es>Nacionalidad</es>
+<en>Nationality</en>
+<fa>ملیت</fa>
+</ID_NATIONALITY>
+<ID_CONTINENT_RESIDE>
+<es>Continente de Residencia</es>
+<en>Home Continent</en>
+<fa>قاره موطن</fa>
+</ID_CONTINENT_RESIDE>
+<ID_COUNTRY_RESIDE>
+<es>País de Residendcia</es>
+<en>Home Country</en>
+<fa>کشور موطن</fa>
+</ID_COUNTRY_RESIDE>
+<ID_STATE_RESIDE>
+<es>Departamento o Estado de Residencia</es>
+<en>Home State</en>
+<fa>استان موطن</fa>
+</ID_STATE_RESIDE>
+<ID_CITY_RESIDE>
+<es>Ciudad de Residencia</es>
+<en>Home City</en>
+<fa>شهر موطن</fa>
+</ID_CITY_RESIDE>
+<ID_ADDRESS_RESIDE>
+<es>Dirección Domicilio</es>
+<en>Home Address</en>
+<fa>آدرس منزل</fa>
+</ID_ADDRESS_RESIDE>
+<ID_TELEPHONE_RESIDE>
+<es>Teléfono Domicilio</es>
+<en>Home Telephone</en>
+<fa>تلفن منزل</fa>
+</ID_TELEPHONE_RESIDE>
+<ID_FAX_RESIDE>
+<es>Fax de Residencia</es>
+<en>Home Fax</en>
+<fa>فکس منزل</fa>
+</ID_FAX_RESIDE>
+<ID_PERCENTAGE>
+<es>Porcentaje</es>
+<en>Percentage</en>
+<fa>درصد</fa>
+</ID_PERCENTAGE>
+<ID_CAPTION_PERCENTAGE>
+<es>Porcentaje (Etiqueta)</es>
+<en>Percentage (Caption)</en>
+<fa>درصد (عنوان)</fa>
+</ID_CAPTION_PERCENTAGE>
+<ID_CAPTION_DATE>
+<es>Fecha (Etiqueta)</es>
+<en>Date (Caption)</en>
+<fa>تاریخ (عنوان)</fa>
+</ID_CAPTION_DATE>
+<ID_PERSONAL_HOME_PAGE>
+<es>Sitio WEB Personal</es>
+<en>Personal Home Page</en>
+<fa>وبسایت شخصی</fa>
+</ID_PERSONAL_HOME_PAGE>
+<ID_PERSONAL_EMAIL>
+<es>Correo Electrónico Personal</es>
+<en>Personal E-Mail</en>
+<fa>پست الکترونیک شخصی</fa>
+</ID_PERSONAL_EMAIL>
+<ID_PERSONAL_POSTAL_CODE>
+<es>Casilla de Correo Personal</es>
+<en>Personal Postal Code</en>
+<fa>کدپستی شخصی</fa>
+</ID_PERSONAL_POSTAL_CODE>
+<ID_ANOTHER_OWNER>
+<es>Pertenece a (Otro)</es>
+<en>Owner (Other)</en>
+<fa>مالک ( دیگر)</fa>
+</ID_ANOTHER_OWNER>
+<ID_WHITSIGNATUREOF>
+<es>Con la Firma de</es>
+<en>With Signature of</en>
+<fa>با امضاء</fa>
+</ID_WHITSIGNATUREOF>
+<ID_CONTINENT>
+<es>Continente</es>
+<en>Continent</en>
+<fa>قاره</fa>
+</ID_CONTINENT>
+<ID_CONTINENT_WORK>
+<es>Continente o Región</es>
+<en>Business Continent or Region</en>
+<fa>قاره یا ناحیه کسب وکار</fa>
+</ID_CONTINENT_WORK>
+<ID_COUNTRY_WORK>
+<es>País</es>
+<en>Business Country</en>
+<fa>کشور محل کسب وکار</fa>
+</ID_COUNTRY_WORK>
+<ID_STATE_WORK>
+<es>Departamento o Estado</es>
+<en>Business State</en>
+<fa>استان محل کسب وکار</fa>
+</ID_STATE_WORK>
+<ID_CITY_WORK>
+<es>Ciudad</es>
+<en>Business City</en>
+<fa>شهر محل کسب وکار</fa>
+</ID_CITY_WORK>
+<ID_ADDRESS_WORK>
+<es>Dirección</es>
+<en>Business Address</en>
+<fa>آدرس محل کسب وکار</fa>
+</ID_ADDRESS_WORK>
+<ID_TELEPHONE_WORK>
+<es>Teléfono</es>
+<en>Business Telephone</en>
+<fa>تلفن محل کسب و کار</fa>
+</ID_TELEPHONE_WORK>
+<ID_FAX_WORK>
+<es>Fax</es>
+<en>Business Fax</en>
+<fa>فکس محل کسب وکار</fa>
+</ID_FAX_WORK>
+<ID_HOME_PAGE_WORK>
+<es>Sitio WEB</es>
+<en>Business Home Page</en>
+<fa>وبسایت  کسب و کار</fa>
+</ID_HOME_PAGE_WORK>
+<ID_EMAIL_WORK>
+<es>Correo Electrónico</es>
+<en>Business E-Mail</en>
+<fa>پست الکترونیک کسب و کار</fa>
+</ID_EMAIL_WORK>
+<ID_POSTAL_CODE_WORK>
+<es>Casilla de Correo</es>
+<en>Business Postal Code</en>
+<fa>کد پستی کسب وکار</fa>
+</ID_POSTAL_CODE_WORK>
+<ID_TEMPLATES>
+<es>Plantillas</es>
+<en>Templates</en>
+<fa>قالبها</fa>
+</ID_TEMPLATES>
+<ID_CONTACT_TEMPLATES_NOT_EXISTS>
+<es>No existen archivos</es>
+<en>Files not exists</en>
+<fa>پرونده ها وجود ندارند</fa>
+</ID_CONTACT_TEMPLATES_NOT_EXISTS>
+<ID_DELETE_CONTACT_GROUP>
+<es>Desea borrar este Grupo de Contactos?</es>
+<en>Do you want to delete this Contacts Group?</en>
+<fa>آیا مایل به حذف این گروه تماسها می باشید؟</fa>
+</ID_DELETE_CONTACT_GROUP>
+<ID_RTF_FILENAME>
+<es>Nombre del archivo RTF</es>
+<en>RTF Filename</en>
+<fa>نام پرونده RTF</fa>
+</ID_RTF_FILENAME>
+<ID_DELETE_RTF_FILE>
+<es>Eliminar esta plantilla RTF</es>
+<en>Delete this RTF</en>
+<fa>این RTF حذف شود</fa>
+</ID_DELETE_RTF_FILE>
+<ID_DELETE_RTF_FILE_CONFIRM>
+<es>Se eliminará este RTF</es>
+<en>This RTF will be deleted</en>
+<fa>این RTF حذف خواهد شد</fa>
+</ID_DELETE_RTF_FILE_CONFIRM>
+<ID_EXISTS_CONTACT>
+<es>Ya existe un contacto con esos nombres y apellidos</es>
+<en>The contact already exists!</en>
+<fa>تماس مورد نظر از قبل موجودست!</fa>
+</ID_EXISTS_CONTACT>
+<ID_CONTACT_COPY>
+<es>El contacto ha sido copiado con éxito</es>
+<en>The contact has been copied successfully!</en>
+<fa>تماس مورد نظر با موفقیت کپی شده است!</fa>
+</ID_CONTACT_COPY>
+<ID_CONTACT_ACTIVATE>
+<es>Miembros del grupo activados</es>
+<en>Miembros del grupo activados</en>
+<fa>ID_CONTACT_ACTIVATE</fa>
+</ID_CONTACT_ACTIVATE>
+<ID_CONTACT_INACTIVATE>
+<es>Miembros del grupo desactivados</es>
+<en>Miembros del grupo desactivados</en>
+<fa>ID_CONTACT_INACTIVATE</fa>
+</ID_CONTACT_INACTIVATE>
+<ID_TASK_REQ_DOC_MSG1>
+<es>Por favor seleccione la documentación que es requerida en este tarea</es>
+<en>Please Select the required documentation for this task</en>
+<fa>لطفا برای این کار مستندات مورد نیاز را انتخاب نمایید</fa>
+</ID_TASK_REQ_DOC_MSG1>
+<ID_TASK_REQ_DOC_MSG2>
+<es>No existen 'Documentos Requeridos' o todos ya se encuentran asignados</es>
+<en>'Required Documents' do not exist or all already they are assigned</en>
+<fa>'مستندات موردنیاز' وجود ندارند یا تمامی آنها قبل تخصیص داده شده اند.</fa>
+</ID_TASK_REQ_DOC_MSG2>
+<ID_TASK_REQ_DOC_MSG3>
+<es>Propiedades para este documento</es>
+<en>Properties for this documentation</en>
+<fa>متعلقات این مستندات</fa>
+</ID_TASK_REQ_DOC_MSG3>
+<ID_TASK_REQ_DOC_REQUIRED>
+<es>Documentación Requerida</es>
+<en>Required Documentation</en>
+<fa>مستندات موردنیاز</fa>
+</ID_TASK_REQ_DOC_REQUIRED>
+<ID_TASK_REQ_DOC_AS_STEP>
+<es>Como paso normal (adjuntar)</es>
+<en>As Normal Step</en>
+<fa>به عنوان گام عادی</fa>
+</ID_TASK_REQ_DOC_AS_STEP>
+<ID_TASK_REQ_DOC_CAN_DELETE>
+<es>Puede Borrarse</es>
+<en>Can Delete</en>
+<fa>می تواند حذف شود</fa>
+</ID_TASK_REQ_DOC_CAN_DELETE>
+<ID_TASK_REQ_DOC_PREVIOU_TASKS>
+<es>Documentos de Tareas Previas</es>
+<en>Documents of Previous Tasks</en>
+<fa>مستندات کارهای قبلی</fa>
+</ID_TASK_REQ_DOC_PREVIOU_TASKS>
+<ID_ADDED_IN>
+<es>Adicionado en</es>
+<en>Added in</en>
+<fa>اضافه شده در</fa>
+</ID_ADDED_IN>
+<ID_RECEIVERS>
+<es>Destinatarios</es>
+<en>Recipients</en>
+<fa>گیرندگان</fa>
+</ID_RECEIVERS>
+<ID_REPORTS_CONTENT>
+<es>Usuarios para reportes.</es>
+<en>Report users.</en>
+<fa>استفاده کنندگان از گزارش.</fa>
+</ID_REPORTS_CONTENT>
+<ID_CREDIT_CARD>
+<es>Fecha de Expiración</es>
+<en>Expiration Date</en>
+<fa>تاریخ انقضا</fa>
+</ID_CREDIT_CARD>
+<ID_CREDIT_CARD_NUMBER>
+<es>Número de la Tarjeta de Crédito</es>
+<en>Credit Card Number</en>
+<fa>شماره کارت اعتباری</fa>
+</ID_CREDIT_CARD_NUMBER>
+<ID_EMPTY_FIELDS>
+<es>Algunos campos se encuentran vacios</es>
+<en>Some fields are empty</en>
+<fa>بعضی از فیلدها خالی هستند</fa>
+</ID_EMPTY_FIELDS>
+<ID_REQUIRED_INFORMATION1>
+<es>Información Requerida</es>
+<en>Required information</en>
+<fa>اطلاعات مورد نایاز</fa>
+</ID_REQUIRED_INFORMATION1>
+<ID_REQUIRED_INFORMATION2>
+<es>Usted tiene dos opciones:</es>
+<en>You have two options:</en>
+<fa>شما دو انتخاب دارید</fa>
+</ID_REQUIRED_INFORMATION2>
+<ID_REQUIRED_INFORMATION3>
+<es>Para completar la información ahora, haga clic en Retornar.</es>
+<en>To complete the Dynaform now click on the Back button.</en>
+<fa>اگر مي خواهيد فرم را تکمیل نماييد بر روی دکمه بازگشت کلیک نمایید.</fa>
+</ID_REQUIRED_INFORMATION3>
+<ID_REQUIRED_INFORMATION4 date="2007-05-12 08:59:03">
+<es>Para completar la información después, haga clic en Guardar.</es>
+<en>To complete the Dynaform later click on the Save button.</en>
+<fa>اگر ميخواهيد تكميل فرم را به زمان ارجاع كار موكول كنيد بر روي دکمه ثبت کلیک نمایید.</fa>
+</ID_REQUIRED_INFORMATION4>
+<ID_REQUIRED_INFORMATION5>
+<es>Debe llenar los siguientes campos:</es>
+<en>You must complete the following fields:</en>
+<fa>باید فیلدهای زیر را تکمیل نمایید:</fa>
+</ID_REQUIRED_INFORMATION5>
+<ID_ASSIGN_WEBBOT>
+<es>Añadir un Webbot existente</es>
+<en>Add an existing Webbot</en>
+<fa>یک اسکریپ  موجود اضافه شود</fa>
+</ID_ASSIGN_WEBBOT>
+<ID_NO_EXISTS_WEBBOT>
+<es>NO EXISTEN WEBBOTS</es>
+<en>NOT EXISTS WEBBOTS</en>
+<fa>اسکریپ ها وچود ندارند</fa>
+</ID_NO_EXISTS_WEBBOT>
+<ID_MESSAGE_TRY_NOW>
+<es>Ud. puede probar el proceso de las siguientes formas:</es>
+<en>You can try now of the following forms:</en>
+<fa>می توانید فرمهای زیر را امتحان نمایید:</fa>
+</ID_MESSAGE_TRY_NOW>
+<ID_MESSAGE_TRY_NOW_INITIAL_USER>
+<es>Como Usuario Inicial</es>
+<en>Like Initial User</en>
+<fa>مانند کاربر آغازین</fa>
+</ID_MESSAGE_TRY_NOW_INITIAL_USER>
+<ID_MESSAGE_TRY_NOW_FORM>
+<es>Un paso</es>
+<en>One Step</en>
+<fa>یک گام</fa>
+</ID_MESSAGE_TRY_NOW_FORM>
+<ID_MESSAGE_TRY_NOW_EXTERNAL_USER>
+<es>Como Usuario Externo</es>
+<en>External User</en>
+<fa>کاربر بیرونی</fa>
+</ID_MESSAGE_TRY_NOW_EXTERNAL_USER>
+<ID_MORE_INFO>
+<es>Presione aquí para ver más información</es>
+<en>Click here to view more info</en>
+<fa>برای مشاهده اطلاعات بیشتر اینجا را کلیک نمایید</fa>
+</ID_MORE_INFO>
+<ID_GO_TO>
+<es>Ir a</es>
+<en>Go to</en>
+<fa>برو به</fa>
+</ID_GO_TO>
+<ID_TASK_TITLE>
+<es>Título de la tarea</es>
+<en>Task title</en>
+<fa>عنوان کار</fa>
+</ID_TASK_TITLE>
+<ID_TASK_ELEMENTS>
+<es>Elementos de la Tarea</es>
+<en>Task Elements</en>
+<fa>عناصر کار</fa>
+</ID_TASK_ELEMENTS>
+<ID_VIEW>
+<es>Ver</es>
+<en>View</en>
+<fa>مشاهده</fa>
+</ID_VIEW>
+<ID_ASSIGNED_USERS>
+<es>Usuarios asignados</es>
+<en>Assigned users</en>
+<fa>کاربران تخصیص داده شده</fa>
+</ID_ASSIGNED_USERS>
+<ID_CASES_PERCENTAGE>
+<es>Porcentaje de casos</es>
+<en>Cases percentage</en>
+<fa>درصد موارد</fa>
+</ID_CASES_PERCENTAGE>
+<ID_CASES_NUMBER>
+<es>Número de casos</es>
+<en>Number of cases</en>
+<fa>تعداد موارد</fa>
+</ID_CASES_NUMBER>
+<ID_VIEW_LIST>
+<es>Ver Listado</es>
+<en>View list</en>
+<fa>مشاهده فهرست</fa>
+</ID_VIEW_LIST>
+<ID_CONDITIONS>
+<es>Condiciones</es>
+<en>Conditions</en>
+<fa>شرایط</fa>
+</ID_CONDITIONS>
+<ID_MODE>
+<es>Modo</es>
+<en>Mode</en>
+<fa>حالت</fa>
+</ID_MODE>
+<ID_DE_ASSIGN>
+<es>Borrar</es>
+<en>Delete</en>
+<fa>حذف</fa>
+</ID_DE_ASSIGN>
+<ID_DE_ASSIGN_QUESTION>
+<es>Desea borrar este paso?</es>
+<en>Are you sure to delete this step?</en>
+<fa>آیا از حذف این گام مطمئنید؟</fa>
+</ID_DE_ASSIGN_QUESTION>
+<ID_MODIFY_CONDITION>
+<es>Modificar condición</es>
+<en>Modify condition</en>
+<fa>شزط اضافه شود</fa>
+</ID_MODIFY_CONDITION>
+<ID_ELEMENT_TO_ASSIGN>
+<es>Elemento a añadir</es>
+<en>Element to add</en>
+<fa>عنصر لازم به تخصیص</fa>
+</ID_ELEMENT_TO_ASSIGN>
+<ID_SELECT_DYNAFORM_TO_ASSIGN>
+<es>Seleccione el DynaForm a añadir</es>
+<en>Select the DynaForm to add</en>
+<fa>جهت اضافه نمودن ، فرم انتخاب شود</fa>
+</ID_SELECT_DYNAFORM_TO_ASSIGN>
+<ID_SELECT_REQ_DOC_TO_ASSIGN>
+<es>Seleccione el documento requerido a añadir</es>
+<en>Select the required document to add</en>
+<fa>جهت اضافه نمودن ، مستند الزامی انتخاب شود</fa>
+</ID_SELECT_REQ_DOC_TO_ASSIGN>
+<ID_SELECT_RTF_TO_ASSIGN>
+<es>Seleccione el documento generado a añadir</es>
+<en>Select the output document to add</en>
+<fa>جهت اضافه نمودن ،مستند خروجی انتخاب شود</fa>
+</ID_SELECT_RTF_TO_ASSIGN>
+<ID_NO_DYNAFORMS_FOUND>
+<es>No existen DynaForms para este proceso o todos ya se encuentran asignados</es>
+<en>No DynaForms found for this process or all already assigned</en>
+<fa>برای این فرآیند فرمی وجود ندارد یا تمامی آنها قبلا تخصیص داده شده اند</fa>
+</ID_NO_DYNAFORMS_FOUND>
+<ID_NO_DOCUMENTS_FOUND>
+<es>No existen documentos requeridos para este proceso o todos ya se encuentran asignados</es>
+<en>No required documents found for this process or all already assigned</en>
+<fa>هیچ مستند الزامیی برای این فرآیند یافته نشد یا تمامی آنها قبلا تخصیص داده شده اند</fa>
+</ID_NO_DOCUMENTS_FOUND>
+<ID_NO_RTFS_FOUND>
+<es>No existen RTFs para este proceso o todos ya se encuentran asignados</es>
+<en>No RTFs found for this process or all already assigned</en>
+<fa>هیچ RTFی برای این فرآیند یافت نشد یا همگی قبلا تخصیص داده شده اند</fa>
+</ID_NO_RTFS_FOUND>
+<ID_PREVIEW_NOT_AVAILABLE>
+<es>Vista previa no disponible para este tipo de paso</es>
+<en>Preview not available for this type of step</en>
+<fa>پیش نمایش برای این نوع گام وجود ندارد</fa>
+</ID_PREVIEW_NOT_AVAILABLE>
+<ID_ADDED_INDIVIDUALLY>
+<es>Adicionado individualmente</es>
+<en>Added individually</en>
+<fa>به صورت تکی اضافه شد</fa>
+</ID_ADDED_INDIVIDUALLY>
+<ID_USERS_GROUPS_NOT_ASSIGNED_TASK>
+<es>Grupos de usuarios no añadidos a esta tarea</es>
+<en>Users groups not added to this task</en>
+<fa>گروههای کاربری به این کار اضافه نشد</fa>
+</ID_USERS_GROUPS_NOT_ASSIGNED_TASK>
+<ID_USERS_NOT_ASSIGNED_TASK>
+<es>Usuarios no añadidos a esta tarea</es>
+<en>Users not added to this task</en>
+<fa>کاربران به این کار اضافه نشدند</fa>
+</ID_USERS_NOT_ASSIGNED_TASK>
+<ID_ASSIGN_THIS_GROUP>
+<es>Añadir este grupo</es>
+<en>Add this group</en>
+<fa>این گروه اضافه شود</fa>
+</ID_ASSIGN_THIS_GROUP>
+<ID_ASSIGN_THIS_USER>
+<es>Añadir este usuario</es>
+<en>Add this user</en>
+<fa>این کاربر اضافه شود</fa>
+</ID_ASSIGN_THIS_USER>
+<ID_NO_USERS_GROUPS_FOUND>
+<es>No existen grupos de usuarios o todos ya se encuentran asignados</es>
+<en>No users groups found or all already assigned</en>
+<fa>هیچ گروه کاربری یافت نشد یا قبلا همگی تخصیص داده شده اند</fa>
+</ID_NO_USERS_GROUPS_FOUND>
+<ID_NO_USERS_FOUND>
+<es>No existen usuarios o todos ya se encuentran asignados</es>
+<en>No users found or all already assigned</en>
+<fa>هیچ کاربری یافت نشد یا قبلا همگی تخصیص داده شده اند</fa>
+</ID_NO_USERS_FOUND>
+<ID_ASSIGN_STEP>
+<es>Añadir paso</es>
+<en>Add step</en>
+<fa>گام اضافه شود</fa>
+</ID_ASSIGN_STEP>
+<ID_ALL_USERS>
+<es>Todos los usuarios</es>
+<en>All users</en>
+<fa>همه کاربران</fa>
+</ID_ALL_USERS>
+<ID_WITHOUT_CONDITION>
+<es>[SIN CONDICIÓN]</es>
+<en>[WITHOUT CONDITION]</en>
+<fa>[بدون شرط]</fa>
+</ID_WITHOUT_CONDITION>
+<ID_ADD_MESSAGE>
+<es>Añadir mensaje</es>
+<en>Add message</en>
+<fa>پیغام اضافه شود</fa>
+</ID_ADD_MESSAGE>
+<ID_MSG_CONFIRM_DEASIGN_USER_MESSAGE>
+<es>Está seguro de borrar este usuario?</es>
+<en>Are you sure to delete this user?</en>
+<fa>آیا از حذف این کاربر مطمئنید؟</fa>
+</ID_MSG_CONFIRM_DEASIGN_USER_MESSAGE>
+<ID_MSG_CONFIRM_DEASIGN_USERS_GROUP_MESSAGE>
+<es>Está seguro de borrar este grupo de usuarios?</es>
+<en>Are you sure to delete this users group?</en>
+<fa>آیا از حذف این گروه کاربری مطمئنید؟</fa>
+</ID_MSG_CONFIRM_DEASIGN_USERS_GROUP_MESSAGE>
+<ID_USERS_NOT_ASSIGNED_MESSAGE>
+<es>Usuarios no asignados</es>
+<en>Users not assigned</en>
+<fa>کاربران تخصیص داده نشده اند</fa>
+</ID_USERS_NOT_ASSIGNED_MESSAGE>
+<ID_USERS_GROUPS_NOT_ASSIGNED_MESSAGE>
+<es>Grupos de usuarios no asignados</es>
+<en>Users groups not assigned</en>
+<fa>گروههای کاربری تخصیص داده نشده اند</fa>
+</ID_USERS_GROUPS_NOT_ASSIGNED_MESSAGE>
+<ID_ASSIGN_USER>
+<es>Añadir usuario</es>
+<en>Add user</en>
+<fa>کاربر اضافه شود</fa>
+</ID_ASSIGN_USER>
+<ID_ASSIGN_GROUP_USER>
+<es>Añadir grupo de usuarios</es>
+<en>Add user group</en>
+<fa>گروه کاربری اضافه شود</fa>
+</ID_ASSIGN_GROUP_USER>
+<ID_MSG_CONFIRM_DELETE_WEBBOT>
+<es>Está seguro de borrar este webbot?</es>
+<en>Are you sure to delete this webbot?</en>
+<fa>آیا از حذف این اسکریپ مطمئن هستید؟</fa>
+</ID_MSG_CONFIRM_DELETE_WEBBOT>
+<ID_MESSAGE_TITLE>
+<es>Título del mensaje</es>
+<en>Message title</en>
+<fa>عنوان پیغام</fa>
+</ID_MESSAGE_TITLE>
+<ID_MESSAGE_TITLE_NOT_EMPTY>
+<es>El título del mensaje no puede estar vacio!</es>
+<en>The message title cannot be empty!</en>
+<fa>عنوان پیغام نبایستی خالی بماند!</fa>
+</ID_MESSAGE_TITLE_NOT_EMPTY>
+<ID_MESSAGE_NOT_EMPTY>
+<es>El mensaje no puede estar vacio!</es>
+<en>The message cannot be empty!</en>
+<fa>پیغام نبایستی خالی بماند!</fa>
+</ID_MESSAGE_NOT_EMPTY>
+<ID_DELETE_UNUSED_PROCESS>
+<es>Delete unused process</es>
+<en>Delete unused process</en>
+<fa>فرآیند غیرموردکاربرد حذف شود</fa>
+</ID_DELETE_UNUSED_PROCESS>
+<ID_EXTERNAL_USER_VAR>
+<es>Campo que contiene su E-Mail o el E-Mail</es>
+<en>Field with E-Mail or E-Mail</en>
+<fa>فیلد با پست الکترونیک یا پست الکترونیک</fa>
+</ID_EXTERNAL_USER_VAR>
+<FIELD_CANNOT_EMPTY>
+<es>El campo no pueden estar vacio!</es>
+<en>The field cannot be empty!</en>
+<fa>فیلد مورد نظر نبایستی خالی بماند!</fa>
+</FIELD_CANNOT_EMPTY>
+<TYPE_ANYTHING>
+<es>Escriba algo en este campo para ver sugerencias</es>
+<en>Type anything in this field for view suggestions</en>
+<fa>برای مشاهده پیشنهادات هرچیزی را در این فیلد تایپ نمایید.</fa>
+</TYPE_ANYTHING>
+<WEBBOT_OF_TYPE>
+<es>WEBBOT DE TIPO:</es>
+<en>WEBBOT OF TYPE:</en>
+<fa>اسکریپ از نوع :</fa>
+</WEBBOT_OF_TYPE>
+<ID_WEBBOT_TITLE_NOT_EMPTY>
+<es>El título del webbot no puede estar vacio!</es>
+<en>The webbot title cannot be empty!</en>
+<fa>عنوان اسکریپ نبایستی خالی باشد!</fa>
+</ID_WEBBOT_TITLE_NOT_EMPTY>
+<ID_WEBBOT_SCRIPT_NOT_EMPTY>
+<es>El webbot script no puede estar vacio!</es>
+<en>The webbot script cannot be empty!</en>
+<fa>اسکریپ نبایستی خالی بماند!</fa>
+</ID_WEBBOT_SCRIPT_NOT_EMPTY>
+<WRG_STEP5>
+<es>Paso 5</es>
+<en>Step 5</en>
+<fa>گام 5</fa>
+</WRG_STEP5>
+<WRG_STEP1_DESC_GRP>
+<es>Seleccione el Tipo de Gráfico</es>
+<en>Choose the Graph type</en>
+<fa>نوع نمودار را انتخاب نمایید</fa>
+</WRG_STEP1_DESC_GRP>
+<WRG_STEP2_DESC_GRP>
+<es>Seleccione los Parámetros para el Gráfico</es>
+<en>Select the Parameters for the Graphic</en>
+<fa>پارامترهای نمودار را انتخاب نمایید</fa>
+</WRG_STEP2_DESC_GRP>
+<WRG_STEP3_DESC_GRP>
+<es>Restricciones</es>
+<en>Limits</en>
+<fa>محدوده ها</fa>
+</WRG_STEP3_DESC_GRP>
+<WRG_STEP4_DESC_GRP>
+<es>Personalizar</es>
+<en>Customize</en>
+<fa>سفارشی سازی</fa>
+</WRG_STEP4_DESC_GRP>
+<WRG_STEP5_DESC_GRP>
+<es>Guardar</es>
+<en>Save</en>
+<fa>ذخیره</fa>
+</WRG_STEP5_DESC_GRP>
+<WRG_TYPE_BAR>
+<es>Barra</es>
+<en>Bar</en>
+<fa>میله</fa>
+</WRG_TYPE_BAR>
+<WRG_TYPE_LINE>
+<es>Línea</es>
+<en>Line</en>
+<fa>خط</fa>
+</WRG_TYPE_LINE>
+<WRG_TYPE_SCATTER>
+<es>Scatter</es>
+<en>Scatter</en>
+<fa>پراکنده کردن</fa>
+</WRG_TYPE_SCATTER>
+<WRG_TYPE_STOCK>
+<es>Stock</es>
+<en>Stock</en>
+<fa>انبار</fa>
+</WRG_TYPE_STOCK>
+<WRG_TYPE_PIE2D>
+<es>Pie 2D</es>
+<en>Pie 2D</en>
+<fa>نمودار دایره ای دوبعدی</fa>
+</WRG_TYPE_PIE2D>
+<WRG_TYPE_PIE3D>
+<es>Pie 3D</es>
+<en>Pie 3D</en>
+<fa>نمودار  دایره ای سه بعدی</fa>
+</WRG_TYPE_PIE3D>
+<ID_MEMBERS>
+<es>Miembros</es>
+<en>Members</en>
+<fa>اعضا</fa>
+</ID_MEMBERS>
+<WRG_FEATURES>
+<es>Caracterísiticas</es>
+<en>Features</en>
+<fa>ویژگیها</fa>
+</WRG_FEATURES>
+<WRG_VALUES_FIELD>
+<es>Campo de Valores</es>
+<en>Values Field</en>
+<fa>فیلدهای مقادیر</fa>
+</WRG_VALUES_FIELD>
+<WRG_LABELS_FIELD>
+<es>Campo de Etiquetas</es>
+<en>Labels Field</en>
+<fa>فیلد برچسبها</fa>
+</WRG_LABELS_FIELD>
+<WRG_GROUPEDBY>
+<es>Agrupado por</es>
+<en>Grouped by</en>
+<fa>گروهبندی شده بر اساس</fa>
+</WRG_GROUPEDBY>
+<WRG_SERIESBY>
+<es>Series por</es>
+<en>Series by</en>
+<fa>رده بندی بر اساس</fa>
+</WRG_SERIESBY>
+<WRG_GROUPED_BY_NOTHING>
+<es>Nada</es>
+<en>Nothing</en>
+<fa>هیچ چیز</fa>
+</WRG_GROUPED_BY_NOTHING>
+<WRG_GROUPED_BY_LABELS>
+<es>Etiquetas</es>
+<en>Labels</en>
+<fa>برچسبها</fa>
+</WRG_GROUPED_BY_LABELS>
+<WRG_GROUPED_BY_FIELDS>
+<es>Campos</es>
+<en>Fields</en>
+<fa>فیلدها</fa>
+</WRG_GROUPED_BY_FIELDS>
+<WRG_FUNCTION_COUNT>
+<es>Conteo</es>
+<en>Count</en>
+<fa>شمارش</fa>
+</WRG_FUNCTION_COUNT>
+<WRG_FUNCTION_SUM>
+<es>Suma</es>
+<en>Sum</en>
+<fa>جمع</fa>
+</WRG_FUNCTION_SUM>
+<WRG_FUNCTION_AVERAGE>
+<es>Promedio</es>
+<en>Average</en>
+<fa>میانگین</fa>
+</WRG_FUNCTION_AVERAGE>
+<WRG_GROUPED_BY_VALUES>
+<es>Valores</es>
+<en>Values</en>
+<fa>مقادیر</fa>
+</WRG_GROUPED_BY_VALUES>
+<ID_COLS>
+<es>Columnas</es>
+<en>Cols</en>
+<fa>تقسیم گروه</fa>
+</ID_COLS>
+<ID_SPLIT_GROUP>
+<es>Desagrupar</es>
+<en>Split group</en>
+<fa>عنوان</fa>
+</ID_SPLIT_GROUP>
+<WRG_TITLE>
+<es>Título</es>
+<en>Title</en>
+<fa>عنوان فرعی</fa>
+</WRG_TITLE>
+<WRG_SUBTITLE>
+<es>Sub Título</es>
+<en>Sub Title</en>
+<fa>شرح</fa>
+</WRG_SUBTITLE>
+<WRG_SUBSUBTITLE>
+<es>Descripción</es>
+<en>Description</en>
+<fa>عنوان محور X</fa>
+</WRG_SUBSUBTITLE>
+<WRG_XTITLE>
+<es>Título Eje X</es>
+<en>X Title</en>
+<fa>عنوان محور Y</fa>
+</WRG_XTITLE>
+<WRG_YTITLE>
+<es>Título Eje Y</es>
+<en>Y Title</en>
+<fa>آیا مطمئن هستید که می خواهید این گروه کاربری را تقسیم نمایید؟</fa>
+</WRG_YTITLE>
+<ID_MSG_CONFIRM_SPLIT_USERS_GROUP>
+<es>¿Está seguro de desagrupar este grupo?</es>
+<en>Are you sure to split this user group?</en>
+<fa>پیغام جدید</fa>
+</ID_MSG_CONFIRM_SPLIT_USERS_GROUP>
+<ID_NEW_MESSAGE>
+<es>Nuevo mensaje</es>
+<en>New message</en>
+<fa>پیغام جدید</fa>
+</ID_NEW_MESSAGE>
+<ID_SEARCH_RECIPIENT>
+<es>Buscar destinatario</es>
+<en>Search recipient</en>
+<fa>ID_SEARCH_RECIPIENT</fa>
+</ID_SEARCH_RECIPIENT>
+<ID_RAZON_SOCIAL>
+<es>RAZÓN SOCIAL</es>
+<en>RAZON SOCIAL</en>
+<fa>ID_RAZON_SOCIAL</fa>
+</ID_RAZON_SOCIAL>
+<ID_EMAIL_OR_VAR>
+<es>E-Mail or DynaForm field</es>
+<en>E-Mail o campo del DynaForm</en>
+<fa></fa>
+</ID_EMAIL_OR_VAR>
+<ID_ADD_RECIPIENT>
+<es>Añadir destinatario</es>
+<en>Add recipient</en>
+<fa>اضافه کردن گیرنده</fa>
+</ID_ADD_RECIPIENT>
+<ID_REQUIRED_WEBBOTS_STEP>
+<es>Webbots requeridos para este paso</es>
+<en>Required Webbots for this step</en>
+<fa>اسکریپ های مورد نیاز این گام</fa>
+</ID_REQUIRED_WEBBOTS_STEP>
+<ID_SELECT_WEBBOT_TO_ADD>
+<es>Seleccione el Webbot a añadir</es>
+<en>Select the Webbot to add</en>
+<fa>اسکریپ را برای اضافه کردن انتخاب نمایید</fa>
+</ID_SELECT_WEBBOT_TO_ADD>
+<ID_NO_WEBBOTS_FOUND>
+<es>No existen Webbots o todos ya se encuentran asignados</es>
+<en>No Webbots found or all already assigned</en>
+<fa>اسکریپ ی یافت نشد یا همه آنها قبلا تخصیص داده شده اند</fa>
+</ID_NO_WEBBOTS_FOUND>
+<ID_ADD_REX>
+<es>Añadir REX</es>
+<en>Añadir REX</en>
+<fa>Añadir REX</fa>
+</ID_ADD_REX>
+<ID_NOT_WEBBOTS>
+<es>Sin Webbots</es>
+<en>Without Webbots</en>
+<fa>فاقد اسکریپ</fa>
+</ID_NOT_WEBBOTS>
+<ID_ADD_WEBBOT>
+<es>Añadir Webbot</es>
+<en>Add Webbot</en>
+<fa>اضافه کردن اسکریپ</fa>
+</ID_ADD_WEBBOT>
+<ID_RUN_BEFORE>
+<es>Ejecutar antes</es>
+<en>Run before</en>
+<fa>قبل از اجرا</fa>
+</ID_RUN_BEFORE>
+<ID_RUN_AFTER>
+<es>Ejecutar después</es>
+<en>Run after</en>
+<fa>بعد از اجرا</fa>
+</ID_RUN_AFTER>
+<ID_ANULAR>
+<es>ANULAR</es>
+<en>ANULAR</en>
+<fa>برای این نوع گام در دسترس نمی باشد</fa>
+</ID_ANULAR>
+<ID_NOT_AVAILABLE>
+<es>No disponible para este tipo de paso</es>
+<en>Not available for this type of step</en>
+<fa>برای این نوع گام وجود ندارد</fa>
+</ID_NOT_AVAILABLE>
+<ID_EXTERNAL_CONGRATULATION date="2007-04-17 19:03:18">
+<es>Gracias por su tiempo. La información proporcionada ha sido correctamente enviada a</es>
+<en>Thank you for your time. The information you provided has been submitted successfully to</en>
+<fa>ضمن تشکر از جنابعالی، اطلاعات شما با موفقیت ارسال شد</fa>
+</ID_EXTERNAL_CONGRATULATION>
+<ID_MSG_CONFIRM_DELETE_REX>
+<es>¿ Está seguro de borrar el Registro de Exportador ?</es>
+<en>¿ Está seguro de borrar el Registro de Exportador ?</en>
+<fa>ID_MSG_CONFIRM_DELETE_REX</fa>
+</ID_MSG_CONFIRM_DELETE_REX>
+<ID_MSG_CONFIRM_DELETE_INV>
+<es>¿Esta seguo de anular el registro de inventario?</es>
+<en>¿Esta seguo de anular el registro de inventario?</en>
+<fa>ID_MSG_CONFIRM_DELETE_INV</fa>
+</ID_MSG_CONFIRM_DELETE_INV>
+<ID_MSG_CONFIRM_DELETE_DOS>
+<es>¿Esta seguro de anular la dosificación?</es>
+<en>¿Esta seguro de anular la dosificación?</en>
+<fa>ID_MSG_CONFIRM_DELETE_DOS</fa>
+</ID_MSG_CONFIRM_DELETE_DOS>
+<ID_SEQUENTIAL>
+<es>Secuencial</es>
+<en>Sequential</en>
+<fa>متوالی</fa>
+</ID_SEQUENTIAL>
+<ID_END_OF_PROCESS>
+<es>Fin de proceso</es>
+<en>End of process</en>
+<fa>پایان فرآیند</fa>
+</ID_END_OF_PROCESS>
+<ID_SELECTION_OF_USER>
+<es>Selección del ejecutante</es>
+<en>Selection of executant</en>
+<fa>انتخاب اجراکننده</fa>
+</ID_SELECTION_OF_USER>
+<ID_RULES_AND_USER_GROUPS>
+<es>Reglas y grupos de usuarios</es>
+<en>Rules and user groups</en>
+<fa>قوانین و گروههای کاربری</fa>
+</ID_RULES_AND_USER_GROUPS>
+<ID_ADD_USER_OF_TASK>
+<es>Ultimo ejecutante de la tarea</es>
+<en>Last executant of the task</en>
+<fa>آخرین اجراکننده کار</fa>
+</ID_ADD_USER_OF_TASK>
+<ID_PARALLEL_JOIN>
+<es>Paralelo (unión)</es>
+<en>Parallel (join)</en>
+<fa>موازی(اتصال)</fa>
+</ID_PARALLEL_JOIN>
+<ID_SEQUENTIAL_JOIN>
+<es>Secuencial (unión)</es>
+<en>Sequential (join)</en>
+<fa>متوالی(اتصال)</fa>
+</ID_SEQUENTIAL_JOIN>
+<ID_SEQUENTIAL_MAIN_JOIN>
+<es>Secuencial (unión principal)</es>
+<en>Sequential (main join)</en>
+<fa>متوالی (اتصال اصلی)</fa>
+</ID_SEQUENTIAL_MAIN_JOIN>
+<ID_NEXT_STEP_BE>
+<es>La siguiente tarea será de tipo</es>
+<en>The next task will be</en>
+<fa>کار بعدی عبارت خواهد بود از</fa>
+</ID_NEXT_STEP_BE>
+<ID_PARALLEL_FORK date="2007-04-24 07:32:44">
+<es>Paralelo (bifurcación)</es>
+<en>Parallel (fork)</en>
+<fa>موازی</fa>
+</ID_PARALLEL_FORK>
+<ID_PARALLEL_TASKS>
+<es>Tareas en paralelo</es>
+<en>Parallel tasks</en>
+<fa>کارهای موازی</fa>
+</ID_PARALLEL_TASKS>
+<ID_NO_TASKS>
+<es>Sin tareas asignadas</es>
+<en>Without assigned tasks</en>
+<fa>بدون کارهای تخصیص یافته</fa>
+</ID_NO_TASKS>
+<ID_EVALUATE_AUTO>
+<es>Evaluación (automática)</es>
+<en>Evaluate (auto)</en>
+<fa>ارزیابی (خودکار)</fa>
+</ID_EVALUATE_AUTO>
+<ID_POSSIBLE_TASKS>
+<es>Posibles tareas</es>
+<en>Possible tasks</en>
+<fa>کارهای ممکن</fa>
+</ID_POSSIBLE_TASKS>
+<ID_CONDITION_REQUIRED>
+<es>La condición no puede estar vacia!</es>
+<en>The condition cannot be empty!</en>
+<fa>شرط نمی تواند خالی باشد!</fa>
+</ID_CONDITION_REQUIRED>
+<ID_EVALUATE_MANUAL>
+<es>Evaluación (manual)</es>
+<en>Evaluate (manual)</en>
+<fa>ارزیابی (دستی)</fa>
+</ID_EVALUATE_MANUAL>
+<ID_HAVENT_RIGHTS_THIS_ITEM>
+<es>Ud. no tiene derechos para ver esta item</es>
+<en>You haven't rights to view this item</en>
+<fa>شما حق دسترسی برای مشاهده این مورد ندارید</fa>
+</ID_HAVENT_RIGHTS_THIS_ITEM>
+<ID_WITHOUT_DERIVATION_RULE>
+<es>Sin regla de derivación</es>
+<en>Without derivation rule</en>
+<fa>بدون قوانین نحوه ارجاع کار</fa>
+</ID_WITHOUT_DERIVATION_RULE>
+<ID_RECIBIDO>
+<es>Recibido</es>
+<en>id_recibido</en>
+<fa>ID_RECIBIDO</fa>
+</ID_RECIBIDO>
+<WRG_SYSTEM_TABLES>
+<es>Tablas del Sistema</es>
+<en>System Tables</en>
+<fa>جداول سیستم</fa>
+</WRG_SYSTEM_TABLES>
+<WRG_REPORT_TABLES>
+<es>Tablas de Reportes</es>
+<en>Report Tables</en>
+<fa>گزارش جداول</fa>
+</WRG_REPORT_TABLES>
+<ID_DEMO>
+<es>Demo</es>
+<en>Demo</en>
+<fa>نمایش</fa>
+</ID_DEMO>
+<ID_TECHNICAL_MANUAL>
+<es>Manual técnico</es>
+<en>Technical Manual</en>
+<fa>راهنمای فنی</fa>
+</ID_TECHNICAL_MANUAL>
+<ID_IMPORT_PROCESS>
+<es>Importar Proceso</es>
+<en>Import Process</en>
+<fa>فرآیند ورود اطلاعات</fa>
+</ID_IMPORT_PROCESS>
+<ID_CANT_REMOVE_INVENTARIO>
+<es>No es posible anular el registro porque sus valores ya fueron dosificados</es>
+<en>No es posible anular el registro porque sus valores ya fueron dosificados</en>
+<fa></fa>
+</ID_CANT_REMOVE_INVENTARIO>
+<ID_CHOOSE>
+<es>Seleccionar</es>
+<en>Choose</en>
+<fa>انتخاب</fa>
+</ID_CHOOSE>
+<ID_EDIT_CREDIT_CARD>
+<es>Información de la Tarjeta de Crédito</es>
+<en>Edit Credit Card Information</en>
+<fa>ویرایش کارت اعتباری</fa>
+</ID_EDIT_CREDIT_CARD>
+<ID_REQUIRED_FILES>
+<es>Los campos marcados con un asterisco (*) son obligatorios.</es>
+<en>Fields marked with an asterisk (*) are required</en>
+<fa>فیلدهای نشانه گذاری شده با یک ستاره(*) الزامی هستند.</fa>
+</ID_REQUIRED_FILES>
+<ID_SAVED_SUCCESSFULLY>
+<es>Guardado satisfactoriamente</es>
+<en>Saved successfully</en>
+<fa>با موفقیت ذخیره شد</fa>
+</ID_SAVED_SUCCESSFULLY>
+<ID_NO_ROOM_FIELDS>
+<es>No hay sitio para más campos.</es>
+<en>There is no room for more fields.</en>
+<fa>جایی برای فیلدهای بیشتر وجود ندارد.</fa>
+</ID_NO_ROOM_FIELDS>
+<ID_NO_ROOM_FORMS>
+<es>No hay sitio para más formularios.</es>
+<en>There is no room for more forms.</en>
+<fa>برای فرمهای بیشتر جایی وجود ندارد.</fa>
+</ID_NO_ROOM_FORMS>
+<ID_INDUSTRIES>
+<es>Industrias</es>
+<en>Industries</en>
+<fa>صنایع</fa>
+</ID_INDUSTRIES>
+<ID_PLEASE_ENTER_ORGANIZATION>
+<es>Por favor introduzca el nombre de la empresa</es>
+<en>Please enter the name of your organization</en>
+<fa>لطفا نام سازمان خود را وارد نمایید</fa>
+</ID_PLEASE_ENTER_ORGANIZATION>
+<ID_PLEASE_ENTER_FIRST_NAME>
+<es>Por favor introduzca su nombre</es>
+<en>Please enter your First Name</en>
+<fa>لطفا نام کوچک خود را وارد نمایید</fa>
+</ID_PLEASE_ENTER_FIRST_NAME>
+<ID_PLEASE_ENTER_LAST_NAME>
+<es>Por favor introduzca su apellido</es>
+<en>Please enter your Last Name</en>
+<fa>لطفا نام خانوادگی خود را وارد نمایید</fa>
+</ID_PLEASE_ENTER_LAST_NAME>
+<ID_PLEASE_ENTER_CITY>
+<es>Por favor introduzca su ciudad</es>
+<en>Please enter your city</en>
+<fa>لطفا شهر خود را وارد نمایید</fa>
+</ID_PLEASE_ENTER_CITY>
+<ID_PLEASE_ENTER_COUNTRY>
+<es>Por favor seleccione su país</es>
+<en>Please select your country name</en>
+<fa>لطفا نام کشور خود را وارد نمایید</fa>
+</ID_PLEASE_ENTER_COUNTRY>
+<ID_PLEASE_ENTER_STATE>
+<es>Por favor introduzca su región</es>
+<en>Please select your State/ Region</en>
+<fa>لطفا استان / منطقه خود را انتخاب نمایید</fa>
+</ID_PLEASE_ENTER_STATE>
+<ID_PLEASE_ENTER_LOCATION>
+<es>Por favor seleccione su ubicación</es>
+<en>Please select your location</en>
+<fa>لطفا مکان خود را وارد نمایید</fa>
+</ID_PLEASE_ENTER_LOCATION>
+<ID_PLEASE_ENTER_EMAIL>
+<es>Por favor introduzca su correo electrónico</es>
+<en>Please enter your Email address</en>
+<fa>لطفا آدرس ای میل خود را وارد نمایید</fa>
+</ID_PLEASE_ENTER_EMAIL>
+<ID_PLEASE_ENTER_TELEPHONE>
+<es>Por favor introduzca su teléfono</es>
+<en>Please enter your contact Telephone Number</en>
+<fa>لطفا شماره تلفن تماس خود را وارد نمایید</fa>
+</ID_PLEASE_ENTER_TELEPHONE>
+<ID_PLEASE_ENTER_ADDRESS>
+<es>Por favor introduzca su dirección</es>
+<en>Please enter the address of your organization</en>
+<fa>لطفا آدرس سازمان خود را وارد نمایید</fa>
+</ID_PLEASE_ENTER_ADDRESS>
+<ID_PLEASE_ENTER_WEB_ADDRESS>
+<es>Por favor introduzca el nombre de su Web Address</es>
+<en>Please enter the name of your Web Address</en>
+<fa>لطفا نام آدرس وبسایت خود را وارد نمایید</fa>
+</ID_PLEASE_ENTER_WEB_ADDRESS>
+<ID_WEB_ADDRESS_SHORT>
+<es>El nombre del Web Address tiene menos de 4 caracteres</es>
+<en>The name of the company space has to have at least 4 characters</en>
+<fa>لطفا نام فضای شرکت خود را که حداقل  4 کاراکتر داشته باشد وارد نمایید</fa>
+</ID_WEB_ADDRESS_SHORT>
+<ID_PLEASE_ENTER_LOGIN>
+<es>Por favor introduzca su nombre de usuario</es>
+<en>Please enter a login name</en>
+<fa>لطفا یک نام ورود (به سیستم) را وارد نمایید</fa>
+</ID_PLEASE_ENTER_LOGIN>
+<ID_PLEASE_ENTER_HEAR_ABOUT>
+<es>Por favor seleccione: Cómo se enteró de nosotros?</es>
+<en>Please select: How did you hear about us</en>
+<fa>طفا انتخاب نمایید : چگونه از(نرم افزار) ما کسب اطلاع نمودید</fa>
+</ID_PLEASE_ENTER_HEAR_ABOUT>
+<ID_PLEASE_ENTER_SECURITY_QUESTIO>
+<es>Por favor seleccione la pregunta de seguridad</es>
+<en>Please enter a security question</en>
+<fa>لطفا یک سوال امنیتی انتخاب نمایید</fa>
+</ID_PLEASE_ENTER_SECURITY_QUESTIO>
+<ID_PLEASE_ENTER_ANSWER>
+<es>Por favor introduzca su respuesta</es>
+<en>Please give an answer to your security question</en>
+<fa>لطفا پاسخی به سوال امنیتی خودتان بدهید</fa>
+</ID_PLEASE_ENTER_ANSWER>
+<ID_USER_REGISTRATION>
+<es>Registro de usuarios</es>
+<en>User Registration</en>
+<fa>ثبت نام کاربر</fa>
+</ID_USER_REGISTRATION>
+<ID_CREDIT_CARD_INFORMATION>
+<es>Introduzca datos de su tarjeta de crédito</es>
+<en>Please provide your credit card information</en>
+<fa>لطفا اطلاعات کارت اعتباری خود را ذکر نمایید</fa>
+</ID_CREDIT_CARD_INFORMATION>
+<ID_PLEASE_ENTER_CC>
+<es>Por favor introduzca su número de tarjeta de crédito</es>
+<en>Please enter your credit card number</en>
+<fa>لطفا شماره کار اعتباری خود را وارد نمایید</fa>
+</ID_PLEASE_ENTER_CC>
+<ID_PLEASE_ENTER_CC_EXP>
+<es>Por favor introduzca la fecha de expiración de su tarjeta de crédito</es>
+<en>Please enter your credit card expiration date</en>
+<fa>لطفا تاریخ انقضاء کارت اعتباری خود را وارد نمایید</fa>
+</ID_PLEASE_ENTER_CC_EXP>
+<ID_PLEASE_ENTER_CC_CVV>
+<es>Por favor introduzca el CVV de su tarjeta de crédito</es>
+<en>Please enter your credit card CVV</en>
+<fa>لطفا CVV کارت اعتباری خود را وارد نمایید</fa>
+</ID_PLEASE_ENTER_CC_CVV>
+<ID_PLEASE_ENTER_CC_FIRSTNAME>
+<es>Por favor introduzca su(s) nombre(s) que aparecen en su tarjeta de crédito</es>
+<en>Please enter your first name that appear in your credit card</en>
+<fa>لطفا نام کوچک خود را که در کارت اعتباریتان ذکر شده وارد نمایید.</fa>
+</ID_PLEASE_ENTER_CC_FIRSTNAME>
+<ID_PLEASE_ENTER_CC_LASTNAME>
+<es>Por favor introduzca su(s) apellidos(s) que aparecen en su tarjeta de crédito</es>
+<en>Please enter your last name that appear in your credit card</en>
+<fa>لطفا نام خانوادگی خود را که درکارت اعتباریتان ذکر شده وارد نمایید</fa>
+</ID_PLEASE_ENTER_CC_LASTNAME>
+<ID_PLEASE_ENTER_CC_ADDRESS>
+<es>id_please_enter_cc_address</es>
+<en>Please enter your address that appear in your credit card</en>
+<fa>لطفا آدرس خود را که در کارت اعتباریتان ذکر شده وارد نمایید</fa>
+</ID_PLEASE_ENTER_CC_ADDRESS>
+<ID_PLEASE_ENTER_CC_STATE>
+<es>id_please_enter_cc_state</es>
+<en>id_please_enter_cc_state</en>
+<fa>لطفا استان را وارد نمایید</fa>
+</ID_PLEASE_ENTER_CC_STATE>
+<ID_PLEASE_ENTER_CC_CITY>
+<es>id_please_enter_cc_city</es>
+<en>id_please_enter_cc_city</en>
+<fa>لطفا شهر را وارد نمایید</fa>
+</ID_PLEASE_ENTER_CC_CITY>
+<ID_PLEASE_ENTER_CC_COUNTRY>
+<es>id_please_enter_cc_country</es>
+<en>id_please_enter_cc_country</en>
+<fa>لطفا کشور را وارد نمایید</fa>
+</ID_PLEASE_ENTER_CC_COUNTRY>
+<ID_DOWNLOAD_PROCESS>
+<es>Descarga proceso</es>
+<en>Download Process</en>
+<fa>فرآیند بارگذاری</fa>
+</ID_DOWNLOAD_PROCESS>
+<ID_DOWNLOAD_PROCESSES>
+<es>Descarga procesos</es>
+<en>Download Processes</en>
+<fa>فرآیندهای بارگذاری</fa>
+</ID_DOWNLOAD_PROCESSES>
+<ID_VERYFY_CARD_INFORMATION>
+<es>Verifique los datos de su tarjeta de crédito</es>
+<en>Verify your credit card information</en>
+<fa>بازبینی اطلاعات کارت اعتباری شما</fa>
+</ID_VERYFY_CARD_INFORMATION>
+<ID_CC_ACCEPTED>
+<es>Tipos de Tarjetas aceptadas</es>
+<en>Card Types Accepted</en>
+<fa>انواع کارتهای ( اعتباری) مورد پذیرش</fa>
+</ID_CC_ACCEPTED>
+<ID_SAME_AS_ABOVE>
+<es>Copiar los datos de Información de contacto</es>
+<en>Same as Above</en>
+<fa>همانند فوق</fa>
+</ID_SAME_AS_ABOVE>
+<ID_CONFIRM_UNSUBSCRIBE>
+<es>Se desuscribirá del Sistema (perderá su cuenta de acceso y todo lo que tenga en el Sistema).</es>
+<en>You are about to unsubscribe from your ProcessMaker account. Please take into account that once this is done, you will lose all information residing in your workspace, thus meaning: - Your login credentials will no longer allow you to access the ProcessMaker site. - All your business cases will be erased. - All your process definitions will be deleted. - All your users profiles will be lost. Are you sure you want to proceed?</en>
+<fa>شما در حال باطل کردن آبونمان حساب ProcessMaker خود هستید.لطفا در نظر بگیرید که با انجام اینکار</fa>
+</ID_CONFIRM_UNSUBSCRIBE>
+<ID_PHYSICAL>
+<es>Físico</es>
+<en>Physical</en>
+<fa>فیزیکی</fa>
+</ID_PHYSICAL>
+<ID_CASE_EXTERNAL_ORIGIN>
+<es>Este caso fue generado externamente</es>
+<en>This case was generated externally</en>
+<fa>این پرونده به صورت خارجی ایجاد شده است</fa>
+</ID_CASE_EXTERNAL_ORIGIN>
+<ID_ERROR_TO_INITIATE_CASE>
+<es>No se pudo iniciar un nuevo caso.</es>
+<en>A new case could not be initiated.</en>
+<fa>یک پرونده جدید نمی تواند آغاز شود</fa>
+</ID_ERROR_TO_INITIATE_CASE>
+<ID_USER_GROUP_ARBITRARY>
+<es>Usuarios y grupos (Ad hoc)</es>
+<en>Users and Groups (Ad hoc)</en>
+<fa>کاربران و گروهها (موردی)</fa>
+</ID_USER_GROUP_ARBITRARY>
+<ID_ROLE_LIST>
+<es>id_role_list</es>
+<en>id_role_list</en>
+<fa>شماره فهرست نقشها</fa>
+</ID_ROLE_LIST>
+<ID_ROLE_ADMIN>
+<es>Administrar Roles</es>
+<en>Role Admin</en>
+<fa>مدیر نقش</fa>
+</ID_ROLE_ADMIN>
+<ID_EMPTY>
+<es>esta vacio</es>
+<en>is empty</en>
+<fa>خالی است</fa>
+</ID_EMPTY>
+<ID_MSG_CONFIRM_DELETE_WEBSERVICE>
+<es>¿ Está seguro de borrar este Web Service ?</es>
+<en>Are you sure te delete this Web Service ?</en>
+<fa>آیا از حذف این خدمت وب مطمئنید؟</fa>
+</ID_MSG_CONFIRM_DELETE_WEBSERVICE>
+<ID_MSG_CONFIRM_DELETE_DB>
+<es>¿ Está seguro de borrar esta conexión a Base de Datos ?</es>
+<en>Are you sure to delete this DataBase Connection</en>
+<fa>آیا از حذف این اتصال پایگاه داده مطمئنید ؟</fa>
+</ID_MSG_CONFIRM_DELETE_DB>
+<ID_VARS>
+<es>Variables</es>
+<en>Vars</en>
+<fa>ID_VARS</fa>
+</ID_VARS>
+<ID_REQUIRED_FIELDS>
+<es>Campos requeridos</es>
+<en>Required fields</en>
+<fa>فیلدهای مورد نیاز</fa>
+</ID_REQUIRED_FIELDS>
+<ID_EVERY_DAY>
+<es>Todos los días</es>
+<en>Every day</en>
+<fa>هر روز</fa>
+</ID_EVERY_DAY>
+<EVERY_WORK_DAY>
+<es>every_work_day</es>
+<en>every_work_day</en>
+<fa>هر روز کاری</fa>
+</EVERY_WORK_DAY>
+<ID_EVERY_WORK_DAY>
+<es>Todos los días laborales</es>
+<en>Every working days</en>
+<fa>هر روز کاری</fa>
+</ID_EVERY_WORK_DAY>
+<ID_EVERY_MONTH_START>
+<es>Cada inicio de mes</es>
+<en>Every month start</en>
+<fa>آغاز هر ماه</fa>
+</ID_EVERY_MONTH_START>
+<ID_EVERY_MONTH_END>
+<es>Cada fin de mes</es>
+<en>Every month end</en>
+<fa>پایان هر ماه</fa>
+</ID_EVERY_MONTH_END>
+<ID_EVERY_MONDAY>
+<es>Cada Lunes</es>
+<en>Every Monday</en>
+<fa>هر دوشنبه</fa>
+</ID_EVERY_MONDAY>
+<ID_EVERY_TUESDAY>
+<es>Cada Martes</es>
+<en>Every Tuesday</en>
+<fa>هر سه شنبه</fa>
+</ID_EVERY_TUESDAY>
+<ID_EVERY_WEDNESDAY>
+<es>Cada Miércoles</es>
+<en>Every Wednesday</en>
+<fa>هر چهارشنبه</fa>
+</ID_EVERY_WEDNESDAY>
+<ID_EVERY_THURSDAY>
+<es>Cada Jueves</es>
+<en>Every Thursday</en>
+<fa>هر پنجشتبه</fa>
+</ID_EVERY_THURSDAY>
+<ID_EVERY_FRIDAY>
+<es>Cada Viernes</es>
+<en>Every Friday</en>
+<fa>هر جمعه</fa>
+</ID_EVERY_FRIDAY>
+<ID_EVERY_SATURDAY>
+<es>Cada Sábado</es>
+<en>Every Saturday</en>
+<fa>هر شنبه</fa>
+</ID_EVERY_SATURDAY>
+<ID_EVERY_SUNDAY>
+<es>Cada Domingo</es>
+<en>Every Sunday</en>
+<fa>هر یکشنبه</fa>
+</ID_EVERY_SUNDAY>
+<ID_SEND_CASES_LIST_EMAIL>
+<es>Enviar lista de casos por E-Mail</es>
+<en>Send cases list to email</en>
+<fa>فهرست موارد را به ای میل بفرستید</fa>
+</ID_SEND_CASES_LIST_EMAIL>
+<ID_FREQUENCY>
+<es>Frecuencia</es>
+<en>Frequency</en>
+<fa>فرکانس</fa>
+</ID_FREQUENCY>
+<ID_DERIVATE>
+<es>Procesar los casos seleccionados</es>
+<en>Process the selected cases</en>
+<fa>موارد انتخاب شده را پردازش نمایید</fa>
+</ID_DERIVATE>
+<ID_LEAST_ONE>
+<es>Seleccione al menos uno</es>
+<en>Select at least one</en>
+<fa>حداقل یکی را  انتخاب نمایید</fa>
+</ID_LEAST_ONE>
+<ID_ERROR_DERIVATE_CASES>
+<es>No se pudo derivar el o los siguientes casos:</es>
+<en>It was not possible to derive the following cases:</en>
+<fa>استخراج موارد زیر ممکن نبود:</fa>
+</ID_ERROR_DERIVATE_CASES>
+<ID_NOT_EXISTS_CASES>
+<es>No existen casos pendientes para esta tarea</es>
+<en>Not exist pending cases for this task</en>
+<fa>برای این کار موارد معوقه وجود ندارد</fa>
+</ID_NOT_EXISTS_CASES>
+<ID_PARALLEL_BY_EVALUATION_FORK date="2007-04-24 07:32:53">
+<es>Paralelo por evaluación (bifurcación)</es>
+<en>Parallel by evaluation (fork)</en>
+<fa>موازی  بر اساس ارزیابی</fa>
+</ID_PARALLEL_BY_EVALUATION_FORK>
+<ID_MSG_ERROR_TAS_TEMPORIZER_UNIT>
+<es>Debe seleccionar la unidad para la duración del congelamiento de la tarea</es>
+<en>The Unit of frozen duration is required</en>
+<fa>واحد مدت زمان توقف کار مورد نیاز است</fa>
+</ID_MSG_ERROR_TAS_TEMPORIZER_UNIT>
+<ID_MSG_ERROR_TAS_TEMPORIZER>
+<es>Debe introducir la duración del congelamiento de la tarea</es>
+<en>Frozen's duration is required</en>
+<fa>مدت زمان توقف کار مورد نیاز است</fa>
+</ID_MSG_ERROR_TAS_TEMPORIZER>
+<ID_REGIONAL_ID_EXIST>
+<es>Ya existe una regional con el mismo código</es>
+<en>Ya existe una regional con el mismo código</en>
+<fa>ID_REGIONAL_ID_EXIST</fa>
+</ID_REGIONAL_ID_EXIST>
+<ID_NANDINA_ID_EXIST>
+<es>Ya existe un registro con el mismo CÓDIGO ARANCEL</es>
+<en>Ya existe un registro con el mismo CÓDIGO ARANCEL</en>
+<fa>ID_NANDINA_ID_EXIST</fa>
+</ID_NANDINA_ID_EXIST>
+<ID_SELECT_AT_LEAST_A_TASK>
+<es>Seleecione por lo menos una tarea</es>
+<en>Select a least a task</en>
+<fa>حداقل یک کار انتخاب نمایید</fa>
+</ID_SELECT_AT_LEAST_A_TASK>
+<ID_FIRST_ASSGIN_USER>
+<es>Por favor seleecione un usuario para la tarea inicial</es>
+<en>First assign a user in the initial task.</en>
+<fa>ابتدا یک کاربر را به کار آغازین تخصیص دهید</fa>
+</ID_FIRST_ASSGIN_USER>
+<ID_OPERATION_COMPLETED_SUCCESS>
+<es>¡Operación completada exitosamente!</es>
+<en>Operation completed successfully!</en>
+<fa>عملیات با موفقیت به پایان رسید!</fa>
+</ID_OPERATION_COMPLETED_SUCCESS>
+<ID_CONGRATULATIONS_CREATING_ACCO>
+<es>id_congratulations_creating_acco</es>
+<en>Congratulations on creating an account in the</en>
+<fa>تبریک برای ایجاد یک حساب در</fa>
+</ID_CONGRATULATIONS_CREATING_ACCO>
+<ID_CUCI_ID_EXIST>
+<es>Ya existe un registro CUCI con el mismo Código Cuci</es>
+<en>Ya existe un registro CUCI con el mismo Código Cuci</en>
+<fa>ID_CUCI_ID_EXIST</fa>
+</ID_CUCI_ID_EXIST>
+<ID_CIUDAD_ID_EXIST>
+<es>La Ciudad especificada ya existe en la Base de Datos!</es>
+<en>La Ciudad especificada ya existe en la Base de Datos!</en>
+<fa>ID_CIUDAD_ID_EXIST</fa>
+</ID_CIUDAD_ID_EXIST>
+<ID_CIUDAD_NOT_DELETE>
+<es>No es posible borrar, existen datos relacionados con la ciudad.</es>
+<en>No es posible borrar, existen datos relacionados con la ciudad.</en>
+<fa>ID_CIUDAD_NOT_DELETE</fa>
+</ID_CIUDAD_NOT_DELETE>
+<ID_DOCUMENT_ID_EXIST>
+<es>El nombre del documento ya existe en la Base de Datos!</es>
+<en>El nombre del documento ya existe en la Base de Datos!</en>
+<fa>ID_DOCUMENT_ID_EXIST</fa>
+</ID_DOCUMENT_ID_EXIST>
+<ID_VARIABLE_EMPTY>
+<es>La variable para la asignación por evaluación se encuentra vacia</es>
+<en>Variable is empty</en>
+<fa>متغیر خالی است</fa>
+</ID_VARIABLE_EMPTY>
+<ID_EMPRESADOCUMENT_ID_EXIST>
+<es>La relación Empresa - Documento Requerido ya existe en la Base de Datos!</es>
+<en>La relación Empresa - Documento Requerido ya existe en la Base de Datos!</en>
+<fa>ID_EMPRESADOCUMENT_ID_EXIST</fa>
+</ID_EMPRESADOCUMENT_ID_EXIST>
+<ID_PUC_VALOR_ID_EXIST>
+<es>La relacion Region - Valor ya existe en la Base de Datos!</es>
+<en>La relacion Region - Valor ya existe en la Base de Datos!</en>
+<fa>ID_PUC_VALOR_ID_EXIST</fa>
+</ID_PUC_VALOR_ID_EXIST>
+<ID_PROCESS_WAITING>
+<es>En espera</es>
+<en>Waiting</en>
+<fa>در انتظاتر</fa>
+</ID_PROCESS_WAITING>
+<ID_HAB_REX_EXTERNO>
+<es>La Habilitación del Exportador culminó con éxito!</es>
+<en>La Habilitación del Exportador culminó con éxito!</en>
+<fa>ID_HAB_REX_EXTERNO</fa>
+</ID_HAB_REX_EXTERNO>
+<ID_REXEXTERNO_NOT_EXIST>
+<es>El registro no existe!</es>
+<en>El registro no existe!</en>
+<fa>ID_REXEXTERNO_NOT_EXIST</fa>
+</ID_REXEXTERNO_NOT_EXIST>
+<ID_RAZON_SOCIAL_EXISTE>
+<es>Razón Social existente, ingrese otra Razón Social.</es>
+<en>Razón Social existente, ingrese otra Razón Social.</en>
+<fa>ID_RAZON_SOCIAL_EXISTE</fa>
+</ID_RAZON_SOCIAL_EXISTE>
+<ID_NIT_EXISTE>
+<es>NIT Existente, ingrese otro NIT</es>
+<en>NIT Existente, ingrese otro NIT</en>
+<fa>ID_NIT_EXISTE</fa>
+</ID_NIT_EXISTE>
+<ID_FUNDEMPRESA_EXISTE>
+<es>El Registro de Fundempresa ya existe, ingrese otro registro</es>
+<en>El Registro de Fundempresa ya existe, ingrese otro registro</en>
+<fa>ID_FUNDEMPRESA_EXISTE</fa>
+</ID_FUNDEMPRESA_EXISTE>
+<ID_REX_NOT_EXIST>
+<es>El registro de exportador no existe!</es>
+<en>El registro de exportador no existe!</en>
+<fa>ID_REX_NOT_EXIST</fa>
+</ID_REX_NOT_EXIST>
+<ID_REX_EXPIRED>
+<es>Certificado de Exportador Caducado!</es>
+<en>Certificado de Exportador Caducado!</en>
+<fa>ID_REX_EXPIRED</fa>
+</ID_REX_EXPIRED>
+<ID_NIT_EXPIRED>
+<es>Certificado NIT Caducado!</es>
+<en>Certificado NIT Caducado!</en>
+<fa>ID_NIT_EXPIRED</fa>
+</ID_NIT_EXPIRED>
+<ID_FUNDEMPRESA_EXPIRED>
+<es>Certificado de Fundempresa Caducado!</es>
+<en>Certificado de Fundempresa Caducado!</en>
+<fa>ID_FUNDEMPRESA_EXPIRED</fa>
+</ID_FUNDEMPRESA_EXPIRED>
+<ID_FROM_FORM_INTO>
+<es>Varios pasos</es>
+<en>Many Steps</en>
+<fa>گامهای زیاد</fa>
+</ID_FROM_FORM_INTO>
+<ID_ROW>
+<es>Fila</es>
+<en>Row</en>
+<fa>سطر</fa>
+</ID_ROW>
+<ID_ADD_ROW>
+<es>Adicionar fila</es>
+<en>Add row</en>
+<fa>اضافه کردن سطر</fa>
+</ID_ADD_ROW>
+<ID_CANNOT_DELETE_LAST_ROW>
+<es>La última fila no puede ser borrada!</es>
+<en>Cannot delete the last row!</en>
+<fa>آخرین سطر نمی تواند حذف شود</fa>
+</ID_CANNOT_DELETE_LAST_ROW>
+<ID_MSG_CONFIRM_DELETE_FUNCTION>
+<es>¿ Está seguro de borrar esta función ?</es>
+<en>¿ Do you want to delete this function ?</en>
+<fa>آیا می خواهید این کارکرد را حذف نمایید ؟</fa>
+</ID_MSG_CONFIRM_DELETE_FUNCTION>
+<ID_FUNCTION_REQUIRED>
+<es>La función no puede estar en blanco!</es>
+<en>The function cannot be empty!</en>
+<fa>کارکرد نمی تواند خالی بماند!</fa>
+</ID_FUNCTION_REQUIRED>
+<ID_TESTING_FUNCTION>
+<es>Probando función</es>
+<en>Testing function</en>
+<fa>کارکرد آزمایش</fa>
+</ID_TESTING_FUNCTION>
+<ID_RESULT>
+<es>Resultado</es>
+<en>Result</en>
+<fa>نتیجه</fa>
+</ID_RESULT>
+<ID_PREFERENCES>
+<es>Preferencias</es>
+<en>Preferences</en>
+<fa>ترجیحات</fa>
+</ID_PREFERENCES>
+<ID_DATE_FORMAT>
+<es>Formato de fecha</es>
+<en>Date Format</en>
+<fa>فرمت تاریخ</fa>
+</ID_DATE_FORMAT>
+<ID_DOCUMENT_CREATED>
+<es>El documento fue almacenado satisfactoriamente</es>
+<en>The document was correctly saved</en>
+<fa>مستند مورد نظر به درستی ذخیره شد</fa>
+</ID_DOCUMENT_CREATED>
+<ID_DOCUMENT_DUPLICATED>
+<es>El documento ya existe, por favor verifique</es>
+<en>The document exists</en>
+<fa>مستند موجودست</fa>
+</ID_DOCUMENT_DUPLICATED>
+<ID_SURE_DELETE>
+<es>Esta seguro de borrar la tabla ?</es>
+<en>Are you sure to delete the table ?</en>
+<fa>آیا از حذف این جدول مطمئنید ؟</fa>
+</ID_SURE_DELETE>
+<ID_NEW_TABLE>
+<es>Campos de la Nueva Tabla</es>
+<en>New Table Fields</en>
+<fa>افزودن فیلدهای جدول</fa>
+</ID_NEW_TABLE>
+<ID_DYNAFORM_TABLE>
+<es>DYNAFORM</es>
+<en>DYNAFORM</en>
+<fa>فیلدهای فرم</fa>
+</ID_DYNAFORM_TABLE>
+<ID_GET_FIELDS>
+<es>CARGAR CAMPOS</es>
+<en>GET FIELDS</en>
+<fa>نام جدول قبلا استفاده شده است</fa>
+</ID_GET_FIELDS>
+<ID_ACEPTAR>
+<es>ACEPTAR</es>
+<en>SUBMIT</en>
+<fa>آیا واقعا مایل به ایجاد این جدول می باشید ؟</fa>
+</ID_ACEPTAR>
+<ID_TABLE_EXISTS>
+<es>El nombre de la tabla ya existe por favor vertifique</es>
+<en>Table name has already been taken.</en>
+<fa>انتخاب فیلدهای جدول الزامی است</fa>
+</ID_TABLE_EXISTS>
+<ID_SURE_CREATE_TABLE>
+<es>¿ Esta seguro de crear la tabla ?</es>
+<en>Do you really want to create the table ?</en>
+<fa>آیا واقعا مایل به ایجاد این جدول می باشید ؟</fa>
+</ID_SURE_CREATE_TABLE>
+<ID_SELECT_TABLE_FIELDS>
+<es>Debe seleccionar los campos para la nueva tabla</es>
+<en>You must select the table fields</en>
+<fa>تعیین اتصال پایگاه داده الزامی است</fa>
+</ID_SELECT_TABLE_FIELDS>
+<ID_TYPE_TABLE_NAME>
+<es>Debe introducir el nombre de la tabla</es>
+<en>You must type the  table name</en>
+<fa>ورود نام جدول الزامی است</fa>
+</ID_TYPE_TABLE_NAME>
+<ID_DYNAFORM_FIELDS>
+<es>Campos del DynaForm</es>
+<en>DynaForm Fields</en>
+<fa>فیلدهای فرم</fa>
+</ID_DYNAFORM_FIELDS>
+<ID_SELECT_DATABASE>
+<es>Debe Seleccioanr la Base de Datos</es>
+<en>You must specify a database connection</en>
+<fa>تعیین اتصال پایگاه داده الزامی است</fa>
+</ID_SELECT_DATABASE>
+<ID_DELETE_FIELD_SURE>
+<es>Esta seguro de eliminar el campo</es>
+<en>The field will be deleted, Are you sure ?</en>
+<fa>فیلد مورد نظر حذف خواهد شد ، آیا مطمئن هستید ؟</fa>
+</ID_DELETE_FIELD_SURE>
+<ID_FIELD_TYPE>
+<es>Tipo de dato</es>
+<en>Field Type</en>
+<fa>نوع فیلد</fa>
+</ID_FIELD_TYPE>
+<ID_SELECT_DBCONNECTION>
+<es>Debe seleccionar la conección a base de datos</es>
+<en>You must specify the database connection</en>
+<fa>تعیین اتصال پایگاه داده الزامی است</fa>
+</ID_SELECT_DBCONNECTION>
+<ID_VIEW_DYNAFORMS>
+<es>Ver DynaForms</es>
+<en>View DynaForms</en>
+<fa>مشاهده فرمها</fa>
+</ID_VIEW_DYNAFORMS>
+<ID_SELECT_CMB>
+<es>--Seleccionar--</es>
+<en>--Select--</en>
+<fa>انتخاب</fa>
+</ID_SELECT_CMB>
+<ID_PROCESS_TRACKING>
+<es>Seguimiento de casos</es>
+<en>Case Tracker</en>
+<fa>پی گیری مورد كاري</fa>
+</ID_PROCESS_TRACKING>
+<ID_CLOSE_SESSION>
+<es>Has iniciado una sesión de ProcessMaker desde otro Navegador</es>
+<en>You have started a ProcessMaker session from a different browser</en>
+<fa>از جستجوگر متفاوتی به فضای ProcessMaker وارد شده اید</fa>
+</ID_CLOSE_SESSION>
+<ENVIRONMENT>
+<es>Entorno</es>
+<en>Environment</en>
+<fa>محیط</fa>
+</ENVIRONMENT>
+<ID_DELETE_ROW>
+<es>Está seguro de borrar la fila seleccionada?</es>
+<en>Are you sure to delete the selected row?</en>
+<fa>آیا از حذف سطر منتخب اطمینان دارید ؟</fa>
+</ID_DELETE_ROW>
+<ID_MSG_SELECT_WEEKDAY>
+<es>Debe seleccionar el dia de la semana</es>
+<en>You must  choose a day</en>
+<fa>انتخاب روز الزامی است</fa>
+</ID_MSG_SELECT_WEEKDAY>
+<ID_MSG_SELECT_MONTH>
+<es>Debe seleccionar el mes</es>
+<en>You  must choos a month</en>
+<fa>انتخاب ماه الزامی است</fa>
+</ID_MSG_SELECT_MONTH>
+<ID_MSG_SELECT_MONTH_DAY>
+<es>Debe seleccionar el dia del mes</es>
+<en>You must select month's day</en>
+<fa>انتخاب یک روز از ماه الزامی است</fa>
+</ID_MSG_SELECT_MONTH_DAY>
+<ID_MSG_SELECT_HOUR>
+<es>Debe seleccionar la hora</es>
+<en>You must choose an hour</en>
+<fa>انتخاب ساعت الزامی است</fa>
+</ID_MSG_SELECT_HOUR>
+<ID_MSG_SELECT_MINUTE>
+<es>Debe seleccionar un minuto</es>
+<en>You must select a minute</en>
+<fa>انتخاب دقیقه الزامی است</fa>
+</ID_MSG_SELECT_MINUTE>
+<ID_MSG_TAS_UNTIL>
+<es>Debe seleccionar hasta cuando estara congelada la tarea</es>
+<en>You must select until when task will be froozen</en>
+<fa>انتخاب حد زمان توقف کار الزامی است</fa>
+</ID_MSG_TAS_UNTIL>
+<ID_MSG_TAS_INCOMMING_ASSIGN_TYPE>
+<es>Debe seleccionar el tipo de asignacion recibida</es>
+<en>you must choose an uncoming assign type</en>
+<fa>انتخاب نوع تخصیص الزامی است</fa>
+</ID_MSG_TAS_INCOMMING_ASSIGN_TYPE>
+<ID_MSG_TAS_DISABLE_WEEKDAY>
+<es>Deshabilite dia de la semana</es>
+<en>You must uncheck week day</en>
+<fa>بایستی انتخاب روزهفته را باطل نمایید</fa>
+</ID_MSG_TAS_DISABLE_WEEKDAY>
+<ID_MSG_TAS_DISABLE_MONTHDAY>
+<es>Deshabilite dia del mes</es>
+<en>yo must uncheck month day</en>
+<fa>بایستی انتخاب روزماه را باطل نمایید</fa>
+</ID_MSG_TAS_DISABLE_MONTHDAY>
+<ID_MONTH_EMPTY>
+<es>Debe elegir un mes</es>
+<en>Month empty</en>
+<fa>ماه خالی است</fa>
+</ID_MONTH_EMPTY>
+<ID_DAY_EMPTY>
+<es>Debe elegir un dia</es>
+<en>Choose a day</en>
+<fa>روز را انتخاب نمایید</fa>
+</ID_DAY_EMPTY>
+<ID_YEAR_EMPTY>
+<es>Debe elegir un año</es>
+<en>Choose a year</en>
+<fa>سال را انتخاب نمایید</fa>
+</ID_YEAR_EMPTY>
+<ID_INVALID_USER>
+<es>Nombre de usuario invalido</es>
+<en>Invalid user name</en>
+<fa>نام کاربر نامعتبر می باشد</fa>
+</ID_INVALID_USER>
+<ID_USER_REGISTERED>
+<es>El usuario ya existe</es>
+<en>User name already exists</en>
+<fa>نام کاربر از قبل وجود دارد</fa>
+</ID_USER_REGISTERED>
+<ID_UPDATING_DATA>
+<es>ACTUALIZANDO DATOS...</es>
+<en>UPDATING DATA.....</en>
+<fa>درحال بروزرسانی داده ها...</fa>
+</ID_UPDATING_DATA>
+<ID_CHECKGROUP>
+<es>Check options group</es>
+<en>Check options group</en>
+<fa>کنترل گروه انتخابها</fa>
+</ID_CHECKGROUP>
+<ID_CHECKGROUP_CAPTION>
+<es>Check options group (Caption)</es>
+<en>Check options group (Caption)</en>
+<fa>کنترل گروه انتخابها (عنوان)</fa>
+</ID_CHECKGROUP_CAPTION>
+<ID_ADD_HORIZONTAL_LINE>
+<es>Añadir Linea Horizontal</es>
+<en>Add Horizontal Line</en>
+<fa>افزودن خط افقی</fa>
+</ID_ADD_HORIZONTAL_LINE>
+<ID_ADD_VERTICAL_LINE>
+<es>Añadir Linea Vertical</es>
+<en>Add Vertical Line</en>
+<fa>افزودن خط عمودی</fa>
+</ID_ADD_VERTICAL_LINE>
+<ID_ADD_TEXT>
+<es>Añadir Texto</es>
+<en>Add Text</en>
+<fa>افزودن متن</fa>
+</ID_ADD_TEXT>
+<ID_EDIT_TEXT>
+<es>Editar Texto</es>
+<en>Edit Text</en>
+<fa>ویرایش متن</fa>
+</ID_EDIT_TEXT>
+<ID_DELETE_TEXT>
+<es>Borrar Texto</es>
+<en>Delete Text</en>
+<fa>حذف متن</fa>
+</ID_DELETE_TEXT>
+<ID_DELETE_LINE>
+<es>Borrar Línea</es>
+<en>Delete Line</en>
+<fa>حذف خط</fa>
+</ID_DELETE_LINE>
+<ID_RADIOGROUP_CAPTION>
+<es>Radio group (Caption)</es>
+<en>Radio group (Caption)</en>
+<fa>ID_RADIOGROUP_CAPTION</fa>
+</ID_RADIOGROUP_CAPTION>
+<ID_USER_GROUP_SELFSERVICE>
+<es>Grupo de usuarios (Autoservicio)</es>
+<en>User group (Self service)</en>
+<fa>گروه کاربر ( ؟ )</fa>
+</ID_USER_GROUP_SELFSERVICE>
+<ID_DELETE_CASE>
+<es>Desea borrar el caso seleccionado?</es>
+<en>Do you wish to delete the selected case?</en>
+<fa>آیا مایل به حذف مورد انتخاب شده هستید ؟</fa>
+</ID_DELETE_CASE>
+<ID_PROCESS_UNTIL>
+<es>Hasta</es>
+<en>Until</en>
+<fa>تا</fa>
+</ID_PROCESS_UNTIL>
+<ID_LOADING_PROCESS>
+<es>Cargando, por favor espere...</es>
+<en>Loading, please wait...</en>
+<fa>درحال بارگذاری، لطفا صبرکنید...</fa>
+</ID_LOADING_PROCESS>
+<ID_USERS_AND_GROUPS>
+<es>Usuarios y Grupos</es>
+<en>Users and Groups</en>
+<fa>کاربران و گروهها</fa>
+</ID_USERS_AND_GROUPS>
+<ID_FIELDNAME_NOEMPTY>
+<es>El nombre del campo no debe ser vacio</es>
+<en>Field name must have a value</en>
+<fa>نام فیلد بایستی دارای مقدار باشد</fa>
+</ID_FIELDNAME_NOEMPTY>
+<ID_FIELDNAME_EXISTS>
+<es>El nombre del campo ya existe</es>
+<en>Field name already exists</en>
+<fa>نام فیلد از قبل وجود دارد</fa>
+</ID_FIELDNAME_EXISTS>
+<ID_FIELDNAME_KEYWORD>
+<es>El nombre del campo no puede ser una palabra reservada de sql</es>
+<en>Field name musn't be an sql key word</en>
+<fa>نام فیلد نباید از کلمات کلیدی sql باشد</fa>
+</ID_FIELDNAME_KEYWORD>
+<ID_PEOPLE>
+<es>Personas</es>
+<en>People</en>
+<fa>افراد</fa>
+</ID_PEOPLE>
+<ID_PLACES>
+<es>Lugares</es>
+<en>Places</en>
+<fa>مکانها</fa>
+</ID_PLACES>
+<ID_OBJECTS>
+<es>Objetos</es>
+<en>Objects</en>
+<fa>اشیاء</fa>
+</ID_OBJECTS>
+<ID_SHOW_ME_AGAIN>
+<es>mortrarme otra vez</es>
+<en>Show me again</en>
+<fa>نمایش مجدد</fa>
+</ID_SHOW_ME_AGAIN>
+<ID_DONT_SHOW_ME_AGAIN>
+<es>No volver a mostrar</es>
+<en>Don't show me again</en>
+<fa>عدم نمایش مجدد</fa>
+</ID_DONT_SHOW_ME_AGAIN>
+<ID_MAGENTA>
+<es>Magenta</es>
+<en>Magenta</en>
+<fa></fa>
+</ID_MAGENTA>
+<ID_ORANGE>
+<es>Naranja</es>
+<en>Orange</en>
+<fa>نارنجی</fa>
+</ID_ORANGE>
+<ID_PINK>
+<es>Rosado</es>
+<en>Pink</en>
+<fa>صورتی</fa>
+</ID_PINK>
+<ID_PURPLE>
+<es>Morado</es>
+<en>Purple</en>
+<fa>بنفش</fa>
+</ID_PURPLE>
+<ID_TERRITORY>
+<es>Territorio</es>
+<en>Territory</en>
+<fa>ناحیه</fa>
+</ID_TERRITORY>
+<ID_FIELD_>
+<es>Field_</es>
+<en>Field_</en>
+<fa>فیلد</fa>
+</ID_FIELD_>
+<ID_DEFAULT_VALUE>
+<es>Valor por defecto</es>
+<en>Default Value</en>
+<fa>مقدار پیش فرض</fa>
+</ID_DEFAULT_VALUE>
+<ID_DEPENDENT_FIELDS>
+<es>Campos dependientes</es>
+<en>Dependent Fields</en>
+<fa>فیلدهای وابسته</fa>
+</ID_DEPENDENT_FIELDS>
+<ID_DATABASE_ATTRIBUTES>
+<es>Atributos de la Base de Datos</es>
+<en>Database Attributes</en>
+<fa>متعلقات پایگاه داده</fa>
+</ID_DATABASE_ATTRIBUTES>
+<ID_DB_CONNECTION>
+<es>Conexión a BD</es>
+<en>DB Connection</en>
+<fa>اتصال پایگاه داده</fa>
+</ID_DB_CONNECTION>
+<ID_LOCAL_CONNECTION>
+<es>Conexión local</es>
+<en>Local Connection</en>
+<fa>اتصال محلی</fa>
+</ID_LOCAL_CONNECTION>
+<ID_LINK_FIELD>
+<es>Link</es>
+<en>Link Field</en>
+<fa>فیلد</fa>
+</ID_LINK_FIELD>
+<ID_STRING_TO>
+<es>A String</es>
+<en>String To</en>
+<fa>يبشس</fa>
+</ID_STRING_TO>
+<ID_ON_CLICK>
+<es>OnClick</es>
+<en>OnClick</en>
+<fa>با کلیک نمودن</fa>
+</ID_ON_CLICK>
+<ID_SHOW_ONLY_IN_POPUP>
+<es>Mostrar solo en Popup</es>
+<en>Show Only in Popup</en>
+<fa>نمایش تنها در پنجره های اضافی نما</fa>
+</ID_SHOW_ONLY_IN_POPUP>
+<ID_TOTALIZEABLE>
+<es>Totalizador</es>
+<en>Totalizeable</en>
+<fa>قابل جمعبندی</fa>
+</ID_TOTALIZEABLE>
+<ID_UPPERCASE>
+<es>Mayusculas</es>
+<en>UPPERCASE</en>
+<fa>حرف بزرگ</fa>
+</ID_UPPERCASE>
+<ID_LOWERCASE>
+<es>Minusculas</es>
+<en>LOWERCASE</en>
+<fa>حرف کوچک</fa>
+</ID_LOWERCASE>
+<ID_CAPITALIZE>
+<es>CAPITALIZE</es>
+<en>CAPITALIZE</en>
+<fa>بزرگ کردن حروف</fa>
+</ID_CAPITALIZE>
+<ID_PMFUNCTION>
+<es>PmFunction</es>
+<en>PmFunction</en>
+<fa>ID_PMFUNCTION</fa>
+</ID_PMFUNCTION>
+<ID_INSERT>
+<es>Insertar</es>
+<en>Insert</en>
+<fa>ID_INSERT</fa>
+</ID_INSERT>
+<ID_DELETE_ALL_CASES>
+<es>Borrar todos los casos</es>
+<en>Delete all cases</en>
+<fa>حذف تمام موارد</fa>
+</ID_DELETE_ALL_CASES>
+<ID_MSG_CONFIRM_DELETE_CASES>
+<es>¿ Está seguro de borrar todos los casos?</es>
+<en>Do you want to delete the all cases?</en>
+<fa>ID_MSG_CONFIRM_DELETE_CASES</fa>
+</ID_MSG_CONFIRM_DELETE_CASES>
+<ID_ARE_NO_BUSINESS_CASES>
+<es>No hay casos en su workspace</es>
+<en>There are no business cases</en>
+<fa>هيچ مورد كاري وجود ندارد</fa>
+</ID_ARE_NO_BUSINESS_CASES>
+<ID_MSG_ERROR_DOC_FILENAME>
+<es>Nombre del archivo requerido!</es>
+<en>Filename required!</en>
+<fa>Filename required!</fa>
+</ID_MSG_ERROR_DOC_FILENAME>
+<ID_MSG_ERROR_DOC_TITLE>
+<es>Debe introducir el título del documento!</es>
+<en>Title required!</en>
+<fa>Title required!</fa>
+</ID_MSG_ERROR_DOC_TITLE>
+<ID_MSG_CONFIRM_DELETE_OUTDOC>
+<es>¿ Está seguro de borrar este documento ?</es>
+<en>Do you want to delete this output document ?</en>
+<fa>Do you want to delete this output document ?</fa>
+</ID_MSG_CONFIRM_DELETE_OUTDOC>
+<ID_CHANGE_TITLE>
+<es>Cambiar título</es>
+<en>Change Title</en>
+<fa>تغییر عنوان</fa>
+</ID_CHANGE_TITLE>
+<ID_ADD_NEW>
+<es>Nuevo</es>
+<en>Add new</en>
+<fa>جديد</fa>
+</ID_ADD_NEW>
+<ID_MSG_CONFIRM_RESET_TEMPLATE>
+<es>¿ Está seguro de restaurar el template por defecto ?</es>
+<en>Are you sure to restore the default template ?</en>
+<fa>Are you sure to restore the default template ?</fa>
+</ID_MSG_CONFIRM_RESET_TEMPLATE>
+<ID_CASES>
+<es>Casos</es>
+<en>Cases</en>
+</ID_CASES>
+<ID_START_CASE>
+<es>Iniciar Caso</es>
+<en>Start Case</en>
+</ID_START_CASE>
+</dynaForm>

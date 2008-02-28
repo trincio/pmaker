@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<dynaForm
+  sql="SELECT * FROM GROUPWF"
+  type="xmlform"
+  sqlConnection=""
+  deleteRow="0"
+  menu="groups/groups_Options"
+  filterForm="groups/groups_Search"
+  width="95%"
+>
+<!--
+  menu="groups/groups_Options"
+  filterForm="groups/groups_Search"
+-->
+<title type="title" colWidth="200" showInTable="0">
+  <en>Group Information</en>
+  <es>Información del Grupo</es>
+</title>
+
+<GRP_UID type="hidden" showInTable="0">
+</GRP_UID>
+
+<GRP_TITLE type="text" colWidth="200" size="30" maxlength="64">
+  <en>Name</en>
+  <es>Nombre</es>
+</GRP_TITLE>
+
+<GRP_STATUS type="dropdown" colWidth="150" align="center">
+  <en>Status
+  <option name="ACTIVE">Active</option>
+  <option name="INACTIVE">Inactive</option>
+  </en>
+  <es>Estado
+  <option name="ACTIVE">Activo</option>
+  <option name="INACTIVE">Inactivo</option>
+  </es>
+</GRP_STATUS>
+
+<button type="button" onclick="saveGroup( this.form );" showInTable="0">
+  <en>Save</en>
+  <es>Guardar</es>
+</button>
+
+
+</dynaForm>

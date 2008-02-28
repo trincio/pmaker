@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm type="xmlmenu">
+<MNU_ADD type="link" value='' link="#" onclick="stepAdd(); return false;" colAlign="left" colWidth="35">
+  <en>New</en>
+  <es>Nuevo</es>
+</MNU_ADD>
+<!--<PAGED_TABLE_FAST_SEARCH type="FastSearch" label="@G::LoadTranslation(ID_SEARCH)"/>-->
+<PROCESS type="hidden" showInTable="0"/>
+<TASK type="hidden" showInTable="0"/>
+<CONFIRM type="hidden" showInTable="0"/>
+<URL_STEPS_EDIT defaultValue="../steps/steps_New" type="private"/>
+<URL_STEP_DELETE defaultValue="../steps/steps_Delete" type="private"/>
+<URL_STEP_UP defaultValue="../steps/steps_Up" type="private"/>
+<URL_STEP_DOWN defaultValue="../steps/steps_Down" type="private"/>
+<PAGED_TABLE_ID type="private"/>
+<js type="javascript" replaceTags="1">
+  function stepAdd(){
+		popupWindow('@G::LoadTranslation(ID_NEW_STEP)', '@G::encryptlink(@#URL_STEPS_EDIT)?PROCESS=@#PROCESS&amp;TASK=@#TASK', 500, 420);
+  }
+
+  function stepSave(sProcess, sTask, sType, sUID) {
+    var oRPC = new leimnud.module.rpc.xmlhttp({
+      url   : '../steps/steps_Save',
+      async : false,
+      method: 'POST',
+      args  : 'sProcess=' + sProcess + '&amp;sTask=' + sTask + '&amp;sType=' + sType + '&amp;sUID=' + sUID
+    });
+    oRPC.make();
+    currentPopupWindow.remove();
+    @#PAGED_TABLE_ID.refresh();
+  }
+  function stepUp( uid, stepPos  ){
+    result = ajax_function('@G::encryptlink(@#URL_STEP_UP)','','STEP_UID='+uid+'&amp;TASK=@#TASK&amp;STEP_POSITION='+stepPos,'POST');
+    @#PAGED_TABLE_ID.refresh();
+  }
+  function stepDown( uid, stepPos  ){
+    result = ajax_function('@G::encryptlink(@#URL_STEP_DOWN)','','STEP_UID='+uid+'&amp;TASK=@#TASK&amp;STEP_POSITION='+stepPos,'POST');
+    @#PAGED_TABLE_ID.refresh();
+  }
+  function stepDelete( uid, stepPos  ){
+    new leimnud.module.app.confirm().make({
+      label:'@#CONFIRM',
+      action:function()
+      {
+        ajax_function('@G::encryptlink(@#URL_STEP_DELETE)','','STEP_UID='+uid+'&amp;TASK=@#TASK&amp;STEP_POSITION='+stepPos,'POST');
+        @#PAGED_TABLE_ID.refresh();
+      }.extend(this)
+    });
+  }
+  function devolver(result){
+  //alert(result);
+  };
+</js>
+
+</dynaForm>

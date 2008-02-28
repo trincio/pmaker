@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<dynaForm type="xmlmenu">
+
+<PROCESS type="private" />
+
+<TASK type="private" />
+
+<TYPE type="private" />
+
+<MNU_ASSIGN type="link" value='' link="#" onclick="popupWindow('Assign users group or user (Adhoc)', '../users/users_Ajax?function=availableUsers&amp;sProcess=@#PROCESS&amp;sTask=@#TASK&amp;iType=@#TYPE', 500, 420);return false;" colAlign="left" colWidth="50">
+  <en>Assign</en>
+  <es>Asignar</es>
+</MNU_ASSIGN>
+
+<MNU_CHANGE type="link" value='' link="#" onclick="changeView(@#TYPE);return false;" colAlign="right" colWidth="200">
+  <en>View Users who are not for "Adhoc"</en>
+  <es>Ver Usuarios que no son para "Adhoc"</es>
+</MNU_CHANGE>
+
+<js type="javascript">
+var assignGroupOrUser = function(sTask, sUser, iType, iRelation) {
+  var oRPC = new leimnud.module.rpc.xmlhttp({
+    url   : '../users/users_Ajax',
+    async : false,
+    method: 'POST',
+    args  : 'function=assign&amp;TAS_UID=' + sTask + '&amp;USR_UID=' + sUser + '&amp;TU_TYPE=' + iType + '&amp;TU_RELATION=' + iRelation
+  });
+  oRPC.make();
+  currentPopupWindow.remove();
+  Pm.tmp.usersPanel.clearContent();
+  Pm.tmp.usersPanel.loader.show();
+  Pm.tmp.usersPanel.currentRPC.make();
+};
+
+var ofToAssignGroupOrUser = function(TAS_UID, USR_UID, TU_TYPE, TU_RELATION) {
+  new leimnud.module.app.confirm().make({
+  	label:'@#CONFIRM',
+  	action:function() {
+  		var oRPC = new leimnud.module.rpc.xmlhttp({
+        url   : '../users/users_Ajax',
+        async : false,
+        method: 'POST',
+        args  : 'function=ofToAssign&amp;TAS_UID=' + TAS_UID + '&amp;USR_UID=' + USR_UID + '&amp;TU_TYPE=' + TU_TYPE + '&amp;TU_RELATION=' + TU_RELATION
+      });
+      oRPC.make();
+      Pm.tmp.usersPanel.clearContent();
+      Pm.tmp.usersPanel.loader.show();
+      Pm.tmp.usersPanel.currentRPC.make();
+  	}.extend(this)
+  });
+  return false;
+};
+
+function showHideFilterForm()
+{
+  if (document.getElementById('users_ShortSearch').style.display==='none')
+    document.getElementById('users_ShortSearch').style.display = '';
+  else
+    document.getElementById('users_ShortSearch').style.display = 'none';
+}
+
+var changeView = function(iType)
+{
+  var oRPC = new leimnud.module.rpc.xmlhttp({
+    url   : '../users/users_Ajax',
+    async : false,
+    method: 'POST',
+    args  : 'function=changeView&amp;TU_TYPE=' + (iType == 1 ? '2' : '1')
+  });
+  oRPC.make();
+  Pm.tmp.usersPanel.clearContent();
+  Pm.tmp.usersPanel.loader.show();
+  Pm.tmp.usersPanel.currentRPC.make();
+};
+</js>
+</dynaForm>

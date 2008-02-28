@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm
+  name="triggers_Edit"
+  type="xmlform"
+  width="100%"
+>
+<PRO_UID type="hidden"/>
+
+<TRI_UID type="hidden"/>
+
+<TITLE type="title" group="1">
+  <en>Trigger Information</en>
+  <es>Trigger Information</es>
+</TITLE>
+
+<TRI_TITLE type="text" size="42" maxlength="100">
+  <en>Title</en>
+  <es>Título</es>
+</TRI_TITLE>
+
+<TRI_TYPE type="hidden"/>
+
+<TRI_DESCRIPTION type="textarea" rows="1" cols="38">
+  <en>Description</en>
+  <es>Descripción</es>
+</TRI_DESCRIPTION>
+
+<TRI_WEBBOT type="textarea" rows="4" cols="38">
+  <en>Script</en>
+  <es>Script</es>
+</TRI_WEBBOT>
+
+<SAVE type="button" onclick="triggerSave(this.form);">
+  <en>Save</en>
+  <es>Guardar</es>
+</SAVE>
+
+</dynaForm>

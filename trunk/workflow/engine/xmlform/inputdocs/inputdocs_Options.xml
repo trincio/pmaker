@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm type="xmlmenu">
+
+<MNU_ADD type="link" value='' link="#" onclick="inputdocsAdd(); return false;" colAlign="left" colWidth="35">
+  <en>New</en>
+  <es>Nuevo</es>
+</MNU_ADD>
+<PAGED_TABLE_ID type="private"/>
+<!--<PAGED_TABLE_FAST_SEARCH type="FastSearch" label="@G::LoadTranslation(ID_SEARCH)"/>-->
+<PRO_UID type="private"/>
+<inputdocsEdit type="private" defaultValue="../inputdocs/inputdocs_Edit"/>
+<inputdocsDelete type="private" defaultValue="../inputdocs/inputdocs_Delete"/>
+<js type="javascript" replaceTags="1">
+var currentPagedTable = @#PAGED_TABLE_ID;
+  function inputdocsAdd(){
+		popupWindow('@G::LoadTranslation(ID_NEW_INPUTDOCS)', '@G::encryptlink(@#inputdocsEdit)?PRO_UID=@%PRO_UID' , 500, 350);
+  }
+  function inputdocsEdit( uid ) {
+		popupWindow('@G::LoadTranslation(ID_EDIT_INPUTDOCS)', '@G::encryptlink(@#inputdocsEdit)?INP_DOC_UID='+ uid , 500, 350);
+  }
+  function inputdocsSave( form ) {
+    ajax_post( form.action, form, 'POST' );
+    currentPopupWindow.remove();
+    @#PAGED_TABLE_ID.refresh();
+  }
+  function inputdocsDelete( uid ) {
+    ajax_function('@G::encryptlink(@#inputdocsDelete)','','INP_DOC_UID='+uid,'POST');
+    @#PAGED_TABLE_ID.refresh();
+  }
+</js>
+<!-- Default Search option -->
+<!--<MNU_SEARCH type="link" value='' link="#" onclick="showHideSearch('@#SEARCH_FILTER_FORM',this); return false;" colAlign="right" colWidth="130">
+  <en>Advanced Search</en>
+  <es>Buscar Avanzado</es>
+</MNU_SEARCH>-->
+<SEARCH_FILTER_FORM type="private"/>
+</dynaForm>

@@ -1,0 +1,312 @@
+<script language="JavaScript">
+var keyAlfa = "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ·ÈÌÛ˙Ò¡…Õ”⁄—";
+var keyDigit = "01234567890";
+var keyReal = keyDigit+"-.";
+var keyAlfa9 = keyAlfa+keyDigit+".,";
+var keyAny = keyAlfa9+"!#$%&/()=ø?°+*{}[]-_.:,;'|\"\\@";
+var ALFA = 1, INTEGER = 2, REAL=3, ANY = 4, ALFANUM = 5;
+
+function Upcase (t) {
+  aux = t.value; t.value  = aux.toUpperCase();
+}
+
+function isIn ( cadena, car ) {
+  var i = 0; sw = 0==1;
+  while ( i < cadena.length && !sw ) {
+    sw= (cadena.charAt(i) == car);
+    i ++;
+  }
+  return sw;
+}
+
+function IsKeyValid ( mode ) {
+  var msj;
+  isNetscape   = (document.layers);
+  eventChooser = (isNetscape) ? keyStroke.which : event.keyCode;
+
+  if ( eventChooser == 13 ) {
+    if ( top.document.webform.elements["BSUBMIT"].onclick  )
+      top.document.webform.elements["BSUBMIT"].onclick();
+  	return ;
+  }
+
+  car = String.fromCharCode( eventChooser );
+  if (mode==ALFA   ) bOk = isIn ( keyAlfa, car );
+  if (mode==INTEGER) bOk = isIn ( keyDigit,car );
+  if (mode==REAL   ) bOk = isIn ( keyReal, car );
+  if (mode==ANY    ) bOk = isIn ( keyAny,  car );
+  if (mode==ALFANUM) bOk = isIn ( keyAlfa9,car );
+
+  window.event.returnValue = true;
+  if (! bOk) {
+    alert ("The character " + String (car) + " is not valid for this field");
+    window.event.returnValue = false;
+  }
+}
+
+function IsAlfa (f) {
+  return 1;
+}
+
+function IsInteger (f) {
+  return 1;
+}
+
+function IsReal (f) {
+  return 1;
+}
+
+function IsAny (f) {
+  return 1;
+}
+
+function IsAlfaNum (f) {
+}
+
+/* modal function*/
+  function getValue ( nameField ) {
+    val = top.document.webform.elements ["form[" + nameField + "]"].value;
+    return val;
+  }
+
+  function setModalValue ( nameField, display, value ) {
+    var cacheobj=document.webform.elements ["form[" + nameField + "]"];
+    largo = cacheobj.options.length;
+    for (m = largo - 1;m>=0;m--)  cacheobj.options[m]=null;
+    cacheobj.options[0]= new Option( display, value);
+    cacheobj.options[0].selected=true;
+    return ;
+  }
+
+var controls ;
+
+function control1 (nameField) {
+	// assing methods
+	//this.popup    = cal_popup1;
+
+	// validate input parameters
+	if (!nameField)
+		return cal_error("Error calling the control: no target control specified");
+	if (nameField == null)
+		return cal_error("Error calling the calendar: parameter specified is not valid tardet control");
+
+	this.field = document.webform.elements ["form[" + nameField + "]"];
+
+  this.field.options[0]= new Option( " ", " ");
+  this.field.options[0].selected=true;
+
+	// register in global collections
+	//this.id = controls.length;
+	controls = this;
+}
+
+
+  function show_dialog ( nameField, page, width, height ) {
+    //var field = document.webform.elements ["form[" + nameField + "]"];
+
+    if (crtl) crtl = null;
+    var crtl = new control1(nameField);
+    var url = '../controls/' + page;
+
+    var left=300, top=60;
+    if( window.screen && window.screen.availHeight )
+      {left = (window.screen.availWidth  - width) /2;
+        top = (window.screen.availHeight - height)/2 -20;}
+
+    var options = 'top=' + top + ', left=' + left + ', width=' + width + ',height='+ height +
+                  ',status=no,resizable=no,dependent=yes,alwaysRaised=yes';
+    var obj_dialog = window.open( url, 'Controls', options );
+
+  	obj_dialog.opener = window;
+	  obj_dialog.focus();
+
+    return ;
+  }
+
+  function showModal ( url, width, height ) {
+    options = "dialogHeight:" + height +"px; dialogWidth:" + width+"px; center:yes; resizable:no; status:no;  ";
+    res = window.showModalDialog( url, 0, options);
+    return res;
+  }
+
+// Title: Tigra Calendar
+// URL: http://www.softcomplex.com/products/tigra_calendar/
+// Version: 3.2 (European date format)
+// Date: 10/14/2002 (mm/dd/yyyy)
+// Feedback: feedback@softcomplex.com (specify product title in the subject)
+// Note: Permission given to use this script in ANY kind of applications if
+//    header lines are left unchanged.
+// Note: Script consists of two files: calendar?.js and calendar.html
+// About us: Our company provides offshore IT consulting services.
+//    Contact us at sales@softcomplex.com if you have any programming task you
+//    want to be handled by professionals. Our typical hourly rate is $20.
+
+// if two digit year input dates after this year considered 20 century.
+var NUM_CENTYEAR = 30;
+// is time input control required by default
+var BUL_TIMECOMPONENT = false;
+// are year scrolling buttons required by default
+var BUL_YEARSCROLL = true;
+
+var calendars = [];
+var RE_NUM = /^\-?\d+$/;
+
+function calendar1(obj_date1, obj_date2, obj_date3) {
+
+	// assing methods
+	this.gen_date = cal_gen_date1;
+	this.gen_time = cal_gen_time1;
+	this.gen_tsmp = cal_gen_tsmp1;
+	this.prs_date = cal_prs_date1;
+	this.prs_time = cal_prs_time1;
+	this.prs_tsmp = cal_prs_tsmp1;
+	this.popup    = cal_popup1;
+	this.fecha    = "0";
+
+	// validate input parameters
+	if (!obj_date1)
+		return cal_error("Error calling the calendar: no target control specified");
+	if (obj_date1 == null)
+		return cal_error("Error calling the calendar: parameter specified is not valid tardet control");
+	this.date1 = obj_date1;
+	this.date2 = obj_date2;
+	this.date3 = obj_date3;
+	this.time_comp = BUL_TIMECOMPONENT;
+	this.year_scroll = BUL_YEARSCROLL;
+
+	// register in global collections
+	this.id = calendars.length;
+	calendars[this.id] = this;
+}
+
+function cal_popup1 (str_datetime) {
+	this.dt_current = this.prs_tsmp(str_datetime );
+	if (!this.dt_current) return;
+
+  var left=300, top=60;
+  if( window.screen && window.screen.availHeight )
+    {left = (window.screen.availWidth  - 200) /2;
+      top = (window.screen.availHeight - 215)/2 -20;}
+	var obj_calwindow = window.open(
+		'../controls/calendar.html?datetime=' + this.dt_current.valueOf()+ '&id=' + this.id,
+		'Calendar', 'width=200,height='+(this.time_comp ? 215 : 190)+
+		',status=no,resizable=no,top=' + top + ',left=' + left + ',dependent=yes,alwaysRaised=yes'
+	);
+
+	obj_calwindow.opener = window;
+	obj_calwindow.focus();
+
+
+
+}
+
+// timestamp generating function
+function cal_gen_tsmp1 (dt_datetime) {
+	return(this.gen_date(dt_datetime) + ' ' + this.gen_time(dt_datetime));
+}
+
+// date generating function
+function cal_gen_date1 (dt_datetime) {
+	return (
+		(dt_datetime.getDate() < 10 ? '0' : '') + dt_datetime.getDate() + "-"
+		+ (dt_datetime.getMonth() < 9 ? '0' : '') + (dt_datetime.getMonth() + 1) + "-"
+		+ dt_datetime.getFullYear()
+	);
+}
+// time generating function
+function cal_gen_time1 (dt_datetime) {
+	return (
+		(dt_datetime.getHours() < 10 ? '0' : '') + dt_datetime.getHours() + ":"
+		+ (dt_datetime.getMinutes() < 10 ? '0' : '') + (dt_datetime.getMinutes()) + ":"
+		+ (dt_datetime.getSeconds() < 10 ? '0' : '') + (dt_datetime.getSeconds())
+	);
+}
+
+// timestamp parsing function
+function cal_prs_tsmp1 (str_datetime) {
+	// if no parameter specified return current timestamp
+	if (!str_datetime)
+		return (new Date());
+
+	// if positive integer treat as milliseconds from epoch
+	if (RE_NUM.exec(str_datetime))
+		return new Date(str_datetime);
+
+	// else treat as date in string format
+	var arr_datetime = str_datetime.split(' ');
+	return this.prs_time(arr_datetime[1], this.prs_date(arr_datetime[0]));
+}
+
+// date parsing function
+function cal_prs_date1 (str_date) {
+
+	var arr_date = str_date.split('-');
+
+	if (arr_date.length != 3) return cal_error ("Invalid date format: '" + str_date + "'.\nFormat accepted is dd-mm-yyyy.");
+	if (!arr_date[0]) return cal_error ("Invalid date format: '" + str_date + "'.\nNo day of month value can be found.");
+	if (!RE_NUM.exec(arr_date[0])) return cal_error ("Invalid day of month value: '" + arr_date[0] + "'.\nAllowed values are unsigned integers.");
+	if (!arr_date[1]) return cal_error ("Invalid date format: '" + str_date + "'.\nNo month value can be found.");
+	if (!RE_NUM.exec(arr_date[1])) return cal_error ("Invalid month value: '" + arr_date[1] + "'.\nAllowed values are unsigned integers.");
+	if (!arr_date[2]) return cal_error ("Invalid date format: '" + str_date + "'.\nNo year value can be found.");
+	if (!RE_NUM.exec(arr_date[2])) return cal_error ("Invalid year value: '" + arr_date[2] + "'.\nAllowed values are unsigned integers.");
+
+	var dt_date = new Date();
+	dt_date.setDate(1);
+
+	if (arr_date[1] < 1 || arr_date[1] > 12) return cal_error ("Invalid month value: '" + arr_date[1] + "'.\nAllowed range is 01-12.");
+	dt_date.setMonth(arr_date[1]-1);
+
+	if (arr_date[2] < 100) arr_date[2] = Number(arr_date[2]) + (arr_date[2] < NUM_CENTYEAR ? 2000 : 1900);
+	dt_date.setFullYear(arr_date[2]);
+
+	var dt_numdays = new Date(arr_date[2], arr_date[1], 0);
+	dt_date.setDate(arr_date[0]);
+	if (dt_date.getMonth() != (arr_date[1]-1)) return cal_error ("Invalid day of month value: '" + arr_date[0] + "'.\nAllowed range is 01-"+dt_numdays.getDate()+".");
+
+	return (dt_date)
+}
+
+// time parsing function
+function cal_prs_time1 (str_time, dt_date) {
+
+	if (!dt_date) return null;
+	var arr_time = String(str_time ? str_time : '').split(':');
+
+	if (!arr_time[0]) dt_date.setHours(0);
+	else if (RE_NUM.exec(arr_time[0]))
+		if (arr_time[0] < 24) dt_date.setHours(arr_time[0]);
+		else return cal_error ("Invalid hours value: '" + arr_time[0] + "'.\nAllowed range is 00-23.");
+	else return cal_error ("Invalid hours value: '" + arr_time[0] + "'.\nAllowed values are unsigned integers.");
+
+	if (!arr_time[1]) dt_date.setMinutes(0);
+	else if (RE_NUM.exec(arr_time[1]))
+		if (arr_time[1] < 60) dt_date.setMinutes(arr_time[1]);
+		else return cal_error ("Invalid minutes value: '" + arr_time[1] + "'.\nAllowed range is 00-59.");
+	else return cal_error ("Invalid minutes value: '" + arr_time[1] + "'.\nAllowed values are unsigned integers.");
+
+	if (!arr_time[2]) dt_date.setSeconds(0);
+	else if (RE_NUM.exec(arr_time[2]))
+		if (arr_time[2] < 60) dt_date.setSeconds(arr_time[2]);
+		else return cal_error ("Invalid seconds value: '" + arr_time[2] + "'.\nAllowed range is 00-59.");
+	else return cal_error ("Invalid seconds value: '" + arr_time[2] + "'.\nAllowed values are unsigned integers.");
+
+	dt_date.setMilliseconds(0);
+	return dt_date;
+}
+
+function cal_error (str_message) {
+	alert (str_message);
+	return null;
+}
+
+  //to call picker date.... added byOnti
+  function picker_date ( nameField ) {
+  var date1=document.webform.elements ["form[" + nameField + "][DAY]"];
+  var date2=document.webform.elements ["form[" + nameField + "][MONTH]"];
+  var date3=document.webform.elements ["form[" + nameField + "][YEAR]"];
+  var cal1 = new calendar1(date1, date2, date3);
+  cal1.popup();
+  }
+
+
+</script>

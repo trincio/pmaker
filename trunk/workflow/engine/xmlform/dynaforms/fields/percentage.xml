@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm
+  name="percentage"
+  type="xmlform"
+  width="100%"
+>
+<PME_A type="hidden" />
+<PME_TYPE type="hidden" />
+<PME_TITLE type="title" enableHTML="1">
+  <en>Properties</en>
+  <es>Propiedades</es>
+</PME_TITLE>
+<PME_XMLNODE_NAME type="text" size="32" maxlength="64" validate="Field" dependentFields="PME_VALIDATE_NAME" required="1">
+
+  <en>Field Name</en>
+  <es>Nombre de Campo</es>
+</PME_XMLNODE_NAME>
+<PME_VALIDATE_NAME type="hidden" sqlConnection="XMLDB">
+SELECT XMLNODE_NAME, TYPE FROM dynaForm WHERE XMLNODE_NAME = @@PME_XMLNODE_NAME
+</PME_VALIDATE_NAME>
+
+<PME_LABEL type="text" maxlength="50" size="50">
+  <en>Label</en>
+  <es>Etiqueta</es>
+</PME_LABEL>
+
+<PME_SUBTITLE3 type="subtitle" enableHTML="1">
+  <en>Behaviour</en>
+  <es>Comportamiento</es>
+</PME_SUBTITLE3>
+
+<PME_MAXLENGTH type="text" maxlength="10" size="10" validate="Int" defaultvalue="15" >
+
+  <en>Max. Length</en>
+  <es>Max. Length</es>
+</PME_MAXLENGTH>
+<PME_VALIDATE type="dropdown" defaultvalue="Any" >
+  <en>Validate
+    <option name="Int">Int</option>
+    <option name="Real">Real</option>
+  </en>
+  <es>Validate
+    <option name="Int">Int</option>
+    <option name="Real">Real</option>
+  </es>
+</PME_VALIDATE>
+<PME_MASK type="text" maxlength="50" size="30" defaultvalue="###.## %" >
+
+  <en>Mask</en>
+  <es>Mask</es>
+</PME_MASK>
+<PME_REQUIRED type="checkbox" falseValue="0" value="1" defaultvalue="0" labelOnRight="0">
+
+  <en>Required</en>
+  <es>Required</es>
+</PME_REQUIRED>
+<PME_READONLY type="checkbox" falseValue="0" value="1" defaultvalue="0" labelOnRight="0">
+
+  <en>Read Only</en>
+  <es>Read Only</es>
+</PME_READONLY>
+<PME_DEFAULTVALUE type="text" maxlength="50" size="30" defaultvalue="" >
+
+  <en>Default Value</en>
+  <es>Default Value</es>
+</PME_DEFAULTVALUE>
+
+<PME_SUBTITLE type="subtitle" enableHTML="1">
+  <en>Appearance</en>
+  <es>Apariencia</es>
+</PME_SUBTITLE>
+
+<PME_SIZE type="text" maxlength="10" size="10" validate="Int" defaultvalue="15" >
+
+  <en>Size</en>
+  <es>Size</es>
+</PME_SIZE>
+<PME_GROUP type="text" maxlength="10" size="10" validate="Int" defaultvalue="0" group="2">
+
+  <en>Group</en>
+  <es>Group</es>
+</PME_GROUP>
+<PME_MODE type="dropdown" defaultvalue="edit">
+
+  <en>Mode
+    <option name="edit">Edit</option>
+    <option name="view">View</option>
+  </en>
+  <es>Modo
+    <option name="edit">Edición</option>
+    <option name="view">Vista</option>
+  </es>
+</PME_MODE>
+<!--
+<PME_ENABLEHTML type="checkbox" falseValue="0" value="1" defaultvalue="0" labelOnRight="0">
+
+  <en>EnableHtml</en>
+  <es>EnableHtml</es>
+</PME_ENABLEHTML>
+-->
+<PME_STYLE type="text" maxlength="" size="50">
+
+  <en>Style</en>
+  <es>Style</es>
+</PME_STYLE>
+<!--
+<PME_LINKFIELD type="text" maxlength="50" size="30" defaultvalue="" >
+
+  <en>LinkField</en>
+  <es>LinkField</es>
+</PME_LINKFIELD>
+-->
+<PME_SUBTITLE2 type="subtitle" enableHTML="1">
+  <en>Data</en>
+  <es>Datos</es>
+</PME_SUBTITLE2>
+
+<PME_SQLCONNECTION type="text" maxlength="50" size="50">
+  <en>Sql Connection</en>
+  <es>Conexión Sql</es>
+</PME_SQLCONNECTION>
+
+<PME_XMLNODE_VALUE type="textarea" cols="47" rows="3">
+  <en>Sql</en>
+  <es>Sql</es>
+</PME_XMLNODE_VALUE>
+
+<PME_ACCEPT type="button" onclick="fieldsSave( this.form );">
+  <en>Save</en>
+  <es>Guardar</es>
+</PME_ACCEPT>
+
+<PME_JS type="javascript"><![CDATA[
+var fieldForm="percentage";
+var fieldName=getField("PME_XMLNODE_NAME",fieldForm);
+var savedFieldName=fieldName.value;
+var pme_validating;
+fieldName.focus();
+fieldName.select();
+leimnud.event.add(fieldName, 'change', {method:verifyFieldName, instance:fieldName, event:true});
+function verifyFieldName(){
+  pme_validating=true;
+  setTimeout('verifyFieldName1();',0);
+  return true;
+}
+function verifyFieldName1(){
+  var newFieldName=fieldName.value;
+  var validatedFieldName=getField("PME_VALIDATE_NAME",fieldForm).value;
+  var valid=(newFieldName!=='')&&(((newFieldName!==savedFieldName)&&(validatedFieldName===''))||((newFieldName===savedFieldName)));
+  if (valid)
+    getField("PME_ACCEPT",fieldForm).disabled=false;
+  else
+    getField("PME_ACCEPT",fieldForm).disabled=true;
+  pme_validating=false;
+  return valid;
+}
+]]></PME_JS>
+</dynaForm>

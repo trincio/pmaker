@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm
+  sqlConnection=""
+  width="100%"
+  rowsPerPage="10"
+>
+<PROCESS type="hidden" showInTable="0"/>
+<TASK type="hidden" showInTable="0"/>
+<STEP_UID type="hidden" showInTable="0"/>
+<STEP_TITLE type="text" colWidth="250"  titleAlign="left" align="left">
+  <en>Title</en>
+  <es>Título</es>
+</STEP_TITLE>
+<STEP_TYPE_OBJ type="dropdown" colWidth="100" titleAlign="left" align="left">
+  <en>Type
+  <option name="DYNAFORM">Dynaform</option>
+  <option name="OUTPUT_DOCUMENT">Output Document</option>
+  <option name="INPUT_DOCUMENT">Documentation</option>
+  <!--<option name="MESSAGE">Message</option>-->
+  </en>
+  <es>Tipo
+  <option name="DYNAFORM">Dynaform</option>
+  <option name="OUTPUT_DOC">Documentos de salida</option>
+  <option name="INPUT_DOCUMENT">Documentación</option>
+  <!--<option name="MESSAGE">Message</option>-->
+  </es>
+</STEP_TYPE_OBJ>
+<ASSIGN type="link" colWidth="50" value="@G::LoadTranslation(ID_SELECT)" link="#" onclick="stepSave(@QPROCESS, @QTASK, @QSTEP_TYPE_OBJ, @QSTEP_UID);return false;"/>
+<PAGED_TABLE_ID type="private" showInTable="0"/>
+<JSFILTER type="javascript" replaceTags="1" showInTable="0">
+function pagedTableFilter( form ) {
+  @#PAGED_TABLE_ID.doFilter( form );
+}
+</JSFILTER>
+</dynaForm>

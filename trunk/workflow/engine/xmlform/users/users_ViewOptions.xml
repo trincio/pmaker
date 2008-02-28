@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm name="users_ViewOptions" type="xmlmenu">
+<MNU type="link" value='' link="#" onclick="window.location = 'users_List';return false;" colAlign="right" colWidth="80">
+  <es>Volver al listado</es>
+  <en>Back to list</en>
+</MNU>
+</dynaForm>

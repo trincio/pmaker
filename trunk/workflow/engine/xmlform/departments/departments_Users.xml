@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm name="departmentUsers"
+  type="filterform"
+  sqlconnection=""
+  menu="departments/departments_Options"
+  filterForm="departments/departments_Users"
+  width="100%"
+  sql="SELECT * FROM USERS WHERE USR_DEPARTMENT = '@#DEP_UID'"
+>
+
+<USR_UID type="dropdown" colWidth="390">
+select USR_UID, USR_USERNAME FROM USERS
+  <en>Name</en>
+  <es>Nombre</es>
+</USR_UID>
+
+</dynaForm>

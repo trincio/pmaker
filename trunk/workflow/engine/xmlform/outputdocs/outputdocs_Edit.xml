@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm
+  name="outputdocs_Edit"
+  type="xmlform"
+  width="100%"
+>
+
+<PRO_UID type="hidden"/>
+
+<OUT_DOC_UID type="hidden" showInTable="0"/>
+
+<TITLE type="title" group="1">
+  <en>Output Document Information</en>
+  <es>Output Document Information</es>
+</TITLE>
+
+<OUT_DOC_TITLE type="text" style="width:90%" >
+  <en>Output document</en>
+  <es>Documento requerido</es>
+</OUT_DOC_TITLE>
+
+<OUT_DOC_FILENAME type="text" size="30" maxlength="100">
+  <en>Filename</en>
+  <es>Nombre de Archivo</es>
+</OUT_DOC_FILENAME>
+
+<OUT_DOC_DESCRIPTION type="textarea" rows="3" cols="50">
+  <en>Description</en>
+  <es>Descripción</es>
+</OUT_DOC_DESCRIPTION>
+
+<OUT_DOC_TEMPLATE type="html" rows="20" cols="50" defaultValue="&lt;br/&gt;">
+  <en>Template</en>
+  <es>Template</es>
+</OUT_DOC_TEMPLATE>
+
+<ACCEPT type="button" onclick="outputdocsSave( this.form );">
+  <en>Save</en>
+  <es>Guardar</es>
+</ACCEPT>
+</dynaForm>
