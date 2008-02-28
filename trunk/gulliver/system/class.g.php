@@ -1175,7 +1175,8 @@ class G
   function LoadTranslation( $msgID , $lang = SYS_LANG )
   {
     global $translation;
-    require_once( PATH_LANGUAGECONT . 'translation.' . $lang );
+    if ( file_exists (PATH_LANGUAGECONT . 'translation.' . $lang) )
+      require_once( PATH_LANGUAGECONT . 'translation.' . $lang );
     if ( isset ( $translation[$msgID] ) )
       return $translation[$msgID];
     else
