@@ -29,6 +29,7 @@ dynaformEditor={
 		} catch (e) {
 			alert(e);
 		}
+		this.saveProperties();
 		res=this.ajax.save(this.A,this.dynUid);
 		if (res==0) {
 			alert(G_STRINGS.ID_SAVED);
