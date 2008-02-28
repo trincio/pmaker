@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * You can contact Colosa Inc, 2655 Le Jeune Road, Suite 1112, Coral Gables, 
+ * You can contact Colosa Inc, 2655 Le Jeune Road, Suite 1112, Coral Gables,
  * FL 33134, USA or email info@colosa.com.
  *
  * The interactive user interfaces in modified source and object code versions
@@ -52,14 +52,14 @@ class dynaformEditor extends WebResource
 	var $dyn_uid='';
 	var $dyn_type='';
 	var $home='';
-	/* 
+	/*
 	 * Other Options for Editor:
 	 *   left: 'getAbsoluteLeft(document.getElementById("dynaformEditor[0]"))',
 	 *   top: 'getAbsoluteTop(document.getElementById("dynaformEditor[0]"))',
 	 *   height: '3/4*(document.body.clientWidth-getAbsoluteLeft(document.getElementById("dynaformEditor[0]"))*2)',
 	 *   left: 'getAbsoluteLeft(document.getElementById("dynaformEditor[0]"))'
 	 *   left: 'getAbsoluteLeft(document.getElementById("dynaformEditor[0]"))'
-	 * 
+	 *
 	 * Other Options for Toolbar:
 	 *   left: 'getAbsoluteLeft(document.getElementById("dynaformEditor[0]"))',
 	 *   top: 'getAbsoluteTop(document.getElementById("dynaformEditor[0]"))',
@@ -141,7 +141,7 @@ class dynaformEditor extends WebResource
 		$script='';
 		/* Start Block: Load (Create if not exists) the xmlform */
 		$Parameters = array(
-			'SYS_LANG' => SYS_LANG, 
+			'SYS_LANG' => SYS_LANG,
 			'URL'=> G::encrypt( $this->file , URL_KEY ),
 			'DYN_UID'=> $this->dyn_uid,
 			'PRO_UID'=> $this->pro_uid,
@@ -173,7 +173,7 @@ class dynaformEditor extends WebResource
 		}
 		catch(Exception $e)
 		{
-			
+
 		}
 		/* Start Block: Prepare the XMLDB connection */
 		define('DB_XMLDB_HOST', PATH_DYNAFORM  . $this->file . '.xml' );
@@ -312,7 +312,7 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 				)
 			);
 		}
-		$G_PUBLISH->AddContent('dynaform', $template , $file, '', 
+		$G_PUBLISH->AddContent('dynaform', $template , $file, '',
 			$aFields, '');
 		G::RenderPage('publish','raw');
 		return ob_get_clean();
@@ -361,9 +361,9 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 						'complete',
 						'',
 						array('type'=>'xmlmenu','xmlfile'=>'gulliver/dynaforms_Options')
-			  		),SYS_LANG,PATH_XMLFORM,$form) 
+			  		),SYS_LANG,PATH_XMLFORM,$form)
 			  	),
-				$form->fields); 
+				$form->fields);
 			/**/
 			/*
 			 * Loads the stored HTML or the default Template if
@@ -371,8 +371,8 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 			 */
 			$filename = substr($form->fileName , 0, -3) .
 				( $form->type==='xmlform' ? '' : '.' . $form->type  ) . 'html';
-			if (!file_exists( $filename )) 
-			{ 
+			if (!file_exists( $filename ))
+			{
 				$html=$form->printTemplate( $form->template , $script );
 			}
 			else
@@ -426,7 +426,7 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 		{
 			$file = G::decrypt( $A , URL_KEY );
 			$form = new Form( $file , PATH_DYNAFORM, SYS_LANG, true );
-			$filename = substr($form->fileName , 0, -3) . 
+			$filename = substr($form->fileName , 0, -3) .
 			  ( $form->type==='xmlform' ? '' : '.' . $form->type  ) . 'html';
 			$fp=fopen($filename, 'w');
 			fwrite($fp, $htmlcode );
@@ -546,7 +546,7 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 				$tmp['Properties']=$Fields;
 				self::_setTmpData($tmp);
 			}
-			
+
 			$dbc2 = new DBConnection( PATH_DYNAFORM . $file . '.xml' ,'','','','myxml' );
 			$ses2 = new DBSession($dbc2);
 					if (!isset($Fields['ENABLETEMPLATE'])) $Fields['ENABLETEMPLATE'] ="0";
@@ -568,16 +568,15 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 			$file = G::decrypt( $A , URL_KEY );
 			$tmp=self::_getTmpData();
 			if (isset($tmp['useTmpCopy']))
-			{
-				/*Save Register*/
+			{			/*Save Register*/
 		  		$dynaform = new dynaform;
 				$dynaform->update( $tmp['Properties'] );
-	
+
 				/*Save file*/
 				$copy = implode('',file(PATH_DYNAFORM  . $file . '.xml'));
 				$copyHtml = false;
 				if (file_exists(PATH_DYNAFORM  . $file . '.html'))
-				{ 
+				{
 					$copyHtml = implode('',file(PATH_DYNAFORM  . $file . '.html'));
 				}
 				$file = dynaformEditor::_getFilename($file);
