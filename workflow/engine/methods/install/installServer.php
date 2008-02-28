@@ -165,24 +165,38 @@ function createSite($con,$site,$dataClient,$passwordSite="sample",$my)
 	print_r("Dump schema workflow/rbac && data\n====================================\n");
 
 	print_r("Mysql client: ".$my."\n");
+	
+	$pws = PATH_WORKFLOW_MYSQL_DATA.$schema;
+	$pws = (PHP_OS=="WINNT")?'"'.$pws.'"':$pws;
 
-	$sh_sc = $my." ".$wf." < ".PATH_WORKFLOW_MYSQL_DATA.$schema." -h ".$dataClient->mysqlH." --user=".$wf." --password=".$passwordSite;
+	$sh_sc = $my." ".$wf." < ".$pws." -h ".$dataClient->mysqlH." --user=".$wf." --password=".$passwordSite;
 	$result_shell = exec($sh_sc);
 	print_r($sh_sc."  => ".(($result_shell)?$result_shell:"OK")."\n");
 
-	$sh_in = $my." ".$wf." < ".PATH_WORKFLOW_MYSQL_DATA.$values." -h ".$dataClient->mysqlH." --user=".$wf." --password=".$passwordSite;
+
+	$pws = PATH_WORKFLOW_MYSQL_DATA.$values;
+	$pws = (PHP_OS=="WINNT")?'"'.$pws.'"':$pws;
+
+	$sh_in = $my." ".$wf." < ".$pws." -h ".$dataClient->mysqlH." --user=".$wf." --password=".$passwordSite;
 	$result_shell = exec($sh_in);
 	print_r($result_shell."\n");
 	print_r($sh_in."  => ".(($result_shell)?$result_shell:"OK")."\n");
 
 
 	/* Dump schema rbac && data  */
-	$sh_rbsc = $my." ".$rb." < ".PATH_RBAC_MYSQL_DATA.$schema." -h ".$dataClient->mysqlH." --user=".$rb." --password=".$passwordSite;
+	$pws = PATH_RBAC_MYSQL_DATA.$schema;
+	$pws = (PHP_OS=="WINNT")?'"'.$pws.'"':$pws;
+
+	$sh_rbsc = $my." ".$rb." < ".$pws." -h ".$dataClient->mysqlH." --user=".$rb." --password=".$passwordSite;
 	$result_shell = exec($sh_rbsc,$err_sh);
 	print_r($result_shell."\n");
 	print_r($sh_rbsc."  => ".(($result_shell)?$result_shell:"OK")."\n");
 
-	$sh_in = $my." ".$rb." < ".PATH_RBAC_MYSQL_DATA.$values." -h ".$dataClient->mysqlH." --user=".$rb." --password=".$passwordSite;
+
+	$pws = PATH_RBAC_MYSQL_DATA.$values;
+	$pws = (PHP_OS=="WINNT")?'"'.$pws.'"':$pws;
+
+	$sh_in = $my." ".$rb." < ".$pws." -h ".$dataClient->mysqlH." --user=".$rb." --password=".$passwordSite;
 	$result_shell = exec($sh_in);
 	print_r($sh_in."  => ".(($result_shell)?$result_shell:"OK")."\n");
 
