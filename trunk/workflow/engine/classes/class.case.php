@@ -349,6 +349,42 @@ class Cases {
     }
   }
 
+  /*
+  * getSiblingThreads
+  * @param string $sAppUid
+  * @return
+  */
+  function getSiblingThreads ( $sAppUid, $iDelIndex ) {
+    try {
+      $c = new Criteria();
+      $c->add ( AppThreadPeer::APP_UID, $sAppUid );
+      $c->add ( AppThreadPeer::DEL_INDEX, $iDelIndex );
+      $rs = AppThreadPeer::doSelectRs ( $c );
+      $rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $rs->next();
+      $row = $rs->getRow();
+      $iParent = $row['APP_THREAD_PARENT'];
+      
+      $aThreads = array();
+      $c = new Criteria();
+      $c->add ( AppThreadPeer::APP_UID, $sAppUid );
+      $c->add ( AppThreadPeer::APP_THREAD_PARENT, $iParent );
+      $rs = AppThreadPeer::doSelectRs ( $c );
+      $rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $rs->next();
+      $row = $rs->getRow();
+      while ( is_array($row) ) {
+        $aThreads[] = $row;
+        $rs->next();
+        $row = $rs->getRow();
+      }
+      return $aThreads;
+    }
+  	catch ( Exception $e ) {
+	    throw ( $e );
+    }
+  }
+
 
   /*
   * CountTotalPreviousTasks
@@ -592,6 +628,34 @@ print $sql;
 	    throw ( $e );
     }
   }
+
+  /*
+  * GetAllDelegations
+  * @param string $sAppUid
+  * @return
+  */
+  function GetAllThreads ( $sAppUid ) {
+    //('SELECT * FROM APP_DELEGATION WHERE APP_UID="'.$currentDelegation['APP_UID'].'" ');
+    try {
+      $aThreads = array();
+      $c = new Criteria();
+      $c->add ( AppThreadPeer::APP_UID, $sAppUid );
+      $rs = AppThreadPeer::doSelectRs ( $c );
+      $rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $rs->next();
+      $row = $rs->getRow();
+      while ( is_array($row) ) {
+        $aThreads[] = $row;
+        $rs->next();
+        $row = $rs->getRow();
+      }
+      return $aThreads;
+    }
+  	catch ( Exception $e ) {
+	    throw ( $e );
+    }
+  }
+
 
 
   /*

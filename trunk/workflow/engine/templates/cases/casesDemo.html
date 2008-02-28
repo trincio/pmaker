@@ -354,7 +354,32 @@ font-weight:normal;
 	</ul>
   </div>
 
+<li class="debug-child">
+	<div onmouseout="krumo.out(this);" onmouseover="krumo.over(this);" onclick="krumo.toggle(this);" class="debug-element debug-expand debug-opened">
+			<a class="debug-name">threads</a>
+			(<em class="debug-type">Array, <strong class="debug-array-length">{$CANT_THREADS} elements</strong></em>) 
+	</div>
+	<div style="display: block;" class="debug-nest">
+	<ul class="debug-node">
+	{foreach key=id item=data from=$THREADS}
+	<li class="debug-child">
+	<div onmouseout="krumo.out(this);" onmouseover="krumo.over(this);" onclick="krumo.toggle(this);" class="debug-element debug-opened">
+			<a class="debug-name">{$data.APP_THREAD_INDEX}</a>
+	  		[<em class="debug-type">thread status:</em>
+	  		<strong class="debug-string">{$data.APP_THREAD_STATUS}</strong>]
+	  		[<em class="debug-type">thread parent:</em>
+	  		<strong class="debug-array-length">{$data.APP_THREAD_PARENT}</strong>]
+	  		[<em class="debug-type">del_index:</em>
+	  		<strong class="debug-string">{$data.DEL_INDEX}</strong>]
+	</div>
+  </li>
+	{/foreach}  
+  </ul>
+  </div>
 </li>
+
+
+
 </ul>
 </div>
 

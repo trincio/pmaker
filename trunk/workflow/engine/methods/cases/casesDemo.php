@@ -52,9 +52,7 @@ $_DBArray['user'] = $rows;
 $_SESSION['_DBArray'] = $_DBArray;
 //krumo ( $_DBArray );
 
-G::LoadClass( 'ArrayPeer');
-
-
+  G::LoadClass( 'ArrayPeer');
     $c = new Criteria ('dbarray');
     $c->setDBArrayTable('user');
     $c->add ( 'user.age', 122 , Criteria::GREATER_EQUAL );
@@ -93,6 +91,9 @@ $oUser = new Users();
 $oUser->load( $appFields['APP_CUR_USER'] );
 $Fields['CUR_USER']     = $oUser->getUsrFirstname() . ' ' . $oUser->getUsrLastname();
 
+$threads     = $oCase->GetAllThreads ($appFields['APP_UID']); 
+$Fields['THREADS']  = $threads;
+$Fields['CANT_THREADS']  = count($threads);
 $delegations = $oCase->GetAllDelegations ($appFields['APP_UID']); 
 foreach ( $delegations as $key => $val ) {
   $delegations[$key]['TAS_TITLE'] = Content::load ( 'TAS_TITLE', '', $val['TAS_UID'], SYS_LANG );

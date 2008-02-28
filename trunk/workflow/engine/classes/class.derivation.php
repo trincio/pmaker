@@ -295,16 +295,14 @@ class Derivation
     if ( !defined('TASK_FINISH_TASK'))    define('TASK_FINISH_TASK',   -2);
 
     $this->case = new cases();
-    $appFields = $this->case->LoadCase ( $currentDelegation['APP_UID'], $currentDelegation['DEL_INDEX'] );
-
     //first, we close the current derivation, then we'll try to derivate to each defined route
     $appFields = $this->case->LoadCase($currentDelegation['APP_UID'], $currentDelegation['DEL_INDEX'] );
-    $this->case->CloseCurrentDelegation ( $currentDelegation['APP_UID'], $currentDelegation['DEL_INDEX'] );
+krumo ($currentDelegation);    
+krumo ( $nextDelegations ); //*////*/*/*/*/quitar comentario
+    //$this->case->CloseCurrentDelegation ( $currentDelegation['APP_UID'], $currentDelegation['DEL_INDEX'] );
 
     //Count how many tasks should be derivated.
     $countNextTask = count($nextDelegations);
-//krumo ($currentDelegation);    
-//krumo ( $nextDelegations ); die;
     foreach($nextDelegations as $nextDel)
     {
       switch ( $nextDel['TAS_UID'] ) {
@@ -313,16 +311,12 @@ class Derivation
           $this->case->closeAllDelegations ( $currentDelegation['APP_UID'] );
           break;
 
-        case TASK_FINISH_TASK:
-          /* close currentDelegation .. done some lines below */
-          /* close the thread here */
-          break;
-
         default:
+          // get all siblingThreads
+          $siblingThreads = $this->case->getSiblingThreads( $currentDelegation['APP_UID'], $currentDelegation['DEL_INDEX'] );
+          krumo ($siblingThreads); die;
           // verify previous derivations, if one of them is open, we must wait for it.
         /*
-          // Get OPEN/NULL delegations que deberian llegar al $nextDel['TAS_UID'].
-          $pendingDel = $this->case->getOpenNullDelegations( $currentDelegation['APP_UID'], $nextDel['TAS_UID'] );
           // Count the total previous tasks of $nextDel['TAS_UID']
           $countPrevTask = $this->case->CountTotalPreviousTasks( $nextDel['TAS_UID'] );
           // Start Block : Quitar de los pendientes los que no fueron iniciados
