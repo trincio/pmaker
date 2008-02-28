@@ -46,7 +46,6 @@ $rows[] = array ( 'uid' => 66, 'name' => 'Ernest', 'age' => 24, 'balance' => 7 )
 $rows[] = array ( 'uid' => 77, 'name' => 'Albert', 'age' => 25, 'balance' => 84567 );
 $rows[] = array ( 'uid' => 88, 'name' => 'Sue',    'age' => 26, 'balance' => 94567 );
 $rows[] = array ( 'uid' => 99, 'name' => 'Freddy', 'age' => 22, 'balance' => 04567 );
-$rows[] = array ( 'uid' => 00, 'name' => 'Xetba',  'age' => 21, 'balance' => 134567 );
 
 $_DBArray['user'] = $rows;
 $_SESSION['_DBArray'] = $_DBArray;
