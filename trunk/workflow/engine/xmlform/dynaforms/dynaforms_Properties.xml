@@ -56,10 +56,10 @@
   </es>
 </MODE>
 
-<ENABLETEMPLATE type="checkbox" value="1" defaultvalue="0" labelOnRight="0">
+<!--<ENABLETEMPLATE type="checkbox" value="1" defaultvalue="0" labelOnRight="0">
   <en>Enable Template</en>
   <es>Habilitar template</es>
-</ENABLETEMPLATE>
+</ENABLETEMPLATE>-->
 
 <PME_PROP_APPLY type="button" onclick="dynaformEditor.saveProperties();">
   <en>Apply</en>
@@ -78,9 +78,12 @@ function orderButtons() {
   propertiesDiv.style.visibility='';
 }
 orderButtons();
-getField("ENABLETEMPLATE","dynaforms_Properties").onclick=function()
+/*getField("ENABLETEMPLATE","dynaforms_Properties").onclick=function()
 {
-	getField("PME_HTML_ENABLETEMPLATE","dynaforms_HtmlEditor").checked=this.checked;
-}
+  var oAux;
+  if (oAux = getField("PME_HTML_ENABLETEMPLATE","dynaforms_HtmlEditor")) {
+	  oAux.checked=this.checked;
+	}
+}*/
 </sdfsdf>
 </dynaForm>

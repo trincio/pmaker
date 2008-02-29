@@ -345,10 +345,18 @@ function getField( fieldName , formId )
   {
     var form = document.getElementById(formId);
     if (!form) {form=document.getElementsByName(formId);
-      if (form) form = form[0];
+      if (form) {
+      	if (form.length > 0) {
+      	  form = form[0];
+        }
+      }
     }
-    return form.elements[ 'form[' + fieldName + ']' ];
-
+    if (form.length > 0) {
+      return form.elements[ 'form[' + fieldName + ']' ];
+    }
+    else {
+    	return null;
+    }
   }
   else
   {

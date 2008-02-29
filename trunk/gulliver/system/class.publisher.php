@@ -617,6 +617,16 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
 			G.alert(response["*message"]);
 		}
 	},
+	enableHTML:function()
+	{
+    post  = "form[ENABLETEMPLATE]=" + (getField("PME_HTML_ENABLETEMPLATE","dynaforms_HtmlEditor").checked ? "1" : "0");
+    //post += "&form[DYN_TYPE]=";
+	  var response=this.ajax.set_properties(this.A,this.dynUid,post);
+		if (response!=0)
+		{
+			G.alert(response["*message"]);
+		}
+	},
 	// Change view point functions
 	changeToPreview:function()
 	{
