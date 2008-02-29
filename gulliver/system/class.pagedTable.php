@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * You can contact Colosa Inc, 2655 Le Jeune Road, Suite 1112, Coral Gables, 
+ * You can contact Colosa Inc, 2655 Le Jeune Road, Suite 1112, Coral Gables,
  * FL 33134, USA or email info@colosa.com.
  *
  * The interactive user interfaces in modified source and object code versions
@@ -43,7 +43,7 @@ G::LoadClass('xmlMenu');
  * @access public
  * @dependencies DBConnection  DBSession  TemplatePower  Form  XmlForm
  */
- 
+
 class pagedTable
 {
   var $xmlFormFile;
@@ -67,7 +67,7 @@ class pagedTable
   var $fields;
   var $query;
   var $totpages;
-  
+
   //SQL QUERIES
   var $sql='';
   var $sqlWhere='';
@@ -77,7 +77,7 @@ class pagedTable
   var $sqlInsert='';
   var $sqlUpdate='';
   var $fieldDataList='';
-  
+
   //Configuration
   var $xmlPopup='';
   var $addRow=false;
@@ -128,7 +128,7 @@ class pagedTable
     $this->sqlWhere = isset($matches[3])?$matches[3]:'';
     $this->sqlGroupBy = isset($matches[4])?$matches[4]:'';
     $this->sqlOrderBy = isset($matches[5])?$matches[5]:'';
-    
+
     $this->order='';
     if ($this->sqlOrderBy!='')
     {
@@ -908,7 +908,8 @@ class pagedTable
         $this->tpl->newBlock( 'norecords' );
         $this->tpl->assign( "columnCount", $this->colCount);
         $noRecordsFound='ID_NO_RECORDS_FOUND';
-        if (G::LoadMessageXml($noRecordsFound)) $noRecordsFound = G::LoadMessageXml($noRecordsFound);
+        //if (G::LoadMessageXml($noRecordsFound)) $noRecordsFound = G::LoadMessageXml($noRecordsFound);
+        if (G::LoadTranslation($noRecordsFound)) $noRecordsFound = G::LoadTranslation($noRecordsFound);
         $this->tpl->assign( "noRecordsFound", $noRecordsFound);
 
       }

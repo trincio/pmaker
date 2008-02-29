@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * You can contact Colosa Inc, 2655 Le Jeune Road, Suite 1112, Coral Gables, 
+ * You can contact Colosa Inc, 2655 Le Jeune Road, Suite 1112, Coral Gables,
  * FL 33134, USA or email info@colosa.com.
  *
  * The interactive user interfaces in modified source and object code versions
@@ -54,7 +54,7 @@ die;
 	$ntable= unserialize($_SESSION['pagedTable['.$id.']']);
 	$page=get_ajax_value('page');
 	$function=get_ajax_value('function');
-  
+
   if (isset($ntable->filterForm_Id) && ($ntable->filterForm_Id!=='')) {
     $filterForm=new filterForm(G::getUIDName( $ntable->filterForm_Id ));
     $filterForm->values=$_SESSION[$filterForm->id];
@@ -88,7 +88,7 @@ die;
   define('DB_XMLDB_NAME','');
   define('DB_XMLDB_TYPE','myxml');
 	/* End Block*/
-	
+
 	$ntable->prepareQuery();
 	switch ($function)
 	{
