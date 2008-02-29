@@ -888,10 +888,18 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 			$dbc2 = new DBConnection( PATH_DYNAFORM . $file . '.xml' ,'','','','myxml' );
 			$ses2 = new DBSession($dbc2);
 					if (!isset($Fields['ENABLETEMPLATE'])) $Fields['ENABLETEMPLATE'] ="0";
-			$ses2->execute(G::replaceDataField("UPDATE . SET WIDTH = @@WIDTH WHERE XMLNODE_NAME = 'dynaForm' ", $Fields));
-			$ses2->execute(G::replaceDataField("UPDATE . SET ENABLETEMPLATE = @@ENABLETEMPLATE WHERE XMLNODE_NAME = 'dynaForm' ", $Fields));
-			$ses2->execute(G::replaceDataField("UPDATE . SET TYPE = @@DYN_TYPE WHERE XMLNODE_NAME = 'dynaForm' ", $Fields));
-			$ses2->execute(G::replaceDataField("UPDATE . SET MODE = @@MODE WHERE XMLNODE_NAME = 'dynaForm' ", $Fields));
+			if (isset($Fields['WIDTH'])) {
+			  $ses2->execute(G::replaceDataField("UPDATE . SET WIDTH = @@WIDTH WHERE XMLNODE_NAME = 'dynaForm' ", $Fields));
+		  }
+		  if (isset($Fields['ENABLETEMPLATE'])) {
+			  $ses2->execute(G::replaceDataField("UPDATE . SET ENABLETEMPLATE = @@ENABLETEMPLATE WHERE XMLNODE_NAME = 'dynaForm' ", $Fields));
+			}
+			if (isset($Fields['DYN_TYPE'])) {
+			  $ses2->execute(G::replaceDataField("UPDATE . SET TYPE = @@DYN_TYPE WHERE XMLNODE_NAME = 'dynaForm' ", $Fields));
+			}
+			if (isset($Fields['MODE'])) {
+			  $ses2->execute(G::replaceDataField("UPDATE . SET MODE = @@MODE WHERE XMLNODE_NAME = 'dynaForm' ", $Fields));
+			}
 			return 0;
   		}
 		catch(Exception $e)
@@ -973,6 +981,24 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 			'MODE'=> $form->mode
 		);
 		$P=self::get_properties($A,$DYN_UID);
+		if (!isset($P['DYN_TITLE'])) {
+			$P['DYN_TITLE'] = $sp['DYN_TITLE'];
+		}
+		if (!isset($P['DYN_TYPE'])) {
+			$P['DYN_TYPE'] = $sp['DYN_TYPE'];
+		}
+		if (!isset($P['DYN_DESCRIPTION'])) {
+			$P['DYN_DESCRIPTION'] = $sp['DYN_DESCRIPTION'];
+		}
+		if (!isset($P['WIDTH'])) {
+			$P['WIDTH'] = $sp['WIDTH'];
+		}
+		if (!isset($P['ENABLETEMPLATE'])) {
+			$P['ENABLETEMPLATE'] = $sp['ENABLETEMPLATE'];
+		}
+		if (!isset($P['MODE'])) {
+			$P['MODE'] = $sp['MODE'];
+		}
 		$modPro = ($sp['DYN_TITLE']!=$P['DYN_TITLE']) ||
 			($sp['DYN_TYPE']!=$P['DYN_TYPE']) ||
 			($sp['DYN_DESCRIPTION']!=$P['DYN_DESCRIPTION']) ||

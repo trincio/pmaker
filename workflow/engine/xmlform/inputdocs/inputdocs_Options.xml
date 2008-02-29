@@ -24,8 +24,14 @@ var currentPagedTable = @#PAGED_TABLE_ID;
     @#PAGED_TABLE_ID.refresh();
   }
   function inputdocsDelete( uid ) {
-    ajax_function('@G::encryptlink(@#inputdocsDelete)','','INP_DOC_UID='+uid,'POST');
-    @#PAGED_TABLE_ID.refresh();
+    new leimnud.module.app.confirm().make({
+    	label:'@G::LoadTranslation(ID_MSG_CONFIRM_DELETE_DOCUMENT)',
+    	action:function()
+    	{
+        ajax_function('@G::encryptlink(@#inputdocsDelete)','','INP_DOC_UID='+uid,'POST');
+        @#PAGED_TABLE_ID.refresh();
+      }.extend(this)
+    });
   }
 </js>
 <!-- Default Search option -->
