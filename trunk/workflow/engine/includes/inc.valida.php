@@ -42,7 +42,7 @@ function IsKeyValid ( mode ) {
 
   window.event.returnValue = true;
   if (! bOk) {
-    alert ("<?=G::LoadMessageXml('ID_THE_CHARACTER')?> " + String (car) + " <?=G::LoadMessageXml('ID_NOT_VALID')?>");
+    alert ("<?=G::LoadTranslationXml('ID_THE_CHARACTER')?> " + String (car) + " <?=G::LoadTranslationXml('ID_NOT_VALID')?>");
     window.event.returnValue = false;
   }
 }
@@ -90,7 +90,7 @@ function control1 (nameField) {
 
 	// validate input parameters
 	if (!nameField)
-		return cal_error("<?=G::LoadMessageXml('ID_ERROR_CALLING_CONTROL')?>");
+		return cal_error("<?=G::LoadTranslation('ID_ERROR_CALLING_CONTROL')?>");
 	if (nameField == null)
 		return cal_error("Error calling the calendar: parameter specified is not valid tardet control");
 
