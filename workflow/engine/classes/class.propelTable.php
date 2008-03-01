@@ -722,7 +722,7 @@ class propelTable
         $this->tpl->newBlock( 'norecords' );
         $this->tpl->assign( "columnCount", $this->colCount);
         $noRecordsFound='ID_NO_RECORDS_FOUND';
-        if (G::LoadMessageXml($noRecordsFound)) $noRecordsFound = G::LoadMessageXml($noRecordsFound);
+        if (G::LoadTranslation($noRecordsFound)) $noRecordsFound = G::LoadTranslation($noRecordsFound);
         $this->tpl->assign( "noRecordsFound", $noRecordsFound);
 
       }

@@ -1084,7 +1084,7 @@ class G
   {
     global $arrayXmlMessages;
     $_SESSION['G_MESSAGE_TYPE'] = $strType;
-    $_SESSION['G_MESSAGE'] = nl2br (G::LoadMessage($msgID));
+    $_SESSION['G_MESSAGE'] = nl2br (G::LoadTranslation($msgID));
   }
 
   //just put the $text in the message text
@@ -1165,7 +1165,7 @@ class G
     }
   }
     /**
-   * Function LoadMessageXml
+   * Function LoadTranslation
    * @author Aldo Mauricio Veliz Valenzuela. <mauricio@colosa.com>
    * @access public
    * @parameter string msgID
@@ -2519,7 +2519,7 @@ class oldG
     global $arrayXmlMessages;
 
     if ($msg == '')
-      $msg = G::LoadMessage($msgID);
+      $msg = G::LoadTranslation($msgID);
 
     $HTTP_SESSION_VARS['G_MESSAGE_TYPE'] = $strType;
     $HTTP_SESSION_VARS['G_MESSAGE'] = nl2br ($msg);
