@@ -62,13 +62,6 @@ foreach ($_POST['form']['TASKS'] as $aValues)
 		$sStatus = 'SELFSERVICE';
 	}
 }
-foreach ($_POST['form']['TASKS'] as $aValues)
-{
-	if ($aValues['TAS_UID'] == '-1')
-	{
-		$sStatus = 'COMPLETED';
-	}
-}
 
 try {
   //load data
