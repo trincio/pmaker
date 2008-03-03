@@ -70,12 +70,10 @@
         <td class="FormFieldContent">{$data.NEXT_TASK.USR_UID}{$data.NEXT_TASK.USR_HIDDEN_FIELD}</td>
    	 </tr>
     {else}
-    	<tr>
-    		 <td class="FormLabel" width="100">
-         </td><td class="FormFieldContent"> ?????? {$data.NEXT_TASK.TAS_TITLE}
-           <input type="hidden" name="form[TASKS][{$id}][USR_UID]" id="form[TASKS][{$id}][USR_UID]" value="">
-         </td>
-    	</tr>
+      <tr>
+   	 	<td class="FormLabel" width="100">Employee:</td>
+        <td class="FormFieldContent">{$data.NEXT_TASK.USR_UID}{$data.NEXT_TASK.USR_HIDDEN_FIELD}</td>
+   	 </tr>
     {/if}
   
  	 <tr height="0">
@@ -110,40 +108,3 @@
 {if $PROCESS.ROU_TYPE neq 'SELECT'}
   </form>
 {/if}
-
-<script type="text/javascript">
-{literal}
-var showUsers = function(sTask)
-{
-	if (sTask == '')
-	{
-		document.getElementById('spanUSR_UID').innerHTML = '';
-		document.getElementById('btnContinue').disabled  = true;
-	}
-	else
-	{
-		var aTask = sTask.split('|');
-		document.getElementById('form[TASKS][1][TAS_UID]').value           = aTask[0];
-		document.getElementById('form[TASKS][1][TAS_ASSIGN_TYPE]').value   = aTask[2];
-		document.getElementById('form[TASKS][1][TAS_DEF_PROC_CODE]').value = aTask[3];
-		document.getElementById('form[TASKS][1][DEL_PRIORITY]').value      = aTask[4];
-		var oRPC = new leimnud.module.rpc.xmlhttp({
-      url   : '../cases/cases_Ajax',
-      async : false,
-      method: 'POST',
-      args  : 'action=showUsers&TAS_UID=' + aTask[0] + '&USR_UID=' + aTask[1] + '&TAS_ASSIGN_TYPE=' + aTask[2] + '&TAS_ASSIGN_VARIABLE=' + aTask[5]
-    });
-    oRPC.make();
-    document.getElementById('spanUSR_UID').innerHTML = oRPC.xmlhttp.responseText;
-    if (document.getElementById('_ERROR_'))
-    {
-		  document.getElementById('btnContinue').disabled = true;
-	  }
-	  else
-	  {
-	  	document.getElementById('btnContinue').disabled = false;
-	  }
-	}
-};
-{/literal}
-</script>

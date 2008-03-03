@@ -7,17 +7,17 @@
 
 <IFORM type="hidden" />
 
-<TAS_DEF_TITLE type="textarea" required="1" cols="38" rows="3" group="1">
+<TAS_DEF_TITLE type="textarea" required="1" cols="48" rows="5" group="1">
   <en>Case Title</en>
   <es>Título del caso</es>
 </TAS_DEF_TITLE>
 
-<TAS_DEF_DESCRIPTION type="textarea" required="1" cols="38" rows="3" group="1">
+<TAS_DEF_DESCRIPTION type="textarea" required="1" cols="48" rows="5" group="1">
   <en>Case Description</en>
   <es>Descripción del caso</es>
 </TAS_DEF_DESCRIPTION>
 
-<TAS_DEF_PROC_CODE type="textarea" required="1" cols="38" rows="3" group="1">
+<TAS_DEF_PROC_CODE type="textarea" required="1" cols="48" rows="5" group="1">
   <en>Case Status</en>
   <es>Estado del Caso</es>
 </TAS_DEF_PROC_CODE>

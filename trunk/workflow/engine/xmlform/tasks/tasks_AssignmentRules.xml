@@ -13,18 +13,16 @@
 
 <TAS_ASSIGN_TYPE type="radiogroup" defaultvalue="BALANCED" group="1">
   <en>Incoming Assigment type
-    <option name="BALANCED">Round Robin assignment</option>
-    <option name="MANUAL">Manual assignment</option>
-    <option name="EVALUATE">Value Based assignment</option>
+    <option name="BALANCED">Round Robin Assignment</option>
+    <option name="MANUAL">Manual Assignment</option>
+    <option name="EVALUATE">Value Based Assignment</option>
     <!--<option name="SELFSERVICE">Self Service Task</option>-->
   </en>
-  <es>Tipo de Asignación recibida
-    <option name="BALANCED">Asignación Cíclica</option>
-    <option name="MANUAL">Manual</option>
-    <option name="EVALUATE">Asignación por valores de caso</option>
-    <!--<option name="SELFSERVICE">Tarea de auto servicio</option>-->
-  </es>
 </TAS_ASSIGN_TYPE>
+
+<TAS_ASSIGN_VARIABLE type="text" size="50" maxlength="155" defaultvalue="@@SYS_NEXT_USER_TO_BE_ASSIGNED"  >
+  <en>Variable for Value Based Assignment</en>
+</TAS_ASSIGN_VARIABLE>
 
 <!--<TAS_DERIVATION type="checkbox" value="TRUE" group="1">
   <en>Fast Assignment</en>

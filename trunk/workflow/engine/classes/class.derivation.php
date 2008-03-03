@@ -196,7 +196,7 @@ class Derivation
       foreach ( $aUsers as $key => $val ) {
         $userFields = $oUser->load($val);
         $auxFields['USR_UID'] = $userFields['USR_UID'];
-        $auxFields['USR_USERNAME  '] = $userFields['USR_USERNAME'];
+        $auxFields['USR_USERNAME']   = $userFields['USR_USERNAME'];
         $auxFields['USR_FIRSTNAME']  = $userFields['USR_FIRSTNAME'];
         $auxFields['USR_LASTNAME']   = $userFields['USR_LASTNAME'];
         $auxFields['USR_FULLNAME']   = $userFields['USR_LASTNAME'] . ' ' . $userFields['USR_FIRSTNAME'];
@@ -212,7 +212,7 @@ class Derivation
     else {
       $userFields = $oUser->load( $aUsers );
       $auxFields['USR_UID']        = $userFields['USR_UID'];
-      $auxFields['USR_USERNAME  '] = $userFields['USR_USERNAME'];
+      $auxFields['USR_USERNAME']   = $userFields['USR_USERNAME'];
       $auxFields['USR_FIRSTNAME']  = $userFields['USR_FIRSTNAME'];
       $auxFields['USR_LASTNAME']   = $userFields['USR_LASTNAME'];
       $auxFields['USR_FULLNAME']   = $userFields['USR_LASTNAME'] . ' ' . $userFields['USR_FIRSTNAME'];
@@ -232,7 +232,6 @@ class Derivation
     $nextAssignedTask = $tasInfo['NEXT_TASK'];
     $lastAssigned     = $tasInfo['NEXT_TASK']['TAS_LAST_ASSIGNED'];
     $sTasUid          = $tasInfo['NEXT_TASK']['TAS_UID'];
-
     // to do: we can increase the LOCATION by COUNTRY, STATE and LOCATION
     /* Verify if the next Task is set with the option "TAS_ASSIGN_LOCATION == TRUE" */
     $assignLocation = '';
@@ -246,7 +245,7 @@ class Derivation
     /* End - Verify if the next Task is set with the option "TAS_ASSIGN_LOCATION == TRUE" */
 
     $uidUser = '';
-    switch($nextAssignedTask['TAS_ASSIGN_TYPE'])
+    switch( $nextAssignedTask['TAS_ASSIGN_TYPE'] )
     {
       case 'BALANCED' :
            $users = $this->getAllUsersFromAnyTask ($sTasUid);
@@ -269,8 +268,18 @@ class Derivation
            $users = $this->getAllUsersFromAnyTask ($sTasUid);
            $userFields = $this->getUsersFullNameFromArray ($users);
            break;
+      case 'EVALUATE' :
+           $AppFields = $this->case->loadCase( $tasInfo['APP_UID'] );
+           $variable  = str_replace ( '@@', '', $nextAssignedTask['TAS_ASSIGN_VARIABLE'] );
+           if ( isset ( $AppFields['APP_DATA'][$variable] ) ) {
+             $value = $AppFields['APP_DATA'][$variable];
+             $userFields = $this->getUsersFullNameFromArray ($value);             	   
+           }
+           else
+             throw ( new Exception("Task doesn't have a valid user in variable $variable or this variable doesn't exists.") ) ;
+           break;
       default :
-           krumo ($users); die;
+           throw ( new Exception('Invalid Task Assignment method for Next Task ') ) ;
     }
     return $userFields;
   }
