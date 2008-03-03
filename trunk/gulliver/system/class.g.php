@@ -708,7 +708,7 @@ class G
     $filename = $file;
 
     if ( file_exists ( $filename ) ) {
-      switch ( $typefile ) {
+      switch ( strtolower ($typefile ) ) {
         case 'js' :
           G::sendHeaders ( $filename , 'text/javascript', $download, $downloadFileName ); break;
         case 'htm' :

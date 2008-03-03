@@ -297,10 +297,9 @@ class Derivation
     $this->case = new cases();
     //first, we close the current derivation, then we'll try to derivate to each defined route
     $appFields = $this->case->LoadCase($currentDelegation['APP_UID'], $currentDelegation['DEL_INDEX'] );
-krumo ($currentDelegation);    
-krumo ( $nextDelegations ); //*////*/*/*/*/quitar comentario
-    //$this->case->CloseCurrentDelegation ( $currentDelegation['APP_UID'], $currentDelegation['DEL_INDEX'] );
-
+//krumo ($currentDelegation);    
+//krumo ( $nextDelegations ); //*////*/*/*/*/quitar comentario
+    $this->case->CloseCurrentDelegation ( $currentDelegation['APP_UID'], $currentDelegation['DEL_INDEX'] );
     //Count how many tasks should be derivated.
     $countNextTask = count($nextDelegations);
     foreach($nextDelegations as $nextDel)
@@ -314,23 +313,8 @@ krumo ( $nextDelegations ); //*////*/*/*/*/quitar comentario
         default:
           // get all siblingThreads
           $siblingThreads = $this->case->getSiblingThreads( $currentDelegation['APP_UID'], $currentDelegation['DEL_INDEX'] );
-          krumo ($siblingThreads); die;
-          // verify previous derivations, if one of them is open, we must wait for it.
-        /*
-          // Count the total previous tasks of $nextDel['TAS_UID']
-          $countPrevTask = $this->case->CountTotalPreviousTasks( $nextDel['TAS_UID'] );
-          // Start Block : Quitar de los pendientes los que no fueron iniciados
-          $_pendingDel = $pendingDel;
-          $pendingDel=array();
-          foreach($_pendingDel as $pending)
-          {
-            $opened = $this->case->isRouteOpen( $pending['APP_UID'], $pending['TAS_UID']);
-            if ($opened) $pendingDel[] = $pending;
-          }
-
-          $pending = count($pendingDel);
-*/
-          $canDerivate = true; //???
+          //krumo ($siblingThreads); die;
+          $canDerivate = count($siblingThreads) == 0;
           if ( $canDerivate ) {
             if ( $nextDel['TAS_ASSIGN_TYPE'] == 'BALANCED') {
               $this->setTasLastAssigned ($nextDel['TAS_UID'], $nextDel['USR_UID']);

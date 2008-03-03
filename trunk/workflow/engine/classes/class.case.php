@@ -356,6 +356,7 @@ class Cases {
   */
   function getSiblingThreads ( $sAppUid, $iDelIndex ) {
     try {
+    	//get the parent thread
       $c = new Criteria();
       $c->add ( AppThreadPeer::APP_UID, $sAppUid );
       $c->add ( AppThreadPeer::DEL_INDEX, $iDelIndex );
@@ -364,11 +365,13 @@ class Cases {
       $rs->next();
       $row = $rs->getRow();
       $iParent = $row['APP_THREAD_PARENT'];
-      
+
+      //get the sibling       
       $aThreads = array();
       $c = new Criteria();
       $c->add ( AppThreadPeer::APP_UID, $sAppUid );
       $c->add ( AppThreadPeer::APP_THREAD_PARENT, $iParent );
+      $c->add ( AppThreadPeer::DEL_INDEX,         $iDelIndex, Criteria::NOT_EQUAL );
       $rs = AppThreadPeer::doSelectRs ( $c );
       $rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
       $rs->next();
