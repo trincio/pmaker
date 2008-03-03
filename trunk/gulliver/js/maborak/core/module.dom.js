@@ -30,7 +30,9 @@ leimnud.Package.Public({
 				this.parent.event.add(this.button,"mouseover",this.mouseover);
 				this.parent.event.add(this.button,"mouseout",this.mouseout);
 				this.parent.dom.setStyle(this.button,style || {});
-				if(typeof go==="function"){this.parent.event.add(this.button,"mouseup",go.args(this.button));}
+				if(typeof go==="function"){
+					this.button.onmouseup=go.args(this.button);
+				}
 				return this.button;
 			};
 			this.mouseover=function()

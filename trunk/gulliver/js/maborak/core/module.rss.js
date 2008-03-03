@@ -124,7 +124,7 @@ leimnud.Package.Public({
 				var item = items[i];
 				f.item.push({
 					title		: (this.tag(item,'title',0,true)	|| '').escapeHTML(),
-					link		: (this.tag(item,'link',0,true)		|| '').escapeHTML(),
+					link		: ((this.type=='rss')?(this.tag(item,'link',0,true) || ""):(this.tag(item,'link',0).getAttribute('href') || "")).escapeHTML(),
 					pubDate		: (this.tag(item,(this.type=='rss')?'pubDate':'updated',0,true)		|| ''),
 					content		: (this.tag(item,(this.type=='rss')?((this.tag(item,'encoded',0,true))?'encoded':'content'):'content',0,true) || '').stripScript(),
 					description	: (this.tag(item,(this.type=='rss')?'description':'summary',0,true)	|| '').stripScript(),
@@ -222,7 +222,8 @@ leimnud.Package.Public({
 					link		= new DOM('div',{className:"module_rss_itemLink___"+this.options.theme}).append(
 						new button("Read More",function(evt,button,i){
 							var ln = (this.parent.browser.isIE)?button:i;
-							window.open(this.feedArray.item[ln].link);
+							var link = this.feedArray.item[ln].link;
+							window.open(link);
 						}.extend(this,i)),
 						new button("Send by Email",this.send.args(i))
 					)
@@ -446,13 +447,22 @@ leimnud.Package.Public({
 					url:this.options.proxy,
 					args:"action=add&data="+ojs
 				});
-				r.callback=function(){this.elements.interface.add.enable();}.extend(this);
+				r.callback=function(rpc){
+					var result = rpc.xmlhttp.responseText;
+					if(result==="Failed")
+					{
+						new this.parent.module.app.alert().make({label:"Write failed: <b>"+this.options.fileJson+"</b>"});
+					}
+					this.elements.interface.add.enable();
+				}.extend(this);
 				r.make();
 			}
 			this.options.feed.push(obj);
-			this.elements.feedSelector.append(
+			var fls = this.elements.feedSelector.options;
+			fls[fls.length] = new Option((fls.length+1)+".- "+(obj.title),index,true);
+/*			this.elements.feedSelector.append(
 				new Option(obj.title,index,true)
-			);
+			);*/
 			this.load(index);
 		};
 		this.send=function(evt,b,index)
@@ -505,23 +515,26 @@ leimnud.Package.Public({
 			};
 			myPanel.make();
 			var table = document.createElement("table");
+			myPanel.addContent(table);
 			table.className="app_grid_table___"+this.options.theme;
 			var url,title,probe;
 			$(table).append(
-				new DOM('tr').append(
-					new DOM('td',{innerHTML:"Url:"},{width:"15%",textAlign:"right"}),
-					new DOM('td',false,{width:"85%",padding:1}).append(
-						url = new input(false,{width:"100%"})
+				new DOM('tbody').append(
+					new DOM('tr').append(
+						new DOM('td',{innerHTML:"Url:"},{width:"15%",textAlign:"right"}),
+						new DOM('td',false,{width:"85%",padding:1}).append(
+							url = new input(false,{width:"100%"})
+						)
+					),
+					new DOM('tr').append(
+						new DOM('td',{innerHTML:"Title:"},{textAlign:"right"}),
+						new DOM('td',false,{padding:1}).append(
+							title = new input(false,{width:"100%"})
+						)
+					),
+					new DOM('tr').append(
+						probe = new DOM('td',{innerHTML:"",colSpan:2},{textAlign:"center",padding:1})
 					)
-				),
-				new DOM('tr').append(
-					new DOM('td',{innerHTML:"Title:"},{textAlign:"right"}),
-					new DOM('td',false,{padding:1}).append(
-						title = new input(false,{width:"100%"})
-					)
-				),
-				new DOM('tr').append(
-					probe = new DOM('td',{innerHTML:"",colSpan:2},{textAlign:"center",padding:1})
 				)
 			);
 			var but0 = myPanel.elements.statusBarButtons[0];
@@ -586,7 +599,6 @@ leimnud.Package.Public({
 				but1.disable();
 				return false;
 			}.extend(this);
-			myPanel.addContent(table);
 			return false;
 		};
 		this.tag=function(DOM,tag,node,value)

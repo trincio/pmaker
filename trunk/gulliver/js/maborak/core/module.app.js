@@ -1291,9 +1291,10 @@ leimnud.Package.Public({
 		{
 			this.make=function(options)
 			{
+				var lb	= (typeof G_STRINGS!=='undefined')?G_STRINGS:{};
 				var label={
-					accept:((G_STRINGS)?G_STRINGS.ACCEPT:"Aceptar"),
-					cancel:((G_STRINGS)?G_STRINGS.CANCEL:"Cancelar")
+					accept:lb.ACCEPT || "Aceptar",
+					cancel:lb.CANCEL || "Cancelar"
 				};
 				this.panel = new this.parent.module.panel();
 				this.options = {
@@ -1352,8 +1353,9 @@ leimnud.Package.Public({
 		{
 			this.make=function(options)
 			{
+				var lb	= (typeof G_STRINGS!=='undefined')?G_STRINGS:{};
 				var label={
-					accept:((G_STRINGS)?G_STRINGS.ACCEPT:"Aceptar")
+					accept:lb.ACCEPT || "Aceptar"
 				};
 				this.panel = new this.parent.module.panel();
 				this.options = {
