@@ -297,8 +297,8 @@ class Derivation
     $this->case = new cases();
     //first, we close the current derivation, then we'll try to derivate to each defined route
     $appFields = $this->case->LoadCase($currentDelegation['APP_UID'], $currentDelegation['DEL_INDEX'] );
-//krumo ($currentDelegation);    
-//krumo ( $nextDelegations ); //*////*/*/*/*/quitar comentario
+krumo ($currentDelegation);
+krumo ( $nextDelegations ); //*////*/*/*/*/quitar comentario
     $this->case->CloseCurrentDelegation ( $currentDelegation['APP_UID'], $currentDelegation['DEL_INDEX'] );
     //Count how many tasks should be derivated.
     $countNextTask = count($nextDelegations);
@@ -308,20 +308,26 @@ class Derivation
         case TASK_FINISH_PROCESS:
           /*Close all delegations of $currentDelegation['APP_UID'] */
           $this->case->closeAllDelegations ( $currentDelegation['APP_UID'] );
+          $this->case->closeAllThreads ( $currentDelegation['APP_UID']);
           break;
 
         default:
           // get all siblingThreads
-          $siblingThreads = $this->case->getSiblingThreads( $currentDelegation['APP_UID'], $currentDelegation['DEL_INDEX'] );
-          //krumo ($siblingThreads); die;
-          $canDerivate = count($siblingThreads) == 0;
+          if ( $currentDelegation['ROU_TYPE'] == 'SEC-JOIN' ) {
+            $siblingThreads = $this->case->getOpenSiblingThreads( $currentDelegation['APP_UID'], $currentDelegation['DEL_INDEX'] );
+            $canDerivate = count($siblingThreads) == 0;
+            
+          //krumo ($siblingThreads);  die;
+          }
+          else 
+            $canDerivate = true;
+            
           if ( $canDerivate ) {
             if ( $nextDel['TAS_ASSIGN_TYPE'] == 'BALANCED') {
               $this->setTasLastAssigned ($nextDel['TAS_UID'], $nextDel['USR_UID']);
             }
 
             $iAppThreadIndex = $appFields['DEL_THREAD'];
-
             // the new delegation
             $delType = 'NORMAL';
             $iNewDelIndex = $this->case->newAppDelegation( $_SESSION['PROCESS'],
@@ -330,17 +336,29 @@ class Derivation
               $nextDel['USR_UID'],
               $currentDelegation['DEL_INDEX'],
               $nextDel['DEL_PRIORITY'],
-              $delType );
-
-            if ( $currentDelegation['ROU_TYPE'] == 'PARALLEL'  ) {
-              $this->case->closeAppThread ( $currentDelegation['APP_UID'], $iAppThreadIndex);
-              $iNewThreadIndex = $this->case->newAppThread ( $currentDelegation['APP_UID'], $iNewDelIndex, $iAppThreadIndex );
-              $this->case->updateAppDelegation ( $currentDelegation['APP_UID'], $iNewDelIndex, $iNewThreadIndex  );
-            }
-            else {
+              $delType,
+              $iAppThreadIndex 
+               );
+            
+            switch ( $currentDelegation['ROU_TYPE'] ) {
+            	case 'PARALLEL' :
+                   $this->case->closeAppThread ( $currentDelegation['APP_UID'], $iAppThreadIndex);
+                   $iNewThreadIndex = $this->case->newAppThread ( $currentDelegation['APP_UID'], $iNewDelIndex, $iAppThreadIndex );
+                   $this->case->updateAppDelegation ( $currentDelegation['APP_UID'], $iNewDelIndex, $iNewThreadIndex  );
+                   break;
+              default : 
               $this->case->updateAppThread ( $currentDelegation['APP_UID'], $iAppThreadIndex, $iNewDelIndex );
-            }
+            }//switch
 
+          }
+          else {  //when the task doesnt generate a new AppDelegation
+            $iAppThreadIndex = $appFields['DEL_THREAD'];
+            switch ( $currentDelegation['ROU_TYPE'] ) {
+            	case 'SEC-JOIN' :
+                   $this->case->closeAppThread ( $currentDelegation['APP_UID'], $iAppThreadIndex);
+            	     break;
+              default : 
+            }//switch
           }
       }
 
@@ -350,38 +368,16 @@ class Derivation
     }
 
     /* Start Block : UPDATES APPLICATION */
-    //if ($countNextTask == 1) {
-    //  $firstDel = $nextDelegations[1];
-    //  $appFields['APP_CUR_USER'] = $firstDel['USR_UID'];
-    //  $appFields['APP_PARALLEL'] = 'N';
-    //}
 
     //Set THE APP_STATUS
     $appFields['APP_STATUS'] = $currentDelegation['APP_STATUS'];
 
     /* Start Block : Count the open threads of $currentDelegation['APP_UID'] */
     $openThreads = $this->case->GetOpenThreads( $currentDelegation['APP_UID'] );
-    if ( $openThreads == 0) {
-      /*Close case  */
+    if ( $openThreads == 0) {       //Close case  
       $appFields['APP_STATUS']      = 'COMPLETED';
       $appFields['APP_FINISH_DATE'] = 'now';
     }
-    /*
-    if ( $openThreads > 1) {
-      $appFields['APP_CUR_USER'] = '';
-      $appFields['APP_PARALLEL'] = 'Y';
-    }
-    elseif ( $openThreads == 1 )
-    {
-      //$openThreads = $openThreads->read();
-      $appFields['APP_CUR_USER'] = $openThreads['USR_UID'];
-      $appFields['APP_PARALLEL'] = 'N';
-    }
-    else
-    {
-
-    }
-    /* End Block */
 
     /* Start Block : UPDATES APPLICATION */
     $this->case->updateCase ( $currentDelegation['APP_UID'], $appFields );

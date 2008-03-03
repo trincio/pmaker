@@ -51,7 +51,7 @@ G::LoadClass("dates");
  */
 class AppDelegation extends BaseAppDelegation {
 
-  function createAppDelegation ($sProUid, $sAppUid, $sTasUid, $sUsrUid ) {
+  function createAppDelegation ($sProUid, $sAppUid, $sTasUid, $sUsrUid, $sAppThread ) {
     if (!isset($sProUid) || strlen($sProUid) == 0 ) {
       throw ( new Exception ( 'Column "PRO_UID" cannot be null.' ) );
     }
@@ -66,6 +66,9 @@ class AppDelegation extends BaseAppDelegation {
 
     if (!isset($sUsrUid) || strlen($sUsrUid ) == 0 ) {
       throw ( new Exception ( 'Column "USR_UID" cannot be null.' ) );
+    }
+    if (!isset($sAppThread) || strlen($sAppThread ) == 0 ) {
+      throw ( new Exception ( 'Column "APP_THREAD" cannot be null.' ) );
     }
     //get max DEL_INDEX SELECT MAX(DEL_INDEX) AS M FROM APP_DELEGATION WHERE APP_UID="'.$Fields['APP_UID'].'"'
     $c = new Criteria ();
@@ -85,7 +88,7 @@ class AppDelegation extends BaseAppDelegation {
     $this->setUsrUid          ( $sUsrUid );
     $this->setDelType         ( 'NORMAL' );
     $this->setDelPriority     ( 'NORMAL' );
-    $this->setDelThread       ( 1 );
+    $this->setDelThread       ( $sAppThread );
     $this->setDelThreadStatus ( 'OPEN' );
     $this->setDelDelegateDate ( 'now' );
     $this->setDelTaskDueDate  ( $this->calculateDueDate() );

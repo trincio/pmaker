@@ -388,6 +388,45 @@ class Cases {
     }
   }
 
+  /*
+  * getSiblingThreads
+  * @param string $sAppUid
+  * @return
+  */
+  function getOpenSiblingThreads ( $sAppUid, $iDelIndex ) {
+    try {
+    	//get the parent thread
+      $c = new Criteria();
+      $c->add ( AppThreadPeer::APP_UID, $sAppUid );
+      $c->add ( AppThreadPeer::DEL_INDEX, $iDelIndex );
+      $rs = AppThreadPeer::doSelectRs ( $c );
+      $rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $rs->next();
+      $row = $rs->getRow();
+      $iParent = $row['APP_THREAD_PARENT'];
+
+      //get the sibling       
+      $aThreads = array();
+      $c = new Criteria();
+      $c->add ( AppThreadPeer::APP_UID, $sAppUid );
+      $c->add ( AppThreadPeer::APP_THREAD_PARENT, $iParent );
+      $c->add ( AppThreadPeer::APP_THREAD_STATUS, 'OPEN' );
+      $c->add ( AppThreadPeer::DEL_INDEX,         $iDelIndex, Criteria::NOT_EQUAL );
+      $rs = AppThreadPeer::doSelectRs ( $c );
+      $rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $rs->next();
+      $row = $rs->getRow();
+      while ( is_array($row) ) {
+        $aThreads[] = $row;
+        $rs->next();
+        $row = $rs->getRow();
+      }
+      return $aThreads;
+    }
+  	catch ( Exception $e ) {
+	    throw ( $e );
+    }
+  }
 
   /*
   * CountTotalPreviousTasks
@@ -550,12 +589,13 @@ print $sql;
   * @param string $sAppUid,
   * @param string $sTasUid,
   * @param string $sUsrUid
+  * @param string $iAppThreadIndex
   * @return
   */
-  function newAppDelegation( $sProUid, $sAppUid, $sTasUid, $sUsrUid, $sPrevious, $sPriority, $sDelType ) {
+  function newAppDelegation( $sProUid, $sAppUid, $sTasUid, $sUsrUid, $sPrevious, $sPriority, $sDelType, $iAppThreadIndex = 1) {
     try {
       $appDel = new AppDelegation();
-      $delIndex = $appDel->createAppDelegation($sProUid, $sAppUid, $sTasUid, $sUsrUid);
+      $delIndex = $appDel->createAppDelegation($sProUid, $sAppUid, $sTasUid, $sUsrUid, $iAppThreadIndex);
       $aData = array();
       $aData['APP_UID'] = $sAppUid;
       $aData['DEL_INDEX'] = $delIndex;
@@ -711,6 +751,36 @@ print $sql;
   }
 
   /*
+  * closeAllDelegations
+  * @param string $sAppUid
+  * @return
+  */
+  function closeAllThreads ( $sAppUid ) {
+    try {
+      //Execute('UPDATE APP_DELEGATION SET DEL_THREAD_STATUS="CLOSED" WHERE APP_UID="$sAppUid" AND DEL_THREAD_STATUS="OPEN"');
+      $c = new Criteria();
+      $c->add ( AppThreadPeer::APP_UID, $sAppUid );
+      $c->add ( AppThreadPeer::APP_THREAD_STATUS, 'OPEN');
+      $rowObj = AppThreadPeer::doSelect ( $c );
+      foreach ( $rowObj as $appThread ) {
+        $appThread->setAppThreadStatus( 'CLOSED' );
+        if ( $appThread->Validate() ) {
+          $appThread->Save();
+        }
+        else {
+          $msg = '';
+          foreach($this->getValidationFailures() as $objValidationFailure) $msg .= $objValidationFailure->getMessage() . "<br/>";
+          throw ( new PropelException ( 'The row cannot be created!', new PropelException ( $msg ) ) );
+        }
+      }
+    }
+  	catch ( Exception $e ) {
+	    throw ( $e );
+    }
+  }
+
+
+  /*
   * newAppThread
   * @param string $sAppUid,
   * @param string $iNewDelIndex
@@ -812,7 +882,8 @@ print $sql;
 
         //appDelegation
         $AppDelegation   = new AppDelegation;
-        $iDelIndex       = $AppDelegation->createAppDelegation($sProUid, $sAppUid, $sTasUid, $sUsrUid );
+        $iAppThreadIndex = 1; //start thread
+        $iDelIndex       = $AppDelegation->createAppDelegation($sProUid, $sAppUid, $sTasUid, $sUsrUid, $iAppThreadIndex );
 
         //appThread
         $AppThread       = new AppThread;
