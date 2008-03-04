@@ -172,11 +172,12 @@ leimnud.Package.Public({
 			}
 			else if(this.type=="link")
 			{
-				//this.probeAbsoluteGroup();
+				//this.probeAbsoGroup();
 				this.elementStart=[];
 				for(i=0;i<this.linkRef.length;i++)
 				{
-					position = this.parent.dom.position(this.linkRef[i],false,true);
+					var position = this.parent.dom.position(this.linkRef[i],false,true);
+					console.info(position)
 					this.elementStart[i]={
 						x:position.x,
 						y:position.y
@@ -350,7 +351,9 @@ leimnud.Package.Public({
 		{
 			if(this.parent.dom.getStyle(d0m,"position")!="absolute")
 			{
+				
 				var position=this.parent.dom.position(d0m,false,true);
+				console.info(position);
 				//alert(position.x+":"+position.y)
 				this.parent.dom.setStyle(d0m,{
 					position:'absolute',
@@ -388,7 +391,7 @@ leimnud.Package.Public({
 					this.parent.dom.setStyle(this.linkRef[i],{
 						position:'absolute',
 						left	:this.elementStart[i].x,
-						top		:this.elementStart[i].y
+						top	:this.elementStart[i].y
 					});
 				}
 			}
