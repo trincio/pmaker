@@ -11,10 +11,19 @@
   <en></en>
 </__DYNAFORM_OPTIONS>
 
+<INP_DOC_UID type="private"/>
+
+<POSITION type="private"/>
+
 <INP_DOC_TITLE type="caption">
-  <en>Input document</en>
-  <es>Documento requerido</es>
+  <en>Title</en>
+  <es>Título</es>
 </INP_DOC_TITLE>
+
+<INP_DOC_DESCRIPTION type="caption">
+  <en>Description</en>
+  <es>Descripción</es>
+</INP_DOC_DESCRIPTION>
 
 <INP_DOC_FORM_NEEDED type="dropdown" colWidth="80" titleAlign="left" align="left" mode="view">
   <en>Document Type
@@ -42,6 +51,16 @@
   </es>
 </INP_DOC_ORIGINAL>
 
+<APP_DOC_CREATE_DATE type="date" mode="view">
+  <en>Created Date</en>
+  <es>Fecha de Creación</es>
+</APP_DOC_CREATE_DATE>
+
+<CREATOR type="text" mode="view">
+  <en>Creator</en>
+  <es>Creador</es>
+</CREATOR>
+
 <!--<INP_DOC_PUBLISHED type="dropdown" colWidth="80" titleAlign="left" align="left" mode="view">
   <en>Access type
   <option name ='PRIVATE'>Private</option>
@@ -53,33 +72,29 @@
   </es>
 </INP_DOC_PUBLISHED>-->
 
-<INP_DOC_DESCRIPTION type="caption">
-  <en>Description</en>
-  <es>Descripción</es>
-</INP_DOC_DESCRIPTION>
-
 <APP_DOC_COMMENT type="caption">
   <en>Comments</en>
   <es>Comentarios</es>
 </APP_DOC_COMMENT>
 
-<NEXT_STEP type="button" onclick="nextStep(this.form);">
-  <en>Next step</en>
-  <es>Siguiente paso</es>
-</NEXT_STEP>
+<BACK type="button" onclick="back('@#INP_DOC_UID', @#POSITION);">
+  <en>Back</en>
+  <es>Atrás</es>
+</BACK>
 
 <JS type="javascript">
+<![CDATA[
 leimnud.event.add(window, 'load', function() {
   if (getField('INP_DOC_FORM_NEEDED').value == 'VIRTUAL') {
     hideRow('INP_DOC_ORIGINAL');
   }
 });
 
-var nextStep = function(oForm)
+var back = function(sUID, iPosition)
 {
-  oForm.action = 'cases_NextStep';
-  oForm.submit();
+  window.location = 'cases_Step?TYPE=INPUT_DOCUMENT&UID=' + sUID + '&POSITION=' + iPosition + '&ACTION=ATTACH';
 };
+]]>
 </JS>
 
 </dynaForm>

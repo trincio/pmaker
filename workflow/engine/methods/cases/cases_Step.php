@@ -167,12 +167,15 @@ switch ($_GET['TYPE'])
       case 'ATTACH':
         switch ($Fields['INP_DOC_FORM_NEEDED']) {
           case 'REAL':
-            $sXmlForm = 'cases/cases_AttachInputDocument1';
-            break;
-          case 'VIRTUAL':
+            $Fields['TYPE_LABEL'] = G::LoadTranslation('ID_NEW');
             $sXmlForm = 'cases/cases_AttachInputDocument2';
             break;
+          case 'VIRTUAL':
+            $Fields['TYPE_LABEL'] = G::LoadTranslation('ID_ATTACH');
+            $sXmlForm = 'cases/cases_AttachInputDocument1';
+            break;
           case 'VREAL':
+            $Fields['TYPE_LABEL'] = G::LoadTranslation('ID_ATTACH');
             $sXmlForm = 'cases/cases_AttachInputDocument3';
             break;
         }
@@ -182,15 +185,20 @@ switch ($_GET['TYPE'])
       break;
       case 'VIEW':
         require_once 'classes/model/AppDocument.php';
+        require_once 'classes/model/Users.php';
         $oAppDocument = new AppDocument();
         $oAppDocument->Fields = $oAppDocument->load($_GET['DOC']);
+        $Fields['POSITION']   = $_SESSION['STEP_POSITION'];
+        $oUser = new Users();
+        $aUser = $oUser->load($oAppDocument->Fields['USR_UID']);
+        $Fields['CREATOR'] = $aUser['USR_FIRSTNAME'] . ' ' . $aUser['USR_LASTNAME'];
         switch ($Fields['INP_DOC_FORM_NEEDED'])
         {
           case 'REAL':
-            $sXmlForm = 'cases/cases_ViewInputDocument1';
+            $sXmlForm = 'cases/cases_ViewInputDocument2';
           break;
           case 'VIRTUAL':
-            $sXmlForm = 'cases/cases_ViewInputDocument2';
+            $sXmlForm = 'cases/cases_ViewInputDocument1';
           break;
           case 'VREAL':
             $sXmlForm = 'cases/cases_ViewInputDocument3';
@@ -290,7 +298,7 @@ switch ($_GET['TYPE'])
       break;
     }
     break;
-    
+
   case 'ASSIGN_TASK':
     $oDerivation = new Derivation();
     $oProcess    = new Process();
@@ -299,7 +307,7 @@ switch ($_GET['TYPE'])
     $aFields['TASK'] = $oDerivation->prepareInformation(
                        array( 'USER_UID'  => $_SESSION['USER_LOGGED'],
                               'APP_UID'   => $_SESSION['APPLICATION'],
-                              'DEL_INDEX' => $_SESSION['INDEX'])  
+                              'DEL_INDEX' => $_SESSION['INDEX'])
                        );
 
     if ( empty($aFields['TASK']) )  {
@@ -313,8 +321,8 @@ switch ($_GET['TYPE'])
       default:
         // loop for every and each possible task to derivate
         foreach ( $aFields['TASK'] as $sKey => &$aValues)
-        {          
-          $sPriority = '';//set priority value 
+        {
+          $sPriority = '';//set priority value
           if ($aFields['TASK'][$sKey]['NEXT_TASK']['TAS_PRIORITY_VARIABLE'] != '') {
             //TO DO: review this type of assignment
             if (isset($oApplication->Fields[ str_replace('@@', '', $aFields['TASK'][$sKey]['NEXT_TASK']['TAS_PRIORITY_VARIABLE'])]) )
