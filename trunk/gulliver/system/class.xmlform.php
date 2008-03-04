@@ -509,8 +509,9 @@ class XmlForm_Field_Title extends XmlForm_Field
    * @parameter string value
    * @return string
    */
-  function render( $value = NULL )
+  function render( $value = NULL, &$owner)
   {
+  	$this->label = G::replaceDataField( $this->label, $owner->values );
 		return $this->htmlentities( $this->label );
 	}
   /* A title node has no value

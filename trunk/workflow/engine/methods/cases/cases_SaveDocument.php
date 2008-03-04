@@ -58,28 +58,29 @@
                    'DOC_UID'             => $_GET['UID'],
                    'APP_DOC_TYPE'        => $_POST['form']['APP_DOC_TYPE'],
                    'APP_DOC_CREATE_DATE' => date('Y-m-d H:i:s'),
-                   'APP_DOC_COMMENT'     => isset($_POST['form']['APP_DOC_COMMENT'])?$_POST['form']['APP_DOC_COMMENT']:'',
+                   'APP_DOC_COMMENT'     => isset($_POST['form']['APP_DOC_COMMENT']) ? $_POST['form']['APP_DOC_COMMENT'] : '',
                    'APP_DOC_TITLE'       => '',
-                   'APP_DOC_FILENAME'    => $_FILES['form']['name']['APP_DOC_FILENAME']);
+                   'APP_DOC_FILENAME'    => isset($_FILES['form']['name']['APP_DOC_FILENAME']) ? $_FILES['form']['name']['APP_DOC_FILENAME'] : '');
   $oAppDocument->create($aFields);
   $sAppDocUid = $oAppDocument->getAppDocUid();
   $info = pathinfo( $oAppDocument->getAppDocFilename() );
-  $ext = $info['extension'];
+  $ext = (isset($info['extension']) ? $info['extension'] : '');
 
   //save the file
-  G::uploadFile($_FILES['form']['tmp_name']['APP_DOC_FILENAME'], PATH_DOCUMENT . $_SESSION['APPLICATION'] . '/', $sAppDocUid . '.' . $ext );
-
-  //to do: process_id undefined
-  $oData['PRO_UID']	  = $_SESSION['APPLICATION'];
-  $oData['APP_UID']	  = $_SESSION['APPLICATION'];
-  $oData['FILENAME']	= PATH_UPLOAD . $_SESSION['APPLICATION'] . '/' . $_FILES['form']['name']['APP_DOC_FILENAME'] ;
-/*
-  if($_FILES['form']['name']['APP_DOC_FILENAME'] != ''){
-  	$oPluginRegistry =& PMPluginRegistry::getSingleton();
-	  $oPluginRegistry->executeTriggers ( PM_UPLOAD_DOCUMENT , $oData );
-  }*/
+  if (!empty($_FILES['form'])) {
+  	if ($_FILES['form']['error']['APP_DOC_FILENAME'] == 0) {
+      G::uploadFile($_FILES['form']['tmp_name']['APP_DOC_FILENAME'], PATH_DOCUMENT . $_SESSION['APPLICATION'] . '/', $sAppDocUid . '.' . $ext );
+    }
+  }
 
   //go to the next step
-  $aNextStep = $oCase->getNextStep($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['STEP_POSITION'] - 1);
-  $_SESSION['STEP_POSITION'] = $aNextStep['POSITION'];
-  G::header('location: ' . $aNextStep['PAGE']);
+  if (!isset($_POST['form']['MORE'])) {
+    $aNextStep = $oCase->getNextStep($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['STEP_POSITION']);
+    $_SESSION['STEP_POSITION'] = $aNextStep['POSITION'];
+    G::header('location: ' . $aNextStep['PAGE']);
+    die;
+  }
+  else {
+  	G::header('location: ' . $_SERVER['HTTP_REFERER']);
+  	die;
+  }

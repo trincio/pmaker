@@ -16,14 +16,14 @@
 <STEP_TYPE_OBJ type="dropdown" colWidth="100" titleAlign="left" align="left">
   <en>Type
   <option name="DYNAFORM">Dynaform</option>
+  <option name="INPUT_DOCUMENT">Input Document</option>
   <option name="OUTPUT_DOCUMENT">Output Document</option>
-  <option name="INPUT_DOCUMENT">Documentation</option>
   <!--<option name="MESSAGE">Message</option>-->
   </en>
   <es>Tipo
   <option name="DYNAFORM">Dynaform</option>
-  <option name="OUTPUT_DOC">Documentos de salida</option>
   <option name="INPUT_DOCUMENT">Documentación</option>
+  <option name="OUTPUT_DOC">Documentos de salida</option>
   <!--<option name="MESSAGE">Message</option>-->
   </es>
 </STEP_TYPE_OBJ>

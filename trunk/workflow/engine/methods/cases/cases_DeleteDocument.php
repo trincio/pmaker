@@ -55,7 +55,7 @@ G::LoadClass('case');
 
 /* Process the info */
 $oAppDocument = new AppDocument();
-//$oAppDocument->remove($_GET['DOC']);
+$oAppDocument->remove($_GET['DOC']);
 $oCase = new Cases();
 if ($_GET['TYPE'] == 'INPUT')
 {

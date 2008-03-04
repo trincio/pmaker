@@ -11,10 +11,22 @@
   <en></en>
 </__DYNAFORM_OPTIONS>
 
-<INP_DOC_TITLE type="caption">
-  <en>Input document</en>
+<TYPE_LABEL type="private"/>
+
+<TITLE1 type="title">
+  <en>Attach Input document</en>
   <es>Documento requerido</es>
+</TITLE1>
+
+<INP_DOC_TITLE type="caption">
+  <en>Title</en>
+  <es>Título</es>
 </INP_DOC_TITLE>
+
+<INP_DOC_DESCRIPTION type="caption">
+  <en>Description</en>
+  <es>Descripción</es>
+</INP_DOC_DESCRIPTION>
 
 <INP_DOC_FORM_NEEDED type="dropdown" colWidth="80" titleAlign="left" align="left" mode="view">
   <en>Document Type
@@ -53,32 +65,27 @@
   </es>
 </INP_DOC_PUBLISHED>-->
 
-<INP_DOC_DESCRIPTION type="caption">
-  <en>Description</en>
-  <es>Descripción</es>
-</INP_DOC_DESCRIPTION>
-
 <APP_DOC_TYPE type="hidden" defaultValue="INPUT" />
-
-<APP_DOC_COMMENT type="textarea" rows="5" cols="32" colWidth="200" titleAlign="left" align="left">
-  <en>Comments</en>
-  <es>Comentarios</es>
-</APP_DOC_COMMENT>
 
 <APP_DOC_FILENAME type="file" >
   <en>File</en>
   <es>Archivo</es>
 </APP_DOC_FILENAME>
 
+<APP_DOC_COMMENT type="textarea" rows="5" cols="32" colWidth="200" titleAlign="left" align="left">
+  <en>Comments</en>
+  <es>Comentarios</es>
+</APP_DOC_COMMENT>
+
+<MORE type="checkbox">
+  <en>Upload more input document</en>
+  <es>Subir más documentos</es>
+</MORE>
+
 <SAVE type="button" onclick="verifyInfo(this.form);">
   <en>Save</en>
   <es>Guardar</es>
 </SAVE>
-
-<NEXT_STEP type="button" onclick="nextStep(this.form);">
-  <en>Next step</en>
-  <es>Siguiente paso</es>
-</NEXT_STEP>
 
 <MESSAGE1 type="phpvariable" />
 
@@ -93,13 +100,6 @@ leimnud.event.add(window, 'load', function() {
 
 var verifyInfo = function(oForm)
 {
-  oAux = getField('APP_DOC_COMMENT');
-  if (oAux.value == '')
-  {
-    alert('@#MESSAGE1');
-    oAux.focus();
-    return;
-  }
   oAux = getField('APP_DOC_FILENAME');
   if (oAux.value == '')
   {
@@ -107,12 +107,13 @@ var verifyInfo = function(oForm)
     oAux.focus();
     return;
   }
-  oForm.submit();
-};
-
-var nextStep = function(oForm)
-{
-  oForm.action = 'cases_NextStep';
+  oAux = getField('APP_DOC_COMMENT');
+  if (oAux.value == '')
+  {
+    alert('@#MESSAGE1');
+    oAux.focus();
+    return;
+  }
   oForm.submit();
 };
 </JS>

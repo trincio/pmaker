@@ -50,7 +50,8 @@
      	  $stepTitle = $oDocument->getOutDocTitle(); break;
      	case 'INPUT_DOCUMENT':
      	  $oDocument = InputDocumentPeer::retrieveByPK($aRow->getStepUidObj());
-     	  $stepTitle = $oDocument->getInpDocTitle(); break;
+     	  $stepTitle = $oDocument->getInpDocTitle();
+     	  $sType     = $oDocument->getInpDocFormNeeded(); break;
      	default:
      	  $stepTitle = $aRow->getStepUid();
      }
@@ -90,13 +91,14 @@
      	break;
      	case 'INPUT_DOCUMENT':
      	  $sOptions  = '<table width="100%" cellpadding="0" cellspacing="0" border="0"><tr>';
-     	  $sOptions .= '<td width="100%" class="treeNode"><a style="' . (($_GET['TYPE'] == 'INPUT_DOCUMENT') && ($_GET['UID'] == $aRow->getStepUidObj() && ($_GET['ACTION'] == 'ATTACH')) ? 'background-color:orange;color:white;padding-left:5px;padding-right:5px;' : '') . '" href="../cases/cases_Step?TYPE=' . $aRow->getStepTypeObj() . '&UID=' . $aRow->getStepUidObj() . '&POSITION=' . $aRow->getStepPosition() . '&ACTION=ATTACH">' . G::LoadTranslation('ID_ATTACH') . '</a></td>';
+     	  $sOptions .= '<td width="100%" class="treeNode"><a style="' . (($_GET['TYPE'] == 'INPUT_DOCUMENT') && ($_GET['UID'] == $aRow->getStepUidObj() && ($_GET['ACTION'] == 'ATTACH')) ? 'background-color:orange;color:white;padding-left:5px;padding-right:5px;' : '') . '" href="../cases/cases_Step?TYPE=' . $aRow->getStepTypeObj() . '&UID=' . $aRow->getStepUidObj() . '&POSITION=' . $aRow->getStepPosition() . '&ACTION=ATTACH">' . ($sType == 'REAL' ? G::LoadTranslation('ID_NEW') : G::LoadTranslation('ID_ATTACH')) . '</a></td>';
      	  $sOptions .= '</tr></table>';
      	  $oCri = new Criteria;
      	  $oCri->add( AppDocumentPeer::APP_UID , $_SESSION['APPLICATION'] );
      	  $oCri->add( AppDocumentPeer::DEL_INDEX , $_SESSION['INDEX'] );
      	  $oCri->add( AppDocumentPeer::DOC_UID , $aRow->getStepUidObj() );
      	  $oCri->add( AppDocumentPeer::APP_DOC_TYPE , 'INPUT' );
+     	  $oCri->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
      	  $aDocuments = AppDocumentPeer::doSelect($oCri);
      	  if (sizeof($aDocuments) !== 0)
      	  {
@@ -106,8 +108,16 @@
      	    while ($oDocument = current($aDocuments))
      	    {
      	      $aRow2 = $oDocument->toArray(BasePeer::TYPE_FIELDNAME);
+     	      $oAux1 = new AppDocument();
+     	      $aAux  = $oAux1->load($aRow2['APP_DOC_UID']);
      	      $sOptions .= '<tr>';
-     	      $sOptions .= '<td width="5%" >' . $i . '.</td><td width="55%" class="treeNodeAlternate"><input type="text" readonly="readonly" style="font:inherit;border:none;width:100%;" value="' . htmlentities( $oDocument->getAppDocFilename(), ENT_QUOTES, "utf-8" ) . '"/></td>';
+     	      if ($aAux['APP_DOC_FILENAME'] != '') {
+     	        $sAux = $aAux['APP_DOC_FILENAME'];
+     	      }
+     	      else {
+     	      	$sAux = $aAux['APP_DOC_COMMENT'];
+     	      }
+     	      $sOptions .= '<td width="5%">' . $i . '.</td><td width="55%" class="treeNodeAlternate"><input type="text" readonly="readonly" style="font:inherit;border:none;width:100%;" value="' . htmlentities( $sAux, ENT_QUOTES, "utf-8" ) . '" title="' . $sAux . '" /></td>';
      	      if (isset($_GET['DOC']))
      	      {
      	        $sOptions .= '<td width="20%" class="treeNode" align="center"><a style="' . (($_GET['TYPE'] == 'INPUT_DOCUMENT') && ($_GET['UID'] == $aRow->getStepUidObj() && ($_GET['ACTION'] == 'VIEW') && ($_GET['DOC'] == $aRow2['APP_DOC_UID'])) ? 'background-color:orange;color:shite;padding-left:5px;padding-right:5px;' : '') . '" href="../cases/cases_Step?TYPE=' . $aRow->getStepTypeObj() . '&UID=' . $aRow->getStepUidObj() . '&POSITION=' . $aRow->getStepPosition() . '&ACTION=VIEW&DOC=' . $aRow2['APP_DOC_UID'] . '">' . G::LoadTranslation('ID_VIEW') . '</a></td>';
