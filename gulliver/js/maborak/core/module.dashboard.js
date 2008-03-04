@@ -30,6 +30,7 @@ leimnud.Package.Public({
 		this.make=function(options)
 		{
 			this.options	= {
+				drag:true,
 				data:[]
 			}.concat(options || {});
 			var width	= this.options.target.offsetWidth-50;
@@ -49,7 +50,7 @@ leimnud.Package.Public({
 				this.parent.dom.setStyle(this.elements.column[i],{
 					width	:width/this.columns,
 					border	:'0px solid red',
-					position:'relative',
+					//position:'relative',
 					verticalAlign:'top'
 				});
 			}
@@ -78,7 +79,7 @@ leimnud.Package.Public({
 				size:{w:this.widthColumn,h:options.height || 300},
 				position:{x:0,y:0},
 				statusBar:false,
-				control:{resize:false,roll:true,drag:false,close:false},
+				control:{resize:false,roll:true,drag:this.options.drag,close:false},
 				fx:{shadow:false}
 			};
 			panel.setStyle={
@@ -94,6 +95,10 @@ leimnud.Package.Public({
 					backgroundImage:"url("+this.parent.info.images+"grid.title.gray.gif)",
 					backgroundPosition:"0pt 0px"
 				}
+			};
+			panel.events={
+				init:[function(){
+				}]
 			};
 			panel.make();
 			if(options.open)

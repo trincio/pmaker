@@ -59,7 +59,7 @@ $G_HEADER->addScriptCode( '
 			target:$("dashboard"),
 data:[
 	[{title:"My info - Page editor",open:{url:"http://wilmer.opensource.colosa.net/sysos/en/blank/users/myInfo"},height:730}],
-	[{url:"http://maborak.com"},{url:"http://rss.maborak.com"}]
+	[{title:"esto",url:"http://maborak.com"},{title:"otro",url:"http://rss.maborak.com"}]
 ]
 		});
 	});' );

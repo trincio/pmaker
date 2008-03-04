@@ -40,7 +40,7 @@ $G_TMP_MENU->AddIdRawOption('USERS',      'users/users_List');
 $G_TMP_MENU->AddIdRawOption('CASES',      'cases/cases_List');
 $G_TMP_MENU->AddIdRawOption('PROCESSES',  'processes/processes_List');
 $G_TMP_MENU->AddIdRawOption('SETUP',      'setup');
-//$G_TMP_MENU->AddIdRawOption('DASHBOARD',  'dashboard');
+$G_TMP_MENU->AddIdRawOption('DASHBOARD',  'dashboard');
 
 $G_TMP_MENU->Labels = array(
   G::LoadTranslation('ID_MY_ACCOUNT'),
