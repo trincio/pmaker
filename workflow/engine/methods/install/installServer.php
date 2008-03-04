@@ -391,7 +391,7 @@ else if($action==="install")
 	fclose( $fp );
 
 	/* Update languages */
-	$update = file_get_contents("http://".$_SERVER['SERVER_NAME']."/sysworkflow/en/green/tools/updateTranslation");
+	$update = file_get_contents("http://".$_SERVER['SERVER_NAME'].":".$_SERVER['SERVER_PORT']."/sysworkflow/en/green/tools/updateTranslation");
 	print_r("Update language:  => ".((!$update)?$update:"OK")."\n");
 }
 ?>
