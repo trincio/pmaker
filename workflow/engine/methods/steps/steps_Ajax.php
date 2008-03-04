@@ -111,6 +111,7 @@ try {
   	  	$aFields['ST_TYPE']  = $aData['sType'];
   	  	global $G_PUBLISH;
     	  global $G_HEADER;
+    	  G::LoadClass('xmlfield_InputPM');
     	  $G_PUBLISH = new Publisher();
         $G_PUBLISH->AddContent('xmlform', 'xmlform', 'steps/triggers_Assign', '', $aFields, '../steps/steps_Ajax');
         $G_HEADER->clearScripts();
@@ -134,14 +135,19 @@ try {
   	  $oStepTrigger->update($aFields);
   	break;
   	case 'editTriggerCondition':
+  	  require_once 'classes/model/Step.php';
+  	  $oStep = new Step();
+  	  $aRow  = $oStep->load($aData['sStep']);
   	  $aFields['STEP_UID'] = $aData['sStep'];
   	  $aFields['TRI_UID']  = $aData['sTrigger'];
   	  $aFields['ST_TYPE']  = $aData['sType'];
   	  $oStepTrigger = new StepTrigger();
   	  $aFields = $oStepTrigger->load($aFields['STEP_UID'], $_SESSION['TASK'], $aFields['TRI_UID'], $aFields['ST_TYPE']);
   	  $aFields['action'] = 'saveTriggerCondition';
+  	  $aFields['PROCESS']  = $aRow['PRO_UID'];
   	  global $G_PUBLISH;
     	global $G_HEADER;
+    	G::LoadClass('xmlfield_InputPM');
     	$G_PUBLISH = new Publisher();
       $G_PUBLISH->AddContent('xmlform', 'xmlform', 'steps/triggersCondition_Edit', '', $aFields, '../steps/steps_Ajax');
       $G_HEADER->clearScripts();

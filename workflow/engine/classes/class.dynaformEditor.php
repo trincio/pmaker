@@ -551,6 +551,7 @@ loadEditor();
 });');*/
 		$G_HEADER->addScriptFile('/js/dveditor/core/dveditor.js');
 		$G_HEADER->addScriptFile('/codepress/codepress.js',1);
+		$G_HEADER->addScriptFile('/js/grid/core/grid.js');
 		/*$G_HEADER->addScriptCode('leimnud.event.add(window,"load",function(){' .
 				'dynaformEditor.views["preview"]=document.getElementById("dynaformEditor[3]");' .
 				'dynaformEditor.views["xmlcode"]=document.getElementById("dynaformEditor[4]");' .

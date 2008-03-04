@@ -11,7 +11,7 @@ SELECT TAS_UID, CON_VALUE FROM TASK LEFT JOIN CONTENT ON (TAS_UID = CON_ID AND C
   <es>Siguiente tarea</es>
 </ROU_NEXT_TASK>
 
-<ROU_CONDITION type="text" size="35" maxlength="255">
+<ROU_CONDITION type="textpm" size="35" maxlength="255" showVars="1" process="@#PROCESS">
   <en>Condition</en>
   <es>Condición</es>
 </ROU_CONDITION>

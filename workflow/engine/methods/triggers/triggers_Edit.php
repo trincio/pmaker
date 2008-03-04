@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * You can contact Colosa Inc, 2655 Le Jeune Road, Suite 1112, Coral Gables, 
+ * You can contact Colosa Inc, 2655 Le Jeune Road, Suite 1112, Coral Gables,
  * FL 33134, USA or email info@colosa.com.
  *
  * The interactive user interfaces in modified source and object code versions
@@ -45,7 +45,7 @@ else
 	$aFields['PRO_UID']  = $_GET['PRO_UID'];
 	$aFields['TRI_TYPE'] = 'SCRIPT';
 }
-
+G::LoadClass('xmlfield_InputPM');
 $G_PUBLISH = new Publisher();
 $G_HEADER->clearScripts();
 $G_PUBLISH->AddContent('xmlform', 'xmlform', 'triggers/triggers_Edit', '', $aFields, '../triggers/triggers_Save');

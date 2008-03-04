@@ -1548,6 +1548,7 @@ class processMap {
   	  	    $sXmlform = 'patterns_Select';
   	  		break;
   	  		case 'EVALUATE':
+  	  		  G::LoadClass('xmlfield_InputPM');
   	  	    $aFields['GRID_EVALUATE_TYPE']['ROU_UID'][$aRow['ROU_CASE']]          = $aRow['ROU_UID'];
   	  		  $aFields['GRID_EVALUATE_TYPE']['ROU_NEXT_TASK'][$aRow['ROU_CASE']]    = $aRow['ROU_NEXT_TASK'];
   	  		  $aFields['GRID_EVALUATE_TYPE']['ROU_CONDITION'][$aRow['ROU_CASE']]    = $aRow['ROU_CONDITION'];
@@ -1572,6 +1573,7 @@ class processMap {
   	  	    $sXmlform = 'patterns_Parallel';
   	  		break;
   	  		case 'PARALLEL-BY-EVALUATION':
+  	  		  G::LoadClass('xmlfield_InputPM');
   	  	    $aFields['GRID_PARALLEL_EVALUATION_TYPE']['ROU_UID'][$aRow['ROU_CASE']]       = $aRow['ROU_UID'];
   	  		  $aFields['GRID_PARALLEL_EVALUATION_TYPE']['ROU_NEXT_TASK'][$aRow['ROU_CASE']] = $aRow['ROU_NEXT_TASK'];
   	  		  $aFields['GRID_PARALLEL_EVALUATION_TYPE']['ROU_CONDITION'][$aRow['ROU_CASE']] = $aRow['ROU_CONDITION'];
