@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * You can contact Colosa Inc, 2655 Le Jeune Road, Suite 1112, Coral Gables, 
+ * You can contact Colosa Inc, 2655 Le Jeune Road, Suite 1112, Coral Gables,
  * FL 33134, USA or email info@colosa.com.
  *
  * The interactive user interfaces in modified source and object code versions
@@ -49,6 +49,7 @@ try {
   require_once 'classes/model/Step.php';
   $oStep     = new Step();
   $aFields   = $oStep->load($_GET['UID']);
+  G::LoadClass('xmlfield_InputPM');
   $G_PUBLISH = new Publisher();
   $G_PUBLISH->AddContent('xmlform', 'xmlform', 'steps/conditions_Edit', '', $aFields, '../steps/conditions_Save');
   $G_HEADER->clearScripts();

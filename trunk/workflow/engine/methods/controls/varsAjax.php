@@ -32,11 +32,11 @@
  * and retain the original copyright notice.
  * -
  */
-$G_FORM  = new Form($_POST['sFormFilename'], $_POST['sPath'], SYS_LANG);
-$aFields = $G_FORM->getVars();
+G::LoadClass('xmlfield_InputPM');
+$aFields = getDynaformsVars($_POST['sProcess']);
 $sHTML   = '<select name="_Var_Form_" id="_Var_Form_" size="' . count($aFields) . '" style="width:100%;height:90%;" ondblclick="insertFormVar(\'' . $_POST['sFieldName'] . '\', this.value);">';
 foreach ($aFields as $aField) {
-	$sHTML .= '<option value="@@' . $aField['sName'] . '">@@' . $aField['sName'] . ' (' . $aField['sType'] . ')</option>';
+	$sHTML .= '<option value="' . $_POST['sSymbol'] . $aField['sName'] . '">' . $_POST['sSymbol'] . $aField['sName'] . ' (' . $aField['sType'] . ')</option>';
 }
 $sHTML .= '</select>';
 $sHTML .= '<p align="center">Double click to insert</p>';

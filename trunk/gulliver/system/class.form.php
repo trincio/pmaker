@@ -48,7 +48,6 @@ class Form extends XmlForm
   var $values = array();
   var $action = '';
   var $ajaxServer = '';
-  var $varsAjaxServer = '../gulliver/varsAjax';
   var $enableTemplate = false;
   var $ajaxSubmit = false;
   var $template;
@@ -273,7 +272,7 @@ class Form extends XmlForm
    * @access public
    * @return array
    */
-  function getVars() {
+  /*function getVars() {
   	$aFields = array();
   	$aAux    = G::getSystemConstants();
   	foreach ($aAux as $sName => $sValue) {
@@ -287,6 +286,6 @@ class Form extends XmlForm
   	  }
   	}
   	return $aFields;
-  }
+  }*/
 }
 ?>

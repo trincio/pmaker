@@ -173,6 +173,16 @@ var G_Grid = function(oForm, sGridName)
   			}
   			else
   			{
+  				aObjects = oNewRow.getElementsByTagName('td')[i].getElementsByTagName('a');
+  				if (aObjects)
+  		    {
+  		    	if (aObjects[0]) {
+  		    		if (aObjects[0].onclick) {
+  		    			sAux = new String(aObjects[0].onclick);
+  		    		  eval('aObjects[0].onclick = ' + sAux.replace(/\[1\]/g, '\[' + (this.oGrid.rows.length - 2) + '\]') + ';');
+  		    	  }
+  		    	}
+  		    }
   				switch (aCells[i].innerHTML.replace(/^\s+|\s+$/g, '').substr(0, 6).toLowerCase())
   		    {
   		    	case '<input':
