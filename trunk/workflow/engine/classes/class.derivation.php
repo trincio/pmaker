@@ -92,7 +92,8 @@ class Derivation
       $bContinue   = true;
 
       //evaluate the condition if there are conditions defined.
-      if( isset( $aDerivation['ROU_CONDITION'] ) && $aDerivation['ROU_CONDITION'] != '' && $aDerivation['ROU_TYPE'] != 'SELECT' ) {
+      if( isset( $aDerivation['ROU_CONDITION'] ) && $aDerivation['ROU_CONDITION'] != '' 
+         && ( $aDerivation['ROU_TYPE'] != 'SELECT' ||  $aDerivation['ROU_TYPE'] == 'PARALLEL-BY-EVALUATION') ) {
         $AppFields = $this->case->loadCase( $aData['APP_UID'] );
         G::LoadClass('pmScript');
         $oPMScript = new PMScript();
@@ -351,6 +352,7 @@ krumo ( $nextDelegations ); //*////*/*/*/*/quitar comentario
             
             switch ( $currentDelegation['ROU_TYPE'] ) {
             	case 'PARALLEL' :
+            	case 'PARALLEL-BY-EVALUATION' :
                    $this->case->closeAppThread ( $currentDelegation['APP_UID'], $iAppThreadIndex);
                    $iNewThreadIndex = $this->case->newAppThread ( $currentDelegation['APP_UID'], $iNewDelIndex, $iAppThreadIndex );
                    $this->case->updateAppDelegation ( $currentDelegation['APP_UID'], $iNewDelIndex, $iNewThreadIndex  );

@@ -14,9 +14,8 @@
   <es>Dynaform Information</es>
 </TITLE>
 
-<DYN_TITLE type="text" maxlength="32" size ="32">
-  <en>Dynaform</en>
-  <es>Dynaform</es>
+<DYN_TITLE type="text" maxlength="128" size ="45">
+  <en>Dynaform Title</en>
 </DYN_TITLE>
 
 <DYN_TYPE type="dropdown" colWidth="80" align="center">
@@ -30,7 +29,7 @@
   </es>
 </DYN_TYPE>
 
-<DYN_DESCRIPTION type="textarea" cols="35" rows="12" >
+<DYN_DESCRIPTION type="textarea" cols="45" rows="8" >
   <en>Description</en>
   <es>Descripción</es>
 </DYN_DESCRIPTION>

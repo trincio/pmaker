@@ -253,10 +253,6 @@ font-weight:normal;
 			<strong class="debug-string">{$CUR_USER}</strong>
 	</div>
 	<div onmouseout="krumo.out(this);" onmouseover="krumo.over(this);" class="debug-element">
-  	<a class="debug-name">APP_DATA</a>	(<em class="debug-type">Integer</em>)
-			<strong class="debug-string">{$APP_DATA}</strong>
-	</div>
-	<div onmouseout="krumo.out(this);" onmouseover="krumo.over(this);" class="debug-element">
   	<a class="debug-name">APP_PARALLEL</a>	(<em class="debug-type">Integer</em>)
 			<strong class="debug-string">{$APP_PARALLEL}</strong>
 	</div>
@@ -379,6 +375,24 @@ font-weight:normal;
   </div>
 </li>
 
+<li class="debug-child">
+	<div onmouseout="krumo.out(this);" onmouseover="krumo.over(this);" onclick="krumo.toggle(this);" class="debug-element debug-expand debug-opened">
+			<a class="debug-name">APP_DATA</a>
+			(<em class="debug-type">Array, <strong class="debug-array-length">{$CANT_APP_DATA} elements</strong></em>) 
+	</div>
+	<div style="display: block;" class="debug-nest">
+	<ul class="debug-node">
+	{foreach key=id item=data from=$APP_DATA}
+	<li class="debug-child">
+	<div onmouseout="krumo.out(this);" onmouseover="krumo.over(this);" onclick="krumo.toggle(this);" class="debug-element debug-opened">
+			<a class="debug-name">{$id}</a>&nbsp;
+	  		<strong class="debug-string">{$data}</strong>
+	</div>
+  </li>
+	{/foreach}  
+  </ul>
+  </div>
+</li>
 
 
 </ul>

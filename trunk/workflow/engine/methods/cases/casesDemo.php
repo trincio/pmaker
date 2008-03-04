@@ -93,6 +93,8 @@ $Fields['CUR_USER']     = $oUser->getUsrFirstname() . ' ' . $oUser->getUsrLastna
 $threads     = $oCase->GetAllThreads ($appFields['APP_UID']); 
 $Fields['THREADS']  = $threads;
 $Fields['CANT_THREADS']  = count($threads);
+
+$Fields['CANT_APP_DATA'] = count($Fields['APP_DATA']);
 $delegations = $oCase->GetAllDelegations ($appFields['APP_UID']); 
 foreach ( $delegations as $key => $val ) {
   $delegations[$key]['TAS_TITLE'] = Content::load ( 'TAS_TITLE', '', $val['TAS_UID'], SYS_LANG );

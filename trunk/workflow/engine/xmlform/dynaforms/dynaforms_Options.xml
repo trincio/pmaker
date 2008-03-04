@@ -15,7 +15,7 @@
 <PAGED_TABLE_ID type="private"/>
 <js type="javascript" replaceTags="1"><![CDATA[
   function dynaformAdd(){
-		popupWindow('@G::LoadTranslation(ID_NEW_DYNAFORM)', '@G::encryptlink(@#dynaformsEdit)?PRO_UID=@%PRO_UID' , 500, 420);
+		popupWindow('@G::LoadTranslation(ID_NEW_DYNAFORM)', '@G::encryptlink(@#dynaformsEdit)?PRO_UID=@%PRO_UID' , 500, 350);
   }
   function dynaformProperties( uid ){
 		popupWindow('@G::LoadTranslation(ID_EDIT_DYNAFORM)', '@G::encryptlink(@#dynaformsEdit)?DYN_UID='+ uid , 500, 400);
