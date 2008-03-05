@@ -46,19 +46,9 @@ switch ($RBAC->userCanAccess('PM_FACTORY'))
 	  die;
 	break;
 }
-  //this code must be moved to class process or processMap
-  //***************************
-  require_once ( "classes/model/Process.php" );
   
-  $oProcess = new Process();
-  $Fields = $oProcess->Load( $_GET['PRO_UID'] );
-
-  $proFields['PRO_UID'] = $_GET['PRO_UID'];
-  if ( $Fields['PRO_STATUS'] == 'ACTIVE' ) 
-    $proFields['PRO_STATUS'] = 'INACTIVE';
-  else
-    $proFields['PRO_STATUS'] = 'ACTIVE';
-
-  $oProcess->Update( $proFields );
+  G::LoadClass('processes');
+  $oProcess = new Processes();
+  $oProcess->changeStatus ( $_GET['PRO_UID'] );
   G::header('location: ' . $_SERVER['HTTP_REFERER']);
   
