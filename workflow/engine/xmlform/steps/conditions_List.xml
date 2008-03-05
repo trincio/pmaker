@@ -11,8 +11,8 @@
 <TASK type="hidden" showInTable="0"/>
 
 <STEP_TITLE type="text" colWidth="180"  titleAlign="left" align="left">
-  <en>Step Name</en>
-  <es>Nombre del paso</es>
+  <en>Title</en>
+  <es>Título</es>
 </STEP_TITLE>
 
 <STEP_CONDITION type="text" colWidth="300"  titleAlign="left" align="left" replaceTags="0">

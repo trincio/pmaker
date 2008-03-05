@@ -30,7 +30,7 @@ var saveDataTaskTemporal = function(iForm)
         {
           oTaskData.TAS_ASSIGN_TYPE = 'EVALUATE';
         }
-
+        oTaskData.TAS_ASSIGN_VARIABLE = getField('TAS_ASSIGN_VARIABLE').value;
       break;
       case 3:
       case '3':

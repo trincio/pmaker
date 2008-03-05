@@ -15,7 +15,7 @@
 </TITLE>
 
 <DYN_TITLE type="text" maxlength="128" size ="45">
-  <en>Dynaform Title</en>
+  <en>Title</en>
 </DYN_TITLE>
 
 <DYN_TYPE type="dropdown" colWidth="80" align="center">
