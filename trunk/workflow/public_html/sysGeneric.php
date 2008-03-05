@@ -1,7 +1,7 @@
 <?php
 /*** enable display_error On to caught even fatal errors ***/
-ini_set('display_errors','on');
-ini_set('error_reporting', E_ALL);
+ini_set('display_errors','On');
+ini_set('error_reporting', E_ALL  );
 ini_set('memory_limit', '80M');
 $path = Array();
 $sf = $_SERVER['SCRIPT_FILENAME'];
