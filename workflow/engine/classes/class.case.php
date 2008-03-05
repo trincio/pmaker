@@ -1225,11 +1225,13 @@ $oData['PRO_UID']   = $aData['PRO_UID'];
     switch ( $sTypeList ) {
       case 'all' :
          $c->add ( ApplicationPeer::APP_STATUS, '', Criteria::NOT_EQUAL );
+         $c->add ( AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL );
+         
          $xmlfile=$filesList[0];
         break;
       case 'to_do' :
          $c->add ( ApplicationPeer::APP_STATUS, 'TO_DO' );
-         $c->add ( AppDelegationPeer::DEL_FINISH_DATE,null, Criteria::ISNULL );
+         $c->add ( AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL );
          $xmlfile=$filesList[1];
         break;
       case 'draft' :
