@@ -32,6 +32,25 @@
  * and retain the original copyright notice.
  * -
  */
+
+require_once ( "classes/model/Process.php" );
+
 class Processes {
+  
+  /*
+  * change Status of any Process
+  * @param string $sUIDUser
+  * @return boolean
+  */
+  function changeStatus ( $sProUid = '') {
+    $oProcess = new Process();
+    $Fields = $oProcess->Load( $sProUid );
+    $proFields['PRO_UID'] = $sProUid;
+    if ( $Fields['PRO_STATUS'] == 'ACTIVE' ) 
+      $proFields['PRO_STATUS'] = 'INACTIVE';
+    else
+      $proFields['PRO_STATUS'] = 'ACTIVE';
+
+    $oProcess->Update( $proFields );
+  }
 }
-?>
