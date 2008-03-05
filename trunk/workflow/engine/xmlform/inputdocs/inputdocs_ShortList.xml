@@ -9,8 +9,8 @@
 <INP_DOC_UID type="hidden" showInTable="0"/>
 
 <INP_DOC_TITLE type="text" colWidth="350" titleAlign="left" align="left">
-  <en>Input document</en>
-  <es>Documento requerido</es>
+  <en>Title</en>
+  <es>Título</es>
 </INP_DOC_TITLE>
 
 <EDIT type="link" colWidth="40" value="@G::LoadTranslation(ID_EDIT)" link="#" onclick="inputdocsEdit(@QINP_DOC_UID);return false;"/>

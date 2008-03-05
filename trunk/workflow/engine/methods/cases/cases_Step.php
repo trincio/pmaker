@@ -182,6 +182,7 @@ switch ($_GET['TYPE'])
         $Fields['MESSAGE1'] = G::LoadTranslation('ID_PLEASE_ENTER_COMMENTS');
         $Fields['MESSAGE2'] = G::LoadTranslation('ID_PLEASE_SELECT_FILE');
         $G_PUBLISH->AddContent('xmlform', 'xmlform', $sXmlForm, '', $Fields, 'cases_SaveDocument?UID=' . $_GET['UID']);
+        $G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_InputdocsList', $oCase->getInputDocumentsCriteria($_SESSION['APPLICATION'], $_SESSION['INDEX'], $_GET['UID']), '');//$aFields
       break;
       case 'VIEW':
         require_once 'classes/model/AppDocument.php';

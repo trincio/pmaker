@@ -10,8 +10,8 @@
 <STEP_UID type="hidden" showInTable="0"/>
 <STEP_POSITION type="hidden" showInTable="0"/>
 <STEP_TITLE type="text" colWidth="280"  titleAlign="left" align="left">
-  <en>Step Title</en>
-  <es>Paso</es>
+  <en>Title</en>
+  <es>Título</es>
 </STEP_TITLE>
 <STEP_TYPE_OBJ type="dropdown" colWidth="100" titleAlign="left" align="left">
   <en>Type

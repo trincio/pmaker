@@ -15,8 +15,8 @@
 </TITLE>
 
 <INP_DOC_TITLE type="text" maxlength="100" size="40" colWidth="200" titleAlign="left" align="left" dataCompareField="T.CON_VALUE" dataCompareType="contains" >
-  <en>Input document</en>
-  <es>Documento requerido</es>
+  <en>Title</en>
+  <es>Título</es>
 </INP_DOC_TITLE>
 
 <INP_DOC_FORM_NEEDED type="dropdown" colWidth="80" titleAlign="left" align="left" dataCompareField="INP_DOC_FORM_NEEDED" dataCompareType="=" >

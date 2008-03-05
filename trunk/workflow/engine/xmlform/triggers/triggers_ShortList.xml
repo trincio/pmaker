@@ -9,8 +9,8 @@
 <TRI_UID type="hidden" showInTable="0"/>
 
 <TRI_TITLE type="text" colWidth="350" titleAlign="left" align="left">
-  <en>Triggers</en>
-  <es>Disparadores</es>
+  <en>Title</en>
+  <es>Título</es>
 </TRI_TITLE>
 
 <EDIT type="link" colWidth="40" value="@G::LoadTranslation(ID_EDIT)" link="#" onclick="triggerEdit(@QTRI_UID);return false;"/>

@@ -15,13 +15,13 @@
 </TITLE>
 
 <OUT_DOC_TITLE type="text" style="width:90%" >
-  <en>Output document</en>
-  <es>Documento requerido</es>
+  <en>Title</en>
+  <es>Título</es>
 </OUT_DOC_TITLE>
 
 <OUT_DOC_FILENAME type="textpm" size="30" maxlength="100" showVars="1" process="@#PRO_UID" symbol="@#">
-  <en>Filename</en>
-  <es>Nombre de Archivo</es>
+  <en>Filename generated</en>
+  <es>Nombre de archivo generado</es>
 </OUT_DOC_FILENAME>
 
 <OUT_DOC_DESCRIPTION type="textarea" rows="3" cols="50">

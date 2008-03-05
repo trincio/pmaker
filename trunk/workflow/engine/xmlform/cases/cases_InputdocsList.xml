@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm
+  sqlConnection=""
+  rowsPerPage="20"
+>
+
+<DOC_UID type="hidden" showInTable="0"/>
+
+<POSITION type="hidden" showInTable="0"/>
+
+<APP_DOC_UID type="hidden" showInTable="0"/>
+
+<CONFIRM type="hidden" showInTable="0"/>
+
+<TITLE type="text" colWidth="275" titleAlign="left" align="left">
+  <en></en>
+  <es></es>
+</TITLE>
+<!---->
+<VIEW type="link" colWidth="25" value="@G::LoadTranslation(ID_VIEW)" link="cases_Step?TYPE=INPUT_DOCUMENT&amp;UID=@#DOC_UID&amp;POSITION=@#POSITION&amp;ACTION=VIEW&amp;DOC=@#APP_DOC_UID" onclick=""/>
+
+<DELETE type="link" colWidth="25" value="@G::LoadTranslation(ID_DELETE)" link="cases_DeleteDocument?TYPE=INPUT&amp;DOC=@#APP_DOC_UID" onclick="return confirm('@#CONFIRM');"/>
+
+<!-- FILTER FORM -->
+<!--<SEARCH type="button" onclick="pagedTableFilter(this.form);" showInTable="0">
+  <en>Apply Filter</en>
+  <es>Filtrar</es>
+</SEARCH>
+
+<PAGED_TABLE_ID type="private" showInTable="0"/>
+
+<JSFILTER type="javascript" replaceTags="1" showInTable="0">
+function pagedTableFilter(form) {
+  @#PAGED_TABLE_ID.doFilter(form);
+}
+</JSFILTER>-->
+
+</dynaForm>

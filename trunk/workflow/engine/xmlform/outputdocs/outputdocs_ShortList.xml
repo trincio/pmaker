@@ -9,8 +9,8 @@
 <OUT_DOC_UID type="hidden" showInTable="0"/>
 
 <OUT_DOC_TITLE type="text" colWidth="350" titleAlign="left" align="left">
-  <en>Output document</en>
-  <es>Documento requerido</es>
+  <en>Title</en>
+  <es>Título</es>
 </OUT_DOC_TITLE>
 
 <EDIT type="link" colWidth="40" value="@G::LoadTranslation(ID_EDIT)" link="#" onclick="outputdocsEdit(@QOUT_DOC_UID);return false;"/>
