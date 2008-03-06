@@ -166,10 +166,20 @@ function createSite($con,$site,$dataClient,$passwordSite="sample",$my)
 
 	print_r("Mysql client: ".$my."\n");
 	
+	$myPortA = explode(":",$dataClient->mysqlH);
+	if(count($myPortA)<2)
+	{
+		$myPortA[1]="3306";
+	}
+	$myPort=$myPortA[1];
+	$dataClient->mysqlH=$myPortA[0];
+
+	print_r("Mysql port: ".$myPort."\n");
+	
 	$pws = PATH_WORKFLOW_MYSQL_DATA.$schema;
 	$pws = (PHP_OS=="WINNT")?'"'.$pws.'"':$pws;
 
-	$sh_sc = $my." ".$wf." < ".$pws." -h ".$dataClient->mysqlH." --user=".$wf." --password=".$passwordSite;
+	$sh_sc = $my." ".$wf." < ".$pws." -h ".$dataClient->mysqlH." --port=".$myPort." --user=".$wf." --password=".$passwordSite;
 	$result_shell = exec($sh_sc);
 	print_r($sh_sc."  => ".(($result_shell)?$result_shell:"OK")."\n");
 
@@ -177,7 +187,7 @@ function createSite($con,$site,$dataClient,$passwordSite="sample",$my)
 	$pws = PATH_WORKFLOW_MYSQL_DATA.$values;
 	$pws = (PHP_OS=="WINNT")?'"'.$pws.'"':$pws;
 
-	$sh_in = $my." ".$wf." < ".$pws." -h ".$dataClient->mysqlH." --user=".$wf." --password=".$passwordSite;
+	$sh_in = $my." ".$wf." < ".$pws." -h ".$dataClient->mysqlH." --port=".$myPort." --user=".$wf." --password=".$passwordSite;
 	$result_shell = exec($sh_in);
 	print_r($result_shell."\n");
 	print_r($sh_in."  => ".(($result_shell)?$result_shell:"OK")."\n");
@@ -187,7 +197,7 @@ function createSite($con,$site,$dataClient,$passwordSite="sample",$my)
 	$pws = PATH_RBAC_MYSQL_DATA.$schema;
 	$pws = (PHP_OS=="WINNT")?'"'.$pws.'"':$pws;
 
-	$sh_rbsc = $my." ".$rb." < ".$pws." -h ".$dataClient->mysqlH." --user=".$rb." --password=".$passwordSite;
+	$sh_rbsc = $my." ".$rb." < ".$pws." -h ".$dataClient->mysqlH." --port=".$myPort." --user=".$rb." --password=".$passwordSite;
 	$result_shell = exec($sh_rbsc,$err_sh);
 	print_r($result_shell."\n");
 	print_r($sh_rbsc."  => ".(($result_shell)?$result_shell:"OK")."\n");
@@ -196,7 +206,7 @@ function createSite($con,$site,$dataClient,$passwordSite="sample",$my)
 	$pws = PATH_RBAC_MYSQL_DATA.$values;
 	$pws = (PHP_OS=="WINNT")?'"'.$pws.'"':$pws;
 
-	$sh_in = $my." ".$rb." < ".$pws." -h ".$dataClient->mysqlH." --user=".$rb." --password=".$passwordSite;
+	$sh_in = $my." ".$rb." < ".$pws." -h ".$dataClient->mysqlH." --port=".$myPort." --user=".$rb." --password=".$passwordSite;
 	$result_shell = exec($sh_in);
 	print_r($sh_in."  => ".(($result_shell)?$result_shell:"OK")."\n");
 
@@ -214,7 +224,7 @@ function createSite($con,$site,$dataClient,$passwordSite="sample",$my)
 	$db_text = "<?php\n" .
 	"// Processmaker configuration\n" .
 	"define ('DB_ADAPTER', 'mysql' );\n" .
-	"define ('DB_HOST', '" . $dataClient->mysqlH . "' );\n" .
+	"define ('DB_HOST', '" . $dataClient->mysqlH . ":".$myPort."' );\n" .
 	"define ('DB_NAME', '" . $wf. "' );\n" .
 	"define ('DB_USER', '" . $wf . "' );\n" .
 	"define ('DB_PASS', '" . $passwordSite . "' );\n" .
