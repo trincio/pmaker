@@ -33,13 +33,19 @@
  * -
  */
 
-require_once ( "classes/model/Process.php" );
+require_once 'classes/model/Content.php';
+require_once 'classes/model/Process.php';
+//require_once 'classes/model/Task.php';
+require_once 'classes/model/Route.php';
+require_once 'classes/model/SwimlanesElements.php';
+G::LoadClass('tasks');
+G::LoadThirdParty('pear/json','class.json');
 
 class Processes {
   
   /*
   * change Status of any Process
-  * @param string $sUIDUser
+  * @param string $sProUid
   * @return boolean
   */
   function changeStatus ( $sProUid = '') {
@@ -53,4 +59,88 @@ class Processes {
 
     $oProcess->Update( $proFields );
   }
+  
+  function getProcessRow ($sProUid ){
+    $oProcess = new Process( );
+    return $oProcess->Load( $sProUid );
+  }
+/*
+	* Get all Swimlanes Elements for any Process
+	* @param string $sProUid
+	* @return array
+	*/
+  public function getAllLanes($sProUid) {
+  	try {
+  	  $aLanes   = array();
+  	  $oCriteria = new Criteria('workflow');
+      $oCriteria->add(SwimlanesElementsPeer::PRO_UID,     $sProUid);
+      $oDataset = SwimlanesElementsPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      while ($aRow = $oDataset->getRow()) {
+      	$aLanes[] = $aRow;
+      	$oDataset->next();
+      }
+      return $aLanes;
+    }
+  	catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
+
+  
+  
+  function getTaskRows ($sProUid ){
+    $oTask = new Tasks( );
+    return $oTask->getAllTasks( $sProUid );
+  }
+  
+  function getRouteRows ($sProUid ){
+    $oTask = new Tasks( );
+    return $oTask->getAllRoutes( $sProUid );
+  }
+  
+  function getLaneRows ($sProUid ){  //SwimlanesElements
+    return $this->getAllLanes( $sProUid );
+  }
+  
+  /*
+  * change Status of any Process
+  * @param string $sProUid
+  * @return boolean
+  */
+  function serializeProcess ( $sProUid = '') {
+    $oProcess = new Process( );
+    $oData->process = $this->getProcessRow( $sProUid );
+    $oData->tasks   = $this->getTaskRows( $sProUid );
+    $oData->routes  = $this->getRouteRows( $sProUid );
+    $oData->lanes   = $this->getLaneRows( $sProUid );
+    
+    //krumo ($oData);
+    //$oJSON = new Services_JSON();
+    //krumo ( $oJSON->encode($oData) );
+    //return $oJSON->encode($oData);
+    return serialize($oData);
+  }
+  
+  function saveSerializedProcess ( $proFields ) {
+    //$oJSON = new Services_JSON();
+    //$data = $oJSON->decode($proFields);
+    //$sProUid = $data->process->PRO_UID;
+    $data = unserialize ($proFields);
+    $sProUid = $data->process['PRO_UID'];
+    $filename = PATH_DOCUMENT . $sProUid . '.pm';
+    $filenameOnly = $sProUid . '.pm';
+    $bytesSaved = file_put_contents  ( $filename  , $proFields  );
+    $filenameLink = 'processes_DownloadFile?p=' . $sProUid;
+    
+    $result['PRO_UID']         = $data->process['PRO_UID'];
+    $result['PRO_TITLE']       = $data->process['PRO_TITLE'];
+    $result['PRO_DESCRIPTION'] = $data->process['PRO_DESCRIPTION'];
+    $result['SIZE']            = $bytesSaved;
+    $result['FILENAME']        = $filenameOnly;
+    $result['FILENAME_LINK']   = $filenameLink;
+    return $result;
+  }
+ 
 }

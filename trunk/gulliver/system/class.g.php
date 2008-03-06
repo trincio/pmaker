@@ -733,6 +733,8 @@ class G
           G::sendHeaders ( $filename , 'application/octet-stream', $download, $downloadFileName ); break;
         case 'pdf' :
           G::sendHeaders ( $filename , 'application/octet-stream', $download, $downloadFileName ); break;
+        case 'pm' :
+          G::sendHeaders ( $filename , 'application/octet-stream', $download, $downloadFileName ); break;
         case 'php' :
           require_once( $filename  );
           return;
