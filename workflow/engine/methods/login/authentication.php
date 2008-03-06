@@ -32,16 +32,19 @@
  * and retain the original copyright notice.
  * -
  */
+ 
+ 
+  if (!isset($_POST['form']) ) { 
+    G::SendTemporalMessage ('ID_USER_HAVENT_RIGHTS_SYSTEM', "error");
+    G::header  ("location: login.html");die;
+  }
+
 
 try {
-	//G::LoadClass ("user");
-
 	$frm  = $_POST['form'];
-	if ( isset ( $frm['USR_USERNAME'] ) )
-	{
-	 $usr = strtolower( trim( $frm['USR_USERNAME']));
-	 $pwd = trim( $frm['USR_PASSWORD']);
-
+	if ( isset ( $frm['USR_USERNAME'] ) ) 	{
+	  $usr = strtolower( trim( $frm['USR_USERNAME']));
+	  $pwd = trim( $frm['USR_PASSWORD']);
 	}
   else
 	{
@@ -50,7 +53,6 @@ try {
 	  unset( $_SESSION['PASS_TEMP']);
 		unset( $_SESSION['USER_TEMP']);*/
 	}
-
 	$uid  = $RBAC->VerifyLogin( $usr , $pwd);
 	switch ($uid) {
 		//The user not exists
