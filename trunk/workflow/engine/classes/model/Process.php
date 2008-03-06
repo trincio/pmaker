@@ -279,6 +279,64 @@ class Process extends BaseProcess {
     }
   }
 
+	/**
+	 * Update the Prolication row
+   * @param     array $aData
+   * @return    variant
+  **/
+
+  public function createRow($aData)
+  {
+  	$con = Propel::getConnection( ProcessPeer::DATABASE_NAME );
+    $con->begin();
+  	$this->setProUid          ( $aData['PRO_UID'] );
+    $this->setProParent       ( $aData['PRO_PARENT'] );
+    $this->setProTime         ( $aData['PRO_TIME'] );
+    $this->setProTimeunit     ( $aData['PRO_TIMEUNIT'] );
+    $this->setProStatus       ( $aData['PRO_STATUS'] );
+    $this->setProTypeDay      ( $aData['PRO_TYPE_DAY'] );
+    $this->setProType         ( $aData['PRO_TYPE'] );
+    $this->setProAssignment   ( $aData['PRO_ASSIGNMENT'] );
+    $this->setProShowMap      ( $aData['PRO_SHOW_MAP'] );
+    $this->setProShowMessage  ( $aData['PRO_SHOW_MESSAGE'] );
+    $this->setProShowDelegate ( $aData['PRO_SHOW_DELEGATE'] );
+    $this->setProShowDynaform ( $aData['PRO_SHOW_DYNAFORM'] );
+    $this->setProCategory     ( $aData['PRO_CATEGORY'] );
+    $this->setProSubCategory  ( $aData['PRO_SUB_CATEGORY'] );
+    $this->setProIndustry     ( $aData['PRO_INDUSTRY'] );
+    $this->setProCreateDate   ( $aData['PRO_CREATE_DATE'] );
+    $this->setProCreateUser   ( $aData['PRO_CREATE_USER'] );
+    $this->setProHeight       ( $aData['PRO_HEIGHT'] );
+    $this->setProWidth        ( $aData['PRO_WIDTH'] );
+    $this->setProTitleX       ( $aData['PRO_TITLE_X'] );
+    $this->setProTitleY       ( $aData['PRO_TITLE_Y'] );
+	  if ( $this->validate() ) {
+      $con->begin();
+      $res = $this->save();
+
+      if (isset ( $aData['PRO_TITLE'] ) )
+        $this->setProTitle (  $aData['PRO_TITLE'] );
+      else
+        $this->setProTitle (  'Default Process Title' );
+
+      if (isset ( $aData['PRO_DESCRIPTION'] ) )
+        $this->setProDescription (  $aData['PRO_DESCRIPTION'] );
+      else
+        $this->setProDescription (  'Default Process Description' );
+
+      $con->commit();
+      return $this->getProUid();
+    }
+    else {
+     $msg = '';
+     foreach($this->getValidationFailures() as $objValidationFailure)
+       $msg .= $objValidationFailure->getMessage() . "<br/>";
+
+     throw ( new PropelException ( 'The row cannot be created!', new PropelException ( $msg ) ) );
+    }
+
+  }
+
   /**
 	 * Remove the Prolication document registry
    * @param     array $aData or string $ProUid
