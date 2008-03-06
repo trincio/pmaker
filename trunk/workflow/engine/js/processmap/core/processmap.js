@@ -431,12 +431,15 @@ var processmap=function(){
 					{
 						if(deri.to[i].task==="-1" || deri.to[i].task==="-2")
 						{
+							this.parent.dom.setStyle(task.object.elements[(deri.to.length>1)?'derivationBottom':'derivation'],{
+								background:""
+							});
 
 						}
 						else
 						{
 							deri.to[i].object.line.remove();
-								this.observers.lineas.unregister(deri.to[i].object.indexObserver);
+							this.observers.lineas.unregister(deri.to[i].object.indexObserver);
 						}
 						if(deri.type===5)
 						{
@@ -585,8 +588,9 @@ var processmap=function(){
 					//alert(derivation.task);
 					if(derivation.task==="-1" || derivation.task==="-2")
 					{
-						this.parent.dom.setStyle(task.object.elements.derivation,{
-							//background:((task.derivation.type===0)?"":"url("+this.options.images_dir+task.derivation.type+"t.gif?aa="+Math.random()+")")
+						var target=(task.derivation.to.length>1)?'derivationBottom':'derivation';
+						this.parent.dom.setStyle(task.object.elements[target],{
+						//	background:((task.derivation.type===0)?"":"url("+this.options.images_dir+task.derivation.type+"t.gif?aa="+Math.random()+")")
 							background:"url("+this.options.images_dir+derivation.task+".gif?aa="+Math.random()+")"
 						});
 
@@ -701,6 +705,19 @@ var processmap=function(){
 					zIndex:9
 				});
 				c.ondblclick=this.patternPanel.args(index);
+				var d = document.createElement("div");
+				this.parent.dom.setStyle(d,{
+					position:"absolute",
+					top: /*task.derivation.type==5 ? joinPosY :*/ options.position.y+63,
+					left:/*task.derivation.type==5 ? joinPosX  :*/ options.position.x+(81-12),
+					height:25,
+					width:25,
+					//backgroundColor:"black",
+					border:"0px solid black",
+					overflow:"hidden",
+					zIndex:9
+				});
+
 				var t = document.createElement("div");
 
 				this.parent.dom.setStyle(t,{
@@ -1007,6 +1024,7 @@ var processmap=function(){
 				this.panels.editor.elements.content.appendChild(a);
 				a.appendChild(b);
 				this.panels.editor.elements.content.appendChild(c);
+				this.panels.editor.elements.content.appendChild(d);
 				this.panels.editor.elements.content.appendChild(t);
 
 				options.object={
@@ -1014,6 +1032,7 @@ var processmap=function(){
 						task	: a,
 						label	: b,
 						derivation: c,
+						derivationBottom: d,
 						init	: t
 					}
 				};
@@ -1040,7 +1059,7 @@ var processmap=function(){
 						//elements:a
 						link:{
 							elements:a,
-							ref:[a,c,t]
+							ref:[a,c,d,t]
 						},
 						limit:true
 						//group:[a,c]

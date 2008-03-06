@@ -177,7 +177,7 @@ leimnud.Package.Public({
 				for(i=0;i<this.linkRef.length;i++)
 				{
 					var position = this.parent.dom.position(this.linkRef[i],false,true);
-					console.info(position)
+					//console.info(position)
 					this.elementStart[i]={
 						x:position.x,
 						y:position.y
