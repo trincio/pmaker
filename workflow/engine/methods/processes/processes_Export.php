@@ -34,7 +34,7 @@
  */
 
 try {
-  
+
 /* Includes */
 G::LoadClass('processes');
 
@@ -46,7 +46,7 @@ $Fields = $oProcess->saveSerializedProcess ( $proFields );
   /* Render page */
   $G_PUBLISH = new Publisher;
   $G_PUBLISH->AddContent('xmlform', 'xmlform', 'processes/processes_Export', '', $Fields );
-  G::RenderPage( "publish" );
+  G::RenderPage( 'publish', 'raw' );
 
 }
 catch ( Exception $e ){

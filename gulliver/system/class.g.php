@@ -730,9 +730,7 @@ class G
         case 'txt' :
           G::sendHeaders ( $filename , 'text/html', $download, $downloadFileName ); break;
         case 'doc' :
-          G::sendHeaders ( $filename , 'application/octet-stream', $download, $downloadFileName ); break;
         case 'pdf' :
-          G::sendHeaders ( $filename , 'application/octet-stream', $download, $downloadFileName ); break;
         case 'pm' :
           G::sendHeaders ( $filename , 'application/octet-stream', $download, $downloadFileName ); break;
         case 'php' :
@@ -740,16 +738,12 @@ class G
           return;
           break;
         default :
-            print "missing $typefile type.";
-            trigger_error ( "Unknown type of file '$file'. " , E_USER_ERROR);
-            die;
+          throw new Exception ( "Unknown type of file '$file'. " );
       }
     }
     else {
-      trigger_error ( "file '$file' doesn't exists. " , E_USER_ERROR);
-      die;
+      throw new Exception ( "file '$file' doesn't exists. " );
     }
-
     readfile($filename);
   }
 
