@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm
+  name="cases_AttachInputDocument3"
+  type="xmlform"
+  width="400px"
+  labelWidth="100px"
+>
+
+<TITLE1 type="title">
+  <en>Import Process</en>
+</TITLE1>
+
+
+<PROCESS_FILENAME type="file" >
+  <en>File</en>
+  <es>Archivo</es>
+</PROCESS_FILENAME>
+
+<SAVE type="submit" >
+  <en>Import</en>
+</SAVE>
+
+</dynaForm>

@@ -64,6 +64,13 @@ class Processes {
     $oProcess = new Process( );
     return $oProcess->Load( $sProUid );
   }
+  
+  function createProcessRow ($row ){
+    $oProcess = new Process( );
+    return $oProcess->createRow($row);
+  }
+  
+  
 /*
 	* Get all Swimlanes Elements for any Process
 	* @param string $sProUid
@@ -129,10 +136,14 @@ class Processes {
     //$sProUid = $data->process->PRO_UID;
     $data = unserialize ($proFields);
     $sProUid = $data->process['PRO_UID'];
-    $filename = PATH_DOCUMENT . $sProUid . '.pm';
+    $path = PATH_DOCUMENT . 'output' . PATH_SEP;
+    if ( !is_dir($path) ) {
+      	G::verifyPath($path, true);
+    }
+    $filename = $path . $sProUid . '.pm';
     $filenameOnly = $sProUid . '.pm';
     $bytesSaved = file_put_contents  ( $filename  , $proFields  );
-    $filenameLink = 'processes_DownloadFile?p=' . $sProUid;
+    $filenameLink = 'processes_DownloadFile?p=' . $sProUid . '&r=' . rand(100,1000);
     
     $result['PRO_UID']         = $data->process['PRO_UID'];
     $result['PRO_TITLE']       = $data->process['PRO_TITLE'];
