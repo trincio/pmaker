@@ -32,6 +32,10 @@
  * and retain the original copyright notice.
  * -
  */
-  $_POST['form'] = $_SESSION['sysLogin'];
-  require_once('authentication.php');
-?>
+ 
+ if ( !isset ($_POST) )
+    G::header('location: /sys/' . $lang . '/' . SYS_SKIN . '/' . 'login/login'); 
+    
+ if (isset ($_SESSION['sysLogin']) ) 
+   $_POST['form'] = $_SESSION['sysLogin'];
+ require_once('authentication.php');

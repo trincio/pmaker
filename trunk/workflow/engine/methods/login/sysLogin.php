@@ -35,14 +35,11 @@
 if (isset($_POST['form']['USER_ENV'])) {
   session_start();
   $_SESSION['sysLogin'] = $_POST['form'];
-  G::header('location: /sys' . $_POST['form']['USER_ENV'] . '/'.SYS_LANG.'/'.SYS_SKIN.'/login/sysLoginVerify'); die;
+  G::header('location: /sys' . $_POST['form']['USER_ENV'] . '/'.SYS_LANG.'/'.SYS_SKIN.'/login/sysLoginVerify'); 
+  die;
 }
-//$G_MAIN_MENU     = 'rbac.login';
-//$G_MENU_SELECTED = '';
-
 
 $G_PUBLISH = new Publisher;
-//$G_PUBLISH->AddContent('view', 'login/showDBFiles');
 $G_PUBLISH->AddContent('xmlform', 'xmlform', 'login/sysLogin', '', '', 'sysLogin');
 
 G::RenderPage( "publish" );

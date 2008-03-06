@@ -197,8 +197,11 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
         define ( 'SYS_SYS', $sysParts[2]);
       }
       else {
-        header ("location: /errors/error701.php");
-        die;
+       $aMessage['MESSAGE'] = G::LoadTranslation ('ID_NOT_WORKSPACE');
+       $G_PUBLISH          = new Publisher;
+       $G_PUBLISH->AddContent('xmlform', 'xmlform', 'login/showMessage', '', $aMessage );
+       G::RenderPage( 'publish' );
+       die;
       }
     }
   }
