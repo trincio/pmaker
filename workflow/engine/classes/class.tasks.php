@@ -79,6 +79,54 @@ class Tasks {
     }
   }
 
+/*
+	* Get all tasks for any Process
+	* @param string $sProUid
+	* @return array
+	*/
+  public function getAllTasks($sProUid) {
+  	try {
+  	  $aTasks   = array();
+  	  $oCriteria = new Criteria('workflow');
+      $oCriteria->add(TaskPeer::PRO_UID,     $sProUid);
+      $oDataset = TaskPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      while ($aRow = $oDataset->getRow()) {
+      	$aTasks[] = $aRow;
+      	$oDataset->next();
+      }
+      return $aTasks;
+    }
+  	catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
+
+/*
+	* Get all Routes for any Process
+	* @param string $sProUid
+	* @return array
+	*/
+  public function getAllRoutes($sProUid) {
+  	try {
+  	  $aRoutes   = array();
+  	  $oCriteria = new Criteria('workflow');
+      $oCriteria->add(RoutePeer::PRO_UID,     $sProUid);
+      $oDataset = RoutePeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      while ($aRow = $oDataset->getRow()) {
+      	$aRoutes[] = $aRow;
+      	$oDataset->next();
+      }
+      return $aRoutes;
+    }
+  	catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
+
   /*
 	* Get the assigned users of a task
 	* @param string $sTaskUID
