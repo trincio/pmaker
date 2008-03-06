@@ -308,6 +308,36 @@ var processmap=function(){
 						}.extend(this,panel);
 						r.make();
 					}.extend(this)},
+					{image:"/images/edit.gif",text:G_STRINGS.ID_PROCESSMAP_EXPORT_PROCESS,launch:function(event){
+						this.tmp.exportProcessPanel = panel =new leimnud.module.panel();
+						panel.options={
+							limit	:true,
+							size	:{w:420,h:200},
+							position:{x:50,y:50,center:true},
+							title	:G_STRINGS.ID_PROCESSMAP_EXPORT_PROCESS+": "+this.data.db.title.label,
+							theme	:this.options.theme,
+							control	:{close:true,resize:true},fx:{modal:true},
+							statusBar:false,
+							resize	:true,
+							fx	:{shadow:true,modal:true}
+						};
+						panel.make();
+						panel.loader.show();
+						var r = new leimnud.module.rpc.xmlhttp({
+							url:this.options.dataServer,
+							args:"action=process_Export&data="+{
+								pro_uid	:this.options.uid
+							}.toJSONString()
+						});
+						r.callback=function(rpc,panel)
+						{
+							panel.loader.hide();
+							var scs = rpc.xmlhttp.responseText.extractScript();
+							panel.addContent(rpc.xmlhttp.responseText);
+							scs.evalScript();
+						}.extend(this,panel);
+						r.make();
+					}.extend(this)},
 					{image:"/images/add.png",text:G_STRINGS.ID_PROCESSMAP_ADD_TASK,launch:this.addTask.extend(this)},
 					{image:"/images/addtext.png",text:G_STRINGS.ID_PROCESSMAP_ADD_TEXT,launch:this.addText.extend(this)},
 					{image:"/images/linhori.png",text:G_STRINGS.ID_PROCESSMAP_HORIZONTAL_LINE,launch:this.addGuide.extend(this,"horizontal")},
@@ -401,7 +431,7 @@ var processmap=function(){
 					{
 						if(deri.to[i].task==="-1" || deri.to[i].task==="-2")
 						{
-	
+
 						}
 						else
 						{

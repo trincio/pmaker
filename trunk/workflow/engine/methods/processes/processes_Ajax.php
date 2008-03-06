@@ -72,6 +72,9 @@ try {
   	case 'process_Edit':
   	  $oProcessMap->editProcess($oData->pro_uid);
   	break;
+  	case 'process_Export':
+  	  include(PATH_METHODS . 'processes/processes_Export.php');
+  	break;
   	case 'saveTitlePosition':
   	  $sOutput = $oProcessMap->saveTitlePosition($oData->pro_uid, $oData->position->x, $oData->position->y);
   	break;
