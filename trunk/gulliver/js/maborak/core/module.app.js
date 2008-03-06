@@ -276,7 +276,7 @@ leimnud.Package.Public({
 			this.make=function(options)
 			{
 				this.options = {bubble:true,theme:"firefox"}.concat(options) || {};
-				if(!this.validate()){alert(6);return false;}
+				if(!this.validate()){return false;}
 				this.parent.event.add(this.options.target,"click",this.parent.closure({instance:this,method:this.updateObservers,event:true}));
 				//this.parent.event.add(document.body,"click",this.parent.closure({instance:this,method:this.remove}));
 				//this.parent.event.add(this.options.target,"contextmenu",function(){return false;});
