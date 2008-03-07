@@ -44,6 +44,8 @@ $proFields = $oProcess->serializeProcess( $proUid );
 $Fields = $oProcess->saveSerializedProcess ( $proFields );
 
   /* Render page */
+  $G_MAIN_MENU            = 'processmaker';
+  $G_ID_MENU_SELECTED     = 'PROCESSES';
   $G_PUBLISH = new Publisher;
   $G_PUBLISH->AddContent('xmlform', 'xmlform', 'processes/processes_Import', '', $Fields, 'processes_ImportFile' );
   G::RenderPage( "publish" );

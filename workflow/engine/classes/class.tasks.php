@@ -93,7 +93,8 @@ class Tasks {
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
       $oDataset->next();
       while ($aRow = $oDataset->getRow()) {
-      	$aTasks[] = $aRow;
+      	$oTask = new Task();
+      	$aTasks[] = $oTask->Load($aRow['TAS_UID']);
       	$oDataset->next();
       }
       return $aTasks;
@@ -101,6 +102,19 @@ class Tasks {
   	catch (Exception $oError) {
     	throw($oError);
     }
+  }
+
+/*
+	* creates row tasks from an Task Array
+	* @param string $aTasks
+	* @return array
+	*/
+  public function createTaskRows( $aTask ) {
+  	foreach ( $aTask as $key => $row ) {
+      $oTask = new Task();
+      $res = $oTask->create($row);
+  	}
+  	return;
   }
 
 /*
@@ -125,6 +139,20 @@ class Tasks {
   	catch (Exception $oError) {
     	throw($oError);
     }
+  }
+
+/*
+	* creates row tasks from an Route Array
+	* @param string $aTasks
+	* @return array
+	*/
+  public function createRouteRows( $aRoutes ) {
+  	foreach ( $aRoutes as $key => $row ) {
+      $oRoute = new Route();
+      unset ($row['ROU_UID']);
+      $res = $oRoute->create($row);
+  	}
+  	return;
   }
 
   /*

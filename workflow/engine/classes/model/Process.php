@@ -208,6 +208,30 @@ class Process extends BaseProcess {
       throw ($e);
     }
   }
+  
+	/**
+	 * verify if Process row specified in [pro_id] exists.
+	 *
+	 * @param      string $sProUid   the uid of the Prolication
+	 */
+
+  function processExists ( $ProUid ) {
+  	$con = Propel::getConnection(ProcessPeer::DATABASE_NAME);
+    try {
+      $oPro = ProcessPeer::retrieveByPk( $ProUid );
+  	  if ( get_class ($oPro) == 'Process' ) {
+  	    return true;
+  	  }
+      else {
+        return false;
+      }
+    }
+    catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
+ 
+  
 
 	/**
 	 * Load the Process row specified in [pro_id] column value.
@@ -280,7 +304,7 @@ class Process extends BaseProcess {
   }
 
 	/**
-	 * Update the Prolication row
+	 * creates an Application row
    * @param     array $aData
    * @return    variant
   **/

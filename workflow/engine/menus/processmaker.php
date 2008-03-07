@@ -47,8 +47,8 @@ $G_TMP_MENU->Labels = array(
   G::LoadTranslation('ID_USERS'),
   G::LoadTranslation('ID_CASES'),
   G::LoadTranslation('ID_APPLICATIONS'),
-  G::LoadTranslation('ID_SETUP'),
-  G::LoadTranslation('ID_DASHBOARD')
+  G::LoadTranslation('ID_SETUP')
+//  G::LoadTranslation('ID_DASHBOARD')
 );
 
 if ( file_exists ( PATH_CORE . 'menus/plugin.php' ) ) {

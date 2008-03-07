@@ -238,9 +238,9 @@ switch ($_GET['TYPE'])
           }
         }
         $sFilename = G::replaceDataField($aOD['OUT_DOC_FILENAME'], $aApplication['APP_DATA']);*/
-        $sFilename = G::replaceDataField($aOD['OUT_DOC_FILENAME'], $Fields);
+        $sFilename = G::replaceDataField($aOD['OUT_DOC_FILENAME'], $Fields['APP_DATA']);
         //$oOutputDocument->generate($_GET['UID'], $aApplication['APP_DATA'], PATH_DOCUMENT . $_SESSION['APPLICATION'] . '/outdocs/', $sFilename, $aOD['OUT_DOC_TEMPLATE']);
-        $oOutputDocument->generate($_GET['UID'], $Fields, PATH_DOCUMENT . $_SESSION['APPLICATION'] . '/outdocs/', $sFilename, $aOD['OUT_DOC_TEMPLATE']);
+        $oOutputDocument->generate($_GET['UID'], $Fields['APP_DATA'], PATH_DOCUMENT . $_SESSION['APPLICATION'] . '/outdocs/', $sFilename, $aOD['OUT_DOC_TEMPLATE']);
         require_once 'classes/model/AppDocument.php';
         $oCriteria = new Criteria('workflow');
         $oCriteria->add(AppDocumentPeer::APP_UID,      $_SESSION['APPLICATION']);
