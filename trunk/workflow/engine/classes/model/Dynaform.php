@@ -154,7 +154,10 @@ class Dynaform extends BaseDynaform {
     }
   	$con = Propel::getConnection( DynaformPeer::DATABASE_NAME );
     try {
-  	  $dynUid  = ( G::generateUniqueID() );  
+      if ( !isset ( $aData['DYN_UID'] ) ) 
+  	    $dynUid  = ( G::generateUniqueID() );  
+  	  else
+  	    $dynUid  = $aData['DYN_UID'];
   	  $this->setDynUid          ( $dynUid );  
       $this->setProUid          ( $aData['PRO_UID'] );
       $this->setDynType         ( isset($aData['DYN_TYPE'])?$aData['DYN_TYPE']:'xmlform' );
@@ -292,4 +295,27 @@ class Dynaform extends BaseDynaform {
     $oPro = DynaformPeer::retrieveByPk( $DynUid );
     return ( get_class ($oPro) == 'Dynaform' );
   }
+  
+	/**
+	 * verify if Dynaform row specified in [DynUid] exists.
+	 *
+	 * @param      string $sProUid   the uid of the Prolication
+	 */
+
+  function dynaformExists ( $DynUid ) {
+  	$con = Propel::getConnection(TaskPeer::DATABASE_NAME);
+    try {
+      $oDyn = DynaformPeer::retrieveByPk( $DynUid );
+  	  if ( get_class ($oDyn) == 'Dynaform' ) {
+  	    return true;
+  	  }
+      else {
+        return false;
+      }
+    }
+    catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
+  
 } // Dynaform

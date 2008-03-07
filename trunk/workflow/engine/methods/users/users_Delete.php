@@ -55,13 +55,13 @@ try {
   /*$RBAC->removeUser($_GET['USR_UID']);
   require_once 'classes/model/Users.php';
   $oUser = new Users();
-  $oUser->remove($_GET['USR_UID']);
+  $oUser->remove($_GET['USR_UID']);*/
   G::LoadClass('tasks');
   $oTasks = new Tasks();
   $oTasks->ofToAssignUserOfAllTasks($_GET['USR_UID']);
   G::LoadClass('groups');
   $oGroups = new Groups();
-  $oGroups->ofToAssignUserOfAllGroups($_GET['USR_UID']);*/
+  $oGroups->ofToAssignUserOfAllGroups($_GET['USR_UID']);
   $RBAC->changeUserStatus($_GET['USR_UID'], 'CLOSED');
   require_once 'classes/model/Users.php';
   $oUser                 = new Users();

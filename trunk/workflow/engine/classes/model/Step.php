@@ -58,10 +58,26 @@ class Step extends BaseStep {
       $this->setStepUid($sStepUID);
       $this->setProUid($aData['PRO_UID']);
       $this->setTasUid($aData['TAS_UID']);
-      $this->setStepTypeObj("DYNAFORM");
-      $this->setStepUidObj("");
-      $this->setStepCondition("");
-      $this->setStepPosition("");
+      
+      if (isset ( $aData['STEP_TYPE_OBJ'] ))
+        $this->setStepTypeObj( $aData['STEP_TYPE_OBJ'] );
+      else
+        $this->setStepTypeObj("DYNAFORM");
+        
+      if (isset ( $aData['STEP_UID_OBJ'] ))
+        $this->setStepUidObj( $aData['STEP_UID_OBJ'] );
+      else
+        $this->setStepUidObj("");
+        
+      if (isset ( $aData['STEP_CONDITION'] ))
+        $this->setStepCondition( $aData['STEP_CONDITION'] );
+      else
+        $this->setStepCondition("");
+
+      if (isset ( $aData['STEP_POSITION'] ))
+        $this->setStepPosition( $aData['STEP_POSITION'] );
+      else
+        $this->setStepPosition("");
       if($this->validate())
       {
         $result=$this->save();

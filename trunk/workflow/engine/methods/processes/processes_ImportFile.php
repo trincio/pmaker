@@ -48,6 +48,22 @@
   
   $oData = unserialize ($contents);
   
-  krumo ($oData);
+  
+  $sProUid = $oData->process['PRO_UID'];
+  
+  if ( $oProcess->processExists ( $sProUid ) ) {
+    $sNewProUid = $oProcess->getUnusedProcessGUID() ;
+    $oProcess->setProcessGuid ( $oData, $sNewProUid );
+    $oProcess->setProcessParent( $oData, $sProUid );
+    $oData->process['PRO_TITLE'] = 'copy of Derivations ' . date ( 'H:i:s' );  
+    $oProcess->renewAllTaskGuid ( $oData );
+    $oProcess->renewAllDynaformGuid ( $oData );
+  krumo ($oData); 
+    $oProcess->createProcessFromData ($oData);
+    die;
+  	
+  }
   
   $oProcess->createProcessRow ($oData->process);
+  
+  

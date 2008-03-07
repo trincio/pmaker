@@ -277,6 +277,13 @@ class Task extends BaseTask {
     }
     return 0;
   }
+  
+  /**
+   * create a new Task
+   *
+   * @param      array $aData with new values
+   * @return     void
+   */
   function create($aData)
   {
     $con = Propel::getConnection(TaskPeer::DATABASE_NAME);
@@ -345,6 +352,8 @@ class Task extends BaseTask {
       throw($e);
     }
   }
+  
+  
   public function load($TasUid)
   {
     try {
@@ -431,4 +440,27 @@ class Task extends BaseTask {
       throw($oError);
     }
   }
+
+	/**
+	 * verify if Task row specified in [TasUid] exists.
+	 *
+	 * @param      string $sProUid   the uid of the Prolication
+	 */
+
+  function taskExists ( $TasUid ) {
+  	$con = Propel::getConnection(TaskPeer::DATABASE_NAME);
+    try {
+      $oPro = TaskPeer::retrieveByPk( $TasUid );
+  	  if ( get_class ($oPro) == 'Task' ) {
+  	    return true;
+  	  }
+      else {
+        return false;
+      }
+    }
+    catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
+ 
 } // Task

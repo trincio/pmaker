@@ -129,6 +129,8 @@
     }
     function set_header($filename,$value)
     {
+      $aFields=array("_FILENAME_"=>basename( $filename ) );
+      $value = G::replaceDataField( $value , $aFields );
       $aOrigin = file( $filename);
       //It suposse that allway start with <? or <?php
       $aSource[0]=$aOrigin[0];
@@ -136,14 +138,25 @@
       $nl=(strlen($line)>=2)&&(substr($line,-2,2)=="\r\n")?
         "\r\n":
         ((strlen($line)>=1)&&(substr($line,-1,1)=="\n")?"\n":"");
-      $aSource[1]=$value.$nl;
-      for($r=1;$r<sizeof($aOrigin);$r++)
+
+      $codigo = implode('',$aOrigin);
+      $pattern='/\/\*[\w\W]+\* '.'ProcessMaker Open Source'.'[\w\W]+\*\//i';
+      if (preg_match($pattern,$codigo))
       {
-        $aSource[]=$aOrigin[$r];
+        $codigo=preg_replace( $pattern, $value , $codigo );
+      }
+      else
+      {
+        $aSource[1]=$value.$nl;
+        for($r=1;$r<sizeof($aOrigin);$r++)
+        {
+          $aSource[]=$aOrigin[$r];
+        }
+        $codigo=implode('',$aSource);
       }
       /*Save change*/
       $fp=fopen($filename,'w');
-      fwrite($fp,implode('',$aSource));
+      fwrite($fp,$codigo);
       fclose($fp);
       return $this->get_permissions($filename);
     }
