@@ -48,7 +48,6 @@
   
   $oData = unserialize ($contents);
   
-  
   $sProUid = $oData->process['PRO_UID'];
   
   if ( $oProcess->processExists ( $sProUid ) ) {
@@ -64,6 +63,6 @@
   	
   }
   
-  $oProcess->createProcessRow ($oData->process);
+  $oProcess->createProcessFromData ($oData);
   
   
