@@ -19,7 +19,7 @@
   <es>Título</es>
 </OUT_DOC_TITLE>
 
-<OUT_DOC_FILENAME type="textpm" size="30" maxlength="100" showVars="1" process="@#PRO_UID" symbol="@#">
+<OUT_DOC_FILENAME type="textpm" size="30" maxlength="100" showVars="1" process="@#PRO_UID" symbol="@#" validate="Field">
   <en>Filename generated</en>
   <es>Nombre de archivo generado</es>
 </OUT_DOC_FILENAME>

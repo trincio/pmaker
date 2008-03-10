@@ -1,17 +1,11 @@
 <?xml version="1.0"?>
 <dynaForm type="pagetable"
-  sql="SELECT * FROM USERS INNER JOIN GROUP_USER ON (GROUP_USER.USR_UID = USERS.USR_UID AND NOT ISNULL(GROUP_USER.GRP_UID)) @#WHERE"
   sqlConnection=""
   deleteRow="0"
   menu="groups/groups_Options"
-  filterForm="groups/groups_Search"
   width="95%"
-  searchBy='USR_USERNAME'
 >
-<!--
-  menu="groups/groups_Options"
-  filterForm="groups/groups_Search"
--->
+
 <title type="title" colWidth="300" showInTable="0">
   <en>Group properties</en>
   <es>Propiedades del grupo</es>
@@ -21,28 +15,21 @@
 
 <USR_UID type="hidden" showInTable="0"/>
 
-<USR_USERNAME type="text" colWidth="300" align="left" titleAlign="left">
-  <en>User</en>
-  <es>Usuario</es>
-</USR_USERNAME>
+<USR_FIRSTNAME type="text" colWidth="200" align="left" titleAlign="left">
+  <en>First Name</en>
+  <es>Nombres</es>
+</USR_FIRSTNAME>
 
-<USR_STATUS type="dropdown" colWidth="100" align="left" titleAlign="left">
-  <en>Status
-  <option name="1">Active</option>
-  <option name="0">Inactive</option>
-  </en>
-  <es>Estado
-  <option name="1">Activo</option>
-  <option name="0">Inactivo</option>
-  </es>
-</USR_STATUS>
+<USR_LASTNAME type="text" colWidth="200" align="left" titleAlign="left">
+  <en>Last Name</en>
+  <es>Apellidos</es>
+</USR_LASTNAME>
 
-<DELETE type="link" colWidth="100" align="center" value="@G::LoadTranslation(ID_DE_ASSIGN)" link="#" onclick="ofToAssignUser(@QGRP_UID, @QUSR_UID);return false;"/>
+<DELETE type="link" colWidth="50" align="center" value="@G::LoadTranslation(ID_DE_ASSIGN)" link="#" onclick="ofToAssignUser(@QGRP_UID, @QUSR_UID);return false;"/>
 
 <button type="button" onclick="saveGroup( this.form );" showInTable="0">
   <en>Accept</en>
   <es>Accept</es>
 </button>
-
 
 </dynaForm>
