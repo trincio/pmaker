@@ -23,13 +23,21 @@
  * 
  */
 
+G::LoadThirdParty('pear/json','class.json');
+
 try {
 
+  $oJSON = new Services_JSON();
+  $stdObj = $oJSON->decode( $_POST['data'] );
+  if ( isset ($stdObj->pro_uid ) ) 
+    $sProUid = $stdObj->pro_uid;
+  else
+    throw ( new Exception ( 'the process uid is not defined!.' ) );
+ 
 /* Includes */
 G::LoadClass('processes');
 $oProcess  = new Processes();
-$proUid = isset ($_SESSION['PROCESS']) ? $_SESSION['PROCESS'] : '';
-$proFields = $oProcess->serializeProcess( $proUid );
+$proFields = $oProcess->serializeProcess( $sProUid );
 $Fields = $oProcess->saveSerializedProcess ( $proFields );
 
   /* Render page */
