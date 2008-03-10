@@ -1,10 +1,10 @@
 <?php
 /**
  * groups_Ajax.php
- *  
+ *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -14,23 +14,38 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
 if (($RBAC_Response=$RBAC->userCanAccess("PM_USERS"))!=1) return $RBAC_Response;
 G::LoadInclude('ajax');
 $_POST['action'] = get_ajax_value('action');
 switch ($_POST['action'])
 {
+	case 'showUsers':
+	  G::LoadClass('groups');
+	  $oGroup = new Groups();
+	  global $G_PUBLISH;
+  	global $G_HEADER;
+  	$G_PUBLISH = new Publisher();
+  	$G_PUBLISH->AddContent('propeltable', 'paged-table', 'groups/groups_UsersList', $oGroup->getUsersGroupCriteria($_POST['sGroupUID']), array('GRP_UID' => $_POST['sGroupUID']));
+    $G_HEADER->clearScripts();
+    G::RenderPage('publish', 'raw');
+	break;
+	case 'assignUser':
+	  G::LoadClass('groups');
+	  $oGroup = new Groups();
+	  $oGroup->addUserToGroup($_POST['GRP_UID'], $_POST['USR_UID']);
+	break;
 	case 'ofToAssignUser':
-	  G::LoadClass('groupUser');
-	  $oGroupUser = new GroupUser(new DBConnection());
-	  $oGroupUser->ofToAssignUser($_POST['GRP_UID'], $_POST['USR_UID']);
+	  G::LoadClass('groups');
+	  $oGroup = new Groups();
+	  $oGroup->removeUserOfGroup($_POST['GRP_UID'], $_POST['USR_UID']);
 	break;
 }
 ?>

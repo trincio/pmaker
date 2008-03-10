@@ -24,13 +24,6 @@
  */
 if (($RBAC_Response=$RBAC->userCanAccess("PM_USERS"))!=1) return $RBAC_Response;
 
-  //G::genericForceLogin( 'WF_MYINFO' , 'login/noViewPage', $urlLogin = 'login/login' );
-
-//  G::LoadClass('user');
-//  G::LoadClass('group');
-//  G::LoadClass('groupUser');
-//  G::LoadClass('tree');
-
   $G_MAIN_MENU            = 'processmaker';
   $G_SUB_MENU             = 'users';
   $G_ID_MENU_SELECTED     = 'USERS';
@@ -42,14 +35,12 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_USERS"))!=1) return $RBAC_Response;
   $dbc = new DBConnection();
   $ses = new DBSession($dbc);
 
-  /*$group = new Group( $dbc );
-  $group->Fields['UID']='0';*/
   $Fields['WHERE'] = '';
 
   $G_PUBLISH = new Publisher;
-
   $G_PUBLISH->AddContent('view', 'groups/groups_Tree' );
-  $G_PUBLISH->AddContent('pagedtable', 'paged-table', 'groups/groups_UsersList', '', $Fields , 'groups_Save');
+  $G_PUBLISH->AddContent('smarty', 'groups/groups_usersList', '', '', array());
+  $G_HEADER->addScriptFile('/js/form/core/pagedTable.js');
 
   G::RenderPage( "publish-treeview" );
 
@@ -58,8 +49,9 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_USERS"))!=1) return $RBAC_Response;
   $groups_List = G::encryptlink('groups_List');
   $groups_AddUser = G::encryptlink('groups_AddUser');
 ?>
-<SCRIPT>
-  document.getElementById('pagedtable['+currentPagedTable.id+']').style.visibility='hidden';
+<script>
+  var oAux = document.getElementById("publisherContent[0]");
+  oAux.id = "publisherContent[666]";
   var currentGroup=false;
   function editGroup( uid ) {
     popupWindow('' , '<?=$groups_Edit?>?UID=' + encodeURIComponent( uid )+'&nobug' , 500 , 200 );
@@ -70,36 +62,37 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_USERS"))!=1) return $RBAC_Response;
     refreshTree();
   }
   function addUserGroup( uid ){
-    popupWindow('' , '<?=$groups_AddUser?>?UID='+uid+'&nobug' , 500 , 170 );
+    popupWindow('' , '<?=$groups_AddUser?>?UID='+uid+'&nobug' , 500 , 400 );
   }
   function saveGroup( form ) {
     ajax_post( form.action, form, 'POST' );
     currentPopupWindow.remove();
     refreshTree();
   }
-  function selectGroup( uid , element ){
-    var field,form;
-    field = getField('CUR_GRP_UID');
-    field.value=uid;
-    form = field.form;
-    currentPagedTable.doFilter( form );
+  function selectGroup( uid, element ){
     currentGroup = uid;
-    tree.select( element );
-    document.getElementById('pagedtable['+currentPagedTable.id+']').style.visibility='';
+    var oRPC = new leimnud.module.rpc.xmlhttp({
+      url   : '../groups/groups_Ajax',
+      async : false,
+      method: 'POST',
+      args  : 'action=showUsers&sGroupUID=' + uid
+    });
+    oRPC.make();
+    document.getElementById('spanUsersList').innerHTML = oRPC.xmlhttp.responseText;
   }
   function deleteGroup( uid ){
     new leimnud.module.app.confirm().make({
     	label:"<?=G::LoadTranslation('ID_MSG_CONFIRM_DELETE_GROUP')?>",
     	action:function()
     	{
-    		ajax_function('<?=$groups_Delete?>', 'asd', 'GRP_UID='+uid, "POST" );
+    		ajax_function('<?=$groups_Delete?>', 'asdxxx', 'GRP_UID='+uid, "POST" );
         refreshTree();
-        document.getElementById('pagedtable['+currentPagedTable.id+']').style.visibility='hidden';
+        document.getElementById('spanUsersList').innerHTML = '';
     	}.extend(this)
     });
   }
   function refreshTree(){
-    tree.refresh( document.getElementById("publisherContent[0]") , '<?=$groups_List?>');
+    tree.refresh( document.getElementById("publisherContent[666]") , '<?=$groups_List?>');
   }
 
   var ofToAssignUser = function(sGroup, sUser)
@@ -115,14 +108,22 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_USERS"))!=1) return $RBAC_Response;
           args  : 'action=ofToAssignUser&GRP_UID=' + sGroup + '&USR_UID=' + sUser
         });
         oRPC.make();
-        var oAux, oForm;
-        oAux = getField('CUR_GRP_UID');
-        oAux.value = sGroup;
-        oForm = oAux.form;
-        currentPagedTable.doFilter(oForm);
         currentGroup = sGroup;
-        document.getElementById('pagedtable[' + currentPagedTable.id + ']').style.visibility = '';
+        selectGroup(currentGroup);
       }.extend(this)
     });
   };
-</SCRIPT>
+
+  function saveUserGroup(sUser) {
+
+    var oRPC = new leimnud.module.rpc.xmlhttp({
+      url   : '../groups/groups_Ajax',
+      async : false,
+      method: 'POST',
+      args  : 'action=assignUser&GRP_UID=' + currentGroup + '&USR_UID=' + sUser
+    });
+    oRPC.make();
+    currentPopupWindow.remove();
+    selectGroup(currentGroup);
+  }
+</script>
