@@ -100,7 +100,8 @@ class OutputDocument extends BaseOutputDocument {
   {
   	$oConnection = Propel::getConnection(OutputDocumentPeer::DATABASE_NAME);
   	try {
-  		$aData['OUT_DOC_UID'] = G::generateUniqueID();
+      if ( !isset ( $aData['OUT_DOC_UID'] ) ) 
+    		$aData['OUT_DOC_UID'] = G::generateUniqueID();
   	  $oOutputDocument = new OutputDocument();
   	  $oOutputDocument->fromArray($aData, BasePeer::TYPE_FIELDNAME);
   	  if ($oOutputDocument->validate()) {
@@ -592,4 +593,26 @@ class OutputDocument extends BaseOutputDocument {
     }
   }
 
+
+	/**
+	 * verify if Output row specified in [sUid] exists.
+	 *
+	 * @param      string $sUid   the uid of the Prolication
+	 */
+
+  function OutputExists ( $sUid ) {
+  	$con = Propel::getConnection(OutputDocumentPeer::DATABASE_NAME);
+    try {
+      $oObj = OutputDocumentPeer::retrieveByPk( $sUid );
+  	  if ( get_class ($oObj) == 'OutputDocument' ) {
+  	    return true;
+  	  }
+      else {
+        return false;
+      }
+    }
+    catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
 } // OutputDocument

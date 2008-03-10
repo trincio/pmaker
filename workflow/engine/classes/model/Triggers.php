@@ -142,14 +142,31 @@ class Triggers extends BaseTriggers {
     try
     {
       $con->begin();
-      $this->setTriUid(G::generateUniqueID());
+      if ( !isset ( $aData['TRI_UID'] ) ) 
+        $this->setTriUid(G::generateUniqueID());
+      else
+        $this->setTriUid($aData['TRI_UID'] );
+        
       $this->setProUid($aData['PRO_UID']);
       $this->setTriType("SCRIPT");
-      $this->setTriWebbot("");
+
+      if ( !isset ( $aData['TRI_WEBBOT'] ) ) 
+        $this->setTriWebbot("");
+      else
+        $this->setTriWebbot( $aData['TRI_WEBBOT'] );
+        
       if($this->validate())
       {
-        $this->setTriTitle("");
-        $this->setTriDescription("");
+        if ( !isset ( $aData['TRI_TITLE'] ) ) 
+          $this->setTriTitle("");
+        else
+          $this->setTriTitle( $aData['TRI_TITLE'] );
+          
+        if ( !isset ( $aData['TRI_DESCRIPTION'] ) ) 
+          $this->setTriDescription("");
+        else
+          $this->setTriDescription( $aData['TRI_DESCRIPTION'] );
+        
         $result=$this->save();
         $con->commit();
         return $result;
@@ -217,6 +234,28 @@ class Triggers extends BaseTriggers {
       throw($e);
     }
   }
+  
+	/**
+	 * verify if Trigger row specified in [sUid] exists.
+	 *
+	 * @param      string $sUid   the uid of the Prolication
+	 */
+
+  function TriggerExists ( $sUid ) {
+  	$con = Propel::getConnection(TriggersPeer::DATABASE_NAME);
+    try {
+      $oObj = TriggersPeer::retrieveByPk( $sUid );
+  	  if ( get_class ($oObj) == 'Triggers' ) {
+  	    return true;
+  	  }
+      else {
+        return false;
+      }
+    }
+    catch (Exception $oError) {
+    	throw($oError);
+    }
+  }  
 } // Trigger
 
 ?>

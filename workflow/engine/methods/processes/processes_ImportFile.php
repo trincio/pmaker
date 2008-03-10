@@ -41,18 +41,23 @@
   $sProUid = $oData->process['PRO_UID'];
   
   if ( $oProcess->processExists ( $sProUid ) ) {
+  //krumo ($oData); 
     $sNewProUid = $oProcess->getUnusedProcessGUID() ;
     $oProcess->setProcessGuid ( $oData, $sNewProUid );
     $oProcess->setProcessParent( $oData, $sProUid );
     $oData->process['PRO_TITLE'] = 'copy of Derivations ' . date ( 'H:i:s' );  
     $oProcess->renewAllTaskGuid ( $oData );
     $oProcess->renewAllDynaformGuid ( $oData );
-  krumo ($oData); 
-    $oProcess->createProcessFromData ($oData);
-    die;
+    $oProcess->renewAllInputGuid ( $oData );
+    $oProcess->renewAllOutputGuid ( $oData );
+    $oProcess->renewAllStepGuid ( $oData );
+    $oProcess->renewAllTriggerGuid ( $oData );
+    //$oProcess->createProcessFromData ($oData);
+  //krumo ($oData); 
+    //die;
   	
   }
   
   $oProcess->createProcessFromData ($oData);
   
-  
+  G::header ( 'Location: processes_List');

@@ -121,6 +121,91 @@ class Processes {
   }
   
   /*
+  * verify if the object exists
+  * @param string $sUid
+  * @return boolean
+  */
+  function inputExists ( $sUid = '') {
+    $oInput = new InputDocument();
+    return $oInput->inputExists( $sUid );
+  }
+  
+  
+  /*
+  * verify if the object exists
+  * @param string $sUid
+  * @return boolean
+  */
+  function outputExists ( $sUid = '') {
+    $oOutput = new OutputDocument();
+    return $oOutput->outputExists( $sUid );
+  }
+  
+  /*
+  * verify if the object exists
+  * @param string $sUid
+  * @return boolean
+  */
+  function triggerExists ( $sUid = '') {
+    $oTrigger = new Triggers();
+    return $oTrigger->triggerExists( $sUid );
+  }
+  
+  /*
+  * get an unused input GUID
+  * @return $sProUid
+  */
+  function getUnusedInputGUID( ) {
+    do {
+     $sNewUid = G::generateUniqueID() ;
+    } while ( $this->inputExists ( $sNewUid ) );
+    return $sNewUid;
+  }
+  
+  /*
+  * get an unused output GUID
+  * @return $sProUid
+  */
+  function getUnusedOutputGUID( ) {
+    do {
+     $sNewUid = G::generateUniqueID() ;
+    } while ( $this->outputExists ( $sNewUid ) );
+    return $sNewUid;
+  }
+  
+  /*
+  * get an unused trigger GUID
+  * @return $sProUid
+  */
+  function getUnusedTriggerGUID( ) {
+    do {
+     $sNewUid = G::generateUniqueID() ;
+    } while ( $this->triggerExists ( $sNewUid ) );
+    return $sNewUid;
+  }
+  
+  /*
+  * verify if the object exists
+  * @param string $sUid
+  * @return boolean
+  */
+  function stepExists ( $sUid = '') {
+    $oStep = new Step();
+    return $oStep->stepExists( $sUid );
+  }
+  /*
+  * get an unused step GUID
+  * @return $sUid
+  */
+  function getUnusedStepGUID( ) {
+    do {
+     $sNewUid = G::generateUniqueID() ;
+    } while ( $this->stepExists ( $sNewUid ) );
+    return $sNewUid;
+  }
+  
+    
+  /*
   * get an unused Dynaform GUID
   * @return $sDynUid
   */
@@ -202,6 +287,11 @@ class Processes {
   	foreach ( $oData->steps as $key => $val ) {
   	  $newGuid = $map[ $val['TAS_UID'] ];
   	  $oData->steps[$key]['TAS_UID'] = $newGuid;
+  	}
+  	
+  	foreach ( $oData->steptriggers as $key => $val ) {
+  	  $newGuid = $map[ $val['TAS_UID'] ];
+  	  $oData->steptriggers[$key]['TAS_UID'] = $newGuid;
   	}
   }
 
@@ -323,6 +413,26 @@ class Processes {
   	return;
   }
 
+  /*
+  * change and Renew all Input GUID, because the process needs to have a new set of Inputs
+  * @param string $oData
+  * @return boolean
+  */
+  function renewAllInputGuid ( &$oData ) {
+  	$map = array ();
+  	foreach ( $oData->inputs as $key => $val ) {
+  	  $newGuid = $this->getUnusedInputGUID();
+  	  $map[ $val['INP_DOC_UID'] ] = $newGuid;
+  	  $oData->inputs[$key]['INP_DOC_UID'] = $newGuid;
+  	}
+  	foreach ( $oData->steps as $key => $val ) {
+  	  if ( $val['STEP_TYPE_OBJ'] == 'INPUT_DOCUMENT' ) {
+    	  $newGuid = $map[ $val['STEP_UID_OBJ'] ];
+  	    $oData->steps[$key]['STEP_UID_OBJ'] = $newGuid;
+  	  }
+  	}
+  }
+
   function getOutputRows ($sProUid ){  //SwimlanesElements
   	try {
   	  $aOutput   = array();
@@ -350,6 +460,44 @@ class Processes {
       $res = $oOutput->create($row);
   	}
   	return;
+  }
+
+  /*
+  * change and Renew all Output GUID, because the process needs to have a new set of Outputs
+  * @param string $oData
+  * @return boolean
+  */
+  function renewAllOutputGuid ( &$oData ) {
+  	$map = array ();
+  	foreach ( $oData->outputs as $key => $val ) {
+  	  $newGuid = $this->getUnusedOutputGUID();
+  	  $map[ $val['OUT_DOC_UID'] ] = $newGuid;
+  	  $oData->outputs[$key]['OUT_DOC_UID'] = $newGuid;
+  	}
+  	foreach ( $oData->steps as $key => $val ) {
+  	  if ( $val['STEP_TYPE_OBJ'] == 'OUTPUT_DOCUMENT' ) {
+    	  $newGuid = $map[ $val['STEP_UID_OBJ'] ];
+  	    $oData->steps[$key]['STEP_UID_OBJ'] = $newGuid;
+  	  }
+  	}
+  }
+
+  /*
+  * change and Renew all Trigger GUID, because the process needs to have a new set of Triggers
+  * @param string $oData
+  * @return boolean
+  */
+  function renewAllTriggerGuid ( &$oData ) {
+  	$map = array ();
+  	foreach ( $oData->triggers as $key => $val ) {
+  	  $newGuid = $this->getUnusedTriggerGUID();
+  	  $map[ $val['TRI_UID'] ] = $newGuid;
+  	  $oData->triggers[$key]['TRI_UID'] = $newGuid;
+  	}
+  	foreach ( $oData->steptriggers as $key => $val ) {
+  	  $newGuid = $map[ $val['TRI_UID'] ];
+	    $oData->steptriggers[$key]['TRI_UID'] = $newGuid;
+  	}
   }
 
   function getStepRows ($sProUid ){  //SwimlanesElements
@@ -381,6 +529,27 @@ class Processes {
   	return;
   }
 
+  /*
+  * change and Renew all Step GUID, because the process needs to have a new set of Steps
+  * @param string $oData
+  * @return boolean
+  */
+  function renewAllStepGuid ( &$oData ) {
+  	$map = array ();
+  	foreach ( $oData->steps as $key => $val ) {
+  	  $newGuid = $this->getUnusedStepGUID();
+  	  $map[ $val['STEP_UID'] ] = $newGuid;
+  	  $oData->steps[$key]['STEP_UID'] = $newGuid;
+  	}
+  	foreach ( $oData->steptriggers as $key => $val ) {
+  		if ( $val['STEP_UID'] > 0 ) {
+  	    $newGuid = $map[ $val['STEP_UID'] ];
+	      $oData->steptriggers[$key]['STEP_UID'] = $newGuid;
+	    }
+  	}
+  }
+
+
   function getDynaformRows ($sProUid ){ 
   	try {
   	  $aDynaform   = array();
@@ -410,17 +579,31 @@ class Processes {
   	return;
   }
 
-  function getStepTriggerRows ($sProUid ){  //SwimlanesElements
+
+  function createStepTriggerRows ($aStepTrigger ){  
+  	foreach ( $aStepTrigger as $key => $row ) {
+      $oStepTrigger = new StepTrigger();
+      //unset ($row['TAS_UID']);
+      $res = $oStepTrigger->create($row);
+  	}
+  	return;
+  }
+
+  function getStepTriggerRows ($aTask ){  
   	try {
-  	  $aStepTrigger   = array();
+  		$aInTasks = array();
+  		foreach ( $aTask as $key => $val ) {
+  			$aInTasks[] = $val['TAS_UID'];
+  		}
+  		
+  	  $aTrigger   = array();
   	  $oCriteria = new Criteria('workflow');
-      $oCriteria->add(StepTriggerPeer::PRO_UID,  $sProUid);
+      $oCriteria->add( StepTriggerPeer::TAS_UID,  $aInTasks, Criteria::IN );
       $oDataset = StepTriggerPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
       $oDataset->next();
       while ($aRow = $oDataset->getRow()) {
-      	$oStepTrigger = new StepTrigger();
-      	$aStepTrigger[] = $oStepTrigger->Load( $aRow['StepTrigger_UID'] );
+      	$aStepTrigger[] = $aRow;
       	$oDataset->next();
       }
       return $aStepTrigger;
@@ -429,16 +612,6 @@ class Processes {
     	throw($oError);
     }
   }
-
-  function createStepTriggerRows ($aStepTrigger ){  
-  	foreach ( $aStepTrigger as $key => $row ) {
-      $oStepTrigger = new StepTriggerdocument();
-      //unset ($row['TAS_UID']);
-      $res = $oStepTrigger->create($row);
-  	}
-  	return;
-  }
-
 
   function getTriggerRows ($sProUid ){  
   	try {
@@ -486,8 +659,7 @@ class Processes {
     $oData->dynaforms= $this->getDynaformRows ( $sProUid );
     $oData->steps    = $this->getStepRows( $sProUid );
     $oData->triggers = $this->getTriggerRows( $sProUid );
-    //$oData->steptriggers = $this->getStepTriggerRows( $sProUid );
-    
+    $oData->steptriggers = $this->getStepTriggerRows( $oData->tasks );
     //krumo ($oData);
     //$oJSON = new Services_JSON();
     //krumo ( $oJSON->encode($oData) );
@@ -533,8 +705,8 @@ class Processes {
     $this->createInputRows ($oData->inputs );
     $this->createOutputRows ($oData->outputs );
     $this->createStepRows ($oData->steps );
-    //$this->createTriggerRows ($oData->triggers);
-    
+    $this->createTriggerRows ($oData->triggers);
+    $this->createStepTriggerRows ($oData->steptriggers);
  }
   
 
