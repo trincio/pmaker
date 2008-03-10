@@ -86,7 +86,9 @@ class InputDocument extends BaseInputDocument {
   {
   	$oConnection = Propel::getConnection(InputDocumentPeer::DATABASE_NAME);
   	try {
-  		$aData['INP_DOC_UID'] = G::generateUniqueID();
+      if ( !isset ( $aData['INP_DOC_UID'] ) ) 
+    		$aData['INP_DOC_UID'] = G::generateUniqueID();
+    		
   	  $oInputDocument       = new InputDocument();
   	  $oInputDocument->fromArray($aData, BasePeer::TYPE_FIELDNAME);
   	  if ($oInputDocument->validate()) {
@@ -270,5 +272,27 @@ class InputDocument extends BaseInputDocument {
 	    }
 		}
 	}
+
+	/**
+	 * verify if Input row specified in [DynUid] exists.
+	 *
+	 * @param      string $sUid   the uid of the Prolication
+	 */
+
+  function InputExists ( $sUid ) {
+  	$con = Propel::getConnection(InputDocumentPeer::DATABASE_NAME);
+    try {
+      $oObj = InputDocumentPeer::retrieveByPk( $sUid );
+  	  if ( get_class ($oObj) == 'InputDocument' ) {
+  	    return true;
+  	  }
+      else {
+        return false;
+      }
+    }
+    catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
 
 } // InputDocument

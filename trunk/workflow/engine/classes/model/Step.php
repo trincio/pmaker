@@ -43,7 +43,11 @@ class Step extends BaseStep {
     $con = Propel::getConnection(StepPeer::DATABASE_NAME);
     try
     {
-    	$sStepUID = G::generateUniqueID();
+      if ( isset ( $aData['STEP_UID'] ) ) 
+        $sStepUID = $aData['STEP_UID'];
+      else
+    	  $sStepUID = G::generateUniqueID();
+    	  
       $con->begin();
       $this->setStepUid($sStepUID);
       $this->setProUid($aData['PRO_UID']);
@@ -335,4 +339,27 @@ class Step extends BaseStep {
   		throw $oException;
   	}
   }
+  
+	/**
+	 * verify if Step row specified in [sUid] exists.
+	 *
+	 * @param      string $sUid   the uid of the 
+	 */
+
+  function StepExists ( $sUid ) {
+  	$con = Propel::getConnection(StepPeer::DATABASE_NAME);
+    try {
+      $oObj = StepPeer::retrieveByPk( $sUid );
+  	  if ( get_class ($oObj) == 'Step' ) {
+  	    return true;
+  	  }
+      else {
+        return false;
+      }
+    }
+    catch (Exception $oError) {
+    	throw($oError);
+    }
+  }  
+  
 } // Step

@@ -27,7 +27,6 @@ try {
 
 /* Includes */
 G::LoadClass('processes');
-
 $oProcess  = new Processes();
 $proUid = isset ($_SESSION['PROCESS']) ? $_SESSION['PROCESS'] : '';
 $proFields = $oProcess->serializeProcess( $proUid );
@@ -43,5 +42,5 @@ catch ( Exception $e ){
   $G_PUBLISH = new Publisher;
 	$aMessage['MESSAGE'] = $e->getMessage();
   $G_PUBLISH->AddContent('xmlform', 'xmlform', 'login/showMessage', '', $aMessage );
-  G::RenderPage('publish');
+  G::RenderPage('publish', 'raw' );
 }
