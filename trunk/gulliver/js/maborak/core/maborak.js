@@ -108,7 +108,9 @@ var maborak = function(){
 	/**
 	* }Private functions
 	*/
-	this.tmp= {};
+	this.tmp= {
+		rpc:{}
+	};
 	this.charset="utf-8";
 	/**
 	* Make Core Functions
@@ -1788,6 +1790,7 @@ var maborak = function(){
 					return this.serialized;
 				};
 				this.expand(this);
+				return this;
 			});
 		}
 	};

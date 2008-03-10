@@ -151,6 +151,11 @@ leimnud.Package.Public({
 			};
 			this.expand(this);
 //			return this;
+		},
+		json:function()
+		{
+			this.make();
+			this.expand(this);
 		}
 	}
 });
