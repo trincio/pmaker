@@ -17,7 +17,7 @@
 <USR_LASTNAME type="text" size="30" maxlength="32"  defaultvalue="" required="0" group="1" dependentfields="" linkfield="" strto="" readonly="0" noshowingrid="0" readonlyingrid="0" totalizeable="0" sqlconnection="">
   <en>Last Name</en>
 </USR_LASTNAME>
-<USR_USERNAME type="text" size="15" maxlength="50" validate="Email" defaultvalue="" required="1" group="1" dependentfields="VERIFY" linkfield="" strto="" readonly="0" noshowingrid="0" readonlyingrid="0" totalizeable="0" onchange="">
+<USR_USERNAME type="text" size="15" maxlength="50" validate="AlphaNum" defaultvalue="" required="1" group="1" dependentfields="VERIFY" linkfield="" strto="" readonly="0" noshowingrid="0" readonlyingrid="0" totalizeable="0" onchange="">
   <en>User ID</en>
 </USR_USERNAME>
 <VERIFY type="hidden" size="15"  defaultvalue="" required="0" dependentfields="" readonly="0" noshowingrid="0" readonlyingrid="0" totalizeable="0" >
@@ -110,7 +110,6 @@ var sUsername;
 
 var dynaformOnload = function()
 {
-	changeToViewMode();
   sUsername = document.forms[1].elements['form[USR_USERNAME]'].value;
   leimnud.event.add(document.forms[1].elements['form[USR_USERNAME]'], 'change', {method:verifyUsername, instance:document.forms[1].elements['form[USR_USERNAME]'], event:true});
   leimnud.event.add(document.forms[1].elements['form[USR_CITY]'], 'change', {method:existsElements, instance:document.forms[1].elements['form[USR_CITY]'], event:true});
