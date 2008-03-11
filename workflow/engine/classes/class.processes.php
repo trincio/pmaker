@@ -295,6 +295,10 @@ class Processes {
   	  $newGuid = $map[ $val['TAS_UID'] ];
   	  $oData->steptriggers[$key]['TAS_UID'] = $newGuid;
   	}
+  	foreach ( $oData->taskusers as $key => $val ) {
+  	  $newGuid = $map[ $val['TAS_UID'] ];
+  	  $oData->taskusers[$key]['TAS_UID'] = $newGuid;
+  	}
   }
 
   /*
@@ -708,6 +712,16 @@ class Processes {
     	throw($oError);
     }
   }
+  
+  function createTaskUserRows ($aTaskUser ){  
+  	foreach ( $aTaskUser as $key => $row ) {
+      $oTaskUser = new TaskUser();
+      $res = $oTaskUser->create($row);
+  	}
+  	return;
+  }
+
+
 
 
 
@@ -837,7 +851,7 @@ class Processes {
       if ( $fsXmlContent > 0 ) {
         $newXmlGuid = $oData->dynaformFiles[ $XmlGuid ];
         $sFileName = $path . $newXmlGuid . '.xml';
-        print "$sFileName <br>";
+        //print "$sFileName <br>";
         $XmlContent   = fread( $fp, $fsXmlContent );    //reading string $XmlContent
         $bytesSaved = file_put_contents ( $sFileName, $XmlContent );
         if ( $bytesSaved != $fsXmlContent ) 
@@ -847,7 +861,7 @@ class Processes {
     }
     fclose ( $fp);
     
-    return unserialize ($contents);
+    return true;
  	
   }
   /*
@@ -866,6 +880,7 @@ class Processes {
     $this->createStepRows ($oData->steps );
     $this->createTriggerRows ($oData->triggers);
     $this->createStepTriggerRows ($oData->steptriggers);
+    $this->createTaskUserRows ($oData->taskusers);
     $this->createDynamformFiles ( $oData, $pmFilename  );
     
  }  
