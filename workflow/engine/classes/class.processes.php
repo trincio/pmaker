@@ -761,8 +761,20 @@ class Processes {
     if ( !is_dir($path) ) {
       	G::verifyPath($path, true);
     }
-    $filename = $path . $sProUid . '.pm';
-    $filenameOnly = $sProUid . '.pm';
+    $proTitle = G::capitalizeWords($data->process['PRO_TITLE']);
+
+    $index = ''; $lastIndex = '';
+    do {
+      $filename = $path . $proTitle . $index . '.pm';
+      $lastIndex = $index;
+      if ( $index == '' ) 
+        $index = 1;
+      else 
+        $index ++;
+    } while ( file_exists ( $filename )  );
+    
+    $proTitle .= $lastIndex;
+    $filenameOnly = $proTitle . '.pm';
     
     $fp = fopen( $filename, "wb");
 
@@ -785,7 +797,7 @@ class Processes {
     }
     fclose ( $fp);
     //$bytesSaved = file_put_contents  ( $filename  , $oData  );
-    $filenameLink = 'processes_DownloadFile?p=' . $sProUid . '&r=' . rand(100,1000);
+    $filenameLink = 'processes_DownloadFile?p=' . $proTitle . '&r=' . rand(100,1000);
     
     $result['PRO_UID']         = $data->process['PRO_UID'];
     $result['PRO_TITLE']       = $data->process['PRO_TITLE'];
