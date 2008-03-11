@@ -22,6 +22,8 @@
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
  * 
  */
+ 
+ try {
   //load the variables
   G::LoadClass('processes');
   $oProcess = new Processes();
@@ -33,10 +35,8 @@
     $tempName = $_FILES['form']['tmp_name']['PROCESS_FILENAME'];
     G::uploadFile($tempName, $path, $filename );
   }
-
-  $contents = file_get_contents ( $path . $filename );
+  $oData = $oProcess->getProcessData ( $path . $filename  );
   
-  $oData = unserialize ($contents);
   
   $sProUid = $oData->process['PRO_UID'];
   
@@ -45,19 +45,26 @@
     $sNewProUid = $oProcess->getUnusedProcessGUID() ;
     $oProcess->setProcessGuid ( $oData, $sNewProUid );
     $oProcess->setProcessParent( $oData, $sProUid );
-    $oData->process['PRO_TITLE'] = 'copy of Derivations ' . date ( 'H:i:s' );  
+    $oData->process['PRO_TITLE'] = 'Copy of ' . $oData->process['PRO_TITLE'] . date ( 'H:i:s' );  
     $oProcess->renewAllTaskGuid ( $oData );
     $oProcess->renewAllDynaformGuid ( $oData );
     $oProcess->renewAllInputGuid ( $oData );
     $oProcess->renewAllOutputGuid ( $oData );
     $oProcess->renewAllStepGuid ( $oData );
     $oProcess->renewAllTriggerGuid ( $oData );
-    //$oProcess->createProcessFromData ($oData);
   //krumo ($oData); 
     //die;
   	
   }
   
-  $oProcess->createProcessFromData ($oData);
+  $oProcess->createProcessFromData ($oData, $path . $filename );
   
   G::header ( 'Location: processes_List');
+
+}
+catch ( Exception $e ){
+  $G_PUBLISH = new Publisher;
+	$aMessage['MESSAGE'] = $e->getMessage();
+  $G_PUBLISH->AddContent('xmlform', 'xmlform', 'login/showMessage', '', $aMessage );
+  G::RenderPage('publish');
+}
