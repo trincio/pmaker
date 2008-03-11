@@ -52,13 +52,12 @@
     $oProcess->renewAllOutputGuid ( $oData );
     $oProcess->renewAllStepGuid ( $oData );
     $oProcess->renewAllTriggerGuid ( $oData );
-  //krumo ($oData); 
-    //die;
   	
   }
   
   $oProcess->createProcessFromData ($oData, $path . $filename );
-  
+  //krumo ($oData); 
+  //die;
   G::header ( 'Location: processes_List');
 
 }
