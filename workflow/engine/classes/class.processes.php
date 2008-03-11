@@ -27,6 +27,7 @@ require_once 'classes/model/Content.php';
 require_once 'classes/model/Process.php';
 require_once 'classes/model/Task.php';
 require_once 'classes/model/Route.php';
+require_once 'classes/model/Route.php';
 require_once 'classes/model/SwimlanesElements.php';
 require_once 'classes/model/InputDocument.php';
 require_once 'classes/model/OutputDocument.php';
@@ -34,6 +35,7 @@ require_once 'classes/model/Step.php';
 require_once 'classes/model/StepTrigger.php';
 require_once 'classes/model/Dynaform.php';
 require_once 'classes/model/Triggers.php';
+require_once 'classes/model/Groupwf.php';
 G::LoadClass('tasks');
 G::LoadThirdParty('pear/json','class.json');
 
@@ -312,6 +314,10 @@ class Processes {
     	  $newGuid = $map[ $val['STEP_UID_OBJ'] ];
   	    $oData->steps[$key]['STEP_UID_OBJ'] = $newGuid;
   	  }
+  	}
+  	foreach ( $oData->dynaformFiles as $key => $val ) {
+  	  $newGuid = $map[ $key ]; 
+	    $oData->dynaformFiles[$key] = $newGuid;
   	}
   }
 
@@ -642,6 +648,68 @@ class Processes {
   	return;
   }
 
+  function getGroupwfRows ($aGroups ){  
+  	try {
+  		$aInGroups = array();
+  		foreach ( $aGroups as $key => $val ) {
+  			$aInGroups[] = $val['USR_UID'];
+  		}
+  		
+  	  $aGroupwf   = array();
+  	  $oCriteria = new Criteria('workflow');
+      $oCriteria->add( GroupwfPeer::GRP_UID,  $aInGroups, Criteria::IN );
+      $oDataset = GroupwfPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      while ($aRow = $oDataset->getRow()) {
+      	$oGroupwf = new Groupwf();
+      	$aGroupwf[] = $oGroupwf->Load( $aRow['GRP_UID'] );
+      	$oDataset->next();
+      }
+      return $aGroupwf;
+    }
+  	catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
+
+  function getTaskUserRows ($aTask ){  
+  	try {
+  		$aInTasks = array();
+  		foreach ( $aTask as $key => $val ) {
+  			$aInTasks[] = $val['TAS_UID'];
+  		}
+  		
+  	  $aTaskUser   = array();
+  	  $oCriteria = new Criteria('workflow');
+      $oCriteria->add( TaskUserPeer::TAS_UID,  $aInTasks, Criteria::IN );
+      $oCriteria->add( TaskUserPeer::TU_RELATION,  2 );
+      $oDataset = TaskUserPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      while ($aRow = $oDataset->getRow()) {
+      	$oCriteria2 = new Criteria('workflow');
+      	$oCriteria2->clearSelectColumns();
+      	$oCriteria2->addSelectColumn ( 'COUNT(*)' );
+        $oCriteria2->add( GroupwfPeer::GRP_UID,    $aRow['USR_UID']);
+        $oCriteria2->add( GroupwfPeer::GRP_STATUS, 'ACTIVE' );
+        $oDataset2 = GroupwfPeer::doSelectRS($oCriteria2);
+        //$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+        $oDataset2->next();
+        $aRow2 = $oDataset2->getRow();
+        $bActiveGroup = $aRow2[0];
+        if ( $bActiveGroup == 1 ) 
+      	  $aTaskUser[] = $aRow;
+      	$oDataset->next();
+      }
+      return $aTaskUser;
+    }
+  	catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
+
+
 
   /*
   * change Status of any Process
@@ -659,6 +727,8 @@ class Processes {
     $oData->dynaforms= $this->getDynaformRows ( $sProUid );
     $oData->steps    = $this->getStepRows( $sProUid );
     $oData->triggers = $this->getTriggerRows( $sProUid );
+    $oData->taskusers= $this->getTaskUserRows( $oData->tasks );
+    $oData->groupwfs = $this->getGroupwfRows( $oData->taskusers );
     $oData->steptriggers = $this->getStepTriggerRows( $oData->tasks );
     //krumo ($oData);
     //$oJSON = new Services_JSON();
@@ -667,11 +737,11 @@ class Processes {
     return serialize($oData);
   }
   
-  function saveSerializedProcess ( $proFields ) {
+  function saveSerializedProcess ( $oData ) {
     //$oJSON = new Services_JSON();
-    //$data = $oJSON->decode($proFields);
+    //$data = $oJSON->decode($oData);
     //$sProUid = $data->process->PRO_UID;
-    $data = unserialize ($proFields);
+    $data = unserialize ($oData);
     $sProUid = $data->process['PRO_UID'];
     $path = PATH_DOCUMENT . 'output' . PATH_SEP;
     if ( !is_dir($path) ) {
@@ -679,7 +749,28 @@ class Processes {
     }
     $filename = $path . $sProUid . '.pm';
     $filenameOnly = $sProUid . '.pm';
-    $bytesSaved = file_put_contents  ( $filename  , $proFields  );
+    
+    $fp = fopen( $filename, "wb");
+
+    $fsData = sprintf ( "%09d", strlen ( $oData) );
+    $bytesSaved = fwrite( $fp, $fsData );  //writing the size of $oData
+    $bytesSaved += fwrite( $fp, $oData ); //writing the $oData
+    foreach ($data->dynaforms as $key => $val ) {
+    	$sFileName = PATH_DYNAFORM .  $val['DYN_FILENAME'] . '.xml';
+    	if ( file_exists ( $sFileName ) ) {
+    		$xmlGuid    = $val['DYN_UID'];
+        $fsXmlGuid  = sprintf ( "%09d", strlen ( $xmlGuid ) );
+        $bytesSaved += fwrite( $fp, $fsXmlGuid );  //writing the size of xml file
+        $bytesSaved += fwrite( $fp, $xmlGuid );    //writing the xmlfile
+        
+        $xmlContent = file_get_contents ( $sFileName );
+        $fsXmlContent = sprintf ( "%09d", strlen ( $xmlContent) );
+        $bytesSaved += fwrite( $fp, $fsXmlContent );  //writing the size of xml file
+        $bytesSaved += fwrite( $fp, $xmlContent );    //writing the xmlfile
+    	}
+    }
+    fclose ( $fp);
+    //$bytesSaved = file_put_contents  ( $filename  , $oData  );
     $filenameLink = 'processes_DownloadFile?p=' . $sProUid . '&r=' . rand(100,1000);
     
     $result['PRO_UID']         = $data->process['PRO_UID'];
@@ -691,12 +782,80 @@ class Processes {
     return $result;
   }
   
+  function getProcessData ( $pmFilename  ) {
+    if (! file_exists($pmFilename) ) 
+      throw ( new Exception ( 'Unable to read uploaded file, please check permissions. '));
+      
+    if (! filesize($pmFilename) >= 9 ) 
+      throw ( new Exception ( 'Uploaded file is corrupted, please check the file before continue. '));
+      
+    $fp = fopen( $pmFilename, "rb");
+    $fsData = intval( fread ( $fp, 9)); //reading the size of $oData
+    $contents  = fread( $fp, $fsData );    //reading string $oData
+    $oData = unserialize ($contents);
+    
+    $oData->dynaformFiles = array();
+    while ( !feof ( $fp ) ) {
+      $fsXmlGuid    = intval( fread ( $fp, 9));      //reading the size of $filename
+      if ( $fsXmlGuid > 0 ) 
+        $XmlGuid    = fread( $fp, $fsXmlGuid );    //reading string $XmlGuid
+
+      $fsXmlContent = intval( fread ( $fp, 9));      //reading the size of $XmlContent
+      if ( $fsXmlContent > 0 ) {
+      	$oData->dynaformFiles[$XmlGuid ] = $XmlGuid;
+        $XmlContent   = fread( $fp, $fsXmlContent );    //reading string $XmlContent
+        unset($XmlContent);
+      }
+    }
+    fclose ( $fp);
+    
+    return $oData;
+ 	
+  }
+  
+  function createDynamformFiles ( $oData, $pmFilename  ) {
+    if (! file_exists($pmFilename) )  
+      throw ( new Exception ( 'Unable to read uploaded .pm file, please check permissions. ') );
+      
+    if (! filesize($pmFilename) >= 9 ) 
+      throw ( new Exception ( 'Uploaded .pm file is corrupted, please check the file before continue. '));
+      
+    $fp = fopen( $pmFilename, "rb");
+    $fsData = intval( fread ( $fp, 9));    //reading the size of $oData
+    $contents  = fread( $fp, $fsData );    //reading string $oData
+
+    $path = PATH_DYNAFORM . $oData->process['PRO_UID'] . PATH_SEP;
+    if ( !is_dir($path) ) {
+      	G::verifyPath($path, true);
+    }
+    
+    while ( !feof ( $fp ) ) {
+      $fsXmlGuid    = intval( fread ( $fp, 9));      //reading the size of $filename
+      if ( $fsXmlGuid > 0 ) 
+        $XmlGuid    = fread( $fp, $fsXmlGuid );    //reading string $XmlGuid
+      $fsXmlContent = intval( fread ( $fp, 9));      //reading the size of $XmlContent
+      if ( $fsXmlContent > 0 ) {
+        $newXmlGuid = $oData->dynaformFiles[ $XmlGuid ];
+        $sFileName = $path . $newXmlGuid . '.xml';
+        print "$sFileName <br>";
+        $XmlContent   = fread( $fp, $fsXmlContent );    //reading string $XmlContent
+        $bytesSaved = file_put_contents ( $sFileName, $XmlContent );
+        if ( $bytesSaved != $fsXmlContent ) 
+          throw ( new Exception ('Error writing dynaform file in directory : ' . $path ) );
+        
+      }
+    }
+    fclose ( $fp);
+    
+    return unserialize ($contents);
+ 	
+  }
   /*
   * this function creates a new Process, defined in the object $oData
   * @param string $sProUid
   * @return boolean
   */
-  function createProcessFromData ($oData) {
+  function createProcessFromData ($oData, $pmFilename ) {
     $this->createProcessRow ($oData->process );
     $this->createTaskRows ($oData->tasks );
     $this->createRouteRows ($oData->routes );
@@ -707,7 +866,8 @@ class Processes {
     $this->createStepRows ($oData->steps );
     $this->createTriggerRows ($oData->triggers);
     $this->createStepTriggerRows ($oData->steptriggers);
- }
-  
+    $this->createDynamformFiles ( $oData, $pmFilename  );
+    
+ }  
 
 }
