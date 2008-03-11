@@ -27,7 +27,7 @@
   <en>Last Name</en>
 </USR_LASTNAME>
 
-<USR_USERNAME type="text" size="15" maxlength="50" validate="Email" defaultvalue="" required="1" group="1" dependentfields="" linkfield="" strto="" readonly="0" noshowingrid="0" readonlyingrid="0" totalizeable="0" onchange="">
+<USR_USERNAME type="text" size="15" maxlength="50" validate="AlphaNum" defaultvalue="" required="1" group="1" dependentfields="" linkfield="" strto="" readonly="0" noshowingrid="0" readonlyingrid="0" totalizeable="0" onchange="">
   <es>ID de Usuario (*)</es>
   <en>User ID (*)</en>
 </USR_USERNAME>
@@ -141,22 +141,24 @@ var sUsername;
 
 var dynaformOnload = function()
 {
-  sUsername = document.forms[0].elements['form[USR_USERNAME]'].value;
-  leimnud.event.add(document.forms[0].elements['form[USR_USERNAME]'], 'change', {method:verifyUsername, instance:document.forms[0].elements['form[USR_USERNAME]'], event:true});
-  leimnud.event.add(document.forms[0].elements['form[USR_CITY]'], 'change', {method:existsElements, instance:document.forms[0].elements['form[USR_CITY]'], event:true});
-  leimnud.event.add(document.forms[0].elements['form[USR_LOCATION]'], 'change', {method:existsElements, instance:document.forms[0].elements['form[USR_LOCATION]'], event:true});
-  if (document.forms[0].elements['form[USR_CITY]'].options.length == 0) {
+  sUsername = document.forms[1].elements['form[USR_USERNAME]'].value;
+  leimnud.event.add(document.forms[1].elements['form[USR_USERNAME]'], 'change', {method:verifyUsername, instance:document.forms[1].elements['form[USR_USERNAME]'], event:true});
+  leimnud.event.add(document.forms[1].elements['form[USR_CITY]'], 'change', {method:existsElements, instance:document.forms[1].elements['form[USR_CITY]'], event:true});
+  leimnud.event.add(document.forms[1].elements['form[USR_LOCATION]'], 'change', {method:existsElements, instance:document.forms[1].elements['form[USR_LOCATION]'], event:true});
+  if (document.forms[1].elements['form[USR_CITY]'].options.length == 0) {
     hideRow(document.forms[0].elements['form[USR_CITY]']);
+    hideRow(document.forms[1].elements['form[USR_CITY]']);
   }
-  if (document.forms[0].elements['form[USR_LOCATION]'].options.length == 0) {
+  if (document.forms[1].elements['form[USR_LOCATION]'].options.length == 0) {
     hideRow(document.forms[0].elements['form[USR_LOCATION]']);
+    hideRow(document.forms[1].elements['form[USR_LOCATION]']);
   }
 };
 
 var verifyUsername = function()
 {
-  document.forms[0].elements['form[USR_USERNAME]'].disabled = true;
-  document.forms[0].elements['form[SUBMIT]'].disabled = true;
+  document.forms[1].elements['form[USR_USERNAME]'].disabled = true;
+  document.forms[1].elements['form[SUBMIT]'].disabled = true;
   var oRPC = new leimnud.module.rpc.xmlhttp({
     url    :'users_Ajax',
     async  : false,
@@ -164,17 +166,17 @@ var verifyUsername = function()
     args   :'function=verifyUsername&amp;sOriginalUsername=' + sUsername + '&amp;sUsername=' + encodeURIComponent(this.value)});
   oRPC.make();
   var sResponse = oRPC.xmlhttp.responseText;
-  document.forms[0].elements['form[USR_USERNAME]'].disabled = false;
+  document.forms[1].elements['form[USR_USERNAME]'].disabled = false;
   if (sResponse == '1')
   {
     new leimnud.module.app.alert().make({
 	    label: "@#MESSAGE0"
   	});
-    document.forms[0].elements['form[USR_USERNAME]'].focus();
+    document.forms[1].elements['form[USR_USERNAME]'].focus();
   }
   else
   {
-    document.forms[0].elements['form[SUBMIT]'].disabled = false;
+    document.forms[1].elements['form[SUBMIT]'].disabled = false;
   }
 };
 
@@ -201,38 +203,16 @@ var verifyUserInformation = function(oForm)
 		bContinue = false;
 	}
 	oAux1 = oForm.elements['form[USR_NEW_PASS]'];
-	if ((oAux1.value != '') || ('@#USR_UID' == ''))
+	if (oAux1.value != '')
 	{
 		oAux2 = oForm.elements['form[USR_CNF_PASS]'];
 		if (oAux1.value != oAux2.value)
 		{
 		  new leimnud.module.app.alert().make({
-	    label: "@#MESSAGE3"
-  	});
+	      label: "@#MESSAGE3"
+  	  });
 		  oAux1.focus();
 		  bContinue = false;
-	  }
-	  else
-	  {
-	    if (oAux1.value == '')
-	    {
-	      new leimnud.module.app.alert().make({
-	        label: "Please enter the password!"
-  	    });
-	      oAux1.focus();
-	      bContinue = false;
-	    }
-	    else
-	    {
-	      if (oAux1.value != oAux2.value)
-		    {
-		      new leimnud.module.app.alert().make({
-	          label: "@#MESSAGE3"
-  	      });
-		      oAux1.focus();
-		      bContinue = false;
-		    }
-	    }
 	  }
 	}
 	if (bContinue)

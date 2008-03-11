@@ -27,10 +27,10 @@
   <en></en>
   <es></es>
 </USR_VIEW>
-<USR_EDIT type="link" colWidth="50" value="@#USR_EDIT" link="users_Edit?USR_UID=@#USR_UID">
+<!--<USR_EDIT type="link" colWidth="50" value="@#USR_EDIT" link="users_Edit?USR_UID=@#USR_UID">
   <en></en>
   <es></es>
-</USR_EDIT>
+</USR_EDIT>-->
 <USR_DELETE type="link" colWidth="50" value="@#USR_DELETE" link="#" onclick="deleteUser('@#USR_UID');return false;">
   <en></en>
   <es></es>

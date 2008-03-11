@@ -94,7 +94,7 @@ SELECT ROL_CODE AS USR_ROLE, ROL_CODE AS CODE FROM ROLES WHERE ROL_SYSTEM = '000
   <en>Role</en>
 </USR_ROLE>
 
-<!--<TITLECHP type="title" group="1">
+<TITLECHP type="title" group="1">
   <es>Cambiar Password</es>
   <en>Change Password</en>
 </TITLECHP>
@@ -107,7 +107,7 @@ SELECT ROL_CODE AS USR_ROLE, ROL_CODE AS CODE FROM ROLES WHERE ROL_SYSTEM = '000
 <USR_CNF_PASS type="password" size="12" maxlength="10" validate="5" mask="" required="1">
   <es>Confirmación </es>
   <en>Confirm Password </en>
-</USR_CNF_PASS>-->
+</USR_CNF_PASS>
 
 <TITLEADD type="title" group="1">
   <es>Información adicional</es>
