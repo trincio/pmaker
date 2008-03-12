@@ -123,7 +123,7 @@ class Groups {
     try
     {
       $criteria = new Criteria();
-      //$criteria->add(GroupwfPeer::GRP_STATUS, "ACTIVE");
+      $criteria->add(GroupwfPeer::GRP_UID, "" , Criteria::NOT_EQUAL );
       $con = Propel::getConnection(GroupwfPeer::DATABASE_NAME);
       $objects = GroupwfPeer::doSelect($criteria, $con);
       return $objects;
