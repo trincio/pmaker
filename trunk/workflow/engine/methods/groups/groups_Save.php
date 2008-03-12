@@ -32,9 +32,12 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_USERS"))!=1) return $RBAC_Response;
   $group = new Groupwf();
   if($_POST['form']['GRP_UID']==='')
   {
-    $group->create($_POST['form']);
-    $_POST['form']['GRP_UID']=$group->getGrpUid();
-    $group->update($_POST['form']);
+  	$grpRow = $_POST['form'];
+  	unset ( $grpRow['GRP_UID'] );
+    $group->create( $grpRow );
+    
+    //$_POST['form']['GRP_UID']=$group->getGrpUid();
+    //$group->update($_POST['form']);
   }
   else
   {
