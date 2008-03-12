@@ -100,6 +100,8 @@ class OutputDocument extends BaseOutputDocument {
   {
   	$oConnection = Propel::getConnection(OutputDocumentPeer::DATABASE_NAME);
   	try {
+  	  if ( isset ( $aData['OUT_DOC_UID'] ) && $aData['OUT_DOC_UID']== '' ) 
+        unset ( $aData['OUT_DOC_UID'] );
       if ( !isset ( $aData['OUT_DOC_UID'] ) ) 
     		$aData['OUT_DOC_UID'] = G::generateUniqueID();
   	  $oOutputDocument = new OutputDocument();

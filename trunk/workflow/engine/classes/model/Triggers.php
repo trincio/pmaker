@@ -142,6 +142,8 @@ class Triggers extends BaseTriggers {
     try
     {
       $con->begin();
+      if ( isset ( $aData['TRI_UID'] ) && $aData['TRI_UID']== '' ) 
+        unset ( $aData['TRI_UID'] );
       if ( !isset ( $aData['TRI_UID'] ) ) 
         $this->setTriUid(G::generateUniqueID());
       else

@@ -144,6 +144,8 @@ class Dynaform extends BaseDynaform {
     }
   	$con = Propel::getConnection( DynaformPeer::DATABASE_NAME );
     try {
+      if ( isset ( $aData['DYN_UID'] ) && $aData['DYN_UID']== '' ) 
+        unset ( $aData['DYN_UID'] );
       if ( !isset ( $aData['DYN_UID'] ) ) 
   	    $dynUid  = ( G::generateUniqueID() );  
   	  else

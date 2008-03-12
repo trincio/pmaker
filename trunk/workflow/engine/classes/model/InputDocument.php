@@ -86,9 +86,10 @@ class InputDocument extends BaseInputDocument {
   {
   	$oConnection = Propel::getConnection(InputDocumentPeer::DATABASE_NAME);
   	try {
+      if ( isset ( $aData['INP_DOC_UID'] ) && $aData['INP_DOC_UID']== '' ) 
+        unset ( $aData['INP_DOC_UID'] );
       if ( !isset ( $aData['INP_DOC_UID'] ) ) 
     		$aData['INP_DOC_UID'] = G::generateUniqueID();
-    		
   	  $oInputDocument       = new InputDocument();
   	  $oInputDocument->fromArray($aData, BasePeer::TYPE_FIELDNAME);
   	  if ($oInputDocument->validate()) {
