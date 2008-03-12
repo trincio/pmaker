@@ -95,9 +95,15 @@ class Groupwf extends BaseGroupwf {
     //$oData is not necessary
   	$con = Propel::getConnection( GroupwfPeer::DATABASE_NAME );
     try {
-  	  $this->setGrpUid ( G::generateUniqueID() );
-  
-      $this->setGrpStatus       ( 'ACTIVE' );
+    	if ( isset ( $aData['GRP_UID'] ) ) 
+    	  $this->setGrpUid ( $aData['GRP_UID'] );
+      else 
+  	    $this->setGrpUid ( G::generateUniqueID() );
+  	    
+    	if ( isset ( $aData['GRP_STATUS'] ) ) 
+    	  $this->setGrpStatus ( $aData['GRP_STATUS'] );
+      else 
+        $this->setGrpStatus       ( 'ACTIVE' );
 	
 	    if ( $this->validate() ) {
         $con->begin(); 
@@ -218,4 +224,27 @@ class Groupwf extends BaseGroupwf {
       throw($oError);
     }
   }
+  
+	/**
+	 * verify if row specified in [GrpUid] exists.
+	 *
+	 * @param      string $sProUid   the uid of the Prolication
+	 */
+
+  function GroupwfExists ( $GrpUid ) {
+  	$con = Propel::getConnection(GroupwfPeer::DATABASE_NAME);
+    try {
+      $oPro = GroupwfPeer::retrieveByPk( $GrpUid );
+  	  if ( get_class ($oPro) == 'Groupwf' ) {
+  	    return true;
+  	  }
+      else {
+        return false;
+      }
+    }
+    catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
+  
 } // Groupwf

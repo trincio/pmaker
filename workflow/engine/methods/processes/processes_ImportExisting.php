@@ -47,7 +47,6 @@
   
   //Disable current Process and create a new version of the Process
   if ( $option == 2 ) {
-  //krumo ($oData); 
     $oProcess->disablePreviousProcesses( $sProUid );
     $sNewProUid = $oProcess->getUnusedProcessGUID() ;
     $oProcess->setProcessGuid ( $oData, $sNewProUid );
