@@ -71,8 +71,6 @@
   }
   
   $oProcess->createProcessFromData ($oData, $path . $filename );
-  //krumo ($oData); 
-  //die;
   G::header ( 'Location: processes_List');
 
 }

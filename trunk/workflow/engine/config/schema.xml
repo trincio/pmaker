@@ -1906,7 +1906,7 @@
       <rule name="validValues" value="WEEKS|MONTHS|DAYS|HOURS|MINUTES" message="Please select a valid Time Unit." />
     </validator>
     <validator column="PRO_STATUS">
-      <rule name="validValues" value="ACTIVE|INACTIVE" message="Please select a valid Process Status." />
+      <rule name="validValues" value="ACTIVE|INACTIVE|DISABLED" message="Please select a valid Process Status." />
     </validator>
     <validator column="PRO_TYPE">
       <rule name="validValues" value="NORMAL" message="Please select a valid Process Type." />

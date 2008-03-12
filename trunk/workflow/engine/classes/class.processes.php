@@ -854,6 +854,25 @@ class Processes {
  	
   }
   
+  /* disable all previous process with the parent $sProUid
+  */
+  function disablePreviousProcesses( $sProUid ) {
+	  //change status of process
+  	$oCriteria = new Criteria('workflow');
+  	$oCriteria->add(ProcessPeer::PRO_PARENT, $sProUid);
+  	$oDataset = ProcessPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    $oProcess = new Process();
+    while ($aRow = $oDataset->getRow()) {
+    	$aRow['PRO_STATUS'] = 'DISABLED';
+    	$aRow['PRO_UPDATE_DATE'] = 'now';
+    	$oProcess->update ( $aRow);
+      $oDataset->next();
+    }
+  	
+  }
+  
   function createDynamformFiles ( $oData, $pmFilename  ) {
     if (! file_exists($pmFilename) )  
       throw ( new Exception ( 'Unable to read uploaded .pm file, please check permissions. ') );
