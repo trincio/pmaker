@@ -122,11 +122,11 @@ class Route extends BaseRoute {
   	      foreach($aValidationFailures as $oValidationFailure) {
             $sMessage .= $oValidationFailure->getMessage() . '<br />';
           }
-          throw(new Exception('The registry cannot be updated!<br />'.$sMessage));
+          throw(new Exception('The ROUTE tables cannot be updated!<br />'.$sMessage));
   	    }
       }
       else {
-        throw(new Exception('This row doesn\'t exists!'));
+        throw(new Exception( "The row " . $aData['ROU_UID'] . " doesn't exists!" ));
       }
     }
     catch (Exception $oError) {

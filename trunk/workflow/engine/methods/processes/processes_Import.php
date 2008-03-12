@@ -28,11 +28,6 @@ try {
 /* Includes */
 G::LoadClass('processes');
 
-//$oProcess  = new Processes();
-//$proUid = isset ($_SESSION['PROCESS']) ? $_SESSION['PROCESS'] : '';
-//$proFields = $oProcess->serializeProcess( $proUid );
-//$Fields = $oProcess->saveSerializedProcess ( $proFields );
-
   /* Render page */
   $G_MAIN_MENU            = 'processmaker';
   $G_ID_MENU_SELECTED     = 'PROCESSES';

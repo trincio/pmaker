@@ -334,6 +334,11 @@ class Processes {
     $oProcess = new Process( );
     return $oProcess->createRow($row);
   }
+
+  function updateProcessRow ($row ){
+    $oProcess = new Process( );
+    return $oProcess->update($row);
+  }
   
   
 /*
@@ -370,6 +375,11 @@ class Processes {
     $oTask = new Tasks( );
     return $oTask->createTaskRows( $aTasks );
   }
+
+  function updateTaskRows ($aTasks ){
+    $oTask = new Tasks( );
+    return $oTask->updateTaskRows( $aTasks );
+  }
   
   function getRouteRows ($sProUid ){
     $oTask = new Tasks( );
@@ -379,6 +389,11 @@ class Processes {
   function createRouteRows ($aRoutes ){
     $oTask = new Tasks( );
     return $oTask->createRouteRows( $aRoutes );
+  }
+  
+  function updateRouteRows ($aRoutes ){
+    $oTask = new Tasks( );
+    return $oTask->updateRouteRows( $aRoutes );
   }
   
   function getLaneRows ($sProUid ){  //SwimlanesElements
@@ -865,7 +880,7 @@ class Processes {
         $sFileName = $path . $newXmlGuid . '.xml';
         //print "$sFileName <br>";
         $XmlContent   = fread( $fp, $fsXmlContent );    //reading string $XmlContent
-        $bytesSaved = file_put_contents ( $sFileName, $XmlContent );
+        $bytesSaved = @file_put_contents ( $sFileName, $XmlContent );
         if ( $bytesSaved != $fsXmlContent ) 
           throw ( new Exception ('Error writing dynaform file in directory : ' . $path ) );
         
@@ -876,6 +891,128 @@ class Processes {
     return true;
  	
   }
+  
+  /*
+  * this function remove all Process except the PROCESS ROW
+  * @param string $sProUid
+  * @return boolean
+  */
+  function removeProcessRows ($sProUid )  {
+    try {
+  	  //Instance all classes necesaries
+  	  $oProcess         = new Process();
+  	  $oDynaform        = new Dynaform();
+  	  $oInputDocument   = new InputDocument();
+  	  $oOutputDocument  = new OutputDocument();
+  	  $oTrigger         = new Triggers();
+  	  $oRoute           = new Route();
+  	  $oStep            = new Step();
+  	  $oSwimlaneElement = new SwimlanesElements();
+  	  
+  	  //Delete the tasks of process
+  	  $oCriteria = new Criteria('workflow');
+  	  $oCriteria->add(TaskPeer::PRO_UID, $sProUid);
+  	  $oDataset = TaskPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      $oTask = new Task();
+      while ($aRow = $oDataset->getRow()) {
+        $oTask->remove( $aRow['TAS_UID']);
+      	$oDataset->next();
+      }
+   
+    //Delete the dynaforms of process
+    $oCriteria = new Criteria('workflow');
+    $oCriteria->add(DynaformPeer::PRO_UID, $sProUid);
+    $oDataset = DynaformPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    while ($aRow = $oDataset->getRow()) {
+    	$sWildcard = PATH_DYNAFORM . $aRow['PRO_UID'] . PATH_SEP . $aRow['DYN_UID'] . '_tmp*';
+    	foreach( glob($sWildcard) as $fn ) {
+        @unlink($fn);
+      } 
+    	$sWildcard = PATH_DYNAFORM . $aRow['PRO_UID'] . PATH_SEP . $aRow['DYN_UID'] . '.*';
+    	foreach( glob($sWildcard) as $fn ) {
+        @unlink($fn);
+      } 
+    	$oDynaform->remove( $aRow['DYN_UID'] );
+    	$oDataset->next();
+    }
+
+    //Delete the input documents of process
+  	$oCriteria = new Criteria('workflow');
+  	$oCriteria->add(InputDocumentPeer::PRO_UID, $sProUid);
+  	$oDataset = InputDocumentPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    while ($aRow = $oDataset->getRow()) {
+    	$oInputDocument->remove($aRow['INP_DOC_UID']);
+    	$oDataset->next();
+    }
+    
+    //Delete the output documents of process
+		$oCriteria = new Criteria('workflow');
+	  $oCriteria->add(OutputDocumentPeer::PRO_UID, $sProUid);
+	  $oDataset = OutputDocumentPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    while ($aRow = $oDataset->getRow()) {
+    	$oOutputDocument->remove($aRow['OUT_DOC_UID']);
+    	$oDataset->next();
+    }
+      
+    //Delete the steps 
+		$oCriteria = new Criteria('workflow');
+	  $oCriteria->add(StepPeer::PRO_UID, $sProUid);
+	  $oDataset = StepPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    while ($aRow = $oDataset->getRow()) {
+    	$oStep->remove($aRow['STEP_UID']);
+    	$oDataset->next();
+    }
+
+    //Delete the triggers of process
+		$oCriteria = new Criteria('workflow');
+	  $oCriteria->add(TriggersPeer::PRO_UID, $sProUid);
+	  $oDataset = TriggersPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    while ($aRow = $oDataset->getRow()) {
+    	$oTrigger->remove($aRow['TRI_UID']);
+    	$oDataset->next();
+    }
+      
+    //Delete the routes of process
+		$oCriteria = new Criteria('workflow');
+	  $oCriteria->add(RoutePeer::PRO_UID, $sProUid);
+	  $oDataset = RoutePeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    while ($aRow = $oDataset->getRow()) {
+    	$oRoute->remove($aRow['ROU_UID']);
+    	$oDataset->next();
+    }
+
+    //Delete the swimlanes elements of process
+		$oCriteria = new Criteria('workflow');
+	  $oCriteria->add(SwimlanesElementsPeer::PRO_UID, $sProUid);
+	  $oDataset = SwimlanesElementsPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    while ($aRow = $oDataset->getRow()) {
+    	$oSwimlaneElement->remove($aRow['SWI_UID']);
+    	$oDataset->next();
+    }
+
+ 		return true;
+  	}
+  	catch ( Exception $oError) {
+    	throw($oError);
+    }
+  }
+
   /*
   * this function creates a new Process, defined in the object $oData
   * @param string $sProUid
@@ -897,4 +1034,24 @@ class Processes {
     
  }  
 
+  /*
+  * this function creates a new Process, defined in the object $oData
+  * @param string $sProUid
+  * @return boolean
+  */
+  function updateProcessFromData ($oData, $pmFilename ) {
+    $this->updateProcessRow ($oData->process );
+    $this->removeProcessRows ($oData->process['PRO_UID'] );
+    $this->createTaskRows ($oData->tasks );
+    $this->createRouteRows ($oData->routes );
+    $this->createLaneRows ($oData->lanes );
+    $this->createDynaformRows ($oData->dynaforms );
+    $this->createInputRows ($oData->inputs );
+    $this->createOutputRows ($oData->outputs );
+    $this->createStepRows ($oData->steps );
+    $this->createTriggerRows ($oData->triggers);
+    $this->createStepTriggerRows ($oData->steptriggers);
+    $this->createTaskUserRows ($oData->taskusers);
+    $this->createDynamformFiles ( $oData, $pmFilename  );
+ }  
 }

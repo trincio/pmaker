@@ -372,6 +372,7 @@ class processMap {
       	$oOutputDocument->remove($aRow['OUT_DOC_UID']);
       	$oDataset->next();
       }
+      
       //Delete the triggers of process
   		$oCriteria = new Criteria('workflow');
   	  $oCriteria->add(TriggersPeer::PRO_UID, $sProcessUID);
@@ -382,6 +383,7 @@ class processMap {
       	$oTrigger->remove($aRow['TRI_UID']);
       	$oDataset->next();
       }
+      
       //Delete the routes of process
   		$oCriteria = new Criteria('workflow');
   	  $oCriteria->add(RoutePeer::PRO_UID, $sProcessUID);

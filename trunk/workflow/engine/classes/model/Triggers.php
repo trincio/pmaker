@@ -221,11 +221,13 @@ class Triggers extends BaseTriggers {
     try
     {
       $con->begin();  
-      $this->setTriUid($TriUid);
-      Content::removeContent( 'TRI_TITLE', '', $this->getTriUid());
-      Content::removeContent( 'TRI_DESCRIPTION', '', $this->getTriUid());
-      $result=$this->delete();
-      $con->commit();
+  	  $oTri = TriggersPeer::retrieveByPK( $TriUid );
+  	  if (!is_null($oTri)) {
+        Content::removeContent( 'TRI_TITLE', '', $this->getTriUid());
+        Content::removeContent( 'TRI_DESCRIPTION', '', $this->getTriUid());
+        $result = $oTri->delete();
+        $con->commit();
+      }
       return $result;
     }
     catch(Exception $e)
