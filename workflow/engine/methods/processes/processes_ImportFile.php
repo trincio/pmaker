@@ -27,6 +27,10 @@
   //load the variables
   G::LoadClass('processes');
   $oProcess = new Processes();
+
+//  if ( isset ($_POST) ) {
+//  	krumo ( $_POST );
+//  }
   
   //save the file
   if ($_FILES['form']['error']['PROCESS_FILENAME'] == 0) {
@@ -37,8 +41,19 @@
   }
   $oData = $oProcess->getProcessData ( $path . $filename  );
   
+  $Fields['PRO_FILENAME']  = $filename;
+  $Fields['IMPORT_OPTION'] = 2;
   
   $sProUid = $oData->process['PRO_UID'];
+
+  if ( $oProcess->processExists ( $sProUid ) ) {
+    $G_MAIN_MENU            = 'processmaker';
+    $G_ID_MENU_SELECTED     = 'PROCESSES';
+    $G_PUBLISH = new Publisher;
+    $G_PUBLISH->AddContent('xmlform', 'xmlform', 'processes/processes_ImportExisting', '', $Fields, 'processes_ImportExisting'  );
+    G::RenderPage('publish');
+    die;
+  }
   
   if ( $oProcess->processExists ( $sProUid ) ) {
   //krumo ($oData); 

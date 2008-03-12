@@ -144,9 +144,12 @@ class Process extends BaseProcess {
     }
   	$con = Propel::getConnection( ProcessPeer::DATABASE_NAME );
     try {
-  	  $this->setProUid ( G::generateUniqueID() );
-
-      $this->setProParent       ( '' );
+      do {
+       $sNewProUid = G::generateUniqueID() ;
+      } while ( $this->processExists ( $sNewProUid ) );
+      
+  	  $this->setProUid          ( $sNewProUid );
+      $this->setProParent       ( $sNewProUid );
       $this->setProTime         ( 1 );
       $this->setProTimeunit     ( 'DAYS' );
       $this->setProStatus       ( 'ACTIVE' );
@@ -241,6 +244,12 @@ class Process extends BaseProcess {
   	    $aFields['PRO_DESCRIPTION'] = $oPro->getProDescription();
   	    $this->setProTitle (  $oPro->getProTitle() );
   	    $this->setProDescription (  $oPro->getProDescription() );
+  	    
+  	    //the following code is to copy the parent in old process, when the parent was empty.
+  	    if ( $oPro->getProParent() == '' ) {
+          $oPro->setProParent ( $oPro->getProUid() );
+          $oPro->save();
+  	    }
   	    return $aFields;
   	  }
       else {
@@ -269,6 +278,7 @@ class Process extends BaseProcess {
   	    if ($oPro->validate()) {
   	      if ( isset ( $aData['PRO_TITLE'] ) )
             $oPro->setProTitle( $aData['PRO_TITLE'] );
+            
   	      if ( isset ( $aData['PRO_DESCRIPTION'] ) )
             $oPro->setProDescription( $aData['PRO_DESCRIPTION'] );
           $res = $oPro->save();

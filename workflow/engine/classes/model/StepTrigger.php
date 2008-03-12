@@ -43,6 +43,18 @@ class StepTrigger extends BaseStepTrigger {
     $con = Propel::getConnection(StepTriggerPeer::DATABASE_NAME);
     try
     {
+    	//delete old StepTrigger Rows, because is not safe insert previous verify old rows.
+      $criteria = new Criteria();
+      $criteria->add(StepTriggerPeer::STEP_UID, $aData['STEP_UID'] );
+      $criteria->add(StepTriggerPeer::TAS_UID,  $aData['TAS_UID']  );
+      $criteria->add(StepTriggerPeer::TRI_UID,  $aData['TRI_UID']  );
+      $objects = StepTriggerPeer::doSelect($criteria, $con);
+      $con->begin();
+      foreach($objects as $row) {
+        $this->remove($row->getStepUid(), $row->getTasUid(), $row->getTriUid(), $row->getStType() );
+      }
+      $con->commit();
+          	
       $con->begin();
       $this->setStepUid($aData['STEP_UID']);
       $this->setTasUid($aData['TAS_UID']);
@@ -59,13 +71,13 @@ class StepTrigger extends BaseStepTrigger {
       else
       {
         $con->rollback();
-        trow(new Exception("Failed Validation in class ".get_class($this)."."));
+        throw( new Exception("Failed Validation in class ".get_class($this)."."));
       }
     }
     catch(Exception $e)
     {
       $con->rollback();
-      trow($e);
+      throw($e);
     }
   }
   public function load($StepUid, $TasUid, $TriUid, $StType)

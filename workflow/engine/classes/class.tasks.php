@@ -108,6 +108,19 @@ class Tasks {
   }
 
 /*
+	* updates row tasks from an Task Array
+	* @param string $aTasks
+	* @return array
+	*/
+  public function updateTaskRows( $aTask ) {
+  	foreach ( $aTask as $key => $row ) {
+      $oTask = new Task();
+      $res = $oTask->update($row);
+  	}
+  	return;
+  }
+
+/*
 	* Get all Routes for any Process
 	* @param string $sProUid
 	* @return array
@@ -131,7 +144,7 @@ class Tasks {
     }
   }
 
-/*
+  /*
 	* creates row tasks from an Route Array
 	* @param string $aTasks
 	* @return array
@@ -141,6 +154,20 @@ class Tasks {
       $oRoute = new Route();
       unset ($row['ROU_UID']);
       $res = $oRoute->create($row);
+  	}
+  	return;
+  }
+
+  /*
+	* updates row tasks from an Route Array
+	* @param string $aTasks
+	* @return array
+	*/
+  public function updateRouteRows( $aRoutes ) {
+  	foreach ( $aRoutes as $key => $row ) {
+      $oRoute = new Route();
+      krumo ($row);
+      $res = $oRoute->update($row);
   	}
   	return;
   }

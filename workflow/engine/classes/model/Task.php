@@ -379,7 +379,7 @@ class Task extends BaseTask {
       $this->fromArray($fields,BasePeer::TYPE_FIELDNAME);
       if($this->validate())
       {
-		$contentResult=0;
+		    $contentResult=0;
         if (array_key_exists("TAS_TITLE", $fields)) $contentResult+=$this->setTasTitle($fields["TAS_TITLE"]);
         if (array_key_exists("TAS_DESCRIPTION", $fields)) $contentResult+=$this->setTasDescription($fields["TAS_DESCRIPTION"]);
         if (array_key_exists("TAS_DEF_TITLE", $fields)) $contentResult+=$this->setTasDefTitle($fields["TAS_DEF_TITLE"]);
