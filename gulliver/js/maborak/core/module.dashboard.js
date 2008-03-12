@@ -31,6 +31,7 @@ leimnud.Package.Public({
 		{
 			this.options	= {
 				drag:true,
+				panel:[],
 				data:[]
 			}.concat(options || {});
 			var width	= this.options.target.offsetWidth-50;
@@ -96,6 +97,19 @@ leimnud.Package.Public({
 					backgroundPosition:"0pt 0px"
 				}
 			};
+			if(options.noBg)
+			{
+				panel.setStyle.content.concat({
+					backgroundColor:"#DFDFDF",
+					borderWidth:0
+				});
+				panel.setStyle.containerWindow.concat({
+					backgroundColor:"#DFDFDF"					
+				});
+				panel.setStyle.frontend={
+					backgroundColor:"#DFDFDF"
+				};
+			}
 			panel.events={
 				init:[function(){
 				}]
@@ -105,6 +119,9 @@ leimnud.Package.Public({
 			{
 				panel.open(options.open);
 			}
+			this.options.panel.push({
+				panel:panel
+			});
 			return panel;	
 		};
 		this.expand(this);
