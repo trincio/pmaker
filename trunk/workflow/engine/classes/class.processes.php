@@ -736,6 +736,14 @@ class Processes {
   	return;
   }
 
+  function createGroupRow ($aGroupwf ) {
+  	foreach ( $aGroupwf as $key => $row ) {
+      $oGroupwf = new Groupwf();
+      if ( ! $oGroupwf->GroupwfExists ( $row['GRP_UID'] ) ) {
+        $res = $oGroupwf->create($row);
+  		}
+    }
+  }
 
 
 
@@ -1038,6 +1046,7 @@ class Processes {
   * @return boolean
   */
   function createProcessFromData ($oData, $pmFilename ) {
+  	
     $this->createProcessRow ($oData->process );
     $this->createTaskRows ($oData->tasks );
     $this->createRouteRows ($oData->routes );
@@ -1049,6 +1058,7 @@ class Processes {
     $this->createTriggerRows ($oData->triggers);
     $this->createStepTriggerRows ($oData->steptriggers);
     $this->createTaskUserRows ($oData->taskusers);
+    $this->createGroupRow ($oData->groupwfs );
     $this->createDynamformFiles ( $oData, $pmFilename  );
     
  }  
