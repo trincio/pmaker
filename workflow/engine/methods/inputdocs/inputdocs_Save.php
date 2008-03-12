@@ -39,6 +39,7 @@ try {
   require_once 'classes/model/InputDocument.php';
   $oInputDocument = new InputDocument();
   if ($_POST['form']['INP_DOC_UID'] == '') {
+    unset($_POST['form']['INP_DOC_UID']);
   	$oInputDocument->create($_POST['form']);
   }
   else {

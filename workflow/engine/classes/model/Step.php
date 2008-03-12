@@ -43,6 +43,8 @@ class Step extends BaseStep {
     $con = Propel::getConnection(StepPeer::DATABASE_NAME);
     try
     {
+      if ( isset ( $aData['STEP_UID'] ) && $aData['STEP_UID']== '' ) 
+        unset ( $aData['STEP_UID'] );
       if ( isset ( $aData['STEP_UID'] ) ) 
         $sStepUID = $aData['STEP_UID'];
       else
