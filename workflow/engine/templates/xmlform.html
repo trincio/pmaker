@@ -99,7 +99,7 @@ if (typeof(G_Form)==='undefined') return alert('form.js was not loaded');
   {/if}
   {foreach from=$form->fields item=field key=name}
     i = myForm.aElements.length;
-    {if ($field->type==='dropdown')}
+    {if (($field->type==='dropdown') || $field->type==='listbox')}
       myForm.aElements[i] = new G_DropDown(myForm, myForm.element.elements['form[{$name}]'],'{$name}');
       myForm.aElements[i].setAttributes({$field->getAttributes()});
       {$field->attachEvents("myForm.aElements[i].element")}
