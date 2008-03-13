@@ -80,6 +80,8 @@ try {
 		$aData['USR_EMAIL']       = $_POST['form']['USR_EMAIL'];
 		$aData['USR_DUE_DATE']    = $_POST['form']['USR_DUE_DATE'];
 		$aData['USR_CREATE_DATE'] = date('Y-m-d H:i:s');
+		$aData['USR_UPDATE_DATE'] = date('Y-m-d H:i:s');
+		$aData['USR_BIRTHDAY']    = date('Y-m-d');
 		//fixing bug in inactive user when the admin create a new user.
 		$statusWF = $_POST['form']['USR_STATUS'];
 		$aData['USR_STATUS']      = $_POST['form']['USR_STATUS'] == 'ACTIVE' ? 1 : 0;
