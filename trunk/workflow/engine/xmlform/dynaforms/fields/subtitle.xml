@@ -19,9 +19,9 @@
 SELECT XMLNODE_NAME, TYPE FROM dynaForm WHERE XMLNODE_NAME = @@PME_XMLNODE_NAME
 </PME_VALIDATE_NAME>
 
-<PME_LABEL type="text" maxlength="50" size="50">
-  <en>Label</en>
-  <es>Etiqueta</es>
+<PME_LABEL type="textarea" cols="30" rows="5">
+  <en>Content</en>
+  <es>Contenido</es>
 </PME_LABEL>
 
 <PME_SUBTITLE type="subtitle" enableHTML="1">
