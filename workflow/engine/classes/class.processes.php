@@ -627,6 +627,7 @@ class Processes {
       $oDataset = StepTriggerPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
       $oDataset->next();
+      $aStepTrigger = array();
       while ($aRow = $oDataset->getRow()) {
       	$aStepTrigger[] = $aRow;
       	$oDataset->next();
