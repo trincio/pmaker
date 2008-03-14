@@ -109,6 +109,7 @@ leimnud.Package.Public({
 				x:parseInt(this.drag.style.left),
 				y:parseInt(this.drag.style.top)
 			};
+//			console.info(this.position);
 			this.selected = false;
 			for(var i=0;i<this.arrayPositions.length;i++)
 			{
