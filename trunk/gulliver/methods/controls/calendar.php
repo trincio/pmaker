@@ -159,7 +159,7 @@
 			if ( $strDate < $dtmin_value || $strDate > $dtmax_value)
 				$link = "$strDay";
 			else
-				$link = "<a href='#' onclick=\"selectDate('$strDate');return false;\" >$strDay</a>";
+				$link = "<a href='#' onclick=\"selectDate('$strDate');eval('if (form_' + datePickerPanel.formId + '.getElementByName(datePickerPanel.idName)) {form_' + datePickerPanel.formId + '.getElementByName(datePickerPanel.idName).updateDepententFields();}');return false;\" >$strDay</a>";
 			print "<td bgcolor='$bgcolor' align='center' width='14%'>$link</td>";
 		}
 		print "</tr>";
