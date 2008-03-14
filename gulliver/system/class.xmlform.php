@@ -1056,6 +1056,67 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText
 			$html.="<a href='#' onclick=\"showDatePicker(event,'".$owner->id."', '" . $this->name ."', '" . $value. "', '" . $startDate . "', '" . $endDate . "'); return false;\" ><img src='/controls/cal.gif' border='0'></a>";
 		return $html;
 	}
+
+	function renderGrid( $values = NULL, $owner = NULL )
+  {
+  	$result=array();$r=1;
+  	foreach($values as $v)  {
+  	  $v = G::replaceDataField( $v, $owner->values );
+  	  $startDate = G::replaceDataField( $this->startDate, $owner->values );
+  	  $endDate = G::replaceDataField( $this->endDate, $owner->values );
+  	  $beforeDate = G::replaceDataField( $this->beforeDate, $owner->values );
+  	  $afterDate = G::replaceDataField( $this->afterDate, $owner->values );
+  	  //for backward compatibility size and maxlength
+		  if ( $startDate != ''  ) {
+		  	if ( ! $this->verifyDateFormat ( $startDate ) )
+		  	 	$startDate = '';
+		  }
+		  if ( $startDate == '' && isset ( $beforeDate ) && $beforeDate  != '' ) {
+		  	if ( $this->isvalidBeforeFormat ( $beforeDate ) )
+		  		$startDate = $this->calculateBeforeFormat( $beforeDate , -1 );
+		  }
+
+		  if ( $startDate == '' && isset ( $this->size ) && is_numeric ($this->size) && $this->size >= 1900 && $this->size <= 2100  ) {
+		  		$startDate = $this->size . '-01-01';
+		  }
+
+		  if ( $startDate == ''  ) {
+		  	$startDate = date('Y-m-d');  // the default is the current date
+		  }
+
+  	  //for backward compatibility maxlength
+		  //if ( $this->endDate == '')   $this->finalYear = date('Y') + 8;
+  	  //for backward compatibility size and maxlength
+		  if ( $endDate != ''  ) {
+		  	if ( ! $this->verifyDateFormat ( $endDate ) )
+		  	 	$endDate = '';
+		  }
+
+		  if ( $endDate == '' && isset ( $afterDate ) && $afterDate  != '' ) {
+		  	if ( $this->isvalidBeforeFormat ( $afterDate) )
+		  		$endDate = $this->calculateBeforeFormat( $afterDate, +1 );
+		  }
+
+		  if ( $endDate == '' && isset ( $this->maxlength ) && is_numeric ($this->maxlength) && $this->maxlength >= 1900 && $this->maxlength <= 2100  ) {
+		  		$endDate = $this->maxlength . '-01-01';
+		  }
+		  if ( $endDate == ''  ) {
+		  	//$this->endDate = mktime ( 0,0,0,date('m'),date('d'),date('y') );  // the default is the current date + 2 years
+		  	$endDate = date ( 'Y-m-d', mktime ( 0,0,0,date('m'), date('d'), date ('Y')+2 ) );  // the default is the current date + 2 years
+		  }
+		  if ($v == '')
+		  {
+		  	$v = date('Y-m-d');
+		  }
+		  $html="<input type='hidden' id='form[" . $owner->name .']['.$r.']['.$this->name . "]' name='form[" . $owner->name .']['.$r.']['.$this->name . "]' value='".$v."'>";
+		  $html.="<span id='span[".$owner->owner->id."][" . $owner->name .']['.$r.']['.$this->name . "]' name='span[".$owner->owner->id."][" . $owner->name .']['.$r.']['.$this->name . "]' style='border:1;border-color:#000;width:100px;'>" . $v . " </span> ";
+		  if($this->mode == 'edit')
+		  	$html.="<a href='#' onclick=\"showDatePicker(event,'".$owner->owner->id."', '" . $owner->name .']['.$r.']['.$this->name ."', '" . $v. "', '" . $startDate . "', '" . $endDate . "'); return false;\" ><img src='/controls/cal.gif' border='0'></a>";
+		  $result[] = $html;
+		  $r++;
+    }
+		return $result;
+	}
 }
 
 /*DEPRECATED*/

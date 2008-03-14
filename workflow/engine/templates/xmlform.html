@@ -146,6 +146,8 @@ if (typeof(G_Form)==='undefined') return alert('form.js was not loaded');
           myForm.getElementByName('{$name}').setDependentFields('{$field->dependentFields}');
       {elseif ($field->type==='currency')}
           myForm.getElementByName('{$name}').setDependentFields('{$field->dependentFields}');
+      {elseif ($field->type==='date')}
+          myForm.getElementByName('{$name}').setDependentFields('{$field->dependentFields}');
       {/if}
     {/if}
   {/foreach}

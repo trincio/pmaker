@@ -193,6 +193,24 @@ var G_Grid = function(oForm, sGridName)
   		    	  	aObjects[0].id    = aObjects[0].id.replace(/\[1\]/g, '\[' + (this.oGrid.rows.length - 2) + '\]');
   		    	  	aObjects[0].value = '';
   		    	  }
+  		    	  aObjects = oNewRow.getElementsByTagName('td')[i].getElementsByTagName('span');
+  				    if (aObjects)
+  		        {
+  		        	if (aObjects[0]) {
+  		        		//aObjects[0].name  = aObjects[0].name.replace(/\[1\]/g, '\[' + (this.oGrid.rows.length - 2) + '\]');
+  		    	  	  aObjects[0].id    = aObjects[0].id.replace(/\[1\]/g, '\[' + (this.oGrid.rows.length - 2) + '\]');
+  		        	}
+  		        	aObjects = oNewRow.getElementsByTagName('td')[i].getElementsByTagName('a');
+  				      if (aObjects)
+  		          {
+  		          	if (aObjects[0]) {
+  		          		if (aObjects[0].onclick) {
+  		          			sAux = new String(aObjects[0].onclick);
+  		          		  eval('aObjects[0].onclick = ' + sAux.replace(/\[1\]/g, '\[' + (this.oGrid.rows.length - 2) + '\]') + ';');
+  		          	  }
+  		          	}
+  		          }
+  		        }
   		    	break;
   		    	case '<selec':
   		    	  aObjects = oNewRow.getElementsByTagName('td')[i].getElementsByTagName('select');
