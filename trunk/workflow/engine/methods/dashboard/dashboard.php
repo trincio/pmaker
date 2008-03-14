@@ -44,12 +44,18 @@ $G_PUBLISH->AddContent('template', '', '', '', $oTemplatePower);
 $G_HEADER->addInstanceModule('leimnud', 'dashboard');
 $G_HEADER->addScriptCode( '
 	leimnud.event.add(window,"load",function(){
-		var Da=new leimnud.module.dashboard();
+		window.Da=new leimnud.module.dashboard();
 		Da.make({
 			target:$("dashboard"),
 data:[
-	[{title:"My info - Page editor",open:{url:"http://wilmer.opensource.colosa.net/sysos/en/blank/users/myInfo"},height:730}],
-	[{title:"esto",url:"http://maborak.com"},{title:"otro",url:"http://rss.maborak.com"}]
+	[{title:"My info - Page editor",open:{url:"http://wilmer.opensource.colosa.net/sysos/en/blank/users/myInfo"},height:730,noBg:true}],
+	[{title:"My pending Process",url:"http://maborak.com"},
+{title:"Status",url:"http://rss.maborak.com",height:100},
+{title:"Status",url:"http://rss.maborak.com",height:100},
+{title:"Status",url:"http://rss.maborak.com",height:100},
+{title:"Status",url:"http://rss.maborak.com",height:100}
+
+]
 ]
 		});
 	});' );

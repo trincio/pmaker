@@ -34,6 +34,9 @@ leimnud.Package.Public({
 				panel:[],
 				data:[]
 			}.concat(options || {});
+			this.drop = new this.parent.module.drop();
+			this.drop.make();
+
 			var width	= this.options.target.offsetWidth-50;
 			this.columns	= this.options.data.length;
 			this.widthColumn = (width/this.columns);
@@ -56,6 +59,7 @@ leimnud.Package.Public({
 				});
 			}
 			this.parseData();
+			this.drop.setArrayPositions(true);
 		};
 		this.parseData=function()
 		{
@@ -111,8 +115,47 @@ leimnud.Package.Public({
 				};
 			}
 			panel.events={
-				init:[function(){
-				}]
+				init:[function(i){
+					var e = this.options.panel[i].panel.elements.containerWindow;
+					var p;
+					this.currentPhantom = p = new DOM("div",false,{
+						width:e.clientWidth,
+						height:e.clientHeight,
+						border:"1px dashed red",
+						position:"relative",
+						margin:3
+					});
+					if(e.nextSibling)
+					{
+						e.parentNode.insertBefore(p,e.nextSibling);
+					}
+					else
+					{
+						e.parentNode.appendChild(p);
+					}
+					//console.info(e.nextSibling)
+					//console.info(e.clientWidth+":"+e.clientHeight)
+				}.extend(this,this.options.panel.length)],
+				move:function(i){
+					var e = this.options.panel[i].panel.elements.containerWindow;
+					this.drop.captureFromArray({currentElementDrag:e});
+					if(this.drop.selected!==false)
+					{
+						
+					}
+					this.de = this.drop.selected;
+					console.info(this.drop.selected)
+				}.extend(this,this.options.panel.length),
+				finish:function(i){
+					var e = this.options.panel[i].panel.elements.containerWindow;
+					this.currentPhantom.parentNode.replaceChild(e,this.currentPhantom);
+					this.parent.dom.setStyle(e,{
+						left:"auto",
+						top:"auto",
+						position:"relative"
+					});
+				}.extend(this,this.options.panel.length)
+
 			};
 			panel.make();
 			if(options.open)
@@ -120,7 +163,12 @@ leimnud.Package.Public({
 				panel.open(options.open);
 			}
 			this.options.panel.push({
-				panel:panel
+				panel:panel,
+				index:this.options.panel.length-1
+			});
+			this.drop.register({
+				element:panel.elements.containerWindow,
+				value:this.options.panel.length-1
 			});
 			return panel;	
 		};
