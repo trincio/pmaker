@@ -1109,7 +1109,12 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText
 		  	$v = date('Y-m-d');
 		  }
 		  $html="<input type='hidden' id='form[" . $owner->name .']['.$r.']['.$this->name . "]' name='form[" . $owner->name .']['.$r.']['.$this->name . "]' value='".$v."'>";
-		  $html.="<span id='span[".$owner->owner->id."][" . $owner->name .']['.$r.']['.$this->name . "]' name='span[".$owner->owner->id."][" . $owner->name .']['.$r.']['.$this->name . "]' style='border:1;border-color:#000;width:100px;'>" . $v . " </span> ";
+		  if (isset($owner->owner->id)) {
+		    $html.="<span id='span[".$owner->owner->id."][" . $owner->name .']['.$r.']['.$this->name . "]' name='span[".$owner->owner->id."][" . $owner->name .']['.$r.']['.$this->name . "]' style='border:1;border-color:#000;width:100px;'>" . $v . " </span> ";
+		  }
+		  else {
+		  	$html.="<span id='span[".$owner->id."][" . $owner->name .']['.$r.']['.$this->name . "]' name='span[".$owner->id."][" . $owner->name .']['.$r.']['.$this->name . "]' style='border:1;border-color:#000;width:100px;'>" . $v . " </span> ";
+		  }
 		  if($this->mode == 'edit')
 		  	$html.="<a href='#' onclick=\"showDatePicker(event,'".$owner->owner->id."', '" . $owner->name .']['.$r.']['.$this->name ."', '" . $v. "', '" . $startDate . "', '" . $endDate . "'); return false;\" ><img src='/controls/cal.gif' border='0'></a>";
 		  $result[] = $html;
