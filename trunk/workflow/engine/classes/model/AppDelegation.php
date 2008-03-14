@@ -172,9 +172,12 @@ class AppDelegation extends BaseAppDelegation {
     $oConnection = Propel::getConnection(StepTriggerPeer::DATABASE_NAME);
     try {
       $oConnection->begin();
-      $this->setAppUid($sApplicationUID);
-      $this->setDelIndex($iDelegationIndex);
-      $result = $this->delete();
+  	  $oApp = AppDelegationPeer::retrieveByPK( $sApplicationUID, $iDelegationIndex );
+  	  if ( get_class ($oApp) == 'AppDelegation' ) {
+        $this->setAppUid($sApplicationUID);
+        $this->setDelIndex($iDelegationIndex);
+        $result = $this->delete();
+      }
       $oConnection->commit();
       return $result;
     }
