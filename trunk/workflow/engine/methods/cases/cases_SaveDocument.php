@@ -55,11 +55,29 @@
   $sAppDocUid = $oAppDocument->getAppDocUid();
   $info = pathinfo( $oAppDocument->getAppDocFilename() );
   $ext = (isset($info['extension']) ? $info['extension'] : '');
-
+/*
+  $path = PATH_PLUGINS . 'knowledgeTree' . PATH_SEP . 'data' . PATH_SEP . 'mysql'. PATH_SEP . 'schema.sql';
+  
+  $contents = file_get_contents ( $path );
+  print $contents;
+  $con = Propel::getConnection( 'workflow');
+  $stmt = $con->createStatement();
+  $rs = $stmt->executeQuery($contents, ResultSet::FETCHMODE_NUM);
+  die;
+  */
   //save the file
   if (!empty($_FILES['form'])) {
   	if ($_FILES['form']['error']['APP_DOC_FILENAME'] == 0) {
       G::uploadFile($_FILES['form']['tmp_name']['APP_DOC_FILENAME'], PATH_DOCUMENT . $_SESSION['APPLICATION'] . '/', $sAppDocUid . '.' . $ext );
+      
+      //Hook PM_UPLOAD_DOCUMENT for upload document
+      //to do: process_id undefined
+      $oData['PRO_UID']	  = $_SESSION['APPLICATION'];
+      $oData['APP_UID']	  = $_SESSION['APPLICATION'];
+      $oData['FILENAME']	= PATH_UPLOAD . $_SESSION['APPLICATION'] . '/' . $_FILES['form']['name']['APP_DOC_FILENAME'] ;
+    	$oPluginRegistry =& PMPluginRegistry::getSingleton();
+	    $oPluginRegistry->executeTriggers ( PM_UPLOAD_DOCUMENT , $oData );
+      
     }
   }
 
