@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm name="processes_NewOptions" type="xmlmenu">
+
+<MNU_IMPORT type="link" value='' link="#" onclick="window.location = 'pluginsImport';return false;" 
+   colAlign="left" colWidth="45">
+  <en>Import</en>
+</MNU_IMPORT>
+
+</dynaForm>
