@@ -52,10 +52,24 @@
     if ( $val['filename'] == $sClassName . PATH_SEP . 'class.' . $sClassName . '.php' ) $bClassFile = true;
   }
   if ( $bMainFile && $bClassFile ) {
-    print  $tar->extract ( PATH_PLUGINS );
+    $res = $tar->extract ( PATH_PLUGINS );
   }  
   else
     throw ( new Exception ( "The file $filename doesn't contain class: $sClassName ") ) ;
+    
+  //print "change to ENABLED";
+  $oPluginRegistry =& PMPluginRegistry::getSingleton();
+
+  $pluginFile = $sClassName . '.php';
+  if ( !file_exists ( PATH_PLUGINS . $sClassName . '.php' ) ) throw ( new Exception( "File '$pluginFile' doesn't exists ") );
+  
+  require_once ( PATH_PLUGINS . $pluginFile );
+  $details = $oPluginRegistry->getPluginDetails( $pluginFile );
+  
+  $oPluginRegistry->installPlugin( $details->sNamespace);
+  $oPluginRegistry->setupPlugins(); //get and setup enabled plugins
+  $size = file_put_contents  ( PATH_DATA_SITE . 'plugin.singleton', $oPluginRegistry->serializeInstance() );
+    
   G::header ( 'Location: pluginsList');
 
 }

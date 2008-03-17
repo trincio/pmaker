@@ -82,6 +82,7 @@ class PMPluginRegistry {
 
   //delete this function, it was here, only for test and debug purposes
   function showArrays () { 
+  krumo ( $this->_aPluginDetails);
   krumo ( $this->_aPlugins);
   krumo ( $this->_aMenus);
   krumo ( $this->_aFolders);
@@ -169,7 +170,7 @@ class PMPluginRegistry {
   }
   
   /**
-   * disable the plugin in the singleton
+   * get status plugin in the singleton
    *
    * @param unknown_type $sNamespace
    */
@@ -184,6 +185,21 @@ class PMPluginRegistry {
   	return 0;
   }
   
+  /**
+   * install the plugin 
+   *
+   * @param unknown_type $sNamespace
+   */
+  function installPlugin($sNamespace ) {
+  	foreach ( $this->_aPluginDetails as $namespace=>$detail ) {
+  		if ( $sNamespace == $namespace ) {
+      $oPlugin =& new $detail->sClassName( $detail->sNamespace, $detail->sFilename );
+      $this->_aPlugins[$detail->sNamespace] =& $oPlugin;
+ 		  $oPlugin->install();
+  		}
+  	}
+  }
+
   
   /**
    * Register a menu in the singleton
