@@ -41,20 +41,21 @@
   
   G::LoadThirdParty( 'pear/Archive','Tar');
   $tar = new Archive_Tar ( $path. $filename);
-  $sFileName = substr($filename,0,strrpos($filename, '.' ));
+  $sFileName  = substr($filename,0,strrpos($filename, '.' ));
+  $sClassName = substr($filename,0,strpos($filename, '-' ));
 
-  //print $sFileName . '<br>';
   $aFiles = $tar->listContent();
   $bMainFile = false;
   $bClassFile = false;
   foreach ( $aFiles as $key => $val ) {
-    if ( $val['filename'] == $sFileName . '.php' ) $bMainFile = true;
-    if ( $val['filename'] == $sFileName . PATH_SEP . 'class.' . $sFileName . '.php' ) $bClassFile = true;
+    if ( $val['filename'] == $sClassName . '.php' ) $bMainFile = true;
+    if ( $val['filename'] == $sClassName . PATH_SEP . 'class.' . $sClassName . '.php' ) $bClassFile = true;
   }
   if ( $bMainFile && $bClassFile ) {
-    $tar->extract ( PATH_PLUGINS );
+    print  $tar->extract ( PATH_PLUGINS );
   }  
-
+  else
+    throw ( new Exception ( "The file $filename doesn't contain class: $sClassName ") ) ;
   G::header ( 'Location: pluginsList');
 
 }
