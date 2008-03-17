@@ -895,15 +895,14 @@ print $sql;
     }
 
     // to do: change to a friendly name for the folder, right now, we are using the APP_UID
-    //print_r ($aData );
-/*
-$oData['PRO_UID']   = $aData['PRO_UID'];
-    $oData['APP_UID']   = $aData['APP_UID'];
-    $oData['APP_TITLE'] = $aData['APP_UID'];
 
+    $oData['PRO_UID']   = $sProUid;
+    $oData['APP_UID']   = $sAppUid;
+    $oData['APP_TITLE'] = $sAppUid;
+ 
     $oPluginRegistry =& PMPluginRegistry::getSingleton();
     $oPluginRegistry->executeTriggers ( PM_CREATE_CASE , $oData );
-*/    //remove this, byonti moving to propel
+    //end plugin
 
 
     return array( 'APPLICATION' => $sAppUid, 'INDEX' => $iDelIndex, 'PROCESS' => $sProUid );

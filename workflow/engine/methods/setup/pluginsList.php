@@ -52,7 +52,8 @@ $items[] = array ( 'id' => 'char', 'title' => 'char', 'type' => 'char', 'creator
          require_once ( PATH_PLUGINS . $file );
          $pluginDetail = $oPluginRegistry->getPluginDetails ( $file );
          $status = $pluginDetail->enabled ? 'Enabled' : 'Disabled';
-         $linkEditValue = $pluginDetail->sSetupPage == '' ? ' ' : G::LoadTranslation('ID_SETUP'); 
+         
+         $linkEditValue = $pluginDetail->sSetupPage != '' && $pluginDetail->enabled ?  G::LoadTranslation('ID_SETUP') : ' '; 
 
          $link = 'pluginsChange?id=' . $file . '&status=' . $pluginDetail->enabled;
          $linkEdit = 'pluginsSetup?id=' . $file ;

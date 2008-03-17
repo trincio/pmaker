@@ -45,7 +45,6 @@
   $oPluginRegistry =& PMPluginRegistry::getSingleton();
 
   $details = $oPluginRegistry->getPluginDetails( $pluginFile );
-  
   $xmlform = $details->sPluginFolder . '/' . $details->sSetupPage;
   
   $G_MAIN_MENU            = 'processmaker';

@@ -35,52 +35,27 @@
     G::uploadFile($tempName, $path, $filename );
   }
   
-  if ( $_FILES['form']['type']['PLUGIN_FILENAME'] == 'application/octet-stream') {
-    krumo ( $_FILES['form'] );
-  }
-  else
+  if ( ! $_FILES['form']['type']['PLUGIN_FILENAME'] == 'application/octet-stream') 
     throw ( new Exception ( "the uploaded files is invalid, expected 'application/octect-stream mime type file "));
     
   
   G::LoadThirdParty( 'pear/Archive','Tar');
   $tar = new Archive_Tar ( $path. $filename);
-  
-  //print $filename;
-  $tar->extract ( PATH_PLUGINS );
-  die;  
-  $oData = $oProcess->getProcessData ( $path . $filename  );
-  
-  $Fields['PRO_FILENAME']  = $filename;
-  $Fields['IMPORT_OPTION'] = 2;
-  
-  $sProUid = $oData->process['PRO_UID'];
+  $sFileName = substr($filename,0,strrpos($filename, '.' ));
 
-  if ( $oProcess->processExists ( $sProUid ) ) {
-    $G_MAIN_MENU            = 'processmaker';
-    $G_ID_MENU_SELECTED     = 'PROCESSES';
-    $G_PUBLISH = new Publisher;
-    $G_PUBLISH->AddContent('xmlform', 'xmlform', 'processes/processes_ImportExisting', '', $Fields, 'processes_ImportExisting'  );
-    G::RenderPage('publish');
-    die;
+  //print $sFileName . '<br>';
+  $aFiles = $tar->listContent();
+  $bMainFile = false;
+  $bClassFile = false;
+  foreach ( $aFiles as $key => $val ) {
+    if ( $val['filename'] == $sFileName . '.php' ) $bMainFile = true;
+    if ( $val['filename'] == $sFileName . PATH_SEP . 'class.' . $sFileName . '.php' ) $bClassFile = true;
   }
-  
-  if ( $oProcess->processExists ( $sProUid ) ) {
-  //krumo ($oData); 
-    $sNewProUid = $oProcess->getUnusedProcessGUID() ;
-    $oProcess->setProcessGuid ( $oData, $sNewProUid );
-    $oProcess->setProcessParent( $oData, $sProUid );
-    $oData->process['PRO_TITLE'] = 'Copy of ' . $oData->process['PRO_TITLE'] . date ( 'H:i:s' );  
-    $oProcess->renewAllTaskGuid ( $oData );
-    $oProcess->renewAllDynaformGuid ( $oData );
-    $oProcess->renewAllInputGuid ( $oData );
-    $oProcess->renewAllOutputGuid ( $oData );
-    $oProcess->renewAllStepGuid ( $oData );
-    $oProcess->renewAllTriggerGuid ( $oData );
-  	
-  }
-  
-  $oProcess->createProcessFromData ($oData, $path . $filename );
-  G::header ( 'Location: processes_List');
+  if ( $bMainFile && $bClassFile ) {
+    $tar->extract ( PATH_PLUGINS );
+  }  
+
+  G::header ( 'Location: pluginsList');
 
 }
 catch ( Exception $e ){
