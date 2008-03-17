@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm
+  name="pluginImport"
+  type="xmlform"
+  width="400px"
+  labelWidth="100px"
+>
+
+<TITLE1 type="title">
+  <en>Import Plugin</en>
+</TITLE1>
+
+
+<PLUGIN_FILENAME type="file" >
+  <en>File</en>
+  <es>Archivo</es>
+</PLUGIN_FILENAME>
+
+<SAVE type="submit" >
+  <en>Import</en>
+</SAVE>
+
+</dynaForm>

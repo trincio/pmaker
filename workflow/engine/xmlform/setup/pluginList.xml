@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dynaForm
   width         = "680"
+  menu="setup/plugin_ListOptions"
+  
 >
 <id type="text" colWidth="20" titleAlign="left" align="left" >
   <en>#</en>
