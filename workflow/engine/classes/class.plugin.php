@@ -27,12 +27,12 @@ require_once ( 'class.pluginRegistry.php');
 
 define ( 'G_PLUGIN_CLASS',     1 );
 
-define ( 'PM_CREATE_CASE',     1001 );
-define ( 'PM_UPLOAD_DOCUMENT', 1002 );
-define ( 'PM_BROWSE_CASE',     1003 );
-define ( 'PM_NEW_PROCESS_LIST',1004 );
-define ( 'PM_NEW_PROCESS_SAVE',1005 );
-
+define ( 'PM_CREATE_CASE',       1001 );
+define ( 'PM_UPLOAD_DOCUMENT',   1002 );
+define ( 'PM_CASE_DOCUMENT_LIST',1003 );
+define ( 'PM_BROWSE_CASE',       1004 );
+define ( 'PM_NEW_PROCESS_LIST',  1005 );
+define ( 'PM_NEW_PROCESS_SAVE',  1006 );
 
 class menuDetail {
 	var $sNamespace;
