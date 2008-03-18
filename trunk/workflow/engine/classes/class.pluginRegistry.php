@@ -300,6 +300,28 @@ class PMPluginRegistry {
   }
 
   /**
+   * verify if exists triggers related to a triggerId
+   *
+   * @param unknown_type $triggerId
+   */
+  function existsTrigger( $triggerId) {
+  	$found = false;
+  	foreach ( $this->_aTriggers as $row=>$detail ) {
+  		if ( $triggerId == $detail->sTriggerId  ) { 
+ 		  
+  		  //review all folders registered for this namespace
+
+       	foreach ( $this->_aFolders as $row=>$folder ) 
+     	    $fname = PATH_PLUGINS . $folder->sFolderName . PATH_SEP . 'class.' . $folder->sFolderName  .'.php';
+  		    if ( $detail->sNamespace == $folder->sNamespace && file_exists ( $fname ) ) {
+  		      $found = true;
+  		    }
+  		}
+  	}
+  	return $found;
+  }
+
+  /**
    * Register a trigger in the Singleton
    *
    * @param unknown_type $sTriggerId

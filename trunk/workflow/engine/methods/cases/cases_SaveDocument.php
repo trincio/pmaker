@@ -67,7 +67,8 @@
         G::uploadFile($_FILES['form']['tmp_name']['APP_DOC_FILENAME'], $sPathName, $sFileName );
         
         //Plugin Hook PM_UPLOAD_DOCUMENT for upload document
-        if ( class_exists ('uploadDocumentData' ) ) {
+    	  $oPluginRegistry =& PMPluginRegistry::getSingleton();
+        if ( $oPluginRegistry->existsTrigger ( PM_UPLOAD_DOCUMENT ) && class_exists ('uploadDocumentData' ) ) {
           $oData['APP_UID']	  = $_SESSION['APPLICATION'];
           $documentData = new uploadDocumentData (
                             $_SESSION['APPLICATION'], 
@@ -76,9 +77,9 @@
                             $aFields['APP_DOC_FILENAME']
                             );
         
-      	  $oPluginRegistry =& PMPluginRegistry::getSingleton();
   	      $oPluginRegistry->executeTriggers ( PM_UPLOAD_DOCUMENT , $documentData );
-      }
+  	      unlink ( $sPathName . $sFileName );
+        }
       //end plugin      
       }
     }
