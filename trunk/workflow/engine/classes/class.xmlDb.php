@@ -449,11 +449,9 @@
   function getNames( $children )
   {
     $names=array();$r=0;
-    //$pid=posix_getpid();
-    $pid=G::generateUniqueID();
     foreach($children as $child)
     {
-      $names[$pid . '-' . $r]=$child->name;
+      $names[$r]=$child->name;
       $r++;
     }
     return $names;
