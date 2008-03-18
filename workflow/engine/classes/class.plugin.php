@@ -70,6 +70,41 @@ class folderDetail {
 	 }
 }
 
+class folderData {
+ 	var $sProcessUid;
+	var $sProcessTitle;
+ 	var $sApplicationUid;
+ 	var $sApplicationTitle;
+ 	var $sUserUid;
+ 	var $sUserLogin;
+ 	var $sUserFullName;
+ 	
+  function __construct( $sProcessUid, $sProcessTitle, $sApplicationUid, $sApplicationTitle, $sUserUid, $sUserLogin = '', $sUserFullName ='') {
+   	$this->sProcessUid       = $sProcessUid;
+   	$this->sProcessTitle     = $sProcessTitle;
+   	$this->sApplicationUid   = $sApplicationUid;
+   	$this->sApplicationTitle = $sApplicationTitle;
+   	$this->sUserUid          = $sUserUid;
+   	$this->sUserLogin        = $sUserLogin;
+   	$this->sUserFullName     = $sUserFullName;
+	 }
+}
+
+
+class uploadDocumentData {
+ 	var $sApplicationUid;
+ 	var $sUserUid;
+ 	var $sFilename;
+ 	var $sFileTitle;
+ 	
+  function __construct( $sApplicationUid, $sUserUid, $sFilename, $sFileTitle ) {
+   	$this->sApplicationUid = $sApplicationUid;
+   	$this->sUserUid        = $sUserUid;
+   	$this->sFilename       = $sFilename;
+   	$this->sFileTitle     = $sFileTitle;
+	 }
+}
+
 class PMPlugin {
 	var $sNamespace;
 	var $sClassName;

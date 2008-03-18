@@ -865,7 +865,11 @@ print $sql;
         $this->Task = new Task;
 		  	$this->Task->Load ( $sTasUid );
 
+        //Process
         $sProUid       = $this->Task->getProUid();
+        $this->Process = new Process;
+        $proFields = $this->Process->Load ( $sProUid );
+
         //application
         $Application   = new Application;
         $sAppUid       = $Application->create($sProUid, $sUsrUid );
@@ -894,16 +898,13 @@ print $sql;
       throw ( new Exception ( 'You tried to start a new case without send the USER UID or TASK UID!' ) );
     }
 
-    // to do: change to a friendly name for the folder, right now, we are using the APP_UID
-
-    $oData['PRO_UID']   = $sProUid;
-    $oData['APP_UID']   = $sAppUid;
-    $oData['APP_TITLE'] = $sAppUid;
- 
-    $oPluginRegistry =& PMPluginRegistry::getSingleton();
-    $oPluginRegistry->executeTriggers ( PM_CREATE_CASE , $oData );
+    //call plugin
+    if ( class_exists ('folderData' ) ) {
+      $folderData = new folderData ($sProUid, $proFields['PRO_TITLE'], $sAppUid, $Fields['APP_TITLE'], $sUsrUid );
+      $oPluginRegistry =& PMPluginRegistry::getSingleton();
+      $oPluginRegistry->executeTriggers ( PM_CREATE_CASE , $folderData );
+    }
     //end plugin
-
 
     return array( 'APPLICATION' => $sAppUid, 'INDEX' => $iDelIndex, 'PROCESS' => $sProUid );
   }

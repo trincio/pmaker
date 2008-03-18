@@ -22,73 +22,85 @@
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
  * 
  */
-  //load the variables
-  G::LoadClass('case');
-  $oCase  = new Cases();
-  $Fields = $oCase->loadCase($_SESSION['APPLICATION']);
-  //Execute after triggers - Start
-  $Fields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], 'INPUT_DOCUMENT', $_GET['UID'], 'AFTER', $Fields['APP_DATA'] );
-  //Execute after triggers - End
-
-  //save data
-  $aData = array();
-  $aData['APP_NUMBER']      = $Fields['APP_NUMBER'];
-  $aData['APP_PROC_STATUS'] = $Fields['APP_PROC_STATUS'];
-  $aData['APP_DATA']        = $Fields['APP_DATA'];
-  $oCase->updateCase( $_SESSION['APPLICATION'], $aData );
-
-  //save info
-  require_once ( "classes/model/AppDocument.php" );
-
-  $oAppDocument = new AppDocument();
-  $aFields = array('APP_UID'             => $_SESSION['APPLICATION'],
-                   'DEL_INDEX'           => $_SESSION['INDEX'],
-                   'DEL_INDEX'           => $_SESSION['INDEX'],
-                   'USR_UID'             => $_SESSION['USER_LOGGED'],
-                   'DOC_UID'             => $_GET['UID'],
-                   'APP_DOC_TYPE'        => $_POST['form']['APP_DOC_TYPE'],
-                   'APP_DOC_CREATE_DATE' => date('Y-m-d H:i:s'),
-                   'APP_DOC_COMMENT'     => isset($_POST['form']['APP_DOC_COMMENT']) ? $_POST['form']['APP_DOC_COMMENT'] : '',
-                   'APP_DOC_TITLE'       => '',
-                   'APP_DOC_FILENAME'    => isset($_FILES['form']['name']['APP_DOC_FILENAME']) ? $_FILES['form']['name']['APP_DOC_FILENAME'] : '');
-  $oAppDocument->create($aFields);
-  $sAppDocUid = $oAppDocument->getAppDocUid();
-  $info = pathinfo( $oAppDocument->getAppDocFilename() );
-  $ext = (isset($info['extension']) ? $info['extension'] : '');
-/*
-  $path = PATH_PLUGINS . 'knowledgeTree' . PATH_SEP . 'data' . PATH_SEP . 'mysql'. PATH_SEP . 'schema.sql';
+  try {
+    //load the variables
+    G::LoadClass('case');
+    $oCase  = new Cases();
+    $Fields = $oCase->loadCase($_SESSION['APPLICATION']);
+    //Execute after triggers - Start
+    $Fields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], 'INPUT_DOCUMENT', $_GET['UID'], 'AFTER', $Fields['APP_DATA'] );
+    //Execute after triggers - End
   
-  $contents = file_get_contents ( $path );
-  print $contents;
-  $con = Propel::getConnection( 'workflow');
-  $stmt = $con->createStatement();
-  $rs = $stmt->executeQuery($contents, ResultSet::FETCHMODE_NUM);
-  die;
-  */
-  //save the file
-  if (!empty($_FILES['form'])) {
-  	if ($_FILES['form']['error']['APP_DOC_FILENAME'] == 0) {
-      G::uploadFile($_FILES['form']['tmp_name']['APP_DOC_FILENAME'], PATH_DOCUMENT . $_SESSION['APPLICATION'] . '/', $sAppDocUid . '.' . $ext );
-      
-      //Hook PM_UPLOAD_DOCUMENT for upload document
-      //to do: process_id undefined
-      $oData['PRO_UID']	  = $_SESSION['APPLICATION'];
-      $oData['APP_UID']	  = $_SESSION['APPLICATION'];
-      $oData['FILENAME']	= PATH_UPLOAD . $_SESSION['APPLICATION'] . '/' . $_FILES['form']['name']['APP_DOC_FILENAME'] ;
-    	$oPluginRegistry =& PMPluginRegistry::getSingleton();
-	    $oPluginRegistry->executeTriggers ( PM_UPLOAD_DOCUMENT , $oData );
-      
+    //save data
+    $aData = array();
+    $aData['APP_NUMBER']      = $Fields['APP_NUMBER'];
+    $aData['APP_PROC_STATUS'] = $Fields['APP_PROC_STATUS'];
+    $aData['APP_DATA']        = $Fields['APP_DATA'];
+    $oCase->updateCase( $_SESSION['APPLICATION'], $aData );
+  
+    //save info
+    require_once ( "classes/model/AppDocument.php" );
+  
+    $oAppDocument = new AppDocument();
+    $aFields = array('APP_UID'             => $_SESSION['APPLICATION'],
+                     'DEL_INDEX'           => $_SESSION['INDEX'],
+                     'DEL_INDEX'           => $_SESSION['INDEX'],
+                     'USR_UID'             => $_SESSION['USER_LOGGED'],
+                     'DOC_UID'             => $_GET['UID'],
+                     'APP_DOC_TYPE'        => $_POST['form']['APP_DOC_TYPE'],
+                     'APP_DOC_CREATE_DATE' => date('Y-m-d H:i:s'),
+                     'APP_DOC_COMMENT'     => isset($_POST['form']['APP_DOC_COMMENT']) ? $_POST['form']['APP_DOC_COMMENT'] : '',
+                     'APP_DOC_TITLE'       => '',
+                     'APP_DOC_FILENAME'    => isset($_FILES['form']['name']['APP_DOC_FILENAME']) ? $_FILES['form']['name']['APP_DOC_FILENAME'] : '');
+                     
+                     
+    $oAppDocument->create($aFields);
+    $sAppDocUid = $oAppDocument->getAppDocUid();
+    $info = pathinfo( $oAppDocument->getAppDocFilename() );
+    $ext = (isset($info['extension']) ? $info['extension'] : '');
+  
+    //save the file
+    if (!empty($_FILES['form'])) {
+    	if ($_FILES['form']['error']['APP_DOC_FILENAME'] == 0) {
+        $sPathName = PATH_DOCUMENT . $_SESSION['APPLICATION'] . PATH_SEP;
+        $sFileName = $sAppDocUid . '.' . $ext;
+        G::uploadFile($_FILES['form']['tmp_name']['APP_DOC_FILENAME'], $sPathName, $sFileName );
+        
+        //Plugin Hook PM_UPLOAD_DOCUMENT for upload document
+        if ( class_exists ('uploadDocumentData' ) ) {
+          $oData['APP_UID']	  = $_SESSION['APPLICATION'];
+          $documentData = new uploadDocumentData (
+                            $_SESSION['APPLICATION'], 
+                            $_SESSION['USER_LOGGED'], 
+                            $sPathName . $sFileName,
+                            $aFields['APP_DOC_FILENAME']
+                            );
+        
+      	  $oPluginRegistry =& PMPluginRegistry::getSingleton();
+  	      $oPluginRegistry->executeTriggers ( PM_UPLOAD_DOCUMENT , $documentData );
+      }
+      //end plugin      
+      }
     }
+  
+    //go to the next step
+    if (!isset($_POST['form']['MORE'])) {
+      $aNextStep = $oCase->getNextStep( $_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['STEP_POSITION']);
+      $_SESSION['STEP_POSITION'] = $aNextStep['POSITION'];
+      G::header('location: ' . $aNextStep['PAGE']);
+      die;
+    }
+    else {
+    	G::header('location: ' . $_SERVER['HTTP_REFERER']);
+    	die;
+    }
+    
   }
-
-  //go to the next step
-  if (!isset($_POST['form']['MORE'])) {
-    $aNextStep = $oCase->getNextStep($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['STEP_POSITION']);
-    $_SESSION['STEP_POSITION'] = $aNextStep['POSITION'];
-    G::header('location: ' . $aNextStep['PAGE']);
-    die;
-  }
-  else {
-  	G::header('location: ' . $_SERVER['HTTP_REFERER']);
-  	die;
-  }
+  
+  catch ( Exception $e ) {
+    /* Render Error page */
+      $aMessage['MESSAGE'] = $e->getMessage();
+      $G_PUBLISH          = new Publisher;
+      $G_PUBLISH->AddContent('xmlform', 'xmlform', 'login/showMessage', '', $aMessage );
+      G::RenderPage( 'publish' );
+  } 
