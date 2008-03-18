@@ -1,10 +1,10 @@
 <?php
 /**
  * cases_StepsTree.php
- *  
+ *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -14,13 +14,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
   require_once ( "classes/model/Step.php" );
   require_once ( "classes/model/Content.php" );
@@ -141,15 +141,18 @@
      	      	$sAux = $aAux['APP_DOC_COMMENT'];
      	      }
      	      $sOptions .= '<td width="5%">' . $i . '.</td><td width="55%" class="treeNodeAlternate"><input type="text" readonly="readonly" style="font:inherit;border:none;width:100%;" value="' . htmlentities( $sAux, ENT_QUOTES, "utf-8" ) . '" title="' . $sAux . '" /></td>';
-     	      if (isset($_GET['DOC']))
-     	      {
-     	        $sOptions .= '<td width="20%" class="treeNode" align="center"><a style="' . (($_GET['TYPE'] == 'INPUT_DOCUMENT') && ($_GET['UID'] == $aRow->getStepUidObj() && ($_GET['ACTION'] == 'VIEW') && ($_GET['DOC'] == $aRow2['APP_DOC_UID'])) ? 'background-color:orange;color:shite;padding-left:5px;padding-right:5px;' : '') . '" href="../cases/cases_Step?TYPE=' . $aRow->getStepTypeObj() . '&UID=' . $aRow->getStepUidObj() . '&POSITION=' . $aRow->getStepPosition() . '&ACTION=VIEW&DOC=' . $aRow2['APP_DOC_UID'] . '">' . G::LoadTranslation('ID_VIEW') . '</a></td>';
+     	      global $oPluginRegistry;
+     	      if (!$oPluginRegistry->existsTrigger ( PM_CASE_DOCUMENT_LIST )) {
+     	        if (isset($_GET['DOC']))
+     	        {
+     	          $sOptions .= '<td width="20%" class="treeNode" align="center"><a style="' . (($_GET['TYPE'] == 'INPUT_DOCUMENT') && ($_GET['UID'] == $aRow->getStepUidObj() && ($_GET['ACTION'] == 'VIEW') && ($_GET['DOC'] == $aRow2['APP_DOC_UID'])) ? 'background-color:orange;color:shite;padding-left:5px;padding-right:5px;' : '') . '" href="../cases/cases_Step?TYPE=' . $aRow->getStepTypeObj() . '&UID=' . $aRow->getStepUidObj() . '&POSITION=' . $aRow->getStepPosition() . '&ACTION=VIEW&DOC=' . $aRow2['APP_DOC_UID'] . '">' . G::LoadTranslation('ID_VIEW') . '</a></td>';
+     	        }
+     	        else
+     	        {
+     	        	$sOptions .= '<td width="20%" class="treeNode" align="center"><a style="" href="../cases/cases_Step?TYPE=' . $aRow->getStepTypeObj() . '&UID=' . $aRow->getStepUidObj() . '&POSITION=' . $aRow->getStepPosition() . '&ACTION=VIEW&DOC=' . $aRow2['APP_DOC_UID'] . '">' . G::LoadTranslation('ID_VIEW') . '</a></td>';
+     	        }
+     	        $sOptions .= '<td width="20%" class="treeNode" align="center"><a href="../cases/cases_DeleteDocument?TYPE=INPUT&DOC=' . $aRow2['APP_DOC_UID'] . '" onclick="return confirm(\'' . G::LoadTranslation('ID_CONFIRM_DELETE_ELEMENT') . '\');">' . G::LoadTranslation('ID_DELETE') . '</a></td>';
      	      }
-     	      else
-     	      {
-     	      	$sOptions .= '<td width="20%" class="treeNode" align="center"><a style="" href="../cases/cases_Step?TYPE=' . $aRow->getStepTypeObj() . '&UID=' . $aRow->getStepUidObj() . '&POSITION=' . $aRow->getStepPosition() . '&ACTION=VIEW&DOC=' . $aRow2['APP_DOC_UID'] . '">' . G::LoadTranslation('ID_VIEW') . '</a></td>';
-     	      }
-     	      $sOptions .= '<td width="20%" class="treeNode" align="center"><a href="../cases/cases_DeleteDocument?TYPE=INPUT&DOC=' . $aRow2['APP_DOC_UID'] . '" onclick="return confirm(\'' . G::LoadTranslation('ID_CONFIRM_DELETE_ELEMENT') . '\');">' . G::LoadTranslation('ID_DELETE') . '</a></td>';
      	      $sOptions .= '</tr>';
      	      $i++;
      	      next($aDocuments);
