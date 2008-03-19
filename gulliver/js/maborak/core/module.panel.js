@@ -849,7 +849,8 @@ leimnud.Package.Public({
 					display:"block"
 				});
 				new this.parent.module.fx.algorithm().make({
-					transition	:"backOut",
+					transition	:"sineOut",
+					duration	:1000,
 					begin		:this.elements.containerWindow.offsetHeight,
 					end		:this.options.size.h,
 					onTransition	:function(fx){
@@ -874,6 +875,7 @@ leimnud.Package.Public({
 							width:"auto"
 						});
 						this.rolling=false;
+						return (this.events.roll || function(){})();
 					}.extend(this)
 				});
 			}
@@ -889,7 +891,8 @@ leimnud.Package.Public({
 					width	:this.options.fx.rollWidth || this.lastWidth
 				});
 				new this.parent.module.fx.algorithm().make({
-					transition	:"backIn",
+					transition	:"sineOut",
+					duration	:1000,
 					begin		:this.elements.containerWindow.offsetHeight,
 					end		:this.elements.titleBar.offsetHeight,
 					onTransition	:function(fx){
@@ -917,6 +920,7 @@ leimnud.Package.Public({
 							width:"100%"
 						});
 						this.rolling=false;
+						return (this.events.roll || function(){})();
 					}.extend(this)
 				});
 			}
@@ -1040,6 +1044,10 @@ leimnud.Package.Public({
 						}
 					}.extend(this);
 					rpc.make();
+				}
+				else if(options.html)
+				{
+					this.addContent(options.html);
 				}
 			}
 			else

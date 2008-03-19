@@ -41,6 +41,12 @@ leimnud.Package.Public({
 			this.columns	= this.options.data.length;
 			this.widthColumn = (width/this.columns);
 			this.elements.column=[];
+			/* Button ADD BEGIN */
+			this.elements.add = new DOM('div',false,{padding:6,textAlign:'left'}).append(
+				new button('Add Content')
+			);
+			this.options.target.append(this.elements.add);
+			/* Button ADD END   */
 			this.elements.table 	= document.createElement('table');
 			$(this.elements.table).setStyle({
 				width:width,
@@ -48,6 +54,7 @@ leimnud.Package.Public({
 			})
 			this.elements.tr	= this.elements.table.insertRow(-1);
 			this.options.target.append(this.elements.table);
+			this.matriz = [];
 			for(var i=0;i<this.columns;i++)
 			{
 				this.elements.column[i]=this.elements.tr.insertCell(i);
@@ -57,10 +64,12 @@ leimnud.Package.Public({
 					//position:'relative',
 					verticalAlign:'top'
 				});
+				this.matriz.push([]);
 			}
 			this.parseData();
 			this.drop.setArrayPositions(true);
 		};
+
 		this.parseData=function()
 		{
 			for(var i=0;i<this.columns;i++)
@@ -70,8 +79,10 @@ leimnud.Package.Public({
 				{
 					var wd = column[j];
 					this.panel({
-						target:this.elements.column[i]
+						target:this.elements.column[i],
+						column:i
 					}.concat(wd));
+					this.matriz[i].push(j);
 				}
 			}
 		};
@@ -85,9 +96,10 @@ leimnud.Package.Public({
 				position:{x:0,y:0},
 				statusBar:false,
 				control:{resize:false,roll:true,drag:this.options.drag,close:false},
-				fx:{shadow:false}
+				fx:{shadow:false,opacity:false}
 			};
 			panel.setStyle={
+				title	:{fontWeight:'normal'},
 				containerWindow:{
 					position:'relative',
 					border:"1px solid #afafaf",
@@ -104,26 +116,28 @@ leimnud.Package.Public({
 			if(options.noBg)
 			{
 				panel.setStyle.content.concat({
-					backgroundColor:"#DFDFDF",
-					borderWidth:0
+					backgroundColor	: "#DFDFDF",
+					borderWidth	: 0
 				});
 				panel.setStyle.containerWindow.concat({
-					backgroundColor:"#DFDFDF"					
+					backgroundColor	: "#DFDFDF"					
 				});
 				panel.setStyle.frontend={
-					backgroundColor:"#DFDFDF"
+					backgroundColor	: "#DFDFDF"
 				};
 			}
 			panel.events={
+				roll:function(){return this.drop.setArrayPositions(true);}.extend(this),
 				init:[function(i){
+					if(this.lock===true || this.moving==true){return false;}
 					var e = this.options.panel[i].panel.elements.containerWindow;
 					var p;
 					this.currentPhantom = p = new DOM("div",false,{
-						width:e.clientWidth,
-						height:e.clientHeight,
-						border:"1px dashed red",
-						position:"relative",
-						margin:3
+						width	: e.clientWidth,
+						height	: e.clientHeight,
+						border	: "1px dashed red",
+						position: "relative",
+						margin	: 3
 					});
 					if(e.nextSibling)
 					{
@@ -138,24 +152,76 @@ leimnud.Package.Public({
 				}.extend(this,this.options.panel.length)],
 				move:function(i){
 					var e = this.options.panel[i].panel.elements.containerWindow;
+					var h = this.drop.selected;
 					this.drop.captureFromArray({currentElementDrag:e});
-					if(this.drop.selected!==false)
+					//console.info(h+":"+this.drop.selected);
+					if(this.drop.selected!==false && this.drop.selected!==h)
 					{
-						
+						//var f = this.options.panel[this.drop.selected].panel.elements.containerWindow;
+						var f = this.drop.elements[this.drop.selected].element;
+						this.currentPhantom.remove();
+						var p;
+						this.currentPhantom = p = new DOM("div",false,{
+							width	: e.clientWidth,
+							height	: e.clientHeight,
+							border	: "1px dashed red",
+							position: "relative",
+							margin	: 3
+						});
+						if(f.nextSibling)
+						{
+							f.parentNode.insertBefore(p,f.nextSibling);
+						}
+						else
+						{
+							f.parentNode.appendChild(p);
+						}
+						//console.info(this.currentPhantom);
 					}
 					this.de = this.drop.selected;
-					console.info(this.drop.selected)
+					//console.info(this.drop.selected)
 				}.extend(this,this.options.panel.length),
 				finish:function(i){
+					if(this.lock===true && this.moving==true){return false;}
+					this.lock=true;
+					this.moving=true;
+					var p = this.parent.dom.positionRange(this.currentPhantom,true);
 					var e = this.options.panel[i].panel.elements.containerWindow;
-					this.currentPhantom.parentNode.replaceChild(e,this.currentPhantom);
-					this.parent.dom.setStyle(e,{
-						left:"auto",
-						top:"auto",
-						position:"relative"
+					new this.parent.module.fx.algorithm().make({
+						duration 	: 400,
+						end		: [p.x1,p.y1],
+						transition	: "sineOut",
+						begin	 	: [parseInt(e.style.left),parseInt(e.style.top)],
+						onTransition	: function(fx,dom)
+						{
+							dom.style.left	= fx.result[0];
+							dom.style.top	= fx.result[1];
+						}.extend(this,e),
+						onFinish:function(fx,dom,finish)
+						{
+							var e = dom;
+							dom.style.left	= fx.options.end[0];
+							dom.style.top	= fx.options.end[1];
+							try{
+							this.currentPhantom.parentNode.replaceChild(e,this.currentPhantom);
+							}catch(e){}
+							this.parent.dom.setStyle(e,{
+								left:"auto",
+								top:"auto",
+								position:"relative"
+							});
+							this.drop.setArrayPositions(true);
+							this.lock=false;
+							this.moving=false;
+							if(this.drop.selected!==false)
+							{
+								//console.info("========================");
+								//console.info(i+":"+this.drop.selected);
+								//console.info(this.drop.elements[this.drop.selected].value);
+							}
+						}.extend(this,e)
 					});
 				}.extend(this,this.options.panel.length)
-
 			};
 			panel.make();
 			if(options.open)
@@ -163,8 +229,9 @@ leimnud.Package.Public({
 				panel.open(options.open);
 			}
 			this.options.panel.push({
-				panel:panel,
-				index:this.options.panel.length-1
+				panel	:panel,
+				index	:this.options.panel.length-1,
+				column	:options.column
 			});
 			this.drop.register({
 				element:panel.elements.containerWindow,
