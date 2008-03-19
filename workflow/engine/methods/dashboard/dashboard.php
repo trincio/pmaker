@@ -47,15 +47,15 @@ $G_HEADER->addScriptCode( '
 		window.Da=new leimnud.module.dashboard();
 		Da.make({
 			target:$("dashboard"),
-data:[
-	[{title:"My info - Page editor",open:{url:"http://wilmer.opensource.colosa.net/sysos/en/blank/users/myInfo"},height:730,noBg:true}],
-	[{title:"My pending Process",url:"http://maborak.com"},
-{title:"Status",url:"http://rss.maborak.com",height:100},
-{title:"Status",url:"http://rss.maborak.com",height:100},
-{title:"Status",url:"http://rss.maborak.com",height:100},
-{title:"Status",url:"http://rss.maborak.com",height:100}
 
+data:[
+	[{title:"My info - Page editor",open:{url:"/sysos/en/blank/users/myInfo"},height:730,noBg:true}],
+	[{title:"My info - Page editor",open:{url:"/sysos/en/blank/users/myInfo"},height:730,noBg:true}],
+[
+{title:"My pending Process",open:{html:"<img src=\"/sysos/en/blank/dashboard/chart\" />"},height:400},
+{title:"Status4",url:"http://rss.maborak.com",height:100,noBg:true}
 ]
+
 ]
 		});
 	});' );
