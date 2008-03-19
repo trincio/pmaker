@@ -27,9 +27,30 @@
  * @package home.gulliver.system2
 */
 
-
 class G
 {
+	/**
+	* Emulate variable selector
+	* @author maborak <maborak@maborak.com>
+	* @access public
+	* @param  void
+	* @return void
+	*/
+	function ifthen()
+	{
+		//return (!$variable)?
+		$nums = func_num_args();
+		$vars = func_get_args();
+		for($i=0;$i<$nums;$i++)
+		{
+			if($vars[$i])
+			{
+				return $vars[$i];
+			}
+		}
+		return 1;
+	}
+
 /**
    * Get the current version of gulliver classes
    *
@@ -2391,6 +2412,5 @@ class oldG
     chmod( $path . "/" . $nameToSave , 0666 );
     return 1;
   }
-
 }
 ?>

@@ -152,10 +152,87 @@ leimnud.Package.Public({
 			this.expand(this);
 //			return this;
 		},
-		json:function()
+		json:function(options)
 		{
-			this.make();
+			this.interval=false;
+			this.options = {
+				url	:false
+			}.concat(options || {});
+			this.begin=new Date().getTime();
+			this.tmp = "rpcJson_"+this.begin;
+			this.server= this.parent.info.base+"server/proxy.js.php";
+			this.par = this.parent.info.domBaseJS.parentNode;
+			this.make=function(options)
+			{
+				if(!this.options.url || !this.par){return false;}
+				this.script		= document.createElement("script");
+				this.par.appendChild(this.script);
+				this.script.src  	= this.server+"?data="+escape(this.options.toJSONString())+"&tmp="+this.tmp;
+				this.script.type 	= "text/javascript";
+				this.script.charset 	= this.parent.charset;
+				this.interval = setInterval(this.probe,500);
+			};
+			this.probe=function()
+			{
+				if(window[this.tmp] && window[this.tmp].loaded===true)
+				{
+					this.interval = clearInterval(this.interval);
+					var rt = window[this.tmp].data.parseJSON();
+					if(this.options.debug===true && console.info)
+					{
+						console.info(rt)
+					}
+					/* Create XML BEGIN */
+					 var myDocument;
+					 if(document.implementation.createDocument)
+					 {
+						 var parser = new DOMParser();
+						 try{
+							 window.lk = myDocument = parser.parseFromString(rt || "<xml>empty</xml>", "text/xml");
+						 }catch(e)
+						 {
+						 	 myDocument = parser.parseFromString("<xml>empty</xml>", "text/xml");
+						 }
+					 } else if (window.ActiveXObject){
+						myDocument = new ActiveXObject("Microsoft.XMLDOM");
+						myDocument.async="false";
+						try{
+						 	 myDocument.loadXML(rt || "<xml>empty</xml>");
+						}catch(e)
+						{
+						 	 myDocument.loadXML("<xml>empty</xml>");
+						}
+					 }
+					/* Create XML END */
+					this.json ={
+						responseText:rt,
+						responseXML:myDocument
+					};
+					if(this.parent.browser.isIE)
+					{
+						window[this.tmp]=null;
+					}
+					else
+					{
+						delete window[this.tmp];
+					}
+					this.script.parentNode.removeChild(this.script);
+					if(this.callback)
+					{
+						this.callback.args(this)();
+					}
+				}
+				else
+				{
+					this.time = new Date().getTime()-this.begin;
+					if(this.time>30000)
+					{
+						this.interval = clearInterval(this.interval);
+					}
+				}
+			};
 			this.expand(this);
+			return this;
 		}
 	}
 });
