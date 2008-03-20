@@ -25,40 +25,70 @@
 if (($RBAC_Response=$RBAC->userCanAccess("PM_SETUP"))!=1) return $RBAC_Response;
   
   $G_MAIN_MENU = "processmaker";
-  $G_SUB_MENU  = "dashboard";
+  //$G_SUB_MENU  = "dashboard";
   
   $G_ID_MENU_SELECTED     = "DASHBOARD";
   
+
+  $oJSON   = new Services_JSON();
+  $obj = new stdClass();
+  $obj->title = 'my first chart';
+  $obj->height = 220;
+  $obj->open->image = '/sysos/en/blank/charts/genericCharts?chart=2&type=4';
+  $aColumn1[] = $obj;
   
-  $dbc = new DBConnection;
-  $G_PUBLISH = new Publisher;
-  $G_PUBLISH->SetTo( $dbc );
-  $G_PUBLISH->AddContent( "view", "setup/tree_setupEnvironment" );
+  $obj = new stdClass();
+  $obj->title = 'my first chart';
+  $obj->height = 220;
+  $obj->open->image = '/sysos/en/blank/charts/genericCharts?chart=1&type=4';
+  $aColumn1[] = $obj;
+
+  $obj = new stdClass();
+  $obj->title = 'my first chart';
+  $obj->height = 300;
+  $obj->open->image = '/sysos/en/blank/charts/genericCharts?chart=2&type=3';
+  $aColumn1[] = $obj;
+
+  $obj = new stdClass();
+  $obj->title = 'my first chart';
+  $obj->height = 300;
+  $obj->open->html = '<img src= "/sysos/en/blank/charts/genericCharts?chart=0" >';
+  $aColumn2[] = $obj;
+
+  $obj = new stdClass();
+  $obj->title = 'my first chart';
+  $obj->height = 220;
+  $obj->open->image = '/sysos/en/blank/charts/genericCharts?type=2';
+  $aColumn2[] = $obj;
+
+  $aDashboard = array ( $aColumn1, $aColumn2 );
+  $oData   = $oJSON->encode( $aDashboard );
   
   $oTemplatePower = new TemplatePower(PATH_TPL . 'dashboard/frontend.html');
   
   $oTemplatePower->prepare();
 
-$G_PUBLISH = new Publisher;
-$G_PUBLISH->AddContent('template', '', '', '', $oTemplatePower);
-$G_HEADER->addInstanceModule('leimnud', 'dashboard');
-$G_HEADER->addScriptCode( '
-	leimnud.event.add(window,"load",function(){
-		window.Da=new leimnud.module.dashboard();
-		Da.make({
-			target:$("dashboard"),
-
-data:[
-	[{title:"My info - Page editor",open:{url:"/sysos/en/blank/users/myInfo"},height:730,noBg:true}],
+/*
+[
 	[{title:"My info - Page editor",open:{url:"/sysos/en/blank/users/myInfo"},height:730,noBg:true}],
 [
 {title:"My pending Process",open:{html:"<img src=\"/sysos/en/blank/dashboard/chart\" />"},height:400},
 {title:"Status4",url:"http://rss.maborak.com",height:100,noBg:true}
 ]
 
-]
-		});
-	});' );
+]*/
+
+$scriptCode = 'leimnud.event.add(window,"load",function(){
+		window.Da=new leimnud.module.dashboard();
+		Da.make({
+			target:$("dashboard"),
+      data: ' . $oData . ' });
+	  });';
+
+$G_PUBLISH = new Publisher;
+$G_PUBLISH->AddContent('template', '', '', '', $oTemplatePower);
+$G_HEADER->addInstanceModule('leimnud', 'dashboard');
+$G_HEADER->addScriptCode( $scriptCode );
 
 
 
