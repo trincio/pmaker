@@ -829,7 +829,7 @@ leimnud.Package.Public({
 			};
 			//alert(brdr.y+((this.parent.browser.isIE)?-1:pddn.y+1)+2)
 			return {
-				x:brdr.x+((this.parent.browser.isIE)?0:pddn.x)+2,
+				x:brdr.x+((this.parent.browser.isIE)?0:pddn.x),
 				y:brdr.y+((this.parent.browser.isIE)?-1:pddn.y+1)+2
 			};
 		};
@@ -1049,6 +1049,11 @@ leimnud.Package.Public({
 				{
 					this.addContent(options.html);
 				}
+				else if(options.image)
+				{
+					this.addContent("<div style='text-align:center;'><img src=\""+options.image+"\" /></div>");
+				}
+
 			}
 			else
 			{
@@ -1502,7 +1507,8 @@ leimnud.Package.Public({
 				//var hC = (heightContent-((this.options.statusBarButtons || this.tab.options)?space.y:2));
 				//var hC = heightContent;
 				var hC = (heightContent-space.y)-2;
-				var wC = (this.options.size.w-space.x);				
+				//var wC = (this.options.size.w-space.x);				
+				var wC = (this.options.size.w-space.x);
 				//alert(this.options.size.h+"::"+tamH+":"+(tamH+space.y)+"="+hC+"???"+space.y+"***"+this.elements.titleBar.clientHeight+":"+this.elements.statusBar.offsetHeight+":"+this.elements.headerBar.clientHeight);
 				this.parent.dom.setStyle(this.elements.content,{
 					height	:hC,
