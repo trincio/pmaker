@@ -833,8 +833,10 @@ leimnud.Package.Public({
 			};
 			//alert(brdr.y+((this.parent.browser.isIE)?-1:pddn.y+1)+2)
 			return {
-				x:brdr.x+((this.parent.browser.isIE)?0:pddn.x)-bbb.x,
-				y:brdr.y+((this.parent.browser.isIE)?-1:pddn.y+1)-2
+				//x:brdr.x+((this.parent.browser.isIE)?0:pddn.x)+bbb.x,
+				x:brdr.x+pddn.x+bbb.x,
+				//y:brdr.y+((this.parent.browser.isIE)?-1:pddn.y+1)+bbb.y
+				y:brdr.y+pddn.y+bbb.y
 			};
 		};
 		this.roll=function()

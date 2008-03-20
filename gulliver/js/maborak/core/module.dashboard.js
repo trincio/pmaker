@@ -42,10 +42,10 @@ leimnud.Package.Public({
 			this.widthColumn = (width/this.columns);
 			this.elements.column=[];
 			/* Button ADD BEGIN */
-			this.elements.add = new DOM('div',false,{padding:6,textAlign:'left'}).append(
+			/*this.elements.add = new DOM('div',false,{padding:6,textAlign:'left'}).append(
 				new button('Add Content')
 			);
-			this.options.target.append(this.elements.add);
+			this.options.target.append(this.elements.add);*/
 			/* Button ADD END   */
 			this.elements.table 	= document.createElement('table');
 			$(this.elements.table).setStyle({
@@ -114,11 +114,12 @@ leimnud.Package.Public({
 				},
 				titleBar:{
 					backgroundImage:"url("+this.parent.info.images+"grid.title.gray.gif)",
-					height:15,
+					height:16,
 					backgroundPosition:"0pt -5px"
 				},
 				title:{
-					padding:1
+					padding:1,
+					fontWeight:"normal"
 				},
 				roll:{
 					top:1
