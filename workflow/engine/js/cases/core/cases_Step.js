@@ -248,18 +248,7 @@ var showTaskInformation = function()
 };
 var cancelCase = function()
 {
-  if (confirm("Do you want to cancel this case?"))
-  {
-    var oRPC = new leimnud.module.rpc.xmlhttp({
-    	url : "cases_Ajax",
-    	args: "action=cancelCase"
-    });
-    oRPC.callback = function(rpc){
-    	window.location = "cases_List";
-    }.extend(this);
-    oRPC.make();
-  }
-  /*new leimnud.module.app.confirm().make({
+  new leimnud.module.app.confirm().make({
     label : G_STRINGS.ID_CONFIRM_CANCEL_CASE,
     action: function() {
       var oRPC = new leimnud.module.rpc.xmlhttp({
@@ -271,5 +260,5 @@ var cancelCase = function()
       }.extend(this);
       oRPC.make();
     }.extend(this)
-  });*/
+  });
 };

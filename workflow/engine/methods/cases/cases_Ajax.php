@@ -1,10 +1,10 @@
 <?
 /**
  * cases_Ajax.php
- *  
+ *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -14,13 +14,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
 if (($RBAC_Response=$RBAC->userCanAccess("PM_CASES"))!=1) return $RBAC_Response;
 
@@ -137,7 +137,7 @@ switch($_POST['action'])
 	  $aFields['INIT_DATE'] = ($aDelegation['DEL_INIT_DATE'] != null ? $aDelegation['DEL_INIT_DATE'] : G::LoadTranslation('ID_CASE_NOT_YET_STARTED'));
 	  $aFields['DUE_DATE']  = ($aDelegation['DEL_TASK_DUE_DATE'] != null ? $aDelegation['DEL_TASK_DUE_DATE'] : G::LoadTranslation('ID_NOT_FINISHED'));
 	  $aFields['FINISH']    = ($aDelegation['DEL_FINISH_DATE'] != null ? $aDelegation['DEL_FINISH_DATE'] : G::LoadTranslation('ID_NOT_FINISHED'));
-    $aFields['DURATION']  = ($aDelegation['DEL_FINISH_DATE'] != null ? (int)($iDiff / 3600) . ((int)($iDiff / 3600) == 1 ? G::LoadTranslation('ID_HOUR') : G::LoadTranslation('ID_HOURS')) . (int)(($iDiff % 3600) / 60) . ((int)(($iDiff % 3600) / 60) == 1 ? G::LoadTranslation('ID_MINUTE') : G::LoadTranslation('ID_MINUTES')) . (int)(($iDiff % 3600) % 60) . ((int)(($iDiff % 3600) % 60) == 1 ? G::LoadTranslation('ID_SECOND') : G::LoadTranslation('ID_SECONDS')) : G::LoadTranslation('ID_NOT_FINISHED'));
+    $aFields['DURATION']  = ($aDelegation['DEL_FINISH_DATE'] != null ? (int)($iDiff / 3600) . ' ' . ((int)($iDiff / 3600) == 1 ? G::LoadTranslation('ID_HOUR') : G::LoadTranslation('ID_HOURS')) . ' ' . (int)(($iDiff % 3600) / 60) . ' ' . ((int)(($iDiff % 3600) / 60) == 1 ? G::LoadTranslation('ID_MINUTE') : G::LoadTranslation('ID_MINUTES')) . ' '. (int)(($iDiff % 3600) % 60) . ' ' . ((int)(($iDiff % 3600) % 60) == 1 ? G::LoadTranslation('ID_SECOND') : G::LoadTranslation('ID_SECONDS')) : G::LoadTranslation('ID_NOT_FINISHED'));
 	  global $G_PUBLISH;
   	global $G_HEADER;
   	$G_PUBLISH = new Publisher();
@@ -174,7 +174,7 @@ switch($_POST['action'])
     $aFields['INIT_DATE'] = ($aRow['DEL_INIT_DATE'] != null ? $aRow['DEL_INIT_DATE'] : G::LoadTranslation('ID_CASE_NOT_YET_STARTED'));
     $aFields['DUE_DATE']  = ($aRow['DEL_TASK_DUE_DATE'] != null ? $aRow['DEL_TASK_DUE_DATE'] : G::LoadTranslation('ID_CASE_NOT_YET_STARTED'));
     $aFields['FINISH']    = ($aRow['DEL_FINISH_DATE'] != null ? $aRow['DEL_FINISH_DATE'] : G::LoadTranslation('ID_NOT_FINISHED'));
-    $aFields['DURATION']  = ($aRow['DEL_FINISH_DATE'] != null ? (int)($iDiff / 3600) . ((int)($iDiff / 3600) == 1 ? G::LoadTranslation('ID_HOUR') : G::LoadTranslation('ID_HOURS')) . (int)(($iDiff % 3600) / 60) . ((int)(($iDiff % 3600) / 60) == 1 ? G::LoadTranslation('ID_MINUTE') : G::LoadTranslation('ID_MINUTES')) . (int)(($iDiff % 3600) % 60) . ((int)(($iDiff % 3600) % 60) == 1 ? G::LoadTranslation('ID_SECOND') : G::LoadTranslation('ID_SECONDS')) : G::LoadTranslation('ID_NOT_FINISHED'));
+    $aFields['DURATION']  = ($aRow['DEL_FINISH_DATE'] != null ? (int)($iDiff / 3600) . ' ' . ((int)($iDiff / 3600) == 1 ? G::LoadTranslation('ID_HOUR') : G::LoadTranslation('ID_HOURS')) . ' '  . (int)(($iDiff % 3600) / 60) . ' ' . ((int)(($iDiff % 3600) / 60) == 1 ? G::LoadTranslation('ID_MINUTE') : G::LoadTranslation('ID_MINUTES')) . ' ' . (int)(($iDiff % 3600) % 60) . ' ' . ((int)(($iDiff % 3600) % 60) == 1 ? G::LoadTranslation('ID_SECOND') : G::LoadTranslation('ID_SECONDS')) : G::LoadTranslation('ID_NOT_FINISHED'));
     global $G_PUBLISH;
   	global $G_HEADER;
   	$G_PUBLISH = new Publisher();
@@ -252,6 +252,14 @@ switch($_POST['action'])
 	  $aFields               = $oApplication->load((isset($_POST['sApplicationUID']) ? $_POST['sApplicationUID'] : $_SESSION['APPLICATION']));
 	  $aFields['APP_STATUS'] = 'CANCELLED';
 	  $oApplication->update($aFields);
+	  G::LoadClass('case');
+	  $oCase = new Cases();
+	  if (isset($_POST['sApplicationUID'])) {
+	  	$oCase->CloseCurrentDelegation($_POST['sApplicationUID'], $_POST['iIndex']);
+	  }
+	  else {
+	    $oCase->CloseCurrentDelegation($_SESSION['APPLICATION'], $_SESSION['INDEX']);
+	  }
 	break;
 }
 ?>

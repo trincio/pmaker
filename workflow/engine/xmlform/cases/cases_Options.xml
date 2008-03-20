@@ -29,13 +29,13 @@ function casesDelete(app) {
   @#PAGED_TABLE_ID.refresh();
 }
 
-var cancelCase = function(sUID) {
+var cancelCase = function(sUID, iIndex) {
   new leimnud.module.app.confirm().make({
     label : G_STRINGS.ID_CONFIRM_CANCEL_CASE,
     action: function() {
       var oRPC = new leimnud.module.rpc.xmlhttp({
         url:  'cases_Ajax',
-        args: 'action=cancelCase&amp;sApplicationUID=' + sUID
+        args: 'action=cancelCase&amp;sApplicationUID=' + sUID + '&amp;iIndex=' + iIndex
       });
       oRPC.callback = function(oRPC) {
         @#PAGED_TABLE_ID.refresh();
