@@ -1176,6 +1176,9 @@ print $sql;
     $c->addAlias( "APP_LAST_USER", 'USERS');
 
     $c->addJoin ( ApplicationPeer::APP_UID, AppDelegationPeer::APP_UID, Criteria::LEFT_JOIN );
+    $appThreadConds[] = array( ApplicationPeer::APP_UID    , AppThreadPeer::APP_UID );
+    $appThreadConds[] = array( AppDelegationPeer::DEL_INDEX, AppThreadPeer::DEL_INDEX);
+    $c->addJoinMC ( $appThreadConds, Criteria::LEFT_JOIN );
     $c->addJoin ( AppDelegationPeer::USR_UID, UsersPeer::USR_UID,      Criteria::LEFT_JOIN  );
 
     $del = DBAdapter::getStringDelimiter();
@@ -1220,9 +1223,13 @@ print $sql;
       );
     switch ( $sTypeList ) {
       case 'all' :
-         $c->add ( ApplicationPeer::APP_STATUS, '', Criteria::NOT_EQUAL );
-         $c->add ( AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL );
-
+         $c->add(
+           $c->getNewCriterion(AppDelegationPeer::DEL_THREAD_STATUS, 'OPEN')->addOr(
+             $c->getNewCriterion(ApplicationPeer::APP_STATUS, 'COMPLETED')->addAnd(
+               $c->getNewCriterion(AppDelegationPeer::DEL_PREVIOUS, 0)
+             )
+           )
+         );
          $xmlfile=$filesList[0];
         break;
       case 'to_do' :
@@ -1235,16 +1242,21 @@ print $sql;
          $c->add ( AppDelegationPeer::DEL_FINISH_DATE,null, Criteria::ISNULL );
          $xmlfile=$filesList[2];
         break;
-      case 'paused' :
+      /*case 'paused' :
          $c->add ( ApplicationPeer::APP_STATUS, 'PAUSED' );
          $xmlfile=$filesList[3];
-        break;
+        break;*/
       case 'cancelled' :
-         $c->add ( ApplicationPeer::APP_STATUS, 'CANCELLED' );
+         $c->add(
+           $c->getNewCriterion(AppDelegationPeer::DEL_THREAD_STATUS, 'OPEN')->addAnd(
+             $c->getNewCriterion(ApplicationPeer::APP_STATUS, 'CANCELLED')
+           )
+         );
          $xmlfile=$filesList[4];
         break;
       case 'completed' :
          $c->add ( ApplicationPeer::APP_STATUS, 'COMPLETED' );
+         $c->add ( AppDelegationPeer::DEL_PREVIOUS, 0 );
          $xmlfile=$filesList[5];
         break;
     }
