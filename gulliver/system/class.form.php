@@ -237,16 +237,21 @@ class Form extends XmlForm
       if (($v->type != 'submit')) {
         if ( array_key_exists($k,$newValues) ) {
           if ( is_array($newValues[$k]) ) {
-            $values[$k] = array();
-            foreach( $newValues[$k] as $j => $item ) {
-              if ($this->fields[$k]->validateValue($newValues[$k][$j], $this ))
-                $values[$k][$j] = $this->fields[$k]->maskValue( $newValues[$k][$j], $this );
+          	if (($v->type == 'checkgroup') || ($v->type == 'listbox')) {
+          		$values[$k] = implode('|', $newValues[$k]);
+          	}
+          	else {
+              $values[$k] = array();
+              foreach( $newValues[$k] as $j => $item ) {
+                if ($this->fields[$k]->validateValue($newValues[$k][$j], $this ))
+                  $values[$k][$j] = $this->fields[$k]->maskValue( $newValues[$k][$j], $this );
+              }
+              if ((sizeof($values[$k])===1) && ($v->type!=='grid') && ($this->type!=='grid'))
+              {
+                $values[$k] = $values[$k][0];
+              }
+              if (sizeof($values[$k])===0) $values[$k] = '';
             }
-            if ((sizeof($values[$k])===1) && ($v->type!=='grid') && ($this->type!=='grid'))
-            {
-              $values[$k] = $values[$k][0];
-            }
-            if (sizeof($values[$k])===0) $values[$k] = '';
           } else {
             if ($this->fields[$k]->validateValue($newValues[$k], $this ))
               $values[$k] = $this->fields[$k]->maskValue( $newValues[$k], $this );
