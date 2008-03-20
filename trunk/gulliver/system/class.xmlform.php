@@ -1520,21 +1520,21 @@ class XmlForm_Field_Listbox extends XmlForm_Field
   function render( $value = NULL, $owner=NULL )
   {
     $this->executeSQL( $owner );
-    if (!is_array($value)) $value=array();
+    if (!is_array($value)) $value=explode('|', $value);
     if ($this->mode==='edit') {
-      $html='<select multiple="multiple" id="form['.$this->name.']" name="form['.$this->name.']" size="'.$this->size.'">';
+      $html='<select multiple="multiple" id="form['.$this->name.']" name="form['.$this->name.'][]" size="'.$this->size.'">';
       foreach($this->options as $optionName => $option) {
         $html.='<option value="'.$optionName.'" '.
-                ((array_search($optionName,$value)!==FALSE)?'selected':'').
+                ((in_array($optionName,$value))?'selected':'').
                 '>'.$option.'</option>';
       }
       $html.='</select>';
       return $html;
     } elseif ($this->mode==='view') {
-      $html='<select multiple id="form['.$this->name.']" name="form['.$this->name.']" size="'.$this->size.'" disabled>';
+      $html='<select multiple id="form['.$this->name.']" name="form['.$this->name.'][]" size="'.$this->size.'" disabled>';
       foreach($this->options as $optionName => $option) {
         $html.='<option value="'.$optionName.'" '.
-                ((array_search($optionName,$value)!==FALSE)?'selected':'').
+                ((in_array($optionName,$value))?'selected':'').
                 '>'.$option.'</option>';
       }
       $html.='</select>';
@@ -1585,7 +1585,7 @@ class XmlForm_Field_RadioGroup extends XmlForm_Field
       {
         $html.='<input id="form['.$this->name.']['.$optionName.']" name="form['.$this->name.
                 ']" type=\'radio\' value="'.$optionName.'" '.
-                (($optionName === $value)?'checked':'').'><span class="FormCheck">'.$option.'</span></input><br>';
+                (($optionName == $value)?' checked':'').'><span class="FormCheck">'.$option.'</span></input><br>';
       }
       return $html;
     } elseif ($this->mode==='view') {
@@ -1594,7 +1594,7 @@ class XmlForm_Field_RadioGroup extends XmlForm_Field
       {
         $html.='<input class="FormField" id="form['.$this->name.']['.$optionName.']" name="form['.$this->name.
                 ']" type=\'radio\' value="'.$optionName.'" '.
-                (($optionName === $value)?'checked':'').' disabled><span class="FormCheck">'.$option.'</span></input><br>';
+                (($optionName == $value)?'checked':'').' disabled><span class="FormCheck">'.$option.'</span></input><br>';
       }
       return $html;
     } else {
@@ -1645,11 +1645,11 @@ class XmlForm_Field_CheckGroup extends XmlForm_Field
   var $sqlConnection=0;
   var $sql='';
   var $sqlOption=array();
-	function validateValue( $value , $owner )
+	/*function validateValue( $value , $owner )
 	{
     $this->executeSQL( $owner );
 	  return isset($value) && ( array_key_exists( $value , $this->options ) );
-	}
+	}*/
   /**
    * Function render
    * @author David S. Callizaya S. <davidsantos@colosa.com>
@@ -1661,14 +1661,14 @@ class XmlForm_Field_CheckGroup extends XmlForm_Field
   function render( $value = NULL , $owner = NULL )
   {
     $this->executeSQL( $owner );
-    if (!is_array($value)) $value=array();
+    if (!is_array($value)) $value = explode('|', $value);
     if ($this->mode==='edit') {
       $html='';
       foreach($this->option as $optionName => $option)
       {
         $html.='<input id="form['.$this->name.']['.$optionName.']" name="form['.$this->name.
                 ']['.$optionName.']" type=\'checkbox\' value="'.$optionName.'"'.
-                (array_search($optionName, $value)?'checked':'').'><span class="FormCheck">'.$option.'</span></input><br>';
+                (in_array($optionName, $value)?'checked':'').'><span class="FormCheck">'.$option.'</span></input><br>';
       }
       return $html;
     } elseif ($this->mode==='view') {
@@ -1677,7 +1677,7 @@ class XmlForm_Field_CheckGroup extends XmlForm_Field
       {
         $html.='<input class="FormCheck" id="form['.$this->name.']['.$optionName.']" name="form['.$this->name.
                 ']['.$optionName.']" type=\'checkbox\' value="'.$optionName.'"'.
-                (array_search($optionName, $value)?'checked':'').' disabled><span class="FormCheck">'.$option.'</span></input><br>';
+                (in_array($optionName, $value)?'checked':'').' disabled><span class="FormCheck">'.$option.'</span></input><br>';
       }
       return $html;
     } else {
