@@ -106,11 +106,22 @@ leimnud.Package.Public({
 					margin:3
 				},
 				content:{
-					overflow:"hidden"
+					overflow:"hidden",
+					margin:0,
+					borderLeftWidth:0,
+					borderRightWidth:0,
+					borderBottomWidth:0
 				},
 				titleBar:{
 					backgroundImage:"url("+this.parent.info.images+"grid.title.gray.gif)",
-					backgroundPosition:"0pt 0px"
+					height:15,
+					backgroundPosition:"0pt -5px"
+				},
+				title:{
+					padding:1
+				},
+				roll:{
+					top:1
 				}
 			};
 			if(options.noBg)
