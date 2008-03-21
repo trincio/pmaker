@@ -58,6 +58,7 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
 
 //************ defining Virtual URLs ****************/
   $virtualURITable = array();
+  $virtualURITable['/plugin/(*)']                    = 'plugin';
   $virtualURITable['/(sys*)/(*.js)']                 =  'jsMethod';
   $virtualURITable['/js/(*)']                        = PATH_GULLIVER_HOME . 'js/';
   $virtualURITable['/jscore/(*)']                    = PATH_CORE . 'js/';
@@ -81,6 +82,21 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
 
 //************** verify if we need to redirect or stream the file **************
   if ( G::virtualURI($_SERVER['REQUEST_URI'], $virtualURITable , $realPath )) {
+  	// review if the file requested belongs to public_html plugin
+    if ( substr ( $realPath, 0,6) == 'plugin' ) {
+    	
+      $paths = explode ( PATH_SEP, $realPath );  
+      $paths[0] = substr ( $paths[0],6);
+      if ( count($paths) == 2 )  {
+        $pathsQuery = explode('?', $paths[1]);
+        $pluginFilename = PATH_PLUGINS . $paths[0] . PATH_SEP . 'public_html'. PATH_SEP . $pathsQuery[0];
+        if ( file_exists ( $pluginFilename ) ) {
+        	G::streamFile ( $pluginFilename );
+        }
+      }
+      die;
+	  }
+
   	switch ( $realPath  ) {
     case 'sysUnnamed' :
       require_once('sysUnnamed.php'); die;

@@ -100,8 +100,7 @@ class PMPluginRegistry {
     $sClassName = $sNamespace . 'plugin';
     if ( isset( $this->_aPluginDetails[$sNamespace] ) )
       return;
-
-    require_once ( $sFilename );
+    //require_once ( $sFilename );
     $plugin = new $sClassName ($sNamespace, $sFilename);
     $detail = new pluginDetail (
             $sNamespace, 
@@ -364,7 +363,9 @@ class PMPluginRegistry {
     foreach ( $this->_aPluginDetails as $namespace=>$detail ) {
   		if ( isset($detail->enabled ) && $detail->enabled ) {
         if ( !empty( $detail->sFilename) && file_exists ($detail->sFilename) ) {
-          require_once( $detail->sFilename);
+        	$aux = explode ( PATH_SEP, $detail->sFilename );
+        	$sFilename = PATH_PLUGINS . $aux[ count($aux) -1];
+          require_once( $sFilename);
           $oPlugin =& new $detail->sClassName( $detail->sNamespace, $detail->sFilename );
           $this->_aPlugins[$detail->sNamespace] =& $oPlugin;
           
