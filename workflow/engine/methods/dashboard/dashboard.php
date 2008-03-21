@@ -53,12 +53,36 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_SETUP"))!=1) return $RBAC_Response;
   $obj->title = 'my first chart';
   $obj->height = 300;
   $obj->open->html = '<img src= "/sysos/en/blank/charts/genericCharts?chart=0" >';
-  $aColumn2[] = $obj;
+  $aColumn1[] = $obj;
 
   $obj = new stdClass();
   $obj->title = 'my first chart';
   $obj->height = 220;
   $obj->open->image = '/sysos/en/blank/charts/genericCharts?type=2';
+  $aColumn1[] = $obj;
+  
+  $obj = new stdClass();
+  $obj->title = 'my first chart';
+  $obj->height = 220;
+  $obj->open->url = '/sysos/en/blank/openFlash/chart?type=1&chart=1&u=';
+  $aColumn2[] = $obj;
+
+  $obj = new stdClass();
+  $obj->title = 'my first chart';
+  $obj->height = 220;
+  $obj->open->url = '/sysos/en/blank/openFlash/chart?type=1&chart=2&u=';
+  $aColumn2[] = $obj;
+
+  $obj = new stdClass();
+  $obj->title = 'my first chart';
+  $obj->height = 220;
+  $obj->open->url = '/sysos/en/blank/openFlash/chart?type=3&chart=1&u=';
+  $aColumn2[] = $obj;
+
+  $obj = new stdClass();
+  $obj->title = 'my first chart';
+  $obj->height = 220;
+  $obj->open->url = '/sysos/en/blank/openFlash/chart?type=4&chart=2&u=';
   $aColumn2[] = $obj;
 
   $aDashboard = array ( $aColumn1, $aColumn2 );

@@ -717,9 +717,10 @@ class G
     $typearray = explode ( '.', $file );
     $typefile = $typearray[ count($typearray) -1 ];
     $filename = $file;
-
     if ( file_exists ( $filename ) ) {
       switch ( strtolower ($typefile ) ) {
+        case 'swf' :
+          G::sendHeaders ( $filename , 'application/x-shockwave-flash', $download, $downloadFileName ); break;
         case 'js' :
           G::sendHeaders ( $filename , 'text/javascript', $download, $downloadFileName ); break;
         case 'htm' :
