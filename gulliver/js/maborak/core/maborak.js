@@ -15,6 +15,53 @@
 *
 ***************************************************************************/
 var maborak = function(){
+	this.info={
+		version	:"0.3",
+		name	:"maborak",
+		file	:"maborak.js"
+	},
+	/**
+	* Make this Class
+	* @param options = Object{Options.for.class} || {};
+	* @access		 = Public;
+	*/
+	this.make=function(options)
+	{
+		this.protoCore();
+		this.options=options || {};
+		this.report	= new this.bitacora();
+		this.loadMethods([this.checkBrowser],this);
+		this.event	= this.factory(this.mantis,true);
+		this.tools	= this.factory(this.extended.tools,true);
+		this.file	= this.factory(this.fileCore,true);
+		this.dom	= this.factory(this.extended.D0M,true);
+		this.iphone	= this.factory(this.iphoneBrowser,true);
+		this.cookie	= this.factory(this.extended.cookie,true);
+		this.Package	= new this.PackageCore(this,this.file.db);
+
+		this.report.add("Class loaded.");
+		this.info.base=this.tools.baseJS(this.info.file);
+		this.info.images=this.info.base+"images/";
+		this.path_root=this.tools.path_root(this.info.base)+"/";
+
+		if(this.options.modules){
+			this.Package.Load(this.options.modules,{Instance:this,Type:"module"});
+		}
+		if(this.options.files){
+			this.Package.Load(this.options.files,{Type:"file"});
+		}
+		this.exec(this.fix.memoryLeak);
+
+		/* create Stylesheet BEGIN  */
+		var st	=document.createElement('link');
+		st.rel	='stylesheet';
+		st.type	='text/css';
+		st.href	=this.info.base+'stylesheet/default.css';
+		this.dom.capture("tag.head 0").appendChild(st);
+		/* create Stylesheet END  */
+		this.expand(this);
+		return this;
+	};
 	this.factory=function(Class,create)
 	{
 		var cl = (typeof Class==="function")?Class:function(){};
@@ -1218,6 +1265,7 @@ var maborak = function(){
 					{
 						Isrc = script[i].src;
 						Isrc = Isrc.substring(0, Isrc.lastIndexOf('/'));
+						this.parent.info.domBaseJS=script[i];
 						break;
 					}
 				}
@@ -1805,52 +1853,5 @@ var maborak = function(){
 			});
 		}
 	}
-};
-maborak.prototype={
-	info:{
-		version	:"0.6",
-		name	:"maborak",
-		file	:"maborak.js"
-	},
-	/**
-	* Make this Class
-	* @param options = Object{Options.for.class} || {};
-	* @access		 = Public;
-	*/
-	make:function(options)
-	{
-		this.options=options || {};
-		this.protoCore();
-		this.report	= new this.bitacora();
-		this.loadMethods([this.checkBrowser],this);
-		this.event	= this.factory(this.mantis,true);
-		this.tools	= this.factory(this.extended.tools,true);
-		this.file	= this.factory(this.fileCore,true);
-		this.dom	= this.factory(this.extended.D0M,true);
-		this.iphone	= this.factory(this.iphoneBrowser,true);
-		this.cookie	= this.factory(this.extended.cookie,true);
-		this.Package	= new this.PackageCore(this,this.file.db);
-
-		this.report.add("Class loaded.");
-		this.info.base=this.tools.baseJS(this.info.file);
-		this.info.images=this.info.base+"images/";
-		this.path_root=this.tools.path_root(this.info.base)+"/";
-
-		if(this.options.modules){
-			this.Package.Load(this.options.modules,{Instance:this,Type:"module"});
-		}
-		if(this.options.files){
-			this.Package.Load(this.options.files,{Type:"file"});
-		}
-		this.exec(this.fix.memoryLeak);
-
-		/* create Stylesheet BEGIN  */
-		var st	=document.createElement('link');
-		st.rel	='stylesheet';
-		st.type	='text/css';
-		st.href	=this.info.base+'stylesheet/default.css';
-		this.dom.capture("tag.head 0").appendChild(st);
-		/* create Stylesheet END  */
-		return this;
-	}
+	return this;
 };
