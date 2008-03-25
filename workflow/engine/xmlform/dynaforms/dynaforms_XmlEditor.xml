@@ -22,9 +22,9 @@ function startXMLCodePress()
 {
   var code=getField("XML").value;
   getField("XML").className="codepress javascript linenumbers-on";
-  XMLCodePress=new CodePress(getField("XML"));
+  XMLCodePress=new CodePress(getField("XML"),'xmlform');
   getField("XML").parentNode.insertBefore(XMLCodePress,getField("XML"));
-  XMLCodePress.edit(code,'html');
+  XMLCodePress.edit(code,'xmlform');
 }
 </PME_RESIZE_JS>
 </dynaForm>

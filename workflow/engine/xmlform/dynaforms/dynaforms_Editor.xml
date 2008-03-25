@@ -27,6 +27,17 @@
 <![CDATA[
 function loadEditor()
 {
+  if (!mainPanel.elements)
+  {
+    setTimeout("loadEditor();",100);
+    return;
+  }
+	dynaformEditor.views["preview"]=document.getElementById("dynaformEditor[3]");
+	dynaformEditor.views["xmlcode"]=document.getElementById("dynaformEditor[4]");
+	dynaformEditor.views["htmlcode"]=document.getElementById("dynaformEditor[5]");
+	dynaformEditor.views["fieldslist"]=document.getElementById("dynaformEditor[6]");
+	dynaformEditor.views["javascripts"]=document.getElementById("dynaformEditor[7]");
+	dynaformEditor.views["properties"]=document.getElementById("dynaformEditor[8]");
   if (typeof(dynaformEditor)!=="object") return alert("dynaformEditor.js was not loaded.");
   dynaformEditor.ajax=WebResource("@G::encryptLink(@#dynaforms_Ajax)");
   dynaformEditor.A="@#URL";

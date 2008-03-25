@@ -8,8 +8,9 @@
  * 
  * Read the full licence: http://www.opensource.org/licenses/lgpl-license.php
  */
-
-CodePress = function(obj) {
+if (typeof(CodePress)==="undefined")
+{
+CodePress = function(obj,language) {
 	var self = document.createElement('iframe');
 	self.textarea = obj;
 	self.textarea.disabled = true;
@@ -22,6 +23,7 @@ CodePress = function(obj) {
 	self.style.visibility = 'hidden';
 	self.style.position = 'absolute';
 	self.options = self.textarea.className;
+	self.language=language;
 	
 	self.initialize = function() {
 		self.editor = self.contentWindow.CodePress;
@@ -40,6 +42,7 @@ CodePress = function(obj) {
 		if(obj) self.textarea.value = document.getElementById(obj) ? document.getElementById(obj).value : obj;
 		if(!self.textarea.disabled) return;
 		self.language = language ? language : self.getLanguage();
+		
 		self.src = CodePress.path+'codepress.html?language='+self.language+'&ts='+(new Date).getTime();
 		if(self.attachEvent) self.attachEvent('onload',self.initialize);
 		else self.addEventListener('load',self.initialize,false);
@@ -118,6 +121,7 @@ CodePress.languages = {
 
 CodePress.run = function() {
 	s = document.getElementsByTagName('script');
+	CodePress.path="/codepress/"
 	for(var i=0,n=s.length;i<n;i++) {
 		if(s[i].src.match('codepress.js')) {
 			CodePress.path = s[i].src.replace('codepress.js','');
@@ -136,3 +140,8 @@ CodePress.run = function() {
 
 if(window.attachEvent) window.attachEvent('onload',CodePress.run);
 else window.addEventListener('DOMContentLoaded',CodePress.run,false);
+}
+else
+{
+//  alert("Donde es esto ...");
+}
