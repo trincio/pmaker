@@ -1,15 +1,17 @@
-dynaformEditor={
+if (typeof(dynaformEditor)==="undefined")
+{
+var dynaformEditor={
 	A:"",
 	dynUid:"",
 	ajax:"",
 	currentView:"preview",
-	views:[],
+	views:{},
 	toolbar:{},
 	htmlEditorLoaded:false,
 	loadPressLoaded:true,
 	codePressLoaded:false,
 	_run:function()
-	{alert("despues");
+	{
 		//LOADING PARTS
 		this.toolbar = document.getElementById("fields_Toolbar")
 		mainPanel.elements.headerBar.style.backgroundColor="#CBDAEF";
@@ -263,8 +265,8 @@ dynaformEditor={
 	{
 		if (XMLCodePress)
 		{
-//			XMLCodePress.setCode(newCode);
-			XMLCodePress.edit(newCode,"html");
+			//XMLCodePress.setCode(newCode);
+			XMLCodePress.edit(newCode,"xmlform");
 		}
 		else
 		{
@@ -328,3 +330,8 @@ dynaformEditor={
 		delete myScripts;
 	}
 };
+}
+else
+{
+  alert("Donde esta esto!!!");
+}
