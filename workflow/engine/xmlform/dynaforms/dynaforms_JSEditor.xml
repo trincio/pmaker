@@ -35,6 +35,9 @@ function startJSCodePress()
   JSCodePress=new CodePress(getField("JS"));
   getField("JS").parentNode.insertBefore(JSCodePress,getField("JS"));
   JSCodePress.edit(code,'javascript');
+  getField("JS_LIST").onchange=function(){
+  	dynaformEditor.changeJavascriptCode();
+	};
 }
 </PME_RESIZE_JS>
 

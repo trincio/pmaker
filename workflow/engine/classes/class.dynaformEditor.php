@@ -458,7 +458,7 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 				if (strcasecmp($value->type,"javascript")==0)
 				{
 					$aOptions[]=array('key'=>$name,'value'=>$name);
-					$sCode=$value->code;
+					if ( $name == $fieldName ) $sCode=$value->code;
 				}
 			}
 			return array('aOptions'=>$aOptions, 'sCode'=>$sCode );
@@ -472,6 +472,7 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 	{
 		try
 		{
+			$sCode = rtrim($sCode);
 			$file = G::decrypt( $A , URL_KEY );
 			$dbc2 = new DBConnection( PATH_DYNAFORM . $file . '.xml' ,'','','','myxml' );
 			$ses2 = new DBSession($dbc2);

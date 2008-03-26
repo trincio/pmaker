@@ -10,6 +10,7 @@ var dynaformEditor={
 	htmlEditorLoaded:false,
 	loadPressLoaded:true,
 	codePressLoaded:false,
+	currentJS:false,
 	_run:function()
 	{
 		//LOADING PARTS
@@ -26,12 +27,12 @@ var dynaformEditor={
 
 	},
 	save:function(){
+		this.saveProperties();
 		try {
 			this.saveCurrentView();
 		} catch (e) {
 			alert(e);
 		}
-		this.saveProperties();
 		res=this.ajax.save(this.A,this.dynUid);
 		if (res==0) {
 			alert(G_STRINGS.ID_SAVED);
@@ -289,6 +290,7 @@ var dynaformEditor={
 	refreshJavascripts:function()
 	{
 		var field=getField("JS_LIST","dynaforms_JSEditor");
+		this.currentJS=field.value;
 		var res=this.ajax.get_javascripts(this.A,field.value);
 		if (typeof(res["*message"])==="undefined")
 		{
@@ -300,12 +302,25 @@ var dynaformEditor={
 				optn.value = res.aOptions[i].key;
 				field.options[i]=optn;
 			}
+			field.value = this.currentJS;
 			this.setJSCode(res.sCode);
 		}
 		else
 		{
 			G.alert(response.error["*message"],"Error");
 		}
+	},
+	changeJavascriptCode:function()
+	{
+		var field=getField("JS_LIST","dynaforms_JSEditor");
+		var value=field.value;
+		if (this.currentJS)
+		{
+			field.value=this.currentJS;
+			this.saveJavascript();
+			field.value=value;
+		}
+		this.refreshJavascripts();
 	},
 	refreshProperties:function()
 	{
