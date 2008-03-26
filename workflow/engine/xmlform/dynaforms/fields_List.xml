@@ -6,7 +6,7 @@
   sqlConnection="XMLDB"
   menu="dynaforms/fields_Options"
   width="100%"
-  rowsPerPage="100"
+  rowsPerPage="25"
 >
 <XMLNODE_NAME type="text" colWidth="250" titleAlign="left" align="left" dataCompareField="XMLNODE_NAME" dataCompareType="contains" >
 

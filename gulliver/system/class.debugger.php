@@ -35,6 +35,7 @@ class BUG {
   function send( $msg ) {
     global $BUG_OUTPUT;
     if ($BUG_OUTPUT) fwrite($BUG_OUTPUT, $msg . "\r\n" );
+    return $msg . "\r\n";
   }
   function print_r( $var ) {
     global $BUG_OUTPUT;
@@ -68,7 +69,7 @@ class BUG {
     return $out;
   }
   function traceRoute( $tts=2 , $limit=-1 ) {
-    BUG::send(BUG::traceError( $tts , $limit ));
+    return BUG::send(BUG::traceError( $tts , $limit ));
   }
   function printArgs( $args ) {
     $out = '';
