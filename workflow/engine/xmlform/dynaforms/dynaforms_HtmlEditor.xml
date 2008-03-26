@@ -77,7 +77,7 @@ getField("PME_HTML_ENABLETEMPLATE","dynaforms_HtmlEditor").onclick=function()
 {
 	/*getField("ENABLETEMPLATE","dynaforms_Properties").checked=this.checked;
 	dynaformEditor.saveProperties();*/
-	dynaformEditor.enableHTML();
+	dynaformEditor.setEnableTemplate( this.checked );
 }
 </PME_RESIZE_JS>
 

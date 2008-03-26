@@ -500,7 +500,7 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 				'DYN_TYPE'=> $dynaform->getDynType(),
 				'DYN_DESCRIPTION'=> $dynaform->getDynDescription(),
 				'WIDTH'=> $form->width,
-				'ENABLETEMPLATE'=> $form->enableTemplate,
+				//'ENABLETEMPLATE'=> $form->enableTemplate,
 				'MODE'=> $form->mode
 			);
 			$tmp['Properties']=$Properties;
@@ -520,7 +520,7 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 			$post=array();
 			parse_str( $getFields, $post );
 			$Fields = $post['form'];
-			if (!isset($Fields['ENABLETEMPLATE'])) $Fields['ENABLETEMPLATE'] ="0";
+			//if (!isset($Fields['ENABLETEMPLATE'])) $Fields['ENABLETEMPLATE'] ="0";
 			$file = G::decrypt( $A , URL_KEY );
 			$tmp=self::_getTmpData();
 			if (!isset($tmp['useTmpCopy']))
@@ -536,13 +536,13 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 
 			$dbc2 = new DBConnection( PATH_DYNAFORM . $file . '.xml' ,'','','','myxml' );
 			$ses2 = new DBSession($dbc2);
-					if (!isset($Fields['ENABLETEMPLATE'])) $Fields['ENABLETEMPLATE'] ="0";
+					//if (!isset($Fields['ENABLETEMPLATE'])) $Fields['ENABLETEMPLATE'] ="0";
 			if (isset($Fields['WIDTH'])) {
 			  $ses2->execute(G::replaceDataField("UPDATE . SET WIDTH = @@WIDTH WHERE XMLNODE_NAME = 'dynaForm' ", $Fields));
 		  }
-		  if (isset($Fields['ENABLETEMPLATE'])) {
+		  /*if (isset($Fields['ENABLETEMPLATE'])) {
 			  $ses2->execute(G::replaceDataField("UPDATE . SET ENABLETEMPLATE = @@ENABLETEMPLATE WHERE XMLNODE_NAME = 'dynaForm' ", $Fields));
-			}
+			}*/
 			if (isset($Fields['DYN_TYPE'])) {
 			  $ses2->execute(G::replaceDataField("UPDATE . SET TYPE = @@DYN_TYPE WHERE XMLNODE_NAME = 'dynaForm' ", $Fields));
 			}
@@ -555,6 +555,21 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 		{
 			return (array) $e;
 		}
+	}
+	function get_enabletemplate( $A )
+	{
+		$file = G::decrypt( $A , URL_KEY );
+		$form = new Form( $file , PATH_DYNAFORM, SYS_LANG, true );
+		return $form->enableTemplate;
+	}
+	function set_enabletemplate( $A,  $value )
+	{
+		$file = G::decrypt( $A , URL_KEY );
+		$value = $value=="1"?"1":"0"; 
+		$dbc2 = new DBConnection( PATH_DYNAFORM . $file . '.xml' ,'','','','myxml' );
+		$ses2 = new DBSession($dbc2);
+		$ses2->execute("UPDATE . SET ENABLETEMPLATE = '$value'");
+		return $value;
 	}
 	function save($A,$DYN_UID)
 	{

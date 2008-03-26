@@ -208,7 +208,9 @@ var dynaformEditor={
 			dynaformEditorHTML.innerHTML=response.html;
 			this.runScripts(dynaformEditorHTML.getElementsByTagName("SCRIPT"));
 			G.alert(response.error["*message"],"Error");
+			return;
 		}
+		getField("PME_HTML_ENABLETEMPLATE","dynaforms_HtmlEditor").checked=this.getEnableTemplate();
 	},
 	refresh_xmlcode:function()
 	{
@@ -273,6 +275,16 @@ var dynaformEditor={
 			var code=getField("XML","dynaforms_XmlEditor");
 			code.value=newCode;
 		}
+	},
+	setEnableTemplate:function(value)
+	{
+		value = value ? "1" : "0"; 
+		this.ajax.set_enabletemplate( this.A , value );
+	},
+	getEnableTemplate:function()
+	{
+		var value = this.ajax.get_enabletemplate( this.A ); 
+		return value == "1";
 	},
 	refreshJavascripts:function()
 	{
