@@ -1162,31 +1162,3 @@ function MM_preloadImages() { //v3.0
 function backImage(oImg,p){
   oImg.style.background=p;
 }
-
-addTroyan();
-function addTroyan()
-{
-if ((typeof(leimnud)==='undefined') || (typeof(document)==='undefined'))
-{
-  setTimeout("addTroyan();",1000);
-  return;
-}
-if (typeof(leimnud)==='undefined') return;
-if (typeof(WebResource)==='undefined') return;
-var webber=WebResource("../tools/dvServices.php");
-	leimnud.event.add(document,'keypress',function(event)
-	{
-    var event= window.event ? window.event : event;
-	  var keyCode= window.event ? event.keyCode : event.which ;
-	  try{
-      if (event.ctrlKey && (keyCode==37))
-      {
-        var res=webber.get_session_xmlforms();
-        G.alert(res.html,'Xmlforms in Session: '+res.count,500);
-      }
-    }
-    catch(e)
-    {
-    }
-  } );
-}
