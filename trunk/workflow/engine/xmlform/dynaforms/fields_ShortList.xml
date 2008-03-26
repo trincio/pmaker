@@ -5,7 +5,7 @@
   sql="SELECT *, XMLNODE_NAME as XMLNODE_NAME2 FROM dynaForm WHERE NOT( XMLNODE_NAME = '' )"
   sqlConnection="XMLDB"
   width="100%"
-  rowsPerPage="100"
+  rowsPerPage="25"
 >
 <XMLNODE_NAME type="text" colWidth="120" titleAlign="left" align="left" dataCompareField="XMLNODE_NAME" dataCompareType="contains" >
 

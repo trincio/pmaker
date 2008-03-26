@@ -440,6 +440,7 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 	function set_xmlcode($A,$xmlcode)
 	{
 		$file = G::decrypt( $A , URL_KEY );
+		$xmlcode=trim($xmlcode);
 		$fp=fopen(PATH_DYNAFORM  . $file . '.xml', 'w');
 		fwrite($fp, $xmlcode );
 		fclose($fp);

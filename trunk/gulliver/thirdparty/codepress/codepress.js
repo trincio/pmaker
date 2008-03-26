@@ -64,8 +64,13 @@ CodePress = function(obj,language) {
 		return self.textarea.disabled ? self.editor.getCode() : self.textarea.value;
 	}
 
+  /* Modified by David Callizaya
+   * Refresh the highlighting after set the code.
+   **/
 	self.setCode = function(code) {
 		self.textarea.disabled ? self.editor.setCode(code) : self.textarea.value = code;
+ 		self.editor.innerHTML = '<pre>'+code+'</pre>';
+		self.editor.syntaxHighlight('init');
 	}
 
 	self.toggleAutoComplete = function() {
@@ -143,5 +148,5 @@ else window.addEventListener('DOMContentLoaded',CodePress.run,false);
 }
 else
 {
-//  alert("Donde es esto ...");
+//  alert("ImHn");
 }

@@ -20,17 +20,16 @@ function DVEditor(where,body,oHiddenInput,height)
   {
     var doc=iframe.contentDocument;
   }
-  var _header=head.cloneNode(true);
-  for(var i=0;i<_header.childNodes.length;i++) {
+  var _header=document.createElement("head");// head.cloneNode(true);
+  for(var i=0;i<head.childNodes.length;i++) {
     try{
-      if ((_header.childNodes[i].tagName==='LINK')&&
-          (_header.childNodes[i].type="text/css"))
+      if ((head.childNodes[i].tagName==='LINK')&&
+          (head.childNodes[i].type="text/css"))
       {
+      	_header.appendChild(head.childNodes[i].cloneNode(true));
       }
       else
       {
-        _header.removeChild(_header.childNodes[i]);
-        i--;
       }
     }
     catch(e)
@@ -38,6 +37,7 @@ function DVEditor(where,body,oHiddenInput,height)
     }
   }
   header=_header.innerHTML;
+  //alert(header);
   doc.open();
   doc.write('<html><head>'+header+'</head><body style="height:100%;padding:0px;margin:0px;border:none;background-color:ThreeDHighlight;cursor:text;">'+body+'</body></html>');
   doc.close();

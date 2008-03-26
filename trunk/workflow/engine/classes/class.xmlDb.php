@@ -35,7 +35,7 @@
       return $dbc;
     }
     function isError ( $result ) {
-      return is_a($value, 'DB_Error');
+      return is_a($result, 'DB_Error');
     }
   }
   class XMLConnection {
@@ -55,13 +55,15 @@
         $err = new DB_Error( "Error: Closed xmlConnection." );
         return $err;
       }
-  		if (1===preg_match('/^\s*SELECT\s+([\w\W]+?)(?:\s+FROM\s+`?([^`]+?)`?)(?:\s+WHERE\s+([\w\W]+?))?(?:\s+GROUP\s+BY\s+([\w\W]+?))?(?:\s+ORDER\s+BY\s+([\w\W]+?))?(?:\s+BETWEEN\s+([\w\W]+?)\s+AND\s+([\w\W]+?))?\s*$/im',$sql,$matches))
+  		if (1===preg_match('/^\s*SELECT\s+([\w\W]+?)(?:\s+FROM\s+`?([^`]+?)`?)(?:\s+WHERE\s+([\w\W]+?))?(?:\s+GROUP\s+BY\s+([\w\W]+?))?(?:\s+ORDER\s+BY\s+([\w\W]+?))?(?:\s+BETWEEN\s+([\w\W]+?)\s+AND\s+([\w\W]+?))?(?:\s+LIMIT\s+(\d+)\s*,\s*(\d+))?\s*$/im',$sql,$matches))
   		{
-			  $sqlColumns = $matches[1];
+			$sqlColumns = $matches[1];
     		$sqlFrom = isset($matches[2])?$matches[2]:'';
     		$sqlWhere = isset($matches[3])?$matches[3]:'';
     		$sqlGroupBy = isset($matches[4])?$matches[4]:'';
     		$sqlOrderBy = isset($matches[5])?$matches[5]:'';
+    		$sqlLowLimit = isset($matches[8])?$matches[8]:'';
+    		$sqlHighLimit = isset($matches[9])?$matches[9]:'';
     		/* Start Block: Fields list */
     		$count=preg_match_all('/\s*(\*|[\w\.]+)(?:\s+AS\s+([\w\.]+))?/im',$sqlColumns,$match,PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE);
     		$fieldsList = array();
@@ -142,6 +144,14 @@
         		}
       		}
       	}
+    		/* End Block */
+    		/* Start Block: Apply limits */
+    		if ($sqlLowLimit!='' && $sqlHighLimit!='')
+    		{
+    		  $sqlLowLimit = (int) $sqlLowLimit;
+    		  $sqlHighLimit = (int) $sqlHighLimit;
+    		  $res = array_slice( $res , $sqlLowLimit , $sqlHighLimit );
+    		}
     		/* End Block */
     		$result = new XMLResult( $res );
     		return $result;
@@ -434,6 +444,7 @@
     var $result=array();
     var $cursor=0;
     function XMLResult( $result = array() ){
+      G::LoadSystem("debugger");
       $this->result = $result;
       $this->cursor = 0;
     }

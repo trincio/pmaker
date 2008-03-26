@@ -241,8 +241,8 @@ var dynaformEditor={
 	{
 		if (JSCodePress)
 		{
-//			JSCodePress.setCode(newCode);
-			JSCodePress.edit(newCode,"javascript");
+			JSCodePress.setCode(newCode);
+			//JSCodePress.edit(newCode,"javascript");
 		}
 		else
 		{
@@ -265,8 +265,8 @@ var dynaformEditor={
 	{
 		if (XMLCodePress)
 		{
-			//XMLCodePress.setCode(newCode);
-			XMLCodePress.edit(newCode,"xmlform");
+			XMLCodePress.setCode(newCode);
+			//XMLCodePress.edit(newCode,"xmlform");
 		}
 		else
 		{
