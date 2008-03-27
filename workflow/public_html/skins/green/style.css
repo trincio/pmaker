@@ -616,6 +616,11 @@ form.formDefault .FormTitle
 	font-weight:bold;
 	background-color:#E0EFE6;
 }
+form.formDefault .FormSubTitle
+{
+	background-color:#EFFFF5;
+	color:black;
+}
 form.formDefault .FormButton
 {
 	text-align:center;
