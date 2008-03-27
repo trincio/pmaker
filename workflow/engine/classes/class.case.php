@@ -23,19 +23,21 @@
  *
  */
 
-require_once ( "classes/model/Task.php" );
-require_once ( "classes/model/TaskUser.php" );
-require_once ( "classes/model/Process.php" );
-require_once ( "classes/model/Users.php" );
-require_once ( "classes/model/Step.php" );
 require_once ( "classes/model/Application.php" );
 require_once ( "classes/model/AppDelegation.php" );
 require_once ( "classes/model/AppThread.php" );
+require_once ( "classes/model/Dynaform.php" );
 require_once ( "classes/model/InputDocument.php" );
 require_once ( "classes/model/OutputDocument.php" );
+require_once ( "classes/model/Process.php" );
 require_once ( "classes/model/Step.php" );
 require_once ( "classes/model/StepTrigger.php" );
+require_once ( "classes/model/Task.php" );
+require_once ( "classes/model/TaskUser.php" );
 require_once ( "classes/model/Triggers.php" );
+require_once ( "classes/model/Users.php" );
+require_once ('classes/model/ReportTable.php');
+require_once ('classes/model/ReportVar.php');
 G::LoadClass('pmScript');
 
 class Cases {
@@ -269,14 +271,19 @@ class Cases {
   */
   function updateCase ( $sAppUid, $Fields = array() ) {
     try {
+    	$aApplicationFields = $Fields['APP_DATA'];
       $oApp = new Application;
-      $Fields['APP_UID']     = $sAppUid;
-      $Fields['APP_UPDATE_DATE']     = 'now';
+      $Fields['APP_UID'] = $sAppUid;
+      $Fields['APP_UPDATE_DATE'] = 'now';
       $Fields['APP_DATA'] = serialize ( $Fields['APP_DATA'] );
-      $Fields['APP_TITLE'] = self::refreshCaseTitle( $sAppUid , unserialize($Fields['APP_DATA']) );
-      $Fields['APP_DESCRIPTION'] = self::refreshCaseDescription( $sAppUid , unserialize($Fields['APP_DATA']) );
-      $Fields['APP_PROC_CODE'] = self::refreshCaseStatusCode( $sAppUid , unserialize($Fields['APP_DATA']) );
+      $Fields['APP_TITLE'] = self::refreshCaseTitle( $sAppUid , $aApplicationFields );
+      $Fields['APP_DESCRIPTION'] = self::refreshCaseDescription( $sAppUid , $aApplicationFields );
+      $Fields['APP_PROC_CODE'] = self::refreshCaseStatusCode( $sAppUid , $aApplicationFields );
       $oApp->update ( $Fields );
+      $aFields = $oApp->load($sAppUid);
+      G::LoadClass('reportTables');
+      $oReportTables = new ReportTables();
+      $oReportTables->updateTables($aFields['PRO_UID'], $sAppUid, $aApplicationFields);
       return $Fields;
     }
   	catch ( Exception $e ) {

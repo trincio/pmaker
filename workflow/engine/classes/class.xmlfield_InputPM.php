@@ -214,12 +214,15 @@ class XmlForm_Field_TextareaPM extends XmlForm_Field
 	}
 }
 
-function getDynaformsVars($sProcessUID) {
-	$aFields   = array();
-	$aAux    = G::getSystemConstants();
-	foreach ($aAux as $sName => $sValue) {
-		$aFields[] = array('sName' => $sName, 'sType' => 'system');
-	}
+function getDynaformsVars($sProcessUID, $bSystemVars = true) {
+	$aFields = array();
+	$aFieldsNames = array();
+	if ($bSystemVars) {
+	  $aAux = G::getSystemConstants();
+	  foreach ($aAux as $sName => $sValue) {
+		  $aFields[] = array('sName' => $sName, 'sType' => 'system');
+	  }
+  }
 	require_once 'classes/model/Dynaform.php';
 	$oCriteria = new Criteria('workflow');
 	$oCriteria->addSelectColumn(DynaformPeer::DYN_FILENAME);
@@ -231,11 +234,40 @@ function getDynaformsVars($sProcessUID) {
   	$G_FORM  = new Form($aRow['DYN_FILENAME'], PATH_DYNAFORM, SYS_LANG);
   	if ($G_FORM->type == 'xmlform') {
   	  foreach($G_FORM->fields as $k => $v) {
-	    	if (($v->type != 'title')  && ($v->type != 'subtitle') && ($v->type != 'link')  &&
-	    	    ($v->type != 'file')   && ($v->type != 'button')   && ($v->type != 'reset') &&
-	    	    ($v->type != 'submit') && ($v->type != 'listbox')  && ($v->type != 'checkgroup')) {
-	    	  if (!in_array(array('sName' => $k, 'sType' => $v->type), $aFields)) {
+	    	if (($v->type != 'title')  && ($v->type != 'subtitle') && ($v->type != 'link')       &&
+	    	    ($v->type != 'file')   && ($v->type != 'button')   && ($v->type != 'reset')      &&
+	    	    ($v->type != 'submit') && ($v->type != 'listbox')  && ($v->type != 'checkgroup') &&
+	    	    ($v->type != 'grid')   && ($v->type != 'javascript')) {
+	    	  if (!in_array($k, $aFieldsNames)) {
 	    	    $aFields[] = array('sName' => $k, 'sType' => $v->type);
+	    	    $aFieldsNames[] = $k;
+	    	  }
+	      }
+	    }
+	  }
+  	$oDataset->next();
+  }
+	return $aFields;
+}
+
+function getGridsVars($sProcessUID) {
+	$aFields = array();
+	$aFieldsNames = array();
+	require_once 'classes/model/Dynaform.php';
+	$oCriteria = new Criteria('workflow');
+	$oCriteria->addSelectColumn(DynaformPeer::DYN_FILENAME);
+	$oCriteria->add(DynaformPeer::PRO_UID, $sProcessUID);
+	$oDataset = DynaformPeer::doSelectRS($oCriteria);
+  $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+  $oDataset->next();
+  while ($aRow = $oDataset->getRow()) {
+  	$G_FORM  = new Form($aRow['DYN_FILENAME'], PATH_DYNAFORM, SYS_LANG);
+  	if ($G_FORM->type == 'xmlform') {
+  	  foreach($G_FORM->fields as $k => $v) {
+	    	if ($v->type == 'grid') {
+	    	  if (!in_array($k, $aFieldsNames)) {
+	    	    $aFields[] = array('sName' => $k, 'sXmlForm' => str_replace($sProcessUID . '/', '', $v->xmlGrid));
+	    	    $aFieldsNames[] = $k;
 	    	  }
 	      }
 	    }

@@ -209,12 +209,14 @@ class XmlForm_Field
     	$this->options[ $key ]= $this->sqlOption[ $key ];
     }
 
-    if (isset($this->options)&&isset($this->owner)&&isset($this->owner->values[$this->name])) {
-      if ((!is_array($this->owner->values[$this->name])) && !((is_string($this->owner->values[$this->name]) || is_int($this->owner->values[$this->name])) && array_key_exists($this->owner->values[$this->name], $this->options))) {
-    	  reset($this->options);
-    	  $firstElement=key($this->options);
-      	if (isset($firstElement)) $this->owner->values[$this->name] = $firstElement;
-      	else $this->owner->values[$this->name] = '';
+    if ($this->type != 'listbox') {
+      if (isset($this->options)&&isset($this->owner)&&isset($this->owner->values[$this->name])) {
+        if ((!is_array($this->owner->values[$this->name])) && !((is_string($this->owner->values[$this->name]) || is_int($this->owner->values[$this->name])) && array_key_exists($this->owner->values[$this->name], $this->options))) {
+      	  reset($this->options);
+      	  $firstElement=key($this->options);
+        	if (isset($firstElement)) $this->owner->values[$this->name] = $firstElement;
+        	else $this->owner->values[$this->name] = '';
+        }
       }
     }
     return 0;

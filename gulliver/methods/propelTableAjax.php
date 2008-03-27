@@ -1,10 +1,10 @@
 <?php
 /**
  * propelTableAjax.php
- *  
+ *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -14,27 +14,26 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
   /* Includes */
 	G::LoadSystem('pagedTable');
 	G::LoadClass('propelTable');
 	G::LoadInclude('ajax');
 	G::LoadClass('case');
-  	require_once 'classes/model/Dynaform.php';
 
 	$id = get_ajax_value('ptID');
 	$ntable= unserialize($_SESSION['pagedTable['.$id.']']);
 	$page     = get_ajax_value('page');
 	$function = get_ajax_value('function');
 
-  //THIS BLOCK SET THE FILTER VARIABLES 
+  //THIS BLOCK SET THE FILTER VARIABLES
   if (isset($ntable->filterForm_Id) && ($ntable->filterForm_Id!=='')) {
     $filterForm=new filterForm(G::getUIDName( $ntable->filterForm_Id ));
     $filterForm->values=$_SESSION[$filterForm->id];
@@ -50,25 +49,25 @@
       $ntable->filter = $filter;//G::http_build_query($filter);
     }
   }
-  
-  
+
+
   $fastSearch = get_ajax_value('fastSearch');
   if (isset($fastSearch)) $ntable->fastSearch= urldecode($fastSearch);
-  
+
   //order by
   $orderBy = get_ajax_value('order');
   if (isset($orderBy)) {
 	  $orderBy = urldecode($orderBy);
   	$ntable->orderBy = $orderBy;
   }
-  
+
 	if ( isset($page) && $page!=='' ) $ntable->currentPage = (int) $page;
-  
-	if ( function_exists('pagedTable_BeforeQuery')) 
+
+	if ( function_exists('pagedTable_BeforeQuery'))
     pagedTable_BeforeQuery($ntable);
-    
+
 	//$ntable->prepareQuery();
-  
+
 	switch ($function)
 	{
 	case "showHideField":

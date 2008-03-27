@@ -1957,6 +1957,213 @@
       </vendor>
     </column>
   </table>
+  <table name="REPORT_TABLE">
+    <vendor type="mysql">
+      <parameter name="Name" value="REPORT_TABLE"/>
+      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Version" value="10"/>
+      <parameter name="Row_format" value="Dynamic"/>
+      <parameter name="Rows" value="0"/>
+      <parameter name="Avg_row_length" value="0"/>
+      <parameter name="Data_length" value="0"/>
+      <parameter name="Max_data_length" value="281474976710655"/>
+      <parameter name="Index_length" value="1024"/>
+      <parameter name="Data_free" value="0"/>
+      <parameter name="Auto_increment" value=""/>
+      <parameter name="Create_time" value="2008-03-17 16:46:20"/>
+      <parameter name="Update_time" value="2008-03-17 16:46:20"/>
+      <parameter name="Check_time" value=""/>
+      <parameter name="Collation" value="utf8_general_ci"/>
+      <parameter name="Checksum" value=""/>
+      <parameter name="Create_options" value=""/>
+      <parameter name="Comment" value=""/>
+    </vendor>
+    <column name="REP_TAB_UID" type="VARCHAR" size="32" required="true" primaryKey="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="REP_TAB_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value="PRI"/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="PRO_UID" type="VARCHAR" size="32" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="PRO_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="REP_TAB_NAME" type="VARCHAR" size="100" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="REP_TAB_NAME"/>
+        <parameter name="Type" value="varchar(100)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="REP_TAB_TYPE" type="VARCHAR" size="6" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="REP_TAB_TYPE"/>
+        <parameter name="Type" value="varchar(6)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="NORMAL"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="REP_TAB_GRID" type="VARCHAR" size="150" required="false" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="REP_TAB_GRID"/>
+        <parameter name="Type" value="varchar(150)"/>
+        <parameter name="Null" value="YES"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="REP_TAB_CONNECTION" type="VARCHAR" size="10" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="REP_TAB_CONNECTION"/>
+        <parameter name="Type" value="varchar(10)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="REPORT"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="REP_TAB_CREATE_DATE" type="TIMESTAMP" required="true">
+      <vendor type="mysql">
+        <parameter name="Field" value="REP_TAB_CREATE_DATE"/>
+        <parameter name="Type" value="datetime"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <!-- <parameter name="Default" value="0000-00-00 00:00:00"/> -->
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="REP_TAB_STATUS" type="CHAR" size="8" required="true" default="ACTIVE">
+      <vendor type="mysql">
+        <parameter name="Field" value="REP_TAB_STATUS"/>
+        <parameter name="Type" value="char(8)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="ACTIVE"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <validator column="REP_TAB_UID">
+      <rule name="maxLength" value="32" message="Report table UID can be no larger than ${value} in size" />
+      <rule name="required" message="Report table UID is required." />
+    </validator>
+    <validator column="PRO_UID">
+      <rule name="maxLength" value="32" message="Process UID can be no larger than ${value} in size" />
+      <rule name="required" message="Process UID is required." />
+    </validator>
+    <validator column="REP_TAB_NAME">
+      <rule name="maxLength" value="100" message="Report table name can be no larger than ${value} in size" />
+      <rule name="required" message="Report table name is required." />
+    </validator>
+    <validator column="REP_TAB_TYPE">
+      <rule name="validValues" value="NORMAL|GRID" message="Please select a valid type." />
+      <rule name="required" message="Report table type is required." />
+    </validator>
+    <validator column="REP_TAB_CONNECTION">
+      <rule name="maxLength" value="10" message="Report table connection can be no larger than ${value} in size" />
+      <rule name="required" message="Report table connection is required." />
+    </validator>
+    <!--<validator column="REP_TAB_CREATE_DATE">
+      <rule name="required" message="Report table creation date is required." />
+    </validator>-->
+    <validator column="REP_TAB_STATUS">
+      <rule name="validValues" value="ACTIVE|INACTIVE" message="Please select a valid status." />
+      <rule name="required" message="Report table status is required." />
+    </validator>
+  </table>
+  <table name="REPORT_VAR">
+    <vendor type="mysql">
+      <parameter name="Name" value="REPORT_VAR"/>
+      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Version" value="10"/>
+      <parameter name="Row_format" value="Dynamic"/>
+      <parameter name="Rows" value="0"/>
+      <parameter name="Avg_row_length" value="0"/>
+      <parameter name="Data_length" value="0"/>
+      <parameter name="Max_data_length" value="281474976710655"/>
+      <parameter name="Index_length" value="1024"/>
+      <parameter name="Data_free" value="0"/>
+      <parameter name="Auto_increment" value=""/>
+      <parameter name="Create_time" value="2008-03-17 16:48:30"/>
+      <parameter name="Update_time" value="2008-03-17 16:48:30"/>
+      <parameter name="Check_time" value=""/>
+      <parameter name="Collation" value="utf8_general_ci"/>
+      <parameter name="Checksum" value=""/>
+      <parameter name="Create_options" value=""/>
+      <parameter name="Comment" value=""/>
+    </vendor>
+    <column name="REP_VAR_UID" type="VARCHAR" size="32" required="true" primaryKey="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="REP_VAR_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value="PRI"/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="REP_TAB_UID" type="VARCHAR" size="32" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="REP_TAB_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="REP_VAR_NAME" type="VARCHAR" size="255" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="REP_VAR_NAME"/>
+        <parameter name="Type" value="varchar(255)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="REP_VAR_TYPE" type="VARCHAR" size="20" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="REP_VAR_TYPE"/>
+        <parameter name="Type" value="varchar(20)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <validator column="REP_VAR_UID">
+      <rule name="maxLength" value="32" message="Report variable UID can be no larger than ${value} in size" />
+      <rule name="required" message="Report variable UID is required." />
+    </validator>
+    <validator column="REP_TAB_UID">
+      <rule name="maxLength" value="32" message="Report table UID can be no larger than ${value} in size" />
+      <rule name="required" message="Report variable UID is required." />
+    </validator>
+    <validator column="REP_VAR_NAME">
+      <rule name="maxLength" value="255" message="Report variable name can be no larger than ${value} in size" />
+      <rule name="required" message="Report variable name is required." />
+    </validator>
+    <validator column="REP_VAR_TYPE">
+      <rule name="maxLength" value="20" message="Report variable type can be no larger than ${value} in size" />
+      <rule name="required" message="Report variable type is required." />
+    </validator>
+  </table>
   <table name="ROUTE">
     <vendor type="mysql">
       <parameter name="Name" value="ROUTE"/>
