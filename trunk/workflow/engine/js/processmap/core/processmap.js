@@ -122,6 +122,24 @@ var processmap=function(){
 								}.extend(this);
 								r.make();
 							}.extend(this),
+							reportTables:function(){
+								var panel = this.panels.buildingBlocks;
+								panel.addContentTitle(G_STRINGS.ID_PROCESSMAP_REPORT_TABLES);
+								panel.clearContent();
+								panel.loader.show();
+								var r = new this.parent.module.rpc.xmlhttp({
+									url:this.options.dataServer,
+									args:"action=reportTables&data="+{pro_uid:this.options.uid}.toJSONString()
+								});
+								r.callback=function(rpc){
+									panel.loader.hide();
+									var scs=rpc.xmlhttp.responseText.extractScript();
+									panel.addContent(rpc.xmlhttp.responseText);
+									scs.evalScript();
+									this.buildLoading=false;
+								}.extend(this);
+								r.make();
+							}.extend(this),
 							dynaforms:function(){
 								var panel = this.panels.buildingBlocks;
 								panel.addContentTitle(G_STRINGS.ID_PROCESSMAP_DYNAFORMS);
@@ -591,7 +609,8 @@ var processmap=function(){
 						var target=(task.derivation.to.length>1)?'derivationBottom':'derivation';
 						this.parent.dom.setStyle(task.object.elements[target],{
 						//	background:((task.derivation.type===0)?"":"url("+this.options.images_dir+task.derivation.type+"t.gif?aa="+Math.random()+")")
-							background:"url("+this.options.images_dir+derivation.task+".gif?aa="+Math.random()+")"
+					//		background:"url("+this.options.images_dir+derivation.task+".gif?aa="+Math.random()+")"
+							background:"url("+this.options.images_dir+derivation.task+((target=="derivationBottom")?"bb.jpg":".gif")+"?aa="+Math.random()+")"
 						});
 
 					}
@@ -708,11 +727,11 @@ var processmap=function(){
 				var d = document.createElement("div");
 				this.parent.dom.setStyle(d,{
 					position:"absolute",
-					top: /*task.derivation.type==5 ? joinPosY :*/ options.position.y+63,
-					left:/*task.derivation.type==5 ? joinPosX  :*/ options.position.x+(81-12),
-					height:25,
-					width:25,
-					//backgroundColor:"black",
+					top: /*task.derivation.type==5 ? joinPosY :*/ options.position.y+49,
+					left:/*task.derivation.type==5 ? joinPosX  :*/ options.position.x+(93),
+					height:38,
+					width:38,
+					//backgr1undColor:"black",
 					border:"0px solid black",
 					overflow:"hidden",
 					zIndex:9

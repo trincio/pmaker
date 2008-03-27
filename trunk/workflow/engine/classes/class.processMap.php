@@ -1490,6 +1490,50 @@ class processMap {
   }
 
   /*
+	* Presents a small list of report tables of the process
+	* @param string $sProcessUID
+	* @return void
+	*/
+	function reportTablesList($sProcessUID = '') {
+		try {
+			$oProcess = new Process();
+  	  $aFields  = $oProcess->load($sProcessUID);
+      global $G_PUBLISH;
+      global $G_HEADER;
+      $G_PUBLISH = new Publisher;
+      $G_HEADER->clearScripts();
+      $G_PUBLISH->AddContent('propeltable', 'paged-table', 'reportTables/reportTables_ShortList', $this->getReportTablesCriteria($sProcessUID), $aFields);
+      G::RenderPage('publish', 'raw');
+      return true;
+    }
+  	catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
+
+  /*
+	* Return the report tables list criteria object
+	* @param string $sProcessUID
+	* @return object
+	*/
+  function getReportTablesCriteria($sProcessUID = '') {
+  	require_once 'classes/model/ReportTable.php';
+  	$sDelimiter = DBAdapter::getStringDelimiter();
+  	$oCriteria  = new Criteria('workflow');
+    $oCriteria->addSelectColumn(ReportTablePeer::REP_TAB_UID);
+    $oCriteria->addSelectColumn(ReportTablePeer::PRO_UID);
+    $oCriteria->addAsColumn('REP_TAB_TITLE', 'C.CON_VALUE');
+    $oCriteria->addAlias('C', 'CONTENT');
+    $aConditions   = array();
+    $aConditions[] = array(ReportTablePeer::REP_TAB_UID, 'C.CON_ID');
+    $aConditions[] = array('C.CON_CATEGORY', $sDelimiter . 'REP_TAB_TITLE' . $sDelimiter);
+    $aConditions[] = array('C.CON_LANG', $sDelimiter . SYS_LANG . $sDelimiter);
+    $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
+    $oCriteria->add(ReportTablePeer::PRO_UID, $sProcessUID);
+    return $oCriteria;
+  }
+
+  /*
 	* Show the current pattern
 	* @param string $sProcessUID
 	* @param string $sTaskUID
