@@ -23,7 +23,33 @@
  *
  */
 if (($RBAC_Response=$RBAC->userCanAccess("PM_CASES"))!=1) return $RBAC_Response;
-
+if(isset($_POST['showWindow']) && $_POST['showWindow']!=='false')
+{
+	$fn = '';
+	$sw = $_POST['showWindow'];
+	if($sw=='steps')
+	{
+		$fn='showSteps();';
+	}
+	elseif($sw=='information')
+	{
+		$fn='showInformation();';
+	}
+	elseif($sw=='actions')
+	{
+		$fn='showActions();';
+	}
+	else
+	{
+		$fn=false;
+	}
+	$_SESSION['showCasesWindow']=$fn;
+}
+else
+{
+	$_SESSION['showCasesWindow']=false;
+	die();
+}
 switch($_POST['action'])
 {
 	case 'steps':
@@ -53,6 +79,7 @@ switch($_POST['action'])
     $G_HEADER->addScriptFile('/js/common/tree/tree.js');
     G::RenderPage('publish', 'raw');
 	break;
+	/*  what is this? 
 	case 'KT':
 	  global $G_PUBLISH;
   	global $G_HEADER;
@@ -62,6 +89,7 @@ switch($_POST['action'])
     $G_HEADER->addScriptFile('/js/common/tree/tree.js');
     G::RenderPage('publish', 'raw');
 	break;
+	*/
 	case 'showProcessMap':
     $oTemplatePower = new TemplatePower(PATH_TPL . 'processes/processes_Map.html');
     $oTemplatePower->prepare();
@@ -262,4 +290,3 @@ switch($_POST['action'])
 	  }
 	break;
 }
-?>

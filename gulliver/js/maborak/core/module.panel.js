@@ -949,13 +949,18 @@ leimnud.Package.Public({
 			{
 				e.push(this.elements.modal);
 			}
-			if(this.events.remove && typeof this.events.remove=="function")
+			if(this.events.remove)
 			{
-				var t =  this.events.remove();
-				if(t===false){
-					return false;
+				this.events.remove=(this.events.remove.isArray)?this.events.remove:[this.events.remove];
+				for(var i=0;i<this.events.remove.length;i++)
+				{
+					if(typeof this.events.remove[i]=='function')
+					{
+						this.events.remove[i]();
+					}
 				}
 			}
+			if(this.cancelClose===true){return flase;}
 			if(this.options.fx.fadeOut===true)
 			{
 				new this.parent.module.fx.fade().make({

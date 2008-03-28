@@ -18,12 +18,20 @@ var showInformation = function()
  }
  else
  {
+   Cse.panels.step.events.remove[1]=function()
+   {
+   	var r = new leimnud.module.rpc.xmlhttp({
+		url:"cases_Ajax",
+		args:"showWindow=false"
+	});
+	r.make();
+   };
    Cse.panels.step.elements.title.innerHTML = "Information";
    Cse.panels.step.clearContent();
    Cse.panels.step.loader.show();
    var oRPC = new leimnud.module.rpc.xmlhttp({
      url:  "cases_Ajax",
-	   args: "action=information"
+	   args: "action=information&showWindow=information"
    });
    oRPC.callback = function(rpc){
      Cse.panels.step.loader.hide();
@@ -52,12 +60,20 @@ var showActions = function()
   }
   else
   {
+   Cse.panels.step.events.remove[1]=function()
+   {
+   	var r = new leimnud.module.rpc.xmlhttp({
+		url	:"casesAjax",
+		args	:"showWindow=false"
+	});
+	r.make();
+   };
     Cse.panels.step.elements.title.innerHTML = "Actions";
     Cse.panels.step.clearContent();
     Cse.panels.step.loader.show();
     var oRPC = new leimnud.module.rpc.xmlhttp({
       url:  "cases_Ajax",
-	    args: "action=actions"
+	    args: "action=actions&showWindow=actions"
     });
     oRPC.callback = function(rpc){
       Cse.panels.step.loader.hide();

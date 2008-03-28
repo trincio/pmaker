@@ -92,8 +92,10 @@
   leimnud.Package.Load("cases_Step",{Type:"file",Absolute:true,Path:"/jscore/cases/core/cases_Step.js"});
   leimnud.Package.Load("processmap",{Type:"file",Absolute:true,Path:"/jscore/processmap/core/processmap.js"});
   leimnud.exec(leimnud.fix.memoryLeak);
+  leimnud.event.add(window,"load",function(){
+	  '.((isset($_SESSION['showCasesWindow']) && $_SESSION['showCasesWindow']!==false)?'try{'.$_SESSION['showCasesWindow'].'}catch(e){}':'').'
+});
   ');
-
   $G_PUBLISH->AddContent('template', '', '', '', $oTemplatePower);
 
   $oCase = new Cases();
