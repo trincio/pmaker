@@ -35,6 +35,10 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
   $dbc = new DBConnection( PATH_DYNAFORM . $file . '.xml' ,'','','','myxml' );
   $ses = new DBSession($dbc);
 
+  //TODO: Improve how to obtain the PRO_UID.
+  $aFile=explode('/',str_replace('\\','/',$file));
+  $proUid=$aFile[0];
+  
   $fields = new DynaFormField( $dbc );
   $fields->Fields['XMLNODE_NAME']=(isset($_GET['XMLNODE_NAME'])) ? urldecode($_GET['XMLNODE_NAME']):'';
   $fields->Load( $fields->Fields['XMLNODE_NAME'] );
@@ -72,6 +76,7 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
 	  }
 	}
   $Fields['PME_A'] = $_GET['A'];
+  $Fields['PME_PRO_UID'] = $proUid;
   $G_PUBLISH = new Publisher();
   $G_HEADER->clearScripts();
   $G_HEADER->addScriptFile('/js/grid/core/grid.js');

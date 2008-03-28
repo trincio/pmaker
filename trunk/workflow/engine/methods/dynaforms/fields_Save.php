@@ -38,9 +38,14 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
   define('DB_XMLDB_NAME','');
   define('DB_XMLDB_TYPE','myxml');
 
+
   if (file_exists( PATH_XMLFORM . 'dynaforms/fields/' . $type . '.xml')) {
     $form=new Form('dynaforms/fields/' . $type , PATH_XMLFORM);
+    //TODO: Verify why validatePost removes PME_XMLGRID.
+    $isGrid=isset($_POST['form']['PME_XMLGRID']); 
+    if ($isGrid) $xmlGrid=$_POST['form']['PME_XMLGRID'];
     $form->validatePost();
+    if ($isGrid) $_POST['form']['PME_XMLGRID']=$xmlGrid;
     if ($type==='checkbox') {
       if ($_POST['form']['PME_DEFAULTVALUE']===$form->fields['PME_DEFAULTVALUE']->value) {
         $_POST['form']['PME_DEFAULTVALUE']=$_POST['form']['PME_VALUE'];
@@ -74,8 +79,8 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
   unset($attributes['A']);
   unset($attributes['ACCEPT']);
   unset($attributes['LABEL']);
-  //if (!isset($attributes['ENABLEHTML'])) $attributes['ENABLEHTML'] = '0';
-
+  unset($attributes['PRO_UID']);
+var_dump( $attributes );
   $options = NULL;
   foreach($attributes as $key => $value ) {
     if ($key==='OPTIONS') {
