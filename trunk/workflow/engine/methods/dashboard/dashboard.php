@@ -23,7 +23,14 @@
  * 
  */
 if (($RBAC_Response=$RBAC->userCanAccess("PM_SETUP"))!=1) return $RBAC_Response;
-  
+/*G::LoadClass('Installer');
+$inst = new Installer();
+$s = $inst->createSite(Array(
+	
+));
+print_r($inst);
+print_r($s);
+die();*/
   $G_MAIN_MENU = "processmaker";
   //$G_SUB_MENU  = "dashboard";
   
@@ -97,7 +104,7 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_SETUP"))!=1) return $RBAC_Response;
 [
 	[{title:"My info - Page editor",open:{url:"/sysos/en/blank/users/myInfo"},height:730,noBg:true}],
 [
-{title:"My pending Process",open:{html:"<img src=\"/sysos/en/blank/dashboard/chart\" />"},height:400},
+{title:"My pending Process",open:{image:"/sysos/en/blank/dashboard/chart"},height:400},
 {title:"Status4",url:"http://rss.maborak.com",height:100,noBg:true}
 ]
 

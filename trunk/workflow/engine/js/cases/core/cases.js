@@ -36,85 +36,27 @@ var cases=function()
 				fx:{shadow:false,modal:false,opacity:false}
 			};
 			this.panels.step.setStyle={
-/*				containerWindow:{
-					border:"0px solid red"
-				},
-				frontend:{
-					backgroundColor:"transparent"
-				},
-				content:{
-					margin:0,
-					border:"0px solid red",
-					borderLeft:"1px solid #DADADA",
-					borderRight:"1px solid #DADADA",
-					backgroundColor:"white",
-					paddingTop:15
-				},
-				headerBar:{
-					display:''
-					//height:16,
-					//border:"1px solid red"
-				},
-				titleBar:{
-					background:"none",
-					backgroundColor:"transparent",
-					height:18
-				},
-				close:{
-					display:"none"
-				},*/
 				statusBar:{
 				}
 			};
 			this.panels.step.styles.fx.opacityModal.Static=0;
 			this.panels.step.make();
 			this.panels.step.events = {
-				remove: function() { delete(this.panels.step); }.extend(this)
+				remove:[function() { delete(this.panels.step); }.extend(this)]
 			};
-
-//			this.panels.step.elements.headerBar.className="boxTopPanel";
-//			this.panels.step.elements.headerBar.innerHTML="<div class='a'></div><div class='b'></div><div class='c'></div>";
-
-//			this.panels.step.elements.statusBar.className="boxBottom";
-//			this.panels.step.elements.statusBar.innerHTML="<div class='a'></div><div class='b'></div><div class='c'></div>";
-			
-/*			var cl = document.createElement("div");
-			cl.onmouseup=this.panels.step.remove;
-			this.parent.dom.setStyle(cl,{
-				width:13,
-				height:13,
-				top:30,
-				right:5
+		panel.events.remove.push(function()
+		{
+			var r = new this.parent.module.rpc.xmlhttp({
+				url:this.options.dataServer,
+				args:"showWindow=false"
 			});
-			cl.className=this.panels.step.elements.close.className;
-			this.panels.step.elements.frontend.appendChild(cl);*/
-
-
-/*		this.panels.step = panel = new leimnud.module.panel();
-		panel.options={
-			size	:{w:310,h:550},
-			position:{x:5,y:5},
-			title	:this.options.title,
-			theme	:"processmaker",
-			target	:this.options.target,
-//			limit	:true,
-			statusBar:true,
-			control	:{resize:true,roll:false},
-			fx	:{opacity:false,blinkToFront:false,fadeIn:false}
-		};
-		this.panels.step.events = {
-			remove: function() { delete(this.panels.step); }.extend(this)
-		};*/
-
-		/* Panel step End */
-		/* Panel history Begin */
-		/* Panel history End */
-//		this.panels.step.make();
+			r.make();
+		}.extend(this));
 		/* Load data BEGIN */
 		panel.loader.show();
 		var r = new this.parent.module.rpc.xmlhttp({
 			url:this.options.dataServer,
-			args:"action="+this.options.action
+			args:"action="+this.options.action+"&showWindow="+this.options.action
 		});
 		r.callback=function(rpc){
 			this.panels.step.loader.hide();
