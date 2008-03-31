@@ -659,11 +659,11 @@ class XmlForm_Field_Text extends XmlForm_Field_SimpleText
     }
 	  if ($this->mode==='edit') {
 	    if ($this->readOnly)
-		    return '<input class="module_app_input___gray" id="form[\''.$this->name.'\']" name="form['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $value , ENT_COMPAT, 'utf-8').'\' readOnly="readOnly" style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'" onkeypress="'.htmlentities( $onkeypress , ENT_COMPAT, 'utf-8').'"/>';
+		    return '<input class="module_app_input___gray" id="form['.$this->name.']" name="form['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $value , ENT_COMPAT, 'utf-8').'\' readOnly="readOnly" style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'" onkeypress="'.htmlentities( $onkeypress , ENT_COMPAT, 'utf-8').'"/>';
 		  else
-		    return '<input class="module_app_input___gray" id="form[\''.$this->name.'\']" name="form['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $value , ENT_COMPAT, 'utf-8').'\' style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'" onkeypress="'.htmlentities( $onkeypress , ENT_COMPAT, 'utf-8').'"/>';
+		    return '<input class="module_app_input___gray" id="form['.$this->name.']" name="form['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $value , ENT_COMPAT, 'utf-8').'\' style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'" onkeypress="'.htmlentities( $onkeypress , ENT_COMPAT, 'utf-8').'"/>';
 		} elseif ($this->mode==='view') {
-		    return '<input class="module_app_input___gray" id="form[\''.$this->name.'\']" name="form['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $value , ENT_COMPAT, 'utf-8').'\' style="display:none;'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'" onkeypress="'.htmlentities( $onkeypress , ENT_COMPAT, 'utf-8').'"/>' .
+		    return '<input class="module_app_input___gray" id="form['.$this->name.']" name="form['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $value , ENT_COMPAT, 'utf-8').'\' style="display:none;'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'" onkeypress="'.htmlentities( $onkeypress , ENT_COMPAT, 'utf-8').'"/>' .
 		      $this->htmlentities( $value , ENT_COMPAT, 'utf-8');
 		} else {
 		  return $this->htmlentities( $value , ENT_COMPAT, 'utf-8');
@@ -1334,10 +1334,10 @@ class XmlForm_Field_Button extends XmlForm_Field
     $onclick = G::replaceDataField( $this->onclick, $owner->values );
     $label = G::replaceDataField( $this->label, $owner->values );
     if ($this->mode==='edit') {
-    	$re = "<input style=\"{$this->style}\" class='module_app_button___gray {$this->className}' id=\"form[{$this->name}]\" name=\"form[{$this->name}]\" type='button' value=\"{$this->label}\" ".(($this->onclick)?'onclick="'.htmlentities($onclick,ENT_COMPAT, 'utf-8').'"':'')." />";
+    	$re = "<input style=\"{$this->style}\" class='module_app_button___gray {$this->className}' id=\"form[{$this->name}]\" name=\"form[{$this->name}]\" type='button' value=\"{$label}\" ".(($this->onclick)?'onclick="'.htmlentities($onclick,ENT_COMPAT, 'utf-8').'"':'')." />";
     	return $re;
   	} elseif ($this->mode==='view') {
-		return "<input style=\"{$this->style}\" disabled='disabled' class='module_app_button___gray module_app_buttonDisabled___gray {$this->className}' id=\"form[{$this->name}]\" name=\"form[{$this->name}]\" type='button' value=\"{$this->label}\" ".(($this->onclick)?'onclick="'.htmlentities($onclick,ENT_COMPAT, 'utf-8').'"':'')." />";
+		return "<input style=\"{$this->style}\" disabled='disabled' class='module_app_button___gray module_app_buttonDisabled___gray {$this->className}' id=\"form[{$this->name}]\" name=\"form[{$this->name}]\" type='button' value=\"{$label}\" ".(($this->onclick)?'onclick="'.htmlentities($onclick,ENT_COMPAT, 'utf-8').'"':'')." />";
   	} else {
   	    return $this->htmlentities( $value , ENT_COMPAT, 'utf-8');
   	}
