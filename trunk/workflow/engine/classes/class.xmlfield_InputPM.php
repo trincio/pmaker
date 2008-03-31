@@ -47,7 +47,7 @@ class XmlForm_Field_TextPM extends XmlForm_Field_SimpleText
 	var $symbol      = '@@';
   /**
    * Function render
-   * @author Julio Cesar Laura Avendaño <juliocesar@colosa.com>
+   * @author Julio Cesar Laura Avendaï¿½o <juliocesar@colosa.com>
    * @access public
    * @parameter string value
    * @parameter string owner
@@ -78,11 +78,11 @@ class XmlForm_Field_TextPM extends XmlForm_Field_SimpleText
 	  }
 	  if ($this->mode==='edit') {
 	    if ($this->readOnly)
-		    return '<input class="FormField" id="form['.$this->name.']" name="form['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $value , ENT_COMPAT, 'utf-8').'\' readOnly="readOnly" style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'" onkeypress="'.htmlentities( $onkeypress , ENT_COMPAT, 'utf-8').'"/>' . $sShowVars;
+		    return '<input class="module_app_input___gray" id="form['.$this->name.']" name="form['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $value , ENT_COMPAT, 'utf-8').'\' readOnly="readOnly" style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'" onkeypress="'.htmlentities( $onkeypress , ENT_COMPAT, 'utf-8').'"/>' . $sShowVars;
 		  else
-		    return '<input class="FormField" id="form['.$this->name.']" name="form['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $value , ENT_COMPAT, 'utf-8').'\' style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'" onkeypress="'.htmlentities( $onkeypress , ENT_COMPAT, 'utf-8').'"/>' . $sShowVars;
+		    return '<input class="module_app_input___gray" id="form['.$this->name.']" name="form['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $value , ENT_COMPAT, 'utf-8').'\' style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'" onkeypress="'.htmlentities( $onkeypress , ENT_COMPAT, 'utf-8').'"/>' . $sShowVars;
 		} elseif ($this->mode==='view') {
-		    return '<input class="FormField" id="form['.$this->name.']" name="form['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $value , ENT_COMPAT, 'utf-8').'\' style="display:none;'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'" onkeypress="'.htmlentities( $onkeypress , ENT_COMPAT, 'utf-8').'"/>' .
+		    return '<input class="module_app_input___gray" id="form['.$this->name.']" name="form['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $value , ENT_COMPAT, 'utf-8').'\' style="display:none;'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'" onkeypress="'.htmlentities( $onkeypress , ENT_COMPAT, 'utf-8').'"/>' .
 		      $this->htmlentities( $value , ENT_COMPAT, 'utf-8');
 		} else {
 		  return $this->htmlentities( $value , ENT_COMPAT, 'utf-8');
@@ -90,7 +90,7 @@ class XmlForm_Field_TextPM extends XmlForm_Field_SimpleText
 	}
   /**
    * Function renderGrid
-   * @author Julio Cesar Laura Avendaño <juliocesar@colosa.com>
+   * @author Julio Cesar Laura Avendaï¿½o <juliocesar@colosa.com>
    * @access public
    * @parameter string values
    * @parameter string owner
@@ -112,9 +112,9 @@ class XmlForm_Field_TextPM extends XmlForm_Field_SimpleText
 	    }
   	  if ($this->mode==='edit') {
   	    if ($this->readOnly)
-  		    $result[] = '<input class="FormField" id="form['. $owner->name .']['.$r.']['.$this->name.']" name="form['. $owner->name .']['.$r.']['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value="'.$this->htmlentities( $v , ENT_COMPAT, 'utf-8').'" readOnly="readOnly" style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'"/>' . $sShowVars;
+  		    $result[] = '<input class="module_app_input___gray" id="form['. $owner->name .']['.$r.']['.$this->name.']" name="form['. $owner->name .']['.$r.']['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value="'.$this->htmlentities( $v , ENT_COMPAT, 'utf-8').'" readOnly="readOnly" style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'"/>' . $sShowVars;
   		  else
-  		    $result[] = '<input class="FormField" id="form['. $owner->name .']['.$r.']['.$this->name.']" name="form['. $owner->name .']['.$r.']['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value="'.$this->htmlentities( $v , ENT_COMPAT, 'utf-8').'" style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'"/>' . $sShowVars;
+  		    $result[] = '<input class="module_app_input___gray" id="form['. $owner->name .']['.$r.']['.$this->name.']" name="form['. $owner->name .']['.$r.']['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value="'.$this->htmlentities( $v , ENT_COMPAT, 'utf-8').'" style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'"/>' . $sShowVars;
   		} elseif ($this->mode==='view') {
   		    $result[] = $this->htmlentities( $v , ENT_COMPAT, 'utf-8');
   		} else {
@@ -143,7 +143,7 @@ class XmlForm_Field_TextareaPM extends XmlForm_Field
 	var $symbol   = '@@';
   /**
    * Function render
-   * @author Julio Cesar Laura Avendaño <juliocesar@colosa.com>
+   * @author Julio Cesar Laura Avendaï¿½o <juliocesar@colosa.com>
    * @access public
    * @parameter string value
    * @return string
@@ -171,7 +171,7 @@ class XmlForm_Field_TextareaPM extends XmlForm_Field
 	}
   /**
    * Function renderGrid
-   * @author Julio Cesar Laura Avendaño <juliocesar@colosa.com>
+   * @author Julio Cesar Laura Avendaï¿½o <juliocesar@colosa.com>
    * @access public
    * @parameter string value
    * @parameter string owner
@@ -190,9 +190,9 @@ class XmlForm_Field_TextareaPM extends XmlForm_Field
 	    }
   	  if ($this->mode==='edit') {
   	    if ($this->readOnly)
-  		    $result[] = '<input class="FormField" id="form['. $owner->name .']['.$r.']['.$this->name.']" name="form['. $owner->name .']['.$r.']['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $v , ENT_COMPAT, 'utf-8').'\' readOnly="readOnly"/>' . $sShowVars;
+  		    $result[] = '<input class="module_app_input___gray" id="form['. $owner->name .']['.$r.']['.$this->name.']" name="form['. $owner->name .']['.$r.']['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $v , ENT_COMPAT, 'utf-8').'\' readOnly="readOnly"/>' . $sShowVars;
   		  else
-  		    $result[] = '<input class="FormField" id="form['. $owner->name .']['.$r.']['.$this->name.']" name="form['. $owner->name .']['.$r.']['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $v , ENT_COMPAT, 'utf-8').'\' />' . $sShowVars;
+  		    $result[] = '<input class="module_app_input___gray" id="form['. $owner->name .']['.$r.']['.$this->name.']" name="form['. $owner->name .']['.$r.']['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $v , ENT_COMPAT, 'utf-8').'\' />' . $sShowVars;
 	  } elseif ($this->mode==='view') {
 			if(stristr($_SERVER['HTTP_USER_AGENT'], 'iPhone'))
 			{

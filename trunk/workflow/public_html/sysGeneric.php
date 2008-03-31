@@ -3,6 +3,7 @@
 ini_set('display_errors','On');
 ini_set('error_reporting', E_ALL  );
 ini_set('memory_limit', '80M');
+
 $path = Array();
 $sf = $_SERVER['SCRIPT_FILENAME'];
 
@@ -54,7 +55,6 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
 
  /*** enable ERROR_LOG_NOTICE_ERROR to log Notices messages in default apache log ***/
   //  define ( 'ERROR_LOG_NOTICE_ERROR', true );
-
 
 //************ defining Virtual URLs ****************/
   $virtualURITable = array();
@@ -216,6 +216,7 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
        $aMessage['MESSAGE'] = G::LoadTranslation ('ID_NOT_WORKSPACE');
        $G_PUBLISH          = new Publisher;
        $G_PUBLISH->AddContent('xmlform', 'xmlform', 'login/showMessage', '', $aMessage );
+       $G_PUBLISH->AddContent('xmlform', 'xmlform', 'login/newSite', '', '', '../install/newSite');
        G::RenderPage( 'publish' );
        die;
       }
@@ -224,7 +225,7 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
   else {  //when we are in global pages, outside any valid workspace
 
 
-    if ((SYS_TARGET==='sysLoginVerify') || (SYS_TARGET==='sysLogin')) {
+    if ((SYS_TARGET==='sysLoginVerify') || (SYS_TARGET==='sysLogin') || (SYS_TARGET==='newSite')) {
   	  $phpFile = G::ExpandPath('methods') . SYS_COLLECTION . "/" . SYS_TARGET.'.php';
   	  require_once($phpFile);
   	  die();
@@ -288,7 +289,7 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
       // register debug connection decorator driver
       Creole::registerDriver('*', 'creole.contrib.DebugConnection');
 
-      // initialize Propel with converted config file
+      // itialize Propel with converted config file
       Propel::init( PATH_CORE . "config/databases.php" );
 
       //log file for workflow database

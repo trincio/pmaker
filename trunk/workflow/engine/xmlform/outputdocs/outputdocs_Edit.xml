@@ -24,7 +24,7 @@
   <es>Nombre de archivo generado</es>
 </OUT_DOC_FILENAME>
 
-<OUT_DOC_DESCRIPTION type="textarea" rows="3" cols="50">
+<OUT_DOC_DESCRIPTION type="textarea" rows="3"  style="width:90%;">
   <en>Description</en>
   <es>Descripción</es>
 </OUT_DOC_DESCRIPTION>
@@ -34,7 +34,7 @@
   <es>Template</es>
 </OUT_DOC_TEMPLATE>
 
-<ACCEPT type="button" onclick="outputdocsSave( this.form );">
+<ACCEPT type="button" onclick="outputdocsSave(this.form);">
   <en>Save</en>
   <es>Guardar</es>
 </ACCEPT>

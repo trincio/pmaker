@@ -30,13 +30,117 @@
 class G
 {
 	/**
+	* Fill array values (recursive)
+	* @author maborak <maborak@maborak.com>
+	* @access public
+	* @param  Array $arr
+	* @param  Void  $value
+	* @param  Boolean $recursive
+	* @return Array
+	*/
+	function array_fill_value($arr=Array(),$value='',$recursive=false)
+	{
+		if(is_array($arr))
+		{
+			foreach($arr as $key=>$val)
+			{
+				if(is_array($arr[$key]))
+				{
+					$arr[$key]=($recursive===true)?G::array_fill_value($arr[$key],$value,true):$val;
+				}
+				else
+				{
+					$arr[$key]=$value;
+				}
+			}
+		}
+		else
+		{
+			$arr=Array();
+		}
+		return $arr;
+	}
+	/**
+	* Generate Password Random
+	* @author maborak <maborak@maborak.com>
+	* @access public
+	* @param  Int
+	* @return String
+	*/
+	function generate_password($length=8)
+	{
+		$password = "";
+		$possible = "0123456789bcdfghjkmnpqrstvwxyz"; 
+		$i = 0; 
+		while($i<$length)
+		{ 
+			$char = substr($possible, mt_rand(0, strlen($possible)-1), 1);
+			if(!strstr($password, $char))
+			{ 
+				$password .= $char;
+				$i++;
+			}
+		}
+		return $password;
+	}
+	/**
+	* Array concat
+	* array_concat(ArrayToConcat,ArrayOriginal);
+	* @author maborak <maborak@maborak.com>
+	* @access public
+	* @param  Array
+	* @return Array
+	*/
+	function array_concat()
+	{
+		$nums = func_num_args();
+		$vars = func_get_args();
+		$ret  = Array();
+		for($i=0;$i<$nums;$i++)
+		{
+			if(is_array($vars[$i]))
+			{
+				foreach($vars[$i] as $key=>$value)
+				{
+					$ret[$key]=$value;
+				}
+			}
+		}
+		return $ret;
+	}
+
+	/**
+	* Compare Variables
+	* var_compare(value,[var1,var2,varN]);
+	* @author maborak <maborak@maborak.com>
+	* @access public
+	* @param  void $value
+	* @param  void $var1-N
+	* @return Boolean
+	*/
+	function var_compare($value=true,$varN)
+	{
+		$nums = func_num_args();
+		if($nums<2){return true;}
+		$vars = func_get_args();
+		$ret  = Array();
+		for($i=1;$i<$nums;$i++)
+		{
+			if($vars[$i]!==$value)
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+	/**
 	* Emulate variable selector
 	* @author maborak <maborak@maborak.com>
 	* @access public
 	* @param  void
 	* @return void
 	*/
-	function ifthen()
+	function var_probe()
 	{
 		//return (!$variable)?
 		$nums = func_num_args();

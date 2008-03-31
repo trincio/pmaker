@@ -85,6 +85,8 @@ var installer=function()
 		var tr = this.table.insertRow(-1);
 		var td0 = tr.insertCell(0);
 		td0.innerHTML="File "+this.options.path_trunk+"config/paths_installed.php<br> permissions: <b>0666</b>";
+		td0.innerHTML+="<br>OR<br>";
+		td0.innerHTML+="Directory "+this.options.path_trunk+"config/<br> permissions: <b>0777</b>";
 		td0.className="inst_td0";
 		this.checkPI = tr.insertCell(1);		
 		this.checkPI.className="inst_td1";
@@ -258,7 +260,14 @@ var installer=function()
 		});
 		r.callback=function(rpc)
 		{
-			this.cstatus = rpc.xmlhttp.responseText.parseJSON();
+			try
+			{
+				this.cstatus = rpc.xmlhttp.responseText.parseJSON();
+			}
+			catch(e)
+			{
+				this.cstatus={};
+			}
 			this.phpVersion.className = (!this.cstatus.phpVersion)?"inst_td1 tdFailed":"inst_td1 tdOk";
 			this.phpVersion.innerHTML = (!this.cstatus.phpVersion)?"FAILED":"PASSED";
 
