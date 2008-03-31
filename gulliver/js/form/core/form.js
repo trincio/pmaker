@@ -389,16 +389,34 @@
     else
       leimnud.event.add(this.element,'keypress',this.validateKey);
     leimnud.event.add(this.element,'change',this.updateDepententFields);
-    leimnud.event.add(this.element,'change',function() {
+	this.element.onblur=function()
+	{
+	    	if(this.validate=="Email")
+		{
+			var pat=/^[\w\_\.çñ]{2,255}@[\w]{2,255}\.[a-z]{1,3}\.?[a-z]{0,3}$/;
+			if(!pat.test(this.element.value))
+			{
+				this.element.className=this.element.className.split(" ")[0]+" FormFieldInvalid";
+			}
+			else
+			{
+				this.element.className=this.element.className.split(" ")[0]+" FormFieldValid";
+			}
+		}
+	}.extend(this);
+/*    leimnud.event.add(this.element,'blur',function() {
     	if (this.validate == 'Email') {
-    		if (!this.element.value.match("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\$")) {
+ 		//if (!this.element.value.match("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?:[A-Z]{2}|com|org|net|gov|mil|biz|info|mobi|name|aero|jobs|museum)\$")) {
+		var pat=/^[\w\_\.çñ]{2,255}@[\w]{2,255}\.[a-z]{1,3}\.?[a-z]{0,3}$/;
+		if(!pat.test(this.element.value)){
+ 	//	if (!this.element.value.match("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?:[A-Z]{2-3})\$")) {
     			new leimnud.module.app.alert().make({
 					  label:G_STRINGS.ID_INVALID_EMAIL
 					});
     			this.element.value = '';
     		}
     	}
-    }.extend(this));
+    }.extend(this));*/
     leimnud.event.add(this.element,'keydown',this.preValidateChange);
   }
   G_Text.prototype=new G_Field();

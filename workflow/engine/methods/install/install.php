@@ -52,7 +52,7 @@ echo '<?xml version="1.0" encoding="UTF-8" ?>';
 	leimnud.event.add(window,'load',function(){
 		inst = new leimnud.module.panel();
 		inst.options={
-			size:{w:810,h:680},
+			size:{w:810,h:700},
 			title	:"",
 			position:{x:2,y:2,center:true},
 			statusBar:false,
@@ -142,8 +142,8 @@ border-collapse:collapse;
 }
 .title
 {
-	text-align:right;
-padding-right:10px;
+	text-align:left;
+padding-left:10px;
 }
 .inputNormal, .inputOk, .inputFailed
 {

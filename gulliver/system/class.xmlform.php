@@ -567,11 +567,11 @@ class XmlForm_Field_SimpleText extends XmlForm_Field
     $onkeypress = G::replaceDataField( $this->onkeypress, $owner->values );
 	  if ($this->mode==='edit') {
 	    if ($this->readOnly)
-		    return '<input class="FormField" id="form['.$this->name.']" name="form['.$this->name.']" type ="text" size="'.$this->size.'" '.(isset($this->maxLength)?' maxlength="'.$this->maxLength.'"' : '').' value=\''.htmlentities( $value , ENT_COMPAT, 'utf-8').'\' readOnly="readOnly" style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'" onkeypress="'.htmlentities( $onkeypress , ENT_COMPAT, 'utf-8').'"/>';
+		    return '<input class="module_app_input___gray" id="form['.$this->name.']" name="form['.$this->name.']" type ="text" size="'.$this->size.'" '.(isset($this->maxLength)?' maxlength="'.$this->maxLength.'"' : '').' value=\''.htmlentities( $value , ENT_COMPAT, 'utf-8').'\' readOnly="readOnly" style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'" onkeypress="'.htmlentities( $onkeypress , ENT_COMPAT, 'utf-8').'"/>';
 		  else
-		    return '<input class="FormField" id="form['.$this->name.']" name="form['.$this->name.']" type ="text" size="'.$this->size.'" '.(isset($this->maxLength)?' maxlength="'.$this->maxLength.'"' : '').' value=\''.htmlentities( $value , ENT_COMPAT, 'utf-8').'\' style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'" onkeypress="'.htmlentities( $onkeypress , ENT_COMPAT, 'utf-8').'"/>';
+		    return '<input class="module_app_input___gray" id="form['.$this->name.']" name="form['.$this->name.']" type ="text" size="'.$this->size.'" '.(isset($this->maxLength)?' maxlength="'.$this->maxLength.'"' : '').' value=\''.htmlentities( $value , ENT_COMPAT, 'utf-8').'\' style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'" onkeypress="'.htmlentities( $onkeypress , ENT_COMPAT, 'utf-8').'"/>';
 		} elseif ($this->mode==='view') {
-		    return '<input class="FormField" id="form['.$this->name.']" name="form['.$this->name.']" type ="text" size="'.$this->size.'" '.(isset($this->maxLength)?' maxlength="'.$this->maxLength.'"' : '').' value=\''.htmlentities( $value , ENT_COMPAT, 'utf-8').'\' style="display:none;'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'" onkeypress="'.htmlentities( $onkeypress , ENT_COMPAT, 'utf-8').'"/>' .
+		    return '<input class="module_app_input___gray" id="form['.$this->name.']" name="form['.$this->name.']" type ="text" size="'.$this->size.'" '.(isset($this->maxLength)?' maxlength="'.$this->maxLength.'"' : '').' value=\''.htmlentities( $value , ENT_COMPAT, 'utf-8').'\' style="display:none;'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'" onkeypress="'.htmlentities( $onkeypress , ENT_COMPAT, 'utf-8').'"/>' .
 		      htmlentities( $value , ENT_COMPAT, 'utf-8');
 		} else {
 		  return $this->htmlentities( $value , ENT_COMPAT, 'utf-8');
@@ -591,11 +591,11 @@ class XmlForm_Field_SimpleText extends XmlForm_Field
     foreach($values as $v)  {
   	  if ($this->mode==='edit') {
   	    if ($this->readOnly)
-  		    $result[] = '<input class="FormField" id="form['. $owner->name .']['.$r.']['.$this->name.']" name="form['. $owner->name .']['.$r.']['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.htmlentities( $v , ENT_COMPAT, 'utf-8').'\' readOnly="readOnly" style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'"/>';
+  		    $result[] = '<input class="module_app_input___gray" id="form['. $owner->name .']['.$r.']['.$this->name.']" name="form['. $owner->name .']['.$r.']['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.htmlentities( $v , ENT_COMPAT, 'utf-8').'\' readOnly="readOnly" style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'"/>';
   		  else
-  		    $result[] = '<input class="FormField" id="form['. $owner->name .']['.$r.']['.$this->name.']" name="form['. $owner->name .']['.$r.']['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.htmlentities( $v , ENT_COMPAT, 'utf-8').'\' style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'"/>';
+  		    $result[] = '<input class="module_app_input___gray" id="form['. $owner->name .']['.$r.']['.$this->name.']" name="form['. $owner->name .']['.$r.']['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.htmlentities( $v , ENT_COMPAT, 'utf-8').'\' style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'"/>';
   		} elseif ($this->mode==='view') {
-  		    $result[] = '<input class="FormField" id="form['. $owner->name .']['.$r.']['.$this->name.']" name="form['. $owner->name .']['.$r.']['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.htmlentities( $v , ENT_COMPAT, 'utf-8').'\' style="display:none;'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'"/>' .
+  		    $result[] = '<input class="module_app_input___gray" id="form['. $owner->name .']['.$r.']['.$this->name.']" name="form['. $owner->name .']['.$r.']['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.htmlentities( $v , ENT_COMPAT, 'utf-8').'\' style="display:none;'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'"/>' .
   		      htmlentities( $v , ENT_COMPAT, 'utf-8');
   		} else {
   		    $result[] = $this->htmlentities( $v , ENT_COMPAT, 'utf-8');
@@ -659,11 +659,11 @@ class XmlForm_Field_Text extends XmlForm_Field_SimpleText
     }
 	  if ($this->mode==='edit') {
 	    if ($this->readOnly)
-		    return '<input class="FormField" id="form['.$this->name.']" name="form['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $value , ENT_COMPAT, 'utf-8').'\' readOnly="readOnly" style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'" onkeypress="'.htmlentities( $onkeypress , ENT_COMPAT, 'utf-8').'"/>';
+		    return '<input class="module_app_input___gray" id="form[\''.$this->name.'\']" name="form['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $value , ENT_COMPAT, 'utf-8').'\' readOnly="readOnly" style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'" onkeypress="'.htmlentities( $onkeypress , ENT_COMPAT, 'utf-8').'"/>';
 		  else
-		    return '<input class="FormField" id="form['.$this->name.']" name="form['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $value , ENT_COMPAT, 'utf-8').'\' style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'" onkeypress="'.htmlentities( $onkeypress , ENT_COMPAT, 'utf-8').'"/>';
+		    return '<input class="module_app_input___gray" id="form[\''.$this->name.'\']" name="form['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $value , ENT_COMPAT, 'utf-8').'\' style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'" onkeypress="'.htmlentities( $onkeypress , ENT_COMPAT, 'utf-8').'"/>';
 		} elseif ($this->mode==='view') {
-		    return '<input class="FormField" id="form['.$this->name.']" name="form['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $value , ENT_COMPAT, 'utf-8').'\' style="display:none;'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'" onkeypress="'.htmlentities( $onkeypress , ENT_COMPAT, 'utf-8').'"/>' .
+		    return '<input class="module_app_input___gray" id="form[\''.$this->name.'\']" name="form['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $value , ENT_COMPAT, 'utf-8').'\' style="display:none;'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'" onkeypress="'.htmlentities( $onkeypress , ENT_COMPAT, 'utf-8').'"/>' .
 		      $this->htmlentities( $value , ENT_COMPAT, 'utf-8');
 		} else {
 		  return $this->htmlentities( $value , ENT_COMPAT, 'utf-8');
@@ -686,9 +686,9 @@ class XmlForm_Field_Text extends XmlForm_Field_SimpleText
       }
   	  if ($this->mode==='edit') {
   	    if ($this->readOnly)
-  		    $result[] = '<input class="FormField" id="form['. $owner->name .']['.$r.']['.$this->name.']" name="form['. $owner->name .']['.$r.']['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value="'.$this->htmlentities( $v , ENT_COMPAT, 'utf-8').'" readOnly="readOnly" style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'"/>';
+  		    $result[] = '<input class="module_app_input___gray" id="form['. $owner->name .']['.$r.']['.$this->name.']" name="form['. $owner->name .']['.$r.']['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value="'.$this->htmlentities( $v , ENT_COMPAT, 'utf-8').'" readOnly="readOnly" style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'"/>';
   		  else
-  		    $result[] = '<input class="FormField" id="form['. $owner->name .']['.$r.']['.$this->name.']" name="form['. $owner->name .']['.$r.']['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value="'.$this->htmlentities( $v , ENT_COMPAT, 'utf-8').'" style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'"/>';
+  		    $result[] = '<input class="module_app_input___gray" id="form['. $owner->name .']['.$r.']['.$this->name.']" name="form['. $owner->name .']['.$r.']['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value="'.$this->htmlentities( $v , ENT_COMPAT, 'utf-8').'" style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'"/>';
   		} elseif ($this->mode==='view') {
   		    $result[] = $this->htmlentities( $v , ENT_COMPAT, 'utf-8');
   		} else {
@@ -742,9 +742,9 @@ class XmlForm_Field_Password extends XmlForm_Field
   {
 	  if ($this->mode==='edit') {
 	    if ($this->readOnly)
-		    return '<input class="FormField" id="form['.$this->name.']" name="form['.$this->name.']" type ="password" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $value , ENT_COMPAT, 'utf-8').'\' readOnly="readOnly"/>';
+		    return '<input class="module_app_input___gray" id="form['.$this->name.']" name="form['.$this->name.']" type ="password" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $value , ENT_COMPAT, 'utf-8').'\' readOnly="readOnly"/>';
 		  else
-		    return '<input class="FormField" id="form['.$this->name.']" name="form['.$this->name.']" type ="password" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $value , ENT_COMPAT, 'utf-8').'\'/>';
+		    return '<input class="module_app_input___gray" id="form['.$this->name.']" name="form['.$this->name.']" type ="password" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $value , ENT_COMPAT, 'utf-8').'\'/>';
 		} elseif ($this->mode==='view') {
 		  return $this->htmlentities( str_repeat('*', 10) , ENT_COMPAT, 'utf-8');
 		} else {
@@ -779,13 +779,13 @@ class XmlForm_Field_Textarea extends XmlForm_Field
     $className = ($this->className)? (' class="'.$this->className.'"') : '';
     if ($this->mode==='edit') {
 	    if ($this->readOnly)
-    		return '<textarea '.$className.' id="form['.$this->name.']" name="form['.$this->name.']" cols="'.$this->cols.'" rows="'.$this->rows.'" style="'.$this->style.'" wrap="'.htmlentities($this->wrap,ENT_QUOTES,'UTF-8').'" class="FormTextArea" readOnly>'.$this->htmlentities( $value ,ENT_COMPAT,'utf-8').'</textarea>';
+    		return '<textarea id="form['.$this->name.']" name="form['.$this->name.']" cols="'.$this->cols.'" rows="'.$this->rows.'" style="'.$this->style.'" wrap="'.htmlentities($this->wrap,ENT_QUOTES,'UTF-8').'" class="module_app_input___gray" '.$className.' readOnly>'.$this->htmlentities( $value ,ENT_COMPAT,'utf-8').'</textarea>';
 	    else
-    		return '<textarea '.$className.' id="form['.$this->name.']" name="form['.$this->name.']" cols="'.$this->cols.'" rows="'.$this->rows.'" style="'.$this->style.'" wrap="'.htmlentities($this->wrap,ENT_QUOTES,'UTF-8').'" class="FormTextArea" >'.$this->htmlentities( $value ,ENT_COMPAT,'utf-8').'</textarea>';
+    		return '<textarea id="form['.$this->name.']" name="form['.$this->name.']" cols="'.$this->cols.'" rows="'.$this->rows.'" style="'.$this->style.'" wrap="'.htmlentities($this->wrap,ENT_QUOTES,'UTF-8').'" class="module_app_input___gray" '.$className.' >'.$this->htmlentities( $value ,ENT_COMPAT,'utf-8').'</textarea>';
 		} elseif ($this->mode==='view') {
   		return '<textarea id="form['.$this->name.']" name="form['.$this->name.']" cols="'.$this->cols.'" rows="'.$this->rows.'" readOnly style="border:0px;backgroud-color:inherit;'.$this->style.'" wrap="'.htmlentities($this->wrap,ENT_QUOTES,'UTF-8').'"  class="FormTextArea" >'.$this->htmlentities( $value ,ENT_COMPAT,'utf-8').'</textarea>';
 		} else {
-  		return '<textarea id="form['.$this->name.']" name="form['.$this->name.']" cols="'.$this->cols.'" rows="'.$this->rows.'" style="'.$this->style.'" wrap="'.htmlentities($this->wrap,ENT_QUOTES,'UTF-8').'"  class="FormTextArea" >'.$this->htmlentities( $value ,ENT_COMPAT,'utf-8').'</textarea>';
+  		return '<textarea id="form['.$this->name.']" name="form['.$this->name.']" cols="'.$this->cols.'" rows="'.$this->rows.'" style="'.$this->style.'" wrap="'.htmlentities($this->wrap,ENT_QUOTES,'UTF-8').'"  class="module_app_input___gray" >'.$this->htmlentities( $value ,ENT_COMPAT,'utf-8').'</textarea>';
 		}
 	}
   /**
@@ -802,9 +802,9 @@ class XmlForm_Field_Textarea extends XmlForm_Field
     foreach($values as $v)  {
   	  if ($this->mode==='edit') {
   	    if ($this->readOnly)
-  		    $result[] = '<input class="FormField" id="form['. $owner->name .']['.$r.']['.$this->name.']" name="form['. $owner->name .']['.$r.']['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $v , ENT_COMPAT, 'utf-8').'\' readOnly="readOnly"/>';
+  		    $result[] = '<input class="module_app_input___gray" id="form['. $owner->name .']['.$r.']['.$this->name.']" name="form['. $owner->name .']['.$r.']['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $v , ENT_COMPAT, 'utf-8').'\' readOnly="readOnly"/>';
   		  else
-  		    $result[] = '<input class="FormField" id="form['. $owner->name .']['.$r.']['.$this->name.']" name="form['. $owner->name .']['.$r.']['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $v , ENT_COMPAT, 'utf-8').'\' />';
+  		    $result[] = '<input class="module_app_input___gray" id="form['. $owner->name .']['.$r.']['.$this->name.']" name="form['. $owner->name .']['.$r.']['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $v , ENT_COMPAT, 'utf-8').'\' />';
 	  } elseif ($this->mode==='view') {
 			if(stristr($_SERVER['HTTP_USER_AGENT'], 'iPhone'))
 			{
@@ -1221,7 +1221,7 @@ class XmlForm_Field_File extends XmlForm_Field
    */
   function render( $value = NULL )
   {
-		return '<input class="FormField_file" id="form['.$this->name.']" name="form['.$this->name.']" type=\'file\' value=\''. $value .'\'/>';
+		return '<input class="module_app_input___gray_file" id="form['.$this->name.']" name="form['.$this->name.']" type=\'file\' value=\''. $value .'\'/>';
 	}
 }
 /*
@@ -1334,13 +1334,10 @@ class XmlForm_Field_Button extends XmlForm_Field
     $onclick = G::replaceDataField( $this->onclick, $owner->values );
     $label = G::replaceDataField( $this->label, $owner->values );
     if ($this->mode==='edit') {
-      	return '<input  id="form['.$this->name.']" name="form['.$this->name.']" type=\'button\' value=\''.
-      	  $label .'\' '.(($this->onclick!=='')?'onclick="'.
-      	  htmlentities( $onclick , ENT_COMPAT, 'utf-8').'"':'').'/>';
+    	$re = "<input style=\"{$this->style}\" class='module_app_button___gray {$this->className}' id=\"form[{$this->name}]\" name=\"form[{$this->name}]\" type='button' value=\"{$this->label}\" ".(($this->onclick)?'onclick="'.htmlentities($onclick,ENT_COMPAT, 'utf-8').'"':'')." />";
+    	return $re;
   	} elseif ($this->mode==='view') {
-      	return '<input  id="form['.$this->name.']" name="form['.$this->name.']" type=\'button\' value=\''.
-      	  $label .'\' '.(($this->onclick!=='')?'onclick="'.
-      	  htmlentities( $onclick , ENT_COMPAT, 'utf-8').'"':'').'disabled/>';
+		return "<input style=\"{$this->style}\" disabled='disabled' class='module_app_button___gray module_app_buttonDisabled___gray {$this->className}' id=\"form[{$this->name}]\" name=\"form[{$this->name}]\" type='button' value=\"{$this->label}\" ".(($this->onclick)?'onclick="'.htmlentities($onclick,ENT_COMPAT, 'utf-8').'"':'')." />";
   	} else {
   	    return $this->htmlentities( $value , ENT_COMPAT, 'utf-8');
   	}
@@ -1386,16 +1383,13 @@ class XmlForm_Field_Submit extends XmlForm_Field
    */
   function render( $value = NULL , $owner )
   {
-    $onclick = G::replaceDataField( $this->onclick, $owner->values );
-    if ($this->mode==='edit') {
+    $onclick = G::replaceDataField( $this->onclick,$owner->values );
+    if ($this->mode==='edit'){
 //      if ($this->readOnly)
 //      	return '<input id="form['.$this->name.']" name="form['.$this->name.']" type=\'submit\' value=\''. $this->label .'\' disabled/>';
-//    	else
-      	return '<input  id="form['.$this->name.']" name="form['.$this->name.']" type=\'submit\' value=\''. $this->label .'\' '.(($this->onclick!=='')?'onclick="'.
-      	  htmlentities( $onclick , ENT_COMPAT, 'utf-8').'"':'').'/>';
+		return "<input style=\"{$this->style}\" class='module_app_button___gray {$this->className}' id=\"form[{$this->name}]\" name=\"form[{$this->name}]\" type='submit' value=\"{$this->label}\" ".(($this->onclick)?'onclick="'.htmlentities($onclick,ENT_COMPAT, 'utf-8').'"':'')." />";
   	} elseif ($this->mode==='view') {
-      	return '<input  id="form['.$this->name.']" name="form['.$this->name.']" type=\'submit\' value=\''. $this->label .'\' disabled '.(($this->onclick!=='')?'onclick="'.
-      	  htmlentities( $onclick , ENT_COMPAT, 'utf-8').'"':'').'/>';
+		return "<input style=\"{$this->style}\" disabled='disabled' class='module_app_button___gray module_app_buttonDisabled___gray {$this->className}' id=\"form[{$this->name}]\" name=\"form[{$this->name}]\" type='submit' value=\"{$this->label}\" ".(($this->onclick)?'onclick="'.htmlentities($onclick,ENT_COMPAT, 'utf-8').'"':'')." />";
   	} else {
   	    return $this->htmlentities( $value , ENT_COMPAT, 'utf-8');
   	}
@@ -1431,9 +1425,9 @@ class XmlForm_Field_Hidden extends XmlForm_Field
 	  	if (isset($firstElement)) $value = $firstElement;
 	  }
     if ($this->mode==='edit') {
-      	return '<input class="FormField" id="form['.$this->name.']" name="form['.$this->name.']" type=\'hidden\' value=\''. $value .'\'/>';
+      	return '<input class="module_app_input___gray" id="form['.$this->name.']" name="form['.$this->name.']" type=\'hidden\' value=\''. $value .'\'/>';
   	} elseif ($this->mode==='view') {
-      	return '<input class="FormField" id="form['.$this->name.']" name="form['.$this->name.']" type=\'submit\' value=\''. $value .'\'/>';
+      	return '<input class="module_app_input___gray" id="form['.$this->name.']" name="form['.$this->name.']" type=\'submit\' value=\''. $value .'\'/>';
   	} else {
   	    return $this->htmlentities( $value , ENT_COMPAT, 'utf-8');
   	}
@@ -1473,10 +1467,10 @@ class XmlForm_Field_Dropdown extends XmlForm_Field
   {
     $this->executeSQL( $owner );
     if ($this->mode === 'edit') {
-      $html='<select class="FormField" id="form'.$rowId.'['.$this->name.']" name="form'.$rowId.'['.$this->name.']" '.(($this->style)?'style="'.$this->style.'"':'').'>';
+      $html='<select class="module_app_input___gray" id="form'.$rowId.'['.$this->name.']" name="form'.$rowId.'['.$this->name.']" '.(($this->style)?'style="'.$this->style.'"':'').'>';
     } elseif ($this->mode === 'view') {
       $html = $this->htmlentities( isset($this->options[ $value ])? $this->options[ $value ]:'' , ENT_COMPAT, 'utf-8');
-      $html .='<select class="FormField" id="form'.$rowId.'['.$this->name.']" name="form'.$rowId.'['.$this->name.']" style="display:none" disabled '.(($this->style)?'style="'.$this->style.'"':'').'>';
+      $html .='<select class="module_app_input___gray" id="form'.$rowId.'['.$this->name.']" name="form'.$rowId.'['.$this->name.']" style="display:none" disabled '.(($this->style)?'style="'.$this->style.'"':'').'>';
     }
       foreach($this->option as $optionName => $option) {
         $html.='<option value="'.$optionName.'" '.
@@ -1594,7 +1588,7 @@ class XmlForm_Field_RadioGroup extends XmlForm_Field
       $html='';
       foreach($this->options as $optionName => $option)
       {
-        $html.='<input class="FormField" id="form['.$this->name.']['.$optionName.']" name="form['.$this->name.
+        $html.='<input class="module_app_input___gray" id="form['.$this->name.']['.$optionName.']" name="form['.$this->name.
                 ']" type=\'radio\' value="'.$optionName.'" '.
                 (($optionName == $value)?'checked':'').' disabled><span class="FormCheck">'.$option.'</span></input><br>';
       }

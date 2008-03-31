@@ -580,8 +580,8 @@ form.formDefault td
 form.formDefault .content
 {
 	background-color:#FFF;
-	border-left:1px solid #CCC;
-	border-right:1px solid #CCC;
+	border-left:1px solid #dadada;
+	border-right:1px solid #dadada;
 }
 form.formDefault input.FormField
 {
@@ -589,6 +589,14 @@ form.formDefault input.FormField
 	background: #FFFFFF url(/skins/green/images/input_back.gif) repeat-x;
 	color:#333333;
 	font:normal 11px Arial,Helvetica,sans-serif;
+}
+form.formDefault input.FormFieldInvalid
+{
+	border: 1px solid red;
+}
+form.formDefault input.FormFieldValid
+{
+	border: 1px solid green;
 }
 form.formDefault .FormLabel
 {
