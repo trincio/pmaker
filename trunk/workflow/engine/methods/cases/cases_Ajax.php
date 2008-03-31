@@ -48,7 +48,6 @@ if(isset($_POST['showWindow']) && $_POST['showWindow']!=='false')
 else
 {
 	$_SESSION['showCasesWindow']=false;
-	die();
 }
 switch($_POST['action'])
 {
@@ -79,7 +78,7 @@ switch($_POST['action'])
     $G_HEADER->addScriptFile('/js/common/tree/tree.js');
     G::RenderPage('publish', 'raw');
 	break;
-	/*  what is this? 
+	/*  what is this?
 	case 'KT':
 	  global $G_PUBLISH;
   	global $G_HEADER;
