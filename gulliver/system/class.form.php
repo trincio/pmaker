@@ -51,10 +51,15 @@ class Form extends XmlForm
   function setDefaultValues( )
   {
     foreach($this->fields as $name => $content) {
-      if (isset($content->defaultValue))
-        $this->values[$name] = $content->defaultValue;
-      else
+      if (get_class($content) != '__PHP_Incomplete_Class') {
+        if (isset($content->defaultValue))
+          $this->values[$name] = $content->defaultValue;
+        else
+          $this->values[$name] = '';
+      }
+      else {
         $this->values[$name] = '';
+      }
     }
     foreach($this->fields as $k => $v){
       $this->fields[$k]->owner =& $this;

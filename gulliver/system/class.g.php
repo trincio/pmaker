@@ -70,13 +70,13 @@ class G
 	function generate_password($length=8)
 	{
 		$password = "";
-		$possible = "0123456789bcdfghjkmnpqrstvwxyz"; 
-		$i = 0; 
+		$possible = "0123456789bcdfghjkmnpqrstvwxyz";
+		$i = 0;
 		while($i<$length)
-		{ 
+		{
 			$char = substr($possible, mt_rand(0, strlen($possible)-1), 1);
 			if(!strstr($password, $char))
-			{ 
+			{
 				$password .= $char;
 				$i++;
 			}
@@ -848,7 +848,8 @@ class G
           G::sendHeaders ( $filename , 'text/html', $download, $downloadFileName ); break;
         case 'doc' :
         case 'pdf' :
-        case 'pm' :
+        case 'pm'  :
+        case 'po'  :
           G::sendHeaders ( $filename , 'application/octet-stream', $download, $downloadFileName ); break;
         case 'php' :
           require_once( $filename  );
