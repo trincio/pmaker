@@ -80,10 +80,10 @@
 -->
 <EDIT type="link" colWidth="40" value="@G::LoadTranslation(ID_EDIT)" link="#" onclick="fieldsEdit(@QXMLNODE_NAME);return false;"/>
 <DELETE type="link" colWidth="40" value="@G::LoadTranslation(ID_DELETE)" link="#" onclick="if (confirm('@G::LoadTranslation(ID_DELETE_FIELD_SURE)')) fieldsDelete(@QXMLNODE_NAME);return false;"/>
-<!--
+
 <UP type="link" colWidth="20" value="@G::LoadTranslation(ID_UP)" link="#" onclick="changePosition(@QXMLNODE_NAME, @#row__-1);return false;"/>
 <DOWN type="link" colWidth="20" value="@G::LoadTranslation(ID_DOWN)" link="#" onclick="changePosition(@QXMLNODE_NAME, @#row__+1);return false;"/>
- -->
+ 
 <!--<DRAG type="link" colWidth="20"  value="&lt;button&gt;.&lt;/button&gt;" enableHTML="1" link="#" onclick="this.onmousedown=function(){startDrag( event, this);};this.onmouseup=function(){endDrag(this, function(){alert('hello')});};"/>
 -->
 <!-- FILTER FORM -->

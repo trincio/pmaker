@@ -1781,8 +1781,12 @@ class XmlForm_Field_Grid extends XmlForm_Field
   {
     $this->id=$this->owner->id . $this->name;
     $tpl=new xmlformTemplate($this, PATH_CORE . 'templates/grid.html');
+    if (!isset($values) || !is_array($values) || sizeof($values)==0)
+    {
+      $values = array_keys($this->fields);
+    }
     $aValuekeys=array_keys($values);
-    if ((int)$aValuekeys[0]==1) $values=$this->flipValues($values);
+    if (count($aValuekeys)>0 && (int)$aValuekeys[0]==1) $values=$this->flipValues($values);
     $this->rows=count(reset($values));
     if (isset($owner->values)) {
       foreach($owner->values as $key => $value) {

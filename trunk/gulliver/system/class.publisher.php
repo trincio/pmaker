@@ -230,7 +230,7 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
       $G_FORM->setValues ( array( 'G_FORM_ID' => $G_FORM->id ) );
       //Asegurese de que no entre cuando $Part['Template']=="grid"
       //de hecho soo deberia usarse cuando $Part['Template']=="xmlform"
-      if (($Part['Type'] == 'dynaform') || ($Part['Template']=="xmlform"))
+      if ((($Part['Type'] == 'dynaform') && $Part['Template']=="xmlform") || ($Part['Template']=="xmlform"))
       {//var_dump($G_FORM->values, $Part['Data']);
       	$G_FORM->values=G::array_merges(
       	array('__DYNAFORM_OPTIONS' => isset($Part['Data']['__DYNAFORM_OPTIONS'])? $Part['Data']['__DYNAFORM_OPTIONS']:''),
