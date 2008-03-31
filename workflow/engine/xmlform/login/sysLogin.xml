@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dynaForm name="sysLogin" version="1.0" basedir="" xmlform_type="NORMAL" width="400px" onsubmit="alert(4); return false;">
+<dynaForm name="sysLogin" version="1.0" basedir="" xmlform_type="NORMAL" width="400px">
 <TITLE type="title">
   <es>Login</es>
   <en>Login</en>
