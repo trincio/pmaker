@@ -960,7 +960,7 @@ leimnud.Package.Public({
 					}
 				}
 			}
-			if(this.cancelClose===true){return flase;}
+			if(this.cancelClose===true){return false;}
 			if(this.options.fx.fadeOut===true)
 			{
 				new this.parent.module.fx.fade().make({
