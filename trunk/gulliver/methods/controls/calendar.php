@@ -54,6 +54,9 @@
  		$dt_currentDay   = $dt_aux[2];
  		$dt_currentMonth = $dt_aux[1];
 		$dt_currentYear  = $dt_aux[0];
+		if ($dt_currentYear='0000') $dt_currentYear = date ('Y');
+		if ($dt_currentMonth='00') $dt_currentMonth = date ('m');
+		if ($dt_currentDay='00') $dt_currentDay = date ('d');
 	}
 	else {
   	$dt_current    = date('Y-m-d');

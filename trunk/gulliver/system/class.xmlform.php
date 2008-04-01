@@ -1015,7 +1015,7 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText
 			if ( ! $this->verifyDateFormat ( $startDate ) )
 			 	$startDate = '';
 		}
-		if ( $startDate == '' && isset ( $beforeDate ) && $beforeDate  != '' ) {
+		if ( isset ( $beforeDate ) && $beforeDate  != '' ) {
 			if ( $this->isvalidBeforeFormat ( $beforeDate ) )
 				$startDate = $this->calculateBeforeFormat( $beforeDate , -1 );
 		}
@@ -1036,12 +1036,12 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText
 			 	$endDate = '';
 		}
 
-		if ( $endDate == '' && isset ( $afterDate ) && $afterDate  != '' ) {
+		if ( isset ( $afterDate ) && $afterDate  != '' ) {
 			if ( $this->isvalidBeforeFormat ( $afterDate) )
 				$endDate = $this->calculateBeforeFormat( $afterDate, +1 );
 		}
 
-		if ( $endDate == '' && isset ( $this->maxlength ) && is_numeric ($this->maxlength) && $this->maxlength >= 1900 && $this->maxlength <= 2100  ) {
+		if ( isset ( $this->maxlength ) && is_numeric ($this->maxlength) && $this->maxlength >= 1900 && $this->maxlength <= 2100  ) {
 				$endDate = $this->maxlength . '-01-01';
 		}
 		if ( $endDate == ''  ) {

@@ -53,6 +53,7 @@ function loadEditor()
     }
     else
     {
+			mainPanel.cancelClose=true;
       return false;
     }
   }

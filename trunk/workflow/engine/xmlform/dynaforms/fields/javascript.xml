@@ -19,7 +19,8 @@
 SELECT XMLNODE_NAME, TYPE FROM dynaForm WHERE XMLNODE_NAME = @@PME_XMLNODE_NAME
 </PME_VALIDATE_NAME>
 
-<PME_CODE type="textarea" cols="47" rows="12" defaultvalue="" style="overflow:scroll">
+<PME_CODE type="textarea" cols="47" rows="12" defaultvalue="
+" style="overflow:scroll">
 
   <en>Code</en>
   <es>Código</es>

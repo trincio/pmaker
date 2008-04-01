@@ -27,7 +27,7 @@ var dynaformEditor={
 
 	},
 	save:function(){
-		this.saveProperties();
+		/*this.saveProperties();*/
 		try {
 			this.saveCurrentView();
 		} catch (e) {
@@ -75,6 +75,9 @@ var dynaformEditor={
 				break;
 			case "javascripts":
 				this.saveJavascript();
+				break;
+			case "properties":
+				this.saveProperties();
 				break;
 		}
 	},
@@ -155,6 +158,7 @@ var dynaformEditor={
 	changeToProperties:function()
 	{
 		this.currentView="properties";
+		this.refreshProperties();
 	},
 	// Refresh functions
 	refreshCurrentView:function()
@@ -333,7 +337,7 @@ var dynaformEditor={
 		getField("DYN_TYPE","dynaforms_Properties").value=prop.DYN_TYPE;
 		getField("DYN_DESCRIPTION","dynaforms_Properties").value=prop.DYN_DESCRIPTION;
 		getField("WIDTH","dynaforms_Properties").value=prop.WIDTH;
-		getField("ENABLETEMPLATE","dynaforms_Properties").checked=(prop.ENABLETEMPLATE=="1");
+		/*getField("ENABLETEMPLATE","dynaforms_Properties").checked=(prop.ENABLETEMPLATE=="1");*/
 		getField("MODE","dynaforms_Properties").value=prop.MODE;
 	},
 	// Internal functions

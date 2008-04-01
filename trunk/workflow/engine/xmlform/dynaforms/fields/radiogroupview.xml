@@ -28,26 +28,26 @@
   <es>Default Value</es>
 </DEFAULTVALUE>
 
-<SUBTITLE type="subtitle" enableHTML="1">
+<SUBTITLE type="title" enableHTML="1">
   <en>Appearance</en>
   <es>Apariencia</es>
 </SUBTITLE>
 
-<GROUP type="text" maxlength="10" size="10" validate="Int" defaultvalue="0" >
+<!--<GROUP type="text" maxlength="10" size="10" validate="Int" defaultvalue="0" >
 
   <en>Group</en>
   <es>Group</es>
-</GROUP>
+</GROUP>-->
 <ENABLEHTML type="checkbox" falseValue="0" value="1" defaultvalue="0" >
 
   <en>EnableHtml</en>
   <es>EnableHtml</es>
 </ENABLEHTML>
-<STYLE type="text" maxlength="" size="50">
+<!--<STYLE type="text" maxlength="" size="50">
 
   <en>Style</en>
   <es>Style</es>
-</STYLE>
+</STYLE>-->
 
 <ACCEPT type="button" onclick="fieldsSave( this.form );">
   <en>Save</en>

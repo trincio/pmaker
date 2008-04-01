@@ -80,7 +80,7 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
   unset($attributes['ACCEPT']);
   unset($attributes['LABEL']);
   unset($attributes['PRO_UID']);
-var_dump( $attributes );
+
   $options = NULL;
   foreach($attributes as $key => $value ) {
     if ($key==='OPTIONS') {

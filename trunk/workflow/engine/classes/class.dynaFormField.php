@@ -56,12 +56,18 @@ class DynaFormField extends DBTable
     $res = $this->_dbses->Execute('SELECT * FROM dynaForm WHERE XMLNODE_NAME="'.$Fields['XMLNODE_NAME'].'"');
     $this->is_new = ($res->count()==0);
     $this->Fields = $Fields;
+    $res = $this->_dbses->Execute('INSERT INTO dynaForm'.
+      ' (XMLNODE_TYPE,XMLNODE_VALUE)'.
+      ' VALUES ("cdata", "'."\n".'")');
     parent::Save();
     if ($this->is_new) {
+      /*
+       * Create a new field.
+       */
       foreach( $labels as $lang => $value ) {
-        $res = $this->_dbses->Execute('INSERT INTO dynaForm'.
+        /*$res = $this->_dbses->Execute('INSERT INTO dynaForm'.
           ' (XMLNODE_TYPE,XMLNODE_VALUE)'.
-          ' VALUES ("cdata", "'."\n".'")');
+          ' VALUES ("cdata", "'."\n".'")');*/
         $res = $this->_dbses->Execute('INSERT INTO dynaForm.'
           .$Fields['XMLNODE_NAME'].' (XMLNODE_NAME,XMLNODE_VALUE,XMLNODE_TYPE) '
           .'VALUES ("","'."\n  ".'","cdata")');
@@ -85,7 +91,13 @@ class DynaFormField extends DBTable
           .$Fields['XMLNODE_NAME'].' (XMLNODE_NAME,XMLNODE_VALUE,XMLNODE_TYPE) '
           .'VALUES ("","'."\n".'","cdata")');
       }
+    $res = $this->_dbses->Execute('INSERT INTO dynaForm'.
+      ' (XMLNODE_TYPE,XMLNODE_VALUE)'.
+      ' VALUES ("cdata", "'."\n".'")');
     } else {
+      /*
+       * Update an existing field.
+       */
       foreach( $labels as $lang => $value ) {
         $res = $this->_dbses->Execute('SELECT * FROM dynaForm.'
           .$Fields['XMLNODE_NAME'].' WHERE XMLNODE_NAME ="'.$lang.'"');
