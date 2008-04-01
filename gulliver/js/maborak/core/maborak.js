@@ -1814,10 +1814,18 @@ var maborak = function(){
 										this.rake(cn);
 									}
 								}
+								alert(inp.name)
 							}
 							else
 							{
-								var cn =inp.name+"="+escape(inp.options[inp.options.selectedIndex].value)+"&";
+								try
+								{
+									var cn =inp.name+"="+escape(inp.options[inp.options.selectedIndex].value)+"&";
+								}
+								catch(e)
+								{
+									var cn =inp.name+"=&";
+								}
 								this.rake(cn);
 							}
 						}

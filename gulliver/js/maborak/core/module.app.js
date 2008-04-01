@@ -412,7 +412,9 @@ leimnud.Package.Public({
 		},
 		submit:function(options)
 		{
-			this.options = options || {};
+			this.options = {
+				callback:function(){}
+			}.concat(options || {});
 			if(!this.parent.dom.element(this.options.form)){return false;}
 			this.make = function(onSub)
 			{
@@ -423,24 +425,17 @@ leimnud.Package.Public({
 					if(Rt===false){return false;}
 				}
 				var arg = new this.parent.dom.serializer(this.options.form,false);
-				alert(arg)
-				//alert(arg.parent)
-				//return false;
 				this.rpc = new this.parent.module.rpc.xmlhttp({
 					url	: this.options.form.action,
 					method	: this.options.form.method,
 					args	: arg.form()
 				});
-				this.rpc.callback=this.callback || false;
+				this.rpc.callback=this.options.callback;
 				this.rpc.make();
 				return false;
 			};
 			this.expand(this);
-			//this.options.form.onsubmit = this.make.args(this.options.form.onsubmit);
-			this.options.form.onsubmit = function(){
-				alert(3)
-				return false;
-			};
+			this.options.form.onsubmit = this.make.args(this.options.form.onsubmit);
 		},
 		iframe:function(element,post)
 		{
