@@ -3,10 +3,10 @@
 
 <DYNA_HEADER >
   <es>[CDATA]
-    <center class=subtitle>Your session has expired. </center>
+    <center class="subtitle">Your session has expired. </center>
   [/CDATA]</es>
   <en>[CDATA]
-    <center class=subtitle>Your session has expired. </center>
+    <center class="subtitle">Your session has expired. </center>
   [/CDATA]</en>
 </DYNA_HEADER>
 
