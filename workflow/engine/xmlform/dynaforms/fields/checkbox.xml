@@ -24,7 +24,7 @@ SELECT XMLNODE_NAME, TYPE FROM dynaForm WHERE XMLNODE_NAME = @@PME_XMLNODE_NAME
   <es>Etiqueta</es>
 </PME_LABEL>
 
-<PME_SUBTITLE3 type="subtitle" enableHTML="1">
+<PME_SUBTITLE3 type="title" enableHTML="1">
   <en>Behaviour</en>
   <es>Comportamiento</es>
 </PME_SUBTITLE3>
@@ -45,16 +45,16 @@ SELECT XMLNODE_NAME, TYPE FROM dynaForm WHERE XMLNODE_NAME = @@PME_XMLNODE_NAME
   <es>Default Value</es>
 </PME_DEFAULTVALUE>
 
-<PME_SUBTITLE type="subtitle" enableHTML="1">
+<PME_SUBTITLE type="title" enableHTML="1">
   <en>Appearance</en>
   <es>Apariencia</es>
 </PME_SUBTITLE>
 
-<PME_GROUP type="text" maxlength="10" size="10" validate="Int" defaultvalue="0" group="2">
+<!--<PME_GROUP type="text" maxlength="10" size="10" validate="Int" defaultvalue="0" group="2">
 
   <en>Group</en>
   <es>Group</es>
-</PME_GROUP>
+</PME_GROUP>->
 <PME_MODE type="dropdown" defaultvalue="edit">
 
   <en>Mode
@@ -66,11 +66,11 @@ SELECT XMLNODE_NAME, TYPE FROM dynaForm WHERE XMLNODE_NAME = @@PME_XMLNODE_NAME
     <option name="view">Vista</option>
   </es>
 </PME_MODE>
-<PME_STYLE type="text" maxlength="" size="50">
+<!--<PME_STYLE type="text" maxlength="" size="50">
 
   <en>Style</en>
   <es>Style</es>
-</PME_STYLE>
+</PME_STYLE>-->
 <PME_LABELONRIGHT type="checkbox" maxlength="50" size="30" falseValue="0" value="1" labelOnRight="0">
   <en>Label on the right side</en>
   <es>Etiqueta a la derecha</es>

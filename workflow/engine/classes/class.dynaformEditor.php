@@ -509,8 +509,11 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 		}
 		else
 		{
+			$form = new Form( $file , PATH_DYNAFORM, SYS_LANG, true );
 			$Properties=$tmp['Properties'];
 			if (!isset($Properties['ENABLETEMPLATE'])) $Properties['ENABLETEMPLATE'] ="0";
+			$Properties['WIDTH']=$form->width;
+			$Properties['MODE']=$form->mode;
 		}
 		return $Properties;
 	}

@@ -25,7 +25,7 @@ SELECT XMLNODE_NAME, TYPE FROM dynaForm WHERE XMLNODE_NAME = @@PME_XMLNODE_NAME
 </PME_LABEL>
 
 
-<PME_SUBTITLE type="subtitle" enableHTML="1">
+<PME_SUBTITLE type="title" enableHTML="1">
   <en>Appearance</en>
   <es>Apariencia</es>
 </PME_SUBTITLE>
@@ -59,11 +59,11 @@ SELECT XMLNODE_NAME, TYPE FROM dynaForm WHERE XMLNODE_NAME = @@PME_XMLNODE_NAME
   <es>EnableHtml</es>
 </PME_ENABLEHTML>
 -->
-<PME_STYLE type="text" maxlength="" size="50">
+<!--<PME_STYLE type="text" maxlength="" size="50">
 
   <en>Style</en>
   <es>Style</es>
-</PME_STYLE>
+</PME_STYLE>-->
 
 <PME_ACCEPT type="button" onclick="fieldsSave( this.form );">
   <en>Save</en>
