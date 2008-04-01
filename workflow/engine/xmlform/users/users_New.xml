@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dynaForm name="myInfo" width="500px" labelWidth="200px"  mode="edit" enableTemplate="0">
+<dynaForm name="myInfo" width="500px" labelWidth="200px"  mode="edit" enableTemplate="0" onsubmit="return verifyUserInformation(this);">
 
 <menuUser type="xmlmenu" xmlfile="users/users_NewOptions">
   <es></es>
@@ -123,7 +123,7 @@ SELECT ROL_CODE AS USR_ROLE, ROL_CODE AS CODE FROM ROLES WHERE ROL_SYSTEM = '000
   <en>Resume</en>
 </USR_RESUME>
 
-<SUBMIT type="button" onclick="verifyUserInformation(this.form);" group="1">
+<SUBMIT type="submit" group="1">
   <es>Guardar</es>
   <en>Save</en>
 </SUBMIT>
@@ -199,7 +199,7 @@ var verifyUserInformation = function(oForm)
   	});
 		oAux1.focus();
 		bContinue = false;
-	}
+		}
 	oAux1 = oForm.elements['form[USR_NEW_PASS]'];
 	if (oAux1.value != '')
 	{
@@ -215,7 +215,12 @@ var verifyUserInformation = function(oForm)
 	}
 	if (bContinue)
 	{
-		oForm.submit();
+		return true;
+	}
+	else
+	{
+	//	oForm.submit();
+		return false;
 	}
 };
 

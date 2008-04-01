@@ -26,10 +26,10 @@ leimnud.Package.Public({
 		{
 			this.makeTmpDB();
 			this.options 		= {
-				statusBar:true,
-				titleBar:true,
-				cursorToDrag:"default",
-				elementToDrag:"title"
+				statusBar	:false,
+				titleBar	:true,
+				cursorToDrag	:"default",
+				elementToDrag	:"title"
 			}.concat(this.options || {});
 			this.options.fx		= {
 				blinkToFront:true,
@@ -42,10 +42,12 @@ leimnud.Package.Public({
 			}.concat(this.options.fx || {});
 			//this.options.fx		= this.options.fx || {};
 			this.options.control	= {
-				resize:true,
+				resize:false,
 				close:true,
 				drag:true
 			}.concat(this.options.control || {});
+			this.options.statusBar = (this.options.statusBarButtons || this.options.control.resize)?true:false;
+
 			this.options.size	= {
 				w:200,h:200
 			}.concat(this.options.size || {});

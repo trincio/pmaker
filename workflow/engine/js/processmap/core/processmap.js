@@ -797,10 +797,9 @@ var processmap=function(){
 							position:{x:50,y:50,center:true},
 							title: G_STRINGS.ID_PROCESSMAP_TASK_STEPS+" "+data.label,
 							theme:this.options.theme,
-							statusBar:true,
+							statusBar:false,
 							control:{
-								close:true,
-								resize:true
+								close:true
 							},
 							fx:{
 								modal:true
