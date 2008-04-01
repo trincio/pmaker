@@ -40,6 +40,7 @@ class Form extends XmlForm
   var $ajaxServer = '';
   var $enableTemplate = false;
   var $ajaxSubmit = false;
+  var $callback='function(){}';
   var $template;
   var $className="formDefault";
   /**

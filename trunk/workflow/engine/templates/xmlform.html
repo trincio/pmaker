@@ -92,7 +92,9 @@ if (typeof(G_Form)==='undefined') return alert('form.js was not loaded');
   {if isset($form->ajaxSubmit) && ($form->ajaxSubmit)}
   {literal}
     var sub = new leimnud.module.app.submit({
-        form    : myForm.element
+    form    : myForm.element,{/literal}
+    callback: {$form->callback}
+    {literal}
       });
     sub.sendObj = false;
   {/literal}

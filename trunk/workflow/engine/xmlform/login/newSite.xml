@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dynaForm name="" version="1.0" basedir="" xmlform_type="NORMAL" width="400px" onsubmit="alert(4); return false;">
+<dynaForm name="new_workspace" version="1.0" basedir="" xmlform_type="NORMAL" width="400px" ajaxSubmit="true" callback="status_create">
 <NEW_WORKSPACE type="title">
   <es>New Workspace</es>
   <en>New Workspace</en>
@@ -8,33 +8,16 @@
   <es>Nombre</es>
   <en>Name</en>
 </NW_TITLE>
-<NW_SUB type="button" onclick="newSite(this.form);return false;">
+<NW_SUB type="submit" oonclick="newSite(this.form);return false;">
   <es>Create</es>
   <en>Create</en>
 </NW_SUB>
 <JS type="JavaScript">
-<![CDATA[
-var newSite=function(form)
-{
-	var nameSite=form['form[NW_TITLE]'].value || '';
-	if(nameSite.trim()=='')
-	{
-		new leimnud.module.app.alert().make({
-			label:'Invalid name'
-		});
+	<![CDATA[
+	var status_create=function(rpc){
+	try{var rp=rpc.xmlhttp.responseText.parseJSON();}catch(e){var rp={};}
+	alert(rp)
 	}
-	else
-	{
-		var arg = new leimnud.dom.serializer(form,false);
-		var r = new leimnud.module.rpc.xmlhttp({
-			url		: form.action,
-			method	: form.method,
-			args	: arg.form()
-		});
-		//r.callback=this.callback || false;
-		r.make();
-	}
-}
-]]>
+	]]>
 </JS>
 </dynaForm>

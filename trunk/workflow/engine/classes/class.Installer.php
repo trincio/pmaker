@@ -63,6 +63,10 @@ class Installer
 		),$this->options['database']);
 		return ($confirmed===true)?$this->make_site():$this->create_site_test();
 	}
+	public function isset_site($name="workflow")
+	{
+		return file_exists(PATH_DATA."sites/".$name);
+	}
 	private function create_site_test()
 	{
 		$result=Array(
