@@ -56,6 +56,17 @@ class DynaFormField extends DBTable
     $res = $this->_dbses->Execute('SELECT * FROM dynaForm WHERE XMLNODE_NAME="'.$Fields['XMLNODE_NAME'].'"');
     $this->is_new = ($res->count()==0);
     $this->Fields = $Fields;
+    /*
+     * MPD-10 al crear campos, que no aparezcan muchos atributos, solo los principales?
+     * Se mostraran los que no estan en blanco
+     */
+    if ($this->is_new)
+    {
+      foreach($this->Fields as $key => $value)
+      {
+        if ($value=="") unset( $this->Fields[$key] );
+      }
+    }
     $res = $this->_dbses->Execute('INSERT INTO dynaForm'.
       ' (XMLNODE_TYPE,XMLNODE_VALUE)'.
       ' VALUES ("cdata", "'."\n".'")');

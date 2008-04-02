@@ -46,19 +46,19 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
   /* Start Comment: Modify the options grid to set dynamically the language
    * label columns.
    */
-  $dbc2 = new DBConnection( PATH_XMLFORM . 'dynaforms/fields/_options.xml' ,'','','','myxml' );
-  $ses2 = new DBSession($dbc2);
-  $ses2->execute("DELETE FROM dynaForm WHERE XMLNODE_NAME like 'LABEL_%' ");
-  $ses2->execute("DELETE FROM dynaForm WHERE XMLNODE_NAME = '' ");
-  $langs=array(SYS_LANG/*,'es','fa'*/);
-  foreach( $langs as $lang ) {
-    $LANG = strtoupper($lang);
-    $Label = 'Label';
-    $ses2->execute("INSERT INTO dynaForm (XMLNODE_NAME,XMLNODE_TYPE,XMLNODE_VALUE) VALUES ('', 'cdata', '\n') ");
-    $ses2->execute("INSERT INTO dynaForm (XMLNODE_NAME,TYPE) VALUES ('LABEL_{$LANG}', 'text') ");
-    $ses2->execute("INSERT INTO dynaForm.LABEL_{$LANG} (XMLNODE_NAME,XMLNODE_VALUE) VALUES ('".SYS_LANG."', '{$Label} ({$lang})') ");
-    $ses2->execute("INSERT INTO dynaForm (XMLNODE_NAME,XMLNODE_TYPE,XMLNODE_VALUE) VALUES ('', 'cdata', '\n') ");
-  }
+//  $dbc2 = new DBConnection( PATH_XMLFORM . 'dynaforms/fields/_options.xml' ,'','','','myxml' );
+//  $ses2 = new DBSession($dbc2);
+//  $ses2->execute("DELETE FROM dynaForm WHERE XMLNODE_NAME like 'LABEL_%' ");
+//  $ses2->execute("DELETE FROM dynaForm WHERE XMLNODE_NAME = '' ");
+//  $langs=array(SYS_LANG/*,'es','fa'*/);
+//  foreach( $langs as $lang ) {
+//    $LANG = strtoupper($lang);
+//    $Label = 'Label';
+//    $ses2->execute("INSERT INTO dynaForm (XMLNODE_NAME,XMLNODE_TYPE,XMLNODE_VALUE) VALUES ('', 'cdata', '\n') ");
+//    $ses2->execute("INSERT INTO dynaForm (XMLNODE_NAME,TYPE) VALUES ('LABEL_{$LANG}', 'text') ");
+//    $ses2->execute("INSERT INTO dynaForm.LABEL_{$LANG} (XMLNODE_NAME,XMLNODE_VALUE) VALUES ('".SYS_LANG."', '{$Label} ({$lang})') ");
+//    $ses2->execute("INSERT INTO dynaForm (XMLNODE_NAME,XMLNODE_TYPE,XMLNODE_VALUE) VALUES ('', 'cdata', '\n') ");
+//  }
   /* End Comment: */
 
 
