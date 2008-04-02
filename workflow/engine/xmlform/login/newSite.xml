@@ -16,7 +16,11 @@
 	<![CDATA[
 	var status_create=function(rpc){
 	try{var rp=rpc.xmlhttp.responseText.parseJSON();}catch(e){var rp={};}
-	alert(rp)
+	alert(rp.message)
+	if(rp.created===true)
+	{
+	window.location="/sys"+rp.name+"/en/green/login/login";
+	}
 	}
 	]]>
 </JS>

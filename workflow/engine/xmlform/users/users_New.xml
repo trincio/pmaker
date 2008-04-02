@@ -201,17 +201,14 @@ var verifyUserInformation = function(oForm)
 		bContinue = false;
 		}
 	oAux1 = oForm.elements['form[USR_NEW_PASS]'];
-	if (oAux1.value != '')
+	oAux2 = oForm.elements['form[USR_CNF_PASS]'];
+	if (oAux1.value.trim() == '' || oAux2.value.trim()!==oAux1.value.trim())
 	{
-		oAux2 = oForm.elements['form[USR_CNF_PASS]'];
-		if (oAux1.value != oAux2.value)
-		{
 		  new leimnud.module.app.alert().make({
-	      label: "@#MESSAGE3"
-  	  });
+		      label: "@#MESSAGE3"
+ 			  });
 		  oAux1.focus();
-		  bContinue = false;
-	  }
+		  bContinue=false;
 	}
 	if (bContinue)
 	{

@@ -29,16 +29,17 @@ if(isset($_POST['form']['NW_TITLE']))
 	$name	= trim($_POST['form']['NW_TITLE']);
 	$inst	= new Installer();
 	$isset	= $inst->isset_site($name);
-	$new	= ((!$isset) && ctype_alpha($name))?true:false;
+	$new	= ((!$isset) && ctype_alnum($name))?true:false;
 	if($new)
 	{
 		$inst->create_site(Array(
-			'name'=>'name'
+			'name'=>$name
 		),true);
 	}
 	$json	= new Services_JSON();
 	$ec;
 	$ec->created=($new)?true:false;
+	$ec->name=$name;
 	$ec->message=($new)?"Created":"Workspace already exists or Name invalid";
 	echo $json->encode($ec);
 }

@@ -34,7 +34,7 @@ var processmap=function(){
 							//target	:this.options.target,
 							statusBar:false,
 							//titleBar:false,
-							control	:{drag:false,resize:true,close:true},
+							control	:{drag:false,resize:false,close:true},
 							fx	:{opacity:true,rolled:false,modal:true}
 						};
 						this.panels.buildingBlocks.make();
@@ -303,9 +303,8 @@ var processmap=function(){
 							position:{x:50,y:50,center:true},
 							title	:G_STRINGS.ID_PROCESSMAP_EDIT_PROCESS+": "+this.data.db.title.label,
 							theme	:this.options.theme,
-							control	:{close:true,resize:true},fx:{modal:true},
+							control	:{close:true,resize:false},fx:{modal:true},
 							statusBar:false,
-							resize	:true,
 							fx	:{shadow:true,modal:true}
 						};
 						panel.make();
@@ -334,9 +333,8 @@ var processmap=function(){
 							position:{x:50,y:50,center:true},
 							title	:G_STRINGS.ID_PROCESSMAP_EXPORT_PROCESS+": "+this.data.db.title.label,
 							theme	:this.options.theme,
-							control	:{close:true,resize:true},fx:{modal:true},
+							control	:{close:true,resize:false},fx:{modal:true},
 							statusBar:false,
-							resize	:true,
 							fx	:{shadow:true,modal:true}
 						};
 						panel.make();
@@ -832,9 +830,8 @@ var processmap=function(){
 							position:{x:50,y:50,center:true},
 							title	:G_STRINGS.ID_PROCESSMAP_USERS_AND_GROUPS+": "+task.label,
 							theme	:this.options.theme,
-							control	:{close:true,resize:true},fx:{modal:true},
+							control	:{close:true,resize:false},fx:{modal:true},
 							statusBar:false,
-							resize	:true,
 							fx	:{modal:true}
 						};
 						panel.make();
@@ -1502,7 +1499,7 @@ var processmap=function(){
 		  	position:{x:50,y:50,center:true},
 		  	title	:G_STRINGS.ID_PROCESSMAP_WORKFLOW_PATTERNS+": "+task.label,
 		  	theme	:this.options.theme,
-		  	control	:{close:true,resize:true},
+		  	control	:{close:true,resize:false},
 		  	fx	:{modal:true}
 		  };
 		  panel.make();
@@ -1699,7 +1696,7 @@ processmap.prototype={
 			titleBar:false,
 			control:{
 				//drag	:false,
-				resize:true
+				resize:false
 			},
 			fx:{
 				opacity:false,
