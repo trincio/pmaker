@@ -93,6 +93,7 @@ if (typeof(G_Form)==='undefined') return alert('form.js was not loaded');
   {literal}
     var sub = new leimnud.module.app.submit({
     form    : myForm.element,{/literal}
+    inProgress: {$form->in_progress},
     callback: {$form->callback}
     {literal}
       });

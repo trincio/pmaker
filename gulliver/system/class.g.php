@@ -376,7 +376,7 @@ class G
    */
   function encrypt($string, $key) {
     //print $string;
-    if ( defined ( 'ENABLE_ENCRYPT' ) && ENABLE_ENCRYPT == 'yes' ) {
+//    if ( defined ( 'ENABLE_ENCRYPT' ) && ENABLE_ENCRYPT == 'yes' ) {
       if (strpos($string, '|', 0) !== false) return $string;
       $result = '';
       for($i=0; $i<strlen($string); $i++) {
@@ -389,9 +389,9 @@ class G
       $result = base64_encode($result);
       $result = str_replace ( '/' , '°' , $result);
       $result = str_replace ( '=' , '' , $result);
-    }
-    else
-      $result = $string;
+  //  }
+   // else
+    //  $result = $string;
 
     return $result;
   }
@@ -407,7 +407,7 @@ class G
    */
   /*public static*/ function decrypt($string, $key) {
 
-   if ( defined ( 'ENABLE_ENCRYPT' ) && ENABLE_ENCRYPT == 'yes' ) {
+//   if ( defined ( 'ENABLE_ENCRYPT' ) && ENABLE_ENCRYPT == 'yes' ) {
 
      //if (strpos($string, '|', 0) !== false) return $string;
      $result = '';
@@ -423,9 +423,9 @@ class G
        $result.=$char;
      }
      if (!empty($string_jhl[1])) $result.='?' . $string_jhl[1];
-   }
-   else
-     $result = $string;
+  // }
+  // else
+    // $result = $string;
    return $result;
   }
 

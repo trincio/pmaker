@@ -103,7 +103,7 @@ class ReportTables {
   	  	  	throw new Exception('Cannot connect to the database "' . $sDBName . '"!');
   	  	  }
   	  	  $sQuery  = 'CREATE TABLE IF NOT EXISTS `' . $sTableName . '` (';
-  	  	  $sQuery .= "`APP_UID` VARCHAR(32) NOT NULL DEFAULT '',";
+  	  	  $sQuery .= "`APP_UID` VARCHAR(32) NOT NULL DEFAULT '',`APP_NUMBER` INT NOT NULL,";
   	  	  if ($sType == 'GRID') {
   	  	  	$sQuery .= "`ROW` INT NOT NULL,";
   	  	  }
@@ -167,11 +167,11 @@ class ReportTables {
           	mysql_query('DELETE FROM `' . $sTableName . "` WHERE APP_UID = '" . $aRow['APP_UID'] . "'");
           	if ($sType == 'NORMAL') {
   	  	      $sQuery  = 'INSERT INTO `' . $sTableName . '` (';
-  	  	      $sQuery .= '`APP_UID`';
+  	  	      $sQuery .= '`APP_UID`,`APP_NUMBER`';
   	  	      foreach ($aFields as $aField) {
   	  	      	$sQuery .= ',`' . $aField['sFieldName'] . '`';
   	  	      }
-  	  	      $sQuery .= ") VALUES ('" . $aRow['APP_UID'] . "'";
+  	  	      $sQuery .= ") VALUES ('" . $aRow['APP_UID'] . "'," . (int)$aRow['APP_NUMBER'];
   	  	      foreach ($aFields as $aField) {
   	  	      	switch ($aField['sType']) {
   	  	      		case 'number':
@@ -195,11 +195,11 @@ class ReportTables {
   	  	    	if (isset($aData[$sGrid])) {
   	  	    	  foreach ($aData[$sGrid] as $iRow => $aGridRow) {
   	  	    	    $sQuery  = 'INSERT INTO `' . $sTableName . '` (';
-  	  	          $sQuery .= '`APP_UID`,`ROW`';
+  	  	          $sQuery .= '`APP_UID`,`APP_NUMBER`,`ROW`';
   	  	          foreach ($aFields as $aField) {
   	  	          	$sQuery .= ',`' . $aField['sFieldName'] . '`';
   	  	          }
-  	  	          $sQuery .= ") VALUES ('" . $aRow['APP_UID'] . "'," . $iRow;
+  	  	          $sQuery .= ") VALUES ('" . $aRow['APP_UID'] . "'," . (int)$aRow['APP_NUMBER'] . ',' . $iRow;
   	  	          foreach ($aFields as $aField) {
   	  	          	switch ($aField['sType']) {
   	  	          		case 'number':
@@ -267,7 +267,7 @@ class ReportTables {
     	throw($oError);
     }
   }
-  public function updateTables($sProcessUid, $sApplicationUid, $aFields) {
+  public function updateTables($sProcessUid, $sApplicationUid, $iApplicationNumber, $aFields) {
   	try {
   		$oCriteria = new Criteria('workflow');
   	  $oCriteria->add(ReportTablePeer::PRO_UID, $sProcessUid);
@@ -320,11 +320,11 @@ class ReportTables {
   	  	    	}
   	  	    	else {
   	  	    		$sQuery  = 'INSERT INTO `' . $aRow['REP_TAB_NAME'] . '` (';
-  	  	        $sQuery .= '`APP_UID`';
+  	  	        $sQuery .= '`APP_UID`,`APP_NUMBER`';
   	  	        foreach ($aTableFields as $aField) {
   	  	        	$sQuery .= ',`' . $aField['sFieldName'] . '`';
   	  	        }
-  	  	        $sQuery .= ") VALUES ('" . $sApplicationUid . "'";
+  	  	        $sQuery .= ") VALUES ('" . $sApplicationUid . "'," . (int)$iApplicationNumber;
   	  	        foreach ($aTableFields as $aField) {
   	  	        	switch ($aField['sType']) {
   	  	        		case 'number':
@@ -351,11 +351,11 @@ class ReportTables {
   	  	      if (isset($aFields[$aAux[0]])) {
   	  	        foreach ($aFields[$aAux[0]] as $iRow => $aGridRow) {
   	  	          $sQuery  = 'INSERT INTO `' . $aRow['REP_TAB_NAME'] . '` (';
-  	  	          $sQuery .= '`APP_UID`,`ROW`';
+  	  	          $sQuery .= '`APP_UID`,`APP_NUMBER`,`ROW`';
   	  	          foreach ($aTableFields as $aField) {
   	  	          	$sQuery .= ',`' . $aField['sFieldName'] . '`';
   	  	          }
-  	  	          $sQuery .= ") VALUES ('" . $sApplicationUid . "'," . $iRow;
+  	  	          $sQuery .= ") VALUES ('" . $sApplicationUid . "'," . (int)$iApplicationNumber . ',' . $iRow;
   	  	          foreach ($aTableFields as $aField) {
   	  	          	switch ($aField['sType']) {
   	  	          		case 'number':

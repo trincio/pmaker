@@ -216,7 +216,6 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
        $aMessage['MESSAGE'] = G::LoadTranslation ('ID_NOT_WORKSPACE');
        $G_PUBLISH          = new Publisher;
        $G_PUBLISH->AddContent('xmlform', 'xmlform', 'login/showMessage', '', $aMessage );
-       $G_PUBLISH->AddContent('xmlform', 'xmlform', 'login/newSite', '', '', '/sys/en/green/install/newSite');
        G::RenderPage( 'publish' );
        die;
       }

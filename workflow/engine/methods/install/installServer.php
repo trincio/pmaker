@@ -193,19 +193,20 @@ else if($action==="install")
 			'cli'	  =>$my
 		)
 	),true);
-//	echo $inst->report;
+	print_r($inst->report);
+	
+	$sh=md5(filemtime(PATH_GULLIVER."/class.g.php"));
+	$h=G::encrypt($dataClient->mysqlH.$sh.$dataClient->mysqlU.$sh.$dataClient->mysqlP,$sh);
 	$db_text = "<?php\n" .
 	"define( 'PATH_DATA', '".$dir_data."' );\n" .
 	"define( 'PATH_C',    '".$dir_compiled."' );\n" .
-	"define( 'DATABASE_MASTER_USERNAME',    '".$dataClient->mysqlU."' );\n" .
-	"define( 'DATABASE_MASTER_PASSWORD',    '".$dataClient->mysqlP."' );\n" .
-	"define( 'DATABASE_MASTER_HOSTNAME',    '".$dataClient->mysqlH."' );\n" .
-	"define( 'DATABASE_MASTER_CLI',    	'".$my."' );\n" .
+	"define( 'HASH_INSTALLATION','".$h."' );\n" .
+	"define( 'SYSTEM_HASH','".$sh."' );\n" .
+	"define( 'DATABASE_CLIENT','".$my."' );\n" .
 	"?>";
 	$fp = fopen(FILE_PATHS_INSTALLED, "w");
 	fputs( $fp, $db_text, strlen($db_text));
 	fclose( $fp );
-
 	/* Update languages */
 	$update = file_get_contents("http://".$_SERVER['SERVER_NAME'].":".$_SERVER['SERVER_PORT']."/sysworkflow/en/green/tools/updateTranslation");
 	print_r("Update language:  => ".((!$update)?$update:"OK")."\n");

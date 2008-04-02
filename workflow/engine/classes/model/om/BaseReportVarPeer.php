@@ -24,7 +24,7 @@ abstract class BaseReportVarPeer {
 	const CLASS_DEFAULT = 'classes.model.ReportVar';
 
 	/** The total number of columns. */
-	const NUM_COLUMNS = 4;
+	const NUM_COLUMNS = 5;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -32,6 +32,9 @@ abstract class BaseReportVarPeer {
 
 	/** the column name for the REP_VAR_UID field */
 	const REP_VAR_UID = 'REPORT_VAR.REP_VAR_UID';
+
+	/** the column name for the PRO_UID field */
+	const PRO_UID = 'REPORT_VAR.PRO_UID';
 
 	/** the column name for the REP_TAB_UID field */
 	const REP_TAB_UID = 'REPORT_VAR.REP_TAB_UID';
@@ -53,10 +56,10 @@ abstract class BaseReportVarPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('RepVarUid', 'RepTabUid', 'RepVarName', 'RepVarType', ),
-		BasePeer::TYPE_COLNAME => array (ReportVarPeer::REP_VAR_UID, ReportVarPeer::REP_TAB_UID, ReportVarPeer::REP_VAR_NAME, ReportVarPeer::REP_VAR_TYPE, ),
-		BasePeer::TYPE_FIELDNAME => array ('REP_VAR_UID', 'REP_TAB_UID', 'REP_VAR_NAME', 'REP_VAR_TYPE', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME => array ('RepVarUid', 'ProUid', 'RepTabUid', 'RepVarName', 'RepVarType', ),
+		BasePeer::TYPE_COLNAME => array (ReportVarPeer::REP_VAR_UID, ReportVarPeer::PRO_UID, ReportVarPeer::REP_TAB_UID, ReportVarPeer::REP_VAR_NAME, ReportVarPeer::REP_VAR_TYPE, ),
+		BasePeer::TYPE_FIELDNAME => array ('REP_VAR_UID', 'PRO_UID', 'REP_TAB_UID', 'REP_VAR_NAME', 'REP_VAR_TYPE', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
 	);
 
 	/**
@@ -66,10 +69,10 @@ abstract class BaseReportVarPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('RepVarUid' => 0, 'RepTabUid' => 1, 'RepVarName' => 2, 'RepVarType' => 3, ),
-		BasePeer::TYPE_COLNAME => array (ReportVarPeer::REP_VAR_UID => 0, ReportVarPeer::REP_TAB_UID => 1, ReportVarPeer::REP_VAR_NAME => 2, ReportVarPeer::REP_VAR_TYPE => 3, ),
-		BasePeer::TYPE_FIELDNAME => array ('REP_VAR_UID' => 0, 'REP_TAB_UID' => 1, 'REP_VAR_NAME' => 2, 'REP_VAR_TYPE' => 3, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME => array ('RepVarUid' => 0, 'ProUid' => 1, 'RepTabUid' => 2, 'RepVarName' => 3, 'RepVarType' => 4, ),
+		BasePeer::TYPE_COLNAME => array (ReportVarPeer::REP_VAR_UID => 0, ReportVarPeer::PRO_UID => 1, ReportVarPeer::REP_TAB_UID => 2, ReportVarPeer::REP_VAR_NAME => 3, ReportVarPeer::REP_VAR_TYPE => 4, ),
+		BasePeer::TYPE_FIELDNAME => array ('REP_VAR_UID' => 0, 'PRO_UID' => 1, 'REP_TAB_UID' => 2, 'REP_VAR_NAME' => 3, 'REP_VAR_TYPE' => 4, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
 	);
 
 	/**
@@ -171,6 +174,8 @@ abstract class BaseReportVarPeer {
 	{
 
 		$criteria->addSelectColumn(ReportVarPeer::REP_VAR_UID);
+
+		$criteria->addSelectColumn(ReportVarPeer::PRO_UID);
 
 		$criteria->addSelectColumn(ReportVarPeer::REP_TAB_UID);
 

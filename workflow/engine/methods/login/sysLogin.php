@@ -31,7 +31,5 @@ if (isset($_POST['form']['USER_ENV'])) {
 
 $G_PUBLISH = new Publisher;
 $G_PUBLISH->AddContent('xmlform', 'xmlform', 'login/sysLogin', '', '', 'sysLogin');
-$G_PUBLISH->AddContent('xmlform', 'xmlform', 'login/newSite', '', '', '../install/newSite');
-
 G::RenderPage( "publish" );
 ?>

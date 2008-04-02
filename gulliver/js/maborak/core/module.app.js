@@ -413,6 +413,7 @@ leimnud.Package.Public({
 		submit:function(options)
 		{
 			this.options = {
+				inProgress:function(){},
 				callback:function(){}
 			}.concat(options || {});
 			if(!this.parent.dom.element(this.options.form)){return false;}
@@ -424,6 +425,7 @@ leimnud.Package.Public({
 					Rt=onSub();
 					if(Rt===false){return false;}
 				}
+				this.options.inProgress(this.options.form);
 				var arg = new this.parent.dom.serializer(this.options.form,false);
 				this.rpc = new this.parent.module.rpc.xmlhttp({
 					url	: this.options.form.action,
