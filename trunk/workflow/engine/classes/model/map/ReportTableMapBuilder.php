@@ -74,7 +74,7 @@ class ReportTableMapBuilder {
 
 		$tMap->addColumn('REP_TAB_GRID', 'RepTabGrid', 'string', CreoleTypes::VARCHAR, false, 150);
 
-		$tMap->addColumn('REP_TAB_CONNECTION', 'RepTabConnection', 'string', CreoleTypes::VARCHAR, true, 10);
+		$tMap->addColumn('REP_TAB_CONNECTION', 'RepTabConnection', 'string', CreoleTypes::VARCHAR, true, 32);
 
 		$tMap->addColumn('REP_TAB_CREATE_DATE', 'RepTabCreateDate', 'int', CreoleTypes::TIMESTAMP, true, null);
 

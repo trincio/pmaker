@@ -55,11 +55,12 @@ class Installer
 			'path_compiled'	=>@PATH_C,
 			'database'=>Array()
 		),$config);
+		$a=@explode(SYSTEM_HASH,G::decrypt(HASH_INSTALLATION,SYSTEM_HASH));
 		$this->options['database']=G::array_concat(Array(
-			'username'=>@DATABASE_MASTER_USERNAME,
-			'password'=>@DATABASE_MASTER_PASSWORD,
-			'cli'	  =>@DATABASE_MASTER_CLI,
-			'hostname'=>@DATABASE_MASTER_HOSTNAME
+			'username'=>@$a[1],
+			'password'=>@$a[2],
+			'cli'	  =>@DATABASE_CLIENT,
+			'hostname'=>@$a[0]
 		),$this->options['database']);
 		return ($confirmed===true)?$this->make_site():$this->create_site_test();
 	}
@@ -89,6 +90,8 @@ class Installer
 		$test=$this->create_site_test();
 		if($test['created']===true)
 		{
+			$local=Array('localhost','127.0.0.1');
+
 			$wf = "wf_".$this->options['name'];
 			$rb = "rbac_".$this->options['name'];
 			$schema	="schema.sql";
@@ -111,7 +114,7 @@ class Installer
 			$this->log($q.": => ".((!$ac)?mysql_error():"OK")."\n");
 	
 			//$priv_wf = "GRANT ALL PRIVILEGES ON `".$wf.".* TO ".$wf."@`".$this->options['database']['hostname']."` IDENTIFIED BY '".$this->options['password']."' WITH GRANT OPTION";
-			if($this->options['database']['hostname']==="localhost")
+			if(in_array($this->options['database']['hostname'],$local))
 			{
 				$priv_wf = "GRANT ALL PRIVILEGES ON `".$wf."`.* TO ".$wf."@'localhost' IDENTIFIED BY '".$this->options['password']."' WITH GRANT OPTION";
 			}
@@ -123,7 +126,7 @@ class Installer
 			$this->log($priv_wf.": => ".((!$ac)?mysql_error():"OK")."\n");
 		
 			
-			if($this->options['database']['hostname']==="localhost")
+			if(in_array($this->options['database']['hostname'],$local))
 			{
 				$priv_rb = "GRANT ALL PRIVILEGES ON `".$rb."`.* TO ".$rb."@'localhost' IDENTIFIED BY '".$this->options['password']."' WITH GRANT OPTION";
 			}
@@ -201,7 +204,7 @@ class Installer
 		"define ('DB_NAME', '" . $wf. "' );\n" .
 		"define ('DB_USER', '" . $wf . "' );\n" .
 		"define ('DB_PASS', '" . $this->options['password'] . "' );\n" .
-		"define ('DB_RBAC_HOST', '". $this->options['database']['hostname'] . "' );\n" .
+		"define ('DB_RBAC_HOST', '". $this->options['database']['hostname'] .":".$myPort."' );\n" .
 		"define ('DB_RBAC_NAME', '". $rb . "' );\n" .
 		"define ('DB_RBAC_USER', '".$rb . "' );\n" .
 		"define ('DB_RBAC_PASS', '". $this->options['password'] . "' );\n" .

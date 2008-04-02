@@ -36,6 +36,13 @@ abstract class BaseReportVar extends BaseObject  implements Persistent {
 
 
 	/**
+	 * The value for the pro_uid field.
+	 * @var        string
+	 */
+	protected $pro_uid = '';
+
+
+	/**
 	 * The value for the rep_tab_uid field.
 	 * @var        string
 	 */
@@ -78,6 +85,17 @@ abstract class BaseReportVar extends BaseObject  implements Persistent {
 	{
 
 		return $this->rep_var_uid;
+	}
+
+	/**
+	 * Get the [pro_uid] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getProUid()
+	{
+
+		return $this->pro_uid;
 	}
 
 	/**
@@ -134,6 +152,28 @@ abstract class BaseReportVar extends BaseObject  implements Persistent {
 		}
 
 	} // setRepVarUid()
+
+	/**
+	 * Set the value of [pro_uid] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setProUid($v)
+	{
+
+		// Since the native PHP type for this column is string,
+		// we will cast the input to a string (if it is not).
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->pro_uid !== $v || $v === '') {
+			$this->pro_uid = $v;
+			$this->modifiedColumns[] = ReportVarPeer::PRO_UID;
+		}
+
+	} // setProUid()
 
 	/**
 	 * Set the value of [rep_tab_uid] column.
@@ -220,18 +260,20 @@ abstract class BaseReportVar extends BaseObject  implements Persistent {
 
 			$this->rep_var_uid = $rs->getString($startcol + 0);
 
-			$this->rep_tab_uid = $rs->getString($startcol + 1);
+			$this->pro_uid = $rs->getString($startcol + 1);
 
-			$this->rep_var_name = $rs->getString($startcol + 2);
+			$this->rep_tab_uid = $rs->getString($startcol + 2);
 
-			$this->rep_var_type = $rs->getString($startcol + 3);
+			$this->rep_var_name = $rs->getString($startcol + 3);
+
+			$this->rep_var_type = $rs->getString($startcol + 4);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 4; // 4 = ReportVarPeer::NUM_COLUMNS - ReportVarPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 5; // 5 = ReportVarPeer::NUM_COLUMNS - ReportVarPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating ReportVar object", $e);
@@ -438,12 +480,15 @@ abstract class BaseReportVar extends BaseObject  implements Persistent {
 				return $this->getRepVarUid();
 				break;
 			case 1:
-				return $this->getRepTabUid();
+				return $this->getProUid();
 				break;
 			case 2:
-				return $this->getRepVarName();
+				return $this->getRepTabUid();
 				break;
 			case 3:
+				return $this->getRepVarName();
+				break;
+			case 4:
 				return $this->getRepVarType();
 				break;
 			default:
@@ -467,9 +512,10 @@ abstract class BaseReportVar extends BaseObject  implements Persistent {
 		$keys = ReportVarPeer::getFieldNames($keyType);
 		$result = array(
 			$keys[0] => $this->getRepVarUid(),
-			$keys[1] => $this->getRepTabUid(),
-			$keys[2] => $this->getRepVarName(),
-			$keys[3] => $this->getRepVarType(),
+			$keys[1] => $this->getProUid(),
+			$keys[2] => $this->getRepTabUid(),
+			$keys[3] => $this->getRepVarName(),
+			$keys[4] => $this->getRepVarType(),
 		);
 		return $result;
 	}
@@ -505,12 +551,15 @@ abstract class BaseReportVar extends BaseObject  implements Persistent {
 				$this->setRepVarUid($value);
 				break;
 			case 1:
-				$this->setRepTabUid($value);
+				$this->setProUid($value);
 				break;
 			case 2:
-				$this->setRepVarName($value);
+				$this->setRepTabUid($value);
 				break;
 			case 3:
+				$this->setRepVarName($value);
+				break;
+			case 4:
 				$this->setRepVarType($value);
 				break;
 		} // switch()
@@ -537,9 +586,10 @@ abstract class BaseReportVar extends BaseObject  implements Persistent {
 		$keys = ReportVarPeer::getFieldNames($keyType);
 
 		if (array_key_exists($keys[0], $arr)) $this->setRepVarUid($arr[$keys[0]]);
-		if (array_key_exists($keys[1], $arr)) $this->setRepTabUid($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setRepVarName($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setRepVarType($arr[$keys[3]]);
+		if (array_key_exists($keys[1], $arr)) $this->setProUid($arr[$keys[1]]);
+		if (array_key_exists($keys[2], $arr)) $this->setRepTabUid($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setRepVarName($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setRepVarType($arr[$keys[4]]);
 	}
 
 	/**
@@ -552,6 +602,7 @@ abstract class BaseReportVar extends BaseObject  implements Persistent {
 		$criteria = new Criteria(ReportVarPeer::DATABASE_NAME);
 
 		if ($this->isColumnModified(ReportVarPeer::REP_VAR_UID)) $criteria->add(ReportVarPeer::REP_VAR_UID, $this->rep_var_uid);
+		if ($this->isColumnModified(ReportVarPeer::PRO_UID)) $criteria->add(ReportVarPeer::PRO_UID, $this->pro_uid);
 		if ($this->isColumnModified(ReportVarPeer::REP_TAB_UID)) $criteria->add(ReportVarPeer::REP_TAB_UID, $this->rep_tab_uid);
 		if ($this->isColumnModified(ReportVarPeer::REP_VAR_NAME)) $criteria->add(ReportVarPeer::REP_VAR_NAME, $this->rep_var_name);
 		if ($this->isColumnModified(ReportVarPeer::REP_VAR_TYPE)) $criteria->add(ReportVarPeer::REP_VAR_TYPE, $this->rep_var_type);
@@ -608,6 +659,8 @@ abstract class BaseReportVar extends BaseObject  implements Persistent {
 	 */
 	public function copyInto($copyObj, $deepCopy = false)
 	{
+
+		$copyObj->setProUid($this->pro_uid);
 
 		$copyObj->setRepTabUid($this->rep_tab_uid);
 

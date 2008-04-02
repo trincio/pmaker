@@ -2028,7 +2028,7 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="REP_TAB_CONNECTION" type="VARCHAR" size="10" required="true" default="">
+    <column name="REP_TAB_CONNECTION" type="VARCHAR" size="32" required="true" default="">
       <vendor type="mysql">
         <parameter name="Field" value="REP_TAB_CONNECTION"/>
         <parameter name="Type" value="varchar(10)"/>
@@ -2113,6 +2113,16 @@
         <parameter name="Type" value="varchar(32)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value="PRI"/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="PRO_UID" type="VARCHAR" size="32" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="PRO_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
         <parameter name="Extra" value=""/>
       </vendor>
