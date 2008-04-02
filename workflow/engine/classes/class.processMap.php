@@ -598,8 +598,9 @@ class processMap {
       $aConditions[] = array('C.CON_CATEGORY'     , $sDelimiter . 'DYN_TITLE' . $sDelimiter);
       $aConditions[] = array('C.CON_LANG'         , $sDelimiter . SYS_LANG    . $sDelimiter);
       $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
-      $oCriteria->add(DynaformPeer::PRO_UID, $sProcessUID);
-      $oCriteria->add(DynaformPeer::DYN_UID, $sUIDs, Criteria::NOT_IN);
+      $oCriteria->add(DynaformPeer::PRO_UID,  $sProcessUID);
+      $oCriteria->add(DynaformPeer::DYN_UID,  $sUIDs, Criteria::NOT_IN);
+      $oCriteria->add(DynaformPeer::DYN_TYPE, 'xmlform');
       $oDataset  = DynaformPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
       $oDataset->next();

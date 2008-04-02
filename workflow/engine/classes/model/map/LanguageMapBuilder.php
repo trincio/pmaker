@@ -64,7 +64,7 @@ class LanguageMapBuilder {
 
 		$tMap->setUseIdGenerator(false);
 
-		$tMap->addColumn('LAN_ID', 'LanId', 'string', CreoleTypes::VARCHAR, true, 4);
+		$tMap->addPrimaryKey('LAN_ID', 'LanId', 'string', CreoleTypes::VARCHAR, true, 4);
 
 		$tMap->addColumn('LAN_NAME', 'LanName', 'string', CreoleTypes::VARCHAR, true, 30);
 
