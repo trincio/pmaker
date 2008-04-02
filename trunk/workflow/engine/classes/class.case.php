@@ -28,16 +28,17 @@ require_once ( "classes/model/AppDelegation.php" );
 require_once ( "classes/model/AppThread.php" );
 require_once ( "classes/model/Dynaform.php" );
 require_once ( "classes/model/InputDocument.php" );
+require_once ( "classes/model/Language.php" );
 require_once ( "classes/model/OutputDocument.php" );
 require_once ( "classes/model/Process.php" );
+require_once ( "classes/model/ReportTable.php");
+require_once ( "classes/model/ReportVar.php");
 require_once ( "classes/model/Step.php" );
 require_once ( "classes/model/StepTrigger.php" );
 require_once ( "classes/model/Task.php" );
 require_once ( "classes/model/TaskUser.php" );
 require_once ( "classes/model/Triggers.php" );
 require_once ( "classes/model/Users.php" );
-require_once ('classes/model/ReportTable.php');
-require_once ('classes/model/ReportVar.php');
 G::LoadClass('pmScript');
 
 class Cases {

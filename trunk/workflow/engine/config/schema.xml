@@ -1470,12 +1470,12 @@
       <parameter name="Create_options" value=""/>
       <parameter name="Comment" value=""/>
     </vendor>
-    <column name="LAN_ID" type="VARCHAR" size="4" required="true" default="">
+    <column name="LAN_ID" type="VARCHAR" size="4" required="true" default="" primaryKey="true">
       <vendor type="mysql">
         <parameter name="Field" value="LAN_ID"/>
         <parameter name="Type" value="varchar(4)"/>
         <parameter name="Null" value="NO"/>
-        <parameter name="Key" value=""/>
+        <parameter name="Key" value="PRI"/>
         <parameter name="Default" value=""/>
         <parameter name="Extra" value=""/>
       </vendor>

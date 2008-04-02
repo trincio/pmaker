@@ -195,8 +195,8 @@ abstract class BaseLanguagePeer {
 
 	}
 
-	const COUNT = 'COUNT(*)';
-	const COUNT_DISTINCT = 'COUNT(DISTINCT *)';
+	const COUNT = 'COUNT(LANGUAGE.LAN_ID)';
+	const COUNT_DISTINCT = 'COUNT(DISTINCT LANGUAGE.LAN_ID)';
 
 	/**
 	 * Returns the number of rows matching criteria.
@@ -406,6 +406,9 @@ abstract class BaseLanguagePeer {
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 
+			$comparison = $criteria->getComparison(LanguagePeer::LAN_ID);
+			$selectCriteria->add(LanguagePeer::LAN_ID, $criteria->remove(LanguagePeer::LAN_ID), $comparison);
+
 		} else { // $values is Language object
 			$criteria = $values->buildCriteria(); // gets full criteria
 			$selectCriteria = $values->buildPkeyCriteria(); // gets criteria w/ primary key(s)
@@ -462,24 +465,11 @@ abstract class BaseLanguagePeer {
 			$criteria = clone $values; // rename for clarity
 		} elseif ($values instanceof Language) {
 
-			$criteria = $values->buildCriteria();
+			$criteria = $values->buildPkeyCriteria();
 		} else {
 			// it must be the primary key
 			$criteria = new Criteria(self::DATABASE_NAME);
-			// primary key is composite; we therefore, expect
-			// the primary key passed to be an array of pkey
-			// values
-			if(count($values) == count($values, COUNT_RECURSIVE))
-			{
-				// array is not multi-dimensional
-				$values = array($values);
-			}
-			$vals = array();
-			foreach($values as $value)
-			{
-
-			}
-
+			$criteria->add(LanguagePeer::LAN_ID, (array) $values, Criteria::IN);
 		}
 
 		// Set the correct dbName
@@ -542,6 +532,54 @@ abstract class BaseLanguagePeer {
 		}
 
 		return BasePeer::doValidate(LanguagePeer::DATABASE_NAME, LanguagePeer::TABLE_NAME, $columns);
+	}
+
+	/**
+	 * Retrieve a single object by pkey.
+	 *
+	 * @param      mixed $pk the primary key.
+	 * @param      Connection $con the connection to use
+	 * @return     Language
+	 */
+	public static function retrieveByPK($pk, $con = null)
+	{
+		if ($con === null) {
+			$con = Propel::getConnection(self::DATABASE_NAME);
+		}
+
+		$criteria = new Criteria(LanguagePeer::DATABASE_NAME);
+
+		$criteria->add(LanguagePeer::LAN_ID, $pk);
+
+
+		$v = LanguagePeer::doSelect($criteria, $con);
+
+		return !empty($v) > 0 ? $v[0] : null;
+	}
+
+	/**
+	 * Retrieve multiple objects by pkey.
+	 *
+	 * @param      array $pks List of primary keys
+	 * @param      Connection $con the connection to use
+	 * @throws     PropelException Any exceptions caught during processing will be
+	 *		 rethrown wrapped into a PropelException.
+	 */
+	public static function retrieveByPKs($pks, $con = null)
+	{
+		if ($con === null) {
+			$con = Propel::getConnection(self::DATABASE_NAME);
+		}
+
+		$objs = null;
+		if (empty($pks)) {
+			$objs = array();
+		} else {
+			$criteria = new Criteria();
+			$criteria->add(LanguagePeer::LAN_ID, $pks, Criteria::IN);
+			$objs = LanguagePeer::doSelect($criteria, $con);
+		}
+		return $objs;
 	}
 
 } // BaseLanguagePeer

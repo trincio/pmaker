@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm name="languages_ImportForm" type="xmlform" width="100%" height="75%" labelWidth="30%">
+
+<TITLE1 type="title">
+  <en>Import or Update Language</en>
+<es>Import or Update Language</es></TITLE1>
+
+
+<LANGUAGE_FILENAME type="file">
+  <en>File</en>
+  <es>File</es>
+</LANGUAGE_FILENAME>
+
+<IMPORT type="button" onclick="verifyPOFile(this.form);">
+  <en>Import</en>
+<es>Import</es></IMPORT>
+
+<JS type="javascript"><![CDATA[
+var verifyPOFile = function(oForm) {
+  if (document.getElementById('form[LANGUAGE_FILENAME]').value != '') {
+    oForm.submit();
+  }
+  else {
+    alert('@G::LoadTranslation(ID_PLEASE_SELECT_PO_FILE)');
+  }
+};
+]]></JS>
+
+</dynaForm>

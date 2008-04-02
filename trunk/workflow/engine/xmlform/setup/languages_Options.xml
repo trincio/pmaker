@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm type="xmlmenu">
+
+<MNU_IMPORT type="link" value="" link="#" onclick="importLanguage();return false;" colAlign="left" colWidth="100">
+  <en>Import or Update</en>
+<es>Import or Update</es></MNU_IMPORT>
+
+<JS type="javascript"><![CDATA[
+var oPanel;
+var importLanguage = function() {
+  oPanel = new leimnud.module.panel();
+	oPanel.options={
+		limit	   : true,
+		size	   : {w:350,h:150},
+		position : {x:50,y:50,center:true},
+		title	   : '',
+		control	 : {close:true,resize:true},fx:{modal:true},
+		statusBar: false,
+		resize	 : true,
+		fx	     : {shadow:true,modal:true}
+	};
+	oPanel.make();
+	oIFrame = window.document.createElement('iframe');
+	oIFrame.style.border = '0';
+	oIFrame.style.width  = '100%';
+	oIFrame.style.height = '100%';
+	oIFrame.src          = 'languages_ImportForm';
+	oPanel.addContent(oIFrame);
+};
+]]></JS>
+
+</dynaForm>
