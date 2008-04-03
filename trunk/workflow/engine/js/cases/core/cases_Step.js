@@ -179,12 +179,12 @@ var showProcessInformation = function()
 {
   oPanel = new leimnud.module.panel();
   oPanel.options = {
-  	size	:{w:450,h:245},
+  	size	:{w:450,h:260},
   	position:{x:0,y:0,center:true},
   	title	:"Process Information",
   	theme	:"processmaker",
   	statusBar:false,
-  	control	:{resize:true,roll:false},
+  	control	:{resize:false,roll:false},
   	fx	:{modal:true,opacity:true,blinkToFront:true,fadeIn:false}
   };
   oPanel.events = {
@@ -208,12 +208,12 @@ var showTransferHistory = function()
 {
   oPanel = new leimnud.module.panel();
   oPanel.options = {
-  	size	:{w:650,h:510},
+  	size	:{w:650,h:525},
   	position:{x:0,y:0,center:true},
   	title	:G_STRINGS.ID_CASE_HISTORY,
   	theme	:"processmaker",
   	statusBar:false,
-  	control	:{resize:true,roll:false},
+  	control	:{resize:false,roll:false},
   	fx	:{modal:true,opacity:true,blinkToFront:true,fadeIn:false}
   };
   oPanel.events = {
@@ -237,12 +237,12 @@ var showTaskInformation = function()
 {
   oPanel = new leimnud.module.panel();
   oPanel.options = {
-  	size	:{w:450,h:315},
+  	size	:{w:450,h:322},
   	position:{x:0,y:0,center:true},
   	title	:"Task Information",
   	theme	:"processmaker",
   	statusBar:true,
-  	control	:{resize:true,roll:false},
+  	control	:{resize:false,roll:false},
   	fx	:{modal:true,opacity:true,blinkToFront:true,fadeIn:false}
   };
   oPanel.events = {

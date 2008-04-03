@@ -17,11 +17,11 @@ leimnud.Package.Public({
 		{
 			this.keys=[];
 			this.keys['es']=[];
-			this.keys["es"]["Alpha"]=["abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ","áéíóúñÁÉÍÓÚÑ"," "];
+			this.keys["es"]["Alpha"]=["abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ","áéíóúñÁÉÍÓÚÑüïÜÏ"," "];
 			this.keys["es"]["Int"]=[[47,57]].concat("+-");
 			this.keys["es"]["Real"]=[[48,57]].concat(".,-+");
 			this.keys["es"]["Any"]=this.keys["es"]["Alpha"].concat("!#$%&/()=???+*{}[]-_.:,;'|\"\\@",[[48,57]]);
-			this.keys["es"]["AlphaNum"]=this.keys['es']["Int"].concat(this.keys["es"]["Alpha"][0]," ");
+			this.keys["es"]["AlphaNum"]=this.keys['es']["Int"].concat(this.keys["es"]["Alpha"][0],this.keys["es"]["Alpha"][1]," ");
 			this.keys["es"]["Field"]=["abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_"];
 			this.keys["es"]["Email"]=[this.keys["es"]["Alpha"][0]].concat("._-@1234567890");
 			this.keys["es"]["Login"]=[this.keys["es"]["Alpha"][0]].concat("._-@1234567890");
