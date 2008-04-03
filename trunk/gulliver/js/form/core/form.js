@@ -461,7 +461,7 @@
 function G()
 {
   /*MASK*/
-  var reserved=['_',';','#','.','0','d','m','Y','-'];
+  var reserved=['_',';','#','.','0','d','m','y','-'];
   function invertir(num)
   {
     var num0='';
