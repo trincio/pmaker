@@ -353,12 +353,16 @@ var dynaformEditor={
 					if (window.execScript)
 							window.execScript( myScripts[rr], "javascript" );
 						else
-							window.setTimeout( myScripts[rr], 0 );
+							window.setTimeout( "try{\n"+myScripts[rr]+"\n}catch(e){\ndynaformEditor.displayError(e,"+rr+")}", 0 );
 			} catch (e) {
-				alert(e.description);
+				dynaformEditor.displayError(e,rr);
 			}
 		}
 		delete myScripts;
+	},
+	displayError:function(err,rr)
+	{
+		G.alert(err.message.split("\n").join("<br />"),"Javascript Error");
 	}
 };
 }
