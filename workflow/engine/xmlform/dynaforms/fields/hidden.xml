@@ -5,22 +5,25 @@
   width="100%"
 >
 <PME_A type="hidden" />
+
 <PME_TYPE type="hidden" />
+
 <PME_TITLE type="title" enableHTML="1">
+
   <en>Properties</en>
   <es>Propiedades</es>
 </PME_TITLE>
-<PME_XMLNODE_NAME type="text" size="32" maxlength="64" validate="Field" dependentFields="PME_VALIDATE_NAME" required="1">
 
+<PME_XMLNODE_NAME type="text" size="32" maxlength="64" validate="Field" dependentFields="PME_VALIDATE_NAME" required="1">
   <en>Field Name</en>
   <es>Nombre de Campo</es>
 </PME_XMLNODE_NAME>
+
 <PME_VALIDATE_NAME type="hidden" sqlConnection="XMLDB">
 SELECT XMLNODE_NAME, TYPE FROM dynaForm WHERE XMLNODE_NAME = @@PME_XMLNODE_NAME
 </PME_VALIDATE_NAME>
 
 <PME_DEFAULTVALUE type="text" maxlength="" size="30" defaultvalue="" >
-
   <en>Default Value</en>
   <es>Default Value</es>
 </PME_DEFAULTVALUE>
@@ -29,14 +32,12 @@ SELECT XMLNODE_NAME, TYPE FROM dynaForm WHERE XMLNODE_NAME = @@PME_XMLNODE_NAME
   <en>Appearance</en>
   <es>Apariencia</es>
 </PME_SUBTITLE>
-
-<!--<PME_GROUP type="text" maxlength="10" size="10" validate="Int" defaultvalue="0" group="2">
-
+<PME_GROUP type="text" maxlength="10" size="10" validate="Int" defaultvalue="0" group="2">
   <en>Group</en>
   <es>Group</es>
 </PME_GROUP>-->
-<PME_MODE type="dropdown" defaultvalue="edit">
 
+<PME_MODE type="dropdown" defaultvalue="edit">
   <en>Mode
     <option name="edit">Edit</option>
     <option name="view">View</option>
@@ -46,7 +47,6 @@ SELECT XMLNODE_NAME, TYPE FROM dynaForm WHERE XMLNODE_NAME = @@PME_XMLNODE_NAME
     <option name="view">Vista</option>
   </es>
 </PME_MODE>
--->
 
 <PME_SUBTITLE2 type="title" enableHTML="1">
   <en>Data</en>

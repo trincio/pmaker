@@ -22,6 +22,7 @@
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
  *
  */
+require_once 'classes/model/IsoCountry.php';
 require_once 'classes/model/Language.php';
 require_once 'classes/model/Translation.php';
 $aLabels = array();
@@ -63,8 +64,17 @@ foreach ($aXMLForms as $sXmlForm) {
 	$sXmlForm = str_replace(PATH_XMLFORM, '', $sXmlForm);
 	$oForm = new Form($sXmlForm, '', 'en');
 	foreach ($oForm->fields as $sNodeName => $oNode) {
-		if (trim($oNode->label) != '') {
-      $aEnglishLabel[$oNode->name] = str_replace('"', '\"', stripslashes(trim(str_replace(chr(10), '', $oNode->label))));
+		if (is_object($oNode)) {
+		  if (trim($oNode->label) != '') {
+        $aEnglishLabel[$oNode->name] = str_replace('"', '\"', stripslashes(trim(str_replace(chr(10), '', $oNode->label))));
+      }
+      if (isset($oNode->options)) {
+      	if (!empty($oNode->options)) {
+      		foreach ($oNode->options as $sKey => $sValue) {
+      			$aEnglishLabel[$oNode->name . '-' . $sKey] = str_replace('"', '\"', stripslashes(trim(str_replace(chr(10), '', $sValue))));
+      		}
+      	}
+      }
     }
 	}
 	unset($oForm->fields);
@@ -74,24 +84,41 @@ foreach ($aXMLForms as $sXmlForm) {
   $i = 1;
   $iNumberOfFields = count($oForm->fields);
   foreach ($oForm->fields as $sNodeName => $oNode) {
-    if (is_object($oNode) && isset ($aEnglishLabel[$oNode->name])) {
-      $msgid = $aEnglishLabel[$oNode->name];
-      $oNode->label = str_replace('"', '\"', stripslashes(trim(str_replace(chr(10), '', $oNode->label))));
-    }
-    else {
-      $msgid = '';
-    }
-    if ((trim($msgid) != '') && !in_array(strtolower($oNode->type), $aExceptionFields)) {
-    	if ((strpos($msgid, '@G::LoadTranslation') === false) && (strpos($oNode->label, '@G::LoadTranslation') === false)) {
-    	  if (in_array($msgid, $aMsgids)) {
-          $msgid = '[' . $sXmlForm . '?' . $oNode->name . '] ' . $msgid;
+  	if (is_object($oNode)) {
+      if (isset($aEnglishLabel[$oNode->name])) {
+        $msgid = $aEnglishLabel[$oNode->name];
+        $oNode->label = str_replace('"', '\"', stripslashes(trim(str_replace(chr(10), '', $oNode->label))));
+      }
+      else {
+        $msgid = '';
+      }
+      if ((trim($msgid) != '') && !in_array(strtolower($oNode->type), $aExceptionFields)) {
+      	if ((strpos($msgid, '@G::LoadTranslation') === false) && (strpos($oNode->label, '@G::LoadTranslation') === false)) {
+      	  if (in_array($msgid, $aMsgids)) {
+            $msgid = '[' . $sXmlForm . '?' . $oNode->name . '] ' . $msgid;
+          }
+          $aLabels[] = array(0 => '#: ' . $sXmlForm . '?' . $sNodeName,
+                             1 => '# ' . $sXmlForm,
+                             2 => '# ' . $oNode->type . ' - ' . $sNodeName,
+                             3 => 'msgid "' . $msgid . '"',
+                             4 => 'msgstr "' . $oNode->label . '"');
+          $aMsgids[] = $msgid;
+          if (isset($oNode->options)) {
+          	if (!empty($oNode->options)) {
+          		foreach ($oNode->options as $sKey => $sValue) {
+          			if ($sKey == '') {
+          				$sKey = "''";
+          			}
+          			$aLabels[] = array(0 => '#: ' . $sXmlForm . '?' . $sNodeName . '-'. $sKey,
+                                   1 => '# ' . $sXmlForm,
+                                   2 => '# ' . $oNode->type . ' - ' . $sNodeName . ' - ' . $sKey,
+                                   3 => 'msgid "' . $sKey . '"',
+                                   4 => 'msgstr "' . $sValue . '"');
+                $aMsgids[] = $msgid;
+          		}
+          	}
+          }
         }
-        $aLabels[] = array(0 => '#: ' . $sXmlForm . '?' . $sNodeName,
-                           1 => '# ' . $sXmlForm,
-                           2 => '# ' . $oNode->type . ' - ' . $sNodeName,
-                           3 => 'msgid "' . $msgid . '"',
-                           4 => 'msgstr "' . $oNode->label . '"');
-        $aMsgids[] = $msgid;
       }
     }
     $i++;
@@ -107,6 +134,24 @@ $oDataset = LanguagePeer::doSelectRS($oCriteria);
 $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
 $oDataset->next();
 $aRow = $oDataset->getRow();
+$sLanguage = $aRow['LAN_NAME'];
+if ($_GET['LAN_ID'] != 'en') {
+  $oCriteria = new Criteria('workflow');
+  $oCriteria->addSelectColumn(IsoCountryPeer::IC_NAME);
+  $oCriteria->add(IsoCountryPeer::IC_UID, strtoupper($_GET['LAN_ID']));
+  $oDataset = IsoCountryPeer::doSelectRS($oCriteria);
+  $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+  $oDataset->next();
+  if ($aRow = $oDataset->getRow()) {
+    $sCountry = $aRow['IC_NAME'];
+  }
+  else {
+  	$sCountry = '';
+  }
+}
+else {
+	$sCountry = 'United States';
+}
 $sPOFile = PATH_CORE . 'content' . PATH_SEP . 'translations' . PATH_SEP . MAIN_POFILE . '.' . $_GET['LAN_ID'] . '.po';
 $oFile = fopen($sPOFile, 'w');
 fprintf($oFile, "msgid \"\" \n");
@@ -119,8 +164,8 @@ fprintf($oFile, "\"Language-Team: Colosa Developers Team <developers@colosa.com>
 fprintf($oFile, "\"MIME-Version: 1.0 \\n\"\n");
 fprintf($oFile, "\"Content-Type: text/plain; charset=utf-8 \\n\"\n");
 fprintf($oFile, "\"Content-Transfer_Encoding: 8bit\\n\"\n");
-fprintf($oFile, "\"X-Poedit-Language: %s\\n\"\n", ucwords($aRow['LAN_NAME']));
-fprintf($oFile, "\"X-Poedit-Country: %s\\n\"\n", '');//Obtain country if exists, next release
+fprintf($oFile, "\"X-Poedit-Language: %s\\n\"\n", ucwords($sLanguage));
+fprintf($oFile, "\"X-Poedit-Country: %s\\n\"\n", ucwords($sCountry));
 fprintf($oFile, "\"X-Poedit-SourceCharset: utf-8\\n\"\n\n");
 foreach ($aLabels as $aLabel) {
 	fwrite($oFile, $aLabel[0] . "\n");
