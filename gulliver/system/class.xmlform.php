@@ -1359,9 +1359,11 @@ class XmlForm_Field_Reset extends XmlForm_Field
    * @parameter string value
    * @return string
    */
-  function render( $value = NULL )
-  {
-		return '<input name="'.$this->name.'" type ="reset" value="'.$this->label.'"/>';
+	function render( $value = NULL ,$owner)
+	{
+    		$onclick = G::replaceDataField( $this->onclick,$owner->values );
+		//return '<input name="'.$this->name.'" type ="reset" value="'.$this->label.'"/>';
+		return "<input style=\"{$this->style}\" class='module_app_button___gray {$this->className}' id=\"form[{$this->name}]\" name=\"form[{$this->name}]\" type='reset' value=\"{$this->label}\" ".(($this->onclick)?'onclick="'.htmlentities($onclick,ENT_COMPAT, 'utf-8').'"':'')." />";
 	}
 }
 /**
