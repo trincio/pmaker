@@ -26,12 +26,9 @@
       return;
     }
     //processbar.style.display = '';
-    ajax_post( form.action, form, 'POST' , function (res){
-      currentPopupWindow.remove();
-      dynaformEditor.refreshCurrentView(function(){
-        @#PAGED_TABLE_ID.refresh();
-      }, false );
-    } , false );
+    var res=ajax_post( form.action, form, 'POST' , null , false );
+    currentPopupWindow.remove();
+    dynaformEditor.refreshCurrentView();
   }
   function fieldsDelete( uid ) {
     ajax_function('@G::encryptlink(@#fields_Delete)','','A=@#URL&amp;XMLNODE_NAME='+uid,'POST');
