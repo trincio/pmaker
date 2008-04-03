@@ -669,10 +669,10 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 		}
 		$modPro = ($sp['DYN_TITLE']!=$P['DYN_TITLE']) ||
 			($sp['DYN_TYPE']!=$P['DYN_TYPE']) ||
-			($sp['DYN_DESCRIPTION']!=$P['DYN_DESCRIPTION']) ||
+			($sp['DYN_DESCRIPTION']!=$P['DYN_DESCRIPTION']) /*||
 			($sp['WIDTH']!=$P['WIDTH']) ||
 			($sp['ENABLETEMPLATE']!=$P['ENABLETEMPLATE']) ||
-			($sp['MODE']!=$P['MODE']);
+			($sp['MODE']!=$P['MODE'])*/;
 		/* Compare copies */
 		$fileOrigen=dynaformEditor::_getFilename($file);
 		$copy = implode('',file(PATH_DYNAFORM  . $file . '.xml'));
