@@ -64,7 +64,9 @@ class Form extends XmlForm
       }
     }
     foreach($this->fields as $k => $v){
-      $this->fields[$k]->owner =& $this;
+    	if (is_object($v)) {//julichu
+        $this->fields[$k]->owner =& $this;
+      }
     }
   }
   /**
@@ -99,8 +101,10 @@ class Form extends XmlForm
     foreach($this->fields as $k => $v)  {
       //too memory? but it fails if it's loaded with baneco.xml with SYS_LANG='es'
       //NOTE: This fails apparently when class of  ($this->fields[$k]) is PHP_Incomplete_Class (because of cache)
-      $this->fields[$k]->owner =& $this;
-      if ($this->fields[$k]->type==='grid') $this->fields[$k]->parseFile($home, $language);
+      if (is_object($v)) {//julichu
+        $this->fields[$k]->owner =& $this;
+        if ($this->fields[$k]->type==='grid') $this->fields[$k]->parseFile($home, $language);
+      }
     }
     $this->template = PATH_CORE . 'templates/'.$this->type.'.html';
   }

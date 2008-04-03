@@ -268,6 +268,9 @@ class ReportTables {
     }
   }
   public function updateTables($sProcessUid, $sApplicationUid, $iApplicationNumber, $aFields) {
+  	if (!$this->tableExist()) {
+  		return;
+  	}
   	try {
   		$oCriteria = new Criteria('workflow');
   	  $oCriteria->add(ReportTablePeer::PRO_UID, $sProcessUid);
@@ -385,5 +388,12 @@ class ReportTables {
   	catch (Exception $oError) {
     	throw($oError);
     }
+  }
+  function tableExist() {
+  	$bExists  = true;
+  	$oConnection = mysql_connect(DB_HOST, DB_USER, DB_PASS);
+  	mysql_select_db(DB_NAME);
+    $oDataset = mysql_query('SELECT COUNT(*) FROM REPORT_TABLE') || ($bExists = false);
+  	return $bExists;
   }
 }

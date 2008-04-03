@@ -21,7 +21,7 @@
  * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
  *
- *///require_once 'classes/model/Translation.php';Translation::generateFileTranslation('es');die;
+ */
 global $RBAC;
 switch ($RBAC->userCanAccess('PM_FACTORY'))
 {
@@ -37,19 +37,33 @@ switch ($RBAC->userCanAccess('PM_FACTORY'))
 	break;
 }
 try {
-	$aAux = explode('.', $_FILES['form']['name']['LANGUAGE_FILENAME']);
-	$sLanguageID = $aAux[1];
   $oFile = fopen($_FILES['form']['tmp_name']['LANGUAGE_FILENAME'], 'r');
   $bFind = false;
   while (!$bFind && ($sLine = fgets($oFile))) {
+  	if (strpos($sLine, '"X-Poedit-Language:') !== false) {
+  		$aAux = explode(':', $sLine);
+  		$sAux = trim(str_replace('\n"', '', $aAux[1]));
+  	}
     if (strpos($sLine, '#:') !== false) {
     	$bFind = true;
     }
   }
-  if (!$bFind) {
-  	throw new Exception('The .po file hava a bad format!');
-  }
   require_once 'classes/model/Language.php';
+  $oCriteria = new Criteria('workflow');
+  $oCriteria->addSelectColumn(LanguagePeer::LAN_ID);
+  $oCriteria->add(LanguagePeer::LAN_NAME, $sAux, Criteria::LIKE);
+  $oDataset = LanguagePeer::doSelectRS($oCriteria);
+  $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+  $oDataset->next();
+  if ($aRow = $oDataset->getRow()) {
+    $sLanguageID = $aRow['LAN_ID'];
+  }
+  else {
+  	throw new Exception('The .po file have a invalid language!');
+  }
+  if (!$bFind) {
+  	throw new Exception('The .po file have a bad format!');
+  }
   require_once 'classes/model/Translation.php';
   G::LoadClass('xmlDb');
   $oTranslation = new Translation();
@@ -58,32 +72,32 @@ try {
   	if (strpos($sLine, '.xml') === false) {
   		$aAux = explode('/', str_replace('# ', '', $sLine));
   		if (!($sLine = fgets($oFile))) {
-  			throw new Exception('The .po file hava a bad format!');
+  			throw new Exception('The .po file have a bad format!');
   		}
   		if (!($sLine = fgets($oFile))) {
-  			throw new Exception('The .po file hava a bad format!');
+  			throw new Exception('The .po file have a bad format!');
   		}
   		if (!($sLine = fgets($oFile))) {
-  			throw new Exception('The .po file hava a bad format!');
+  			throw new Exception('The .po file have a bad format!');
   		}
       $oTranslation->addTranslation($aAux[1], trim(str_replace(chr(10), '', $aAux[2])), $sLanguageID, substr(trim(str_replace(chr(10), '', $sLine)), 8, -1));
       if (!($sLine = fgets($oFile))) {
-  			throw new Exception('The .po file hava a bad format!');
+  			throw new Exception('The .po file have a bad format!');
   		}
   		$sLine = fgets($oFile);
   	}
   	else {
   		$sXmlForm = trim(str_replace('# ', '', $sLine));
   		if (!($sLine = fgets($oFile))) {
-  			throw new Exception('The .po file hava a bad format!');
+  			throw new Exception('The .po file have a bad format!');
   		}
   		$aAux = explode(' - ', $sLine);
   		$sFieldName = trim(str_replace(chr(10), '', $aAux[1]));
   		if (!($sLine = fgets($oFile))) {
-  			throw new Exception('The .po file hava a bad format!');
+  			throw new Exception('The .po file have a bad format!');
   		}
   		if (!($sLine = fgets($oFile))) {
-  			throw new Exception('The .po file hava a bad format!');
+  			throw new Exception('The .po file have a bad format!');
   		}
       if ($sAux == '') {
   			$sAux = $sXmlForm;
@@ -91,27 +105,48 @@ try {
 			  $oSession = new DBSession($oConnection);
   		}
   		if ($sAux == $sXmlForm) {
-  			$oDataset = $oSession->Execute('SELECT * FROM dynaForm.' . $sFieldName . ' WHERE XMLNODE_NAME = "' . $sLanguageID . '"');
-  			if ($oDataset->count() > 0) {
-  			  $oSession->Execute('UPDATE dynaForm.' . $sFieldName . ' SET XMLNODE_VALUE = "' . str_replace("'", "\'", str_replace('"', '""', stripslashes(substr(trim(str_replace(chr(10), '', $sLine)), 8, -1)))) . '" WHERE XMLNODE_NAME = "' . $sLanguageID . '"');
-  			}
-  			else {
-  				$oSession->Execute('INSERT INTO dynaForm.' . $sFieldName . ' (XMLNODE_NAME, XMLNODE_VALUE) VALUES ("' . $sLanguageID . '", "' . str_replace("'", "\'", str_replace('"', '""', stripslashes(substr(trim(str_replace(chr(10), '', $sLine)), 8, -1)))) . '")');
-  			}
+  			if (count($aAux) == 2) {
+  			  $oDataset = $oSession->Execute('SELECT * FROM dynaForm.' . $sFieldName . ' WHERE XMLNODE_NAME = "' . $sLanguageID . '"');
+  			  if ($oDataset->count() > 0) {
+  			    $oSession->Execute('UPDATE dynaForm.' . $sFieldName . ' SET XMLNODE_VALUE = "' . str_replace("'", "\'", str_replace('"', '""', stripslashes(substr(trim(str_replace(chr(10), '', $sLine)), 8, -1)))) . '" WHERE XMLNODE_NAME = "' . $sLanguageID . '"');
+  			  }
+  			  else {
+  			  	$oSession->Execute('INSERT INTO dynaForm.' . $sFieldName . ' (XMLNODE_NAME, XMLNODE_VALUE) VALUES ("' . $sLanguageID . '", "' . str_replace("'", "\'", str_replace('"', '""', stripslashes(substr(trim(str_replace(chr(10), '', $sLine)), 8, -1)))) . '")');
+  			  }
+  			  $bDelete = true;
+  		  }
+  		  if (count($aAux) == 3) {
+  		  	if ($bDelete) {
+  		  		$oSession->Execute('DELETE FROM dynaForm.' . $sFieldName . '.' . $sLanguageID . ' WHERE 1');
+  		  		$bDelete = false;
+  		  	}
+  		  	$oSession->Execute('INSERT INTO dynaForm.' . $sFieldName . '.' . $sLanguageID . ' (XMLNODE_NAME,XMLNODE_VALUE,name) VALUES ("option","' . str_replace("'", "\'", str_replace('"', '""', stripslashes(substr(trim(str_replace(chr(10), '', $sLine)), 8, -1)))) . '","' . trim(str_replace(chr(10), '', $aAux[2])) . '")');
+  		  }
   		}
   		else {
   			$oConnection = new DBConnection(PATH_XMLFORM . $sXmlForm, '', '', '', 'myxml');
 			  $oSession = new DBSession($oConnection);
-			  $oDataset = $oSession->Execute('SELECT * FROM dynaForm.' . $sFieldName . ' WHERE XMLNODE_NAME = "' . $sLanguageID . '"');
-  			if ($oDataset->count() > 0) {
-			    $oSession->Execute('UPDATE dynaForm.' . $sFieldName . ' SET XMLNODE_VALUE = "' . str_replace("'", "\'", str_replace('"', '""', stripslashes(substr(trim(str_replace(chr(10), '', $sLine)), 8, -1)))) . '" WHERE XMLNODE_NAME = "' . $sLanguageID . '"');
-			  }
-			  else {
-  				$oSession->Execute('INSERT INTO dynaForm.' . $sFieldName . ' (XMLNODE_NAME, XMLNODE_VALUE) VALUES ("' . $sLanguageID . '", "' . str_replace("'", "\'", str_replace('"', '""', stripslashes(substr(trim(str_replace(chr(10), '', $sLine)), 8, -1)))) . '")');
+			  if (count($aAux) == 2) {
+			    $oDataset = $oSession->Execute('SELECT * FROM dynaForm.' . $sFieldName . ' WHERE XMLNODE_NAME = "' . $sLanguageID . '"');
+  			  if ($oDataset->count() > 0) {
+			      $oSession->Execute('UPDATE dynaForm.' . $sFieldName . ' SET XMLNODE_VALUE = "' . str_replace("'", "\'", str_replace('"', '""', stripslashes(substr(trim(str_replace(chr(10), '', $sLine)), 8, -1)))) . '" WHERE XMLNODE_NAME = "' . $sLanguageID . '"');
+			    }
+			    else {
+  			  	$oSession->Execute('INSERT INTO dynaForm.' . $sFieldName . ' (XMLNODE_NAME, XMLNODE_VALUE) VALUES ("' . $sLanguageID . '", "' . str_replace("'", "\'", str_replace('"', '""', stripslashes(substr(trim(str_replace(chr(10), '', $sLine)), 8, -1)))) . '")');
+  			  }
+  			  $bDelete = true;
   			}
+  		  if (count($aAux) == 3) {
+  		  	if ($bDelete) {
+  		  		$oSession->Execute('DELETE FROM dynaForm.' . $sFieldName . '.' . $sLanguageID . ' WHERE 1');
+  		  		$bDelete = false;
+  		  	}
+  		  	$oSession->Execute('INSERT INTO dynaForm.' . $sFieldName . '.' . $sLanguageID . ' (XMLNODE_NAME,XMLNODE_VALUE,name) VALUES ("option","' . str_replace("'", "\'", str_replace('"', '""', stripslashes(substr(trim(str_replace(chr(10), '', $sLine)), 8, -1)))) . '","' . trim(str_replace(chr(10), '', $aAux[2])) . '")');
+  		  }
+  			$sAux = $sXmlForm;
   		}
       if (!($sLine = fgets($oFile))) {
-  			throw new Exception('The .po file hava a bad format!');
+  			throw new Exception('The .po file have a bad format!');
   		}
   		$sLine = fgets($oFile);
   	}

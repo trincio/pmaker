@@ -25,10 +25,13 @@
 global $G_TMP_MENU;
 $G_TMP_MENU_ALIGN = "left";
 
-$G_TMP_MENU->AddIdRawOption('DYNAFORMS',   '', G::LoadTranslation('ID_DYNAFORMS'),"/images/dynaforms.gif",'Pm.data.render.buildingBlocks.injector(\'dynaforms\'); return false;');
-$G_TMP_MENU->AddIdRawOption('INPUTDOCS',   '', G::LoadTranslation('ID_REQUEST_DOCUMENTS'),"/images/inputdocument.gif",'Pm.data.render.buildingBlocks.injector(\'inputs\'); return false;');
-$G_TMP_MENU->AddIdRawOption('OUTPUTDOCS',  '', G::LoadTranslation('ID_OUTPUT_DOCUMENTS'),"/images/outputdocument.gif",'Pm.data.render.buildingBlocks.injector(\'outputs\'); return false;');
-$G_TMP_MENU->AddIdRawOption('TRIGGERS',    '', G::LoadTranslation('ID_TRIGGERS'),"/images/trigger.gif",'Pm.data.render.buildingBlocks.injector(\'triggers\'); return false;');
-//$G_TMP_MENU->AddIdRawOption('MESSAGES',    '', G::LoadTranslation('ID_MESSAGES'),"/images/mail.gif",'Pm.data.render.buildingBlocks.injector(\'messages\'); return false;');
-$G_TMP_MENU->AddIdRawOption('TABLES',    '', G::LoadTranslation('ID_REPORT_TABLES'),"/images/report_tables.gif",'Pm.data.render.buildingBlocks.injector(\'reportTables\'); return false;');
+$G_TMP_MENU->AddIdRawOption('DYNAFORMS',    '', G::LoadTranslation('ID_DYNAFORMS'),"/images/dynaforms.gif",'Pm.data.render.buildingBlocks.injector(\'dynaforms\'); return false;');
+$G_TMP_MENU->AddIdRawOption('INPUTDOCS',    '', G::LoadTranslation('ID_REQUEST_DOCUMENTS'),"/images/inputdocument.gif",'Pm.data.render.buildingBlocks.injector(\'inputs\'); return false;');
+$G_TMP_MENU->AddIdRawOption('OUTPUTDOCS',   '', G::LoadTranslation('ID_OUTPUT_DOCUMENTS'),"/images/outputdocument.gif",'Pm.data.render.buildingBlocks.injector(\'outputs\'); return false;');
+$G_TMP_MENU->AddIdRawOption('TRIGGERS',     '', G::LoadTranslation('ID_TRIGGERS'),"/images/trigger.gif",'Pm.data.render.buildingBlocks.injector(\'triggers\'); return false;');
+//$G_TMP_MENU->AddIdRawOption('MESSAGES',     '', G::LoadTranslation('ID_MESSAGES'),"/images/mail.gif",'Pm.data.render.buildingBlocks.injector(\'messages\'); return false;');
+G::LoadClass('reportTables');
+if (ReportTables::tableExist()) {
+  $G_TMP_MENU->AddIdRawOption('REPORT_TABLES', '', G::LoadTranslation('ID_REPORT_TABLES'),"/images/report_tables.gif",'Pm.data.render.buildingBlocks.injector(\'reportTables\'); return false;');
+}
 ?>
