@@ -541,7 +541,21 @@ class G
     global $G_TEMPLATE;
     $G_CONTENT = $objContent;
     $G_TEMPLATE = $strTemplate;
-    G::LoadSkin( $strSkin );
+    try {
+      G::LoadSkin( $strSkin );
+    }
+    catch ( Exception $e ) {
+      $aMessage['MESSAGE'] = $e->getMessage();
+      global $G_PUBLISH;
+      global $G_MAIN_MENU;
+      global $G_SUB_MENU;
+      $G_MAIN_MENU = '';
+      $G_SUB_MENU = '';
+      $G_PUBLISH          = new Publisher;
+      $G_PUBLISH->AddContent('xmlform', 'xmlform', 'login/showMessage', '', $aMessage );
+      G::LoadSkin( 'green' );
+      die;
+    }
 
   }
 
@@ -569,8 +583,7 @@ class G
       }
       else   {
         $text = "The Skin $file is not exist, please review the Skin Definition";
-        trigger_error ( $text , E_USER_WARNING);
-        die;
+        throw ( new Exception ( $text)  );
       }
     }
 

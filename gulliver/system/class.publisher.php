@@ -90,20 +90,6 @@ class Publisher
   }
 
 
-    /**
-   * Set objConnection
-   *
-   * @param  objConnection
-   * @return void
-   *
-   */
-function SetTo( &$objConnection )
-  {
-    if( is_object( $objConnection ) )
-    {
-      $this->dbc = $objConnection;
-    }
-  }
 
   /**
    * Function RenderContent
@@ -577,4 +563,3 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
     $G_TABLE = NULL;
   }
 }
-?>
