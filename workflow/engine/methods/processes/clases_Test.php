@@ -27,7 +27,6 @@
 
 	$dbc = new DBConnection;
 	$obj = new Derivation;
-	$obj->SetTo($dbc );
 
 /* derivando el primer caso */
 

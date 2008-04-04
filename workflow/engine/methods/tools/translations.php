@@ -34,7 +34,5 @@
   $dbc = new DBConnection;
   $ses = new DBSession($dbc);
   $G_PUBLISH = new Publisher;
-  $G_PUBLISH->SetTo( $dbc );
-
   $G_PUBLISH->AddContent('pagedtable', 'paged-table', 'tools/translationsList', '', array() , '');
   G::RenderPage('publish');

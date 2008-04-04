@@ -37,7 +37,6 @@
   $dbc = new DBConnection;
   $ses = new DBSession($dbc);
   $G_PUBLISH = new Publisher;
-  $G_PUBLISH->SetTo( $dbc ); 
   $G_PUBLISH->AddContent('xmlform', 'xmlform', 'tools/updateTranslation', '', $fields);
   G::RenderPage('publish');   
 ?>
