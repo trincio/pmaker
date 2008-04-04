@@ -51,4 +51,3 @@
 	  $smarty->assign('tpl_submenu', PATH_TEMPLATE . 'submenu.html' );
     $smarty->display('green.html');
   }
-?>
