@@ -49,9 +49,9 @@ while ($aRow1 = $oDataset->getRow()) {
   if (in_array($msgid, $aMsgids)) {
     $msgid = '[' . $aRow1['TRN_CATEGORY'] . '/' . $aRow1['TRN_ID'] . '] ' . $msgid;
   }
-	$aLabels[] = array(0 => '#: TRANSLATION/' . $aRow1['TRN_CATEGORY'] . '/' . $aRow1['TRN_ID'],
-                     1 => '# TRANSLATION/' . $aRow1['TRN_CATEGORY'] . '/' . $aRow1['TRN_ID'],
-                     2 => '#',
+	$aLabels[] = array(0 => '# TRANSLATION',
+                     1 => '# ' . $aRow1['TRN_CATEGORY'] . '/' . $aRow1['TRN_ID'],
+                     2 => '#: ' . $aRow1['TRN_CATEGORY'] . '/' . $aRow1['TRN_ID'],
                      3 => 'msgid "' . $msgid . '"',
                      4 => 'msgstr "' . ($aRow2 ? $aRow2['TRN_VALUE'] : $aRow1['TRN_VALUE']) . '"');
   $aMsgids[] = $msgid;
@@ -97,9 +97,9 @@ foreach ($aXMLForms as $sXmlForm) {
       	  if (in_array($msgid, $aMsgids)) {
             $msgid = '[' . $sXmlForm . '?' . $oNode->name . '] ' . $msgid;
           }
-          $aLabels[] = array(0 => '#: ' . $sXmlForm . '?' . $sNodeName,
+          $aLabels[] = array(0 => '# ' . $sXmlForm . '?' . $sNodeName,
                              1 => '# ' . $sXmlForm,
-                             2 => '# ' . $oNode->type . ' - ' . $sNodeName,
+                             2 => '#: ' . $oNode->type . ' - ' . $sNodeName,
                              3 => 'msgid "' . $msgid . '"',
                              4 => 'msgstr "' . $oNode->label . '"');
           $aMsgids[] = $msgid;
@@ -109,10 +109,10 @@ foreach ($aXMLForms as $sXmlForm) {
           			if ($sKey == '') {
           				$sKey = "''";
           			}
-          			$aLabels[] = array(0 => '#: ' . $sXmlForm . '?' . $sNodeName . '-'. $sKey,
+          			$aLabels[] = array(0 => '# ' . $sXmlForm . '?' . $sNodeName . '-'. $sKey,
                                    1 => '# ' . $sXmlForm,
-                                   2 => '# ' . $oNode->type . ' - ' . $sNodeName . ' - ' . $sKey,
-                                   3 => 'msgid "' . $sKey . '"',
+                                   2 => '#: ' . $oNode->type . ' - ' . $sNodeName . ' - ' . $sKey,
+                                   3 => 'msgid "[' . $sXmlForm . '?' . $oNode->name  . '-' . $sKey . ']"',
                                    4 => 'msgstr "' . $sValue . '"');
                 $aMsgids[] = $msgid;
           		}
@@ -161,18 +161,17 @@ fprintf($oFile, "\"POT-Creation-Date: \\n\"\n");
 fprintf($oFile, "\"PO-Revision-Date: %s \\n\"\n", date('Y-m-d H:i+0100'));
 fprintf($oFile, "\"Last-Translator: Fernando Ontiveros<fernando@colosa.com>\\n\"\n");
 fprintf($oFile, "\"Language-Team: Colosa Developers Team <developers@colosa.com>\\n\"\n");
-fprintf($oFile, "\"MIME-Version: 1.0 \\n\"\n");
-fprintf($oFile, "\"Content-Type: text/plain; charset=utf-8 \\n\"\n");
+fprintf($oFile, "\"MIME-Version: 1.0\\n\"\n");
+fprintf($oFile, "\"Content-Type: text/plain; charset=utf-8\\n\"\n");
 fprintf($oFile, "\"Content-Transfer_Encoding: 8bit\\n\"\n");
 fprintf($oFile, "\"X-Poedit-Language: %s\\n\"\n", ucwords($sLanguage));
 fprintf($oFile, "\"X-Poedit-Country: %s\\n\"\n", ucwords($sCountry));
-fprintf($oFile, "\"X-Poedit-SourceCharset: utf-8\\n\"\n\n");
+fprintf($oFile, "\"X-Poedit-SourceCharset: utf-8\\n\"\n");
+fprintf($oFile, "\"Content-Transfer-Encoding: 8bit\\n\"\n\n");
 foreach ($aLabels as $aLabel) {
 	fwrite($oFile, $aLabel[0] . "\n");
 	fwrite($oFile, $aLabel[1] . "\n");
-	if ($aLabel[2] != '') {
-	  fwrite($oFile, $aLabel[2] . "\n");
-  }
+  fwrite($oFile, $aLabel[2] . "\n");
 	fwrite($oFile, $aLabel[3] . "\n");
 	fwrite($oFile, $aLabel[4] . "\n\n");
 }

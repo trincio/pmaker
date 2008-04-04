@@ -44,7 +44,7 @@ try {
   		$aAux = explode(':', $sLine);
   		$sAux = trim(str_replace('\n"', '', $aAux[1]));
   	}
-    if (strpos($sLine, '#:') !== false) {
+    if (strpos($sLine, '#') !== false) {
     	$bFind = true;
     }
   }
@@ -80,7 +80,7 @@ try {
   		if (!($sLine = fgets($oFile))) {
   			throw new Exception('The .po file have a bad format!');
   		}
-      $oTranslation->addTranslation($aAux[1], trim(str_replace(chr(10), '', $aAux[2])), $sLanguageID, substr(trim(str_replace(chr(10), '', $sLine)), 8, -1));
+      $oTranslation->addTranslation($aAux[0], trim(str_replace(chr(10), '', $aAux[1])), $sLanguageID, substr(trim(str_replace(chr(10), '', $sLine)), 8, -1));
       if (!($sLine = fgets($oFile))) {
   			throw new Exception('The .po file have a bad format!');
   		}
