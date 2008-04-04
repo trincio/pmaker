@@ -482,7 +482,8 @@ class XmlForm_Field
 	/*Close this object*/
   function cloneObject()
   {
-    return unserialize( serialize( $this ) );
+    //return unserialize( serialize( $this ) );//con este cambio los formularios ya no funcionan en php4
+    return clone($this);
   }
 }
 /**

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dynaForm name="tasks_Labels" width="99%" mode="edit" enableTemplate="0" border="0" height="305px">
 
+<PRO_UID type="private" />
+
 <TAS_UID type="hidden" />
 
 <INDEX type="hidden" />
