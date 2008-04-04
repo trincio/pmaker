@@ -1691,8 +1691,8 @@ class G
    * @return int
    */
   function generateUniqueID() {
-    //return uniqid(rand(), true);
-    return strtoupper(substr(uniqid(rand(0, 9), false),0,14));
+    return uniqid(rand(0, 999999999), true);
+    //return strtoupper(substr(uniqid(rand(0, 9), false),0,14));
   }
 
 /**
@@ -1740,11 +1740,14 @@ class G
    */
   function getSystemConstants()
   {
+  	$aBlackList = array('SYS_TEMP', 'SYS_CURRENT_PARMS', 'SYS_COLLECTION', 'SYS_TARGET', 'SYS_URI', 'SYS_UPLOAD_PATH', 'SYS_CURRENT_URI');
     $sysCon = array();
     $constants=get_defined_constants();
     foreach( $constants as $cons => $value )
     {
-      if ( substr($cons,0,4)==='SYS_' ) $sysCon[$cons] = $value;
+    	if (!in_array($cons, $aBlackList)) {
+        if ( substr($cons,0,4)==='SYS_' ) $sysCon[$cons] = $value;
+      }
     }
     $_SESSION = isset($_SESSION) ? $_SESSION : Array();
     foreach( $_SESSION as $name => $value )
