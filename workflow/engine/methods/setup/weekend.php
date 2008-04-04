@@ -45,7 +45,6 @@ for($id=0;$id<7;$id++)
 	$config[$ARR_WEEKDAYS[0][$id]]=$res['LEX_VALUE'];
 }
 $G_PUBLISH = new Publisher;
-$G_PUBLISH->SetTo( $dbc );
 $G_PUBLISH->AddContent('xmlform', 'xmlform', 'setup/weekend', '',$config ,'' );
 G::RenderPage( 'publish' );
 ?>

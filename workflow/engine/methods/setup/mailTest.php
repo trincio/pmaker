@@ -27,7 +27,6 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_SETUP"))!=1) return $RBAC_Response;
 
 
 	$G_PUBLISH = new Publisher;
-	$G_PUBLISH->SetTo( $dbc );
 	$G_PUBLISH->AddContent('xmlform', 'xmlform', 'setup/mailTest' );
 	
 	G::RenderPage( 'publish' );
