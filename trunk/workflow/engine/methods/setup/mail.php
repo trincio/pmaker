@@ -63,7 +63,6 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_SETUP"))!=1) return $RBAC_Response;
 	verifyConfig();
 
 	$G_PUBLISH = new Publisher;
-	$G_PUBLISH->SetTo( $dbc );
 	$uconfig=array();
 	foreach ($config as $key => $value)
 	{

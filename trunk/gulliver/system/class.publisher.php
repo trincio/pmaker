@@ -44,6 +44,7 @@ class Publisher
   /* PHP 4 doesn't provide destructor where to free $scriptFileHandler resource */
   //var $scriptFileHandler = FALSE;
 
+
    /**
    * Add content in $Parts array
    * @author Fernando Ontiveros Lira <fernando@colosa.com>

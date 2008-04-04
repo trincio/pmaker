@@ -62,7 +62,6 @@ $table->addRowTag($r,'lastRow','','');
 */
 
 $G_PUBLISH = new Publisher;
-$G_PUBLISH->SetTo( $dbc );
 $G_PUBLISH->AddContent( 'xmlform', 'xmlform', 'setup/location', '', $param );
 //$G_PUBLISH->AddContent('template', '', '', '', $table->tpl);
 

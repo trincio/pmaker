@@ -42,7 +42,6 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_SETUP"))!=1) return $RBAC_Response;
 	$row['SATURDAY']  = $row['noWorkingDays'][6];
 
   $G_PUBLISH = new Publisher;
-  $G_PUBLISH->SetTo( $dbc );
   $G_PUBLISH->AddContent( "image", "image", "workPeriodGraph" );
   $G_PUBLISH->AddContent( "xmlform", "xmlform", "setup/workPeriod","", $row , "workPeriodSave" );
 

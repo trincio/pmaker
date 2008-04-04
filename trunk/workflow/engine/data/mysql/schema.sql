@@ -294,7 +294,8 @@ CREATE TABLE `LANGUAGE`
 	`LAN_DIRECTION` CHAR(1) default 'L' NOT NULL,
 	`LAN_WEIGHT` INTEGER default 0 NOT NULL,
 	`LAN_ENABLED` CHAR(1) default '1' NOT NULL,
-	`LAN_CALENDAR` VARCHAR(30) default 'GREGORIAN' NOT NULL
+	`LAN_CALENDAR` VARCHAR(30) default 'GREGORIAN' NOT NULL,
+	PRIMARY KEY (`LAN_ID`)
 )Type=MyISAM  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
 #-- LEXICO
@@ -369,6 +370,41 @@ CREATE TABLE `PROCESS_OWNER`
 	`OWN_UID` VARCHAR(32) default '' NOT NULL,
 	`PRO_UID` VARCHAR(32) default '' NOT NULL,
 	PRIMARY KEY (`OWN_UID`,`PRO_UID`)
+)Type=MyISAM  DEFAULT CHARSET='utf8';
+#-----------------------------------------------------------------------------
+#-- REPORT_TABLE
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `REPORT_TABLE`;
+
+
+CREATE TABLE `REPORT_TABLE`
+(
+	`REP_TAB_UID` VARCHAR(32) default '' NOT NULL,
+	`PRO_UID` VARCHAR(32) default '' NOT NULL,
+	`REP_TAB_NAME` VARCHAR(100) default '' NOT NULL,
+	`REP_TAB_TYPE` VARCHAR(6) default '' NOT NULL,
+	`REP_TAB_GRID` VARCHAR(150) default '',
+	`REP_TAB_CONNECTION` VARCHAR(32) default '' NOT NULL,
+	`REP_TAB_CREATE_DATE` DATETIME  NOT NULL,
+	`REP_TAB_STATUS` CHAR(8) default 'ACTIVE' NOT NULL,
+	PRIMARY KEY (`REP_TAB_UID`)
+)Type=MyISAM  DEFAULT CHARSET='utf8';
+#-----------------------------------------------------------------------------
+#-- REPORT_VAR
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `REPORT_VAR`;
+
+
+CREATE TABLE `REPORT_VAR`
+(
+	`REP_VAR_UID` VARCHAR(32) default '' NOT NULL,
+	`PRO_UID` VARCHAR(32) default '' NOT NULL,
+	`REP_TAB_UID` VARCHAR(32) default '' NOT NULL,
+	`REP_VAR_NAME` VARCHAR(255) default '' NOT NULL,
+	`REP_VAR_TYPE` VARCHAR(20) default '' NOT NULL,
+	PRIMARY KEY (`REP_VAR_UID`)
 )Type=MyISAM  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
 #-- ROUTE

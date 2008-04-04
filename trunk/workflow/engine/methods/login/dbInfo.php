@@ -81,7 +81,6 @@ function lookup($target)
   $Fields['HTTP_USER_AGENT'] = getenv('HTTP_USER_AGENT');
 
   $G_PUBLISH = new Publisher;
-  $G_PUBLISH->SetTo($dbc);
   $G_PUBLISH->AddContent('xmlform', 'xmlform', 'login/dbInfo', '', $Fields, 'appNew2');
   $G_HEADER->clearScripts();
   G::RenderPage('publish', 'raw');

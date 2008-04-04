@@ -35,7 +35,6 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_SETUP"))!=1) return $RBAC_Response;
 
   $dbc = new DBConnection;
   $G_PUBLISH = new Publisher;
-  $G_PUBLISH->SetTo( $dbc );
   $G_PUBLISH->AddContent( "view", "setup/tree_setupEnvironment" );
 //  $G_PUBLISH->AddContent( "xmlform", "paged-table2", "setup/Holiday","", "" , "../gulliver/paged-TableAjax.php" );
 

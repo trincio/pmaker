@@ -27,7 +27,6 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_SETUP"))!=1) return $RBAC_Response;
 
 	$dbc = new DBConnection;
 	$G_PUBLISH = new Publisher;
-	$G_PUBLISH->SetTo( $dbc );
 	$G_PUBLISH->AddContent( "xmlform", "xmlform", "setup/language","", "" , "language_save" );
 	$G_PUBLISH->AddContent( "xmlform", "pagedTable", "setup/language_table","","", "../setup/languageAjax.php" );
  	G::RenderPage( 'publish' );
