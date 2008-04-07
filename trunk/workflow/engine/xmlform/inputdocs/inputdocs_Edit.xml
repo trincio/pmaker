@@ -14,7 +14,7 @@
   <es>Input Document Information</es>
 </TITLE>
 
-<INP_DOC_TITLE type="text" maxlength="100" size="40" colWidth="200" titleAlign="left" align="left" dataCompareField="T.CON_VALUE" dataCompareType="contains" >
+<INP_DOC_TITLE type="text" maxlength="100" size="50" colWidth="200" titleAlign="left" align="left" dataCompareField="T.CON_VALUE" dataCompareType="contains" >
   <en>Title</en>
   <es>Título</es>
 </INP_DOC_TITLE>
@@ -56,7 +56,7 @@
   </es>
 </INP_DOC_PUBLISHED>-->
 
-<INP_DOC_DESCRIPTION type="textarea" rows="5" cols="38" colWidth="200" titleAlign="left" align="left" dataCompareField="D.CON_VALUE" dataCompareType="contains" >
+<INP_DOC_DESCRIPTION type="textarea" rows="5" cols="60" colWidth="200" titleAlign="left" align="left" dataCompareField="D.CON_VALUE" dataCompareType="contains" >
   <en>Description</en>
   <es>Descripción</es>
 </INP_DOC_DESCRIPTION>

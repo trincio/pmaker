@@ -16,7 +16,7 @@
   <en>Title</en>
 </PRO_TITLE>
 
-<PRO_DESCRIPTION type="textarea" cols="30" rows="5">
+<PRO_DESCRIPTION type="textarea" cols="60" rows="5">
   <es>Descripción</es>
   <en>Description</en>
 </PRO_DESCRIPTION>
