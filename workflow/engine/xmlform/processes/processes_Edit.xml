@@ -10,13 +10,13 @@
 
 <THETYPE type="hidden" />
 
-<PRO_TITLE type="text" size="35" maxlength="255"  defaultvalue="" required="0" group="1" dependentfields="" linkfield="" strto="" readonly="0" noshowingrid="0" readonlyingrid="0" totalizeable="0" sqlconnection="">
+<PRO_TITLE type="text" size="50" maxlength="255"  defaultvalue="" required="0" group="1" dependentfields="" linkfield="" strto="" readonly="0" noshowingrid="0" readonlyingrid="0" totalizeable="0" sqlconnection="">
   <es>Título</es>
   <en>Title</en>
 </PRO_TITLE>
 
 <!-- <PRO_DESCRIPTION type="html"> -->
-<PRO_DESCRIPTION type="textarea" rows="8" cols="42">
+<PRO_DESCRIPTION type="textarea" rows="8" cols="60">
   <es>Descripción</es>
   <en>Description</en>
 </PRO_DESCRIPTION>
