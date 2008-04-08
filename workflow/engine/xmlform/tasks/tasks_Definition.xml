@@ -12,7 +12,7 @@
   <es>Título</es>
 </TAS_TITLE>
 
-<TAS_DESCRIPTION type="textarea" required="0" cols="48" rows="6" group="1">
+<TAS_DESCRIPTION type="textarea" required="0" cols="60" rows="6" group="1">
   <en>Description</en>
   <es>Descripción</es>
 </TAS_DESCRIPTION>

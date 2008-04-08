@@ -51,12 +51,17 @@ try {
   $oTasks->ofToAssignUserOfAllTasks($_GET['USR_UID']);
   G::LoadClass('groups');
   $oGroups = new Groups();
-  $oGroups->ofToAssignUserOfAllGroups($_GET['USR_UID']);
+  $oGroups->ofToAssignUserOfAllGroups($_GET['USR_UID']);  
   $RBAC->changeUserStatus($_GET['USR_UID'], 'CLOSED');
+  $_GET['USR_USERNAME']='';
+  $RBAC->updateUser(array('USR_UID' => $_GET['USR_UID'], 'USR_USERNAME' => $_GET['USR_USERNAME']),'');
+  
+  
   require_once 'classes/model/Users.php';
   $oUser                 = new Users();
   $aFields               = $oUser->load($_GET['USR_UID']);
   $aFields['USR_STATUS'] = 'CLOSED';
+  $aFields['USR_USERNAME'] = '';
   $oUser->update($aFields);
   G::header('location: ' . $_SERVER['HTTP_REFERER']);
 }
