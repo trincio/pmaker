@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dynaForm name="new_workspace" version="1.0" basedir="" xmlform_type="NORMAL" width="400px" ajaxSubmit="true" in_progress="status_in_progress.args(9898)" callback="status_create">
+<dynaForm name="new_workspace" version="1.0" basedir="" xmlform_type="NORMAL" width="400px" ajaxSubmit="true" callback="status_create">
 <NEW_WORKSPACE type="title">
   <es>New Workspace</es>
   <en>New Workspace</en>
@@ -14,35 +14,14 @@
 </NW_SUB>
 <JS type="JavaScript">
 	<![CDATA[
-	var status_in_progress=function(form)
+	var status_create=function(rpc){
+	try{var rp=rpc.xmlhttp.responseText.parseJSON();}catch(e){var rp={};}
+	alert(rp.message)
+	if(rp.created===true)
 	{
-		var n = getField('NW_TITLE');
-		var b = getField('NW_SUB');
-		n.disabled=true;
-		b.disabled=true;
-	};
-	var status_create=function(rpc)
-	{
-		try{var rp=rpc.xmlhttp.responseText.parseJSON();}catch(e){var rp={};}
-		new leimnud.module.app.alert().make({
-			label:rp.message,
-			action:function()
-			{
-				if(!rp.created)
-				{
-					var n = getField('NW_TITLE');
-					var b = getField('NW_SUB');
-					n.disabled=false;
-					b.disabled=false;
-					n.focus();
-				}
-				else
-				{
-				window.location="/sys"+rp.name+"/en/green/login/login";
-				}
-			}
-		});
-	};
+	window.location="/sys"+rp.name+"/en/green/login/login";
+	}
+	}
 	]]>
 </JS>
 </dynaForm>

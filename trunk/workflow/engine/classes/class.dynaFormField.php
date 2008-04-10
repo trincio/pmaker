@@ -84,7 +84,7 @@ class DynaFormField extends DBTable
           .'VALUES ("","'."\n  ".'","cdata")');
         $res = $this->_dbses->Execute('INSERT INTO dynaForm.'
           .$Fields['XMLNODE_NAME'].' (XMLNODE_NAME,XMLNODE_VALUE) '
-          .'VALUES ("'.$lang.'","'.str_replace('"','""',$value)/*."\n  "*/.'")');
+          .'VALUES ("'.$lang.'","'.str_replace('"','""',$value)."\n  ".'")');
         if (isset($options[$lang])) {
           foreach($options[$lang] as $option => $text ) {
             $res = $this->_dbses->Execute('INSERT INTO dynaForm.'

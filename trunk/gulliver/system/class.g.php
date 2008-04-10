@@ -1704,7 +1704,7 @@ class G
    * @return int
    */
   function generateUniqueID() {
-    return uniqid(rand(0, 999999999), true);
+    return str_replace('.', '_', uniqid(rand(0, 999999999), true));
     //return strtoupper(substr(uniqid(rand(0, 9), false),0,14));
   }
 

@@ -1008,12 +1008,12 @@ var processmap=function(){
 						this.oTaskDetailsPanel = new leimnud.module.panel();
             this.oTaskDetailsPanel.options = {
               limit    : true,
-              size     : {w:300,h:227},
+              size     : {w:300,h:222},
               position : {x:0,y:0,center:true},
               title    : '',
               theme    : 'processmaker',
               statusBar: false,
-              control  : {drag:false,resize:false,close:true},
+              control  : {drag:false,resize:true,close:true},
               fx       : {opacity:true,rolled:false,modal:true}
             };
             this.oTaskDetailsPanel.make();
