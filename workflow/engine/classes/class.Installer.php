@@ -94,6 +94,7 @@ class Installer
 
 			$wf = "wf_".$this->options['name'];
 			$rb = "rbac_".$this->options['name'];
+			$rp = "rp_".$this->options['name'];
 			$schema	="schema.sql";
 			$values	="insert.sql";   //noe existe
 			/* Create databases & users  */
@@ -112,6 +113,14 @@ class Installer
 			$q	= "CREATE DATABASE ".$rb." DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci";
 			$ac = @mysql_query($q,$this->connection_database);
 			$this->log($q.": => ".((!$ac)?mysql_error():"OK")."\n");
+
+			/* report DB begin */
+
+			$q	= "CREATE DATABASE ".$rp." DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci";
+			$ac = @mysql_query($q,$this->connection_database);
+			$this->log($q.": => ".((!$ac)?mysql_error():"OK")."\n");
+
+			/* report DB end */
 	
 			//$priv_wf = "GRANT ALL PRIVILEGES ON `".$wf.".* TO ".$wf."@`".$this->options['database']['hostname']."` IDENTIFIED BY '".$this->options['password']."' WITH GRANT OPTION";
 			if(in_array($this->options['database']['hostname'],$local))
@@ -136,7 +145,23 @@ class Installer
 			}
 			$ac = @mysql_query($priv_rb,$this->connection_database);
 			$this->log($priv_rb.": => ".((!$ac)?mysql_error():"OK")."\n");
-		
+
+
+			/* report DB begin */
+
+			if(in_array($this->options['database']['hostname'],$local))
+			{
+				$priv_rp = "GRANT ALL PRIVILEGES ON `".$rp."`.* TO ".$rp."@'localhost' IDENTIFIED BY '".$this->options['password']."' WITH GRANT OPTION";
+			}
+			else
+			{
+				$priv_rp = "GRANT ALL PRIVILEGES ON `".$rp."`.* TO ".$rp."@'%' IDENTIFIED BY '".$this->options['password']."' WITH GRANT OPTION";
+			}
+			$ac = @mysql_query($priv_rp,$this->connection_database);
+			$this->log($priv_rp.": => ".((!$ac)?mysql_error():"OK")."\n");
+
+
+			/* report DB end */
 		
 			/* Dump schema workflow && data  */
 		

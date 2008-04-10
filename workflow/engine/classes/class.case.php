@@ -284,7 +284,7 @@ class Cases {
       $aFields = $oApp->load($sAppUid);
       G::LoadClass('reportTables');
       $oReportTables = new ReportTables();
-      $oReportTables->updateTables($aFields['PRO_UID'], $sAppUid, $Fields['APP_NUMBER'], $aApplicationFields);
+      $oReportTables->updateTables($aFields['PRO_UID'], $sAppUid, $aApplicationFields);
       return $Fields;
     }
   	catch ( Exception $e ) {

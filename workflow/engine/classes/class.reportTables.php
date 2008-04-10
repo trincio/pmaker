@@ -41,7 +41,8 @@ class ReportTables {
 	                                       'char'   => 'VARCHAR(255)',
 	                                       'text'   => 'TEXT',
 	                                       'date'   => 'DATETIME'));
-  private $sPrefix = 'REP_';
+  //private $sPrefix = 'REP_';
+  private $sPrefix = '';
   public function deleteAllReportVars($sRepTabUid = '') {
   	try {
   		$oCriteria = new Criteria('workflow');
@@ -52,10 +53,10 @@ class ReportTables {
     	throw($oError);
     }
   }
-  public function dropTable($sTableName, $sConnection = 'wf') {
+  public function dropTable($sTableName, $sConnection = 'report') {
   	$sTableName = $this->sPrefix . $sTableName;
   	if ($sConnection == '') {
-  		$sConnection = 'wf';
+  		$sConnection = 'report';
   	}
   	$sDBName = $sConnection . '_' . SYS_SYS;
   	$sDBHost = 'DB' . ($sConnection != 'wf' ? '_' . strtoupper($sConnection) : '') . '_HOST';
@@ -82,10 +83,10 @@ class ReportTables {
     	throw($oError);
     }
   }
-  public function createTable($sTableName, $sConnection = 'wf', $sType = 'NORMAL', $aFields = array()) {
+  public function createTable($sTableName, $sConnection = 'report', $sType = 'NORMAL', $aFields = array()) {
   	$sTableName = $this->sPrefix . $sTableName;
   	if ($sConnection == '') {
-  		$sConnection = 'wf';
+  		$sConnection = 'report';
   	}
   	$sDBName = $sConnection . '_' . SYS_SYS;
   	$sDBHost = 'DB' . ($sConnection != 'wf' ? '_' . strtoupper($sConnection) : '') . '_HOST';
@@ -132,10 +133,10 @@ class ReportTables {
     	throw($oError);
     }
   }
-  public function populateTable($sTableName, $sConnection = 'wf', $sType = 'NORMAL', $aFields = array(), $sProcessUid = '', $sGrid = '') {
+  public function populateTable($sTableName, $sConnection = 'report', $sType = 'NORMAL', $aFields = array(), $sProcessUid = '', $sGrid = '') {
   	$sTableName = $this->sPrefix . $sTableName;
   	if ($sConnection == '') {
-  		$sConnection = 'wf';
+  		$sConnection = 'report';
   	}
   	$sDBName = $sConnection . '_' . SYS_SYS;
   	$sDBHost = 'DB' . ($sConnection != 'wf' ? '_' . strtoupper($sConnection) : '') . '_HOST';
@@ -282,7 +283,7 @@ class ReportTables {
       while ($aRow = $oDataset->getRow()) {
       	$aRow['REP_TAB_NAME'] = $this->sPrefix . $aRow['REP_TAB_NAME'];
       	if ($aRow['REP_TAB_CONNECTION'] == '') {
-  	    	$aRow['REP_TAB_CONNECTION'] = 'wf';
+  	    	$aRow['REP_TAB_CONNECTION'] = 'report';
   	    }
   	    $sDBName = $aRow['REP_TAB_CONNECTION'] . '_' . SYS_SYS;
   	    $sDBHost = 'DB' . ($aRow['REP_TAB_CONNECTION'] != 'wf' ? '_' . strtoupper($aRow['REP_TAB_CONNECTION']) : '') . '_HOST';
