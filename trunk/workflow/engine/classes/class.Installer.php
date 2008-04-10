@@ -152,10 +152,12 @@ class Installer
 			if(in_array($this->options['database']['hostname'],$local))
 			{
 				$priv_rp = "GRANT ALL PRIVILEGES ON `".$rp."`.* TO ".$rp."@'localhost' IDENTIFIED BY '".$this->options['password']."' WITH GRANT OPTION";
+				$priv_rp = "GRANT ALL PRIVILEGES ON `".$rp."`.* TO ".$wf."@'localhost' IDENTIFIED BY '".$this->options['password']."' WITH GRANT OPTION";
 			}
 			else
 			{
 				$priv_rp = "GRANT ALL PRIVILEGES ON `".$rp."`.* TO ".$rp."@'%' IDENTIFIED BY '".$this->options['password']."' WITH GRANT OPTION";
+				$priv_rp = "GRANT ALL PRIVILEGES ON `".$rp."`.* TO ".$wf."@'%' IDENTIFIED BY '".$this->options['password']."' WITH GRANT OPTION";
 			}
 			$ac = @mysql_query($priv_rp,$this->connection_database);
 			$this->log($priv_rp.": => ".((!$ac)?mysql_error():"OK")."\n");
