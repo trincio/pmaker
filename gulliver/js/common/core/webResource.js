@@ -13,6 +13,9 @@ function WebResource(uri,parameters,method)
     	if (parameters != '') {
     		parameters += '&rand=' + Math.random();
     	}
+    	else {
+    		parameters = 'rand=' + Math.random();
+    	}
     	data = parameters;
     	request.open( method, uri + ((method==='GET')?('?'+data): '') , false);
       if (method==='POST') request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
