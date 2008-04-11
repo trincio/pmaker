@@ -126,12 +126,17 @@ try {
   	break;
   	case 'editTriggerCondition':
   	  require_once 'classes/model/Step.php';
-  	  $oStep = new Step();
-  	  $aRow  = $oStep->load($aData['sStep']);
+  	  require_once 'classes/model/Triggers.php';    
+  	  $oStep = new Step();  	    	          	  	    	    	  
+  	   	  		
   	  $aFields['STEP_UID'] = $aData['sStep'];
   	  $aFields['TRI_UID']  = $aData['sTrigger'];
   	  $aFields['ST_TYPE']  = $aData['sType'];
-  	  $oStepTrigger = new StepTrigger();
+  	  
+  	  $Trigger = new Triggers();  	  
+  	  $aRow  = $Trigger->load($aData['sTrigger']); 
+  	  
+  	  $oStepTrigger = new StepTrigger();    	  	  
   	  $aFields = $oStepTrigger->load($aFields['STEP_UID'], $_SESSION['TASK'], $aFields['TRI_UID'], $aFields['ST_TYPE']);
   	  $aFields['action'] = 'saveTriggerCondition';
   	  $aFields['PROCESS']  = $aRow['PRO_UID'];
