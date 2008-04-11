@@ -68,6 +68,7 @@ try {
 	}
 
 	$_SESSION['USER_LOGGED'] = $uid;
+	$_SESSION['USR_USERNAME'] = $usr;
 
   // Asign the uid of user to userloggedobj
   $RBAC->loadUserRolePermission( $RBAC->sSystem, $uid );
