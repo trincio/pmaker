@@ -10,6 +10,9 @@ function WebResource(uri,parameters,method)
     try
     {
     	if (!method ) method ="POST";
+    	if (parameters != '') {
+    		parameters += '&rand=' + Math.random();
+    	}
     	data = parameters;
     	request.open( method, uri + ((method==='GET')?('?'+data): '') , false);
       if (method==='POST') request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -219,7 +222,7 @@ if (!String.prototype.trim)
   		else
   			break;
   	}
-  
+
   	for(i=cadena.length-1; i>=0; i=cadena.length-1)
   	{
   		if(cadena.charAt(i)==" ")
