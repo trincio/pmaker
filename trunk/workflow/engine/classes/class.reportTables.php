@@ -58,7 +58,7 @@ class ReportTables {
   	if ($sConnection == '') {
   		$sConnection = 'report';
   	}
-  	$sDBName = $sConnection . '_' . SYS_SYS;
+  	$sDBName = 'DB' . ($sConnection != 'wf' ? '_' . strtoupper($sConnection) : '') . '_NAME';
   	$sDBHost = 'DB' . ($sConnection != 'wf' ? '_' . strtoupper($sConnection) : '') . '_HOST';
   	$sDBUser = 'DB' . ($sConnection != 'wf' ? '_' . strtoupper($sConnection) : '') . '_USER';
   	$sDBPass = 'DB' . ($sConnection != 'wf' ? '_' . strtoupper($sConnection) : '') . '_PASS';
@@ -70,9 +70,9 @@ class ReportTables {
   	  	  if (!$oConnection) {
   	  	  	throw new Exception('Cannot connect to the server!');
   	  	  }
-  	  	  if (!@mysql_select_db($sDBName)) {
-  	  	  	throw new Exception('Cannot connect to the database "' . $sDBName . '"!');
-  	  	  }
+  	  	  eval("if (!@mysql_select_db($sDBName)) {
+  	  	  	throw new Exception('Cannot connect to the database ' . $sDBName . '!');
+  	  	  }");
   	  	  if (!@mysql_query('DROP TABLE IF EXISTS `' . $sTableName . '`')) {
   	  	  	throw new Exception('Cannot delete the table "' . $sTableName . '"!');
   	  	  }
@@ -88,7 +88,7 @@ class ReportTables {
   	if ($sConnection == '') {
   		$sConnection = 'report';
   	}
-  	$sDBName = $sConnection . '_' . SYS_SYS;
+  	$sDBName = 'DB' . ($sConnection != 'wf' ? '_' . strtoupper($sConnection) : '') . '_NAME';
   	$sDBHost = 'DB' . ($sConnection != 'wf' ? '_' . strtoupper($sConnection) : '') . '_HOST';
   	$sDBUser = 'DB' . ($sConnection != 'wf' ? '_' . strtoupper($sConnection) : '') . '_USER';
   	$sDBPass = 'DB' . ($sConnection != 'wf' ? '_' . strtoupper($sConnection) : '') . '_PASS';
@@ -100,9 +100,9 @@ class ReportTables {
   	  	  if (!$oConnection) {
   	  	  	throw new Exception('Cannot connect to the server!');
   	  	  }
-  	  	  if (!@mysql_select_db($sDBName)) {
-  	  	  	throw new Exception('Cannot connect to the database "' . $sDBName . '"!');
-  	  	  }
+  	  	  eval("if (!@mysql_select_db($sDBName)) {
+  	  	  	throw new Exception('Cannot connect to the database ' . $sDBName . '!');
+  	  	  }");
   	  	  $sQuery  = 'CREATE TABLE IF NOT EXISTS `' . $sTableName . '` (';
   	  	  $sQuery .= "`APP_UID` VARCHAR(32) NOT NULL DEFAULT '',`APP_NUMBER` INT NOT NULL,";
   	  	  if ($sType == 'GRID') {
@@ -138,7 +138,7 @@ class ReportTables {
   	if ($sConnection == '') {
   		$sConnection = 'report';
   	}
-  	$sDBName = $sConnection . '_' . SYS_SYS;
+  	$sDBName = 'DB' . ($sConnection != 'wf' ? '_' . strtoupper($sConnection) : '') . '_NAME';
   	$sDBHost = 'DB' . ($sConnection != 'wf' ? '_' . strtoupper($sConnection) : '') . '_HOST';
   	$sDBUser = 'DB' . ($sConnection != 'wf' ? '_' . strtoupper($sConnection) : '') . '_USER';
   	$sDBPass = 'DB' . ($sConnection != 'wf' ? '_' . strtoupper($sConnection) : '') . '_PASS';
@@ -160,9 +160,9 @@ class ReportTables {
   	      $oDataset = ApplicationPeer::doSelectRS($oCriteria);
           $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
           $oDataset->next();
-          if (!@mysql_select_db($sDBName)) {
-  	  	  	throw new Exception('Cannot connect to the database "' . $sDBName . '"!');
-  	  	  }
+          eval("if (!@mysql_select_db($sDBName)) {
+  	  	  	throw new Exception('Cannot connect to the database ' . $sDBName . '!');
+  	  	  }");
           while ($aRow = $oDataset->getRow()) {
           	$aData = unserialize($aRow['APP_DATA']);
           	mysql_query('DELETE FROM `' . $sTableName . "` WHERE APP_UID = '" . $aRow['APP_UID'] . "'");
@@ -297,9 +297,9 @@ class ReportTables {
   	  	    	throw new Exception('Cannot connect to the server!');
   	  	    }
   	  	    $aTableFields = $this->getTableVars($aRow['REP_TAB_UID'], true);
-  	  	    if (!@mysql_select_db($sDBName)) {
-  	  		    throw new Exception('Cannot connect to the database "' . $sDBName . '"!');
-  	  	    }
+  	  	    eval("if (!@mysql_select_db($sDBName)) {
+  	  	  	  throw new Exception('Cannot connect to the database ' . $sDBName . '!');
+  	  	    }");
   	  	    if ($aRow['REP_TAB_TYPE'] == 'NORMAL') {
   	  	    	$oDataset2 = mysql_query("SELECT * FROM `" . $aRow['REP_TAB_NAME'] . "` WHERE APP_UID = '" . $sApplicationUid . "'");
   	  	    	if ($aRow2 = mysql_fetch_row($oDataset2)) {
