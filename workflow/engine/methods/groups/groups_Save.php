@@ -29,9 +29,9 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_USERS"))!=1) return $RBAC_Response;
   $G_MAIN_MENU     = 'wf.login';
   $G_MENU_SELECTED = '';
 
-  $group = new Groupwf();
+  $group = new Groupwf();  
   if($_POST['form']['GRP_UID']==='')
-  {
+  { 
   	$grpRow = $_POST['form'];
   	unset ( $grpRow['GRP_UID'] );
     $group->create( $grpRow );
