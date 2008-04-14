@@ -140,7 +140,7 @@ try {
 	}
 
 
-	throw ( new Exception ( "this $usr has no role assigned  ($res, $uid)" ) );
+	throw ( new Exception ( "the user $usr has no role assigned  ($res, $uid)" ) );
 
 }
 catch ( Exception $e ) {
