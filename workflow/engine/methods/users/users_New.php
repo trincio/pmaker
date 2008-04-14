@@ -44,7 +44,7 @@ try {
   $aFields['START_DATE'] = date('Y-m-d');
   $aFields['END_DATE']   = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d'), date('Y') + 5));
   $aFields['USR_DUE_DATE']= date('Y-m-d', mktime(0, 0, 0, date('m'), date('d'), date('Y') + 1));
-  
+
   $G_MAIN_MENU           = 'processmaker';
   $G_ID_MENU_SELECTED    = 'USERS';
   $G_PUBLISH             = new Publisher;
