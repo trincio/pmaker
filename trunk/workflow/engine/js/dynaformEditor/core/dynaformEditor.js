@@ -231,7 +231,7 @@ var dynaformEditor={
 		}
 	},
 	refreshFieldsList:function() {
-		ZHluYWZvcm1zL2ZpZWxkc19MaXN0LnhtbA______.refresh();
+		fields_List.refresh();
 	},
 	getJSCode:function()
 	{
@@ -283,12 +283,12 @@ var dynaformEditor={
 	},
 	setEnableTemplate:function(value)
 	{
-		value = value ? "1" : "0"; 
+		value = value ? "1" : "0";
 		this.ajax.set_enabletemplate( this.A , value );
 	},
 	getEnableTemplate:function()
 	{
-		var value = this.ajax.get_enabletemplate( this.A ); 
+		var value = this.ajax.get_enabletemplate( this.A );
 		return value == "1";
 	},
 	refreshJavascripts:function()
