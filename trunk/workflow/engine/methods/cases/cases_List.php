@@ -34,10 +34,10 @@
 
   // $_GET['l'] has the type of cases list like todo,pause,cancel, all
 
-  $conf = new Configurations();
+  $conf = new Configurations();  
   if (!isset($_GET['l']))
   {
-    $confCasesList = $conf->loadObject('ProcessMaker','cases_List','',$_SESSION['USER_LOGGED'],'');
+    $confCasesList = $conf->loadObject('ProcessMaker','cases_List','',$_SESSION['USER_LOGGED'],'');    
     if (is_array($confCasesList))
     {
       $sTypeList = $confCasesList['sTypeList'];
@@ -65,6 +65,7 @@
   /* Prepare page before to show */
   $oCases = new Cases();
   list($Criteria,$xmlfile) = $oCases->getConditionCasesList( $sTypeList, $sUIDUserLogged);
+  
   /* Render page */
   $G_PUBLISH = new Publisher;
   $G_PUBLISH->AddContent( 'propeltable', 'paged-table', $xmlfile, $Criteria );

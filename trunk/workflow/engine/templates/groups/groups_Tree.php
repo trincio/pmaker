@@ -58,7 +58,8 @@
     $ID_MEMBERS  = G::LoadTranslation('ID_MEMBERS');
     $ID_DELETE   = G::LoadTranslation('ID_DELETE');
     $UID         = htmlentities($group->getGrpUid());
-    $GROUP_TITLE = htmlentities($group->getGrpTitle());
+    //$GROUP_TITLE = htmlentities($group->getGrpTitle());
+    $GROUP_TITLE = strip_tags($group->getGrpTitle());
     $htmlGroup   = <<<GHTML
       <table cellspacing='0' cellpadding='0' border='1' style='border:0px;'>
         <tr>
@@ -73,5 +74,4 @@ GHTML;
     $ch->point = '<img src="/images/users.png" />';
   }
   print( $tree->render() );
-
-?>
+  //
