@@ -61,13 +61,16 @@ leimnud.event.add(getField('ROU_NEXT_TASK'),    'change', modified);
 //leimnud.event.add(getField('ROU_TO_LAST_USER'), 'change', modified);
 Pm.tmp.derivationsPanel.events.remove = function() {
   if (bModified) {
+  Pm.tmp.derivationsPanel.cancelClose=true;
     new leimnud.module.app.confirm().make({
       label:  G_STRINGS.ID_SAVE_DERIVATION_RULES_BEFORE_CLOSING,
       action: function() {
+        Pm.tmp.derivationsPanel.cancelClose=false;
         bModified = false;
         getField('SAVE').onclick();
       }.extend(this),
       cancel: function() {
+        Pm.tmp.derivationsPanel.cancelClose=false;
         bModified = false;
         Pm.tmp.derivationsPanel.remove();
       }
