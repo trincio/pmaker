@@ -4,7 +4,7 @@
   <es>Login</es>
   <en>Login</en>
 </TITLE>
-<USR_USERNAME type="text" size="30" maxlength="32" validate="Alpha10">
+<USR_USERNAME type="text" size="30" maxlength="32" validate="Login">
   <es>Usuario</es>
   <en>User</en>
 </USR_USERNAME>
