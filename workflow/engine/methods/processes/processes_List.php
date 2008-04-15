@@ -44,7 +44,6 @@ switch ($RBAC->userCanAccess('PM_FACTORY'))
   $aLabels['LANG']     = SYS_LANG;
   $aLabels['PRO_EDIT']     = G::LoadTranslation('ID_EDIT');
   $aLabels['PRO_DELETE']   = G::LoadTranslation('ID_DELETE');
-  $aLabels['PRO_STATUSx']   = 'link pro_status';
   $aLabels['ACTIVE']   = G::LoadTranslation('ID_ACTIVE');
   $aLabels['INACTIVE'] = G::LoadTranslation('ID_INACTIVE');
   $aLabels['CONFIRM']  = G::LoadTranslation('ID_MSG_CONFIRM_DELETE_PROCESS');
