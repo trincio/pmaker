@@ -58,7 +58,8 @@ if($action==="check")
 	$smex=substr($mex,-9);	
 	$data->mysqlExe		=$s['result']['database']['cli'];
 	$data->phpVersion	=(version_compare(PHP_VERSION,"5.1.0",">="))?true:false;
-	$data->mysqlVersion	=(version_compare(find_SQL_Version((PHP_OS=='WINNT')?$mex:'mysql',$data->mysqlExe),"4.1.20",">=")) ?true:false;
+	$myV=find_SQL_Version((PHP_OS=='WINNT')?'"'.$mex.'"':'mysql',$data->mysqlExe);
+	$data->mysqlVersion	=(version_compare($myV,"4.1.20",">="))?true:false;
 	if(trim($dataClient->mysqlH)=='' || trim($dataClient->mysqlU)=='')
 	{
 		$con = array('connection'=>false,'grant'=>false,'message'=>'Please complete the input fields (Hostname/Username)');
