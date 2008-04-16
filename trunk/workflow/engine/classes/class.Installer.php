@@ -172,7 +172,7 @@ class Installer
 			/* Dump schema workflow && data  */
 
 			$this->log("Dump schema workflow/rbac && data\n====================================\n");
-
+			$this->options['database']['cli'] = (PHP_OS=="WINNT")?'"'.$this->options['database']['cli'].'"':$this->options['database']['cli'];
 			$this->log("Mysql client: ".$this->options['database']['cli']."\n");
 
 			$myPortA = explode(":",$this->options['database']['hostname']);
@@ -190,6 +190,9 @@ class Installer
 
 		$sh_sc = $this->options['database']['cli']." ".$wf." < ".$pws." -h ".$this->options['database']['hostname']." --port=".$myPort." --user=".$wf." --password=".$this->options['password'];
 		$result_shell = exec($sh_sc);
+		$this->log("+++++++++::");
+		$this->log($result_shell);
+		$this->log("+++++++++");
 		$this->log($sh_sc."  => ".(($result_shell)?$result_shell:"OK")."\n");
 
 
