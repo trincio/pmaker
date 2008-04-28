@@ -3,9 +3,9 @@ NameVirtualHost your_ip_address
 #{projectName} virtual host 
 <VirtualHost your_ip_address >
   ServerName "your_{projectName}_server"
-  DocumentRoot {pathHome}
+  DocumentRoot {pathHome}/public_html
   DirectoryIndex index.html index.php
-  <Directory  "{$pathHome}/public_html">
+  <Directory  "{pathHome}/public_html">
     AddDefaultCharset UTF-8
 
     AllowOverRide none

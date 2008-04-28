@@ -640,6 +640,16 @@ function run_new_project ( $task, $args)
   $iSize = file_put_contents ( $httpFilename, $content );
   printf("saved %s bytes in file %s \n", pakeColor::colorize( $iSize, 'INFO'), pakeColor::colorize( 'sysGeneric.php', 'INFO') );    
 
+  //create sysGeneric 
+  $httpdTpl = PATH_GULLIVER_HOME . 'bin' . PATH_SEP . 'tasks' . PATH_SEP . 'index.html.tpl';
+  $httpFilename = $pathHome . PATH_SEP . 'public_html' . PATH_SEP . 'index.html';
+  $template = new TemplatePower( $httpdTpl );
+  $template->prepare();
+  $template->assign ( 'projectName', $projectName);
+  $content = $template->getOutputContent();
+  $iSize = file_put_contents ( $httpFilename, $content );
+  printf("saved %s bytes in file %s \n", pakeColor::colorize( $iSize, 'INFO'), pakeColor::colorize( 'index.html', 'INFO') );    
+
   //create schema.xml with empty databases
   //create welcome page
   
