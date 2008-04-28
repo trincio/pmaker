@@ -588,12 +588,41 @@ function run_new_project ( $task, $args)
     exit (0);
   }  
 
+  $pathHome = PATH_TRUNK . $projectName;
+  
   //create folder and structure
+  G::mk_dir ($pathHome );
+  G::mk_dir ($pathHome . PATH_SEP . 'public_html' );
+  G::mk_dir ($pathHome . PATH_SEP . 'public_html' . PATH_SEP . 'images');
+  G::mk_dir ($pathHome . PATH_SEP . 'public_html' . PATH_SEP . 'skins');
+  G::mk_dir ($pathHome . PATH_SEP . 'engine' );
+  G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'classes' );
+  G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'classes' . PATH_SEP . 'model');  
+  G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'config' );
+  G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'content' );
+  G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'content' . PATH_SEP . 'languages');
+  G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'content' . PATH_SEP . 'translations');
+  G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'data' );
+  G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'data' . PATH_SEP . 'mysql');
+  G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'js' );
+  G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'js' . PATH_SEP . 'labels');
+  G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'menus' );
+  G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'methods' );
+  G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'methods' . PATH_SEP . 'login');
+  G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'skins' );
+  G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'templates' );
+  G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'test' );
+  G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'test' . PATH_SEP . 'bootstrap');
+  G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'test' . PATH_SEP . 'fixtures');
+  G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'test' . PATH_SEP . 'unit');
+  G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'xmlform' );
+  G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'xmlform' . PATH_SEP . 'login');
+  
   //create project.conf for httpd conf
   //create schema.xml with empty databases
   //create welcome page
   
-  printf("Gulliver version %s\n", pakeColor::colorize(trim(file_get_contents( PATH_GULLIVER . 'VERSION')), 'INFO'));
+  printf("creating project %s in %s\n", pakeColor::colorize($projectName, 'INFO'), pakeColor::colorize($pathHome, 'INFO'));
   exit(0);
 }
 
