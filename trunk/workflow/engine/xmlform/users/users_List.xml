@@ -11,7 +11,7 @@
   <en>Full Name</en>
 </USR_COMPLETENAME>
 <USR_USERNAME type="text" titlealign="left" align="left" colWidth="150">
-  <en>User Name</en>
+  <en>Username</en>
 </USR_USERNAME>
 <USR_EMAIL type="text" titlealign="left" align="left" colWidth="190">
   <en>E-Mail</en>
@@ -25,9 +25,14 @@
 <USR_VIEW type="link" colWidth="50" value="@#USR_VIEW" link="users_View?USR_UID=@#USR_UID">
   <en></en>
 </USR_VIEW>
+
 <!--<USR_EDIT type="link" colWidth="50" value="@#USR_EDIT" link="users_Edit?USR_UID=@#USR_UID">
   <en></en>
 </USR_EDIT>-->
+<USR_GROUP type="link" colWidth="80" value="@G::LoadTranslation(ID_VIEW_USER_GROUP)" link="#" onclick="viewUserGroups('@#USR_UID');return false;">
+  <en></en>
+</USR_GROUP>
+
 <USR_DELETE type="link" colWidth="50" value="@#USR_DELETE" link="#" onclick="deleteUser('@#USR_UID');return false;">
   <en></en>
 </USR_DELETE>
