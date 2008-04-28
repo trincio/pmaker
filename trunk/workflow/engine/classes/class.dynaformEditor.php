@@ -99,20 +99,20 @@ class dynaformEditor extends WebResource
 		switch ($this->dyn_type)
 		{
 			case "xmlform":
-				$sampleForm.='<title type="title" enablehtml="0">' . "\n" .
+				/*$sampleForm.='<title type="title" enablehtml="0">' . "\n" .
 						'  <en>Sample form</en>' . "\n" .
 						'</title>'."\n";
 				$sampleForm.='<submit type="submit" enablehtml="0" onclick="">' . "\n" .
 						'  <en>Submit</en>' . "\n" .
-						'</submit>'."\n";
+						'</submit>'."\n";*/
 				break;
 			case "grid":
-				$sampleForm.='<fieldA type="text" >' . "\n" .
+				/*$sampleForm.='<fieldA type="text" >' . "\n" .
 						'<en>A</en>' . "\n" .
 						'</fieldA>'."\n";
 				$sampleForm.='<fieldB type="text" >' . "\n" .
 						'<en>B</en>' . "\n" .
-						'</fieldB>'."\n";
+						'</fieldB>'."\n";*/
 				break;
 		}
 		$sampleForm.='</dynaForm>';
