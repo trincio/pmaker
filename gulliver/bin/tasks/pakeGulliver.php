@@ -580,7 +580,7 @@ function run_create_poedit_file( $task, $args)
 
 function run_new_project ( $task, $args)
 {
-//the class filename in the first argument
+  //the class filename in the first argument
   $projectName = $args[0];
 
   if ( trim ($projectName ) == '' )  {
@@ -588,6 +588,7 @@ function run_new_project ( $task, $args)
     exit (0);
   }  
 
+  G::LoadSystem ('templatePower');
   $pathHome = PATH_TRUNK . $projectName;
   
   //create folder and structure
@@ -619,6 +620,16 @@ function run_new_project ( $task, $args)
   G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'xmlform' . PATH_SEP . 'login');
   
   //create project.conf for httpd conf
+  $httpdTpl = PATH_GULLIVER_HOME . 'bin' . PATH_SEP . 'tasks' . PATH_SEP . 'httpd.conf.tpl';
+  $httpFilename = $pathHome . PATH_SEP . 'engine' . PATH_SEP . $projectName . '.conf';
+  $template = new TemplatePower( $httpdTpl );
+  $template->prepare();
+  $template->assign ( 'pathHome', $pathHome);
+  $template->assign ( 'projectName', $projectName);
+  $content = $template->getOutputContent();
+  $iSize = file_put_contents ( $httpFilename, $content );
+  printf("saved %s bytes in file %s [%s]\n", pakeColor::colorize( $iSize, 'INFO'), pakeColor::colorize( $fName, 'INFO'), pakeColor::colorize( $tplName, 'INFO') );    
+
   //create schema.xml with empty databases
   //create welcome page
   
