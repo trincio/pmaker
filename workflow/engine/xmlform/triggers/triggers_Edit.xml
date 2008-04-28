@@ -22,7 +22,7 @@
   <en>Description</en>
 </TRI_DESCRIPTION>
 
-<TRI_WEBBOT type="textareapm" rows="4" cols="60" showVars="1" process="@#PRO_UID">
+<TRI_WEBBOT type="textareapm" rows="4" cols="55" showVars="1" process="@#PRO_UID">
   <en>Script</en>
 </TRI_WEBBOT>
 
