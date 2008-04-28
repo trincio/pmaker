@@ -628,7 +628,17 @@ function run_new_project ( $task, $args)
   $template->assign ( 'projectName', $projectName);
   $content = $template->getOutputContent();
   $iSize = file_put_contents ( $httpFilename, $content );
-  printf("saved %s bytes in file %s [%s]\n", pakeColor::colorize( $iSize, 'INFO'), pakeColor::colorize( $fName, 'INFO'), pakeColor::colorize( $tplName, 'INFO') );    
+  printf("saved %s bytes in file %s \n", pakeColor::colorize( $iSize, 'INFO'), pakeColor::colorize( $projectName.'.conf', 'INFO') );    
+
+  //create sysGeneric 
+  $httpdTpl = PATH_GULLIVER_HOME . 'bin' . PATH_SEP . 'tasks' . PATH_SEP . 'sysGeneric.php.tpl';
+  $httpFilename = $pathHome . PATH_SEP . 'public_html' . PATH_SEP . 'sysGeneric.php';
+  $template = new TemplatePower( $httpdTpl );
+  $template->prepare();
+  $template->assign ( 'projectName', $projectName);
+  $content = $template->getOutputContent();
+  $iSize = file_put_contents ( $httpFilename, $content );
+  printf("saved %s bytes in file %s \n", pakeColor::colorize( $iSize, 'INFO'), pakeColor::colorize( 'sysGeneric.php', 'INFO') );    
 
   //create schema.xml with empty databases
   //create welcome page
