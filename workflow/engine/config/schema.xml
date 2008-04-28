@@ -3724,10 +3724,10 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="APP_ENABLE_ACTION_DATE" type="DATE" required="true" >
+    <column name="APP_ENABLE_ACTION_DATE" type="TIMESTAMP" required="true" >
       <vendor type="mysql">
         <parameter name="Field" value="APP_ENABLE_ACTION_DATE"/>
-        <parameter name="Type" value="date"/>
+        <parameter name="Type" value="datetime"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
         <!-- <parameter name="Default" value="0000-00-00"/> -->
@@ -3744,20 +3744,20 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="APP_DISABLE_ACTION_DATE" type="DATE" >
+    <column name="APP_DISABLE_ACTION_DATE" type="TIMESTAMP" >
       <vendor type="mysql">
         <parameter name="Field" value="APP_DISABLE_ACTION_DATE"/>
-        <parameter name="Type" value="date"/>
+        <parameter name="Type" value="datetime"/>
         <parameter name="Null" value="YES"/>
         <parameter name="Key" value=""/>
         <!-- <parameter name="Default" value="0000-00-00"/> -->
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="APP_AUTOMATIC_DISABLED_DATE" type="DATE" >
+    <column name="APP_AUTOMATIC_DISABLED_DATE" type="TIMESTAMP" >
       <vendor type="mysql">
         <parameter name="Field" value="APP_AUTOMATIC_DISABLED_DATE"/>
-        <parameter name="Type" value="date"/>
+        <parameter name="Type" value="datetime"/>
         <parameter name="Null" value="YES"/>
         <parameter name="Key" value=""/>
         <!-- <parameter name="Default" value="0000-00-00"/> -->
