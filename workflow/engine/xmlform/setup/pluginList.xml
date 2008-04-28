@@ -2,13 +2,13 @@
 <dynaForm
   width         = "680"
   menu="setup/plugin_ListOptions"
-  
+
 >
 <id type="text" colWidth="20" titleAlign="left" align="left" >
   <en>#</en>
 </id>
 <title type="text" colWidth="150" titleAlign="left" align="left" >
-  <en>Plugin Name ( Class Name )</en>
+  <en>Name (File)</en>
 </title>
 
 <description type="text" colWidth="400" titleAlign="left" align="left" >
