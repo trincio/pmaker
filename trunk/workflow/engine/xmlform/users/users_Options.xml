@@ -1,9 +1,8 @@
-<?xml version="1.0"?>
+<?xml version = "1.0"?>
 <dynaForm type="xmlmenu">
 
 <MNU_ADD type="link" value='' link="#" onclick="window.location = 'users_New';return false;" colAlign="left" colWidth="35">
   <en>New</en>
-  <es>Nuevo</es>
 </MNU_ADD>
 
 <PAGED_TABLE_ID type="private"/>
@@ -12,7 +11,6 @@
 <SEARCH_FILTER_FORM type="private"/>
 <!--<MNU_SEARCH type="link" value='' link="appNew" onclick="showHideSearch('@#SEARCH_FILTER_FORM',this);return false;" colAlign="right" colWidth="130">
   <en>Advanced Search</en>
-  <es>Buscar Avanzado</es>
 </MNU_SEARCH>-->
 
 <CONFIRM type="private"/>
@@ -26,6 +24,69 @@ var deleteUser = function(sUser) {
   	}.extend(this)
   });
 };
+
+function viewUserGroups(sUserUID){
+	popupWindow('' , 'users_Groups?sUserUID='+sUserUID , 400 , 330 );
+    /*refreshTree();*/
+};
+
+function showUserGroups(sUserUID){
+	var oRPC = new leimnud.module.rpc.xmlhttp({
+		url   : '../users/users_Ajax',
+		async : false,
+		method: 'POST',
+		args  : 'function=showUserGroups'+ '&amp;sUserUID=' + sUserUID
+    });
+    oRPC.make();
+    currentPopupWindow.clearContent();
+	currentPopupWindow.addContent(oRPC.xmlhttp.responseText);
+};
+
+function deleteGroup(sGroup, sUser){
+
+	new leimnud.module.app.confirm().make({
+    	label:G_STRINGS.ID_MSG_CONFIRM_REMOVE_USERGROUP,
+    	action:function(){
+	        var oRPC = new leimnud.module.rpc.xmlhttp({
+				url   : '../users/users_Ajax',
+				async : false,
+				method: 'POST',
+				args  : 'function=deleteGroup&amp;GRP_UID=' + sGroup + '&amp;USR_UID=' + sUser
+	        });
+	        oRPC.make();
+	        currentPopupWindow.clearContent();
+			currentPopupWindow.addContent(oRPC.xmlhttp.responseText);
+		}.extend(this)
+    });
+};
+
+function showUserGroupInterface(sUserUID){
+
+	var oRPC = new leimnud.module.rpc.xmlhttp({
+		url   : '../users/users_Ajax',
+		async : false,
+		method: 'POST',
+		args  : 'function=showUserGroupInterface'+ '&amp;sUserUID=' + sUserUID
+    });
+    oRPC.make();
+    currentPopupWindow.clearContent();
+	currentPopupWindow.addContent(oRPC.xmlhttp.responseText);
+    //currentPopupWindow.remove();
+};
+
+function saveUserGroup(sGroup, sUser){
+
+    var oRPC = new leimnud.module.rpc.xmlhttp({
+      url   : '../users/users_Ajax',
+      async : false,
+      method: 'POST',
+      args  : 'function=assignUserToGroup&amp;GRP_UID=' + sGroup + '&amp;USR_UID=' + sUser
+    });
+    oRPC.make();
+    currentPopupWindow.clearContent();
+    currentPopupWindow.addContent(oRPC.xmlhttp.responseText);
+    setTimeout('showUserGroups(\''+sUser+'\')',1500);
+  }
 </JS>
 
 </dynaForm>
