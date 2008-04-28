@@ -1575,7 +1575,7 @@ print $sql;
 		    $aRow = $oDataset->getRow();
 				$array['APP_THREAD_INDEX']   			=	$aRow['APP_THREAD_INDEX']; 
 				$array['APP_DEL_INDEX']   				=	$iIndex;
-				$array['APP_TYPE']   							=	'ON_HOLD';
+				$array['APP_TYPE']   							=	'CANCEL';
 		
 				$c = new Criteria('workflow');
 				$c->clearSelectColumns();
@@ -1593,13 +1593,38 @@ print $sql;
 			  $delay->create($array);
     }
 
-    function reactivateCase($sApplicationUID)
+    function reactivateCase($sApplicationUID, $iIndex, $user_logged)
     {
-        require_once 'classes/model/Application.php';
+      require_once 'classes/model/Application.php';
+      require_once 'classes/model/AppDelay.php';
 	    $oApplication          = new Application();
 	    $aFields               = $oApplication->load((isset($_POST['sApplicationUID']) ? $_POST['sApplicationUID'] : $_SESSION['APPLICATION']));
 	    $aFields['APP_STATUS'] = 'TO_DO';
 	    $oApplication->update($aFields);
-        $this->ReactivateCurrentDelegation($sApplicationUID);
+	    $this->ReactivateCurrentDelegation($sApplicationUID);
+	    $c = new Criteria('workflow');
+			$c->clearSelectColumns();
+			$c->addSelectColumn( AppDelayPeer::APP_DELAY_UID );      
+      						
+			$c->add(AppDelayPeer::APP_UID, $sApplicationUID );
+			$c->add(AppDelayPeer::PRO_UID, $aFields['PRO_UID'] );
+			$c->add(AppDelayPeer::APP_DEL_INDEX, $iIndex );			
+			$c->add(AppDelayPeer::APP_TYPE, 'CANCEL' );
+			$c->add(AppDelayPeer::APP_DISABLE_ACTION_USER, NULL );
+			$c->add(AppDelayPeer::APP_DISABLE_ACTION_DATE, NULL );			
+			
+			$oDataset = AppDelayPeer::doSelectRS($c);
+		  $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+		  $oDataset->next();
+		  $aRow = $oDataset->getRow();
+		  //var_dump($aRow);
+	    $aFields=array();
+	    $aFields['APP_DELAY_UID']=$aRow['APP_DELAY_UID'];
+	    $aFields['APP_DISABLE_ACTION_USER']=$user_logged;  
+	    $aFields['APP_DISABLE_ACTION_DATE']=date('Y-m-d H:i:s');;  
+	  
+	    $delay= new AppDelay();
+	    $delay->update($aFields);
+      //$this->ReactivateCurrentDelegation($sApplicationUID);
     }
 }

@@ -285,9 +285,10 @@ switch($_POST['action'])
 	break;
 	case 'reactivateCase':
 	  $sApplicationUID = isset($_POST['sApplicationUID'])?$_POST['sApplicationUID']:$_SESSION['APPLICATION'];
+	  $iIndex = (isset($_POST['sApplicationUID']))?$_POST['iIndex']:$_SESSION['INDEX'];
 	  G::LoadClass('case');
 	  $oCase = new Cases();
-	  $oCase->reactivateCase($sApplicationUID);
+	  $oCase->reactivateCase($sApplicationUID, $iIndex, $_SESSION['USER_LOGGED']);
 	break;
 	case 'pauseCase':
 	  G::LoadClass('case');
