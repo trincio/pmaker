@@ -73,7 +73,7 @@
   $aFields = $oCase->loadCase( $sAppUid, $iDelIndex );
 
   //draft or to do
-  if ( $aFields['APP_STATUS'] == 'DRAFT' || $aFields['APP_STATUS'] == 'TO_DO' )
+  if ((($aFields['APP_STATUS'] == 'DRAFT') || ($aFields['APP_STATUS'] == 'TO_DO')) && $aFields['DEL_THREAD_STATUS'] != 'PAUSED')
   {
     $_SESSION['APPLICATION']   = $sAppUid;
     $_SESSION['INDEX']         = $iDelIndex;
@@ -96,7 +96,8 @@
   else
   {
   	$_SESSION['APPLICATION']   = $_GET['APP_UID'];
-    $_SESSION['INDEX']         = -1;
+  	$_SESSION['INDEX']         = $iDelIndex;//this value is changed to -1 in "cases_Resume.php"
+    //$_SESSION['INDEX']         = -1;
     $_SESSION['PROCESS']       = $aFields['PRO_UID'];
     $_SESSION['TASK']          = -1;
     $_SESSION['STEP_POSITION'] = 0;

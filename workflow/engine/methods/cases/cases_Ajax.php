@@ -300,14 +300,11 @@ switch($_POST['action'])
 	    $oCase->pauseCase($_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['USER_LOGGED']);
 	  }
   break;
-  case 'unpauseCase':
-    G::LoadClass('case');
+  case 'unpauseCase': 
+	  $sApplicationUID = (isset($_POST['sApplicationUID']))?$_POST['sApplicationUID']:$_SESSION['APPLICATION'];
+	  $iIndex = (isset($_POST['sApplicationUID']))?$_POST['iIndex']:$_SESSION['INDEX'];
+	  G::LoadClass('case');
 	  $oCase = new Cases();
-	  if (isset($_POST['sApplicationUID'])) {
-	  	$oCase->unpauseCase($_POST['sApplicationUID'], $_POST['iIndex'], $_SESSION['USER_LOGGED']);
-	  }
-	  else {
-	    $oCase->unpauseCase($_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['USER_LOGGED']);
-	  }
+	  $oCase->unpauseCase($sApplicationUID, $iIndex, $_SESSION['USER_LOGGED']);
 	break;
 }
