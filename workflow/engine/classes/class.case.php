@@ -1549,14 +1549,48 @@ print $sql;
 	  $oAppDelegation->update($aFields);*/
   }
 
-  	function cancelCase($sApplicationUID, $iIndex)
+  	function cancelCase($sApplicationUID, $iIndex, $user_logged)
     {
         require_once 'classes/model/Application.php';
+        require_once 'classes/model/AppDelay.php';
+			  require_once 'classes/model/AppThread.php';
         $oApplication = new Application();
         $aFields = $oApplication->load($sApplicationUID);
         $aFields['APP_STATUS'] = 'CANCELLED';
         $oApplication->update($aFields);
         $this->CloseCurrentDelegation($sApplicationUID, $iIndex);
+        //me        
+			  $delay														= new AppDelay();
+			  $array['PRO_UID']									= $aFields['PRO_UID'];
+				$array['APP_UID']  								=	$sApplicationUID;
+		
+				$c = new Criteria('workflow');
+				$c->clearSelectColumns();
+				$c->addSelectColumn( AppThreadPeer::APP_THREAD_INDEX );
+				$c->add(AppThreadPeer::APP_UID, $sApplicationUID );
+				$c->add(AppThreadPeer::DEL_INDEX, $iIndex );
+				$oDataset = AppThreadPeer::doSelectRS($c);
+		    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+		    $oDataset->next();
+		    $aRow = $oDataset->getRow();
+				$array['APP_THREAD_INDEX']   			=	$aRow['APP_THREAD_INDEX']; 
+				$array['APP_DEL_INDEX']   				=	$iIndex;
+				$array['APP_TYPE']   							=	'ON_HOLD';
+		
+				$c = new Criteria('workflow');
+				$c->clearSelectColumns();
+				$c->addSelectColumn( ApplicationPeer::APP_STATUS );
+				$c->add(ApplicationPeer::APP_UID, $sApplicationUID );
+				$oDataset = ApplicationPeer::doSelectRS($c);
+		    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+		    $oDataset->next();
+		    $aRow1 = $oDataset->getRow();
+				$array['APP_STATUS']   						=	 $aRow1['APP_STATUS']; 
+		
+				$array['APP_DELEGATION_USER'] 		= $user_logged;
+				$array['APP_ENABLE_ACTION_USER']	=	$user_logged;
+				$array['APP_ENABLE_ACTION_DATE']  = date('Y-m-d H:i:s');
+			  $delay->create($array);
     }
 
     function reactivateCase($sApplicationUID)
