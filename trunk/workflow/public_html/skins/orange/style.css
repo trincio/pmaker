@@ -998,6 +998,7 @@ form.formDefault textarea.FormTextArea
 	background: #FFFFFF url(/skins/green/images/input_back.gif) repeat-x;
 	color:#333333;
 	font:normal 11px Arial,Helvetica,sans-serif;
+	overflow:auto;
 }
 form.formDefault .FormTitle
 {

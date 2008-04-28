@@ -869,7 +869,9 @@ class G
           return;
           break;
         default :
-          throw new Exception ( "Unknown type of file '$file'. " );
+          //throw new Exception ( "Unknown type of file '$file'. " );
+          G::sendHeaders ( $filename , 'application/octet-stream', $download, $downloadFileName ); break;
+          break;
       }
     }
     else {

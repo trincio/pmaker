@@ -51,7 +51,7 @@ try {
   $oTasks->ofToAssignUserOfAllTasks($_GET['USR_UID']);
   G::LoadClass('groups');
   $oGroups = new Groups();
-  $oGroups->ofToAssignUserOfAllGroups($_GET['USR_UID']);  
+  $oGroups->removeUserOfAllGroups($_GET['USR_UID']);  
   $RBAC->changeUserStatus($_GET['USR_UID'], 'CLOSED');
   $_GET['USR_USERNAME']='';
   $RBAC->updateUser(array('USR_UID' => $_GET['USR_UID'], 'USR_USERNAME' => $_GET['USR_USERNAME']),'');

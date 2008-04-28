@@ -853,6 +853,7 @@ class processMap {
       $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
       $oCriteria->add(GroupwfPeer::GRP_STATUS, 'ACTIVE');
       $oCriteria->add(GroupwfPeer::GRP_UID, $aUIDS1, Criteria::NOT_IN);
+      $oCriteria->add(GroupwfPeer::GRP_UID, '', Criteria::NOT_EQUAL);
       $oDataset  = GroupwfPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
       $oDataset->next();

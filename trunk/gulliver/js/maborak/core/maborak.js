@@ -1339,6 +1339,11 @@ var maborak = function(){
 			this.setStyle = function(DOM,styles)
 			{
 				DOM = (DOM.isArray)?DOM:[DOM];
+				var sizeInPixel=["width","height","left","top","right","bottom",
+						 "margin","marginLeft","marginRight","marginTop","marginBottom","marginLeftWidth","marginRightWidth","marginTopWidth","marginBottomWidth",
+						 "padding","paddingLeft","paddingRight","paddingTop","paddingBottom","paddingLeftWidth","paddingRightWidth","paddingTopWidth","paddingBottomWidth",
+						 "borderLeftWidth","borderRightWidth","borderTopWidth","borderBopttomWidth"
+						 ];
 				for(var j=0;j<DOM.length;j++)
 				{
 					var d0m=this.element(DOM[j]);
@@ -1350,7 +1355,10 @@ var maborak = function(){
 								//console.info(value+":"+styles[value])
 								var val = (typeof styles[value]=="function")?styles[value]():styles[value];
 								try{
-								d0m.style[value.camelize()] = (typeof val!="undefined")?val:" ";
+									var valu= (typeof val!="undefined")?val:" ";
+									var prop=value.camelize();
+									valu=(sizeInPixel.inArray(prop) && typeof valu==="number")?valu+"px":valu;
+									d0m.style[prop] = valu;
 								}
 								catch(e){}
 							}
@@ -1814,7 +1822,6 @@ var maborak = function(){
 										this.rake(cn);
 									}
 								}
-								alert(inp.name)
 							}
 							else
 							{

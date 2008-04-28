@@ -85,7 +85,7 @@
     		$node =& $this->xmldoc->findNode( $xmlFrom );
     		if (!isset($node)) {
           //$err = new DB_Error( "$xmlFrom node not found in $dsn." );
-          throw new Exception( "$xmlFrom node not found in $dsn." );
+          throw new Exception( "$xmlFrom node not found in " . $this->xmlFile . "." );
           return $err;
     		} else {
     		  $res = $this->fetchChildren ( $node );

@@ -2,9 +2,7 @@
 <dynaForm name="_options" type="grid" width="100%" editRow="0" insertRow="0">
 
 <NAME type="text" validate="Field">
-
   <en>Value</en>
-  <es>Valor</es>
 </NAME>
 <LABEL_EN type="text"><en>Label</en></LABEL_EN>
 </dynaForm>

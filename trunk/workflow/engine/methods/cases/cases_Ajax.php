@@ -23,31 +23,33 @@
  *
  */
 if (($RBAC_Response=$RBAC->userCanAccess("PM_CASES"))!=1) return $RBAC_Response;
-if(isset($_POST['showWindow']) && $_POST['showWindow']!=='false')
-{
-	$fn = '';
-	$sw = $_POST['showWindow'];
-	if($sw=='steps')
+if (isset($_POST['showWindow'])) {
+  if($_POST['showWindow']=='steps')
 	{
 		$fn='showSteps();';
 	}
-	elseif($sw=='information')
+	elseif($_POST['showWindow']=='information')
 	{
 		$fn='showInformation();';
 	}
-	elseif($sw=='actions')
+	elseif($_POST['showWindow']=='actions')
 	{
 		$fn='showActions();';
 	}
+	elseif($_POST['showWindow']=='false')
+	{
+		$fn='';
+	}
 	else
 	{
-		$fn=false;
+	  if ($_POST['showWindow'] != '') {
+		  $fn=false;
+	  }
 	}
-	$_SESSION['showCasesWindow']=$fn;
+  $_SESSION['showCasesWindow'] = $fn;
 }
-else
-{
-	$_SESSION['showCasesWindow']=false;
+if (!isset($_POST['action'])) {
+  $_POST['action'] = '';
 }
 switch($_POST['action'])
 {
@@ -273,19 +275,73 @@ switch($_POST['action'])
     	break;
     }
 	break;
+
 	case 'cancelCase':
-	  require_once 'classes/model/Application.php';
-	  $oApplication          = new Application();
-	  $aFields               = $oApplication->load((isset($_POST['sApplicationUID']) ? $_POST['sApplicationUID'] : $_SESSION['APPLICATION']));
-	  $aFields['APP_STATUS'] = 'CANCELLED';
-	  $oApplication->update($aFields);
+	  $sApplicationUID = (isset($_POST['sApplicationUID']))?$_POST['sApplicationUID']:$_SESSION['APPLICATION'];
+	  $iIndex = (isset($_POST['sApplicationUID']))?$_POST['iIndex']:$_SESSION['INDEX'];
+	  G::LoadClass('case');
+	  $oCase = new Cases();
+	  $oCase->cancelCase($sApplicationUID, $iIndex);
+	  //me
+	  require_once 'classes/model/AppDelay.php';
+	   require_once 'classes/model/AppThread.php';
+	  $delay														= new AppDelay();
+	  $array['PRO_UID']									= $_SESSION['PROCESS'];
+		$array['APP_UID']  								=	$_SESSION['APPLICATION'];
+
+		$c = new Criteria('workflow');
+		$c->clearSelectColumns();
+		$c->addSelectColumn( AppThreadPeer::APP_THREAD_INDEX );
+		$c->add(AppThreadPeer::APP_UID, $_SESSION['APPLICATION'] );
+		$c->add(AppThreadPeer::DEL_INDEX, $_SESSION['INDEX'] );
+		$oDataset = AppThreadPeer::doSelectRS($c);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    $aRow = $oDataset->getRow();
+		$array['APP_THREAD_INDEX']   			=	$aRow['APP_THREAD_INDEX']; //SELECT APP_THREAD_INDEX FROM APP_DELAY WHERE APP_UID=$_SESSION['APPLICATION'] AND PRO_UID=$_SESSION['PROCESS'];
+
+		$array['APP_DEL_INDEX']   				=	$_SESSION['INDEX'];
+		$array['APP_TYPE']   							=	'ON_HOLD';
+
+		$c = new Criteria('workflow');
+		$c->clearSelectColumns();
+		$c->addSelectColumn( ApplicationPeer::APP_STATUS );
+		$c->add(ApplicationPeer::APP_UID, $_SESSION['APPLICATION'] );
+		$oDataset = ApplicationPeer::doSelectRS($c);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    $aRow1 = $oDataset->getRow();
+		$array['APP_STATUS']   						=	 $aRow1['APP_STATUS']; //SELECT APP_STATUS FROM APPLICATION WHERE APP_UID=$_SESSION['APPLICATION'];
+
+		$array['APP_DELEGATION_USER'] 		= $_SESSION['USER_LOGGED'];
+		$array['APP_ENABLE_ACTION_USER']	=	$_SESSION['USER_LOGGED'];
+		$array['APP_ENABLE_ACTION_DATE']  = date('Y-m-d H:i:s');
+	  $delay->create($array);
+	break;
+	case 'reactivateCase':
+	  $sApplicationUID = isset($_POST['sApplicationUID'])?$_POST['sApplicationUID']:$_SESSION['APPLICATION'];
+	  G::LoadClass('case');
+	  $oCase = new Cases();
+	  $oCase->reactivateCase($sApplicationUID);
+	break;
+	case 'pauseCase':
 	  G::LoadClass('case');
 	  $oCase = new Cases();
 	  if (isset($_POST['sApplicationUID'])) {
-	  	$oCase->CloseCurrentDelegation($_POST['sApplicationUID'], $_POST['iIndex']);
+	  	$oCase->pauseCase($_POST['sApplicationUID'], $_POST['iIndex'], $_SESSION['USER_LOGGED']);
 	  }
 	  else {
-	    $oCase->CloseCurrentDelegation($_SESSION['APPLICATION'], $_SESSION['INDEX']);
+	    $oCase->pauseCase($_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['USER_LOGGED']);
+	  }
+  break;
+  case 'unpauseCase':
+    G::LoadClass('case');
+	  $oCase = new Cases();
+	  if (isset($_POST['sApplicationUID'])) {
+	  	$oCase->unpauseCase($_POST['sApplicationUID'], $_POST['iIndex'], $_SESSION['USER_LOGGED']);
+	  }
+	  else {
+	    $oCase->unpauseCase($_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['USER_LOGGED']);
 	  }
 	break;
 }

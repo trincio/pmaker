@@ -26,10 +26,8 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_USERS"))!=1) return $RBAC_Response;
   
   //G::genericForceLogin( 'WF_MYINFO' , 'login/noViewPage', $urlLogin = 'login/login' );
 
-  $G_PUBLISH = new Publisher;
-  
+$G_PUBLISH = new Publisher;
+$G_HEADER->clearScripts();
   $G_PUBLISH->AddContent( 'view', 'groups/groups_Tree' );
-
-  G::RenderPage( "publish-raw" , "blank" );
-  
+  G::RenderPage( "publish-raw" , "raw" );  
 ?>

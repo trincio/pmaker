@@ -26,7 +26,6 @@
 require_once 'classes/model/om/BaseGroupwf.php';
 require_once 'classes/model/Content.php';
 
-
 /**
  * Skeleton subclass for representing a row from the 'GROUPWF' table.
  *
@@ -245,6 +244,20 @@ class Groupwf extends BaseGroupwf {
     catch (Exception $oError) {
     	throw($oError);
     }
+  }
+  
+  function loadByGroupname ( $Groupname ) {  	  	
+  	$c = new Criteria('workflow');    
+    $del = DBAdapter::getStringDelimiter();
+
+    $c->clearSelectColumns();
+    $c->addSelectColumn( ContentPeer::CON_CATEGORY );
+    $c->addSelectColumn( ContentPeer::CON_VALUE );
+                    
+    $c->add(ContentPeer::CON_CATEGORY,  'GRP_TITLE');
+    $c->add(ContentPeer::CON_VALUE,  $Groupname);
+    $c->add(ContentPeer::CON_LANG,  SYS_LANG );          
+    return $c;   
   }
   
 } // Groupwf

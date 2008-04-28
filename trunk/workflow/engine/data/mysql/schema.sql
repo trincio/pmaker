@@ -586,7 +586,7 @@ CREATE TABLE `USERS`
 	`USR_FIRSTNAME` VARCHAR(50) default '' NOT NULL,
 	`USR_LASTNAME` VARCHAR(50) default '' NOT NULL,
 	`USR_EMAIL` VARCHAR(100) default '' NOT NULL,
-	`USR_DUE_DATE` DATE default '0000-00-00' NOT NULL,
+	`USR_DUE_DATE` DATE  NOT NULL,
 	`USR_CREATE_DATE` DATETIME  NOT NULL,
 	`USR_UPDATE_DATE` DATETIME  NOT NULL,
 	`USR_STATUS` VARCHAR(32) default 'ACTIVE' NOT NULL,
@@ -601,7 +601,7 @@ CREATE TABLE `USERS`
 	`USR_DEPARTMENT` INTEGER default 0 NOT NULL,
 	`USR_POSITION` VARCHAR(100) default '' NOT NULL,
 	`USR_RESUME` VARCHAR(100) default '' NOT NULL,
-	`USR_BIRTHDAY` DATE default '0000-00-00' NOT NULL,
+	`USR_BIRTHDAY` DATE  NOT NULL,
 	`USR_ROLE` VARCHAR(32) default 'PROCESSMAKER_ADMIN',
 	PRIMARY KEY (`USR_UID`)
 )Type=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Users';
@@ -621,5 +621,48 @@ CREATE TABLE `APP_THREAD`
 	`DEL_INDEX` INTEGER default 0 NOT NULL,
 	PRIMARY KEY (`APP_UID`,`APP_THREAD_INDEX`)
 )Type=MyISAM  DEFAULT CHARSET='utf8' COMMENT='APP_THREAD';
+#-----------------------------------------------------------------------------
+#-- APP_SPOOL
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `APP_SPOOL`;
+
+
+CREATE TABLE `APP_SPOOL`
+(
+	`id` SMALLINT(6)  NOT NULL,
+	`sender` VARCHAR(96)  NOT NULL,
+	`file` TEXT  NOT NULL,
+	`now` VARCHAR(16)  NOT NULL,
+	`status` VARCHAR(16)  NOT NULL,
+	PRIMARY KEY (`id`),
+	KEY `sender`(`sender`, `status`)
+)Type=MyISAM ;
+#-----------------------------------------------------------------------------
+#-- APP_DELAY
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `APP_DELAY`;
+
+
+CREATE TABLE `APP_DELAY`
+(
+	`APP_DELAY_UID` VARCHAR(32) default '' NOT NULL,
+	`PRO_UID` VARCHAR default '0' NOT NULL,
+	`APP_UID` VARCHAR default '0' NOT NULL,
+	`APP_THREAD_INDEX` INTEGER default 0 NOT NULL,
+	`APP_DEL_INDEX` INTEGER default 0 NOT NULL,
+	`APP_TYPE` VARCHAR default '0' NOT NULL,
+	`APP_STATUS` VARCHAR default '0' NOT NULL,
+	`APP_NEXT_TASK` VARCHAR default '0',
+	`APP_DELEGATION_USER` VARCHAR default '0',
+	`APP_ENABLE_ACTION_USER` VARCHAR default '0' NOT NULL,
+	`APP_ENABLE_ACTION_DATE` DATE  NOT NULL,
+	`APP_DISABLE_ACTION_USER` VARCHAR default '0',
+	`APP_DISABLE_ACTION_DATE` DATE,
+	`APP_AUTOMATIC_DISABLED_DATE` DATE,
+	PRIMARY KEY (`APP_DELAY_UID`),
+	KEY `indexAppDelay`(`PRO_UID`, `APP_UID`, `APP_THREAD_INDEX`, `APP_DEL_INDEX`, `APP_NEXT_TASK`, `APP_DELEGATION_USER`, `APP_DELEGATION_USER`, `APP_DISABLE_ACTION_USER`)
+)Type=MyISAM  DEFAULT CHARSET='utf8' COMMENT='APP_DELAY';
 # This restores the fkey checks, after having unset them earlier
 SET FOREIGN_KEY_CHECKS = 1;

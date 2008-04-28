@@ -14,7 +14,6 @@
 
 <TITLE type="text" colWidth="275" titleAlign="left" align="left">
   <en></en>
-  <es></es>
 </TITLE>
 <!---->
 <VIEW type="link" colWidth="25" value="@G::LoadTranslation(ID_VIEW)" link="cases_Step?TYPE=INPUT_DOCUMENT&amp;UID=@#DOC_UID&amp;POSITION=@#POSITION&amp;ACTION=VIEW&amp;DOC=@#APP_DOC_UID" onclick=""/>
@@ -24,7 +23,6 @@
 <!-- FILTER FORM -->
 <!--<SEARCH type="button" onclick="pagedTableFilter(this.form);" showInTable="0">
   <en>Apply Filter</en>
-  <es>Filtrar</es>
 </SEARCH>
 
 <PAGED_TABLE_ID type="private" showInTable="0"/>

@@ -9,12 +9,10 @@
 <JS_LIST withoutLabel="1" type="dropdown" sqlconnection="XMLDB">
 SELECT XMLNODE_NAME AS UID, XMLNODE_NAME AS NAME FROM dynaForm WHERE TYPE = "javascript"
   <en>Section</en>
-  <es>Sección</es>
 </JS_LIST>
 
 <JS withoutLabel="1" type="textarea" rows="25" cols="60" sqlconnection="XMLDB" style="width:100%">
   <en>Code</en>
-  <es>Código</es>
 </JS>
 
 <PME_RESIZE_JS type="javascript">

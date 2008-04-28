@@ -185,8 +185,13 @@ class Installer
 
 			$this->log("Mysql port: ".$myPort."\n");
 
+			mysql_select_db($wf,$this->connection_database);
 			$pws = PATH_WORKFLOW_MYSQL_DATA.$schema;
-			$pws = (PHP_OS=="WINNT")?'"'.$pws.'"':$pws;
+			$qws = $this->query_sql_file(PATH_WORKFLOW_MYSQL_DATA.$schema,$this->connection_database);			
+			$this->log($qws);
+			$qwv = $this->query_sql_file(PATH_WORKFLOW_MYSQL_DATA.$values,$this->connection_database);			
+			$this->log($qwv);
+			/*$pws = (PHP_OS=="WINNT")?'"'.$pws.'"':$pws;
 
 		$sh_sc = $this->options['database']['cli']." ".$wf." < ".$pws." -h ".$this->options['database']['hostname']." --port=".$myPort." --user=".$wf." --password=".$this->options['password'];
 		$result_shell = exec($sh_sc);
@@ -198,16 +203,20 @@ class Installer
 
 		$pws = PATH_WORKFLOW_MYSQL_DATA.$values;
 		$pws = (PHP_OS=="WINNT")?'"'.$pws.'"':$pws;
-
 		$sh_in = $this->options['database']['cli']." ".$wf." < ".$pws." -h ".$this->options['database']['hostname']." --port=".$myPort." --user=".$wf." --password=".$this->options['password'];
 			$result_shell = exec($sh_in);
 			$this->log($result_shell."\n");
-		$this->log($sh_in."  => ".(($result_shell)?$result_shell:"OK")."\n");
+		$this->log($sh_in."  => ".(($result_shell)?$result_shell:"OK")."\n");*/
 
 
 		/* Dump schema rbac && data  */
 		$pws = PATH_RBAC_MYSQL_DATA.$schema;
-		$pws = (PHP_OS=="WINNT")?'"'.$pws.'"':$pws;
+		mysql_select_db($rb,$this->connection_database);
+		$qrs = $this->query_sql_file(PATH_RBAC_MYSQL_DATA.$schema,$this->connection_database);
+		$this->log($qrs);
+		$qrv = $this->query_sql_file(PATH_RBAC_MYSQL_DATA.$values,$this->connection_database);
+		$this->log($qrv);
+		/*$pws = (PHP_OS=="WINNT")?'"'.$pws.'"':$pws;
 
 		$sh_rbsc = $this->options['database']['cli']." ".$rb." < ".$pws." -h ".$this->options['database']['hostname']." --port=".$myPort." --user=".$rb." --password=".$this->options['password'];
 		$result_shell = exec($sh_rbsc,$err_sh);
@@ -220,7 +229,7 @@ class Installer
 
 		$sh_in = $this->options['database']['cli']." ".$rb." < ".$pws." -h ".$this->options['database']['hostname']." --port=".$myPort." --user=".$rb." --password=".$this->options['password'];
 		$result_shell = exec($sh_in);
-		$this->log($sh_in."  => ".(($result_shell)?$result_shell:"OK")."\n");
+		$this->log($sh_in."  => ".(($result_shell)?$result_shell:"OK")."\n");*/
 
 		$path_site 	= $this->options['path_data']."/sites/".$this->options['name']."/";
 		$db_file	= $path_site."db.php";
@@ -255,6 +264,43 @@ class Installer
 		fclose( $fp );
 		}
 		return $test;
+	}
+	public function query_sql_file($file,$connection)
+	{
+		$report = array(
+			'SQL_FILE'=>$file,
+			'errors'=>array(),
+			'querys'=>0
+		);
+		$content = @fread(@fopen($file,"rt"),@filesize($file));
+		if(!$content)
+		{
+			$report['errors']="Error reading SQL";
+			return $report;
+		}
+		$ret = array();
+		for ($i=0 ; $i < strlen($content)-1; $i++)
+		{
+			if ( $content[$i] == ";" )
+			{
+            	if ( $content[$i+1] == "\n" )
+            	{
+					$ret[] = substr($content, 0, $i);
+					$content = substr($content, $i + 1);
+					$i = 0;
+            	}
+        	}
+    	}
+    	$report['querys']=count($ret);
+		foreach($ret as $qr)
+		{
+			$re = @mysql_query($qr,$connection);
+			if(!$re)
+			{
+				$report['errors'][]="Query error: ".mysql_error();
+			}
+		}
+		return $report;
 	}
 	private function check_path()
 	{

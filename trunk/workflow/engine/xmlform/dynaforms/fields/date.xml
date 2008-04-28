@@ -8,109 +8,81 @@
 <PME_TYPE type="hidden" />
 <PME_TITLE type="title" enableHTML="1">
   <en>Properties</en>
-  <es>Propiedades</es>
 </PME_TITLE>
 <PME_XMLNODE_NAME type="text" size="32" maxlength="64" validate="Field" dependentFields="PME_VALIDATE_NAME" required="1">
-
   <en>Field Name</en>
-  <es>Nombre de Campo</es>
 </PME_XMLNODE_NAME>
+<PME_XMLNODE_NAME_OLD type="hidden" />
 <PME_VALIDATE_NAME type="hidden" sqlConnection="XMLDB">
 SELECT XMLNODE_NAME, TYPE FROM dynaForm WHERE XMLNODE_NAME = @@PME_XMLNODE_NAME
 </PME_VALIDATE_NAME>
 
 <PME_LABEL type="text" maxlength="50" size="50">
   <en>Label</en>
-  <es>Etiqueta</es>
 </PME_LABEL>
 
 <PME_SUBTITLE3 type="title" enableHTML="1">
   <en>Start and End Dates</en>
-  <es>Fechas Inicial y Final</es>
 </PME_SUBTITLE3>
 
 <PME_STARTDATE type="date" mask="yyyy-mm-dd" defaultvalue="" beforedate="10y">
   <en>Start Date</en>
-  <es>Fecha Inicial</es>
 </PME_STARTDATE>
 <PME_ENDDATE type="date" mask="yyyy-mm-dd" defaultvalue="" afterdate="10y">
-
   <en>End Date</en>
-  <es>Fecha Final</es>
 </PME_ENDDATE>
 <PME_SUBTITLE3a type="title" enableHTML="1">
   <en>Relative Start and End Dates</en>
-  <es>Fechas Inicial y Final Relativas</es>
 </PME_SUBTITLE3a>
 <PMED_AFTERBEFORE_DESC type="subtitle" defaultvalue="1m" enableHtml="1">
 
   <en><![CDATA[Sufixes: d=day m=month y=year; <br />Or leave empty to use <b>Start and End dates</b>.]]></en>
-  <es><![CDATA[Sufijos: d=dia m=mes y=año; <br />Ó dejar vacio para usar las <b>Fechas Inicial y Final</b>.]]></es>
 </PMED_AFTERBEFORE_DESC>
 
 <PME_AFTERDATE type="text" defaultvalue="1m">
-
   <en>After Date</en>
-  <es>After Date</es>
 </PME_AFTERDATE>
 <PME_BEFOREDATE type="text" defaultvalue="1m">
-
   <en>Before Date</en>
-  <es>Before Date</es>
 </PME_BEFOREDATE>
 <PME_SUBTITLE3b type="title" enableHTML="1">
   <en>Behaviour</en>
-  <es>Comportamiento</es>
 </PME_SUBTITLE3b>
 <!-- <PME_FORMAT type="text" maxlength="50" size="30" defaultvalue="Y-m-d" >
 
   <en>Format</en>
-  <es>Format</es>
 </PME_FORMAT>
 <PME_MASK type="text" maxlength="50" size="30" defaultvalue="yyyy-mm-dd" >
 
   <en>Mask</en>
-  <es>Mask</es>
 </PME_MASK> -->
 <PME_REQUIRED type="checkbox" falseValue="0" value="1" defaultvalue="0" labelOnRight="0">
-
   <en>Required</en>
-  <es>Required</es>
 </PME_REQUIRED>
 <PME_READONLY type="checkbox" falseValue="0" value="1" defaultvalue="0" labelOnRight="0">
 
   <en>Read Only</en>
-  <es>Read Only</es>
 </PME_READONLY>
 <PME_DEPENDENTFIELDS type="listbox" defaultvalue="" sqlconnection="XMLDB">
 select XMLNODE_NAME, XMLNODE_NAME AS NAME FROM dynaForm WHERE XMLNODE_NAME &lt;&gt; @@PME_XMLNODE_NAME AND XMLNODE_NAME &lt;&gt; ""	AND ( TYPE="text" or TYPE="textarea" or TYPE="dropdown" or TYPE="listbox" or TYPE="hidden" )
   <en>Dependent Fields
   <option name="">(none)</option>
   </en>
-  <es>Dependent Fields
-  <option name="">(ninguno)</option>
-  </es>
 </PME_DEPENDENTFIELDS>
 <PME_DEFAULTVALUE type="text" maxlength="50" size="30" defaultvalue="" >
-
   <en>Default Value</en>
-  <es>Default Value</es>
 </PME_DEFAULTVALUE>
 
 <PME_SUBTITLE type="title" enableHTML="1">
   <en>Appearance</en>
-  <es>Apariencia</es>
 </PME_SUBTITLE>
 
 <PME_SIZE type="text" maxlength="10" size="10" validate="Int" defaultvalue="15" >
-
   <en>Size</en>
-  <es>Size</es>
 </PME_SIZE>
 <!--<PME_GROUP type="text" maxlength="10" size="10" validate="Int" defaultvalue="0" group="2">
 
   <en>Group</en>
-  <es>Group</es>
 </PME_GROUP>-->
 <PME_MODE type="dropdown" defaultvalue="edit">
 
@@ -118,27 +90,20 @@ select XMLNODE_NAME, XMLNODE_NAME AS NAME FROM dynaForm WHERE XMLNODE_NAME &lt;&
     <option name="edit">Edit</option>
     <option name="view">View</option>
   </en>
-  <es>Modo
-    <option name="edit">Edición</option>
-    <option name="view">Vista</option>
-  </es>
 </PME_MODE>
 <!--
 <PME_ENABLEHTML type="checkbox" falseValue="0" value="1" defaultvalue="0" labelOnRight="0">
 
   <en>EnableHtml</en>
-  <es>EnableHtml</es>
 </PME_ENABLEHTML>
 -->
 <!--<PME_STYLE type="text" maxlength="" size="50">
 
   <en>Style</en>
-  <es>Style</es>
 </PME_STYLE>-->
 
 <PME_ACCEPT type="button" onclick="fieldsSave( this.form );">
   <en>Save</en>
-  <es>Guardar</es>
 </PME_ACCEPT>
 
 <PME_JS type="javascript"><![CDATA[

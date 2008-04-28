@@ -93,7 +93,7 @@
   leimnud.Package.Load("processmap",{Type:"file",Absolute:true,Path:"/jscore/processmap/core/processmap.js"});
   leimnud.exec(leimnud.fix.memoryLeak);
   leimnud.event.add(window,"load",function(){
-	  '.((isset($_SESSION['showCasesWindow']) && $_SESSION['showCasesWindow']!==false)?'try{'.$_SESSION['showCasesWindow'].'}catch(e){}':'').'
+	  '.(isset($_SESSION['showCasesWindow'])?'try{'.$_SESSION['showCasesWindow'].'}catch(e){}':'').'
 });
   ');
   $G_PUBLISH->AddContent('template', '', '', '', $oTemplatePower);
@@ -184,7 +184,7 @@ switch ($_GET['TYPE'])
     else
       $G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_InputdocsList', $oCase->getInputDocumentsCriteria($_SESSION['APPLICATION'], $_SESSION['INDEX'], $_GET['UID']), '');//$aFields
     //end plugin
-        
+
       break;
       case 'VIEW':
         require_once 'classes/model/AppDocument.php';
@@ -409,7 +409,7 @@ $G_HEADER->addScriptCode('
       Cse.panels.step.loader.show();
       var oRPC = new leimnud.module.rpc.xmlhttp({
         url:  "cases_Ajax?TYPE=' . (isset($_GET['TYPE']) ? $_GET['TYPE'] : '') . '&UID=' . (isset($_GET['UID']) ? $_GET['UID'] : '') . '&POSITION=' . (isset($_GET['POSITION']) ? $_GET['POSITION'] : '') . '&ACTION=' . (isset($_GET['ACTION']) ? $_GET['ACTION'] : '') . '&DOC=' . (isset($_GET['DOC']) ? $_GET['DOC'] : '') . '",
-        args: "action=steps"
+        args: "action=steps&showWindow=steps"
       });
       oRPC.callback = function(rpc){
         Cse.panels.step.loader.hide();

@@ -19,7 +19,6 @@
 
 <TITLE type="title" showInTable="0">
   <en>Parallel By Evaluation</en>
-  <es>Paralelo por Evaluación</es>
 </TITLE>
 
 <ROU_TYPE type="hidden" />
@@ -28,7 +27,6 @@
 
 <SAVE type="button" onclick="savePattern(this.form);">
   <en>Save</en>
-  <es>Save</es>
 </SAVE>
 
 <JS type="javascript">

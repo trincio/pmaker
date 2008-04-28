@@ -24,6 +24,7 @@
  */
 
 require_once ( "classes/model/Application.php" );
+require_once ( "classes/model/AppDelay.php" );
 require_once ( "classes/model/AppDelegation.php" );
 require_once ( "classes/model/AppThread.php" );
 require_once ( "classes/model/Dynaform.php" );
@@ -284,7 +285,7 @@ class Cases {
       $aFields = $oApp->load($sAppUid);
       G::LoadClass('reportTables');
       $oReportTables = new ReportTables();
-      $oReportTables->updateTables($aFields['PRO_UID'], $sAppUid, $aApplicationFields);
+      $oReportTables->updateTables($aFields['PRO_UID'], $sAppUid, $Fields['APP_NUMBER'], $aApplicationFields);
       return $Fields;
     }
   	catch ( Exception $e ) {
@@ -861,6 +862,44 @@ print $sql;
 
 
   /*
+  * ReactivateCurrentDelegation
+  * @Description:  This function reativate the case previously cancelled from to do
+  * @param string $sAppUid
+  * @param string $iDelIndex
+  * @return Fields
+  */
+  function ReactivateCurrentDelegation ($sAppUid)
+  {
+    try
+	{
+      $c = new Criteria();
+      $c->add ( AppDelegationPeer::APP_UID, $sAppUid);
+
+      $rowObj = AppDelegationPeer::doSelect($c);
+      foreach($rowObj as $appDel)
+	  {
+        $appDel->setDelThreadStatus('OPEN');
+        $appDel->setDelFinishDate(null);
+        if ($appDel->Validate())
+		{
+          $appDel->Save();
+        }
+        else
+		{
+          $msg = '';
+          foreach($this->getValidationFailures() as $objValidationFailure) $msg .= $objValidationFailure->getMessage()."<br/>";
+          throw(new PropelException ('The row cannot be created!', new PropelException($msg)));
+        }
+      }
+    }
+  	catch (Exception $e)
+    {
+	    throw($e);
+    }
+  }
+
+
+  /*
   * Start a case
   * in the array is fundamental send two elements
   * one of them is TAS_UID and the other element is USR_UID
@@ -1232,7 +1271,7 @@ print $sql;
     switch ( $sTypeList ) {
       case 'all' :
          $c->add(
-           $c->getNewCriterion(AppDelegationPeer::DEL_THREAD_STATUS, 'OPEN')->addOr(
+           $c->getNewCriterion(AppThreadPeer::APP_THREAD_STATUS, 'OPEN')->addOr(
              $c->getNewCriterion(ApplicationPeer::APP_STATUS, 'COMPLETED')->addAnd(
                $c->getNewCriterion(AppDelegationPeer::DEL_PREVIOUS, 0)
              )
@@ -1243,23 +1282,28 @@ print $sql;
       case 'to_do' :
          $c->add ( ApplicationPeer::APP_STATUS, 'TO_DO' );
          $c->add ( AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL );
+         $c->add ( AppThreadPeer::APP_THREAD_STATUS, 'OPEN' );
+         $c->add ( AppDelegationPeer::DEL_THREAD_STATUS, 'OPEN' );
          $xmlfile=$filesList[1];
         break;
       case 'draft' :
          $c->add ( ApplicationPeer::APP_STATUS, 'DRAFT' );
          $c->add ( AppDelegationPeer::DEL_FINISH_DATE,null, Criteria::ISNULL );
+         $c->add ( AppDelegationPeer::DEL_THREAD_STATUS, 'OPEN' );
          $xmlfile=$filesList[2];
         break;
-      /*case 'paused' :
-         $c->add ( ApplicationPeer::APP_STATUS, 'PAUSED' );
+      case 'paused' :
+         $c->add ( AppDelegationPeer::DEL_FINISH_DATE,null, Criteria::ISNULL );
+         $c->add ( AppDelegationPeer::DEL_THREAD_STATUS, 'PAUSED' );
          $xmlfile=$filesList[3];
-        break;*/
+        break;
       case 'cancelled' :
          $c->add(
-           $c->getNewCriterion(AppDelegationPeer::DEL_THREAD_STATUS, 'OPEN')->addAnd(
+           $c->getNewCriterion(AppThreadPeer::APP_THREAD_STATUS, 'OPEN')->addAnd(
              $c->getNewCriterion(ApplicationPeer::APP_STATUS, 'CANCELLED')
            )
          );
+		 //$c->add ( AppThreadPeer::APP_THREAD_INDEX, null, Criteria::ISNOTNULL  );
          $xmlfile=$filesList[4];
         break;
       case 'completed' :
@@ -1305,7 +1349,12 @@ print $sql;
     $oCriteria = new Criteria();
     $oCriteria->add( ApplicationPeer::APP_NUMBER , $iApplicationNumber );
     $oApplication = ApplicationPeer::doSelectOne( $oCriteria );
-  	return $oApplication->getAppUid();
+    if (!is_null($oApplication)) {
+  	  return $oApplication->getAppUid();
+    }
+    else {
+    	return null;
+    }
   }
 
   /*
@@ -1454,4 +1503,69 @@ print $sql;
     	throw $oException;
     }
   }
+
+  function getCriteriaProcessCases($status, $PRO_UID)
+  {
+  	$c = new Criteria('workflow');
+
+    $c->add(ApplicationPeer::APP_STATUS, $status);
+    $c->add(ApplicationPeer::PRO_UID, $PRO_UID);
+    return $c;
+  }
+
+  function pauseCase($sApplicationUID, $iDelegation, $sUserUID) {
+    $oAppDelegation = new AppDelegation();
+    $aFields = $oAppDelegation->Load($sApplicationUID, $iDelegation);
+    $aFields['DEL_THREAD_STATUS'] = 'PAUSED';
+	  $oAppDelegation->update($aFields);
+	  $oApplication = new Application();
+	  $aFields = $oApplication->Load($sApplicationUID);
+	  $oCriteria = new Criteria('workflow');
+		$oCriteria->clearSelectColumns();
+		$oCriteria->addSelectColumn(AppThreadPeer::APP_THREAD_INDEX);
+		$oCriteria->add(AppThreadPeer::APP_UID,   $sApplicationUID);
+		$oCriteria->add(AppThreadPeer::DEL_INDEX, $iDelegation);
+		$oDataset = AppThreadPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    $aRow = $oDataset->getRow();
+	  $aData['PRO_UID']                = $aFields['PRO_UID'];
+	  $aData['APP_UID']                = $sApplicationUID;
+	  $aData['APP_THREAD_INDEX']       = $aRow['APP_THREAD_INDEX'];
+	  $aData['APP_DEL_INDEX']          = $iDelegation;
+	  $aData['APP_TYPE']               = 'PAUSE';
+	  $aData['APP_STATUS']             = $aFields['APP_STATUS'];
+	  $aData['APP_DELEGATION_USER']    = $sUserUID;
+	  $aData['APP_ENABLE_ACTION_USER'] = $sUserUID;
+	  $aData['APP_ENABLE_ACTION_DATE'] = date('Y-m-d H:i:s');
+	  $oAppDelay = new AppDelay();
+	  $oAppDelay->create($aData);
+  }
+
+  function unpauseCase($sApplicationUID, $iDelegation, $sUserUID) {
+    /*$oAppDelegation = new AppDelegation();
+    $aFields = $oAppDelegation->Load($sApplicationUID, $iDelegation);
+    $aFields['DEL_THREAD_STATUS'] = 'OPEN';
+	  $oAppDelegation->update($aFields);*/
+  }
+
+  	function cancelCase($sApplicationUID, $iIndex)
+    {
+        require_once 'classes/model/Application.php';
+        $oApplication = new Application();
+        $aFields = $oApplication->load($sApplicationUID);
+        $aFields['APP_STATUS'] = 'CANCELLED';
+        $oApplication->update($aFields);
+        $this->CloseCurrentDelegation($sApplicationUID, $iIndex);
+    }
+
+    function reactivateCase($sApplicationUID)
+    {
+        require_once 'classes/model/Application.php';
+	    $oApplication          = new Application();
+	    $aFields               = $oApplication->load((isset($_POST['sApplicationUID']) ? $_POST['sApplicationUID'] : $_SESSION['APPLICATION']));
+	    $aFields['APP_STATUS'] = 'TO_DO';
+	    $oApplication->update($aFields);
+        $this->ReactivateCurrentDelegation($sApplicationUID);
+    }
 }

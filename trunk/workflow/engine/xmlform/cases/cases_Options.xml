@@ -11,8 +11,7 @@
 <!-- Default Search option -->
 <SEARCH_FILTER_FORM type="private"/>
 <MNU_NEW type="link" label="@G::LoadTranslation(ID_START_CASE)" value='' link="@G::encryptLink(@#cases_New)" colAlign="left" colWidth="85">
-  <!--<en>@G::LoadTranslation(ID_START_CASE)</en>
-  <es>@G::LoadTranslation(ID_START_CASE)</es>-->
+  <!--<en>@G::LoadTranslation(ID_START_CASE)</en>-->
 </MNU_NEW>
 <PAGED_TABLE_ID type="private"/>
 <PAGED_TABLE_FAST_SEARCH type="FastSearch" label=""/>
@@ -21,7 +20,6 @@
 <MNU_JUMP type="button" label="@G::LoadTranslation(ID_JUMP)" colAlign="right"  colWidth="50" onclick="window.location.href='@#cases_Open?APP_NUMBER='+encodeURIComponent(getField('PAGED_TABLE_JUMP').value);"/>
 <!--<MNU_SEARCH type="link" value='' link="#" onclick="showHideSearch('@#SEARCH_FILTER_FORM',this); return false;" colAlign="right" colWidth="130">
   <en>Advanced Search</en>
-  <es>Buscar Avanzado</es>
 </MNU_SEARCH>-->
 <JS type="javascript">
 function casesDelete(app) {
@@ -36,6 +34,56 @@ var cancelCase = function(sUID, iIndex) {
       var oRPC = new leimnud.module.rpc.xmlhttp({
         url:  'cases_Ajax',
         args: 'action=cancelCase&amp;sApplicationUID=' + sUID + '&amp;iIndex=' + iIndex
+      });
+      oRPC.callback = function(oRPC) {
+        @#PAGED_TABLE_ID.refresh();
+      }.extend(this);
+      oRPC.make();
+    }.extend(this)
+  });
+};
+
+var pauseCase = function(sUID, iIndex)
+{
+  new leimnud.module.app.confirm().make({
+    label : G_STRINGS.ID_CONFIRM_PAUSE_CASE,
+    action: function() {
+      var oRPC = new leimnud.module.rpc.xmlhttp({
+        url:  'cases_Ajax',
+        args: 'action=pauseCase&amp;sApplicationUID=' + sUID + '&amp;iIndex=' + iIndex
+      });
+      oRPC.callback = function(oRPC) {
+        @#PAGED_TABLE_ID.refresh();
+      }.extend(this);
+      oRPC.make();
+    }.extend(this)
+  });
+};
+
+var reactivateCase = function(sUID, iIndex) {
+  new leimnud.module.app.confirm().make({
+    label : G_STRINGS.ID_MSG_CONFIRM_REACTIVATE_CASES,
+    action: function() {
+      var oRPC = new leimnud.module.rpc.xmlhttp({
+        url:  'cases_Ajax',
+        args: 'action=reactivateCase&amp;sApplicationUID=' + sUID + '&amp;iIndex=' + iIndex
+      });
+      oRPC.callback = function(oRPC) {
+        @#PAGED_TABLE_ID.refresh();
+      }.extend(this);
+      oRPC.make();
+    }.extend(this)
+  });
+};
+
+var unpauseCase = function(sUID, iIndex)
+{
+  new leimnud.module.app.confirm().make({
+    label : G_STRINGS.ID_CONFIRM_UNPAUSE_CASE,
+    action: function() {
+      var oRPC = new leimnud.module.rpc.xmlhttp({
+        url:  'cases_Ajax',
+        args: 'action=unpauseCase&amp;sApplicationUID=' + sUID + '&amp;iIndex=' + iIndex
       });
       oRPC.callback = function(oRPC) {
         @#PAGED_TABLE_ID.refresh();

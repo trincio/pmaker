@@ -53,7 +53,7 @@ try {
   	  	echo '0';
   	  }
   	  else
-  	  {
+  	  {/*
   	  	G::LoadClassRBAC('user');
   	  	$oUser = new RBAC_User(new DBConnection(DB_HOST, DB_RBAC_USER, DB_RBAC_PASS, DB_RBAC_NAME, null, null ,DB_ERROR_SHOWALL_AND_CONTINUE));
   	  	if (!$oUser->loadByUsername($_POST['sUsername']))
@@ -63,7 +63,23 @@ try {
   	  	else
   	  	{
   	  		echo '1';
+  	  	}*/
+  	  	require_once 'classes/model/Users.php';
+  	  	G::LoadClass('Users');
+	      $oUser = new Users();
+	      $oCriteria=$oUser->loadByUsername($_POST['sUsername']);	        	    
+  	  	$oDataset = UsersPeer::doSelectRS($oCriteria);
+        $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+        $oDataset->next();
+        $aRow = $oDataset->getRow();                      
+        if (!$aRow)
+  	  	{
+  	  		echo '0';
   	  	}
+  	  	else
+  	  	{
+  	  		echo '1';
+  	  	} 	   
   	  }
   	break;
   	case 'availableUsers':
@@ -109,6 +125,37 @@ try {
   	case 'changeView':
   	  $_SESSION['iType'] = $_POST['TU_TYPE'];
   	break;
+  	
+  	case 'deleteGroup':
+  	  G::LoadClass('groups');
+	  $oGroup = new Groups();
+	  $oGroup->removeUserOfGroup($_POST['GRP_UID'], $_POST['USR_UID']);
+	  $_GET['sUserUID'] = $_POST['USR_UID'];
+	  $G_PUBLISH = new Publisher;
+      $G_PUBLISH->AddContent('view', 'users/users_Tree' );
+      G::RenderPage('publish', 'raw');
+  	break;
+  	
+  	case 'showUserGroupInterface':
+  	  $_GET['sUserUID'] = $_POST['sUserUID'];
+	  $G_PUBLISH = new Publisher;
+	  $G_PUBLISH->AddContent('view', 'users/users_AssignGroup' );
+	  G::RenderPage('publish', 'raw');
+  	break;
+  	
+  	case 'showUserGroups':
+  	  $_GET['sUserUID'] = $_POST['sUserUID'];
+	  $G_PUBLISH = new Publisher;
+	  $G_PUBLISH->AddContent('view', 'users/users_Tree' );
+	  G::RenderPage('publish', 'raw');
+  	break;
+  	
+  	case 'assignUserToGroup':
+	  G::LoadClass('groups');
+	  $oGroup = new Groups();
+	  $oGroup->addUserToGroup($_POST['GRP_UID'], $_POST['USR_UID']);
+	  echo '<div align="center"><h2><font color="blue">'.G::LoadTranslation('ID_MSG_ASSIGN_DONE').'</font></h2></div>';
+	break;
   }
 }
 catch (Exception $oException) {

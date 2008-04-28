@@ -9,15 +9,18 @@ leimnud.Package.Public({
 	content	:function(){
 		this.make=function(options)
 		{
+			options	     = options || {};
 			this.modes   = ["remote","local"];
 			this.options = {
-				mode:(this.modes.inArray(options.mode || "remote")?options.mode:"local")
+				mode:(this.modes.inArray((options.mode || "remote"))?options.mode:"local")
 			};
-			this.options = (this.options.mode=="remote")?{
+			this.options = (this.options.mode=="remote" || options.openFeed)?{
 				rpc	:"json",
+				mode	:"remote",
 				fileJson:this.parent.info.base+"data/maborak.module.rss.feeds.json",
 				proxy	:this.parent.info.base+"server/maborak.module.rss.php"
 			}:{
+				mode	  :"local",
 				rpc	  :"xmlhttp",
 				proxy	  :"server/maborak.module.rss.php",
 				fileJson  :"data/maborak.module.rss.feeds.json"
@@ -32,8 +35,13 @@ leimnud.Package.Public({
 				saveDataIn:"json", /*Support: cookie,json*/
 				cookieFeed:"maborak.module.rss.feeds",
 				width	  :250,
+				inline	  :false,
+				title	  :"Rss Reader",
 				feed	  :[]
-			}).concat(options || {});
+			}).concat(options || {}).concat({
+				multiple  :((this.options.openFeed)?false:true)
+			});
+			this.options.target=this.setTarget();
 			this.driverRPC = ["xmlhttp","json"];
 			this.options.rpc = (this.driverRPC.inArray(this.options.rpc))?this.options.rpc:"xmlhttp";
 			this.elements={
@@ -55,18 +63,43 @@ leimnud.Package.Public({
 			else if(this.options.saveDataIn=="json")
 			{
 				this.message("Loading feeds......");
-				var r = new this.parent.module.rpc[this.options.rpc]({
-					method:"GET",
-					url:this.options.fileJson
-				});
-				r.callback=function(rpc)
+				if(this.options.openFeed)
 				{
-					try{var f = rpc[this.options.rpc].responseText.parseJSON();}catch(e){var f = [];}
-					this.options.feed = this.options.feed.concat(f || []);
+					this.options.feed = [
+						{url:this.options.openFeed,proxy:true}
+					];
 					this.clearMessage();
 					return this.beforeLoad();
-				}.extend(this);
-				r.make();
+				}
+				else
+				{
+					var r = new this.parent.module.rpc[this.options.rpc]({
+						method	:"GET",
+//						debug	:true,
+						url	:this.options.fileJson
+					});
+					r.callback=function(rpc)
+					{
+						try{var f = rpc[this.options.rpc].responseText.parseJSON();}catch(e){var f = [];}
+						this.options.feed = this.options.feed.concat(f || []);
+						this.clearMessage();
+						return this.beforeLoad();
+					}.extend(this);
+					r.make();
+				}
+			}
+		};
+		this.setTarget=function()
+		{
+			if(this.options.inline===true)
+			{
+				var rnd  ="rss_"+new Date().getTime();
+				document.write("<div id='"+rnd+"' style='width:300px;'></div>");
+				return $(rnd);
+			}
+			else
+			{
+				return this.options.target;
 			}
 		};
 		this.beforeLoad=function()
@@ -190,16 +223,20 @@ leimnud.Package.Public({
 		this.renderHeader=function(Obj)
 		{
 			$(this.options.target).append(
-				new DOM('div',{className:"module_rss_title___"+this.options.theme,innerHTML:"Rss Reader"}),
+				new DOM('div',{className:"module_rss_title___"+this.options.theme,innerHTML:this.options.title}),
 /*				new DOM('div',{className:"module_rss_separator___"+this.options.theme}),*/
-				this.fsDOM = new DOM('div',{className:"module_rss_header___"+this.options.theme},false,{position:'relative'}),
-				(this.options.toolbar)?new DOM('div',{className:"module_rss_separator___"+this.options.theme}):false,
-				new DOM('div',{className:"module_rss_header___"+this.options.theme},{display:((this.options.toolbar)?"":"none")}).append(
+				this.fsDOM = new DOM('div',{
+					className:"module_rss_header___"+this.options.theme
+					},false,{
+						position:'relative'
+					}),
+				//(this.options.toolbar)?new DOM('div',{className:"module_rss_separator___"+this.options.theme}):false,
+				new DOM('div',{className:"module_rss_header___"+this.options.theme},{display:((this.options.toolbar && this.options.multiple)?"":"none")}).append(
 					this.elements.interface.details = new button('Details',this.showDetails),
 					this.elements.interface.reload  = new button('Reload',this.reload),
 					this.elements.interface.add	= new button('Add feed',this.open)
-				),
-				this.elements.interface.detailsContent  = new DOM('div',{className:"module_rss_separator___"+this.options.theme})
+				)/*,
+				this.elements.interface.detailsContent  = new DOM('div',{className:"module_rss_separator___"+this.options.theme})*/
 			);
 			this.fsDOM.append(
 					(this.options.multiple)?(this.feedSelector()):false
@@ -238,12 +275,13 @@ leimnud.Package.Public({
 					hr		= new DOM('hr' ,{className:"module_rss_itemHr___"+this.options.theme}),
 					content		= new DOM('div',{className:"module_rss_itemContent___"+this.options.theme,innerHTML:feedItem.content || "<br>"}),
 					link		= new DOM('div',{className:"module_rss_itemLink___"+this.options.theme}).append(
-						new button("Read More",function(evt,button,i){
+						new button("Save").disable(),
+						new button("Read",function(evt,button,i){
 							var ln = (this.parent.browser.isIE)?button:i;
 							var link = this.feedArray.item[ln].link;
 							window.open(link);
-						}.extend(this,i)),
-						new button("Send by Email",this.send.args(i))
+						}.extend(this,i),false,{title:"Read more"}),
+						new button("Send",this.send.args(i))
 					)
 				);
 				var header,title,buttons,item;
@@ -271,7 +309,8 @@ leimnud.Package.Public({
 						container
 					)
 				);
-				var contentHeight = ((content.clientHeight)+(description.clientHeight)+(link.clientHeight));
+				//console.info((itemPubDate.clientHeight)+":"+(content.clientHeight)+":"+(description.clientHeight)+":"+(link.clientHeight));
+				var contentHeight = ((itemPubDate.clientHeight)+(description.clientHeight)+(hr.clientHeight)+(content.clientHeight)+(link.clientHeight));
 				this.parent.dom.setStyle(container,{
 					display:"none",
 					overflow:((contentHeight>3)?"auto":"hidden")
@@ -467,10 +506,17 @@ leimnud.Package.Public({
 					args	:"action=add&data="+ojs
 				});
 				r.callback=function(rpc){
-					var result = rpc[this.options.rpc].responseText;
-					if(result==="Failed")
+					try
 					{
-						new this.parent.module.app.alert().make({label:"Write failed: <b>"+this.options.fileJson+"</b>"});
+						var result = rpc[this.options.rpc].responseText.parseJSON();
+					}
+					catch(e)
+					{
+						var result = {ok:"Error read/write json"};
+					}
+					if(result.ok!=="ok")
+					{
+						new this.parent.module.app.alert().make({label:"<b>"+this.options.fileJson+"</b><br>"+result});
 					}
 					this.elements.interface.add.enable();
 				}.extend(this);
@@ -497,7 +543,7 @@ leimnud.Package.Public({
 					var ft= this.feedArray.title;
 					var r = new this.parent.module.rpc[this.options.rpc]({
 						url	:this.options.proxy,
-						method	:"POST",
+						method	:((this.options.mode=="remote")?"GET":"POST"),
 						args	:"action=sendmail&to="+value.trim()+"&subject="+encodeURIComponent(f.title)+"&content="+encodeURIComponent(c)+"&link="+encodeURIComponent(l)+"&feed="+encodeURIComponent(ft)
 					});
 					r.callback=function(){
@@ -560,6 +606,7 @@ leimnud.Package.Public({
 			var but0 = myPanel.elements.statusBarButtons[0];
 			var but1 = myPanel.elements.statusBarButtons[1];
 			var but2 = myPanel.elements.statusBarButtons[2];
+			url.focus();
 			myPanel.elements.statusBarButtons[3].onmouseup=myPanel.remove;
 			but1.disable();
 			but0.onmouseup=function()
@@ -569,6 +616,7 @@ leimnud.Package.Public({
 				but0.disable();
 				var rpc = new this.parent.module.rpc[this.options.rpc]({
 					url	: ((this.options.mode==='local')?this.options.proxy:url.value.trim()),
+//					debug	: true,
 					method	: ((this.options.mode==='local')?"POST":"GET"),
 					args	: ((this.options.mode==='local')?"action=proxy&url="+encodeURIComponent(url.value.trim()):"")
 				});

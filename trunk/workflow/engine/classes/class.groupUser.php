@@ -74,7 +74,7 @@ class GroupUser extends DBTable
 			return;
 		}
 	}
-
+	
 	/*
 	* Of to assign a user from a group
 	* @param string $sGroup

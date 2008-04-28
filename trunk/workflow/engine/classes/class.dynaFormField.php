@@ -1,10 +1,10 @@
 <?php
 /**
  * class.dynaFormField.php
- *  
+ *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -14,20 +14,20 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
 
 G::LoadClass('xmlDb');
 
 class DynaFormField extends DBTable
 {
-  function SetTo( $objConnection )  
+  function SetTo( $objConnection )
   {
     DBTable::SetTo( $objConnection, 'dynaForm', array('XMLNODE_NAME') );
   }
@@ -45,7 +45,7 @@ class DynaFormField extends DBTable
   {
     $this->Fields['XMLNODE_NAME'] = $uid;
     parent::Delete();
-  }  
+  }
   function Save ( $Fields , $labels=array() , $options=array() )
   {
     if ($Fields['TYPE'] === 'javascript'){
@@ -53,7 +53,12 @@ class DynaFormField extends DBTable
       unset($Fields['CODE']);
       $labels = array();
     }
-    $res = $this->_dbses->Execute('SELECT * FROM dynaForm WHERE XMLNODE_NAME="'.$Fields['XMLNODE_NAME'].'"');
+    if ($Fields['XMLNODE_NAME_OLD'] == '') {
+      $res = $this->_dbses->Execute('SELECT * FROM dynaForm WHERE XMLNODE_NAME="'.$Fields['XMLNODE_NAME'].'"');
+    }
+    else {
+      $res = $this->_dbses->Execute('SELECT * FROM dynaForm WHERE XMLNODE_NAME="'.$Fields['XMLNODE_NAME_OLD'].'"');
+    }
     $this->is_new = ($res->count()==0);
     $this->Fields = $Fields;
     /*
@@ -67,9 +72,12 @@ class DynaFormField extends DBTable
         if ($value=="") unset( $this->Fields[$key] );
       }
     }
-    $res = $this->_dbses->Execute('INSERT INTO dynaForm'.
+    else {
+      $this->Fields['XMLNODE_NAME'] = $this->Fields['XMLNODE_NAME_OLD'];
+    }
+    /*$res = $this->_dbses->Execute('INSERT INTO dynaForm'.
       ' (XMLNODE_TYPE,XMLNODE_VALUE)'.
-      ' VALUES ("cdata", "'."\n".'")');
+      ' VALUES ("cdata", "'."\n".'")');*/
     parent::Save();
     if ($this->is_new) {
       /*
@@ -84,7 +92,7 @@ class DynaFormField extends DBTable
           .'VALUES ("","'."\n  ".'","cdata")');
         $res = $this->_dbses->Execute('INSERT INTO dynaForm.'
           .$Fields['XMLNODE_NAME'].' (XMLNODE_NAME,XMLNODE_VALUE) '
-          .'VALUES ("'.$lang.'","'.str_replace('"','""',$value)."\n  ".'")');
+          .'VALUES ("'.$lang.'","'.str_replace('"','""',$value)/*."\n  "*/.'")');
         if (isset($options[$lang])) {
           foreach($options[$lang] as $option => $text ) {
             $res = $this->_dbses->Execute('INSERT INTO dynaForm.'
@@ -109,6 +117,7 @@ class DynaFormField extends DBTable
       /*
        * Update an existing field.
        */
+      $this->_dbses->Execute('UPDATE dynaForm SET XMLNODE_NAME = "' . $Fields['XMLNODE_NAME'] . '" WHERE XMLNODE_NAME = "' . $Fields['XMLNODE_NAME_OLD'] . '"');
       foreach( $labels as $lang => $value ) {
         $res = $this->_dbses->Execute('SELECT * FROM dynaForm.'
           .$Fields['XMLNODE_NAME'].' WHERE XMLNODE_NAME ="'.$lang.'"');

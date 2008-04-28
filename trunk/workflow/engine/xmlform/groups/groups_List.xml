@@ -14,7 +14,6 @@
 -->
 <title type="title" colWidth="200" showInTable="0">
   <en>Group properties</en>
-  <es>Propiedades del grupo</es>
 </title>
 
 <UID type="hidden" showInTable="0">
@@ -22,7 +21,6 @@
 
 <GROUP_TITLE type="text" colWidth="200" align="left" titleAlign="left">
   <en>Group</en>
-  <es>Grupo</es>
 </GROUP_TITLE>
 
 <GROUP_STATUS type="dropdown" colWidth="150" align="left">
@@ -32,17 +30,10 @@
   <option name="VACATION">Vacation</option>
   <option name="CLOSED">Closed</option>
   </en>
-  <es>Estado
-  <option name="ACTIVE">Activo</option>
-  <option name="INACTIVE">Inactivo</option>
-  <option name="VACATION">Vacación</option>
-  <option name="CLOSED">Cerrado</option>
-  </es>
 </GROUP_STATUS>
 
 <button type="button" onclick="saveGroup( this.form );" showInTable="0">
   <en>Accept</en>
-  <es>Accept</es>
 </button>
 
 

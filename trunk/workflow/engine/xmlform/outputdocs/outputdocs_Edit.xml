@@ -11,32 +11,26 @@
 
 <TITLE type="title" group="1">
   <en>Output Document Information</en>
-  <es>Output Document Information</es>
 </TITLE>
 
 <OUT_DOC_TITLE type="text" style="width:90%" >
   <en>Title</en>
-  <es>Título</es>
 </OUT_DOC_TITLE>
 
 <OUT_DOC_FILENAME type="textpm" size="30" maxlength="100" showVars="1" process="@#PRO_UID" symbol="@#" validate="Field">
   <en>Filename generated</en>
-  <es>Nombre de archivo generado</es>
 </OUT_DOC_FILENAME>
 
 <OUT_DOC_DESCRIPTION type="textarea" rows="3"  style="width:90%;">
   <en>Description</en>
-  <es>Descripción</es>
 </OUT_DOC_DESCRIPTION>
 
 <OUT_DOC_TEMPLATE type="html" rows="20" cols="50" defaultValue="&lt;br/&gt;">
   <en>Template</en>
-  <es>Template</es>
 </OUT_DOC_TEMPLATE>
 
 <ACCEPT type="button" onclick="outputdocsSave(this.form);">
   <en>Save</en>
-  <es>Guardar</es>
 </ACCEPT>
 
 <JS type="JavaScript">
@@ -46,7 +40,7 @@ var showDynaformsFormVars = function(sFieldName, sAjaxServer, sProcess, sSymbol)
 	_oVarsPanel_ = new leimnud.module.panel();
 	_oVarsPanel_.options = {
     limit    : true,
-    size     : {w:350,h:400},
+    size     : {w:400,h:600},
     position : {x:0,y:0,center:true},
     title    : '',
     theme    : 'processmaker',

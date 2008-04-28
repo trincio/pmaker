@@ -8,7 +8,6 @@
 
 <TITLE9689 type="title" group="1">
   <en>Personal Information</en>
-  <fa>اطلاعات شخصی</fa>
 </TITLE9689>
 
 <USR_FIRSTNAME type="text" size="30" maxlength="32"  defaultvalue="" required="0" group="1" dependentfields="" linkfield="" strto="" readonly="0" noshowingrid="0" readonlyingrid="0" totalizeable="0" sqlconnection="">
@@ -17,13 +16,13 @@
 <USR_LASTNAME type="text" size="30" maxlength="32"  defaultvalue="" required="0" group="1" dependentfields="" linkfield="" strto="" readonly="0" noshowingrid="0" readonlyingrid="0" totalizeable="0" sqlconnection="">
   <en>Last Name</en>
 </USR_LASTNAME>
-<USR_USERNAME type="text" size="15" maxlength="50" validate="AlphaNum" defaultvalue="" required="1" group="1" dependentfields="VERIFY" linkfield="" strto="" readonly="0" noshowingrid="0" readonlyingrid="0" totalizeable="0" onchange="">
+<USR_USERNAME type="text" size="15" maxlength="50" validate="AlphaNum" defaultvalue="" required="1" group="1" dependentfields="" linkfield="" strto="" readonly="0" noshowingrid="0" readonlyingrid="0" totalizeable="0" onchange="">
   <en>User ID</en>
 </USR_USERNAME>
-<VERIFY type="hidden" size="15"  defaultvalue="" required="0" dependentfields="" readonly="0" noshowingrid="0" readonlyingrid="0" totalizeable="0" >
+<!--<VERIFY type="hidden" size="15"  defaultvalue="" required="0" dependentfields="" readonly="0" noshowingrid="0" readonlyingrid="0" totalizeable="0" >
   SELECT USR_UID, USR_USERNAME FROM USERS WHERE USR_USERNAME = @@USR_USERNAME
   <en>Exists</en>
-</VERIFY>
+</VERIFY>-->
 <USR_EMAIL type="text" size="35" maxlength="35" validate="Email" defaultvalue="" required="0" group="1" dependentfields="" linkfield="" strto="" readonly="0" noshowingrid="0" readonlyingrid="0" totalizeable="0" sqlconnection="">
   <en>Email</en>
 </USR_EMAIL>

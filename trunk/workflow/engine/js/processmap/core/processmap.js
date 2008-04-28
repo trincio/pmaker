@@ -27,7 +27,7 @@ var processmap=function(){
 						this.panels.buildingBlocks=new leimnud.module.panel();
 						this.panels.buildingBlocks.options={
 							limit	:true,
-							size	:{w:420,h:280},
+							size	:{w:420,h:420},
 							position:{x:0,y:10,center:true},
 							title	:"",
 							theme	:"processmaker",
@@ -719,9 +719,10 @@ var processmap=function(){
 					//backgroundColor:"black",
 					border:"0px solid black",
 					overflow:"hidden",
+                    cursor:"pointer",
 					zIndex:9
 				});
-				c.ondblclick=this.patternPanel.args(index);
+				c.onclick=this.patternPanel.args(index);
 				var d = document.createElement("div");
 				this.parent.dom.setStyle(d,{
 					position:"absolute",
@@ -1008,12 +1009,12 @@ var processmap=function(){
 						this.oTaskDetailsPanel = new leimnud.module.panel();
             this.oTaskDetailsPanel.options = {
               limit    : true,
-              size     : {w:300,h:222},
+              size     : {w:300,h:227},
               position : {x:0,y:0,center:true},
               title    : '',
               theme    : 'processmaker',
               statusBar: false,
-              control  : {drag:false,resize:true,close:true},
+              control  : {drag:false,resize:false,close:true},
               fx       : {opacity:true,rolled:false,modal:true}
             };
             this.oTaskDetailsPanel.make();

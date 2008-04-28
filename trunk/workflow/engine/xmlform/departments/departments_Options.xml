@@ -2,13 +2,11 @@
 <dynaForm type="xmlmenu">
 <MNU_ADD type="link" value='' link="#" onclick="addDepartmentUser('@#DEP_UID'); return false;" colAlign="left" colWidth="35" enableHTML="1">
   <en>Assign&amp;nbsp;Employee</en>
-  <es>Asignar&amp;nbsp;Empleado</es>
 </MNU_ADD>
 <PAGED_TABLE_ID type="private"/>
 <PAGED_TABLE_FAST_SEARCH type="FastSearch" label="@G::LoadTranslation(ID_SEARCH)"/>
 <!--<MNU_SEARCH type="link" value='' link="#" onclick="showHideElement('@#SEARCH_FILTER_FORM'); return false;" colAlign="right" colWidth="130">
   <en>Advanced Search</en>
-  <es>Buscar Avanzado</es>
 </MNU_SEARCH>-->
 <SEARCH_FILTER_FORM type="private"/>
 <DEP_UID type="private"/>

@@ -7,7 +7,6 @@
 >
 
 <__DYNAFORM_OPTIONS type="xmlmenu" xmlfile="gulliver/dynaforms_Options">
-  <es></es>
   <en></en>
 </__DYNAFORM_OPTIONS>
 
@@ -15,17 +14,14 @@
 
 <TITLE1 type="title">
   <en>Attach Input document</en>
-  <es>Documento requerido</es>
 </TITLE1>
 
 <INP_DOC_TITLE type="caption">
   <en>Title</en>
-  <es>Título</es>
 </INP_DOC_TITLE>
 
 <INP_DOC_DESCRIPTION type="caption">
   <en>Description</en>
-  <es>Descripción</es>
 </INP_DOC_DESCRIPTION>
 
 <INP_DOC_FORM_NEEDED type="dropdown" colWidth="80" titleAlign="left" align="left" mode="view">
@@ -34,11 +30,6 @@
   <option name ='REAL'>Printed</option>
   <option name ='VREAL'>Digital/Printed</option>
   </en>
-  <es>Tipo
-  <option name ='VIRTUAL'>Impreso</option>
-  <option name ='REAL'>Digital</option>
-  <option name ='VREAL'>Digital/Impreso</option>
-  </es>
 </INP_DOC_FORM_NEEDED>
 
 <INP_DOC_ORIGINAL type="dropdown" colWidth="80" titleAlign="left" align="left" mode="view">
@@ -47,11 +38,6 @@
   <option name ='COPYLEGAL'>Legal Copy</option>
   <option name ='COPY'>Copy</option>
   </en>
-  <es>Formato
-  <option name ='ORIGINAL'>Original</option>
-  <option name ='COPY'>Copia</option>
-  <option name ='COPYLEGAL'>Copia legalizada</option>
-  </es>
 </INP_DOC_ORIGINAL>
 
 <!--<INP_DOC_PUBLISHED type="dropdown" colWidth="80" titleAlign="left" align="left" mode="view">
@@ -59,32 +45,24 @@
   <option name ='PRIVATE'>Private</option>
   <option name ='PUBLIC'>Public</option>
   </en>
-  <es>Tipo de acceso
-  <option name ='PRIVATE'>Privado</option>
-  <option name ='PUBLIC'>Público</option>
-  </es>
 </INP_DOC_PUBLISHED>-->
 
 <APP_DOC_TYPE type="hidden" defaultValue="INPUT" />
 
 <APP_DOC_FILENAME type="file" >
   <en>File</en>
-  <es>Archivo</es>
 </APP_DOC_FILENAME>
 
 <APP_DOC_COMMENT type="textarea" rows="5" cols="32" colWidth="200" titleAlign="left" align="left">
   <en>Comments</en>
-  <es>Comentarios</es>
 </APP_DOC_COMMENT>
 
 <MORE type="checkbox">
   <en>Upload more input document</en>
-  <es>Subir más documentos</es>
 </MORE>
 
 <SAVE type="button" onclick="verifyInfo(this.form);">
   <en>Save</en>
-  <es>Guardar</es>
 </SAVE>
 
 <MESSAGE1 type="phpvariable" />

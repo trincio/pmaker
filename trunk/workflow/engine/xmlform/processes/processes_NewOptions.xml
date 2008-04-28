@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dynaForm name="processes_NewOptions" type="xmlmenu">
 <MNU type="link" value='' link="#" onclick="window.location = 'processes_List'; return false;" colAlign="right" colWidth="80">
-  <es>Volver al listado</es>
   <en>Back to list</en>
 </MNU>
 </dynaForm>

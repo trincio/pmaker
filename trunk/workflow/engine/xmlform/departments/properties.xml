@@ -2,44 +2,33 @@
 <dynaForm name="properties" type="xmlform" width="400px" >
 <SYS_LANG type="private"/>
 <TITLES type="title" group="4">
-  <es>Propiedades del departamento</es>
   <en>Department Properties</en>
 </TITLES>
 
 <DEP_TITLE type="text" maxlength="" >
-  <es>Título</es>
   <en>Title</en>
 </DEP_TITLE>
 
 <DEP_UID type="hidden">
-  <es>Título</es>
   <en>Title</en>
 </DEP_UID>
 
 <DEP_PARENT type="dropdown" style="width:120px;">
 SELECT DEP_UID, CASE WHEN (ISNULL(CON_VALUE)) THEN DEP_UID ELSE CON_VALUE END AS LABEL FROM DEPARTMENT LEFT JOIN CONTENT ON(CON_ID=DEP_UID and CON_LANG="@#SYS_LANG")
-  <es>Padre</es>
   <en>Parent</en>
 </DEP_PARENT>
 
 <DEP_MANAGER type="dropdown" style="width:120px;">
   select USR_UID, USR_USERNAME FROM USERS
-  <es>Manager</es>
   <en>Manager</en>
 </DEP_MANAGER>
 
 <!--<DEP_LOCATION type="dropdown" style="width:120px;">
   select UID, CAPTION FROM TERRITORY
-  <es>Manager</es>
   <en>Manager</en>
 </DEP_LOCATION>-->
 
 <DEP_STATUS type="dropdown" style="width:120px;">
-  <es>Estado
-  <option name="ACTIVE">Activo</option>
-  <option name="INACTIVE">Inactivo</option>
-  <option name="CLOSED">Cerrado</option>
-  </es>
   <en>Status
   <option name="ACTIVE">Active</option>
   <option name="INACTIVE">Inactive</option>
@@ -48,14 +37,11 @@ SELECT DEP_UID, CASE WHEN (ISNULL(CON_VALUE)) THEN DEP_UID ELSE CON_VALUE END AS
 </DEP_STATUS>
 
 <DEP_REF_CODE type="textarea" rows="4" cols="40" mode="edit">
-  <es>Ref Code</es>
   <en>Ref Code</en>
 </DEP_REF_CODE>
 
 <BSUBMIT type="button" onclick="update111(this);">
-  <es>Aceptar</es>
   <en>Accept</en>
-  <fa>اضافه کردن</fa>
 </BSUBMIT>
 
 </dynaForm>

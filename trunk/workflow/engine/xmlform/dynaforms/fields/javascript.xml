@@ -8,33 +8,26 @@
 <PME_TYPE type="hidden" />
 <PME_TITLE type="title" enableHTML="1">
   <en>Properties</en>
-  <es>Propiedades</es>
 </PME_TITLE>
 <PME_XMLNODE_NAME type="text" size="32" maxlength="64" validate="Field" dependentFields="PME_VALIDATE_NAME" required="1">
-
   <en>Field Name</en>
-  <es>Nombre de Campo</es>
 </PME_XMLNODE_NAME>
+<PME_XMLNODE_NAME_OLD type="hidden" />
 <PME_VALIDATE_NAME type="hidden" sqlConnection="XMLDB">
 SELECT XMLNODE_NAME, TYPE FROM dynaForm WHERE XMLNODE_NAME = @@PME_XMLNODE_NAME
 </PME_VALIDATE_NAME>
 
-<PME_CODE type="textarea" cols="47" rows="12" defaultvalue="
-" style="overflow:scroll">
-
+<PME_CODE type="textarea" cols="47" rows="12" defaultvalue="" style="overflow:scroll">
   <en>Code</en>
-  <es>Código</es>
 </PME_CODE>
 
 <!--<PME_REPLACETAGS type="checkbox" falseValue="0" value="1" defaultvalue="1" >
 
   <en>ReplaceTags</en>
-  <es>ReplaceTags</es>
 </PME_REPLACETAGS>-->
 
 <PME_ACCEPT type="button" onclick="fieldsSave( this.form );">
   <en>Save</en>
-  <es>Guardar</es>
 </PME_ACCEPT>
 
 <PME_JS type="javascript"><![CDATA[

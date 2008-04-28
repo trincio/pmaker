@@ -9,38 +9,30 @@
 <PME_TYPE type="hidden" />
 <PME_TITLE type="title" enableHTML="1">
   <en>Properties</en>
-  <es>Propiedades</es>
 </PME_TITLE>
 <PME_XMLNODE_NAME type="text" size="32" maxlength="64" validate="Field" dependentFields="PME_VALIDATE_NAME" required="1">
-
   <en>Field Name</en>
-  <es>Nombre de Campo</es>
 </PME_XMLNODE_NAME>
+<PME_XMLNODE_NAME_OLD type="hidden" />
 <PME_VALIDATE_NAME type="hidden" sqlConnection="XMLDB">
 SELECT XMLNODE_NAME, TYPE FROM dynaForm WHERE XMLNODE_NAME = @@PME_XMLNODE_NAME
 </PME_VALIDATE_NAME>
 
 <PME_XMLGRID type="dropdown">
-SELECT DYN_FILENAME, C.CON_VALUE FROM DYNAFORM LEFT JOIN CONTENT C ON (DYN_UID=C.CON_ID AND C.CON_LANG=@@SYS_LANG AND C.CON_CATEGORY="DYN_TITLE") WHERE DYN_TYPE="grid" AND PRO_UID=@@PME_PRO_UID 
+SELECT DYN_FILENAME, C.CON_VALUE FROM DYNAFORM LEFT JOIN CONTENT C ON (DYN_UID=C.CON_ID AND C.CON_LANG=@@SYS_LANG AND C.CON_CATEGORY="DYN_TITLE") WHERE DYN_TYPE="grid" AND PRO_UID=@@PME_PRO_UID
   <en>Grid</en>
-  <es>Grilla</es>
 </PME_XMLGRID>
 
 <PME_INSERTROW type="checkbox" falseValue="0" value="1" defaultvalue="1" >
-
   <en>Add new rows</en>
-  <es>Agregar filas</es>
 </PME_INSERTROW>
 
 <PME_DELETEROW type="checkbox" falseValue="0" value="1" defaultvalue="1" >
-
   <en>Delete rows</en>
-  <es>Borrar filas</es>
 </PME_DELETEROW>
 
 <PME_ACCEPT type="button" onclick="fieldsSave( this.form );">
   <en>Save</en>
-  <es>Guardar</es>
 </PME_ACCEPT>
 
 <PME_JS type="javascript"><![CDATA[

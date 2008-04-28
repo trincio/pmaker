@@ -186,7 +186,30 @@ class dynaformEditor extends WebResource
 		$G_PUBLISH->AddContent('blank');
 		try
 		{
-		$G_PUBLISH->AddContent('pagedtable', 'paged-table', 'dynaforms/fields_List', 'display:none', $Parameters , '', SYS_URI.'dynaforms/dynaforms_PagedTableAjax');
+		//$G_PUBLISH->AddContent('pagedtable', 'paged-table', 'dynaforms/fields_List', 'display:none', $Parameters , '', SYS_URI.'dynaforms/dynaforms_PagedTableAjax');
+		$i         = 0;
+		$aFields   = array();
+  	$aFields[] = array('XMLNODE_NAME' => 'char',
+    	                 'TYPE'         => 'char',
+    	                 'UP'           => 'char',
+    	                 'DOWN'         => 'char');
+	  $oSession = new DBSession(new DBConnection(PATH_DYNAFORM  . $this->file . '.xml', '', '', '', 'myxml'));
+	  $oDataset = $oSession->Execute('SELECT * FROM dynaForm WHERE NOT( XMLNODE_NAME = "" )');
+	  $iMaximun = $oDataset->count();
+	  while ($aRow = $oDataset->Read()) {
+  		$aFields[] = array('XMLNODE_NAME' => $aRow['XMLNODE_NAME'],
+      	                 'TYPE'         => $aRow['TYPE'],
+      	                 'UP'           => ($i > 0 ? G::LoadTranslation('ID_UP') : ''),
+      	                 'DOWN'         => ($i < $iMaximun-1 ? G::LoadTranslation('ID_DOWN') : ''));
+      $i++;
+	  }
+	  global $_DBArray;
+    $_DBArray['fields']   = $aFields;
+    $_SESSION['_DBArray'] = $_DBArray;
+    G::LoadClass('ArrayPeer');
+    $oCriteria = new Criteria('dbarray');
+    $oCriteria->setDBArrayTable('fields');
+		$G_PUBLISH->AddContent('propeltable', 'paged-table', 'dynaforms/fields_List', $oCriteria, $Parameters, '', SYS_URI.'dynaforms/dynaforms_PagedTableAjax');
 		} catch (Exception $e) {}
 		try
 		{

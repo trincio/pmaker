@@ -29,7 +29,7 @@ $G_TMP_MENU->AddIdRawOption('MY_ACCOUNT', 'users/myInfo');
 $G_TMP_MENU->AddIdRawOption('USERS',      'users/users_List');
 $G_TMP_MENU->AddIdRawOption('CASES',      'cases/cases_List');
 $G_TMP_MENU->AddIdRawOption('PROCESSES',  'processes/processes_List');
-$G_TMP_MENU->AddIdRawOption('SETUP',      'setup/setup');
+$G_TMP_MENU->AddIdRawOption('SETUP',      'setup/pluginsList');
 //$G_TMP_MENU->AddIdRawOption('DASHBOARD',  'dashboard/dashboard');//next release
 
 $G_TMP_MENU->Labels = array(

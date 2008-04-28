@@ -14,7 +14,6 @@
 -->
 <title type="title" colWidth="200" showInTable="0">
   <en>Group Information</en>
-  <es>Información del Grupo</es>
 </title>
 
 <GRP_UID type="hidden" showInTable="0">
@@ -22,7 +21,6 @@
 
 <GRP_TITLE type="text" colWidth="200" size="30" maxlength="64">
   <en>Name</en>
-  <es>Nombre</es>
 </GRP_TITLE>
 
 <GRP_STATUS type="dropdown" colWidth="150" align="center">
@@ -30,16 +28,41 @@
   <option name="ACTIVE">Active</option>
   <option name="INACTIVE">Inactive</option>
   </en>
-  <es>Estado
-  <option name="ACTIVE">Activo</option>
-  <option name="INACTIVE">Inactivo</option>
-  </es>
 </GRP_STATUS>
 
 <button type="button" onclick="saveGroup( this.form );" showInTable="0">
   <en>Save</en>
-  <es>Guardar</es>
-</button>
-
+</button> 
+<JS type="javascript" replacetags="1">
+var sGroupname;
+sGroupname = document.forms[0].elements['form[GRP_TITLE]'].value;
+     
+var verifyGroupname = function()
+{  
+  document.forms[0].elements['form[GRP_TITLE]'].disabled = true;
+  document.forms[0].elements['form[button]'].disabled = true;    
+  var oRPC = new leimnud.module.rpc.xmlhttp({
+    url    :'groups_Ajax',
+    async  : false,
+    method :'POST',
+    args   :'action=verifyGroupname&amp;sOriginalGroupname=' + sGroupname + '&amp;sGroupname=' + encodeURIComponent(this.value)});
+  oRPC.make();
+  var sResponse = oRPC.xmlhttp.responseText; 
+  document.forms[0].elements['form[GRP_TITLE]'].disabled = false;
+  if (sResponse == '1')
+  {
+    new leimnud.module.app.alert().make({
+	    label: G_STRINGS.ID_MSJ
+  	});
+    document.forms[0].elements['form[GRP_TITLE]'].focus();
+  }
+  else
+  {
+    document.forms[0].elements['form[button]'].disabled = false;
+  }
+};
+  
+leimnud.event.add(document.forms[0].elements['form[GRP_TITLE]'],'change',verifyGroupname);  
+</JS>
 
 </dynaForm>

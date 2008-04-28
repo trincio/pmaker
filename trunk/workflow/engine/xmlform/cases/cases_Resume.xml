@@ -8,7 +8,6 @@
 
 <TITLE1 type="title">
   <en>Case Resume</en>
-  <es>Resumen del Caso</es>
 </TITLE1>
 
 <TITLE type="text" mode="view">
@@ -21,17 +20,14 @@
 
 <CREATE_DATE type="text" mode="view">
   <en>Create Date</en>
-  <es>Fecha de Creación</es>
 </CREATE_DATE>
 
 <UPDATE_DATE type="text" mode="view">
   <en>Last Update</en>
-  <es>Ultima Actualización</es>
 </UPDATE_DATE>
 
 <STATUS type="text" mode="view">
   <en>Status</en>
-  <es>Estado</es>
 </STATUS>
 
 </dynaForm>

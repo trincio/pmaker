@@ -59,7 +59,7 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_USERS"))!=1) return $RBAC_Response;
   }
   function addGroup(){
     popupWindow('' , '<?=$groups_Edit?>' , 500 , 200 );
-    refreshTree();
+//    refreshTree();
   }
   function addUserGroup( uid ){
     popupWindow('' , '<?=$groups_AddUser?>?UID='+uid+'&nobug' , 500 , 400 );

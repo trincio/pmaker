@@ -20,7 +20,6 @@
 
 <TITLE type="title" showInTable="0">
   <en>Workflow Pattern</en>
-  <es>Workflow Pattern</es>
 </TITLE>
 
 <ROU_TYPE type="dropdown">
@@ -33,15 +32,6 @@
     <option name="PARALLEL-BY-EVALUATION">Parallel by evaluation (fork)</option>
     <option name="SEC-JOIN">Parallel (join)</option>
   </en>
-  <es>Tipo
-    <option name="">- Seleccione - </option>
-    <option name="SEQUENTIAL">Secuencial</option>
-    <option name="SELECT">Selección</option>
-    <option name="EVALUATE">Evaluación</option>
-    <option name="PARALLEL">Paralelo (bifurcación)</option>
-    <option name="PARALLEL-BY-EVALUATION">Paralelo por evaluación (bifurcación)</option>
-    <option name="SEC-JOIN">Paralelo (unión)</option>
-  </es>
 </ROU_TYPE>
 
 <ROU_NEXT_TASK type="dropdown">
@@ -50,10 +40,6 @@ SELECT TAS_UID, CON_VALUE FROM TASK LEFT JOIN CONTENT ON (TAS_UID = CON_ID AND C
     <option name="-1">End of process</option>
     <option name="-2">Leaf task</option>
   </en>
-  <es>Siguiente tarea
-    <option name="-1">Fin de proceso</option>
-    <option name="-2">Tarea colgante</option>
-  </es>
 </ROU_NEXT_TASK>
 
 <ROU_TO_LAST_USER type="dropdown">
@@ -61,10 +47,6 @@ SELECT TAS_UID, CON_VALUE FROM TASK LEFT JOIN CONTENT ON (TAS_UID = CON_ID AND C
     <option name="FALSE">Rules and user groups</option>
     <option name="TRUE">Last executant of the task</option>
   </en>
-  <es>Siguiente tarea
-    <option name="FALSE">Fin de proceso</option>
-    <option name="TRUE">Tarea colgante</option>
-  </es>
 </ROU_TO_LAST_USER>
 
 <GRID_SELECT_TYPE type="grid" xmlgrid="patterns/patterns_GridSelectType" addRow="1" deleteRow="1" editRow="" />
@@ -77,7 +59,6 @@ SELECT TAS_UID, CON_VALUE FROM TASK LEFT JOIN CONTENT ON (TAS_UID = CON_ID AND C
 
 <SAVE type="button" onclick="savePattern(this.form);">
   <en>Save</en>
-  <es>Save</es>
 </SAVE>
 
 <JS type="javascript">

@@ -24,11 +24,20 @@
  */
 G::LoadClass('xmlfield_InputPM');
 $aFields = getDynaformsVars($_POST['sProcess']);
-$sHTML   = '<select name="_Var_Form_" id="_Var_Form_" size="' . count($aFields) . '" style="width:100%;height:90%;" ondblclick="insertFormVar(\'' . $_POST['sFieldName'] . '\', this.value);">';
+$sHTML   = '<select name="_Var_Form_" id="_Var_Form_" size="' . count($aFields) . '" style="width:100%;height:50%;" ondblclick="insertFormVar(\'' . $_POST['sFieldName'] . '\', this.value);">';
 foreach ($aFields as $aField) {
 	$sHTML .= '<option value="' . $_POST['sSymbol'] . $aField['sName'] . '">' . $_POST['sSymbol'] . $aField['sName'] . ' (' . $aField['sType'] . ')</option>';
 }
 $sHTML .= '</select>';
-$sHTML .= '<p align="center">Double click to insert</p>';
+$sHTML .= '<table>';
+$sHTML .= '<tr><td align="center" class="module_app_input___gray">' . G::LoadTranslation('ID_DOCLICK') . '</td></tr>';
+$sHTML .= '<tr><td class="module_app_input___gray">' . G::LoadTranslation('ID_ESC') . '</td></tr>';
+$sHTML .= '<tr><td class="module_app_input___gray">' . G::LoadTranslation('ID_NONEC') . '</td></tr>';
+$sHTML .= '<tr><td class="module_app_input___gray">' . G::LoadTranslation('ID_EURL') . '</td></tr>';
+$sHTML .= '<tr><td class="module_app_input___gray">' . G::LoadTranslation('ID_EVAL') . '</td></tr>';
+$sHTML .= '<tr><td class="module_app_input___gray">' . G::LoadTranslation('ID_ESCJS') . '</td></tr>';
+$sHTML .= '<tr><td class="module_app_input___gray">' . G::LoadTranslation('ID_ESCSJS') . '</td></tr>';
+$sHTML .= '<tr><td class="module_app_input___gray">' . G::LoadTranslation('ID_FUNCTION') . '</td></tr>';
+$sHTML .= '</table>';
 echo $sHTML;
 ?>
