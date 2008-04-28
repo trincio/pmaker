@@ -7,51 +7,38 @@
 <A type="hidden" />
 <TYPE type="hidden" />
 <XMLNODE_NAME type="text" validate="Field" >
-
   <en>Field name</en>
-  <es>Nombre de campo</es>
 </XMLNODE_NAME>
 
 <LABEL type="text" maxlength="50" size="50">
   <en>Label</en>
-  <es>Etiqueta</es>
 </LABEL>
 
 <REQUIRED type="checkbox" falseValue="0" value="1" defaultvalue="0" >
-
   <en>Required</en>
-  <es>Required</es>
 </REQUIRED>
 <DEFAULTVALUE type="text" maxlength="50" size="30" defaultvalue="" >
-
   <en>Default Value</en>
-  <es>Default Value</es>
 </DEFAULTVALUE>
 
 <SUBTITLE type="title" enableHTML="1">
   <en>Appearance</en>
-  <es>Apariencia</es>
 </SUBTITLE>
 
 <!--<GROUP type="text" maxlength="10" size="10" validate="Int" defaultvalue="0" >
 
   <en>Group</en>
-  <es>Group</es>
 </GROUP>-->
 <ENABLEHTML type="checkbox" falseValue="0" value="1" defaultvalue="0" >
-
   <en>EnableHtml</en>
-  <es>EnableHtml</es>
 </ENABLEHTML>
 <!--<STYLE type="text" maxlength="" size="50">
 
   <en>Style</en>
-  <es>Style</es>
 </STYLE>-->
 
 <ACCEPT type="button" onclick="fieldsSave( this.form );">
   <en>Save</en>
-  <es>Guardar</es>
 </ACCEPT>
 
 <js type="javascript">

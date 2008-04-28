@@ -96,7 +96,7 @@ class AppDelegationMapBuilder {
 
 		$tMap->addValidator('DEL_PRIORITY', 'validValues', 'propel.validator.ValidValuesValidator', 'HIGH|NORMAL|LOW', 'Please select a valid Priority.');
 
-		$tMap->addValidator('DEL_THREAD_STATUS', 'validValues', 'propel.validator.ValidValuesValidator', 'CLOSED|OPEN', 'Please select a valid status.');
+		$tMap->addValidator('DEL_THREAD_STATUS', 'validValues', 'propel.validator.ValidValuesValidator', 'CLOSED|OPEN|PAUSED', 'Please select a valid status.');
 
 	} // doBuild()
 

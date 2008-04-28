@@ -1,10 +1,10 @@
 <?php
 /**
  * fields_Save.php
- *  
+ *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -14,13 +14,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
 if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Response;
 
@@ -30,7 +30,7 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
 
   $type=strtolower($_POST['form']['PME_TYPE']);
   if (!(isset($_POST['form']['PME_A']) && $_POST['form']['PME_A']!==''))  return;
-  
+
   $file = G::decrypt( $_POST['form']['PME_A'] , URL_KEY );
   define('DB_XMLDB_HOST', PATH_DYNAFORM  . $file . '.xml' );
   define('DB_XMLDB_USER','');
@@ -42,7 +42,7 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
   if (file_exists( PATH_XMLFORM . 'dynaforms/fields/' . $type . '.xml')) {
     $form=new Form('dynaforms/fields/' . $type , PATH_XMLFORM);
     //TODO: Verify why validatePost removes PME_XMLGRID.
-    $isGrid=isset($_POST['form']['PME_XMLGRID']); 
+    $isGrid=isset($_POST['form']['PME_XMLGRID']);
     if ($isGrid) $xmlGrid=$_POST['form']['PME_XMLGRID'];
     $form->validatePost();
     if ($isGrid) $_POST['form']['PME_XMLGRID']=$xmlGrid;
@@ -68,11 +68,11 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
   $fields = new DynaFormField( $dbc );
 
   if ($_POST['form']['XMLNODE_NAME']==='') return;
-  
-  
+
+
   $attributes = $_POST['form'];
   if (isset($attributes['CODE'])) $attributes['XMLNODE_VALUE'] = ($attributes['CODE']);
-  
+
   $labels = array();
   if (isset($attributes['LABEL'])) $labels = array ( SYS_LANG => $attributes['LABEL'] );
 
@@ -98,7 +98,7 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
           foreach( $value as $row ) {
             foreach( $langs as $lang ) {
               $LANG = strtoupper($lang);
-              if (isset($row['LABEL_'.$LANG])) 
+              if (isset($row['LABEL_'.$LANG]))
                 $options[$lang][$row['NAME']]=$row['LABEL_'.$LANG];
             }
           }
@@ -116,5 +116,25 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
     }
   }
   $fields->Save( $attributes , $labels , $options );
-  
+
+  G::LoadClass('xmlDb');
+  $i         = 0;
+	$aFields   = array();
+  $aFields[] = array('XMLNODE_NAME' => 'char',
+  	                 'TYPE'         => 'char',
+  	                 'UP'           => 'char',
+  	                 'DOWN'         => 'char');
+	$oSession = new DBSession(new DBConnection(PATH_DYNAFORM . $file . '.xml', '', '', '', 'myxml'));
+	$oDataset = $oSession->Execute('SELECT * FROM dynaForm WHERE NOT( XMLNODE_NAME = "" )');
+	$iMaximun = $oDataset->count();
+	while ($aRow = $oDataset->Read()) {
+  	$aFields[] = array('XMLNODE_NAME' => $aRow['XMLNODE_NAME'],
+    	                 'TYPE'         => $aRow['TYPE'],
+    	                 'UP'           => ($i > 0 ? G::LoadTranslation('ID_UP') : ''),
+    	                 'DOWN'         => ($i < $iMaximun-1 ? G::LoadTranslation('ID_DOWN') : ''));
+    $i++;
+	}
+	global $_DBArray;
+  $_DBArray['fields']   = $aFields;
+  $_SESSION['_DBArray'] = $_DBArray;
 ?>

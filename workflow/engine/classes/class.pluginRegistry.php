@@ -1,10 +1,10 @@
 <?php
 /**
  * class.pluginRegistry.php
- *  
+ *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -14,13 +14,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
 
 class pluginDetail {
@@ -42,7 +42,7 @@ class pluginDetail {
   	$this->sSetupPage    = $sSetupPage;
   	$this->iVersion      = $iVersion;
   	$this->sFilename     = $sFilename;
-  	if ( $sPluginFolder == '') 
+  	if ( $sPluginFolder == '')
   	  $this->sPluginFolder = $sNamespace;
   	else
   	  $this->sPluginFolder = $sPluginFolder ;
@@ -66,9 +66,9 @@ class PMPluginRegistry {
     }
     return self::$instance;
   }
-  
+
   function serializeInstance() {
-    return serialize ( self::$instance); 
+    return serialize ( self::$instance);
   }
 
   function unSerializeInstance( $serialized ) {
@@ -81,14 +81,14 @@ class PMPluginRegistry {
   }
 
   //delete this function, it was here, only for test and debug purposes
-  function showArrays () { 
+  function showArrays () {
   krumo ( $this->_aPluginDetails);
   krumo ( $this->_aPlugins);
   krumo ( $this->_aMenus);
   krumo ( $this->_aFolders);
-  krumo ( $this->_aTriggers);  
+  krumo ( $this->_aTriggers);
   }
-  
+
   /**
    * Register the plugin in the singleton
    *
@@ -103,11 +103,11 @@ class PMPluginRegistry {
     //require_once ( $sFilename );
     $plugin = new $sClassName ($sNamespace, $sFilename);
     $detail = new pluginDetail (
-            $sNamespace, 
-            $sClassName, 
-            $sFilename, 
-            $plugin->sFriendlyName, 
-            $plugin->sPluginFolder, 
+            $sNamespace,
+            $sClassName,
+            $sFilename,
+            $plugin->sFriendlyName,
+            $plugin->sPluginFolder,
             $plugin->sDescription,
             $plugin->sSetupPage,
             $plugin->iVersion  );
@@ -154,20 +154,20 @@ class PMPluginRegistry {
 
   	 foreach ( $this->_aMenus as $key=>$detail ) {
   	   if ( $detail->sNamespace == $sNamespace )
-  	     unset ( $this->_aMenus[ $key ] ); 
+  	     unset ( $this->_aMenus[ $key ] );
     }
   	 foreach ( $this->_aFolders as $key=>$detail ) {
   	   if ( $detail->sNamespace == $sNamespace )
-  	     unset ( $this->_aFolders[ $key ] ); 
+  	     unset ( $this->_aFolders[ $key ] );
      }
 
   	 foreach ( $this->_aTriggers as $key=>$detail ) {
   	   if ( $detail->sNamespace == $sNamespace )
-  	     unset ( $this->_aTriggers[ $key ] ); 
+  	     unset ( $this->_aTriggers[ $key ] );
     }
-    
+
   }
-  
+
   /**
    * get status plugin in the singleton
    *
@@ -178,14 +178,14 @@ class PMPluginRegistry {
   		if ( $sNamespace == $namespace )
         if ( $this->_aPluginDetails[$sNamespace]->enabled )
           return 'enabled';
-        else 
+        else
           return 'disabled';
   	}
   	return 0;
   }
-  
+
   /**
-   * install the plugin 
+   * install the plugin
    *
    * @param unknown_type $sNamespace
    */
@@ -199,7 +199,7 @@ class PMPluginRegistry {
   	}
   }
 
-  
+
   /**
    * Register a menu in the singleton
    *
@@ -210,9 +210,9 @@ class PMPluginRegistry {
   function registerMenu($sNamespace, $sMenuId, $sFilename ) {
     $found = false;
   	 foreach ( $this->_aMenus as $row=>$detail ) {
-  		if ( $sMenuId == $detail->sMenuId && $sNamespace == $detail->sNamespace ) 
+  		if ( $sMenuId == $detail->sMenuId && $sNamespace == $detail->sNamespace )
   		  $found = true;
-  	 }	
+  	 }
     if ( !$found ) {
   	  $menuDetail = new menuDetail ($sNamespace, $sMenuId, $sFilename);
       $this->_aMenus[] = $menuDetail;
@@ -226,10 +226,10 @@ class PMPluginRegistry {
    */
   function registerFolder($sNamespace, $sFolderId, $sFolderName ) {
     $found = false;
-  	foreach ( $this->_aFolders as $row=>$detail ) 
-  		if ( $sFolderId == $detail->sFolderId && $sNamespace == $detail->sNamespace ) 
+  	foreach ( $this->_aFolders as $row=>$detail )
+  		if ( $sFolderId == $detail->sFolderId && $sNamespace == $detail->sNamespace )
   		  $found = true;
-  		
+
     if ( !$found ) {
       $this->_aFolders[] = new folderDetail ( $sNamespace, $sFolderId, $sFolderName);
     }
@@ -269,13 +269,13 @@ class PMPluginRegistry {
    */
   function executeTriggers( $triggerId, $oData ) {
   	foreach ( $this->_aTriggers as $row=>$detail ) {
-  		if ( $triggerId == $detail->sTriggerId  ) { 
- 		  
+  		if ( $triggerId == $detail->sTriggerId  ) {
+
   		  //review all folders registered for this namespace
   		  $found = false;
         $classFile = '';
 
-       	foreach ( $this->_aFolders as $row=>$folder ) 
+       	foreach ( $this->_aFolders as $row=>$folder )
      	    $fname = PATH_PLUGINS . $folder->sFolderName . PATH_SEP . 'class.' . $folder->sFolderName  .'.php';
   		    if ( $detail->sNamespace == $folder->sNamespace && file_exists ( $fname ) ) {
   		      $found = true;
@@ -306,11 +306,11 @@ class PMPluginRegistry {
   function existsTrigger( $triggerId) {
   	$found = false;
   	foreach ( $this->_aTriggers as $row=>$detail ) {
-  		if ( $triggerId == $detail->sTriggerId  ) { 
- 		  
+  		if ( $triggerId == $detail->sTriggerId  ) {
+
   		  //review all folders registered for this namespace
 
-       	foreach ( $this->_aFolders as $row=>$folder ) 
+       	foreach ( $this->_aFolders as $row=>$folder )
      	    $fname = PATH_PLUGINS . $folder->sFolderName . PATH_SEP . 'class.' . $folder->sFolderName  .'.php';
   		    if ( $detail->sNamespace == $folder->sNamespace && file_exists ( $fname ) ) {
   		      $found = true;
@@ -329,9 +329,9 @@ class PMPluginRegistry {
   function registerTrigger($sNamespace, $sTriggerId, $sTriggerName ) {
     $found = false;
   	foreach ( $this->_aTriggers as $row=>$detail ) {
-  		if ( $sTriggerId == $detail->sTriggerId && $sNamespace == $detail->sNamespace ) 
+  		if ( $sTriggerId == $detail->sTriggerId && $sNamespace == $detail->sNamespace )
   		  $found = true;
-  	}	
+  	}
     if ( !$found ) {
     	$triggerDetail = new triggerDetail ($sNamespace, $sTriggerId, $sTriggerName);
       $this->_aTriggers[] = $triggerDetail;
@@ -363,12 +363,17 @@ class PMPluginRegistry {
     foreach ( $this->_aPluginDetails as $namespace=>$detail ) {
   		if ( isset($detail->enabled ) && $detail->enabled ) {
         if ( !empty( $detail->sFilename) && file_exists ($detail->sFilename) ) {
-        	$aux = explode ( PATH_SEP, $detail->sFilename );
+        	if (strpos($detail->sFilename, PATH_SEP) !== false) {
+        	  $aux = explode ( PATH_SEP, $detail->sFilename );
+          }
+          else {
+          	$aux = explode ( chr(92), $detail->sFilename );
+          }
         	$sFilename = PATH_PLUGINS . $aux[ count($aux) -1];
           require_once( $sFilename);
           $oPlugin =& new $detail->sClassName( $detail->sNamespace, $detail->sFilename );
           $this->_aPlugins[$detail->sNamespace] =& $oPlugin;
-          
+
     		  $iPlugins++;
     		  //print ( "$iPlugins $namespace <br>");
     		  $oPlugin->setup();
@@ -377,12 +382,12 @@ class PMPluginRegistry {
   	}
   	return $iPlugins;
   }
-  
+
   function executeMethod( $sNamespace, $methodName, $oData ) {
   	try {
   	$details = $this->_aPluginDetails[$sNamespace];
   	$pluginFolder = $details->sPluginFolder;
-  	$className    = $details->sClassName;  	
+  	$className    = $details->sClassName;
     $classFile = PATH_PLUGINS . $pluginFolder . PATH_SEP . 'class.' . $pluginFolder .'.php';
   	if ( file_exists ( $classFile ) ) {
     	require_once ( $classFile );
@@ -409,13 +414,13 @@ class PMPluginRegistry {
   	$oData = NULL;
     return $this->executeMethod ( $sNamespace, 'getFieldsForPageSetup', $oData);
   }
-  
-  
+
+
   function updateFieldsForPageSetup( $sNamespace, $oData ) {
   	if ( !isset ($this->_aPluginDetails[$sNamespace] ) ) {
-  		throw ( new Exception ( "The namespace '$sNamespace' doesn't exists in plugins folder." ) ); 
+  		throw ( new Exception ( "The namespace '$sNamespace' doesn't exists in plugins folder." ) );
   	};
     return $this->executeMethod ( $sNamespace, 'updateFieldsForPageSetup', $oData);
   }
-  
+
 }

@@ -2,33 +2,27 @@
 <dynaForm name="organizationalChart" ajaxSubmit="1" width="640px">
 
 <TITLES type="title" group="4">
-  <es>Árbol organizacional</es>
   <en>OrganizationalChart</en>
 </TITLES>
 
 <!--<toolbar type="toolbar" xmlfile="departments/toolBar">
-  <es></es>
   <en></en>
 </toolbar>-->
 
 <CHART type="OrganizationalChart" style="overflow:scroll;height:400px;width:600px;" borderStyle="3px solid black" fontStyle="10pt" contextmenu="popupMenu_departmentContext">
-  <es>Árbol organizacional</es>
   <en>OrganizationalChart</en>
 </CHART>
 <!--
 <MANAGER type="dropdown" style="width:120px;">
   select USR_UID, USR_USERNAME FROM USERS
-  <es>Manager</es>
   <en>Manager</en>
 </MANAGER>
 
 <USERS type="grid" xmlGrid="departments/departmentUsers">
-  <es>Usuarios del Departamento</es>
   <en>Department Users</en>
 </USERS>
 
 <BSUBMIT type="submit">
-  <es>Aceptar</es>
   <en>Accept</en>
   <fa>اضافه کردن</fa>
 </BSUBMIT>

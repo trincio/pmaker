@@ -8,22 +8,18 @@
 
 <PRO_UID type="text" style="width:100%;" dataCompareField="PRO_UID" dataCompareType="=">
   <en>UID</en>
-  <es>UID</es>
 </PRO_UID>
 
 <PRO_TITLE type="text" style="width:100%;" dataCompareField="C1.CON_VALUE" dataCompareType="contains">
   <en>Title</en>
-  <es>Título</es>
 </PRO_TITLE>
 
 <PRO_DESCRIPTION type="text" style="width:100%;" dataCompareField="C2.CON_VALUE" dataCompareType="contains">
   <en>Description</en>
-  <es>Descripción</es>
 </PRO_DESCRIPTION>
 
 <search type="button" onclick="pagedTableFilter( this.form )">
   <en>Apply Filter</en>
-  <es>Filtrar</es>
 </search>
 
 </dynaForm>

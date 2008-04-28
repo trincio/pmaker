@@ -59,8 +59,9 @@ while ($aRow1 = $oDataset->getRow()) {
 }
 G::LoadThirdParty('pake', 'pakeFinder.class');
 $aExceptionFields = array('', 'javascript', 'hidden', 'phpvariable', 'private', 'toolbar', 'xmlmenu', 'toolbutton', 'cellmark', 'grid');
-$aXMLForms = pakeFinder::type('file')->name( '*.xml' )->in(PATH_XMLFORM);
+$aXMLForms = pakeFinder::type('file')->name( '*.xml' )->in(substr(PATH_XMLFORM, 0, -1));
 foreach ($aXMLForms as $sXmlForm) {
+	$sXmlForm = str_replace(chr(92), '/', $sXmlForm);
 	$sXmlForm = str_replace(PATH_XMLFORM, '', $sXmlForm);
 	$oForm = new Form($sXmlForm, '', 'en');
 	foreach ($oForm->fields as $sNodeName => $oNode) {

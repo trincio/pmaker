@@ -10,7 +10,6 @@
 
 <XMLNODE_NAME type="text" colWidth="200"  titleAlign="left" align="left" dataCompareField="XMLNODE_NAME" dataCompareType="contains">
   <en>Field</en>
-  <es>Campo</es>
 </XMLNODE_NAME>
 
 <TYPE type="dropdown" colWidth="200"  titleAlign="left" align="left" dataCompareField="TYPE" dataCompareType="=">
@@ -39,37 +38,11 @@
   <option name='javascript'>Java Script</option>
   <option name='private'>Private</option>
   </en>
-  <es>Tipo
-  <option name='title'>Title</option>
-  <option name='subtitle'>Subtitle</option>
-  <option name='text'>text</option>
-  <option name='password'>Password</option>
-  <option name='textarea'>Text Area</option>
-  <option name='currency'>Currency</option>
-  <option name='percentage'>Percentage</option>
-  <option name='date'>date</option>
-  <option name='yesno'>Yes/No</option>
-  <option name='link'>link</option>
-  <option name='file'>file</option>
-  <option name='checkbox'>Check Box</option>
-  <option name='button'>Button</option>
-  <option name='reset'>Reset</option>
-  <option name='submit'>Submit</option>
-  <option name='hidden'>Hidden</option>
-  <option name='dropdown'>Dropdown</option>
-  <option name='listbox'>List Box</option>
-  <option name='radiogroup'>Radio Group</option>
-  <option name='checkgroup'>Check Group</option>
-  <option name='grid'>grid</option>
-  <option name='javascript'>Java Script</option>
-  <option name='private'>Private</option>
-  </es>
 </TYPE>
 
 <!-- FILTER FORM -->
 <SEARCH type="button" onclick="pagedTableFilter( this.form );" showInTable="0">
   <en>Apply Filter</en>
-  <es>Filtrar</es>
 </SEARCH>
 <PAGED_TABLE_ID type="private" showInTable="0"/>
 <JSFILTER type="javascript" replaceTags="1" showInTable="0">

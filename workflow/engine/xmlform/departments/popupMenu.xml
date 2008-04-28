@@ -2,17 +2,14 @@
 <dynaForm name="departmentContext" type="popupMenu" theme="processmaker">
 
 <ADD_DEPARTMENT type="popupOption" launch="addDepartment( target );">
-  <es>Add department</es>
   <en>Add department</en>
 </ADD_DEPARTMENT>
 
 <DEL_DEPARTMENT type="popupOption" launch="delDepartment( target );">
-  <es>Delete department</es>
   <en>Delete department</en>
 </DEL_DEPARTMENT>
 
 <PROPERTIES type="popupOption" launch="proDepartment( target );">
-  <es>Properties</es>
   <en>Properties</en>
 </PROPERTIES>
 

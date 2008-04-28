@@ -105,6 +105,23 @@ var showTriggers = function(sStep, sType)
   });
   oRPC.make();
   document.getElementById('triggersSpan_' + sStep + '_' + sType).innerHTML = oRPC.xmlhttp.responseText;
+
+  var tri = document.getElementById('TRIG_'+sStep+'_'+sType);
+  if (tri) {
+  	oRPC = new leimnud.module.rpc.xmlhttp({
+      url   : '../steps/steps_Ajax',
+      async : false,
+      method: 'POST',
+      args  : 'action=counterTriggers&sStep='+sStep+'&sType='+sType
+    });
+    oRPC.make();
+    aAux = oRPC.xmlhttp.responseText.split('|');
+    tri.innerHTML=aAux[1];
+    var tri = document.getElementById('TRIG_'+sStep);
+    if (tri) {
+    	tri.innerHTML=aAux[0];
+    }
+  }
 };
 
 var editTriggerCondition = function(sStep, sTrigger, sType)

@@ -192,7 +192,7 @@ class AppDelegation extends BaseAppDelegation {
 //	  print_r("aaaaaaaaaaaaaaaa");
 //	  die();
     //Fatal error: Call to undefined method Task::getUsrUid() in /opt/processmaker/trunk/workflow/engine/classes/model/AppDelegation.php on line 190
-    return 'tomorrow';
+    //return 'tomorrow'; //Sample
 
     $dates = new dates();
     //Get TasDuration

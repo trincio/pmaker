@@ -1,10 +1,10 @@
 <?php
 /**
  * fields_Edit.php
- *  
+ *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -14,13 +14,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
 if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Response;
 
@@ -38,7 +38,7 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
   //TODO: Improve how to obtain the PRO_UID.
   $aFile=explode('/',str_replace('\\','/',$file));
   $proUid=$aFile[0];
-  
+
   $fields = new DynaFormField( $dbc );
   $fields->Fields['XMLNODE_NAME']=(isset($_GET['XMLNODE_NAME'])) ? urldecode($_GET['XMLNODE_NAME']):'';
   $fields->Load( $fields->Fields['XMLNODE_NAME'] );
@@ -77,6 +77,7 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
 	}
   $Fields['PME_A'] = $_GET['A'];
   $Fields['PME_PRO_UID'] = $proUid;
+  $Fields['PME_XMLNODE_NAME_OLD'] = $Fields['PME_XMLNODE_NAME'];
   $G_PUBLISH = new Publisher();
   $G_HEADER->clearScripts();
   $G_HEADER->addScriptFile('/js/grid/core/grid.js');

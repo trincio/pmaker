@@ -4,22 +4,18 @@
 >
 <uid type="text" colWidth="50" titleAlign="left" align="left" dataCompareField="APP_NUMBER" dataCompareType="=" >
   <en>#</en>
-  <es>#</es>
 </uid>
 <name type="text" value="@#APP_TITLE" link="@G::encryptlink(@#cases_Open)?APP_UID=@#APP_UID&amp;DEL_INDEX=@#DEL_INDEX" colWidth="180" titleAlign="left" align="left" dataCompareField="APP_TITLE.CON_VALUE" dataCompareType="contains" >
 
   <en>name</en>
-  <es>name</es>
 </name>
 <age type="text" value="@#APP_TAS_TITLE" link="@G::encryptlink(@#cases_Open)?APP_UID=@#APP_UID&amp;DEL_INDEX=@#DEL_INDEX" colWidth="180" titleAlign="left" align="left" dataCompareField="TAS_TITLE.CON_VALUE" dataCompareType="contains" >
 
   <en>Task</en>
-  <es>Tarea</es>
 </age>
 <balance type="text" colWidth="180" titleAlign="left" align="left" dataCompareField="PRO_TITLE.CON_VALUE" dataCompareType="contains" >
 
   <en>balance</en>
-  <es>balance</es>
 </balance>
 
 </dynaForm>

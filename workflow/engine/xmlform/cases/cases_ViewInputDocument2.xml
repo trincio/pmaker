@@ -7,7 +7,6 @@
 >
 
 <__DYNAFORM_OPTIONS type="xmlmenu" xmlfile="gulliver/dynaforms_Options">
-  <es></es>
   <en></en>
 </__DYNAFORM_OPTIONS>
 
@@ -17,12 +16,10 @@
 
 <INP_DOC_TITLE type="caption">
   <en>Title</en>
-  <es>Título</es>
 </INP_DOC_TITLE>
 
 <INP_DOC_DESCRIPTION type="caption">
   <en>Description</en>
-  <es>Descripción</es>
 </INP_DOC_DESCRIPTION>
 
 <INP_DOC_FORM_NEEDED type="dropdown" colWidth="80" titleAlign="left" align="left" mode="view">
@@ -31,11 +28,6 @@
   <option name ='REAL'>Printed</option>
   <option name ='VREAL'>Digital/Printed</option>
   </en>
-  <es>Tipo
-  <option name ='VIRTUAL'>Impreso</option>
-  <option name ='REAL'>Digital</option>
-  <option name ='VREAL'>Digital/Impreso</option>
-  </es>
 </INP_DOC_FORM_NEEDED>
 
 <INP_DOC_ORIGINAL type="dropdown" colWidth="80" titleAlign="left" align="left" mode="view">
@@ -44,21 +36,14 @@
   <option name ='COPYLEGAL'>Legal Copy</option>
   <option name ='COPY'>Copy</option>
   </en>
-  <es>Formato
-  <option name ='ORIGINAL'>Original</option>
-  <option name ='COPY'>Copia</option>
-  <option name ='COPYLEGAL'>Copia legalizada</option>
-  </es>
 </INP_DOC_ORIGINAL>
 
 <APP_DOC_CREATE_DATE type="date" mode="view">
   <en>Created Date</en>
-  <es>Fecha de Creación</es>
 </APP_DOC_CREATE_DATE>
 
 <CREATOR type="text" mode="view">
   <en>Creator</en>
-  <es>Creador</es>
 </CREATOR>
 
 <!--<INP_DOC_PUBLISHED type="dropdown" colWidth="80" titleAlign="left" align="left" mode="view">
@@ -66,20 +51,14 @@
   <option name ='PRIVATE'>Private</option>
   <option name ='PUBLIC'>Public</option>
   </en>
-  <es>Tipo de acceso
-  <option name ='PRIVATE'>Privado</option>
-  <option name ='PUBLIC'>Público</option>
-  </es>
 </INP_DOC_PUBLISHED>-->
 
 <APP_DOC_COMMENT type="caption">
   <en>Comments</en>
-  <es>Comentarios</es>
 </APP_DOC_COMMENT>
 
 <BACK type="button" onclick="back('@#INP_DOC_UID', @#POSITION);">
   <en>Back</en>
-  <es>Atrás</es>
 </BACK>
 
 <JS type="javascript">

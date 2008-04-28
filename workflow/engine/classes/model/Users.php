@@ -125,8 +125,17 @@ class Users extends BaseUsers {
       throw($e);
     }
   }
+ 
+  function loadByUsername($sUsername)
+  {
+  	$c = new Criteria('workflow');    
+    $del = DBAdapter::getStringDelimiter();
 
+    $c->clearSelectColumns();
+    $c->addSelectColumn( UsersPeer::USR_USERNAME );    
+                        
+    $c->add(UsersPeer::USR_USERNAME, $sUsername);    
+    return $c;   
+  }
 } // Users
-
-
 ?>

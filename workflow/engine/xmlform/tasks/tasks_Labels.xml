@@ -11,27 +11,22 @@
 
 <TAS_DEF_TITLE type="textareapm" required="0" cols="46" rows="5" group="1" showVars="1" process="@#PRO_UID" symbol="@#">
   <en>Case Title</en>
-  <es>Título del caso</es>
 </TAS_DEF_TITLE>
 
 <TAS_DEF_DESCRIPTION type="textareapm" required="0" cols="46" rows="5" group="1" showVars="1" process="@#PRO_UID" symbol="@#">
   <en>Case Description</en>
-  <es>Descripción del caso</es>
 </TAS_DEF_DESCRIPTION>
 
 <TAS_DEF_PROC_CODE type="textareapm" required="0" cols="46" rows="5" group="1" showVars="1" process="@#PRO_UID" symbol="@#">
   <en>Case Status</en>
-  <es>Estado del Caso</es>
 </TAS_DEF_PROC_CODE>
 
 <!--<SEND_EMAIL type="checkbox" value="TRUE" group="1">
   <en>Notify case finalitation to every case owner</en>
-  <es>Notificar finalización de caso a todos los dueños del caso</es>
 </SEND_EMAIL>
 
 <TAS_DEF_MESSAGE type="textarea" required="1" cols="38" rows="3" group="1">
   <en>Derivation message</en>
-  <es>Mensaje de derivación</es>
 </TAS_DEF_MESSAGE>-->
 
 <JS type="javascript">
@@ -78,7 +73,7 @@ var showDynaformsFormVars = function(sFieldName, sAjaxServer, sProcess, sSymbol)
 	_oVarsPanel_ = new leimnud.module.panel();
 	_oVarsPanel_.options = {
     limit    : true,
-    size     : {w:350,h:400},
+    size     : {w:400,h:600},
     position : {x:0,y:0,center:true},
     title    : '',
     theme    : 'processmaker',

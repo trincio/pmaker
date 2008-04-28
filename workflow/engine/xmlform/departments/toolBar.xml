@@ -2,12 +2,10 @@
 <dynaForm name="toolBar" version="1.0" type="toolbar" align="right">
 
 <addDepartment type="toolButton" file="images/form.gif" home="public_html" style="height:18px">
-  <es>Agregar departamento</es>
   <en>Add department</en>
 </addDepartment>
 
 <dropDepartment type="toolButton" file="images/trash.gif" home="public_html" style="height:18px">
-  <es>Agregar departamento</es>
   <en>Add department</en>
 </dropDepartment>
 

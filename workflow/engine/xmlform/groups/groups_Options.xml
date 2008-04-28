@@ -5,7 +5,6 @@
 
 <MNU_ADD_EMPLOYE type="link" value='' link="#" onclick="addUserGroup('@#GRP_UID'); return false;" colAlign="left" colWidth="150">
   <en>Assign Employee</en>
-  <es>Asignar empleado</es>
 </MNU_ADD_EMPLOYE>
 
 </dynaForm>

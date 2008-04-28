@@ -14,22 +14,18 @@
 <!--<HTML type="html" width="100%" height="400" toolbarSet="Basic"><en/></HTML>-->
 <HTML type="html" width="100%" height="350px" toolbarSet="toolbar2lines">
 <en>HTML View</en>
-<es>HTML View</es>
 </HTML>
 
 <PME_HTML_ENABLETEMPLATE type="checkbox" value="1" defaultvalue="0" labelOnRight="0">
   <en>Enable HTML Editing</en>
-  <es>Habilitar Edición HTML</es>
 </PME_HTML_ENABLETEMPLATE>
 
 <PME_REFRESH_VIEW type="button" onclick="html2_html();">
 <en>Refresh View</en>
-<es>Refresh View</es>
 </PME_REFRESH_VIEW>
 
 <HTML2 type="textarea" cols="40" rows="16" style="width:100%">
 <en>HTML Code</en>
-<es>HTML Code</es>
 </HTML2>
 <PME_SYNCH_JS type="javascript">
 <![CDATA[

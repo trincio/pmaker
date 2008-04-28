@@ -8,12 +8,10 @@
 
 <TITLE type="title">
   <en>Start a new case</en>
-  <es>Iniciar nuevo caso</es>
 </TITLE>
 
 <DESCRIPTION type="label">
   <en>You cannot initiate a new case.</en>
-  <es>Uds. no puede iniciar un caso.</es>
 </DESCRIPTION>
 
 </dynaForm>

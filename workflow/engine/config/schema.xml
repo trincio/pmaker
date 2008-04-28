@@ -359,7 +359,7 @@
       <rule name="validValues" value="HIGH|NORMAL|LOW" message="Please select a valid Priority." />
     </validator>
     <validator column="DEL_THREAD_STATUS">
-      <rule name="validValues" value="CLOSED|OPEN" message="Please select a valid status." />
+      <rule name="validValues" value="CLOSED|OPEN|PAUSED" message="Please select a valid status." />
     </validator>
   </table>
   <table name="APP_DOCUMENT">
@@ -2028,7 +2028,7 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="REP_TAB_CONNECTION" type="VARCHAR" size="10" required="true" default="">
+    <column name="REP_TAB_CONNECTION" type="VARCHAR" size="32" required="true" default="">
       <vendor type="mysql">
         <parameter name="Field" value="REP_TAB_CONNECTION"/>
         <parameter name="Type" value="varchar(10)"/>
@@ -2113,6 +2113,16 @@
         <parameter name="Type" value="varchar(32)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value="PRI"/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="PRO_UID" type="VARCHAR" size="32" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="PRO_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
         <parameter name="Extra" value=""/>
       </vendor>
@@ -3330,13 +3340,13 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="USR_DUE_DATE" type="DATE" required="true" default="0000-00-00">
+    <column name="USR_DUE_DATE" type="DATE" required="true" >
       <vendor type="mysql">
         <parameter name="Field" value="USR_DUE_DATE"/>
         <parameter name="Type" value="date"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
-        <parameter name="Default" value="0000-00-00"/>
+        <!-- <parameter name="Default" value="0000-00-00"/> -->
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
@@ -3480,13 +3490,13 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="USR_BIRTHDAY" type="DATE" required="true" default="0000-00-00">
+    <column name="USR_BIRTHDAY" type="DATE" required="true" >
       <vendor type="mysql">
         <parameter name="Field" value="USR_BIRTHDAY"/>
         <parameter name="Type" value="date"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
-        <parameter name="Default" value="0000-00-00"/>
+        <!-- <parameter name="Default" value="0000-00-00"/> -->
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
@@ -3581,5 +3591,202 @@
     <validator column="APP_THREAD_STATUS">
       <rule name="validValues" value="CLOSED|OPEN" message="Please select a valid status." />
     </validator>
+  </table>
+  <table name="APP_SPOOL" phpName="AppSpool">
+    <column name="id" phpName="Id" type="SMALLINT" size="6" primaryKey="true" required="true"/>
+    <column name="sender" phpName="Sender" type="VARCHAR" size="96" required="true" defaultValue=""/>
+    <column name="file" phpName="File" type="LONGVARCHAR" required="true"/>
+    <column name="now" phpName="Now" type="VARCHAR" size="16" required="true" defaultValue=""/>
+    <column name="status" phpName="Status" type="VARCHAR" size="16" required="true" defaultValue="pending"/>
+    <index name="sender">
+      <index-column name="sender"/>
+      <index-column name="status"/>
+    </index>
+  </table>
+  <table name="APP_DELAY">
+    <vendor type="mysql">
+      <parameter name="Name" value="APP_DELAY"/>
+      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Version" value="10"/>
+      <parameter name="Row_format" value="Dynamic"/>
+      <parameter name="Rows" value="0"/>
+      <parameter name="Avg_row_length" value="0"/>
+      <parameter name="Data_length" value="0"/>
+      <parameter name="Max_data_length" value="281474976710655"/>
+      <parameter name="Index_length" value="1024"/>
+      <parameter name="Data_free" value="0"/>
+      <parameter name="Auto_increment" value=""/>
+      <parameter name="Create_time" value="2008-04-25 10:30:00"/>
+      <parameter name="Update_time" value="2008-04-25 10:30:00"/>
+      <parameter name="Check_time" value=""/>
+      <parameter name="Collation" value="utf8_general_ci"/>
+      <parameter name="Checksum" value=""/>
+      <parameter name="Create_options" value=""/>
+      <parameter name="Comment" value="APP_DELAY"/>
+    </vendor>
+    <column name="APP_DELAY_UID" type="VARCHAR" size="32" required="true" primaryKey="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="APP_DELAY_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value="PRI"/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="PRO_UID" type="VARCHAR" required="true" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="PRO_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="APP_UID" type="VARCHAR" required="true" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="APP_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="APP_THREAD_INDEX" type="INTEGER" required="true" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="APP_THREAD_INDEX"/>
+        <parameter name="Type" value="int(11)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="0"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="APP_DEL_INDEX" type="INTEGER" required="true" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="APP_DEL_INDEX"/>
+        <parameter name="Type" value="int(11)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="0"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="APP_TYPE" type="VARCHAR" required="true" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="APP_TYPE"/>
+        <parameter name="Type" value="varchar(20)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="APP_STATUS" type="VARCHAR" required="true" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="APP_STATUS"/>
+        <parameter name="Type" value="varchar(20)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="APP_NEXT_TASK" type="VARCHAR" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="APP_NEXT_TASK"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="YES"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="APP_DELEGATION_USER" type="VARCHAR" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="APP_DELEGATION_USER"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="APP_ENABLE_ACTION_USER" type="VARCHAR" required="true" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="APP_ENABLE_ACTION_USER"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="APP_ENABLE_ACTION_DATE" type="DATE" required="true" >
+      <vendor type="mysql">
+        <parameter name="Field" value="APP_ENABLE_ACTION_DATE"/>
+        <parameter name="Type" value="date"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <!-- <parameter name="Default" value="0000-00-00"/> -->
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="APP_DISABLE_ACTION_USER" type="VARCHAR" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="APP_DISABLE_ACTION_USER"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="YES"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="APP_DISABLE_ACTION_DATE" type="DATE" >
+      <vendor type="mysql">
+        <parameter name="Field" value="APP_DISABLE_ACTION_DATE"/>
+        <parameter name="Type" value="date"/>
+        <parameter name="Null" value="YES"/>
+        <parameter name="Key" value=""/>
+        <!-- <parameter name="Default" value="0000-00-00"/> -->
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="APP_AUTOMATIC_DISABLED_DATE" type="DATE" >
+      <vendor type="mysql">
+        <parameter name="Field" value="APP_AUTOMATIC_DISABLED_DATE"/>
+        <parameter name="Type" value="date"/>
+        <parameter name="Null" value="YES"/>
+        <parameter name="Key" value=""/>
+        <!-- <parameter name="Default" value="0000-00-00"/> -->
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <index name="indexAppDelay">
+      <index-column name="PRO_UID"/>
+      <index-column name="APP_UID"/>
+      <index-column name="APP_THREAD_INDEX"/>
+      <index-column name="APP_DEL_INDEX"/>
+      <index-column name="APP_NEXT_TASK"/>
+      <index-column name="APP_DELEGATION_USER"/>
+      <index-column name="APP_DELEGATION_USER"/>
+      <index-column name="APP_DISABLE_ACTION_USER"/>
+      <vendor type="mysql">
+        <parameter name="Table" value="APP_DELAY"/>
+        <parameter name="Non_unique" value="1"/>
+        <parameter name="Key_name" value="indexAppDelay"/>
+        <parameter name="Seq_in_index" value="1"/>
+        <parameter name="Column_name" value="PRO_UID"/>
+        <parameter name="Collation" value="A"/>
+        <parameter name="Cardinality" value=""/>
+        <parameter name="Sub_part" value=""/>
+        <parameter name="Packed" value=""/>
+        <parameter name="Null" value=""/>
+        <parameter name="Index_type" value="BTREE"/>
+        <parameter name="Comment" value=""/>
+      </vendor>
+    </index>
   </table>
 </database>

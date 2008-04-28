@@ -45,6 +45,5 @@
 <SEARCH_FILTER_FORM type="private"/>
 <!--<MNU_SEARCH type="link" value='' link="#" onclick="showHideSearch('@#SEARCH_FILTER_FORM',this); return false;" colAlign="right" colWidth="130">
   <en>Advanced Search</en>
-  <es>Buscar Avanzado</es>
 </MNU_SEARCH>-->
 </dynaForm>

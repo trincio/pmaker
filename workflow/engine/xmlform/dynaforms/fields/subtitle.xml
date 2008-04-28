@@ -8,31 +8,26 @@
 <PME_TYPE type="hidden" />
 <PME_TITLE type="title" enableHTML="1">
   <en>Properties</en>
-  <es>Propiedades</es>
 </PME_TITLE>
 <PME_XMLNODE_NAME type="text" size="32" maxlength="64" validate="Field" dependentFields="PME_VALIDATE_NAME" required="1">
-
   <en>Field Name</en>
-  <es>Nombre de Campo</es>
 </PME_XMLNODE_NAME>
+<PME_XMLNODE_NAME_OLD type="hidden" />
 <PME_VALIDATE_NAME type="hidden" sqlConnection="XMLDB">
 SELECT XMLNODE_NAME, TYPE FROM dynaForm WHERE XMLNODE_NAME = @@PME_XMLNODE_NAME
 </PME_VALIDATE_NAME>
 
 <PME_LABEL type="textarea" cols="30" rows="5">
   <en>Content</en>
-  <es>Contenido</es>
 </PME_LABEL>
 
 <PME_SUBTITLE type="title" enableHTML="1">
   <en>Appearance</en>
-  <es>Apariencia</es>
 </PME_SUBTITLE>
 
 <!--<PME_GROUP type="text" maxlength="10" size="10" validate="Int" defaultvalue="0" group="2">
 
   <en>Group</en>
-  <es>Group</es>
 </PME_GROUP>-->
 <!--<PME_MODE type="dropdown" defaultvalue="edit">
 
@@ -40,20 +35,13 @@ SELECT XMLNODE_NAME, TYPE FROM dynaForm WHERE XMLNODE_NAME = @@PME_XMLNODE_NAME
     <option name="edit">Edit</option>
     <option name="view">View</option>
   </en>
-  <es>Modo
-    <option name="edit">Edición</option>
-    <option name="view">Vista</option>
-  </es>
 </PME_MODE>-->
 <PME_ENABLEHTML type="checkbox" falseValue="0" value="1" defaultvalue="0" labelOnRight="0">
-
   <en>Enable Html</en>
-  <es>Enable Html</es>
 </PME_ENABLEHTML>
 
 <PME_ACCEPT type="button" onclick="fieldsSave( this.form );">
   <en>Save</en>
-  <es>Guardar</es>
 </PME_ACCEPT>
 
 <PME_JS type="javascript"><![CDATA[

@@ -23,6 +23,7 @@
  *
  */
 
+require_once 'classes/model/Content.php';
 require_once 'classes/model/Language.php';
 require_once 'classes/model/Translation.php';
 G::LoadClass('xmlDb');
@@ -157,6 +158,19 @@ class languages {
       $oLanguage = new Language();
       $oLanguage->update(array('LAN_ID' => $sLanguageID, 'LAN_ENABLED' => '1'));
       Translation::generateFileTranslation($sLanguageID);
+      $oCriteria = new Criteria('workflow');
+      $oCriteria->addSelectColumn(ContentPeer::CON_CATEGORY);
+      $oCriteria->addSelectColumn(ContentPeer::CON_ID);
+      $oCriteria->addSelectColumn(ContentPeer::CON_VALUE);
+      $oCriteria->add(ContentPeer::CON_LANG, 'en');
+      $oDataset = ContentPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      $oContent = new Content();
+      while ($aRow = $oDataset->getRow()) {
+      	$oContent->load($aRow['CON_CATEGORY'], '', $aRow['CON_ID'], $sLanguageID);
+      	$oDataset->next();
+      }
   	}
   	catch (Exception $oError) {
     	throw($oError);

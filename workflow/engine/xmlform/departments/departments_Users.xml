@@ -11,7 +11,6 @@
 <USR_UID type="dropdown" colWidth="390">
 select USR_UID, USR_USERNAME FROM USERS
   <en>Name</en>
-  <es>Nombre</es>
 </USR_UID>
 
 </dynaForm>

@@ -2,27 +2,22 @@
 <dynaForm name="cases_ProcessInformation" width="100%" labelWidth="35%"  mode="view" enableTemplate="0">
 
 <!--<TITLE1 type="title" group="1">
-  <es>Información del Proceso</es>
   <en>Process Information</en>
 </TITLE1>-->
 
 <PRO_TITLE type="text" size="40" maxlength="255" defaultvalue="" required="1" group="1" dependentfields="" linkfield="" strto="" readonly="0" noshowingrid="0" readonlyingrid="0" totalizeable="0" sqlconnection="">
-  <es>Título</es>
   <en>Title</en>
 </PRO_TITLE>
 
 <PRO_DESCRIPTION type="textarea" required="0" cols="38" rows="5" group="1">
-  <es>Descripción</es>
   <en>Description</en>
 </PRO_DESCRIPTION>
 
 <PRO_AUTHOR type="text" size="40" maxlength="255" defaultvalue="" required="1" group="1" dependentfields="" linkfield="" strto="" readonly="0" noshowingrid="0" readonlyingrid="0" totalizeable="0" sqlconnection="">
-  <es>Autor</es>
   <en>Author</en>
 </PRO_AUTHOR>
 
 <PRO_CREATE_DATE type="date" required="" group="1">
-  <es>Fecha de Creación</es>
   <en>Create Date</en>
 </PRO_CREATE_DATE>
 

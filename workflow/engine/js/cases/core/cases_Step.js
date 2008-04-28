@@ -278,3 +278,19 @@ var cancelCase = function()
     }.extend(this)
   });
 };
+var pauseCase = function()
+{
+  new leimnud.module.app.confirm().make({
+    label : G_STRINGS.ID_CONFIRM_PAUSE_CASE,
+    action: function() {
+      var oRPC = new leimnud.module.rpc.xmlhttp({
+        url:  'cases_Ajax',
+        args: 'action=pauseCase'
+      });
+      oRPC.callback = function(oRPC) {
+        window.location = 'cases_List';
+      }.extend(this);
+      oRPC.make();
+    }.extend(this)
+  });
+};

@@ -25,6 +25,7 @@
 if (($RBAC_Response=$RBAC->userCanAccess("PM_USERS"))!=1) return $RBAC_Response;
 G::LoadInclude('ajax');
 $_POST['action'] = get_ajax_value('action');
+
 switch ($_POST['action'])
 {
 	case 'showUsers':
@@ -46,6 +47,34 @@ switch ($_POST['action'])
 	  G::LoadClass('groups');
 	  $oGroup = new Groups();
 	  $oGroup->removeUserOfGroup($_POST['GRP_UID'], $_POST['USR_UID']);
-	break;
+	break;	
+	
+	case 'verifyGroupname':  	  	    	  
+  	  $_POST['sOriginalGroupname'] = get_ajax_value('sOriginalGroupname');
+  	  $_POST['sGroupname']         = get_ajax_value('sGroupname');  	    	   	  	
+  	  if ($_POST['sOriginalGroupname'] == $_POST['sGroupname'])
+  	  {
+  	    echo '0';
+  	  }
+  	  else
+  	  {   	  	
+  	  	require_once 'classes/model/Groupwf.php';
+  	  	G::LoadClass('Groupswf');
+	      $oGroup = new Groupwf();
+	      $oCriteria=$oGroup->loadByGroupname($_POST['sGroupname']);	        	    
+  	  	$oDataset = GroupwfPeer::doSelectRS($oCriteria);
+        $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+        $oDataset->next();
+        $aRow = $oDataset->getRow();                      
+        if (!$aRow)
+  	  	{
+  	  		echo '0';
+  	  	}
+  	  	else
+  	  	{
+  	  		echo '1';
+  	  	} 	   
+  	  }
+  	break;
 }
 ?>

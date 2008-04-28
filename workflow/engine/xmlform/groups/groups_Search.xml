@@ -7,12 +7,10 @@
 
 <USR_USERNAME type="text" dataCompareField="USR_USERNAME" dataCompareType="contains">
   <en>User name</en>
-  <es>Nombre de usuario</es>
 </USR_USERNAME>
 
 <CUR_GRP_UID type="hidden" dataCompareField="GRP_UID" dataCompareType="=">
-  <en>User name</en>
-  <es>Nombre de usuario</es>
+  <en>User name</en>}
 </CUR_GRP_UID>
 <JSFILTER1 type="javascript" replaceTags="1">
 var currentPagedTable = @#PAGED_TABLE_ID;
@@ -28,7 +26,6 @@ The next fields has an special use with pagedTable.
 -->
 <SEARCH type="button" onclick="pagedTableFilter( this.form );">
   <en>Apply Filter</en>
-  <es>Filtrar</es>
 </SEARCH>
 <PAGED_TABLE_ID type="private"/>
 <JSFILTER type="javascript" replaceTags="1">

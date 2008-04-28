@@ -285,7 +285,7 @@ class ReportTables {
       	if ($aRow['REP_TAB_CONNECTION'] == '') {
   	    	$aRow['REP_TAB_CONNECTION'] = 'report';
   	    }
-  	    $sDBName = $aRow['REP_TAB_CONNECTION'] . '_' . SYS_SYS;
+  	    $sDBName = 'DB' . ($aRow['REP_TAB_CONNECTION'] != 'wf' ? '_' . strtoupper($aRow['REP_TAB_CONNECTION']) : '') . '_NAME';
   	    $sDBHost = 'DB' . ($aRow['REP_TAB_CONNECTION'] != 'wf' ? '_' . strtoupper($aRow['REP_TAB_CONNECTION']) : '') . '_HOST';
   	    $sDBUser = 'DB' . ($aRow['REP_TAB_CONNECTION'] != 'wf' ? '_' . strtoupper($aRow['REP_TAB_CONNECTION']) : '') . '_USER';
   	    $sDBPass = 'DB' . ($aRow['REP_TAB_CONNECTION'] != 'wf' ? '_' . strtoupper($aRow['REP_TAB_CONNECTION']) : '') . '_PASS';

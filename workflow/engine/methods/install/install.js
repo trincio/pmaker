@@ -111,25 +111,6 @@ var installer=function()
 		tdtitle.colSpan=2;
 		tdtitle.innerHTML="Database";
 		tdtitle.className="app_grid_title___gray title";
-
-		if(inWIN)
-		{
-			var tr = this.table.insertRow(-1);
-			var td0 = tr.insertCell(0);
-			td0.innerHTML="Path mysql.exe: ";
-			td0.className="inst_td0";
-			var td1 = tr.insertCell(1);
-			td1.className="inst_td1";
-			this.databaseExe = document.createElement("input");
-			this.databaseExe.type="file";
-			this.databaseExe.size=25;
-			this.databaseExe.onkeyup=this.submit;
-			this.databaseExe.className="inputNormal";
-			leimnud.dom.setStyle(this.databaseExe,{
-				textAlign:"left"
-			});
-			td1.appendChild(this.databaseExe);
-		}
 		
 		var tr = this.table.insertRow(-1);
 		var td0 = tr.insertCell(0);
@@ -240,7 +221,6 @@ var installer=function()
 	{
 		//alert(this.databaseExe.value.eplace("\\","/"))
 		return {
-				mysqlE	:((inWIN && this.databaseExe.value.trim())?this.databaseExe.value.replace(/\\/g,"/"):""),
 				mysqlH	:this.databaseHostname.value,
 				mysqlU	:this.databaseUsername.value,
 				mysqlP	:this.databasePassword.value,
@@ -289,14 +269,6 @@ var installer=function()
 			this.checkDLJ.className = (!this.cstatus.checkDLJ)?"inst_td1 tdFailed":"inst_td1 tdOk";
 			this.checkDLJ.innerHTML = (!this.cstatus.checkDLJ)?"FAILED":"PASSED";
 
-			if(inWIN)
-			{
-				this.databaseExe.className = (!this.cstatus.mysqlExe)?"inputFailed":"inputOk";
-			}
-			else
-			{
-				this.cstatus.mysqlExe=true;
-			}
 			this.databaseHostname.className = (!this.cstatus.mysqlConnection)?"inputFailed":"inputOk";
 			this.databaseUsername.className = (!this.cstatus.mysqlConnection)?"inputFailed":"inputOk";
 			this.databasePassword.className = (!this.cstatus.mysqlConnection)?"inputFailed":"inputOk";
@@ -311,7 +283,7 @@ var installer=function()
 			this.workflowData.className = (!this.cstatus.path_data)?"inputFailed":"inputOk";
 			this.compiled.className = (!this.cstatus.path_compiled)?"inputFailed":"inputOk";
 
-			if(this.cstatus.mysqlExe && this.cstatus.checkmqgpc && this.cstatus.checkMemory && this.cstatus.checkPI && this.cstatus.checkDL && this.cstatus.checkDLJ && this.cstatus.phpVersion && this.cstatus.mysqlVersion && this.cstatus.mysqlConnection && this.cstatus.grantPriv && this.cstatus.path_data && this.cstatus.path_compiled)
+			if(this.cstatus.checkmqgpc && this.cstatus.checkMemory && this.cstatus.checkPI && this.cstatus.checkDL && this.cstatus.checkDLJ && this.cstatus.phpVersion && this.cstatus.mysqlVersion && this.cstatus.mysqlConnection && this.cstatus.grantPriv && this.cstatus.path_data && this.cstatus.path_compiled)
 			{
 				this.options.button0.disabled=true;
 				this.options.button1.disabled=false;
@@ -352,10 +324,6 @@ var installer=function()
 			this.compiled.focus();
 		}
 		this.options.button0.disabled=dis;
-		if(inWIN)
-		{
-			this.databaseExe.disabled=dis;
-		}
 		this.buttonFun(this.options.button0);
 	};
 	this.submit=function(evt)

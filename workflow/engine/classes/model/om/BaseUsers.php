@@ -74,7 +74,7 @@ abstract class BaseUsers extends BaseObject  implements Persistent {
 	 * The value for the usr_due_date field.
 	 * @var        int
 	 */
-	protected $usr_due_date = 943934400;
+	protected $usr_due_date;
 
 
 	/**
@@ -179,7 +179,7 @@ abstract class BaseUsers extends BaseObject  implements Persistent {
 	 * The value for the usr_birthday field.
 	 * @var        int
 	 */
-	protected $usr_birthday = 943934400;
+	protected $usr_birthday;
 
 
 	/**
@@ -684,7 +684,7 @@ abstract class BaseUsers extends BaseObject  implements Persistent {
 		} else {
 			$ts = $v;
 		}
-		if ($this->usr_due_date !== $ts || $ts === 943934400) {
+		if ($this->usr_due_date !== $ts) {
 			$this->usr_due_date = $ts;
 			$this->modifiedColumns[] = UsersPeer::USR_DUE_DATE;
 		}
@@ -1020,7 +1020,7 @@ abstract class BaseUsers extends BaseObject  implements Persistent {
 		} else {
 			$ts = $v;
 		}
-		if ($this->usr_birthday !== $ts || $ts === 943934400) {
+		if ($this->usr_birthday !== $ts) {
 			$this->usr_birthday = $ts;
 			$this->modifiedColumns[] = UsersPeer::USR_BIRTHDAY;
 		}

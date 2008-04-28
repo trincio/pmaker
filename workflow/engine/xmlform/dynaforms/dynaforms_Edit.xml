@@ -11,7 +11,6 @@
 
 <TITLE type="title" group="1">
   <en>Dynaform Information</en>
-  <es>Dynaform Information</es>
 </TITLE>
 
 <DYN_TITLE type="text" maxlength="128" size ="45">
@@ -23,21 +22,15 @@
   <option name="xmlform">Master form</option>
   <option name="grid">Grid</option>
   </en>
-  <es>Tipo
-  <option name="xmlform">Formulario maestro</option>
-  <option name="grid">Grilla</option>
-  </es>
 </DYN_TYPE>
 
 <DYN_DESCRIPTION type="textarea" cols="45" rows="8" >
   <en>Description</en>
-  <es>Descripción</es>
 </DYN_DESCRIPTION>
 
 
 <ACCEPT type="button" onclick="dynaformSave( this.form );">
   <en>Save</en>
-  <es>Guardar</es>
 </ACCEPT>
 
 </dynaForm>

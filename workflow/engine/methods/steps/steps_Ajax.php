@@ -1,10 +1,10 @@
 <?php
 /**
  * steps_Ajax.php
- *  
+ *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -14,13 +14,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
 try {
 	global $RBAC;
@@ -126,17 +126,17 @@ try {
   	break;
   	case 'editTriggerCondition':
   	  require_once 'classes/model/Step.php';
-  	  require_once 'classes/model/Triggers.php';    
-  	  $oStep = new Step();  	    	          	  	    	    	  
-  	   	  		
+  	  require_once 'classes/model/Triggers.php';
+  	  $oStep = new Step();
+
   	  $aFields['STEP_UID'] = $aData['sStep'];
   	  $aFields['TRI_UID']  = $aData['sTrigger'];
   	  $aFields['ST_TYPE']  = $aData['sType'];
-  	  
-  	  $Trigger = new Triggers();  	  
-  	  $aRow  = $Trigger->load($aData['sTrigger']); 
-  	  
-  	  $oStepTrigger = new StepTrigger();    	  	  
+
+  	  $Trigger = new Triggers();
+  	  $aRow  = $Trigger->load($aData['sTrigger']);
+
+  	  $oStepTrigger = new StepTrigger();
   	  $aFields = $oStepTrigger->load($aFields['STEP_UID'], $_SESSION['TASK'], $aFields['TRI_UID'], $aFields['ST_TYPE']);
   	  $aFields['action'] = 'saveTriggerCondition';
   	  $aFields['PROCESS']  = $aRow['PRO_UID'];
@@ -166,6 +166,21 @@ try {
   	  $oStepTrigger = new StepTrigger();
   	  $oStepTrigger->reOrder($aData['sStep'], $_SESSION['TASK'], $aData['sType'], $aData['iPosition']);
   	  $oStepTrigger->remove($aData['sStep'], $_SESSION['TASK'], $aData['sTrigger'], $aData['sType']);
+  	break;
+
+  	case 'counterTriggers':
+  	  G::LoadClass('processMap');
+	    $oProcessMap = new ProcessMap();
+  	  $oCriteria1 = $oProcessMap->getStepTriggersCriteria($aData['sStep'], $_SESSION['TASK'], $aData['sType']);
+  	  if ($aData['sType'] == 'BEFORE') {
+  	  	$oCriteria2 = $oProcessMap->getStepTriggersCriteria($aData['sStep'], $_SESSION['TASK'], 'AFTER');
+  	  }
+  	  else {
+  	  	$oCriteria2 = $oProcessMap->getStepTriggersCriteria($aData['sStep'], $_SESSION['TASK'], 'BEFORE');
+  	  }
+  	  $iCantity = StepTriggerPeer::doCount($oCriteria1);
+  	  $iTotal = $iCantity + StepTriggerPeer::doCount($oCriteria2);
+      echo $iTotal . '|' . $iCantity;
   	break;
   }
 }

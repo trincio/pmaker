@@ -8,7 +8,6 @@
 
 <title type="title" colWidth="300" showInTable="0">
   <en>Group properties</en>
-  <es>Propiedades del grupo</es>
 </title>
 
 <GRP_UID type="hidden" showInTable="0"/>
@@ -17,19 +16,16 @@
 
 <USR_FIRSTNAME type="text" colWidth="200" align="left" titleAlign="left">
   <en>First Name</en>
-  <es>Nombres</es>
 </USR_FIRSTNAME>
 
 <USR_LASTNAME type="text" colWidth="200" align="left" titleAlign="left">
   <en>Last Name</en>
-  <es>Apellidos</es>
 </USR_LASTNAME>
 
 <DELETE type="link" colWidth="50" align="center" value="@G::LoadTranslation(ID_DE_ASSIGN)" link="#" onclick="ofToAssignUser(@QGRP_UID, @QUSR_UID);return false;"/>
 
 <button type="button" onclick="saveGroup( this.form );" showInTable="0">
   <en>Accept</en>
-  <es>Accept</es>
 </button>
 
 </dynaForm>
