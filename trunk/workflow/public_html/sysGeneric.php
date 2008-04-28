@@ -151,6 +151,7 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
   //G::LoadSystem("fckEditor");
   //G::LoadSystem("htmlArea");
 
+
   $GLOBALS['G_HEADER'] = new headPublisher();  //??
 
   /***************** Installer  ******************************/
@@ -359,7 +360,8 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
       }
       else {
         //This sentence is used when you lost the Session
-        if(SYS_TARGET != 'authentication' and  SYS_TARGET != 'login' and  SYS_TARGET != 'dbInfo' and  SYS_TARGET != 'sysLoginVerify' and  SYS_TARGET != 'updateTranslation'){
+        if(SYS_TARGET != 'authentication' and  SYS_TARGET != 'login' and  SYS_TARGET != 'dbInfo' and  SYS_TARGET != 'sysLoginVerify' and  SYS_TARGET != 'updateTranslation'  and  SYS_TARGET != 'updateTranslation' 
+        and  SYS_TARGET != 'wsBase' and  SYS_TARGET != 'demo'){
           header ("location: ".SYS_URI."login/login.php");
           die();
         }
