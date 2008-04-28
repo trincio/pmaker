@@ -36,6 +36,9 @@ pake_task('generate-unit-test-class',  'project_exists');
 pake_desc('generate basic CRUD files for an existing class');
 pake_task('generate-crud',  'project_exists');
 
+pake_desc('build new project');
+pake_task('new-project',  'project_exists');
+
 
 function run_version( $task, $args)
 {
@@ -573,5 +576,24 @@ function run_create_poedit_file( $task, $args)
   exit(0);
   
   //to do: leer los html templates
+}
+
+function run_new_project ( $task, $args)
+{
+//the class filename in the first argument
+  $projectName = $args[0];
+
+  if ( trim ($projectName ) == '' )  {
+    printf("invalid Project Name\n", pakeColor::colorize( $class, 'ERROR'));
+    exit (0);
+  }  
+
+  //create folder and structure
+  //create project.conf for httpd conf
+  //create schema.xml with empty databases
+  //create welcome page
+  
+  printf("Gulliver version %s\n", pakeColor::colorize(trim(file_get_contents( PATH_GULLIVER . 'VERSION')), 'INFO'));
+  exit(0);
 }
 
