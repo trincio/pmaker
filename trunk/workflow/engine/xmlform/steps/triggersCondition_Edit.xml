@@ -3,6 +3,7 @@
   name="triggersCondition_Edit"
   type="xmlform"
   width="100%"
+  labelWidth="20%"
 >
 
 <PROCESS type="private" />
@@ -15,16 +16,14 @@
 
 <ST_TYPE type="hidden" />
 
-<ST_CONDITION type="textareapm" required="0" cols="32" rows="4" showVars="1" process="@#PROCESS">
+<ST_CONDITION type="textareapm" required="0" cols="55" rows="4" showVars="1" process="@#PROCESS">
 <en>Condition</en>
-<es>Condición</es>
 </ST_CONDITION>
 
 <ST_POSITION type="hidden" />
 
 <SAVE type="button" onclick="saveTriggerCondition(this.form);">
 <en>Save</en>
-<es>Guardar</es>
 </SAVE>
 
 <JS type="javascript" replaceTags="1">
