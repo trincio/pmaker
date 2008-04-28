@@ -27,7 +27,15 @@
 </UPDATE_DATE>
 
 <STATUS type="text" mode="view">
-  <en>Status</en>
+  <en>Case Status</en>
 </STATUS>
+
+<DEL_THREAD_STATUS type="dropdown" mode="view">
+  <en>Current Task Status
+    <option name="OPEN">Active</option>
+    <option name="CLOSE">Finished</option>
+    <option name="PAUSED">Paused</option>
+  </en>
+</DEL_THREAD_STATUS>
 
 </dynaForm>
