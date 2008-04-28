@@ -96,7 +96,7 @@
   else
   {
   	$_SESSION['APPLICATION']   = $_GET['APP_UID'];
-  	$_SESSION['INDEX']         = $iDelIndex;//this value is changed to -1 in "cases_Resume.php"
+  	$_SESSION['INDEX']         = $iDelIndex;
     //$_SESSION['INDEX']         = -1;
     $_SESSION['PROCESS']       = $aFields['PRO_UID'];
     $_SESSION['TASK']          = -1;
