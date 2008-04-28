@@ -14,7 +14,7 @@
   //try to find automatically the trunk directory where are placed the RBAC and Gulliver directories
   //in a normal installation you don't need to change it.
   array_pop($docuroot);
-  $pathTrunk = implode( PATH_SEP, $docuroot ) . PATH_SEP ;
+  $pathTrunk = implode( PATH_SEP, $docuroot );
   array_pop($docuroot);
   $pathOutTrunk = implode( PATH_SEP, $docuroot ) . PATH_SEP ;
   // to do: check previous algorith for Windows  $pathTrunk = "c:/home/"; 
