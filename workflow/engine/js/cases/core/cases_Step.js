@@ -278,6 +278,22 @@ var cancelCase = function()
     }.extend(this)
   });
 };
+var reactivateCase = function()
+{
+  new leimnud.module.app.confirm().make({
+    label : G_STRINGS.ID_MSG_CONFIRM_REACTIVATE_CASES,
+    action: function() {
+      var oRPC = new leimnud.module.rpc.xmlhttp({
+        url:  'cases_Ajax',
+        args: 'action=reactivateCase'
+      });
+      oRPC.callback = function(oRPC) {
+        window.location = 'cases_List';
+      }.extend(this);
+      oRPC.make();
+    }.extend(this)
+  });
+};
 var pauseCase = function()
 {
   new leimnud.module.app.confirm().make({
@@ -286,6 +302,22 @@ var pauseCase = function()
       var oRPC = new leimnud.module.rpc.xmlhttp({
         url:  'cases_Ajax',
         args: 'action=pauseCase'
+      });
+      oRPC.callback = function(oRPC) {
+        window.location = 'cases_List';
+      }.extend(this);
+      oRPC.make();
+    }.extend(this)
+  });
+};
+var unpauseCase = function()
+{
+  new leimnud.module.app.confirm().make({
+    label : G_STRINGS.ID_CONFIRM_UNPAUSE_CASE,
+    action: function() {
+      var oRPC = new leimnud.module.rpc.xmlhttp({
+        url:  'cases_Ajax',
+        args: 'action=unpauseCase'
       });
       oRPC.callback = function(oRPC) {
         window.location = 'cases_List';

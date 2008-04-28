@@ -43,17 +43,33 @@
   /* GET , POST & $_SESSION Vars */
 
   /* Menues */
-  $G_MAIN_MENU            = 'processmaker';
-  $G_SUB_MENU             = 'cases';
-  $G_ID_MENU_SELECTED     = 'CASES';
-  $G_ID_SUB_MENU_SELECTED = '_';
+  $_SESSION['bNoShowSteps'] = true;
+  $G_MAIN_MENU              = 'processmaker';
+  $G_SUB_MENU               = 'caseOptions';
+  $G_ID_MENU_SELECTED       = 'CASES';
+  $G_ID_SUB_MENU_SELECTED   = '_';
 
  /* Prepare page before to show */
   $oCase = new Cases();
   $aFields = $oCase->loadCase( $_SESSION['APPLICATION'], $_SESSION['INDEX'] );
-  $_SESSION['INDEX'] = -1;
 
   /* Render page */
+  $G_HEADER->addScriptCode('
+  var Cse = {};
+  Cse.panels = {};
+  var leimnud = new maborak();
+  leimnud.make();
+  leimnud.Package.Load("rpc,drag,drop,panel,app,validator,fx,dom,abbr",{Instance:leimnud,Type:"module"});
+  leimnud.Package.Load("json",{Type:"file"});
+  leimnud.Package.Load("cases",{Type:"file",Absolute:true,Path:"/jscore/cases/core/cases.js"});
+  leimnud.Package.Load("cases_Step",{Type:"file",Absolute:true,Path:"/jscore/cases/core/cases_Step.js"});
+  leimnud.Package.Load("processmap",{Type:"file",Absolute:true,Path:"/jscore/processmap/core/processmap.js"});
+  leimnud.exec(leimnud.fix.memoryLeak);
+  leimnud.event.add(window,"load",function(){
+	  '.(isset($_SESSION['showCasesWindow'])?'try{'.$_SESSION['showCasesWindow'].'}catch(e){}':'').'
+});
+  ');
+  $G_HEADER->addScriptFile('/jscore/cases/core/cases_Step.js');
   $G_PUBLISH = new Publisher;
   $G_PUBLISH->AddContent('xmlform', 'xmlform', 'cases/cases_Resume.xml', '', $aFields, '');
   G::RenderPage( 'publish' );
