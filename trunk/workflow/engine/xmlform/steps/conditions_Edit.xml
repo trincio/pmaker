@@ -12,14 +12,12 @@
 
 <TAS_UID type="hidden" showInTable="0"/>
 
-<STEP_CONDITION type="textareapm" cols="45" rows="5" showVars="1" process="@#PRO_UID">
+<STEP_CONDITION type="textareapm" cols="62" rows="5" showVars="1" process="@#PRO_UID">
   <en>Condition</en>
-  <es>Description</es>
 </STEP_CONDITION>
 
 <ACCEPT type="button" onclick="saveCondition(this.form);">
   <en>Save</en>
-  <es>Guardar</es>
 </ACCEPT>
 
 <JS type="JavaScript">
