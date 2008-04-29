@@ -152,7 +152,7 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
   //G::LoadSystem("htmlArea");
 
 
-  $GLOBALS['G_HEADER'] = new headPublisher();  //??
+  $GLOBALS['G_HEADER'] = new headPublisher();  //$G_HEADER->addScriptFile
 
   /***************** Installer  ******************************/
   if(!defined('PATH_DATA') || !file_exists(PATH_DATA))
