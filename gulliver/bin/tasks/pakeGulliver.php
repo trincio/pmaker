@@ -650,6 +650,26 @@ function run_new_project ( $task, $args)
   $iSize = file_put_contents ( $httpFilename, $content );
   printf("saved %s bytes in file %s \n", pakeColor::colorize( $iSize, 'INFO'), pakeColor::colorize( 'index.html', 'INFO') );    
 
+  //create paths.php
+  $httpdTpl = PATH_GULLIVER_HOME . 'bin' . PATH_SEP . 'tasks' . PATH_SEP . 'paths.php.tpl';
+  $httpFilename = $pathHome . PATH_SEP . 'engine' . PATH_SEP . 'config' . PATH_SEP . 'paths.php';
+  $template = new TemplatePower( $httpdTpl );
+  $template->prepare();
+  $template->assign ( 'projectName', $projectName);
+  $content = $template->getOutputContent();
+  $iSize = file_put_contents ( $httpFilename, $content );
+  printf("saved %s bytes in file %s \n", pakeColor::colorize( $iSize, 'INFO'), pakeColor::colorize( 'paths.php', 'INFO') );    
+
+  //create defines.php
+  $httpdTpl = PATH_GULLIVER_HOME . 'bin' . PATH_SEP . 'tasks' . PATH_SEP . 'defines.php.tpl';
+  $httpFilename = $pathHome . PATH_SEP . 'engine' . PATH_SEP . 'config' . PATH_SEP . 'defines.php';
+  $template = new TemplatePower( $httpdTpl );
+  $template->prepare();
+  $template->assign ( 'projectName', $projectName);
+  $content = $template->getOutputContent();
+  $iSize = file_put_contents ( $httpFilename, $content );
+  printf("saved %s bytes in file %s \n", pakeColor::colorize( $iSize, 'INFO'), pakeColor::colorize( 'defines.php', 'INFO') );    
+
   //create schema.xml with empty databases
   //create welcome page
   
