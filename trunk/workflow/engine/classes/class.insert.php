@@ -18,17 +18,24 @@
  *
  */
  
-require_once ( "classes/model/AppSpool.php" );
+	require_once ( "classes/model/AppSpool.php" );
 
 	class insert
 	{
 		private $db_spool;
 		private $mode;
+		private $status;
 	
 		function __construct($db_spool=array(),$mode='pending')
 		{
 			if(count($db_spool)>0)
 				$db_spool  = $this->db_insert($db_spool,$mode);
+
+		}
+
+		public function returnStatus()
+		{
+			return $this->status;
 
 		}
 		
@@ -56,6 +63,7 @@ require_once ( "classes/model/AppSpool.php" );
 			if(!$spool->validate())
 			{
 			        $errors = $spool->getValidationFailures();
+				$this->status = 'error';
 
 				foreach($errors as $key => $value)
 				{
@@ -65,6 +73,7 @@ require_once ( "classes/model/AppSpool.php" );
 			else
 			{
 			        echo "Saving - validation ok\n";
+				$this->status = 'success';
 			        $spool->save();
 			}
 			

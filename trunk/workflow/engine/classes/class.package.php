@@ -41,7 +41,7 @@
 			$this->headers 		= '';
 			$this->message		= '';
 
-			$this->with_html	= true;
+			$this->with_html	= false;
 			
 			$this->max_line_length	= '70';
 			
@@ -213,6 +213,7 @@
 			}
 			
 			// attachments
+			/*
 			if(count($this->fileData['attachments'])>0)
 			{
 				foreach($this->fileData['attachments'] as $data)
@@ -221,7 +222,7 @@
 
 				}
 
-			}
+			}*/
 
 			$comp .= '--'.$this->emailboundary.'--'."\r\n";
 

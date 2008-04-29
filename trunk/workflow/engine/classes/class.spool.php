@@ -20,51 +20,41 @@
  */
 
 	
+	require_once('classes/model/AppSpool.php');
+
 	class spoolRun
 	{
 	
 		private $fileData;
 		private $fileField;
 		private $spool_id;
-		private $message;
 	
 		function __construct() 
 		{
-			Propel::init("projects/spool/build/conf/APP_SPOOL-conf.php");
-
 			$this->fileData  = array();
 			$this->fileField = '';
 			$this->spool_id  = '';
-			$this->message = array();
 			
 			$this->getSpoolFilesList();
-		
-		}
-
-		public function returnMessages()
-		{
-			return $this->message;
 
 		}
-	
+
 		private function getSpoolFilesList() 
 		{		
-			$sql = "SELECT id,sender,file FROM APP_SPOOL WHERE status='pending'";
+			$sql = "SELECT id,file FROM APP_SPOOL WHERE status='pending'";
 
-			$con = Propel::getConnection("APP_SPOOL");
+			$con = Propel::getConnection("workflow");
+			$stmt = $con->prepareStatement($sql);
+			$rs = $stmt->executeQuery();
 
-			$stmt = $con->prepare($sql);
-			$stmt->execute();
-
-			$result = AppSpoolPeer::populateObjects($stmt);
-
-			for($i = 0, $j = count($result); $i < $j; $i++)
+			while($rs->next())
 			{
-				$this->spool_id = $result[$i]->getId();
-				$this->fileField = $result[$i]->getFile();
+				$this->spool_id = $rs->getInt('id');
+				$this->fileField = $rs->getString('file');
 				$this->base64Decode();
 				$this->handleEnvelopeTo();
 				$this->handleMail();
+				$this->updateSpoolStatus();
 
 			}
 
@@ -91,39 +81,15 @@
 		
 		}
 		
-		private function deleteFromSpool() 
-		{		
-			if(trim($this->spool_id)!='') 
-			{				
-				$spool = AppSpoolPeer::retrieveByPK($this->spool_id);
-				$spool->delete();
-				
-			}
-		
-		}
-		
 		private function updateSpoolStatus() 
 		{		
-			if(trim($this->spool_id)!='') 
-			{				
-				//$sql = "UPDATE spool SET status='sent' WHERE id='$this->spool_id'";
-				
-				$spool = AppSpoolPeer::retrieveByPK($this->spool_id);
-				$spool ->setStatus('sent');
-				if($spool->validate())
-				{
-					$spool>save();
-				}
-				else
-				{
-					$this->message[] = 'spool status not updated';
-				}
-				
-			}
-			else
-			{
-				$this->message[] = 'no spool_id';
-			}
+			(false === $this->status)
+				? $s = 'failed'
+				: $s = 'sent';
+
+			$spool = AppSpoolPeer::retrieveByPK($this->spool_id);
+			$spool->setStatus($s);
+			$spool->save();
 		
 		}
 		
@@ -161,16 +127,9 @@
 
 				$send = new smtp($return_path, $this->fileData['envelope_to'], $header, $body);
 
-				$status = $send->returnStatus();
-				$this->message[] = $send->returnErrors();
+				$this->status = $send->returnStatus();
+
 				unset($send);
-
-				if($status) 
-				{
-					$this->updateSpoolStatus();
-					$this->message[] = 'mail sent';
-
-				}
 
 			}
 

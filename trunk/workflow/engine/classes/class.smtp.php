@@ -21,31 +21,19 @@
 
 	class smtp
 	{
-		private $connect;
-		private $status;
 		private $mail_server;
-
-		private $smtpserver;
-		private $port;
-		private $timeout;
-		private $username;
-		private $password;
-		private $with_auth;
-
 		private $return_path;
 		private $envelope_to;
+		private $status;
 		private $headers;
 		private $body;
 		private $log;
 		
 		function __construct($return_path='',$env_to=array(),$headers='',$body='')
 		{
-			$this->connect = false;
-			$this->status  = true;
+			$this->status  = false;
 			$this->mail_server = gethostbyaddr('127.0.0.1');
 
-			$this->configure();
-				
 			$this->return_path = "$return_path";
 			
 			$this->getEnvelopeTo($env_to);
@@ -54,11 +42,9 @@
 			$this->body = "$body";
 			$this->log = array();
 			
-			$this->openConnection();
+			if(count($this->envelope_to)>0)
+				$this->status = $this->sendMessage();
 
-			$this->sendMessage();
-
-			$this->closeConnection();
 
 		}
 		
@@ -67,26 +53,13 @@
 			return $this->log;
 
 		}
-		
+
 		public function returnStatus()
 		{
 			return $this->status;
 
 		}
-
-		private function configure()
-		{
-			require_once('config_smtp.php');
-
-			$this->smtpserver = "{$config['smtpserver']}";
-			$this->port       = "{$config['port']}";
-			$this->timeout    = "{$config['timeout']}";
-			$this->with_auth  = "{$config['with_auth']}";
-			$this->username	  = "{$config['username']}";
-			$this->password   = "{$config['password']}";
-
-		}
-
+		
 		private function getEnvelopeTo($env_to)
 		{
 			if(count($env_to)>0)
@@ -104,116 +77,98 @@
 			
 		}
 		
-		private function openConnection()
-		{
-			$errno 	= '';
-			$errstr = '';
-			
-			if($this->connect = fsockopen($this->smtpserver, $this->port, $errno, $errstr, $this->timeout))
-				$this->serverResponse('220','Failed to connect');
-		
-		}
-		
-		private function closeConnection()
-		{
-			if($this->connect)
-				fclose($this->connect);
-			exit();
-
-		}
-		
-		private function serverResponse($code='',$error='')
-		{
-			if($this->connect)
-			{	
-				if($rcv = fgets($this->connect, 1024))
-				{ 
-					if(substr($rcv,0,3) != "$code") 
-					{
-						$this->status = false;
-						$this->log[] = $rcv . " $error";
-						$this->closeConnection();
-					}
-
-				}
-
-			}
-
-		}
-		
-		private function put_line($line='')
-		{
-			fputs($this->connect, "$line\r\n");
-
-		}
-	
 		private function sendMessage()
 		{
-			// say HELO
-			if($this->connect) {
-				$this->put_line('HELO '."$this->mail_server");
-				$this->serverResponse('250','Failed to say helo');
-			}
+			// connect 
+			$cp = fsockopen("$this->mail_server", 25, $errno, $errstr, 1);
 
-			// if we authenticate
-			if(false !== strpos($this->with_auth, 'yes'))
+			if(!$cp)
 			{
-				if($this->connect)
-				{
-					$this->put_line('AUTH LOGIN ');
-					$this->serverResponse('334','Failed to initiate authentication');
-				}
-
-				if($this->connect)
-				{
-					$this->put_line(base64_encode($this->username));
-					$this->serverResponse('334','Failed username');
-				}
-
-				if($this->connect)
-				{
-					$this->put_line(base64_encode($this->password));
-					$this->serverResponse('235','Failed password');
-				}
-
+				$this->log[] = 'Failed to make a connection';
+				return false;
 			}
 
-			// return_path
-			if($this->connect) {
-				$this->put_line('MAIL FROM: '."$this->return_path");
-				$this->serverResponse('250','MAIL FROM failed');
+			$res = fgets($cp,256);
+			if(substr($res,0,3) != '220')
+			{
+				$this->log[] = $res.' Failed to connect';
+				return false;
 			}
 
-			// envelope_to
-			if($this->connect) {
-				foreach($this->envelope_to as $val) {
-					$this->put_line('RCPT TO: '."$val");
-					$this->serverResponse('250','RCPT TO failed');
+			// say HELO
+			fputs($cp, 'HELO '."$this->mail_server\r\n");
+			
+			$res = fgets($cp,256);
+			if(substr($res,0,3) != '250')
+			{
+				$this->log[] = $res.' Failed to say HELO';
+				return false;
+			}
+
+			// mail from
+			fputs($cp, 'MAIL FROM: '."$this->return_path\r\n");
+
+			$res = fgets($cp,256);
+			if(substr($res,0,3) != '250')
+			{
+				$this->log[] = $res.' MAIL FROM failed';
+				return false;
+			}
+
+			// mail to
+			foreach($this->envelope_to as $val)
+			{
+				fputs($cp, 'RCPT TO: '."$val\r\n");
+
+				$res = fgets($cp,256);
+				if(substr($res,0,3) != '250')
+				{
+					$this->log[] = $res.' RCPT TO failed';
+					return false;
 				}
+
 			}
 
 			// data
-			if($this->connect) {
-				$this->put_line('DATA');
-				$this->serverResponse('354','DATA failed');
+			fputs($cp, 'DATA'."\r\n");
+
+			$res = fgets($cp,256);
+			if(substr($res,0,3) != '354')
+			{
+				$this->log[] = $res.' DATA failed';
+				return false;
 			}
 
 			// send headers
-			$this->put_line("$this->headers");
+			fputs($cp, "$this->headers\r\n");
 				
 			// send body
-			$this->put_line("$this->body");
+			fputs($cp, "$this->body\r\n");
 				
 			// end of message
-			$this->put_line("\r\n.");
-			$this->serverResponse('250','Message failed');
+			fputs($cp, "\r\n.\r\n");
+
+			$res = fgets($cp,256);
+			if(substr($res,0,3) != '250')
+			{
+				$this->log[] = $res. ' Message failed';
+				return false;
+			}
 
 			// quit
-			$this->put_line('QUIT');
-			$this->serverResponse('221','QUIT failed');
+			fputs($cp, 'QUIT'."\r\n");
+
+			$res = fgets($cp,256);
+			if(substr($res,0,3) != '221')
+			{
+				$this->log[] = $res.' QUIT failed';
+				return false;
+			}
 			
+			return true;
 			
 		}
+
 		
 		
 	} // end of class
