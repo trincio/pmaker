@@ -1,10 +1,10 @@
 <?php
 /**
  * casesDemo.php
- *  
+ *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -14,17 +14,17 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
 
 try {
-  
+
 $rows[] = array ( 'uid' => 'char', 'name' => 'char', 'age' => 'integer', 'balance' => 'float' );
 $rows[] = array ( 'uid' => 11, 'name' => 'john',   'age' => 44, 'balance' => 123423 );
 $rows[] = array ( 'uid' => 22, 'name' => 'bobby',  'age' => 33, 'balance' => 23456 );
@@ -80,12 +80,12 @@ $oUser = new Users();
 $oUser->load( $appFields['APP_CUR_USER'] );
 $Fields['CUR_USER']     = $oUser->getUsrFirstname() . ' ' . $oUser->getUsrLastname();
 
-$threads     = $oCase->GetAllThreads ($appFields['APP_UID']); 
+$threads     = $oCase->GetAllThreads ($appFields['APP_UID']);
 $Fields['THREADS']  = $threads;
 $Fields['CANT_THREADS']  = count($threads);
 
 $Fields['CANT_APP_DATA'] = count($Fields['APP_DATA']);
-$delegations = $oCase->GetAllDelegations ($appFields['APP_UID']); 
+$delegations = $oCase->GetAllDelegations ($appFields['APP_UID']);
 foreach ( $delegations as $key => $val ) {
   $delegations[$key]['TAS_TITLE'] = Content::load ( 'TAS_TITLE', '', $val['TAS_UID'], SYS_LANG );
   $oUser->load( $val['USR_UID'] );
@@ -93,6 +93,29 @@ foreach ( $delegations as $key => $val ) {
 }
 $Fields['CANT_DELEGATIONS']  = count($delegations);
 $Fields['DELEGATIONS']  = $delegations;
+require_once 'classes/model/AppDelay.php';
+$oCriteria = new Criteria('workflow');
+$oCriteria->addSelectColumn(AppDelayPeer::APP_THREAD_INDEX);
+$oCriteria->addSelectColumn(AppDelayPeer::APP_DEL_INDEX);
+$oCriteria->addSelectColumn(AppDelayPeer::APP_TYPE);
+$oCriteria->addSelectColumn(AppDelayPeer::APP_STATUS);
+$oCriteria->addSelectColumn(AppDelayPeer::APP_ENABLE_ACTION_USER);
+$oCriteria->addSelectColumn(AppDelayPeer::APP_ENABLE_ACTION_DATE);
+$oCriteria->addSelectColumn(AppDelayPeer::APP_DISABLE_ACTION_USER);
+$oCriteria->addSelectColumn(AppDelayPeer::APP_DISABLE_ACTION_DATE);
+$oCriteria->add(AppDelayPeer::APP_UID, $appUid);
+$oCriteria->addAscendingOrderByColumn(AppDelayPeer::APP_TYPE);
+$oCriteria->addAscendingOrderByColumn(AppDelayPeer::APP_ENABLE_ACTION_DATE);
+$oDataset = AppDelayPeer::doSelectRS($oCriteria);
+$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+$oDataset->next();
+$aDelays = array();
+while ($aRow = $oDataset->getRow()) {
+  $aDelays[] = $aRow;
+  $oDataset->next();
+}
+$Fields['DELAYS'] = $aDelays;
+$Fields['CANT_DELAYS'] = count($aDelays);
   /* Render page */
   $G_PUBLISH = new Publisher;
   //$G_PUBLISH->AddContent( 'propeltable', 'paged-table', 'cases/casesDemo', $c );

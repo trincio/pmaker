@@ -199,36 +199,36 @@ top:9px;
 strong.debug-array-length, strong.debug-string-length {
 color:#000099;
 font-weight:normal;
-}  
-</style>  
+}
+</style>
 {/literal}
 
 <div class="debug-root">
 	<ul class="debug-node debug-first">
 		<li class="debug-child">
-	
+
 	<div onmouseout="krumo.out(this);" onmouseover="krumo.over(this);" onclick="krumo.toggle(this);" class="debug-element debug-expand debug-opened">
 			<a class="debug-name">Application</a>
-			(<em class="debug-type"><strong class="debug-array-length">{$APP_UID}</strong></em>) 			
+			(<em class="debug-type"><strong class="debug-array-length">{$APP_UID}</strong></em>)
 			<strong class="debug-string">{$APP_STATUS} </strong>
 			<strong class="debug-array-length">{$APP_NUMBER}</strong></em>
-							
+
 	</div>
 
 	<div style="display: block;" class="debug-nest">
 	<ul class="debug-node">
 	<li class="debug-child">
-	
+
 	<div onmouseout="krumo.out(this);" onmouseover="krumo.over(this);" onclick="krumo.toggle(this);" class="debug-element debug-expand debug-opened">
 			<a class="debug-name">properties</a>
-			(<em class="debug-type">Array, <strong class="debug-array-length">7 elements</strong></em>) 
+			(<em class="debug-type">Array, <strong class="debug-array-length">7 elements</strong></em>)
 	</div>
 	<div style="display: none;" class="debug-nest">
 	<ul class="debug-node">
 	<li class="debug-child">
-	
+
 	<div onmouseout="krumo.out(this);" onmouseover="krumo.over(this);" class="debug-element">
-  	<a class="debug-name">APP_TITLE</a>	(<em class="debug-type"> 
+  	<a class="debug-name">APP_TITLE</a>	(<em class="debug-type">
   	  <strong class="debug-array-length">{$APP_NUMBER}</strong></em>)
 			<strong class="debug-string">{$APP_TITLE}</strong>
 	</div>
@@ -265,7 +265,7 @@ font-weight:normal;
 <li class="debug-child">
 	<div onmouseout="krumo.out(this);" onmouseover="krumo.over(this);" onclick="krumo.toggle(this);" class="debug-element debug-expand debug-opened">
 			<a class="debug-name">delegations</a>
-			(<em class="debug-type">Array, <strong class="debug-array-length">{$CANT_DELEGATIONS} elements</strong></em>) 
+			(<em class="debug-type">Array, <strong class="debug-array-length">{$CANT_DELEGATIONS} elements</strong></em>)
 	</div>
 	<div style="display: block;" class="debug-nest">
 	<ul class="debug-node">
@@ -346,15 +346,15 @@ font-weight:normal;
 	</ul>
   </div>
   </li>
-	{/foreach}  
-  
+	{/foreach}
+
 	</ul>
   </div>
 
 <li class="debug-child">
 	<div onmouseout="krumo.out(this);" onmouseover="krumo.over(this);" onclick="krumo.toggle(this);" class="debug-element debug-expand debug-opened">
 			<a class="debug-name">threads</a>
-			(<em class="debug-type">Array, <strong class="debug-array-length">{$CANT_THREADS} elements</strong></em>) 
+			(<em class="debug-type">Array, <strong class="debug-array-length">{$CANT_THREADS} elements</strong></em>)
 	</div>
 	<div style="display: block;" class="debug-nest">
 	<ul class="debug-node">
@@ -370,7 +370,32 @@ font-weight:normal;
 	  		<strong class="debug-string">{$data.DEL_INDEX}</strong>]
 	</div>
   </li>
-	{/foreach}  
+	{/foreach}
+  </ul>
+  </div>
+</li>
+
+<li class="debug-child">
+	<div onmouseout="krumo.out(this);" onmouseover="krumo.over(this);" onclick="krumo.toggle(this);" class="debug-element debug-expand debug-opened">
+			<a class="debug-name">actions (APP_DELAY)</a>
+			(<em class="debug-type">Array, <strong class="debug-array-length">{$CANT_DELAYS} elements</strong></em>)
+	</div>
+	<div style="display: block;" class="debug-nest">
+	<ul class="debug-node">
+	{foreach key=id item=data from=$DELAYS}
+	<li class="debug-child">
+  <div onmouseout="krumo.out(this);" onmouseover="krumo.over(this);" onclick="return false;krumo.toggle(this);" class="debug-element debug-opened">
+			<!--<a class="debug-name">{$data.APP_TYPE}</a>-->{$data.APP_TYPE}
+      [<em class="debug-type">thread index:</em><strong class="debug-string">{$data.APP_THREAD_INDEX}</strong>]
+      [<em class="debug-type">delegation index:</em><strong class="debug-string">{$data.APP_DEL_INDEX}</strong>]
+      [<em class="debug-type">application status:</em><strong class="debug-string">{$data.APP_STATUS}</strong>]<br />
+      [<em class="debug-type">enable action user:</em><strong class="debug-string">{$data.APP_ENABLE_ACTION_USER}</strong>]
+      [<em class="debug-type">enable action date:</em><strong class="debug-string">{$data.APP_ENABLE_ACTION_DATE}</strong>]<br />
+      [<em class="debug-type">disable action user:</em><strong class="debug-string">{$data.APP_DISABLE_ACTION_USER}</strong>]
+      [<em class="debug-type">disable action date:</em><strong class="debug-string">{$data.APP_DISABLE_ACTION_DATE}</strong>]
+	</div>
+  </li>
+	{/foreach}
   </ul>
   </div>
 </li>
@@ -378,7 +403,7 @@ font-weight:normal;
 <li class="debug-child">
 	<div onmouseout="krumo.out(this);" onmouseover="krumo.over(this);" onclick="krumo.toggle(this);" class="debug-element debug-expand debug-opened">
 			<a class="debug-name">APP_DATA</a>
-			(<em class="debug-type">Array, <strong class="debug-array-length">{$CANT_APP_DATA} elements</strong></em>) 
+			(<em class="debug-type">Array, <strong class="debug-array-length">{$CANT_APP_DATA} elements</strong></em>)
 	</div>
 	<div style="display: block;" class="debug-nest">
 	<ul class="debug-node">
@@ -389,7 +414,7 @@ font-weight:normal;
 	  		<strong class="debug-string">{$data}</strong>
 	</div>
   </li>
-	{/foreach}  
+	{/foreach}
   </ul>
   </div>
 </li>

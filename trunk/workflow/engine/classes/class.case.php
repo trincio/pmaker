@@ -891,11 +891,12 @@ class Cases
     * @param string $iDelIndex
     * @return Fields
     */
-    function ReactivateCurrentDelegation($sAppUid)
+    function ReactivateCurrentDelegation($sAppUid, $iDelegation)
     {
         try {
             $c = new Criteria();
             $c->add(AppDelegationPeer::APP_UID, $sAppUid);
+            $c->add(AppDelegationPeer::DEL_INDEX, $iDelegation);
 
             $rowObj = AppDelegationPeer::doSelect($c);
             foreach ($rowObj as $appDel) {
@@ -1557,7 +1558,7 @@ class Cases
         $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
         $oDataset->next();
         $aRow = $oDataset->getRow();
-        
+
         $aFields = array();
         $aFields['APP_DELAY_UID'] = $aRow['APP_DELAY_UID'];
         $aFields['APP_DISABLE_ACTION_USER'] = $sUserUID;
@@ -1621,7 +1622,7 @@ class Cases
             $_SESSION['APPLICATION']));
         $aFields['APP_STATUS'] = 'TO_DO';
         $oApplication->update($aFields);
-        $this->ReactivateCurrentDelegation($sApplicationUID);
+        $this->ReactivateCurrentDelegation($sApplicationUID, $iIndex);
         $c = new Criteria('workflow');
         $c->clearSelectColumns();
         $c->addSelectColumn(AppDelayPeer::APP_DELAY_UID);
