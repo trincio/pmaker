@@ -309,6 +309,25 @@ var pauseCase = function()
       oRPC.make();
     }.extend(this)
   });
+<<<<<<< .mine
+};
+
+var deleteCase = function(sApplicationUID)
+{
+  new leimnud.module.app.confirm().make({
+    label : G_STRINGS.ID_CONFIRM_DELETE_CASE,
+    action: function() {
+      var oRPC = new leimnud.module.rpc.xmlhttp({
+        url:  'cases_Ajax',
+        args: 'action=deleteCase&sApplicationUID='+sApplicationUID
+      });
+      oRPC.callback = function(oRPC) {
+        window.location = 'cases_List';
+      }.extend(this);
+      oRPC.make();
+    }.extend(this)
+  });
+=======
 };
 var unpauseCase = function()
 {
@@ -325,4 +344,5 @@ var unpauseCase = function()
       oRPC.make();
     }.extend(this)
   });
+>>>>>>> .r1219
 };

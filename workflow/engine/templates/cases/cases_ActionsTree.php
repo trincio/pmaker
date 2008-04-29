@@ -85,6 +85,9 @@ else
 
 $oNode = &$oTree->addChild('1', '<a class="linkInBlue" href="#" onclick="pauseCase();return false;">' . G::LoadTranslation('ID_PAUSED_CASE') . '</a>', array('nodeType' => 'parentBlue'));
 */
+$oNode = &$oTree->addChild('1', '<a class="linkInBlue" href="#" onclick="deleteCase(\''.$APP_UID.'\');return false;">' . G::LoadTranslation('ID_DELETE') . '</a>', array('nodeType' => 'parentBlue'));
+
+
 $oNode->plus = '';
 $oNode->minus = '';
 $oNode->point = '';

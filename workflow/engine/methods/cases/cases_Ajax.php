@@ -307,4 +307,10 @@ switch($_POST['action'])
 	  $oCase = new Cases();
 	  $oCase->unpauseCase($sApplicationUID, $iIndex, $_SESSION['USER_LOGGED']);
 	break;
+  case 'deleteCase':
+      G::LoadClass('case');
+      $oCase = new Cases();
+      $sApplicationUID = (isset($_POST['sApplicationUID']))?$_POST['sApplicationUID']:$_SESSION['APPLICATION'];
+      $oCase->removeCase($sApplicationUID);
+  break;
 }
