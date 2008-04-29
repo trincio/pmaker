@@ -151,33 +151,13 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
   //G::LoadSystem("fckEditor");
   //G::LoadSystem("htmlArea");
 
-
-  $GLOBALS['G_HEADER'] = new headPublisher();  //??
-
-  /***************** Installer  ******************************/
-  if(!defined('PATH_DATA') || !file_exists(PATH_DATA))
-  {
-	  if((SYS_TARGET==='installServer'))
-	  {
-		   $phpFile = G::ExpandPath('methods') ."install/installServer.php";
-		  require_once($phpFile);
-		   die();
-	  }
-	  else
-	  {
-		   $phpFile = G::ExpandPath('methods') ."install/install.php";
-		  require_once($phpFile);
-		   die();
-	  }
-  }
-
-  /***************** Installer  ******************************/
+  $GLOBALS['G_HEADER'] = new headPublisher();  //$G_HEADER->addScriptFile
 
   //***************** database and workspace definition  ************************
   //if SYS_TEMP exists, the URL has a workspace, now we need to verify if exists their db.php file
   if ( defined('SYS_TEMP') && SYS_TEMP != '')
   {
-	  //this is the default, the workspace db.php file is in /shared/workflow/sites/SYS_SYS
+	  //this is the default, the workspace db.php file is in /shared/{projectName}/sites/SYS_SYS
     if ( file_exists( PATH_DB .  SYS_TEMP . '/db.php' ) ) {
       require_once( PATH_DB .  SYS_TEMP . '/db.php' );
       define ( 'SYS_SYS' , SYS_TEMP );
