@@ -45,11 +45,12 @@
   define( 'FILE_PATHS_INSTALLED', PATH_CORE . 'config' . PATH_SEP . 'paths_installed.php' );
 //************ include Gulliver Class **************
  require_once( PATH_GULLIVER . PATH_SEP . 'class.g.php');
+
+//************ Install definitions  **************
+  define( 'PATH_DATA', '/shared/{projectName}_data/' );
+  define( 'PATH_C',    PATH_OUTTRUNK.'compiled/' );
+
 //************ the Smarty Directories **************
- 
-  if(file_exists(FILE_PATHS_INSTALLED))
-  {
-  	require_once ( FILE_PATHS_INSTALLED );
   // TODO: This path defines where to save temporal data, similar to $_SESSION.
   define( 'PATH_TEMPORAL', PATH_C . 'dynEditor/');
 
@@ -58,7 +59,7 @@
 	define( 'PATH_SMARTY_CACHE',   PATH_C . 'smarty' . PATH_SEP . 'cache' );
 	if (!is_dir(PATH_SMARTY_C)) G::mk_dir(PATH_SMARTY_C);
 	if (!is_dir(PATH_SMARTY_CACHE)) G::mk_dir(PATH_SMARTY_CACHE);
-}
+
 //***************** set include path  ***********************
   set_include_path(
     PATH_CORE . PATH_SEPARATOR .

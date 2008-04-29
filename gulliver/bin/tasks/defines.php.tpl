@@ -16,6 +16,7 @@
   define ( 'MAIN_POFILE', '{projectName}');
   define ( 'PO_SYSTEM_VERSION',  '0.0.1');
 
+
   $G_CONTENT = NULL;
   $G_MESSAGE = "";
   $G_MESSAGE_TYPE = "info";

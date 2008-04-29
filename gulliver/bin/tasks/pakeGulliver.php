@@ -578,8 +578,36 @@ function run_create_poedit_file( $task, $args)
   //to do: leer los html templates
 }
 
+function create_file_from_tpl ( $tplName, $newFilename )
+{
+  global $pathHome;
+  global $projectName;
+  $httpdTpl = PATH_GULLIVER_HOME . 'bin' . PATH_SEP . 'tasks' . PATH_SEP . $tplName . '.tpl';
+  $httpFilename = $pathHome . PATH_SEP . $newFilename;
+  $template = new TemplatePower( $httpdTpl );
+  $template->prepare();
+  $template->assign ( 'pathHome', $pathHome);
+  $template->assign ( 'projectName', $projectName);
+  $content = $template->getOutputContent();
+  $iSize = file_put_contents ( $httpFilename, $content );
+  printf("saved %s bytes in file %s \n", pakeColor::colorize( $iSize, 'INFO'), pakeColor::colorize( $tplName, 'INFO') );    
+}
+
+function copy_file_from_tpl ( $tplName, $newFilename )
+{
+  global $pathHome;
+  global $projectName;
+  $httpdTpl = PATH_GULLIVER_HOME . 'bin' . PATH_SEP . 'tasks' . PATH_SEP . $tplName . '.tpl';
+  $httpFilename = $pathHome . PATH_SEP . $newFilename;
+  $content = file_get_contents ( $httpdTpl );
+  $iSize = file_put_contents ( $httpFilename, $content );
+  printf("saved %s bytes in file %s \n", pakeColor::colorize( $iSize, 'INFO'), pakeColor::colorize( $tplName, 'INFO') );    
+}
+
 function run_new_project ( $task, $args)
 {
+  global $pathHome;
+  global $projectName;
   //the class filename in the first argument
   $projectName = $args[0];
 
@@ -596,6 +624,7 @@ function run_new_project ( $task, $args)
   G::mk_dir ($pathHome . PATH_SEP . 'public_html' );
   G::mk_dir ($pathHome . PATH_SEP . 'public_html' . PATH_SEP . 'images');
   G::mk_dir ($pathHome . PATH_SEP . 'public_html' . PATH_SEP . 'skins');
+  G::mk_dir ($pathHome . PATH_SEP . 'public_html' . PATH_SEP . 'skins'. PATH_SEP . 'green');
   G::mk_dir ($pathHome . PATH_SEP . 'engine' );
   G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'classes' );
   G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'classes' . PATH_SEP . 'model');  
@@ -620,55 +649,25 @@ function run_new_project ( $task, $args)
   G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'xmlform' . PATH_SEP . 'login');
   
   //create project.conf for httpd conf
-  $httpdTpl = PATH_GULLIVER_HOME . 'bin' . PATH_SEP . 'tasks' . PATH_SEP . 'httpd.conf.tpl';
-  $httpFilename = $pathHome . PATH_SEP . 'engine' . PATH_SEP . $projectName . '.conf';
-  $template = new TemplatePower( $httpdTpl );
-  $template->prepare();
-  $template->assign ( 'pathHome', $pathHome);
-  $template->assign ( 'projectName', $projectName);
-  $content = $template->getOutputContent();
-  $iSize = file_put_contents ( $httpFilename, $content );
-  printf("saved %s bytes in file %s \n", pakeColor::colorize( $iSize, 'INFO'), pakeColor::colorize( $projectName.'.conf', 'INFO') );    
-
-  //create sysGeneric 
-  $httpdTpl = PATH_GULLIVER_HOME . 'bin' . PATH_SEP . 'tasks' . PATH_SEP . 'sysGeneric.php.tpl';
-  $httpFilename = $pathHome . PATH_SEP . 'public_html' . PATH_SEP . 'sysGeneric.php';
-  $template = new TemplatePower( $httpdTpl );
-  $template->prepare();
-  $template->assign ( 'projectName', $projectName);
-  $content = $template->getOutputContent();
-  $iSize = file_put_contents ( $httpFilename, $content );
-  printf("saved %s bytes in file %s \n", pakeColor::colorize( $iSize, 'INFO'), pakeColor::colorize( 'sysGeneric.php', 'INFO') );    
-
-  //create sysGeneric 
-  $httpdTpl = PATH_GULLIVER_HOME . 'bin' . PATH_SEP . 'tasks' . PATH_SEP . 'index.html.tpl';
-  $httpFilename = $pathHome . PATH_SEP . 'public_html' . PATH_SEP . 'index.html';
-  $template = new TemplatePower( $httpdTpl );
-  $template->prepare();
-  $template->assign ( 'projectName', $projectName);
-  $content = $template->getOutputContent();
-  $iSize = file_put_contents ( $httpFilename, $content );
-  printf("saved %s bytes in file %s \n", pakeColor::colorize( $iSize, 'INFO'), pakeColor::colorize( 'index.html', 'INFO') );    
-
-  //create paths.php
-  $httpdTpl = PATH_GULLIVER_HOME . 'bin' . PATH_SEP . 'tasks' . PATH_SEP . 'paths.php.tpl';
-  $httpFilename = $pathHome . PATH_SEP . 'engine' . PATH_SEP . 'config' . PATH_SEP . 'paths.php';
-  $template = new TemplatePower( $httpdTpl );
-  $template->prepare();
-  $template->assign ( 'projectName', $projectName);
-  $content = $template->getOutputContent();
-  $iSize = file_put_contents ( $httpFilename, $content );
-  printf("saved %s bytes in file %s \n", pakeColor::colorize( $iSize, 'INFO'), pakeColor::colorize( 'paths.php', 'INFO') );    
-
-  //create defines.php
-  $httpdTpl = PATH_GULLIVER_HOME . 'bin' . PATH_SEP . 'tasks' . PATH_SEP . 'defines.php.tpl';
-  $httpFilename = $pathHome . PATH_SEP . 'engine' . PATH_SEP . 'config' . PATH_SEP . 'defines.php';
-  $template = new TemplatePower( $httpdTpl );
-  $template->prepare();
-  $template->assign ( 'projectName', $projectName);
-  $content = $template->getOutputContent();
-  $iSize = file_put_contents ( $httpFilename, $content );
-  printf("saved %s bytes in file %s \n", pakeColor::colorize( $iSize, 'INFO'), pakeColor::colorize( 'defines.php', 'INFO') );    
+  create_file_from_tpl ( 'httpd.conf', 'engine' . PATH_SEP . $projectName . '.conf' );
+  create_file_from_tpl ( 'sysGeneric.php',  'public_html' . PATH_SEP . 'sysGeneric.php' );
+  copy_file_from_tpl   ( 'style.css',       'public_html' . PATH_SEP . 'skins' . PATH_SEP . 'green' . PATH_SEP . 'style.css' );
+  copy_file_from_tpl   ( 'bm.jpg',          'public_html' . PATH_SEP . 'skins' . PATH_SEP . 'green' . PATH_SEP . 'images' . PATH_SEP . 'bm.jpg' );
+  copy_file_from_tpl   ( 'bsm.jpg',         'public_html' . PATH_SEP . 'skins' . PATH_SEP . 'green' . PATH_SEP . 'images' . PATH_SEP . 'bsm.jpg' );
+  create_file_from_tpl ( 'index.html',      'public_html' . PATH_SEP . 'index.html' );
+  create_file_from_tpl ( 'paths.php',       'engine' . PATH_SEP . 'config' . PATH_SEP . 'paths.php' );
+  create_file_from_tpl ( 'defines.php',     'engine' . PATH_SEP . 'config' . PATH_SEP . 'defines.php' );
+  create_file_from_tpl ( 'sysLogin.php',    'engine' . PATH_SEP . 'methods' . PATH_SEP . 'login' . PATH_SEP . 'sysLogin.php' );
+  create_file_from_tpl ( 'login.php',       'engine' . PATH_SEP . 'methods' . PATH_SEP . 'login' . PATH_SEP . 'login.php' );
+  create_file_from_tpl ( 'authentication.php','engine'.PATH_SEP . 'methods' . PATH_SEP . 'login' . PATH_SEP . 'authentication.php' );
+  create_file_from_tpl ( 'sysLogin.xml',    'engine' . PATH_SEP . 'xmlform' . PATH_SEP . 'login' . PATH_SEP . 'sysLogin.xml' );
+  create_file_from_tpl ( 'login.xml',       'engine' . PATH_SEP . 'xmlform' . PATH_SEP . 'login' . PATH_SEP . 'login.xml' );
+  create_file_from_tpl ( 'showMessage.xml', 'engine' . PATH_SEP . 'xmlform' . PATH_SEP . 'login' . PATH_SEP . 'showMessage.xml' );
+  copy_file_from_tpl   ( 'xmlform.html',    'engine' . PATH_SEP . 'templates' . PATH_SEP . 'xmlform.html' );
+  copy_file_from_tpl   ( 'publish.php',     'engine' . PATH_SEP . 'templates' . PATH_SEP . 'publish.php' );
+  copy_file_from_tpl   ( 'green.html',      'engine' . PATH_SEP . 'skins' . PATH_SEP . 'green.html' );
+  copy_file_from_tpl   ( 'green.php',       'engine' . PATH_SEP . 'skins' . PATH_SEP . 'green.php' );
+  //create_file_from_tpl ( 'httpd.conf', xxx );
 
   //create schema.xml with empty databases
   //create welcome page
