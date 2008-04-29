@@ -20,12 +20,10 @@
 
 	if( isset ( $_POST['form']) ) 
 	{	
-    $frm = $_POST['form']; 	
+    		$frm = $_POST['form']; 	
 
 		G::LoadClass('insert');
 
-		//set_include_path("projects/spool/build/classes" . ':' . get_include_path());
-		
 		$db_spool			= array();
 		
 		$db_spool['envelope_to']	= base64_encode($frm['to_email']);
@@ -37,6 +35,8 @@
 		$db_spool['domain'] 	        = base64_encode($frm['domain']);
 
 		
+		$db_spool['attachments'] = array();
+
 		if( isset($frm['attachments']) && count($frm['attachments']) >0 ) 
 		{
 			foreach($frm['attachments'] as $attchment) 
@@ -47,11 +47,15 @@
 
 		}
 		$insert = new insert($db_spool);
+		$status = $insert->returnStatus();
 		unset($insert);
 		
 	}
 
-	exit();
+  $Fields['MESSAGE'] = $status;
+  $G_PUBLISH = new Publisher;
+  $G_PUBLISH->AddContent('xmlform', 'xmlform', 'login/showMessage', '', $Fields, 'emailSystemSpool');
+  G::RenderPage('publish');
 	
 	
 ?>
