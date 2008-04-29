@@ -1508,9 +1508,14 @@ class Cases
 
     function pauseCase($sApplicationUID, $iDelegation, $sUserUID)
     {
+    	require_once 'classes/model/Application.php';
+    	require_once 'classes/model/AppDelegation.php';
+        require_once 'classes/model/AppDelay.php';
+        require_once 'classes/model/AppThread.php';
+			
         $oAppDelegation = new AppDelegation();
         $aFields = $oAppDelegation->Load($sApplicationUID, $iDelegation);
-        $aFields['DEL_THREAD_STATUS'] = 'PAUSED';
+        $aFields['DEL_THREAD_STATUS'] = 'CLOSED';
         $oAppDelegation->update($aFields);
         $oApplication = new Application();
         $aFields = $oApplication->Load($sApplicationUID);
@@ -1534,6 +1539,23 @@ class Cases
         $aData['APP_ENABLE_ACTION_DATE'] = date('Y-m-d H:i:s');
         $oAppDelay = new AppDelay();
         $oAppDelay->create($aData);
+        
+        $aData = Array();
+        $aData['APP_UID'] = $aFields['APP_UID'];
+        $aData['DEL_INDEX'] = $aFields['DEL_INDEX'];
+        $aData['DEL_PREVIOUS'] = $aFields['DEL_PREVIOUS'];
+        $aData['PRO_UID'] = $aFields['PRO_UID'];
+        $aData['TAS_UID'] = $aFields['TAS_UID'];
+        $aData['USR_UID'] = $aFields['USR_UID'];
+        $aData['DEL_TYPE'] = $aFields['DEL_TYPE'];
+        $aData['DEL_THREAD'] = $aFields['DEL_THREAD'];
+        $aData['DEL_THREAD_STATUS'] = 'PAUSED';
+        $aData['DEL_PRIORITY'] = $aFields['DEL_PRIORITY'];
+        $aData['DEL_DELEGATE_DATE'] = $aFields['DEL_DELEGATE_DATE'];
+        $aData['DEL_INIT_DATE'] = date('Y-m-d H:i:s');
+        
+        $oAppDelegation = new AppDelegation();
+        $oAppDelegation->create($aData);
     }
 
     function unpauseCase($sApplicationUID, $iDelegation, $sUserUID)
