@@ -56,7 +56,7 @@
   <en></en>
 </OPEN>
 
-<PAUSE type="link" colWidth="40" value="@G::LoadTranslation(ID_PAUSED_CASE)" link="#" onclick="pauseCase(@QAPP_UID, @QDEL_INDEX);return false;"/>
+
 
 <!--<CANCEL type="link" colWidth="40" value="@G::LoadTranslation(ID_CANCEL)" link="#" onclick="cancelCase(@QAPP_UID, @QDEL_INDEX);return false;"/>-->
 

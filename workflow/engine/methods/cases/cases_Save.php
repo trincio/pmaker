@@ -46,6 +46,7 @@
   /* unset any variable, because we are starting a new case */
   if (isset($_SESSION['APPLICATION']))   unset($_SESSION['APPLICATION']);
   if (isset($_SESSION['PROCESS']))       unset($_SESSION['PROCESS']);
+  if (isset($_SESSION['TASK']))          unset($_SESSION['TASK']);
   if (isset($_SESSION['INDEX']))         unset($_SESSION['INDEX']);
   if (isset($_SESSION['STEP_POSITION'])) unset($_SESSION['STEP_POSITION']);
 
