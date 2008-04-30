@@ -120,6 +120,20 @@ class database extends database_base {
 		$sSQL .= $this->sEndLine;
 		return $sSQL . $sKeys;
 	}
+	public function generateAddKeysSQL($sTable, $aKeys) {
+	  try {
+	    $sSQL = 'ALTER TABLE ' . $this->sQuoteCharacter . $sTable . $this->sQuoteCharacter . ' ADD INDEX (';
+	    foreach ($aKeys as $sKey) {
+	      $sSQL .= $this->sQuoteCharacter . $sKey . $this->sQuoteCharacter . ', ';
+	    }
+	    $sSQL  = substr($sSQL, 0, -2);
+	    $sSQL .= ')' . $this->sEndLine;
+	    return $sSQL;
+	  }
+	  catch (Exception $oException) {
+	  	throw $oException;
+	  }
+	}
 	public function executeQuery($sQuery) {
 		try {
 		  if ($this->oConnection) {
