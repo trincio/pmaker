@@ -344,3 +344,51 @@ var unpauseCase = function()
     }.extend(this)
   });
 };
+
+var view_reassignCase = function()
+{  
+	 var panel =new leimnud.module.panel();
+						panel.options={	
+							size	:{w:450,h:450},
+							position:{x:50,y:50,center:true},
+							/*statusBarButtons:[
+								{value:G_STRINGS.ID_DELETE},
+								{value:G_STRINGS.CANCEL}
+							],*/
+							title	:G_STRINGS.ID_PROSESSESCASE,														
+							control	:{close:true,resize:false},fx:{modal:true},
+							statusBar:false,
+							fx	:{shadow:true,modal:true}
+						};						
+						panel.make();
+						/*panel.elements.statusBarButtons[0].onmouseup=function()
+						{
+							window.location="processes_Delete.php?PRO_UID="+uid;
+						};
+						panel.elements.statusBarButtons[1].onmouseup=panel.remove;*/
+						panel.loader.show();
+						var r = new leimnud.module.rpc.xmlhttp({
+							url:"cases_Ajax",							
+							args:"action=view_reassignCase"
+						});
+						r.callback=function(rpc)
+						{
+							panel.loader.hide();
+							panel.addContent(rpc.xmlhttp.responseText);						
+						};
+						r.make();						
+
+};
+
+var reassignCase = function(USR_UID)
+{
+  var oRPC = new leimnud.module.rpc.xmlhttp({
+        url:  'cases_Ajax',
+        args: 'action=reassignCase'+'&USR_UID='+USR_UID
+      });
+      
+      oRPC.callback = function(oRPC) {
+        window.location = 'cases_List';
+      }.extend(this);
+      oRPC.make();
+};

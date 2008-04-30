@@ -54,7 +54,7 @@ $oDataset = AppDelayPeer::doSelectRS($oCriteria);
 $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
 $oDataset->next();
 $aRow = $oDataset->getRow();
-
+GLOBAL $RBAC;
 switch($aFields['APP_STATUS'])
 {
 	case 'DRAFT':
@@ -67,11 +67,12 @@ switch($aFields['APP_STATUS'])
 			else {
 					$oNode = &$oTree->addChild('1', '<a class="linkInBlue" href="#" onclick="unpauseCase();return false;">' . G::LoadTranslation('ID_UNPAUSE') . '</a>', array('nodeType' => 'parentBlue'));
 			}
-			$oNode = &$oTree->addChild('1', '<a class="linkInBlue" href="#" onclick="deleteCase(\''.$APP_UID.'\');return false;">' . G::LoadTranslation('ID_DELETE') . '</a>', array('nodeType' => 'parentBlue'));
+			$oNode = &$oTree->addChild('1', '<a class="linkInBlue" href="#" onclick="deleteCase(\''.$APP_UID.'\');return false;">' . G::LoadTranslation('ID_DELETE') . '</a>', array('nodeType' => 'parentBlue'));		
 	break;
 	case 'TO_DO':
 			if(!$aRow) {
 					$oNode = &$oTree->addChild('1', '<a class="linkInBlue" href="#" onclick="pauseCase();return false;">' . G::LoadTranslation('ID_PAUSED_CASE') . '</a>', array('nodeType' => 'parentBlue'));
+					
 					if ($cant == 1) {
  					  $oNode = & $oTree->addChild('1', '<a class="linkInBlue" href="#" onclick="cancelCase();return false;">' . G::LoadTranslation('ID_CANCEL') . '</a>', array('nodeType'=>'parentBlue'));
  			    }
@@ -79,6 +80,8 @@ switch($aFields['APP_STATUS'])
 			else {
 					$oNode = &$oTree->addChild('1', '<a class="linkInBlue" href="#" onclick="unpauseCase();return false;">' . G::LoadTranslation('ID_UNPAUSE') . '</a>', array('nodeType' => 'parentBlue'));
 			}
+			if($RBAC->userCanAccess('PM_REASSIGNCASE')==1)
+			    $oNode = &$oTree->addChild('1', '<a class="linkInBlue" href="#" onclick="view_reassignCase(\''.$APP_UID.'\');return false;">' . G::LoadTranslation('ID_REASSIGN') . '</a>', array('nodeType' => 'parentBlue'));
 	break;
 
 	case 'CANCELLED':
@@ -86,6 +89,7 @@ switch($aFields['APP_STATUS'])
 	break;
 }
 
+//$oNode = &$oTree->addChild('1', '<a class="linkInBlue" href="#" onclick="view_reassignCase(\''.$APP_UID.'\');return false;">' . G::LoadTranslation('ID_REASSIGN') . '</a>', array('nodeType' => 'parentBlue'));
 
 $oNode->plus = '';
 $oNode->minus = '';

@@ -313,4 +313,43 @@ switch($_POST['action'])
       $sApplicationUID = (isset($_POST['sApplicationUID']))?$_POST['sApplicationUID']:$_SESSION['APPLICATION'];
       $oCase->removeCase($sApplicationUID);
   break;
+  case 'view_reassignCase':      
+      G::LoadClass('groups');
+      G::LoadClass('tasks');
+      
+      $oTasks = new Tasks();
+  	  $aAux   = $oTasks->getGroupsOfTask($_SESSION['TASK'], 1);  	  
+  	  $row = array();  	  	  
+  	  
+  	  $groups = new Groups();
+  	  foreach ($aAux as $aGroup) {			  	  		  	  	
+  	  	$row[] = $groups->getUsersOfGroup($aGroup['GRP_UID']);
+  	  }  	    	  
+  	  
+  	  $aAux = $oTasks->getUsersOfTask($_SESSION['TASK'], 1);
+  	  foreach ($aAux as $aUser) {
+  	  	$row[] = $aUser['USR_UID'];
+  	  }
+  	  
+  	  require_once 'classes/model/Users.php'; 
+  	  $c = new Criteria();
+  	  $c->addSelectColumn(UsersPeer::USR_UID);
+  	  $c->addSelectColumn(UsersPeer::USR_FIRSTNAME);
+  	  $c->addSelectColumn(UsersPeer::USR_LASTNAME);
+      $c->add(UsersPeer::USR_UID, $row, Criteria::IN);
+      //$c->add(UsersPeer::USR_UID, $_SESSION['USER_LOGGED'], Criteria::NOT_EQUAL);      
+      
+      global $G_PUBLISH;	   
+      global $G_HEADER;           
+	  	$G_PUBLISH = new Publisher();
+	  	$G_HEADER->clearScripts();
+	    $G_PUBLISH->AddContent('propeltable', 'paged-table', 'processes/processes_viewreassignCase', $c);
+	    //$G_HEADER->clearScripts();
+	    G::RenderPage('publish', 'raw');
+  break;
+  case 'reassignCase':      
+      G::LoadClass('case');
+      $cases = new Cases();      
+      $cases->reassignCase($_SESSION['APPLICATION'], $_SESSION['INDEX'], $_POST['USR_UID']);
+  break;
 }

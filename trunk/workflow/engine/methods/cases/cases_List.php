@@ -25,7 +25,7 @@
 
   /* Permissions */
   if (($RBAC_Response = $RBAC->userCanAccess("PM_CASES"))!=1) return $RBAC_Response;
-
+  //if (($RBAC_Response = $RBAC->userCanAccess("PM_CASES"))!=1) return $RBAC_Response;
   /* Includes */
   G::LoadClass('case');
   G::LoadClass('configuration');

@@ -1270,8 +1270,10 @@ class Cases
         $usrConds[] = array('APP_PREV_DEL.USR_UID', 'APP_LAST_USER.USR_UID');
         $c->addJoinMC($usrConds, Criteria::LEFT_JOIN);
 
-
-        $c->add(UsersPeer::USR_UID, $sUIDUserLogged);
+        if($sTypeList!='gral')
+        {
+          $c->add(UsersPeer::USR_UID, $sUIDUserLogged);
+        }  
 
         $filesList = array('cases/cases_ListAll', 'cases/cases_ListTodo',
             'cases/cases_ListDraft', 'cases/cases_ListOnHold', 'cases/cases_ListCancelled',
@@ -1315,6 +1317,12 @@ class Cases
                 $c->add(AppDelegationPeer::DEL_PREVIOUS, 0);
                 $xmlfile = $filesList[5];
                 break;
+             case 'gral':
+                $c->add($c->getNewCriterion(AppThreadPeer::APP_THREAD_STATUS, 'OPEN')->addOr($c->
+                    getNewCriterion(ApplicationPeer::APP_STATUS, 'COMPLETED')->addAnd($c->
+                    getNewCriterion(AppDelegationPeer::DEL_PREVIOUS, 0))));
+                $xmlfile = $filesList[0];
+                break;    
         }
         /*
         * TODO: Revisar y decidir como se eliminaran variables de session xmlfors
