@@ -128,6 +128,18 @@ class processMap {
             $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
             $oDataset2->next();
             $aRow2 = $oDataset2->getRow();
+            $oCriteria = new Criteria('workflow');
+          	$oCriteria->addSelectColumn('DEL_FINISH_DATE');
+      	    $oCriteria->add(AppDelegationPeer::APP_UID, $sApplicationUID);
+      	    $oCriteria->add(AppDelegationPeer::TAS_UID, $aRow1['TAS_UID']);
+      	    $oCriteria->add(AppDelegationPeer::DEL_FINISH_DATE, null);
+      	    $oDataset2 = AppDelegationPeer::doSelectRS($oCriteria);
+            $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+            $oDataset2->next();
+            $aRow3 = $oDataset2->getRow();
+            if ($aRow3) {
+              $aRow2['FINISH'] = '';
+            }
   	        if (($aRow2['FINISH'] == null) && ($aRow1['TAS_UID'] == $sTask)) {
               $oTask->color = '#FF0000';
             }
