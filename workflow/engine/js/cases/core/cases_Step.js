@@ -309,7 +309,6 @@ var pauseCase = function()
       oRPC.make();
     }.extend(this)
   });
-<<<<<<< .mine
 };
 
 var deleteCase = function(sApplicationUID)
@@ -327,8 +326,8 @@ var deleteCase = function(sApplicationUID)
       oRPC.make();
     }.extend(this)
   });
-=======
 };
+
 var unpauseCase = function()
 {
   new leimnud.module.app.confirm().make({
@@ -344,5 +343,4 @@ var unpauseCase = function()
       oRPC.make();
     }.extend(this)
   });
->>>>>>> .r1219
 };
