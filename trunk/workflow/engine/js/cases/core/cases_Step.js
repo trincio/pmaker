@@ -346,20 +346,20 @@ var unpauseCase = function()
 };
 
 var view_reassignCase = function()
-{  
+{
 	 var panel =new leimnud.module.panel();
-						panel.options={	
+						panel.options={
 							size	:{w:450,h:450},
 							position:{x:50,y:50,center:true},
 							/*statusBarButtons:[
 								{value:G_STRINGS.ID_DELETE},
 								{value:G_STRINGS.CANCEL}
 							],*/
-							title	:G_STRINGS.ID_PROSESSESCASE,														
+							title	:G_STRINGS.ID_PROSESSESCASE,
 							control	:{close:true,resize:false},fx:{modal:true},
 							statusBar:false,
 							fx	:{shadow:true,modal:true}
-						};						
+						};
 						panel.make();
 						/*panel.elements.statusBarButtons[0].onmouseup=function()
 						{
@@ -368,15 +368,17 @@ var view_reassignCase = function()
 						panel.elements.statusBarButtons[1].onmouseup=panel.remove;*/
 						panel.loader.show();
 						var r = new leimnud.module.rpc.xmlhttp({
-							url:"cases_Ajax",							
+							url:"cases_Ajax",
 							args:"action=view_reassignCase"
 						});
 						r.callback=function(rpc)
 						{
 							panel.loader.hide();
-							panel.addContent(rpc.xmlhttp.responseText);						
+							panel.addContent(rpc.xmlhttp.responseText);
+							var scs=rpc.xmlhttp.responseText.extractScript();
+  	          scs.evalScript();
 						};
-						r.make();						
+						r.make();
 
 };
 
@@ -386,7 +388,7 @@ var reassignCase = function(USR_UID)
         url:  'cases_Ajax',
         args: 'action=reassignCase'+'&USR_UID='+USR_UID
       });
-      
+
       oRPC.callback = function(oRPC) {
         window.location = 'cases_List';
       }.extend(this);

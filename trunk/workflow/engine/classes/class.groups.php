@@ -48,7 +48,7 @@ class Groups
             $oCriteria = new Criteria();
             $oCriteria->addJoin(UsersPeer::USR_UID, GroupUserPeer::USR_UID, Criteria::LEFT_JOIN);
             $oCriteria->add(GroupUserPeer::GRP_UID, $sGroupUID);
-            $oCriteria->add(UsersPeer::USR_STATUS, 1);
+            $oCriteria->add(UsersPeer::USR_STATUS, 'ACTIVE');
             $oDataset = UsersPeer::doSelectRS($oCriteria);
             $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
             $oDataset->next();
@@ -131,7 +131,7 @@ class Groups
     }
 
     /*
-    * get all groups 
+    * get all groups
     * @param none
     * @return $objects
     */
@@ -148,7 +148,7 @@ class Groups
             throw $e;
         }
     }
-    
+
     //que que de comentado que aqui estaba y me falta fachas huevadas por hacer, en si no tanto
     //vale que solo es el puo query para enlazar las 3 tablas en cuestion y posteriormente su opcion para eliminar digamos y es todo!
 	function getUserGroups($sUserUID)
@@ -167,7 +167,7 @@ class Groups
             throw $e;
         }
     }
-    
+
 
     /*
     * Remove a user from group
@@ -235,7 +235,7 @@ class Groups
             throw ($oError);
         }
     }
-    
+
     function getNumberGroups($sUserUID)
     {
         try {
@@ -249,7 +249,7 @@ class Groups
         catch (exception $oError) {
             print_r($oError);
         }
-			
+
 	}
 
     /*

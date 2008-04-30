@@ -3771,7 +3771,6 @@
       <index-column name="APP_DEL_INDEX"/>
       <index-column name="APP_NEXT_TASK"/>
       <index-column name="APP_DELEGATION_USER"/>
-      <index-column name="APP_DELEGATION_USER"/>
       <index-column name="APP_DISABLE_ACTION_USER"/>
       <vendor type="mysql">
         <parameter name="Table" value="APP_DELAY"/>
