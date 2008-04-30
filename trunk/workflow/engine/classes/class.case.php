@@ -1652,4 +1652,23 @@ class Cases
         $delay->update($aFields);
         //$this->ReactivateCurrentDelegation($sApplicationUID);
     }
+
+    function reassignCase($sApplicationUID, $iDelegation, $newUserUID)
+    {
+        $this->CloseCurrentDelegation($sApplicationUID, $iDelegation);
+        $oAppDelegation = new AppDelegation();
+        $aFieldsDel = $oAppDelegation->Load($sApplicationUID, $iDelegation);
+        $iIndex = $oAppDelegation->createAppDelegation($aFieldsDel['PRO_UID'], $aFieldsDel['APP_UID'], $aFieldsDel['TAS_UID'], $aFieldsDel['USR_UID'], $aFieldsDel['DEL_THREAD']);
+        $aData = array();
+        $aData['APP_UID']           = $aFieldsDel['APP_UID'];
+        $aData['DEL_INDEX']         = $iIndex;
+        $aData['DEL_PREVIOUS']      = $aFieldsDel['DEL_PREVIOUS'];
+        $aData['DEL_TYPE']          = $aFieldsDel['DEL_TYPE'];
+        $aData['DEL_PRIORITY']      = $aFieldsDel['DEL_PRIORITY'];
+        $aData['DEL_DELEGATE_DATE'] = $aFieldsDel['DEL_DELEGATE_DATE'];
+        $aData['USR_UID']           = $newUserUID;
+        $aData['DEL_INIT_DATE']     = null;
+        $aData['DEL_FINISH_DATE']   = null;
+        $oAppDelegation->update($aData);
+    }
 }
