@@ -73,24 +73,47 @@
   $aFields = $oCase->loadCase( $sAppUid, $iDelIndex );
 
   //draft or to do
-  if ((($aFields['APP_STATUS'] == 'DRAFT') || ($aFields['APP_STATUS'] == 'TO_DO')) && $aFields['DEL_THREAD_STATUS'] != 'PAUSED')
+  if (($aFields['APP_STATUS'] == 'DRAFT') || ($aFields['APP_STATUS'] == 'TO_DO'))
   {
-    $_SESSION['APPLICATION']   = $sAppUid;
-    $_SESSION['INDEX']         = $iDelIndex;
+    require_once 'classes/model/AppDelay.php';
+    $oCriteria = new Criteria('workflow');
+    $oCriteria->add(AppDelayPeer::APP_UID, $sAppUid);
+    $oCriteria->add(AppDelayPeer::APP_DEL_INDEX, $iDelIndex);
+    $oCriteria->add(AppDelayPeer::APP_TYPE, 'PAUSE');
+    $oCriteria->add(AppDelayPeer::APP_DISABLE_ACTION_USER, null);
+    $oCriteria->add(AppDelayPeer::APP_DISABLE_ACTION_DATE, null);
+    $oDataset = AppDelayPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    $aRow = $oDataset->getRow();
 
-    if ( is_null ( $aFields['DEL_INIT_DATE']) ) {
-      $oCase->setDelInitDate( $sAppUid, $iDelIndex );
-      $aFields = $oCase->loadCase( $sAppUid, $iDelIndex );
+    if(!$aRow) {
+      $_SESSION['APPLICATION']   = $sAppUid;
+      $_SESSION['INDEX']         = $iDelIndex;
+
+      if ( is_null ( $aFields['DEL_INIT_DATE']) ) {
+        $oCase->setDelInitDate( $sAppUid, $iDelIndex );
+        $aFields = $oCase->loadCase( $sAppUid, $iDelIndex );
+      }
+
+      $_SESSION['PROCESS']       = $aFields['PRO_UID'];
+      $_SESSION['TASK']          = $aFields['TAS_UID'];
+      $_SESSION['STEP_POSITION'] = 0;
+
+      /* Redirect to next step */
+      $aNextStep = $oCase->getNextStep( $_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['STEP_POSITION'] );
+      $sPage     = $aNextStep['PAGE'];
+      G::header('location: ' . $sPage);
     }
-
-    $_SESSION['PROCESS']       = $aFields['PRO_UID'];
-    $_SESSION['TASK']          = $aFields['TAS_UID'];
-    $_SESSION['STEP_POSITION'] = 0;
-
-    /* Redirect to next step */
-    $aNextStep = $oCase->getNextStep( $_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['STEP_POSITION'] );
-    $sPage     = $aNextStep['PAGE'];
-    G::header('location: ' . $sPage);
+    else {
+      $_SESSION['APPLICATION']   = $_GET['APP_UID'];
+  	  $_SESSION['INDEX']         = $iDelIndex;
+      //$_SESSION['INDEX']         = -1;
+      $_SESSION['PROCESS']       = $aFields['PRO_UID'];
+      $_SESSION['TASK']          = -1;
+      $_SESSION['STEP_POSITION'] = 0;
+      require_once( PATH_METHODS . 'cases' . PATH_SEP . 'cases_Resume.php');
+    }
   }
   //APP_STATUS <> DRAFT and TO_DO
   else
