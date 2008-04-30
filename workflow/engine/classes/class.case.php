@@ -1236,11 +1236,9 @@ class Cases
         $c->addAlias("APP_PREV_DEL", 'APP_DELEGATION');
         $c->addAlias("APP_LAST_USER", 'USERS');
 
-        $c->addJoin(ApplicationPeer::APP_UID, AppDelegationPeer::APP_UID, Criteria::
-            LEFT_JOIN);
+        $c->addJoin(ApplicationPeer::APP_UID, AppDelegationPeer::APP_UID, Criteria::LEFT_JOIN);
         $appThreadConds[] = array(ApplicationPeer::APP_UID, AppThreadPeer::APP_UID);
-        $appThreadConds[] = array(AppDelegationPeer::DEL_INDEX, AppThreadPeer::
-            DEL_INDEX);
+        $appThreadConds[] = array(AppDelegationPeer::DEL_INDEX, AppThreadPeer::DEL_INDEX);
         $c->addJoinMC($appThreadConds, Criteria::LEFT_JOIN);
         $c->addJoin(AppDelegationPeer::USR_UID, UsersPeer::USR_UID, Criteria::LEFT_JOIN);
 
@@ -1299,8 +1297,11 @@ class Cases
                 $xmlfile = $filesList[2];
                 break;
             case 'paused':
-                $c->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
-                $c->add(AppDelegationPeer::DEL_THREAD_STATUS, 'PAUSED');
+                $appDelayConds[] = array(ApplicationPeer::APP_UID, AppDelayPeer::APP_UID);
+                $appDelayConds[] = array(AppDelegationPeer::DEL_INDEX, AppDelayPeer::APP_DEL_INDEX);
+                $c->addJoinMC($appDelayConds, Criteria::LEFT_JOIN);
+                $c->add(AppDelayPeer::APP_DELAY_UID, NULL, Criteria::ISNOTNULL);
+                $c->add(AppDelayPeer::APP_DISABLE_ACTION_USER, NULL, Criteria::ISNULL);
                 $xmlfile = $filesList[3];
                 break;
             case 'cancelled':
@@ -1508,18 +1509,10 @@ class Cases
 
     function pauseCase($sApplicationUID, $iDelegation, $sUserUID)
     {
-    	require_once 'classes/model/Application.php';
-    	require_once 'classes/model/AppDelegation.php';
-        require_once 'classes/model/AppDelay.php';
-        require_once 'classes/model/AppThread.php';
-			
-        $oAppDelegation = new AppDelegation();
-        $aFields = $oAppDelegation->Load($sApplicationUID, $iDelegation);
-        $aFields['DEL_THREAD_STATUS'] = 'CLOSED';
-        $oAppDelegation->update($aFields);
+        $this->CloseCurrentDelegation($sApplicationUID, $iDelegation);
         $oApplication = new Application();
-        $aFields = $oApplication->Load($sApplicationUID);
-        $oCriteria = new Criteria('workflow');
+        $aFields      = $oApplication->Load($sApplicationUID);
+        $oCriteria    = new Criteria('workflow');
         $oCriteria->clearSelectColumns();
         $oCriteria->addSelectColumn(AppThreadPeer::APP_THREAD_INDEX);
         $oCriteria->add(AppThreadPeer::APP_UID, $sApplicationUID);
@@ -1528,66 +1521,54 @@ class Cases
         $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
         $oDataset->next();
         $aRow = $oDataset->getRow();
-        $aData['PRO_UID'] = $aFields['PRO_UID'];
-        $aData['APP_UID'] = $sApplicationUID;
-        $aData['APP_THREAD_INDEX'] = $aRow['APP_THREAD_INDEX'];
-        $aData['APP_DEL_INDEX'] = $iDelegation;
-        $aData['APP_TYPE'] = 'PAUSE';
-        $aData['APP_STATUS'] = $aFields['APP_STATUS'];
-        $aData['APP_DELEGATION_USER'] = $sUserUID;
+        $aData['PRO_UID']                = $aFields['PRO_UID'];
+        $aData['APP_UID']                = $sApplicationUID;
+        $aData['APP_THREAD_INDEX']       = $aRow['APP_THREAD_INDEX'];
+        $aData['APP_DEL_INDEX']          = $iDelegation;
+        $aData['APP_TYPE']               = 'PAUSE';
+        $aData['APP_STATUS']             = $aFields['APP_STATUS'];
+        $aData['APP_DELEGATION_USER']    = $sUserUID;
         $aData['APP_ENABLE_ACTION_USER'] = $sUserUID;
         $aData['APP_ENABLE_ACTION_DATE'] = date('Y-m-d H:i:s');
         $oAppDelay = new AppDelay();
         $oAppDelay->create($aData);
-        
-        $aData = Array();
-        $aData['APP_UID'] = $aFields['APP_UID'];
-        $aData['DEL_INDEX'] = $aFields['DEL_INDEX'];
-        $aData['DEL_PREVIOUS'] = $aFields['DEL_PREVIOUS'];
-        $aData['PRO_UID'] = $aFields['PRO_UID'];
-        $aData['TAS_UID'] = $aFields['TAS_UID'];
-        $aData['USR_UID'] = $aFields['USR_UID'];
-        $aData['DEL_TYPE'] = $aFields['DEL_TYPE'];
-        $aData['DEL_THREAD'] = $aFields['DEL_THREAD'];
-        $aData['DEL_THREAD_STATUS'] = 'PAUSED';
-        $aData['DEL_PRIORITY'] = $aFields['DEL_PRIORITY'];
-        $aData['DEL_DELEGATE_DATE'] = $aFields['DEL_DELEGATE_DATE'];
-        $aData['DEL_INIT_DATE'] = date('Y-m-d H:i:s');
-        
-        $oAppDelegation = new AppDelegation();
-        $oAppDelegation->create($aData);
     }
 
     function unpauseCase($sApplicationUID, $iDelegation, $sUserUID)
     {
         $oAppDelegation = new AppDelegation();
-        $aFields = $oAppDelegation->Load($sApplicationUID, $iDelegation);
-        $aFields['DEL_THREAD_STATUS'] = 'OPEN';
-        $oAppDelegation->update($aFields);
-
-        $c = new Criteria('workflow');
-        $c->clearSelectColumns();
-        $c->addSelectColumn(AppDelayPeer::APP_DELAY_UID);
-
-        $c->add(AppDelayPeer::APP_UID, $sApplicationUID);
-        $c->add(AppDelayPeer::PRO_UID, $aFields['PRO_UID']);
-        $c->add(AppDelayPeer::APP_DEL_INDEX, $iIndex);
-        $c->add(AppDelayPeer::APP_TYPE, 'PAUSE');
-        $c->add(AppDelayPeer::APP_DISABLE_ACTION_USER, null);
-        $c->add(AppDelayPeer::APP_DISABLE_ACTION_DATE, null);
-
-        $oDataset = AppDelayPeer::doSelectRS($c);
+        $aFieldsDel = $oAppDelegation->Load($sApplicationUID, $iDelegation);
+        $iIndex = $oAppDelegation->createAppDelegation($aFieldsDel['PRO_UID'], $aFieldsDel['APP_UID'], $aFieldsDel['TAS_UID'], $aFieldsDel['USR_UID'], $aFieldsDel['DEL_THREAD']);
+        $aData = array();
+        $aData['APP_UID']           = $aFieldsDel['APP_UID'];
+        $aData['DEL_INDEX']         = $iIndex;
+        $aData['DEL_PREVIOUS']      = $aFieldsDel['DEL_PREVIOUS'];
+        $aData['DEL_TYPE']          = $aFieldsDel['DEL_TYPE'];
+        $aData['DEL_PRIORITY']      = $aFieldsDel['DEL_PRIORITY'];
+        $aData['DEL_DELEGATE_DATE'] = $aFieldsDel['DEL_DELEGATE_DATE'];
+        $aData['DEL_INIT_DATE']     = date('Y-m-d H:i:s');
+        $aData['DEL_FINISH_DATE']   = null;
+        $oAppDelegation->update($aData);
+        $oCriteria = new Criteria('workflow');
+        $oCriteria->clearSelectColumns();
+        $oCriteria->addSelectColumn(AppDelayPeer::APP_DELAY_UID);
+        $oCriteria->addSelectColumn(AppDelayPeer::APP_THREAD_INDEX);
+        $oCriteria->add(AppDelayPeer::APP_UID, $sApplicationUID);
+        $oCriteria->add(AppDelayPeer::APP_DEL_INDEX, $iDelegation);
+        $oCriteria->add(AppDelayPeer::APP_TYPE, 'PAUSE');
+        $oCriteria->add(AppDelayPeer::APP_DISABLE_ACTION_USER, null);
+        $oCriteria->add(AppDelayPeer::APP_DISABLE_ACTION_DATE, null);
+        $oDataset = AppDelayPeer::doSelectRS($oCriteria);
         $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
         $oDataset->next();
         $aRow = $oDataset->getRow();
-
-        $aFields = array();
-        $aFields['APP_DELAY_UID'] = $aRow['APP_DELAY_UID'];
-        $aFields['APP_DISABLE_ACTION_USER'] = $sUserUID;
-        $aFields['APP_DISABLE_ACTION_DATE'] = date('Y-m-d H:i:s');
-
-        $delay = new AppDelay();
-        $delay->update($aFields);
+        $oAppThread = new AppThread();
+        $oAppThread->update(array('APP_UID' => $sApplicationUID, 'APP_THREAD_INDEX' => $aRow['APP_THREAD_INDEX'], 'DEL_INDEX' => $iIndex));
+        $aData['APP_DELAY_UID']           = $aRow['APP_DELAY_UID'];
+        $aData['APP_DISABLE_ACTION_USER'] = $sUserUID;
+        $aData['APP_DISABLE_ACTION_DATE'] = date('Y-m-d H:i:s');
+        $oAppDelay = new AppDelay();
+        $aFieldsDelay = $oAppDelay->update($aData);
     }
 
     function cancelCase($sApplicationUID, $iIndex, $user_logged)
