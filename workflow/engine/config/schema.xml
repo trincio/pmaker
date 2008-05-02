@@ -490,7 +490,7 @@
       <rule name="required" message="Application Document Creation Date is required." />
     </validator>
   </table>
-  <table name="APP_MESSAGE">
+  <table name="APP_MESSAGE" idMethod="native" >
     <vendor type="mysql">
       <parameter name="Name" value="APP_MESSAGE"/>
       <parameter name="Engine" value="MyISAM"/>
@@ -511,7 +511,7 @@
       <parameter name="Create_options" value=""/>
       <parameter name="Comment" value="Messages in an Application"/>
     </vendor>
-    <column name="APP_MSG_UID" type="VARCHAR" size="32" required="true" autoIncrement="true" primaryKey="true" default="">
+    <column name="APP_MSG_UID" type="integer" required="true" primaryKey="true" autoIncrement="true" >
       <vendor type="mysql">
         <parameter name="Field" value="APP_MSG_UID"/>
         <parameter name="Type" value="int(32)"/>
