@@ -1,6 +1,6 @@
 <?php
 /**
- * RolesPermissions.php
+ * upgrade_System.php
  *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
@@ -22,31 +22,18 @@
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
  *
  */
-
-require_once 'classes/model/om/BaseRolesPermissions.php';
-
-
-/**
- * Skeleton subclass for representing a row from the 'ROLES_PERMISSIONS' table.
- *
- *
- *
- * You should add additional methods to this class to meet the
- * application requirements.  This class will only be generated as
- * long as it does not already exist in the output directory.
- *
- * @package    classes.model
- */
-class RolesPermissions extends BaseRolesPermissions {
-  function create($aData) {
-    try {
-  	  $oRolesPermissions = new RolesPermissions();
-  	  $oRolesPermissions->fromArray($aData, BasePeer::TYPE_FIELDNAME);
-  	  $iResult = $oRolesPermissions->save();
-  	  return true;
-    }
-    catch (Exception $oError) {
-    	throw($oError);
-    }
+global $RBAC;
+$aRequiredPermissions = array('PM_LOGIN',
+                              'PM_SETUP',
+                              'PM_USERS',
+                              'PM_FACTORY',
+                              'PM_CASES',
+                              'PM_ALLCASES',
+                              'PM_REASSIGNCASE');
+foreach ($aRequiredPermissions as $sCode) {
+  if (!$RBAC->loadPermissionByCode($sCode)) {
+    $sPermissionUID = $RBAC->createPermision($sCode);
+    $aRoleInfo = $RBAC->loadRoleByCode('PROCESSMAKER_ADMIN');
+    $RBAC->assignPermissionToRole($aRoleInfo['ROL_UID'], $sPermissionUID);
   }
-} // RolesPermissions
+}

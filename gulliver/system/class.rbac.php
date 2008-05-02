@@ -1,10 +1,10 @@
 <?php
 /**
  * class.rbac.php
- *  
+ *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -14,13 +14,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
 /**
  * File: $Id$
@@ -58,6 +58,7 @@ class RBAC
   var $permissionsObj;
   var $userloggedobj;
   var $currentSystemobj;
+  var $rolesPermissionsObj;
 
   var $aUserInfo = array();
   var $sSystem = '';
@@ -75,10 +76,6 @@ class RBAC
   }
 
    function initRBAC () {
-      //require_once ( "classes/model/Roles.php" );
-      require_once ( "classes/model/Permissions.php" );
-      require_once ( "classes/model/RolesPermissions.php" );
-      //require_once ( "classes/model/UsersRoles.php" );
     if ( is_null($this->userObj ) ) {
       require_once ( "classes/model/RbacUsers.php" );
       $this->userObj = new RbacUsers;
@@ -98,6 +95,16 @@ class RBAC
     if ( is_null($this->rolesObj ) ) {
       require_once ( "classes/model/Roles.php" );
       $this->rolesObj = new Roles;
+    }
+
+    if ( is_null($this->permissionsObj ) ) {
+      require_once ( "classes/model/Permissions.php" );
+      $this->permissionsObj = new Permissions;
+    }
+
+    if ( is_null($this->rolesPermissionsObj ) ) {
+      require_once ( "classes/model/RolesPermissions.php" );
+      $this->rolesPermissionsObj = new RolesPermissions;
     }
   }
 
@@ -621,6 +628,22 @@ class RBAC
     else
       $this->initDB2( $dbname);
   	return $this->rolesObj->editRole($roleid, $appid, $code , $descrip);
+  }
+
+  function loadPermissionByCode($sCode) {
+    return $this->permissionsObj->loadByCode($sCode);
+  }
+
+  function createPermision($sCode) {
+    return $this->permissionsObj->create(array('PER_CODE' => $sCode));
+  }
+
+  function loadRoleByCode($sCode) {
+    return $this->rolesObj->loadByCode($sCode);
+  }
+
+  function assignPermissionToRole($sRoleUID, $sPermissionUID) {
+    return $this->rolesPermissionsObj->create(array('ROL_UID' => $sRoleUID, 'PER_UID' => $sPermissionUID));
   }
 
 }

@@ -1273,7 +1273,7 @@ class Cases
         if($sTypeList!='gral')
         {
           $c->add(UsersPeer::USR_UID, $sUIDUserLogged);
-        }  
+        }
 
         $filesList = array('cases/cases_ListAll', 'cases/cases_ListTodo',
             'cases/cases_ListDraft', 'cases/cases_ListOnHold', 'cases/cases_ListCancelled',
@@ -1322,7 +1322,7 @@ class Cases
                     getNewCriterion(ApplicationPeer::APP_STATUS, 'COMPLETED')->addAnd($c->
                     getNewCriterion(AppDelegationPeer::DEL_PREVIOUS, 0))));
                 $xmlfile = $filesList[0];
-                break;    
+                break;
         }
         /*
         * TODO: Revisar y decidir como se eliminaran variables de session xmlfors
@@ -1678,5 +1678,7 @@ class Cases
         $aData['DEL_INIT_DATE']     = null;
         $aData['DEL_FINISH_DATE']   = null;
         $oAppDelegation->update($aData);
+        $oAppThread = new AppThread();
+        $oAppThread->update(array('APP_UID' => $sApplicationUID, 'APP_THREAD_INDEX' => $aFieldsDel['DEL_THREAD'], 'DEL_INDEX' => $iIndex));
     }
 }
