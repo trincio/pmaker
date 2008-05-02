@@ -64,8 +64,9 @@ class wsResponse
 	function getPayloadString ( $operation ) {
     $res = "<$operation>\n";
     $res .= "<status_code>" . $this->status_code . "</status_code>";
-    $res .= "<message>" . $this->message . " $operation </message>";
+    $res .= "<message>" . $this->message . "</message>";
     $res .= "<timestamp>" . $this->timestamp . "</timestamp>";
+    $res .= "<array>" . $this->timestamp . "</array>";
     $res .= "<$operation>";
     return $res;
 	}
@@ -116,6 +117,18 @@ class wsBase
 	    }
       
 	  	$wsResponse = new wsResponse ('0', $uid );
+	  	return $wsResponse;
+    }
+    catch ( Exception $e ) {
+    	$wsResponse = unserialize ( $e->getMessage() );
+	  	return $wsResponse;
+    }		
+
+	}
+
+	public function listOfProcess( ) {
+    try {	
+	  	$wsResponse = new wsResponse ('123', 'nathing is happen' );
 	  	return $wsResponse;
     }
     catch ( Exception $e ) {

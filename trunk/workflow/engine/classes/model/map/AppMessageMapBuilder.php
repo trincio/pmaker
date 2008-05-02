@@ -62,9 +62,9 @@ class AppMessageMapBuilder {
 		$tMap = $this->dbMap->addTable('APP_MESSAGE');
 		$tMap->setPhpName('AppMessage');
 
-		$tMap->setUseIdGenerator(false);
+		$tMap->setUseIdGenerator(true);
 
-		$tMap->addPrimaryKey('APP_MSG_UID', 'AppMsgUid', 'string', CreoleTypes::VARCHAR, true, 32);
+		$tMap->addPrimaryKey('APP_MSG_UID', 'AppMsgUid', 'int', CreoleTypes::INTEGER, true, null);
 
 		$tMap->addColumn('MSG_UID', 'MsgUid', 'string', CreoleTypes::VARCHAR, false, 32);
 
@@ -88,11 +88,11 @@ class AppMessageMapBuilder {
 
 		$tMap->addColumn('APP_MSG_BCC', 'AppMsgBcc', 'string', CreoleTypes::LONGVARCHAR, false, null);
 
+		$tMap->addColumn('APP_MSG_TEMPLATE', 'AppMsgTemplate', 'string', CreoleTypes::LONGVARCHAR, false, null);
+
+		$tMap->addColumn('APP_MSG_STATUS', 'AppMsgStatus', 'string', CreoleTypes::LONGVARCHAR, false, null);
+
 		$tMap->addColumn('APP_MSG_ATTACH', 'AppMsgAttach', 'string', CreoleTypes::LONGVARCHAR, false, null);
-
-		$tMap->addValidator('APP_MSG_TYPE', 'validValues', 'propel.validator.ValidValuesValidator', 'CUSTOM_MESSAGE', 'Please select a valid document type.');
-
-		$tMap->addValidator('APP_MSG_TYPE', 'required', 'propel.validator.RequiredValidator', '', 'Application Message Type is required.');
 
 	} // doBuild()
 
