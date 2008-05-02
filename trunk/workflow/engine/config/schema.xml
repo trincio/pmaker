@@ -3639,7 +3639,7 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="PRO_UID" type="VARCHAR" required="true" default="0">
+    <column name="PRO_UID" type="VARCHAR" size="32" required="true" default="0">
       <vendor type="mysql">
         <parameter name="Field" value="PRO_UID"/>
         <parameter name="Type" value="varchar(32)"/>
@@ -3649,7 +3649,7 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="APP_UID" type="VARCHAR" required="true" default="0">
+    <column name="APP_UID" type="VARCHAR" size="32" required="true" default="0">
       <vendor type="mysql">
         <parameter name="Field" value="APP_UID"/>
         <parameter name="Type" value="varchar(32)"/>
@@ -3679,7 +3679,7 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="APP_TYPE" type="VARCHAR" required="true" default="0">
+    <column name="APP_TYPE" type="VARCHAR" size="20" required="true" default="0">
       <vendor type="mysql">
         <parameter name="Field" value="APP_TYPE"/>
         <parameter name="Type" value="varchar(20)"/>
@@ -3689,7 +3689,7 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="APP_STATUS" type="VARCHAR" required="true" default="0">
+    <column name="APP_STATUS" type="VARCHAR" size="20" required="true" default="0">
       <vendor type="mysql">
         <parameter name="Field" value="APP_STATUS"/>
         <parameter name="Type" value="varchar(20)"/>
@@ -3699,7 +3699,7 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="APP_NEXT_TASK" type="VARCHAR" default="0">
+    <column name="APP_NEXT_TASK" type="VARCHAR" size="32" default="0">
       <vendor type="mysql">
         <parameter name="Field" value="APP_NEXT_TASK"/>
         <parameter name="Type" value="varchar(32)"/>
@@ -3709,7 +3709,7 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="APP_DELEGATION_USER" type="VARCHAR" default="0">
+    <column name="APP_DELEGATION_USER" type="VARCHAR"  size="32" default="0">
       <vendor type="mysql">
         <parameter name="Field" value="APP_DELEGATION_USER"/>
         <parameter name="Type" value="varchar(32)"/>
@@ -3719,7 +3719,7 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="APP_ENABLE_ACTION_USER" type="VARCHAR" required="true" default="0">
+    <column name="APP_ENABLE_ACTION_USER" type="VARCHAR"  size="32" required="true" default="0">
       <vendor type="mysql">
         <parameter name="Field" value="APP_ENABLE_ACTION_USER"/>
         <parameter name="Type" value="varchar(32)"/>
@@ -3739,7 +3739,7 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="APP_DISABLE_ACTION_USER" type="VARCHAR" default="0">
+    <column name="APP_DISABLE_ACTION_USER" type="VARCHAR" size="32" default="0">
       <vendor type="mysql">
         <parameter name="Field" value="APP_DISABLE_ACTION_USER"/>
         <parameter name="Type" value="varchar(32)"/>
