@@ -511,20 +511,20 @@
       <parameter name="Create_options" value=""/>
       <parameter name="Comment" value="Messages in an Application"/>
     </vendor>
-    <column name="APP_MSG_UID" type="VARCHAR" size="32" required="true" primaryKey="true" default="">
+    <column name="APP_MSG_UID" type="VARCHAR" size="32" required="true" autoIncrement="true" primaryKey="true" default="">
       <vendor type="mysql">
         <parameter name="Field" value="APP_MSG_UID"/>
-        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Type" value="int(32)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value="PRI"/>
         <parameter name="Default" value=""/>
-        <parameter name="Extra" value=""/>
+        <parameter name="Extra" value="auto_increment"/>
       </vendor>
     </column>
     <column name="MSG_UID" type="VARCHAR" size="32">
       <vendor type="mysql">
         <parameter name="Field" value="MSG_UID"/>
-        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Type" value="varchar(64)"/>
         <parameter name="Null" value="YES"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
@@ -534,8 +534,8 @@
     <column name="APP_UID" type="VARCHAR" size="32" required="true" default="">
       <vendor type="mysql">
         <parameter name="Field" value="APP_UID"/>
-        <parameter name="Type" value="varchar(32)"/>
-        <parameter name="Null" value="NO"/>
+        <parameter name="Type" value="varchar(64)"/>
+        <parameter name="Null" value="YES"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
         <parameter name="Extra" value=""/>
@@ -544,28 +544,28 @@
     <column name="DEL_INDEX" type="INTEGER" required="true" default="0">
       <vendor type="mysql">
         <parameter name="Field" value="DEL_INDEX"/>
-        <parameter name="Type" value="int(11)"/>
-        <parameter name="Null" value="NO"/>
+        <parameter name="Type" value="int(32)"/>
+        <parameter name="Null" value="YES"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value="0"/>
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="APP_MSG_TYPE" type="VARCHAR" size="100" required="true" default="CUSTOM_MESSAGE">
+    <column name="APP_MSG_TYPE" type="VARCHAR" size="100" required="true" default="">
       <vendor type="mysql">
         <parameter name="Field" value="APP_MSG_TYPE"/>
-        <parameter name="Type" value="varchar(100)"/>
-        <parameter name="Null" value="NO"/>
+        <parameter name="Type" value="varchar(64)"/>
+        <parameter name="Null" value="YES"/>
         <parameter name="Key" value=""/>
-        <parameter name="Default" value="CUSTOM_MESSAGE"/>
+        <parameter name="Default" value=""/>
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
     <column name="APP_MSG_SUBJECT" type="VARCHAR" size="150" required="true" default="">
       <vendor type="mysql">
         <parameter name="Field" value="APP_MSG_SUBJECT"/>
-        <parameter name="Type" value="varchar(150)"/>
-        <parameter name="Null" value="NO"/>
+        <parameter name="Type" value="varchar(256)"/>
+        <parameter name="Null" value="YES"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
         <parameter name="Extra" value=""/>
@@ -574,8 +574,8 @@
     <column name="APP_MSG_FROM" type="VARCHAR" size="100" required="true" default="">
       <vendor type="mysql">
         <parameter name="Field" value="APP_MSG_FROM"/>
-        <parameter name="Type" value="varchar(100)"/>
-        <parameter name="Null" value="NO"/>
+        <parameter name="Type" value="varchar(256)"/>
+        <parameter name="Null" value="YES"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
         <parameter name="Extra" value=""/>
@@ -584,8 +584,8 @@
     <column name="APP_MSG_TO" type="LONGVARCHAR" required="true">
       <vendor type="mysql">
         <parameter name="Field" value="APP_MSG_TO"/>
-        <parameter name="Type" value="text"/>
-        <parameter name="Null" value="NO"/>
+        <parameter name="Type" value="varchar(256)"/>
+        <parameter name="Null" value="YES"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
         <parameter name="Extra" value=""/>
@@ -595,7 +595,7 @@
       <vendor type="mysql">
         <parameter name="Field" value="APP_MSG_BODY"/>
         <parameter name="Type" value="text"/>
-        <parameter name="Null" value="NO"/>
+        <parameter name="Null" value="YES"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
         <parameter name="Extra" value=""/>
@@ -614,7 +614,7 @@
     <column name="APP_MSG_CC" type="LONGVARCHAR">
       <vendor type="mysql">
         <parameter name="Field" value="APP_MSG_CC"/>
-        <parameter name="Type" value="text"/>
+        <parameter name="Type" value="varchar(256)"/>
         <parameter name="Null" value="YES"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
@@ -624,27 +624,43 @@
     <column name="APP_MSG_BCC" type="LONGVARCHAR">
       <vendor type="mysql">
         <parameter name="Field" value="APP_MSG_BCC"/>
-        <parameter name="Type" value="text"/>
+        <parameter name="Type" value="varchar(256)"/>
         <parameter name="Null" value="YES"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="APP_MSG_TEMPLATE" type="LONGVARCHAR">
+      <vendor type="mysql">
+        <parameter name="Field" value="APP_MSG_TEMPLATE"/>
+        <parameter name="Type" value="varchar(128)"/>
+        <parameter name="Null" value="YES"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="APP_MSG_STATUS" type="LONGVARCHAR">
+      <vendor type="mysql">
+        <parameter name="Field" value="APP_MSG_STATUS"/>
+        <parameter name="Type" value="varchar(16)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="pending"/>
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
     <column name="APP_MSG_ATTACH" type="LONGVARCHAR">
       <vendor type="mysql">
         <parameter name="Field" value="APP_MSG_ATTACH"/>
-        <parameter name="Type" value="text"/>
+        <parameter name="Type" value="varchar(256)"/>
         <parameter name="Null" value="YES"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <validator column="APP_MSG_TYPE">
-      <rule name="validValues" value="CUSTOM_MESSAGE" message="Please select a valid document type." />
-      <rule name="required" message="Application Message Type is required." />
-    </validator>
   </table>
   <table name="APP_OWNER">
     <vendor type="mysql">
@@ -3591,17 +3607,6 @@
     <validator column="APP_THREAD_STATUS">
       <rule name="validValues" value="CLOSED|OPEN" message="Please select a valid status." />
     </validator>
-  </table>
-  <table name="APP_SPOOL" phpName="AppSpool">
-    <column name="id" phpName="Id" type="SMALLINT" size="6" primaryKey="true" required="true"/>
-    <column name="sender" phpName="Sender" type="VARCHAR" size="96" required="true" defaultValue=""/>
-    <column name="file" phpName="File" type="LONGVARCHAR" required="true"/>
-    <column name="now" phpName="Now" type="VARCHAR" size="16" required="true" defaultValue=""/>
-    <column name="status" phpName="Status" type="VARCHAR" size="16" required="true" defaultValue="pending"/>
-    <index name="sender">
-      <index-column name="sender"/>
-      <index-column name="status"/>
-    </index>
   </table>
   <table name="APP_DELAY">
     <vendor type="mysql">
