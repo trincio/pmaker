@@ -257,7 +257,7 @@ abstract class BaseAppDelay extends BaseObject  implements Persistent {
 	 * @return     mixed Formatted date/time value as string or integer unix timestamp (if format is NULL).
 	 * @throws     PropelException - if unable to convert the date/time to timestamp.
 	 */
-	public function getAppEnableActionDate($format = 'Y-m-d')
+	public function getAppEnableActionDate($format = 'Y-m-d H:i:s')
 	{
 
 		if ($this->app_enable_action_date === null || $this->app_enable_action_date === '') {
@@ -299,7 +299,7 @@ abstract class BaseAppDelay extends BaseObject  implements Persistent {
 	 * @return     mixed Formatted date/time value as string or integer unix timestamp (if format is NULL).
 	 * @throws     PropelException - if unable to convert the date/time to timestamp.
 	 */
-	public function getAppDisableActionDate($format = 'Y-m-d')
+	public function getAppDisableActionDate($format = 'Y-m-d H:i:s')
 	{
 
 		if ($this->app_disable_action_date === null || $this->app_disable_action_date === '') {
@@ -330,7 +330,7 @@ abstract class BaseAppDelay extends BaseObject  implements Persistent {
 	 * @return     mixed Formatted date/time value as string or integer unix timestamp (if format is NULL).
 	 * @throws     PropelException - if unable to convert the date/time to timestamp.
 	 */
-	public function getAppAutomaticDisabledDate($format = 'Y-m-d')
+	public function getAppAutomaticDisabledDate($format = 'Y-m-d H:i:s')
 	{
 
 		if ($this->app_automatic_disabled_date === null || $this->app_automatic_disabled_date === '') {
@@ -704,13 +704,13 @@ abstract class BaseAppDelay extends BaseObject  implements Persistent {
 
 			$this->app_enable_action_user = $rs->getString($startcol + 9);
 
-			$this->app_enable_action_date = $rs->getDate($startcol + 10, null);
+			$this->app_enable_action_date = $rs->getTimestamp($startcol + 10, null);
 
 			$this->app_disable_action_user = $rs->getString($startcol + 11);
 
-			$this->app_disable_action_date = $rs->getDate($startcol + 12, null);
+			$this->app_disable_action_date = $rs->getTimestamp($startcol + 12, null);
 
-			$this->app_automatic_disabled_date = $rs->getDate($startcol + 13, null);
+			$this->app_automatic_disabled_date = $rs->getTimestamp($startcol + 13, null);
 
 			$this->resetModified();
 
