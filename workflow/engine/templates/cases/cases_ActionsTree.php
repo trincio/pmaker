@@ -60,19 +60,15 @@ switch($aFields['APP_STATUS'])
 	case 'DRAFT':
 			if(!$aRow) {
 					$oNode = &$oTree->addChild('1', '<a class="linkInBlue" href="#" onclick="pauseCase();return false;">' . G::LoadTranslation('ID_PAUSED_CASE') . '</a>', array('nodeType' => 'parentBlue'));
-					if ($cant == 1) {
- 					  $oNode = & $oTree->addChild('1', '<a class="linkInBlue" href="#" onclick="cancelCase();return false;">' . G::LoadTranslation('ID_CANCEL') . '</a>', array('nodeType'=>'parentBlue'));
- 			    }
 		  }
 			else {
 					$oNode = &$oTree->addChild('1', '<a class="linkInBlue" href="#" onclick="unpauseCase();return false;">' . G::LoadTranslation('ID_UNPAUSE') . '</a>', array('nodeType' => 'parentBlue'));
 			}
-			$oNode = &$oTree->addChild('1', '<a class="linkInBlue" href="#" onclick="deleteCase(\''.$APP_UID.'\');return false;">' . G::LoadTranslation('ID_DELETE') . '</a>', array('nodeType' => 'parentBlue'));		
+			$oNode = &$oTree->addChild('1', '<a class="linkInBlue" href="#" onclick="deleteCase(\''.$APP_UID.'\');return false;">' . G::LoadTranslation('ID_DELETE') . '</a>', array('nodeType' => 'parentBlue'));
 	break;
 	case 'TO_DO':
 			if(!$aRow) {
 					$oNode = &$oTree->addChild('1', '<a class="linkInBlue" href="#" onclick="pauseCase();return false;">' . G::LoadTranslation('ID_PAUSED_CASE') . '</a>', array('nodeType' => 'parentBlue'));
-					
 					if ($cant == 1) {
  					  $oNode = & $oTree->addChild('1', '<a class="linkInBlue" href="#" onclick="cancelCase();return false;">' . G::LoadTranslation('ID_CANCEL') . '</a>', array('nodeType'=>'parentBlue'));
  			    }

@@ -84,13 +84,13 @@ class AppDelayMapBuilder {
 
 		$tMap->addColumn('APP_ENABLE_ACTION_USER', 'AppEnableActionUser', 'string', CreoleTypes::VARCHAR, true, null);
 
-		$tMap->addColumn('APP_ENABLE_ACTION_DATE', 'AppEnableActionDate', 'int', CreoleTypes::DATE, true, null);
+		$tMap->addColumn('APP_ENABLE_ACTION_DATE', 'AppEnableActionDate', 'int', CreoleTypes::TIMESTAMP, true, null);
 
 		$tMap->addColumn('APP_DISABLE_ACTION_USER', 'AppDisableActionUser', 'string', CreoleTypes::VARCHAR, false, null);
 
-		$tMap->addColumn('APP_DISABLE_ACTION_DATE', 'AppDisableActionDate', 'int', CreoleTypes::DATE, false, null);
+		$tMap->addColumn('APP_DISABLE_ACTION_DATE', 'AppDisableActionDate', 'int', CreoleTypes::TIMESTAMP, false, null);
 
-		$tMap->addColumn('APP_AUTOMATIC_DISABLED_DATE', 'AppAutomaticDisabledDate', 'int', CreoleTypes::DATE, false, null);
+		$tMap->addColumn('APP_AUTOMATIC_DISABLED_DATE', 'AppAutomaticDisabledDate', 'int', CreoleTypes::TIMESTAMP, false, null);
 
 	} // doBuild()
 
