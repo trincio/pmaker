@@ -31,12 +31,12 @@
 		$db_spool['del_index']		= 99; // random number
 		$db_spool['app_msg_type']	= 'email message';
 		$db_spool['app_msg_subject']	= 'subject field'; //"{$frm['subject']}";
-		$db_spool['app_msg_from']	= '<ian@colosa.com>';//"{$frm['from_email']}";
+		$db_spool['app_msg_from']	= '"ian armstrong" <ian@colosa.com>';//"{$frm['from_email']}";
 		$db_spool['app_msg_to']		= '<ika@openmail.cc>'; //"{$frm['to_email']}";
 		$db_spool['app_msg_body']	= 'body field'; //"{$frm['body']}";
 		$db_spool['app_msg_date']	= time();
-		$db_spool['app_msg_cc']		= "cc";
-		$db_spool['app_msg_bcc']	= "bcc";
+		$db_spool['app_msg_cc']		= '<ian@openmail.cc>';
+		$db_spool['app_msg_bcc']	= '<ian.k.armstrong@gmail.com>';
 		$db_spool['app_msg_template']	= "/path/to/template";
 		$db_spool['app_msg_status']	= "pending";
 
