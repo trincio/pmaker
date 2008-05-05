@@ -74,7 +74,8 @@
                             $_SESSION['APPLICATION'], 
                             $_SESSION['USER_LOGGED'], 
                             $sPathName . $sFileName,
-                            $aFields['APP_DOC_FILENAME']
+                            $aFields['APP_DOC_FILENAME'],
+                            $sAppDocUid
                             );
         
   	      $oPluginRegistry->executeTriggers ( PM_UPLOAD_DOCUMENT , $documentData );

@@ -96,12 +96,14 @@ class uploadDocumentData {
  	var $sUserUid;
  	var $sFilename;
  	var $sFileTitle;
+ 	var $sDocumentUid;
  	
-  function __construct( $sApplicationUid, $sUserUid, $sFilename, $sFileTitle ) {
+  function __construct( $sApplicationUid, $sUserUid, $sFilename, $sFileTitle, $sDocumentUid ) {
    	$this->sApplicationUid = $sApplicationUid;
    	$this->sUserUid        = $sUserUid;
    	$this->sFilename       = $sFilename;
-   	$this->sFileTitle     = $sFileTitle;
+   	$this->sFileTitle      = $sFileTitle;
+   	$this->sDocumentUid    = $sDocumentUid;
 	 }
 }
 
