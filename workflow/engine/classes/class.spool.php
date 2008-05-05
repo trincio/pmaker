@@ -41,7 +41,7 @@
 
 		private function getSpoolFilesList() 
 		{		
-			$sql = "SELECT id,file FROM APP_SPOOL WHERE status='pending'";
+			$sql = "SELECT * FROM APP_MESSAGE WHERE status='pending'";
 
 			$con = Propel::getConnection("workflow");
 			$stmt = $con->prepareStatement($sql);
@@ -51,10 +51,10 @@
 			{
 				$this->spool_id = $rs->getInt('id');
 				$this->fileField = $rs->getString('file');
-				$this->base64Decode();
+				//$this->base64Decode();
 				$this->handleEnvelopeTo();
 				$this->handleMail();
-				$this->updateSpoolStatus();
+				//$this->updateSpoolStatus();
 
 			}
 
