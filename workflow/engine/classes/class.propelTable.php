@@ -438,9 +438,11 @@ class propelTable
       $this->xmlForm->fields[ $this->fields[$r]['Name'] ]->mode = 'view';
       $this->xmlForm->setDefaultValues();
       $this->xmlForm->setValues( $result );
+      //var_dump($this->fields[$r]['Name'],get_class($this->xmlForm->fields[ $this->fields[$r]['Name'] ]));echo '<br /><br />';
+      //
       if ((array_search( 'rendergrid', get_class_methods( get_class($this->xmlForm->fields[ $this->fields[$r]['Name'] ])) )!==FALSE)
           ||(array_search( 'renderGrid', get_class_methods( get_class($this->xmlForm->fields[ $this->fields[$r]['Name'] ])) )!==FALSE)) {
-        $htmlField = $this->xmlForm->fields[ $this->fields[$r]['Name'] ]->renderGrid( array($value) , $this->xmlForm );
+        $htmlField = $this->xmlForm->fields[ $this->fields[$r]['Name'] ]->renderGrid( array($value) , $this->xmlForm, true );
         $this->tpl->assign( "value" , $htmlField[0] );
       } else {
       }

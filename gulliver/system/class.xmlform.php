@@ -1060,7 +1060,7 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText
 		return $html;
 	}
 
-	function renderGrid( $values = NULL, $owner = NULL )
+	function renderGrid( $values = NULL, $owner = NULL, $onlyValue = false )
   {
   	$result=array();$r=1;
   	foreach($values as $v)  {
@@ -1111,7 +1111,12 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText
 		  {
 		  	$v = date('Y-m-d');
 		  }
-		  $html="<input type='hidden' id='form[" . $owner->name .']['.$r.']['.$this->name . "]' name='form[" . $owner->name .']['.$r.']['.$this->name . "]' value='".$v."'>";
+		  if (!$onlyValue) {
+		    $html="<input type='hidden' id='form[" . $owner->name .']['.$r.']['.$this->name . "]' name='form[" . $owner->name .']['.$r.']['.$this->name . "]' value='".$v."'>";
+		  }
+		  else {
+		    $html='';
+		  }
 		  if (isset($owner->owner->id)) {
 		    $html.="<span id='span[".$owner->owner->id."][" . $owner->name .']['.$r.']['.$this->name . "]' name='span[".$owner->owner->id."][" . $owner->name .']['.$r.']['.$this->name . "]' style='border:1;border-color:#000;width:100px;'>" . $v . " </span> ";
 		  }
