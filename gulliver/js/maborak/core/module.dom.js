@@ -7,14 +7,19 @@ leimnud.Package.Public({
 		Version	:"0.1"
 	},
 	content	:{
-		button:function(label,go,style)
+		button:function(label,go,style,prop)
 		{
-			this.make=function(label,go,style)
-			{
-				this.button = document.createElement("input");
+			this.make=function(label,go,style,prop)
+			{				
+				this.button = new this.parent.module.dom.create("input",{
+					className:"module_app_button___gray",
+					type	:"button",
+					value	:label || "Button"
+				}.concat(prop || {}),style || {});
+/*				this.button = document.createElement("input");
 				this.button.className="module_app_button___gray";
 				this.button.type="button";
-				this.button.value=label || "Button";
+				this.button.value=label || "Button";*/
 				this.button.disable=function()
 				{
 					this.button.disabled=true;
@@ -27,8 +32,10 @@ leimnud.Package.Public({
 					this.button.className="module_app_button___gray";
 					return this.button;
 				}.extend(this);
-				this.parent.event.add(this.button,"mouseover",this.mouseover);
-				this.parent.event.add(this.button,"mouseout",this.mouseout);
+				this.button.onmouseover	=this.mouseover;
+				this.button.onmouseout	=this.mouseout;
+				//this.parent.event.add(this.button,"mouseover",this.mouseover);
+				//this.parent.event.add(this.button,"mouseout",this.mouseout);
 				this.parent.dom.setStyle(this.button,style || {});
 				if(typeof go==="function"){
 					this.button.onmouseup=go.args(this.button);
@@ -46,7 +53,7 @@ leimnud.Package.Public({
 				return false;
 			};
 			this.expand();
-			return this.make(label,go,style);
+			return this.make(label,go,style,prop);
 		},
 		input:function(label,style)
 		{
@@ -85,6 +92,65 @@ leimnud.Package.Public({
 			};
 			this.expand();
 			return this.make(label,style);
+		},
+		select:function(options)
+		{
+            this.options = {
+                data:[],
+                selected:0,
+                properties:{},
+                style:{}
+            }.concat(options || {});
+			this.make=function()
+			{
+                this.select = new this.parent.module.dom.create("select",this.options.properties,this.options.style);
+				this.select.className="module_app_select___gray";
+                this.makeData();
+                this.select.selected=function()
+                {
+                    return this.select.options[this.select.selectedIndex];
+                }.extend(this);
+                this.select.clear=function()
+                {
+                    var a = this.select.options;
+                    var b = a.length;
+                    for(var i=0;i<b;i++)
+                    {
+                        a[0].parentNode.removeChild(a[0]);
+                    }
+                }.extend(this);
+                this.select.addOption=function(data)
+                {
+                    data = {
+                        value   :null,
+                        text    :null,
+                        selected:false,
+                        key     :false
+                    }.concat(data || {});
+                    var o = new Option(data.text,data.value,data.selected);
+                    if(data.key===false)
+                    {
+                        this.select.append(o);
+                    }
+                    else
+                    {
+                        this.select.insertBefore(o,this.select.options[data.key]);
+                        this.select.selectedIndex=data.key;
+                    }
+                }.extend(this);
+				return this.select;
+			};
+            this.makeData=function(){
+                var d = this.options.data;
+                var j = d.length;
+
+                for(var i=0;i<j;i++)
+                {
+                    this.select[i]=new Option(d[i].text,d[i].value,((this.options.selected===i)?true:false));
+                }
+            };
+			this.expand();
+			return this.make();
 		},
 		create:function(dom,properties,style)
 		{

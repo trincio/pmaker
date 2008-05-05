@@ -1441,6 +1441,7 @@ leimnud.Package.Public({
 						borderWidth:0
 					}
 				};
+				this.panel.events={remove:this.functionOnFALSE};
 				this.panel.make();
 				this.panel.addContent(this.options.label || "");
 				this.panel.addContent("<br>");
@@ -1480,13 +1481,14 @@ leimnud.Package.Public({
 			};
 			this.functionOnTRUE=function()
 			{
+                this.action=true;
 				this.options.action(this.input.value);
 				this.panel.remove();
 				return false;
 			};
 			this.functionOnFALSE=function()
 			{
-				if(this.options.cancel)
+				if(this.options.cancel && this.action!==true)
 				{
 					this.options.cancel();
 				}

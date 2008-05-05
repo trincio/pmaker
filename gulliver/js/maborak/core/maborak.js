@@ -389,6 +389,20 @@ var maborak = function(){
 			}
 			return this;
 		};
+		/**
+		* Convert array to select data
+		* @return Array
+		*/
+		Array.prototype.toSelect = function()
+		{
+            var s = [];
+			for(var i=0;i<this.length;i++)
+			{
+			    s.push({value:i,text:this[i]});
+			}
+			return s;
+		};
+
 		Object.prototype.isObject	= true;
 		Object.prototype.isArray	= false;
 
@@ -1418,11 +1432,11 @@ var maborak = function(){
 							if(document.defaultView && document.defaultView.getComputedStyle)
 							{
 								var css = document.defaultView.getComputedStyle(d0m, null);
-								value = css ? css.getPropertyValue(st[i]) : null;
+								value = css ? css.getPropertyValue(stringStyle) : null;
 							}
 							else if(d0m.currentStyle)
 							{
-								value = d0m.currentStyle[st[i].camelize()];
+								value = d0m.currentStyle[stringStyle];
 							}
 						}
 						rs.push((value == 'auto')?null:value);

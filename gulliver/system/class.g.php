@@ -842,7 +842,9 @@ class G
           G::sendHeaders ( $filename , 'text/javascript', $download, $downloadFileName ); break;
         case 'htm' :
         case 'html' :
-          G::sendHeaders ( $filename , 'text/html', $download, $downloadFileName ); break;
+            G::sendHeaders ( $filename , 'text/html', $download, $downloadFileName ); break;
+        case 'htc' :
+          G::sendHeaders ( $filename , 'text/plain', $download, $downloadFileName ); break;
         case 'json' :
           G::sendHeaders ( $filename , 'text/plain', $download, $downloadFileName ); break;
         case 'gif' :
@@ -877,7 +879,21 @@ class G
     else {
       throw new Exception ( "file '$file' doesn't exists. " );
     }
-    readfile($filename);
+    if(strtolower($typefile==="js"))
+    {
+        $a = file_get_contents($filename);
+        //$b = preg_replace("/(\/\*[\w\W]*?\*\/|\/\/[\w\W]*?\n| {4}|\t|\r|\n)/","", $a);
+        //$b = preg_replace("/(\/\*[\w\W]*?\*\/|\/\/[\w\W]*?\n| {4}|\t)/","", $a);
+        $b = preg_replace("/(\/\*[\w\W]*?\*\/| {4})/","", $a);
+        $b = preg_replace("/(\/\/[\w\W]*?\n|\n\n|\r\r)/","\n", $b);
+        //$b = preg_replace("/(\/\*[\w\W]*?\*\/|\/\/[\w\W]*?\n)/","", $a);
+        //$b = preg_replace("/(\/\*[\w\W]*?\*\/)/","", $a);
+        print_r($b);
+    }
+    else
+    {
+        readfile($filename);
+    }
   }
 
   function sendHeaders ( $filename , $contentType = '', $download = false, $downloadFileName = '' )

@@ -20,8 +20,8 @@ leimnud.Package.Public({
 				fileJson:this.parent.info.base+"data/maborak.module.rss.feeds.json",
 				proxy	:this.parent.info.base+"server/maborak.module.rss.php"
 			}:{
-				mode	  :"local",
-				rpc	  :"xmlhttp",
+				mode      :"local",
+				rpc       :"xmlhttp",
 				proxy	  :"server/maborak.module.rss.php",
 				fileJson  :"data/maborak.module.rss.feeds.json"
 			}.concat(this.options);
@@ -80,7 +80,16 @@ leimnud.Package.Public({
 					});
 					r.callback=function(rpc)
 					{
-						try{var f = rpc[this.options.rpc].responseText.parseJSON();}catch(e){var f = [];}
+						try{
+                            var ed = rpc[this.options.rpc].responseText.parseJSON();
+                            var f = ed.feeds || [];
+                        }
+                        catch(e)
+                        {
+                            var ed = {category:["General"],feeds:[]};
+                            var f = ed.feeds;
+                        }
+                        this.categoryArray=(ed.category && ed.category.isArray && ed.category.length>0)?ed.category:["General"];
 						this.options.feed = this.options.feed.concat(f || []);
 						this.clearMessage();
 						return this.beforeLoad();
@@ -557,7 +566,7 @@ leimnud.Package.Public({
 		{
 			var myPanel=new leimnud.module.panel();
 			myPanel.options={
-				size:{w:330,h:135},
+				size:{w:330,h:155},
 				position:{x:0,y:0,center:true},
 				title:"Add New feed",
 				theme:"processmaker",
@@ -587,8 +596,8 @@ leimnud.Package.Public({
 			$(table).append(
 				new DOM('tbody').append(
 					new DOM('tr').append(
-						new DOM('td',{innerHTML:"Url:"},{width:"15%",textAlign:"right"}),
-						new DOM('td',false,{width:"85%",padding:1}).append(
+						new DOM('td',{innerHTML:"Url:"},{width:"25%",textAlign:"right"}),
+						new DOM('td',false,{width:"75%",padding:1}).append(
 							url = new input(false,{width:"100%"})
 						)
 					),
@@ -597,6 +606,43 @@ leimnud.Package.Public({
 						new DOM('td',false,{padding:1}).append(
 							title = new input(false,{width:"100%"})
 						)
+					),
+                    new DOM('tr').append(
+						new DOM('td',{innerHTML:"Category:"},{textAlign:"right"}),
+						new DOM('td',false,{padding:1}).append(
+							category = new this.parent.module.dom.select({
+                                data    :this.categoryArray.toSelect().concat([{value:"new",text:"--- New category ---"}]),
+                                properties:{onchange:function(){
+                                    //alert(category.options[category.selectedIndex].value)
+                                    if(category.selected().value==="new")
+                                    {
+                                        new leimnud.module.app.prompt().make({
+                                            label:"Category name:",
+                                            action:function(val)
+                                            {
+                                                //category.clear();
+                                                this.categoryArray.push(val);
+                                                category.addOption({
+                                                    text    :val,
+                                                    value   :this.categoryArray.length,
+                                                    key     :(category.options.length-1),
+                                                    selected:true
+                                                });
+                                            }.extend(this),
+                                            cancel:function()
+                                            {
+                                                category.selectedIndex=0;
+                                            }
+                                        });
+                                    }
+                                    else
+                                    {
+                                    
+                                    }
+                                }.extend(this)},
+                                style:{marginLeft:2}
+						    })
+                        )
 					),
 					new DOM('tr').append(
 						probe = new DOM('td',{innerHTML:"",colSpan:2},{textAlign:"center",padding:1})
