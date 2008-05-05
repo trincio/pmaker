@@ -18,18 +18,17 @@
  *
  */
  
-	require_once ( "classes/model/AppSpool.php" );
+	require_once ( "classes/model/AppMessage.php" );
 
 	class insert
 	{
 		private $db_spool;
-		private $mode;
 		private $status;
 	
-		function __construct($db_spool=array(),$mode='pending')
+		function __construct($db_spool=array())
 		{
 			if(count($db_spool)>0)
-				$db_spool  = $this->db_insert($db_spool,$mode);
+				$db_spool  = $this->db_insert($db_spool);
 
 		}
 
@@ -39,26 +38,24 @@
 
 		}
 		
-		private function db_insert($db_spool,$mode)
+		private function db_insert($db_spool)
 		{
-			$string = '';
-			$sender = strtolower(trim($db_spool['from_email']));
-		
-			foreach($db_spool as $key => $val)
-			{
-				$b1 = 'A480fa0ba807b4A';
-				$b2 = 'B480fa0ba70db4B';
-				$string .= "$key$b1$val$b2";
+			$spool = new AppMessage();
+			$spool->setmsgUid($db_spool['msg_uid']);
+			$spool->setappUid($db_spool['app_uid']);
+			$spool->setdelIndex($db_spool['del_index']);
+			$spool->setappMsgtype($db_spool['app_msg_type']);
+			$spool->setappMsgsubject($db_spool['app_msg_subject']);
+			$spool->setappMsgfrom($db_spool['app_msg_from']);
+			$spool->setappMsgto($db_spool['app_msg_to']);
+			$spool->setappMsgbody($db_spool['app_msg_body']);
+			$spool->setappMsgdate($db_spool['app_msg_date']);
+			$spool->setappMsgcc($db_spool['app_msg_cc']);
+			$spool->setappMsgbcc($db_spool['app_msg_bcc']);
+			$spool->setappMsgtemplate($db_spool['app_msg_template']);
+			$spool->setappMsgstatus($db_spool['app_msg_status']);
 
-			}
-			
-			$time = time();
-
-			$spool = new AppSpool();
-			$spool->setSender($sender);
-			$spool->setFile($string);
-			$spool->setNow($time);
-			$spool->setStatus($mode);
+			$spool->setappMsgattach($db_spool['app_msg_attach']);
 
 			if(!$spool->validate())
 			{
@@ -76,6 +73,7 @@
 				$this->status = 'success';
 			        $spool->save();
 			}
+
 			
 		
 		}
