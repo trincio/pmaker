@@ -73,33 +73,38 @@
 			
 		private function addHeaders()
 		{
-			$header = 'From: "'."{$this->fileData['from_name']}".'" <'."{$this->fileData['from_email']}".'>'."\r\n";
+			$header = '';
 
-			if(count($this->fileData['envelope_to'])>0) {
-				
-				if(count($this->fileData['envelope_to'])>1) {
-					$to = '';
-					foreach($this->fileData['envelope_to'] as $add) {
-						$to .= $add.',';
-					}
-					$to = substr($to,0,strlen(rtrim($to))-1);
-				}
-				else {
-					$to = "{$this->fileData['envelope_to']['0']}";
-				}
-				
+			(strlen($this->fileData['from_name']>0))
+			? $header .= 'From: '."{$this->fileData['from_name']}".' '."{$this->fileData['from_email']}"."\r\n"
+			: $header .= 'From: '."{$this->fileData['from_email']}"."\r\n";
+
+			// to
+			if(strlen($this->fileData['to'])>0)
+			{
+				$to = "{$this->fileData['to']}";
 				$header .= 'To: '.$to."\r\n";
+
 			}
 			
-			$header .= 'X-Sender: <'."{$this->fileData['from_email']}".'>'."\r\n";
+			// cc
+			if(strlen($this->fileData['cc'])>0)
+			{
+				$cc = "{$this->fileData['cc']}";
+				$header .= 'Cc: '.$cc."\r\n";
+
+			}
+
+			$header .= 'X-Sender: '."{$this->fileData['from_email']}"."\r\n";
 			$header .= 'Return-Path: <'."{$this->fileData['from_email']}".'>'."\r\n";
-			$header .= 'Errors-To: <'."{$this->fileData['from_email']}".'>'."\r\n";
-			$header .= 'Reply-To: <'."{$this->fileData['from_email']}".'>'."\r\n";
+			$header .= 'Errors-To: '."{$this->fileData['from_email']}"."\r\n";
+			$header .= 'Reply-To: '."{$this->fileData['from_email']}"."\r\n";
 			
-			if(!empty($this->fileData['reference'])) {
-			
+			if(!empty($this->fileData['reference']))
+			{
 				$header .= 'In-Reply-To: <'."{$this->fileData['reference']}".'>'."\r\n";
 				$header .= 'References: <'."{$this->fileData['reference']}".'>'."\r\n";
+
 			}
 			
 			$header .= 'Message-Id: <'.md5(uniqid(rand())).':'
@@ -108,7 +113,7 @@
 			
 			$header .= 'X-Mailer: ProcessMaker <http://www.processmaker.com>'."\r\n";
 			$header .= 'X-Priority: 3'."\r\n";
-			$header .= 'Date: '.date("r")."\r\n";
+			$header .= 'Date: '."{$this->fileData['date']}"."\r\n";
 			$header .= 'Subject: '."{$this->fileData['subject']}"."\r\n";
 			$header .= 'MIME-Version: 1.0'."\r\n";
 			
@@ -116,13 +121,6 @@
 				? $header .= 'Content-Type: multipart/mixed; '."\r\n\t".'boundary="'.$this->emailboundary.'"'."\r\n"
 				: $header .= 'Content-Type: multipart/alternative; '."\r\n\t".'boundary="'.$this->emailboundary.'"'."\r\n";
 				
-			if(!empty($this->fileData['signature']))
-			{
-				$header .= 'X-FILTER-DSPAM: spam scanned at '."{$this->fileData['domain']}"."\r\n";
-				$header .= 'X-DSPAM-Signature: '."{$this->fileData['signature']}"."\r\n";
-				
-			}
-
 			$header .= 'This is a multi-part message in MIME format'."\r\n";
 
 			$this->headers = $header;

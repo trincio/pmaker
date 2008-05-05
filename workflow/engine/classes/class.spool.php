@@ -20,7 +20,7 @@
  */
 
 	
-	require_once('classes/model/AppSpool.php');
+	require_once('classes/model/AppMessage.php');
 
 	class spoolRun
 	{
@@ -32,7 +32,6 @@
 		function __construct() 
 		{
 			$this->fileData  = array();
-			$this->fileField = '';
 			$this->spool_id  = '';
 			
 			$this->getSpoolFilesList();
@@ -41,7 +40,7 @@
 
 		private function getSpoolFilesList() 
 		{		
-			$sql = "SELECT * FROM APP_MESSAGE WHERE status='pending'";
+			$sql = "SELECT * FROM APP_MESSAGE WHERE APP_MSG_STATUS ='pending'";
 
 			$con = Propel::getConnection("workflow");
 			$stmt = $con->prepareStatement($sql);
@@ -49,36 +48,25 @@
 
 			while($rs->next())
 			{
-				$this->spool_id = $rs->getInt('id');
-				$this->fileField = $rs->getString('file');
-				//$this->base64Decode();
+				$this->spool_id 		= $rs->getInt('APP_MSG_UID');
+				$this->fileData['subject'] 	= $rs->getString('APP_MSG_SUBJECT');
+				$this->fileData['from'] 	= $rs->getString('APP_MSG_FROM');
+				$this->fileData['to'] 		= $rs->getString('APP_MSG_TO');
+				$this->fileData['body'] 	= $rs->getString('APP_MSG_BODY');
+				$this->fileData['date'] 	= $rs->getString('APP_MSG_DATE');
+				$this->fileData['cc'] 		= $rs->getString('APP_MSG_CC');
+				$this->fileData['bcc'] 		= $rs->getString('APP_MSG_BCC');
+				$this->fileData['template'] 	= $rs->getString('APP_MSG_TEMPLATE');
+				$this->fileData['attachments'] 	= array(); //$rs->getString('APP_MSG_ATTACH');
+				$this->fileData['domain'] 	= 'processmaker.com';
+
+				$this->handleFrom();
 				$this->handleEnvelopeTo();
 				$this->handleMail();
-				//$this->updateSpoolStatus();
+				$this->updateSpoolStatus();
 
 			}
 
-		}
-		
-		private function base64Decode() 
-		{	
-			$fields = array('envelope_to','subject','body','from_name','domain');
-
-			$b1 = 'A480fa0ba807b4A';
-			$b2 = 'B480fa0ba70db4B';
-
-			$split = explode($b2,$this->fileField);
-			
-			foreach($split as $val) 
-			{
-				list($k,$v) = explode($b1,$val);
-
-				(in_array($k,$fields)) 
-					? $this->fileData[$k] = base64_decode($v)
-					: $this->fileData[$k] = $v;
-				 
-			}	
-		
 		}
 		
 		private function updateSpoolStatus() 
@@ -87,18 +75,33 @@
 				? $s = 'failed'
 				: $s = 'sent';
 
-			$spool = AppSpoolPeer::retrieveByPK($this->spool_id);
-			$spool->setStatus($s);
+			$spool = AppMessagePeer::retrieveByPK($this->spool_id);
+			$spool->setappMsgstatus($s);
 			$spool->save();
 		
 		}
-		
+
+		private function handleFrom()
+		{
+			if(false !== ($pos = strpos($this->fileData['from'],'<')))
+			{
+				$this->fileData['from_name']  = trim(substr($this->fileData['from'],0,$pos));
+				$this->fileData['from_email'] = trim(substr($this->fileData['from'],$pos));
+
+			}
+
+		}
+
 		private function handleEnvelopeTo() 
 		{
-			$text = trim($this->fileData['envelope_to']);
-			$this->fileData['envelope_to'] = array();
 			$hold = array();
-			
+			$this->fileData['envelope_to'] = array();
+
+			$text  = '';
+			$text .= trim($this->fileData['to']);
+			$text .= ',' . trim($this->fileData['cc']);
+			$text .= ',' . trim($this->fileData['bcc']);
+
 			if(false !== (strpos($text,',')))
 			{
 				$hold = explode(',',$text);
@@ -113,7 +116,7 @@
 			}
 		
 		}
-		
+
 		private function handleMail() 
 		{
 			if(count($this->fileData['envelope_to'])>0) 
