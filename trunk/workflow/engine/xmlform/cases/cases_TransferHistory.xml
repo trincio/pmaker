@@ -33,9 +33,9 @@
 
 <APP_TYPE type="dropdown" colWidth="100" colAlign="center" titleAlign="center">
   <en>Action
-  <option name="PAUSE">Unpaused</option>
-  <option name="CANCEL">Canceled</option>
-  <option name="">Derivated</option>  
+  <option name="PAUSE">Paused</option>
+  <option name="CANCEL">Cancelled</option>
+  <option name="">Derivated</option>
   </en>
 </APP_TYPE>
 

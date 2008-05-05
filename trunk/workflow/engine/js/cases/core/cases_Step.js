@@ -208,7 +208,7 @@ var showTransferHistory = function()
 {
   oPanel = new leimnud.module.panel();
   oPanel.options = {
-  	size	:{w:800,h:525},
+  	size	:{w:900,h:520},
   	position:{x:0,y:0,center:true},
   	title	:G_STRINGS.ID_CASE_HISTORY,
   	theme	:"processmaker",
