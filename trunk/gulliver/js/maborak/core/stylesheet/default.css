@@ -413,7 +413,7 @@ INPUT {
 }
 .panel_close___processmaker{
 	position:absolute;
-	top:4;
+	top:4px;
 	font:normal 0pt tahoma;
 	padding:0px;
 	border:0px solid red;
@@ -1153,8 +1153,11 @@ INPUT {
 }
 
 /*	Theme leimnud.module.app.input	END */
-
-
+.module_app_select___gray
+{
+	font:normal 8pt Tahoma,Sans-serif,MiscFixed;
+	width:100%;
+}
 
 /*	Theme leimnud.module.rss	BEGIN */
 

@@ -1,6 +1,6 @@
 /**
 * @author MaBoRaK
-* @extends Class leimnud Módulo panel
+* @extends Class leimnud.module.panel
 * @param options Panel options
 */
 leimnud.Package.Public({
@@ -830,8 +830,8 @@ leimnud.Package.Public({
 				y:(parseInt(this.parent.dom.getStyle(this.elements.content,"paddingTop") || 0,10)+parseInt(this.parent.dom.getStyle(this.elements.content,"paddingBottom") || 0,10))
 			};
 			var bbb={
-				x:(parseInt(this.parent.dom.getStyle(this.elements.content,"borderLeftWidth") || 0,10)+parseInt(this.parent.dom.getStyle(this.elements.content,"borderRightWidth") || 0,10)),
-				y:(parseInt(this.parent.dom.getStyle(this.elements.content,"borderTopWidth") || 0,10)+parseInt(this.parent.dom.getStyle(this.elements.content,"borderBottomWidth") || 0,10))
+				x:(parseInt(this.parent.dom.getStyle(this.elements.content,"borderLeftWidth") || 1,10)+parseInt(this.parent.dom.getStyle(this.elements.content,"borderRightWidth") || 1,10)),
+				y:(parseInt(this.parent.dom.getStyle(this.elements.content,"borderTopWidth") || 1,10)+parseInt(this.parent.dom.getStyle(this.elements.content,"borderBottomWidth") || 1,10))
 			};
 			//alert(brdr.y+((this.parent.browser.isIE)?-1:pddn.y+1)+2)
 			return {
@@ -936,6 +936,7 @@ leimnud.Package.Public({
 		this.remove=function()
 		{
 			//alert(this.parent.dom.getOpacity(this.elements.shadow))
+            if(this.inRemove===true){return false;}else{this.inRemove=true;}
 			var e	= [];
 			if(this.options.fx.fadeOut===true)
 			{

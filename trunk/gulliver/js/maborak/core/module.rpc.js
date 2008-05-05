@@ -156,7 +156,9 @@ leimnud.Package.Public({
 		{
 			this.interval=false;
 			this.options = {
-				url	:false
+				url	:false,
+				method	:"GET",
+				args	:""
 			}.concat(options || {});
 			this.begin=new Date().getTime();
 			this.tmp = "rpcJson_"+this.begin;
@@ -167,17 +169,32 @@ leimnud.Package.Public({
 				if(!this.options.url || !this.par){return false;}
 				this.script		= document.createElement("script");
 				this.par.appendChild(this.script);
-				this.script.src  	= this.server+"?data="+escape(this.options.toJSONString())+"&tmp="+this.tmp;
+				//this.script.src  	= this.server+"?data="+escape(this.options.toJSONString())+"&tmp="+this.tmp;
+				this.script.src  	= this.server
+							  +"?tmp="+this.tmp
+							  +"&url="+this.options.url
+							  +"&method="+this.options.method
+							  +"&args="+encodeURIComponent(this.options.args);
+	//						  +"&args="+escape(this.options.args);
+	//			this.script.src  	= this.server+"?data="+this.options.toJSONString()+"&tmp="+this.tmp;
 				this.script.type 	= "text/javascript";
 				this.script.charset 	= this.parent.charset;
 				this.interval = setInterval(this.probe,500);
 			};
 			this.probe=function()
 			{
-				if(window[this.tmp] && window[this.tmp].loaded===true)
+				this.time = new Date().getTime()-this.begin;
+				if(window[this.tmp] && window[this.tmp].loaded===true || this.time>65000)
 				{
 					this.interval = clearInterval(this.interval);
-					var rt = window[this.tmp].data.parseJSON();
+                    var rt;
+                    try{
+	    				rt = window[this.tmp].data.parseJSON();
+                    }
+                    catch(e)
+                    {
+    					rt = "";
+                    }
 					if(this.options.debug===true && console.info)
 					{
 						console.info(rt)
@@ -198,7 +215,8 @@ leimnud.Package.Public({
 						myDocument.async="false";
 						try{
 						 	 myDocument.loadXML(rt || "<xml>empty</xml>");
-						}catch(e)
+						}
+                        catch(e)
 						{
 						 	 myDocument.loadXML("<xml>empty</xml>");
 						}
@@ -220,14 +238,6 @@ leimnud.Package.Public({
 					if(this.callback)
 					{
 						this.callback.args(this)();
-					}
-				}
-				else
-				{
-					this.time = new Date().getTime()-this.begin;
-					if(this.time>30000)
-					{
-						this.interval = clearInterval(this.interval);
 					}
 				}
 			};
