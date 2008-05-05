@@ -20,32 +20,39 @@
 
 	if( isset ( $_POST['form']) ) 
 	{	
-    		$frm = $_POST['form']; 	
+    		$frm = "{$_POST['form']}"; 	
 
 		G::LoadClass('insert');
 
 		$db_spool			= array();
 		
-		$db_spool['envelope_to']	= base64_encode($frm['to_email']);
-		$db_spool['subject']		= base64_encode($frm['subject']);
-		$db_spool['body'] 		= base64_encode($frm['body']);
-	
-		$db_spool['from_name']  	= base64_encode($frm['from_name']);
-		$db_spool['from_email'] 	= "{$frm['from_email']}";
-		$db_spool['domain'] 	        = base64_encode($frm['domain']);
+		$db_spool['msg_uid']		= 'msg_uid';
+		$db_spool['app_uid']		= 'app_uid';
+		$db_spool['del_index']		= 99; // random number
+		$db_spool['app_msg_type']	= 'email message';
+		$db_spool['app_msg_subject']	= 'subject field'; //"{$frm['subject']}";
+		$db_spool['app_msg_from']	= '<ian@colosa.com>';//"{$frm['from_email']}";
+		$db_spool['app_msg_to']		= '<ika@openmail.cc>'; //"{$frm['to_email']}";
+		$db_spool['app_msg_body']	= 'body field'; //"{$frm['body']}";
+		$db_spool['app_msg_date']	= time();
+		$db_spool['app_msg_cc']		= "cc";
+		$db_spool['app_msg_bcc']	= "bcc";
+		$db_spool['app_msg_template']	= "/path/to/template";
+		$db_spool['app_msg_status']	= "pending";
 
-		
-		$db_spool['attachments'] = array();
+		$db_spool['app_msg_attach'] 	= serialize(array('attachment_1','attachment_2'));
 
-		if( isset($frm['attachments']) && count($frm['attachments']) >0 ) 
+		/*
+		if(isset($frm['attachments']) && count($frm['attachments']) >0 ) 
 		{
 			foreach($frm['attachments'] as $attchment) 
 			{
-				$db_spool['attachments'][] = "$attchment";
+				$db_spool['app_msg_attach'][] = "$attchment";
 
 			}
 
-		}
+		}*/
+
 		$insert = new insert($db_spool);
 		$status = $insert->returnStatus();
 		unset($insert);
