@@ -1182,10 +1182,22 @@ class Cases
         $c->addSelectColumn(AppDelegationPeer::DEL_DELEGATE_DATE);
         $c->addSelectColumn(AppDelegationPeer::DEL_INIT_DATE);
         $c->addSelectColumn(AppDelegationPeer::DEL_FINISH_DATE);
-
+				
+				$c->addSelectColumn(AppDelayPeer::APP_TYPE);			
+				$c->addSelectColumn(AppDelayPeer::APP_ENABLE_ACTION_DATE);			
+				$c->addSelectColumn(AppDelayPeer::APP_DISABLE_ACTION_DATE);			
         //APP_DELEGATION LEFT JOIN USERS
         $c->addJoin(AppDelegationPeer::USR_UID, UsersPeer::USR_UID, Criteria::LEFT_JOIN);
 
+        //APP_DELAY FOR MORE DESCRIPTION
+        //$c->addJoin(AppDelegationPeer::DEL_INDEX, AppDelayPeer::APP_DEL_INDEX, Criteria::LEFT_JOIN);
+        //$c->addJoin(AppDelegationPeer::APP_UID, AppDelayPeer::APP_UID, Criteria::LEFT_JOIN);        
+        $del = DBAdapter::getStringDelimiter();
+        $app = array();
+        $app[] = array(AppDelegationPeer::DEL_INDEX, AppDelayPeer::APP_DEL_INDEX);
+        $app[] = array(AppDelegationPeer::APP_UID, AppDelayPeer::APP_UID);        
+        $c->addJoinMC($app, Criteria::LEFT_JOIN);
+        
         //  LEFT JOIN CONTENT TAS_TITLE
         $c->addAlias("TAS_TITLE", 'CONTENT');
         $del = DBAdapter::getStringDelimiter();
@@ -1194,7 +1206,7 @@ class Cases
         $appTitleConds[] = array('TAS_TITLE.CON_CATEGORY', $del . 'TAS_TITLE' . $del);
         $appTitleConds[] = array('TAS_TITLE.CON_LANG', $del . SYS_LANG . $del);
         $c->addJoinMC($appTitleConds, Criteria::LEFT_JOIN);
-
+				   
         //WHERE
         $c->add(AppDelegationPeer::APP_UID, $sAppUid);
 
