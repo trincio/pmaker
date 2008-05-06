@@ -884,8 +884,8 @@ class G
         $a = file_get_contents($filename);
         //$b = preg_replace("/(\/\*[\w\W]*?\*\/|\/\/[\w\W]*?\n| {4}|\t|\r|\n)/","", $a);
         //$b = preg_replace("/(\/\*[\w\W]*?\*\/|\/\/[\w\W]*?\n| {4}|\t)/","", $a);
-        $b = preg_replace("/(\/\*[\w\W]*?\*\/| {4})/","", $a);
-        $b = preg_replace("/(\/\/[\w\W]*?\n|\n\n|\r\r)/","\n", $b);
+        $b = preg_replace("/(\/\*[\w\W]*?\*\/)/","", $a);
+        //$b = preg_replace("/(\/\/[\w\W]*?\n|\n\n|\r\r)/","\n", $b);
         //$b = preg_replace("/(\/\*[\w\W]*?\*\/|\/\/[\w\W]*?\n)/","", $a);
         //$b = preg_replace("/(\/\*[\w\W]*?\*\/)/","", $a);
         print_r($b);
