@@ -231,18 +231,24 @@ var processmap=function(){
 									fin.title	= G_STRINGS.ID_END_OF_PROCESS;
 									div.appendChild(fin);
 
-									[dr1,dr2,dr3,dr4,dr5,dr6,fin].map(function(el){
+                                	var ini = document.createElement("img");
+									ini.src = this.options.images_dir+"7.gif";
+									ini.title	= "Starting task";
+									div.appendChild(ini);
+
+
+									[dr1,dr2,dr3,dr4,dr5,dr6,fin,ini].map(function(el){
 										el.className ="processmap_toolbarItem___"+this.options.theme
 									}.extend(this));
 									this.dragables.derivation = new this.parent.module.drag({
-									elements:[dr1,dr2,dr3,dr4,dr5,dr6,fin],
+									elements:[dr1,dr2,dr3,dr4,dr5,dr6,fin,ini],
 										fx:{
 											type	: "clone",
 											target	: this.panels.editor.elements.content,
 											zIndex	: 11
 										}
 									});
-									this.dragables.derivation.typesDerivation=["simple","double","conditional","conditional1","conditional2","conditional3","final"];
+									this.dragables.derivation.typesDerivation=["simple","double","conditional","conditional1","conditional2","conditional3","final","initial"];
 									this.dragables.derivation.events={
 										init	:[function(){
 											this.dragables.derivation.noDrag=true;
@@ -268,7 +274,7 @@ var processmap=function(){
 									};
 									this.dragables.derivation.make();
 									//drg.options.elements=[];
-									this.parent.dom.setStyle([dr1,dr2,dr3,dr4,dr5,dr6,fin],{
+									this.parent.dom.setStyle([dr1,dr2,dr3,dr4,dr5,dr6,fin,ini],{
 										cursor:"move"
 									});
 					panel.loader.hide();
@@ -498,6 +504,7 @@ var processmap=function(){
 				var tmS;
 				var typeDerivation = this.dragables.derivation.currentElementInArray;
 				if(typeDerivation===6){
+                    
 					var vars=this.data.db.task[uid];
 					var vtd = {
 						type:0,
@@ -517,6 +524,24 @@ var processmap=function(){
 					this.dragables.derivation.noDrag=false;
 					return false;
 				}
+                else if(typeDerivation===7)
+                {
+					var vars=this.data.db.task[uid];
+                    this.data.render.setTaskINI({task:vars.uid,value:true});
+                    this.inDerivationDrag=false;
+					this.dragables.derivation.noDrag=false;
+                    var r = new leimnud.module.rpc.xmlhttp({
+			             		url:"../tasks/tasks_Ajax",
+				             	args:"function=saveTaskData&oData="+{
+                                    TAS_START:"TRUE",
+                                    TAS_UID:vars.uid
+                                }.toJSONString()
+			        });
+			        r.make();
+
+
+                    return false;
+                }
 				this.observers.menu.update();
 				tmS = this.derivationArrowToDrop = document.createElement("div");
 				this.parent.dom.setStyle(tmS,{
