@@ -241,8 +241,9 @@ switch ($_GET['TYPE'])
         }
         $sFilename = G::replaceDataField($aOD['OUT_DOC_FILENAME'], $aApplication['APP_DATA']);*/
         $sFilename = ereg_replace('[^A-Za-z0-9_]', '_', G::replaceDataField($aOD['OUT_DOC_FILENAME'], $Fields['APP_DATA']));
+        $pathOutput = PATH_DOCUMENT . $_SESSION['APPLICATION'] . PATH_SEP . 'outdocs'. PATH_SEP ;
         //$oOutputDocument->generate($_GET['UID'], $aApplication['APP_DATA'], PATH_DOCUMENT . $_SESSION['APPLICATION'] . '/outdocs/', $sFilename, $aOD['OUT_DOC_TEMPLATE']);
-        $oOutputDocument->generate($_GET['UID'], $Fields['APP_DATA'], PATH_DOCUMENT . $_SESSION['APPLICATION'] . '/outdocs/', $sFilename, $aOD['OUT_DOC_TEMPLATE']);
+        $oOutputDocument->generate($_GET['UID'], $Fields['APP_DATA'], $pathOutput, $sFilename, $aOD['OUT_DOC_TEMPLATE']);
         require_once 'classes/model/AppDocument.php';
         $oCriteria = new Criteria('workflow');
         $oCriteria->add(AppDocumentPeer::APP_UID,      $_SESSION['APPLICATION']);
@@ -288,6 +289,21 @@ switch ($_GET['TYPE'])
           $oAppDocument = new AppDocument();
           $sDocUID = $oAppDocument->create($aFields);
         }
+        //Plugin Hook PM_UPLOAD_DOCUMENT for upload document
+    	  $oPluginRegistry =& PMPluginRegistry::getSingleton();
+        if ( $oPluginRegistry->existsTrigger ( PM_UPLOAD_DOCUMENT ) && class_exists ('uploadDocumentData' ) ) {
+          $oData['APP_UID']	  = $_SESSION['APPLICATION'];
+          $documentData = new uploadDocumentData (
+                            $_SESSION['APPLICATION'], 
+                            $_SESSION['USER_LOGGED'], 
+                            $pathOutput . $sFilename . '.pdf',
+                            $sFilename. '.pdf',
+                            $sDocUID
+                            );
+        
+  	      $oPluginRegistry->executeTriggers ( PM_UPLOAD_DOCUMENT , $documentData );
+  	      unlink ( $sPathName . $sFileName );
+        }
         G::header('location: cases_Step?TYPE=OUTPUT_DOCUMENT&UID=' . $_GET['UID'] . '&POSITION=' . $_SESSION['STEP_POSITION'] . '&ACTION=VIEW&DOC=' . $sDocUID);
         break;
       case 'VIEW':
@@ -298,6 +314,15 @@ switch ($_GET['TYPE'])
         $aFields['FILE1'] = 'cases_ShowOutputDocument?a=' . $aFields['APP_DOC_UID'] . '&ext=doc&random=' . rand();
         $aFields['FILE2'] = 'cases_ShowOutputDocument?a=' . $aFields['APP_DOC_UID'] . '&ext=pdf&random=' . rand();
         $G_PUBLISH->AddContent('xmlform', 'xmlform', 'cases/cases_ViewOutputDocument1', '', G::array_merges($aOD, $aFields), '');
+    //call plugin
+    if ( $oPluginRegistry->existsTrigger ( PM_CASE_DOCUMENT_LIST ) ) {
+      $folderData = new folderData (null, null, $_SESSION['APPLICATION'], null, $_SESSION['USER_LOGGED'] );
+      $oPluginRegistry =& PMPluginRegistry::getSingleton();
+      $oPluginRegistry->executeTriggers ( PM_CASE_DOCUMENT_LIST , $folderData );
+    }
+    else
+      $G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_InputdocsList', $oCase->getInputDocumentsCriteria($_SESSION['APPLICATION'], $_SESSION['INDEX'], $_GET['UID']), '');//$aFields
+    //end plugin
       break;
     }
     break;
