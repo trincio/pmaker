@@ -294,13 +294,13 @@ switch ($_GET['TYPE'])
         if ( $oPluginRegistry->existsTrigger ( PM_UPLOAD_DOCUMENT ) && class_exists ('uploadDocumentData' ) ) {
           $oData['APP_UID']	  = $_SESSION['APPLICATION'];
           $documentData = new uploadDocumentData (
-                            $_SESSION['APPLICATION'], 
-                            $_SESSION['USER_LOGGED'], 
+                            $_SESSION['APPLICATION'],
+                            $_SESSION['USER_LOGGED'],
                             $pathOutput . $sFilename . '.pdf',
                             $sFilename. '.pdf',
                             $sDocUID
                             );
-        
+
   	      $oPluginRegistry->executeTriggers ( PM_UPLOAD_DOCUMENT , $documentData );
   	      unlink ( $sPathName . $sFileName );
         }

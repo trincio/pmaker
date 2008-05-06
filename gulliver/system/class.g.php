@@ -1780,6 +1780,9 @@ class G
         if ( substr($cons,0,4)==='SYS_' ) $sysCon[$cons] = $value;
       }
     }
+    $sysCon['APPLICATION'] = (isset($_SESSION['APPLICATION']) ? $_SESSION['APPLICATION'] : '');
+    $sysCon['PROCESS'] = (isset($_SESSION['PROCESS']) ? $_SESSION['PROCESS'] : '');
+    $sysCon['TASK'] = (isset($_SESSION['TASK']) ? $_SESSION['TASK'] : '');
     $_SESSION = isset($_SESSION) ? $_SESSION : Array();
     foreach( $_SESSION as $name => $value )
     {
