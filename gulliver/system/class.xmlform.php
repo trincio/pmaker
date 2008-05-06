@@ -248,11 +248,11 @@ class XmlForm_Field
    * @parameter string values
    * @return string
    */
-  function renderGrid( $values=array(), $owner = NULL )
+  function renderGrid( $values=array(), $owner = NULL, $onlyValue = false )
   {
     $result=array();$r=1;
     foreach($values as $v) {
-      $result[] = $this->render($v, $owner, '['. $owner->name .']['.$r.']');
+      $result[] = $this->render($v, $owner, '['. $owner->name .']['.$r.']', $onlyValue);
       $r++;
     }
     return $result;
@@ -1113,18 +1113,18 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText
 		  }
 		  if (!$onlyValue) {
 		    $html="<input type='hidden' id='form[" . $owner->name .']['.$r.']['.$this->name . "]' name='form[" . $owner->name .']['.$r.']['.$this->name . "]' value='".$v."'>";
+		    if (isset($owner->owner->id)) {
+		      $html.="<span id='span[".$owner->owner->id."][" . $owner->name .']['.$r.']['.$this->name . "]' name='span[".$owner->owner->id."][" . $owner->name .']['.$r.']['.$this->name . "]' style='border:1;border-color:#000;width:100px;'>" . $v . " </span> ";
+		    }
+		    else {
+		    	$html.="<span id='span[".$owner->id."][" . $owner->name .']['.$r.']['.$this->name . "]' name='span[".$owner->id."][" . $owner->name .']['.$r.']['.$this->name . "]' style='border:1;border-color:#000;width:100px;'>" . $v . " </span> ";
+		    }
+		    if($this->mode == 'edit')
+		    	$html.="<a href='#' onclick=\"showDatePicker(event,'".$owner->owner->id."', '" . $owner->name .']['.$r.']['.$this->name ."', '" . $v. "', '" . $startDate . "', '" . $endDate . "'); return false;\" ><img src='/controls/cal.gif' border='0'></a>";
 		  }
 		  else {
-		    $html='';
+		    $html=$v;
 		  }
-		  if (isset($owner->owner->id)) {
-		    $html.="<span id='span[".$owner->owner->id."][" . $owner->name .']['.$r.']['.$this->name . "]' name='span[".$owner->owner->id."][" . $owner->name .']['.$r.']['.$this->name . "]' style='border:1;border-color:#000;width:100px;'>" . $v . " </span> ";
-		  }
-		  else {
-		  	$html.="<span id='span[".$owner->id."][" . $owner->name .']['.$r.']['.$this->name . "]' name='span[".$owner->id."][" . $owner->name .']['.$r.']['.$this->name . "]' style='border:1;border-color:#000;width:100px;'>" . $v . " </span> ";
-		  }
-		  if($this->mode == 'edit')
-		  	$html.="<a href='#' onclick=\"showDatePicker(event,'".$owner->owner->id."', '" . $owner->name .']['.$r.']['.$this->name ."', '" . $v. "', '" . $startDate . "', '" . $endDate . "'); return false;\" ><img src='/controls/cal.gif' border='0'></a>";
 		  $result[] = $html;
 		  $r++;
     }
@@ -1471,24 +1471,38 @@ class XmlForm_Field_Dropdown extends XmlForm_Field
    * @parameter string owner
    * @return string
    */
-  function render( $value = NULL , $owner = NULL , $rowId = '' )
+  function render( $value = NULL , $owner = NULL , $rowId = '', $onlyValue = false )
   {
     $this->executeSQL( $owner );
-    if ($this->mode === 'edit') {
-      $html='<select class="module_app_input___gray" id="form'.$rowId.'['.$this->name.']" name="form'.$rowId.'['.$this->name.']" '.(($this->style)?'style="'.$this->style.'"':'').'>';
-    } elseif ($this->mode === 'view') {
-      $html = $this->htmlentities( isset($this->options[ $value ])? $this->options[ $value ]:'' , ENT_COMPAT, 'utf-8');
-      $html .='<select class="module_app_input___gray" id="form'.$rowId.'['.$this->name.']" name="form'.$rowId.'['.$this->name.']" style="display:none" disabled '.(($this->style)?'style="'.$this->style.'"':'').'>';
+    if (!$onlyValue) {
+      if ($this->mode === 'edit') {
+        $html='<select class="module_app_input___gray" id="form'.$rowId.'['.$this->name.']" name="form'.$rowId.'['.$this->name.']" '.(($this->style)?'style="'.$this->style.'"':'').'>';
+      } elseif ($this->mode === 'view') {
+        $html = $this->htmlentities( isset($this->options[ $value ])? $this->options[ $value ]:'' , ENT_COMPAT, 'utf-8');
+        $html .='<select class="module_app_input___gray" id="form'.$rowId.'['.$this->name.']" name="form'.$rowId.'['.$this->name.']" style="display:none" disabled '.(($this->style)?'style="'.$this->style.'"':'').'>';
+      }
+        foreach($this->option as $optionName => $option) {
+          $html.='<option value="'.$optionName.'" '.
+            ($optionName==$value?'selected="selected"':'') . '>'.$option.'</option>';
+        }
+        foreach($this->sqlOption as $optionName => $option) {
+          $html.='<option value="'.$optionName.'" '.
+            ($optionName==$value?'selected="selected"':'') . '>'.$option.'</option>';
+        }
+        $html.='</select>';
     }
+    else {
       foreach($this->option as $optionName => $option) {
-        $html.='<option value="'.$optionName.'" '.
-          ($optionName==$value?'selected="selected"':'') . '>'.$option.'</option>';
+        if ($optionName==$value) {
+          $html = $option;
+        }
       }
       foreach($this->sqlOption as $optionName => $option) {
-        $html.='<option value="'.$optionName.'" '.
-          ($optionName==$value?'selected="selected"':'') . '>'.$option.'</option>';
+        if ($optionName==$value) {
+          $html = $option;
+        }
       }
-      $html.='</select>';
+    }
     return $html;
   }
 }
