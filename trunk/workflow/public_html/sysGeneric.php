@@ -4,6 +4,28 @@ ini_set('display_errors','On');
 ini_set('error_reporting', E_ALL  );
 ini_set('memory_limit', '80M');
 
+if (ini_get('magic_quotes_gpc') == '1') {
+  if (is_array($_POST)) {
+    foreach($_POST as $sKey1 => $vValue1) {
+      if (is_array($vValue1)) {
+        foreach($vValue1 as $sKey2 => $vValue2) {
+          if (is_array($vValue2)) {
+            foreach($vValue2 as $sKey3 => $vValue3) {
+              $_POST[$sKey1][$sKey2][$sKey3] = stripslashes($_POST[$sKey1][$sKey2][$sKey3]);
+            }
+          }
+          else {
+            $_POST[$sKey1][$sKey2] = stripslashes($_POST[$sKey1][$sKey2]);
+          }
+        }
+      }
+      else {
+        $_POST[$sKey1] = stripslashes($_POST[$sKey1]);
+      }
+    }
+  }
+}
+
 $path = Array();
 $sf = $_SERVER['SCRIPT_FILENAME'];
 
@@ -84,8 +106,8 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
   if ( G::virtualURI($_SERVER['REQUEST_URI'], $virtualURITable , $realPath )) {
   	// review if the file requested belongs to public_html plugin
     if ( substr ( $realPath, 0,6) == 'plugin' ) {
-    	
-      $paths = explode ( PATH_SEP, $realPath );  
+
+      $paths = explode ( PATH_SEP, $realPath );
       $paths[0] = substr ( $paths[0],6);
       if ( count($paths) == 2 )  {
         $pathsQuery = explode('?', $paths[1]);
@@ -354,14 +376,15 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
       header('Cache-Control: no-cache, must-revalidate, post-check=0,pre-check=0 ');
       header('P3P: CP="CAO PSA OUR"');
 
-      if(isset($_SESSION['USER_LOGGED'])) {
+      if(isset( $_SESSION['USER_LOGGED'] )) {
         $RBAC->initRBAC();
         $RBAC->loadUserRolePermission( $RBAC->sSystem, $_SESSION['USER_LOGGED'] );
       }
       else {
         //This sentence is used when you lost the Session
-        if(SYS_TARGET != 'authentication' and  SYS_TARGET != 'login' and  SYS_TARGET != 'dbInfo' and  SYS_TARGET != 'sysLoginVerify' and  SYS_TARGET != 'updateTranslation'  and  SYS_TARGET != 'updateTranslation' 
-        and  SYS_TARGET != 'wsBase' and  SYS_TARGET != 'demo'){
+        if ( SYS_TARGET != 'authentication' and  SYS_TARGET != 'login'
+        and  SYS_TARGET != 'dbInfo'         and  SYS_TARGET != 'sysLoginVerify'
+        and  SYS_TARGET != 'updateTranslation'  and  SYS_COLLECTION != 'services' ){
           header ("location: ".SYS_URI."login/login.php");
           die();
         }
