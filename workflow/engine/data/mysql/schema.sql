@@ -649,5 +649,24 @@ CREATE TABLE `APP_DELAY`
 	PRIMARY KEY (`APP_DELAY_UID`),
 	KEY `indexAppDelay`(`PRO_UID`, `APP_UID`, `APP_THREAD_INDEX`, `APP_DEL_INDEX`, `APP_NEXT_TASK`, `APP_DELEGATION_USER`, `APP_DISABLE_ACTION_USER`)
 )Type=MyISAM  DEFAULT CHARSET='utf8' COMMENT='APP_DELAY';
+#-----------------------------------------------------------------------------
+#-- SESSION
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `SESSION`;
+
+
+CREATE TABLE `SESSION`
+(
+	`SES_UID` VARCHAR(32) default '' NOT NULL,
+	`SES_STATUS` VARCHAR(16) default 'ACTIVE' NOT NULL,
+	`USR_UID` VARCHAR(32) default 'ACTIVE' NOT NULL,
+	`SES_REMOTE_IP` VARCHAR(32) default '0.0.0.0' NOT NULL,
+	`SES_INIT_DATE` VARCHAR(19) default '' NOT NULL,
+	`SES_DUE_DATE` VARCHAR(19) default '' NOT NULL,
+	`SES_END_DATE` VARCHAR(19) default '' NOT NULL,
+	PRIMARY KEY (`SES_UID`),
+	KEY `indexSession`(`SES_UID`)
+)Type=MyISAM  DEFAULT CHARSET='utf8' COMMENT='SESSION';
 # This restores the fkey checks, after having unset them earlier
 SET FOREIGN_KEY_CHECKS = 1;

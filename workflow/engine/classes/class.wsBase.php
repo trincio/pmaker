@@ -46,6 +46,7 @@ require_once ( "classes/model/Task.php" );
 require_once ( "classes/model/TaskUser.php" );
 require_once ( "classes/model/Triggers.php" );
 require_once ( "classes/model/Users.php" );
+require_once ( "classes/model/Session.php" );
 G::LoadClass('pmScript');
 
 class wsResponse
@@ -69,6 +70,10 @@ class wsResponse
     $res .= "<array>" . $this->timestamp . "</array>";
     $res .= "<$operation>";
     return $res;
+	}
+
+	function getPayloadArray (  ) {
+    return array("status_code" => $this->status_code , 'message'=> $this->message, 'timestamp' => $this->timestamp);
 	}
 }
 
@@ -104,7 +109,7 @@ class wsBase
       	throw ( new Exception ( serialize ( $wsResponse ) ));
     	}
     
-      // Asign the uid of user to userloggedobj
+      // check access to PM
       $RBAC->loadUserRolePermission( $RBAC->sSystem, $uid );
 	    $res = $RBAC->userCanAccess("PM_LOGIN");
       
@@ -115,8 +120,22 @@ class wsBase
         	$wsResponse = new wsResponse (2, G::loadTranslation ('ID_USER_HAVENT_RIGHTS_SYSTEM'));
       	throw ( new Exception ( serialize ( $wsResponse ) ));
 	    }
-      
-	  	$wsResponse = new wsResponse ('0', $uid );
+
+      $sessionId = G::generateUniqueID();
+	  	$wsResponse = new wsResponse ('0', $sessionId );
+	  	
+	  	
+	  	$session = new Session ();
+	  	$session->setSesUid ( $sessionId );
+	  	$session->setSesStatus ( 'ACTIVE');
+	  	$session->setUsrUid ( $uid );
+	  	$session->setSesRemoteIp ( $_SERVER['REMOTE_ADDR'] );
+	  	$session->setSesInitDate ( date ('Y-m-d H:i:s') );
+	  	$session->setSesDueDate  ( date ('Y-m-d H:i:s', mktime(date('H'),date('i')+5, date('s'), date('m'),date('d'),date('Y') ) ) );
+	  	$session->setSesEndDate ( '' );
+	  	$session->Save();
+		  	  
+	  	//save the session in DataBase
 	  	return $wsResponse;
     }
     catch ( Exception $e ) {
@@ -126,14 +145,26 @@ class wsBase
 
 	}
 
-	public function listOfProcess( ) {
+	public function processList( ) {
     try {	
-	  	$wsResponse = new wsResponse ('123', 'nathing is happen' );
-	  	return $wsResponse;
+  	  $result  = array();
+  	  $oCriteria = new Criteria('workflow');
+      $oCriteria->add(ProcessPeer::PRO_STATUS ,  'ACTIVE' );
+      $oDataset = ProcessPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      
+      while ($aRow = $oDataset->getRow()) {
+      	$oProcess = new Process();
+      	$arrayProcess = $oProcess->Load( $aRow['PRO_UID'] );
+      	$result[] = array ( 'guid' => $aRow['PRO_UID'], 'name' => $arrayProcess['PRO_TITLE'] );
+      	$oDataset->next();
+      }
+      return $result;
     }
     catch ( Exception $e ) {
-    	$wsResponse = unserialize ( $e->getMessage() );
-	  	return $wsResponse;
+    	$result[] = array ( 'guid' => $e->getMessage(), 'name' => $e->getMessage() );
+      return $result;
     }		
 	}
 	

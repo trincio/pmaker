@@ -3793,4 +3793,99 @@
       </vendor>
     </index>
   </table>
+  <table name="SESSION">
+    <vendor type="mysql">
+      <parameter name="Name" value="SESSION"/>
+      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Version" value="10"/>
+      <parameter name="Row_format" value="Dynamic"/>
+      <parameter name="Rows" value="0"/>
+      <parameter name="Avg_row_length" value="0"/>
+      <parameter name="Data_length" value="0"/>
+      <parameter name="Max_data_length" value="281474976710655"/>
+      <parameter name="Index_length" value="1024"/>
+      <parameter name="Data_free" value="0"/>
+      <parameter name="Auto_increment" value=""/>
+      <parameter name="Create_time" value="2008-04-25 10:30:00"/>
+      <parameter name="Update_time" value="2008-04-25 10:30:00"/>
+      <parameter name="Check_time" value=""/>
+      <parameter name="Collation" value="utf8_general_ci"/>
+      <parameter name="Checksum" value=""/>
+      <parameter name="Create_options" value=""/>
+      <parameter name="Comment" value="SESSION"/>
+    </vendor>
+    <column name="SES_UID" type="VARCHAR" size="32" required="true" primaryKey="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="SES_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value="PRI"/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="SES_STATUS" type="VARCHAR" size="16" required="true" default="ACTIVE">
+      <vendor type="mysql">
+        <parameter name="Field" value="SET_STATUS"/>
+        <parameter name="Type" value="varchar(16)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="ACTIVE"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="USR_UID" type="VARCHAR" size="32" required="true" default="ACTIVE">
+      <vendor type="mysql">
+        <parameter name="Field" value="SET_STATUS"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="ACTIVE"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="SES_REMOTE_IP" type="VARCHAR" size="32" required="true" default="0.0.0.0">
+      <vendor type="mysql">
+        <parameter name="Field" value="SES_REMOTE_IP"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="0.0.0.0"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="SES_INIT_DATE" type="VARCHAR" size="19" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="SES_INIT_DATE"/>
+        <parameter name="Type" value="int(11)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="0"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="SES_DUE_DATE" type="VARCHAR" size="19" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="SES_DUE_DATE"/>
+        <parameter name="Type" value="int(11)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="0"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="SES_END_DATE" type="VARCHAR" size="19" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="SES_END_DATE"/>
+        <parameter name="Type" value="int(11)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="0"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <index name="indexSession">
+      <index-column name="SES_UID"/>
+    </index>
+  </table>
 </database>
