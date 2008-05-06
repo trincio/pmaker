@@ -314,16 +314,6 @@ class processMap {
   		$oApplication     = new Application();
   		$oAppDelegation   = new AppDelegation();
   		$oAppDocument     = new AppDocument();
-  		//Delete the tasks of process
-  		$oCriteria = new Criteria('workflow');
-  	  $oCriteria->add(TaskPeer::PRO_UID, $sProcessUID);
-  	  $oDataset = TaskPeer::doSelectRS($oCriteria);
-      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-      $oDataset->next();
-      while ($aRow = $oDataset->getRow()) {
-        $this->deleteTask($aRow['TAS_UID']);
-      	$oDataset->next();
-      }
       //Delete the applications of process
   		$oCriteria = new Criteria('workflow');
   	  $oCriteria->add(ApplicationPeer::PRO_UID, $sProcessUID);
@@ -352,6 +342,16 @@ class processMap {
         	$oDataset2->next();
         }
         $oApplication->remove($aRow['APP_UID']);
+      	$oDataset->next();
+      }
+      //Delete the tasks of process
+  		$oCriteria = new Criteria('workflow');
+  	  $oCriteria->add(TaskPeer::PRO_UID, $sProcessUID);
+  	  $oDataset = TaskPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      while ($aRow = $oDataset->getRow()) {
+        $this->deleteTask($aRow['TAS_UID']);
       	$oDataset->next();
       }
   		//Delete the dynaforms of process

@@ -66,27 +66,27 @@ class AppDelayMapBuilder {
 
 		$tMap->addPrimaryKey('APP_DELAY_UID', 'AppDelayUid', 'string', CreoleTypes::VARCHAR, true, 32);
 
-		$tMap->addColumn('PRO_UID', 'ProUid', 'string', CreoleTypes::VARCHAR, true, null);
+		$tMap->addColumn('PRO_UID', 'ProUid', 'string', CreoleTypes::VARCHAR, true, 32);
 
-		$tMap->addColumn('APP_UID', 'AppUid', 'string', CreoleTypes::VARCHAR, true, null);
+		$tMap->addColumn('APP_UID', 'AppUid', 'string', CreoleTypes::VARCHAR, true, 32);
 
 		$tMap->addColumn('APP_THREAD_INDEX', 'AppThreadIndex', 'int', CreoleTypes::INTEGER, true, null);
 
 		$tMap->addColumn('APP_DEL_INDEX', 'AppDelIndex', 'int', CreoleTypes::INTEGER, true, null);
 
-		$tMap->addColumn('APP_TYPE', 'AppType', 'string', CreoleTypes::VARCHAR, true, null);
+		$tMap->addColumn('APP_TYPE', 'AppType', 'string', CreoleTypes::VARCHAR, true, 20);
 
-		$tMap->addColumn('APP_STATUS', 'AppStatus', 'string', CreoleTypes::VARCHAR, true, null);
+		$tMap->addColumn('APP_STATUS', 'AppStatus', 'string', CreoleTypes::VARCHAR, true, 20);
 
-		$tMap->addColumn('APP_NEXT_TASK', 'AppNextTask', 'string', CreoleTypes::VARCHAR, false, null);
+		$tMap->addColumn('APP_NEXT_TASK', 'AppNextTask', 'string', CreoleTypes::VARCHAR, false, 32);
 
-		$tMap->addColumn('APP_DELEGATION_USER', 'AppDelegationUser', 'string', CreoleTypes::VARCHAR, false, null);
+		$tMap->addColumn('APP_DELEGATION_USER', 'AppDelegationUser', 'string', CreoleTypes::VARCHAR, false, 32);
 
-		$tMap->addColumn('APP_ENABLE_ACTION_USER', 'AppEnableActionUser', 'string', CreoleTypes::VARCHAR, true, null);
+		$tMap->addColumn('APP_ENABLE_ACTION_USER', 'AppEnableActionUser', 'string', CreoleTypes::VARCHAR, true, 32);
 
 		$tMap->addColumn('APP_ENABLE_ACTION_DATE', 'AppEnableActionDate', 'int', CreoleTypes::TIMESTAMP, true, null);
 
-		$tMap->addColumn('APP_DISABLE_ACTION_USER', 'AppDisableActionUser', 'string', CreoleTypes::VARCHAR, false, null);
+		$tMap->addColumn('APP_DISABLE_ACTION_USER', 'AppDisableActionUser', 'string', CreoleTypes::VARCHAR, false, 32);
 
 		$tMap->addColumn('APP_DISABLE_ACTION_DATE', 'AppDisableActionDate', 'int', CreoleTypes::TIMESTAMP, false, null);
 
