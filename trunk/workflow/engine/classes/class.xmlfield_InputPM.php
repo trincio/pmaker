@@ -222,9 +222,6 @@ function getDynaformsVars($sProcessUID, $bSystemVars = true) {
 	  foreach ($aAux as $sName => $sValue) {
 		  $aFields[] = array('sName' => $sName, 'sType' => 'system');
 	  }
-	  $aFields[] = array('sName' => 'APPLICATION', 'sType' => 'system');
-	  $aFields[] = array('sName' => 'PROCESS', 'sType' => 'system');
-	  $aFields[] = array('sName' => 'TASK', 'sType' => 'system');
   }
 	require_once 'classes/model/Dynaform.php';
 	$oCriteria = new Criteria('workflow');
