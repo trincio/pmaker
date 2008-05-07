@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<dynaForm type="xmlmenu">
+
+<DBS_UID type="private" />
+
+<MNU_ADD type="link" value="" link="#" onclick="panelDBConnection('@#DBS_UID');return false;" colAlign="left" colWidth="45">
+  <en>New</en>
+</MNU_ADD>
+
+</dynaForm>

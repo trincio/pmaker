@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm type="xmlform">
+
+<PRO_UID type="dropdown" sqlConnection="dbarray">
+  SELECT * FROM PROCESSES
+  <en>Process</en>
+</PRO_UID>
+
+<JS type="javascript">
+<![CDATA[
+leimnud.event.add(getField('PRO_UID'), 'change', function() {
+  var oRPC = new leimnud.module.rpc.xmlhttp({
+    url   : '../setup/dbConnectionsAjax',
+    async : false,
+    method: 'POST',
+    args  : 'action=showConnections&PRO_UID=' + this.value
+  });
+  oRPC.make();
+  document.getElementById('publisherContent[1]').innerHTML = oRPC.xmlhttp.responseText;
+}.extend(getField('PRO_UID')));
+
+var oPanel;
+
+var panelDBConnection = function(DBS_UID) {
+  oPanel = new leimnud.module.panel();
+  oPanel.options = {
+  	size	:{w:300,h:270},
+  	position:{x:0,y:0,center:true},
+  	title	:(DBS_UID == '' ? G_STRINGS.ID_NEW_DBC : G_STRINGS.ID_EDIT_DBC),
+  	theme	:"processmaker",
+  	statusBar:false,
+  	control	:{resize:false,roll:false,drag:false},
+  	fx	:{modal:true,opacity:true,blinkToFront:false,fadeIn:false,drag:false}
+  };
+  oPanel.events = {
+  	remove: function() { delete(oPanel); }.extend(this)
+  };
+  oPanel.make();
+  oPanel.loader.show();
+  var oRPC = new leimnud.module.rpc.xmlhttp({
+  	url : 'dbConnectionsAjax',
+  	args: 'action=newOrEditDBConnection&DBS_UID=' + DBS_UID + '&PRO_UID=' + getField('PRO_UID').value
+  });
+  oRPC.callback = function(rpc){
+  	oPanel.loader.hide();
+  	var scs=rpc.xmlhttp.responseText.extractScript();
+  	oPanel.addContent(rpc.xmlhttp.responseText);
+  	scs.evalScript();
+  }.extend(this);
+  oRPC.make();
+};
+
+var saveDBConnection = function() {
+  //verify required fields
+  //
+};
+]]>
+</JS>
+
+</dynaForm>

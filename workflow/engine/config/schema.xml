@@ -3989,16 +3989,6 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="DBS_DESCRIPTION" type="VARCHAR" size="255" default="0">
-      <vendor type="mysql">
-        <parameter name="Field" value="DBS_DESCRIPTION"/>
-        <parameter name="Type" value="varchar(255)"/>
-        <parameter name="Null" value="NO"/>
-        <parameter name="Key" value=""/>
-        <parameter name="Default" value=""/>
-        <parameter name="Extra" value=""/>
-      </vendor>
-    </column>
     <index name="indexDBSource">
       <index-column name="PRO_UID"/>
       <vendor type="mysql">
