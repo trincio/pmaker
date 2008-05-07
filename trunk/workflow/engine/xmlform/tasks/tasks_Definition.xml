@@ -9,18 +9,20 @@
 
 <TAS_TITLE type="text" size="40" maxlength="255" defaultvalue="" required="1" group="1" dependentfields="" linkfield="" strto="" readonly="0" noshowingrid="0" readonlyingrid="0" totalizeable="0" sqlconnection="">
   <en>Title</en>
-  <es>Título</es>
 </TAS_TITLE>
 
 <TAS_DESCRIPTION type="textarea" required="0" cols="60" rows="6" group="1">
   <en>Description</en>
-  <es>Descripción</es>
 </TAS_DESCRIPTION>
 
 <TAS_START type="checkbox" value="TRUE" group="1">
   <en>Starting task</en>
-  <es>Tarea inicial</es>
 </TAS_START>
+
+<TAS_PRIORITY_VARIABLE type="text" size="50" maxlength="155" defaultvalue="@@SYS_CASE_PRIORITY" group="1">
+  <en>Varible for Case priority</en>
+</TAS_PRIORITY_VARIABLE>
+
 
 <JS type="javascript">
 Pm.tmp.propertiesPanel.events.remove = function() { bFunctionAlreadyAssigned = false; aTaskFlag = [false,false,false,false,false,false]; };
@@ -44,7 +46,8 @@ if (aTaskFlag[0])
 {
   getField('TAS_TITLE').value       = oTaskData.TAS_TITLE;
   getField('TAS_DESCRIPTION').value = oTaskData.TAS_DESCRIPTION;
-  getField('TAS_START').checked     = (oTaskData.TAS_START == 'TRUE' ? true : false);
+  getField('TAS_START').checked     = (oTaskData.TAS_START == 'TRUE' ? true : false);  
+  getField('TAS_PRIORITY_VARIABLE').value = oTaskData.TAS_PRIORITY_VARIABLE;
 }
 else
 {

@@ -60,6 +60,8 @@ try {
 
   //Execute triggers before derivation
   $appFields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], 'ASSIGN_TASK', -2, 'BEFORE', $appFields['APP_DATA'] );
+  $appFields['DEL_INDEX']       = $_SESSION['INDEX'];
+  $appFields['TAS_UID']         = $_SESSION['TASK'];
   //Save data - Start
   $oCase->updateCase ( $_SESSION['APPLICATION'], $appFields);
   //Save data - End
@@ -74,12 +76,15 @@ try {
     'ROU_TYPE'   => $_POST['form']['ROU_TYPE']
 
   );
-  $oDerivation->derivate( $aCurrentDerivation, $_POST['form']['TASKS'] );
-
+  //var_dump($appFields);echo"<br>";
+  $oDerivation->derivate( $aCurrentDerivation, $_POST['form']['TASKS'] ); 
   //Execute triggers after derivation
   $appFields = $oCase->loadCase( $_SESSION['APPLICATION'] ); //refresh appFields, because in derivations should change some values
   $appFields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], 'ASSIGN_TASK', -2, 'AFTER', $appFields['APP_DATA'] );
+  //$appFields['DEL_INDEX']       = $_SESSION['INDEX'];
+  //$appFields['TAS_UID']         = $_SESSION['TASK'];
   //Save data - Start
+  
   $oCase->updateCase ( $_SESSION['APPLICATION'], $appFields);
   //Save data - End
 

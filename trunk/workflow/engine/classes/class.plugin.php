@@ -128,6 +128,11 @@ class PMPlugin {
     $oPluginRegistry->registerMenu ( $this->sNamespace, $menuId, $sMenuFilename);
   }
 
+  function registerDashboard( ) {
+    $oPluginRegistry =& PMPluginRegistry::getSingleton();
+    $oPluginRegistry->registerDashboard ( $this->sNamespace);
+  }
+
   /**
    * Register a folder for methods
    *

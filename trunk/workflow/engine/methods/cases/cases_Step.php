@@ -103,6 +103,8 @@
 
   //Execute before triggers - Start
   $Fields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], $_GET['TYPE'], $_GET['UID'], 'BEFORE', $Fields['APP_DATA'] );
+  $Fields['DEL_INDEX']= $_SESSION['INDEX'];
+  $Fields['TAS_UID']  = $_SESSION['TASK'];
   //Execute before triggers - End
 
   //Save data - Start
@@ -264,6 +266,8 @@ switch ($_GET['TYPE'])
                            'APP_DOC_FILENAME'    => $sFilename);
           //Execute after triggers - Start
           $Fields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], 'OUTPUT_DOCUMENT', $_GET['UID'], 'AFTER', $Fields['APP_DATA'] );
+          $Fields['DEL_INDEX']= $_SESSION['INDEX'];
+          $Fields['TAS_UID']  = $_SESSION['TASK'];
           //Execute after triggers - End
           //Save data - Start
           $oCase->updateCase ( $_SESSION['APPLICATION'], $Fields );
@@ -282,6 +286,8 @@ switch ($_GET['TYPE'])
                            'APP_DOC_FILENAME'    => $sFilename);
           //Execute after triggers - Start
           $Fields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], 'OUTPUT_DOCUMENT', $_GET['UID'], 'AFTER', $Fields['APP_DATA'] );
+          $Fields['DEL_INDEX']= $_SESSION['INDEX'];
+          $Fields['TAS_UID']  = $_SESSION['TASK'];
           //Execute after triggers - End
           //Save data - Start
           $oCase->updateCase ( $_SESSION['APPLICATION'], $Fields );
