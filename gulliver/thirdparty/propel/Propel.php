@@ -247,7 +247,7 @@ class Propel {
 	 */
 	public static function init($c)
 	{
-		self::configure($c);
+		self::configure($c); 
 		self::initialize();
 	}
 

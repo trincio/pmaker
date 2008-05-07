@@ -22,6 +22,8 @@
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
  * 
  */
+ 
+ 
 if (($RBAC_Response=$RBAC->userCanAccess("PM_SETUP"))!=1) return $RBAC_Response;
  $G_MAIN_MENU = "processmaker";
   //$G_SUB_MENU  = "dashboard";
@@ -31,61 +33,20 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_SETUP"))!=1) return $RBAC_Response;
   $prePath = '/sys' . SYS_SYS . '/' . SYS_LANG . '/blank/';
 
   $oJSON   = new Services_JSON();
-  $obj = new stdClass();
-  $obj->title = 'my first chart';
-  $obj->height = 220;
-  $obj->open->image = $prePath . 'charts/genericCharts?chart=2&type=4';
-  $aColumn1[] = $obj;
   
-  $obj = new stdClass();
-  $obj->title = 'my first chart';
-  $obj->height = 220;
-  $obj->open->image = $prePath . 'charts/genericCharts?chart=1&type=4';
-  $aColumn1[] = $obj;
-
-  $obj = new stdClass();
-  $obj->title = 'my first chart';
-  $obj->height = 300;
-  $obj->open->image = $prePath . 'charts/genericCharts?chart=2&type=3';
-  $aColumn1[] = $obj;
-
-  $obj = new stdClass();
-  $obj->title = 'my first chart';
-  $obj->height = 300;
-  $obj->open->image = $prePath . 'charts/genericCharts?chart=0';
-  $aColumn1[] = $obj;
-
-  $obj = new stdClass();
-  $obj->title = 'my first chart';
-  $obj->height = 220;
-  $obj->open->image = $prePath . 'charts/genericCharts?type=2';
-  $aColumn1[] = $obj;
+  require_once ( PATH_PLUGINS. 'openFlash' . PATH_SEP . "class.openFlash.php" );
+  $openFlash = new openFlashClass( );
   
-  $obj = new stdClass();
-  $obj->title = 'my first chart';
-  $obj->height = 220;
-  $obj->open->url = $prePath . 'openFlash/chart?type=1&chart=1&u=';
-  $aColumn2[] = $obj;
-
-  $obj = new stdClass();
-  $obj->title = 'my first chart';
-  $obj->height = 220;
-  $obj->open->url = $prePath . 'openFlash/chart?type=2&chart=2&u=';
-  $aColumn2[] = $obj;
-
-  $obj = new stdClass();
-  $obj->title = 'my first chart';
-  $obj->height = 220;
-  $obj->open->url = $prePath . 'openFlash/chart?type=1&chart=1&u=';
-  $aColumn2[] = $obj;
-
-  $obj = new stdClass();
-  $obj->title = 'my first chart';
-  $obj->height = 220;
-  $obj->open->url = $prePath . 'openFlash/chart?type=1&chart=2&u=';
-  $aColumn2[] = $obj;
-
-  $aDashboard = array ( $aColumn1, $aColumn2 );
+  $charts = $openFlash->getAvailableCharts (); 
+  
+  $colIndex = 0;
+  foreach ( $charts as $key => $chart ) {
+    $obj = $openFlash->getChart( $chart );
+    $aColumn[ $colIndex ][] = $obj;
+    $colIndex = 1 - $colIndex;
+  }
+  
+  $aDashboard = array ( $aColumn[0], $aColumn[1] );
   $oData   = $oJSON->encode( $aDashboard );
   
   $oTemplatePower = new TemplatePower(PATH_TPL . 'dashboard/frontend.html');
