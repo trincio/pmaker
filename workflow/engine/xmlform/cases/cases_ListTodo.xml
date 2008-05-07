@@ -42,6 +42,16 @@
   <en>Last Modification</en>
 </APP_UPDATE_DATE>
 
+<DEL_PRIORITY type="dropdown" value="" link="" colWidth="180" titleAlign="left" align="left" dataCompareField="APP_DELEGATION.DEL_PRIORITY" dataCompareType="contains">
+  <en>Priority  
+      <option name="VH">Very High</option>
+      <option name="H">High</option>
+      <option name="N">Normal</option>
+      <option name="L">Low</option>
+      <option name="VL">Very Low</option>
+  </en>
+</DEL_PRIORITY>
+
 <DEL_INIT_DATE type="date" rows="3" cols="32" colWidth="90" titleAlign="left" align="left" dataCompareField="APPLICATION.APP_UPDATE_DATE" dataCompareType="contains" showInTable="0">
   <en>Start Date</en>
 </DEL_INIT_DATE>

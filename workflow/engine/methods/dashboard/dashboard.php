@@ -33,18 +33,27 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_SETUP"))!=1) return $RBAC_Response;
   $prePath = '/sys' . SYS_SYS . '/' . SYS_LANG . '/blank/';
 
   $oJSON   = new Services_JSON();
-  
-  require_once ( PATH_PLUGINS. 'openFlash' . PATH_SEP . "class.openFlash.php" );
-  $openFlash = new openFlashClass( );
-  
-  $charts = $openFlash->getAvailableCharts (); 
-  
+
+  $oPluginRegistry = &PMPluginRegistry::getSingleton();
+  $dashboards = $oPluginRegistry->getDashboards ();
+
   $colIndex = 0;
-  foreach ( $charts as $key => $chart ) {
-    $obj = $openFlash->getChart( $chart );
-    $aColumn[ $colIndex ][] = $obj;
-    $colIndex = 1 - $colIndex;
+
+  $aColumn[0] = array ();
+  $aColumn[1] = array ();
+  
+  foreach ( $dashboards as $key => $sNamespace  ) {
+    require_once ( PATH_PLUGINS. $sNamespace  . PATH_SEP . "class." . $sNamespace . ".php" );
+    $sClassName = $sNamespace . 'Class';
+    $obj = new $sClassName();
+    $charts = $obj->getAvailableCharts (); 
+    foreach ( $charts as $key => $chart ) {
+      $oChart = $obj->getChart( $chart );
+      $aColumn[ $colIndex ][] = $oChart;
+      $colIndex = 1 - $colIndex;
+    }
   }
+  
   
   $aDashboard = array ( $aColumn[0], $aColumn[1] );
   $oData   = $oJSON->encode( $aDashboard );

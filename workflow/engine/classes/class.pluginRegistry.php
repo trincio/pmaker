@@ -55,6 +55,7 @@ class PMPluginRegistry {
   private $_aMenus = array();
   private $_aFolders = array();
   private $_aTriggers = array();
+  private $_aDashboards = array();
 
   static private $instance = NULL;
 
@@ -87,6 +88,7 @@ class PMPluginRegistry {
   krumo ( $this->_aMenus);
   krumo ( $this->_aFolders);
   krumo ( $this->_aTriggers);
+  krumo ( $this->_aDashboards);
   }
 
   /**
@@ -146,24 +148,29 @@ class PMPluginRegistry {
    * @param unknown_type $sNamespace
    */
   function disablePlugin($sNamespace ) {
-  	 foreach ( $this->_aPluginDetails as $namespace=>$detail ) {
+  	foreach ( $this->_aPluginDetails as $namespace=>$detail ) {
   		if ( $sNamespace == $namespace )
 //  		  $this->_aPluginDetails[$sNamespace]->enabled = false;
   		  unset ($this->_aPluginDetails[$sNamespace]);
   	 }
 
-  	 foreach ( $this->_aMenus as $key=>$detail ) {
+  	foreach ( $this->_aMenus as $key=>$detail ) {
   	   if ( $detail->sNamespace == $sNamespace )
   	     unset ( $this->_aMenus[ $key ] );
     }
-  	 foreach ( $this->_aFolders as $key=>$detail ) {
+  	foreach ( $this->_aFolders as $key=>$detail ) {
   	   if ( $detail->sNamespace == $sNamespace )
   	     unset ( $this->_aFolders[ $key ] );
      }
 
-  	 foreach ( $this->_aTriggers as $key=>$detail ) {
+  	foreach ( $this->_aTriggers as $key=>$detail ) {
   	   if ( $detail->sNamespace == $sNamespace )
   	     unset ( $this->_aTriggers[ $key ] );
+    }
+
+ 	 foreach ( $this->_aDashboards as $key=>$detail ) {
+  	   if ( $detail == $sNamespace )
+  	     unset ( $this->_aDashboards[ $key ] );
     }
 
   }
@@ -220,6 +227,24 @@ class PMPluginRegistry {
   }
 
   /**
+   * Register a dashboard class in the singleton
+   *
+   * @param unknown_type $sNamespace
+   * @param unknown_type $sMenuId
+   * @param unknown_type $sFilename
+   */
+  function registerDashboard($sNamespace ) {
+    $found = false;
+  	foreach ( $this->_aDashboards as $row=>$detail ) {
+  		if ( $sNamespace == $detail )
+  		  $found = true;
+  	}
+    if ( !$found ) {
+      $this->_aDashboards[] = $sNamespace;
+    }
+  }
+
+  /**
    * Register a folder for methods
    *
    * @param unknown_type $sFolderName
@@ -260,6 +285,20 @@ class PMPluginRegistry {
   			include ( $detail->sFilename );
   		}
   	}
+  }
+
+  /**
+   * return all dashboards registered
+   *
+   */
+  function getDashboards( ) {
+    return $this->_aDashboards;
+  	$dash = array ();
+  	foreach ( $this->_aDashboards as $row=>$detail ) {
+  		$sClassName = str_replace ( 'plugin', 'class', $this->_aPluginDetails[ $detail ]->sClassName);
+  		$dash[] = $sClassName;
+  	}
+  	return $dash;
   }
 
   /**
@@ -309,7 +348,6 @@ class PMPluginRegistry {
   		if ( $triggerId == $detail->sTriggerId  ) {
 
   		  //review all folders registered for this namespace
-
        	foreach ( $this->_aFolders as $row=>$folder )
      	    $fname = PATH_PLUGINS . $folder->sFolderName . PATH_SEP . 'class.' . $folder->sFolderName  .'.php';
   		    if ( $detail->sNamespace == $folder->sNamespace && file_exists ( $fname ) ) {

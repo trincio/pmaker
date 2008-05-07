@@ -34,6 +34,7 @@
 <APP_UPDATE_DATE type="date" rows="3" cols="32" colWidth="90" titleAlign="left" align="left" dataCompareField="APPLICATION.APP_UPDATE_DATE" dataCompareType="contains" >
   <en>Last Modification</en>
 </APP_UPDATE_DATE>
+
 <DEL_FINISH_DATE type="date" rows="3" cols="32" colWidth="90" titleAlign="left" align="left" dataCompareField="APPLICATION.APP_UPDATE_DATE" dataCompareType="contains" showInTable="0">
   <en>Finish Date</en>
 </DEL_FINISH_DATE>

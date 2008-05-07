@@ -379,7 +379,9 @@ krumo ( $nextDelegations ); //*////*/*/*/*/quitar comentario
       $appFields['APP_STATUS']      = 'COMPLETED';
       $appFields['APP_FINISH_DATE'] = 'now';
     }
-
+    
+    $appFields['DEL_INDEX']       = $iNewDelIndex;
+    $appFields['TAS_UID']         = $nextDel['TAS_UID'];    
     /* Start Block : UPDATES APPLICATION */
     $this->case->updateCase ( $currentDelegation['APP_UID'], $appFields );
     /* End Block : UPDATES APPLICATION */

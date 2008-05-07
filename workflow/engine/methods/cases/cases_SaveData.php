@@ -43,6 +43,8 @@
   $aData['APP_NUMBER']      = $Fields['APP_NUMBER'];
   $aData['APP_PROC_STATUS'] = $Fields['APP_PROC_STATUS'];
   $aData['APP_DATA']        = $Fields['APP_DATA'];
+  $aData['DEL_INDEX']       = $_SESSION['INDEX'];
+  $aData['TAS_UID']         = $_SESSION['TASK'];
   $oCase->updateCase( $_SESSION['APPLICATION'], $aData );
 
   //go to the next step

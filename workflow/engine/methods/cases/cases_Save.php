@@ -51,7 +51,7 @@
   if (isset($_SESSION['STEP_POSITION'])) unset($_SESSION['STEP_POSITION']);
 
   /* Process */
-  try {
+  try {  	
     $oCase = new Cases();
     $aData = $oCase->startCase( $_POST['form']['TAS_UID'], $_SESSION['USER_LOGGED'] );
     $_SESSION['APPLICATION']   = $aData['APPLICATION'];
