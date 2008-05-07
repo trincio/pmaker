@@ -34,7 +34,7 @@ require_once 'classes/model/SwimlanesElements.php';
 /**
  * processMap - Process Map class
  * @package ProcessMaker
- * @author Julio Cesar Laura Avenda�o
+ * @author Julio Cesar Laura Avendaño
  * @copyright 2007 COLOSA
  */
 class processMap {

@@ -27,6 +27,7 @@ require_once ("classes/model/Application.php");
 require_once ("classes/model/AppDelay.php");
 require_once ("classes/model/AppDelegation.php");
 require_once ("classes/model/AppThread.php");
+require_once ("classes/model/DbSource.php");
 require_once ("classes/model/Dynaform.php");
 require_once ("classes/model/InputDocument.php");
 require_once ("classes/model/Language.php");

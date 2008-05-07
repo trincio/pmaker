@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm name="languages_ImportForm" type="xmlform" width="100%" labelWidth="40%">
+
+<DBS_UID type="hidden" />
+
+<PRO_UID type="hidden" />
+
+<DBS_TYPE type="dropdown">
+  <en>Type
+    <option name="mysql">MySQL</option>
+    <option name="pgsql">PostgreSQL</option>
+    <option name="mssql">Microsoft SQL Server</option>
+  </en>
+</DBS_TYPE>
+
+<DBS_SERVER type="text" size="25" maxlength="100" defaultvalue="" required="true" >
+  <en>Server</en>
+</DBS_SERVER>
+
+<DBS_DATABASE_NAME type="text" size="25" maxlength="100" defaultvalue="" required="true" >
+  <en>Database Name</en>
+</DBS_DATABASE_NAME>
+
+<DBS_USERNAME type="text" size="25" maxlength="32" defaultvalue="" required="true" >
+  <en>Username</en>
+</DBS_USERNAME>
+
+<DBS_PASSWORD type="password" size="25" maxlength="32" defaultvalue="" >
+  <en>Password</en>
+</DBS_PASSWORD>
+
+<DBS_PORT type="text" size="25" maxlength="10" defaultvalue="" >
+  <en>Port</en>
+</DBS_PORT>
+
+<TEST type="button" onclick="alert('Under construction!');">
+  <en>Test Connection</en>
+</TEST>
+
+<CREATE type="button" onclick="saveDBConnection();">
+  <en>Create</en>
+</CREATE>
+
+</dynaForm>
