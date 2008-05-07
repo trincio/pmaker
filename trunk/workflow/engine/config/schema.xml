@@ -310,7 +310,7 @@
         <parameter name="Type" value="varchar(100)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
-        <parameter name="Default" value="0"/>
+        <parameter name="Default" value="N"/>
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
@@ -356,7 +356,7 @@
       <rule name="validValues" value="NORMAL|PARALLEL" message="Please select a valid status." />
     </validator>
     <validator column="DEL_PRIORITY">
-      <rule name="validValues" value="HIGH|NORMAL|LOW" message="Please select a valid Priority." />
+      <rule name="validValues" value="VH|H|N|L|VL" message="Please select a valid Priority." />
     </validator>
     <validator column="DEL_THREAD_STATUS">
       <rule name="validValues" value="CLOSED|OPEN|PAUSED" message="Please select a valid status." />
