@@ -24,10 +24,11 @@
  */
   global $G_TMP_MENU;
 
-  $G_TMP_MENU->AddIdRawOption('LANGUAGES', 'setup/languages',    G::LoadTranslation('ID_LANGUAGES'));
-  $G_TMP_MENU->AddIdRawOption('PLUGINS',   'setup/pluginsList', 'Plugins');
-  $G_TMP_MENU->AddIdRawOption('UPGRADE',   'setup/upgrade',      G::LoadTranslation('ID_UPGRADE'));
-  $G_TMP_MENU->AddIdRawOption('MAILSYSTEM','setup/emailSystemTest',     'Email System Test' );
+  $G_TMP_MENU->AddIdRawOption('LANGUAGES',      'setup/languages',       G::LoadTranslation('ID_LANGUAGES'));
+  $G_TMP_MENU->AddIdRawOption('PLUGINS',        'setup/pluginsList', '   Plugins');
+  $G_TMP_MENU->AddIdRawOption('UPGRADE',        'setup/upgrade',         G::LoadTranslation('ID_UPGRADE'));
+  $G_TMP_MENU->AddIdRawOption('MAILSYSTEM',     'setup/emailSystemTest', 'Email System Test' );
+  $G_TMP_MENU->AddIdRawOption('DB_CONNECTIONS', 'setup/dbConnections',   G::LoadTranslation('ID_DB_CONNECTIONS'));
   //$G_TMP_MENU->AddIdRawOption('TRANSLATION', 'tools/translations', 'Translations');
   //$G_TMP_MENU->AddIdRawOption('UPDATE_ALL',  'tools/updateTranslation', 'Update');
 
