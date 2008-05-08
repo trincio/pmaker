@@ -77,7 +77,7 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
 	}
   $Fields['PME_A'] = $_GET['A'];
   $Fields['PME_PRO_UID'] = $proUid;
-  $Fields['PME_XMLNODE_NAME_OLD'] = $Fields['PME_XMLNODE_NAME'];
+  $Fields['PME_XMLNODE_NAME_OLD'] = (isset($Fields['PME_XMLNODE_NAME']) ? $Fields['PME_XMLNODE_NAME'] : '');
   $G_PUBLISH = new Publisher();
   $G_HEADER->clearScripts();
   $G_HEADER->addScriptFile('/js/grid/core/grid.js');
