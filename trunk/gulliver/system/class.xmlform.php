@@ -1119,8 +1119,9 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText
 		    else {
 		    	$html.="<span id='span[".$owner->id."][" . $owner->name .']['.$r.']['.$this->name . "]' name='span[".$owner->id."][" . $owner->name .']['.$r.']['.$this->name . "]' style='border:1;border-color:#000;width:100px;'>" . $v . " </span> ";
 		    }
-		    if($this->mode == 'edit')
-		    	$html.="<a href='#' onclick=\"showDatePicker(event,'".$owner->owner->id."', '" . $owner->name .']['.$r.']['.$this->name ."', '" . $v. "', '" . $startDate . "', '" . $endDate . "'); return false;\" ><img src='/controls/cal.gif' border='0'></a>";
+		    if($this->mode == 'edit') {
+		    	$html.="<a href='#' onclick=\"showDatePicker(event,'".(isset($owner->owner) ? $owner->owner->id : $owner->id)."', '" . $owner->name .']['.$r.']['.$this->name ."', '" . $v. "', '" . $startDate . "', '" . $endDate . "'); return false;\" ><img src='/controls/cal.gif' border='0'></a>";
+		    }
 		  }
 		  else {
 		    $html=$v;
@@ -1474,11 +1475,12 @@ class XmlForm_Field_Dropdown extends XmlForm_Field
   function render( $value = NULL , $owner = NULL , $rowId = '', $onlyValue = false )
   {
     $this->executeSQL( $owner );
+    $html = '';
     if (!$onlyValue) {
       if ($this->mode === 'edit') {
         $html='<select class="module_app_input___gray" id="form'.$rowId.'['.$this->name.']" name="form'.$rowId.'['.$this->name.']" '.(($this->style)?'style="'.$this->style.'"':'').'>';
       } elseif ($this->mode === 'view') {
-        $html = $this->htmlentities( isset($this->options[ $value ])? $this->options[ $value ]:'' , ENT_COMPAT, 'utf-8');
+        $html  = $this->htmlentities( isset($this->options[ $value ])? $this->options[ $value ]:'' , ENT_COMPAT, 'utf-8');
         $html .='<select class="module_app_input___gray" id="form'.$rowId.'['.$this->name.']" name="form'.$rowId.'['.$this->name.']" style="display:none" disabled '.(($this->style)?'style="'.$this->style.'"':'').'>';
       }
         foreach($this->option as $optionName => $option) {
