@@ -355,7 +355,8 @@ function getField( fieldName , formId )
       return form.elements[ 'form[' + fieldName + ']' ];
     }
     else {
-    	return null;
+    	//return null;
+    	return document.getElementById( 'form[' + fieldName + ']' );
     }
   }
   else

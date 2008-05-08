@@ -180,7 +180,12 @@ class dynaformEditor extends WebResource
 		$G_PUBLISH->AddContent('blank');
 		$this->panelConf['title']=$this->title;
 		$G_PUBLISH->AddContent('panel-init', 'mainPanel', $this->panelConf );
-		$G_PUBLISH->AddContent('xmlform', 'toolbar', 'dynaforms/fields_Toolbar', 'display:none', $Parameters , '', '');
+		if ($Properties['DYN_TYPE'] == 'xmlform') {
+		  $G_PUBLISH->AddContent('xmlform', 'toolbar', 'dynaforms/fields_Toolbar', 'display:none', $Parameters , '', '');
+		}
+		else {
+		  $G_PUBLISH->AddContent('xmlform', 'toolbar', 'dynaforms/fields_ToolbarGrid', 'display:none', $Parameters , '', '');
+		}
 		$G_PUBLISH->AddContent('xmlform', 'xmlform', 'dynaforms/dynaforms_Editor', 'display:none', $Parameters , '', '');
 		$G_PUBLISH->AddContent('xmlform', 'xmlform', 'dynaforms/dynaforms_XmlEditor', 'display:none', $XmlEditor , '', '');
 		$G_PUBLISH->AddContent('blank');
