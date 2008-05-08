@@ -314,13 +314,13 @@ class PMPluginRegistry {
   		  $found = false;
         $classFile = '';
 
-       	foreach ( $this->_aFolders as $row=>$folder )
+       	foreach ( $this->_aFolders as $row=>$folder ) {
      	    $fname = PATH_PLUGINS . $folder->sFolderName . PATH_SEP . 'class.' . $folder->sFolderName  .'.php';
   		    if ( $detail->sNamespace == $folder->sNamespace && file_exists ( $fname ) ) {
   		      $found = true;
   		      $classFile = $fname;
   		    }
-
+        }
         if ( $found ) {
     			require_once ( $classFile );
     			$sClassName = str_replace ( 'plugin', 'class', $this->_aPluginDetails[ $detail->sNamespace ]->sClassName);
