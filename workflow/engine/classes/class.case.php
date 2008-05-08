@@ -1317,6 +1317,7 @@ class Cases
                 $c->add($c->getNewCriterion(AppThreadPeer::APP_THREAD_STATUS, 'OPEN')->addOr($c->
                     getNewCriterion(ApplicationPeer::APP_STATUS, 'COMPLETED')->addAnd($c->
                     getNewCriterion(AppDelegationPeer::DEL_PREVIOUS, 0))));
+                $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
                 $xmlfile = $filesList[0];
                 break;
             case 'to_do':
@@ -1324,12 +1325,14 @@ class Cases
                 $c->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
                 $c->add(AppThreadPeer::APP_THREAD_STATUS, 'OPEN');
                 $c->add(AppDelegationPeer::DEL_THREAD_STATUS, 'OPEN');                
+                $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
                 $xmlfile = $filesList[1];
                 break;
             case 'draft':
                 $c->add(ApplicationPeer::APP_STATUS, 'DRAFT');
                 $c->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
                 $c->add(AppDelegationPeer::DEL_THREAD_STATUS, 'OPEN');
+                $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
                 $xmlfile = $filesList[2];
                 break;
             case 'paused':
@@ -1338,23 +1341,26 @@ class Cases
                 $c->addJoinMC($appDelayConds, Criteria::LEFT_JOIN);
                 $c->add(AppDelayPeer::APP_DELAY_UID, NULL, Criteria::ISNOTNULL);
                 $c->add(AppDelayPeer::APP_DISABLE_ACTION_USER, NULL, Criteria::ISNULL);
+                $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
                 $xmlfile = $filesList[3];
                 break;
             case 'cancelled':
                 $c->add($c->getNewCriterion(AppThreadPeer::APP_THREAD_STATUS, 'OPEN')->addAnd($c->
-                    getNewCriterion(ApplicationPeer::APP_STATUS, 'CANCELLED')));
-                //$c->add ( AppThreadPeer::APP_THREAD_INDEX, null, Criteria::ISNOTNULL  );
+                    getNewCriterion(ApplicationPeer::APP_STATUS, 'CANCELLED')));                
+                $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
                 $xmlfile = $filesList[4];
                 break;
             case 'completed':
                 $c->add(ApplicationPeer::APP_STATUS, 'COMPLETED');
                 $c->add(AppDelegationPeer::DEL_PREVIOUS, 0);
+                $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
                 $xmlfile = $filesList[5];
                 break;
              case 'gral':
                 $c->add($c->getNewCriterion(AppThreadPeer::APP_THREAD_STATUS, 'OPEN')->addOr($c->
                     getNewCriterion(ApplicationPeer::APP_STATUS, 'COMPLETED')->addAnd($c->
                     getNewCriterion(AppDelegationPeer::DEL_PREVIOUS, 0))));
+                $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);    
                 $xmlfile = $filesList[0];
                 break;
         }
