@@ -4,26 +4,24 @@ ini_set('display_errors','On');
 ini_set('error_reporting', E_ALL  );
 ini_set('memory_limit', '80M');
 
-if (ini_get('magic_quotes_gpc') == '1') {
-  if (is_array($_POST)) {
-    foreach($_POST as $sKey1 => $vValue1) {
-      if (is_array($vValue1)) {
-        foreach($vValue1 as $sKey2 => $vValue2) {
-          if (is_array($vValue2)) {
-            foreach($vValue2 as $sKey3 => $vValue3) {
-              $_POST[$sKey1][$sKey2][$sKey3] = stripslashes($_POST[$sKey1][$sKey2][$sKey3]);
-            }
-          }
-          else {
-            $_POST[$sKey1][$sKey2] = stripslashes($_POST[$sKey1][$sKey2]);
-          }
-        }
+function strip_slashes(&$vVar) {
+  if (is_array($vVar)) {
+    foreach($vVar as $sKey => $vValue) {
+      if (is_array($vValue)) {
+        strip_slashes($vVar[$sKey]);
       }
       else {
-        $_POST[$sKey1] = stripslashes($_POST[$sKey1]);
+        $vVar[$sKey] = stripslashes($vVar[$sKey]);
       }
     }
   }
+  else {
+    $vVar = stripslashes($vVar);
+  }
+}
+
+if (ini_get('magic_quotes_gpc') == '1') {
+  strip_slashes($_POST);
 }
 
 $path = Array();
