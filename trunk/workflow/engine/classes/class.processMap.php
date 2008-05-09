@@ -25,6 +25,7 @@
 G::LoadThirdParty('pear/json','class.json');
 G::LoadClass('groups');
 G::LoadClass('tasks');
+G::LoadClass('xmlfield_InputPM');
 require_once 'classes/model/Content.php';
 require_once 'classes/model/Process.php';
 require_once 'classes/model/Task.php';
@@ -1032,7 +1033,7 @@ class processMap {
 	* @param string $sTaskUID
 	* @return boolean
 	*/
-	function editTaskProperties($sTaskUID = '', $iForm = 1, $iIndex = 0) {
+	function editTaskProperties($sTaskUID = '', $iForm = 1, $iIndex = 0) {		
 		try {
   	  switch ($iForm) {
   	  	case 1:
@@ -1055,7 +1056,7 @@ class processMap {
   	  	break;
   	  }
   	  $oTask            = new Task();
-  	  $aFields          = $oTask->load($sTaskUID);
+  	  $aFields          = $oTask->load($sTaskUID);  	  	  
   	  $aFields['INDEX'] = $iIndex;
   	  $aFields['IFORM'] = $iForm;
   	  $aFields['LANG']  = SYS_LANG;
