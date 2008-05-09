@@ -17,7 +17,7 @@ class NET
     public $hostname;
     public $ip;
 
-    /*vars for the errors handle*/
+    /*errors handle*/
     private $errno;
     private $errstr;
 
@@ -89,9 +89,7 @@ class NET
 
     function ping($pTTL = 3000)
     {
-        //$output=shell_exec($comm);
-        //echo "<pre>".$output."</pre>";
-        echo $cmd = "ping -w 3000 $this->ip";
+        $cmd = "ping -w $pTTL $this->ip";
         $output = exec($cmd, $a, $a1);
         $this->errstr = "";
         for ($i = 0; $i < count($a); $i++)
@@ -146,13 +144,48 @@ class NET
             $this->errno = 10001;
         }
     }
+    
+    function mssql_connect($pUser, $pPasswd)
+    {
+        if ($pPasswd != "") {
+            $link = @mssql_connect($this->ip, $pUser, $pPasswd);
+        } else {
+            $link = @mssql_connect($this->ip, $pUser, "");
+        }
+        if ($link) {
+            $this->errstr = "";
+            $this->errno = 0;
+        } else {
+            $this->errstr = "NET::MSSQL->The connection was refused";
+            $this->errno = 30001;
+        }
+    }
+
+    function mssql_testDataBase($pUser, $pPasswd, $pDb)
+    {
+        set_time_limit(0);
+        $link = @mssql_connect($this->ip, $pUser, $pPasswd);
+        if ($link) {
+        	$db = @mysql_select_db($pDb, $link);	
+            if ($db) {
+                $this->errstr = "";
+                $this->errno = 0;
+            } else {
+                $this->errstr = "NET::MSSQL->Select data base failed";
+                $this->errno = 30010;
+            }
+        } else {
+            $this->errstr = "NET::MSSQL->The connection was refused";
+            $this->errno = 30001;
+        }
+    }
 
     function pg_ping($pUser, $pPasswd, $pDb, $pPort)
     {
         $pPort = ($pPort == "") ? "5432" : $pPort;
-        $link = pg_pconnect("host='$this->ip' port='$pPort' user='$pUser' password='$pPasswd' dbname='$pDb' ");
+        $link = @pg_pconnect("host='$this->ip' port='$pPort' user='$pUser' password='$pPasswd' dbname='$pDb' ");
         if ($link) {
-            if (pg_ping($link)) {
+            if (@pg_ping($link)) {
                 $this->errstr = "";
                 $this->errno = 0;
             } else {
