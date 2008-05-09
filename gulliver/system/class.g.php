@@ -449,20 +449,18 @@ class G
 /***************  path functions *****************/
 
   /*public static*/ function mk_dir( $strPath, $rights = 0777)
-  {
-    $folder_path = array(
-      strstr($strPath, '.') ? dirname($strPath) : $strPath);
-
-  $oldumask = umask(0);
-  while(!@is_dir(dirname(end($folder_path)))
+  {   	  	 	  	  	  	  	
+    $folder_path = array($strPath);     
+    $oldumask = umask(0);
+    while(!@is_dir(dirname(end($folder_path)))
             && dirname(end($folder_path)) != '/'
             && dirname(end($folder_path)) != '.'
             && dirname(end($folder_path)) != '')
-      array_push($folder_path, dirname(end($folder_path)));
-    while($parent_folder_path = array_pop($folder_path))
-      if(!@mkdir($parent_folder_path, $rights))
+      array_push($folder_path, dirname(end($folder_path))); //var_dump($folder_path); die;
+    while($parent_folder_path = array_pop($folder_path))       
+      if(!@is_dir($parent_folder_path))
+      		if(!@mkdir($parent_folder_path, $rights))
         //trigger_error ("Can't create folder \"$parent_folder_path\".", E_USER_WARNING);
-
     umask($oldumask);
   }
 
