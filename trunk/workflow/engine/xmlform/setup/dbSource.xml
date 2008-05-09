@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm name="db_SetServerConfiguration" type="xmlform" width="500" height="" labelWidth="30%">
+
+<menuUser type="xmlmenu" xmlfile="setup/db_sourceOptions">
+  <en></en>
+</menuUser>
+
+<TITLE1 type="title">
+  <en>Data Base Source Manager</en>
+</TITLE1>
+
+<server type="text" size="45" value="" required="1">
+  <en>Server</en>
+</server>
+
+<port type="text" value="" required="1">
+  <en>Port</en>
+</port>
+
+<db_name type="text" size="45" default="" required="1">
+  <en>Data Base Name</en>
+</db_name>
+
+<db_user_name type="text" size="45" default="" required="1">
+  <en>User Name</en>
+</db_user_name>
+
+<db_password type="text" size="45" default="" required="1">
+  <en>Password</en>
+</db_password>
+
+<description type="textarea" rows="8" cols="45" default="Set a server description" >
+  <en>Description</en>
+</description>
+
+<BTN_SUBMIT type="button" onclick="javascript:x()">
+  <en>Set server configuration</en>
+</BTN_SUBMIT>
+
+</dynaForm>

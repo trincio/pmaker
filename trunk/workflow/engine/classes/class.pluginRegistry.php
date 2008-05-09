@@ -348,11 +348,12 @@ class PMPluginRegistry {
   		if ( $triggerId == $detail->sTriggerId  ) {
 
   		  //review all folders registered for this namespace
-       	foreach ( $this->_aFolders as $row=>$folder )
+       	foreach ( $this->_aFolders as $row=>$folder ) {
      	    $fname = PATH_PLUGINS . $folder->sFolderName . PATH_SEP . 'class.' . $folder->sFolderName  .'.php';
   		    if ( $detail->sNamespace == $folder->sNamespace && file_exists ( $fname ) ) {
   		      $found = true;
   		    }
+  		  }
   		}
   	}
   	return $found;

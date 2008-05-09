@@ -46,14 +46,230 @@ var panelDBConnection = function(DBS_UID) {
   	var scs=rpc.xmlhttp.responseText.extractScript();
   	oPanel.addContent(rpc.xmlhttp.responseText);
   	scs.evalScript();
+  	$('form[CREATE]').disabled = true;
   }.extend(this);
   oRPC.make();
 };
 
 var saveDBConnection = function() {
-  //verify required fields
-  //
+	
+	var pro_uid = $('form[PRO_UID]').value;
+	var type = $('form[DBS_TYPE]').value;
+	var server= $('form[DBS_SERVER]').value;
+	var db_name = $('form[DBS_DATABASE_NAME]').value;
+	var user = $('form[DBS_USERNAME]').value;
+	var passwd = $('form[DBS_PASSWORD]').value;
+	var port = $('form[DBS_PORT]').value;
+	
+  var uri = 'action=saveConnection&type='+type+'&server='+server+'&db_name='+db_name+'&user='+user+'&passwd='+passwd+'&port='+port+'&pro_uid='+pro_uid;	
+  
+  var oRPC = new leimnud.module.rpc.xmlhttp({
+  	url : 'dbConnectionsAjax',
+  	args: uri
+  });
+  oRPC.callback = function(rpc){
+  	oPanel.clearContent();
+  	oPanel.addContent(rpc.xmlhttp.responseText);
+  	
+  	
+  	var oRPC = new leimnud.module.rpc.xmlhttp({
+    url   : '../setup/dbConnectionsAjax',
+    async : false,
+    method: 'POST',
+    args  : 'action=showConnections&PRO_UID=' + pro_uid
+  });
+  oRPC.make();
+  document.getElementById('publisherContent[1]').innerHTML = oRPC.xmlhttp.responseText;
+  	
+  	
+  	setTimeout("oPanel.remove();",1000);
+  }.extend(this);
+  oRPC.make();
 };
+
+function $(id){
+	return document.getElementById(id);
+}
+
+function AJAX() 
+{
+	try	{
+		xmlhttp = new XMLHttpRequest();
+	} 
+	catch(generic_error) {
+		try {
+			xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+		} catch (microsoft_old_error) {
+			try {
+				xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+			} catch (microsoft_error) {
+				xmlhttp = false;
+			}
+		}
+	}
+	return xmlhttp;
+}
+
+var currentPopupWindow;
+
+function testDBConnection()
+{
+	var type = $('form[DBS_TYPE]').value;
+	var server= $('form[DBS_SERVER]').value;
+	var db_name = $('form[DBS_DATABASE_NAME]').value;
+	var user = $('form[DBS_USERNAME]').value;
+	var passwd = $('form[DBS_PASSWORD]').value;
+	var port = $('form[DBS_PORT]').value;
+	
+	var myPanel = new leimnud.module.panel();
+	currentPopupWindow = myPanel;
+	myPanel.options = {
+		size:{w:450,h:250},
+		position:{center:true},
+		title: "TESTING SERVER CONNECTION",
+		theme: "processmaker",
+		control: { close: false, roll: false, drag: true, resize: false},
+		fx: {
+			shadow	:true,
+			blinkToFront:true,
+			opacity	:true,
+			drag:true,
+			modal: true
+		}
+	};
+	
+	myPanel.make();
+	myPanel.loader.show();
+	   
+	var requestfile = 'dbConnectionsAjax';	 
+    var uri = 'action=showTestConnection&type='+type+'&server='+server+'&db_name='+db_name+'&user='+user+'&passwd='+passwd+'&port='+port;
+	
+	var ajax = AJAX();
+	ajax.open("POST", requestfile, true);
+	ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;");		
+	ajax.onreadystatechange = function() { 
+		if(ajax.readyState == 4) {
+			currentPopupWindow.clearContent();
+			currentPopupWindow.addContent(ajax.responseText);
+			myPanel.command(myPanel.loader.hide);
+			testHost(1);
+		} else {	
+			//var html = "<center><IMG src='"+MODULE+"images/load2.gif' width='20' height='20' border='0'><br><b>"+msgwait+"</b></center>";
+			var msg = 'Verifing Port'
+		    //$(target).innerHTML = html;
+		}
+	}
+	ajax.send(uri);
+    
+	//delete myPanel;			
+	//setTimeout("currentPopupWindow.remove();",1000);
+}
+
+var resultset = true;
+function testHost(step)
+{		
+	$("test_"+step).style.display = "block";
+	
+	var type = $('form[DBS_TYPE]').value;
+	var server= $('form[DBS_SERVER]').value;
+	var db_name = $('form[DBS_DATABASE_NAME]').value;
+	var user = $('form[DBS_USERNAME]').value;
+	if($('form[DBS_PASSWORD]').value != '') {
+		var passwd = $('form[DBS_PASSWORD]').value;
+	} else {
+		var passwd = 'none';
+	}		
+	
+	if($('form[DBS_PORT]').value != '') {
+		var port = $('form[DBS_PORT]').value;
+	} else {
+		var port = 'none';
+	}
+	
+	switch(step)
+	{
+		case 1: teststep = 'resolv'; break;
+		case 2: teststep = 'checkport'; break;
+		case 3:  
+			switch(type)
+			{
+				case 'mysql': teststep = 'mysql_ping';	break;		
+				case 'pgsql': teststep = 'pg_ping'; 	break;
+				case 'mssql': teststep = 'mysql_ping'; 	break;
+			}		
+			break;
+		case 4: 
+			switch(type)
+			{
+				case 'mysql': teststep = 'mysql_testDataBase'; 	break;		
+				case 'pgsql': return 0; 	break;
+				case 'mssql': teststep = 'mysql_ping'; 	break;
+			}		
+			break;
+		default:
+			return;
+		break;
+	}
+	
+	var requestfile = 'dbConnectionsAjax';
+	var uri = 'action=testConnection&teststep='+teststep+'&type='+type+'&server='+server+'&db_name='+db_name+'&user='+user+'&port='+port+'&passwd='+passwd; 
+	
+	var ajax = AJAX();
+	ajax.open("POST", requestfile, true);
+	ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;");		
+	ajax.onreadystatechange = function() { 
+		if(ajax.readyState == 4) {
+			try{	
+				if(eval(ajax.responseText.trim())) {
+					$('status_'+step).innerHTML = "<font color=blue><b>DONE</b></font>";
+				}
+				else {
+					$('status_'+step).innerHTML = "<font color=red><b>FAILED</b></font>";
+					resultset = false;
+				}
+				step += 1;
+				testHost(step);
+			} catch (e) {
+				if(resultset){				
+					$('form[CREATE]').disabled = false;
+				}
+				else {
+					resultset = true;
+					$('form[CREATE]').disabled = true;
+				} 
+				return;
+			};
+		} else {	
+			var html = "Testing...";
+		    $('status_'+step).innerHTML = html;
+		}
+	}
+	ajax.send(uri);
+}
+
+
+
+function cancelTestConnection()
+{
+	currentPopupWindow.remove();
+}
+
+String.prototype.trim = function() 
+{
+	return this.replace(/^\s+|\s+get/g,"");
+}
+
+function makeUriElement(param)
+{
+	urix="";
+	for(i=0; i<param.length; i++)
+	{
+		if(i != 0) urix+="&";
+		urix += param[i]+"="+$(param[i]).value; 
+	}
+	return urix;
+}
+	
 ]]>
 </JS>
 

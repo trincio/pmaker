@@ -33,11 +33,11 @@
   <en>Port</en>
 </DBS_PORT>
 
-<TEST type="button" onclick="alert('Under construction!');">
+<TEST type="button" onclick="javascript:testDBConnection();">
   <en>Test Connection</en>
 </TEST>
 
-<CREATE type="button" onclick="saveDBConnection();">
+<CREATE type="button" onclick="javascript:saveDBConnection();">
   <en>Create</en>
 </CREATE>
 
