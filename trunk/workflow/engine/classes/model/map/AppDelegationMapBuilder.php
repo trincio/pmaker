@@ -92,6 +92,8 @@ class AppDelegationMapBuilder {
 
 		$tMap->addColumn('DEL_FINISH_DATE', 'DelFinishDate', 'int', CreoleTypes::TIMESTAMP, false, null);
 
+		$tMap->addColumn('DEL_DURATION', 'DelDuration', 'double', CreoleTypes::DOUBLE, false, null);
+
 		$tMap->addValidator('DEL_TYPE', 'validValues', 'propel.validator.ValidValuesValidator', 'NORMAL|PARALLEL', 'Please select a valid status.');
 
 		$tMap->addValidator('DEL_PRIORITY', 'validValues', 'propel.validator.ValidValuesValidator', '1|2|3|4|5', 'Please select a valid Priority.');

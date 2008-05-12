@@ -351,6 +351,16 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
+    <column name="DEL_DURATION" type="DOUBLE" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="DEL_DURATION"/>
+        <parameter name="Type" value="double"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="0"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
 
     <validator column="DEL_TYPE">
       <rule name="validValues" value="NORMAL|PARALLEL" message="Please select a valid status." />

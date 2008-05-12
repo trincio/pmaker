@@ -272,7 +272,7 @@ class Cases
     * @return Fields
     */
     function updateCase($sAppUid, $Fields = array())
-    {  
+    {
         try {
             $aApplicationFields = $Fields['APP_DATA'];
             $oApp = new Application;
@@ -281,34 +281,34 @@ class Cases
             $Fields['APP_DATA'] = serialize($Fields['APP_DATA']);
             $Fields['APP_TITLE'] = self::refreshCaseTitle($sAppUid, $aApplicationFields);
             $Fields['APP_DESCRIPTION'] = self::refreshCaseDescription($sAppUid, $aApplicationFields);
-            $Fields['APP_PROC_CODE'] = self::refreshCaseStatusCode($sAppUid, $aApplicationFields);            
+            $Fields['APP_PROC_CODE'] = self::refreshCaseStatusCode($sAppUid, $aApplicationFields);
             $oApp->update($Fields);
-            
+
             $DEL_INDEX = $Fields['DEL_INDEX'];
             $TAS_UID = $Fields['TAS_UID'];
-                        
+
             $aFields = $oApp->load($sAppUid);
             G::LoadClass('reportTables');
             $oReportTables = new ReportTables();
-            $oReportTables->updateTables($aFields['PRO_UID'], $sAppUid, $Fields['APP_NUMBER'],$aApplicationFields);                        
-                    
-            if($DEL_INDEX!='' && $TAS_UID!='')         
+            $oReportTables->updateTables($aFields['PRO_UID'], $sAppUid, $Fields['APP_NUMBER'],$aApplicationFields);
+
+            if($DEL_INDEX!='' && $TAS_UID!='')
             {
 	            $oTask = new Task;
 	            $array = $oTask->load($TAS_UID);
-	            
-	            $VAR_PRI = substr($array['TAS_PRIORITY_VARIABLE'], 2); 
-	                                                                               
-	            $x = unserialize($Fields['APP_DATA']);            
+
+	            $VAR_PRI = substr($array['TAS_PRIORITY_VARIABLE'], 2);
+
+	            $x = unserialize($Fields['APP_DATA']);
 	            if(isset($x[$VAR_PRI]))
 	             {  $oDel = new AppDelegation;
 	             	  $array['APP_UID'] = $sAppUid;
 	             	  $array['DEL_INDEX'] = $DEL_INDEX;
 	             	  $array['TAS_UID'] = $TAS_UID;
 	             	  $array['DEL_PRIORITY'] = $x[$VAR_PRI];
-	             	  $oDel->update($array);             	
-	             }		                        
-	          }   
+	             	  $oDel->update($array);
+	             }
+	          }
             return $Fields;
         }
         catch (exception $e) {
@@ -887,9 +887,12 @@ class Cases
             $c->add(AppDelegationPeer::APP_UID, $sAppUid);
             $c->add(AppDelegationPeer::DEL_INDEX, $iDelIndex);
             $rowObj = AppDelegationPeer::doSelect($c);
+            G::LoadClass('dates');
+            $oDates = new dates();
             foreach ($rowObj as $appDel) {
                 $appDel->setDelThreadStatus('CLOSED');
                 $appDel->setDelFinishDate('now');
+                $appDel->setDelDuration($oDates->calculateDuration($appDel->getDelInitDate(), $appDel->getDelFinishDate(), null, null, $appDel->getTasUid()));
                 if ($appDel->Validate()) {
                     $appDel->Save();
                 } else {
@@ -1324,7 +1327,7 @@ class Cases
                 $c->add(ApplicationPeer::APP_STATUS, 'TO_DO');
                 $c->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
                 $c->add(AppThreadPeer::APP_THREAD_STATUS, 'OPEN');
-                $c->add(AppDelegationPeer::DEL_THREAD_STATUS, 'OPEN');                
+                $c->add(AppDelegationPeer::DEL_THREAD_STATUS, 'OPEN');
                 $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
                 $xmlfile = $filesList[1];
                 break;
@@ -1346,7 +1349,7 @@ class Cases
                 break;
             case 'cancelled':
                 $c->add($c->getNewCriterion(AppThreadPeer::APP_THREAD_STATUS, 'OPEN')->addAnd($c->
-                    getNewCriterion(ApplicationPeer::APP_STATUS, 'CANCELLED')));                
+                    getNewCriterion(ApplicationPeer::APP_STATUS, 'CANCELLED')));
                 $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
                 $xmlfile = $filesList[4];
                 break;
@@ -1360,7 +1363,7 @@ class Cases
                 $c->add($c->getNewCriterion(AppThreadPeer::APP_THREAD_STATUS, 'OPEN')->addOr($c->
                     getNewCriterion(ApplicationPeer::APP_STATUS, 'COMPLETED')->addAnd($c->
                     getNewCriterion(AppDelegationPeer::DEL_PREVIOUS, 0))));
-                $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);    
+                $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
                 $xmlfile = $filesList[0];
                 break;
         }
