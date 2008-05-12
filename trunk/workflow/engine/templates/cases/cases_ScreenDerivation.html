@@ -83,19 +83,32 @@
     {if $PROCESS.ROU_TYPE eq 'SELECT'}
     <tr>
   		<td colspan="2" align="center">
-      <input type="submit" name="btnContinue" id="btnContinue" value="Continue with option {$id} " ></td>
+      {if $data.NEXT_TASK.TAS_ASSIGN_TYPE neq '' && not $data.NEXT_TASK.ROU_FINISH_FLAG }
+        <input type="submit" name="btnContinue" id="btnContinue" value="Continue with option {$id} " >
+      {/if}
+      {if $data.NEXT_TASK.TAS_ASSIGN_TYPE neq '' && $data.NEXT_TASK.ROU_FINISH_FLAG }
+        <input type="submit" name="btnContinue" id="btnContinue" value="Finish with option {$id} " >
+      {$data.NEXT_TASK.TAS_ASSIGN_TYPE}
+      {/if}
+      </td>  
     </tr>
     </form>
     {/if}
 	{/foreach}  
 
-  {if $PROCESS.ERROR eq '' && $PROCESS.ROU_TYPE neq 'SELECT' }
+  {if $PROCESS.ERROR eq '' && $PROCESS.ROU_TYPE neq 'SELECT' && ! $PROCESS.ROU_FINISH_FLAG  }
 	<tr>
 		<td colspan="2" align="center">
       <input type="submit" name="btnContinue" id="btnContinue" value="Continue {$PROCESS.DISABLED}" ></td>
 	</tr>
 	{/if}
-                                                                                                                                       </table>
+  {if $PROCESS.ERROR eq '' && $PROCESS.ROU_TYPE neq 'SELECT' && $PROCESS.ROU_FINISH_FLAG  }
+	<tr>
+		<td colspan="2" align="center">
+      <input type="submit" name="btnContinue" id="btnContinue" value="Finish" ></td>
+	</tr>
+	{/if}
+                                                                                                                   </table>
         </td>
       </tr>
     </table>
