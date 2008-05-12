@@ -343,65 +343,63 @@ switch ($_GET['TYPE'])
                               'APP_UID'   => $_SESSION['APPLICATION'],
                               'DEL_INDEX' => $_SESSION['INDEX'])
                        );
-
     if ( empty($aFields['TASK']) )  {
       throw ( new Exception ( G::LoadTranslation ( 'ID_NO_DERIVATION_RULE')  ) );
     }
 
     //take the first derivation rule as the task derivation rule type.
     $aFields['PROCESS']['ROU_TYPE'] = $aFields['TASK'][1]['ROU_TYPE'];
-    switch ( $aFields['PROCESS']['ROU_TYPE'] )
+    $aFields['PROCESS']['ROU_FINISH_FLAG'] = false;
+
+    foreach ( $aFields['TASK'] as $sKey => &$aValues)
     {
-      default:
-        // loop for every and each possible task to derivate
-        foreach ( $aFields['TASK'] as $sKey => &$aValues)
+      $sPriority = '';//set priority value
+      if ($aFields['TASK'][$sKey]['NEXT_TASK']['TAS_PRIORITY_VARIABLE'] != '') {
+        //TO DO: review this type of assignment
+        if (isset($oApplication->Fields[ str_replace('@@', '', $aFields['TASK'][$sKey]['NEXT_TASK']['TAS_PRIORITY_VARIABLE'])]) )
         {
-          $sPriority = '';//set priority value
-          if ($aFields['TASK'][$sKey]['NEXT_TASK']['TAS_PRIORITY_VARIABLE'] != '') {
-            //TO DO: review this type of assignment
-            if (isset($oApplication->Fields[ str_replace('@@', '', $aFields['TASK'][$sKey]['NEXT_TASK']['TAS_PRIORITY_VARIABLE'])]) )
-            {
-              $sPriority = $oApplication->Fields[$aFields['TASK'][$sKey]['NEXT_TASK']['TAS_PRIORITY_VARIABLE']];
-            }
-          }//set priority value
-
-          $sTask = $aFields['TASK'][$sKey]['NEXT_TASK']['TAS_UID'];
-
-          //TAS_UID has a hidden field to store the TAS_UID
-          $hiddenName = "form[TASKS][" . $sKey . "][TAS_UID]";
-          $hiddenField = '<input type="hidden" name="' . $hiddenName . '" id="' . $hiddenName . '" value="' . $aValues['NEXT_TASK']['TAS_UID'] . '">';
-          $aFields['TASK'][$sKey]['NEXT_TASK']['TAS_HIDDEN_FIELD'] = $hiddenField;
-          switch ($aValues['NEXT_TASK']['TAS_ASSIGN_TYPE']) {
-            case 'EVALUATE':
-            case 'BALANCED':
-                $hiddenName = "form[TASKS][" . $sKey . "][USR_UID]";
-                $aFields['TASK'][$sKey]['NEXT_TASK']['USR_UID'] = $aFields['TASK'][$sKey]['NEXT_TASK']['USER_ASSIGNED']['USR_USERNAME'] ;
-                $aFields['TASK'][$sKey]['NEXT_TASK']['USR_HIDDEN_FIELD'] = '<input type="hidden" name="' . $hiddenName . '" id="' . $hiddenName . '" value="' . $aValues['NEXT_TASK']['USER_ASSIGNED']['USR_UID'] . '">';
-                break;
-            case 'MANUAL':
-                $sAux      = '<select name="form[TASKS][' . $sKey . '][USR_UID]" id="form[TASKS][' . $sKey . '][USR_UID]">';
-                foreach ($aValues['NEXT_TASK']['USER_ASSIGNED'] as $aUser)
-                {
-                  $sAux .= '<option value="' . $aUser['USR_UID'] . '">' . $aUser['USR_FULLNAME'] . '</option>';
-                }
-                $sAux .= '</select>';
-                $aFields['TASK'][$sKey]['NEXT_TASK']['USR_UID'] = $sAux;
-                break;
-            case 'SELFSERVICE':
-                //Next release
-                break;
-            case '':  //when this task is the Finish process
-                $userFields = $oDerivation->getUsersFullNameFromArray ( $aFields['TASK'][$sKey]['USER_UID'] );
-                $aFields['TASK'][$sKey]['NEXT_TASK']['USR_UID'] = $userFields['USR_FULLNAME'];
-                break;
-          }
-          $hiddenName = 'form[TASKS][' . $sKey . ']';
-          $aFields['TASK'][$sKey]['NEXT_TASK']['TAS_ASSIGN_TYPE']   = '<input type="hidden" name="' . $hiddenName . '[TAS_ASSIGN_TYPE]"   id="' . $hiddenName . '[TAS_ASSIGN_TYPE]"   value="' . $aValues['NEXT_TASK']['TAS_ASSIGN_TYPE'] . '">';
-          $aFields['TASK'][$sKey]['NEXT_TASK']['TAS_DEF_PROC_CODE'] = '<input type="hidden" name="' . $hiddenName . '[TAS_DEF_PROC_CODE]" id="' . $hiddenName . '[TAS_DEF_PROC_CODE]" value="' . $aValues['NEXT_TASK']['TAS_DEF_PROC_CODE'] . '">';
-          $aFields['TASK'][$sKey]['NEXT_TASK']['DEL_PRIORITY']      = '<input type="hidden" name="' . $hiddenName . '[DEL_PRIORITY]"      id="' . $hiddenName . '[DEL_PRIORITY]"      value="' . $sPriority . '">';
+          $sPriority = $oApplication->Fields[$aFields['TASK'][$sKey]['NEXT_TASK']['TAS_PRIORITY_VARIABLE']];
         }
-        break;
+      }//set priority value
+
+      $sTask = $aFields['TASK'][$sKey]['NEXT_TASK']['TAS_UID'];
+
+      //TAS_UID has a hidden field to store the TAS_UID
+      $hiddenName = "form[TASKS][" . $sKey . "][TAS_UID]";
+      $hiddenField = '<input type="hidden" name="' . $hiddenName . '" id="' . $hiddenName . '" value="' . $aValues['NEXT_TASK']['TAS_UID'] . '">';
+      $aFields['TASK'][$sKey]['NEXT_TASK']['TAS_HIDDEN_FIELD'] = $hiddenField;
+      switch ($aValues['NEXT_TASK']['TAS_ASSIGN_TYPE']) {
+        case 'EVALUATE':
+        case 'BALANCED':
+            $hiddenName = "form[TASKS][" . $sKey . "][USR_UID]";
+            $aFields['TASK'][$sKey]['NEXT_TASK']['USR_UID'] = $aFields['TASK'][$sKey]['NEXT_TASK']['USER_ASSIGNED']['USR_FULLNAME'];
+            $aFields['TASK'][$sKey]['NEXT_TASK']['USR_HIDDEN_FIELD'] = '<input type="hidden" name="' . $hiddenName . '" id="' . $hiddenName . '" value="' . $aValues['NEXT_TASK']['USER_ASSIGNED']['USR_UID'] . '">';
+            break;
+        case 'MANUAL':
+            $sAux      = '<select name="form[TASKS][' . $sKey . '][USR_UID]" id="form[TASKS][' . $sKey . '][USR_UID]">';
+            foreach ($aValues['NEXT_TASK']['USER_ASSIGNED'] as $aUser)
+            {
+              $sAux .= '<option value="' . $aUser['USR_UID'] . '">' . $aUser['USR_FULLNAME'] . '</option>';
+            }
+            $sAux .= '</select>';
+            $aFields['TASK'][$sKey]['NEXT_TASK']['USR_UID'] = $sAux;
+            break;
+        case 'SELFSERVICE':
+            //Next release
+            break;
+        case '':  //when this task is the Finish process
+            $userFields = $oDerivation->getUsersFullNameFromArray ( $aFields['TASK'][$sKey]['USER_UID'] );
+            $aFields['TASK'][$sKey]['NEXT_TASK']['USR_UID'] = $userFields['USR_FULLNAME'];
+            $aFields['TASK'][$sKey]['NEXT_TASK']['ROU_FINISH_FLAG'] = true;
+            $aFields['PROCESS']['ROU_FINISH_FLAG'] = true;
+            break;
       }
+      $hiddenName = 'form[TASKS][' . $sKey . ']';
+      $aFields['TASK'][$sKey]['NEXT_TASK']['TAS_ASSIGN_TYPE']   = '<input type="hidden" name="' . $hiddenName . '[TAS_ASSIGN_TYPE]"   id="' . $hiddenName . '[TAS_ASSIGN_TYPE]"   value="' . $aValues['NEXT_TASK']['TAS_ASSIGN_TYPE'] . '">';
+      $aFields['TASK'][$sKey]['NEXT_TASK']['TAS_DEF_PROC_CODE'] = '<input type="hidden" name="' . $hiddenName . '[TAS_DEF_PROC_CODE]" id="' . $hiddenName . '[TAS_DEF_PROC_CODE]" value="' . $aValues['NEXT_TASK']['TAS_DEF_PROC_CODE'] . '">';
+      $aFields['TASK'][$sKey]['NEXT_TASK']['DEL_PRIORITY']      = '<input type="hidden" name="' . $hiddenName . '[DEL_PRIORITY]"      id="' . $hiddenName . '[DEL_PRIORITY]"      value="' . $sPriority . '">';
+    }
+                    
     $G_PUBLISH->AddContent('smarty', 'cases/cases_ScreenDerivation', '', '', $aFields);
   break;
 }
