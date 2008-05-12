@@ -44,11 +44,11 @@
 
 <DEL_PRIORITY type="dropdown" value="" link="" colWidth="180" titleAlign="left" align="left" dataCompareField="APP_DELEGATION.DEL_PRIORITY" dataCompareType="contains">
   <en>Priority  
-      <option name="VH">Very High</option>
-      <option name="H">High</option>
-      <option name="N">Normal</option>
-      <option name="L">Low</option>
-      <option name="VL">Very Low</option>
+      <option name="1">Very High</option>
+      <option name="2">High</option>
+      <option name="3">Normal</option>
+      <option name="4">Low</option>
+      <option name="5">Very Low</option>
   </en>
 </DEL_PRIORITY>
 

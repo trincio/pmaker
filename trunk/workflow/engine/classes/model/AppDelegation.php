@@ -77,7 +77,7 @@ class AppDelegation extends BaseAppDelegation {
     $this->setDelPrevious     ( 0 );
     $this->setUsrUid          ( $sUsrUid );
     $this->setDelType         ( 'NORMAL' );
-    $this->setDelPriority     ( 'N' );
+    $this->setDelPriority     ( '3' );
     $this->setDelThread       ( $sAppThread );
     $this->setDelThreadStatus ( 'OPEN' );
     $this->setDelDelegateDate ( 'now' );

@@ -92,8 +92,8 @@ class Form extends XmlForm
 
     $this->home=$home;
     $res = parent::parseFile( $filename , $language, $forceParse );
-    if ($res==1) trigger_error('Faild to parse file ' . $filename . '.', E_USER );
-    if ($res==2) trigger_error('Faild to create cache file "' . $xmlform->parsedFile . '".', E_USER );
+    if ($res==1) trigger_error('Faild to parse file ' . $filename . '.', E_USER_ERROR );
+    if ($res==2) trigger_error('Faild to create cache file "' . $xmlform->parsedFile . '".', E_USER_ERROR );
     $this->setDefaultValues();
 
     //to do: review if you can use the same form twice. in order to use once or not.
