@@ -22,7 +22,10 @@
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
  *
  */
- 
+/*G::LoadClass('dates');
+$oDates = new dates();
+//$oDates->calculateDuration('2008-05-08', '', null, null, '147C01599607CC');
+var_dump($oDates->calculateDuration('2008-05-08', ''));die;*/
 if (!isset($_SESSION['G_MESSAGE']))
 {
 	$_SESSION['G_MESSAGE'] = '';

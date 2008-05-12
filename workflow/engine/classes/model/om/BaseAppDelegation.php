@@ -125,6 +125,13 @@ abstract class BaseAppDelegation extends BaseObject  implements Persistent {
 	 */
 	protected $del_finish_date;
 
+
+	/**
+	 * The value for the del_duration field.
+	 * @var        double
+	 */
+	protected $del_duration = 0;
+
 	/**
 	 * Flag to prevent endless save loop, if this object is referenced
 	 * by another object which falls in this transaction.
@@ -371,6 +378,17 @@ abstract class BaseAppDelegation extends BaseObject  implements Persistent {
 		} else {
 			return date($format, $ts);
 		}
+	}
+
+	/**
+	 * Get the [del_duration] column value.
+	 * 
+	 * @return     double
+	 */
+	public function getDelDuration()
+	{
+
+		return $this->del_duration;
 	}
 
 	/**
@@ -690,6 +708,22 @@ abstract class BaseAppDelegation extends BaseObject  implements Persistent {
 	} // setDelFinishDate()
 
 	/**
+	 * Set the value of [del_duration] column.
+	 * 
+	 * @param      double $v new value
+	 * @return     void
+	 */
+	public function setDelDuration($v)
+	{
+
+		if ($this->del_duration !== $v || $v === 0) {
+			$this->del_duration = $v;
+			$this->modifiedColumns[] = AppDelegationPeer::DEL_DURATION;
+		}
+
+	} // setDelDuration()
+
+	/**
 	 * Hydrates (populates) the object variables with values from the database resultset.
 	 *
 	 * An offset (1-based "start column") is specified so that objects can be hydrated
@@ -734,12 +768,14 @@ abstract class BaseAppDelegation extends BaseObject  implements Persistent {
 
 			$this->del_finish_date = $rs->getTimestamp($startcol + 13, null);
 
+			$this->del_duration = $rs->getFloat($startcol + 14);
+
 			$this->resetModified();
 
 			$this->setNew(false);
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 14; // 14 = AppDelegationPeer::NUM_COLUMNS - AppDelegationPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 15; // 15 = AppDelegationPeer::NUM_COLUMNS - AppDelegationPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating AppDelegation object", $e);
@@ -984,6 +1020,9 @@ abstract class BaseAppDelegation extends BaseObject  implements Persistent {
 			case 13:
 				return $this->getDelFinishDate();
 				break;
+			case 14:
+				return $this->getDelDuration();
+				break;
 			default:
 				return null;
 				break;
@@ -1018,6 +1057,7 @@ abstract class BaseAppDelegation extends BaseObject  implements Persistent {
 			$keys[11] => $this->getDelInitDate(),
 			$keys[12] => $this->getDelTaskDueDate(),
 			$keys[13] => $this->getDelFinishDate(),
+			$keys[14] => $this->getDelDuration(),
 		);
 		return $result;
 	}
@@ -1091,6 +1131,9 @@ abstract class BaseAppDelegation extends BaseObject  implements Persistent {
 			case 13:
 				$this->setDelFinishDate($value);
 				break;
+			case 14:
+				$this->setDelDuration($value);
+				break;
 		} // switch()
 	}
 
@@ -1128,6 +1171,7 @@ abstract class BaseAppDelegation extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[11], $arr)) $this->setDelInitDate($arr[$keys[11]]);
 		if (array_key_exists($keys[12], $arr)) $this->setDelTaskDueDate($arr[$keys[12]]);
 		if (array_key_exists($keys[13], $arr)) $this->setDelFinishDate($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setDelDuration($arr[$keys[14]]);
 	}
 
 	/**
@@ -1153,6 +1197,7 @@ abstract class BaseAppDelegation extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(AppDelegationPeer::DEL_INIT_DATE)) $criteria->add(AppDelegationPeer::DEL_INIT_DATE, $this->del_init_date);
 		if ($this->isColumnModified(AppDelegationPeer::DEL_TASK_DUE_DATE)) $criteria->add(AppDelegationPeer::DEL_TASK_DUE_DATE, $this->del_task_due_date);
 		if ($this->isColumnModified(AppDelegationPeer::DEL_FINISH_DATE)) $criteria->add(AppDelegationPeer::DEL_FINISH_DATE, $this->del_finish_date);
+		if ($this->isColumnModified(AppDelegationPeer::DEL_DURATION)) $criteria->add(AppDelegationPeer::DEL_DURATION, $this->del_duration);
 
 		return $criteria;
 	}
@@ -1242,6 +1287,8 @@ abstract class BaseAppDelegation extends BaseObject  implements Persistent {
 		$copyObj->setDelTaskDueDate($this->del_task_due_date);
 
 		$copyObj->setDelFinishDate($this->del_finish_date);
+
+		$copyObj->setDelDuration($this->del_duration);
 
 
 		$copyObj->setNew(true);
