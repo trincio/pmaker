@@ -33,6 +33,8 @@ define ( 'PM_CASE_DOCUMENT_LIST',1003 );
 define ( 'PM_BROWSE_CASE',       1004 );
 define ( 'PM_NEW_PROCESS_LIST',  1005 );
 define ( 'PM_NEW_PROCESS_SAVE',  1006 );
+define ( 'PM_NEW_DYNAFORM_LIST', 1007 );
+define ( 'PM_NEW_DYNAFORM_SAVE', 1008 );
 
 class menuDetail {
 	var $sNamespace;

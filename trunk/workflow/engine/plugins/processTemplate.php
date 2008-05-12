@@ -23,7 +23,8 @@
  * 
  */
   G::LoadClass( "plugin");
-  
+
+
  class processTemplatePlugin extends PMPlugin 
  {
     function processTemplatePlugin($sNamespace, $sFilename = null) 
@@ -41,7 +42,14 @@
     {
       $this->registerTrigger( PM_NEW_PROCESS_LIST, 'getNewProcessTemplateList' );
       $this->registerTrigger( PM_NEW_PROCESS_SAVE, 'saveNewProcess' );
+      $this->registerTrigger( PM_NEW_DYNAFORM_LIST, 'getNewProcessTemplateList' );
+      $this->registerTrigger( PM_NEW_DYNAFORM_SAVE, 'saveNewProcess' );
     }
+    
+    function install()
+    {
+      
+    }    
   }
 
  $oPluginRegistry =& PMPluginRegistry::getSingleton();

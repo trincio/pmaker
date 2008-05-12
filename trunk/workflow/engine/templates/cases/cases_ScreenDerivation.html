@@ -44,7 +44,11 @@
 </td>
   </tr>
   <tr>
+  {if $PROCESS.ERROR eq '' && $PROCESS.ROU_TYPE neq 'SELECT' && $PROCESS.ROU_FINISH_FLAG  }
+    <td class='FormTitle' colspan="2" align="">End of Process</td>
+  {else}
     <td class='FormTitle' colspan="2" align="">Assign Task</td>
+  {/if}
   </tr>
   
 	{foreach key=id item=data from=$TASK}
@@ -59,19 +63,22 @@
         <td class="FormFieldContent">{$data.ROU_CONDITION }</td>
     </tr>
     {/if}
+    
+    {if $PROCESS.ERROR eq '' }
   	<tr>
   		<td class="FormLabel" width="100">Next Task:</td>
       <td class="FormFieldContent">{$data.NEXT_TASK.TAS_TITLE}{$data.NEXT_TASK.TAS_HIDDEN_FIELD}</td>
   	</tr>
+    {/if}
   
-    {if $data.NEXT_TASK.USR_UID neq ''}
+    {if not $data.NEXT_TASK.ROU_FINISH_FLAG }
       <tr>
    	 	<td class="FormLabel" width="100">Employee:</td>
         <td class="FormFieldContent">{$data.NEXT_TASK.USR_UID}{$data.NEXT_TASK.USR_HIDDEN_FIELD}</td>
    	 </tr>
     {else}
       <tr>
-   	 	<td class="FormLabel" width="100">Employee:</td>
+   	 	<td class="FormLabel" width="100">Last Employee:</td>
         <td class="FormFieldContent">{$data.NEXT_TASK.USR_UID}{$data.NEXT_TASK.USR_HIDDEN_FIELD}</td>
    	 </tr>
     {/if}
@@ -84,10 +91,10 @@
     <tr>
   		<td colspan="2" align="center">
       {if $data.NEXT_TASK.TAS_ASSIGN_TYPE neq '' && not $data.NEXT_TASK.ROU_FINISH_FLAG }
-        <input type="submit" name="btnContinue" id="btnContinue" value="Continue with option {$id} " >
+        <input type="submit" class='module_app_button___gray' name="btnContinue" id="btnContinue" value="Continue with option {$id} " >
       {/if}
       {if $data.NEXT_TASK.TAS_ASSIGN_TYPE neq '' && $data.NEXT_TASK.ROU_FINISH_FLAG }
-        <input type="submit" name="btnContinue" id="btnContinue" value="Finish with option {$id} " >
+        <input type="submit" class='module_app_button___gray' name="btnContinue" id="btnContinue" value="Finish with option {$id} " >
       {$data.NEXT_TASK.TAS_ASSIGN_TYPE}
       {/if}
       </td>  
@@ -99,13 +106,13 @@
   {if $PROCESS.ERROR eq '' && $PROCESS.ROU_TYPE neq 'SELECT' && ! $PROCESS.ROU_FINISH_FLAG  }
 	<tr>
 		<td colspan="2" align="center">
-      <input type="submit" name="btnContinue" id="btnContinue" value="Continue {$PROCESS.DISABLED}" ></td>
+      <input type="submit" class='module_app_button___gray' name="btnContinue" id="btnContinue" value="Continue {$PROCESS.DISABLED}" ></td>
 	</tr>
 	{/if}
   {if $PROCESS.ERROR eq '' && $PROCESS.ROU_TYPE neq 'SELECT' && $PROCESS.ROU_FINISH_FLAG  }
 	<tr>
 		<td colspan="2" align="center">
-      <input type="submit" name="btnContinue" id="btnContinue" value="Finish" ></td>
+      <input type="submit" class='module_app_button___gray' name="btnContinue" id="btnContinue" value="Finish" ></td>
 	</tr>
 	{/if}
                                                                                                                    </table>
