@@ -39,20 +39,22 @@ class database extends database_base {
 		$sKeys = '';
 	  $sSQL = 'CREATE TABLE IF NOT EXISTS ' . $this->sQuoteCharacter . $sTable . $this->sQuoteCharacter . '(';
 		foreach ($aColumns as $sColumnName => $aParameters) {
-			$sSQL .= $this->sQuoteCharacter . $sColumnName . $this->sQuoteCharacter . ' ' . $aParameters['Type'];
-			if ($aParameters['Null'] == 'YES') {
-				$sSQL .= ' NULL';
+		  if ($sColumnName != 'INDEXES') {
+			  $sSQL .= $this->sQuoteCharacter . $sColumnName . $this->sQuoteCharacter . ' ' . $aParameters['Type'];
+			  if ($aParameters['Null'] == 'YES') {
+			  	$sSQL .= ' NULL';
+			  }
+			  else {
+			  	$sSQL .= ' NOT NULL';
+			  }
+			  if ($aParameters['Key'] == 'PRI') {
+			  	$sKeys .= $this->sQuoteCharacter . $sColumnName . $this->sQuoteCharacter . ',';
+			  }
+			  if ($aParameters['Default'] != '') {
+			  	$sSQL .= " DEFAULT '" . $aParameters['Default'] . "'";
+			  }
+			  $sSQL .= ',';
 			}
-			else {
-				$sSQL .= ' NOT NULL';
-			}
-			if ($aParameters['Key'] == 'PRI') {
-				$sKeys .= $this->sQuoteCharacter . $sColumnName . $this->sQuoteCharacter . ',';
-			}
-			if ($aParameters['Default'] != '') {
-				$sSQL .= " DEFAULT '" . $aParameters['Default'] . "'";
-			}
-			$sSQL .= ',';
 		}
 		$sSQL = substr($sSQL, 0, -1);
 		if ($sKeys != '') {
