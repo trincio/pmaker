@@ -310,7 +310,7 @@
         <parameter name="Type" value="varchar(100)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
-        <parameter name="Default" value="N"/>
+        <parameter name="Default" value="3"/>
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
