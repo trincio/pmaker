@@ -1873,3 +1873,49 @@ processmap.prototype={
 		r.make();
 	}
 };
+
+/**
+*	Added By: Erik Amariu Ortiz <erik@colosacom>
+*	Comment: Ths functionality make the wondow for the show panel DB Connection. 
+*/
+var mainPanel;
+
+function showBdConnectionsList()
+{
+	mainPanel = new leimnud.module.panel();
+	mainPanel.options = {
+	  	size	:{w:640,h:450},
+	  	position:{x:0,y:0,center:true},
+	  	title	:"",
+	  	theme	:"processmaker",
+	  	statusBar:false,
+	  	control	:{resize:false,roll:false,drag:false},
+	  	fx	:{modal:true,opacity:true,blinkToFront:false,fadeIn:false,drag:false}
+  	};
+  	mainPanel.events = {
+  		remove: function() { delete(mainPanel); }.extend(this)
+  	};
+	mainPanel.make();
+	mainPanel.loader.show();
+	var oRPC = new leimnud.module.rpc.xmlhttp({
+	  	url : '../dbConnections/dbConnectionsAjax',
+	  	args: 'action=showBdConnectionsList'
+  	});
+  	oRPC.callback = function(rpc) {
+	  	mainPanel.loader.hide();
+	  	var scs=rpc.xmlhttp.responseText.extractScript();
+	  	mainPanel.addContent(rpc.xmlhttp.responseText);
+	  	scs.evalScript();
+  	}.extend(this);
+	oRPC.make();
+}
+
+
+
+
+
+
+
+
+
+
