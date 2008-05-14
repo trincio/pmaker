@@ -78,4 +78,42 @@ class DbSource extends BaseDbSource
             throw ($e);
         }
     }
+
+    function remove($DbsUid)
+    {
+        $con = Propel::getConnection(DbSourcePeer::DATABASE_NAME);
+        try {
+            $con->begin();
+            $this->setDbsUid($DbsUid);
+            $result = $this->delete();
+            $con->commit();
+            return $result;
+        }
+        catch (exception $e) {
+            $con->rollback();
+            throw ($e);
+        }
+    }
+
+    function create($aData)
+    {
+        $con = Propel::getConnection(UsersPeer::DATABASE_NAME);
+        try {
+            $this->fromArray($aData, BasePeer::TYPE_FIELDNAME);
+            if ($this->validate()) {
+                $result = $this->save();
+            } else {
+                $e = new Exception("Failed Validation in class " . get_class($this) . ".");
+                $e->aValidationFailures = $this->getValidationFailures();
+                throw ($e);
+            }
+            $con->commit();
+            return $result;
+        }
+        catch (exception $e) {
+            $con->rollback();
+            throw ($e);
+        }
+    }
+
 } // DbSource

@@ -140,6 +140,33 @@ switch ($_GET['TYPE'])
       $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['PREVIOUS_STEP_LABEL'] = G::loadTranslation("ID_PREVIOUS_STEP");
     }
     $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['NEXT_STEP'] = $aNextStep['PAGE'];
+    
+    /** ******************************************************************************* init  erik task
+      aqui deberia existir la validacion por proceso 
+      que exista el archivo de configuraciones,
+      si exista hacer: 
+      PROPEL::Init ( PATH_DATA . ..... dbconections/GUI_PROCESS.php); 
+    */
+    
+    require_once PATH_HOME."engine/classes/class.dbConnections.php";
+    $dbs = new dbConnections($_SESSION['PROCESS']);
+    
+    $_SESSION['HAVE_A_MYSQL_CONNECTION'] = (($_SESSION['cnn_mysql'] = $dbs->getConnections("mysql")) != false)?true: false; 
+	$_SESSION['HAVE_A_PGSQL_CONNECTION'] = (($_SESSION['cnn_pgsql'] = $dbs->getConnections("pgsql")) != false)?true: false; 
+	$_SESSION['HAVE_A_MSSQL_CONNECTION'] = (($_SESSION['cnn_mssql'] = $dbs->getConnections("mssql")) != false)?true: false;
+    
+    if($_SESSION['HAVE_A_MYSQL_CONNECTION'] or $_SESSION['HAVE_A_PGSQL_CONNECTION'] or $_SESSION['HAVE_A_MSSQL_CONNECTION'] )
+    {
+		PROPEL::Init ( PATH_METHODS.'dbConnections/genericDbConnectios.php'); 
+	}
+    /*//this commented lines is just for testing,.. remove later
+	$for_test_the_array =  include (PATH_METHODS.'dbConnections/genericDbConnectios.php');
+	echo '<pre>';
+	print_r($for_test_the_array);
+	echo '</pre>';
+	*/
+    /** ******************************************************************************** end erik task*/
+    
     $G_PUBLISH->AddContent('dynaform', 'xmlform', $_SESSION['PROCESS']. '/' . $_GET['UID'], '', $Fields['APP_DATA'], 'cases_SaveData?UID=' . $_GET['UID']);
     break;
   case 'INPUT_DOCUMENT':
