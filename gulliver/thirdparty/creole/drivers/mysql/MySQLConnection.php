@@ -18,26 +18,26 @@
  * and is licensed under the LGPL. For more information please see
  * <http://creole.phpdb.org>.
  */
- 
+
 require_once 'creole/Connection.php';
 require_once 'creole/common/ConnectionCommon.php';
 include_once 'creole/drivers/mysql/MySQLResultSet.php';
 
 /**
  * MySQL implementation of Connection.
- * 
- * 
+ *
+ *
  * @author    Hans Lellelid <hans@xmpl.org>
- * @author    Stig Bakken <ssb@fast.no> 
+ * @author    Stig Bakken <ssb@fast.no>
  * @author    Lukas Smith
  * @version   $Revision: 1.18 $
  * @package   creole.drivers.mysql
- */ 
+ */
 class MySQLConnection extends ConnectionCommon implements Connection {
 
     /** Current database (used in mysql_select_db()). */
     private $database;
-    
+
     /**
      * Connect to a database and log in as the specified user.
      *
@@ -55,7 +55,7 @@ class MySQLConnection extends ConnectionCommon implements Connection {
 
         $this->dsn = $dsninfo;
         $this->flags = $flags;
-        
+
         $persistent = ($flags & Creole::PERSISTENT) === Creole::PERSISTENT;
 
         if (isset($dsninfo['protocol']) && $dsninfo['protocol'] == 'unix') {
@@ -68,9 +68,9 @@ class MySQLConnection extends ConnectionCommon implements Connection {
         }
         $user = $dsninfo['username'];
         $pw = $dsninfo['password'];
-        
+
 		$encoding = !empty($dsninfo['encoding']) ? $dsninfo['encoding'] : null;
-		
+
         $connect_function = $persistent ? 'mysql_pconnect' : 'mysql_connect';
 
         @ini_set('track_errors', true);
@@ -98,7 +98,7 @@ class MySQLConnection extends ConnectionCommon implements Connection {
             if (!@mysql_select_db($dsninfo['database'], $conn)) {
                switch(mysql_errno($conn)) {
                         case 1049:
-                            $exc = new SQLException("no such database", mysql_error($conn));         
+                            $exc = new SQLException("no such database", mysql_error($conn));
                         break;
                         case 1044:
                             $exc = new SQLException("access violation", mysql_error($conn));
@@ -106,21 +106,21 @@ class MySQLConnection extends ConnectionCommon implements Connection {
                         default:
                            $exc = new SQLException("cannot select database", mysql_error($conn));
                 }
-                
+
                 throw $exc;
-                
+
             }
             // fix to allow calls to different databases in the same script
             $this->database = $dsninfo['database'];
         }
 
         $this->dblink = $conn;
-        
+
         if ($encoding) {
 			$this->executeUpdate("SET NAMES " . $encoding);
 		}
-    }    
-    
+    }
+
     /**
      * @see Connection::getDatabaseInfo()
      */
@@ -129,7 +129,7 @@ class MySQLConnection extends ConnectionCommon implements Connection {
         require_once 'creole/drivers/mysql/metadata/MySQLDatabaseInfo.php';
         return new MySQLDatabaseInfo($this);
     }
-    
+
     /**
      * @see Connection::getIdGenerator()
      */
@@ -138,23 +138,23 @@ class MySQLConnection extends ConnectionCommon implements Connection {
         require_once 'creole/drivers/mysql/MySQLIdGenerator.php';
         return new MySQLIdGenerator($this);
     }
-    
+
     /**
      * @see Connection::prepareStatement()
      */
-    public function prepareStatement($sql) 
+    public function prepareStatement($sql)
     {
         require_once 'creole/drivers/mysql/MySQLPreparedStatement.php';
         return new MySQLPreparedStatement($this, $sql);
     }
-    
+
     /**
      * @see Connection::prepareCall()
      */
     public function prepareCall($sql) {
         throw new SQLException('MySQL does not support stored procedures.');
     }
-    
+
     /**
      * @see Connection::createStatement()
      */
@@ -163,7 +163,7 @@ class MySQLConnection extends ConnectionCommon implements Connection {
         require_once 'creole/drivers/mysql/MySQLStatement.php';
         return new MySQLStatement($this);
     }
-        
+
     /**
      * @see Connection::disconnect()
      */
@@ -173,7 +173,7 @@ class MySQLConnection extends ConnectionCommon implements Connection {
         $this->dblink = null;
         return $ret;
     }
-    
+
     /**
      * @see Connection::applyLimit()
      */
@@ -203,12 +203,12 @@ class MySQLConnection extends ConnectionCommon implements Connection {
         }
         return new MySQLResultSet($this, $result, $fetchmode);
     }
-    
+
     /**
      * @see Connection::executeUpdate()
      */
     function executeUpdate($sql)
-    {    
+    {
         $this->lastQuery = $sql;
 
         if ($this->database) {
@@ -216,11 +216,11 @@ class MySQLConnection extends ConnectionCommon implements Connection {
                     throw new SQLException('No database selected', mysql_error($this->dblink));
             }
         }
-        
+
         $result = @mysql_query($sql, $this->dblink);
         if (!$result) {
             throw new SQLException('Could not execute update', mysql_error($this->dblink), $sql);
-        }        
+        }
         return (int) mysql_affected_rows($this->dblink);
     }
 
@@ -237,7 +237,7 @@ class MySQLConnection extends ConnectionCommon implements Connection {
             throw new SQLException('Could not begin transaction', mysql_error($this->dblink));
         }
     }
-        
+
     /**
      * Commit the current transaction.
      * @throws SQLException
@@ -253,7 +253,7 @@ class MySQLConnection extends ConnectionCommon implements Connection {
         $result = @mysql_query('COMMIT', $this->dblink);
         $result = @mysql_query('SET AUTOCOMMIT=1', $this->dblink);
         if (!$result) {
-            throw new SQLException('Can not commit transaction', mysql_error($this->dblink));                
+            throw new SQLException('Can not commit transaction', mysql_error($this->dblink));
         }
     }
 
@@ -286,5 +286,5 @@ class MySQLConnection extends ConnectionCommon implements Connection {
     {
         return (int) @mysql_affected_rows($this->dblink);
     }
-    
+
 }

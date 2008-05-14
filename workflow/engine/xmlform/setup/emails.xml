@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm name="processes_New" width="400px" labelWidth="40%">
+
+<THETITLE type="title" group="1">
+  <en>Configuration</en>
+</THETITLE>
+
+<MESS_ENGINE type="dropdown">
+  <en>Email Engine
+    <option name="SENDMAIL">Sendmail</option>
+    <option name="PHPMAILER">SMTP (PHPMailer)</option>
+    <option name="OPENMAIL">SMTP (OpenMail)</option>
+  </en>
+</MESS_ENGINE>
+
+<MESS_SERVER type="text" size="25" maxlength="100" required="true">
+  <en>Server</en>
+</MESS_SERVER>
+
+<MESS_PORT type="text" size="5" maxlength="5" validate="Int">
+  <en>Port</en>
+</MESS_PORT>
+
+<MESS_ACCOUNT type="text" size="25" maxlength="25" required="true" validate="Email">
+  <en>Account</en>
+</MESS_ACCOUNT>
+
+<MESS_PASSWORD type="password" size="25" maxlength="25">
+  <en>Password</en>
+</MESS_PASSWORD>
+
+<MESS_BACKGROUND type="checkbox" value="1">
+  <en>Run in the background</en>
+</MESS_BACKGROUND>
+
+<MESS_EXECUTE_EVERY type="text" size="5" maxlength="5" required="true" validate="Int" defaultValue="5">
+  <en>Execute every (in minutes)</en>
+</MESS_EXECUTE_EVERY>
+
+<MESS_SEND_MAX type="text" size="5" maxlength="5" required="true" validate="Int" defaultValue="50">
+  <en>Maximun number of mails sended by attempt</en>
+</MESS_SEND_MAX>
+
+<MESS_TRY_SEND_INMEDIATLY type="checkbox" value="1">
+  <en>Try send mails inmediatly</en>
+</MESS_TRY_SEND_INMEDIATLY>
+
+<TEST type="button" onclick="alert('Under construction!');">
+  <en>Test</en>
+</TEST>
+
+<SAVE_CHANGES type="button" onclick="verifyData(this.form);">
+  <en>Save Changes</en>
+</SAVE_CHANGES>
+
+<JS type="javascript">
+<![CDATA[
+leimnud.event.add(getField('MESS_ENGINE'), 'change', function() {
+  if (this.value != 'SENDMAIL') {
+    showRowById('MESS_SERVER');
+    showRowById('MESS_PORT');
+    showRowById('MESS_ACCOUNT');
+    showRowById('MESS_PASSWORD');
+  }
+  else {
+     hideRowById('MESS_SERVER');
+     hideRowById('MESS_PORT');
+     hideRowById('MESS_ACCOUNT');
+     hideRowById('MESS_PASSWORD');
+  }
+}.extend(getField('MESS_ENGINE')));
+
+leimnud.event.add(getField('MESS_BACKGROUND'), 'click', function() {
+  if (this.checked) {
+    showRowById('MESS_EXECUTE_EVERY');
+    showRowById('MESS_SEND_MAX');
+    showRowById('MESS_TRY_SEND_INMEDIATLY');
+  }
+  else {
+    hideRowById('MESS_EXECUTE_EVERY');
+    hideRowById('MESS_SEND_MAX');
+    hideRowById('MESS_TRY_SEND_INMEDIATLY');
+  }
+}.extend(getField('MESS_BACKGROUND')));
+
+if (getField('MESS_ENGINE').value == 'SENDMAIL') {
+   hideRowById('MESS_SERVER');
+   hideRowById('MESS_PORT');
+   hideRowById('MESS_ACCOUNT');
+   hideRowById('MESS_PASSWORD');
+}
+
+if (!getField('MESS_BACKGROUND').checked) {
+  hideRowById('MESS_EXECUTE_EVERY');
+  hideRowById('MESS_SEND_MAX');
+  hideRowById('MESS_TRY_SEND_INMEDIATLY');
+}
+
+var verifyData = function(oForm) {
+	if (getField('MESS_ENGINE').value != 'SENDMAIL') {
+	  oAux = getField('MESS_SERVER');
+	  if (oAux.value == '') {
+	    alert('MESS_SERVER');
+	    oAux.focus();
+	    return;
+	  }
+	  oAux = getField('MESS_ACCOUNT');
+	  if (oAux.value == '') {
+	    alert('MESS_ACCOUNT');
+	    oAux.focus();
+	    return;
+	  }
+	}
+	if (getField('MESS_BACKGROUND').checked) {
+	  oAux = getField('MESS_EXECUTE_EVERY');
+	  if (oAux.value == '') {
+	    alert('MESS_EXECUTE_EVERY');
+	    oAux.focus();
+	    return;
+	  }
+	  oAux = getField('MESS_SEND_MAX');
+	  if (oAux.value == '') {
+	    alert('MESS_SEND_MAX');
+	    oAux.focus();
+	    return;
+	  }
+	}
+	oForm.submit();
+};
+]]>
+</JS>
+
+</dynaForm>
