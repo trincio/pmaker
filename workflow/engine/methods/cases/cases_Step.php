@@ -157,7 +157,7 @@ switch ($_GET['TYPE'])
     
     if($_SESSION['HAVE_A_MYSQL_CONNECTION'] or $_SESSION['HAVE_A_PGSQL_CONNECTION'] or $_SESSION['HAVE_A_MSSQL_CONNECTION'] )
     {
-		PROPEL::Init ( PATH_METHODS.'dbConnections/genericDbConnectios.php'); 
+		PROPEL::Init ( PATH_METHODS.'dbConnections/genericDbConnections.php'); 
 	}
     /*//this commented lines is just for testing,.. remove later
 	$for_test_the_array =  include (PATH_METHODS.'dbConnections/genericDbConnectios.php');
