@@ -1886,7 +1886,7 @@ function showBdConnectionsList()
 	mainPanel.options = {
 	  	size	:{w:640,h:450},
 	  	position:{x:0,y:0,center:true},
-	  	title	:"",
+	  	title	:G_STRINGS.ID_DBS_LIST,
 	  	theme	:"processmaker",
 	  	statusBar:false,
 	  	control	:{resize:false,roll:false,drag:false},

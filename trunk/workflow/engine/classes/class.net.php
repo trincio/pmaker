@@ -199,6 +199,19 @@ class NET
             $this->errno = 20001;
         }
     }
+    
+    function pg_connect($pUser, $pPasswd, $pDb, $pPort)
+    {
+        $pPort = ($pPort == "") ? "5432" : $pPort;
+        $link = pg_connect("host='192.168.1.23' port='5432' user='processmaker' password='processmaker' dbname='workflow'"); //pg_connect("host='$this->ip' port='$pPort' user='$pUser' password='$pPasswd' dbname='$pDb' ");
+        if ($link) {
+        	$this->errstr = "";
+            $this->errno = 0;
+        } else {
+            $this->errstr = "NET::POSTGRES->The connection was refused";
+            $this->errno = 20011;
+        }
+    }
 
     function showMsg()
     {
