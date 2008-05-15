@@ -237,6 +237,7 @@ class XmlForm_Field_hours extends XmlForm_Field_SimpleText
 	var $showVars    = 0;
 	var $process     = '';
 	var $symbol      = '@@';
+	
   /**
    * Function render
    * @author Julio Cesar Laura Avenda?o <juliocesar@colosa.com>
@@ -301,9 +302,9 @@ class XmlForm_Field_hours extends XmlForm_Field_SimpleText
   		  else
   		    $result[] = '<input class="module_app_input___gray" id="form['. $owner->name .']['.$r.']['.$this->name.']" name="form['. $owner->name .']['.$r.']['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value="'.$this->htmlentities( $v , ENT_COMPAT, 'utf-8').'" style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'"/>' . $sShowVars;
   		} elseif ($this->mode==='view') {
-  		    $result[] = $this->htmlentities( number_format($v, 2), ENT_COMPAT, 'utf-8');
+  		    $result[] = '<p align="'.$this->align.'">'.$this->htmlentities( number_format($v, 2), ENT_COMPAT, 'utf-8').'</p>';
   		} else {
-  		    $result[] = $this->htmlentities( number_format($v, 2), ENT_COMPAT, 'utf-8');
+  		    $result[] = '<p align="'.$this->align.'">'.$this->htmlentities( number_format($v, 2), ENT_COMPAT, 'utf-8').'</p>';
   		}
       $r++;
     }
