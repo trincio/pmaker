@@ -7,7 +7,7 @@
 
 <MESS_ENGINE type="dropdown">
   <en>Email Engine
-    <option name="SENDMAIL">Sendmail</option>
+    <option name="MAIL">Mail (PHP)</option>
     <option name="PHPMAILER">SMTP (PHPMailer)</option>
     <option name="OPENMAIL">SMTP (OpenMail)</option>
   </en>
@@ -45,7 +45,7 @@
   <en>Try send mails inmediatly</en>
 </MESS_TRY_SEND_INMEDIATLY>
 
-<TEST type="button" onclick="alert('Under construction!');">
+<TEST type="button" onclick="testEmailConfiguration();">
   <en>Test</en>
 </TEST>
 
@@ -56,7 +56,7 @@
 <JS type="javascript">
 <![CDATA[
 leimnud.event.add(getField('MESS_ENGINE'), 'change', function() {
-  if (this.value != 'SENDMAIL') {
+  if (this.value != 'MAIL') {
     showRowById('MESS_SERVER');
     showRowById('MESS_PORT');
     showRowById('MESS_ACCOUNT');
@@ -83,7 +83,7 @@ leimnud.event.add(getField('MESS_BACKGROUND'), 'click', function() {
   }
 }.extend(getField('MESS_BACKGROUND')));
 
-if (getField('MESS_ENGINE').value == 'SENDMAIL') {
+if (getField('MESS_ENGINE').value == 'MAIL') {
    hideRowById('MESS_SERVER');
    hideRowById('MESS_PORT');
    hideRowById('MESS_ACCOUNT');
@@ -97,16 +97,16 @@ if (!getField('MESS_BACKGROUND').checked) {
 }
 
 var verifyData = function(oForm) {
-	if (getField('MESS_ENGINE').value != 'SENDMAIL') {
+	if (getField('MESS_ENGINE').value != 'MAIL') {
 	  oAux = getField('MESS_SERVER');
 	  if (oAux.value == '') {
-	    alert('MESS_SERVER');
+	    alert(G_STRINGS.ID_MESS_SERVER_REQUIRED);
 	    oAux.focus();
 	    return;
 	  }
 	  oAux = getField('MESS_ACCOUNT');
 	  if (oAux.value == '') {
-	    alert('MESS_ACCOUNT');
+	    alert(G_STRINGS.ID_MESS_ACCOUNT_REQUIRED);
 	    oAux.focus();
 	    return;
 	  }
@@ -114,18 +114,68 @@ var verifyData = function(oForm) {
 	if (getField('MESS_BACKGROUND').checked) {
 	  oAux = getField('MESS_EXECUTE_EVERY');
 	  if (oAux.value == '') {
-	    alert('MESS_EXECUTE_EVERY');
+	    alert(G_STRINGS.ID_MESS_EXECUTE_EVERY_REQUIRED);
 	    oAux.focus();
 	    return;
 	  }
 	  oAux = getField('MESS_SEND_MAX');
 	  if (oAux.value == '') {
-	    alert('MESS_SEND_MAX');
+	    alert(G_STRINGS.ID_MESS_SEND_MAX_REQUIRED);
 	    oAux.focus();
 	    return;
 	  }
 	}
 	oForm.submit();
+};
+
+var oPanel;
+
+var testEmailConfiguration = function() {
+  if (getField('MESS_ENGINE').value != 'MAIL') {
+	  oAux = getField('MESS_SERVER');
+	  if (oAux.value == '') {
+	    alert(G_STRINGS.ID_MESS_SERVER_REQUIRED);
+	    oAux.focus();
+	    return;
+	  }
+	  oAux = getField('MESS_ACCOUNT');
+	  if (oAux.value == '') {
+	    alert(G_STRINGS.ID_MESS_ACCOUNT_REQUIRED);
+	    oAux.focus();
+	    return;
+	  }
+	}
+  oPanel = new leimnud.module.panel();
+  oPanel.options = {
+  	size	:{w:300,h:200},
+  	position:{x:0,y:0,center:true},
+  	title	:"",
+  	theme	:"processmaker",
+  	statusBar:false,
+  	//control	:{resize:false,roll:false,drag:false,close:false},
+  	control	:{resize:false,roll:false,drag:false},
+  	fx	:{modal:true,opacity:true,blinkToFront:false,fadeIn:false,drag:false}
+  };
+  oPanel.events = {
+  	remove: function() { delete(oPanel); }.extend(this)
+  };
+  oPanel.make();
+  oPanel.loader.show();
+  var oRPC = new leimnud.module.rpc.xmlhttp({
+  	url : 'emails_Ajax',
+  	args: 'action=testEmailConfiguration'
+  });
+  oRPC.callback = function(rpc){
+    oPanel.loader.hide();
+  	oPanel.addContent(rpc.xmlhttp.responseText);
+  	var scs = rpc.xmlhttp.responseText.extractScript();
+  	scs.evalScript();
+  }.extend(this);
+  oRPC.make();
+};
+
+var closeTestPanel = function() {
+  oPanel.remove();
 };
 ]]>
 </JS>

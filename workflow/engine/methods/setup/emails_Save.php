@@ -22,5 +22,23 @@
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
  *
  */
-header('Content-Type: text/plain;');
-var_dump($_POST['form']);
+
+require_once 'classes/model/Configuration.php';
+$oConfiguration = new Configuration();
+$aFields['MESS_ENGINE']              = $_POST['form']['MESS_ENGINE'];
+$aFields['MESS_SERVER']              = $_POST['form']['MESS_SERVER'];
+$aFields['MESS_PORT']                = $_POST['form']['MESS_PORT'];
+$aFields['MESS_ACCOUNT']             = $_POST['form']['MESS_ACCOUNT'];
+$aFields['MESS_PASSWORD']            = $_POST['form']['MESS_PASSWORD'];
+$aFields['MESS_BACKGROUND']          = isset($_POST['form']['MESS_BACKGROUND']) ? $_POST['form']['MESS_BACKGROUND'] : '';
+$aFields['MESS_EXECUTE_EVERY']       = $_POST['form']['MESS_EXECUTE_EVERY'];
+$aFields['MESS_SEND_MAX']            = $_POST['form']['MESS_SEND_MAX'];
+$aFields['MESS_TRY_SEND_INMEDIATLY'] = isset($_POST['form']['MESS_TRY_SEND_INMEDIATLY']) ? $_POST['form']['MESS_TRY_SEND_INMEDIATLY'] : '';
+$oConfiguration->update(array('CFG_UID'   => 'Emails',
+                              'OBJ_UID'   => '',
+                              'CFG_VALUE' => serialize($aFields),
+                              'PRO_UID'   => '',
+                              'USR_UID'   => '',
+                              'APP_UID'   => ''));
+G::SendMessageText(G::LoadTranslation('ID_CHANGES_SAVED'), 'info');
+G::header('location: emails');
