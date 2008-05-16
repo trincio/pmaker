@@ -65,6 +65,9 @@ try {
   	case 'process_Export':
   	  include(PATH_METHODS . 'processes/processes_Export.php');
   	break;
+  	case 'process_User':
+  	  include(PATH_METHODS . 'processes/processes_User.php');
+  	break;  	
   	case 'saveTitlePosition':
   	  $sOutput = $oProcessMap->saveTitlePosition($oData->pro_uid, $oData->position->x, $oData->position->y);
   	break;
@@ -206,7 +209,7 @@ try {
   	  G::LoadClass('tasks');
 	  	$oTasks = new Tasks();
 	    $oTasks->deleteAllRoutesOfTask($oData->pro_uid, $oData->tas_uid);
-  	break;
+  	break;  	  	
   }
   die($sOutput);
 }

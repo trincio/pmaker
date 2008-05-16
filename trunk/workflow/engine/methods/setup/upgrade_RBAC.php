@@ -29,7 +29,9 @@ $aRequiredPermissions = array('PM_LOGIN',
                               'PM_FACTORY',
                               'PM_CASES',
                               'PM_ALLCASES',
-                              'PM_REASSIGNCASE');
+                              'PM_REASSIGNCASE',
+                              'PM_REPORTS',
+                              'PM_SUPERVISOR');
 foreach ($aRequiredPermissions as $sCode) {
   if (!$RBAC->loadPermissionByCode($sCode)) {
     $sPermissionUID = $RBAC->createPermision($sCode);

@@ -3803,6 +3803,84 @@
       </vendor>
     </index>
   </table>
+  <table name="PROCESS_USER">
+    <vendor type="mysql">
+      <parameter name="Name" value="PROCESS_USER"/>
+      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Version" value="10"/>
+      <parameter name="Row_format" value="Dynamic"/>
+      <parameter name="Rows" value="10"/>
+      <parameter name="Avg_row_length" value="47"/>
+      <parameter name="Data_length" value="472"/>
+      <parameter name="Max_data_length" value="281474976710655"/>
+      <parameter name="Index_length" value="2048"/>
+      <parameter name="Data_free" value="0"/>
+      <parameter name="Auto_increment" value=""/>
+      <parameter name="Create_time" value="2008-15-05 12:00:00"/>
+      <parameter name="Update_time" value="2008-15-05 12:00:00"/>
+      <parameter name="Check_time" value=""/>
+      <parameter name="Collation" value="utf8_general_ci"/>
+      <parameter name="Checksum" value=""/>
+      <parameter name="Create_options" value=""/>
+      <parameter name="Comment" value=""/>
+    </vendor>
+    <column name="PU_UID" type="VARCHAR" size="32" required="true" primaryKey="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="PU_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value="PRI"/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="PRO_UID" type="VARCHAR" size="32" required="true" primaryKey="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="PRO_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value="PRI"/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="USR_UID" type="VARCHAR" size="32" required="true" primaryKey="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="USR_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value="PRI"/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="PU_TYPE" type="VARCHAR" size="20" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="PU_TYPE"/>
+        <parameter name="Type" value="varchar(20)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value="PRI"/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>        
+    <validator column="PU_UID">
+      <rule name="maxLength" value="32" message="Process User UID can be no larger than ${value} in size" />
+      <rule name="required" message="Process User UID is required." />
+    </validator>
+    <validator column="PRO_UID">
+      <rule name="maxLength" value="32" message="Process UID can be no larger than ${value} in size" />
+      <rule name="required" message="Process UID is required." />
+    </validator>
+    <validator column="USR_UID">
+      <rule name="maxLength" value="32" message="User UID can be no larger than ${value} in size" />
+      <rule name="required" message="User UID is required." />
+    </validator>    
+    <validator column="PU_TYPE">
+      <rule name="maxLength" value="20" message="Value can be no larger than ${value} in size" />
+      <rule name="required" message="Value is required." />
+    </validator>    
+  </table>
   <table name="SESSION">
     <vendor type="mysql">
       <parameter name="Name" value="SESSION"/>
