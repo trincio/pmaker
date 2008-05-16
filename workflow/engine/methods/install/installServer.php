@@ -49,17 +49,11 @@ if($action==="check")
 		'database'=>Array(
 			'hostname'=>$dataClient->mysqlH,
 			'username'=>$dataClient->mysqlU,
-			'password'=>$dataClient->mysqlP,
-			'cli'	  =>$dataClient->mysqlE
+			'password'=>$dataClient->mysqlP
 		)
 	));
 	$data=null;
-	$mex=$dataClient->mysqlE;
-	$smex=substr($mex,-9);	
-	$data->mysqlExe		=$s['result']['database']['cli'];
 	$data->phpVersion	=(version_compare(PHP_VERSION,"5.1.0",">="))?true:false;
-	$myV=find_SQL_Version((PHP_OS=='WINNT')?'"'.$mex.'"':'mysql',$data->mysqlExe);
-	$data->mysqlVersion	=(version_compare($myV,"4.1.20",">="))?true:false;
 	if(trim($dataClient->mysqlH)=='' || trim($dataClient->mysqlU)=='')
 	{
 		$con = array('connection'=>false,'grant'=>false,'message'=>'Please complete the input fields (Hostname/Username)');
@@ -67,10 +61,11 @@ if($action==="check")
 	$data->mysqlConnection	=$s['result']['database']['connection'];
 	$data->grantPriv	=$s['result']['database']['grant'];
 	$data->databaseMessage	=$s['result']['database']['message'];
+	$data->mysqlVersion	=$s['result']['database']['version'];
 	$data->path_data	=$s['result']['path_data'];
 	$data->path_compiled	=$s['result']['path_compiled'];
 	$data->checkMemory	=(((int)ini_get("memory_limit"))>=40)?true:false;
-	$data->checkmqgpc	=(get_magic_quotes_gpc())?false:true;
+	#$data->checkmqgpc	=(get_magic_quotes_gpc())?false:true;
 	$data->checkPI		=((int)$inst->file_permisions(PATH_CORE."config/paths_installed.php",666)==666 || (!file_exists(PATH_CORE."config/paths_installed.php") && (int)$inst->file_permisions(PATH_CORE."config/",777)==777))?true:false;
 	$data->checkDL		=((int)$inst->file_permisions(PATH_CORE."content/languages/",777)==777)?true:false;
 	$data->checkDLJ		=((int)$inst->file_permisions(PATH_CORE."js/labels/",777)==777)?true:false;
@@ -173,7 +168,6 @@ else if($action==="install")
 	$dir_data	= (substr($dir_data,-1)==$sp)?$dir_data:$dir_data."/";
 	$dir_compiled	= (substr($dir_compiled,-1)==$sp)?$dir_compiled:$dir_compiled."/";
 	global $isWindows;
-	$my = $isWindows ? $dataClient->mysqlE : 'mysql';
 
 	@mkdir($dir_data."sites",0777,true);
 	@mkdir($dir_compiled,0777,true);
@@ -190,8 +184,7 @@ else if($action==="install")
 		'database'=>Array(
 			'hostname'=>$dataClient->mysqlH,
 			'username'=>$dataClient->mysqlU,
-			'password'=>$dataClient->mysqlP,
-			'cli'	  =>$my
+			'password'=>$dataClient->mysqlP
 		)
 	),true);
 	print_r($inst->report);
@@ -203,7 +196,6 @@ else if($action==="install")
 	"define( 'PATH_C',    '".$dir_compiled."' );\n" .
 	"define( 'HASH_INSTALLATION','".$h."' );\n" .
 	"define( 'SYSTEM_HASH','".$sh."' );\n" .
-	"define( 'DATABASE_CLIENT','".$my."' );\n" .
 	"?>";
 	$fp = fopen(FILE_PATHS_INSTALLED, "w");
 	fputs( $fp, $db_text, strlen($db_text));

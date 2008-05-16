@@ -29,6 +29,11 @@
  * @author MaBoRaK
  * @version 0.1
  */
+if($_POST && $_POST['phpinfo'])
+{
+    phpinfo();
+    die();
+}
 echo '<?xml version="1.0" encoding="UTF-8" ?>';
 ?>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -52,7 +57,7 @@ echo '<?xml version="1.0" encoding="UTF-8" ?>';
 	leimnud.event.add(window,'load',function(){
 		inst = new leimnud.module.panel();
 		inst.options={
-			size:{w:810,h:700},
+			size:{w:document.body.offsetWidth-50,h:700},
 			title	:"",
 			position:{x:2,y:2,center:true},
 			statusBar:false,
