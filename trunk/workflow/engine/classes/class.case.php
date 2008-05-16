@@ -1314,7 +1314,7 @@ class Cases
 
         $filesList = array('cases/cases_ListAll', 'cases/cases_ListTodo',
             'cases/cases_ListDraft', 'cases/cases_ListOnHold', 'cases/cases_ListCancelled',
-            'cases/cases_ListCompleted');
+            'cases/cases_ListCompleted', 'cases/cases_ListToRevise');
         switch ($sTypeList) {
             case 'all':
                 $c->add($c->getNewCriterion(AppThreadPeer::APP_THREAD_STATUS, 'OPEN')->addOr($c->
@@ -1365,6 +1365,27 @@ class Cases
                     getNewCriterion(AppDelegationPeer::DEL_PREVIOUS, 0))));
                 $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
                 $xmlfile = $filesList[0];
+                break;
+             case 'to_revise':
+                require_once 'classes/model/ProcessUser.php';
+                $oCriteria = new Criteria('workflow');
+                $oCriteria->add(ProcessUserPeer::USR_UID, $sUIDUserLogged);
+                $oCriteria->add(ProcessUserPeer::PU_TYPE, 'SUPERVISOR');
+                $oDataset = ProcessUserPeer::doSelectRS($oCriteria);
+                $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+                $oDataset->next();
+                $aProcesses = array();
+                while ($aRow = $oDataset->getRow()) {
+                  $aProcesses[] = $aRow['PRO_UID'];
+                  $oDataset->next();
+                }
+                $c->add(ApplicationPeer::PRO_UID, $aProcesses, Criteria::IN);
+                $c->add(ApplicationPeer::APP_STATUS, 'TO_DO');
+                $c->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
+                $c->add(AppThreadPeer::APP_THREAD_STATUS, 'OPEN');
+                $c->add(AppDelegationPeer::DEL_THREAD_STATUS, 'OPEN');
+                $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
+                $xmlfile = $filesList[6];
                 break;
         }
         /*

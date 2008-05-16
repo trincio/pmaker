@@ -301,36 +301,6 @@ var processmap=function(){
 					width:201,
 					theme:this.options.theme,
 					menu:[
-					{image:"/images/users.png",text:G_STRINGS.ID_PROCESSMAP_PROCESS_SUPERVISORS,launch:function(event){
-						this.tmp.editProcessPanel = panel =new leimnud.module.panel();
-						panel.options={
-							limit	:true,
-							size	:{w:500,h:300},
-							position:{x:50,y:50,center:true},
-							title	:G_STRINGS.ID_PROCESSMAP_PROCESS_SUPERVISORS,
-							theme	:this.options.theme,
-							control	:{close:true,resize:false},fx:{modal:true},
-							statusBar:false,
-							fx	:{shadow:true,modal:true}
-						};
-						panel.make();
-						panel.loader.show();
-						var r = new leimnud.module.rpc.xmlhttp({
-							url:this.options.dataServer,
-							args:"action=process_User&data="+{
-								pro_uid	:this.options.uid
-							}.toJSONString()
-						});
-						r.callback=function(rpc,panel)
-						{
-							panel.loader.hide();
-							var scs = rpc.xmlhttp.responseText.extractScript();
-							panel.addContent(rpc.xmlhttp.responseText);
-							scs.evalScript();
-							//Pm.objeto.innerHTML="asdasd";
-						}.extend(this,panel);
-						r.make();
-					}.extend(this)},					
 					{image:"/images/edit.gif",text:G_STRINGS.ID_PROCESSMAP_EDIT_PROCESS,launch:function(event){
 						this.tmp.editProcessPanel = panel =new leimnud.module.panel();
 						panel.options={
@@ -390,11 +360,41 @@ var processmap=function(){
 						}.extend(this,panel);
 						r.make();
 					}.extend(this)},
+					{image:"/images/users.png",text:G_STRINGS.ID_PROCESSMAP_PROCESS_SUPERVISORS,launch:function(event){
+						this.tmp.editProcessPanel = panel =new leimnud.module.panel();
+						panel.options={
+							limit	:true,
+							size	:{w:500,h:300},
+							position:{x:50,y:50,center:true},
+							title	:G_STRINGS.ID_PROCESSMAP_PROCESS_SUPERVISORS,
+							theme	:this.options.theme,
+							control	:{close:true,resize:false},fx:{modal:true},
+							statusBar:false,
+							fx	:{shadow:true,modal:true}
+						};
+						panel.make();
+						panel.loader.show();
+						var r = new leimnud.module.rpc.xmlhttp({
+							url:this.options.dataServer,
+							args:"action=process_User&data="+{
+								pro_uid	:this.options.uid
+							}.toJSONString()
+						});
+						r.callback=function(rpc,panel)
+						{
+							panel.loader.hide();
+							var scs = rpc.xmlhttp.responseText.extractScript();
+							panel.addContent(rpc.xmlhttp.responseText);
+							scs.evalScript();
+							//Pm.objeto.innerHTML="asdasd";
+						}.extend(this,panel);
+						r.make();
+					}.extend(this)},
+					{separator:true},
 					{image:"/images/add.png",text:G_STRINGS.ID_PROCESSMAP_ADD_TASK,launch:this.addTask.extend(this)},
 					{image:"/images/addtext.png",text:G_STRINGS.ID_PROCESSMAP_ADD_TEXT,launch:this.addText.extend(this)},
 					{image:"/images/linhori.png",text:G_STRINGS.ID_PROCESSMAP_HORIZONTAL_LINE,launch:this.addGuide.extend(this,"horizontal")},
 					{image:"/images/linver.png",text:G_STRINGS.ID_PROCESSMAP_VERTICAL_LINE,launch:this.addGuide.extend(this,"vertical")},
-					{separator:true},
 					{image:"/images/delete.png",text:G_STRINGS.ID_PROCESSMAP_DELETE_ALL_LINES,launch:function(event,index){
 						index = this.parent.browser.isIE?event:index;
 						new leimnud.module.app.confirm().make({
@@ -534,7 +534,7 @@ var processmap=function(){
 				var tmS;
 				var typeDerivation = this.dragables.derivation.currentElementInArray;
 				if(typeDerivation===6){
-                    
+
 					var vars=this.data.db.task[uid];
 					var vtd = {
 						type:0,
@@ -1906,7 +1906,7 @@ processmap.prototype={
 
 /**
 *	Added By: Erik Amariu Ortiz <erik@colosacom>
-*	Comment: Ths functionality make the wondow for the show panel DB Connection. 
+*	Comment: Ths functionality make the wondow for the show panel DB Connection.
 */
 var mainPanel;
 

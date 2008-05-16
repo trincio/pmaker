@@ -196,7 +196,7 @@ class MySQLConnection extends ConnectionCommon implements Connection {
             if (!@mysql_select_db($this->database, $this->dblink)) {
                 throw new SQLException('No database selected', mysql_error($this->dblink));
             }
-        }
+        }//echo $sql . '<br /><br />';
         $result = @mysql_query($sql, $this->dblink);
         if (!$result) {
             throw new SQLException('Could not execute query', mysql_error($this->dblink), $sql);
