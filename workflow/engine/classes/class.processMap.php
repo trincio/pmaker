@@ -1033,7 +1033,7 @@ class processMap {
 	* @param string $sTaskUID
 	* @return boolean
 	*/
-	function editTaskProperties($sTaskUID = '', $iForm = 1, $iIndex = 0) {		
+	function editTaskProperties($sTaskUID = '', $iForm = 1, $iIndex = 0) {
 		try {
   	  switch ($iForm) {
   	  	case 1:
@@ -1056,7 +1056,7 @@ class processMap {
   	  	break;
   	  }
   	  $oTask            = new Task();
-  	  $aFields          = $oTask->load($sTaskUID);  	  	  
+  	  $aFields          = $oTask->load($sTaskUID);
   	  $aFields['INDEX'] = $iIndex;
   	  $aFields['IFORM'] = $iForm;
   	  $aFields['LANG']  = SYS_LANG;
@@ -1875,6 +1875,50 @@ class processMap {
     $c->addJoinMC ( $proDescripConds ,      Criteria::LEFT_JOIN );
 
     return $c;
+  }
+
+  /*
+	* Show the dynaforms for the supervisors
+	* @param string $sProcessUID
+	* @return boolean
+	*/
+  function supervisorDynaforms($sProcessUID) {
+    try {
+    	/*$oProcess = new Process();
+  	  $aFields  = $oProcess->load($sProcessUID);
+      global $G_PUBLISH;
+      global $G_HEADER;
+      $G_PUBLISH = new Publisher;
+      $G_HEADER->clearScripts();
+      $G_PUBLISH->AddContent('propeltable', 'paged-table', 'dynaforms/dynaforms_Supervisor', $this->getSupervisorDynaformsCriteria($sProcessUID), $aFields);
+      G::RenderPage('publish', 'raw');*/
+    	return true;
+    }
+  	catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
+
+  /*
+	* Return the supervisors dynaforms list criteria object
+	* @param string $sProcessUID
+	* @return object
+	*/
+  function getSupervisorDynaformsCriteria($sProcessUID = '') {
+  	/*require_once 'classes/model/ReportTable.php';
+  	$sDelimiter = DBAdapter::getStringDelimiter();
+  	$oCriteria  = new Criteria('workflow');
+    $oCriteria->addSelectColumn(ReportTablePeer::REP_TAB_UID);
+    $oCriteria->addSelectColumn(ReportTablePeer::PRO_UID);
+    $oCriteria->addAsColumn('REP_TAB_TITLE', 'C.CON_VALUE');
+    $oCriteria->addAlias('C', 'CONTENT');
+    $aConditions   = array();
+    $aConditions[] = array(ReportTablePeer::REP_TAB_UID, 'C.CON_ID');
+    $aConditions[] = array('C.CON_CATEGORY', $sDelimiter . 'REP_TAB_TITLE' . $sDelimiter);
+    $aConditions[] = array('C.CON_LANG', $sDelimiter . SYS_LANG . $sDelimiter);
+    $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
+    $oCriteria->add(ReportTablePeer::PRO_UID, $sProcessUID);
+    return $oCriteria;*/
   }
 } // processMap
 ?>

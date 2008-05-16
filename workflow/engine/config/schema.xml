@@ -3863,7 +3863,7 @@
         <parameter name="Default" value=""/>
         <parameter name="Extra" value=""/>
       </vendor>
-    </column>        
+    </column>
     <validator column="PU_UID">
       <rule name="maxLength" value="32" message="Process User UID can be no larger than ${value} in size" />
       <rule name="required" message="Process User UID is required." />
@@ -3875,11 +3875,11 @@
     <validator column="USR_UID">
       <rule name="maxLength" value="32" message="User UID can be no larger than ${value} in size" />
       <rule name="required" message="User UID is required." />
-    </validator>    
+    </validator>
     <validator column="PU_TYPE">
       <rule name="maxLength" value="20" message="Value can be no larger than ${value} in size" />
       <rule name="required" message="Value is required." />
-    </validator>    
+    </validator>
   </table>
   <table name="SESSION">
     <vendor type="mysql">
@@ -4083,6 +4083,90 @@
         <parameter name="Table" value="DB_SOURCE"/>
         <parameter name="Non_unique" value="1"/>
         <parameter name="Key_name" value="indexDBSource"/>
+        <parameter name="Seq_in_index" value="1"/>
+        <parameter name="Column_name" value="PRO_UID"/>
+        <parameter name="Collation" value="A"/>
+        <parameter name="Cardinality" value=""/>
+        <parameter name="Sub_part" value=""/>
+        <parameter name="Packed" value=""/>
+        <parameter name="Null" value=""/>
+        <parameter name="Index_type" value="BTREE"/>
+        <parameter name="Comment" value=""/>
+      </vendor>
+    </index>
+  </table>
+  <table name="STEP_SUPERVISOR">
+    <vendor type="mysql">
+      <parameter name="Name" value="STEP_SUPERVISOR"/>
+      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Version" value="10"/>
+      <parameter name="Row_format" value="Dynamic"/>
+      <parameter name="Rows" value="0"/>
+      <parameter name="Avg_row_length" value="0"/>
+      <parameter name="Data_length" value="0"/>
+      <parameter name="Max_data_length" value="281474976710655"/>
+      <parameter name="Index_length" value="1024"/>
+      <parameter name="Data_free" value="0"/>
+      <parameter name="Auto_increment" value=""/>
+      <parameter name="Create_time" value="2008-05-16 17:50:00"/>
+      <parameter name="Update_time" value="2008-05-16 17:50:00"/>
+      <parameter name="Check_time" value=""/>
+      <parameter name="Collation" value="utf8_general_ci"/>
+      <parameter name="Checksum" value=""/>
+      <parameter name="Create_options" value=""/>
+      <parameter name="Comment" value="STEP_SUPERVISOR"/>
+    </vendor>
+    <column name="PRO_UID" type="VARCHAR" size="32" required="true" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="PRO_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="STEP_TYPE_OBJ" type="VARCHAR" size="20" required="true" default="DYNAFORM">
+      <vendor type="mysql">
+        <parameter name="Field" value="STEP_TYPE_OBJ"/>
+        <parameter name="Type" value="varchar(20)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="DYNAFORM"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="STEP_UID_OBJ" type="VARCHAR" size="32" required="true" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="STEP_UID_OBJ"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="0"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="STEP_POSITION" type="INTEGER" required="true" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="STEP_POSITION"/>
+        <parameter name="Type" value="int(11)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="0"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <validator column="STEP_TYPE_OBJ">
+      <rule name="validValues" value="DYNAFORM|INPUT_DOCUMENT|OUTPUT_DOCUMENT" message="Please select a valid value for STEP_TYPE_OBJ." />
+    </validator>
+    <index name="indexStepSupervisor">
+      <index-column name="PRO_UID"/>
+      <index-column name="STEP_TYPE_OBJ"/>
+      <index-column name="STEP_UID_OBJ"/>
+      <vendor type="mysql">
+        <parameter name="Table" value="STEP_SUPERVISOR"/>
+        <parameter name="Non_unique" value="1"/>
+        <parameter name="Key_name" value="indexStepSupervisor"/>
         <parameter name="Seq_in_index" value="1"/>
         <parameter name="Column_name" value="PRO_UID"/>
         <parameter name="Collation" value="A"/>

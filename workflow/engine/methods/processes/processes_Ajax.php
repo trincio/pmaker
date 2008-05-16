@@ -67,7 +67,10 @@ try {
   	break;
   	case 'process_User':
   	  include(PATH_METHODS . 'processes/processes_User.php');
-  	break;  	
+  	break;
+  	case 'supervisorDynaforms':
+  	  $sOutput = $oProcessMap->supervisorDynaforms($oData->pro_uid);
+  	break;
   	case 'saveTitlePosition':
   	  $sOutput = $oProcessMap->saveTitlePosition($oData->pro_uid, $oData->position->x, $oData->position->y);
   	break;
@@ -209,7 +212,7 @@ try {
   	  G::LoadClass('tasks');
 	  	$oTasks = new Tasks();
 	    $oTasks->deleteAllRoutesOfTask($oData->pro_uid, $oData->tas_uid);
-  	break;  	  	
+  	break;
   }
   die($sOutput);
 }

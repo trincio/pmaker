@@ -12,8 +12,8 @@
 <LANG type="private" />
 
 <TAS_ASSIGN_TYPE type="radiogroup" defaultvalue="BALANCED" group="1">
-  <en>Incoming Assigment type
-    <option name="BALANCED">Round Robin Assignment</option>
+  <en>Case to be assigned by
+    <option name="BALANCED">Cyclical Assignment</option>
     <option name="MANUAL">Manual Assignment</option>
     <option name="EVALUATE">Value Based Assignment</option>
     <!--<option name="SELFSERVICE">Self Service Task</option>-->
