@@ -1,13 +1,15 @@
 <?php
-/*--------------------------------------------------
+/**
+ * @Author: 	Erik Amaru Ortiz <erik@colosa.com>
+ * @Description:This is a class for load all additional connections; if exist in a particular proccess
+ * @Date: 		15-05-2008   
+ */
+/*-----------------------------------------------------------------
 | dbConnections.class.php
-| By Erik Amaru Ortiz
-| CopyLeft (f) 2008 
-| Email: erik@colosa.com
-+--------------------------------------------------
++------------------------------------------------------------------
 | Email bugs/suggestions to erik@colosa.com erik.260mb.com
-+--------------------------------------------------
-+--------------------------------------------------*/
++------------------------------------------------------------------
++------------------------------------------------------------------*/
 
 require_once 'model/DbSource.php';
 require_once 'model/Content.php';
@@ -16,7 +18,8 @@ require_once 'model/Content.php';
 class dbConnections
 {
     private $PRO_UID;
-    private $connections;
+    public $connections;
+    private $types;
 
     /*errors handle*/
     private $errno;
@@ -36,6 +39,9 @@ class dbConnections
         $oDBSource = new DbSource();
         $oContent = new Content();
 		$connections = Array();
+		$types = Array();
+		$this->have_any_connectios = false;
+		
         $c = new Criteria();
         
         $c->clearSelectColumns();
@@ -70,6 +76,9 @@ class dbConnections
 			);
             $result->next();
         }
+        if(!in_array($row[2], $types)) {
+			$types[] = $row[2];
+		}
         $this->connections = $connections;
         return $connections;
     }
@@ -89,7 +98,33 @@ class dbConnections
 		}
 		
 	}
-
+	
+	function loadAdditionalConnections()
+	{	
+		PROPEL::Init ( PATH_METHODS.'dbConnections/genericDbConnections.php'); 
+	}
+	
+	function getDbServicesAvailables()
+	{ 
+		$servicesAvailables = Array();
+		
+		$dbServices = Array(
+			'mysql'=>Array('id'=>'mysql', 'command'=>'mysql_connect', 'name'=>'MySql'),
+			'pgsql'=>Array('id'=>'pgsql','command'=>'pg_connect', 'name'=>'PostgreSQL'),
+			'mssql'=>Array('id'=>'mssql','command'=>'mssql_connect', 'name'=>'Microsoft SQL Server'),
+			'oracle'=>Array('id'=>'oracle','command'=>'oci_connect', 'name'=>'Oracle'),
+			'informix'=>Array('id'=>'informix','command'=>'ifx_connect','name'=>'Informix'),
+			'sqlite'=>Array('id'=>'sqlite','command'=>'sqlite_open', 'name'=>'SQLite')
+		);
+			
+		foreach($dbServices as $service) {
+			if(@function_exists($service['command'])){
+				$servicesAvailables[] = $service;
+			}
+		}
+		return $servicesAvailables;
+	}
+	
     function showMsg()
     {
         if ($this->errno != 0) {

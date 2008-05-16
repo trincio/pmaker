@@ -53,7 +53,6 @@
   $aFields = array();
   $oCase = new Cases();
   $bCanStart = $oCase->canStartCase( $_SESSION['USER_LOGGED'] );
-
   if ($bCanStart)
   {
     $aFields['LANG'] = SYS_LANG;
