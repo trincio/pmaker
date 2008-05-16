@@ -360,6 +360,32 @@ var processmap=function(){
 						}.extend(this,panel);
 						r.make();
 					}.extend(this)},
+					{separator:true},
+					{image:"/images/add.png",text:G_STRINGS.ID_PROCESSMAP_ADD_TASK,launch:this.addTask.extend(this)},
+					{image:"/images/addtext.png",text:G_STRINGS.ID_PROCESSMAP_ADD_TEXT,launch:this.addText.extend(this)},
+					{image:"/images/linhori.png",text:G_STRINGS.ID_PROCESSMAP_HORIZONTAL_LINE,launch:this.addGuide.extend(this,"horizontal")},
+					{image:"/images/linver.png",text:G_STRINGS.ID_PROCESSMAP_VERTICAL_LINE,launch:this.addGuide.extend(this,"vertical")},
+					{image:"/images/delete.png",text:G_STRINGS.ID_PROCESSMAP_DELETE_ALL_LINES,launch:function(event,index){
+						index = this.parent.browser.isIE?event:index;
+						new leimnud.module.app.confirm().make({
+              label:G_STRINGS.ID_PROCESSMAP_CONFIRM_DELETE_ALL_LINES,
+              action:function()
+              {
+              	for(var i=0;i<this.data.db.guide.length;i++)
+							  {
+							  	this.parent.dom.remove(this.data.db.guide[i].object.elements.guide);
+							  }
+							  var r = new leimnud.module.rpc.xmlhttp({
+							  	url:this.options.dataServer,
+							  	args:"action=deleteGuides&data="+{
+							  		pro_uid:this.options.uid
+							  	}.toJSONString()
+							  });
+							  r.make();
+              }.extend(this)
+            });
+					}.extend(this)},
+					{separator:true},
 					{image:"/images/users.png",text:G_STRINGS.ID_PROCESSMAP_PROCESS_SUPERVISORS,launch:function(event){
 						this.tmp.editProcessPanel = panel =new leimnud.module.panel();
 						panel.options={
@@ -390,30 +416,35 @@ var processmap=function(){
 						}.extend(this,panel);
 						r.make();
 					}.extend(this)},
-					{separator:true},
-					{image:"/images/add.png",text:G_STRINGS.ID_PROCESSMAP_ADD_TASK,launch:this.addTask.extend(this)},
-					{image:"/images/addtext.png",text:G_STRINGS.ID_PROCESSMAP_ADD_TEXT,launch:this.addText.extend(this)},
-					{image:"/images/linhori.png",text:G_STRINGS.ID_PROCESSMAP_HORIZONTAL_LINE,launch:this.addGuide.extend(this,"horizontal")},
-					{image:"/images/linver.png",text:G_STRINGS.ID_PROCESSMAP_VERTICAL_LINE,launch:this.addGuide.extend(this,"vertical")},
-					{image:"/images/delete.png",text:G_STRINGS.ID_PROCESSMAP_DELETE_ALL_LINES,launch:function(event,index){
-						index = this.parent.browser.isIE?event:index;
-						new leimnud.module.app.confirm().make({
-              label:G_STRINGS.ID_PROCESSMAP_CONFIRM_DELETE_ALL_LINES,
-              action:function()
-              {
-              	for(var i=0;i<this.data.db.guide.length;i++)
-							  {
-							  	this.parent.dom.remove(this.data.db.guide[i].object.elements.guide);
-							  }
-							  var r = new leimnud.module.rpc.xmlhttp({
-							  	url:this.options.dataServer,
-							  	args:"action=deleteGuides&data="+{
-							  		pro_uid:this.options.uid
-							  	}.toJSONString()
-							  });
-							  r.make();
-              }.extend(this)
-            });
+					{image:"/images/dynaforms.gif",text:G_STRINGS.ID_PROCESSMAP_SUPERVISORS_DYNAFORMS,launch:function(event){
+						this.tmp.editProcessPanel = panel =new leimnud.module.panel();
+						panel.options={
+							limit	:true,
+							size	:{w:500,h:300},
+							position:{x:50,y:50,center:true},
+							title	:G_STRINGS.ID_PROCESSMAP_SUPERVISORS_DYNAFORMS,
+							theme	:this.options.theme,
+							control	:{close:true,resize:false},fx:{modal:true},
+							statusBar:false,
+							fx	:{shadow:true,modal:true}
+						};
+						panel.make();
+						panel.loader.show();
+						var r = new leimnud.module.rpc.xmlhttp({
+							url:this.options.dataServer,
+							args:"action=supervisorDynaforms&data="+{
+								pro_uid	:this.options.uid
+							}.toJSONString()
+						});
+						r.callback=function(rpc,panel)
+						{
+							panel.loader.hide();
+							var scs = rpc.xmlhttp.responseText.extractScript();
+							panel.addContent(rpc.xmlhttp.responseText);
+							scs.evalScript();
+							//Pm.objeto.innerHTML="asdasd";
+						}.extend(this,panel);
+						r.make();
 					}.extend(this)}
 					]
 				});
