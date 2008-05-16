@@ -33,6 +33,14 @@ var installer=function()
 		this.options.button2.value="Reset";
 		this.titleBar.appendChild(this.options.button2);
 
+        this.options.phpinfo = document.createElement("input");
+		this.options.phpinfo.type="button";
+		this.options.phpinfo.style.fontWeight="bold";
+		this.options.phpinfo.value="phpinfo()";
+		this.titleBar.appendChild(this.options.phpinfo);
+        this.options.phpinfo.onmouseup=this.showPhpinfo;
+
+
 		this.options.button1.disabled=true;
 		this.options.button0.onmouseup=this.check;
 		this.options.button1.onmouseup=function(){inst.selectTab(1);}.extend(this);
@@ -41,6 +49,8 @@ var installer=function()
 		this.buttonFun(this.options.button0);
 		this.buttonFun(this.options.button1);
 		this.buttonFun(this.options.button2);
+		this.buttonFun(this.options.phpinfo);
+
 
 
 		//this.phpVersion =
@@ -74,12 +84,12 @@ var installer=function()
 		this.checkMemory = tr.insertCell(1);		
 		this.checkMemory.className="inst_td1";
 
-		var tr = this.table.insertRow(-1);
+/*		var tr = this.table.insertRow(-1);
 		var td0 = tr.insertCell(0);
 		td0.innerHTML="Set magic quotes gpc to <b>false</b>";
 		td0.className="inst_td0";
 		this.checkmqgpc = tr.insertCell(1);		
-		this.checkmqgpc.className="inst_td1";
+		this.checkmqgpc.className="inst_td1";*/
 
 
 		var tr = this.table.insertRow(-1);
@@ -257,8 +267,8 @@ var installer=function()
 			this.checkMemory.className = (!this.cstatus.checkMemory)?"inst_td1 tdFailed":"inst_td1 tdOk";
 			this.checkMemory.innerHTML = (!this.cstatus.checkMemory)?"FAILED":"PASSED";
 
-			this.checkmqgpc.className = (!this.cstatus.checkmqgpc)?"inst_td1 tdFailed":"inst_td1 tdOk";
-			this.checkmqgpc.innerHTML = (!this.cstatus.checkmqgpc)?"FAILED":"PASSED";
+//			this.checkmqgpc.className = (!this.cstatus.checkmqgpc)?"inst_td1 tdFailed":"inst_td1 tdOk";
+//			this.checkmqgpc.innerHTML = (!this.cstatus.checkmqgpc)?"FAILED":"PASSED";
 
 			this.checkPI.className = (!this.cstatus.checkPI)?"inst_td1 tdFailed":"inst_td1 tdOk";
 			this.checkPI.innerHTML = (!this.cstatus.checkPI)?"FAILED":"PASSED";
@@ -283,7 +293,7 @@ var installer=function()
 			this.workflowData.className = (!this.cstatus.path_data)?"inputFailed":"inputOk";
 			this.compiled.className = (!this.cstatus.path_compiled)?"inputFailed":"inputOk";
 
-			if(this.cstatus.checkmqgpc && this.cstatus.checkMemory && this.cstatus.checkPI && this.cstatus.checkDL && this.cstatus.checkDLJ && this.cstatus.phpVersion && this.cstatus.mysqlVersion && this.cstatus.mysqlConnection && this.cstatus.grantPriv && this.cstatus.path_data && this.cstatus.path_compiled)
+			if(this.cstatus.checkMemory && this.cstatus.checkPI && this.cstatus.checkDL && this.cstatus.checkDLJ && this.cstatus.phpVersion && this.cstatus.mysqlVersion && this.cstatus.mysqlConnection && this.cstatus.grantPriv && this.cstatus.path_data && this.cstatus.path_compiled)
 			{
 				this.options.button0.disabled=true;
 				this.options.button1.disabled=false;
@@ -433,5 +443,26 @@ var installer=function()
 			but.onblur=function(){ this.className="app_grid_title___gray button"};
 		}
 	};
+    this.showPhpinfo=function()
+    {
+        var panel = new leimnud.module.panel();
+        panel.options={
+            title:"PHP info",
+            position:{center:true},
+            size:{w:700,h:document.body.clientHeight-50},
+            fx:{modal:true}
+        };
+        panel.make();
+  		var r = new leimnud.module.rpc.xmlhttp({
+			url	    :"install.php",
+			method	:"POST",
+			args	:"phpinfo=true"
+		});
+        r.callback=function(rpc)
+        {
+            panel.addContent(rpc.xmlhttp.responseText);
+        };
+        r.make();
+    };
 	this.expand(this);
 }

@@ -1196,7 +1196,7 @@ leimnud.Package.Public({
 			frontend:function()
 			{
 				this.parent.dom.setStyle(this.elements.frontend,{
-					//width:"100%",
+					width:(this.parent.browser.isIE)?"auto":"100%"
 					//height:"100%",
 					//position:"absolute",
 					//backgroundColor:"#FFFFFF",
