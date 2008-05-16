@@ -228,6 +228,12 @@ class Propel {
 	 * @return     void
 	 * @throws     PropelException If configuration file cannot be opened. (E_WARNING probably will also be raised in PHP)
 	 */
+	 	public static function krumo()
+	{
+	krumo ( self::$configuration);
+	}
+		
+
 	public static function configure($configFile)
 	{
 		self::$configuration = include($configFile);

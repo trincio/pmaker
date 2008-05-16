@@ -178,7 +178,8 @@ krumo ( 'DBArrayConnection getIdGenerator '); die;
 	 */
 	public function isConnected()
 	{
-krumo ( 'DBArrayConnection isConnected '); die;
+	  return true;
+    krumo ( 'DBArrayConnection isConnected '); die;
 		return $this->childConnection->isConnected();
 	}
 

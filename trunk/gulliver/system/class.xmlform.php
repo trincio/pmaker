@@ -155,6 +155,7 @@ class XmlForm_Field
   private function executePropel( &$owner )
   {
     $query = G::replaceDataField( $this->sql, $owner->values );
+
     $con = Propel::getConnection( $this->sqlConnection);
     $stmt = $con->createStatement( );
     if ( $this->sqlConnection == 'dbarray' ) {
@@ -1461,8 +1462,9 @@ class XmlForm_Field_Dropdown extends XmlForm_Field
 	var $sqlOption=array();
 	function validateValue( $value , &$owner )
 	{
-    $this->executeSQL( $owner );
-	  return isset($value) && ( array_key_exists( $value , $this->options ) );
+    /*$this->executeSQL( $owner );
+	  return isset($value) && ( array_key_exists( $value , $this->options ) );*/
+	  return true;
 	}
   /**
    * Function render
