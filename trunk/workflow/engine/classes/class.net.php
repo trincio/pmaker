@@ -145,6 +145,20 @@ class NET
         }
     }
     
+    function mysql_getVersion($pUser, $pPasswd, $pDb)
+    {
+		$link = @mysql_connect($this->ip, $pUser, $pDb);
+		if ($link) {
+			$this->errstr = "NET::MYSQL->The connection was refused!";
+            $this->errno = 10001;
+            return false;
+		} else {
+			$this->errstr = "";
+            $this->errno = 0;
+			return mysql_get_server_info();
+		}
+	}
+    
     function mssql_connect($pUser, $pPasswd)
     {
         if ($pPasswd != "") {
@@ -212,6 +226,19 @@ class NET
             $this->errno = 20011;
         }
     }
+    
+    function dbName($pAdapter)
+    {
+		switch($pAdapter)
+		{
+			case 'mysql': return 'MySql'; break;
+			case 'pgsql': return 'PostgreSQL'; break;
+			case 'mssql': return 'Microsoft SQL Server'; break;
+			case 'oracle': return 'Oracle'; break;
+			case 'informix': return  'Informix'; break;
+			case 'sqlite': return 'SQLite'; break;
+		}
+	}
 
     function showMsg()
     {

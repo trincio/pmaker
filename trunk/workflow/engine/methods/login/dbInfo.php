@@ -64,8 +64,11 @@ function lookup($target)
     
     $redhat .= " (" . PHP_OS . ")";
 
+  G::LoadClass('net');	
+  $dbNetView = new NET(DB_HOST);
+
   $Fields['SYSTEM']          = $redhat;
-  $Fields['DATABASE']        = DB_ADAPTER;
+  $Fields['DATABASE']        = $dbNetView->dbName(DB_ADAPTER) . ' (ver. ' . $dbNetView->mysql_getVersion(DB_USER, DB_PASS, DB_NAME).')';
   $Fields['DATABASE_SERVER'] = DB_HOST;
   $Fields['DATABASE_NAME']   = DB_NAME;
   $Fields['PHP']             = phpversion();
