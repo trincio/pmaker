@@ -1,10 +1,10 @@
 <?php
 /**
  * class.BasePeer.php
- *  
+ *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -14,13 +14,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
 
 require_once 'propel/util/BasePeer.php';
@@ -31,7 +31,7 @@ include_once 'classes/model/Application.php';
 /**
  * Base static class for performing query and update operations on the 'APPLICATION' table.
  *
- * 
+ *
  *
  * @package    classes.model.om
  */
@@ -350,7 +350,8 @@ abstract class GulliverBasePeer {
 	public static function doSelectRS(Criteria $criteria, $con = null)
 	{
 		if ($con === null) {
-			$con = Propel::getConnection(self::DATABASE_NAME);
+			//$con = Propel::getConnection(self::DATABASE_NAME);
+			$con = Propel::getConnection($criteria->getDbName());
 		}
 		if (!$criteria->getSelectColumns()) {
 			$criteria = clone $criteria;
@@ -358,7 +359,8 @@ abstract class GulliverBasePeer {
 		}
 
 		// Set the correct dbName
-		$criteria->setDbName(self::DATABASE_NAME);
+		//$criteria->setDbName(self::DATABASE_NAME);
+		$criteria->setDbName($criteria->getDbName());
 
 		// BasePeer returns a Creole ResultSet, set to return
 		// rows indexed numerically.
@@ -374,17 +376,17 @@ abstract class GulliverBasePeer {
 	public static function populateObjects(ResultSet $rs)
 	{
 		$results = array();
-	
+
 		// set the class once to avoid overhead in the loop
 		$cls = ApplicationPeer::getOMClass();
 		$cls = Propel::import($cls);
 		// populate the object(s)
 		while($rs->next()) {
-		
+
 			$obj = new $cls();
 			$obj->hydrate($rs);
 			$results[] = $obj;
-			
+
 		}
 		return $results;
 	}
@@ -548,7 +550,7 @@ abstract class GulliverBasePeer {
 			// use transaction because $criteria could contain info
 			// for more than one table or we could emulating ON DELETE CASCADE, etc.
 			$con->begin();
-			
+
 			$affectedRows += BasePeer::doDelete($criteria, $con);
 			$con->commit();
 			return $affectedRows;
