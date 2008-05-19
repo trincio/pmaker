@@ -1884,14 +1884,12 @@ class processMap {
 	*/
   function supervisorDynaforms($sProcessUID) {
     try {
-    	/*$oProcess = new Process();
-  	  $aFields  = $oProcess->load($sProcessUID);
       global $G_PUBLISH;
       global $G_HEADER;
       $G_PUBLISH = new Publisher;
       $G_HEADER->clearScripts();
-      $G_PUBLISH->AddContent('propeltable', 'paged-table', 'dynaforms/dynaforms_Supervisor', $this->getSupervisorDynaformsCriteria($sProcessUID), $aFields);
-      G::RenderPage('publish', 'raw');*/
+      $G_PUBLISH->AddContent('propeltable', 'paged-table', 'dynaforms/dynaforms_Supervisor', $this->getSupervisorDynaformsCriteria($sProcessUID));
+      G::RenderPage('publish', 'raw');
     	return true;
     }
   	catch (Exception $oError) {
@@ -1905,20 +1903,27 @@ class processMap {
 	* @return object
 	*/
   function getSupervisorDynaformsCriteria($sProcessUID = '') {
-  	/*require_once 'classes/model/ReportTable.php';
+    require_once 'classes/model/StepSupervisor.php';
+    require_once 'classes/model/Dynaform.php';
   	$sDelimiter = DBAdapter::getStringDelimiter();
   	$oCriteria  = new Criteria('workflow');
-    $oCriteria->addSelectColumn(ReportTablePeer::REP_TAB_UID);
-    $oCriteria->addSelectColumn(ReportTablePeer::PRO_UID);
-    $oCriteria->addAsColumn('REP_TAB_TITLE', 'C.CON_VALUE');
+  	$oCriteria->addSelectColumn(StepSupervisorPeer::PRO_UID);
+  	$oCriteria->addSelectColumn(StepSupervisorPeer::STEP_TYPE_OBJ);
+  	$oCriteria->addSelectColumn(StepSupervisorPeer::STEP_UID_OBJ);
+  	$oCriteria->addSelectColumn(StepSupervisorPeer::STEP_POSITION);
+  	$oCriteria->addAsColumn('DYN_TITLE', 'C.CON_VALUE');
     $oCriteria->addAlias('C', 'CONTENT');
-    $aConditions   = array();
-    $aConditions[] = array(ReportTablePeer::REP_TAB_UID, 'C.CON_ID');
-    $aConditions[] = array('C.CON_CATEGORY', $sDelimiter . 'REP_TAB_TITLE' . $sDelimiter);
-    $aConditions[] = array('C.CON_LANG', $sDelimiter . SYS_LANG . $sDelimiter);
+  	$aConditions   = array();
+    $aConditions[] = array(StepSupervisorPeer::STEP_UID_OBJ , DynaformPeer::DYN_UID);
+    $aConditions[] = array(StepSupervisorPeer::STEP_TYPE_OBJ, $sDelimiter . 'DYNAFORM' . $sDelimiter);
     $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
-    $oCriteria->add(ReportTablePeer::PRO_UID, $sProcessUID);
-    return $oCriteria;*/
+    $aConditions   = array();
+    $aConditions[] = array(DynaformPeer::DYN_UID , 'C.CON_ID');
+    $aConditions[] = array('C.CON_CATEGORY', $sDelimiter . 'DYN_TITLE' . $sDelimiter);
+    $aConditions[] = array('C.CON_LANG'    , $sDelimiter . SYS_LANG    . $sDelimiter);
+    $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
+    $oCriteria->add(StepSupervisorPeer::PRO_UID, $sProcessUID);
+    return $oCriteria;
   }
 } // processMap
 ?>
