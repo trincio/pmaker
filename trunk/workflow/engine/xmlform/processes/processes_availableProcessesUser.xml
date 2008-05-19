@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<dynaForm type="pagetable"
+  sqlConnection=""
+  menu="" 
+>
+
+<USR_FIRSTNAME type="text" titlealign="left" colWidth="100">
+  <en>First name</en>
+</USR_FIRSTNAME>
+
+<USR_LASTNAME type="text" align="right" colWidth="100">
+  <en>Last name</en>
+</USR_LASTNAME>
+
+<ASSIGN type="link" colWidth="100" link="#" onclick="panDel('@#PU_UID');return false;">
+  <en>Assign</en>
+</ASSIGN>
+
+</dynaForm>
