@@ -385,7 +385,7 @@ var processmap=function(){
               }.extend(this)
             });
 					}.extend(this)},
-					/*{separator:true},
+					{separator:true},
 					{image:"/images/users.png",text:G_STRINGS.ID_PROCESSMAP_PROCESS_SUPERVISORS,launch:function(event){
 						this.tmp.editProcessPanel = panel =new leimnud.module.panel();
 						panel.options={
@@ -445,7 +445,7 @@ var processmap=function(){
 							//Pm.objeto.innerHTML="asdasd";
 						}.extend(this,panel);
 						r.make();
-					}.extend(this)}*/
+					}.extend(this)}
 					]
 				});
 				this.observers.menu.register(this.parent.closure({instance:this.menu,method:this.menu.remove}),this.menu);
