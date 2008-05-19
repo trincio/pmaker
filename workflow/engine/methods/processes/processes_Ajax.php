@@ -69,7 +69,7 @@ try {
   	  include(PATH_METHODS . 'processes/processes_User.php');
   	break;
   	case 'supervisorDynaforms':
-  	  $sOutput = $oProcessMap->supervisorDynaforms($oData->pro_uid);
+  	  $oProcessMap->supervisorDynaforms($oData->pro_uid);
   	break;
   	case 'saveTitlePosition':
   	  $sOutput = $oProcessMap->saveTitlePosition($oData->pro_uid, $oData->position->x, $oData->position->y);

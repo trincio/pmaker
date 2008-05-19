@@ -420,7 +420,7 @@ var processmap=function(){
 						this.tmp.editProcessPanel = panel =new leimnud.module.panel();
 						panel.options={
 							limit	:true,
-							size	:{w:500,h:300},
+							size	:{w:500,h:380},
 							position:{x:50,y:50,center:true},
 							title	:G_STRINGS.ID_PROCESSMAP_SUPERVISORS_DYNAFORMS,
 							theme	:this.options.theme,
