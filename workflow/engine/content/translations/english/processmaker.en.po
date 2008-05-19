@@ -2,7 +2,7 @@ msgid ""
 msgstr "" 
 "Project-Id-Version: PM 4.0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-05-19 09:34+0100 \n"
+"PO-Revision-Date: 2008-05-19 09:58+0100 \n"
 "Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
 "Language-Team: Colosa Developers Team <developers@colosa.com>\n"
 "MIME-Version: 1.0\n"
@@ -1666,14 +1666,14 @@ msgstr "EMAILS"
 # TRANSLATION
 # LABEL/ID_REPORT2
 #: LABEL/ID_REPORT2
-msgid "Report2"
-msgstr "Report2"
+msgid "Number of cases per process"
+msgstr "Number of cases per process"
 
 # TRANSLATION
 # LABEL/ID_REPORT1
 #: LABEL/ID_REPORT1
-msgid "Report1"
-msgstr "Report1"
+msgid "Case duration by process and task"
+msgstr "Case duration by process and task"
 
 # TRANSLATION
 # LABEL/ID_IUD
