@@ -2,7 +2,7 @@ msgid ""
 msgstr "" 
 "Project-Id-Version: PM 4.0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-05-09 16:05+0100 \n"
+"PO-Revision-Date: 2008-05-19 09:34+0100 \n"
 "Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
 "Language-Team: Colosa Developers Team <developers@colosa.com>\n"
 "MIME-Version: 1.0\n"
@@ -1532,9 +1532,219 @@ msgid "Please select a .po file"
 msgstr "Please select a .po file"
 
 # TRANSLATION
+# JAVASCRIPT/ID_PROCESSMAP_SUPERVISORS_DYNAFORMS
+#: JAVASCRIPT/ID_PROCESSMAP_SUPERVISORS_DYNAFORMS
+msgid "Dynaforms for the supervisor"
+msgstr "Dynaforms for the supervisor"
+
+# TRANSLATION
+# LABEL/ID_TO_REVISE
+#: LABEL/ID_TO_REVISE
+msgid "To Revise"
+msgstr "To Revise"
+
+# TRANSLATION
+# LABEL/ID_MESS_ENGINE_TYPE_3
+#: LABEL/ID_MESS_ENGINE_TYPE_3
+msgid "SMTP (OpenMail)"
+msgstr "SMTP (OpenMail)"
+
+# TRANSLATION
+# LABEL/ID_MESS_TEST_MESSAGE_ERROR_PHP_MAIL
+#: LABEL/ID_MESS_TEST_MESSAGE_ERROR_PHP_MAIL
+msgid "Test message send failed, error: "
+msgstr "Test message send failed, error: "
+
+# TRANSLATION
+# LABEL/ID_MESS_TEST_MESSAGE_SENDED
+#: LABEL/ID_MESS_TEST_MESSAGE_SENDED
+msgid "Test message sended successfully"
+msgstr "Test message sended successfully"
+
+# TRANSLATION
+# LABEL/ID_MESS_ENGINE_TYPE_2
+#: LABEL/ID_MESS_ENGINE_TYPE_2
+msgid "SMTP (PHPMailer)"
+msgstr "SMTP (PHPMailer)"
+
+# TRANSLATION
+# LABEL/ID_MESS_ENGINE_TYPE_1
+#: LABEL/ID_MESS_ENGINE_TYPE_1
+msgid "Mail (PHP)"
+msgstr "Mail (PHP)"
+
+# TRANSLATION
+# LABEL/ID_MESS_TEST_BODY
+#: LABEL/ID_MESS_TEST_BODY
+msgid "This mail has sended using"
+msgstr "This mail has sended using"
+
+# TRANSLATION
+# LABEL/ID_MESS_TEST_SUBJECT
+#: LABEL/ID_MESS_TEST_SUBJECT
+msgid "Test Email"
+msgstr "Test Email"
+
+# TRANSLATION
+# JAVASCRIPT/ID_MESS_TEST_FROM_EMAIL
+#: JAVASCRIPT/ID_MESS_TEST_FROM_EMAIL
+msgid "The "From Email" field is required"
+msgstr "The "From Email" field is required"
+
+# TRANSLATION
+# JAVASCRIPT/ID_MESS_TEST_TO
+#: JAVASCRIPT/ID_MESS_TEST_TO
+msgid "The "To" field is required"
+msgstr "The "To" field is required"
+
+# TRANSLATION
+# LABEL/ID_MESS_SEND_MAX_REQUIRED
+#: LABEL/ID_MESS_SEND_MAX_REQUIRED
+msgid "The number of mails sended by attempt is required"
+msgstr "The number of mails sended by attempt is required"
+
+# TRANSLATION
+# JAVASCRIPT/ID_MESS_EXECUTE_EVERY_REQUIRED
+#: JAVASCRIPT/ID_MESS_EXECUTE_EVERY_REQUIRED
+msgid "The "Execute Every" field is required"
+msgstr "The "Execute Every" field is required"
+
+# TRANSLATION
+# JAVASCRIPT/ID_MESS_ACCOUNT_REQUIRED
+#: JAVASCRIPT/ID_MESS_ACCOUNT_REQUIRED
+msgid "The email account is required"
+msgstr "The email account is required"
+
+# TRANSLATION
+# JAVASCRIPT/ID_DBS_EDIT
+#: JAVASCRIPT/ID_DBS_EDIT
+msgid "Edit the current Data Base Source"
+msgstr "Edit the current Data Base Source"
+
+# TRANSLATION
+# JAVASCRIPT/ID_PROCESSMAP_PROCESS_SUPERVISORS
+#: JAVASCRIPT/ID_PROCESSMAP_PROCESS_SUPERVISORS
+msgid "Process Supervisor"
+msgstr "Process Supervisor"
+
+# TRANSLATION
+# JAVASCRIPT/ID_MESS_SERVER_REQUIRED
+#: JAVASCRIPT/ID_MESS_SERVER_REQUIRED
+msgid "The email server is required"
+msgstr "The email server is required"
+
+# TRANSLATION
+# LABEL/ID_DBS_EDIT
+#: LABEL/ID_DBS_EDIT
+msgid "[LABEL/ID_DBS_EDIT] Edit the current Data Base Source"
+msgstr "Edit the current Data Base Source"
+
+# TRANSLATION
+# JAVASCRIPT/ID_DBS_NEW
+#: JAVASCRIPT/ID_DBS_NEW
+msgid "Add new Data Base Source"
+msgstr "Add new Data Base Source"
+
+# TRANSLATION
+# JAVASCRIPT/ID_DBS_LIST
+#: JAVASCRIPT/ID_DBS_LIST
+msgid "Data Bases Source List"
+msgstr "Data Bases Source List"
+
+# TRANSLATION
+# LABEL/ID_CHANGES_SAVED
+#: LABEL/ID_CHANGES_SAVED
+msgid "Changes saved"
+msgstr "Changes saved"
+
+# TRANSLATION
+# LABEL/ID_EMAILS
+#: LABEL/ID_EMAILS
+msgid "EMAILS"
+msgstr "EMAILS"
+
+# TRANSLATION
+# LABEL/ID_REPORT2
+#: LABEL/ID_REPORT2
+msgid "Report2"
+msgstr "Report2"
+
+# TRANSLATION
+# LABEL/ID_REPORT1
+#: LABEL/ID_REPORT1
+msgid "Report1"
+msgstr "Report1"
+
+# TRANSLATION
+# LABEL/ID_IUD
+#: LABEL/ID_IUD
+msgid "#"
+msgstr "#"
+
+# TRANSLATION
+# LABEL/ID_REPORTS
+#: LABEL/ID_REPORTS
+msgid "Reports"
+msgstr "Reports"
+
+# TRANSLATION
+# JAVASCRIPT/ID_MSG_CONFIRM_REMOVE_DBS
+#: JAVASCRIPT/ID_MSG_CONFIRM_REMOVE_DBS
+msgid "Are you sure you want to remove this DB Connection?"
+msgstr "Are you sure you want to remove this DB Connection?"
+
+# TRANSLATION
+# JAVASCRIPT/DBCONNECTIONS_MSG6
+#: JAVASCRIPT/DBCONNECTIONS_MSG6
+msgid "You must specify a user!"
+msgstr "You must specify a user!"
+
+# TRANSLATION
+# JAVASCRIPT/DBCONNECTIONS_MSG7
+#: JAVASCRIPT/DBCONNECTIONS_MSG7
+msgid "Loading test, please wait!..."
+msgstr "Loading test, please wait!..."
+
+# TRANSLATION
+# JAVASCRIPT/DBCONNECTIONS_MSG5
+#: JAVASCRIPT/DBCONNECTIONS_MSG5
+msgid "You must specify a data base name!"
+msgstr "You must specify a data base name!"
+
+# TRANSLATION
+# JAVASCRIPT/DBCONNECTIONS_MSG4
+#: JAVASCRIPT/DBCONNECTIONS_MSG4
+msgid "You must specify a data base server!"
+msgstr "You must specify a data base server!"
+
+# TRANSLATION
+# JAVASCRIPT/DBCONNECTIONS_MSG3
+#: JAVASCRIPT/DBCONNECTIONS_MSG3
+msgid "Testing"
+msgstr "Testing"
+
+# TRANSLATION
+# JAVASCRIPT/DBCONNECTIONS_MSG2
+#: JAVASCRIPT/DBCONNECTIONS_MSG2
+msgid "FAILED"
+msgstr "FAILED"
+
+# TRANSLATION
+# LABEL/DBCONNECTIOS_MSG2
+#: LABEL/DBCONNECTIOS_MSG2
+msgid "[LABEL/DBCONNECTIOS_MSG2] FAILED"
+msgstr "FAILED"
+
+# TRANSLATION
+# JAVASCRIPT/DBCONNECTIONS_MSG1
+#: JAVASCRIPT/DBCONNECTIONS_MSG1
+msgid "DONE"
+msgstr "DONE"
+
+# TRANSLATION
 # JAVASCRIPT/DBCONNECTIOS_MSG1
 #: JAVASCRIPT/DBCONNECTIOS_MSG1
-msgid "DONE"
+msgid "[JAVASCRIPT/DBCONNECTIOS_MSG1] DONE"
 msgstr "DONE"
 
 # TRANSLATION
@@ -2185,6 +2395,150 @@ msgstr "Last Name"
 msgid "[groups/groups_UsersList.xml?button] Accept"
 msgstr "Accept"
 
+# dbConnections/dbConnections_Edit.xml?DBS_SERVER
+# dbConnections/dbConnections_Edit.xml
+#: text - DBS_SERVER
+msgid "Server"
+msgstr "Server"
+
+# dbConnections/dbConnections_Edit.xml?DBS_DATABASE_NAME
+# dbConnections/dbConnections_Edit.xml
+#: text - DBS_DATABASE_NAME
+msgid "Database Name"
+msgstr "Database Name"
+
+# dbConnections/dbConnections_Edit.xml?DBS_USERNAME
+# dbConnections/dbConnections_Edit.xml
+#: text - DBS_USERNAME
+msgid "Username"
+msgstr "Username"
+
+# dbConnections/dbConnections_Edit.xml?DBS_PASSWORD
+# dbConnections/dbConnections_Edit.xml
+#: password - DBS_PASSWORD
+msgid "Password"
+msgstr "Password"
+
+# dbConnections/dbConnections_Edit.xml?DBS_PORT
+# dbConnections/dbConnections_Edit.xml
+#: text - DBS_PORT
+msgid "Port"
+msgstr "Port"
+
+# dbConnections/dbConnections_Edit.xml?DBS_DESCRIPTION
+# dbConnections/dbConnections_Edit.xml
+#: textarea - DBS_DESCRIPTION
+msgid "Description"
+msgstr "Description"
+
+# dbConnections/dbConnections_Edit.xml?TEST
+# dbConnections/dbConnections_Edit.xml
+#: button - TEST
+msgid "Test Connection"
+msgstr "Test Connection"
+
+# dbConnections/dbConnections_Edit.xml?CREATE
+# dbConnections/dbConnections_Edit.xml
+#: button - CREATE
+msgid "[dbConnections/dbConnections_Edit.xml?CREATE] Save"
+msgstr "Save"
+
+# dbConnections/dbConnections_Options.xml?MNU_ADD
+# dbConnections/dbConnections_Options.xml
+#: link - MNU_ADD
+msgid "[dbConnections/dbConnections_Options.xml?MNU_ADD] New"
+msgstr "New"
+
+# dbConnections/dbConnections.xml?DBS_TYPE
+# dbConnections/dbConnections.xml
+#: text - DBS_TYPE
+msgid "[dbConnections/dbConnections.xml?DBS_TYPE] Type"
+msgstr "Type"
+
+# dbConnections/dbConnections.xml?DBS_SERVER
+# dbConnections/dbConnections.xml
+#: text - DBS_SERVER
+msgid "[dbConnections/dbConnections.xml?DBS_SERVER] Server"
+msgstr "Server"
+
+# dbConnections/dbConnections.xml?DBS_DATABASE_NAME
+# dbConnections/dbConnections.xml
+#: text - DBS_DATABASE_NAME
+msgid "[dbConnections/dbConnections.xml?DBS_DATABASE_NAME] Database Name"
+msgstr "Database Name"
+
+# dbConnections/dbConnections.xml?DBS_DESCRIPTION
+# dbConnections/dbConnections.xml
+#: text - DBS_DESCRIPTION
+msgid "[dbConnections/dbConnections.xml?DBS_DESCRIPTION] Description"
+msgstr "Description"
+
+# dbConnections/dbConnections.xml?DBS_EDIT
+# dbConnections/dbConnections.xml
+#: link - DBS_EDIT
+msgid "[dbConnections/dbConnections.xml?DBS_EDIT] Edit"
+msgstr "Edit"
+
+# dbConnections/dbConnections.xml?DBS_DELETE
+# dbConnections/dbConnections.xml
+#: link - DBS_DELETE
+msgid "[dbConnections/dbConnections.xml?DBS_DELETE] Delete"
+msgstr "Delete"
+
+# dbConnections/dbConnections_New.xml?DBS_TYPE
+# dbConnections/dbConnections_New.xml
+#: dropdown - DBS_TYPE
+msgid "[dbConnections/dbConnections_New.xml?DBS_TYPE] Type"
+msgstr ""
+
+# dbConnections/dbConnections_New.xml?DBS_SERVER
+# dbConnections/dbConnections_New.xml
+#: text - DBS_SERVER
+msgid "[dbConnections/dbConnections_New.xml?DBS_SERVER] Server"
+msgstr "Server"
+
+# dbConnections/dbConnections_New.xml?DBS_DATABASE_NAME
+# dbConnections/dbConnections_New.xml
+#: text - DBS_DATABASE_NAME
+msgid "[dbConnections/dbConnections_New.xml?DBS_DATABASE_NAME] Database Name"
+msgstr "Database Name"
+
+# dbConnections/dbConnections_New.xml?DBS_USERNAME
+# dbConnections/dbConnections_New.xml
+#: text - DBS_USERNAME
+msgid "[dbConnections/dbConnections_New.xml?DBS_USERNAME] Username"
+msgstr "Username"
+
+# dbConnections/dbConnections_New.xml?DBS_PASSWORD
+# dbConnections/dbConnections_New.xml
+#: password - DBS_PASSWORD
+msgid "[dbConnections/dbConnections_New.xml?DBS_PASSWORD] Password"
+msgstr "Password"
+
+# dbConnections/dbConnections_New.xml?DBS_PORT
+# dbConnections/dbConnections_New.xml
+#: text - DBS_PORT
+msgid "[dbConnections/dbConnections_New.xml?DBS_PORT] Port"
+msgstr "Port"
+
+# dbConnections/dbConnections_New.xml?DBS_DESCRIPTION
+# dbConnections/dbConnections_New.xml
+#: textarea - DBS_DESCRIPTION
+msgid "[dbConnections/dbConnections_New.xml?DBS_DESCRIPTION] Description"
+msgstr "Description"
+
+# dbConnections/dbConnections_New.xml?TEST
+# dbConnections/dbConnections_New.xml
+#: button - TEST
+msgid "[dbConnections/dbConnections_New.xml?TEST] Test Connection"
+msgstr "Test Connection"
+
+# dbConnections/dbConnections_New.xml?CREATE
+# dbConnections/dbConnections_New.xml
+#: button - CREATE
+msgid "Create"
+msgstr "Create"
+
 # dynaforms/dynaforms_Options.xml?MNU_ADD
 # dynaforms/dynaforms_Options.xml
 #: link - MNU_ADD
@@ -2230,7 +2584,7 @@ msgstr "Grid"
 # dynaforms/dynaforms_Properties.xml?DYN_DESCRIPTION
 # dynaforms/dynaforms_Properties.xml
 #: textarea - DYN_DESCRIPTION
-msgid "Description"
+msgid "[dynaforms/dynaforms_Properties.xml?DYN_DESCRIPTION] Description"
 msgstr "Description"
 
 # dynaforms/dynaforms_Properties.xml?SUBTITLE
@@ -2793,9 +3147,15 @@ msgstr "Data"
 
 # dynaforms/fields/hidden.xml?PME_SQLCONNECTION
 # dynaforms/fields/hidden.xml
-#: text - PME_SQLCONNECTION
+#: dropdown - PME_SQLCONNECTION
 msgid "Sql Connection"
 msgstr "Sql Connection"
+
+# dynaforms/fields/hidden.xml?PME_SQLCONNECTION-''
+# dynaforms/fields/hidden.xml
+#: dropdown - PME_SQLCONNECTION - ''
+msgid "[dynaforms/fields/hidden.xml?PME_SQLCONNECTION-'']"
+msgstr "(none)"
 
 # dynaforms/fields/hidden.xml?PME_XMLNODE_VALUE
 # dynaforms/fields/hidden.xml
@@ -2883,9 +3243,15 @@ msgstr "Data"
 
 # dynaforms/fields/listbox.xml?PME_SQLCONNECTION
 # dynaforms/fields/listbox.xml
-#: text - PME_SQLCONNECTION
+#: dropdown - PME_SQLCONNECTION
 msgid "[dynaforms/fields/listbox.xml?PME_SQLCONNECTION] Sql Connection"
 msgstr "Sql Connection"
+
+# dynaforms/fields/listbox.xml?PME_SQLCONNECTION-''
+# dynaforms/fields/listbox.xml
+#: dropdown - PME_SQLCONNECTION - ''
+msgid "[dynaforms/fields/listbox.xml?PME_SQLCONNECTION-'']"
+msgstr "(none)"
 
 # dynaforms/fields/listbox.xml?PME_XMLNODE_VALUE
 # dynaforms/fields/listbox.xml
@@ -2961,9 +3327,15 @@ msgstr "Data"
 
 # dynaforms/fields/checkgroup.xml?PME_SQLCONNECTION
 # dynaforms/fields/checkgroup.xml
-#: text - PME_SQLCONNECTION
+#: dropdown - PME_SQLCONNECTION
 msgid "[dynaforms/fields/checkgroup.xml?PME_SQLCONNECTION] Sql Connection"
 msgstr "Sql Connection"
+
+# dynaforms/fields/checkgroup.xml?PME_SQLCONNECTION-''
+# dynaforms/fields/checkgroup.xml
+#: dropdown - PME_SQLCONNECTION - ''
+msgid "[dynaforms/fields/checkgroup.xml?PME_SQLCONNECTION-'']"
+msgstr "(none)"
 
 # dynaforms/fields/checkgroup.xml?PME_XMLNODE_VALUE
 # dynaforms/fields/checkgroup.xml
@@ -3087,9 +3459,15 @@ msgstr "Data"
 
 # dynaforms/fields/percentage.xml?PME_SQLCONNECTION
 # dynaforms/fields/percentage.xml
-#: text - PME_SQLCONNECTION
+#: dropdown - PME_SQLCONNECTION
 msgid "[dynaforms/fields/percentage.xml?PME_SQLCONNECTION] Sql Connection"
 msgstr "Sql Connection"
+
+# dynaforms/fields/percentage.xml?PME_SQLCONNECTION-''
+# dynaforms/fields/percentage.xml
+#: dropdown - PME_SQLCONNECTION - ''
+msgid "[dynaforms/fields/percentage.xml?PME_SQLCONNECTION-'']"
+msgstr "(none)"
 
 # dynaforms/fields/percentage.xml?PME_XMLNODE_VALUE
 # dynaforms/fields/percentage.xml
@@ -3327,9 +3705,15 @@ msgstr "Data"
 
 # dynaforms/fields/dropdown.xml?PME_SQLCONNECTION
 # dynaforms/fields/dropdown.xml
-#: text - PME_SQLCONNECTION
+#: dropdown - PME_SQLCONNECTION
 msgid "[dynaforms/fields/dropdown.xml?PME_SQLCONNECTION] Sql Connection"
 msgstr "Sql Connection"
+
+# dynaforms/fields/dropdown.xml?PME_SQLCONNECTION-''
+# dynaforms/fields/dropdown.xml
+#: dropdown - PME_SQLCONNECTION - ''
+msgid "[dynaforms/fields/dropdown.xml?PME_SQLCONNECTION-'']"
+msgstr "(none)"
 
 # dynaforms/fields/dropdown.xml?PME_XMLNODE_VALUE
 # dynaforms/fields/dropdown.xml
@@ -3597,9 +3981,15 @@ msgstr "Data"
 
 # dynaforms/fields/text.xml?PME_SQLCONNECTION
 # dynaforms/fields/text.xml
-#: text - PME_SQLCONNECTION
+#: dropdown - PME_SQLCONNECTION
 msgid "[dynaforms/fields/text.xml?PME_SQLCONNECTION] Sql Connection"
 msgstr "Sql Connection"
+
+# dynaforms/fields/text.xml?PME_SQLCONNECTION-''
+# dynaforms/fields/text.xml
+#: dropdown - PME_SQLCONNECTION - ''
+msgid "[dynaforms/fields/text.xml?PME_SQLCONNECTION-'']"
+msgstr "(none)"
 
 # dynaforms/fields/text.xml?PME_XMLNODE_VALUE
 # dynaforms/fields/text.xml
@@ -3717,9 +4107,15 @@ msgstr "Data"
 
 # dynaforms/fields/radiogroup.xml?PME_SQLCONNECTION
 # dynaforms/fields/radiogroup.xml
-#: text - PME_SQLCONNECTION
+#: dropdown - PME_SQLCONNECTION
 msgid "[dynaforms/fields/radiogroup.xml?PME_SQLCONNECTION] Sql Connection"
 msgstr "Sql Connection"
+
+# dynaforms/fields/radiogroup.xml?PME_SQLCONNECTION-''
+# dynaforms/fields/radiogroup.xml
+#: dropdown - PME_SQLCONNECTION - ''
+msgid "[dynaforms/fields/radiogroup.xml?PME_SQLCONNECTION-'']"
+msgstr "(none)"
 
 # dynaforms/fields/radiogroup.xml?PME_XMLNODE_VALUE
 # dynaforms/fields/radiogroup.xml
@@ -3891,9 +4287,15 @@ msgstr "Data"
 
 # dynaforms/fields/currency.xml?PME_SQLCONNECTION
 # dynaforms/fields/currency.xml
-#: text - PME_SQLCONNECTION
+#: dropdown - PME_SQLCONNECTION
 msgid "[dynaforms/fields/currency.xml?PME_SQLCONNECTION] Sql Connection"
 msgstr "Sql Connection"
+
+# dynaforms/fields/currency.xml?PME_SQLCONNECTION-''
+# dynaforms/fields/currency.xml
+#: dropdown - PME_SQLCONNECTION - ''
+msgid "[dynaforms/fields/currency.xml?PME_SQLCONNECTION-'']"
+msgstr "(none)"
 
 # dynaforms/fields/currency.xml?PME_XMLNODE_VALUE
 # dynaforms/fields/currency.xml
@@ -4227,9 +4629,15 @@ msgstr "Data"
 
 # dynaforms/fields/textarea.xml?PME_SQLCONNECTION
 # dynaforms/fields/textarea.xml
-#: text - PME_SQLCONNECTION
+#: dropdown - PME_SQLCONNECTION
 msgid "[dynaforms/fields/textarea.xml?PME_SQLCONNECTION] Sql Connection"
 msgstr "Sql Connection"
+
+# dynaforms/fields/textarea.xml?PME_SQLCONNECTION-''
+# dynaforms/fields/textarea.xml
+#: dropdown - PME_SQLCONNECTION - ''
+msgid "[dynaforms/fields/textarea.xml?PME_SQLCONNECTION-'']"
+msgstr "(none)"
 
 # dynaforms/fields/textarea.xml?PME_XMLNODE_VALUE
 # dynaforms/fields/textarea.xml
@@ -5226,6 +5634,96 @@ msgstr "File"
 #: submit - SAVE
 msgid "[processes/processes_Import.xml?SAVE] Import"
 msgstr "Import"
+
+# reports/reportsList.xml?RPT_UID
+# reports/reportsList.xml
+#: text - RPT_UID
+msgid "[reports/reportsList.xml?RPT_UID] #"
+msgstr "#"
+
+# reports/reportsList.xml?RPT_TITLE
+# reports/reportsList.xml
+#: text - RPT_TITLE
+msgid "[reports/reportsList.xml?RPT_TITLE] Reports"
+msgstr "Reports"
+
+# reports/report2.xml?PRO_TITLE
+# reports/report2.xml
+#: text - PRO_TITLE
+msgid "[reports/report2.xml?PRO_TITLE] Processes"
+msgstr "Processes"
+
+# reports/report2.xml?CANTCASES
+# reports/report2.xml
+#: text - CANTCASES
+msgid "Total Cases"
+msgstr "Total Cases"
+
+# reports/report2.xml?CASELASTMONTH
+# reports/report2.xml
+#: text - CASELASTMONTH
+msgid "Cases last month"
+msgstr "Cases last month"
+
+# reports/report2.xml?CASELASTDAY
+# reports/report2.xml
+#: text - CASELASTDAY
+msgid "Cases last day"
+msgstr "Cases last day"
+
+# reports/report1_back.xml?backs
+# reports/report1_back.xml
+#: link - backs
+msgid "Back"
+msgstr "Back"
+
+# reports/reports_Description.xml?TAS_TITLE
+# reports/reports_Description.xml
+#: text - TAS_TITLE
+msgid "[reports/reports_Description.xml?TAS_TITLE] Task"
+msgstr "Task"
+
+# reports/reports_Description.xml?TOTALDUR
+# reports/reports_Description.xml
+#: hours - TOTALDUR
+msgid "Total Duration (Hours)"
+msgstr "Total Duration (Hours)"
+
+# reports/reports_Description.xml?PROMEDIO
+# reports/reports_Description.xml
+#: hours - PROMEDIO
+msgid "Average (Hours)"
+msgstr "Average (Hours)"
+
+# reports/report1.xml?PRO_TITLE
+# reports/report1.xml
+#: text - PRO_TITLE
+msgid "[reports/report1.xml?PRO_TITLE] Processes"
+msgstr "Processes"
+
+# reports/report1.xml?CANTCASES
+# reports/report1.xml
+#: text - CANTCASES
+msgid "[reports/report1.xml?CANTCASES] Cases"
+msgstr "Cases"
+
+# reports/report1.xml?TOTALDUR
+# reports/report1.xml
+#: hours - TOTALDUR
+msgid "[reports/report1.xml?TOTALDUR] Total Duration (Hours)"
+msgstr "Total Duration (Hours)"
+
+# reports/report1.xml?PROMEDIO
+# reports/report1.xml
+#: hours - PROMEDIO
+msgid "[reports/report1.xml?PROMEDIO] Average (Hours)"
+msgstr "Average (Hours)"
+
+# reports/report1.xml?RPT_VIEW
+# reports/report1.xml
+#: link - RPT_VIEW
+msgid "Detaills"
+msgstr "Detaills"
 
 # setup/workPeriod.xml?TITLE9592
 # setup/workPeriod.xml
@@ -6505,6 +7003,96 @@ msgstr "Code"
 msgid "Language"
 msgstr "Language"
 
+# setup/emails.xml?THETITLE
+# setup/emails.xml
+#: title - THETITLE
+msgid "Configuration"
+msgstr "Configuration"
+
+# setup/emails.xml?MESS_ENGINE
+# setup/emails.xml
+#: dropdown - MESS_ENGINE
+msgid "Email Engine"
+msgstr "Email Engine"
+
+# setup/emails.xml?MESS_ENGINE-MAIL
+# setup/emails.xml
+#: dropdown - MESS_ENGINE - MAIL
+msgid "[setup/emails.xml?MESS_ENGINE-MAIL]"
+msgstr "Mail (PHP)"
+
+# setup/emails.xml?MESS_ENGINE-PHPMAILER
+# setup/emails.xml
+#: dropdown - MESS_ENGINE - PHPMAILER
+msgid "[setup/emails.xml?MESS_ENGINE-PHPMAILER]"
+msgstr "SMTP (PHPMailer)"
+
+# setup/emails.xml?MESS_ENGINE-OPENMAIL
+# setup/emails.xml
+#: dropdown - MESS_ENGINE - OPENMAIL
+msgid "[setup/emails.xml?MESS_ENGINE-OPENMAIL]"
+msgstr "SMTP (OpenMail)"
+
+# setup/emails.xml?MESS_SERVER
+# setup/emails.xml
+#: text - MESS_SERVER
+msgid "[setup/emails.xml?MESS_SERVER] Server"
+msgstr "Server"
+
+# setup/emails.xml?MESS_PORT
+# setup/emails.xml
+#: text - MESS_PORT
+msgid "[setup/emails.xml?MESS_PORT] Port"
+msgstr "Port"
+
+# setup/emails.xml?MESS_ACCOUNT
+# setup/emails.xml
+#: text - MESS_ACCOUNT
+msgid "Account"
+msgstr "Account"
+
+# setup/emails.xml?MESS_PASSWORD
+# setup/emails.xml
+#: password - MESS_PASSWORD
+msgid "[setup/emails.xml?MESS_PASSWORD] Password"
+msgstr "Password"
+
+# setup/emails.xml?MESS_BACKGROUND
+# setup/emails.xml
+#: checkbox - MESS_BACKGROUND
+msgid "Run in the background"
+msgstr "Run in the background"
+
+# setup/emails.xml?MESS_EXECUTE_EVERY
+# setup/emails.xml
+#: text - MESS_EXECUTE_EVERY
+msgid "Execute every (in minutes)"
+msgstr "Execute every (in minutes)"
+
+# setup/emails.xml?MESS_SEND_MAX
+# setup/emails.xml
+#: text - MESS_SEND_MAX
+msgid "Maximun number of mails sended by attempt"
+msgstr "Maximun number of mails sended by attempt"
+
+# setup/emails.xml?MESS_TRY_SEND_INMEDIATLY
+# setup/emails.xml
+#: checkbox - MESS_TRY_SEND_INMEDIATLY
+msgid "Try send mails inmediatly"
+msgstr "Try send mails inmediatly"
+
+# setup/emails.xml?TEST
+# setup/emails.xml
+#: button - TEST
+msgid "Test"
+msgstr "Test"
+
+# setup/emails.xml?SAVE_CHANGES
+# setup/emails.xml
+#: button - SAVE_CHANGES
+msgid "Save Changes"
+msgstr "Save Changes"
+
 # setup/holidayListMenu.xml?MNU_NEW
 # setup/holidayListMenu.xml
 #: link - MNU_NEW
@@ -6532,7 +7120,7 @@ msgstr "Upgrade"
 # setup/mailTest.xml?TITLE6171
 # setup/mailTest.xml
 #: title - TITLE6171
-msgid "Test Email"
+msgid "[setup/mailTest.xml?TITLE6171] Test Email"
 msgstr "Test Email"
 
 # setup/mailTest.xml?TEST_EMAIL
@@ -6544,7 +7132,7 @@ msgstr "Send to :"
 # setup/mailTest.xml?BTEST
 # setup/mailTest.xml
 #: button - BTEST
-msgid "Test"
+msgid "[setup/mailTest.xml?BTEST] Test"
 msgstr "Test"
 
 # setup/emailSetupTest.xml?TITLE1
@@ -6619,161 +7207,17 @@ msgstr "File"
 msgid "[setup/pluginImport.xml?SAVE] Import"
 msgstr "Import"
 
-# setup/dbSource.xml?TITLE1
-# setup/dbSource.xml
-#: title - TITLE1
-msgid "Data Base Source Manager"
-msgstr "Data Base Source Manager"
+# setup/emails_Sended.xml?MESSAGE
+# setup/emails_Sended.xml
+#: title - MESSAGE
+msgid "@#MESSAGE_VALUE"
+msgstr "@#MESSAGE_VALUE"
 
-# setup/dbSource.xml?server
-# setup/dbSource.xml
-#: text - server
-msgid "Server"
-msgstr "Server"
-
-# setup/dbSource.xml?port
-# setup/dbSource.xml
-#: text - port
-msgid "Port"
-msgstr "Port"
-
-# setup/dbSource.xml?db_name
-# setup/dbSource.xml
-#: text - db_name
-msgid "Data Base Name"
-msgstr "Data Base Name"
-
-# setup/dbSource.xml?db_user_name
-# setup/dbSource.xml
-#: text - db_user_name
-msgid "User Name"
-msgstr "User Name"
-
-# setup/dbSource.xml?db_password
-# setup/dbSource.xml
-#: text - db_password
-msgid "Password"
-msgstr "Password"
-
-# setup/dbSource.xml?description
-# setup/dbSource.xml
-#: textarea - description
-msgid "[setup/dbSource.xml?description] Description"
-msgstr "Description"
-
-# setup/dbSource.xml?BTN_SUBMIT
-# setup/dbSource.xml
-#: button - BTN_SUBMIT
-msgid "Set server configuration"
-msgstr "Set server configuration"
-
-# setup/processesForDBConnections.xml?PRO_UID
-# setup/processesForDBConnections.xml
-#: dropdown - PRO_UID
-msgid "Process"
-msgstr "Process"
-
-# setup/dbConnections_Edit.xml?DBS_TYPE
-# setup/dbConnections_Edit.xml
-#: dropdown - DBS_TYPE
-msgid "[setup/dbConnections_Edit.xml?DBS_TYPE] Type"
-msgstr "Type"
-
-# setup/dbConnections_Edit.xml?DBS_TYPE-mysql
-# setup/dbConnections_Edit.xml
-#: dropdown - DBS_TYPE - mysql
-msgid "[setup/dbConnections_Edit.xml?DBS_TYPE-mysql]"
-msgstr "MySQL"
-
-# setup/dbConnections_Edit.xml?DBS_TYPE-pgsql
-# setup/dbConnections_Edit.xml
-#: dropdown - DBS_TYPE - pgsql
-msgid "[setup/dbConnections_Edit.xml?DBS_TYPE-pgsql]"
-msgstr "PostgreSQL"
-
-# setup/dbConnections_Edit.xml?DBS_TYPE-mssql
-# setup/dbConnections_Edit.xml
-#: dropdown - DBS_TYPE - mssql
-msgid "[setup/dbConnections_Edit.xml?DBS_TYPE-mssql]"
-msgstr "Microsoft SQL Server"
-
-# setup/dbConnections_Edit.xml?DBS_SERVER
-# setup/dbConnections_Edit.xml
-#: text - DBS_SERVER
-msgid "[setup/dbConnections_Edit.xml?DBS_SERVER] Server"
-msgstr "Server"
-
-# setup/dbConnections_Edit.xml?DBS_DATABASE_NAME
-# setup/dbConnections_Edit.xml
-#: text - DBS_DATABASE_NAME
-msgid "Database Name"
-msgstr "Database Name"
-
-# setup/dbConnections_Edit.xml?DBS_USERNAME
-# setup/dbConnections_Edit.xml
-#: text - DBS_USERNAME
-msgid "Username"
-msgstr "Username"
-
-# setup/dbConnections_Edit.xml?DBS_PASSWORD
-# setup/dbConnections_Edit.xml
-#: password - DBS_PASSWORD
-msgid "[setup/dbConnections_Edit.xml?DBS_PASSWORD] Password"
-msgstr "Password"
-
-# setup/dbConnections_Edit.xml?DBS_PORT
-# setup/dbConnections_Edit.xml
-#: text - DBS_PORT
-msgid "[setup/dbConnections_Edit.xml?DBS_PORT] Port"
-msgstr "Port"
-
-# setup/dbConnections_Edit.xml?TEST
-# setup/dbConnections_Edit.xml
-#: button - TEST
-msgid "Test Connection"
-msgstr "Test Connection"
-
-# setup/dbConnections_Edit.xml?CREATE
-# setup/dbConnections_Edit.xml
-#: button - CREATE
-msgid "Create"
-msgstr "Create"
-
-# setup/dbConnections_Options.xml?MNU_ADD
-# setup/dbConnections_Options.xml
-#: link - MNU_ADD
-msgid "[setup/dbConnections_Options.xml?MNU_ADD] New"
-msgstr "New"
-
-# setup/dbConnections.xml?DBS_TYPE
-# setup/dbConnections.xml
-#: text - DBS_TYPE
-msgid "[setup/dbConnections.xml?DBS_TYPE] Type"
-msgstr "Type"
-
-# setup/dbConnections.xml?DBS_SERVER
-# setup/dbConnections.xml
-#: text - DBS_SERVER
-msgid "[setup/dbConnections.xml?DBS_SERVER] Server"
-msgstr "Server"
-
-# setup/dbConnections.xml?DBS_DATABASE_NAME
-# setup/dbConnections.xml
-#: text - DBS_DATABASE_NAME
-msgid "[setup/dbConnections.xml?DBS_DATABASE_NAME] Database Name"
-msgstr "Database Name"
-
-# setup/dbConnections.xml?DBS_DESCRIPTION
-# setup/dbConnections.xml
-#: text - DBS_DESCRIPTION
-msgid "[setup/dbConnections.xml?DBS_DESCRIPTION] Description"
-msgstr "Description"
-
-# setup/dbConnections.xml?DBS_EDIT
-# setup/dbConnections.xml
-#: link - DBS_EDIT
-msgid "[setup/dbConnections.xml?DBS_EDIT] Edit"
-msgstr "Edit"
+# setup/emails_Sended.xml?ClOSE
+# setup/emails_Sended.xml
+#: button - ClOSE
+msgid "Close"
+msgstr "Close"
 
 # setup/noProcesses.xml?MESSAGE
 # setup/noProcesses.xml
@@ -7036,7 +7480,7 @@ msgstr "Test"
 # setup/pluginList.xml?id
 # setup/pluginList.xml
 #: text - id
-msgid "#"
+msgid "[setup/pluginList.xml?id] #"
 msgstr "#"
 
 # setup/pluginList.xml?title
@@ -7050,6 +7494,36 @@ msgstr "Name (File)"
 #: text - description
 msgid "[setup/pluginList.xml?description] Description"
 msgstr "Description"
+
+# setup/emails_TestForm.xml?THETITLE
+# setup/emails_TestForm.xml
+#: title - THETITLE
+msgid "Mail Configuration Test Page"
+msgstr "Mail Configuration Test Page"
+
+# setup/emails_TestForm.xml?FROM_NAME
+# setup/emails_TestForm.xml
+#: text - FROM_NAME
+msgid "[setup/emails_TestForm.xml?FROM_NAME] From Name:"
+msgstr "From Name:"
+
+# setup/emails_TestForm.xml?FROM_EMAIL
+# setup/emails_TestForm.xml
+#: text - FROM_EMAIL
+msgid "[setup/emails_TestForm.xml?FROM_EMAIL] From Email:"
+msgstr "From Email:"
+
+# setup/emails_TestForm.xml?TO
+# setup/emails_TestForm.xml
+#: text - TO
+msgid "[setup/emails_TestForm.xml?TO] To:"
+msgstr "To:"
+
+# setup/emails_TestForm.xml?SEND
+# setup/emails_TestForm.xml
+#: button - SEND
+msgid "[setup/emails_TestForm.xml?SEND] Send Email"
+msgstr "Send Email"
 
 # departments/properties.xml?TITLES
 # departments/properties.xml
@@ -7458,12 +7932,6 @@ msgstr "Confirm Password"
 #: title - TITLEADD
 msgid "[users/myInfoView.xml?TITLEADD] Additional Information"
 msgstr "Additional Information"
-
-# users/myInfoView.xml?USR_PHOTO
-# users/myInfoView.xml
-#: image - USR_PHOTO
-msgid "[users/myInfoView.xml?USR_PHOTO] Photo"
-msgstr "Photo"
 
 # users/myInfoView.xml?USR_RESUME
 # users/myInfoView.xml
@@ -8116,14 +8584,14 @@ msgstr "Assigned user can send messages"
 # tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_TYPE
 # tasks/tasks_AssignmentRules.xml
 #: radiogroup - TAS_ASSIGN_TYPE
-msgid "Incoming Assigment type"
-msgstr "Incoming Assigment type"
+msgid "Case to be assigned by"
+msgstr "Case to be assigned by"
 
 # tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_TYPE-BALANCED
 # tasks/tasks_AssignmentRules.xml
 #: radiogroup - TAS_ASSIGN_TYPE - BALANCED
 msgid "[tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_TYPE-BALANCED]"
-msgstr "Round Robin Assignment"
+msgstr "Cyclical Assignment"
 
 # tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_TYPE-MANUAL
 # tasks/tasks_AssignmentRules.xml
@@ -8136,12 +8604,6 @@ msgstr "Manual Assignment"
 #: radiogroup - TAS_ASSIGN_TYPE - EVALUATE
 msgid "[tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_TYPE-EVALUATE]"
 msgstr "Value Based Assignment"
-
-# tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_VARIABLE
-# tasks/tasks_AssignmentRules.xml
-#: text - TAS_ASSIGN_VARIABLE
-msgid "Variable for Value Based Assignment"
-msgstr "Variable for Value Based Assignment"
 
 # tasks/tasks_Labels.xml?TAS_DEF_TITLE
 # tasks/tasks_Labels.xml
@@ -8299,12 +8761,6 @@ msgstr "Description"
 msgid "Starting task"
 msgstr "Starting task"
 
-# tasks/tasks_Definition.xml?TAS_PRIORITY_VARIABLE
-# tasks/tasks_Definition.xml
-#: text - TAS_PRIORITY_VARIABLE
-msgid "Varible for Case priority"
-msgstr "Varible for Case priority"
-
 # gulliver/dynaforms_Options.xml?DYN_BACKWARD
 # gulliver/dynaforms_Options.xml
 #: link - DYN_BACKWARD
@@ -8338,7 +8794,7 @@ msgstr "Task"
 # cases/cases_ListTodo.xml?APP_PRO_TITLE
 # cases/cases_ListTodo.xml
 #: text - APP_PRO_TITLE
-msgid "[cases/cases_ListTodo.xml?APP_PRO_TITLE] Process"
+msgid "Process"
 msgstr "Process"
 
 # cases/cases_ListTodo.xml?APP_DEL_PREVIOUS_USER
@@ -8365,34 +8821,34 @@ msgstr "Last Modification"
 msgid "Priority"
 msgstr "Priority"
 
-# cases/cases_ListTodo.xml?DEL_PRIORITY-VH
+# cases/cases_ListTodo.xml?DEL_PRIORITY-1
 # cases/cases_ListTodo.xml
-#: dropdown - DEL_PRIORITY - VH
-msgid "[cases/cases_ListTodo.xml?DEL_PRIORITY-VH]"
+#: dropdown - DEL_PRIORITY - 1
+msgid "[cases/cases_ListTodo.xml?DEL_PRIORITY-1]"
 msgstr "Very High"
 
-# cases/cases_ListTodo.xml?DEL_PRIORITY-H
+# cases/cases_ListTodo.xml?DEL_PRIORITY-2
 # cases/cases_ListTodo.xml
-#: dropdown - DEL_PRIORITY - H
-msgid "[cases/cases_ListTodo.xml?DEL_PRIORITY-H]"
+#: dropdown - DEL_PRIORITY - 2
+msgid "[cases/cases_ListTodo.xml?DEL_PRIORITY-2]"
 msgstr "High"
 
-# cases/cases_ListTodo.xml?DEL_PRIORITY-N
+# cases/cases_ListTodo.xml?DEL_PRIORITY-3
 # cases/cases_ListTodo.xml
-#: dropdown - DEL_PRIORITY - N
-msgid "[cases/cases_ListTodo.xml?DEL_PRIORITY-N]"
+#: dropdown - DEL_PRIORITY - 3
+msgid "[cases/cases_ListTodo.xml?DEL_PRIORITY-3]"
 msgstr "Normal"
 
-# cases/cases_ListTodo.xml?DEL_PRIORITY-L
+# cases/cases_ListTodo.xml?DEL_PRIORITY-4
 # cases/cases_ListTodo.xml
-#: dropdown - DEL_PRIORITY - L
-msgid "[cases/cases_ListTodo.xml?DEL_PRIORITY-L]"
+#: dropdown - DEL_PRIORITY - 4
+msgid "[cases/cases_ListTodo.xml?DEL_PRIORITY-4]"
 msgstr "Low"
 
-# cases/cases_ListTodo.xml?DEL_PRIORITY-VL
+# cases/cases_ListTodo.xml?DEL_PRIORITY-5
 # cases/cases_ListTodo.xml
-#: dropdown - DEL_PRIORITY - VL
-msgid "[cases/cases_ListTodo.xml?DEL_PRIORITY-VL]"
+#: dropdown - DEL_PRIORITY - 5
+msgid "[cases/cases_ListTodo.xml?DEL_PRIORITY-5]"
 msgstr "Very Low"
 
 # cases/cases_ListTodo.xml?DEL_INIT_DATE
@@ -8854,7 +9310,7 @@ msgstr "Comments"
 # cases/cases_ViewInputDocument2.xml?BACK
 # cases/cases_ViewInputDocument2.xml
 #: button - BACK
-msgid "Back"
+msgid "[cases/cases_ViewInputDocument2.xml?BACK] Back"
 msgstr "Back"
 
 # cases/cases_ViewOutputDocument1.xml?OUT_DOC_TITLE
@@ -9493,6 +9949,96 @@ msgstr ""
 msgid "[cases/cases_List.xml?SEARCH] Apply Filter"
 msgstr "Apply Filter"
 
+# cases/cases_ListToRevise.xml?APP_NUMBER
+# cases/cases_ListToRevise.xml
+#: text - APP_NUMBER
+msgid "[cases/cases_ListToRevise.xml?APP_NUMBER] #"
+msgstr "#"
+
+# cases/cases_ListToRevise.xml?APP_TITLE
+# cases/cases_ListToRevise.xml
+#: text - APP_TITLE
+msgid "[cases/cases_ListToRevise.xml?APP_TITLE] Case"
+msgstr "Case"
+
+# cases/cases_ListToRevise.xml?APP_TAS_TITLE
+# cases/cases_ListToRevise.xml
+#: text - APP_TAS_TITLE
+msgid "[cases/cases_ListToRevise.xml?APP_TAS_TITLE] Task"
+msgstr "Task"
+
+# cases/cases_ListToRevise.xml?APP_PRO_TITLE
+# cases/cases_ListToRevise.xml
+#: text - APP_PRO_TITLE
+msgid "[cases/cases_ListToRevise.xml?APP_PRO_TITLE] Process"
+msgstr "Process"
+
+# cases/cases_ListToRevise.xml?APP_DEL_PREVIOUS_USER
+# cases/cases_ListToRevise.xml
+#: text - APP_DEL_PREVIOUS_USER
+msgid "[cases/cases_ListToRevise.xml?APP_DEL_PREVIOUS_USER] Sent by"
+msgstr "Sent by"
+
+# cases/cases_ListToRevise.xml?DEL_TASK_DUE_DATE
+# cases/cases_ListToRevise.xml
+#: date - DEL_TASK_DUE_DATE
+msgid "[cases/cases_ListToRevise.xml?DEL_TASK_DUE_DATE] Due Date"
+msgstr "Due Date"
+
+# cases/cases_ListToRevise.xml?APP_UPDATE_DATE
+# cases/cases_ListToRevise.xml
+#: date - APP_UPDATE_DATE
+msgid "[cases/cases_ListToRevise.xml?APP_UPDATE_DATE] Last Modification"
+msgstr "Last Modification"
+
+# cases/cases_ListToRevise.xml?DEL_PRIORITY
+# cases/cases_ListToRevise.xml
+#: dropdown - DEL_PRIORITY
+msgid "[cases/cases_ListToRevise.xml?DEL_PRIORITY] Priority"
+msgstr "Priority"
+
+# cases/cases_ListToRevise.xml?DEL_PRIORITY-1
+# cases/cases_ListToRevise.xml
+#: dropdown - DEL_PRIORITY - 1
+msgid "[cases/cases_ListToRevise.xml?DEL_PRIORITY-1]"
+msgstr "Very High"
+
+# cases/cases_ListToRevise.xml?DEL_PRIORITY-2
+# cases/cases_ListToRevise.xml
+#: dropdown - DEL_PRIORITY - 2
+msgid "[cases/cases_ListToRevise.xml?DEL_PRIORITY-2]"
+msgstr "High"
+
+# cases/cases_ListToRevise.xml?DEL_PRIORITY-3
+# cases/cases_ListToRevise.xml
+#: dropdown - DEL_PRIORITY - 3
+msgid "[cases/cases_ListToRevise.xml?DEL_PRIORITY-3]"
+msgstr "Normal"
+
+# cases/cases_ListToRevise.xml?DEL_PRIORITY-4
+# cases/cases_ListToRevise.xml
+#: dropdown - DEL_PRIORITY - 4
+msgid "[cases/cases_ListToRevise.xml?DEL_PRIORITY-4]"
+msgstr "Low"
+
+# cases/cases_ListToRevise.xml?DEL_PRIORITY-5
+# cases/cases_ListToRevise.xml
+#: dropdown - DEL_PRIORITY - 5
+msgid "[cases/cases_ListToRevise.xml?DEL_PRIORITY-5]"
+msgstr "Very Low"
+
+# cases/cases_ListToRevise.xml?DEL_INIT_DATE
+# cases/cases_ListToRevise.xml
+#: date - DEL_INIT_DATE
+msgid "[cases/cases_ListToRevise.xml?DEL_INIT_DATE] Start Date"
+msgstr "Start Date"
+
+# cases/cases_ListToRevise.xml?SEARCH
+# cases/cases_ListToRevise.xml
+#: button - SEARCH
+msgid "[cases/cases_ListToRevise.xml?SEARCH] Apply Filter"
+msgstr "Apply Filter"
+
 # cases/cases_ListAll.xml?APP_NUMBER
 # cases/cases_ListAll.xml
 #: text - APP_NUMBER
@@ -9636,12 +10182,6 @@ msgstr "Name"
 #: submit - NW_SUB
 msgid "[login/newSite.xml?NW_SUB] Create"
 msgstr "Create"
-
-# login/nologin.xml?subtitle
-# login/nologin.xml
-#: subtitle - subtitle
-msgid "subtitle"
-msgstr ""
 
 # login/nologin.xml?BSUBMIT
 # login/nologin.xml
@@ -9988,7 +10528,7 @@ msgstr "All the triggers available were assigned!"
 # steps/triggers_NoAssign.xml?ClOSE
 # steps/triggers_NoAssign.xml
 #: button - ClOSE
-msgid "Close"
+msgid "[steps/triggers_NoAssign.xml?ClOSE] Close"
 msgstr "Close"
 
 # steps/triggersCondition_Edit.xml?ST_CONDITION
