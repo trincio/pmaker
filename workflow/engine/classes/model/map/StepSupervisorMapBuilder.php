@@ -64,6 +64,8 @@ class StepSupervisorMapBuilder {
 
 		$tMap->setUseIdGenerator(false);
 
+		$tMap->addPrimaryKey('STEP_UID', 'StepUid', 'string', CreoleTypes::VARCHAR, true, 32);
+
 		$tMap->addColumn('PRO_UID', 'ProUid', 'string', CreoleTypes::VARCHAR, true, 32);
 
 		$tMap->addColumn('STEP_TYPE_OBJ', 'StepTypeObj', 'string', CreoleTypes::VARCHAR, true, 20);
