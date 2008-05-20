@@ -24,11 +24,14 @@ abstract class BaseStepSupervisorPeer {
 	const CLASS_DEFAULT = 'classes.model.StepSupervisor';
 
 	/** The total number of columns. */
-	const NUM_COLUMNS = 4;
+	const NUM_COLUMNS = 5;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
 
+
+	/** the column name for the STEP_UID field */
+	const STEP_UID = 'STEP_SUPERVISOR.STEP_UID';
 
 	/** the column name for the PRO_UID field */
 	const PRO_UID = 'STEP_SUPERVISOR.PRO_UID';
@@ -53,10 +56,10 @@ abstract class BaseStepSupervisorPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('ProUid', 'StepTypeObj', 'StepUidObj', 'StepPosition', ),
-		BasePeer::TYPE_COLNAME => array (StepSupervisorPeer::PRO_UID, StepSupervisorPeer::STEP_TYPE_OBJ, StepSupervisorPeer::STEP_UID_OBJ, StepSupervisorPeer::STEP_POSITION, ),
-		BasePeer::TYPE_FIELDNAME => array ('PRO_UID', 'STEP_TYPE_OBJ', 'STEP_UID_OBJ', 'STEP_POSITION', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME => array ('StepUid', 'ProUid', 'StepTypeObj', 'StepUidObj', 'StepPosition', ),
+		BasePeer::TYPE_COLNAME => array (StepSupervisorPeer::STEP_UID, StepSupervisorPeer::PRO_UID, StepSupervisorPeer::STEP_TYPE_OBJ, StepSupervisorPeer::STEP_UID_OBJ, StepSupervisorPeer::STEP_POSITION, ),
+		BasePeer::TYPE_FIELDNAME => array ('STEP_UID', 'PRO_UID', 'STEP_TYPE_OBJ', 'STEP_UID_OBJ', 'STEP_POSITION', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
 	);
 
 	/**
@@ -66,10 +69,10 @@ abstract class BaseStepSupervisorPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('ProUid' => 0, 'StepTypeObj' => 1, 'StepUidObj' => 2, 'StepPosition' => 3, ),
-		BasePeer::TYPE_COLNAME => array (StepSupervisorPeer::PRO_UID => 0, StepSupervisorPeer::STEP_TYPE_OBJ => 1, StepSupervisorPeer::STEP_UID_OBJ => 2, StepSupervisorPeer::STEP_POSITION => 3, ),
-		BasePeer::TYPE_FIELDNAME => array ('PRO_UID' => 0, 'STEP_TYPE_OBJ' => 1, 'STEP_UID_OBJ' => 2, 'STEP_POSITION' => 3, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME => array ('StepUid' => 0, 'ProUid' => 1, 'StepTypeObj' => 2, 'StepUidObj' => 3, 'StepPosition' => 4, ),
+		BasePeer::TYPE_COLNAME => array (StepSupervisorPeer::STEP_UID => 0, StepSupervisorPeer::PRO_UID => 1, StepSupervisorPeer::STEP_TYPE_OBJ => 2, StepSupervisorPeer::STEP_UID_OBJ => 3, StepSupervisorPeer::STEP_POSITION => 4, ),
+		BasePeer::TYPE_FIELDNAME => array ('STEP_UID' => 0, 'PRO_UID' => 1, 'STEP_TYPE_OBJ' => 2, 'STEP_UID_OBJ' => 3, 'STEP_POSITION' => 4, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
 	);
 
 	/**
@@ -170,6 +173,8 @@ abstract class BaseStepSupervisorPeer {
 	public static function addSelectColumns(Criteria $criteria)
 	{
 
+		$criteria->addSelectColumn(StepSupervisorPeer::STEP_UID);
+
 		$criteria->addSelectColumn(StepSupervisorPeer::PRO_UID);
 
 		$criteria->addSelectColumn(StepSupervisorPeer::STEP_TYPE_OBJ);
@@ -180,8 +185,8 @@ abstract class BaseStepSupervisorPeer {
 
 	}
 
-	const COUNT = 'COUNT(*)';
-	const COUNT_DISTINCT = 'COUNT(DISTINCT *)';
+	const COUNT = 'COUNT(STEP_SUPERVISOR.STEP_UID)';
+	const COUNT_DISTINCT = 'COUNT(DISTINCT STEP_SUPERVISOR.STEP_UID)';
 
 	/**
 	 * Returns the number of rows matching criteria.
@@ -391,6 +396,9 @@ abstract class BaseStepSupervisorPeer {
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 
+			$comparison = $criteria->getComparison(StepSupervisorPeer::STEP_UID);
+			$selectCriteria->add(StepSupervisorPeer::STEP_UID, $criteria->remove(StepSupervisorPeer::STEP_UID), $comparison);
+
 		} else { // $values is StepSupervisor object
 			$criteria = $values->buildCriteria(); // gets full criteria
 			$selectCriteria = $values->buildPkeyCriteria(); // gets criteria w/ primary key(s)
@@ -447,24 +455,11 @@ abstract class BaseStepSupervisorPeer {
 			$criteria = clone $values; // rename for clarity
 		} elseif ($values instanceof StepSupervisor) {
 
-			$criteria = $values->buildCriteria();
+			$criteria = $values->buildPkeyCriteria();
 		} else {
 			// it must be the primary key
 			$criteria = new Criteria(self::DATABASE_NAME);
-			// primary key is composite; we therefore, expect
-			// the primary key passed to be an array of pkey
-			// values
-			if(count($values) == count($values, COUNT_RECURSIVE))
-			{
-				// array is not multi-dimensional
-				$values = array($values);
-			}
-			$vals = array();
-			foreach($values as $value)
-			{
-
-			}
-
+			$criteria->add(StepSupervisorPeer::STEP_UID, (array) $values, Criteria::IN);
 		}
 
 		// Set the correct dbName
@@ -524,6 +519,54 @@ abstract class BaseStepSupervisorPeer {
 		}
 
 		return BasePeer::doValidate(StepSupervisorPeer::DATABASE_NAME, StepSupervisorPeer::TABLE_NAME, $columns);
+	}
+
+	/**
+	 * Retrieve a single object by pkey.
+	 *
+	 * @param      mixed $pk the primary key.
+	 * @param      Connection $con the connection to use
+	 * @return     StepSupervisor
+	 */
+	public static function retrieveByPK($pk, $con = null)
+	{
+		if ($con === null) {
+			$con = Propel::getConnection(self::DATABASE_NAME);
+		}
+
+		$criteria = new Criteria(StepSupervisorPeer::DATABASE_NAME);
+
+		$criteria->add(StepSupervisorPeer::STEP_UID, $pk);
+
+
+		$v = StepSupervisorPeer::doSelect($criteria, $con);
+
+		return !empty($v) > 0 ? $v[0] : null;
+	}
+
+	/**
+	 * Retrieve multiple objects by pkey.
+	 *
+	 * @param      array $pks List of primary keys
+	 * @param      Connection $con the connection to use
+	 * @throws     PropelException Any exceptions caught during processing will be
+	 *		 rethrown wrapped into a PropelException.
+	 */
+	public static function retrieveByPKs($pks, $con = null)
+	{
+		if ($con === null) {
+			$con = Propel::getConnection(self::DATABASE_NAME);
+		}
+
+		$objs = null;
+		if (empty($pks)) {
+			$objs = array();
+		} else {
+			$criteria = new Criteria();
+			$criteria->add(StepSupervisorPeer::STEP_UID, $pks, Criteria::IN);
+			$objs = StepSupervisorPeer::doSelect($criteria, $con);
+		}
+		return $objs;
 	}
 
 } // BaseStepSupervisorPeer

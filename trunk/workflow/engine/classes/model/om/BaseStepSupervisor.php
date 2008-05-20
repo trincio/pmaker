@@ -29,6 +29,13 @@ abstract class BaseStepSupervisor extends BaseObject  implements Persistent {
 
 
 	/**
+	 * The value for the step_uid field.
+	 * @var        string
+	 */
+	protected $step_uid = '';
+
+
+	/**
 	 * The value for the pro_uid field.
 	 * @var        string
 	 */
@@ -68,6 +75,17 @@ abstract class BaseStepSupervisor extends BaseObject  implements Persistent {
 	 * @var        boolean
 	 */
 	protected $alreadyInValidation = false;
+
+	/**
+	 * Get the [step_uid] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getStepUid()
+	{
+
+		return $this->step_uid;
+	}
 
 	/**
 	 * Get the [pro_uid] column value.
@@ -112,6 +130,28 @@ abstract class BaseStepSupervisor extends BaseObject  implements Persistent {
 
 		return $this->step_position;
 	}
+
+	/**
+	 * Set the value of [step_uid] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setStepUid($v)
+	{
+
+		// Since the native PHP type for this column is string,
+		// we will cast the input to a string (if it is not).
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->step_uid !== $v || $v === '') {
+			$this->step_uid = $v;
+			$this->modifiedColumns[] = StepSupervisorPeer::STEP_UID;
+		}
+
+	} // setStepUid()
 
 	/**
 	 * Set the value of [pro_uid] column.
@@ -218,20 +258,22 @@ abstract class BaseStepSupervisor extends BaseObject  implements Persistent {
 	{
 		try {
 
-			$this->pro_uid = $rs->getString($startcol + 0);
+			$this->step_uid = $rs->getString($startcol + 0);
 
-			$this->step_type_obj = $rs->getString($startcol + 1);
+			$this->pro_uid = $rs->getString($startcol + 1);
 
-			$this->step_uid_obj = $rs->getString($startcol + 2);
+			$this->step_type_obj = $rs->getString($startcol + 2);
 
-			$this->step_position = $rs->getInt($startcol + 3);
+			$this->step_uid_obj = $rs->getString($startcol + 3);
+
+			$this->step_position = $rs->getInt($startcol + 4);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 4; // 4 = StepSupervisorPeer::NUM_COLUMNS - StepSupervisorPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 5; // 5 = StepSupervisorPeer::NUM_COLUMNS - StepSupervisorPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating StepSupervisor object", $e);
@@ -435,15 +477,18 @@ abstract class BaseStepSupervisor extends BaseObject  implements Persistent {
 	{
 		switch($pos) {
 			case 0:
-				return $this->getProUid();
+				return $this->getStepUid();
 				break;
 			case 1:
-				return $this->getStepTypeObj();
+				return $this->getProUid();
 				break;
 			case 2:
-				return $this->getStepUidObj();
+				return $this->getStepTypeObj();
 				break;
 			case 3:
+				return $this->getStepUidObj();
+				break;
+			case 4:
 				return $this->getStepPosition();
 				break;
 			default:
@@ -466,10 +511,11 @@ abstract class BaseStepSupervisor extends BaseObject  implements Persistent {
 	{
 		$keys = StepSupervisorPeer::getFieldNames($keyType);
 		$result = array(
-			$keys[0] => $this->getProUid(),
-			$keys[1] => $this->getStepTypeObj(),
-			$keys[2] => $this->getStepUidObj(),
-			$keys[3] => $this->getStepPosition(),
+			$keys[0] => $this->getStepUid(),
+			$keys[1] => $this->getProUid(),
+			$keys[2] => $this->getStepTypeObj(),
+			$keys[3] => $this->getStepUidObj(),
+			$keys[4] => $this->getStepPosition(),
 		);
 		return $result;
 	}
@@ -502,15 +548,18 @@ abstract class BaseStepSupervisor extends BaseObject  implements Persistent {
 	{
 		switch($pos) {
 			case 0:
-				$this->setProUid($value);
+				$this->setStepUid($value);
 				break;
 			case 1:
-				$this->setStepTypeObj($value);
+				$this->setProUid($value);
 				break;
 			case 2:
-				$this->setStepUidObj($value);
+				$this->setStepTypeObj($value);
 				break;
 			case 3:
+				$this->setStepUidObj($value);
+				break;
+			case 4:
 				$this->setStepPosition($value);
 				break;
 		} // switch()
@@ -536,10 +585,11 @@ abstract class BaseStepSupervisor extends BaseObject  implements Persistent {
 	{
 		$keys = StepSupervisorPeer::getFieldNames($keyType);
 
-		if (array_key_exists($keys[0], $arr)) $this->setProUid($arr[$keys[0]]);
-		if (array_key_exists($keys[1], $arr)) $this->setStepTypeObj($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setStepUidObj($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setStepPosition($arr[$keys[3]]);
+		if (array_key_exists($keys[0], $arr)) $this->setStepUid($arr[$keys[0]]);
+		if (array_key_exists($keys[1], $arr)) $this->setProUid($arr[$keys[1]]);
+		if (array_key_exists($keys[2], $arr)) $this->setStepTypeObj($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setStepUidObj($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setStepPosition($arr[$keys[4]]);
 	}
 
 	/**
@@ -551,6 +601,7 @@ abstract class BaseStepSupervisor extends BaseObject  implements Persistent {
 	{
 		$criteria = new Criteria(StepSupervisorPeer::DATABASE_NAME);
 
+		if ($this->isColumnModified(StepSupervisorPeer::STEP_UID)) $criteria->add(StepSupervisorPeer::STEP_UID, $this->step_uid);
 		if ($this->isColumnModified(StepSupervisorPeer::PRO_UID)) $criteria->add(StepSupervisorPeer::PRO_UID, $this->pro_uid);
 		if ($this->isColumnModified(StepSupervisorPeer::STEP_TYPE_OBJ)) $criteria->add(StepSupervisorPeer::STEP_TYPE_OBJ, $this->step_type_obj);
 		if ($this->isColumnModified(StepSupervisorPeer::STEP_UID_OBJ)) $criteria->add(StepSupervisorPeer::STEP_UID_OBJ, $this->step_uid_obj);
@@ -571,33 +622,30 @@ abstract class BaseStepSupervisor extends BaseObject  implements Persistent {
 	{
 		$criteria = new Criteria(StepSupervisorPeer::DATABASE_NAME);
 
+		$criteria->add(StepSupervisorPeer::STEP_UID, $this->step_uid);
 
 		return $criteria;
 	}
 
 	/**
-	 * Returns NULL since this table doesn't have a primary key.
-	 * This method exists only for BC and is deprecated!
-	 * @return     null
+	 * Returns the primary key for this object (row).
+	 * @return     string
 	 */
 	public function getPrimaryKey()
 	{
-		return null;
+		return $this->getStepUid();
 	}
 
 	/**
-	 * Dummy primary key setter.
+	 * Generic method to set the primary key (step_uid column).
 	 *
-	 * This function only exists to preserve backwards compatibility.  It is no longer
-	 * needed or required by the Persistent interface.  It will be removed in next BC-breaking
-	 * release of Propel.
-	 *
-	 * @deprecated
+	 * @param      string $key Primary key.
+	 * @return     void
 	 */
-	 public function setPrimaryKey($pk)
-	 {
-		 // do nothing, because this object doesn't have any primary keys
-	 }
+	public function setPrimaryKey($key)
+	{
+		$this->setStepUid($key);
+	}
 
 	/**
 	 * Sets contents of passed object to values from current object.
@@ -622,6 +670,8 @@ abstract class BaseStepSupervisor extends BaseObject  implements Persistent {
 
 
 		$copyObj->setNew(true);
+
+		$copyObj->setStepUid(''); // this is a pkey column, so set to default value
 
 	}
 

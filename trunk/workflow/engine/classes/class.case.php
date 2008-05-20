@@ -36,6 +36,7 @@ require_once ("classes/model/Process.php");
 require_once ("classes/model/ReportTable.php");
 require_once ("classes/model/ReportVar.php");
 require_once ("classes/model/Step.php");
+require_once ("classes/model/StepSupervisor.php");
 require_once ("classes/model/StepTrigger.php");
 require_once ("classes/model/Task.php");
 require_once ("classes/model/TaskUser.php");
