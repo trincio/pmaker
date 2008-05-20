@@ -66,9 +66,9 @@ class ProcessUserMapBuilder {
 
 		$tMap->addPrimaryKey('PU_UID', 'PuUid', 'string', CreoleTypes::VARCHAR, true, 32);
 
-		$tMap->addPrimaryKey('PRO_UID', 'ProUid', 'string', CreoleTypes::VARCHAR, true, 32);
+		$tMap->addColumn('PRO_UID', 'ProUid', 'string', CreoleTypes::VARCHAR, true, 32);
 
-		$tMap->addPrimaryKey('USR_UID', 'UsrUid', 'string', CreoleTypes::VARCHAR, true, 32);
+		$tMap->addColumn('USR_UID', 'UsrUid', 'string', CreoleTypes::VARCHAR, true, 32);
 
 		$tMap->addColumn('PU_TYPE', 'PuType', 'string', CreoleTypes::VARCHAR, true, 20);
 

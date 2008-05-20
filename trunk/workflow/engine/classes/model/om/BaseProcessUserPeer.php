@@ -394,12 +394,6 @@ abstract class BaseProcessUserPeer {
 			$comparison = $criteria->getComparison(ProcessUserPeer::PU_UID);
 			$selectCriteria->add(ProcessUserPeer::PU_UID, $criteria->remove(ProcessUserPeer::PU_UID), $comparison);
 
-			$comparison = $criteria->getComparison(ProcessUserPeer::PRO_UID);
-			$selectCriteria->add(ProcessUserPeer::PRO_UID, $criteria->remove(ProcessUserPeer::PRO_UID), $comparison);
-
-			$comparison = $criteria->getComparison(ProcessUserPeer::USR_UID);
-			$selectCriteria->add(ProcessUserPeer::USR_UID, $criteria->remove(ProcessUserPeer::USR_UID), $comparison);
-
 		} else { // $values is ProcessUser object
 			$criteria = $values->buildCriteria(); // gets full criteria
 			$selectCriteria = $values->buildPkeyCriteria(); // gets criteria w/ primary key(s)
@@ -460,26 +454,7 @@ abstract class BaseProcessUserPeer {
 		} else {
 			// it must be the primary key
 			$criteria = new Criteria(self::DATABASE_NAME);
-			// primary key is composite; we therefore, expect
-			// the primary key passed to be an array of pkey
-			// values
-			if(count($values) == count($values, COUNT_RECURSIVE))
-			{
-				// array is not multi-dimensional
-				$values = array($values);
-			}
-			$vals = array();
-			foreach($values as $value)
-			{
-
-				$vals[0][] = $value[0];
-				$vals[1][] = $value[1];
-				$vals[2][] = $value[2];
-			}
-
-			$criteria->add(ProcessUserPeer::PU_UID, $vals[0], Criteria::IN);
-			$criteria->add(ProcessUserPeer::PRO_UID, $vals[1], Criteria::IN);
-			$criteria->add(ProcessUserPeer::USR_UID, $vals[2], Criteria::IN);
+			$criteria->add(ProcessUserPeer::PU_UID, (array) $values, Criteria::IN);
 		}
 
 		// Set the correct dbName
@@ -551,26 +526,53 @@ abstract class BaseProcessUserPeer {
 	}
 
 	/**
-	 * Retrieve object using using composite pkey values.
-	 * @param string $pu_uid
-	   @param string $pro_uid
-	   @param string $usr_uid
-	   
-	 * @param      Connection $con
+	 * Retrieve a single object by pkey.
+	 *
+	 * @param      mixed $pk the primary key.
+	 * @param      Connection $con the connection to use
 	 * @return     ProcessUser
 	 */
-	public static function retrieveByPK( $pu_uid, $pro_uid, $usr_uid, $con = null) {
+	public static function retrieveByPK($pk, $con = null)
+	{
 		if ($con === null) {
 			$con = Propel::getConnection(self::DATABASE_NAME);
 		}
-		$criteria = new Criteria();
-		$criteria->add(ProcessUserPeer::PU_UID, $pu_uid);
-		$criteria->add(ProcessUserPeer::PRO_UID, $pro_uid);
-		$criteria->add(ProcessUserPeer::USR_UID, $usr_uid);
+
+		$criteria = new Criteria(ProcessUserPeer::DATABASE_NAME);
+
+		$criteria->add(ProcessUserPeer::PU_UID, $pk);
+
+
 		$v = ProcessUserPeer::doSelect($criteria, $con);
 
-		return !empty($v) ? $v[0] : null;
+		return !empty($v) > 0 ? $v[0] : null;
 	}
+
+	/**
+	 * Retrieve multiple objects by pkey.
+	 *
+	 * @param      array $pks List of primary keys
+	 * @param      Connection $con the connection to use
+	 * @throws     PropelException Any exceptions caught during processing will be
+	 *		 rethrown wrapped into a PropelException.
+	 */
+	public static function retrieveByPKs($pks, $con = null)
+	{
+		if ($con === null) {
+			$con = Propel::getConnection(self::DATABASE_NAME);
+		}
+
+		$objs = null;
+		if (empty($pks)) {
+			$objs = array();
+		} else {
+			$criteria = new Criteria();
+			$criteria->add(ProcessUserPeer::PU_UID, $pks, Criteria::IN);
+			$objs = ProcessUserPeer::doSelect($criteria, $con);
+		}
+		return $objs;
+	}
+
 } // BaseProcessUserPeer
 
 // static code to register the map builder for this Peer with the main Propel class

@@ -68,6 +68,15 @@ try {
   	case 'process_User':
   	  include(PATH_METHODS . 'processes/processes_User.php');
   	break;
+  	case 'availableProcessesUser':  	  	  	  
+  	  include(PATH_METHODS . 'processes/processes_availableProcessesUser.php');
+  	break;  	
+  	case 'assignProcessUser':  	  	  	    	  
+  	  $oProcessMap->assignProcessUser($oData->PRO_UID, $oData->USR_UID);
+  	break;  
+  	case 'removeProcessUser':  	  	  	    	  
+  	  $oProcessMap->removeProcessUser($oData->PU_UID);
+  	break;  	
   	case 'supervisorDynaforms':
   	  $oProcessMap->supervisorDynaforms($oData->pro_uid);
   	break;

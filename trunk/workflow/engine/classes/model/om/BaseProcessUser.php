@@ -572,45 +572,28 @@ abstract class BaseProcessUser extends BaseObject  implements Persistent {
 		$criteria = new Criteria(ProcessUserPeer::DATABASE_NAME);
 
 		$criteria->add(ProcessUserPeer::PU_UID, $this->pu_uid);
-		$criteria->add(ProcessUserPeer::PRO_UID, $this->pro_uid);
-		$criteria->add(ProcessUserPeer::USR_UID, $this->usr_uid);
 
 		return $criteria;
 	}
 
 	/**
-	 * Returns the composite primary key for this object.
-	 * The array elements will be in same order as specified in XML.
-	 * @return     array
+	 * Returns the primary key for this object (row).
+	 * @return     string
 	 */
 	public function getPrimaryKey()
 	{
-		$pks = array();
-
-		$pks[0] = $this->getPuUid();
-
-		$pks[1] = $this->getProUid();
-
-		$pks[2] = $this->getUsrUid();
-
-		return $pks;
+		return $this->getPuUid();
 	}
 
 	/**
-	 * Set the [composite] primary key.
+	 * Generic method to set the primary key (pu_uid column).
 	 *
-	 * @param      array $keys The elements of the composite key (order must match the order in XML file).
+	 * @param      string $key Primary key.
 	 * @return     void
 	 */
-	public function setPrimaryKey($keys)
+	public function setPrimaryKey($key)
 	{
-
-		$this->setPuUid($keys[0]);
-
-		$this->setProUid($keys[1]);
-
-		$this->setUsrUid($keys[2]);
-
+		$this->setPuUid($key);
 	}
 
 	/**
@@ -626,16 +609,16 @@ abstract class BaseProcessUser extends BaseObject  implements Persistent {
 	public function copyInto($copyObj, $deepCopy = false)
 	{
 
+		$copyObj->setProUid($this->pro_uid);
+
+		$copyObj->setUsrUid($this->usr_uid);
+
 		$copyObj->setPuType($this->pu_type);
 
 
 		$copyObj->setNew(true);
 
 		$copyObj->setPuUid(''); // this is a pkey column, so set to default value
-
-		$copyObj->setProUid(''); // this is a pkey column, so set to default value
-
-		$copyObj->setUsrUid(''); // this is a pkey column, so set to default value
 
 	}
 

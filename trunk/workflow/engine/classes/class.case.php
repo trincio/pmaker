@@ -33,6 +33,7 @@ require_once ("classes/model/InputDocument.php");
 require_once ("classes/model/Language.php");
 require_once ("classes/model/OutputDocument.php");
 require_once ("classes/model/Process.php");
+require_once ("classes/model/ProcessUser.php");
 require_once ("classes/model/ReportTable.php");
 require_once ("classes/model/ReportVar.php");
 require_once ("classes/model/Step.php");
