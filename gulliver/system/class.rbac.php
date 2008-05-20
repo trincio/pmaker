@@ -528,27 +528,6 @@ class RBAC
     return $this->userObj->listAllUsersByRole($role);
   }
 
-
-  /**
-   * Lista todos los roles de una applicacion
-   *
-   * devuelve en un array todos los Roles que pertenecen a una aplicaci?n especifica
-   *
-   * @author Fernando Ontiveros Lira <fernando@colosa.com>
-   * @access public
-
-   * @param  string $application   id de Permiso
-   * @return
-   *    array: Lista de usuario
-   */
-  function listAllRoles ( $application, $permission = "", $dbname = '' ) {
-	if ( $dbname == '' )
-	  $this->initDB();
-	else
-	  $this->initDB2( $dbname);
-      return $this->userObj->listAllRoles($application, $permission);
-  }
-
   /**
    * El Nombre del Usuario, para usos diversos
    *
@@ -645,6 +624,28 @@ class RBAC
   function assignPermissionToRole($sRoleUID, $sPermissionUID) {
     return $this->rolesPermissionsObj->create(array('ROL_UID' => $sRoleUID, 'PER_UID' => $sPermissionUID));
   }
-
+  
+  
+  /** @erik adds ****/
+  function listAllRoles () {
+      return $this->rolesObj->listAllRoles();
+  }
+  
+  function createRole($aData) {
+	  return $this->rolesObj->createRole($aData);	
+  }
+  function removeRole($ROL_UID){
+	  return $this->rolesObj->removeRole($ROL_UID);
+  }	
+  function verifyNewRole($code){
+	return $this->rolesObj->verifyNewRole($code);
+  }
+  function updateRole($fields){
+	return $this->rolesObj->updateRole($fields);
+  }
+  function loadById($ROL_UID){
+	return $this->rolesObj->loadById($ROL_UID);
+  }
+  
 }
 ?>

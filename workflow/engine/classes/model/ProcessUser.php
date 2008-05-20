@@ -62,11 +62,11 @@ class ProcessUser extends BaseProcessUser {
    * @param string $sUserUid
    * @return string
   **/
-  public function remove($sPuUid, $sProUid, $sUserUid, $PuType)
+  public function remove($sPuUid)
   {
-  	$oConnection = Propel::getConnection(TaskUserPeer::DATABASE_NAME);
+  	$oConnection = Propel::getConnection(ProcessUserPeer::DATABASE_NAME);
   	try {
-  	  $oProcessUser = ProcessUserPeer::retrieveByPK($sPuUid, $sProUid, $sUserUid, $PuType);
+  	  $oProcessUser = ProcessUserPeer::retrieveByPK($sPuUid);
   	  if (!is_null($oProcessUser))
   	  {
   	  	$oConnection->begin();

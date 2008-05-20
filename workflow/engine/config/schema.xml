@@ -3834,7 +3834,7 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="PRO_UID" type="VARCHAR" size="32" required="true" primaryKey="true" default="">
+    <column name="PRO_UID" type="VARCHAR" size="32" required="true" default="">
       <vendor type="mysql">
         <parameter name="Field" value="PRO_UID"/>
         <parameter name="Type" value="varchar(32)"/>
@@ -3844,7 +3844,7 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="USR_UID" type="VARCHAR" size="32" required="true" primaryKey="true" default="">
+    <column name="USR_UID" type="VARCHAR" size="32" required="true" default="">
       <vendor type="mysql">
         <parameter name="Field" value="USR_UID"/>
         <parameter name="Type" value="varchar(32)"/>

@@ -28,12 +28,12 @@ global $G_TMP_MENU;
   //$G_TMP_MENU->AddIdRawOption('NEW_USER', 'users/users_New');
   //$G_TMP_MENU->AddIdRawOption('DEPARTMENTS',    'departments/departments_List');
   $G_TMP_MENU->AddIdRawOption('GROUPS',    'groups/groups');
-  //$G_TMP_MENU->AddIdRawOption('ROLES',    'roles/roles_List');
+  $G_TMP_MENU->AddIdRawOption('ROLES',    'roles/roles_List');
 
   $G_TMP_MENU->Labels = array (
     G::LoadTranslation('ID_USERS_LIST'),
     //G::LoadTranslation('ID_NEW'),
     //G::LoadTranslation('ID_ORGANIZATIONAL_CHART'),
     G::LoadTranslation('ID_GROUP_USERS'),
-    //G::LoadTranslation('ID_ROLS'),
+    G::LoadTranslation('ID_ROLES'),
   );
