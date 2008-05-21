@@ -25,40 +25,40 @@
 		private $message;
 		private $charset;
 		private $emailboundary;
-		private $debug; 
+		private $debug;
 		private $fileData;
 		private $max_line_length;
 		private $with_html;
-		
+
 		function __construct($fileData=array())
 		{
 			$this->fileData	= array();
-			
+
 			$this->debug	     	= 1;
 			$this->emailboundary 	= 'Part-'.md5(uniqid(microtime()));
 			$this->charset       	= 'UTF-8'; //'ISO-8859-1'
-		
+
 			$this->headers 		= '';
 			$this->message		= '';
 
 			$this->with_html	= false;
-			
+
 			$this->max_line_length	= '70';
-			
+
 			if(count($fileData)>0) {
 				$this->fileData = $fileData;
 				$this->addHeaders();
 				$this->compileBody();
 			}
-			
+
 		}
-			
+
 		public function returnHeader()
 		{
 			return $this->headers;
 
 		}
-		
+
 		public function returnBody()
 		{
 			return $this->message;
@@ -70,14 +70,14 @@
 			if($this->debug>0) return $error;
 
 		}
-			
+
 		private function addHeaders()
 		{
 			$header = '';
 
-			(strlen($this->fileData['from_name']>0))
-			? $header .= 'From: '."{$this->fileData['from_name']}".' '."{$this->fileData['from_email']}"."\r\n"
-			: $header .= 'From: '."{$this->fileData['from_email']}"."\r\n";
+			(strlen($this->fileData['from_name'])>0)
+			? $header .= 'From: '."{$this->fileData['from_name']}".' <'."{$this->fileData['from_email']}>"."\r\n"
+			: $header .= 'From: '."<{$this->fileData['from_email']}>"."\r\n";
 
 			// to
 			if(strlen($this->fileData['to'])>0)
@@ -86,7 +86,7 @@
 				$header .= 'To: '.$to."\r\n";
 
 			}
-			
+
 			// cc
 			if(strlen($this->fileData['cc'])>0)
 			{
@@ -99,42 +99,42 @@
 			$header .= 'Return-Path: <'."{$this->fileData['from_email']}".'>'."\r\n";
 			$header .= 'Errors-To: '."{$this->fileData['from_email']}"."\r\n";
 			$header .= 'Reply-To: '."{$this->fileData['from_email']}"."\r\n";
-			
+
 			if(!empty($this->fileData['reference']))
 			{
 				$header .= 'In-Reply-To: <'."{$this->fileData['reference']}".'>'."\r\n";
 				$header .= 'References: <'."{$this->fileData['reference']}".'>'."\r\n";
 
 			}
-			
+
 			$header .= 'Message-Id: <'.md5(uniqid(rand())).':'
 				.str_replace(' ','_', "{$this->fileData['from_name']}")
 				.'@'."{$this->fileData['domain']}".'>'."\r\n";
-			
+
 			$header .= 'X-Mailer: ProcessMaker <http://www.processmaker.com>'."\r\n";
 			$header .= 'X-Priority: 3'."\r\n";
 			$header .= 'Date: '."{$this->fileData['date']}"."\r\n";
 			$header .= 'Subject: '."{$this->fileData['subject']}"."\r\n";
 			$header .= 'MIME-Version: 1.0'."\r\n";
-			
+
 			(count($this->fileData['attachments'])>0)
 				? $header .= 'Content-Type: multipart/mixed; '."\r\n\t".'boundary="'.$this->emailboundary.'"'."\r\n"
 				: $header .= 'Content-Type: multipart/alternative; '."\r\n\t".'boundary="'.$this->emailboundary.'"'."\r\n";
-				
+
 			$header .= 'This is a multi-part message in MIME format'."\r\n";
 
 			$this->headers = $header;
 
 		}
-		
+
 		private function addAttachment($data='')
 		{
 			$attach_this = '';
-			
+
 			if(trim($data)!='')
 			{
 				list($file,$name,$type) = explode('|',$data);
-			
+
 				if(is_readable($file))
 				{
 					// attachment header
@@ -150,40 +150,40 @@
 
 					// add content and header
 					$attach_this = $attachment_header.$file_content."\r\n";
-					
+
 				} else { $this->returnErrors($file.' not readable in addAttachment');}
-				
+
 			} else { $this->returnErrors('missing data in addAttachment');}
-			
+
 			return $attach_this;
 
 		}
-		
+
 		private function fixbody()
 		{
 			$lines 	= array();
 			$b 	= '';
-		
+
 			$body = "{$this->fileData['body']}";
-			
+
 			$body = str_replace("\r", "\n", str_replace("\r\n", "\n", $body));
-			
+
 			$lines = explode("\n", $body);
-			
+
 			foreach($lines as $line)
 			{
 				// wrap lines
 				$line = wordwrap($line, $this->max_line_length, "\r\n");
-			
+
 				// leading dot problem
 				if(substr($line, 0,1) == '.') $line = '.' . $line;
-				
+
 				$b .= $line."\r\n";
 			}
 			return $b;
 
 		}
-		
+
 		private function compileBody()
 		{
 			$comp = '';
@@ -209,7 +209,7 @@
 				$comp .= "$body"."\r\n\r\n";
 
 			}
-			
+
 			// attachments
 			/*
 			if(count($this->fileData['attachments'])>0)
@@ -228,10 +228,10 @@
 
 		}
 
-		
-		
-		
+
+
+
 	} // end of class
-	
-	
+
+
 ?>

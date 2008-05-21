@@ -56,17 +56,23 @@
 <JS type="javascript">
 <![CDATA[
 leimnud.event.add(getField('MESS_ENGINE'), 'change', function() {
-  if (this.value != 'MAIL') {
-    showRowById('MESS_SERVER');
-    showRowById('MESS_PORT');
-    showRowById('MESS_ACCOUNT');
-    showRowById('MESS_PASSWORD');
-  }
-  else {
-     hideRowById('MESS_SERVER');
-     hideRowById('MESS_PORT');
-     hideRowById('MESS_ACCOUNT');
-     hideRowById('MESS_PASSWORD');
+  switch (this.value) {
+    case 'MAIL':
+      hideRowById('MESS_SERVER');
+      hideRowById('MESS_PORT');
+      hideRowById('MESS_ACCOUNT');
+      hideRowById('MESS_PASSWORD');
+    break;
+    case 'PHPMAILER':
+      showRowById('MESS_SERVER');
+      showRowById('MESS_PORT');
+      showRowById('MESS_ACCOUNT');
+      showRowById('MESS_PASSWORD');
+    break;
+    case 'OPENMAIL':
+      hideRowById('MESS_ACCOUNT');
+      hideRowById('MESS_PASSWORD');
+    break;
   }
 }.extend(getField('MESS_ENGINE')));
 
@@ -83,11 +89,23 @@ leimnud.event.add(getField('MESS_BACKGROUND'), 'click', function() {
   }
 }.extend(getField('MESS_BACKGROUND')));
 
-if (getField('MESS_ENGINE').value == 'MAIL') {
-   hideRowById('MESS_SERVER');
-   hideRowById('MESS_PORT');
-   hideRowById('MESS_ACCOUNT');
-   hideRowById('MESS_PASSWORD');
+switch (getField('MESS_ENGINE').value) {
+  case 'MAIL':
+    hideRowById('MESS_SERVER');
+    hideRowById('MESS_PORT');
+    hideRowById('MESS_ACCOUNT');
+    hideRowById('MESS_PASSWORD');
+  break;
+  case 'PHPMAILER':
+    showRowById('MESS_SERVER');
+    showRowById('MESS_PORT');
+    showRowById('MESS_ACCOUNT');
+    showRowById('MESS_PASSWORD');
+  break;
+  case 'OPENMAIL':
+    hideRowById('MESS_ACCOUNT');
+    hideRowById('MESS_PASSWORD');
+  break;
 }
 
 if (!getField('MESS_BACKGROUND').checked) {
@@ -97,19 +115,29 @@ if (!getField('MESS_BACKGROUND').checked) {
 }
 
 var verifyData = function(oForm) {
-	if (getField('MESS_ENGINE').value != 'MAIL') {
-	  oAux = getField('MESS_SERVER');
-	  if (oAux.value == '') {
-	    alert(G_STRINGS.ID_MESS_SERVER_REQUIRED);
-	    oAux.focus();
-	    return;
-	  }
-	  oAux = getField('MESS_ACCOUNT');
-	  if (oAux.value == '') {
-	    alert(G_STRINGS.ID_MESS_ACCOUNT_REQUIRED);
-	    oAux.focus();
-	    return;
-	  }
+	switch (getField('MESS_ENGINE').value) {
+	  case 'PHPMAILER':
+	    oAux = getField('MESS_SERVER');
+	    if (oAux.value == '') {
+	      alert(G_STRINGS.ID_MESS_SERVER_REQUIRED);
+	      oAux.focus();
+	      return;
+	    }
+	    oAux = getField('MESS_ACCOUNT');
+	    if (oAux.value == '') {
+	      alert(G_STRINGS.ID_MESS_ACCOUNT_REQUIRED);
+	      oAux.focus();
+	      return;
+	    }
+	  break;
+	  case 'OPENMAIL':
+	    oAux = getField('MESS_SERVER');
+	    if (oAux.value == '') {
+	      alert(G_STRINGS.ID_MESS_SERVER_REQUIRED);
+	      oAux.focus();
+	      return;
+	    }
+	  break;
 	}
 	if (getField('MESS_BACKGROUND').checked) {
 	  oAux = getField('MESS_EXECUTE_EVERY');
