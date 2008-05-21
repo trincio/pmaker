@@ -58,7 +58,7 @@
 </APP_DOC_COMMENT>
 
 <MORE type="checkbox">
-  <en>Upload more input document</en>
+  <en>Upload Multiple Input Documents</en>
 </MORE>
 
 <SAVE type="button" onclick="verifyInfo(this.form);">
