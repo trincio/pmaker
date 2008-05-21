@@ -55,7 +55,7 @@
 </APP_DOC_FILENAME>
 
 <MORE type="checkbox">
-  <en>Upload more input document</en>
+  <en>Upload Multiple Input Documents</en>
 </MORE>
 
 <SAVE type="button" onclick="verifyInfo(this.form);">
