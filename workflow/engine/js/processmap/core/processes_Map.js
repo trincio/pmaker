@@ -62,6 +62,11 @@ var saveDataTaskTemporal = function(iForm)
         //oTaskData.SEND_EMAIL          = (getField('SEND_EMAIL').checked ? 'TRUE' : 'FALSE');
         //oTaskData.TAS_DEF_MESSAGE     = getField('TAS_DEF_MESSAGE').value;
       break;
+      case 7:
+      case '7':
+        oTaskData.SEND_EMAIL      = (getField('SEND_EMAIL').checked ? 'TRUE' : 'FALSE');
+        oTaskData.TAS_DEF_MESSAGE = getField('TAS_DEF_MESSAGE').value;
+      break;
     }
   }
   else

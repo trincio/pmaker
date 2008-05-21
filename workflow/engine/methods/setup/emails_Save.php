@@ -25,6 +25,7 @@
 
 require_once 'classes/model/Configuration.php';
 $oConfiguration = new Configuration();
+$aFields['MESS_ENABLED']             = isset($_POST['form']['MESS_ENABLED']) ? $_POST['form']['MESS_ENABLED'] : '';
 $aFields['MESS_ENGINE']              = $_POST['form']['MESS_ENGINE'];
 $aFields['MESS_SERVER']              = $_POST['form']['MESS_SERVER'];
 $aFields['MESS_PORT']                = $_POST['form']['MESS_PORT'];

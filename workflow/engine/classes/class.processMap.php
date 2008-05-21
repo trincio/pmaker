@@ -1054,6 +1054,9 @@ class processMap {
   	  	case 6:
   	  	  $sFilename = 'tasks/tasks_Labels.xml';
   	  	break;
+  	  	case 7:
+  	  	  $sFilename = 'tasks/tasks_Notifications.xml';
+  	  	break;
   	  }
   	  $oTask            = new Task();
   	  $aFields          = $oTask->load($sTaskUID);
@@ -1998,30 +2001,30 @@ class processMap {
     $oStepSupervisor->remove($sStepUID);
     $oStepSupervisor->reorderPositions($sProcessUID, $iPosition);
   }
-  
+
   function listProcessesUser($sProcessUID) {
   	require_once 'classes/model/Users.php';
     require_once 'classes/model/ProcessUser.php';
-  
-	  $oCriteria = new Criteria('workflow');  
+
+	  $oCriteria = new Criteria('workflow');
 	  $oCriteria->addSelectColumn(ProcessUserPeer::PU_UID);
 	  $oCriteria->addSelectColumn(ProcessUserPeer::USR_UID);
 	  $oCriteria->addSelectColumn(ProcessUserPeer::PRO_UID);
 	  $oCriteria->addSelectColumn(ProcessUserPeer::PU_TYPE);
 	  $oCriteria->addSelectColumn(UsersPeer::USR_FIRSTNAME);
 	  $oCriteria->addSelectColumn(UsersPeer::USR_LASTNAME);
-	  $oCriteria->addJoin(ProcessUserPeer::USR_UID, UsersPeer::USR_UID, Criteria::LEFT_JOIN);  
-	  $oCriteria->add(ProcessUserPeer::PRO_UID, $sProcessUID);   	
+	  $oCriteria->addJoin(ProcessUserPeer::USR_UID, UsersPeer::USR_UID, Criteria::LEFT_JOIN);
+	  $oCriteria->add(ProcessUserPeer::PRO_UID, $sProcessUID);
     return $oCriteria;
   }
-  
+
   function listNoProcessesUser($sProcessUID) {
   	require_once 'classes/model/Users.php';
     require_once 'classes/model/ProcessUser.php';
-    
-  	$oCriteria = new Criteria('workflow');    
-	  $oCriteria->addSelectColumn(ProcessUserPeer::USR_UID); 
-	  $oCriteria->add(ProcessUserPeer::PRO_UID, $sProcessUID);  
+
+  	$oCriteria = new Criteria('workflow');
+	  $oCriteria->addSelectColumn(ProcessUserPeer::USR_UID);
+	  $oCriteria->add(ProcessUserPeer::PRO_UID, $sProcessUID);
 	  $oDataset = ProcessUserPeer::doSelectRS($oCriteria);
 	  $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
     $oDataset->next();
@@ -2029,31 +2032,31 @@ class processMap {
     while ($aRow = $oDataset->getRow()) {
       $aUIDS[] = $aRow['USR_UID'];
       $oDataset->next();
-    }  
+    }
     $sDelimiter = DBAdapter::getStringDelimiter();
   	$oCriteria  = new Criteria('workflow');
   	$oCriteria->addSelectColumn(UsersPeer::USR_UID);
   	$oCriteria->addSelectColumn(UsersPeer::USR_FIRSTNAME);
 	  $oCriteria->addSelectColumn(UsersPeer::USR_LASTNAME);
-    $oCriteria->add(UsersPeer::USR_UID, $aUIDS, Criteria::NOT_IN);  		    
-				 	              
+    $oCriteria->add(UsersPeer::USR_UID, $aUIDS, Criteria::NOT_IN);
+
     return $oCriteria;
   }
-    
-  function assignProcessUser($sProcessUID, $sUsrUID) {  	  	
+
+  function assignProcessUser($sProcessUID, $sUsrUID) {
     require_once 'classes/model/ProcessUser.php';
     $oProcessUser = new ProcessUser();
     $oProcessUser->create(array('PU_UID'   => G::generateUniqueID(),
                                 'PRO_UID'  => $sProcessUID,
                                 'USR_UID'  => $sUsrUID,
-                                'PU_TYPE'  => 'SUPERVISOR' 
+                                'PU_TYPE'  => 'SUPERVISOR'
                                ));
   }
-  
+
   function removeProcessUser($sPUUID) {
     require_once 'classes/model/ProcessUser.php';
-    $oProcessUser = new ProcessUser();    
-    $oProcessUser->remove($sPUUID);    
+    $oProcessUser = new ProcessUser();
+    $oProcessUser->remove($sPUUID);
   }
 } // processMap
 ?>

@@ -5,7 +5,7 @@
   <en>Mail Configuration Test Page</en>
 </THETITLE>
 
-<FROM_NAME type="text" size="25" default="Test Sender">
+<FROM_NAME type="text" size="25" defaultValue="Test Sender">
   <en>From Name:</en>
 </FROM_NAME>
 

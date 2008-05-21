@@ -26,7 +26,7 @@
 </TAS_START>
 
 <JS type="javascript">
-Pm.tmp.propertiesPanel.events.remove = function() { bFunctionAlreadyAssigned = false; aTaskFlag = [false,false,false,false,false,false]; };
+Pm.tmp.propertiesPanel.events.remove = function() { bFunctionAlreadyAssigned = false; aTaskFlag = [false,false,false,false,false,false,false]; };
 
 /* Initialize panel buttons */
 if (!bFunctionAlreadyAssigned)
@@ -47,7 +47,7 @@ if (aTaskFlag[0])
 {
   getField('TAS_TITLE').value       = oTaskData.TAS_TITLE;
   getField('TAS_DESCRIPTION').value = oTaskData.TAS_DESCRIPTION;
-  getField('TAS_START').checked     = (oTaskData.TAS_START == 'TRUE' ? true : false);  
+  getField('TAS_START').checked     = (oTaskData.TAS_START == 'TRUE' ? true : false);
   getField('TAS_PRIORITY_VARIABLE').value = oTaskData.TAS_PRIORITY_VARIABLE;
 }
 else

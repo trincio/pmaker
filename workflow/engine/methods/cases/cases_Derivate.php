@@ -1,10 +1,10 @@
 <?
 /**
  * cases_Derivate.php
- *  
+ *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -14,13 +14,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
 /* Permissions */
 switch ($RBAC->userCanAccess('PM_CASES'))
@@ -76,15 +76,19 @@ try {
     'ROU_TYPE'   => $_POST['form']['ROU_TYPE']
 
   );
-  //var_dump($appFields);echo"<br>";
-  $oDerivation->derivate( $aCurrentDerivation, $_POST['form']['TASKS'] ); 
+  //Send notifications
+  $oTask     = new Task();
+  $aTaskInfo = $oTask->load($_SESSION['TASK']);
+  header('Content-Type: text/plain;');var_dump($aTaskInfo);
+  die('<br />:|');
+  $oDerivation->derivate( $aCurrentDerivation, $_POST['form']['TASKS'] );
   //Execute triggers after derivation
   $appFields = $oCase->loadCase( $_SESSION['APPLICATION'] ); //refresh appFields, because in derivations should change some values
   $appFields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], 'ASSIGN_TASK', -2, 'AFTER', $appFields['APP_DATA'] );
   //$appFields['DEL_INDEX']       = $_SESSION['INDEX'];
   //$appFields['TAS_UID']         = $_SESSION['TASK'];
   //Save data - Start
-  
+
   $oCase->updateCase ( $_SESSION['APPLICATION'], $appFields);
   //Save data - End
 

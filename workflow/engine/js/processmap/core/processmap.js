@@ -1068,6 +1068,10 @@ var processmap=function(){
 									title	: G_STRINGS.ID_PROCESSMAP_TASK_PROPERTIES_LABELS,
 									content	: this.parent.closure({instance:this,method:iForm,args:[panel,index,6]}),
 									noClear : true
+								},{
+									title	: G_STRINGS.ID_PROCESSMAP_TASK_PROPERTIES_NOTIFICATIONS,
+									content	: this.parent.closure({instance:this,method:iForm,args:[panel,index,7]}),
+									noClear : true
 								}]
 							};
 						panel.make();

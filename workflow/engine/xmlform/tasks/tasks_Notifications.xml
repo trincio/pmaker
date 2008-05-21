@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dynaForm name="tasks_Labels" width="99%" mode="edit" enableTemplate="0" border="0" height="305px">
+<dynaForm name="tasks_Notifications" width="99%" mode="edit" enableTemplate="0" border="0" height="305px">
 
 <PRO_UID type="private" />
 
@@ -9,31 +9,48 @@
 
 <IFORM type="hidden" />
 
-<TAS_DEF_TITLE type="textareapm" required="0" cols="46" rows="5" group="1" showVars="1" process="@#PRO_UID" symbol="@#">
-  <en>Case Title</en>
-</TAS_DEF_TITLE>
+<SEND_EMAIL type="checkbox" value="TRUE" group="1">
+  <en>After derivation notify to each next user</en>
+</SEND_EMAIL>
 
-<TAS_DEF_DESCRIPTION type="textareapm" required="0" cols="46" rows="5" group="1" showVars="1" process="@#PRO_UID" symbol="@#">
-  <en>Case Description</en>
-</TAS_DEF_DESCRIPTION>
-
-<TAS_DEF_PROC_CODE type="textareapm" required="0" cols="46" rows="5" group="1" showVars="1" process="@#PRO_UID" symbol="@#">
-  <en>Case Status</en>
-</TAS_DEF_PROC_CODE>
+<TAS_DEF_MESSAGE type="textareapm" cols="45" rows="6" group="1" showVars="1" process="@#PRO_UID" symbol="@#">
+  <en>Message</en>
+</TAS_DEF_MESSAGE>
 
 <JS type="javascript">
 <![CDATA[
 /* Recovery data */
-if (aTaskFlag[5])
+if (aTaskFlag[6])
 {
-  getField('TAS_DEF_TITLE').value       = oTaskData.TAS_DEF_TITLE;
-  getField('TAS_DEF_DESCRIPTION').value = oTaskData.TAS_DEF_DESCRIPTION;
-  getField('TAS_DEF_PROC_CODE').value   = oTaskData.TAS_DEF_PROC_CODE;
+  getField('SEND_EMAIL').checked    = (oTaskData.SEND_EMAIL == 'TRUE' ? true : false);
+  getField('TAS_DEF_MESSAGE').value = oTaskData.TAS_DEF_MESSAGE;
 }
 else
 {
-  saveDataTaskTemporal(6);
-  aTaskFlag[5] = true;
+  saveDataTaskTemporal(7);
+  aTaskFlag[6] = true;
+}
+
+leimnud.event.add(document.getElementById('form[SEND_EMAIL]'), 'click', function() {
+  var oAux = document.getElementById('form[TAS_DEF_MESSAGE]');
+  if (!document.getElementById('form[SEND_EMAIL]').checked)
+  {
+    document.getElementById('form[TAS_DEF_MESSAGE]').value = '';
+    hideRowById('TAS_DEF_MESSAGE');
+  }
+  else
+  {
+     showRowById('TAS_DEF_MESSAGE');
+  }
+});
+if (document.getElementById('form[TAS_DEF_MESSAGE]').value != '')
+{
+  document.getElementById('form[SEND_EMAIL]').checked = true;
+  showRowById('TAS_DEF_MESSAGE');
+}
+else
+{
+  hideRowById('TAS_DEF_MESSAGE');
 }
 
 var _oVarsPanel_;
