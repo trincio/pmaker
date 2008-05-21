@@ -252,9 +252,7 @@ class RBAC
     return $this->rolesObj->loadByCode($sCode);
   }
 
-  function assignPermissionToRole($sRoleUID, $sPermissionUID) {
-    return $this->rolesPermissionsObj->create(array('ROL_UID' => $sRoleUID, 'PER_UID' => $sPermissionUID));
-  }
+  
   
   
   /** @erik adds ****/
@@ -286,13 +284,29 @@ class RBAC
   function deleteUserRole($ROL_UID, $USR_UID){
 	return $this->rolesObj->deleteUserRole($ROL_UID, $USR_UID);
   }
-  function getAllUsers(){
-	return $this->rolesObj->getAllUsers();
+  function getAllUsers($ROL_UID){
+	return $this->rolesObj->getAllUsers($ROL_UID);
   }
   function assignUserToRole($aData){
 	return $this->rolesObj->assignUserToRole($aData);
   }
+  function getRolePermissions($ROL_UID){
+	return $this->rolesObj->getRolePermissions($ROL_UID);
+  }
+  function getAllPermissions($ROL_UID){
+	return $this->rolesObj->getAllPermissions($ROL_UID);
+  }
+  function  assignPermissionRole($sData){
+	return $this->rolesObj->assignPermissionRole($sData);
+  }
+  function assignPermissionToRole($sRoleUID, $sPermissionUID) {
+    return $this->rolesPermissionsObj->create(array('ROL_UID' => $sRoleUID, 'PER_UID' => $sPermissionUID));
+  }
   
+  function  deletePermissionRole($ROL_UID, $PER_UID){
+	return $this->rolesObj->deletePermissionRole($ROL_UID, $PER_UID);
+  }
+ 
   
 }
 ?>
