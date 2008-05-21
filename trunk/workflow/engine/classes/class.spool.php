@@ -61,7 +61,19 @@
 				$this->fileData['bcc'] 		     = $rs->getString('APP_MSG_BCC');
 				$this->fileData['template'] 	 = $rs->getString('APP_MSG_TEMPLATE');
 				$this->fileData['attachments'] = array(); //$rs->getString('APP_MSG_ATTACH');
-				$this->fileData['domain'] 	   = gethostbyaddr('127.0.0.1');
+				if ($this->config['MESS_ENGINE'] == 'OPENMAIL') {
+			    if ($this->config['MESS_SERVER'] != '') {
+			      if (($sAux = @gethostbyaddr($this->config['MESS_SERVER']))) {
+              $this->fileData['domain'] = $sAux;
+            }
+            else {
+              $this->fileData['domain'] = $this->config['MESS_SERVER'];
+            }
+          }
+          else {
+            $this->fileData['domain'] = gethostbyaddr('127.0.0.1');
+          }
+			  }
 				$this->sendMail();
 			}
 		}
@@ -88,7 +100,19 @@
 			$this->fileData['bcc'] 		     = $sBCC;
 			$this->fileData['template'] 	 = $sTemplate;
 			$this->fileData['attachments'] = array();
-		  $this->fileData['domain'] 	   = gethostbyaddr('127.0.0.1');
+			if ($this->config['MESS_ENGINE'] == 'OPENMAIL') {
+			  if ($this->config['MESS_SERVER'] != '') {
+			    if (($sAux = @gethostbyaddr($this->config['MESS_SERVER']))) {
+            $this->fileData['domain'] = $sAux;
+          }
+          else {
+            $this->fileData['domain'] = $this->config['MESS_SERVER'];
+          }
+        }
+        else {
+          $this->fileData['domain'] = gethostbyaddr('127.0.0.1');
+        }
+			}
 		}
 
 		public function sendMail() {

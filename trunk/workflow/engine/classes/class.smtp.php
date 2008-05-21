@@ -48,7 +48,10 @@
 		}
 
 		function setServer($sServer) {
-		  $this->mail_server = ($sServer != '' ? $sServer : gethostbyaddr('127.0.0.1'));
+		  if (($sAux = @gethostbyaddr($sServer))) {
+        $sServer = $sAux;
+      }
+		  $this->mail_server = $sServer;
 		}
 
 		function setPort($iPort) {
