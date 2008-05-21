@@ -138,6 +138,11 @@
 				$this->fileData['from_email'] = trim(substr($this->fileData['from'],$pos));
         $this->fileData['from_email'] = str_replace('<', '', str_replace('>', '', $this->fileData['from_email']));
 			}
+			else {
+			  $this->fileData['from']       = '<' . $this->fileData['from'] . '>';
+			  $this->fileData['from_name']  = '';
+				$this->fileData['from_email'] = $this->fileData['from'];
+			}
 
 		}
 

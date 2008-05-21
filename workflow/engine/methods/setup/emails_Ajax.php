@@ -65,6 +65,11 @@ switch ($_POST['action']) {
     $sBody .= '" (' . date('H:i:s') . ').';
     G::LoadClass('spool');
     $oSpool = new spoolRun();
+    $oSpool->setConfig(array('MESS_ENGINE'   => $_POST['MESS_ENGINE'],
+                             'MESS_SERVER'   => $_POST['MESS_SERVER'],
+                             'MESS_PORT'     => $_POST['MESS_PORT'],
+                             'MESS_ACCOUNT'  => $_POST['MESS_ACCOUNT'],
+                             'MESS_PASSWORD' => $_POST['MESS_PASSWORD']));
     $oSpool->create(array('msg_uid'          => '',
                           'app_uid'          => '',
                           'del_index'        => 0,
@@ -78,11 +83,6 @@ switch ($_POST['action']) {
                           'app_msg_attach'   => '',
                           'app_msg_template' => '',
                           'app_msg_status'   => 'pending'));
-    $oSpool->setConfig(array('MESS_ENGINE'   => $_POST['MESS_ENGINE'],
-                             'MESS_SERVER'   => $_POST['MESS_SERVER'],
-                             'MESS_PORT'     => $_POST['MESS_PORT'],
-                             'MESS_ACCOUNT'  => $_POST['MESS_ACCOUNT'],
-                             'MESS_PASSWORD' => $_POST['MESS_PASSWORD']));
     $oSpool->sendMail();
     global $G_PUBLISH;
     global $G_HEADER;

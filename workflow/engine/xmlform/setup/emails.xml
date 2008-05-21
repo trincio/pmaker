@@ -82,7 +82,7 @@ leimnud.event.add(getField('MESS_ENABLED'), 'click', function() {
         hideRowById('MESS_PASSWORD');
       break;
     }
-    showRowById('MESS_BACKGROUND');
+    //showRowById('MESS_BACKGROUND');////enable this line in the next release
     if (getField('MESS_BACKGROUND').checked) {
       showRowById('MESS_EXECUTE_EVERY');
       showRowById('MESS_SEND_MAX');
@@ -175,6 +175,7 @@ switch (getField('MESS_ENGINE').value) {
   break;
 }
 
+hideRowById('MESS_BACKGROUND');//delete this line in the next release
 if (!getField('MESS_BACKGROUND').checked) {
   hideRowById('MESS_EXECUTE_EVERY');
   hideRowById('MESS_SEND_MAX');
