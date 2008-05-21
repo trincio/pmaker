@@ -17,14 +17,14 @@
  * @file class.insert.php
  *
  */
- 
+
 	require_once ( "classes/model/AppMessage.php" );
 
 	class insert
 	{
 		private $db_spool;
 		private $status;
-	
+
 		function __construct($db_spool=array())
 		{
 			if(count($db_spool)>0)
@@ -37,25 +37,26 @@
 			return $this->status;
 
 		}
-		
-		private function db_insert($db_spool)
-		{
-			$spool = new AppMessage();
-			$spool->setmsgUid($db_spool['msg_uid']);
-			$spool->setappUid($db_spool['app_uid']);
-			$spool->setdelIndex($db_spool['del_index']);
-			$spool->setappMsgtype($db_spool['app_msg_type']);
-			$spool->setappMsgsubject($db_spool['app_msg_subject']);
-			$spool->setappMsgfrom($db_spool['app_msg_from']);
-			$spool->setappMsgto($db_spool['app_msg_to']);
-			$spool->setappMsgbody($db_spool['app_msg_body']);
-			$spool->setappMsgdate($db_spool['app_msg_date']);
-			$spool->setappMsgcc($db_spool['app_msg_cc']);
-			$spool->setappMsgbcc($db_spool['app_msg_bcc']);
-			$spool->setappMsgtemplate($db_spool['app_msg_template']);
-			$spool->setappMsgstatus($db_spool['app_msg_status']);
 
-			$spool->setappMsgattach($db_spool['app_msg_attach']);
+		public function db_insert($db_spool)
+		{
+		  $sUID = G::generateUniqueID();
+			$spool = new AppMessage();
+			$spool->setAppMsgUid($sUID);
+			$spool->setMsgUid($db_spool['msg_uid']);
+			$spool->setAppUid($db_spool['app_uid']);
+			$spool->setDelIndex($db_spool['del_index']);
+			$spool->setAppMsgType($db_spool['app_msg_type']);
+			$spool->setAppMsgSubject($db_spool['app_msg_subject']);
+			$spool->setAppMsgFrom($db_spool['app_msg_from']);
+			$spool->setAppMsgTo($db_spool['app_msg_to']);
+			$spool->setAppMsgBody($db_spool['app_msg_body']);
+			$spool->setAppMsgDate(date('Y-m-d H:i:s'));
+			$spool->setAppMsgCc($db_spool['app_msg_cc']);
+			$spool->setAppMsgBcc($db_spool['app_msg_bcc']);
+			$spool->setappMsgAttach($db_spool['app_msg_attach']);
+			$spool->setAppMsgTemplate($db_spool['app_msg_template']);
+			$spool->setAppMsgStatus($db_spool['app_msg_status']);
 
 			if(!$spool->validate())
 			{
@@ -69,20 +70,20 @@
 			}
 			else
 			{
-			        echo "Saving - validation ok\n";
+			        //echo "Saving - validation ok\n";
 				$this->status = 'success';
 			        $spool->save();
 			}
+      return $sUID;
 
-			
-		
+
 		}
-		
-		
-		
-		
+
+
+
+
 	} // end of class
- 
- 
- 
+
+
+
 ?>

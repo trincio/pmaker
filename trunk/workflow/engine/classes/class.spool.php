@@ -19,27 +19,29 @@
  *
  */
 
-	
+
 	require_once('classes/model/AppMessage.php');
 
 	class spoolRun
 	{
-	
+
 		private $fileData;
-		private $fileField;
 		private $spool_id;
-	
-		function __construct() 
+		public  $status;
+		public  $error;
+
+		function __construct()
 		{
-			$this->fileData  = array();
-			$this->spool_id  = '';
-			
-			$this->getSpoolFilesList();
+		  $this->config   = array();
+			$this->fileData = array();
+			$this->spool_id = '';
+
+			//$this->getSpoolFilesList();
 
 		}
 
-		private function getSpoolFilesList() 
-		{		
+		public function getSpoolFilesList()
+		{
 			$sql = "SELECT * FROM APP_MESSAGE WHERE APP_MSG_STATUS ='pending'";
 
 			$con = Propel::getConnection("workflow");
@@ -48,29 +50,49 @@
 
 			while($rs->next())
 			{
-				$this->spool_id 		= $rs->getInt('APP_MSG_UID');
-				$this->fileData['subject'] 	= $rs->getString('APP_MSG_SUBJECT');
-				$this->fileData['from'] 	= $rs->getString('APP_MSG_FROM');
-				$this->fileData['to'] 		= $rs->getString('APP_MSG_TO');
-				$this->fileData['body'] 	= $rs->getString('APP_MSG_BODY');
-				$this->fileData['date'] 	= $rs->getString('APP_MSG_DATE');
-				$this->fileData['cc'] 		= $rs->getString('APP_MSG_CC');
-				$this->fileData['bcc'] 		= $rs->getString('APP_MSG_BCC');
-				$this->fileData['template'] 	= $rs->getString('APP_MSG_TEMPLATE');
-				$this->fileData['attachments'] 	= array(); //$rs->getString('APP_MSG_ATTACH');
-				$this->fileData['domain'] 	= 'processmaker.com';
-
-				$this->handleFrom();
-				$this->handleEnvelopeTo();
-				$this->handleMail();
-				$this->updateSpoolStatus();
-
+				$this->spool_id 		           = $rs->getString('APP_MSG_UID');
+				$this->fileData['subject']     = $rs->getString('APP_MSG_SUBJECT');
+				$this->fileData['from'] 	     = $rs->getString('APP_MSG_FROM');
+				$this->fileData['to'] 		     = $rs->getString('APP_MSG_TO');
+				$this->fileData['body'] 	     = $rs->getString('APP_MSG_BODY');
+				$this->fileData['date'] 	     = $rs->getString('APP_MSG_DATE');
+				$this->fileData['cc'] 		     = $rs->getString('APP_MSG_CC');
+				$this->fileData['bcc'] 		     = $rs->getString('APP_MSG_BCC');
+				$this->fileData['template'] 	 = $rs->getString('APP_MSG_TEMPLATE');
+				$this->fileData['attachments'] = array(); //$rs->getString('APP_MSG_ATTACH');
+				$this->fileData['domain'] 	   = gethostbyaddr('127.0.0.1');
+				$this->sendMail();
 			}
-
 		}
-		
-		private function updateSpoolStatus() 
-		{		
+
+		public function setConfig($sServer, $sPort) {
+		  $this->config['server'] = $sServer;
+		  $this->config['port']   = $sPort;
+		}
+
+		public function setData($sAppMsgUid, $sSubject, $sFrom, $sTo, $sBody, $sDate = '', $sCC = '', $sBCC = '', $sTemplate = '') {
+		  $this->spool_id 		           = $sAppMsgUid;
+			$this->fileData['subject']     = $sSubject;
+			$this->fileData['from'] 	     = $sFrom;
+			$this->fileData['to'] 		     = $sTo;
+			$this->fileData['body'] 	     = $sBody;
+			$this->fileData['date'] 	     = ($sDate != '' ? $sDate : date('Y-m-d H:i:s'));
+			$this->fileData['cc'] 		     = $sCC;
+			$this->fileData['bcc'] 		     = $sBCC;
+			$this->fileData['template'] 	 = $sTemplate;
+			$this->fileData['attachments'] = array(); //$rs->getString('APP_MSG_ATTACH');
+		  $this->fileData['domain'] 	   = gethostbyaddr('127.0.0.1');
+		}
+
+		public function sendMail() {
+		  $this->handleFrom();
+			$this->handleEnvelopeTo();
+			$this->handleMail();
+		  $this->updateSpoolStatus();
+		}
+
+		private function updateSpoolStatus()
+		{
 			(false === $this->status)
 				? $s = 'failed'
 				: $s = 'sent';
@@ -78,7 +100,7 @@
 			$spool = AppMessagePeer::retrieveByPK($this->spool_id);
 			$spool->setappMsgstatus($s);
 			$spool->save();
-		
+
 		}
 
 		private function handleFrom()
@@ -92,7 +114,7 @@
 
 		}
 
-		private function handleEnvelopeTo() 
+		private function handleEnvelopeTo()
 		{
 			$hold = array();
 			$this->fileData['envelope_to'] = array();
@@ -105,44 +127,48 @@
 			if(false !== (strpos($text,',')))
 			{
 				$hold = explode(',',$text);
-			
+
 				for($i = 0; $i < count($hold); $i++)
 					if(strlen($hold[$i])>0) $this->fileData['envelope_to'][$i] = "{$hold[$i]}";
-					
-			} 
-			else 
+
+			}
+			else
 			{
 				$this->fileData['envelope_to']['0'] = "$text";
 			}
-		
+
 		}
 
-		private function handleMail() 
+		private function handleMail()
 		{
-			if(count($this->fileData['envelope_to'])>0) 
+			if(count($this->fileData['envelope_to'])>0)
 			{
+			  //obtener la configuración del envio de mails, y segun eso enviar para cada tipo
+        //pero por el momento solo para OPENMAIL
+        G::LoadClass('package');
+        G::LoadClass('smtp');
 				$pack = new package($this->fileData);
 				$header = $pack->returnHeader();
 				$body   = $pack->returnBody();
 				unset($pack);
-
 				$return_path = '<'."{$this->fileData['from_email']}".'>';
-
-				$send = new smtp($return_path, $this->fileData['envelope_to'], $header, $body);
-
+				$send = new smtp();
+				$send->setServer($this->config['server']);
+				$send->setPort($this->config['port']);
+				$send->setReturnPath($return_path);
+				$send->setHeaders($header);
+				$send->setBody($body);//var_dump($this->fileData['envelope_to']);die;
+				$send->getEnvelopeTo($this->fileData['envelope_to']);
 				$this->status = $send->returnStatus();
-
+				if (!$send->sendMessage()) {
+				  $this->error = implode(', ', $send->returnErrors());
+				}
+				else {
+				  $this->error = '';
+				}
+				/*$send = new smtp($return_path, $this->fileData['envelope_to'], $header, $body);*/
 				unset($send);
-
 			}
-
 		}
-
-			
-	
-	
 	} // end of class
-
-
-
 ?>

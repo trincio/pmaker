@@ -9,7 +9,7 @@
   <en>Email Engine
     <option name="MAIL">Mail (PHP)</option>
     <option name="PHPMAILER">SMTP (PHPMailer)</option>
-    <option name="OPENMAIL">SMTP (OpenMail)</option>
+    <option name="OPENMAIL">SMTP without authentication (OpenMail)</option>
   </en>
 </MESS_ENGINE>
 

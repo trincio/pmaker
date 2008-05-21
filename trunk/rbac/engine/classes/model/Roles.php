@@ -24,7 +24,8 @@
  */
 
 require_once 'classes/model/om/BaseRoles.php';
-
+require_once 'classes/model/om/BaseRbacUsers.php';
+require_once 'classes/model/om/BaseUsersRoles.php';
 
 /**
  * Skeleton subclass for representing a row from the 'ROLES' table.
@@ -200,6 +201,87 @@ class Roles extends BaseRoles
         $aFields['ROL_STATUS'] = $row[6];
         
         return $aFields;
+	}
+	function getRoleCode($ROL_UID)
+	{
+		$oCriteria = new Criteria('rbac');
+        $oCriteria->addSelectColumn(RolesPeer::ROL_UID);
+        $oCriteria->addSelectColumn(RolesPeer::ROL_CODE);  
+        $oCriteria->add(RolesPeer::ROL_UID, $ROL_UID);   
+		
+        $result = RolesPeer::doSelectRS($oCriteria);
+        $result->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+        $result->next();
+        $row = $result->getRow();
+        $ret = $row['ROL_CODE'];
+        
+        return $ret;
+	}
+	
+	function getRoleUsers($ROL_UID)
+    {
+        try {
+            $criteria = new Criteria();
+            $criteria->addSelectColumn(RolesPeer::ROL_UID);
+	        $criteria->addSelectColumn(RolesPeer::ROL_PARENT);
+	        $criteria->addSelectColumn(RolesPeer::ROL_SYSTEM);
+	        $criteria->addSelectColumn(RolesPeer::ROL_CODE);
+	        $criteria->addSelectColumn(RolesPeer::ROL_CREATE_DATE);
+	        $criteria->addSelectColumn(RolesPeer::ROL_UPDATE_DATE);
+	        $criteria->addSelectColumn(RolesPeer::ROL_STATUS);
+	        $criteria->addSelectColumn(RbacUsersPeer::USR_UID);
+	        $criteria->addSelectColumn(RbacUsersPeer::USR_USERNAME);
+	        $criteria->addSelectColumn(RbacUsersPeer::USR_FIRSTNAME);
+	        $criteria->addSelectColumn(RbacUsersPeer::USR_LASTNAME);
+            $criteria->add(RolesPeer::ROL_UID, "", Criteria::NOT_EQUAL);
+            $criteria->add(RolesPeer::ROL_UID, $ROL_UID);
+            $criteria->addJoin(RolesPeer::ROL_UID, UsersRolesPeer::ROL_UID);
+            $criteria->addJoin(UsersRolesPeer::USR_UID, RbacUsersPeer::USR_UID);
+            
+            $oDataset = RolesPeer::doSelectRS($criteria);
+            $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+            return $oDataset;
+			
+        }
+        catch (exception $e) {
+            throw $e;
+        }
+    }
+    
+    function getAllUsers()
+    {
+        try {
+            $criteria = new Criteria();
+
+	        $criteria->addSelectColumn(RbacUsersPeer::USR_UID);
+	        $criteria->addSelectColumn(RbacUsersPeer::USR_USERNAME);
+	        $criteria->addSelectColumn(RbacUsersPeer::USR_FIRSTNAME);
+	        $criteria->addSelectColumn(RbacUsersPeer::USR_LASTNAME);
+            $criteria->add(RbacUsersPeer::USR_UID, "", Criteria::NOT_EQUAL);
+            
+            $oDataset = RbacUsersPeer::doSelectRS($criteria);
+            $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+            return $oDataset;
+        }
+        catch (exception $e) {
+            throw $e;
+        }
+    }
+    
+    function assignUserToRole($aData)
+	{
+		$oUsersRoles = new UsersRoles();
+		$oUsersRoles->setUsrUid($aData['USR_UID']);
+		$oUsersRoles->setRolUid($aData['ROL_UID']);
+		$oUsersRoles->save();
+	} 
+    
+    function deleteUserRole($ROL_UID, $USR_UID)
+    {
+    	$crit = new Criteria();
+		$crit->add(UsersRolesPeer::ROL_UID, $ROL_UID);
+		$crit->add(UsersRolesPeer::USR_UID, $USR_UID);
+		UsersRolesPeer::doDelete($crit);
 	}
 
 

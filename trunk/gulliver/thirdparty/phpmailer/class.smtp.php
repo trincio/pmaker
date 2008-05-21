@@ -28,13 +28,13 @@ class SMTP
      *  @var int
      */
     var $SMTP_PORT = 25;
-    
+
     /**
      *  SMTP reply line ending
      *  @var string
      */
     var $CRLF = "\r\n";
-    
+
     /**
      *  Sets whether debugging is turned on
      *  @var bool
@@ -98,7 +98,7 @@ class SMTP
         }
 
         #connect to the smtp server
-        $this->smtp_conn = fsockopen($host,    # the host of the server
+        $this->smtp_conn = @fsockopen($host,    # the host of the server
                                      $port,    # the port to use
                                      $errno,   # error number if any
                                      $errstr,  # error message if any
@@ -508,7 +508,7 @@ class SMTP
         }
 
         $this->helo_rply = $rply;
-        
+
         return true;
     }
 

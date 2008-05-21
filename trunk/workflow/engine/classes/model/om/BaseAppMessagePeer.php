@@ -408,8 +408,6 @@ abstract class BaseAppMessagePeer {
 			$criteria = $values->buildCriteria(); // build Criteria from AppMessage object
 		}
 
-		$criteria->remove(AppMessagePeer::APP_MSG_UID); // remove pkey col since this table uses auto-increment
-
 
 		// Set the correct dbName
 		$criteria->setDbName(self::DATABASE_NAME);
