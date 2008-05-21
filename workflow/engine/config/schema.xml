@@ -521,14 +521,14 @@
       <parameter name="Create_options" value=""/>
       <parameter name="Comment" value="Messages in an Application"/>
     </vendor>
-    <column name="APP_MSG_UID" type="integer" required="true" primaryKey="true" autoIncrement="true" >
+    <column name="APP_MSG_UID" type="VARCHAR" size="32" required="true" primaryKey="true" >
       <vendor type="mysql">
         <parameter name="Field" value="APP_MSG_UID"/>
-        <parameter name="Type" value="int(32)"/>
+        <parameter name="Type" value="varchar(32)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value="PRI"/>
         <parameter name="Default" value=""/>
-        <parameter name="Extra" value="auto_increment"/>
+        <parameter name="Extra" value=""/>
       </vendor>
     </column>
     <column name="MSG_UID" type="VARCHAR" size="32">

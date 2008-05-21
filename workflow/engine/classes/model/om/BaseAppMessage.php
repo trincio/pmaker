@@ -30,7 +30,7 @@ abstract class BaseAppMessage extends BaseObject  implements Persistent {
 
 	/**
 	 * The value for the app_msg_uid field.
-	 * @var        int
+	 * @var        string
 	 */
 	protected $app_msg_uid;
 
@@ -149,7 +149,7 @@ abstract class BaseAppMessage extends BaseObject  implements Persistent {
 	/**
 	 * Get the [app_msg_uid] column value.
 	 * 
-	 * @return     int
+	 * @return     string
 	 */
 	public function getAppMsgUid()
 	{
@@ -334,16 +334,16 @@ abstract class BaseAppMessage extends BaseObject  implements Persistent {
 	/**
 	 * Set the value of [app_msg_uid] column.
 	 * 
-	 * @param      int $v new value
+	 * @param      string $v new value
 	 * @return     void
 	 */
 	public function setAppMsgUid($v)
 	{
 
-		// Since the native PHP type for this column is integer,
-		// we will cast the input value to an int (if it is not).
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
-			$v = (int) $v;
+		// Since the native PHP type for this column is string,
+		// we will cast the input to a string (if it is not).
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
 		}
 
 		if ($this->app_msg_uid !== $v) {
@@ -680,7 +680,7 @@ abstract class BaseAppMessage extends BaseObject  implements Persistent {
 	{
 		try {
 
-			$this->app_msg_uid = $rs->getInt($startcol + 0);
+			$this->app_msg_uid = $rs->getString($startcol + 0);
 
 			$this->msg_uid = $rs->getString($startcol + 1);
 
@@ -808,8 +808,6 @@ abstract class BaseAppMessage extends BaseObject  implements Persistent {
 					$affectedRows += 1; // we are assuming that there is only 1 row per doInsert() which
 										 // should always be true here (even though technically
 										 // BasePeer::doInsert() can insert multiple rows).
-
-					$this->setAppMsgUid($pk);  //[IMV] update autoincrement primary key
 
 					$this->setNew(false);
 				} else {
@@ -1163,7 +1161,7 @@ abstract class BaseAppMessage extends BaseObject  implements Persistent {
 
 	/**
 	 * Returns the primary key for this object (row).
-	 * @return     int
+	 * @return     string
 	 */
 	public function getPrimaryKey()
 	{
@@ -1173,7 +1171,7 @@ abstract class BaseAppMessage extends BaseObject  implements Persistent {
 	/**
 	 * Generic method to set the primary key (app_msg_uid column).
 	 *
-	 * @param      int $key Primary key.
+	 * @param      string $key Primary key.
 	 * @return     void
 	 */
 	public function setPrimaryKey($key)
