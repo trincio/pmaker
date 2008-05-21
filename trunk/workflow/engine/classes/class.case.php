@@ -286,8 +286,8 @@ class Cases
             $Fields['APP_PROC_CODE'] = self::refreshCaseStatusCode($sAppUid, $aApplicationFields);
             $oApp->update($Fields);
 
-            $DEL_INDEX = $Fields['DEL_INDEX'];
-            $TAS_UID = $Fields['TAS_UID'];
+            $DEL_INDEX = isset($Fields['DEL_INDEX']) ? $Fields['DEL_INDEX'] : '';
+            $TAS_UID = isset($Fields['TAS_UID']) ? $Fields['TAS_UID'] : '';
 
             $aFields = $oApp->load($sAppUid);
             G::LoadClass('reportTables');
