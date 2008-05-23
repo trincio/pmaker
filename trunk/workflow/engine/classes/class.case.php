@@ -1013,8 +1013,7 @@ class Cases
     * @param integer $iPosition
     * @return array
     */
-    function getNextStep($sProUid = '', $sAppUid = '', $iDelIndex = 0, $iPosition =
-        0)
+    function getNextStep($sProUid = '', $sAppUid = '', $iDelIndex = 0, $iPosition = 0)
     {
         G::LoadClass('pmScript');
         $oPMScript = new PMScript();
@@ -1112,8 +1111,7 @@ class Cases
     * @param integer $iPosition
     * @return array
     */
-    function getPreviousStep($sProUid = '', $sAppUid = '', $iDelIndex = 0, $iPosition =
-        0)
+    function getPreviousStep($sProUid = '', $sAppUid = '', $iDelIndex = 0, $iPosition = 0)
     {
         //Note: Depreciated, delete in the future
         G::LoadClass('pmScript');
@@ -1198,6 +1196,30 @@ class Cases
         catch (exception $e) {
             throw ($e);
         }
+    }
+
+    function getNextSupervisorStep($sProcessUID, $iPosition) {
+      $iPosition += 1;
+      $oCriteria = new Criteria();
+      $oCriteria->add(StepSupervisorPeer::PRO_UID, $sProcessUID);
+      $oCriteria->add(StepSupervisorPeer::STEP_TYPE_OBJ, 'DYNAFORM');
+      $oCriteria->add(StepSupervisorPeer::STEP_POSITION, $iPosition);
+      $oDataset = StepSupervisorPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      $aRow = $oDataset->getRow();
+      if (!$aRow) {
+        $oCriteria = new Criteria();
+        $oCriteria->add(StepSupervisorPeer::PRO_UID, $sProcessUID);
+        $oCriteria->add(StepSupervisorPeer::STEP_TYPE_OBJ, 'DYNAFORM');
+        $oCriteria->add(StepSupervisorPeer::STEP_POSITION, 1);
+        $oDataset = StepSupervisorPeer::doSelectRS($oCriteria);
+        $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+        $oDataset->next();
+        $aRow = $oDataset->getRow();
+      }
+      $aNextStep = array('UID' => $aRow['STEP_UID_OBJ'], 'POSITION' => $aRow['STEP_POSITION']);
+      return $aNextStep;
     }
 
     function getTransferHistoryCriteria($sAppUid)
