@@ -98,5 +98,7 @@ getField("PAGED_TABLE_JUMP").onkeypress = function(event) {
   if (event.keyCode===13) window.location.href='@#cases_Open?APP_NUMBER='+encodeURIComponent(getField('PAGED_TABLE_JUMP').value);
 };
 
+
+
 </JS>
 </dynaForm>

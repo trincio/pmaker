@@ -56,6 +56,8 @@
 <MARK2 type="cellMark" className="RowLink1" classNameAlt="RowLink2" defaultValue="1"/>
 <!--<EDIT type="link" colWidth="40" value="@G::LoadTranslation(ID_EDIT)" link="#" onclick="casesEdit(@QAPP_UID);return false;"/>-->
 
+<EDIT type="link" colWidth="40" value="@G::LoadTranslation(ID_EDIT)" link="cases_OpenToRevise?APP_UID=@#APP_UID&amp;DEL_INDEX=@#DEL_INDEX"/>
+
 <!--<OPEN type="link" value="@G::LoadTranslation(ID_OPEN)" link="@G::encryptlink(@#cases_Open)?APP_UID=@#APP_UID&amp;DEL_INDEX=@#DEL_INDEX" colWidth="40" titleAlign="left" align="left" dataCompareField="APP_TITLE.CON_VALUE" dataCompareType="contains" >
   <en></en>
 </OPEN>-->

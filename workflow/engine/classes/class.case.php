@@ -1769,4 +1769,30 @@ class Cases
         $oAppThread = new AppThread();
         $oAppThread->update(array('APP_UID' => $sApplicationUID, 'APP_THREAD_INDEX' => $aFieldsDel['DEL_THREAD'], 'DEL_INDEX' => $iIndex));
     }
+    
+    function getAllStepsToRevise($APP_UID, $DEL_INDEX)
+	{
+		//echo '-->'.$_SESSION['USER_LOGGED'];
+		$oCriteria = new Criteria('workflow');
+		
+		$oCriteria->addSelectColumn(StepSupervisorPeer::STEP_UID);
+		$oCriteria->addSelectColumn(StepSupervisorPeer::PRO_UID);
+		$oCriteria->addSelectColumn(StepSupervisorPeer::STEP_TYPE_OBJ);
+		$oCriteria->addSelectColumn(StepSupervisorPeer::STEP_UID_OBJ);
+		$oCriteria->addSelectColumn(StepSupervisorPeer::STEP_POSITION);
+		
+		$oCriteria->add(AppDelegationPeer::APP_UID, $APP_UID);
+		$oCriteria->add(AppDelegationPeer::DEL_INDEX, $DEL_INDEX);
+		//oCriteria->add(StepSupervisorPeer::STEP_TYPE_OBJ, 'DYNAFORM');
+		
+		$oCriteria->addJoin(AppDelegationPeer::PRO_UID, StepSupervisorPeer::PRO_UID);
+		//$oCriteria->addJoin(StepSupervisorPeer::STEP_UID_OBJ, DynaformPeer::DYN_UID);
+		$oCriteria->addAscendingOrderByColumn(StepSupervisorPeer::STEP_POSITION);
+		
+		$oDataset = AppDelegationPeer::doSelectRS($oCriteria);
+		$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+		
+		return $oDataset;
+	}
+	 
 }
