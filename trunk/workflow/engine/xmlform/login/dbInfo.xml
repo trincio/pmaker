@@ -31,6 +31,9 @@
 <DATABASE_NAME type="caption" >
   <en>Database Name</en>
 </DATABASE_NAME>
+<AVAILABLE_DB type="caption" >
+  <en>Available Databases </en>
+</AVAILABLE_DB >
 <HTTP_USER_AGENT type="caption"  >
   <en>User's Browser</en>
 </HTTP_USER_AGENT>

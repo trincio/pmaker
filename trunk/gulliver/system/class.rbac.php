@@ -306,6 +306,9 @@ class RBAC
   function  deletePermissionRole($ROL_UID, $PER_UID){
 	return $this->rolesObj->deletePermissionRole($ROL_UID, $PER_UID);
   }
+  function numUsersWithRole($ROL_UID){
+	return $this->rolesObj->numUsersWithRole($ROL_UID);
+  }
  
   
 }
