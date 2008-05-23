@@ -42,8 +42,8 @@
     {
       $this->registerTrigger( PM_NEW_PROCESS_LIST, 'getNewProcessTemplateList' );
       $this->registerTrigger( PM_NEW_PROCESS_SAVE, 'saveNewProcess' );
-      $this->registerTrigger( PM_NEW_DYNAFORM_LIST, 'getNewProcessTemplateList' );
-      $this->registerTrigger( PM_NEW_DYNAFORM_SAVE, 'saveNewProcess' );
+      $this->registerTrigger( PM_NEW_DYNAFORM_LIST, 'getNewDynaformTemplateList' );
+      $this->registerTrigger( PM_NEW_DYNAFORM_SAVE, 'saveNewDynaform' );
     }
     
     function install()
