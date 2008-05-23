@@ -53,6 +53,7 @@ CREATE TABLE `APP_DELEGATION`
 	`DEL_INIT_DATE` DATETIME,
 	`DEL_TASK_DUE_DATE` DATETIME,
 	`DEL_FINISH_DATE` DATETIME,
+	`DEL_DURATION` DOUBLE default 0,
 	PRIMARY KEY (`APP_UID`,`DEL_INDEX`)
 )Type=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Delegation a task to user';
 #-----------------------------------------------------------------------------
@@ -83,7 +84,7 @@ DROP TABLE IF EXISTS `APP_MESSAGE`;
 
 CREATE TABLE `APP_MESSAGE`
 (
-	`APP_MSG_UID` INTEGER  NOT NULL AUTO_INCREMENT,
+	`APP_MSG_UID` VARCHAR(32)  NOT NULL,
 	`MSG_UID` VARCHAR(32),
 	`APP_UID` VARCHAR(32) default '' NOT NULL,
 	`DEL_INDEX` INTEGER default 0 NOT NULL,
@@ -650,6 +651,21 @@ CREATE TABLE `APP_DELAY`
 	KEY `indexAppDelay`(`PRO_UID`, `APP_UID`, `APP_THREAD_INDEX`, `APP_DEL_INDEX`, `APP_NEXT_TASK`, `APP_DELEGATION_USER`, `APP_DISABLE_ACTION_USER`)
 )Type=MyISAM  DEFAULT CHARSET='utf8' COMMENT='APP_DELAY';
 #-----------------------------------------------------------------------------
+#-- PROCESS_USER
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `PROCESS_USER`;
+
+
+CREATE TABLE `PROCESS_USER`
+(
+	`PU_UID` VARCHAR(32) default '' NOT NULL,
+	`PRO_UID` VARCHAR(32) default '' NOT NULL,
+	`USR_UID` VARCHAR(32) default '' NOT NULL,
+	`PU_TYPE` VARCHAR(20) default '' NOT NULL,
+	PRIMARY KEY (`PU_UID`)
+)Type=MyISAM  DEFAULT CHARSET='utf8';
+#-----------------------------------------------------------------------------
 #-- SESSION
 #-----------------------------------------------------------------------------
 
@@ -668,5 +684,42 @@ CREATE TABLE `SESSION`
 	PRIMARY KEY (`SES_UID`),
 	KEY `indexSession`(`SES_UID`)
 )Type=MyISAM  DEFAULT CHARSET='utf8' COMMENT='SESSION';
+#-----------------------------------------------------------------------------
+#-- DB_SOURCE
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `DB_SOURCE`;
+
+
+CREATE TABLE `DB_SOURCE`
+(
+	`DBS_UID` VARCHAR(32) default '' NOT NULL,
+	`PRO_UID` VARCHAR(32) default '0' NOT NULL,
+	`DBS_TYPE` VARCHAR(8) default '0' NOT NULL,
+	`DBS_SERVER` VARCHAR(100) default '0' NOT NULL,
+	`DBS_DATABASE_NAME` VARCHAR(100) default '0' NOT NULL,
+	`DBS_USERNAME` VARCHAR(32) default '0' NOT NULL,
+	`DBS_PASSWORD` VARCHAR(32) default '0',
+	`DBS_PORT` INTEGER default 0,
+	PRIMARY KEY (`DBS_UID`),
+	KEY `indexDBSource`(`PRO_UID`)
+)Type=MyISAM  DEFAULT CHARSET='utf8' COMMENT='DB_SOURCE';
+#-----------------------------------------------------------------------------
+#-- STEP_SUPERVISOR
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `STEP_SUPERVISOR`;
+
+
+CREATE TABLE `STEP_SUPERVISOR`
+(
+	`STEP_UID` VARCHAR(32) default '' NOT NULL,
+	`PRO_UID` VARCHAR(32) default '0' NOT NULL,
+	`STEP_TYPE_OBJ` VARCHAR(20) default 'DYNAFORM' NOT NULL,
+	`STEP_UID_OBJ` VARCHAR(32) default '0' NOT NULL,
+	`STEP_POSITION` INTEGER default 0 NOT NULL,
+	PRIMARY KEY (`STEP_UID`),
+	KEY `indexStepSupervisor`(`PRO_UID`, `STEP_TYPE_OBJ`, `STEP_UID_OBJ`)
+)Type=MyISAM  DEFAULT CHARSET='utf8' COMMENT='STEP_SUPERVISOR';
 # This restores the fkey checks, after having unset them earlier
 SET FOREIGN_KEY_CHECKS = 1;

@@ -51,9 +51,11 @@
   $G_ID_MENU_SELECTED     = 'SETUP';
   $G_SUB_MENU             = 'setup';
   $G_ID_SUB_MENU_SELECTED = 'PLUGINS';
-  
   $G_PUBLISH = new Publisher;
   try {
+    if ( !file_exists ($xmlform ) ) throw ( new Exception ('setup not defined for this plugin') );
+  
+  
   	$Fields = $oPluginRegistry->getFieldsForPageSetup( $details->sNamespace );
     $G_PUBLISH->AddContent( 'xmlform', 'xmlform', $xmlform, '',$Fields ,'pluginsSetupSave?id='.$pluginFile );  
   }
