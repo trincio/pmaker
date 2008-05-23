@@ -65,7 +65,14 @@ function lookup($target)
     $redhat .= " (" . PHP_OS . ")";
 
   G::LoadClass('net');	
+  G::LoadClass('dbConnections');	
   $dbNetView = new NET(DB_HOST);
+  $dbConns = new dbConnections( '');
+  $availdb = '';
+  foreach ($dbConns->getDbServicesAvailables()  as $key => $val ) {
+    if ( $availdb != '' ) $availdb .= ', ';
+    $availdb .= $val['name'];
+  }
 
   $Fields['SYSTEM']          = $redhat;
   $Fields['DATABASE']        = $dbNetView->dbName(DB_ADAPTER) . ' (ver. ' . $dbNetView->mysql_getVersion(DB_USER, DB_PASS, DB_NAME).')';
@@ -77,6 +84,7 @@ function lookup($target)
   $Fields['ENVIRONMENT']     = SYS_SYS;
   $Fields['SERVER_SOFTWARE'] = getenv('SERVER_SOFTWARE');
   $Fields['SERVER_NAME']     = getenv('SERVER_NAME');
+  $Fields['AVAILABLE_DB']    = $availdb;
   $Fields['SERVER_PROTOCOL'] = getenv('SERVER_PROTOCOL');
   $Fields['SERVER_PORT']     = getenv('SERVER_PORT');
   $Fields['REMOTE_HOST']     = getenv('REMOTE_HOST');

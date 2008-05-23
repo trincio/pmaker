@@ -292,6 +292,9 @@ class Roles extends BaseRoles
     
     function assignUserToRole($aData)
 	{
+		/*Remove first*/
+		$this->deleteUserRole('%', $aData['USR_UID']);
+            
 		$oUsersRoles = new UsersRoles();
 		$oUsersRoles->setUsrUid($aData['USR_UID']);
 		$oUsersRoles->setRolUid($aData['ROL_UID']);
@@ -301,8 +304,11 @@ class Roles extends BaseRoles
     function deleteUserRole($ROL_UID, $USR_UID)
     {
     	$crit = new Criteria();
-		$crit->add(UsersRolesPeer::ROL_UID, $ROL_UID);
 		$crit->add(UsersRolesPeer::USR_UID, $USR_UID);
+		
+		if($ROL_UID != '%'){
+			$crit->add(UsersRolesPeer::ROL_UID, $ROL_UID);	
+		}
 		UsersRolesPeer::doDelete($crit);
 	}
 	
@@ -390,6 +396,18 @@ class Roles extends BaseRoles
 		$crit->add(RolesPermissionsPeer::ROL_UID, $ROL_UID);
 		$crit->add(RolesPermissionsPeer::PER_UID, $PER_UID);
 		RolesPermissionsPeer::doDelete($crit);
+	}
+	
+	function numUsersWithRole($ROL_UID)
+	{
+		$criteria = new Criteria();
+        $criteria->addSelectColumn(RbacUsersPeer::USR_UID);
+        $criteria->add(RolesPeer::ROL_UID, "", Criteria::NOT_EQUAL);
+        $criteria->add(RolesPeer::ROL_UID, $ROL_UID);
+        $criteria->addJoin(RolesPeer::ROL_UID, UsersRolesPeer::ROL_UID);
+        $criteria->addJoin(UsersRolesPeer::USR_UID, RbacUsersPeer::USR_UID);
+        
+        return RolesPeer::doCount($criteria); 
 	}
 
 } // Roles
