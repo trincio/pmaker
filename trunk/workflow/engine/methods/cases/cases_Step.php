@@ -140,7 +140,7 @@ switch ($_GET['TYPE'])
       $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['PREVIOUS_STEP_LABEL'] = G::loadTranslation("ID_PREVIOUS_STEP");
     }
     $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['NEXT_STEP'] = $aNextStep['PAGE'];
-    
+
     /** Added Bye erik
      * date: 16-05-08
 	 * Description: this was added for the additional database connections */
@@ -148,7 +148,7 @@ switch ($_GET['TYPE'])
     $oDbConnections = new dbConnections($_SESSION['PROCESS']);
     $oDbConnections->loadAdditionalConnections();
     // PROPEL::krumo();
-      
+
     $G_PUBLISH->AddContent('dynaform', 'xmlform', $_SESSION['PROCESS']. '/' . $_GET['UID'], '', $Fields['APP_DATA'], 'cases_SaveData?UID=' . $_GET['UID']);
     break;
   case 'INPUT_DOCUMENT':
@@ -408,7 +408,7 @@ switch ($_GET['TYPE'])
       $aFields['TASK'][$sKey]['NEXT_TASK']['TAS_DEF_PROC_CODE'] = '<input type="hidden" name="' . $hiddenName . '[TAS_DEF_PROC_CODE]" id="' . $hiddenName . '[TAS_DEF_PROC_CODE]" value="' . $aValues['NEXT_TASK']['TAS_DEF_PROC_CODE'] . '">';
       $aFields['TASK'][$sKey]['NEXT_TASK']['DEL_PRIORITY']      = '<input type="hidden" name="' . $hiddenName . '[DEL_PRIORITY]"      id="' . $hiddenName . '[DEL_PRIORITY]"      value="' . $sPriority . '">';
     }
-                    
+
     $G_PUBLISH->AddContent('smarty', 'cases/cases_ScreenDerivation', '', '', $aFields);
   break;
 }
