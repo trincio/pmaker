@@ -49,5 +49,11 @@
   	$smarty->assign('header', $header );
 	  $smarty->assign('tpl_menu', PATH_TEMPLATE . 'menu.html' );
 	  $smarty->assign('tpl_submenu', PATH_TEMPLATE . 'submenu.html' );
+    
+    $oPluginRegistry = &PMPluginRegistry::getSingleton();
+    
+    $sCompanyLogo = $oPluginRegistry->getCompanyLogo ( '/images/processmaker.logo.jpg' );
+
+	  $smarty->assign('logo_company', $sCompanyLogo );
     $smarty->display('green.html');
   }

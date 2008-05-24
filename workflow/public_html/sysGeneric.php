@@ -104,7 +104,6 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
   if ( G::virtualURI($_SERVER['REQUEST_URI'], $virtualURITable , $realPath )) {
   	// review if the file requested belongs to public_html plugin
     if ( substr ( $realPath, 0,6) == 'plugin' ) {
-
       $paths = explode ( PATH_SEP, $realPath );
       $paths[0] = substr ( $paths[0],6);
       if ( count($paths) == 2 )  {

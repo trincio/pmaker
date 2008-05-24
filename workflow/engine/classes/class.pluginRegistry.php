@@ -31,6 +31,7 @@ class pluginDetail {
   var $sSetupPage = null;
 	var $sFilename;
 	var $sPluginFolder = '';
+	var $sCompanyLogo = '';
 	var $iVersion = 0;
 	var $enabled = false;
 
@@ -397,6 +398,23 @@ class PMPluginRegistry {
 */
   }
 
+  function setCompanyLogo( $sNamespace, $filename ) {
+    $found = false;
+  	foreach ( $this->_aPluginDetails as $row=>$detail ) {
+  		if ( $sNamespace == $detail->sNamespace )
+        $this->_aPluginDetails[ $sNamespace ]->sCompanyLogo = $filename;
+  	}
+  }
+
+  function getCompanyLogo( $default ) {
+    $sCompanyLogo = $default;
+  	foreach ( $this->_aPluginDetails as $row=>$detail ) {
+  		if ( trim($detail->sCompanyLogo) != '' )
+  		  $sCompanyLogo = $detail->sCompanyLogo;
+  	}
+  	return $sCompanyLogo;
+  }
+  
   function setupPlugins() {
   	$iPlugins = 0;
     foreach ( $this->_aPluginDetails as $namespace=>$detail ) {

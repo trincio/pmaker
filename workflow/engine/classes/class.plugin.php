@@ -135,6 +135,11 @@ class PMPlugin {
     $oPluginRegistry->registerDashboard ( $this->sNamespace);
   }
 
+  function setCompanyLogo( $filename ) {
+    $oPluginRegistry =& PMPluginRegistry::getSingleton();
+    $oPluginRegistry->setCompanyLogo( $this->sNamespace, $filename);
+  }
+
   /**
    * Register a folder for methods
    *
