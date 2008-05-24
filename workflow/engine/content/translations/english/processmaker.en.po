@@ -2,7 +2,7 @@ msgid ""
 msgstr "" 
 "Project-Id-Version: PM 4.0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-05-19 09:58+0100 \n"
+"PO-Revision-Date: 2008-05-24 11:29+0100 \n"
 "Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
 "Language-Team: Colosa Developers Team <developers@colosa.com>\n"
 "MIME-Version: 1.0\n"
@@ -1532,10 +1532,112 @@ msgid "Please select a .po file"
 msgstr "Please select a .po file"
 
 # TRANSLATION
+# JAVASCRIPT/ID_ROLES_CAN_NOT_DELETE
+#: JAVASCRIPT/ID_ROLES_CAN_NOT_DELETE
+msgid "This role have some users,.  Can't delete this role!."
+msgstr "This role have some users,.  Can't delete this role!."
+
+# TRANSLATION
+# LABEL/ID_PERMISSIONS
+#: LABEL/ID_PERMISSIONS
+msgid "[LABEL/ID_PERMISSIONS] Permissions"
+msgstr "Permissions"
+
+# TRANSLATION
+# LABEL/ID_MESSAGE_SUBJECT_DERIVATION
+#: LABEL/ID_MESSAGE_SUBJECT_DERIVATION
+msgid "Notification for task assignment"
+msgstr "Notification for task assignment"
+
+# TRANSLATION
+# LABEL/ID_PERMITIONS
+#: LABEL/ID_PERMITIONS
+msgid "Permitions"
+msgstr "Permitions"
+
+# TRANSLATION
+# LABEL/ID_ASSIGN_ROLE
+#: LABEL/ID_ASSIGN_ROLE
+msgid "Assign user"
+msgstr "Assign user"
+
+# TRANSLATION
+# JAVASCRIPT/ID_MSG_CONFIRM_DELETE_SUPERVISOR_PROCESSUSER
+#: JAVASCRIPT/ID_MSG_CONFIRM_DELETE_SUPERVISOR_PROCESSUSER
+msgid "Do you want to delete this supervisor?"
+msgstr "Do you want to delete this supervisor?"
+
+# TRANSLATION
+# LABEL/ID_REMOVE
+#: LABEL/ID_REMOVE
+msgid "[LABEL/ID_REMOVE] Remove"
+msgstr "Remove"
+
+# TRANSLATION
+# JAVASCRIPT/ID_MSG_CONFIRM
+#: JAVASCRIPT/ID_MSG_CONFIRM
+msgid "Are you sure?"
+msgstr "Are you sure?"
+
+# TRANSLATION
+# JAVASCRIPT/ID_ROLES_MSG2
+#: JAVASCRIPT/ID_ROLES_MSG2
+msgid "Existing role!, choose another please"
+msgstr "Existing role!, choose another please"
+
+# TRANSLATION
+# LABEL/ID_ROLES_MSG2
+#: LABEL/ID_ROLES_MSG2
+msgid "[LABEL/ID_ROLES_MSG2] Existing role!, choose another please"
+msgstr "Existing role!, choose another please"
+
+# TRANSLATION
+# JAVASCRIPT/ID_ROLES_MSG1
+#: JAVASCRIPT/ID_ROLES_MSG1
+msgid "You must specify a code!"
+msgstr "You must specify a code!"
+
+# TRANSLATION
+# JAVASCRIPT/ID_REMOVE_ROLE
+#: JAVASCRIPT/ID_REMOVE_ROLE
+msgid "Are you sure you want to delete this role?"
+msgstr "Are you sure you want to delete this role?"
+
+# TRANSLATION
+# LABEL/ID_MSG_CONFIRM_DELETE_SUPERVISOR_DYNAFORM
+#: LABEL/ID_MSG_CONFIRM_DELETE_SUPERVISOR_DYNAFORM
+msgid "Do you want to remove this Dynaform?"
+msgstr "Do you want to remove this Dynaform?"
+
+# TRANSLATION
+# LABEL/VIEW_ROLE_USERS
+#: LABEL/VIEW_ROLE_USERS
+msgid "View users"
+msgstr "View users"
+
+# TRANSLATION
+# LABEL/ID_ROLES
+#: LABEL/ID_ROLES
+msgid "ROLES"
+msgstr "ROLES"
+
+# TRANSLATION
+# JAVASCRIPT/ID_PROCESSMAP_TASK_PROPERTIES_NOTIFICATIONS
+#: JAVASCRIPT/ID_PROCESSMAP_TASK_PROPERTIES_NOTIFICATIONS
+msgid "Notifications"
+msgstr "Notifications"
+
+# TRANSLATION
 # JAVASCRIPT/ID_PROCESSMAP_SUPERVISORS_DYNAFORMS
 #: JAVASCRIPT/ID_PROCESSMAP_SUPERVISORS_DYNAFORMS
 msgid "Dynaforms for the supervisor"
 msgstr "Dynaforms for the supervisor"
+
+# TRANSLATION
+# JAVASCRIPT/ID_ASSIGN_DYNAFORM
+#: JAVASCRIPT/ID_ASSIGN_DYNAFORM
+msgid "Assign Dynaform"
+msgstr "Assign Dynaform"
 
 # TRANSLATION
 # LABEL/ID_TO_REVISE
@@ -1546,8 +1648,8 @@ msgstr "To Revise"
 # TRANSLATION
 # LABEL/ID_MESS_ENGINE_TYPE_3
 #: LABEL/ID_MESS_ENGINE_TYPE_3
-msgid "SMTP (OpenMail)"
-msgstr "SMTP (OpenMail)"
+msgid "SMTP without authentication (OpenMail)"
+msgstr "SMTP without authentication (OpenMail)"
 
 # TRANSLATION
 # LABEL/ID_MESS_TEST_MESSAGE_ERROR_PHP_MAIL
@@ -2395,6 +2497,102 @@ msgstr "Last Name"
 msgid "[groups/groups_UsersList.xml?button] Accept"
 msgstr "Accept"
 
+# roles/roles_New.xml?title
+# roles/roles_New.xml
+#: title - title
+msgid "Create a new Role"
+msgstr "Create a new Role"
+
+# roles/roles_New.xml?ROL_CODE
+# roles/roles_New.xml
+#: text - ROL_CODE
+msgid "Rol Code"
+msgstr "Rol Code"
+
+# roles/roles_New.xml?ROL_STATUS
+# roles/roles_New.xml
+#: dropdown - ROL_STATUS
+msgid "[roles/roles_New.xml?ROL_STATUS] Status"
+msgstr "Status"
+
+# roles/roles_New.xml?ROL_STATUS-1
+# roles/roles_New.xml
+#: dropdown - ROL_STATUS - 1
+msgid "[roles/roles_New.xml?ROL_STATUS-1]"
+msgstr "Active"
+
+# roles/roles_New.xml?ROL_STATUS-''
+# roles/roles_New.xml
+#: dropdown - ROL_STATUS - ''
+msgid "[roles/roles_New.xml?ROL_STATUS-'']"
+msgstr "Inactive"
+
+# roles/roles_New.xml?CREATE
+# roles/roles_New.xml
+#: button - CREATE
+msgid "Create"
+msgstr "Create"
+
+# roles/roles_Options.xml?MNU_ADD
+# roles/roles_Options.xml
+#: link - MNU_ADD
+msgid "[roles/roles_Options.xml?MNU_ADD] New"
+msgstr "New"
+
+# roles/roles_Edit.xml?title
+# roles/roles_Edit.xml
+#: title - title
+msgid "[roles/roles_Edit.xml?title] Create a new Role"
+msgstr "Create a new Role"
+
+# roles/roles_Edit.xml?ROL_CODE
+# roles/roles_Edit.xml
+#: text - ROL_CODE
+msgid "[roles/roles_Edit.xml?ROL_CODE] Rol Code"
+msgstr "Rol Code"
+
+# roles/roles_Edit.xml?ROL_STATUS
+# roles/roles_Edit.xml
+#: dropdown - ROL_STATUS
+msgid "[roles/roles_Edit.xml?ROL_STATUS] Status"
+msgstr "Status"
+
+# roles/roles_Edit.xml?ROL_STATUS-1
+# roles/roles_Edit.xml
+#: dropdown - ROL_STATUS - 1
+msgid "[roles/roles_Edit.xml?ROL_STATUS-1]"
+msgstr "Active"
+
+# roles/roles_Edit.xml?ROL_STATUS-''
+# roles/roles_Edit.xml
+#: dropdown - ROL_STATUS - ''
+msgid "[roles/roles_Edit.xml?ROL_STATUS-'']"
+msgstr "Inactive"
+
+# roles/roles_Edit.xml?CREATE
+# roles/roles_Edit.xml
+#: button - CREATE
+msgid "Update"
+msgstr "Update"
+
+# roles/roles_List.xml?ROL_CODE
+# roles/roles_List.xml
+#: text - ROL_CODE
+msgid "Code"
+msgstr "Code"
+
+# roles/roles_List.xml?ROL_CREATE_DATE
+# roles/roles_List.xml
+#: text - ROL_CREATE_DATE
+msgid "Create date"
+msgstr "Create date"
+
+# roles/roles_List.xml?ROL_UPDATE_DATE
+# roles/roles_List.xml
+#: text - ROL_UPDATE_DATE
+msgid "Update date"
+msgstr "Update date"
+
 # dbConnections/dbConnections_Edit.xml?DBS_SERVER
 # dbConnections/dbConnections_Edit.xml
 #: text - DBS_SERVER
@@ -2536,7 +2734,7 @@ msgstr "Test Connection"
 # dbConnections/dbConnections_New.xml?CREATE
 # dbConnections/dbConnections_New.xml
 #: button - CREATE
-msgid "Create"
+msgid "[dbConnections/dbConnections_New.xml?CREATE] Create"
 msgstr "Create"
 
 # dynaforms/dynaforms_Options.xml?MNU_ADD
@@ -2671,6 +2869,12 @@ msgstr "Description"
 msgid "[dynaforms/dynaforms_Edit.xml?ACCEPT] Save"
 msgstr "Save"
 
+# dynaforms/dynaforms_SupervisorOptions.xml?MNU_ASSIGN
+# dynaforms/dynaforms_SupervisorOptions.xml
+#: link - MNU_ASSIGN
+msgid "[dynaforms/dynaforms_SupervisorOptions.xml?MNU_ASSIGN] Assign"
+msgstr "Assign"
+
 # dynaforms/dynaforms_ShortList.xml?DYN_TITLE
 # dynaforms/dynaforms_ShortList.xml
 #: text - DYN_TITLE
@@ -2735,6 +2939,18 @@ msgstr "Description"
 # dynaforms/dynaforms_List.xml
 #: button - SEARCH
 msgid "[dynaforms/dynaforms_List.xml?SEARCH] Apply Filter"
+msgstr "Apply Filter"
+
+# dynaforms/dynaforms_Supervisor.xml?DYN_TITLE
+# dynaforms/dynaforms_Supervisor.xml
+#: text - DYN_TITLE
+msgid "[dynaforms/dynaforms_Supervisor.xml?DYN_TITLE] Title"
+msgstr "Title"
+
+# dynaforms/dynaforms_Supervisor.xml?SEARCH
+# dynaforms/dynaforms_Supervisor.xml
+#: button - SEARCH
+msgid "[dynaforms/dynaforms_Supervisor.xml?SEARCH] Apply Filter"
 msgstr "Apply Filter"
 
 # dynaforms/fields_Edit.xml?XMLNODE_NAME
@@ -2938,7 +3154,7 @@ msgstr "Section"
 # dynaforms/dynaforms_JSEditor.xml?JS
 # dynaforms/dynaforms_JSEditor.xml
 #: textarea - JS
-msgid "Code"
+msgid "[dynaforms/dynaforms_JSEditor.xml?JS] Code"
 msgstr "Code"
 
 # dynaforms/fields_List.xml?XMLNODE_NAME
@@ -4849,6 +5065,18 @@ msgstr "Appearance"
 msgid "[dynaforms/fields/reset.xml?PME_ACCEPT] Save"
 msgstr "Save"
 
+# dynaforms/dynaforms_AvailableSupervisorDynaforms.xml?DYN_TITLE
+# dynaforms/dynaforms_AvailableSupervisorDynaforms.xml
+#: text - DYN_TITLE
+msgid "[dynaforms/dynaforms_AvailableSupervisorDynaforms.xml?DYN_TITLE] Title"
+msgstr "Title"
+
+# dynaforms/dynaforms_AvailableSupervisorDynaforms.xml?SEARCH
+# dynaforms/dynaforms_AvailableSupervisorDynaforms.xml
+#: button - SEARCH
+msgid "[dynaforms/dynaforms_AvailableSupervisorDynaforms.xml?SEARCH] Apply Filter"
+msgstr "Apply Filter"
+
 # dynaforms/dynaform_Fields.xml?XMLNODE_NAME
 # dynaforms/dynaform_Fields.xml
 #: text - XMLNODE_NAME
@@ -5413,6 +5641,12 @@ msgstr "Import"
 msgid "Back to list"
 msgstr "Back to list"
 
+# processes/processes_Assignuser.xml?MNU_ASSIGN
+# processes/processes_Assignuser.xml
+#: link - MNU_ASSIGN
+msgid "[processes/processes_Assignuser.xml?MNU_ASSIGN] Assign"
+msgstr "Assign"
+
 # processes/processes_Properties.xml?TITLE1
 # processes/processes_Properties.xml
 #: title - TITLE1
@@ -5617,6 +5851,18 @@ msgstr "Template"
 msgid "[processes/processes_New.xml?SUBMIT] Save"
 msgstr "Save"
 
+# processes/processes_availableProcessesUser.xml?USR_FIRSTNAME
+# processes/processes_availableProcessesUser.xml
+#: text - USR_FIRSTNAME
+msgid "First name"
+msgstr "First name"
+
+# processes/processes_availableProcessesUser.xml?USR_LASTNAME
+# processes/processes_availableProcessesUser.xml
+#: text - USR_LASTNAME
+msgid "Last name"
+msgstr "Last name"
+
 # processes/processes_Import.xml?TITLE1
 # processes/processes_Import.xml
 #: title - TITLE1
@@ -5634,6 +5880,18 @@ msgstr "File"
 #: submit - SAVE
 msgid "[processes/processes_Import.xml?SAVE] Import"
 msgstr "Import"
+
+# processes/processes_User.xml?USR_FIRSTNAME
+# processes/processes_User.xml
+#: text - USR_FIRSTNAME
+msgid "[processes/processes_User.xml?USR_FIRSTNAME] First name"
+msgstr "First name"
+
+# processes/processes_User.xml?USR_LASTNAME
+# processes/processes_User.xml
+#: text - USR_LASTNAME
+msgid "[processes/processes_User.xml?USR_LASTNAME] Last name"
+msgstr "Last name"
 
 # reports/reportsList.xml?RPT_UID
 # reports/reportsList.xml
@@ -7009,6 +7267,12 @@ msgstr "Language"
 msgid "Configuration"
 msgstr "Configuration"
 
+# setup/emails.xml?MESS_ENABLED
+# setup/emails.xml
+#: checkbox - MESS_ENABLED
+msgid "Enable send mails"
+msgstr "Enable send mails"
+
 # setup/emails.xml?MESS_ENGINE
 # setup/emails.xml
 #: dropdown - MESS_ENGINE
@@ -7031,7 +7295,7 @@ msgstr "SMTP (PHPMailer)"
 # setup/emails.xml
 #: dropdown - MESS_ENGINE - OPENMAIL
 msgid "[setup/emails.xml?MESS_ENGINE-OPENMAIL]"
-msgstr "SMTP (OpenMail)"
+msgstr "SMTP without authentication (OpenMail)"
 
 # setup/emails.xml?MESS_SERVER
 # setup/emails.xml
@@ -8539,12 +8803,6 @@ msgstr "Confirm Password"
 msgid "[users/users_View.xml?TITLEADD] Additional Information"
 msgstr "Additional Information"
 
-# users/users_View.xml?USR_PHOTO
-# users/users_View.xml
-#: image - USR_PHOTO
-msgid "[users/users_View.xml?USR_PHOTO] Photo"
-msgstr "Photo"
-
 # users/users_View.xml?USR_RESUME
 # users/users_View.xml
 #: link - USR_RESUME
@@ -8581,6 +8839,12 @@ msgstr "Allow arbitrary transfer (Ad hoc)"
 msgid "Assigned user can send messages"
 msgstr "Assigned user can send messages"
 
+# tasks/tasks_Notifications.xml?SEND_EMAIL
+# tasks/tasks_Notifications.xml
+#: checkbox - SEND_EMAIL
+msgid "After derivation notify to each next user"
+msgstr "After derivation notify to each next user"
+
 # tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_TYPE
 # tasks/tasks_AssignmentRules.xml
 #: radiogroup - TAS_ASSIGN_TYPE
@@ -8605,23 +8869,11 @@ msgstr "Manual Assignment"
 msgid "[tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_TYPE-EVALUATE]"
 msgstr "Value Based Assignment"
 
-# tasks/tasks_Labels.xml?TAS_DEF_TITLE
-# tasks/tasks_Labels.xml
-#: textareapm - TAS_DEF_TITLE
-msgid "Case Title"
-msgstr "Case Title"
-
-# tasks/tasks_Labels.xml?TAS_DEF_DESCRIPTION
-# tasks/tasks_Labels.xml
-#: textareapm - TAS_DEF_DESCRIPTION
-msgid "Case Description"
-msgstr "Case Description"
-
-# tasks/tasks_Labels.xml?TAS_DEF_PROC_CODE
-# tasks/tasks_Labels.xml
-#: textareapm - TAS_DEF_PROC_CODE
-msgid "Case Status"
-msgstr "Case Status"
+# tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_VARIABLE
+# tasks/tasks_AssignmentRules.xml
+#: textpm - TAS_ASSIGN_VARIABLE
+msgid "Variable for Value Based Assignment"
+msgstr "Variable for Value Based Assignment"
 
 # tasks/tasks_Owner.xml?TAS_OWNER_APP
 # tasks/tasks_Owner.xml
@@ -9004,8 +9256,8 @@ msgstr "Comments"
 # cases/cases_AttachInputDocument3.xml?MORE
 # cases/cases_AttachInputDocument3.xml
 #: checkbox - MORE
-msgid "Upload more input document"
-msgstr "Upload more input document"
+msgid "Upload Multiple Input Documents"
+msgstr "Upload Multiple Input Documents"
 
 # cases/cases_AttachInputDocument3.xml?SAVE
 # cases/cases_AttachInputDocument3.xml
@@ -9508,8 +9760,8 @@ msgstr "File"
 # cases/cases_AttachInputDocument1.xml?MORE
 # cases/cases_AttachInputDocument1.xml
 #: checkbox - MORE
-msgid "[cases/cases_AttachInputDocument1.xml?MORE] Upload more input document"
-msgstr "Upload more input document"
+msgid "[cases/cases_AttachInputDocument1.xml?MORE] Upload Multiple Input Documents"
+msgstr "Upload Multiple Input Documents"
 
 # cases/cases_AttachInputDocument1.xml?SAVE
 # cases/cases_AttachInputDocument1.xml
@@ -9736,8 +9988,8 @@ msgstr "Comments"
 # cases/cases_AttachInputDocument2.xml?MORE
 # cases/cases_AttachInputDocument2.xml
 #: checkbox - MORE
-msgid "Add more input document"
-msgstr "Add more input document"
+msgid "[cases/cases_AttachInputDocument2.xml?MORE] Upload Multiple Input Documents"
+msgstr "Upload Multiple Input Documents"
 
 # cases/cases_AttachInputDocument2.xml?SAVE
 # cases/cases_AttachInputDocument2.xml
@@ -10114,7 +10366,7 @@ msgstr "Case Resume"
 # cases/cases_Resume.xml?TITLE
 # cases/cases_Resume.xml
 #: text - TITLE
-msgid "[cases/cases_Resume.xml?TITLE] Case Title"
+msgid "Case Title"
 msgstr "Case Title"
 
 # cases/cases_Resume.xml?CREATOR
@@ -10138,7 +10390,7 @@ msgstr "Last Update"
 # cases/cases_Resume.xml?STATUS
 # cases/cases_Resume.xml
 #: text - STATUS
-msgid "[cases/cases_Resume.xml?STATUS] Case Status"
+msgid "Case Status"
 msgstr "Case Status"
 
 # cases/cases_Resume.xml?DEL_THREAD_STATUS
@@ -10290,6 +10542,12 @@ msgstr "Database Server IP Address"
 #: caption - DATABASE_NAME
 msgid "[login/dbInfo.xml?DATABASE_NAME] Database Name"
 msgstr "Database Name"
+
+# login/dbInfo.xml?AVAILABLE_DB
+# login/dbInfo.xml
+#: caption - AVAILABLE_DB
+msgid "Available Databases"
+msgstr "Available Databases"
 
 # login/dbInfo.xml?HTTP_USER_AGENT
 # login/dbInfo.xml
