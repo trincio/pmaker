@@ -64,8 +64,8 @@ $html = "
       </table>";
 
         $ch = &$tree->addChild("", $html, array('nodeType' => 'child'));
-        $ch->point = '<img src="/images/bulletButton.gif" />';
-        
+        $ch->point = '</span><img src="/images/plus.gif" />';
+        $i=1;
 foreach ($steps as $step) {
 
     if ($step['STEP_TYPE_OBJ'] == 'DYNAFORM') {        
@@ -82,42 +82,45 @@ foreach ($steps as $step) {
         $html = "
       <table cellspacing='0' cellpadding='0' border='1' style='border:0px;'>
         <tr>
-        <td class='treeNode' style='border:0px;background-color:transparent;'>$n&nbsp;&nbsp;</td>
+        <td class='treeNode' style='border:0px;background-color:transparent;'><span id='focus$i'></td>
+        <td class='treeNode' style='border:0px;background-color:transparent;'>&nbsp;&nbsp;$n&nbsp;&nbsp;</td>
           <td class='treeNode' style='border:0px;background-color:transparent;'>
-		  	<a href=\"cases_StepToRevise?PRO_UID=$PRO_UID&DYN_UID=$DYN_UID&APP_UID=$APP_UID&position=".$step['STEP_POSITION']."&DEL_INDEX=$DEL_INDEX\">{$TITLE}</a>
+		  	<a href=\"cases_StepToRevise?ex=$i&PRO_UID=$PRO_UID&DYN_UID=$DYN_UID&APP_UID=$APP_UID&position=".$step['STEP_POSITION']."&DEL_INDEX=$DEL_INDEX\">{$TITLE}</a>
 		  </td>
         </tr>
       </table>";
 
         $ch = &$tree->addChild("", $html, array('nodeType' => 'child'));
-        $ch->point = '<img src="/images/ftv2pnode.gif" />';
-
+        $ch->point = '<img src="/images/ftv2mnode.gif" />';
+		$i++;
     }
 }
 
 $html = "
       <table cellspacing='0' cellpadding='0' border='1' style='border:0px;'>
         <tr>
+          <td class='treeNode' style='border:0px;background-color:transparent;'><span id='focus$i'></td>
           <td class='treeNode' style='border:0px;background-color:transparent;'>
-		  	<a href=\"cases_StepToReviseInputs?PRO_UID=$PRO_UID&DYN_UID=$DYN_UID&APP_UID=$APP_UID&DEL_INDEX=$DEL_INDEX\">Inputs</a>
+		  	<a href=\"cases_StepToReviseInputs?ex=$i&PRO_UID=$PRO_UID&DYN_UID=$DYN_UID&APP_UID=$APP_UID&DEL_INDEX=$DEL_INDEX\">&nbsp;&nbsp;Input Documents</a>
 		  </td>
         </tr>
       </table>";
 
         $ch = &$tree->addChild("", $html, array('nodeType' => 'child'));
-        $ch->point = '<img src="/images/bulletButton.gif" />';
-        
+        $ch->point = '</span><img src="/images/ftv2doc.gif" />';
+$i++;       
 $html = "
       <table cellspacing='0' cellpadding='0' border='1' style='border:0px;'>
         <tr>
+          <td class='treeNode' style='border:0px;background-color:transparent;'><span id='focus$i'></td>
           <td class='treeNode' style='border:0px;background-color:transparent;'>
-		  	<a href='cases_StepToReviseOutputs?PRO_UID=$PRO_UID&DEL_INDEX=$DEL_INDEX&APP_UID=$APP_UID'>Outputs</a>
+		  	<a href='cases_StepToReviseOutputs?ex=$i&PRO_UID=$PRO_UID&DEL_INDEX=$DEL_INDEX&APP_UID=$APP_UID'>&nbsp;&nbsp;Output Documents</a>
 		  </td>
         </tr>
       </table>";
 
         $ch = &$tree->addChild("", $html, array('nodeType' => 'child'));
-        $ch->point = '<img src="/images/bulletButton.gif" />';
-        
+        $ch->point = '</span><img src="/images/ftv2doc.gif" />';
+
 print ($tree->render());
 //
