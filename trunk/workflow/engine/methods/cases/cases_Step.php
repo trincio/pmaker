@@ -154,6 +154,7 @@ switch ($_GET['TYPE'])
   case 'INPUT_DOCUMENT':
     $oInputDocument = new InputDocument();
     $Fields = $oInputDocument->load($_GET['UID']);
+    Krumo($Fields);
     if (!$aPreviousStep)
     {
       //$Fields['__DYNAFORM_OPTIONS']['PREVIOUS_STEP'] = "javascript:alert('" . G::LoadTranslation('ID_YOU_ARE_FIRST_STEP') . "');";

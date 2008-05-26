@@ -55,6 +55,17 @@ $steps = $o->getAllStepsToRevise($_GET['APP_UID'], $_GET['DEL_INDEX']);
 $APP_UID = $_GET['APP_UID']; 
 $DEL_INDEX = $_GET['DEL_INDEX'];
 
+
+$html = "
+      <table cellspacing='0' cellpadding='0' border='1' style='border:0px;'>
+        <tr>
+        <td class='treeNode' style='border:0px;background-color:transparent;'><b>Dynaforms<b></td>
+        </tr>
+      </table>";
+
+        $ch = &$tree->addChild("", $html, array('nodeType' => 'child'));
+        $ch->point = '<img src="/images/bulletButton.gif" />';
+        
 foreach ($steps as $step) {
 
     if ($step['STEP_TYPE_OBJ'] == 'DYNAFORM') {        
@@ -83,5 +94,30 @@ foreach ($steps as $step) {
 
     }
 }
+
+$html = "
+      <table cellspacing='0' cellpadding='0' border='1' style='border:0px;'>
+        <tr>
+          <td class='treeNode' style='border:0px;background-color:transparent;'>
+		  	<a href=\"cases_StepToReviseInputs?PRO_UID=$PRO_UID&DYN_UID=$DYN_UID&APP_UID=$APP_UID&DEL_INDEX=$DEL_INDEX\">Inputs</a>
+		  </td>
+        </tr>
+      </table>";
+
+        $ch = &$tree->addChild("", $html, array('nodeType' => 'child'));
+        $ch->point = '<img src="/images/bulletButton.gif" />';
+        
+$html = "
+      <table cellspacing='0' cellpadding='0' border='1' style='border:0px;'>
+        <tr>
+          <td class='treeNode' style='border:0px;background-color:transparent;'>
+		  	<a href='cases_StepToReviseOutputs?PRO_UID=$PRO_UID&DEL_INDEX=$DEL_INDEX&APP_UID=$APP_UID'>Outputs</a>
+		  </td>
+        </tr>
+      </table>";
+
+        $ch = &$tree->addChild("", $html, array('nodeType' => 'child'));
+        $ch->point = '<img src="/images/bulletButton.gif" />';
+        
 print ($tree->render());
 //
