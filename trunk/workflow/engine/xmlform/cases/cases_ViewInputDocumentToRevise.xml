@@ -62,13 +62,8 @@
 
 <JS type="javascript">
 <![CDATA[
-leimnud.event.add(window, 'load', function() {
-  if (getField('INP_DOC_FORM_NEEDED').value == 'VIRTUAL') {
-    hideRow('INP_DOC_ORIGINAL');
-  }
-});
 
-var back = function(sUID, iPosition)
+var back = function()
 {
 	javascript:history.go(-1);
 };
