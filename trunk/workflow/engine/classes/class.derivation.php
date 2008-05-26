@@ -1,10 +1,10 @@
 <?php
 /**
  * class.derivation.php
- *  
+ *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -14,13 +14,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
   require_once ( "classes/model/Task.php" );
   require_once ( "classes/model/Process.php" );
@@ -82,7 +82,7 @@ class Derivation
       $bContinue   = true;
 
       //evaluate the condition if there are conditions defined.
-      if( isset( $aDerivation['ROU_CONDITION'] ) && $aDerivation['ROU_CONDITION'] != '' 
+      if( isset( $aDerivation['ROU_CONDITION'] ) && $aDerivation['ROU_CONDITION'] != ''
          && ( $aDerivation['ROU_TYPE'] != 'SELECT' ||  $aDerivation['ROU_TYPE'] == 'PARALLEL-BY-EVALUATION') ) {
         $AppFields = $this->case->loadCase( $aData['APP_UID'] );
         G::LoadClass('pmScript');
@@ -264,7 +264,7 @@ class Derivation
            $variable  = str_replace ( '@@', '', $nextAssignedTask['TAS_ASSIGN_VARIABLE'] );
            if ( isset ( $AppFields['APP_DATA'][$variable] ) ) {
              $value = $AppFields['APP_DATA'][$variable];
-             $userFields = $this->getUsersFullNameFromArray ($value);             	   
+             $userFields = $this->getUsersFullNameFromArray ($value);
            }
            else
              throw ( new Exception("Task doesn't have a valid user in variable $variable or this variable doesn't exists.") ) ;
@@ -297,8 +297,8 @@ class Derivation
     $this->case = new cases();
     //first, we close the current derivation, then we'll try to derivate to each defined route
     $appFields = $this->case->LoadCase($currentDelegation['APP_UID'], $currentDelegation['DEL_INDEX'] );
-krumo ($currentDelegation);
-krumo ( $nextDelegations ); //*////*/*/*/*/quitar comentario
+//krumo ($currentDelegation);
+//krumo ( $nextDelegations ); //*////*/*/*/*/quitar comentario
     $this->case->CloseCurrentDelegation ( $currentDelegation['APP_UID'], $currentDelegation['DEL_INDEX'] );
     //Count how many tasks should be derivated.
     $countNextTask = count($nextDelegations);
@@ -316,12 +316,12 @@ krumo ( $nextDelegations ); //*////*/*/*/*/quitar comentario
           if ( $currentDelegation['ROU_TYPE'] == 'SEC-JOIN' ) {
             $siblingThreads = $this->case->getOpenSiblingThreads( $currentDelegation['APP_UID'], $currentDelegation['DEL_INDEX'] );
             $canDerivate = count($siblingThreads) == 0;
-            
+
           //krumo ($siblingThreads);  die;
           }
-          else 
+          else
             $canDerivate = true;
-            
+
           if ( $canDerivate ) {
             if ( $nextDel['TAS_ASSIGN_TYPE'] == 'BALANCED') {
               $this->setTasLastAssigned ($nextDel['TAS_UID'], $nextDel['USR_UID']);
@@ -337,9 +337,9 @@ krumo ( $nextDelegations ); //*////*/*/*/*/quitar comentario
               $currentDelegation['DEL_INDEX'],
               $nextDel['DEL_PRIORITY'],
               $delType,
-              $iAppThreadIndex 
+              $iAppThreadIndex
                );
-            
+
             switch ( $currentDelegation['ROU_TYPE'] ) {
             	case 'PARALLEL' :
             	case 'PARALLEL-BY-EVALUATION' :
@@ -347,7 +347,7 @@ krumo ( $nextDelegations ); //*////*/*/*/*/quitar comentario
                    $iNewThreadIndex = $this->case->newAppThread ( $currentDelegation['APP_UID'], $iNewDelIndex, $iAppThreadIndex );
                    $this->case->updateAppDelegation ( $currentDelegation['APP_UID'], $iNewDelIndex, $iNewThreadIndex  );
                    break;
-              default : 
+              default :
               $this->case->updateAppThread ( $currentDelegation['APP_UID'], $iAppThreadIndex, $iNewDelIndex );
             }//switch
 
@@ -358,7 +358,7 @@ krumo ( $nextDelegations ); //*////*/*/*/*/quitar comentario
             	case 'SEC-JOIN' :
                    $this->case->closeAppThread ( $currentDelegation['APP_UID'], $iAppThreadIndex);
             	     break;
-              default : 
+              default :
             }//switch
           }
       }
@@ -375,13 +375,13 @@ krumo ( $nextDelegations ); //*////*/*/*/*/quitar comentario
 
     /* Start Block : Count the open threads of $currentDelegation['APP_UID'] */
     $openThreads = $this->case->GetOpenThreads( $currentDelegation['APP_UID'] );
-    if ( $openThreads == 0) {       //Close case  
+    if ( $openThreads == 0) {       //Close case
       $appFields['APP_STATUS']      = 'COMPLETED';
       $appFields['APP_FINISH_DATE'] = 'now';
     }
-    
-    $appFields['DEL_INDEX']       = $iNewDelIndex;
-    $appFields['TAS_UID']         = $nextDel['TAS_UID'];    
+
+    $appFields['DEL_INDEX']       = (isset($iNewDelIndex) ? $iNewDelIndex : 0);
+    $appFields['TAS_UID']         = $nextDel['TAS_UID'];
     /* Start Block : UPDATES APPLICATION */
     $this->case->updateCase ( $currentDelegation['APP_UID'], $appFields );
     /* End Block : UPDATES APPLICATION */

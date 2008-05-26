@@ -106,29 +106,31 @@ try {
       G::LoadClass('spool');
       $oUser = new Users();
       foreach ($_POST['form']['TASKS'] as $aTask) {
-        $aUser = $oUser->load($aTask['USR_UID']);
-        $sTo   = ((($aUser['USR_FIRSTNAME'] != '') || ($aUser['USR_LASTNAME'] != '')) ? $aUser['USR_FIRSTNAME'] . ' ' . $aUser['USR_LASTNAME'] . ' ' : '') . '<' . $aUser['USR_EMAIL'] . '>';
-        $oSpool = new spoolRun();
-        $oSpool->setConfig(array('MESS_ENGINE'   => $aConfiguration['MESS_ENGINE'],
-                                 'MESS_SERVER'   => $aConfiguration['MESS_SERVER'],
-                                 'MESS_PORT'     => $aConfiguration['MESS_PORT'],
-                                 'MESS_ACCOUNT'  => $aConfiguration['MESS_ACCOUNT'],
-                                 'MESS_PASSWORD' => $aConfiguration['MESS_PASSWORD']));
-        $oSpool->create(array('msg_uid'          => '',
-                              'app_uid'          => $_SESSION['APPLICATION'],
-                              'del_index'        => $_SESSION['INDEX'],
-                              'app_msg_type'     => 'DERIVATION',
-                              'app_msg_subject'  => $sSubject,
-                              'app_msg_from'     => $sFrom,
-                              'app_msg_to'       => $sTo,
-                              'app_msg_body'     => $sBody,
-                              'app_msg_cc'       => '',
-                              'app_msg_bcc'      => '',
-                              'app_msg_attach'   => '',
-                              'app_msg_template' => '',
-                              'app_msg_status'   => 'pending'));
-        if (($aConfiguration['MESS_BACKGROUND'] == '') || ($aConfiguration['MESS_TRY_SEND_INMEDIATLY'] == '1')) {
-          $oSpool->sendMail();
+        if (isset($aTask['USR_UID'])) {
+          $aUser = $oUser->load($aTask['USR_UID']);
+          $sTo   = ((($aUser['USR_FIRSTNAME'] != '') || ($aUser['USR_LASTNAME'] != '')) ? $aUser['USR_FIRSTNAME'] . ' ' . $aUser['USR_LASTNAME'] . ' ' : '') . '<' . $aUser['USR_EMAIL'] . '>';
+          $oSpool = new spoolRun();
+          $oSpool->setConfig(array('MESS_ENGINE'   => $aConfiguration['MESS_ENGINE'],
+                                   'MESS_SERVER'   => $aConfiguration['MESS_SERVER'],
+                                   'MESS_PORT'     => $aConfiguration['MESS_PORT'],
+                                   'MESS_ACCOUNT'  => $aConfiguration['MESS_ACCOUNT'],
+                                   'MESS_PASSWORD' => $aConfiguration['MESS_PASSWORD']));
+          $oSpool->create(array('msg_uid'          => '',
+                                'app_uid'          => $_SESSION['APPLICATION'],
+                                'del_index'        => $_SESSION['INDEX'],
+                                'app_msg_type'     => 'DERIVATION',
+                                'app_msg_subject'  => $sSubject,
+                                'app_msg_from'     => $sFrom,
+                                'app_msg_to'       => $sTo,
+                                'app_msg_body'     => $sBody,
+                                'app_msg_cc'       => '',
+                                'app_msg_bcc'      => '',
+                                'app_msg_attach'   => '',
+                                'app_msg_template' => '',
+                                'app_msg_status'   => 'pending'));
+          if (($aConfiguration['MESS_BACKGROUND'] == '') || ($aConfiguration['MESS_TRY_SEND_INMEDIATLY'] == '1')) {
+            $oSpool->sendMail();
+          }
         }
       }
     }
