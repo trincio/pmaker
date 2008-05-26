@@ -50,10 +50,13 @@
 	  $smarty->assign('tpl_menu', PATH_TEMPLATE . 'menu.html' );
 	  $smarty->assign('tpl_submenu', PATH_TEMPLATE . 'submenu.html' );
     
-    $oPluginRegistry = &PMPluginRegistry::getSingleton();
+    if (class_exists('PMPluginRegistry')) {
+      $oPluginRegistry = &PMPluginRegistry::getSingleton();
+      $sCompanyLogo = $oPluginRegistry->getCompanyLogo ( '/images/processmaker.logo.jpg' );
+    }
+    else
+      $sCompanyLogo = '/images/processmaker.logo.jpg';
     
-    $sCompanyLogo = $oPluginRegistry->getCompanyLogo ( '/images/processmaker.logo.jpg' );
-
 	  $smarty->assign('logo_company', $sCompanyLogo );
     $smarty->display('green.html');
   }
