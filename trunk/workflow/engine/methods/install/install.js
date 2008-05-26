@@ -129,6 +129,7 @@ var installer=function()
 		var td1 = tr.insertCell(1);
 		td1.className="inst_td1";
 		this.databaseHostname = document.createElement("input");
+		this.databaseHostname.value="localhost";
 		this.databaseHostname.type="text";
 		this.databaseHostname.onkeyup=this.submit;
 		this.databaseHostname.className="inputNormal";
@@ -157,6 +158,7 @@ var installer=function()
 		this.databaseUsername = document.createElement("input");
 		this.databaseUsername.onkeyup=this.submit;
 		this.databaseUsername.type="text";
+		this.databaseUsername.value="root";
 		this.databaseUsername.className="inputNormal";
 		td1.appendChild(this.databaseUsername);
 
