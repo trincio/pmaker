@@ -66,9 +66,6 @@ $G_PUBLISH = new Publisher;
 $oAppDocument = new AppDocument();
 $oAppDocument->Fields = $oAppDocument->load($_GET['DOC']);
 $oo = $oAppDocument->load($_GET['DOC']);
-echo '<pre>';
-print_r($oo);
-echo '</pre>';
 
 $oUser = new Users();
 $aUser = $oUser->load($oAppDocument->Fields['USR_UID']);
