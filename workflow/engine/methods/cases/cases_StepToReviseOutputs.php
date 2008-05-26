@@ -89,9 +89,30 @@ $G_PUBLISH->AddContent('template', '', '', '', $oTemplatePower);
 $oCase = new Cases();
 $G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_OutputdocsListToRevise', $oCase->getOutputDocumentsCriteriaToRevise($_SESSION['APPLICATION']), '');
 G::RenderPage('publish');
+
+if(!isset($_GET['ex'])) $_GET['ex']=0;
+
 ?>
 <script type="text/javascript">
 /*------------------------------ To Revise Routines ---------------------------*/
+function setSelect()
+{
+	var ex=<?=$_GET['ex']?>;
+	
+	try{
+		for(i=1; i<50; i++)
+		{
+			if(i == ex){
+				document.getElementById('focus'+i).innerHTML = '<img src="/images/bulletButton.gif" />';
+			}
+			else{			
+				document.getElementById('focus'+i).innerHTML = '';
+			}	
+		}
+	} catch (e){
+		return 0;
+	}
+}
 function toRevisePanel(APP_UID,DEL_INDEX)
 {
 	oPanel = new leimnud.module.panel();
@@ -118,6 +139,7 @@ function toRevisePanel(APP_UID,DEL_INDEX)
     oRPC.callback = function(rpc) {
 	  	oPanel.loader.hide();
 	  	oPanel.addContent(rpc.xmlhttp.responseText);
+	  	setSelect();
 
   	}.extend(this);
 	oRPC.make();

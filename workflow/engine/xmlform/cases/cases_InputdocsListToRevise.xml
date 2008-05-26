@@ -12,9 +12,17 @@
 
 <CONFIRM type="hidden" showInTable="0"/>
 
-<TITLE type="text" colWidth="275" titleAlign="left" align="left">
-  <en></en>
+<TITLE type="text" colWidth="150" titleAlign="left" align="left">
+  <en>Type</en>
 </TITLE>
+
+<TYPE type="text" colWidth="100" titleAlign="left" align="left">
+  <en>Type</en>
+</TYPE>
+
+<CREATE_DATE type="text" colWidth="110" titleAlign="left" align="left">
+  <en>Create Date</en>
+</CREATE_DATE>
 
 <VIEW type="link" colWidth="25" value="@G::LoadTranslation(ID_VIEW)" link="cases_ToReviseInputDocView?UID=@#DOC_UID&amp;DOC=@#APP_DOC_UID" onclick=""/>
 </dynaForm>

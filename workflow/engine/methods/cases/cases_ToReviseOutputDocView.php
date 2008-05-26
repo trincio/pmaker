@@ -100,9 +100,31 @@ $G_PUBLISH = new Publisher;
 $G_PUBLISH->AddContent('xmlform', 'xmlform', 'cases/cases_ViewOutputDocumentToRevise', '', G::array_merges($aOD, $aFields), '');
 //
 G::RenderPage('publish');
+
+if(!isset($_GET['ex'])) $_GET['ex']=0;
+
 ?>
 <script type="text/javascript">
 /*------------------------------ To Revise Routines ---------------------------*/
+function setSelect()
+{
+	var ex=<?=$_GET['ex']?>;
+	
+	try{
+		for(i=1; i<50; i++)
+		{
+			if(i == ex){
+				document.getElementById('focus'+i).innerHTML = '<img src="/images/bulletButton.gif" />';
+			}
+			else{			
+				document.getElementById('focus'+i).innerHTML = '';
+			}	
+		}
+	} catch (e){
+		return 0;
+	}
+}
+
 function toRevisePanel(APP_UID,DEL_INDEX)
 {
 	oPanel = new leimnud.module.panel();
@@ -129,6 +151,7 @@ function toRevisePanel(APP_UID,DEL_INDEX)
     oRPC.callback = function(rpc) {
 	  	oPanel.loader.hide();
 	  	oPanel.addContent(rpc.xmlhttp.responseText);
+	  	setSelect();
 
   	}.extend(this);
 	oRPC.make();

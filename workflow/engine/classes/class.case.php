@@ -292,25 +292,24 @@ class Cases
             $aFields = $oApp->load($sAppUid);
             G::LoadClass('reportTables');
             $oReportTables = new ReportTables();
-            $oReportTables->updateTables($aFields['PRO_UID'], $sAppUid, $Fields['APP_NUMBER'],$aApplicationFields);
+            $oReportTables->updateTables($aFields['PRO_UID'], $sAppUid, $Fields['APP_NUMBER'], $aApplicationFields);
 
-            if($DEL_INDEX!='' && $TAS_UID!='')
-            {
-	            $oTask = new Task;
-	            $array = $oTask->load($TAS_UID);
+            if ($DEL_INDEX != '' && $TAS_UID != '') {
+                $oTask = new Task;
+                $array = $oTask->load($TAS_UID);
 
-	            $VAR_PRI = substr($array['TAS_PRIORITY_VARIABLE'], 2);
+                $VAR_PRI = substr($array['TAS_PRIORITY_VARIABLE'], 2);
 
-	            $x = unserialize($Fields['APP_DATA']);
-	            if(isset($x[$VAR_PRI]))
-	             {  $oDel = new AppDelegation;
-	             	  $array['APP_UID'] = $sAppUid;
-	             	  $array['DEL_INDEX'] = $DEL_INDEX;
-	             	  $array['TAS_UID'] = $TAS_UID;
-	             	  $array['DEL_PRIORITY'] = $x[$VAR_PRI];
-	             	  $oDel->update($array);
-	             }
-	          }
+                $x = unserialize($Fields['APP_DATA']);
+                if (isset($x[$VAR_PRI])) {
+                    $oDel = new AppDelegation;
+                    $array['APP_UID'] = $sAppUid;
+                    $array['DEL_INDEX'] = $DEL_INDEX;
+                    $array['TAS_UID'] = $TAS_UID;
+                    $array['DEL_PRIORITY'] = $x[$VAR_PRI];
+                    $oDel->update($array);
+                }
+            }
             return $Fields;
         }
         catch (exception $e) {
@@ -585,8 +584,7 @@ class Cases
             $rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
             $rs->next();
             $row = $rs->getRow();
-            $sql = 'SELECT D.*,R.* FROM ROUTE R LEFT JOIN APP_DELEGATION D ON (R.TAS_UID=D.TAS_UID) WHERE APP_UID="' .
-                $sAppUid . '" AND ROU_NEXT_TASK="' . $sTasUid . '"';
+            $sql = 'SELECT D.*,R.* FROM ROUTE R LEFT JOIN APP_DELEGATION D ON (R.TAS_UID=D.TAS_UID) WHERE APP_UID="' . $sAppUid . '" AND ROU_NEXT_TASK="' . $sTasUid . '"';
             print $sql;
 
             while (is_array($row)) {
@@ -627,13 +625,11 @@ class Cases
     * @param string $iAppThreadIndex
     * @return
     */
-    function newAppDelegation($sProUid, $sAppUid, $sTasUid, $sUsrUid, $sPrevious, $sPriority,
-        $sDelType, $iAppThreadIndex = 1)
+    function newAppDelegation($sProUid, $sAppUid, $sTasUid, $sUsrUid, $sPrevious, $sPriority, $sDelType, $iAppThreadIndex = 1)
     {
         try {
             $appDel = new AppDelegation();
-            $delIndex = $appDel->createAppDelegation($sProUid, $sAppUid, $sTasUid, $sUsrUid,
-                $iAppThreadIndex);
+            $delIndex = $appDel->createAppDelegation($sProUid, $sAppUid, $sTasUid, $sUsrUid, $iAppThreadIndex);
             $aData = array();
             $aData['APP_UID'] = $sAppUid;
             $aData['DEL_INDEX'] = $delIndex;
@@ -971,8 +967,7 @@ class Cases
                 //appDelegation
                 $AppDelegation = new AppDelegation;
                 $iAppThreadIndex = 1; //start thread
-                $iDelIndex = $AppDelegation->createAppDelegation($sProUid, $sAppUid, $sTasUid, $sUsrUid,
-                    $iAppThreadIndex);
+                $iDelIndex = $AppDelegation->createAppDelegation($sProUid, $sAppUid, $sTasUid, $sUsrUid, $iAppThreadIndex);
 
                 //appThread
                 $AppThread = new AppThread;
@@ -980,8 +975,7 @@ class Cases
                 //DONE: Al ya existir un delegation, se puede "calcular" el caseTitle.
                 $Fields = $Application->toArray(BasePeer::TYPE_FIELDNAME);
                 $Fields['APP_TITLE'] = self::refreshCaseTitle($sAppUid, G::array_merges(G::getSystemConstants(), unserialize($Fields['APP_DATA'])));
-                $Fields['APP_DESCRIPTION'] = self::refreshCaseDescription($sAppUid, G::array_merges(G::getSystemConstants(), unserialize
-                    ($Fields['APP_DATA'])));
+                $Fields['APP_DESCRIPTION'] = self::refreshCaseDescription($sAppUid, G::array_merges(G::getSystemConstants(), unserialize($Fields['APP_DATA'])));
                 $Fields['APP_PROC_CODE'] = self::refreshCaseStatusCode($sAppUid, G::array_merges(G::getSystemConstants(), unserialize($Fields['APP_DATA'])));
                 $Application->update($Fields);
 
@@ -995,8 +989,7 @@ class Cases
 
         //call plugin
         if (class_exists('folderData')) {
-            $folderData = new folderData($sProUid, $proFields['PRO_TITLE'], $sAppUid, $Fields['APP_TITLE'],
-                $sUsrUid);
+            $folderData = new folderData($sProUid, $proFields['PRO_TITLE'], $sAppUid, $Fields['APP_TITLE'], $sUsrUid);
             $oPluginRegistry = &PMPluginRegistry::getSingleton();
             $oPluginRegistry->executeTriggers(PM_CREATE_CASE, $folderData);
         }
@@ -1083,18 +1076,15 @@ class Cases
                                 $sAction = '';
                                 break;
                         }
-                        $aNextStep = array('TYPE' => $oStep->getStepTypeObj(), 'UID' => $oStep->
-                            getStepUidObj(), 'POSITION' => $oStep->getStepPosition(), 'PAGE' =>
-                            'cases_Step?TYPE=' . $oStep->getStepTypeObj() . '&UID=' . $oStep->getStepUidObj
-                            () . '&POSITION=' . $oStep->getStepPosition() . '&ACTION=' . $sAction);
+                        $aNextStep = array('TYPE' => $oStep->getStepTypeObj(), 'UID' => $oStep->getStepUidObj(), 'POSITION' => $oStep->getStepPosition(), 'PAGE' => 'cases_Step?TYPE=' . $oStep->getStepTypeObj() . '&UID=' . $oStep->
+                            getStepUidObj() . '&POSITION=' . $oStep->getStepPosition() . '&ACTION=' . $sAction);
                         $iPosition = $iLastStep;
                     }
                     $iPosition += 1;
                 }
             }
             if (!$aNextStep) {
-                $aNextStep = array('TYPE' => 'DERIVATION', 'UID' => -1, 'POSITION' => ($iLastStep +
-                    1), 'PAGE' => 'cases_Step?TYPE=ASSIGN_TASK&UID=-1&POSITION=10000&ACTION=ASSIGN');
+                $aNextStep = array('TYPE' => 'DERIVATION', 'UID' => -1, 'POSITION' => ($iLastStep + 1), 'PAGE' => 'cases_Step?TYPE=ASSIGN_TASK&UID=-1&POSITION=10000&ACTION=ASSIGN');
             }
             return $aNextStep;
         }
@@ -1178,10 +1168,8 @@ class Cases
                                 $sAction = '';
                                 break;
                         }
-                        $aPreviousStep = array('TYPE' => $oStep->getStepTypeObj(), 'UID' => $oStep->
-                            getStepUidObj(), 'POSITION' => $oStep->getStepPosition(), 'PAGE' =>
-                            'cases_Step?TYPE=' . $oStep->getStepTypeObj() . '&UID=' . $oStep->getStepUidObj
-                            () . '&POSITION=' . $oStep->getStepPosition() . '&ACTION=' . $sAction);
+                        $aPreviousStep = array('TYPE' => $oStep->getStepTypeObj(), 'UID' => $oStep->getStepUidObj(), 'POSITION' => $oStep->getStepPosition(), 'PAGE' => 'cases_Step?TYPE=' . $oStep->getStepTypeObj() . '&UID=' .
+                            $oStep->getStepUidObj() . '&POSITION=' . $oStep->getStepPosition() . '&ACTION=' . $sAction);
                         $iPosition = $iFirstStep;
                     }
                     $iPosition -= 1;
@@ -1198,28 +1186,60 @@ class Cases
         }
     }
 
-    function getNextSupervisorStep($sProcessUID, $iPosition) {
-      $iPosition += 1;
-      $oCriteria = new Criteria();
-      $oCriteria->add(StepSupervisorPeer::PRO_UID, $sProcessUID);
-      $oCriteria->add(StepSupervisorPeer::STEP_TYPE_OBJ, 'DYNAFORM');
-      $oCriteria->add(StepSupervisorPeer::STEP_POSITION, $iPosition);
-      $oDataset = StepSupervisorPeer::doSelectRS($oCriteria);
-      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-      $oDataset->next();
-      $aRow = $oDataset->getRow();
-      if (!$aRow) {
+    function getNextSupervisorStep($sProcessUID, $iPosition)
+    {
+        $iPosition += 1;
         $oCriteria = new Criteria();
         $oCriteria->add(StepSupervisorPeer::PRO_UID, $sProcessUID);
         $oCriteria->add(StepSupervisorPeer::STEP_TYPE_OBJ, 'DYNAFORM');
-        $oCriteria->add(StepSupervisorPeer::STEP_POSITION, 1);
+        $oCriteria->add(StepSupervisorPeer::STEP_POSITION, $iPosition);
         $oDataset = StepSupervisorPeer::doSelectRS($oCriteria);
         $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
         $oDataset->next();
         $aRow = $oDataset->getRow();
-      }
-      $aNextStep = array('UID' => $aRow['STEP_UID_OBJ'], 'POSITION' => $aRow['STEP_POSITION']);
-      return $aNextStep;
+        if (!$aRow) {
+            $oCriteria = new Criteria();
+            $oCriteria->add(StepSupervisorPeer::PRO_UID, $sProcessUID);
+            $oCriteria->add(StepSupervisorPeer::STEP_TYPE_OBJ, 'DYNAFORM');
+            $oCriteria->add(StepSupervisorPeer::STEP_POSITION, 1);
+            $oDataset = StepSupervisorPeer::doSelectRS($oCriteria);
+            $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+            $oDataset->next();
+            $aRow = $oDataset->getRow();
+        }
+        $aNextStep = array('UID' => $aRow['STEP_UID_OBJ'], 'POSITION' => $aRow['STEP_POSITION']);
+        return $aNextStep;
+    }
+
+    function getPreviousSupervisorStep($sProcessUID, $iPosition)
+    {
+        $iPosition -= 1;
+        if ($iPosition > 0) {
+            $oCriteria = new Criteria();
+            $oCriteria->add(StepSupervisorPeer::PRO_UID, $sProcessUID);
+            $oCriteria->add(StepSupervisorPeer::STEP_TYPE_OBJ, 'DYNAFORM');
+            $oCriteria->add(StepSupervisorPeer::STEP_POSITION, $iPosition);
+            $oDataset = StepSupervisorPeer::doSelectRS($oCriteria);
+            $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+            $oDataset->next();
+            $aRow = $oDataset->getRow();
+            if (!$aRow) {
+                $oCriteria = new Criteria();
+                $oCriteria->add(StepSupervisorPeer::PRO_UID, $sProcessUID);
+                $oCriteria->add(StepSupervisorPeer::STEP_TYPE_OBJ, 'DYNAFORM');
+                $oCriteria->add(StepSupervisorPeer::STEP_POSITION, 1);
+                $oDataset = StepSupervisorPeer::doSelectRS($oCriteria);
+                $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+                $oDataset->next();
+                $aRow = $oDataset->getRow();
+            }
+            $aNextStep = array('UID' => $aRow['STEP_UID_OBJ'], 'POSITION' => $aRow['STEP_POSITION']);
+            return $aNextStep;
+        }
+        else
+        {
+			return false;
+		}
     }
 
     function getTransferHistoryCriteria($sAppUid)
@@ -1232,9 +1252,9 @@ class Cases
         $c->addSelectColumn(AppDelegationPeer::DEL_INIT_DATE);
         $c->addSelectColumn(AppDelegationPeer::DEL_FINISH_DATE);
 
-				$c->addSelectColumn(AppDelayPeer::APP_TYPE);
-				$c->addSelectColumn(AppDelayPeer::APP_ENABLE_ACTION_DATE);
-				$c->addSelectColumn(AppDelayPeer::APP_DISABLE_ACTION_DATE);
+        $c->addSelectColumn(AppDelayPeer::APP_TYPE);
+        $c->addSelectColumn(AppDelayPeer::APP_ENABLE_ACTION_DATE);
+        $c->addSelectColumn(AppDelayPeer::APP_DISABLE_ACTION_DATE);
         //APP_DELEGATION LEFT JOIN USERS
         $c->addJoin(AppDelegationPeer::USR_UID, UsersPeer::USR_UID, Criteria::LEFT_JOIN);
 
@@ -1331,19 +1351,16 @@ class Cases
         $usrConds[] = array('APP_PREV_DEL.USR_UID', 'APP_LAST_USER.USR_UID');
         $c->addJoinMC($usrConds, Criteria::LEFT_JOIN);
 
-        if($sTypeList!='gral' && $sTypeList!='to_revise')
-        {
-          $c->add(UsersPeer::USR_UID, $sUIDUserLogged);
+        if ($sTypeList != 'gral' && $sTypeList != 'to_revise') {
+            $c->add(UsersPeer::USR_UID, $sUIDUserLogged);
         }
 
-        $filesList = array('cases/cases_ListAll', 'cases/cases_ListTodo',
-            'cases/cases_ListDraft', 'cases/cases_ListOnHold', 'cases/cases_ListCancelled',
-            'cases/cases_ListCompleted', 'cases/cases_ListToRevise');
+        $filesList = array('cases/cases_ListAll', 'cases/cases_ListTodo', 'cases/cases_ListDraft', 'cases/cases_ListOnHold', 'cases/cases_ListCancelled', 'cases/cases_ListCompleted',
+            'cases/cases_ListToRevise');
         switch ($sTypeList) {
             case 'all':
-                $c->add($c->getNewCriterion(AppThreadPeer::APP_THREAD_STATUS, 'OPEN')->addOr($c->
-                    getNewCriterion(ApplicationPeer::APP_STATUS, 'COMPLETED')->addAnd($c->
-                    getNewCriterion(AppDelegationPeer::DEL_PREVIOUS, 0))));
+                $c->add($c->getNewCriterion(AppThreadPeer::APP_THREAD_STATUS, 'OPEN')->addOr($c->getNewCriterion(ApplicationPeer::APP_STATUS, 'COMPLETED')->addAnd($c->getNewCriterion(AppDelegationPeer::DEL_PREVIOUS,
+                    0))));
                 $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
                 $xmlfile = $filesList[0];
                 break;
@@ -1366,14 +1383,13 @@ class Cases
                 $appDelayConds[] = array(ApplicationPeer::APP_UID, AppDelayPeer::APP_UID);
                 $appDelayConds[] = array(AppDelegationPeer::DEL_INDEX, AppDelayPeer::APP_DEL_INDEX);
                 $c->addJoinMC($appDelayConds, Criteria::LEFT_JOIN);
-                $c->add(AppDelayPeer::APP_DELAY_UID, NULL, Criteria::ISNOTNULL);
-                $c->add(AppDelayPeer::APP_DISABLE_ACTION_USER, NULL, Criteria::ISNULL);
+                $c->add(AppDelayPeer::APP_DELAY_UID, null, Criteria::ISNOTNULL);
+                $c->add(AppDelayPeer::APP_DISABLE_ACTION_USER, null, Criteria::ISNULL);
                 $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
                 $xmlfile = $filesList[3];
                 break;
             case 'cancelled':
-                $c->add($c->getNewCriterion(AppThreadPeer::APP_THREAD_STATUS, 'OPEN')->addAnd($c->
-                    getNewCriterion(ApplicationPeer::APP_STATUS, 'CANCELLED')));
+                $c->add($c->getNewCriterion(AppThreadPeer::APP_THREAD_STATUS, 'OPEN')->addAnd($c->getNewCriterion(ApplicationPeer::APP_STATUS, 'CANCELLED')));
                 $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
                 $xmlfile = $filesList[4];
                 break;
@@ -1383,14 +1399,13 @@ class Cases
                 $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
                 $xmlfile = $filesList[5];
                 break;
-             case 'gral':
-                $c->add($c->getNewCriterion(AppThreadPeer::APP_THREAD_STATUS, 'OPEN')->addOr($c->
-                    getNewCriterion(ApplicationPeer::APP_STATUS, 'COMPLETED')->addAnd($c->
-                    getNewCriterion(AppDelegationPeer::DEL_PREVIOUS, 0))));
+            case 'gral':
+                $c->add($c->getNewCriterion(AppThreadPeer::APP_THREAD_STATUS, 'OPEN')->addOr($c->getNewCriterion(ApplicationPeer::APP_STATUS, 'COMPLETED')->addAnd($c->getNewCriterion(AppDelegationPeer::DEL_PREVIOUS,
+                    0))));
                 $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
                 $xmlfile = $filesList[0];
                 break;
-             case 'to_revise':
+            case 'to_revise':
                 require_once 'classes/model/ProcessUser.php';
                 $oCriteria = new Criteria('workflow');
                 $oCriteria->add(ProcessUserPeer::USR_UID, $sUIDUserLogged);
@@ -1400,8 +1415,8 @@ class Cases
                 $oDataset->next();
                 $aProcesses = array();
                 while ($aRow = $oDataset->getRow()) {
-                  $aProcesses[] = $aRow['PRO_UID'];
-                  $oDataset->next();
+                    $aProcesses[] = $aRow['PRO_UID'];
+                    $oDataset->next();
                 }
                 $c->add(ApplicationPeer::PRO_UID, $aProcesses, Criteria::IN);
                 $c->add(ApplicationPeer::APP_STATUS, 'TO_DO');
@@ -1466,8 +1481,7 @@ class Cases
   	                              FROM
   	                                APP_DELEGATION
   	                              WHERE
-  	                                APP_UID           = "' . $sApplicationUID .
-            '" AND
+  	                                APP_UID           = "' . $sApplicationUID . '" AND
   	                                USR_UID           = "' . $sUserUID . '" AND
   	                                DEL_THREAD_STATUS = "OPEN"
   	                              ORDER BY
@@ -1503,8 +1517,7 @@ class Cases
         $c->add(StepTriggerPeer::STEP_UID, $sStepUid);
         $c->add(StepTriggerPeer::TAS_UID, $sTasUid);
         $c->add(StepTriggerPeer::ST_TYPE, $sTriggerType);
-        $c->addJoin(StepTriggerPeer::TRI_UID, TriggersPeer::TRI_UID, Criteria::
-            LEFT_JOIN);
+        $c->addJoin(StepTriggerPeer::TRI_UID, TriggersPeer::TRI_UID, Criteria::LEFT_JOIN);
         $c->addAscendingOrderByColumn(StepTriggerPeer::ST_POSITION);
         $rs = TriggersPeer::doSelectRS($c);
         $rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
@@ -1518,8 +1531,7 @@ class Cases
         return $aTriggers;
     }
 
-    function executeTriggers($sTasUid, $sStepType, $sStepUidObj, $sTriggerType, $aFields =
-        array())
+    function executeTriggers($sTasUid, $sStepType, $sStepUidObj, $sTriggerType, $aFields = array())
     {
         $aTriggers = $this->loadTriggers($sTasUid, $sStepType, $sStepUidObj, $sTriggerType);
         if (count($aTriggers) > 0) {
@@ -1562,14 +1574,11 @@ class Cases
             $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
             $oDataset->next();
             $aInputDocuments = array();
-            $aInputDocuments[] = array('APP_DOC_UID' => 'char', 'DOC_UID' => 'char',
-                'APP_DOC_COMMENT' => 'char', 'APP_DOC_FILENAME' => 'char', 'APP_DOC_INDEX' =>
-                'integer');
+            $aInputDocuments[] = array('APP_DOC_UID' => 'char', 'DOC_UID' => 'char', 'APP_DOC_COMMENT' => 'char', 'APP_DOC_FILENAME' => 'char', 'APP_DOC_INDEX' => 'integer');
             while ($aRow = $oDataset->getRow()) {
                 $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
-                $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'],
-                    'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'],
-                    'APP_DOC_INDEX' => $aAux['APP_DOC_INDEX']);
+                $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' =>
+                    $aAux['APP_DOC_INDEX']);
                 if ($aFields['APP_DOC_FILENAME'] != '') {
                     $aFields['TITLE'] = $aFields['APP_DOC_FILENAME'];
                 } else {
@@ -1607,19 +1616,21 @@ class Cases
             $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
             $oDataset->next();
             $aInputDocuments = array();
-            $aInputDocuments[] = array('APP_DOC_UID' => 'char', 'DOC_UID' => 'char',
-                'APP_DOC_COMMENT' => 'char', 'APP_DOC_FILENAME' => 'char', 'APP_DOC_INDEX' =>
-                'integer');
+            $aInputDocuments[] = array('APP_DOC_UID' => 'char', 'DOC_UID' => 'char', 'APP_DOC_COMMENT' => 'char', 'APP_DOC_FILENAME' => 'char', 'APP_DOC_INDEX' => 'integer');
             while ($aRow = $oDataset->getRow()) {
+            
                 $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
-                $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'],
-                    'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'],
-                    'APP_DOC_INDEX' => $aAux['APP_DOC_INDEX']);
+                $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' =>
+                    $aAux['APP_DOC_INDEX']);
+                
                 if ($aFields['APP_DOC_FILENAME'] != '') {
                     $aFields['TITLE'] = $aFields['APP_DOC_FILENAME'];
                 } else {
                     $aFields['TITLE'] = $aFields['APP_DOC_COMMENT'];
                 }
+                $aFields['CREATE_DATE'] = $aRow['APP_DOC_CREATE_DATE'];
+                $aFields['TYPE'] = $aRow['APP_DOC_TYPE'];
+                
                 $aFields['POSITION'] = $_SESSION['STEP_POSITION'];
                 $aFields['CONFIRM'] = G::LoadTranslation('ID_CONFIRM_DELETE_ELEMENT');
                 $aInputDocuments[] = $aFields;
@@ -1651,27 +1662,18 @@ class Cases
             $oDataset = AppDocumentPeer::doSelectRS($oCriteria);
             $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
             $oDataset->next();
-            $aOutputDocuments   = array();
-            $aOutputDocuments[] = array('APP_DOC_UID'         => 'char',
-                                        'DOC_UID'             => 'char',
-                                        'APP_DOC_COMMENT'     => 'char',
-                                        'APP_DOC_FILENAME'    => 'char',
-                                        'APP_DOC_INDEX'       => 'integer',
-                                        'APP_DOC_CREATE_DATE' => 'char');
+            $aOutputDocuments = array();
+            $aOutputDocuments[] = array('APP_DOC_UID' => 'char', 'DOC_UID' => 'char', 'APP_DOC_COMMENT' => 'char', 'APP_DOC_FILENAME' => 'char', 'APP_DOC_INDEX' => 'integer', 'APP_DOC_CREATE_DATE' => 'char');
             while ($aRow = $oDataset->getRow()) {
                 $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
-                $aFields = array('APP_DOC_UID'         => $aAux['APP_DOC_UID'],
-                                 'DOC_UID'             => $aAux['DOC_UID'],
-                                 'APP_DOC_COMMENT'     => $aAux['APP_DOC_COMMENT'],
-                                 'APP_DOC_FILENAME'    => $aAux['APP_DOC_FILENAME'],
-                                 'APP_DOC_INDEX'       => $aAux['APP_DOC_INDEX'],
-                                 'APP_DOC_CREATE_DATE' => $aRow['APP_DOC_CREATE_DATE']);
+                $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' =>
+                    $aAux['APP_DOC_INDEX'], 'APP_DOC_CREATE_DATE' => $aRow['APP_DOC_CREATE_DATE']);
                 if ($aFields['APP_DOC_FILENAME'] != '') {
                     $aFields['TITLE'] = $aFields['APP_DOC_FILENAME'];
                 } else {
                     $aFields['TITLE'] = $aFields['APP_DOC_COMMENT'];
                 }
-                $aOutputDocuments[]  = $aFields;
+                $aOutputDocuments[] = $aFields;
                 $oDataset->next();
             }
             global $_DBArray;
@@ -1701,8 +1703,8 @@ class Cases
     {
         $this->CloseCurrentDelegation($sApplicationUID, $iDelegation);
         $oApplication = new Application();
-        $aFields      = $oApplication->Load($sApplicationUID);
-        $oCriteria    = new Criteria('workflow');
+        $aFields = $oApplication->Load($sApplicationUID);
+        $oCriteria = new Criteria('workflow');
         $oCriteria->clearSelectColumns();
         $oCriteria->addSelectColumn(AppThreadPeer::APP_THREAD_INDEX);
         $oCriteria->add(AppThreadPeer::APP_UID, $sApplicationUID);
@@ -1711,13 +1713,13 @@ class Cases
         $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
         $oDataset->next();
         $aRow = $oDataset->getRow();
-        $aData['PRO_UID']                = $aFields['PRO_UID'];
-        $aData['APP_UID']                = $sApplicationUID;
-        $aData['APP_THREAD_INDEX']       = $aRow['APP_THREAD_INDEX'];
-        $aData['APP_DEL_INDEX']          = $iDelegation;
-        $aData['APP_TYPE']               = 'PAUSE';
-        $aData['APP_STATUS']             = $aFields['APP_STATUS'];
-        $aData['APP_DELEGATION_USER']    = $sUserUID;
+        $aData['PRO_UID'] = $aFields['PRO_UID'];
+        $aData['APP_UID'] = $sApplicationUID;
+        $aData['APP_THREAD_INDEX'] = $aRow['APP_THREAD_INDEX'];
+        $aData['APP_DEL_INDEX'] = $iDelegation;
+        $aData['APP_TYPE'] = 'PAUSE';
+        $aData['APP_STATUS'] = $aFields['APP_STATUS'];
+        $aData['APP_DELEGATION_USER'] = $sUserUID;
         $aData['APP_ENABLE_ACTION_USER'] = $sUserUID;
         $aData['APP_ENABLE_ACTION_DATE'] = date('Y-m-d H:i:s');
         $oAppDelay = new AppDelay();
@@ -1730,14 +1732,14 @@ class Cases
         $aFieldsDel = $oAppDelegation->Load($sApplicationUID, $iDelegation);
         $iIndex = $oAppDelegation->createAppDelegation($aFieldsDel['PRO_UID'], $aFieldsDel['APP_UID'], $aFieldsDel['TAS_UID'], $aFieldsDel['USR_UID'], $aFieldsDel['DEL_THREAD']);
         $aData = array();
-        $aData['APP_UID']           = $aFieldsDel['APP_UID'];
-        $aData['DEL_INDEX']         = $iIndex;
-        $aData['DEL_PREVIOUS']      = $aFieldsDel['DEL_PREVIOUS'];
-        $aData['DEL_TYPE']          = $aFieldsDel['DEL_TYPE'];
-        $aData['DEL_PRIORITY']      = $aFieldsDel['DEL_PRIORITY'];
+        $aData['APP_UID'] = $aFieldsDel['APP_UID'];
+        $aData['DEL_INDEX'] = $iIndex;
+        $aData['DEL_PREVIOUS'] = $aFieldsDel['DEL_PREVIOUS'];
+        $aData['DEL_TYPE'] = $aFieldsDel['DEL_TYPE'];
+        $aData['DEL_PRIORITY'] = $aFieldsDel['DEL_PRIORITY'];
         $aData['DEL_DELEGATE_DATE'] = $aFieldsDel['DEL_DELEGATE_DATE'];
-        $aData['DEL_INIT_DATE']     = date('Y-m-d H:i:s');
-        $aData['DEL_FINISH_DATE']   = null;
+        $aData['DEL_INIT_DATE'] = date('Y-m-d H:i:s');
+        $aData['DEL_FINISH_DATE'] = null;
         $oAppDelegation->update($aData);
         $oCriteria = new Criteria('workflow');
         $oCriteria->clearSelectColumns();
@@ -1754,7 +1756,7 @@ class Cases
         $aRow = $oDataset->getRow();
         $oAppThread = new AppThread();
         $oAppThread->update(array('APP_UID' => $sApplicationUID, 'APP_THREAD_INDEX' => $aRow['APP_THREAD_INDEX'], 'DEL_INDEX' => $iIndex));
-        $aData['APP_DELAY_UID']           = $aRow['APP_DELAY_UID'];
+        $aData['APP_DELAY_UID'] = $aRow['APP_DELAY_UID'];
         $aData['APP_DISABLE_ACTION_USER'] = $sUserUID;
         $aData['APP_DISABLE_ACTION_DATE'] = date('Y-m-d H:i:s');
         $oAppDelay = new AppDelay();
@@ -1811,8 +1813,7 @@ class Cases
         require_once 'classes/model/Application.php';
         require_once 'classes/model/AppDelay.php';
         $oApplication = new Application();
-        $aFields = $oApplication->load((isset($_POST['sApplicationUID']) ? $_POST['sApplicationUID'] :
-            $_SESSION['APPLICATION']));
+        $aFields = $oApplication->load((isset($_POST['sApplicationUID']) ? $_POST['sApplicationUID'] : $_SESSION['APPLICATION']));
         $aFields['APP_STATUS'] = 'TO_DO';
         $oApplication->update($aFields);
         $this->ReactivateCurrentDelegation($sApplicationUID, $iIndex);
@@ -1850,43 +1851,41 @@ class Cases
         $aFieldsDel = $oAppDelegation->Load($sApplicationUID, $iDelegation);
         $iIndex = $oAppDelegation->createAppDelegation($aFieldsDel['PRO_UID'], $aFieldsDel['APP_UID'], $aFieldsDel['TAS_UID'], $aFieldsDel['USR_UID'], $aFieldsDel['DEL_THREAD']);
         $aData = array();
-        $aData['APP_UID']           = $aFieldsDel['APP_UID'];
-        $aData['DEL_INDEX']         = $iIndex;
-        $aData['DEL_PREVIOUS']      = $aFieldsDel['DEL_PREVIOUS'];
-        $aData['DEL_TYPE']          = $aFieldsDel['DEL_TYPE'];
-        $aData['DEL_PRIORITY']      = $aFieldsDel['DEL_PRIORITY'];
+        $aData['APP_UID'] = $aFieldsDel['APP_UID'];
+        $aData['DEL_INDEX'] = $iIndex;
+        $aData['DEL_PREVIOUS'] = $aFieldsDel['DEL_PREVIOUS'];
+        $aData['DEL_TYPE'] = $aFieldsDel['DEL_TYPE'];
+        $aData['DEL_PRIORITY'] = $aFieldsDel['DEL_PRIORITY'];
         $aData['DEL_DELEGATE_DATE'] = $aFieldsDel['DEL_DELEGATE_DATE'];
-        $aData['USR_UID']           = $newUserUID;
-        $aData['DEL_INIT_DATE']     = null;
-        $aData['DEL_FINISH_DATE']   = null;
+        $aData['USR_UID'] = $newUserUID;
+        $aData['DEL_INIT_DATE'] = null;
+        $aData['DEL_FINISH_DATE'] = null;
         $oAppDelegation->update($aData);
         $oAppThread = new AppThread();
         $oAppThread->update(array('APP_UID' => $sApplicationUID, 'APP_THREAD_INDEX' => $aFieldsDel['DEL_THREAD'], 'DEL_INDEX' => $iIndex));
     }
 
     function getAllStepsToRevise($APP_UID, $DEL_INDEX)
-	{
-		//echo '-->'.$_SESSION['USER_LOGGED'];
-		$oCriteria = new Criteria('workflow');
+    {
+        
+        $oCriteria = new Criteria('workflow');
 
-		$oCriteria->addSelectColumn(StepSupervisorPeer::STEP_UID);
-		$oCriteria->addSelectColumn(StepSupervisorPeer::PRO_UID);
-		$oCriteria->addSelectColumn(StepSupervisorPeer::STEP_TYPE_OBJ);
-		$oCriteria->addSelectColumn(StepSupervisorPeer::STEP_UID_OBJ);
-		$oCriteria->addSelectColumn(StepSupervisorPeer::STEP_POSITION);
+        $oCriteria->addSelectColumn(StepSupervisorPeer::STEP_UID);
+        $oCriteria->addSelectColumn(StepSupervisorPeer::PRO_UID);
+        $oCriteria->addSelectColumn(StepSupervisorPeer::STEP_TYPE_OBJ);
+        $oCriteria->addSelectColumn(StepSupervisorPeer::STEP_UID_OBJ);
+        $oCriteria->addSelectColumn(StepSupervisorPeer::STEP_POSITION);
 
-		$oCriteria->add(AppDelegationPeer::APP_UID, $APP_UID);
-		$oCriteria->add(AppDelegationPeer::DEL_INDEX, $DEL_INDEX);
-		//oCriteria->add(StepSupervisorPeer::STEP_TYPE_OBJ, 'DYNAFORM');
+        $oCriteria->add(AppDelegationPeer::APP_UID, $APP_UID);
+        $oCriteria->add(AppDelegationPeer::DEL_INDEX, $DEL_INDEX);
 
-		$oCriteria->addJoin(AppDelegationPeer::PRO_UID, StepSupervisorPeer::PRO_UID);
-		//$oCriteria->addJoin(StepSupervisorPeer::STEP_UID_OBJ, DynaformPeer::DYN_UID);
-		$oCriteria->addAscendingOrderByColumn(StepSupervisorPeer::STEP_POSITION);
+        $oCriteria->addJoin(AppDelegationPeer::PRO_UID, StepSupervisorPeer::PRO_UID);
+        $oCriteria->addAscendingOrderByColumn(StepSupervisorPeer::STEP_POSITION);
 
-		$oDataset = AppDelegationPeer::doSelectRS($oCriteria);
-		$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+        $oDataset = AppDelegationPeer::doSelectRS($oCriteria);
+        $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
 
-		return $oDataset;
-	}
+        return $oDataset;
+    }
 
 }
