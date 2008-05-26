@@ -116,6 +116,7 @@ class PMPlugin {
   var $iVersion = 0;
   var $sFriendlyName = null;
   var $sPluginFolder = '';
+  var $aWorkspaces = null;
 
   function PMPlugin($sNamespace, $sFilename = null) {
     $this->sNamespace  = $sNamespace;

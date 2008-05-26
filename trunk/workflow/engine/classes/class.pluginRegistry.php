@@ -34,6 +34,7 @@ class pluginDetail {
 	var $sCompanyLogo = '';
 	var $iVersion = 0;
 	var $enabled = false;
+	var $aWorkspaces = null;
 
   function __construct( $sNamespace, $sClassName, $sFilename, $sFriendlyName = '', $sPluginFolder ='', $sDescription ='', $sSetupPage ='', $iVersion = 0) {
   	$this->sNamespace = $sNamespace;
@@ -114,6 +115,8 @@ class PMPluginRegistry {
             $plugin->sDescription,
             $plugin->sSetupPage,
             $plugin->iVersion  );
+    if ( isset ($plugin->aWorkspaces) )         
+      $detail->aWorkspaces = $plugin->aWorkspaces;
     $this->_aPluginDetails[$sNamespace] = $detail;
   }
 

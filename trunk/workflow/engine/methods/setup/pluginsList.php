@@ -52,7 +52,10 @@ $items[] = array ( 'id' => 'char', 'title' => 'char', 'type' => 'char', 'creator
          require_once ( PATH_PLUGINS . $file );
          $pluginDetail = $oPluginRegistry->getPluginDetails ( $file );
          $status = $pluginDetail->enabled ? 'Enabled' : 'Disabled';
-         
+         if ( isset ($pluginDetail->aWorkspaces ) ) {
+           if ( ! in_array ( SYS_SYS, $pluginDetail->aWorkspaces) )
+             continue;
+         }
          $linkEditValue = $pluginDetail->sSetupPage != '' && $pluginDetail->enabled ?  G::LoadTranslation('ID_SETUP') : ' '; 
 
          $link = 'pluginsChange?id=' . $file . '&status=' . $pluginDetail->enabled;
