@@ -16,5 +16,5 @@
   <en></en>
 </TITLE>
 
-<VIEW type="link" colWidth="25" value="@G::LoadTranslation(ID_VIEW)" link="cases_Step?TYPE=INPUT_DOCUMENT&amp;UID=@#DOC_UID&amp;POSITION=@#POSITION&amp;ACTION=VIEW&amp;DOC=@#APP_DOC_UID" onclick=""/>
+<VIEW type="link" colWidth="25" value="@G::LoadTranslation(ID_VIEW)" link="cases_ToReviseInputDocView?UID=@#DOC_UID&amp;DOC=@#APP_DOC_UID" onclick=""/>
 </dynaForm>
