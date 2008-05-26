@@ -147,8 +147,8 @@ function toRevisePanel(APP_UID,DEL_INDEX)
 {
 	oPanel = new leimnud.module.panel();
 	oPanel.options = {
-	  	size	:{w:250,h:380},
-	  	position:{x:0,y:150},
+	  	size	:{w:250,h:450},
+	  	position:{x:0,y:100},
 	  	title	:'',
 	  	theme	:"processmaker",
 	  	statusBar:false,
