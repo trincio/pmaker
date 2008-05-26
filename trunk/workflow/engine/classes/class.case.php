@@ -1593,7 +1593,7 @@ class Cases
             throw $oException;
         }
     }
-    
+
     function getInputDocumentsCriteriaToRevise($sApplicationUID)
     {
         try {
@@ -1631,6 +1631,55 @@ class Cases
             G::LoadClass('ArrayPeer');
             $oCriteria = new Criteria('dbarray');
             $oCriteria->setDBArrayTable('inputDocuments');
+            $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
+            return $oCriteria;
+        }
+        catch (exception $oException) {
+            throw $oException;
+        }
+    }
+
+    function getOutputDocumentsCriteriaToRevise($sApplicationUID)
+    {
+        try {
+            require_once 'classes/model/AppDocument.php';
+            $oAppDocument = new AppDocument();
+            $oCriteria = new Criteria('workflow');
+            $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
+            $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, 'OUTPUT');
+            $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
+            $oDataset = AppDocumentPeer::doSelectRS($oCriteria);
+            $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+            $oDataset->next();
+            $aOutputDocuments   = array();
+            $aOutputDocuments[] = array('APP_DOC_UID'         => 'char',
+                                        'DOC_UID'             => 'char',
+                                        'APP_DOC_COMMENT'     => 'char',
+                                        'APP_DOC_FILENAME'    => 'char',
+                                        'APP_DOC_INDEX'       => 'integer',
+                                        'APP_DOC_CREATE_DATE' => 'char');
+            while ($aRow = $oDataset->getRow()) {
+                $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
+                $aFields = array('APP_DOC_UID'         => $aAux['APP_DOC_UID'],
+                                 'DOC_UID'             => $aAux['DOC_UID'],
+                                 'APP_DOC_COMMENT'     => $aAux['APP_DOC_COMMENT'],
+                                 'APP_DOC_FILENAME'    => $aAux['APP_DOC_FILENAME'],
+                                 'APP_DOC_INDEX'       => $aAux['APP_DOC_INDEX'],
+                                 'APP_DOC_CREATE_DATE' => $aRow['APP_DOC_CREATE_DATE']);
+                if ($aFields['APP_DOC_FILENAME'] != '') {
+                    $aFields['TITLE'] = $aFields['APP_DOC_FILENAME'];
+                } else {
+                    $aFields['TITLE'] = $aFields['APP_DOC_COMMENT'];
+                }
+                $aOutputDocuments[]  = $aFields;
+                $oDataset->next();
+            }
+            global $_DBArray;
+            $_DBArray['outputDocuments'] = $aOutputDocuments;
+            $_SESSION['_DBArray'] = $_DBArray;
+            G::LoadClass('ArrayPeer');
+            $oCriteria = new Criteria('dbarray');
+            $oCriteria->setDBArrayTable('outputDocuments');
             $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
             return $oCriteria;
         }
@@ -1814,30 +1863,30 @@ class Cases
         $oAppThread = new AppThread();
         $oAppThread->update(array('APP_UID' => $sApplicationUID, 'APP_THREAD_INDEX' => $aFieldsDel['DEL_THREAD'], 'DEL_INDEX' => $iIndex));
     }
-    
+
     function getAllStepsToRevise($APP_UID, $DEL_INDEX)
 	{
 		//echo '-->'.$_SESSION['USER_LOGGED'];
 		$oCriteria = new Criteria('workflow');
-		
+
 		$oCriteria->addSelectColumn(StepSupervisorPeer::STEP_UID);
 		$oCriteria->addSelectColumn(StepSupervisorPeer::PRO_UID);
 		$oCriteria->addSelectColumn(StepSupervisorPeer::STEP_TYPE_OBJ);
 		$oCriteria->addSelectColumn(StepSupervisorPeer::STEP_UID_OBJ);
 		$oCriteria->addSelectColumn(StepSupervisorPeer::STEP_POSITION);
-		
+
 		$oCriteria->add(AppDelegationPeer::APP_UID, $APP_UID);
 		$oCriteria->add(AppDelegationPeer::DEL_INDEX, $DEL_INDEX);
 		//oCriteria->add(StepSupervisorPeer::STEP_TYPE_OBJ, 'DYNAFORM');
-		
+
 		$oCriteria->addJoin(AppDelegationPeer::PRO_UID, StepSupervisorPeer::PRO_UID);
 		//$oCriteria->addJoin(StepSupervisorPeer::STEP_UID_OBJ, DynaformPeer::DYN_UID);
 		$oCriteria->addAscendingOrderByColumn(StepSupervisorPeer::STEP_POSITION);
-		
+
 		$oDataset = AppDelegationPeer::doSelectRS($oCriteria);
 		$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-		
+
 		return $oDataset;
 	}
-	 
+
 }
