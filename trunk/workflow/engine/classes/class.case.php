@@ -1331,7 +1331,7 @@ class Cases
         $usrConds[] = array('APP_PREV_DEL.USR_UID', 'APP_LAST_USER.USR_UID');
         $c->addJoinMC($usrConds, Criteria::LEFT_JOIN);
 
-        if($sTypeList!='gral')
+        if($sTypeList!='gral' && $sTypeList!='to_revise')
         {
           $c->add(UsersPeer::USR_UID, $sUIDUserLogged);
         }
