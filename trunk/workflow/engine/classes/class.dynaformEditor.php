@@ -312,9 +312,17 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 		$form = new Form( $file , PATH_DYNAFORM, SYS_LANG, true );
 		switch(basename($form->template,'.html'))
 		{
-		  case 'grid': $template='grid';
-		  	$aFields = (array_combine(array_keys($form->fields),array_keys($form->fields)));
-		  	foreach($aFields as $key => $val) $aFields[$key]=array("","","","","");
+		  case 'grid': $template='grid';//var_dump(array_keys($form->fields),array_keys($form->fields));
+		    $aAux = array_keys($form->fields);
+		    if (count($aAux) > 0) {
+		  	  $aFields = (array_combine($aAux,$aAux));
+		    }
+		    else {
+		      $aFields = $aAux;
+		    }
+		  	if (is_array($aFields)) {
+		  	  foreach($aFields as $key => $val) $aFields[$key]=array("","","","","");
+		    }
 		  break;
 		  default: $template='xmlform';
 			$aFields = array(
