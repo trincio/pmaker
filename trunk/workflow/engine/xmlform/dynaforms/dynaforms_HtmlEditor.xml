@@ -20,6 +20,10 @@
   <en>Enable HTML Editing</en>
 </PME_HTML_ENABLETEMPLATE>
 
+<PME_RESTORE_HTML type="button" onclick="restore_html();">
+<en>Restote Original HTML</en>
+</PME_RESTORE_HTML>
+
 <PME_REFRESH_VIEW type="button" onclick="html2_html();">
 <en>Refresh View</en>
 </PME_REFRESH_VIEW>
@@ -57,6 +61,9 @@
       getField("HTML").value=getField("HTML2").value;
     }
   }
+  var restore_html = function() {
+    alert('restore_html');
+  };
   html_html2();
 ]]>
 </PME_SYNCH_JS>

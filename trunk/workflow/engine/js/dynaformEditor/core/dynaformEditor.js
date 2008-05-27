@@ -360,6 +360,10 @@ var dynaformEditor={
 		}
 		delete myScripts;
 	},
+	restoreHTML:function()
+	{
+	  this.ajax.restore_html(this.A);
+	},
 	displayError:function(err,rr)
 	{
 		G.alert(err.message.split("\n").join("<br />"),"Javascript Error");
