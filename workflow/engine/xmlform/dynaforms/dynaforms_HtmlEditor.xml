@@ -20,7 +20,7 @@
   <en>Enable HTML Editing</en>
 </PME_HTML_ENABLETEMPLATE>
 
-<PME_RESTORE_HTML type="button" onclick="restore_html();">
+<PME_RESTORE_HTML type="button" onclick="dynaformEditor.restoreHTML();">
 <en>Restote Original HTML</en>
 </PME_RESTORE_HTML>
 
