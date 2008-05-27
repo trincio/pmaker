@@ -312,7 +312,7 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 		$form = new Form( $file , PATH_DYNAFORM, SYS_LANG, true );
 		switch(basename($form->template,'.html'))
 		{
-		  case 'grid': $template='grid';//var_dump(array_keys($form->fields),array_keys($form->fields));
+		  case 'grid': $template='grid';
 		    $aAux = array_keys($form->fields);
 		    if (count($aAux) > 0) {
 		  	  $aFields = (array_combine($aAux,$aAux));
@@ -441,6 +441,10 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 		{
 			return (array) $e;
 		}
+	}
+	function restore_html($A)
+	{
+	  //
 	}
 	function set_htmlcode($A,$htmlcode)
 	{
@@ -609,6 +613,15 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 		$dbc2 = new DBConnection( PATH_DYNAFORM . $file . '.xml' ,'','','','myxml' );
 		$ses2 = new DBSession($dbc2);
 		$ses2->execute("UPDATE . SET ENABLETEMPLATE = '$value'");
+		/*if ($value === '1') {
+		  $fileTmp = self::_getFilename( $file );
+      self::_copyFile(PATH_DYNAFORM  . $fileTmp . '.html',PATH_DYNAFORM  . $file . '.html');
+		}
+		if ($value === '0') {
+		  if (file_exists(PATH_DYNAFORM  . $file . '.html')) {
+		    unlink(PATH_DYNAFORM  . $file . '.html');
+		  }
+		}*/
 		return $value;
 	}
 	function save($A,$DYN_UID)
