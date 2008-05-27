@@ -444,7 +444,31 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 	}
 	function restore_html($A)
 	{
-	  //
+	  $script  = '';
+	  $fileTmp = G::decrypt( $A , URL_KEY );
+	  $file    = dynaformEditor::_getFilename($fileTmp);
+	  $form    = new Form( $fileTmp , PATH_DYNAFORM, SYS_LANG, true );
+		/* Navigation Bar */
+		$form->fields=G::array_merges(
+		array('__DYNAFORM_OPTIONS' => new XmlForm_Field_XmlMenu(
+			new Xml_Node(
+				'__DYNAFORM_OPTIONS',
+				'complete',
+				'',
+				array('type'=>'xmlmenu','xmlfile'=>'gulliver/dynaforms_Options')
+				),SYS_LANG,PATH_XMLFORM,$form)
+			),
+		$form->fields);
+		$form->enableTemplate = false;
+		$html=$form->printTemplate( $form->template , $script );
+		$html=str_replace('{$form_className}','formDefault', $html );
+		if (file_exists(PATH_DYNAFORM  . $fileTmp . '.html')) {
+		  unlink(PATH_DYNAFORM  . $fileTmp . '.html');
+	  }
+	  $fp=fopen(PATH_DYNAFORM  . $fileTmp . '.html','w');
+		fwrite($fp, $html);
+		fclose($fp);
+		return $html;
 	}
 	function set_htmlcode($A,$htmlcode)
 	{
@@ -613,15 +637,6 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 		$dbc2 = new DBConnection( PATH_DYNAFORM . $file . '.xml' ,'','','','myxml' );
 		$ses2 = new DBSession($dbc2);
 		$ses2->execute("UPDATE . SET ENABLETEMPLATE = '$value'");
-		/*if ($value === '1') {
-		  $fileTmp = self::_getFilename( $file );
-      self::_copyFile(PATH_DYNAFORM  . $fileTmp . '.html',PATH_DYNAFORM  . $file . '.html');
-		}
-		if ($value === '0') {
-		  if (file_exists(PATH_DYNAFORM  . $file . '.html')) {
-		    unlink(PATH_DYNAFORM  . $file . '.html');
-		  }
-		}*/
 		return $value;
 	}
 	function save($A,$DYN_UID)

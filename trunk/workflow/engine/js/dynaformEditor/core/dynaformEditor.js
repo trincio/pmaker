@@ -362,7 +362,9 @@ var dynaformEditor={
 	},
 	restoreHTML:function()
 	{
-	  this.ajax.restore_html(this.A);
+	  window._editorHTML.doc.body.innerHTML = this.ajax.restore_html(this.A);
+		html_html2();
+		html2_html();
 	},
 	displayError:function(err,rr)
 	{

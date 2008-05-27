@@ -477,7 +477,18 @@ class Propel {
 
 			$dsn = isset(self::$configuration['datasources'][$name]['connection']) ? self::$configuration['datasources'][$name]['connection'] : null;
 			if ($dsn === null) {
-				throw new PropelException("No connection params set for " . $name);
+				if(isset($_SESSION['PROCESS'])) {
+					/** Added By Erik Amaru <erik@colosa.com *******************************
+					* @date: 27-05-08 11:48                                                *
+					* @Description: this was added for the additional database connections *
+					***********************************************************************/
+					G::LoadClass ('dbConnections');
+    				$oDbConnections = new dbConnections($_SESSION['PROCESS']);
+    				$oDbConnections->loadAdditionalConnections();
+    				$dsn = isset(self::$configuration['datasources'][$name]['connection']) ? self::$configuration['datasources'][$name]['connection'] : null;	
+				} else {
+    				throw new PropelException("No connection params set for " . $name);
+    			}	
 			}
 
 			include_once 'creole/Creole.php';
