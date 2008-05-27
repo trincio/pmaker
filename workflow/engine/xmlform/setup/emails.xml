@@ -6,7 +6,7 @@
 </THETITLE>
 
 <MESS_ENABLED type="checkbox" value="1">
-  <en>Enable send mails</en>
+  <en>Enable Email Notifications</en>
 </MESS_ENABLED>
 
 <MESS_ENGINE type="dropdown">
