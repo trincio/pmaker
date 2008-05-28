@@ -376,7 +376,7 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 			$file = G::decrypt( $A , URL_KEY );
 			$form = new Form( $file , PATH_DYNAFORM, SYS_LANG, true );
 			/* Navigation Bar */
-			$form->fields=G::array_merges(
+			/*$form->fields=G::array_merges(
 				array('__DYNAFORM_OPTIONS' => new XmlForm_Field_XmlMenu(
 					new Xml_Node(
 						'__DYNAFORM_OPTIONS',
@@ -385,7 +385,7 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 						array('type'=>'xmlmenu','xmlfile'=>'gulliver/dynaforms_Options')
 			  		),SYS_LANG,PATH_XMLFORM,$form)
 			  	),
-				$form->fields);
+				$form->fields);*/
 			/**/
 			/*
 			 * Loads the stored HTML or the default Template if

@@ -21,7 +21,7 @@
 </PME_HTML_ENABLETEMPLATE>
 
 <PME_RESTORE_HTML type="button" onclick="dynaformEditor.restoreHTML();">
-<en>Restote Original HTML</en>
+<en>Restore Original HTML</en>
 </PME_RESTORE_HTML>
 
 <PME_REFRESH_VIEW type="button" onclick="html2_html();">
