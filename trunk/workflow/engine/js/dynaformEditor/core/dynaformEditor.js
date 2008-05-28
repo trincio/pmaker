@@ -350,8 +350,8 @@ var dynaformEditor={
 		for(var rr=0; rr < myScripts.length ; rr++){
 			try {
 				if (myScripts[rr]!=="")
-					if (window.execScript)
-							window.execScript( myScripts[rr], "javascript" );
+					if (window.execScript) {
+						window.execScript( myScripts[rr], "javascript" );}
 						else
 							window.setTimeout( "try{\n"+myScripts[rr]+"\n}catch(e){\ndynaformEditor.displayError(e,"+rr+")}", 0 );
 			} catch (e) {

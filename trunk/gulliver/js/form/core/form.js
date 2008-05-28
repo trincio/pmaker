@@ -193,7 +193,9 @@
     var me=this;
     this.parent = G_Field;
     this.parent( form, element, name );
-    this.prev = element.value;
+    if (element) {
+      this.prev = element.value;
+    }
     this.validate = 'Any';
     this.mask='';
     this.required=false;
