@@ -38,7 +38,7 @@ var G_Grid = function(oForm, sGridName)
 			      }
 			      if (aFields[i].oProperties)
 			      {
-			      	this.aElements[this.aElements.length - 1].mask = aFields[i].oProperties.sMask;
+			      	this.aElements[this.aElements.length - 1].mask = aFields[i].oProperties.mask;
 			      }
 			      j++;
    		    }
@@ -60,7 +60,7 @@ var G_Grid = function(oForm, sGridName)
 			      }
 			      if (aFields[i].oProperties)
 			      {
-			      	this.aElements[this.aElements.length - 1].mask = aFields[i].oProperties.sMask;
+			      	this.aElements[this.aElements.length - 1].mask = aFields[i].oProperties.mask;
 			      }
    		    	j++;
    		    }
@@ -82,7 +82,7 @@ var G_Grid = function(oForm, sGridName)
 			      }
 			      if (aFields[i].oProperties)
 			      {
-			      	this.aElements[this.aElements.length - 1].mask = aFields[i].oProperties.sMask;
+			      	this.aElements[this.aElements.length - 1].mask = aFields[i].oProperties.mask;
 			      }
    		    	j++;
    		    }
