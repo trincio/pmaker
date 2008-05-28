@@ -409,7 +409,8 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 			 *       los ya revisados en el archivo temporal del editor de dynaforms.
 			 */
 			$tmp=self::_getTmpData();
-			if (!isset($tmp['OLD_FIELDS'])) $tmp['OLD_FIELDS']=array();
+			if (!isset($tmp['OLD_FIELDS'])) $tmp['OLD_FIELDS']=array();//var_dump($html);die;
+			$aAux = explode('</form>', $html);
 			foreach($form->fields as $field)
 			{
 				if ((strpos( $html , '{$form.'.$field->name.'}' )===FALSE) &&
@@ -425,16 +426,18 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 							if (array_search( $field->name , $tmp['OLD_FIELDS'] )===false)
 							{
 								//TOP
-								$html.='<br/>{$'.$field->name.'}'.'{$form.'.$field->name.'}';
+								$aAux[0] .= '<br/>{$'.$field->name.'}'.'{$form.'.$field->name.'}';
+								//$html.='<br/>{$'.$field->name.'}'.'{$form.'.$field->name.'}';
 								//BOTTOM
 								//$html='{$'.$field->name.'}'.'{$form.'.$field->name.'}'.$html;
-								$tmp['OLD_FIELDS'][]=$field->name;
+								//$tmp['OLD_FIELDS'][]=$field->name;
 							}
 					}
 				}
 			}
 			self::_setTmpData($tmp);
-			$html=str_replace('{$form_className}','formDefault', $html );
+			//$html=str_replace('{$form_className}','formDefault', $html );
+			$html=str_replace('{$form_className}','formDefault', $aAux[0] . '</form>' );
 			return $html;
 		}
 		catch (Exception $e)
