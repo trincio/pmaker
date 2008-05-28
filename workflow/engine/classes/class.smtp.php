@@ -18,11 +18,18 @@
  *
  */
 
+	//-------------------------------------------------------------
+	// smtp authentication
+	//-------------------------------------------------------------
+	// setSmtpAuthentication($sAuth)
+	// setUsername($sName)
+	// setPassword($sPass) 
+	//-------------------------------------------------------------
 
 	class smtp
 	{
 		private $mail_server;
-		private $port = 25;
+		private $port;
 		private $return_path;
 		private $envelope_to;
 		private $status;
@@ -33,39 +40,28 @@
 		private $username;
 		private $password;
 
-		function __construct($return_path='',$env_to=array(),$headers='',$body='')
+		function __construct()
 		{
 			$this->status  = false;
-
-			//-------------------------------------------------------------
-			// smtp authentication
-			//-------------------------------------------------------------
-			// setSmtpAuthentication($sAuth)
-			// setUsername($sName)
-			// setPassword($sPass) 
-
+			
 			$this->with_auth = false; 	// change to 'true' to use smtp authentication
 			$this->username = '';     	// needed for smtp authentication
 			$this->password = '';     	// needed for smtp authentication
 
-			// see functions below
-			//-------------------------------------------------------------
+			$this->mail_server = '';
 
-			$this->mail_server = gethostbyaddr('127.0.0.1');
+			$this->return_path = '';
+			$this->envelope_to = array();
+			$this->headers = '';
+			$this->body = '';
 
-			$this->return_path = "$return_path";
-
-			$this->getEnvelopeTo($env_to);
-
-			$this->headers = "$headers";
-			$this->body = "$body";
+			$this->port = '';
 			$this->log = array();
 
-			/*if(count($this->envelope_to)>0)
-				$this->status = $this->sendMessage();*/
+
 		}
 
-		function setServer($sServer)
+		public function setServer($sServer)
 		{
 			if(($sAux = @gethostbyaddr($sServer)))
 				$sServer = $sAux;
@@ -73,31 +69,31 @@
 			$this->mail_server = $sServer;
 		}
 
-		function setPort($iPort) {
+		public function setPort($iPort) {
 		  $this->port = ($iPort != '' ? (int)$iPort : 25);
 		}
 
-		function setReturnPath($sReturnPath) {
+		public function setReturnPath($sReturnPath) {
 		  $this->return_path = $sReturnPath;
 		}
 
-		function setHeaders($sHeaders) {
+		public function setHeaders($sHeaders) {
 		  $this->headers = $sHeaders;
 		}
 
-		function setBody($sBody) {
+		public function setBody($sBody) {
 		  $this->body = $sBody;
 		}
 
-		function setSmtpAuthentication($sAuth) {
+		public function setSmtpAuthentication($sAuth) {
 		 	$this->with_auth = $sAuth;
 		}
 
-		function setUsername($sName) {
+		public function setUsername($sName) {
 		 	$this->username = $sName;
   		}
 
-		function setPassword($sPass) {
+		public function setPassword($sPass) {
 			$this->password = $sPass;
 		}
             
@@ -110,21 +106,17 @@
 			return $this->status;
 		}
 
-		public function getEnvelopeTo($env_to)
+		public function setEnvelopeTo($env_to)
 		{
 			if(count($env_to)>0)
 			{
 				foreach($env_to as $val)
 				{
-					if(false !== ($p = strpos($val,'<')))
-						$this->envelope_to[] = trim(substr($val,$p));
-				  else
-				    $this->envelope_to[] = trim($val);
+					(false !== ($p = strpos($val,'<')))
+						? $this->envelope_to[] = trim(substr($val,$p))
+				    		: $this->envelope_to[] = trim($val);
 				}
-			}
-			else
-			{
-				$this->envelope_to = array();
+
 			}
 
 		}
@@ -132,6 +124,7 @@
 		public function sendMessage()
 		{
 			// connect
+			$errno = $errstr = '';
 			$cp = fsockopen("$this->mail_server", $this->port, $errno, $errstr, 1);
 
 			if(!$cp)
@@ -144,6 +137,7 @@
 			if(substr($res,0,3) != '220')
 			{
 				$this->log[] = $res.' Failed to connect';
+				fclose($cp);
 				return false;
 			}
 
@@ -156,6 +150,7 @@
 				if(substr($res,0,3) != '250')
 				{
 					$this->log[] = $res.' Failed to say EHLO';
+					fclose($cp);
 					return false;
 				}
 				
@@ -166,6 +161,7 @@
 				if(substr($res,0,3) != '334')
 				{
 					$this->log[] = $res.' Auth Login Failed';
+					fclose($cp);
 					return false;
 				}
 
@@ -176,6 +172,7 @@
 				if(substr($res,0,3) != '334')
 				{
 					$this->log[] = $res.' Username failed';
+					fclose($cp);
 					return false;
 				}
 
@@ -186,6 +183,7 @@
 				if(substr($res,0,3) != '235')
 				{
 					$this->log[] = $res.' Password failed';
+					fclose($cp);
 					return false;
 				}
 
@@ -201,6 +199,7 @@
 				if(substr($res,0,3) != '250')
 				{
 					$this->log[] = $res.' Failed to say HELO';
+					fclose($cp);
 					return false;
 				}
 
@@ -213,6 +212,7 @@
 			if(substr($res,0,3) != '250')
 			{
 				$this->log[] = $res.' MAIL FROM failed';
+				fclose($cp);
 				return false;
 			}
 
@@ -225,6 +225,7 @@
 				if(substr($res,0,3) != '250')
 				{
 					$this->log[] = $res.' RCPT TO failed';
+					fclose($cp);
 					return false;
 				}
 
@@ -237,6 +238,7 @@
 			if(substr($res,0,3) != '354')
 			{
 				$this->log[] = $res.' DATA failed';
+				fclose($cp);
 				return false;
 			}
 
@@ -253,6 +255,7 @@
 			if(substr($res,0,3) != '250')
 			{
 				$this->log[] = $res. ' Message failed';
+				fclose($cp);
 				return false;
 			}
 
@@ -263,10 +266,13 @@
 			if(substr($res,0,3) != '221')
 			{
 				$this->log[] = $res.' QUIT failed';
+				fclose($cp);
 				return false;
 			}
 
-			return true;
+			fclose($cp);
+
+			$this->status  = true;
 
 		}
 
