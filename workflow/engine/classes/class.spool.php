@@ -24,7 +24,7 @@
 
 	class spoolRun
 	{
-    private $config;
+		private $config;
 		private $fileData;
 		private $spool_id;
 		public  $status;
@@ -32,7 +32,7 @@
 
 		function __construct()
 		{
-		  $this->config   = array();
+			$this->config   = array();
 			$this->fileData = array();
 			$this->spool_id = '';
 			$this->status   = 'pending';

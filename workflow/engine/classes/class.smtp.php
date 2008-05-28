@@ -29,10 +29,28 @@
 		private $headers;
 		private $body;
 		private $log;
+		private $with_auth;
+		private $username;
+		private $password;
 
 		function __construct($return_path='',$env_to=array(),$headers='',$body='')
 		{
 			$this->status  = false;
+
+			//-------------------------------------------------------------
+			// smtp authentication
+			//-------------------------------------------------------------
+			// setSmtpAuthentication($sAuth)
+			// setUsername($sName)
+			// setPassword($sPass) 
+
+			$this->with_auth = false; 	// change to 'true' to use smtp authentication
+			$this->username = '';     	// needed for smtp authentication
+			$this->password = '';     	// needed for smtp authentication
+
+			// see functions below
+			//-------------------------------------------------------------
+
 			$this->mail_server = gethostbyaddr('127.0.0.1');
 
 			$this->return_path = "$return_path";
@@ -47,11 +65,12 @@
 				$this->status = $this->sendMessage();*/
 		}
 
-		function setServer($sServer) {
-		  if (($sAux = @gethostbyaddr($sServer))) {
-        $sServer = $sAux;
-      }
-		  $this->mail_server = $sServer;
+		function setServer($sServer)
+		{
+			if(($sAux = @gethostbyaddr($sServer)))
+				$sServer = $sAux;
+
+			$this->mail_server = $sServer;
 		}
 
 		function setPort($iPort) {
@@ -70,16 +89,25 @@
 		  $this->body = $sBody;
 		}
 
-		public function returnErrors()
-		{
-			return $this->log;
-
+		function setSmtpAuthentication($sAuth) {
+		 	$this->with_auth = $sAuth;
 		}
 
-		public function returnStatus()
-		{
-			return $this->status;
+		function setUsername($sName) {
+		 	$this->username = $sName;
+  		}
 
+		function setPassword($sPass) {
+			$this->password = $sPass;
+		}
+            
+
+		public function returnErrors() {
+			return $this->log;
+		}
+
+		public function returnStatus() {
+			return $this->status;
 		}
 
 		public function getEnvelopeTo($env_to)
@@ -119,14 +147,63 @@
 				return false;
 			}
 
-			// say HELO
-			fputs($cp, 'HELO '."$this->mail_server\r\n");
-
-			$res = fgets($cp,256);
-			if(substr($res,0,3) != '250')
+			if(false !== $this->with_auth)
 			{
-				$this->log[] = $res.' Failed to say HELO';
-				return false;
+				// say EHLO - works with SMTP and ESMTP servers
+				fputs($cp, 'EHLO '."$this->mail_server\r\n");
+
+				$res = fgets($cp,256);
+				if(substr($res,0,3) != '250')
+				{
+					$this->log[] = $res.' Failed to say EHLO';
+					return false;
+				}
+				
+				// Request Authentication
+				fputs($cp, 'AUTH LOGIN'."\r\n");
+
+				$res = fgets($cp,256);
+				if(substr($res,0,3) != '334')
+				{
+					$this->log[] = $res.' Auth Login Failed';
+					return false;
+				}
+
+				// Send Username
+				fputs($cp, base64_encode($this->username)."\r\n");
+
+				$res = fgets($cp,256);
+				if(substr($res,0,3) != '334')
+				{
+					$this->log[] = $res.' Username failed';
+					return false;
+				}
+
+				// Send Password
+				fputs($cp, base64_encode($this->password)."\r\n");
+
+				$res = fgets($cp,256);
+				if(substr($res,0,3) != '235')
+				{
+					$this->log[] = $res.' Password failed';
+					return false;
+				}
+
+
+			}
+			else // without smtp authentication
+			{
+
+				// say HELO
+				fputs($cp, 'HELO '."$this->mail_server\r\n");
+
+				$res = fgets($cp,256);
+				if(substr($res,0,3) != '250')
+				{
+					$this->log[] = $res.' Failed to say HELO';
+					return false;
+				}
+
 			}
 
 			// mail from
@@ -192,6 +269,7 @@
 			return true;
 
 		}
+
 
 
 
