@@ -39,6 +39,9 @@ pake_task('generate-crud',  'project_exists');
 pake_desc('build new project');
 pake_task('new-project',  'project_exists');
 
+pake_desc('build new plugin');
+pake_task('new-plugin',  'project_exists');
+
 
 function run_version( $task, $args)
 {
@@ -157,7 +160,10 @@ function run_generate_unit_test_class ( $task, $args)
     return $res;
   }
   function savePluginFile ( $fName, $tplName, $class, $tableName, $fields = null ) {
-    $pluginFilename = PATH_PLUGINS . $fName;
+    $pluginOutDirectory = PATH_OUTTRUNK . 'plugins' . PATH_SEP . $class . PATH_SEP;
+    
+    $pluginFilename = $pluginOutDirectory . $fName;
+    
     $pluginTpl      = PATH_GULLIVER_HOME . 'bin' . PATH_SEP . 'tasks' . PATH_SEP . $tplName . '.tpl';
     $template = new TemplatePower( $pluginTpl );
     $template->prepare();
@@ -220,8 +226,12 @@ function run_generate_crud ( $task, $args)
   printf("using DSN Connection %s \n", pakeColor::colorize( $connectionDSN, 'INFO'));
 
   $pluginDirectory = PATH_PLUGINS . $class;
+  $pluginOutDirectory = PATH_OUTTRUNK . 'plugins' . PATH_SEP . $class;
+
+  G::verifyPath ( $pluginOutDirectory, true );
+  G::verifyPath ( $pluginOutDirectory. PATH_SEP . $class, $pluginDirectory );
   
-  G::verifyPath ( $pluginDirectory, true );
+  //G::verifyPath ( $pluginDirectory, true );
   
   //main php file 
   savePluginFile ( $class . '.php', 'pluginMainFile', $class, $tableName );
@@ -303,6 +313,10 @@ function run_generate_crud ( $task, $args)
   $fields['keylist'] = $keylist;
   savePluginFile ( $class . PATH_SEP . $class . 'Edit.php', 'pluginEdit', $class, $tableName, $fields );
   savePluginFile ( $class . PATH_SEP . $class . 'Save.php', 'pluginSave', $class, $tableName, $fields );
+
+  printf("creting symlinks %s \n", pakeColor::colorize( $pluginDirectory, 'INFO'));
+  symlink ($pluginOutDirectory. PATH_SEP . $class. '.php', PATH_PLUGINS . $class . '.php');
+  symlink ($pluginOutDirectory. PATH_SEP . $class,         $pluginDirectory);
 
   exit (0);
 }
@@ -675,4 +689,3 @@ function run_new_project ( $task, $args)
   printf("creating project %s in %s\n", pakeColor::colorize($projectName, 'INFO'), pakeColor::colorize($pathHome, 'INFO'));
   exit(0);
 }
-

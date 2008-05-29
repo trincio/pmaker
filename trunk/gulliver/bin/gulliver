@@ -16,7 +16,7 @@
   array_pop($docuroot);
   $pathTrunk = implode( PATH_SEP, $docuroot );
   array_pop($docuroot);
-  $pathOutTrunk = implode( PATH_SEP, $docuroot ) . PATH_SEP ;
+  $pathOutTrunk = implode( PATH_SEP, $docuroot );
   // to do: check previous algorith for Windows  $pathTrunk = "c:/home/"; 
 
   define('PATH_HOME',     $pathhome . PATH_SEP );
