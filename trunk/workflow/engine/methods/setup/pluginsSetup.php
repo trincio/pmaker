@@ -53,7 +53,7 @@
   $G_ID_SUB_MENU_SELECTED = 'PLUGINS';
   $G_PUBLISH = new Publisher;
   try {
-    if ( !file_exists ($xmlform ) ) throw ( new Exception ('setup not defined for this plugin') );
+    if ( !file_exists ( PATH_PLUGINS.$xmlform.'.xml' ) ) throw ( new Exception ('setup not defined for this plugin') );
   
   
   	$Fields = $oPluginRegistry->getFieldsForPageSetup( $details->sNamespace );
