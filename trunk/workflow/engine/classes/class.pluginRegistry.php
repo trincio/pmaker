@@ -444,6 +444,7 @@ class PMPluginRegistry {
   }
 
   function executeMethod( $sNamespace, $methodName, $oData ) {
+    $response = null;
   	try {
   	$details = $this->_aPluginDetails[$sNamespace];
   	$pluginFolder = $details->sPluginFolder;
