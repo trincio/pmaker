@@ -59,7 +59,6 @@ class Installer
 		$this->options['database']=G::array_concat(Array(
 			'username'=>@$a[1],
 			'password'=>@$a[2],
-			'cli'	  =>@DATABASE_CLIENT,
 			'hostname'=>@$a[0]
 		),$this->options['database']);
 		return ($confirmed===true)?$this->make_site():$this->create_site_test();
@@ -81,7 +80,7 @@ class Installer
 				$result['path_data'],
 				$result['database']['connection'],
 				$result['database']['grant'],
-				$result['database']['cli']),
+				$result['database']['version']),
 			'result'=>$result
 		);
 	}
@@ -172,9 +171,6 @@ class Installer
 			/* Dump schema workflow && data  */
 
 			$this->log("Dump schema workflow/rbac && data\n====================================\n");
-			$this->options['database']['cli'] = (PHP_OS=="WINNT")?'"'.$this->options['database']['cli'].'"':$this->options['database']['cli'];
-			$this->log("Mysql client: ".$this->options['database']['cli']."\n");
-
 			$myPortA = explode(":",$this->options['database']['hostname']);
 			if(count($myPortA)<2)
 			{
@@ -187,17 +183,14 @@ class Installer
 
 			mysql_select_db($wf,$this->connection_database);
 			$pws = PATH_WORKFLOW_MYSQL_DATA.$schema;
-			$qws = $this->query_sql_file(PATH_WORKFLOW_MYSQL_DATA.$schema,$this->connection_database);			
+			$qws = $this->query_sql_file(PATH_WORKFLOW_MYSQL_DATA.$schema,$this->connection_database);
 			$this->log($qws);
-			$qwv = $this->query_sql_file(PATH_WORKFLOW_MYSQL_DATA.$values,$this->connection_database);			
+			$qwv = $this->query_sql_file(PATH_WORKFLOW_MYSQL_DATA.$values,$this->connection_database);
 			$this->log($qwv);
 			/*$pws = (PHP_OS=="WINNT")?'"'.$pws.'"':$pws;
 
 		$sh_sc = $this->options['database']['cli']." ".$wf." < ".$pws." -h ".$this->options['database']['hostname']." --port=".$myPort." --user=".$wf." --password=".$this->options['password'];
 		$result_shell = exec($sh_sc);
-		$this->log("+++++++++::");
-		$this->log($result_shell);
-		$this->log("+++++++++");
 		$this->log($sh_sc."  => ".(($result_shell)?$result_shell:"OK")."\n");
 
 
@@ -336,20 +329,18 @@ class Installer
 	}
 	private function check_connection()
 	{
-		$mex=$this->options['database']['cli'];
-		$cli=((file_exists($mex) && substr($mex,-9)=="mysql.exe") || PHP_OS!=="WINNT")? true:false;
 		if(!function_exists("mysql_connect"))
 		{
 			return Array(
 				'connection'=>false,
 				'grant'=>false,
-				'cli'=>$cli,
+				'version'=>false,
 				'message'=>"php-mysql is Not Installed"
 			);
 		}
 		$this->connection_database = @mysql_connect($this->options['database']['hostname'],$this->options['database']['username'],$this->options['database']['password']);
 		$rt = Array(
-				'cli'=>$cli
+				'version'=>false
 			);
 		if(!$this->connection_database)
 		{
@@ -359,6 +350,8 @@ class Installer
 		}
 		else
 		{
+			preg_match('@[0-9]+\.[0-9]+\.[0-9]+@',mysql_get_server_info($this->connection_database),$version);
+			$rt['version']=version_compare(@$version[0],"4.1.0",">=");
 			$rt['connection']=true;
 			$dbNameTest = "PROCESSMAKERTESTDC";
 			$db = @mysql_query("CREATE DATABASE ".$dbNameTest,$this->connection_database);
@@ -394,4 +387,14 @@ class Installer
 		array_push($this->report,$text);
 	}
 }
+/*
+global $RBAC;
+$aData['USR_UID']      = $_POST['form']['USR_UID'];
+$aData['USR_USERNAME'] = $_POST['form']['USR_USERNAME'];
+$aData['USR_PASSWORD'] = $_POST['form']['USR_PASSWORD'];
+$RBAC->updateUser($aData);
+require_once 'classes/model/Users.php';
+$oUser = new Users();
+$oUser->update($aData);
+*/
 ?>
