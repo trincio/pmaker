@@ -2,7 +2,7 @@ msgid ""
 msgstr "" 
 "Project-Id-Version: PM 4.0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-05-24 11:29+0100 \n"
+"PO-Revision-Date: 2008-05-29 10:32+0100 \n"
 "Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
 "Language-Team: Colosa Developers Team <developers@colosa.com>\n"
 "MIME-Version: 1.0\n"
@@ -1532,6 +1532,12 @@ msgid "Please select a .po file"
 msgstr "Please select a .po file"
 
 # TRANSLATION
+# LABEL/ID_EMAIL
+#: LABEL/ID_EMAIL
+msgid "Email"
+msgstr "Email"
+
+# TRANSLATION
 # JAVASCRIPT/ID_ROLES_CAN_NOT_DELETE
 #: JAVASCRIPT/ID_ROLES_CAN_NOT_DELETE
 msgid "This role have some users,.  Can't delete this role!."
@@ -2506,8 +2512,8 @@ msgstr "Create a new Role"
 # roles/roles_New.xml?ROL_CODE
 # roles/roles_New.xml
 #: text - ROL_CODE
-msgid "Rol Code"
-msgstr "Rol Code"
+msgid "Role Code"
+msgstr "Role Code"
 
 # roles/roles_New.xml?ROL_STATUS
 # roles/roles_New.xml
@@ -2548,8 +2554,8 @@ msgstr "Create a new Role"
 # roles/roles_Edit.xml?ROL_CODE
 # roles/roles_Edit.xml
 #: text - ROL_CODE
-msgid "[roles/roles_Edit.xml?ROL_CODE] Rol Code"
-msgstr "Rol Code"
+msgid "[roles/roles_Edit.xml?ROL_CODE] Role Code"
+msgstr "Role Code"
 
 # roles/roles_Edit.xml?ROL_STATUS
 # roles/roles_Edit.xml
@@ -3132,6 +3138,12 @@ msgstr "HTML View"
 #: checkbox - PME_HTML_ENABLETEMPLATE
 msgid "Enable HTML Editing"
 msgstr "Enable HTML Editing"
+
+# dynaforms/dynaforms_HtmlEditor.xml?PME_RESTORE_HTML
+# dynaforms/dynaforms_HtmlEditor.xml
+#: button - PME_RESTORE_HTML
+msgid "Restore Original HTML"
+msgstr "Restore Original HTML"
 
 # dynaforms/dynaforms_HtmlEditor.xml?PME_REFRESH_VIEW
 # dynaforms/dynaforms_HtmlEditor.xml
@@ -7270,8 +7282,8 @@ msgstr "Configuration"
 # setup/emails.xml?MESS_ENABLED
 # setup/emails.xml
 #: checkbox - MESS_ENABLED
-msgid "Enable send mails"
-msgstr "Enable send mails"
+msgid "Enable Email Notifications"
+msgstr "Enable Email Notifications"
 
 # setup/emails.xml?MESS_ENGINE
 # setup/emails.xml
@@ -7930,7 +7942,7 @@ msgstr "User ID (*)"
 # users/users_New.xml?USR_EMAIL
 # users/users_New.xml
 #: text - USR_EMAIL
-msgid "Email"
+msgid "[users/users_New.xml?USR_EMAIL] Email"
 msgstr "Email"
 
 # users/users_New.xml?USR_ADDRESS
@@ -8196,6 +8208,12 @@ msgstr "Confirm Password"
 #: title - TITLEADD
 msgid "[users/myInfoView.xml?TITLEADD] Additional Information"
 msgstr "Additional Information"
+
+# users/myInfoView.xml?USR_PHOTO
+# users/myInfoView.xml
+#: image - USR_PHOTO
+msgid "[users/myInfoView.xml?USR_PHOTO] Photo"
+msgstr "Photo"
 
 # users/myInfoView.xml?USR_RESUME
 # users/myInfoView.xml
@@ -8803,6 +8821,12 @@ msgstr "Confirm Password"
 msgid "[users/users_View.xml?TITLEADD] Additional Information"
 msgstr "Additional Information"
 
+# users/users_View.xml?USR_PHOTO
+# users/users_View.xml
+#: image - USR_PHOTO
+msgid "[users/users_View.xml?USR_PHOTO] Photo"
+msgstr "Photo"
+
 # users/users_View.xml?USR_RESUME
 # users/users_View.xml
 #: link - USR_RESUME
@@ -8845,6 +8869,12 @@ msgstr "Assigned user can send messages"
 msgid "After derivation notify to each next user"
 msgstr "After derivation notify to each next user"
 
+# tasks/tasks_Notifications.xml?TAS_DEF_MESSAGE
+# tasks/tasks_Notifications.xml
+#: textareapm - TAS_DEF_MESSAGE
+msgid "Message"
+msgstr "Message"
+
 # tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_TYPE
 # tasks/tasks_AssignmentRules.xml
 #: radiogroup - TAS_ASSIGN_TYPE
@@ -8874,6 +8904,24 @@ msgstr "Value Based Assignment"
 #: textpm - TAS_ASSIGN_VARIABLE
 msgid "Variable for Value Based Assignment"
 msgstr "Variable for Value Based Assignment"
+
+# tasks/tasks_Labels.xml?TAS_DEF_TITLE
+# tasks/tasks_Labels.xml
+#: textareapm - TAS_DEF_TITLE
+msgid "Case Title"
+msgstr "Case Title"
+
+# tasks/tasks_Labels.xml?TAS_DEF_DESCRIPTION
+# tasks/tasks_Labels.xml
+#: textareapm - TAS_DEF_DESCRIPTION
+msgid "Case Description"
+msgstr "Case Description"
+
+# tasks/tasks_Labels.xml?TAS_DEF_PROC_CODE
+# tasks/tasks_Labels.xml
+#: textareapm - TAS_DEF_PROC_CODE
+msgid "Case Status"
+msgstr "Case Status"
 
 # tasks/tasks_Owner.xml?TAS_OWNER_APP
 # tasks/tasks_Owner.xml
@@ -9006,6 +9054,12 @@ msgstr "Title"
 #: textarea - TAS_DESCRIPTION
 msgid "[tasks/tasks_Definition.xml?TAS_DESCRIPTION] Description"
 msgstr "Description"
+
+# tasks/tasks_Definition.xml?TAS_PRIORITY_VARIABLE
+# tasks/tasks_Definition.xml
+#: textpm - TAS_PRIORITY_VARIABLE
+msgid "Variable for Case priority"
+msgstr "Variable for Case priority"
 
 # tasks/tasks_Definition.xml?TAS_START
 # tasks/tasks_Definition.xml
@@ -9174,6 +9228,84 @@ msgstr "Finish Date"
 #: button - SEARCH
 msgid "[cases/cases_ListCompleted.xml?SEARCH] Apply Filter"
 msgstr "Apply Filter"
+
+# cases/cases_ViewInputDocumentToRevise.xml?APP_DOC_TITLE
+# cases/cases_ViewInputDocumentToRevise.xml
+#: caption - APP_DOC_TITLE
+msgid "[cases/cases_ViewInputDocumentToRevise.xml?APP_DOC_TITLE] Title"
+msgstr "Title"
+
+# cases/cases_ViewInputDocumentToRevise.xml?APP_DOC_COMMENT
+# cases/cases_ViewInputDocumentToRevise.xml
+#: caption - APP_DOC_COMMENT
+msgid "Comment"
+msgstr "Comment"
+
+# cases/cases_ViewInputDocumentToRevise.xml?APP_DOC_TYPE
+# cases/cases_ViewInputDocumentToRevise.xml
+#: text - APP_DOC_TYPE
+msgid "[cases/cases_ViewInputDocumentToRevise.xml?APP_DOC_TYPE] Type"
+msgstr "Type"
+
+# cases/cases_ViewInputDocumentToRevise.xml?INP_DOC_ORIGINAL
+# cases/cases_ViewInputDocumentToRevise.xml
+#: dropdown - INP_DOC_ORIGINAL
+msgid "[cases/cases_ViewInputDocumentToRevise.xml?INP_DOC_ORIGINAL] Format"
+msgstr "Format"
+
+# cases/cases_ViewInputDocumentToRevise.xml?INP_DOC_ORIGINAL-ORIGINAL
+# cases/cases_ViewInputDocumentToRevise.xml
+#: dropdown - INP_DOC_ORIGINAL - ORIGINAL
+msgid "[cases/cases_ViewInputDocumentToRevise.xml?INP_DOC_ORIGINAL-ORIGINAL]"
+msgstr "Original"
+
+# cases/cases_ViewInputDocumentToRevise.xml?INP_DOC_ORIGINAL-COPYLEGAL
+# cases/cases_ViewInputDocumentToRevise.xml
+#: dropdown - INP_DOC_ORIGINAL - COPYLEGAL
+msgid "[cases/cases_ViewInputDocumentToRevise.xml?INP_DOC_ORIGINAL-COPYLEGAL]"
+msgstr "Legal Copy"
+
+# cases/cases_ViewInputDocumentToRevise.xml?INP_DOC_ORIGINAL-COPY
+# cases/cases_ViewInputDocumentToRevise.xml
+#: dropdown - INP_DOC_ORIGINAL - COPY
+msgid "[cases/cases_ViewInputDocumentToRevise.xml?INP_DOC_ORIGINAL-COPY]"
+msgstr "Copy"
+
+# cases/cases_ViewInputDocumentToRevise.xml?APP_DOC_CREATE_DATE
+# cases/cases_ViewInputDocumentToRevise.xml
+#: date - APP_DOC_CREATE_DATE
+msgid "Created Date"
+msgstr "Created Date"
+
+# cases/cases_ViewInputDocumentToRevise.xml?CREATOR
+# cases/cases_ViewInputDocumentToRevise.xml
+#: text - CREATOR
+msgid "Creator"
+msgstr "Creator"
+
+# cases/cases_ViewInputDocumentToRevise.xml?APP_DOC_FILENAME
+# cases/cases_ViewInputDocumentToRevise.xml
+#: link - APP_DOC_FILENAME
+msgid "[cases/cases_ViewInputDocumentToRevise.xml?APP_DOC_FILENAME] File"
+msgstr "File"
+
+# cases/cases_ViewInputDocumentToRevise.xml?BACK
+# cases/cases_ViewInputDocumentToRevise.xml
+#: button - BACK
+msgid "[cases/cases_ViewInputDocumentToRevise.xml?BACK] Back"
+msgstr "Back"
+
+# cases/cases_OutputdocsListToRevise.xml?TITLE
+# cases/cases_OutputdocsListToRevise.xml
+#: text - TITLE
+msgid "[cases/cases_OutputdocsListToRevise.xml?TITLE] Title"
+msgstr "Title"
+
+# cases/cases_OutputdocsListToRevise.xml?APP_DOC_CREATE_DATE
+# cases/cases_OutputdocsListToRevise.xml
+#: date - APP_DOC_CREATE_DATE
+msgid "Create Date"
+msgstr "Create Date"
 
 # cases/cases_AttachInputDocument3.xml?TITLE1
 # cases/cases_AttachInputDocument3.xml
@@ -9412,7 +9544,7 @@ msgstr "Apply Filter"
 # cases/cases_InputdocsList.xml?TITLE
 # cases/cases_InputdocsList.xml
 #: text - TITLE
-msgid "[cases/cases_InputdocsList.xml?TITLE] Language"
+msgid "[cases/cases_InputdocsList.xml?TITLE] Title"
 msgstr ""
 
 # cases/cases_InputdocsList.xml?DELETE
@@ -9544,13 +9676,13 @@ msgstr "Copy"
 # cases/cases_ViewInputDocument2.xml?APP_DOC_CREATE_DATE
 # cases/cases_ViewInputDocument2.xml
 #: date - APP_DOC_CREATE_DATE
-msgid "Created Date"
+msgid "[cases/cases_ViewInputDocument2.xml?APP_DOC_CREATE_DATE] Created Date"
 msgstr "Created Date"
 
 # cases/cases_ViewInputDocument2.xml?CREATOR
 # cases/cases_ViewInputDocument2.xml
 #: text - CREATOR
-msgid "Creator"
+msgid "[cases/cases_ViewInputDocument2.xml?CREATOR] Creator"
 msgstr "Creator"
 
 # cases/cases_ViewInputDocument2.xml?APP_DOC_COMMENT
@@ -9580,7 +9712,7 @@ msgstr "Description"
 # cases/cases_ViewOutputDocument1.xml?APP_DOC_CREATE_DATE
 # cases/cases_ViewOutputDocument1.xml
 #: caption - APP_DOC_CREATE_DATE
-msgid "Create Date"
+msgid "[cases/cases_ViewOutputDocument1.xml?APP_DOC_CREATE_DATE] Create Date"
 msgstr "Create Date"
 
 # cases/cases_ViewOutputDocument1.xml?APP_DOC_FILENAME1
@@ -9600,6 +9732,24 @@ msgstr "File (.pdf)"
 #: button - NEXT_STEP
 msgid "Next step"
 msgstr "Next step"
+
+# cases/cases_InputdocsListToRevise.xml?TITLE
+# cases/cases_InputdocsListToRevise.xml
+#: text - TITLE
+msgid "[cases/cases_InputdocsListToRevise.xml?TITLE] Type"
+msgstr "Type"
+
+# cases/cases_InputdocsListToRevise.xml?TYPE
+# cases/cases_InputdocsListToRevise.xml
+#: text - TYPE
+msgid "[cases/cases_InputdocsListToRevise.xml?TYPE] Type"
+msgstr "Type"
+
+# cases/cases_InputdocsListToRevise.xml?CREATE_DATE
+# cases/cases_InputdocsListToRevise.xml
+#: text - CREATE_DATE
+msgid "[cases/cases_InputdocsListToRevise.xml?CREATE_DATE] Create Date"
+msgstr "Create Date"
 
 # cases/cases_TaskInformation.xml?TAS_TITLE
 # cases/cases_TaskInformation.xml
@@ -10087,6 +10237,42 @@ msgstr "File"
 msgid "[cases/cases_ViewInputDocument3.xml?BACK] Back"
 msgstr "Back"
 
+# cases/cases_ViewOutputDocumentToRevise.xml?OUT_DOC_TITLE
+# cases/cases_ViewOutputDocumentToRevise.xml
+#: caption - OUT_DOC_TITLE
+msgid "[cases/cases_ViewOutputDocumentToRevise.xml?OUT_DOC_TITLE] Output document"
+msgstr "Output document"
+
+# cases/cases_ViewOutputDocumentToRevise.xml?OUT_DOC_DESCRIPTION
+# cases/cases_ViewOutputDocumentToRevise.xml
+#: caption - OUT_DOC_DESCRIPTION
+msgid "[cases/cases_ViewOutputDocumentToRevise.xml?OUT_DOC_DESCRIPTION] Description"
+msgstr "Description"
+
+# cases/cases_ViewOutputDocumentToRevise.xml?APP_DOC_CREATE_DATE
+# cases/cases_ViewOutputDocumentToRevise.xml
+#: caption - APP_DOC_CREATE_DATE
+msgid "[cases/cases_ViewOutputDocumentToRevise.xml?APP_DOC_CREATE_DATE] Create Date"
+msgstr "Create Date"
+
+# cases/cases_ViewOutputDocumentToRevise.xml?APP_DOC_FILENAME1
+# cases/cases_ViewOutputDocumentToRevise.xml
+#: link - APP_DOC_FILENAME1
+msgid "[cases/cases_ViewOutputDocumentToRevise.xml?APP_DOC_FILENAME1] File (.doc)"
+msgstr "File (.doc)"
+
+# cases/cases_ViewOutputDocumentToRevise.xml?APP_DOC_FILENAME2
+# cases/cases_ViewOutputDocumentToRevise.xml
+#: link - APP_DOC_FILENAME2
+msgid "[cases/cases_ViewOutputDocumentToRevise.xml?APP_DOC_FILENAME2] File (.pdf)"
+msgstr "File (.pdf)"
+
+# cases/cases_ViewOutputDocumentToRevise.xml?BACK
+# cases/cases_ViewOutputDocumentToRevise.xml
+#: button - BACK
+msgid "[cases/cases_ViewOutputDocumentToRevise.xml?BACK] Back"
+msgstr "Back"
+
 # cases/cases_ProcessInformation.xml?PRO_TITLE
 # cases/cases_ProcessInformation.xml
 #: text - PRO_TITLE
@@ -10366,7 +10552,7 @@ msgstr "Case Resume"
 # cases/cases_Resume.xml?TITLE
 # cases/cases_Resume.xml
 #: text - TITLE
-msgid "Case Title"
+msgid "[cases/cases_Resume.xml?TITLE] Case Title"
 msgstr "Case Title"
 
 # cases/cases_Resume.xml?CREATOR
@@ -10390,7 +10576,7 @@ msgstr "Last Update"
 # cases/cases_Resume.xml?STATUS
 # cases/cases_Resume.xml
 #: text - STATUS
-msgid "Case Status"
+msgid "[cases/cases_Resume.xml?STATUS] Case Status"
 msgstr "Case Status"
 
 # cases/cases_Resume.xml?DEL_THREAD_STATUS
