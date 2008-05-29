@@ -174,9 +174,7 @@ class AppDelegation extends BaseAppDelegation {
       $oConnection->begin();
   	  $oApp = AppDelegationPeer::retrieveByPK( $sApplicationUID, $iDelegationIndex );
   	  if ( get_class ($oApp) == 'AppDelegation' ) {
-        $this->setAppUid($sApplicationUID);
-        $this->setDelIndex($iDelegationIndex);
-        $result = $this->delete();
+        $result = $oApp->delete();
       }
       $oConnection->commit();
       return $result;
