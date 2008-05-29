@@ -27,6 +27,10 @@
    $oPluginRegistry = &PMPluginRegistry::getSingleton();
    $existsDynaforms = $oPluginRegistry->existsTrigger(PM_NEW_DYNAFORM_LIST );
 
+//for now, we are going with the default list, because the plugin is not complete
+include ('dynaforms_Edit.php');die;
+//---*****************
+
  if ( !$existsDynaforms ) {
    include ('dynaforms_Edit.php');
    die;
