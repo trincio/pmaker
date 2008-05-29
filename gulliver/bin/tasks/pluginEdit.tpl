@@ -30,7 +30,6 @@
   $dbc = new DBConnection;
   $ses = new DBSession($dbc);
   $G_PUBLISH = new Publisher;
-  $G_PUBLISH->SetTo( $dbc ); 
   $G_PUBLISH->AddContent('xmlform', 'xmlform', '{className}/{className}', '', $fields, '{className}Save' );
   G::RenderPage('publish');   
 ?>
