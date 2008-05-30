@@ -321,6 +321,51 @@ function run_generate_crud ( $task, $args)
   exit (0);
 }
 
+function run_new_plugin ( $task, $args) 
+{
+  ini_set('display_errors','on');
+  ini_set('error_reporting', E_ERROR);
+
+  // the environment for poedit always is Development
+  define ( 'G_ENVIRONMENT', G_DEV_ENV );
+
+  //the plugin name in the first argument
+  if ( !isset($args[0]) ) {
+    printf("Error: %s\n", pakeColor::colorize( 'you must specify a valid name for the plugin', 'ERROR'));
+    exit (0);
+  }  
+  $pluginName = $args[0];
+  
+  //second parameter is the table name, by default is the same classname in uppercase.
+  //$tableName = isset($args[1])? $args[1] : strtoupper ($class) ;
+
+  require_once ( "propel/Propel.php" );
+  G::LoadSystem ('templatePower');
+
+  Propel::init(  PATH_CORE . "config/databases.php");  
+  $configuration = Propel::getConfiguration();
+  $connectionDSN = $configuration['datasources']['workflow']['connection'];
+  printf("using DSN Connection %s \n", pakeColor::colorize( $connectionDSN, 'INFO'));
+
+  $pluginDirectory = PATH_PLUGINS . $pluginName;
+  $pluginOutDirectory = PATH_OUTTRUNK . 'plugins' . PATH_SEP . $pluginName;
+
+  G::verifyPath ( $pluginOutDirectory, true );
+  G::verifyPath ( $pluginOutDirectory. PATH_SEP . $pluginName, $pluginDirectory );
+  
+  //main php file 
+  savePluginFile ( $pluginName . '.php', 'pluginMainFile', $pluginName, $pluginName );
+
+  //menu  
+  savePluginFile ( $pluginName . PATH_SEP . 'menu' . $pluginName . '.php', 'pluginMenu', $pluginName, $pluginName );
+
+  printf("creting symlinks %s \n", pakeColor::colorize( $pluginDirectory, 'INFO'));
+  symlink ($pluginOutDirectory. PATH_SEP . $pluginName. '.php', PATH_PLUGINS . $pluginName . '.php');
+  symlink ($pluginOutDirectory. PATH_SEP . $pluginName,         $pluginDirectory);
+
+  exit (0);
+}
+
 
 function run_create_poedit_file( $task, $args)
 {
