@@ -35,6 +35,7 @@
     var $plus = "<span style='position:absolute; width:16px;height:22px;cursor:pointer;'onclick='tree.expand(this.parentNode);'>&nbsp;</span>";
     var $minus = "<span  style='position:absolute; width:16px;height:22px;cursor:pointer' onclick='tree.contract(this.parentNode);'>&nbsp;</span>";
     var $point = "<span style='position:absolute; width:5px;height:10px;cursor:pointer;'  onclick='tree.select(this.parentNode);'>&nbsp;</span>";
+
     function Tree( $xmlnode = NULL )
     {
 	    if (!isset($xmlnode)) return;
@@ -99,4 +100,4 @@
       return $obj->printObject( array( 'node' => &$this ) );
     }
   }
-?>
+
