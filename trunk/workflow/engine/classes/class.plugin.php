@@ -35,6 +35,7 @@ define ( 'PM_NEW_PROCESS_LIST',  1005 );
 define ( 'PM_NEW_PROCESS_SAVE',  1006 );
 define ( 'PM_NEW_DYNAFORM_LIST', 1007 );
 define ( 'PM_NEW_DYNAFORM_SAVE', 1008 );
+define ( 'PM_EXTERNAL_STEP',     1009 );
 
 class menuDetail {
 	var $sNamespace;

@@ -390,20 +390,28 @@ function run_new_plugin ( $task, $args)
 
   printf("creating plugin directory %s \n", pakeColor::colorize( $pluginOutDirectory, 'INFO'));
   
-
   G::verifyPath ( $pluginOutDirectory, true );
   G::verifyPath ( $pluginHome . PATH_SEP . 'public_html', true );
   G::verifyPath ( $pluginHome . PATH_SEP . 'config', true );
   G::verifyPath ( $pluginHome . PATH_SEP . 'data', true );
-  $changeLogo = strtolower ( prompt ( 'Change system logo [Y/N]' ));
+  $changeLogo = strtolower ( prompt ( 'Change system logo [y/N]' ));
 
+  $fields = array();
   if ( $changeLogo == 'y' ) {
     $filePng = $pluginHome . PATH_SEP . 'public_html' . PATH_SEP . $pluginName . '.png';
     createPngLogo ( $filePng, $pluginName );
+    $fields['changeLogo'][] = array( 'className' => $pluginName);
+  }
+
+  $externalStep = strtolower ( prompt ( 'Create external step for Processmaker[y/N]' ));
+  if ( $externalStep == 'y' ) {
+    $fields['externalStep'][] = array( 'className' => $pluginName);
+    savePluginFile ( $pluginName . PATH_SEP . 'step' . $pluginName . '.php', 'pluginStep', $pluginName, $pluginName );
   }
 
   //main php file 
-  savePluginFile ( $pluginName . '.php', 'pluginMainFile', $pluginName, $pluginName );
+  savePluginFile ( $pluginName . '.php', 'pluginMainFile', $pluginName, $pluginName, $fields );
+  savePluginFile ( $pluginName . PATH_SEP . 'class.' . $pluginName . '.php', 'pluginClass', $pluginName, $pluginName, $fields );
 
   //menu  
   savePluginFile ( $pluginName . PATH_SEP . 'menu' . $pluginName . '.php', 'pluginMenu', $pluginName, $pluginName );
