@@ -11,11 +11,19 @@
 | the GNU GPL and is free to use and redistribute
 | only if this copyright statement is not removed
 +--------------------------------------------------*/
+/**
+* @LastModification 30/05/2008
+*/
 
 class NET
 {
     public $hostname;
     public $ip;
+
+    private $db_user;
+    private $db_passwd;
+    private $db_sourcename;
+    private $db_port;
 
     /*errors handle*/
     private $errno;
@@ -25,6 +33,10 @@ class NET
     {
         $this->errno = 0;
         $this->errstr = "";
+
+        unset($this->db_user);
+        unset($this->db_passwd);
+        unset($this->db_sourcename);
 
         #verifing valid param
         if ($pHost == "") {
@@ -97,134 +109,205 @@ class NET
         $this->errno = $a1;
     }
 
-    function mysql_ping($pUser, $pPasswd)
+    function loginDbServer($pUser, $pPasswd)
     {
-        if ($pPasswd != "") {
-            $link = @mysql_connect($this->ip, $pUser, $pPasswd);
-        } else {
-            $link = @mysql_connect($this->ip, $pUser, "");
-        }
-        if ($link) {
-            if (@mysql_ping($link)) {
-                $this->errstr = "";
-                $this->errno = 0;
-            } else {
-                $this->errstr = "NET::MYSQL->Lost Connection";
-                $this->errno = 10010;
-            }
-        } else {
-            $this->errstr = "NET::MYSQL->The connection was refused";
-            $this->errno = 10001;
-        }
-        return;
+        $this->db_user = $pUser;
+        $this->db_passwd = $pPasswd;
     }
 
-    function mysql_testDataBase($pUser, $pPasswd, $pDb)
+    function setDataBase($pDb, $pPort='')
+    {
+        $this->db_sourcename = $pDb;
+        $this->db_port = $pPort;
+    }
+
+    function tryConnectServer($pDbDriver)
+    {
+        $stat = new Stat();
+
+        if(isset($this->db_user) && (isset($this->db_passwd) || ('' == $this->db_passwd)) && isset($this->db_sourcename))
+        {
+            switch($pDbDriver)
+            {
+                case 'mysql':
+                    if ($this->db_passwd == '') {
+                        $link = @mysql_connect($this->ip, $this->db_user);
+                    } else {
+                        $link = @mysql_connect($this->ip, $this->db_user, $this->db_passwd);
+                    }
+                    if ($link) {
+                        if (@mysql_ping($link)) {
+                            $stat->status = 'SUCCESS';
+                            $this->errstr = "";
+                            $this->errno = 0;
+                        } else {
+                            $this->errstr = "NET::MYSQL->Lost Connection";
+                            $this->errno = 10010;
+                        }
+                    } else {
+                        $this->errstr = "NET::MYSQL->The connection was refused";
+                        $this->errno = 10001;
+                    }
+                    break;
+
+                case 'pgsql':
+                    $this->db_port = ($this->db_port == "") ? "5432" : $this->db_port;
+                    $link = @pg_connect("host='$this->ip' port='$this->db_port' user='$this->db_user' password='$this->db_passwd' dbname='$this->db_sourcename'");
+                    if ($link) {
+                        $stat->status = 'SUCCESS';
+                        $this->errstr = "";
+                        $this->errno = 0;
+                    } else {
+                        $this->errstr = "NET::POSTGRES->The connection was refused";
+                        $this->errno = 20001;
+                    }
+                    break;
+
+                case 'mssql':
+                    $str_port = ($this->db_port == "") ? "" : ",".$this->db_port;
+                    $link = @mssql_connect($this->ip . $str_port, $this->db_user, $this->db_passwd);
+
+                    if ($link) {
+                        $stat->status = 'SUCCESS';
+                        $this->errstr = "";
+                        $this->errno = 0;
+                    } else {
+                        $this->errstr = "NET::MSSQL->The connection was refused";
+                        $this->errno = 30001;
+                    }
+                    break;
+
+                case 'oracle':
+                    $this->db_port = ($this->db_port == "") ? "1521" : $this->db_port;
+                    try{
+                        $link = $conn = @oci_connect($this->db_user,$this->db_passwd, "(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP) (HOST=$this->ip) (PORT=$this->db_port) )) (CONNECT_DATA=(SERVICE_NAME=)))");
+                        if ($link) {
+                            $stat->status = 'SUCCESS';
+                            $this->errstr = "";
+                            $this->errno = 0;
+                        } else {
+                            $this->errstr = "NET::ORACLE->The connection was refused";
+                            $this->errno = 30001;
+                        }
+                    } catch (Exception $e){
+                        throw new Exception("[erik] Couldn't connect to Oracle Server! - ".$e->getMessage());
+                    }
+                    break;
+
+                case 'informix':
+                    break;
+                case 'sqlite':
+                    break;
+
+            }
+        } else {
+            throw new Exception("CLASS::NET::ERROR: No connections param.");
+        }
+
+        return $stat;
+    }
+
+    function tryOpenDataBase($pDbDriver)
     {
         set_time_limit(0);
-        $link = @mysql_connect($this->ip, $pUser, $pPasswd);
-        $db = @mysql_select_db($pDb);
-        if ($link) {
-            if ($db) {
-                $result = @mysql_query("show tables;");
-                if ($result) {
-                    $this->errstr = "";
-                    $this->errno = 0;
-                    @mysql_free_result($result);
-                } else {
-                    $this->errstr = "NET::MYSQL->Test query failed";
-                    $this->errno = 10100;
-                }
-            } else {
-                $this->errstr = "NET::MYSQL->Select data base failed";
-                $this->errno = 10011;
-            }
-        } else {
-            $this->errstr = "NET::MYSQL->The connection was refused";
-            $this->errno = 10001;
-        }
-    }
-    
-    function mysql_getVersion($pUser, $pPasswd, $pDb)
-    {
-		$link = @mysql_connect($this->ip, $pUser, $pDb);
-		if ($link) {
-			$this->errstr = "NET::MYSQL->The connection was refused!";
-            $this->errno = 10001;
-            return false;
-		} else {
-			$this->errstr = "";
-            $this->errno = 0;
-			return mysql_get_server_info();
-		}
-	}
-    
-    function mssql_connect($pUser, $pPasswd)
-    {
-        if ($pPasswd != "") {
-            $link = @mssql_connect($this->ip, $pUser, $pPasswd);
-        } else {
-            $link = @mssql_connect($this->ip, $pUser, "");
-        }
-        if ($link) {
-            $this->errstr = "";
-            $this->errno = 0;
-        } else {
-            $this->errstr = "NET::MSSQL->The connection was refused";
-            $this->errno = 30001;
-        }
-    }
+        $stat = new Stat();
 
-    function mssql_testDataBase($pUser, $pPasswd, $pDb)
-    {
-        set_time_limit(0);
-        $link = @mssql_connect($this->ip, $pUser, $pPasswd);
-        if ($link) {
-        	$db = @mysql_select_db($pDb, $link);	
-            if ($db) {
-                $this->errstr = "";
-                $this->errno = 0;
-            } else {
-                $this->errstr = "NET::MSSQL->Select data base failed";
-                $this->errno = 30010;
-            }
-        } else {
-            $this->errstr = "NET::MSSQL->The connection was refused";
-            $this->errno = 30001;
-        }
-    }
+        if(isset($this->db_user) && (isset($this->db_passwd) || ('' == $this->db_passwd)) && isset($this->db_sourcename))
+        {
+            switch($pDbDriver)
+            {
+                case 'mysql':
+                    $link = @mysql_connect($this->ip, $this->db_user, $this->db_passwd);
+                    $db = @mysql_select_db($this->db_sourcename);
+                    if ($link) {
+                        if ($db) {
+                            $result = @mysql_query("show tables;");
+                            if ($result) {
+                                $stat->status = 'SUCCESS';
+                                $this->errstr = "";
+                                $this->errno = 0;
+                                @mysql_free_result($result);
+                            } else {
+                                $this->errstr = "NET::MYSQL->Test query failed";
+                                $this->errno = 10100;
+                            }
+                        } else {
+                            $this->errstr = "NET::MYSQL->Select data base failed";
+                            $this->errno = 10011;
+                        }
+                    } else {
+                        $this->errstr = "NET::MYSQL->The connection was refused";
+                        $this->errno = 10001;
+                    }
+                    break;
 
-    function pg_ping($pUser, $pPasswd, $pDb, $pPort)
-    {
-        $pPort = ($pPort == "") ? "5432" : $pPort;
-        $link = @pg_connect("host='$this->ip' port='$pPort' user='$pUser' password='$pPasswd' dbname='$pDb' ");
-        if ($link) {
-        	$this->errno = 0;
-        	return 0;
-            if (@pg_ping($link)) {
-                $this->errstr = "";
-                $this->errno = 0;
-            } else {
-                $this->errstr = "NET::POSTGRES->Lost Connection";
-                $this->errno = 20010;
+                case 'pgsql':
+                    $this->db_port = ($this->db_port == "") ? "5432" : $this->db_port;
+                    $link = @pg_connect("host='$this->ip' port='$this->db_port' user='$this->db_user' password='$this->db_passwd' dbname='$this->db_sourcename'");
+                    if ($link) {
+                        if (@pg_ping($link)) {
+                            $stat->status = 'SUCCESS';
+                            $this->errstr = "";
+                            $this->errno = 0;
+                        } else {
+                            $this->errstr = "NET::POSTGRES->Lost Connection";
+                            $this->errno = 20010;
+                        }
+                    } else {
+                        $this->errstr = "NET::POSTGRES->The connection was refused";
+                        $this->errno = 20001;
+                    }
+                    break;
+
+                case 'mssql':
+                    $str_port = ($this->db_port == "") ? "" : ",".$this->db_port;
+                    $link = @mssql_connect($this->ip . $str_port, $this->db_user, $this->db_passwd);
+                    if ($link) {
+                        $db = @mssql_select_db($this->db_sourcename, $link);
+                        if ($db) {
+                            $stat->status = 'SUCCESS';
+                            $this->errstr = "";
+                            $this->errno = 0;
+                        } else {
+                            $this->errstr = "NET::MSSQL->Select data base failed";
+                            $this->errno = 30010;
+                        }
+                    } else {
+                        $this->errstr = "NET::MSSQL->The connection was refused";
+                        $this->errno = 30001;
+                    }
+                    break;
+
+                case 'oracle':
+                    $this->db_port = ($this->db_port == "") ? "1521" : $this->db_port;
+                    $link = @oci_connect($this->db_user,$this->db_passwd, "(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP) (HOST=$this->ip) (PORT=$this->db_port) )))");
+                    if ($link) {
+                        $stid = @oci_parse($link, 'select AUTHENTICATION_TYPE from v$session_connect_info');
+                        $result = @oci_execute($stid, OCI_DEFAULT);
+                        if($result){
+                            $stat->status = 'SUCCESS';
+                            $this->errstr = "";
+                            $this->errno = 0;
+                            @oci_close($link);
+                        } else {
+                            $this->errstr = "NET::ORACLE->Couldn't execute any query on this server!";
+                            $this->errno = 40010;
+                        }
+                    } else {
+                        $this->errstr = "NET::ORACLE->The connection was refused";
+                        $this->errno = 40001;
+                    }
+                    break;
+                case 'informix':
+                    break;
+                case 'sqlite':
+                    break;
+
             }
         } else {
-            $this->errstr = "NET::POSTGRES->The connection was refused";
-            $this->errno = 20001;
+            throw new Exception("CLASS::NET::ERROR: No connections param.");
         }
-    }
-    
-    function pg_connect($pUser, $pPasswd, $pDb, $pPort)
-    {
-        $pPort = ($pPort == "") ? "5432" : $pPort;
-        $link = @pg_connect("host='$this->ip' port='$pPort' user='$pUser' password='$pPasswd' dbname='$pDb' ");
-        if ($link) {
-        	$this->errstr = "";
-            $this->errno = 0;
-        } else {
-            $this->errstr = "NET::POSTGRES->The connection was refused";
-            $this->errno = 20011;
-        }
+        return $stat;
     }
     
     function dbName($pAdapter)
@@ -268,6 +351,16 @@ class NET
         return $this->errstr;
     }
 
+}
+
+class Stat
+{
+    public $stutus;
+
+    function __construct()
+    {
+        $this->status = false;
+    }
 }
 
 ?>

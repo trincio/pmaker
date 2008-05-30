@@ -7,7 +7,7 @@
 /*-----------------------------------------------------------------
 | dbConnections.class.php
 +------------------------------------------------------------------
-| Email bugs/suggestions to erik@colosa.com erik.260mb.com
+| Email bugs/suggestions to erik@colosa.com 
 +------------------------------------------------------------------
 +------------------------------------------------------------------*/
 
@@ -109,12 +109,35 @@ class dbConnections
 		$servicesAvailables = Array();
 		
 		$dbServices = Array(
-			'mysql'=>Array('id'=>'mysql', 'command'=>'mysql_connect', 'name'=>'MySql'),
-			'pgsql'=>Array('id'=>'pgsql','command'=>'pg_connect', 'name'=>'PostgreSQL'),
-			'mssql'=>Array('id'=>'mssql','command'=>'mssql_connect', 'name'=>'Microsoft SQL Server'),
-			'oracle'=>Array('id'=>'oracle','command'=>'oci_connect', 'name'=>'Oracle'),
-			'informix'=>Array('id'=>'informix','command'=>'ifx_connect','name'=>'Informix'),
-			'sqlite'=>Array('id'=>'sqlite','command'=>'sqlite_open', 'name'=>'SQLite')
+			'mysql' => Array(
+                'id'        => 'mysql', 
+                'command'   => 'mysql_connect',
+                'name'      => 'MySql'
+            ),
+			'pgsql' => Array(
+                 'id'       => 'pgsql',
+                 'command'  => 'pg_connect',
+                 'name'     => 'PostgreSQL'
+            ),
+			'mssql' => Array(
+                  'id'      => 'mssql',
+                  'command' => 'mssql_connect',
+                  'name'    => 'Microsoft SQL Server'),
+			'oracle'=> Array(
+                'id'        => 'oracle',
+                'command'   => 'oci_connect',
+                'name'      => 'Oracle'
+            ),
+			'informix'=> Array(
+                'id'        => 'informix',
+                'command'   => 'ifx_connect',
+                'name'      => 'Informix'
+            ),
+			'sqlite' => Array(
+                'id'        => 'sqlite',
+                'command'   => 'sqlite_open',
+                'name'      => 'SQLite'
+            )
 		);
 			
 		foreach($dbServices as $service) {

@@ -127,6 +127,8 @@ class Report {
 		$oCriteria = new Criteria('workflow');
 		$del = DBAdapter::getStringDelimiter();
     $oCriteria->addSelectColumn(AppDelegationPeer::PRO_UID);
+    $oCriteria->addAsColumn("MIN", "MIN(".AppDelegationPeer::DEL_DURATION.")");
+    $oCriteria->addAsColumn("MAX", "MAX(".AppDelegationPeer::DEL_DURATION.")");
     $oCriteria->addAsColumn('PRO_TITLE', 'C1.CON_VALUE' );
     $oCriteria->addAlias("C1",  'CONTENT');
     $proTitleConds = array();
@@ -149,6 +151,8 @@ class Report {
     $aProcess[] = array('PRO_UID'   => 'char',
       	                'PRO_TITLE' => 'char',
       	                'CANTCASES' => 'integer',
+      	                'MIN'       => 'float',
+      	                'MAX'       => 'float',
       	                'CASELASTMONTH' => 'integer',
       	                'CASELASTDAY' => 'integer'
       	                );
@@ -192,6 +196,8 @@ class Report {
       	$aProcess[] = array('PRO_UID'   => $aRow['PRO_UID'],
       	                    'PRO_TITLE' => $aRow['PRO_TITLE'],
       	                    'CANTCASES' => $cant,
+      	                    'MIN'       => $aRow['MIN'],
+      	                    'MAX'       => $aRow['MAX'],
       	                    'CASELASTMONTH' => $cant1,
       	                    'CASELASTDAY' => $cant2
       	                   );
@@ -403,6 +409,111 @@ class Report {
     $oCriteria = new Criteria('dbarray');
     $oCriteria->setDBArrayTable('reports');
     return $oCriteria;    
+	}
+	
+ function generatedReport3()
+	{ 
+		require_once 'classes/model/AppDelegation.php';
+		require_once 'classes/model/Application.php';
+		$oCriteria = new Criteria('workflow');
+		$del = DBAdapter::getStringDelimiter();  
+		/*          
+    $oCriteria->addAsColumn("DATES", "CONCAT(SUBSTRING(".AppDelegationPeer::DEL_INIT_DATE.",6,2), '-', SUBSTRING(".AppDelegationPeer::DEL_INIT_DATE.",1,4))");       
+    //$oCriteria->addSelectColumn('COUNT(*)');
+    //$oCriteria->addSelectColumn(AppDelegationPeer::APP_UID);
+    $oCriteria->add(AppDelegationPeer::APP_UID, '', Criteria::NOT_EQUAL);
+    $oCriteria->addGroupByColumn("DATES"); 
+    */
+   
+      $sql = "SELECT CONCAT(SUBSTRING(AD.DEL_INIT_DATE,6,2),'-', SUBSTRING(AD.DEL_INIT_DATE,1,4)) AS FECHA, 
+              COUNT(*) AS CANTCASES,       				
+      				MIN(AD.DEL_DURATION) AS MIN, 
+							MAX(AD.DEL_DURATION) AS MAX, 
+							SUM(AD.DEL_DURATION) AS TOTALDUR, 
+							AVG(AD.DEL_DURATION) AS PROMEDIO 
+              FROM APP_DELEGATION AS AD WHERE AD.APP_UID<>'' GROUP BY FECHA";
+
+			$con = Propel::getConnection("workflow");
+			$stmt = $con->prepareStatement($sql);
+			$rs = $stmt->executeQuery();
+      
+      $ROW[] = array('FECHA'     => 'char',
+      							 'CANTCASES' => 'integer',
+      	             'MIN'       => 'float',
+      	             'MAX'       => 'float',
+      	             'TOTALDUR'  => 'float',
+      	             'PROMEDIO'  => 'float'	      	                
+      	            );
+      
+			while($rs->next())
+			{								
+				$ROW[] = array('FECHA'    => $rs->getString('FECHA'),
+				               'CANTCASES'=> $rs->getString('CANTCASES'),
+				               'MIN'      => $rs->getString('MIN'),
+	      							 'MAX'      => $rs->getString('MAX'),
+	      							 'TOTALDUR' => $rs->getString('TOTALDUR'),
+	      							 'PROMEDIO' => $rs->getString('PROMEDIO')  	       	                
+      	                );
+			}		
+		
+		global $_DBArray;
+    $_DBArray['reports']  = $ROW;
+    $_SESSION['_DBArray'] = $_DBArray;
+    G::LoadClass('ArrayPeer');
+    $oCriteria = new Criteria('dbarray');
+    $oCriteria->setDBArrayTable('reports');
+    
+    return $oCriteria;    
+    
+	}
+	
+	function generatedReport3_filter($task)
+	{ echo $task; die;
+		require_once 'classes/model/AppDelegation.php';
+		require_once 'classes/model/Application.php';
+		$oCriteria = new Criteria('workflow');
+		$del = DBAdapter::getStringDelimiter();  
+		
+      $sql = "SELECT CONCAT(SUBSTRING(AD.DEL_INIT_DATE,6,2),'-', SUBSTRING(AD.DEL_INIT_DATE,1,4)) AS FECHA, 
+              COUNT(*) AS CANTCASES,       				
+      				MIN(AD.DEL_DURATION) AS MIN, 
+							MAX(AD.DEL_DURATION) AS MAX, 
+							SUM(AD.DEL_DURATION) AS TOTALDUR, 
+							AVG(AD.DEL_DURATION) AS PROMEDIO 
+              FROM APP_DELEGATION AS AD WHERE AD.APP_UID<>'' GROUP BY FECHA";
+
+			$con = Propel::getConnection("workflow");
+			$stmt = $con->prepareStatement($sql);
+			$rs = $stmt->executeQuery();
+      
+      $ROW[] = array('FECHA'     => 'char',
+      							 'CANTCASES' => 'integer',
+      	             'MIN'       => 'float',
+      	             'MAX'       => 'float',
+      	             'TOTALDUR'  => 'float',
+      	             'PROMEDIO'  => 'float'	      	                
+      	            );
+      
+			while($rs->next())
+			{								
+				$ROW[] = array('FECHA'    => $rs->getString('FECHA'),
+				               'CANTCASES'=> $rs->getString('CANTCASES'),
+				               'MIN'      => $rs->getString('MIN'),
+	      							 'MAX'      => $rs->getString('MAX'),
+	      							 'TOTALDUR' => $rs->getString('TOTALDUR'),
+	      							 'PROMEDIO' => $rs->getString('PROMEDIO')  	       	                
+      	                );
+			}		
+		
+		global $_DBArray;
+    $_DBArray['reports']  = $ROW;
+    $_SESSION['_DBArray'] = $_DBArray;
+    G::LoadClass('ArrayPeer');
+    $oCriteria = new Criteria('dbarray');
+    $oCriteria->setDBArrayTable('reports');
+    
+    return $oCriteria;    
+    
 	}
 }
 
