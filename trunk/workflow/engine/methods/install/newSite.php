@@ -22,25 +22,34 @@
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
  * 
  */
-G::LoadClass('Installer');
-G::LoadClass('json');
 if(isset($_POST['form']['NW_TITLE']))
 {
+	G::LoadClass('Installer');
+	G::LoadClass('json');
 	$name	= trim($_POST['form']['NW_TITLE']);
 	$inst	= new Installer();
 	$isset	= $inst->isset_site($name);
 	$new	= ((!$isset) && ctype_alnum($name))?true:false;
+	$user	= (isset($_POST['form']['NW_USERNAME']))?trim($_POST['form']['NW_USERNAME']):'admin';
+	$pass	= (isset($_POST['form']['NW_PASSWORD']))?$_POST['form']['NW_PASSWORD']:'admin';
 	if($new)
 	{
 		$inst->create_site(Array(
-			'name'=>$name
+			'name'=>$name,
+			'admin'=>Array('username'=>$user,'password'=>$pass)
 		),true);
 	}
 	$json	= new Services_JSON();
 	$ec;
 	$ec->created=($new)?true:false;
 	$ec->name=$name;
-	$ec->message=($new)?"Created":"Workspace already exists or Name invalid";
+	$ec->message=($new)?"Workspace created":"Workspace already exists or Name invalid";
 	echo $json->encode($ec);
+}
+else
+{
+	$G_PUBLISH = new Publisher;
+	$G_PUBLISH->AddContent('xmlform', 'xmlform', 'login/newSite', '', '', '/sys/en/green/install/newSite');
+	G::RenderPage( "publish" );
 }
 ?>

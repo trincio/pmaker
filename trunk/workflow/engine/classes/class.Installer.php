@@ -53,7 +53,8 @@ class Installer
 			'password'	=>G::generate_password(12),
 			'path_data'	=>@PATH_DATA,
 			'path_compiled'	=>@PATH_C,
-			'database'=>Array()
+			'database'=>Array(),
+			'admin'=>Array('username'=>'admin','password'=>'admin')
 		),$config);
 		$a=@explode(SYSTEM_HASH,G::decrypt(HASH_INSTALLATION,SYSTEM_HASH));
 		$this->options['database']=G::array_concat(Array(
@@ -91,8 +92,8 @@ class Installer
 		{
 			$local=Array('localhost','127.0.0.1');
 
-			$wf = "wf_".$this->options['name'];
-			$rb = "rbac_".$this->options['name'];
+			$this->wf_site_name = $wf = "wf_".$this->options['name'];
+			$this->rbac_site_name = $rb = "rbac_".$this->options['name'];
 			$rp = "rp_".$this->options['name'];
 			$schema	="schema.sql";
 			$values	="insert.sql";   //noe existe
@@ -255,8 +256,21 @@ class Installer
 		$this->log("Write: ".$db_file."  => ".((!$ff)?$ff:"OK")."\n");
 
 		fclose( $fp );
+		$this->set_admin();
 		}
 		return $test;
+	}
+	public function set_admin()
+	{
+		mysql_select_db($this->wf_site_name,$this->connection_database);
+		$q = 'UPDATE USERS SET USR_USERNAME = \''.mysql_escape_string($this->options['admin']['username']).'\', `USR_PASSWORD` = \''.md5($this->options['admin']['password']).'\' WHERE `USR_UID` = \'00000000000000000000000000000001\' LIMIT 1';
+		$ac = @mysql_query($q,$this->connection_database);
+		$this->log("Set workflow USERNAME:PASSWORD => ".((!$ac)?mysql_error():"OK")."\n");
+
+		mysql_select_db($this->rbac_site_name,$this->connection_database);
+		$q = 'UPDATE USERS SET USR_USERNAME = \''.mysql_escape_string($this->options['admin']['username']).'\', `USR_PASSWORD` = \''.md5($this->options['admin']['password']).'\' WHERE `USR_UID` = \'00000000000000000000000000000001\' LIMIT 1';
+		$ac = @mysql_query($q,$this->connection_database);
+		$this->log("Set rbac USERNAME:PASSWORD => ".((!$ac)?mysql_error():"OK")."\n");
 	}
 	public function query_sql_file($file,$connection)
 	{
@@ -387,14 +401,4 @@ class Installer
 		array_push($this->report,$text);
 	}
 }
-/*
-global $RBAC;
-$aData['USR_UID']      = $_POST['form']['USR_UID'];
-$aData['USR_USERNAME'] = $_POST['form']['USR_USERNAME'];
-$aData['USR_PASSWORD'] = $_POST['form']['USR_PASSWORD'];
-$RBAC->updateUser($aData);
-require_once 'classes/model/Users.php';
-$oUser = new Users();
-$oUser->update($aData);
-*/
 ?>
