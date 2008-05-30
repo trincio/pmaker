@@ -58,6 +58,7 @@ class PMPluginRegistry {
   private $_aFolders = array();
   private $_aTriggers = array();
   private $_aDashboards = array();
+  private $_aSteps = array();
 
   static private $instance = NULL;
 
@@ -91,6 +92,7 @@ class PMPluginRegistry {
   krumo ( $this->_aFolders);
   krumo ( $this->_aTriggers);
   krumo ( $this->_aDashboards);
+  krumo ( $this->_aSteps);
   }
 
   /**
@@ -175,6 +177,11 @@ class PMPluginRegistry {
  	 foreach ( $this->_aDashboards as $key=>$detail ) {
   	   if ( $detail == $sNamespace )
   	     unset ( $this->_aDashboards[ $key ] );
+    }
+
+ 	 foreach ( $this->_aSteps as $key=>$detail ) {
+  	   if ( $detail->sNamespace == $sNamespace )
+  	     unset ( $this->_aSteps[ $key ] );
     }
 
   }
@@ -265,6 +272,22 @@ class PMPluginRegistry {
   }
 
   /**
+   * Register a step for process
+   *
+   * @param unknown_type $sFolderName
+   */
+  function registerStep($sNamespace, $sStepId, $sStepName, $sStepTitle ) {
+    $found = false;
+  	foreach ( $this->_aSteps as $row=>$detail )
+  		if ( $sStepId == $detail->sStepId && $sNamespace == $detail->sNamespace )
+  		  $found = true;
+
+    if ( !$found ) {
+      $this->_aSteps[] = new stepDetail ( $sNamespace, $sStepId, $sStepName, $sStepTitle);
+    }
+  }
+
+  /**
    * return true if the $sFolderName is registered in the singleton
    *
    * @param unknown_type $sFolderName
@@ -303,6 +326,14 @@ class PMPluginRegistry {
   		$dash[] = $sClassName;
   	}
   	return $dash;
+  }
+
+  /**
+   * return all dashboards registered
+   *
+   */
+  function getSteps( ) {
+    return $this->_aSteps;
   }
 
   /**

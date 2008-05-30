@@ -26,6 +26,10 @@
 try {
 	G::LoadClass('tree');
 	G::LoadClass('processMap');
+  //call plugin
+  $oPluginRegistry = &PMPluginRegistry::getSingleton();
+  $externalSteps   = $oPluginRegistry->getSteps();
+
 	$oProcessMap = new ProcessMap();
   $oTree           = new Tree();
   $oTree->nodeType = 'blank';
@@ -59,6 +63,13 @@ try {
   		  $aFields           = $oObject->load($aRow['STEP_UID_OBJ']);
   		  $aRow['STEP_NAME'] = $aFields['OUT_DOC_TITLE'];
   		break;
+   		case 'EXTERNAL':
+        $aRow['STEP_NAME'] = 'unknown ' . $aRow['STEP_UID'];
+   		  foreach ( $externalSteps as $key=>$val ) {
+   		  	if ( $val->sStepId == $aRow['STEP_UID_OBJ'] ) 
+   		  	  $aRow['STEP_NAME'] = $val->sStepTitle;
+    		  }
+    		break;
   	}
     $oCriteria  = $oProcessMap->getStepTriggersCriteria($aRow['STEP_UID'], $_SESSION['TASK'], 'BEFORE');
     $iCantidad1 = StepTriggerPeer::doCount($oCriteria);

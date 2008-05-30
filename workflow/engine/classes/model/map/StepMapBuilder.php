@@ -78,7 +78,7 @@ class StepMapBuilder {
 
 		$tMap->addColumn('STEP_POSITION', 'StepPosition', 'int', CreoleTypes::INTEGER, true, null);
 
-		$tMap->addValidator('STEP_TYPE_OBJ', 'validValues', 'propel.validator.ValidValuesValidator', 'DYNAFORM|INPUT_DOCUMENT|MESSAGE|OUTPUT_DOCUMENT', 'Please select a valid value for STEP_TYPE_OBJ.');
+		$tMap->addValidator('STEP_TYPE_OBJ', 'validValues', 'propel.validator.ValidValuesValidator', 'DYNAFORM|INPUT_DOCUMENT|MESSAGE|OUTPUT_DOCUMENT|EXTERNAL', 'Please select a valid value for STEP_TYPE_OBJ.');
 
 	} // doBuild()
 

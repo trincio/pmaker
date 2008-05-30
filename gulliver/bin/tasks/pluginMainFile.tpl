@@ -22,7 +22,7 @@
     {
       $this->registerMenu( 'setup', 'menu{className}.php');
 <!-- START BLOCK : externalStep -->
-      $this->registerTrigger( PM_EXTERNAL_STEP, 'step{className}' );
+      $this->registerStep( '{GUID}', 'step{className}', '{className} customized step' );
 <!-- END BLOCK : externalStep --> 
 <!-- START BLOCK : changeLogo -->
       $this->setCompanyLogo ('/plugin/{className}/{className}.png');
