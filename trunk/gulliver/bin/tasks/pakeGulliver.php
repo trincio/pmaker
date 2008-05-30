@@ -64,7 +64,44 @@ function strip_quotes( $text )
   return str_replace('"',"", $text );
 }
 
-        
+function prompt ( $text ) {
+    printf("$text %s ", pakeColor::colorize( ':', 'INFO'));
+    # 4092 max on win32 fopen
+
+    $fp=fopen("php://stdin", "r");
+    $in=fgets($fp,4094);
+    fclose($fp);
+
+    # strip newline
+    (PHP_OS == "WINNT") ? ($read = str_replace("\r\n", "", $in)) : ($read = str_replace("\n", "", $in));
+
+    return $read;
+}
+
+function createPngLogo (  $filePng, $text ) {
+  $im = imagecreatetruecolor (162,50);
+  $orange = imagecolorallocate($im, 140, 120, 0);
+  $white  = imagecolorallocate($im,255,255,255);
+  $black  = imagecolorallocate($im,0,0,0);
+  $grey   = imagecolorallocate($im,100,100,100);
+  $yellow = imagecolorallocatealpha($im, 255, 255, 10, 95);
+  $red    = imagecolorallocatealpha($im, 255, 10, 10, 95);
+  $blue   = imagecolorallocatealpha($im, 10, 10, 255, 95);
+  $transparent = imagecolorallocatealpha($im, 0, 0, 0, 127);
+  
+  imagefill($im, 0, 0, $white);
+  imagestring($im, 4, 50, 14, $text, $orange);
+
+  // drawing 3 overlapped circle
+  imagefilledellipse($im, 25, 20, 27, 25, $yellow);
+  imagefilledellipse($im, 15, 30, 27, 25, $red);
+  imagefilledellipse($im, 30, 30, 27, 25, $blue);
+  
+  imagefill($im, 0, 0, $transparent);
+  imagesavealpha($im, true);  
+  imagepng($im, $filePng);
+}
+    
 function run_generate_unit_test_class ( $task, $args) 
 {
   //the class filename in the first argument
@@ -349,17 +386,29 @@ function run_new_plugin ( $task, $args)
 
   $pluginDirectory = PATH_PLUGINS . $pluginName;
   $pluginOutDirectory = PATH_OUTTRUNK . 'plugins' . PATH_SEP . $pluginName;
+  $pluginHome = PATH_OUTTRUNK . 'plugins' . PATH_SEP . $pluginName. PATH_SEP . $pluginName;
+
+  printf("creating plugin directory %s \n", pakeColor::colorize( $pluginOutDirectory, 'INFO'));
+  
 
   G::verifyPath ( $pluginOutDirectory, true );
-  G::verifyPath ( $pluginOutDirectory. PATH_SEP . $pluginName, $pluginDirectory );
-  
+  G::verifyPath ( $pluginHome . PATH_SEP . 'public_html', true );
+  G::verifyPath ( $pluginHome . PATH_SEP . 'config', true );
+  G::verifyPath ( $pluginHome . PATH_SEP . 'data', true );
+  $changeLogo = strtolower ( prompt ( 'Change system logo [Y/N]' ));
+
+  if ( $changeLogo == 'y' ) {
+    $filePng = $pluginHome . PATH_SEP . 'public_html' . PATH_SEP . $pluginName . '.png';
+    createPngLogo ( $filePng, $pluginName );
+  }
+
   //main php file 
   savePluginFile ( $pluginName . '.php', 'pluginMainFile', $pluginName, $pluginName );
 
   //menu  
   savePluginFile ( $pluginName . PATH_SEP . 'menu' . $pluginName . '.php', 'pluginMenu', $pluginName, $pluginName );
 
-  printf("creting symlinks %s \n", pakeColor::colorize( $pluginDirectory, 'INFO'));
+  printf("creating symlinks %s \n", pakeColor::colorize( $pluginDirectory, 'INFO'));
   symlink ($pluginOutDirectory. PATH_SEP . $pluginName. '.php', PATH_PLUGINS . $pluginName . '.php');
   symlink ($pluginOutDirectory. PATH_SEP . $pluginName,         $pluginDirectory);
 

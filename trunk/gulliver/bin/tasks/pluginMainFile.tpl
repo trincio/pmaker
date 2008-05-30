@@ -11,6 +11,8 @@
         $this->sPluginFolder = '{className}';
         $this->sSetupPage    = '{className}';
         $this->iVersion = 0.78;
+        //$this->aWorkspaces = array ( 'os' );
+        $this->aWorkspaces = null;
         return $res;
 
        
@@ -20,6 +22,8 @@
     {
       $this->registerMenu( 'setup', 'menu{className}.php');
       $this->registerTrigger( 1000, 'create{className}' );
+      $this->setCompanyLogo ('/plugin/{className}/{className}.png');
+        
     }
   }
 
