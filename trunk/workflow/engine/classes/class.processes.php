@@ -1,10 +1,10 @@
 <?php
 /**
  * class.processes.php
- *  
+ *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -14,13 +14,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
 
 require_once 'classes/model/Content.php';
@@ -36,11 +36,12 @@ require_once 'classes/model/StepTrigger.php';
 require_once 'classes/model/Dynaform.php';
 require_once 'classes/model/Triggers.php';
 require_once 'classes/model/Groupwf.php';
+require_once 'classes/model/DbSource.php';
 G::LoadClass('tasks');
 G::LoadThirdParty('pear/json','class.json');
 
 class Processes {
-  
+
   /*
   * change Status of any Process
   * @param string $sProUid
@@ -50,14 +51,14 @@ class Processes {
     $oProcess = new Process();
     $Fields = $oProcess->Load( $sProUid );
     $proFields['PRO_UID'] = $sProUid;
-    if ( $Fields['PRO_STATUS'] == 'ACTIVE' ) 
+    if ( $Fields['PRO_STATUS'] == 'ACTIVE' )
       $proFields['PRO_STATUS'] = 'INACTIVE';
     else
       $proFields['PRO_STATUS'] = 'ACTIVE';
 
     $oProcess->Update( $proFields );
   }
-  
+
   /*
   * changes in DB the parent GUID
   * @return $sProUid
@@ -79,7 +80,7 @@ class Processes {
     $oProcess = new Process();
     return $oProcess->processExists( $sProUid );
   }
-  
+
   /*
   * get an unused process GUID
   * @return $sProUid
@@ -90,7 +91,7 @@ class Processes {
     } while ( $this->processExists ( $sNewProUid ) );
     return $sNewProUid;
   }
-  
+
   /*
   * verify if the task  $sTasUid exists
   * @param string $sTasUid
@@ -100,7 +101,7 @@ class Processes {
     $oTask = new Task();
     return $oTask->taskExists( $sTasUid );
   }
-  
+
   /*
   * get an unused task GUID
   * @return $sTasUid
@@ -111,7 +112,7 @@ class Processes {
     } while ( $this->taskExists ( $sNewTasUid ) );
     return $sNewTasUid;
   }
-  
+
   /*
   * verify if the dynaform $sDynUid exists
   * @param string $sDynUid
@@ -121,7 +122,7 @@ class Processes {
     $oDynaform = new Dynaform();
     return $oDynaform->dynaformExists( $sDynUid );
   }
-  
+
   /*
   * verify if the object exists
   * @param string $sUid
@@ -131,8 +132,8 @@ class Processes {
     $oInput = new InputDocument();
     return $oInput->inputExists( $sUid );
   }
-  
-  
+
+
   /*
   * verify if the object exists
   * @param string $sUid
@@ -142,7 +143,7 @@ class Processes {
     $oOutput = new OutputDocument();
     return $oOutput->outputExists( $sUid );
   }
-  
+
   /*
   * verify if the object exists
   * @param string $sUid
@@ -152,7 +153,7 @@ class Processes {
     $oTrigger = new Triggers();
     return $oTrigger->triggerExists( $sUid );
   }
-  
+
   /*
   * get an unused input GUID
   * @return $sProUid
@@ -163,7 +164,7 @@ class Processes {
     } while ( $this->inputExists ( $sNewUid ) );
     return $sNewUid;
   }
-  
+
   /*
   * get an unused output GUID
   * @return $sProUid
@@ -174,7 +175,7 @@ class Processes {
     } while ( $this->outputExists ( $sNewUid ) );
     return $sNewUid;
   }
-  
+
   /*
   * get an unused trigger GUID
   * @return $sProUid
@@ -185,7 +186,7 @@ class Processes {
     } while ( $this->triggerExists ( $sNewUid ) );
     return $sNewUid;
   }
-  
+
   /*
   * verify if the object exists
   * @param string $sUid
@@ -205,8 +206,8 @@ class Processes {
     } while ( $this->stepExists ( $sNewUid ) );
     return $sNewUid;
   }
-  
-    
+
+
   /*
   * get an unused Dynaform GUID
   * @return $sDynUid
@@ -217,7 +218,7 @@ class Processes {
     } while ( $this->dynaformExists ( $sNewUid ) );
     return $sNewUid;
   }
-  
+
   /*
   * change the GUID for a serialized process
   * @param string $sProUid
@@ -250,6 +251,9 @@ class Processes {
   	}
   	foreach ($oData->triggers as $key => $val ) {
   		$oData->triggers[$key]['PRO_UID'] = $sNewProUid;
+  	}
+  	foreach ($oData->dbconnections as $key => $val ) {
+  		$oData->dbconnections[$key]['PRO_UID'] = $sNewProUid;
   	}
   	return true;
   }
@@ -290,7 +294,7 @@ class Processes {
   	  $newGuid = $map[ $val['TAS_UID'] ];
   	  $oData->steps[$key]['TAS_UID'] = $newGuid;
   	}
-  	
+
   	foreach ( $oData->steptriggers as $key => $val ) {
   	  $newGuid = $map[ $val['TAS_UID'] ];
   	  $oData->steptriggers[$key]['TAS_UID'] = $newGuid;
@@ -320,7 +324,7 @@ class Processes {
   	  }
   	}
   	foreach ( $oData->dynaformFiles as $key => $val ) {
-  	  $newGuid = $map[ $key ]; 
+  	  $newGuid = $map[ $key ];
 	    $oData->dynaformFiles[$key] = $newGuid;
   	}
   }
@@ -329,7 +333,7 @@ class Processes {
     $oProcess = new Process( );
     return $oProcess->Load( $sProUid );
   }
-  
+
   function createProcessRow ($row ){
     $oProcess = new Process( );
     return $oProcess->createRow($row);
@@ -339,8 +343,8 @@ class Processes {
     $oProcess = new Process( );
     return $oProcess->update($row);
   }
-  
-  
+
+
 /*
 	* Get all Swimlanes Elements for any Process
 	* @param string $sProUid
@@ -370,7 +374,7 @@ class Processes {
     $oTask = new Tasks( );
     return $oTask->getAllTasks( $sProUid );
   }
-  
+
   function createTaskRows ($aTasks ){
     $oTask = new Tasks( );
     return $oTask->createTaskRows( $aTasks );
@@ -380,26 +384,26 @@ class Processes {
     $oTask = new Tasks( );
     return $oTask->updateTaskRows( $aTasks );
   }
-  
+
   function getRouteRows ($sProUid ){
     $oTask = new Tasks( );
     return $oTask->getAllRoutes( $sProUid );
   }
-  
+
   function createRouteRows ($aRoutes ){
     $oTask = new Tasks( );
     return $oTask->createRouteRows( $aRoutes );
   }
-  
+
   function updateRouteRows ($aRoutes ){
     $oTask = new Tasks( );
     return $oTask->updateRouteRows( $aRoutes );
   }
-  
+
   function getLaneRows ($sProUid ){  //SwimlanesElements
     return $this->getAllLanes( $sProUid );
   }
-  
+
   function createLaneRows ($aLanes ){  //SwimlanesElements
   	foreach ( $aLanes as $key => $row ) {
       $oLane = new SwimlanesElements();
@@ -429,7 +433,7 @@ class Processes {
     }
   }
 
-  function createInputRows ($aInput ){  
+  function createInputRows ($aInput ){
   	foreach ( $aInput as $key => $row ) {
       $oInput = new Inputdocument();
       //unset ($row['TAS_UID']);
@@ -478,7 +482,7 @@ class Processes {
     }
   }
 
-  function createOutputRows ($aOutput ){  
+  function createOutputRows ($aOutput ){
   	foreach ( $aOutput as $key => $row ) {
       $oOutput = new Outputdocument();
       //unset ($row['TAS_UID']);
@@ -545,7 +549,7 @@ class Processes {
     }
   }
 
-  function createStepRows ($aStep ){  
+  function createStepRows ($aStep ){
   	foreach ( $aStep as $key => $row ) {
       $oStep = new Step();
       //unset ($row['TAS_UID']);
@@ -568,14 +572,19 @@ class Processes {
   	}
   	foreach ( $oData->steptriggers as $key => $val ) {
   		if ( $val['STEP_UID'] > 0 ) {
-  	    $newGuid = $map[ $val['STEP_UID'] ];
-	      $oData->steptriggers[$key]['STEP_UID'] = $newGuid;
+  		  if (isset($map[ $val['STEP_UID'] ])) {
+  	      $newGuid = $map[ $val['STEP_UID'] ];
+	        $oData->steptriggers[$key]['STEP_UID'] = $newGuid;
+	      }
+	      else {
+	        $oData->steptriggers[$key]['STEP_UID'] = $this->getUnusedStepGUID();
+	      }
 	    }
-  	}
+  	}//header('Content-Type: text/plain;');var_dump($oData->steptriggers);die;
   }
 
 
-  function getDynaformRows ($sProUid ){ 
+  function getDynaformRows ($sProUid ){
   	try {
   	  $aDynaform   = array();
   	  $oCriteria = new Criteria('workflow');
@@ -595,7 +604,7 @@ class Processes {
     }
   }
 
-  function createDynaformRows ($aDynaform ){  
+  function createDynaformRows ($aDynaform ){
   	foreach ( $aDynaform as $key => $row ) {
       $oDynaform = new Dynaform();
       //unset ($row['TAS_UID']);
@@ -605,7 +614,7 @@ class Processes {
   }
 
 
-  function createStepTriggerRows ($aStepTrigger ){  
+  function createStepTriggerRows ($aStepTrigger ){
   	foreach ( $aStepTrigger as $key => $row ) {
       $oStepTrigger = new StepTrigger();
       //unset ($row['TAS_UID']);
@@ -614,13 +623,13 @@ class Processes {
   	return;
   }
 
-  function getStepTriggerRows ($aTask ){  
+  function getStepTriggerRows ($aTask ){
   	try {
   		$aInTasks = array();
   		foreach ( $aTask as $key => $val ) {
   			$aInTasks[] = $val['TAS_UID'];
   		}
-  		
+
   	  $aTrigger   = array();
   	  $oCriteria = new Criteria('workflow');
       $oCriteria->add( StepTriggerPeer::TAS_UID,  $aInTasks, Criteria::IN );
@@ -639,7 +648,7 @@ class Processes {
     }
   }
 
-  function getTriggerRows ($sProUid ){  
+  function getTriggerRows ($sProUid ){
   	try {
   	  $aTrigger   = array();
   	  $oCriteria = new Criteria('workflow');
@@ -659,7 +668,7 @@ class Processes {
     }
   }
 
-  function createTriggerRows ($aTrigger ){  
+  function createTriggerRows ($aTrigger ){
   	foreach ( $aTrigger as $key => $row ) {
       $oTrigger = new Triggers();
       //unset ($row['TAS_UID']);
@@ -668,13 +677,13 @@ class Processes {
   	return;
   }
 
-  function getGroupwfRows ($aGroups ){  
+  function getGroupwfRows ($aGroups ){
   	try {
   		$aInGroups = array();
   		foreach ( $aGroups as $key => $val ) {
   			$aInGroups[] = $val['USR_UID'];
   		}
-  		
+
   	  $aGroupwf   = array();
   	  $oCriteria = new Criteria('workflow');
       $oCriteria->add( GroupwfPeer::GRP_UID,  $aInGroups, Criteria::IN );
@@ -693,13 +702,33 @@ class Processes {
     }
   }
 
-  function getTaskUserRows ($aTask ){  
+  function getDBConnectionsRows($sProUid) {
+    try {
+      $aConnections = array();
+  	  $oCriteria = new Criteria('workflow');
+      $oCriteria->add(DbSourcePeer::PRO_UID, $sProUid);
+      $oDataset = DbSourcePeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      while ($aRow = $oDataset->getRow()) {
+      	$oConnection = new DbSource();
+      	$aConnections[] = $oConnection->Load($aRow['DBS_UID']);
+      	$oDataset->next();
+      }
+      return $aConnections;
+    }
+    catch (Exception $oError) {
+      throw $oError;
+    }
+  }
+
+  function getTaskUserRows ($aTask ){
   	try {
   		$aInTasks = array();
   		foreach ( $aTask as $key => $val ) {
   			$aInTasks[] = $val['TAS_UID'];
   		}
-  		
+
   	  $aTaskUser   = array();
   	  $oCriteria = new Criteria('workflow');
       $oCriteria->add( TaskUserPeer::TAS_UID,  $aInTasks, Criteria::IN );
@@ -718,7 +747,7 @@ class Processes {
         $oDataset2->next();
         $aRow2 = $oDataset2->getRow();
         $bActiveGroup = $aRow2[0];
-        if ( $bActiveGroup == 1 ) 
+        if ( $bActiveGroup == 1 )
       	  $aTaskUser[] = $aRow;
       	$oDataset->next();
       }
@@ -728,8 +757,8 @@ class Processes {
     	throw($oError);
     }
   }
-  
-  function createTaskUserRows ($aTaskUser ){  
+
+  function createTaskUserRows ($aTaskUser ){
   	foreach ( $aTaskUser as $key => $row ) {
       $oTaskUser = new TaskUser();
       $res = $oTaskUser->create($row);
@@ -743,6 +772,13 @@ class Processes {
       if ( ! $oGroupwf->GroupwfExists ( $row['GRP_UID'] ) ) {
         $res = $oGroupwf->create($row);
   		}
+    }
+  }
+
+  function createDBConnections ($aConnections ) {
+  	foreach ( $aConnections as $sKey => $aRow ) {
+      $oConnection = new DbSource();
+      $oConnection->create($aRow);
     }
   }
 
@@ -768,13 +804,14 @@ class Processes {
     $oData->taskusers= $this->getTaskUserRows( $oData->tasks );
     $oData->groupwfs = $this->getGroupwfRows( $oData->taskusers );
     $oData->steptriggers = $this->getStepTriggerRows( $oData->tasks );
-    //krumo ($oData);
+    $oData->dbconnections = $this->getDBConnectionsRows($sProUid);
+    //krumo ($oData);die;
     //$oJSON = new Services_JSON();
     //krumo ( $oJSON->encode($oData) );
     //return $oJSON->encode($oData);
     return serialize($oData);
   }
-  
+
   function saveSerializedProcess ( $oData ) {
     //$oJSON = new Services_JSON();
     //$data = $oJSON->decode($oData);
@@ -791,15 +828,15 @@ class Processes {
     do {
       $filename = $path . $proTitle . $index . '.pm';
       $lastIndex = $index;
-      if ( $index == '' ) 
+      if ( $index == '' )
         $index = 1;
-      else 
+      else
         $index ++;
     } while ( file_exists ( $filename )  );
-    
+
     $proTitle .= $lastIndex;
     $filenameOnly = $proTitle . '.pm';
-    
+
     $fp = fopen( $filename, "wb");
 
     $fsData = sprintf ( "%09d", strlen ( $oData) );
@@ -812,7 +849,7 @@ class Processes {
         $fsXmlGuid  = sprintf ( "%09d", strlen ( $xmlGuid ) );
         $bytesSaved += fwrite( $fp, $fsXmlGuid );  //writing the size of xml file
         $bytesSaved += fwrite( $fp, $xmlGuid );    //writing the xmlfile
-        
+
         $xmlContent = file_get_contents ( $sFileName );
         $fsXmlContent = sprintf ( "%09d", strlen ( $xmlContent) );
         $bytesSaved += fwrite( $fp, $fsXmlContent );  //writing the size of xml file
@@ -822,7 +859,7 @@ class Processes {
     fclose ( $fp);
     //$bytesSaved = file_put_contents  ( $filename  , $oData  );
     $filenameLink = 'processes_DownloadFile?p=' . $proTitle . '&r=' . rand(100,1000);
-    
+
     $result['PRO_UID']         = $data->process['PRO_UID'];
     $result['PRO_TITLE']       = $data->process['PRO_TITLE'];
     $result['PRO_DESCRIPTION'] = $data->process['PRO_DESCRIPTION'];
@@ -831,23 +868,23 @@ class Processes {
     $result['FILENAME_LINK']   = $filenameLink;
     return $result;
   }
-  
+
   function getProcessData ( $pmFilename  ) {
-    if (! file_exists($pmFilename) ) 
+    if (! file_exists($pmFilename) )
       throw ( new Exception ( 'Unable to read uploaded file, please check permissions. '));
-      
-    if (! filesize($pmFilename) >= 9 ) 
+
+    if (! filesize($pmFilename) >= 9 )
       throw ( new Exception ( 'Uploaded file is corrupted, please check the file before continue. '));
-      
+
     $fp = fopen( $pmFilename, "rb");
     $fsData = intval( fread ( $fp, 9)); //reading the size of $oData
     $contents  = fread( $fp, $fsData );    //reading string $oData
     $oData = unserialize ($contents);
-    
+
     $oData->dynaformFiles = array();
     while ( !feof ( $fp ) ) {
       $fsXmlGuid    = intval( fread ( $fp, 9));      //reading the size of $filename
-      if ( $fsXmlGuid > 0 ) 
+      if ( $fsXmlGuid > 0 )
         $XmlGuid    = fread( $fp, $fsXmlGuid );    //reading string $XmlGuid
 
       $fsXmlContent = intval( fread ( $fp, 9));      //reading the size of $XmlContent
@@ -858,11 +895,11 @@ class Processes {
       }
     }
     fclose ( $fp);
-    
+
     return $oData;
- 	
+
   }
-  
+
   /* disable all previous process with the parent $sProUid
   */
   function disablePreviousProcesses( $sProUid ) {
@@ -879,16 +916,16 @@ class Processes {
     	$oProcess->update ( $aRow);
       $oDataset->next();
     }
-  	
+
   }
-  
+
   function createDynamformFiles ( $oData, $pmFilename  ) {
-    if (! file_exists($pmFilename) )  
+    if (! file_exists($pmFilename) )
       throw ( new Exception ( 'Unable to read uploaded .pm file, please check permissions. ') );
-      
-    if (! filesize($pmFilename) >= 9 ) 
+
+    if (! filesize($pmFilename) >= 9 )
       throw ( new Exception ( 'Uploaded .pm file is corrupted, please check the file before continue. '));
-      
+
     $fp = fopen( $pmFilename, "rb");
     $fsData = intval( fread ( $fp, 9));    //reading the size of $oData
     $contents  = fread( $fp, $fsData );    //reading string $oData
@@ -897,10 +934,10 @@ class Processes {
     if ( !is_dir($path) ) {
       	G::verifyPath($path, true);
     }
-    
+
     while ( !feof ( $fp ) ) {
       $fsXmlGuid    = intval( fread ( $fp, 9));      //reading the size of $filename
-      if ( $fsXmlGuid > 0 ) 
+      if ( $fsXmlGuid > 0 )
         $XmlGuid    = fread( $fp, $fsXmlGuid );    //reading string $XmlGuid
       $fsXmlContent = intval( fread ( $fp, 9));      //reading the size of $XmlContent
       if ( $fsXmlContent > 0 ) {
@@ -909,17 +946,17 @@ class Processes {
         //print "$sFileName <br>";
         $XmlContent   = fread( $fp, $fsXmlContent );    //reading string $XmlContent
         $bytesSaved = @file_put_contents ( $sFileName, $XmlContent );
-        if ( $bytesSaved != $fsXmlContent ) 
+        if ( $bytesSaved != $fsXmlContent )
           throw ( new Exception ('Error writing dynaform file in directory : ' . $path ) );
-        
+
       }
     }
     fclose ( $fp);
-    
+
     return true;
- 	
+
   }
-  
+
   /*
   * this function remove all Process except the PROCESS ROW
   * @param string $sProUid
@@ -936,7 +973,8 @@ class Processes {
   	  $oRoute           = new Route();
   	  $oStep            = new Step();
   	  $oSwimlaneElement = new SwimlanesElements();
-  	  
+  	  $oConnection      = new DbSource();
+
   	  //Delete the tasks of process
   	  $oCriteria = new Criteria('workflow');
   	  $oCriteria->add(TaskPeer::PRO_UID, $sProUid);
@@ -948,7 +986,7 @@ class Processes {
         $oTask->remove( $aRow['TAS_UID']);
       	$oDataset->next();
       }
-   
+
     //Delete the dynaforms of process
     $oCriteria = new Criteria('workflow');
     $oCriteria->add(DynaformPeer::PRO_UID, $sProUid);
@@ -959,11 +997,11 @@ class Processes {
     	$sWildcard = PATH_DYNAFORM . $aRow['PRO_UID'] . PATH_SEP . $aRow['DYN_UID'] . '_tmp*';
     	foreach( glob($sWildcard) as $fn ) {
         @unlink($fn);
-      } 
+      }
     	$sWildcard = PATH_DYNAFORM . $aRow['PRO_UID'] . PATH_SEP . $aRow['DYN_UID'] . '.*';
     	foreach( glob($sWildcard) as $fn ) {
         @unlink($fn);
-      } 
+      }
     	$oDynaform->remove( $aRow['DYN_UID'] );
     	$oDataset->next();
     }
@@ -978,7 +1016,7 @@ class Processes {
     	$oInputDocument->remove($aRow['INP_DOC_UID']);
     	$oDataset->next();
     }
-    
+
     //Delete the output documents of process
 		$oCriteria = new Criteria('workflow');
 	  $oCriteria->add(OutputDocumentPeer::PRO_UID, $sProUid);
@@ -989,8 +1027,8 @@ class Processes {
     	$oOutputDocument->remove($aRow['OUT_DOC_UID']);
     	$oDataset->next();
     }
-      
-    //Delete the steps 
+
+    //Delete the steps
 		$oCriteria = new Criteria('workflow');
 	  $oCriteria->add(StepPeer::PRO_UID, $sProUid);
 	  $oDataset = StepPeer::doSelectRS($oCriteria);
@@ -1011,7 +1049,7 @@ class Processes {
     	$oTrigger->remove($aRow['TRI_UID']);
     	$oDataset->next();
     }
-      
+
     //Delete the routes of process
 		$oCriteria = new Criteria('workflow');
 	  $oCriteria->add(RoutePeer::PRO_UID, $sProUid);
@@ -1034,6 +1072,17 @@ class Processes {
     	$oDataset->next();
     }
 
+    //Delete the DB connections of process
+		$oCriteria = new Criteria('workflow');
+	  $oCriteria->add(DbSourcePeer::PRO_UID, $sProUid);
+	  $oDataset = DbSourcePeerPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    while ($aRow = $oDataset->getRow()) {
+    	$oConnection->remove($aRow['DBS_UID']);
+    	$oDataset->next();
+    }
+
  		return true;
   	}
   	catch ( Exception $oError) {
@@ -1047,7 +1096,7 @@ class Processes {
   * @return boolean
   */
   function createProcessFromData ($oData, $pmFilename ) {
-  	
+
     $this->createProcessRow ($oData->process );
     $this->createTaskRows ($oData->tasks );
     $this->createRouteRows ($oData->routes );
@@ -1060,9 +1109,9 @@ class Processes {
     $this->createStepTriggerRows ($oData->steptriggers);
     $this->createTaskUserRows ($oData->taskusers);
     $this->createGroupRow ($oData->groupwfs );
+    $this->createDBConnections($oData->dbconnections);
     $this->createDynamformFiles ( $oData, $pmFilename  );
-    
- }  
+ }
 
   /*
   * this function creates a new Process, defined in the object $oData
@@ -1082,6 +1131,7 @@ class Processes {
     $this->createTriggerRows ($oData->triggers);
     $this->createStepTriggerRows ($oData->steptriggers);
     $this->createTaskUserRows ($oData->taskusers);
+    $this->createDBConnections($oData->dbconnections);
     $this->createDynamformFiles ( $oData, $pmFilename  );
- }  
+ }
 }
