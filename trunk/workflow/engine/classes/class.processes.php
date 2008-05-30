@@ -580,7 +580,7 @@ class Processes {
 	        $oData->steptriggers[$key]['STEP_UID'] = $this->getUnusedStepGUID();
 	      }
 	    }
-  	}//header('Content-Type: text/plain;');var_dump($oData->steptriggers);die;
+  	}
   }
 
 
