@@ -1072,6 +1072,9 @@ class Cases
                             case 'INPUT_DOCUMENT':
                                 $sAction = 'ATTACH';
                                 break;
+                            case 'EXTERNAL':
+                                $sAction = 'EXEC';
+                                break;
                             case 'MESSAGE':
                                 $sAction = '';
                                 break;

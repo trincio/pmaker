@@ -68,7 +68,8 @@ function prompt ( $text ) {
     printf("$text %s ", pakeColor::colorize( ':', 'INFO'));
     # 4092 max on win32 fopen
 
-    $fp=fopen("php://stdin", "r");
+    //$fp=fopen("php://stdin", "r");
+    $fp=fopen("/dev/tty", "r");
     $in=fgets($fp,4094);
     fclose($fp);
 
@@ -405,7 +406,7 @@ function run_new_plugin ( $task, $args)
 
   $externalStep = strtolower ( prompt ( 'Create external step for Processmaker[y/N]' ));
   if ( $externalStep == 'y' ) {
-    $fields['externalStep'][] = array( 'className' => $pluginName);
+    $fields['externalStep'][] = array( 'className' => $pluginName, 'GUID' => G::generateUniqueID() );
     savePluginFile ( $pluginName . PATH_SEP . 'step' . $pluginName . '.php', 'pluginStep', $pluginName, $pluginName );
   }
 

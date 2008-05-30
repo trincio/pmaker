@@ -2472,7 +2472,7 @@
       </vendor>
     </column>
     <validator column="STEP_TYPE_OBJ">
-      <rule name="validValues" value="DYNAFORM|INPUT_DOCUMENT|MESSAGE|OUTPUT_DOCUMENT" message="Please select a valid value for STEP_TYPE_OBJ." />
+      <rule name="validValues" value="DYNAFORM|INPUT_DOCUMENT|MESSAGE|OUTPUT_DOCUMENT|EXTERNAL" message="Please select a valid value for STEP_TYPE_OBJ." />
     </validator>
   </table>
   <table name="STEP_TRIGGER">

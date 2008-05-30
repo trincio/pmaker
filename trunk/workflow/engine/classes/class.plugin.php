@@ -73,6 +73,19 @@ class folderDetail {
 	 }
 }
 
+class stepDetail {
+ 	var $sNamespace;
+	var $sStepId;
+ 	var $sStepName;
+  var $sStepTitle;
+  function __construct( $sNamespace, $sStepId, $sStepName, $sStepTitle ) {
+   	$this->sNamespace  = $sNamespace;
+   	$this->sStepId     = $sStepId;
+   	$this->sStepName   = $sStepName;
+   	$this->sStepTitle  = $sStepTitle;
+	 }
+}
+
 class folderData {
  	var $sProcessUid;
 	var $sProcessTitle;
@@ -150,6 +163,11 @@ class PMPlugin {
   function registerFolder($sFolderId, $sFolderName ) {
     $oPluginRegistry =& PMPluginRegistry::getSingleton();
     $oPluginRegistry->registerFolder( $this->sNamespace, $sFolderId, $sFolderName );
+  }
+
+  function registerStep($sStepId, $sStepName, $sStepTitle ) {
+    $oPluginRegistry =& PMPluginRegistry::getSingleton();
+    $oPluginRegistry->registerStep( $this->sNamespace, $sStepId, $sStepName, $sStepTitle );
   }
 
   function registerTrigger( $sTriggerId, $sTriggerName ) {

@@ -498,6 +498,10 @@ class processMap {
   	require_once 'classes/model/InputDocument.php';
   	require_once 'classes/model/OutputDocument.php';
   	try {
+      //call plugin
+      $oPluginRegistry = &PMPluginRegistry::getSingleton();
+      $externalSteps   = $oPluginRegistry->getSteps();
+
   		$aSteps    = array();
   		$aSteps[]  = array('STEP_TITLE'     => 'char',
       	                 'STEP_UID'       => 'char',
@@ -527,6 +531,13 @@ class processMap {
   	        $aFields         = $oOutputDocument->load($aRow['STEP_UID_OBJ']);
   	        $sTitle          = $aFields['OUT_DOC_TITLE'];
       		break;
+      		case 'EXTERNAL':
+  	        $sTitle          = 'unknown ' . $aRow['STEP_UID'];
+      		  foreach ( $externalSteps as $key=>$val ) {
+      		  	if ( $val->sStepId == $aRow['STEP_UID_OBJ'] ) 
+      		  	  $sTitle = $val->sStepTitle;
+      		  }
+      		break;
       	}
       	$aSteps[] = array('STEP_TITLE'     => $sTitle,
       	                  'STEP_UID'       => $aRow['STEP_UID'],
@@ -535,6 +546,7 @@ class processMap {
       	                  'STEP_POSITION'  => $aRow['STEP_POSITION']);
       	$oDataset->next();
       }
+
   		global $_DBArray;
       $_DBArray['steps']    = $aSteps;
       $_SESSION['_DBArray'] = $_DBArray;
@@ -666,11 +678,13 @@ class processMap {
       
       //call plugin
       $oPluginRegistry = &PMPluginRegistry::getSingleton();
-      $existsSteps     = $oPluginRegistry->existsTrigger(PM_EXTERNAL_STEP );
-      if ($existsSteps) {
-        $aBB[] = array('STEP_UID'      => 'UID',
-                       'STEP_TITLE'    => 'My first step',
-                       'STEP_TYPE_OBJ' => 'EXTERNAL');
+      $externalSteps   = $oPluginRegistry->getSteps();
+      if ( is_array ( $externalSteps) && count($externalSteps) > 0 ) {
+      	foreach ( $externalSteps as $key => $stepVar ) {
+          $aBB[] = array('STEP_UID'      => $stepVar->sStepId,
+                         'STEP_TITLE'    => $stepVar->sStepTitle,
+                         'STEP_TYPE_OBJ' => 'EXTERNAL');
+        }
       }
 
       global $_DBArray;

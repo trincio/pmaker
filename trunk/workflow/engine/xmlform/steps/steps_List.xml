@@ -3,7 +3,7 @@
   sqlConnection=""
   menu="steps/steps_Options"
   width="100%"
-  rowsPerPage="4"
+  rowsPerPage="10"
 >
 <PROCESS type="hidden" showInTable="0"/>
 <TASK type="hidden" showInTable="0"/>
@@ -11,21 +11,15 @@
 <STEP_POSITION type="hidden" showInTable="0"/>
 <STEP_TITLE type="text" colWidth="280"  titleAlign="left" align="left">
   <en>Title</en>
-  <es>Título</es>
 </STEP_TITLE>
 <STEP_TYPE_OBJ type="dropdown" colWidth="100" titleAlign="left" align="left">
   <en>Type
   <option name="DYNAFORM">Dynaform</option>
   <option name="INPUT_DOCUMENT">Input Document</option>
   <option name="OUTPUT_DOCUMENT">Output Document</option>
+  <option name="EXTERNAL">External Step</option>
   <!--<option name="MESSAGE">Message</option>-->
   </en>
-  <es>Tipo
-  <option name="DYNAFORM">Dynaform</option>
-  <option name="INPUT_DOCUMENT">Documentación</option>
-  <option name="OUTPUT_DOC">Documentos de salida</option>
-  <!--<option name="MESSAGE">Message</option>-->
-  </es>
 </STEP_TYPE_OBJ>
 <DELETE type="link" colWidth="30" value="@G::LoadTranslation(ID_DE_ASSIGN)" link="#" onclick="stepDelete(@QSTEP_UID, @QSTEP_POSITION);return false;"/>
 <UP type="link" colWidth="20" value="@G::LoadTranslation(ID_UP)" link="#" onclick="stepUp(@QSTEP_UID, @QSTEP_POSITION);return false;"/>
@@ -33,7 +27,6 @@
 <!-- FILTER FORM -->
 <SEARCH type="button" onclick="pagedTableFilter( this.form );" showInTable="0">
   <en>Apply Filter</en>
-  <es>Filtrar</es>
 </SEARCH>
 <PAGED_TABLE_ID type="private" showInTable="0"/>
 <JSFILTER type="javascript" replaceTags="1" showInTable="0">
