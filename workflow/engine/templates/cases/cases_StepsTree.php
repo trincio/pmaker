@@ -22,20 +22,26 @@
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
  *
  */
+
   require_once ( "classes/model/Step.php" );
   require_once ( "classes/model/Content.php" );
   require_once ( "classes/model/AppDocumentPeer.php" );
   require_once ( "classes/model/InputDocumentPeer.php" );
   require_once ( "classes/model/OutputDocumentPeer.php" );
   require_once ( "classes/model/DynaformPeer.php" );
-
   $c = new Criteria();
   $c->add ( StepPeer::PRO_UID, $_SESSION['PROCESS'] );
   $c->add ( StepPeer::TAS_UID, $_SESSION['TASK'] );
   $c->addAscendingOrderByColumn ( StepPeer::STEP_POSITION );
 
-  // class Tree
+  // classes
   G::LoadClass('tree');
+  G::LoadClass('pmScript');
+  G::LoadClass('case');
+
+  $oPluginRegistry = &PMPluginRegistry::getSingleton();
+  $externalSteps   = $oPluginRegistry->getSteps();
+
   $oTree           = new Tree();
   $oTree->nodeType = "blank";
   $oTree->name     = 'Steps';
@@ -43,13 +49,10 @@
 
   $rs = StepPeer::doSelect( $c );
 
-  G::LoadClass('case');
   $oCase = new Cases();
   $Fields = $oCase->loadCase( $_SESSION['APPLICATION'] );
-  G::LoadClass('pmScript');
   $oPMScript = new PMScript();
   $oPMScript->setFields($Fields['APP_DATA'] );
-
   foreach ( $rs as $key => $aRow  )
   {
 	  $bAccessStep = false;
@@ -75,6 +78,14 @@
      	  $oDocument = InputDocumentPeer::retrieveByPK($aRow->getStepUidObj());
      	  $stepTitle = $oDocument->getInpDocTitle();
      	  $sType     = $oDocument->getInpDocFormNeeded(); break;
+     	case 'EXTERNAL':
+  	    $stepTitle          = 'unknown ' . $aRow->getStepUidObj();
+      	foreach ( $externalSteps as $key=>$val ) {
+      	  if ( $val->sStepId == $aRow->getStepUidObj() ) 
+      		  $stepTitle = $val->sStepTitle;
+      	}
+     	  //$sType     = $oDocument->getInpDocFormNeeded(); 
+     	  break;
      	default:
      	  $stepTitle = $aRow->getStepUid();
      }
@@ -168,6 +179,11 @@
      	  $sOptions .= '</tr></table>';
      	  $oAux =& $oNode->addChild($aRow['STEP_UID'] . '_node', $sOptions, array('nodeType'=>'child'));
      	break;
+   	  case 'EXTERNAL':
+     	  $sOptions  = '<table width="70%" cellpadding="0" cellspacing="0" border="0"><tr>';
+     	  $sOptions .= '<td width="100%" class="treeNode"><a style="' . (($_GET['TYPE'] == 'EXTERNAL') && ($_GET['UID'] == $aRow->getStepUidObj() && ($_GET['ACTION'] == 'EDIT')) ?'background-color:orange;color:white;padding-left:5px;padding-right:5px; ' : '') . '" href="../cases/cases_Step?TYPE=' . $aRow->getStepTypeObj() . '&UID=' . $aRow->getStepUidObj() . '&POSITION=' . $aRow->getStepPosition() . '&ACTION=EDIT">' . G::LoadTranslation('ID_EDIT') . '</a></td>';
+     	  $sOptions .= '</tr></table>';
+     	  $oAux =& $oNode->addChild($aRow->getStepUid() . '_node', $sOptions, array('nodeType'=>'child'));
      }
      $oAux->point = '';
     }

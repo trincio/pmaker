@@ -1073,7 +1073,7 @@ class Cases
                                 $sAction = 'ATTACH';
                                 break;
                             case 'EXTERNAL':
-                                $sAction = 'EXEC';
+                                $sAction = 'EDIT';
                                 break;
                             case 'MESSAGE':
                                 $sAction = '';
@@ -1166,6 +1166,9 @@ class Cases
                                 break;
                             case 'INPUT_DOCUMENT':
                                 $sAction = 'ATTACH';
+                                break;
+                            case 'EXTERNAL':
+                                $sAction = 'EDIT';
                                 break;
                             case 'MESSAGE':
                                 $sAction = '';

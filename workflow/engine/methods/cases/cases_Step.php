@@ -147,7 +147,6 @@ switch ($_GET['TYPE'])
     G::LoadClass ('dbConnections');
     $oDbConnections = new dbConnections($_SESSION['PROCESS']);
     $oDbConnections->loadAdditionalConnections();
-    // PROPEL::krumo();
 
     $G_PUBLISH->AddContent('dynaform', 'xmlform', $_SESSION['PROCESS']. '/' . $_GET['UID'], '', $Fields['APP_DATA'], 'cases_SaveData?UID=' . $_GET['UID']);
     break;
@@ -410,7 +409,40 @@ switch ($_GET['TYPE'])
     }
 
     $G_PUBLISH->AddContent('smarty', 'cases/cases_ScreenDerivation', '', '', $aFields);
-  break;
+    break;
+  case 'EXTERNAL':
+    $oPluginRegistry = &PMPluginRegistry::getSingleton();
+    $externalSteps   = $oPluginRegistry->getSteps();
+
+  	$sNamespace = '';
+  	$sStepName  = '';
+    foreach ( $externalSteps as $key=>$val ) {
+      if ( $val->sStepId == $_GET['UID'] ) 
+        $sNamespace = $val->sNamespace;
+        $sStepName  = $val->sStepName;
+      }
+    if (!$aPreviousStep)
+    {
+      $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['PREVIOUS_STEP_LABEL'] = '';
+    }
+    else
+    {
+      $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['PREVIOUS_STEP'] = $aPreviousStep['PAGE'];
+      $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['PREVIOUS_STEP_LABEL'] = G::loadTranslation("ID_PREVIOUS_STEP");
+    }
+    $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['NEXT_STEP'] = $aNextStep['PAGE'];
+
+    /** Added Bye erik
+     * date: 16-05-08
+	 * Description: this was added for the additional database connections */
+    G::LoadClass ('dbConnections');
+    $oDbConnections = new dbConnections($_SESSION['PROCESS']);
+    $oDbConnections->loadAdditionalConnections();
+    $stepFilename = "$sNamespace/$sStepName";
+    $G_PUBLISH->AddContent('content', $stepFilename );
+    //$G_PUBLISH->AddContent('dynaform', 'xmlform', $_SESSION['PROCESS']. '/' . $_GET['UID'], '', $Fields['APP_DATA'], 'cases_SaveData?UID=' . $_GET['UID']);
+    break;
+    
 }
 //Add content content step - End
 }

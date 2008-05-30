@@ -127,16 +127,14 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
     $Part = $this->Parts[ $intPos ];
     switch( $Part['Type'] )
     {
+    /*//disabled because it is deprecated, Fatal error: Call to undefined method G::loadcontent() 	
     case 'showcontent':
       $G_CONTENT = new Content;
       $G_CONTENT = G::LoadContent( $Part['File'] );
       $G_CONTENT->output ( $Part['Template'] );
       return;
       break;
-
-    case 'content':
-      break;
-
+    */
     case 'externalContent':
 	    $G_CONTENT = new Content;
 	    if( $Part['Content'] != "" ) $G_CONTENT = G::LoadContent( $Part['Content'] );
@@ -553,14 +551,27 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
         return;
       break;
     case 'view':
+    case 'content' : 
+      //check if G_PLUGIN_CLASS is defined, because publisher can be called without an environment
+      $aux = explode ( PATH_SEP, $Part['Template'] );
+      if ( count($aux) == 2 && defined ( 'G_PLUGIN_CLASS' ) ) {
+        //if the template doesn't exists, then try it with the plugins folders, after the normal Template
+        $userTemplate   = G::ExpandPath( 'templates' ) . $Part['Template'];
+        $globalTemplate = PATH_TEMPLATE . $Part['Template'];
+        if ( !is_file ($userTemplate) && !is_file ($globalTemplate) ) {
+          $oPluginRegistry =& PMPluginRegistry::getSingleton();
+          if ( $oPluginRegistry->isRegisteredFolder($aux[0]) ) {
+            $pluginTemplate = PATH_PLUGINS. $Part['Template'] . '.php';
+            include ($pluginTemplate);
+
+          }
+        }
+      }
+    
       break;
     }
 
-//    $G_CONTENT = new Content;
-//    if( $Part['Content'] != "" ) $G_CONTENT = G::LoadContent( $Part['Content'] );
     G::LoadTemplate( $Part['Template'] );
-    //$G_FORM = NULL;
-    //$G_CONTENT = NULL;
     $G_TABLE = NULL;
   }
 }
