@@ -21,8 +21,12 @@
     function setup()
     {
       $this->registerMenu( 'setup', 'menu{className}.php');
-      $this->registerTrigger( 1000, 'create{className}' );
+<!-- START BLOCK : externalStep -->
+      $this->registerTrigger( PM_EXTERNAL_STEP, 'step{className}' );
+<!-- END BLOCK : externalStep --> 
+<!-- START BLOCK : changeLogo -->
       $this->setCompanyLogo ('/plugin/{className}/{className}.png');
+<!-- END BLOCK : changeLogo --> 
         
     }
   }

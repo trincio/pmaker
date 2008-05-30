@@ -663,6 +663,16 @@ class processMap {
                        'STEP_TYPE_OBJ' => 'OUTPUT_DOCUMENT');
       	$oDataset->next();
       }
+      
+      //call plugin
+      $oPluginRegistry = &PMPluginRegistry::getSingleton();
+      $existsSteps     = $oPluginRegistry->existsTrigger(PM_EXTERNAL_STEP );
+      if ($existsSteps) {
+        $aBB[] = array('STEP_UID'      => 'UID',
+                       'STEP_TITLE'    => 'My first step',
+                       'STEP_TYPE_OBJ' => 'EXTERNAL');
+      }
+
       global $_DBArray;
       $_DBArray['availableBB'] = $aBB;
       $_SESSION['_DBArray']  = $_DBArray;
