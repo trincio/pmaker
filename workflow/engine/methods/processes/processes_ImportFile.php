@@ -54,7 +54,7 @@
     G::RenderPage('publish');
     die;
   }
-var_dump($sProUid);die;
+
   if ( $oProcess->processExists ( $sProUid ) ) {
   //krumo ($oData);
     $sNewProUid = $oProcess->getUnusedProcessGUID() ;
