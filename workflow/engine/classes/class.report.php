@@ -416,22 +416,17 @@ class Report {
 		require_once 'classes/model/AppDelegation.php';
 		require_once 'classes/model/Application.php';
 		$oCriteria = new Criteria('workflow');
-		$del = DBAdapter::getStringDelimiter();  
-		/*          
-    $oCriteria->addAsColumn("DATES", "CONCAT(SUBSTRING(".AppDelegationPeer::DEL_INIT_DATE.",6,2), '-', SUBSTRING(".AppDelegationPeer::DEL_INIT_DATE.",1,4))");       
-    //$oCriteria->addSelectColumn('COUNT(*)');
-    //$oCriteria->addSelectColumn(AppDelegationPeer::APP_UID);
-    $oCriteria->add(AppDelegationPeer::APP_UID, '', Criteria::NOT_EQUAL);
-    $oCriteria->addGroupByColumn("DATES"); 
-    */
-   
-      $sql = "SELECT CONCAT(SUBSTRING(AD.DEL_INIT_DATE,6,2),'-', SUBSTRING(AD.DEL_INIT_DATE,1,4)) AS FECHA, 
+		$del = DBAdapter::getStringDelimiter();  		
+    $sql = "SELECT CONCAT(SUBSTRING(AD.DEL_INIT_DATE,6,2),'-', SUBSTRING(AD.DEL_INIT_DATE,1,4)) AS FECHA, 
               COUNT(*) AS CANTCASES,       				
       				MIN(AD.DEL_DURATION) AS MIN, 
 							MAX(AD.DEL_DURATION) AS MAX, 
 							SUM(AD.DEL_DURATION) AS TOTALDUR, 
 							AVG(AD.DEL_DURATION) AS PROMEDIO 
-              FROM APP_DELEGATION AS AD WHERE AD.APP_UID<>'' GROUP BY FECHA";
+              FROM APP_DELEGATION AS AD 
+              LEFT JOIN PROCESS AS P ON (P.PRO_UID = AD.PRO_UID)
+              WHERE AD.APP_UID<>'' AND P.PRO_STATUS<>'DISABLED' 
+              GROUP BY FECHA";
 
 			$con = Propel::getConnection("workflow");
 			$stmt = $con->prepareStatement($sql);
@@ -467,21 +462,37 @@ class Report {
     
 	}
 	
-	function generatedReport3_filter($task)
-	{ echo $task; die;
+	function generatedReport3_filter($process, $task)
+	{ //echo $task; die;
 		require_once 'classes/model/AppDelegation.php';
 		require_once 'classes/model/Application.php';
 		$oCriteria = new Criteria('workflow');
 		$del = DBAdapter::getStringDelimiter();  
-		
-      $sql = "SELECT CONCAT(SUBSTRING(AD.DEL_INIT_DATE,6,2),'-', SUBSTRING(AD.DEL_INIT_DATE,1,4)) AS FECHA, 
+	  if($process=='')
+	  { $var=" WHERE P.PRO_STATUS<>'DISABLED'";	  	  
+	  }	
+	  else
+	  {
+	  	if($task=='')
+	  	{ 
+	  	 	 $var=" LEFT JOIN TASK AS T ON (AD.TAS_UID = T.TAS_UID)
+                WHERE P.PRO_STATUS<>'DISABLED'";
+    	}    
+	  	else
+	  	{ $var=" LEFT JOIN TASK AS T ON (AD.TAS_UID = T.TAS_UID)
+             WHERE P.PRO_STATUS<>'DISABLED' AND AD.TAS_UID='".$task."' "; 
+    	}
+    }	
+	  $sql = "SELECT CONCAT(SUBSTRING(AD.DEL_INIT_DATE,6,2),'-', SUBSTRING(AD.DEL_INIT_DATE,1,4)) AS FECHA, 
               COUNT(*) AS CANTCASES,       				
       				MIN(AD.DEL_DURATION) AS MIN, 
 							MAX(AD.DEL_DURATION) AS MAX, 
 							SUM(AD.DEL_DURATION) AS TOTALDUR, 
 							AVG(AD.DEL_DURATION) AS PROMEDIO 
-              FROM APP_DELEGATION AS AD WHERE AD.APP_UID<>'' GROUP BY FECHA";
-
+              FROM APP_DELEGATION AS AD                            
+              LEFT JOIN PROCESS AS P ON (P.PRO_UID = AD.PRO_UID)
+              ".$var."
+              GROUP BY FECHA";
 			$con = Propel::getConnection("workflow");
 			$stmt = $con->prepareStatement($sql);
 			$rs = $stmt->executeQuery();
@@ -512,8 +523,7 @@ class Report {
     $oCriteria = new Criteria('dbarray');
     $oCriteria->setDBArrayTable('reports');
     
-    return $oCriteria;    
-    
+    return $oCriteria;        
 	}
 }
 
