@@ -1,4 +1,4 @@
-﻿<?php
+<?php
 /**
  * class.processMap.php
  *
@@ -508,42 +508,54 @@ class processMap {
       	                 'STEP_TYPE_OBJ'  => 'char',
       	                 'STEP_CONDITION' => 'char',
       	                 'STEP_POSITION'  => 'integer');
-  		$oCriteria = new Criteria('workflow');
+  	  $oCriteria = new Criteria('workflow');
   	  $oCriteria->add(StepPeer::TAS_UID, $sTaskUID);
   	  $oCriteria->addAscendingOrderByColumn(StepPeer::STEP_POSITION);
   	  $oDataset = StepPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
       $oDataset->next();
       while ($aRow = $oDataset->getRow()) {
+        $urlEdit = '';
+        $linkEditValue = '';
+            
       	switch ($aRow['STEP_TYPE_OBJ']) {
-      		case 'DYNAFORM':
-      		  $oDynaform = new Dynaform();
-  	        $aFields   = $oDynaform->load($aRow['STEP_UID_OBJ']);
-  	        $sTitle    = $aFields['DYN_TITLE'];
-      		break;
-      		case 'INPUT_DOCUMENT':
-      		  $oInputDocument = new InputDocument();
-  	        $aFields        = $oInputDocument->load($aRow['STEP_UID_OBJ']);
-  	        $sTitle         = $aFields['INP_DOC_TITLE'];
-      		break;
-      		case 'OUTPUT_DOCUMENT':
-      		  $oOutputDocument = new OutputDocument();
-  	        $aFields         = $oOutputDocument->load($aRow['STEP_UID_OBJ']);
-  	        $sTitle          = $aFields['OUT_DOC_TITLE'];
-      		break;
-      		case 'EXTERNAL':
-  	        $sTitle          = 'unknown ' . $aRow['STEP_UID'];
-      		  foreach ( $externalSteps as $key=>$val ) {
-      		  	if ( $val->sStepId == $aRow['STEP_UID_OBJ'] ) 
-      		  	  $sTitle = $val->sStepTitle;
-      		  }
-      		break;
+            case 'DYNAFORM':
+            $oDynaform = new Dynaform();
+            $aFields   = $oDynaform->load($aRow['STEP_UID_OBJ']);
+            $sTitle    = $aFields['DYN_TITLE'];
+            /** @@@init2 PROCCESS FOR DIRECT EDIT LINK @by erik@colosa.com ON DATE 02/06/2008 18:48:13*/ 
+            $DYN_UID = $aFields['DYN_UID'];
+            $urlEdit   = 'dynaformEdit(\''.$DYN_UID.'\');';
+            $linkEditValue = 'Edit';
+            /** @@@end2*/
+            break;
+            case 'INPUT_DOCUMENT':
+                $oInputDocument = new InputDocument();
+            $aFields        = $oInputDocument->load($aRow['STEP_UID_OBJ']);
+            $sTitle         = $aFields['INP_DOC_TITLE'];
+            break;
+            case 'OUTPUT_DOCUMENT':
+                $oOutputDocument = new OutputDocument();
+            $aFields         = $oOutputDocument->load($aRow['STEP_UID_OBJ']);
+            $sTitle          = $aFields['OUT_DOC_TITLE'];
+            break;
+            case 'EXTERNAL':
+            $sTitle          = 'unknown ' . $aRow['STEP_UID'];
+                foreach ( $externalSteps as $key=>$val ) {
+                if ( $val->sStepId == $aRow['STEP_UID_OBJ'] ) 
+                    $sTitle = $val->sStepTitle;
+                }
+            break;
       	}
       	$aSteps[] = array('STEP_TITLE'     => $sTitle,
       	                  'STEP_UID'       => $aRow['STEP_UID'],
       	                  'STEP_TYPE_OBJ'  => $aRow['STEP_TYPE_OBJ'],
       	                  'STEP_CONDITION' => $aRow['STEP_CONDITION'],
-      	                  'STEP_POSITION'  => $aRow['STEP_POSITION']);
+      	                  'STEP_POSITION'  => $aRow['STEP_POSITION'],
+                          'urlEdit'        => $urlEdit,
+                          'linkEditValue'  => $linkEditValue,
+                          'PRO_UID'        => $aRow['PRO_UID']
+        );
       	$oDataset->next();
       }
 
