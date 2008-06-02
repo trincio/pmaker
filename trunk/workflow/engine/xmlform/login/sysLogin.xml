@@ -4,7 +4,7 @@
   <en>Login</en>
 </TITLE>
 
-<USR_USERNAME type="text" size="30" maxlength="32" validate="Alpha10">
+<USR_USERNAME type="text" size="30" maxlength="32" validate="Login">
   <en>User</en>
 </USR_USERNAME>
 
@@ -12,7 +12,7 @@
   <en>Password</en>
 </USR_PASSWORD>
 
-<USER_ENV type="text" size="30" maxlength="32" validate="Alpha">
+<USER_ENV type="text" size="30" maxlength="32" validate="AlphaNum">
   <en>Workspace</en>
 </USER_ENV>
 
