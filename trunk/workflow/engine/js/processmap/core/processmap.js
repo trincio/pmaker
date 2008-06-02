@@ -34,8 +34,8 @@ var processmap=function(){
 							//target	:this.options.target,
 							statusBar:false,
 							//titleBar:false,
-							control	:{drag:false,resize:false,close:true},
-							fx	:{opacity:true,rolled:false,modal:true}
+							control	:{drag:false,resize:false,close:true, drag:true},
+							fx	:{opacity:true,rolled:false,modal:true, drag:true}
 						};
 						this.panels.buildingBlocks.make();
 						this.panels.buildingBlocks.events={
@@ -1940,8 +1940,8 @@ processmap.prototype={
 };
 
 /**
-*	Added By: Erik Amariu Ortiz <erik@colosacom>
-*	Comment: Ths functionality make the wondow for the show panel DB Connection.
+*	Added By: Erik Amaru Ortiz <erik@colosa.com>
+*	Comment: This functionality make the window for panel DB Connection.
 */
 var mainPanel;
 
@@ -1954,8 +1954,8 @@ function showBdConnectionsList()
 	  	title	:G_STRINGS.ID_DBS_LIST,
 	  	theme	:"processmaker",
 	  	statusBar:false,
-	  	control	:{resize:false,roll:false,drag:false},
-	  	fx	:{modal:true,opacity:true,blinkToFront:false,fadeIn:false,drag:false}
+	  	control	:{resize:false,roll:false,drag:true},
+	  	fx	:{modal:true,opacity:true,blinkToFront:false,fadeIn:false,drag:true}
   	};
   	mainPanel.events = {
   		remove: function() { delete(mainPanel); }.extend(this)
