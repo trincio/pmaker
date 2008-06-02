@@ -817,28 +817,34 @@ class Processes {
     //$data = $oJSON->decode($oData);
     //$sProUid = $data->process->PRO_UID;
     $data = unserialize ($oData);
+    
     $sProUid = $data->process['PRO_UID'];
     $path = PATH_DOCUMENT . 'output' . PATH_SEP;
+      
     if ( !is_dir($path) ) {
       	G::verifyPath($path, true);
     }
     $proTitle = G::capitalizeWords($data->process['PRO_TITLE']);
-
-    $index = ''; $lastIndex = '';
-    do {
+    
+    $index = ''; 
+    $lastIndex = '';
+   
+    do {    	    	    	
       $filename = $path . $proTitle . $index . '.pm';
       $lastIndex = $index;
+     
       if ( $index == '' )
         $index = 1;
       else
         $index ++;
     } while ( file_exists ( $filename )  );
 
+
     $proTitle .= $lastIndex;
     $filenameOnly = $proTitle . '.pm';
-
-    $fp = fopen( $filename, "wb");
-
+    
+    $fp = fopen( $filename.'tpm', "wb");
+   
     $fsData = sprintf ( "%09d", strlen ( $oData) );
     $bytesSaved = fwrite( $fp, $fsData );  //writing the size of $oData
     $bytesSaved += fwrite( $fp, $oData ); //writing the $oData
@@ -857,9 +863,10 @@ class Processes {
     	}
     }
     fclose ( $fp);
+    
     //$bytesSaved = file_put_contents  ( $filename  , $oData  );
     $filenameLink = 'processes_DownloadFile?p=' . $proTitle . '&r=' . rand(100,1000);
-
+    
     $result['PRO_UID']         = $data->process['PRO_UID'];
     $result['PRO_TITLE']       = $data->process['PRO_TITLE'];
     $result['PRO_DESCRIPTION'] = $data->process['PRO_DESCRIPTION'];
