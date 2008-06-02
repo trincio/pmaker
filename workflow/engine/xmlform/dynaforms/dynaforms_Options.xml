@@ -26,6 +26,7 @@
 		popupWindow('@G::LoadTranslation(ID_EDIT_DYNAFORM)', '@G::encryptlink(@#dynaformsEdit)?DYN_UID='+ uid , 500, 400);
   }
   function dynaformEdit( uid ){
+        alert(uid);
 		window.location.href = "@G::encryptlink(@#dynaformsEditor)?PRO_UID=@%PRO_UID&DYN_UID="+uid;
   }
   function dynaformFlatEdit( uid ){
