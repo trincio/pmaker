@@ -525,7 +525,7 @@ class processMap {
             $sTitle    = $aFields['DYN_TITLE'];
             /** @@@init2 PROCCESS FOR DIRECT EDIT LINK @by erik@colosa.com ON DATE 02/06/2008 18:48:13*/ 
             $DYN_UID = $aFields['DYN_UID'];
-            $urlEdit   = 'dynaformEdit(\''.$DYN_UID.'\');';
+            $urlEdit   = 'dynaformEdit(\''.$DYN_UID.'\', \''.$aRow['PRO_UID'].'\');';
             $linkEditValue = 'Edit';
             /** @@@end2*/
             break;

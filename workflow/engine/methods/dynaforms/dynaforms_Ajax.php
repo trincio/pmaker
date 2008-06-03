@@ -27,6 +27,7 @@
  *
  * @author David Callizaya <davidsantos@colosa.com>
  */
+ 
 G::LoadClass('dynaformEditor');
 $oDynaformEditorAjax = new dynaformEditorAjax($_POST);
 

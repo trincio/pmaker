@@ -25,6 +25,7 @@
 <DELETE type="link" colWidth="30" value="@G::LoadTranslation(ID_DE_ASSIGN)" link="#" onclick="stepDelete(@QSTEP_UID, @QSTEP_POSITION);return false;"/>
 <UP type="link" colWidth="20" value="@G::LoadTranslation(ID_UP)" link="#" onclick="stepUp(@QSTEP_UID, @QSTEP_POSITION);return false;"/>
 <DOWN type="link" colWidth="20" value="@G::LoadTranslation(ID_DOWN)" link="#" onclick="stepDown(@QSTEP_UID, @QSTEP_POSITION);return false;"/>
+
 <!-- FILTER FORM -->
 <SEARCH type="button" onclick="pagedTableFilter( this.form );" showInTable="0">
   <en>Apply Filter</en>
