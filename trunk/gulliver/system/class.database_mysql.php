@@ -91,7 +91,6 @@ class database extends database_base {
 		return $sSQL . $sKeys;
 	}
 	public function generateChangeColumnSQL($sTable, $sColumn, $aParameters) {
-		$sKeys = '';
 		$sSQL = 'ALTER TABLE ' . $this->sQuoteCharacter . $sTable . $this->sQuoteCharacter .
 		        ' CHANGE COLUMN ' . $this->sQuoteCharacter . $sColumn . $this->sQuoteCharacter .
 		        ' ' . $this->sQuoteCharacter . $sColumn . $this->sQuoteCharacter;
@@ -106,22 +105,55 @@ class database extends database_base {
 		  	$sSQL .= ' NOT NULL';
 		  }
 		}
-		if (isset($aParameters['Key'])) {
-			$sKeys .= 'ALTER TABLE ' . $this->sQuoteCharacter . $sTable . $this->sQuoteCharacter;
-			if ($aParameters['Key'] == 'PRI') {
-			  $sKeys .= ' ADD PRIMARY KEY (' . $this->sQuoteCharacter . $sColumn . $this->sQuoteCharacter . ')' . $this->sEndLine;
-		  }
-		  else {
-		  	$sKeys .= ' DROP PRIMARY KEY' . $this->sEndLine;
-		  }
-		}
 		if (isset($aParameters['Default'])) {
 			if ($aParameters['Default'] != '') {
 			  $sSQL .= " DEFAULT '" . $aParameters['Default'] . "'";
 		  }
 		}
 		$sSQL .= $this->sEndLine;
-		return $sSQL . $sKeys;
+		return $sSQL;
+	}
+	public function generateDropPrimaryKeySQL($sTable) {
+	  try {
+	    if ($sTable == '') {
+	      throw new Exception('The table name cannot be empty!');
+	    }
+	    return 'ALTER TABLE ' . $this->sQuoteCharacter . $sTable . $this->sQuoteCharacter . ' DROP PRIMARY KEY' . $this->sEndLine;
+	  }
+	  catch (Exception $oException) {
+	    throw $oException;
+	  }
+	}
+	public function generateAddPrimaryKeysSQL($sTable, $aPrimaryKeys) {
+	  try {
+	    if ($sTable == '') {
+	      throw new Exception('The table name cannot be empty!');
+	    }
+	    $sSQL = 'ALTER TABLE ' . $this->sQuoteCharacter . $sTable . $this->sQuoteCharacter .
+			        ' ADD PRIMARY KEY (';
+			foreach ($aPrimaryKeys as $sKey) {
+			  $sSQL .= $this->sQuoteCharacter . $sKey . $this->sQuoteCharacter . ',';
+			}
+			$sSQL = substr($sSQL, 0, -1) . ')' . $this->sEndLine;
+	    return $sSQL;
+	  }
+	  catch (Exception $oException) {
+	    throw $oException;
+	  }
+	}
+	public function generateDropKeySQL($sTable, $sColumn) {
+	  try {
+	    if ($sTable == '') {
+	      throw new Exception('The table name cannot be empty!');
+	    }
+	    if ($sColumn == '') {
+	      throw new Exception('The column name cannot be empty!');
+	    }
+	    return 'ALTER TABLE ' . $this->sQuoteCharacter . $sTable . $this->sQuoteCharacter . ' DROP INDEX ' . $this->sQuoteCharacter . $sColumn . $this->sQuoteCharacter . $this->sEndLine;
+	  }
+	  catch (Exception $oException) {
+	    throw $oException;
+	  }
 	}
 	public function generateAddKeysSQL($sTable, $aKeys) {
 	  try {
