@@ -1082,7 +1082,7 @@
     </vendor>
     <column name="GRP_UID" type="VARCHAR" size="32" required="true" primaryKey="true" default="">
       <vendor type="mysql">
-        <parameter name="Field" value="UID"/>
+        <parameter name="Field" value="GRP_UID"/>
         <parameter name="Type" value="varchar(32)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value="PRI"/>
@@ -3595,7 +3595,7 @@
     </column>
     <column name="APP_THREAD_STATUS" type="VARCHAR" size="32" required="true" default="OPEN">
       <vendor type="mysql">
-        <parameter name="Field" value="DEL_THREAD_STATUS"/>
+        <parameter name="Field" value="APP_THREAD_STATUS"/>
         <parameter name="Type" value="varchar(32)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
@@ -3914,7 +3914,7 @@
     </column>
     <column name="SES_STATUS" type="VARCHAR" size="16" required="true" default="ACTIVE">
       <vendor type="mysql">
-        <parameter name="Field" value="SET_STATUS"/>
+        <parameter name="Field" value="SES_STATUS"/>
         <parameter name="Type" value="varchar(16)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
@@ -3924,7 +3924,7 @@
     </column>
     <column name="USR_UID" type="VARCHAR" size="32" required="true" default="ACTIVE">
       <vendor type="mysql">
-        <parameter name="Field" value="SET_STATUS"/>
+        <parameter name="Field" value="USR_UID"/>
         <parameter name="Type" value="varchar(32)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>

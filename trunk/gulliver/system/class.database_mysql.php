@@ -26,6 +26,7 @@
 G::LoadSystem('database_base');
 
 class database extends database_base {
+  public $iFetchType = MYSQL_ASSOC;
 	public function __construct($sType = DB_ADAPTER, $sServer = DB_HOST, $sUser = DB_USER, $sPass = DB_PASS, $sDataBase = DB_NAME) {
 		$this->sType           = $sType;
 		$this->sServer         = $sServer;
@@ -136,6 +137,23 @@ class database extends database_base {
 	  	throw $oException;
 	  }
 	}
+	public function generateShowTablesSQL() {
+    return 'SHOW TABLES' . $this->sEndLine;
+	}
+	public function generateDescTableSQL($sTable) {
+	  try {
+	    if ($sTable == '') {
+	      throw new Exception('The table name cannot be empty!');
+	    }
+	    return 'DESC ' . $this->sQuoteCharacter . $sTable . $this->sQuoteCharacter . $this->sEndLine;
+	  }
+	  catch (Exception $oException) {
+	  	throw $oException;
+	  }
+	}
+	public function generateTableIndexSQL($sTable) {
+	  return 'SHOW INDEX FROM ' . $this->sQuoteCharacter . $sTable . $this->sQuoteCharacter . $this->sEndLine;
+	}
 	public function executeQuery($sQuery) {
 		try {
 		  if ($this->oConnection) {
@@ -149,6 +167,9 @@ class database extends database_base {
 	  catch (Exception $oException) {
 	  	throw $oException;
 	  }
+	}
+	public function getRegistry($oDataset) {
+	  return @mysql_fetch_array($oDataset, $this->iFetchType);
 	}
 	public function close() {
 		@mysql_close($this->oConnection);
