@@ -1315,8 +1315,9 @@ class Cases
         $c->addAsColumn('APP_TITLE', 'APP_TITLE.CON_VALUE');
         $c->addAsColumn('APP_PRO_TITLE', 'PRO_TITLE.CON_VALUE');
         $c->addAsColumn('APP_TAS_TITLE', 'TAS_TITLE.CON_VALUE');
-        $c->addAsColumn('APP_DEL_PREVIOUS_USER', 'APP_LAST_USER.USR_USERNAME');
-
+        //$c->addAsColumn('APP_DEL_PREVIOUS_USER', 'APP_LAST_USER.USR_USERNAME');
+				$c->addAsColumn('APP_DEL_PREVIOUS_USER', "CONCAT(APP_LAST_USER.USR_LASTNAME, ' ', APP_LAST_USER.USR_FIRSTNAME)");
+				
         $c->addAlias("APP_TITLE", 'CONTENT');
         $c->addAlias("PRO_TITLE", 'CONTENT');
         $c->addAlias("TAS_TITLE", 'CONTENT');
