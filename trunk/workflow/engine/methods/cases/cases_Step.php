@@ -150,6 +150,7 @@ switch ($_GET['TYPE'])
 
     $G_PUBLISH->AddContent('dynaform', 'xmlform', $_SESSION['PROCESS']. '/' . $_GET['UID'], '', $Fields['APP_DATA'], 'cases_SaveData?UID=' . $_GET['UID']);
     break;
+    
   case 'INPUT_DOCUMENT':
     $oInputDocument = new InputDocument();
     $Fields = $oInputDocument->load($_GET['UID']);

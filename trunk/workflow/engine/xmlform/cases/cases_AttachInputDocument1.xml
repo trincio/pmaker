@@ -54,6 +54,10 @@
   <en>File</en>
 </APP_DOC_FILENAME>
 
+<APP_DOC_COMMENT type="textarea" rows="5" cols="32" colWidth="200" titleAlign="left" align="left">
+  <en>Comments</en>
+</APP_DOC_COMMENT>
+
 <MORE type="checkbox">
   <en>Upload Multiple Input Documents</en>
 </MORE>
