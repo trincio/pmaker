@@ -1945,7 +1945,7 @@ processmap.prototype={
 */
 var mainPanel;
 
-function showBdConnectionsList()
+function showDbConnectionsList()
 {
 	mainPanel = new leimnud.module.panel();
 	mainPanel.options = {
@@ -1964,7 +1964,7 @@ function showBdConnectionsList()
 	mainPanel.loader.show();
 	var oRPC = new leimnud.module.rpc.xmlhttp({
 	  	url : '../dbConnections/dbConnectionsAjax',
-	  	args: 'action=showBdConnectionsList'
+	  	args: 'action=showDbConnectionsList'
   	});
   	oRPC.callback = function(rpc) {
 	  	mainPanel.loader.hide();
