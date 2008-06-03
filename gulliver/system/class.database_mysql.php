@@ -70,7 +70,6 @@ class database extends database_base {
 		return $sSQL;
 	}
 	public function generateAddColumnSQL($sTable, $sColumn, $aParameters) {
-		$sKeys = '';
 		$sSQL = 'ALTER TABLE ' . $this->sQuoteCharacter . $sTable . $this->sQuoteCharacter .
 		        ' ADD COLUMN ' . $this->sQuoteCharacter . $sColumn . $this->sQuoteCharacter .
 		        ' ' . $aParameters['Type'];
@@ -80,15 +79,15 @@ class database extends database_base {
 		else {
 			$sSQL .= ' NOT NULL';
 		}
-		if ($aParameters['Key'] == 'PRI') {
+		/*if ($aParameters['Key'] == 'PRI') {
 			$sKeys .= 'ALTER TABLE ' . $this->sQuoteCharacter . $sTable . $this->sQuoteCharacter .
 			          ' ADD PRIMARY KEY (' . $this->sQuoteCharacter . $sColumn . $this->sQuoteCharacter . ')' . $this->sEndLine;
-		}
+		}*/
 		if ($aParameters['Default'] != '') {
 			$sSQL .= " DEFAULT '" . $aParameters['Default'] . "'";
 		}
 		$sSQL .= $this->sEndLine;
-		return $sSQL . $sKeys;
+		return $sSQL;
 	}
 	public function generateChangeColumnSQL($sTable, $sColumn, $aParameters) {
 		$sSQL = 'ALTER TABLE ' . $this->sQuoteCharacter . $sTable . $this->sQuoteCharacter .
@@ -113,7 +112,18 @@ class database extends database_base {
 		$sSQL .= $this->sEndLine;
 		return $sSQL;
 	}
-	public function generateDropPrimaryKeySQL($sTable) {
+	public function generateGetPrimaryKeysSQL($sTable) {
+	  try {
+	    if ($sTable == '') {
+	      throw new Exception('The table name cannot be empty!');
+	    }
+	    return 'SHOW INDEX FROM  ' . $this->sQuoteCharacter . $sTable . $this->sQuoteCharacter . ' WHERE Seq_in_index = 1' . $this->sEndLine;
+	  }
+	  catch (Exception $oException) {
+	    throw $oException;
+	  }
+	}
+	public function generateDropPrimaryKeysSQL($sTable) {
 	  try {
 	    if ($sTable == '') {
 	      throw new Exception('The table name cannot be empty!');
