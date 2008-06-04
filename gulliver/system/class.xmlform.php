@@ -2239,6 +2239,9 @@ class xmlformTemplate extends Smarty
       if ($name==='addRow') $ft->addRow = $form->addRow;
       if ($name==='editRow') $ft->editRow = $form->editRow;
     }
+    if (!isset($ft->action)) {
+      $ft->action = '{$form_action}';
+    }
     $hasRequiredFields=false;
     foreach($form->fields as $k => $v)  {
       $ft->fields[$k] = $v->cloneObject();
