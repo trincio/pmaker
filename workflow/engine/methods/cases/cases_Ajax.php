@@ -404,5 +404,31 @@ switch ($_POST['action']) {
         $G_PUBLISH->AddContent('xmlform', 'xmlform', $sXmlForm, '', G::array_merges($Fields, $oAppDocument->Fields), '');
         G::RenderPage('publish', 'raw');
       break;
+    case 'showGeneratedDocuments':
+        G::LoadClass('case');
+        $oCase = new Cases();
+        global $G_PUBLISH;
+        global $G_HEADER;
+        $G_PUBLISH = new Publisher();
+        $G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_AllOutputdocsList', $oCase->getAllGeneratedDocumentsCriteria($_SESSION['APPLICATION']));
+        $G_HEADER->clearScripts();
+        $G_HEADER->addScriptFile('/js/form/core/pagedTable.js');
+        G::RenderPage('publish', 'raw');
+      break;
+    case 'showGeneratedDocument':
+        require_once 'classes/model/AppDocument.php';
+        $oAppDocument = new AppDocument();
+        $aFields = $oAppDocument->load($_POST['APP_DOC_UID']);
+        require_once 'classes/model/OutputDocument.php';
+        $oOutputDocument = new OutputDocument();
+        $aOD = $oOutputDocument->load($aFields['DOC_UID']);
+        $aFields['VIEW'] = G::LoadTranslation('ID_OPEN');
+        $aFields['FILE1'] = 'cases_ShowOutputDocument?a=' . $aFields['APP_DOC_UID'] . '&ext=doc&random=' . rand();
+        $aFields['FILE2'] = 'cases_ShowOutputDocument?a=' . $aFields['APP_DOC_UID'] . '&ext=pdf&random=' . rand();
+        $G_PUBLISH = new Publisher();
+        $G_PUBLISH->AddContent('xmlform', 'xmlform', 'cases/cases_ViewAnyOutputDocument', '', G::array_merges($aOD, $aFields), '');
+        //$G_PUBLISH->AddContent('xmlform', 'xmlform', 'cases/cases_ViewAnyOutputDocument', '', $aFields, '');
+        G::RenderPage('publish', 'raw');
+      break;
     default: echo 'default';
 }
