@@ -1,5 +1,5 @@
 <?php
-/**
+/** 
  * cases_Step.php
  *
  * ProcessMaker Open Source Edition
@@ -100,6 +100,9 @@
 
   $oCase = new Cases();
   $Fields = $oCase->loadCase( $_SESSION['APPLICATION'] );
+	
+  $APP_NUMBER = $Fields['APP_NUMBER'];
+  $APP_TITLE = $Fields['TITLE'];
 
   //Execute before triggers - Start
   $Fields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], $_GET['TYPE'], $_GET['UID'], 'BEFORE', $Fields['APP_DATA'] );
@@ -184,6 +187,12 @@ switch ($_GET['TYPE'])
         }
         $Fields['MESSAGE1'] = G::LoadTranslation('ID_PLEASE_ENTER_COMMENTS');
         $Fields['MESSAGE2'] = G::LoadTranslation('ID_PLEASE_SELECT_FILE');
+                       
+        $array['APP_NUMBER'] = $APP_NUMBER;
+        $array['APP_TITLE'] = $APP_TITLE;
+        
+        $G_PUBLISH->AddContent('smarty', 'cases/cases_title', '', '', $array);        
+        
         $G_PUBLISH->AddContent('xmlform', 'xmlform', $sXmlForm, '', $Fields, 'cases_SaveDocument?UID=' . $_GET['UID']);
 
     //call plugin
