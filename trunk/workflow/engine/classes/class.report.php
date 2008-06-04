@@ -490,9 +490,10 @@ class Report {
 							SUM(AD.DEL_DURATION) AS TOTALDUR, 
 							AVG(AD.DEL_DURATION) AS PROMEDIO 
               FROM APP_DELEGATION AS AD                            
-              LEFT JOIN PROCESS AS P ON (P.PRO_UID = AD.PRO_UID)
+              LEFT JOIN PROCESS AS P ON (P.PRO_UID = AD.PRO_UID)              
               ".$var."
               GROUP BY FECHA";
+             
 			$con = Propel::getConnection("workflow");
 			$stmt = $con->prepareStatement($sql);
 			$rs = $stmt->executeQuery();
