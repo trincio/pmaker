@@ -453,3 +453,62 @@ var showUploadedDocument = function(APP_DOC_UID) {
   }.extend(this);
   oRPC.make();
 };
+
+var showGeneratedDocuments = function()
+{
+  oPanel = new leimnud.module.panel();
+  oPanel.options = {
+  	size	:{w:400,h:350},
+  	position:{x:0,y:0,center:true},
+  	title	:G_STRINGS.ID_GENERATED_DOCUMENTS,
+  	theme	:'processmaker',
+  	statusBar:true,
+  	control	:{resize:false,roll:false},
+  	fx	:{modal:true,opacity:true,blinkToFront:true,fadeIn:false}
+  };
+  oPanel.events = {
+  	remove: function() { delete(oPanel); }.extend(this)
+  };
+  oPanel.make();
+  oPanel.loader.show();
+  var oRPC = new leimnud.module.rpc.xmlhttp({
+  	url : 'cases_Ajax',
+  	args: 'action=showGeneratedDocuments'
+  });
+  oRPC.callback = function(rpc){
+  	oPanel.loader.hide();
+  	var scs=rpc.xmlhttp.responseText.extractScript();
+  	oPanel.addContent(rpc.xmlhttp.responseText);
+  	scs.evalScript();
+  }.extend(this);
+  oRPC.make();
+};
+
+var showGeneratedDocument = function(APP_DOC_UID) {
+  oPanel2 = new leimnud.module.panel();
+  oPanel2.options = {
+  	size	:{w:300,h:200},
+  	position:{x:0,y:0,center:true},
+  	title	:'',
+  	theme	:'processmaker',
+  	statusBar:true,
+  	control	:{resize:false,roll:false},
+  	fx	:{modal:true,opacity:true,blinkToFront:true,fadeIn:false}
+  };
+  oPanel2.events = {
+  	remove: function() { delete(oPanel2); }.extend(this)
+  };
+  oPanel2.make();
+  oPanel2.loader.show();
+  var oRPC = new leimnud.module.rpc.xmlhttp({
+  	url : 'cases_Ajax',
+  	args: 'action=showGeneratedDocument&APP_DOC_UID=' + APP_DOC_UID
+  });
+  oRPC.callback = function(rpc){
+  	oPanel2.loader.hide();
+  	var scs=rpc.xmlhttp.responseText.extractScript();
+  	oPanel2.addContent(rpc.xmlhttp.responseText);
+  	scs.evalScript();
+  }.extend(this);
+  oRPC.make();
+};

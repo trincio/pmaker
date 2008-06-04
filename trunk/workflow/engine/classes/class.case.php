@@ -1900,9 +1900,43 @@ class Cases
       $oAppDocument = new AppDocument();
       $oCriteria = new Criteria('workflow');
       $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
-      //$oCriteria->add(AppDocumentPeer::DEL_INDEX, $iDelegation);
-      //$oCriteria->add(AppDocumentPeer::DOC_UID, $sDocumentUID);
       $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, 'INPUT');
+      $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
+      $oDataset = AppDocumentPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      $aInputDocuments = array();
+      $aInputDocuments[] = array('APP_DOC_UID' => 'char', 'DOC_UID' => 'char', 'APP_DOC_COMMENT' => 'char', 'APP_DOC_FILENAME' => 'char', 'APP_DOC_INDEX' => 'integer');
+      while ($aRow = $oDataset->getRow()) {
+          $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
+          $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' =>
+              $aAux['APP_DOC_INDEX']);
+          if ($aFields['APP_DOC_FILENAME'] != '') {
+              $aFields['TITLE'] = $aFields['APP_DOC_FILENAME'];
+          } else {
+              $aFields['TITLE'] = $aFields['APP_DOC_COMMENT'];
+          }
+          $aFields['POSITION'] = $_SESSION['STEP_POSITION'];
+          $aFields['CONFIRM'] = G::LoadTranslation('ID_CONFIRM_DELETE_ELEMENT');
+          $aInputDocuments[] = $aFields;
+          $oDataset->next();
+      }
+      global $_DBArray;
+      $_DBArray['inputDocuments'] = $aInputDocuments;
+      $_SESSION['_DBArray'] = $_DBArray;
+      G::LoadClass('ArrayPeer');
+      $oCriteria = new Criteria('dbarray');
+      $oCriteria->setDBArrayTable('inputDocuments');
+      $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_CREATE_DATE);
+      return $oCriteria;
+    }
+
+    function getAllGeneratedDocumentsCriteria($sApplicationUID) {
+      require_once 'classes/model/AppDocument.php';
+      $oAppDocument = new AppDocument();
+      $oCriteria = new Criteria('workflow');
+      $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
+      $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, 'OUTPUT');
       $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
       $oDataset = AppDocumentPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
