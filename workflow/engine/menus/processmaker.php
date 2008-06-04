@@ -1,4 +1,4 @@
-<?php
+<?php 
 /**
  * processmaker.php
  *
@@ -25,20 +25,23 @@
 global $G_TMP_MENU;
 global $RBAC;
 
-$G_TMP_MENU->AddIdRawOption('MY_ACCOUNT', 'users/myInfo');
+//$G_TMP_MENU->AddIdRawOption('MY_ACCOUNT', 'users/myInfo');
 $G_TMP_MENU->AddIdRawOption('USERS',      'users/users_List');
 $G_TMP_MENU->AddIdRawOption('CASES',      'cases/cases_List');
 $G_TMP_MENU->AddIdRawOption('PROCESSES',  'processes/processes_List');
+$G_TMP_MENU->AddIdRawOption('REPORTS',    'reports/reportsList');
 $G_TMP_MENU->AddIdRawOption('SETUP',      'setup/pluginsList');
 //$G_TMP_MENU->AddIdRawOption('DASHBOARD',  'dashboard/dashboard');//next release
 
 $G_TMP_MENU->Labels = array(
-  G::LoadTranslation('ID_MY_ACCOUNT'),
+  //G::LoadTranslation('ID_MY_ACCOUNT'),
   G::LoadTranslation('ID_USERS'),
   G::LoadTranslation('ID_CASES'),
   G::LoadTranslation('ID_APPLICATIONS'),
-  G::LoadTranslation('ID_SETUP'),
+  G::LoadTranslation('ID_REPORTS'),
+  G::LoadTranslation('ID_SETUP'),  
   G::LoadTranslation('ID_DASHBOARD')
+  
 );
 
 if ( file_exists ( PATH_CORE . 'menus/plugin.php' ) ) {
@@ -65,7 +68,13 @@ if ($RBAC->userCanAccess('PM_FACTORY') != 1)
 {
   $G_TMP_MENU->DisableOptionId('PROCESSES');
 }
+
 if ($RBAC->userCanAccess('PM_SETUP') != 1)
 {
   $G_TMP_MENU->DisableOptionId('SETUP');
+}
+
+if ($RBAC->userCanAccess('PM_REPORTS') != 1)
+{
+  $G_TMP_MENU->DisableOptionId('REPORTS');
 }
