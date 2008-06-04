@@ -239,7 +239,7 @@ var showTaskInformation = function()
   oPanel.options = {
   	size	:{w:450,h:322},
   	position:{x:0,y:0,center:true},
-  	title	:"Task Information",
+  	title	:G_STRINGS.ID_TASK_INFORMATION,
   	theme	:"processmaker",
   	statusBar:true,
   	control	:{resize:false,roll:false},
@@ -393,4 +393,63 @@ var reassignCase = function(USR_UID)
         window.location = 'cases_List';
       }.extend(this);
       oRPC.make();
+};
+
+var showUploadedDocuments = function()
+{
+  oPanel = new leimnud.module.panel();
+  oPanel.options = {
+  	size	:{w:400,h:350},
+  	position:{x:0,y:0,center:true},
+  	title	:G_STRINGS.ID_UPLOADED_DOCUMENTS,
+  	theme	:'processmaker',
+  	statusBar:true,
+  	control	:{resize:false,roll:false},
+  	fx	:{modal:true,opacity:true,blinkToFront:true,fadeIn:false}
+  };
+  oPanel.events = {
+  	remove: function() { delete(oPanel); }.extend(this)
+  };
+  oPanel.make();
+  oPanel.loader.show();
+  var oRPC = new leimnud.module.rpc.xmlhttp({
+  	url : 'cases_Ajax',
+  	args: 'action=showUploadedDocuments'
+  });
+  oRPC.callback = function(rpc){
+  	oPanel.loader.hide();
+  	var scs=rpc.xmlhttp.responseText.extractScript();
+  	oPanel.addContent(rpc.xmlhttp.responseText);
+  	scs.evalScript();
+  }.extend(this);
+  oRPC.make();
+};
+
+var showUploadedDocument = function(APP_DOC_UID) {
+  oPanel2 = new leimnud.module.panel();
+  oPanel2.options = {
+  	size	:{w:300,h:300},
+  	position:{x:0,y:0,center:true},
+  	title	:'',
+  	theme	:'processmaker',
+  	statusBar:true,
+  	control	:{resize:false,roll:false},
+  	fx	:{modal:true,opacity:true,blinkToFront:true,fadeIn:false}
+  };
+  oPanel2.events = {
+  	remove: function() { delete(oPanel2); }.extend(this)
+  };
+  oPanel2.make();
+  oPanel2.loader.show();
+  var oRPC = new leimnud.module.rpc.xmlhttp({
+  	url : 'cases_Ajax',
+  	args: 'action=showUploadedDocument&APP_DOC_UID=' + APP_DOC_UID
+  });
+  oRPC.callback = function(rpc){
+  	oPanel2.loader.hide();
+  	var scs=rpc.xmlhttp.responseText.extractScript();
+  	oPanel2.addContent(rpc.xmlhttp.responseText);
+  	scs.evalScript();
+  }.extend(this);
+  oRPC.make();
 };

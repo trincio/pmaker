@@ -1317,7 +1317,7 @@ class Cases
         $c->addAsColumn('APP_TAS_TITLE', 'TAS_TITLE.CON_VALUE');
         //$c->addAsColumn('APP_DEL_PREVIOUS_USER', 'APP_LAST_USER.USR_USERNAME');
 				$c->addAsColumn('APP_DEL_PREVIOUS_USER', "CONCAT(APP_LAST_USER.USR_LASTNAME, ' ', APP_LAST_USER.USR_FIRSTNAME)");
-				
+
         $c->addAlias("APP_TITLE", 'CONTENT');
         $c->addAlias("PRO_TITLE", 'CONTENT');
         $c->addAlias("TAS_TITLE", 'CONTENT');
@@ -1625,11 +1625,11 @@ class Cases
             $aInputDocuments = array();
             $aInputDocuments[] = array('APP_DOC_UID' => 'char', 'DOC_UID' => 'char', 'APP_DOC_COMMENT' => 'char', 'APP_DOC_FILENAME' => 'char', 'APP_DOC_INDEX' => 'integer');
             while ($aRow = $oDataset->getRow()) {
-            
+
                 $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
                 $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' =>
                     $aAux['APP_DOC_INDEX']);
-                
+
                 if ($aFields['APP_DOC_FILENAME'] != '') {
                     $aFields['TITLE'] = $aFields['APP_DOC_FILENAME'];
                 } else {
@@ -1637,7 +1637,7 @@ class Cases
                 }
                 $aFields['CREATE_DATE'] = $aRow['APP_DOC_CREATE_DATE'];
                 $aFields['TYPE'] = $aRow['APP_DOC_TYPE'];
-                
+
                 $aFields['POSITION'] = $_SESSION['STEP_POSITION'];
                 $aFields['CONFIRM'] = G::LoadTranslation('ID_CONFIRM_DELETE_ELEMENT');
                 $aInputDocuments[] = $aFields;
@@ -1874,7 +1874,7 @@ class Cases
 
     function getAllStepsToRevise($APP_UID, $DEL_INDEX)
     {
-        
+
         $oCriteria = new Criteria('workflow');
 
         $oCriteria->addSelectColumn(StepSupervisorPeer::STEP_UID);
@@ -1893,6 +1893,44 @@ class Cases
         $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
 
         return $oDataset;
+    }
+
+    function getAllUploadedDocumentsCriteria($sApplicationUID) {
+      require_once 'classes/model/AppDocument.php';
+      $oAppDocument = new AppDocument();
+      $oCriteria = new Criteria('workflow');
+      $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
+      //$oCriteria->add(AppDocumentPeer::DEL_INDEX, $iDelegation);
+      //$oCriteria->add(AppDocumentPeer::DOC_UID, $sDocumentUID);
+      $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, 'INPUT');
+      $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
+      $oDataset = AppDocumentPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      $aInputDocuments = array();
+      $aInputDocuments[] = array('APP_DOC_UID' => 'char', 'DOC_UID' => 'char', 'APP_DOC_COMMENT' => 'char', 'APP_DOC_FILENAME' => 'char', 'APP_DOC_INDEX' => 'integer');
+      while ($aRow = $oDataset->getRow()) {
+          $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
+          $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' =>
+              $aAux['APP_DOC_INDEX']);
+          if ($aFields['APP_DOC_FILENAME'] != '') {
+              $aFields['TITLE'] = $aFields['APP_DOC_FILENAME'];
+          } else {
+              $aFields['TITLE'] = $aFields['APP_DOC_COMMENT'];
+          }
+          $aFields['POSITION'] = $_SESSION['STEP_POSITION'];
+          $aFields['CONFIRM'] = G::LoadTranslation('ID_CONFIRM_DELETE_ELEMENT');
+          $aInputDocuments[] = $aFields;
+          $oDataset->next();
+      }
+      global $_DBArray;
+      $_DBArray['inputDocuments'] = $aInputDocuments;
+      $_SESSION['_DBArray'] = $_DBArray;
+      G::LoadClass('ArrayPeer');
+      $oCriteria = new Criteria('dbarray');
+      $oCriteria->setDBArrayTable('inputDocuments');
+      $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_CREATE_DATE);
+      return $oCriteria;
     }
 
 }

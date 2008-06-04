@@ -352,20 +352,57 @@ switch ($_POST['action']) {
         $cases = new Cases();
         $cases->reassignCase($_SESSION['APPLICATION'], $_SESSION['INDEX'], $_POST['USR_UID']);
         break;
-
     case 'toRevisePanel':
-        //$G_HEADER->addScriptFile('/js/common/tree/tree.js');
+      //$G_HEADER->addScriptFile('/js/common/tree/tree.js');
 	    //$G_HEADER->addInstanceModule('leimnud', 'rpc');
-		$_GET['APP_UID'] = $_POST['APP_UID'];
-		$_GET['DEL_INDEX'] = $_POST['DEL_INDEX'];
-		
+		  $_GET['APP_UID'] = $_POST['APP_UID'];
+		  $_GET['DEL_INDEX'] = $_POST['DEL_INDEX'];
 	    $G_PUBLISH = new Publisher;
 	    $G_PUBLISH->AddContent('view', 'cases/cases_toRevise');
 	    $G_PUBLISH->AddContent('smarty', 'cases/cases_toReviseIn', '', '', array());
 	    //$G_HEADER->addScriptFile('/js/form/core/pagedTable.js');
-	
 	    //G::RenderPage("publish-treeview");
-		G::RenderPage('publish', 'raw');
-        break;
+		  G::RenderPage('publish', 'raw');
+      break;
+    case 'showUploadedDocuments':
+        G::LoadClass('case');
+        $oCase = new Cases();
+        global $G_PUBLISH;
+        global $G_HEADER;
+        $G_PUBLISH = new Publisher();
+        $G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_AllInputdocsList', $oCase->getAllUploadedDocumentsCriteria($_SESSION['APPLICATION']));
+        $G_HEADER->clearScripts();
+        $G_HEADER->addScriptFile('/js/form/core/pagedTable.js');
+        G::RenderPage('publish', 'raw');
+      break;
+    case 'showUploadedDocument':
+        require_once 'classes/model/AppDocument.php';
+        require_once 'classes/model/InputDocument.php';
+        require_once 'classes/model/Users.php';
+        $oAppDocument = new AppDocument();
+        $oAppDocument->Fields = $oAppDocument->load($_POST['APP_DOC_UID']);
+        $oInputDocument = new InputDocument();
+        $Fields = $oInputDocument->load($oAppDocument->Fields['DOC_UID']);
+        $oUser = new Users();
+        $aUser = $oUser->load($oAppDocument->Fields['USR_UID']);
+        $Fields['CREATOR'] = $aUser['USR_FIRSTNAME'] . ' ' . $aUser['USR_LASTNAME'];
+        switch ($Fields['INP_DOC_FORM_NEEDED'])
+        {
+          case 'REAL':
+            $sXmlForm = 'cases/cases_ViewAnyInputDocument2';
+          break;
+          case 'VIRTUAL':
+            $sXmlForm = 'cases/cases_ViewAnyInputDocument1';
+          break;
+          case 'VREAL':
+            $sXmlForm = 'cases/cases_ViewAnyInputDocument3';
+          break;
+        }
+        $oAppDocument->Fields['VIEW'] = G::LoadTranslation('ID_OPEN');
+        $oAppDocument->Fields['FILE'] = 'cases_ShowDocument?a=' . $_POST['APP_DOC_UID'] . '&r=' . rand();
+        $G_PUBLISH = new Publisher;
+        $G_PUBLISH->AddContent('xmlform', 'xmlform', $sXmlForm, '', G::array_merges($Fields, $oAppDocument->Fields), '');
+        G::RenderPage('publish', 'raw');
+      break;
     default: echo 'default';
 }
