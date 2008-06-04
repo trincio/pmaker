@@ -45,6 +45,7 @@
   }
   else {
 	  if (isset($GLOBALS['G_HEADER'])) $header = $GLOBALS['G_HEADER']->printHeader();
+	  $smarty->assign('user', isset($_SESSION['USR_USERNAME']) ? $_SESSION['USR_USERNAME'] : '');
 	  $smarty->assign('username', (isset($_SESSION['USR_USERNAME']) ? '(' . $_SESSION['USR_USERNAME'] . ' ' . G::LoadTranslation('ID_IN') . ' ' . SYS_SYS . ')' : '') );
   	$smarty->assign('header', $header );
 	  $smarty->assign('tpl_menu', PATH_TEMPLATE . 'menu.html' );
