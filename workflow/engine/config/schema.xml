@@ -3945,7 +3945,7 @@
     <column name="SES_INIT_DATE" type="VARCHAR" size="19" required="true" default="">
       <vendor type="mysql">
         <parameter name="Field" value="SES_INIT_DATE"/>
-        <parameter name="Type" value="int(11)"/>
+        <parameter name="Type" value="varchar(19)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value="0"/>
@@ -3955,7 +3955,7 @@
     <column name="SES_DUE_DATE" type="VARCHAR" size="19" required="true" default="">
       <vendor type="mysql">
         <parameter name="Field" value="SES_DUE_DATE"/>
-        <parameter name="Type" value="int(11)"/>
+        <parameter name="Type" value="varchar(19)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value="0"/>
@@ -3965,7 +3965,7 @@
     <column name="SES_END_DATE" type="VARCHAR" size="19" required="true" default="">
       <vendor type="mysql">
         <parameter name="Field" value="SES_END_DATE"/>
-        <parameter name="Type" value="int(11)"/>
+        <parameter name="Type" value="varchar(19)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value="0"/>
