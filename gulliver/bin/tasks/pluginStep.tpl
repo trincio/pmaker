@@ -2,4 +2,7 @@
   G::LoadClass( "plugin");
   
   print "this is a default step for {className}";
-  krumo ($_SESSION);
+  krumo::session ();
+  krumo::get ();
+  krumo::post ();
+  krumo::backtrace ();

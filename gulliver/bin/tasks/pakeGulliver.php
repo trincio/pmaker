@@ -417,6 +417,11 @@ function run_new_plugin ( $task, $args)
   //menu  
   savePluginFile ( $pluginName . PATH_SEP . 'menu' . $pluginName . '.php', 'pluginMenu', $pluginName, $pluginName );
 
+  //config
+  savePluginFile ( $pluginName . PATH_SEP . 'config' .PATH_SEP . 'schema.xml', 'pluginSchema.xml', $pluginName, $pluginName );
+  savePluginFile ( $pluginName . PATH_SEP . 'config' .PATH_SEP . 'propel.ini', 'pluginPropel.ini', $pluginName, $pluginName );
+  savePluginFile ( $pluginName . PATH_SEP . 'config' .PATH_SEP . 'propel.mysql.ini', 'pluginPropel.mysql.ini', $pluginName, $pluginName );
+  
   printf("creating symlinks %s \n", pakeColor::colorize( $pluginDirectory, 'INFO'));
   symlink ($pluginOutDirectory. PATH_SEP . $pluginName. '.php', PATH_PLUGINS . $pluginName . '.php');
   symlink ($pluginOutDirectory. PATH_SEP . $pluginName,         $pluginDirectory);
