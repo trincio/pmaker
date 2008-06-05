@@ -476,11 +476,11 @@ class Report {
 	  	if($task=='')
 	  	{ 
 	  	 	 $var=" LEFT JOIN TASK AS T ON (AD.TAS_UID = T.TAS_UID)
-                WHERE P.PRO_STATUS<>'DISABLED'";
+                WHERE P.PRO_STATUS<>'DISABLED' AND AD.PRO_UID='".$process."'";
     	}    
 	  	else
 	  	{ $var=" LEFT JOIN TASK AS T ON (AD.TAS_UID = T.TAS_UID)
-             WHERE P.PRO_STATUS<>'DISABLED' AND AD.TAS_UID='".$task."' "; 
+             WHERE P.PRO_STATUS<>'DISABLED' AND AD.PRO_UID='".$process."' AND AD.TAS_UID='".$task."' "; 
     	}
     }	
 	  $sql = "SELECT CONCAT(SUBSTRING(AD.DEL_INIT_DATE,6,2),'-', SUBSTRING(AD.DEL_INIT_DATE,1,4)) AS FECHA, 
@@ -598,11 +598,11 @@ class Report {
 	  	if($task=='')
 	  	{ 
 	  	 	 $var=" LEFT JOIN TASK AS T ON (AD.TAS_UID = T.TAS_UID)
-                WHERE P.PRO_STATUS<>'DISABLED'";
+                WHERE P.PRO_STATUS<>'DISABLED' AND AD.PRO_UID='".$process."'";
     	}    
 	  	else
 	  	{ $var=" LEFT JOIN TASK AS T ON (AD.TAS_UID = T.TAS_UID)
-             WHERE P.PRO_STATUS<>'DISABLED' AND AD.TAS_UID='".$task."' "; 
+             WHERE P.PRO_STATUS<>'DISABLED' AND AD.PRO_UID='".$process."' AND AD.TAS_UID='".$task."' "; 
     	}
     }	
 	  $sql = "SELECT CONCAT(U.USR_LASTNAME,' ',USR_FIRSTNAME) AS USER, 
@@ -721,11 +721,11 @@ class Report {
 	  	if($task=='')
 	  	{ 
 	  	 	 $var=" LEFT JOIN TASK AS T ON (AD.TAS_UID = T.TAS_UID)
-                WHERE P.PRO_STATUS<>'DISABLED' AND AD.DEL_FINISH_DATE IS NULL";
+                WHERE P.PRO_STATUS<>'DISABLED' AND AD.PRO_UID='".$process."' AND AD.DEL_FINISH_DATE IS NULL";
     	}    
 	  	else
 	  	{ $var=" LEFT JOIN TASK AS T ON (AD.TAS_UID = T.TAS_UID)
-             WHERE P.PRO_STATUS<>'DISABLED' AND AD.TAS_UID='".$task."' "; 
+             WHERE P.PRO_STATUS<>'DISABLED' AND AD.PRO_UID='".$process."' AND AD.TAS_UID='".$task."' "; 
     	}
     }	
 	  $sql = "SELECT CONCAT(U.USR_LASTNAME,' ',USR_FIRSTNAME) AS USER, 
