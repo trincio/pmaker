@@ -1784,7 +1784,7 @@ class G
     $_SESSION = isset($_SESSION) ? $_SESSION : Array();
     foreach( $_SESSION as $name => $value )
     {
-      if ( substr($name,0,4)==='USER_' ) $sysCon[$name] = $value;
+      if ( substr($name,0,5)==='USER_' ) $sysCon[$name] = $value;
       if ( substr($name,0,4)==='USR_' ) $sysCon[$name] = $value;
     }
 
