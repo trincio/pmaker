@@ -526,6 +526,252 @@ class Report {
     
     return $oCriteria;        
 	}
+	
+	function generatedReport4()
+	{ 
+		require_once 'classes/model/AppDelegation.php';
+		require_once 'classes/model/Application.php';
+		require_once 'classes/model/Process.php';
+		require_once 'classes/model/Users.php';
+		$oCriteria = new Criteria('workflow');
+		$del = DBAdapter::getStringDelimiter();  		
+    $sql = "SELECT CONCAT(U.USR_LASTNAME,' ',USR_FIRSTNAME) AS USER,  
+              COUNT(*) AS CANTCASES,      				
+      				MIN(AD.DEL_DURATION) AS MIN, 
+							MAX(AD.DEL_DURATION) AS MAX, 
+							SUM(AD.DEL_DURATION) AS TOTALDUR, 
+							AVG(AD.DEL_DURATION) AS PROMEDIO 
+              FROM APP_DELEGATION AS AD 
+              LEFT JOIN PROCESS AS P ON (P.PRO_UID = AD.PRO_UID)
+              LEFT JOIN APPLICATION AS A ON(A.APP_UID = AD.APP_UID)
+              LEFT JOIN USERS AS U ON(U.USR_UID = A.APP_INIT_USER)
+              WHERE AD.APP_UID<>'' AND P.PRO_STATUS<>'DISABLED' 
+              GROUP BY USER";
+
+			$con = Propel::getConnection("workflow");
+			$stmt = $con->prepareStatement($sql);
+			$rs = $stmt->executeQuery();
+      
+      $ROW[] = array('USER'      => 'char',
+      							 'CANTCASES' => 'integer',
+      	             'MIN'       => 'float',
+      	             'MAX'       => 'float',
+      	             'TOTALDUR'  => 'float',
+      	             'PROMEDIO'  => 'float'	      	                
+      	            );
+      
+			while($rs->next())
+			{								
+				$ROW[] = array('USER'     => $rs->getString('USER'),
+				               'CANTCASES'=> $rs->getString('CANTCASES'),
+				               'MIN'      => $rs->getString('MIN'),
+	      							 'MAX'      => $rs->getString('MAX'),
+	      							 'TOTALDUR' => $rs->getString('TOTALDUR'),
+	      							 'PROMEDIO' => $rs->getString('PROMEDIO')  	       	                
+      	                );
+			}		
+		
+		global $_DBArray;
+    $_DBArray['reports']  = $ROW;
+    $_SESSION['_DBArray'] = $_DBArray;
+    G::LoadClass('ArrayPeer');
+    $oCriteria = new Criteria('dbarray');
+    $oCriteria->setDBArrayTable('reports');
+    
+    return $oCriteria;    
+    
+	}
+	
+	function generatedReport4_filter($process, $task)
+	{ //echo $task; die;
+		require_once 'classes/model/AppDelegation.php';
+		require_once 'classes/model/Application.php';
+		require_once 'classes/model/Process.php';
+		require_once 'classes/model/Users.php';
+		$oCriteria = new Criteria('workflow');
+		$del = DBAdapter::getStringDelimiter();  
+	  if($process=='')
+	  { $var=" WHERE P.PRO_STATUS<>'DISABLED'";	  	  
+	  }	
+	  else
+	  {
+	  	if($task=='')
+	  	{ 
+	  	 	 $var=" LEFT JOIN TASK AS T ON (AD.TAS_UID = T.TAS_UID)
+                WHERE P.PRO_STATUS<>'DISABLED'";
+    	}    
+	  	else
+	  	{ $var=" LEFT JOIN TASK AS T ON (AD.TAS_UID = T.TAS_UID)
+             WHERE P.PRO_STATUS<>'DISABLED' AND AD.TAS_UID='".$task."' "; 
+    	}
+    }	
+	  $sql = "SELECT CONCAT(U.USR_LASTNAME,' ',USR_FIRSTNAME) AS USER, 
+              COUNT(*) AS CANTCASES,       				
+      				MIN(AD.DEL_DURATION) AS MIN, 
+							MAX(AD.DEL_DURATION) AS MAX, 
+							SUM(AD.DEL_DURATION) AS TOTALDUR, 
+							AVG(AD.DEL_DURATION) AS PROMEDIO 
+              FROM APP_DELEGATION AS AD                            
+              LEFT JOIN PROCESS AS P ON (P.PRO_UID = AD.PRO_UID)               
+              LEFT JOIN APPLICATION AS A ON(A.APP_UID = AD.APP_UID)
+              LEFT JOIN USERS AS U ON(U.USR_UID = A.APP_INIT_USER)             
+              ".$var."
+              GROUP BY USER";
+             
+			$con = Propel::getConnection("workflow");
+			$stmt = $con->prepareStatement($sql);
+			$rs = $stmt->executeQuery();
+      
+      $ROW[] = array('USER'      => 'char',
+      							 'CANTCASES' => 'integer',
+      	             'MIN'       => 'float',
+      	             'MAX'       => 'float',
+      	             'TOTALDUR'  => 'float',
+      	             'PROMEDIO'  => 'float'	      	                
+      	            );
+      
+			while($rs->next())
+			{								
+				$ROW[] = array('USER'     => $rs->getString('USER'),
+				               'CANTCASES'=> $rs->getString('CANTCASES'),
+				               'MIN'      => $rs->getString('MIN'),
+	      							 'MAX'      => $rs->getString('MAX'),
+	      							 'TOTALDUR' => $rs->getString('TOTALDUR'),
+	      							 'PROMEDIO' => $rs->getString('PROMEDIO')  	       	                
+      	                );
+			}		
+		
+		global $_DBArray;
+    $_DBArray['reports']  = $ROW;
+    $_SESSION['_DBArray'] = $_DBArray;
+    G::LoadClass('ArrayPeer');
+    $oCriteria = new Criteria('dbarray');
+    $oCriteria->setDBArrayTable('reports');
+    
+    return $oCriteria;        
+	}
+	
+	function generatedReport5()
+	{ 
+		require_once 'classes/model/AppDelegation.php';
+		require_once 'classes/model/Application.php';
+		require_once 'classes/model/Process.php';
+		require_once 'classes/model/Users.php';
+		$oCriteria = new Criteria('workflow');
+		$del = DBAdapter::getStringDelimiter();  		
+    $sql = "SELECT CONCAT(U.USR_LASTNAME,' ',USR_FIRSTNAME) AS USER,  
+              COUNT(*) AS CANTCASES,      				
+      				MIN(AD.DEL_DURATION) AS MIN, 
+							MAX(AD.DEL_DURATION) AS MAX, 
+							SUM(AD.DEL_DURATION) AS TOTALDUR, 
+							AVG(AD.DEL_DURATION) AS PROMEDIO 
+              FROM APP_DELEGATION AS AD 
+              LEFT JOIN PROCESS AS P ON (P.PRO_UID = AD.PRO_UID)              
+              LEFT JOIN USERS AS U ON(U.USR_UID = AD.USR_UID)
+              WHERE AD.APP_UID<>'' AND P.PRO_STATUS<>'DISABLED' AND AD.DEL_FINISH_DATE IS NULL
+              GROUP BY USER";
+
+			$con = Propel::getConnection("workflow");
+			$stmt = $con->prepareStatement($sql);
+			$rs = $stmt->executeQuery();
+      
+      $ROW[] = array('USER'      => 'char',
+      							 'CANTCASES' => 'integer',
+      	             'MIN'       => 'float',
+      	             'MAX'       => 'float',
+      	             'TOTALDUR'  => 'float',
+      	             'PROMEDIO'  => 'float'	      	                
+      	            );
+      
+			while($rs->next())
+			{								
+				$ROW[] = array('USER'     => $rs->getString('USER'),
+				               'CANTCASES'=> $rs->getString('CANTCASES'),
+				               'MIN'      => $rs->getString('MIN'),
+	      							 'MAX'      => $rs->getString('MAX'),
+	      							 'TOTALDUR' => $rs->getString('TOTALDUR'),
+	      							 'PROMEDIO' => $rs->getString('PROMEDIO')  	       	                
+      	                );
+			}		
+		
+		global $_DBArray;
+    $_DBArray['reports']  = $ROW;
+    $_SESSION['_DBArray'] = $_DBArray;
+    G::LoadClass('ArrayPeer');
+    $oCriteria = new Criteria('dbarray');
+    $oCriteria->setDBArrayTable('reports');
+    
+    return $oCriteria;    
+    
+	}
+	
+	function generatedReport5_filter($process, $task)
+	{ //echo $task; die;
+		require_once 'classes/model/AppDelegation.php';
+		require_once 'classes/model/Application.php';
+		require_once 'classes/model/Process.php';
+		require_once 'classes/model/Users.php';
+		$oCriteria = new Criteria('workflow');
+		$del = DBAdapter::getStringDelimiter();  
+	  if($process=='')
+	  { $var=" WHERE P.PRO_STATUS<>'DISABLED' AND AD.DEL_FINISH_DATE IS NULL";	  	  
+	  }	
+	  else
+	  {
+	  	if($task=='')
+	  	{ 
+	  	 	 $var=" LEFT JOIN TASK AS T ON (AD.TAS_UID = T.TAS_UID)
+                WHERE P.PRO_STATUS<>'DISABLED' AND AD.DEL_FINISH_DATE IS NULL";
+    	}    
+	  	else
+	  	{ $var=" LEFT JOIN TASK AS T ON (AD.TAS_UID = T.TAS_UID)
+             WHERE P.PRO_STATUS<>'DISABLED' AND AD.TAS_UID='".$task."' "; 
+    	}
+    }	
+	  $sql = "SELECT CONCAT(U.USR_LASTNAME,' ',USR_FIRSTNAME) AS USER, 
+              COUNT(*) AS CANTCASES,       				
+      				MIN(AD.DEL_DURATION) AS MIN, 
+							MAX(AD.DEL_DURATION) AS MAX, 
+							SUM(AD.DEL_DURATION) AS TOTALDUR, 
+							AVG(AD.DEL_DURATION) AS PROMEDIO 
+              FROM APP_DELEGATION AS AD                            
+              LEFT JOIN PROCESS AS P ON (P.PRO_UID = AD.PRO_UID)               
+              LEFT JOIN USERS AS U ON(U.USR_UID = AD.USR_UID)          
+              ".$var."
+              GROUP BY USER";
+             
+			$con = Propel::getConnection("workflow");
+			$stmt = $con->prepareStatement($sql);
+			$rs = $stmt->executeQuery();
+      
+      $ROW[] = array('USER'      => 'char',
+      							 'CANTCASES' => 'integer',
+      	             'MIN'       => 'float',
+      	             'MAX'       => 'float',
+      	             'TOTALDUR'  => 'float',
+      	             'PROMEDIO'  => 'float'	      	                
+      	            );
+      
+			while($rs->next())
+			{								
+				$ROW[] = array('USER'     => $rs->getString('USER'),
+				               'CANTCASES'=> $rs->getString('CANTCASES'),
+				               'MIN'      => $rs->getString('MIN'),
+	      							 'MAX'      => $rs->getString('MAX'),
+	      							 'TOTALDUR' => $rs->getString('TOTALDUR'),
+	      							 'PROMEDIO' => $rs->getString('PROMEDIO')  	       	                
+      	                );
+			}		
+		
+		global $_DBArray;
+    $_DBArray['reports']  = $ROW;
+    $_SESSION['_DBArray'] = $_DBArray;
+    G::LoadClass('ArrayPeer');
+    $oCriteria = new Criteria('dbarray');
+    $oCriteria->setDBArrayTable('reports');
+    
+    return $oCriteria;        
+	}
 }
 
 
