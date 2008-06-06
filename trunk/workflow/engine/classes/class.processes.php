@@ -39,7 +39,7 @@ require_once 'classes/model/Groupwf.php';
 require_once 'classes/model/ReportTable.php';
 require_once 'classes/model/ReportVar.php';
 require_once 'classes/model/DbSource.php';
-
+require_once 'classes/model/StepSupervisor.php';
 
 G::LoadClass('tasks');
 G::LoadClass('reportTables');
@@ -563,6 +563,13 @@ class Processes {
   	return;
   }
 
+  function createStepSupervisorRows($aStepSupervisor){
+    foreach ($aStepSupervisor as $key => $row ) {
+      $oStepSupervisor = new StepSupervisor();
+      $oStepSupervisor->create($row);
+    }
+  }
+
   /*
   * change and Renew all Step GUID, because the process needs to have a new set of Steps
   * @param string $oData
@@ -721,6 +728,27 @@ class Processes {
       	$oDataset->next();
       }
       return $aConnections;
+    }
+    catch (Exception $oError) {
+      throw $oError;
+    }
+  }
+
+  function getStepSupervisorRows($sProUid)
+  {
+    try {
+      $aConnections = array();
+      $oCriteria = new Criteria('workflow');
+      $oCriteria->add(StepSupervisor::PRO_UID, $sProUid);
+      $oDataset = StepSupervisorPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      while ($aRow  = $oDataset->getRow()) {
+        $oStepSup   = new StepSupervisor();
+        $aStepSup[] = $oStepSup->Load($aRow['STEP_UID']);
+        $oStepSup->next();
+      }
+      return $aStepSup;
     }
     catch (Exception $oError) {
       throw $oError;
@@ -889,6 +917,7 @@ class Processes {
     $oData->dbconnections = $this->getDBConnectionsRows($sProUid);
     $oData->reportTables  = $this->getReportTablesRows($sProUid);
     $oData->reportTablesVars  = $this->getReportTablesVarsRows($sProUid);
+    $oData->stepSupervisor    = $this->getStepSupervisorRows($sProUid);
     //krumo ($oData);die;
     //$oJSON = new Services_JSON();
     //krumo ( $oJSON->encode($oData) );
@@ -1149,6 +1178,16 @@ class Processes {
     	$oStep->remove($aRow['STEP_UID']);
     	$oDataset->next();
     }
+    
+    $oCriteria = new Criteria('workflow');
+    $oCriteria->add(StepSupervisorPeer::PRO_UID, $sProUid);
+    $oDataset = StepSupervisorPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    while ($aRow = $oDataset->getRow()) {
+        $oStep->remove($aRow['STEP_UID']);
+        $oDataset->next();
+    }
 
     //Delete the triggers of process
 		$oCriteria = new Criteria('workflow');
@@ -1216,6 +1255,7 @@ class Processes {
     $this->createInputRows ($oData->inputs );
     $this->createOutputRows ($oData->outputs );
     $this->createStepRows ($oData->steps );
+    $this->createStepSupervisorRows($oData->stepSupervisor);
     $this->createTriggerRows ($oData->triggers);
     $this->createStepTriggerRows ($oData->steptriggers);
     $this->createTaskUserRows ($oData->taskusers);
@@ -1246,5 +1286,6 @@ class Processes {
     $this->createDBConnections($oData->dbconnections);
     $this->updateReportTables($oData->reportTables, $oData->reportTablesVars);
     $this->createDynamformFiles ( $oData, $pmFilename  );
+    $this->createStepSupervisorRows($oData->stepSupervisor);
  }
 }
