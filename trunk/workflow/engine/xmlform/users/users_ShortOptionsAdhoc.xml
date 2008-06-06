@@ -9,13 +9,9 @@
 
 <MNU_ASSIGN type="link" value='' link="#" onclick="popupWindow('Assign users group or user (Adhoc)', '../users/users_Ajax?function=availableUsers&amp;sProcess=@#PROCESS&amp;sTask=@#TASK&amp;iType=@#TYPE', 500, 420);return false;" colAlign="left" colWidth="50">
   <en>Assign</en>
-  <es>Asignar</es>
 </MNU_ASSIGN>
 
-<MNU_CHANGE type="link" value='' link="#" onclick="changeView(@#TYPE);return false;" colAlign="right" colWidth="200">
-  <en>View Users who are not for "Adhoc"</en>
-  <es>Ver Usuarios que no son para "Adhoc"</es>
-</MNU_CHANGE>
+<CONFIRM type="private"/>
 
 <js type="javascript">
 var assignGroupOrUser = function(sTask, sUser, iType, iRelation) {

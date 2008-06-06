@@ -100,6 +100,11 @@ try {
   	case 'users':
   	  $oProcessMap->users($oData->pro_uid, $oData->tas_uid);
   	break;
+  	
+  	case 'users_adhoc':
+  	  $oProcessMap->users_adhoc($oData->pro_uid, $oData->tas_uid);
+  	break;
+  	
   	case 'addTask':
   	  $sOutput = $oProcessMap->addTask($oData->uid, $oData->position->x, $oData->position->y);
   	break;
