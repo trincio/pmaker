@@ -87,6 +87,73 @@ class Report {
     return $oCriteria;
 	}
 
+  function generatedReport1_filter($from, $to, $startedby)
+	{	 
+		require_once 'classes/model/AppDelegation.php';
+		require_once 'classes/model/Application.php';
+		require_once 'classes/model/Users.php';
+		$oCriteria = new Criteria('workflow');
+		$del = DBAdapter::getStringDelimiter();
+		$oCriteria->addSelectColumn(UsersPeer::USR_UID);
+    $oCriteria->addSelectColumn(AppDelegationPeer::PRO_UID);    
+    $oCriteria->addAsColumn("MIN", "MIN(".AppDelegationPeer::DEL_DURATION.")");
+    $oCriteria->addAsColumn("MAX", "MAX(".AppDelegationPeer::DEL_DURATION.")");
+    $oCriteria->addAsColumn("TOTALDUR", "SUM(".AppDelegationPeer::DEL_DURATION.")");
+    $oCriteria->addAsColumn("PROMEDIO", "AVG(".AppDelegationPeer::DEL_DURATION.")");
+    $oCriteria->addAsColumn('PRO_TITLE', 'C1.CON_VALUE' );
+    $oCriteria->addAlias("C1",  'CONTENT');
+    $proTitleConds = array();
+    $proTitleConds[] = array( AppDelegationPeer::PRO_UID , 'C1.CON_ID' );
+    $proTitleConds[] = array( 'C1.CON_CATEGORY' , $del . 'PRO_TITLE' . $del );
+    $proTitleConds[] = array( 'C1.CON_LANG' ,     $del . SYS_LANG . $del );
+    $oCriteria->addJoinMC($proTitleConds ,    Criteria::LEFT_JOIN);
+    $oCriteria->addJoin(AppDelegationPeer::USR_UID, UsersPeer::USR_UID, Criteria::LEFT_JOIN);    
+    //$oCriteria->add(AppDelegationPeer::DEL_DURATION,  $from, Criteria::GREATER_EQUAL);
+    //$oCriteria->add(AppDelegationPeer::DEL_DURATION,  $to, Criteria::LESS_EQUAL);
+    //$aAux1 = explode('-', $from);  date('Y-m-d H:i:s', mktime(0, 0, 0, $aAux1[1], $aAux1[2], $aAux1[0]))
+    $oCriteria->add($oCriteria->getNewCriterion(AppDelegationPeer::DEL_INIT_DATE, $from, Criteria::GREATER_EQUAL)->addAnd($oCriteria->getNewCriterion(AppDelegationPeer::DEL_INIT_DATE,  $to, Criteria::LESS_EQUAL)));   
+    
+    
+    if($startedby!='') $oCriteria->add(AppDelegationPeer::USR_UID,  $startedby);
+        		    
+    $oCriteria->addGroupByColumn(AppDelegationPeer::PRO_UID);
+
+    $oDataset = AppDelegationPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    
+    $aProcess[] = array('PRO_UID'   => 'char',
+      	                'PRO_TITLE' => 'char',
+      	                'CANTCASES' => 'integer',
+      	                'MIN'       => 'float',
+      	                'MAX'       => 'float',
+      	                'TOTALDUR'  => 'float',
+      	                'PROMEDIO'  => 'float');
+    while ($aRow = $oDataset->getRow()) {
+      	$oCriteria = new Criteria('workflow');
+        $oCriteria->addSelectColumn(ApplicationPeer::PRO_UID);        
+        $oCriteria->add(ApplicationPeer::PRO_UID,     $aRow['PRO_UID']);        
+
+      	$aProcess[] = array('PRO_UID'   => $aRow['PRO_UID'],
+      	                    'PRO_TITLE' => $aRow['PRO_TITLE'],
+      	                    'CANTCASES' => ApplicationPeer::doCount($oCriteria),
+      	                    'MIN'       => $aRow['MIN'],
+      	                    'MAX'       => $aRow['MAX'],
+      	                    'TOTALDUR'  => $aRow['TOTALDUR'],
+      	                    'PROMEDIO'  => $aRow['PROMEDIO']);
+      	$oDataset->next();
+     }
+
+    global $_DBArray;
+    $_DBArray['reports']  = $aProcess;
+    $_SESSION['_DBArray'] = $_DBArray;
+    G::LoadClass('ArrayPeer');
+    $oCriteria = new Criteria('dbarray');
+    $oCriteria->setDBArrayTable('reports');
+
+    return $oCriteria;						
+	}
+
 	function descriptionReport1($PRO_UID)
 	{
 		require_once 'classes/model/AppDelegation.php';
@@ -211,72 +278,7 @@ class Report {
     $oCriteria = new Criteria('dbarray');
     $oCriteria->setDBArrayTable('reports');
     return $oCriteria;
-	}
-	
-	function generatedReport1_filter($from, $to, $startedby)
-	{	
-		require_once 'classes/model/AppDelegation.php';
-		require_once 'classes/model/Application.php';
-		require_once 'classes/model/Users.php';
-		$oCriteria = new Criteria('workflow');
-		$del = DBAdapter::getStringDelimiter();
-		$oCriteria->addSelectColumn(UsersPeer::USR_UID);
-    $oCriteria->addSelectColumn(AppDelegationPeer::PRO_UID);    
-    $oCriteria->addAsColumn("MIN", "MIN(".AppDelegationPeer::DEL_DURATION.")");
-    $oCriteria->addAsColumn("MAX", "MAX(".AppDelegationPeer::DEL_DURATION.")");
-    $oCriteria->addAsColumn("TOTALDUR", "SUM(".AppDelegationPeer::DEL_DURATION.")");
-    $oCriteria->addAsColumn("PROMEDIO", "AVG(".AppDelegationPeer::DEL_DURATION.")");
-    $oCriteria->addAsColumn('PRO_TITLE', 'C1.CON_VALUE' );
-    $oCriteria->addAlias("C1",  'CONTENT');
-    $proTitleConds = array();
-    $proTitleConds[] = array( AppDelegationPeer::PRO_UID , 'C1.CON_ID' );
-    $proTitleConds[] = array( 'C1.CON_CATEGORY' , $del . 'PRO_TITLE' . $del );
-    $proTitleConds[] = array( 'C1.CON_LANG' ,     $del . SYS_LANG . $del );
-    $oCriteria->addJoinMC($proTitleConds ,    Criteria::LEFT_JOIN);
-    $oCriteria->addJoin(AppDelegationPeer::USR_UID, UsersPeer::USR_UID, Criteria::LEFT_JOIN);
-    
-    $oCriteria->add(AppDelegationPeer::DEL_DURATION,  $from, Criteria::GREATER_EQUAL);
-    $oCriteria->add(AppDelegationPeer::DEL_DURATION,  $to, Criteria::LESS_EQUAL);
-    
-    if($startedby!='') $oCriteria->add(AppDelegationPeer::USR_UID,  $startedby);
-        		    
-    $oCriteria->addGroupByColumn(AppDelegationPeer::PRO_UID);
-
-    $oDataset = AppDelegationPeer::doSelectRS($oCriteria);
-    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-    $oDataset->next();
-    
-    $aProcess[] = array('PRO_UID'   => 'char',
-      	                'PRO_TITLE' => 'char',
-      	                'CANTCASES' => 'integer',
-      	                'MIN'       => 'float',
-      	                'MAX'       => 'float',
-      	                'TOTALDUR'  => 'float',
-      	                'PROMEDIO'  => 'float');
-    while ($aRow = $oDataset->getRow()) {
-      	$oCriteria = new Criteria('workflow');
-        $oCriteria->addSelectColumn(ApplicationPeer::PRO_UID);        
-        $oCriteria->add(ApplicationPeer::PRO_UID,     $aRow['PRO_UID']);        
-
-      	$aProcess[] = array('PRO_UID'   => $aRow['PRO_UID'],
-      	                    'PRO_TITLE' => $aRow['PRO_TITLE'],
-      	                    'CANTCASES' => ApplicationPeer::doCount($oCriteria),
-      	                    'MIN'       => $aRow['MIN'],
-      	                    'MAX'       => $aRow['MAX'],
-      	                    'TOTALDUR'  => $aRow['TOTALDUR'],
-      	                    'PROMEDIO'  => $aRow['PROMEDIO']);
-      	$oDataset->next();
-     }
-
-    global $_DBArray;
-    $_DBArray['reports']  = $aProcess;
-    $_SESSION['_DBArray'] = $_DBArray;
-    G::LoadClass('ArrayPeer');
-    $oCriteria = new Criteria('dbarray');
-    $oCriteria->setDBArrayTable('reports');
-
-    return $oCriteria;						
-	}
+	}		
 	
 	function reports_Description_filter($from, $to, $startedby, $PRO_UID)
 	{	  
@@ -304,8 +306,7 @@ class Report {
 		$proContentConds[] = array('C.CON_LANG',     $del . SYS_LANG . $del);
 		$oCriteria->addJoinMC($proContentConds,      Criteria::LEFT_JOIN);
 
-    $oCriteria->add(AppDelegationPeer::DEL_DURATION,  $from, Criteria::GREATER_EQUAL);
-    $oCriteria->add(AppDelegationPeer::DEL_DURATION,  $to, Criteria::LESS_EQUAL);
+    $oCriteria->add($oCriteria->getNewCriterion(AppDelegationPeer::DEL_INIT_DATE, $from, Criteria::GREATER_EQUAL)->addAnd($oCriteria->getNewCriterion(AppDelegationPeer::DEL_INIT_DATE,  $to, Criteria::LESS_EQUAL)));   
     
     if($startedby!='') $oCriteria->add(AppDelegationPeer::USR_UID,  $startedby);
     
@@ -335,8 +336,7 @@ class Report {
     $oCriteria->addJoinMC($proTitleConds ,    Criteria::LEFT_JOIN);
     $oCriteria->addGroupByColumn(AppDelegationPeer::PRO_UID);
     
-    $oCriteria->add(AppDelegationPeer::DEL_DURATION,  $from, Criteria::GREATER_EQUAL);
-    $oCriteria->add(AppDelegationPeer::DEL_DURATION,  $to, Criteria::LESS_EQUAL);
+    $oCriteria->add($oCriteria->getNewCriterion(AppDelegationPeer::DEL_INIT_DATE, $from, Criteria::GREATER_EQUAL)->addAnd($oCriteria->getNewCriterion(AppDelegationPeer::DEL_INIT_DATE,  $to, Criteria::LESS_EQUAL)));   
     
     if($startedby!='') $oCriteria->add(AppDelegationPeer::USR_UID,  $startedby);
     
