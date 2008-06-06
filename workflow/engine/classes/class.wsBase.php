@@ -146,7 +146,7 @@ class wsBase
 	}
 
 	public function processList( ) {
-    try {	
+   try {	
   	  $result  = array();
   	  $oCriteria = new Criteria('workflow');
       $oCriteria->add(ProcessPeer::PRO_STATUS ,  'ACTIVE' );
