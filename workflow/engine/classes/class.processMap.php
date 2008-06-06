@@ -781,9 +781,9 @@ class processMap {
   	  $aFields            = $oProcess->load($sProcessUID);
   	  $oTask              = new Task();
   	  $aFields            = $oTask->load($sTaskUID);
-  	  if (!isset($_SESSION['iType'])) {
-  	  	$_SESSION['iType'] = 1;
-  	  }
+  	  
+  	  $_SESSION['iType'] = 1;
+  	  
   	  $aFields['TASK']         = $sTaskUID;
   	  $aFields['TYPE']         = $_SESSION['iType'];
   	  $aFields['OF_TO_ASSIGN'] = G::LoadTranslation('ID_DE_ASSIGN');
@@ -804,19 +804,60 @@ class processMap {
   	  $G_HEADER->clearScripts();
   	  $oTask = new Task();
   	  $aTask = $oTask->load($sTaskUID);
-  	  switch ($_SESSION['iType']) {
-  	  	case 1:
-  	  	  if ($aFields['TAS_TYPE'] == 'TRUE') {
-  	  	    $G_PUBLISH->AddContent('pagedtable', 'paged-table', 'users/users_ShortList', $this->getTaskUsersCriteria($sTaskUID, $_SESSION['iType']), $aFields);
+  	 
+  	  if ($aFields['TAS_TYPE'] == 'TRUE') {
+  	  	    $G_PUBLISH->AddContent('propeltable', 'paged-table', 'users/users_ShortList', $this->getTaskUsersCriteria($sTaskUID, $_SESSION['iType']), $aFields);
   	  	  }
-  	  	  else {
+  	  else {
   	  	  	$G_PUBLISH->AddContent('propeltable', 'paged-table', 'users/users_ShortList2', $this->getTaskUsersCriteria($sTaskUID, $_SESSION['iType']), $aFields);
   	  	  }
-  	  	break;
-  	  	case 2:
-  	  	  $G_PUBLISH->AddContent('pagedtable', 'paged-table', 'users/users_ShortListAdhoc', $this->getTaskUsersCriteria($sTaskUID, $_SESSION['iType']), $aFields);
-  	  	break;
+  	  	 	  	  	 
+      G::RenderPage('publish', 'raw');
+      return true;
+    }
+  	catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
+
+  /*
+	* Users Adhoc assigned to Tasks
+	* @param string $sProcessUID
+	* @param string $sTaskUID
+	* @return boolean
+	*/
+	function users_adhoc($sProcessUID = '', $sTaskUID= '') {
+		try {			
+		  $oProcess           = new Process();
+  	  $aFields            = $oProcess->load($sProcessUID);
+  	  $oTask              = new Task();
+  	  $aFields            = $oTask->load($sTaskUID);
+  	  
+  	  $_SESSION['iType'] = 2;
+  	  
+  	  $aFields['TASK']         = $sTaskUID;
+  	  $aFields['TYPE']         = $_SESSION['iType'];
+  	  $aFields['OF_TO_ASSIGN'] = G::LoadTranslation('ID_DE_ASSIGN');
+  	  $aFields['CONFIRM']      = G::LoadTranslation('ID_MSG_CONFIRM_DEASIGN_USER_GROUP_MESSAGE');
+  	  $aFields['UIDS']         = "'0'";
+  	  $oTasks  = new Tasks();
+  	  $oGroups = new Groups();
+  	  $aAux1   = $oTasks->getGroupsOfTask($sTaskUID, $_SESSION['iType']);  	  
+  	  foreach ($aAux1 as $aGroup) 
+  	  {	$aAux2 = $oGroups->getUsersOfGroup($aGroup['GRP_UID']);
+  	    foreach ($aAux2 as $aUser) 
+  	    {  $aFields['UIDS'] .= ",'" . $aUser['USR_UID'] . "'";
+  	    }
   	  }
+  	  global $G_PUBLISH;
+  	  global $G_HEADER;
+  	  $G_PUBLISH = new Publisher();
+  	  $G_HEADER->clearScripts();
+  	  $oTask = new Task();
+  	  $aTask = $oTask->load($sTaskUID);
+  	  
+  	  $G_PUBLISH->AddContent('propeltable', 'paged-table', 'users/users_ShortListAdhoc', $this->getTaskUsersCriteria($sTaskUID, $_SESSION['iType']), $aFields);
+  	  	
       G::RenderPage('publish', 'raw');
       return true;
     }

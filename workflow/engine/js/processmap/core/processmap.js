@@ -940,6 +940,40 @@ var processmap=function(){
 						}.extend(this,panel);
 						r.make();
 					}.extend(this,index)},
+					
+					{image:"/images/users.png",text:G_STRINGS.ID_PROCESSMAP_USERS_AND_GROUPS_ADHOC,launch:function(event,index){
+						var panel;
+						this.tmp.usersPanel = panel =new leimnud.module.panel();
+						panel.options={
+							limit	:true,
+							size	:{w:450,h:300},
+							position:{x:50,y:50,center:true},
+							title	:G_STRINGS.ID_PROCESSMAP_USERS_AND_GROUPS_ADHOC+": "+task.label,
+							theme	:this.options.theme,
+							control	:{close:true,resize:false},fx:{modal:true},
+							statusBar:false,
+							fx	:{modal:true}
+						};
+						panel.make();
+						panel.loader.show();
+						var r;
+						panel.currentRPC = r = new leimnud.module.rpc.xmlhttp({
+							url:this.options.dataServer,
+							args:"action=users_adhoc&data="+{
+								tas_uid	:task.uid,
+								pro_uid	:this.options.uid
+							}.toJSONString()
+						});
+						r.callback=function(rpc,panel)
+						{
+							panel.loader.hide();
+							var scs = rpc.xmlhttp.responseText.extractScript();
+							panel.addContent(rpc.xmlhttp.responseText);
+							scs.evalScript();
+						}.extend(this,panel);
+						r.make();
+					}.extend(this,index)},
+					
 					{image:"/images/rules.png",text:G_STRINGS.ID_PROCESSMAP_WORKFLOW_PATTERNS,launch:this.patternPanel.args(index)},
 					{image:"/images/delete_rules.png",text:G_STRINGS.ID_PROCESSMAP_WORKFLOW_DELETE_PATTERNS,launch:this.parent.closure({instance:this,method:function() {
 						var data = this.data.db.task[index];
