@@ -36,8 +36,13 @@ require_once 'classes/model/StepTrigger.php';
 require_once 'classes/model/Dynaform.php';
 require_once 'classes/model/Triggers.php';
 require_once 'classes/model/Groupwf.php';
+require_once 'classes/model/ReportTable.php';
+require_once 'classes/model/ReportVar.php';
 require_once 'classes/model/DbSource.php';
+
+
 G::LoadClass('tasks');
+G::LoadClass('reportTables');
 G::LoadThirdParty('pear/json','class.json');
 
 class Processes {
@@ -722,6 +727,48 @@ class Processes {
     }
   }
 
+  function getReportTablesRows($sProUid)
+  {
+    try {
+      $aReps = array();
+      $oCriteria = new Criteria('workflow');
+      $oCriteria->add(ReportTablePeer::PRO_UID, $sProUid);
+      $oDataset = ReportTablePeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      while ($aRow = $oDataset->getRow()) {
+        $oRep = new ReportTable();
+        $aReps[] = $oRep->load($aRow['REP_TAB_UID']);
+        $oDataset->next();
+      }
+      return $aReps;
+    }
+    catch (Exception $oError) {
+      throw $oError;
+    }
+  }
+
+  function getReportTablesVarsRows($sProUid)
+  {
+    try {
+      $aRepVars = array();
+      $oCriteria = new Criteria('workflow');
+      $oCriteria->add(ReportVarPeer::PRO_UID, $sProUid);
+      $oDataset = ReportVarPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      while ($aRow = $oDataset->getRow()) {
+        $oRepVar = new ReportVar();
+        $aRepVars[] = $oRepVar->load($aRow['REP_VAR_UID']);
+        $oDataset->next();
+      }
+      return $aRepVars;
+    }
+    catch (Exception $oError) {
+      throw $oError;
+    }
+  }
+
   function getTaskUserRows ($aTask ){
   	try {
   		$aInTasks = array();
@@ -782,8 +829,42 @@ class Processes {
     }
   }
 
+  function createReportTables($aReportTables, $aReportTablesVars)
+  {
+    $this->createReportTablesVars($aReportTablesVars);
+    $oReportTables = new ReportTables();
+    foreach ( $aReportTables as $sKey => $aRow ) {
+      $oRep = new ReportTable();
+      $oRep->create($aRow);
+      $aFields = $oReportTables->getTableVars($aRow['REP_TAB_UID'], true);
+      $oReportTables->createTable($aRow['REP_TAB_NAME'], $aRow['REP_TAB_CONNECTION'], $aRow['REP_TAB_TYPE'], $aFields);
+      $oReportTables->populateTable($aRow['REP_TAB_NAME'], $aRow['REP_TAB_CONNECTION'], $aRow['REP_TAB_TYPE'], $aFields, $aRow['PRO_UID'], $aRow['REP_TAB_GRID']);
+    }
+  } #@!neyek
 
+  function updateReportTables($aReportTables, $aReportTablesVars)
+  {
+    $this->cleanReportTablesReferences($aReportTable);
+    $this->createReportTables($aReportTables, $aReportTablesVars);
+  } #@!neyek
 
+  function createReportTablesVars($aReportTablesVars)
+  {
+    foreach ( $aReportTablesVars as $sKey => $aRow ) {
+      $oRep = new ReportVar();
+      $oRep->create($aRow);
+    }
+  } #@!neyek
+
+  function cleanReportTablesReferences($aReportTables)
+  {
+    foreach ( $aReportTables as $sKey => $aRow ) {
+        $oReportTables = new ReportTables();
+        $oReportTables->deleteReportTable($aRow['REP_TAB_UID']);
+        $oReportTables->deleteAllReportVars($aRow['REP_TAB_UID']);
+        $oReportTables->dropTable($aRow['REP_TAB_NAME']);
+    }
+  } #@!neyek
 
   /*
   * change Status of any Process
@@ -792,6 +873,7 @@ class Processes {
   */
   function serializeProcess ( $sProUid = '') {
     $oProcess = new Process( );
+
     $oData->process  = $this->getProcessRow( $sProUid );
     $oData->tasks    = $this->getTaskRows( $sProUid );
     $oData->routes   = $this->getRouteRows( $sProUid );
@@ -803,8 +885,10 @@ class Processes {
     $oData->triggers = $this->getTriggerRows( $sProUid );
     $oData->taskusers= $this->getTaskUserRows( $oData->tasks );
     $oData->groupwfs = $this->getGroupwfRows( $oData->taskusers );
-    $oData->steptriggers = $this->getStepTriggerRows( $oData->tasks );
+    $oData->steptriggers  = $this->getStepTriggerRows( $oData->tasks );
     $oData->dbconnections = $this->getDBConnectionsRows($sProUid);
+    $oData->reportTables  = $this->getReportTablesRows($sProUid);
+    $oData->reportTablesVars  = $this->getReportTablesVarsRows($sProUid);
     //krumo ($oData);die;
     //$oJSON = new Services_JSON();
     //krumo ( $oJSON->encode($oData) );
@@ -826,7 +910,8 @@ class Processes {
     }
     $proTitle = G::capitalizeWords($data->process['PRO_TITLE']);
 
-    $index = '';
+    $index = ''; 
+
     $lastIndex = '';
 
     do {
@@ -851,18 +936,31 @@ class Processes {
     foreach ($data->dynaforms as $key => $val ) {
     	$sFileName = PATH_DYNAFORM .  $val['DYN_FILENAME'] . '.xml';
     	if ( file_exists ( $sFileName ) ) {
-    		$xmlGuid    = $val['DYN_UID'];
-        $fsXmlGuid  = sprintf ( "%09d", strlen ( $xmlGuid ) );
-        $bytesSaved += fwrite( $fp, $fsXmlGuid );  //writing the size of xml file
-        $bytesSaved += fwrite( $fp, $xmlGuid );    //writing the xmlfile
+            $xmlGuid    = $val['DYN_UID'];
+            $fsXmlGuid  = sprintf ( "%09d", strlen ( $xmlGuid ) );
+            $bytesSaved += fwrite( $fp, $fsXmlGuid );  //writing the size of xml file
+            $bytesSaved += fwrite( $fp, $xmlGuid );    //writing the xmlfile
 
-        $xmlContent = file_get_contents ( $sFileName );
-        $fsXmlContent = sprintf ( "%09d", strlen ( $xmlContent) );
-        $bytesSaved += fwrite( $fp, $fsXmlContent );  //writing the size of xml file
-        $bytesSaved += fwrite( $fp, $xmlContent );    //writing the xmlfile
+            $xmlContent = file_get_contents ( $sFileName );
+            $fsXmlContent = sprintf ( "%09d", strlen ( $xmlContent) );
+            $bytesSaved += fwrite( $fp, $fsXmlContent );  //writing the size of xml file
+            $bytesSaved += fwrite( $fp, $xmlContent );    //writing the xmlfile
     	}
+
+        $sFileName2 = PATH_DYNAFORM .  $val['DYN_FILENAME'] . '.html';
+        if ( file_exists ( $sFileName2 ) ) {
+            $htmlGuid    = $val['DYN_UID'];
+            $fsHtmlGuid  = sprintf ( "%09d", strlen ( $htmlGuid ) );
+            $bytesSaved += fwrite( $fp, $fsHtmlGuid );  //writing size dynaform id
+            $bytesSaved += fwrite( $fp, $htmlGuid );    //writing dynaform id
+
+            $htmlContent = file_get_contents ( $sFileName2 );
+            $fsHtmlContent = sprintf ( "%09d", strlen ( $htmlContent ) );
+            $bytesSaved += fwrite( $fp, $fsHtmlContent );  //writing the size of xml file
+            $bytesSaved += fwrite( $fp, $htmlContent );    //writing the htmlfile
+        }
     }
-    fclose ( $fp);
+    fclose ($fp);
 
     //$bytesSaved = file_put_contents  ( $filename  , $oData  );
     $filenameLink = 'processes_DownloadFile?p=' . $proTitle . '&r=' . rand(100,1000);
@@ -926,43 +1024,49 @@ class Processes {
 
   }
 
-  function createDynamformFiles ( $oData, $pmFilename  ) {
-    if (! file_exists($pmFilename) )
-      throw ( new Exception ( 'Unable to read uploaded .pm file, please check permissions. ') );
+    function createDynamformFiles ( $oData, $pmFilename  ) {
+        if (! file_exists($pmFilename))
+            throw ( new Exception ( 'Unable to read uploaded .pm file, please check permissions. ') );
 
-    if (! filesize($pmFilename) >= 9 )
-      throw ( new Exception ( 'Uploaded .pm file is corrupted, please check the file before continue. '));
+        if (! filesize($pmFilename) >= 9 )
+            throw ( new Exception ( 'Uploaded .pm file is corrupted, please check the file before continue. '));
 
-    $fp = fopen( $pmFilename, "rb");
-    $fsData = intval( fread ( $fp, 9));    //reading the size of $oData
-    $contents  = fread( $fp, $fsData );    //reading string $oData
+        $fp = fopen( $pmFilename, "rb");
+        $fsData = intval( fread ( $fp, 9));    //reading the size of $oData
+        $contents  = fread( $fp, $fsData );    //reading string $oData
 
-    $path = PATH_DYNAFORM . $oData->process['PRO_UID'] . PATH_SEP;
-    if ( !is_dir($path) ) {
-      	G::verifyPath($path, true);
+        $path = PATH_DYNAFORM . $oData->process['PRO_UID'] . PATH_SEP;
+        if ( !is_dir($path) ) {
+            G::verifyPath($path, true);
+        }
+
+        while ( !feof ( $fp ) ) {
+            $fsXmlGuid    = intval( fread ( $fp, 9));      //reading the size of $filename
+            if ( $fsXmlGuid > 0 )
+                $XmlGuid    = fread( $fp, $fsXmlGuid );    //reading string $XmlGuid
+            $fsXmlContent = intval( fread ( $fp, 9));      //reading the size of $XmlContent
+            if ( $fsXmlContent > 0 ) {
+                $newXmlGuid = $oData->dynaformFiles[ $XmlGuid ];
+                
+                //print "$sFileName <br>";
+                $XmlContent   = fread( $fp, $fsXmlContent );    //reading string $XmlContent
+
+                #here we verify if is adynaform or a html
+                $ext = (substr(trim($XmlContent),0,5) == '<?xml')?'.xml':'.html';
+
+                $sFileName = $path . $newXmlGuid . $ext;
+                $bytesSaved = @file_put_contents ( $sFileName, $XmlContent );
+                if ( $bytesSaved != $fsXmlContent )
+                throw ( new Exception ('Error writing dynaform file in directory : ' . $path ) );
+
+            }
+        }
+        fclose ( $fp);
+
+        return true;
+
     }
-
-    while ( !feof ( $fp ) ) {
-      $fsXmlGuid    = intval( fread ( $fp, 9));      //reading the size of $filename
-      if ( $fsXmlGuid > 0 )
-        $XmlGuid    = fread( $fp, $fsXmlGuid );    //reading string $XmlGuid
-      $fsXmlContent = intval( fread ( $fp, 9));      //reading the size of $XmlContent
-      if ( $fsXmlContent > 0 ) {
-        $newXmlGuid = $oData->dynaformFiles[ $XmlGuid ];
-        $sFileName = $path . $newXmlGuid . '.xml';
-        //print "$sFileName <br>";
-        $XmlContent   = fread( $fp, $fsXmlContent );    //reading string $XmlContent
-        $bytesSaved = @file_put_contents ( $sFileName, $XmlContent );
-        if ( $bytesSaved != $fsXmlContent )
-          throw ( new Exception ('Error writing dynaform file in directory : ' . $path ) );
-
-      }
-    }
-    fclose ( $fp);
-
-    return true;
-
-  }
+            
 
   /*
   * this function remove all Process except the PROCESS ROW
@@ -1117,6 +1221,7 @@ class Processes {
     $this->createTaskUserRows ($oData->taskusers);
     $this->createGroupRow ($oData->groupwfs );
     $this->createDBConnections($oData->dbconnections);
+    $this->createReportTables($oData->reportTables, $oData->reportTablesVars);
     $this->createDynamformFiles ( $oData, $pmFilename  );
  }
 
@@ -1139,6 +1244,7 @@ class Processes {
     $this->createStepTriggerRows ($oData->steptriggers);
     $this->createTaskUserRows ($oData->taskusers);
     $this->createDBConnections($oData->dbconnections);
+    $this->updateReportTables($oData->reportTables, $oData->reportTablesVars);
     $this->createDynamformFiles ( $oData, $pmFilename  );
  }
 }
