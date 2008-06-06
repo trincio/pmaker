@@ -309,6 +309,40 @@ class NET
         }
         return $stat;
     }
+
+    function getDbServerVersion($driver)
+    {
+        if(isset($this->ip) && isset($this->db_user) && isset($this->db_passwd)) {
+            try{
+                switch($driver)
+                {
+                    case 'mysql':
+                        if($link = @mysql_connect($this->ip, $this->db_user, $this->db_passwd)){
+                            $v = @mysql_get_server_info();
+                        } else {
+                            throw new Exception(@mysql_error($link));
+                        }
+                        break;
+
+                    case 'pgsql':
+                        $this->db_port = ($this->db_port == "") ? "5432" : $this->db_port;
+                        $link = @pg_connect("host='$this->ip' port='$this->db_port' user='$this->db_user' password='$this->db_passwd' dbname='$this->db_sourcename'");
+                        if($link){
+                            $v = @pg_version($link);
+                        } else {
+                            throw new Exception(@pg_last_error($link));
+                        }
+                        break;
+                }
+                return (isset($v))?$v:'none';
+            } catch (Exception $e){
+                throw new Exception($e->getMessage());
+            }
+        }
+        else{
+            throw new Exception('NET::Error->No params for Data Base Server!');
+        }
+    }
     
     function dbName($pAdapter)
     {

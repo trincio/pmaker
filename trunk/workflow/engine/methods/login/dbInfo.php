@@ -67,6 +67,8 @@ function lookup($target)
   G::LoadClass('net');	
   G::LoadClass('dbConnections');	
   $dbNetView = new NET(DB_HOST);
+  $dbNetView->loginDbServer(DB_USER, DB_PASS);
+  
   $dbConns = new dbConnections( '');
   $availdb = '';
   foreach ($dbConns->getDbServicesAvailables()  as $key => $val ) {
@@ -75,7 +77,7 @@ function lookup($target)
   }
 
   $Fields['SYSTEM']          = $redhat;
-  $Fields['DATABASE']        = $dbNetView->dbName(DB_ADAPTER) . ' (ver. ' . $dbNetView->mysql_getVersion(DB_USER, DB_PASS, DB_NAME).')';
+  $Fields['DATABASE']        = $dbNetView->dbName(DB_ADAPTER) . ' (Version ' . $dbNetView->getDbServerVersion('mysql').')';
   $Fields['DATABASE_SERVER'] = DB_HOST;
   $Fields['DATABASE_NAME']   = DB_NAME;
   $Fields['PHP']             = phpversion();
