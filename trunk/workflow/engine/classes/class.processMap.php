@@ -303,6 +303,13 @@ class processMap {
   		require_once 'classes/model/AppDocument.php';
   		require_once 'classes/model/AppMessage.php';
   		require_once 'classes/model/AppOwner.php';
+  		require_once 'classes/model/AppDelay.php';
+  		require_once 'classes/model/AppThread.php';
+  		require_once 'classes/model/DbSource.php';
+  		require_once 'classes/model/ProcessUser.php';
+  		require_once 'classes/model/StepSupervisor.php';
+  		require_once 'classes/model/ReportTable.php';
+  		G::LoadClass('reportTables');
   		//Instance all classes necesaries
   		$oProcess         = new Process();
   		$oDynaform        = new Dynaform();
@@ -315,6 +322,13 @@ class processMap {
   		$oApplication     = new Application();
   		$oAppDelegation   = new AppDelegation();
   		$oAppDocument     = new AppDocument();
+  		//$oAppDelay        = new AppDelay();
+  		//$oAppMessage      = new AppMessage();
+  		//$oAppThread       = new AppThread();
+  		$oDbSource        = new DbSource();
+  		//$oProcessUser     = new ProcessUser();
+  		//$oStepSupervisor  = new StepSupervisor();
+  		$oReportTable     = new ReportTables();
       //Delete the applications of process
   		$oCriteria = new Criteria('workflow');
   	  $oCriteria->add(ApplicationPeer::PRO_UID, $sProcessUID);
@@ -342,6 +356,19 @@ class processMap {
         	$oAppDocument->remove($aRow2['APP_DOC_UID']);
         	$oDataset2->next();
         }
+        //Delete the actions from a application
+      	$oCriteria2 = new Criteria('workflow');
+  	    $oCriteria2->add(AppDelayPeer::APP_UID, $aRow['APP_UID']);
+        AppDelayPeer::doDelete($oCriteria2);
+        //Delete the messages from a application
+      	$oCriteria2 = new Criteria('workflow');
+  	    $oCriteria2->add(AppMessagePeer::APP_UID, $aRow['APP_UID']);
+        AppMessagePeer::doDelete($oCriteria2);
+        //Delete the threads from a application
+      	$oCriteria2 = new Criteria('workflow');
+  	    $oCriteria2->add(AppThreadPeer::APP_UID, $aRow['APP_UID']);
+        AppThreadPeer::doDelete($oCriteria2);
+        //Delete the application
         $oApplication->remove($aRow['APP_UID']);
       	$oDataset->next();
       }
@@ -425,6 +452,34 @@ class processMap {
       $oDataset->next();
       while ($aRow = $oDataset->getRow()) {
       	$oConfiguration->remove($aRow['CFG_UID']);
+      	$oDataset->next();
+      }
+      //Delete the DB sources of process
+  		$oCriteria = new Criteria('workflow');
+  	  $oCriteria->add(DbSourcePeer::PRO_UID, $sProcessUID);
+  	  $oDataset = DbSourcePeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      while ($aRow = $oDataset->getRow()) {
+      	$oDbSource->remove($aRow['DBS_UID']);
+      	$oDataset->next();
+      }
+      //Delete the supervisors
+      $oCriteria = new Criteria('workflow');
+  	  $oCriteria->add(ProcessUserPeer::PRO_UID, $sProcessUID);
+      ProcessUserPeer::doDelete($oCriteria);
+      //Delete the step supervisors
+      $oCriteria = new Criteria('workflow');
+  	  $oCriteria->add(StepSupervisorPeer::PRO_UID, $sProcessUID);
+      StepSupervisorPeer::doDelete($oCriteria);
+      //Delete the report tables
+      $oCriteria = new Criteria('workflow');
+  	  $oCriteria->add(ReportTablePeer::PRO_UID, $sProcessUID);
+  	  $oDataset = ReportTablePeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      while ($aRow = $oDataset->getRow()) {
+      	$oReportTable->deleteReportTable($aRow['REP_TAB_UID']);
       	$oDataset->next();
       }
       //Delete the process
@@ -517,13 +572,13 @@ class processMap {
       while ($aRow = $oDataset->getRow()) {
         $urlEdit = '';
         $linkEditValue = '';
-            
+
       	switch ($aRow['STEP_TYPE_OBJ']) {
             case 'DYNAFORM':
             $oDynaform = new Dynaform();
             $aFields   = $oDynaform->load($aRow['STEP_UID_OBJ']);
             $sTitle    = $aFields['DYN_TITLE'];
-            /** @@@init2 PROCCESS FOR DIRECT EDIT LINK @by erik@colosa.com ON DATE 02/06/2008 18:48:13*/ 
+            /** @@@init2 PROCCESS FOR DIRECT EDIT LINK @by erik@colosa.com ON DATE 02/06/2008 18:48:13*/
             $DYN_UID = $aFields['DYN_UID'];
             $urlEdit   = 'dynaformEdit(\''.$DYN_UID.'\', \''.$aRow['PRO_UID'].'\');';
             $linkEditValue = 'Edit';
@@ -542,7 +597,7 @@ class processMap {
             case 'EXTERNAL':
             $sTitle          = 'unknown ' . $aRow['STEP_UID'];
                 foreach ( $externalSteps as $key=>$val ) {
-                if ( $val->sStepId == $aRow['STEP_UID_OBJ'] ) 
+                if ( $val->sStepId == $aRow['STEP_UID_OBJ'] )
                     $sTitle = $val->sStepTitle;
                 }
             break;
@@ -687,7 +742,7 @@ class processMap {
                        'STEP_TYPE_OBJ' => 'OUTPUT_DOCUMENT');
       	$oDataset->next();
       }
-      
+
       //call plugin
       $oPluginRegistry = &PMPluginRegistry::getSingleton();
       $externalSteps   = $oPluginRegistry->getSteps();
