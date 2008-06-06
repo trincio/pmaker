@@ -83,11 +83,11 @@ class wsBase
 	{
 	}
 	
-	public function login( $username, $password  ) {
+	public function login( $userid, $password  ) {
 		global $RBAC;
 
     try {	
-    	$uid  = $RBAC->VerifyLogin( $username , $password);
+    	$uid  = $RBAC->VerifyLogin( $userid , $password);
 	    switch ($uid) {
     		case -1: //The user not exists
         	$wsResponse = new wsResponse (3, G::loadTranslation ('ID_USER_NOT_REGISTERED'));
