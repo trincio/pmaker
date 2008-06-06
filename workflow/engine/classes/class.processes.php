@@ -739,14 +739,13 @@ class Processes {
     try {
       $aConnections = array();
       $oCriteria = new Criteria('workflow');
-      $oCriteria->add(StepSupervisor::PRO_UID, $sProUid);
+      $oCriteria->add(StepSupervisorPeer::PRO_UID, $sProUid);
       $oDataset = StepSupervisorPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
       $oDataset->next();
       while ($aRow  = $oDataset->getRow()) {
-        $oStepSup   = new StepSupervisor();
-        $aStepSup[] = $oStepSup->Load($aRow['STEP_UID']);
-        $oStepSup->next();
+        $aStepSup[] = $aRow;
+        $oDataset->next();
       }
       return $aStepSup;
     }
@@ -939,7 +938,7 @@ class Processes {
     }
     $proTitle = G::capitalizeWords($data->process['PRO_TITLE']);
 
-    $index = ''; 
+    $index = '';
 
     $lastIndex = '';
 
@@ -1076,7 +1075,7 @@ class Processes {
             $fsXmlContent = intval( fread ( $fp, 9));      //reading the size of $XmlContent
             if ( $fsXmlContent > 0 ) {
                 $newXmlGuid = $oData->dynaformFiles[ $XmlGuid ];
-                
+
                 //print "$sFileName <br>";
                 $XmlContent   = fread( $fp, $fsXmlContent );    //reading string $XmlContent
 
@@ -1095,7 +1094,7 @@ class Processes {
         return true;
 
     }
-            
+
 
   /*
   * this function remove all Process except the PROCESS ROW
@@ -1178,7 +1177,7 @@ class Processes {
     	$oStep->remove($aRow['STEP_UID']);
     	$oDataset->next();
     }
-    
+
     $oCriteria = new Criteria('workflow');
     $oCriteria->add(StepSupervisorPeer::PRO_UID, $sProUid);
     $oDataset = StepSupervisorPeer::doSelectRS($oCriteria);

@@ -1,10 +1,10 @@
 <?php
 /**
  * Dynaform.php
- *  
+ *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -14,13 +14,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
 
 require_once 'classes/model/om/BaseDynaform.php';
@@ -30,7 +30,7 @@ require_once 'classes/model/Content.php';
 /**
  * Skeleton subclass for representing a row from the 'DYNAFORM' table.
  *
- * 
+ *
  *
  * You should add additional methods to this class to meet the
  * application requirements.  This class will only be generated as
@@ -61,7 +61,7 @@ class Dynaform extends BaseDynaform {
 
 	/**
 	 * Set the [Dyn_title] column value.
-	 * 
+	 *
 	 * @param      string $v new value
 	 * @return     void
 	 */
@@ -73,7 +73,7 @@ class Dynaform extends BaseDynaform {
 		// Since the native PHP type for this column is string,
 		// we will cast the input to a string (if it is not).
 		if ($v !== null && !is_string($v)) {
-			$v = (string) $v; 
+			$v = (string) $v;
 		}
 
 		if ($this->dyn_title !== $v || $v === '') {
@@ -106,7 +106,7 @@ class Dynaform extends BaseDynaform {
 
 	/**
 	 * Set the [Dyn_description] column value.
-	 * 
+	 *
 	 * @param      string $v new value
 	 * @return     void
 	 */
@@ -118,7 +118,7 @@ class Dynaform extends BaseDynaform {
 		// Since the native PHP type for this column is string,
 		// we will cast the input to a string (if it is not).
 		if ($v !== null && !is_string($v)) {
-			$v = (string) $v; 
+			$v = (string) $v;
 		}
 
 		if ($this->dyn_description !== $v || $v === '') {
@@ -130,75 +130,75 @@ class Dynaform extends BaseDynaform {
 	} // set()
 
 	/**
-	 * Creates the Dynaform 
-	 * 
+	 * Creates the Dynaform
+	 *
 	 * @param      array $aData  Fields with :
 	 *                   $aData['DYN_UID'] the dynaform id
 	 *                   $aData['USR_UID'] the userid
 	 * @return     void
 	 */
-  
+
   function create ($aData ) {
     if ( !isset ( $aData['PRO_UID'] ) ) {
-       throw ( new PropelException ( 'The dynaform cannot be created. The PRO_UID is empty.' ) );      
+       throw ( new PropelException ( 'The dynaform cannot be created. The PRO_UID is empty.' ) );
     }
   	$con = Propel::getConnection( DynaformPeer::DATABASE_NAME );
     try {
-      if ( isset ( $aData['DYN_UID'] ) && $aData['DYN_UID']== '' ) 
+      if ( isset ( $aData['DYN_UID'] ) && $aData['DYN_UID']== '' )
         unset ( $aData['DYN_UID'] );
-      if ( !isset ( $aData['DYN_UID'] ) ) 
-  	    $dynUid  = ( G::generateUniqueID() );  
+      if ( !isset ( $aData['DYN_UID'] ) )
+  	    $dynUid  = ( G::generateUniqueID() );
   	  else
   	    $dynUid  = $aData['DYN_UID'];
-  	  $this->setDynUid          ( $dynUid );  
+  	  $this->setDynUid          ( $dynUid );
       $this->setProUid          ( $aData['PRO_UID'] );
       $this->setDynType         ( isset($aData['DYN_TYPE'])?$aData['DYN_TYPE']:'xmlform' );
       $this->setDynFilename     ( $aData['PRO_UID'] . PATH_SEP . $dynUid );
-	
+
 	    if ( $this->validate() ) {
-        $con->begin(); 
+        $con->begin();
         $res = $this->save();
-       
+
         if (isset ( $aData['DYN_TITLE'] ) )
           $this->setDynTitle (  $aData['DYN_TITLE'] );
         else
           $this->setDynTitle (  'Default Dynaform Title' );
-          
+
         if (isset ( $aData['DYN_DESCRIPTION'] ) )
           $this->setDynDescription (  $aData['DYN_DESCRIPTION'] );
         else
           $this->setDynDescription (  'Default Dynaform Description' );
-          
-        $con->commit(); 
+
+        $con->commit();
         return $this->getDynUid();
       }
       else {
        $msg = '';
-       foreach($this->getValidationFailures() as $objValidationFailure) 
+       foreach($this->getValidationFailures() as $objValidationFailure)
          $msg .= $objValidationFailure->getMessage() . "<br/>";
        var_dump($this->getDynType());
-       throw ( new PropelException ( 'The row cannot be created!', new PropelException ( $msg ) ) );      
+       throw ( new PropelException ( 'The row cannot be created!', new PropelException ( $msg ) ) );
       }
 
     }
     catch (Exception $e) {
-      $con->rollback(); 
+      $con->rollback();
       throw ($e);
     }
   }
 
 	/**
 	 * Load the Dynaform row specified in [dyn_id] column value.
-	 * 
-	 * @param      string $ProUid   the uid of the Prolication 
-	 * @return     array  $Fields   the fields 
+	 *
+	 * @param      string $ProUid   the uid of the Prolication
+	 * @return     array  $Fields   the fields
 	 */
-  
+
   function Load ( $ProUid ) {
   	$con = Propel::getConnection(DynaformPeer::DATABASE_NAME);
     try {
       $oPro = DynaformPeer::retrieveByPk( $ProUid );
-  	  if ( get_class ($oPro) == 'Dynaform' ) { 
+  	  if ( get_class ($oPro) == 'Dynaform' ) {
   	    $aFields = $oPro->toArray(BasePeer::TYPE_FIELDNAME);
   	    $this->fromArray ($aFields, BasePeer::TYPE_FIELDNAME );
   	    $aFields['DYN_TITLE']       = $oPro->getDynTitle();
@@ -221,14 +221,14 @@ class Dynaform extends BaseDynaform {
    * @param     array $aData
    * @return    variant
   **/
-  
+
   public function update($aData)
   {
   	$con = Propel::getConnection( DynaformPeer::DATABASE_NAME );
   	try {
-      $con->begin(); 
+      $con->begin();
   	  $oPro = DynaformPeer::retrieveByPK( $aData['DYN_UID'] );
-  	  if ( get_class ($oPro) == 'Dynaform' ) { 
+  	  if ( get_class ($oPro) == 'Dynaform' ) {
   	  	$oPro->fromArray( $aData, BasePeer::TYPE_FIELDNAME );
   	    if ($oPro->validate()) {
   	      if ( isset ( $aData['DYN_TITLE'] ) )
@@ -236,17 +236,17 @@ class Dynaform extends BaseDynaform {
   	      if ( isset ( $aData['DYN_DESCRIPTION'] ) )
             $oPro->setDynDescription( $aData['DYN_DESCRIPTION'] );
           $res = $oPro->save();
-          $con->commit(); 
+          $con->commit();
           return $res;
   	    }
   	    else {
-         foreach($this->getValidationFailures() as $objValidationFailure) 
+         foreach($this->getValidationFailures() as $objValidationFailure)
            $msg .= $objValidationFailure->getMessage() . "<br/>";
          throw ( new PropelException ( 'The row cannot be created!', new PropelException ( $msg ) ) );
   	    }
       }
       else {
-        $con->rollback(); 
+        $con->rollback();
         throw(new Exception( "This row doesn't exists!" ));
       }
     }
@@ -257,7 +257,7 @@ class Dynaform extends BaseDynaform {
 
   /**
 	 * Remove the Prolication document registry
-   * @param     array $aData or string $ProUid 
+   * @param     array $aData or string $ProUid
    * @return    string
   **/
   public function remove($ProUid)
@@ -271,7 +271,20 @@ class Dynaform extends BaseDynaform {
   	  {
         Content::removeContent('DYN_TITLE', '',       $oPro->getDynUid());
         Content::removeContent('DYN_DESCRIPTION', '', $oPro->getDynUid());
-        return $oPro->delete();
+        $iResult = $oPro->delete();
+        if (file_exists(PATH_DYNAFORM . $oPro->getProUid() . PATH_SEP . $oPro->getDynUid() . '.xml')) {
+          unlink(PATH_DYNAFORM . $oPro->getProUid() . PATH_SEP . $oPro->getDynUid() . '.xml');
+        }
+        if (file_exists(PATH_DYNAFORM . $oPro->getProUid() . PATH_SEP . $oPro->getDynUid() . '_tmp0.xml')) {
+          unlink(PATH_DYNAFORM . $oPro->getProUid() . PATH_SEP . $oPro->getDynUid() . '_tmp0.xml');
+        }
+        if (file_exists(PATH_DYNAFORM . $oPro->getProUid() . PATH_SEP . $oPro->getDynUid() . '.html')) {
+          unlink(PATH_DYNAFORM . $oPro->getProUid() . PATH_SEP . $oPro->getDynUid() . '.html');
+        }
+        if (file_exists(PATH_DYNAFORM . $oPro->getProUid() . PATH_SEP . $oPro->getDynUid() . '_tmp0.html')) {
+          unlink(PATH_DYNAFORM . $oPro->getProUid() . PATH_SEP . $oPro->getDynUid() . '_tmp0.html');
+        }
+        return $iResult;
       }
       else {
         throw(new Exception( "This row doesn't exists!" ));
@@ -287,7 +300,7 @@ class Dynaform extends BaseDynaform {
     $oPro = DynaformPeer::retrieveByPk( $DynUid );
     return ( get_class ($oPro) == 'Dynaform' );
   }
-  
+
 	/**
 	 * verify if Dynaform row specified in [DynUid] exists.
 	 *
@@ -309,5 +322,5 @@ class Dynaform extends BaseDynaform {
     	throw($oError);
     }
   }
-  
+
 } // Dynaform
