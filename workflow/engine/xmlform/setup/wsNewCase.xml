@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm name="webservices" width="500" mode="edit" border="0" enableTemplate="0" height="205px">
+
+<SESSION_ID type="text" size="36" maxlength="32"  >
+  <en>Session Id</en>
+</SESSION_ID>
+
+<PROCESS_ID type="text" size="32" maxlength="32"  >
+  <en>Process ID</en>
+</PROCESS_ID>
+
+<VARIABLES type="textarea" cols="42" rows="8"  >
+  <en>Variables</en>
+</VARIABLES>
+
+
+<ACTION type="submit" >
+  <en>NewCase</en>
+</ACTION>
+
+</dynaForm>

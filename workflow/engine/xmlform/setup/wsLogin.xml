@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm name="webservices" width="500" mode="edit" border="0" enableTemplate="0" height="105px">
+
+<USER_ID type="text" size="32" maxlength="32"  >
+  <en>User ID</en>
+</USER_ID>
+
+<PASSWORD type="password" size="32" maxlength="32" >
+  <en>Password</en>
+</PASSWORD>
+
+<ACTION type="submit" >
+  <en>Login</en>
+</ACTION>
+
+</dynaForm>
