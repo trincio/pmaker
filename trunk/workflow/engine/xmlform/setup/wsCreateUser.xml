@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm name="webservices" width="500" mode="edit" border="0" enableTemplate="0" height="205px">
+
+<SESSION_ID type="text" size="36" maxlength="32"  >
+  <en>Session Id</en>
+</SESSION_ID>
+
+<USER_ID type="text" size="32" maxlength="32"  >
+  <en>User ID</en>
+</USER_ID>
+
+<FIRST_NAME type="text" size="32" maxlength="32"  >
+  <en>First Name</en>
+</FIRST_NAME>
+
+<LAST_NAME type="text" size="32" maxlength="32"  >
+  <en>Last Name</en>
+</LAST_NAME>
+
+<EMAIL type="text" size="32" maxlength="32"  >
+  <en>Email</en>
+</EMAIL>
+
+<ROLE type="text" size="32" maxlength="32"  >
+  <en>Role</en>
+</ROLE>
+
+
+<ACTION type="submit" >
+  <en>Login</en>
+</ACTION>
+
+</dynaForm>
