@@ -446,7 +446,9 @@ switch ($_POST['action']) {
         $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['PREVIOUS_STEP_LABEL'] = '';
         $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['NEXT_STEP_LABEL'] = '';
         $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['NEXT_STEP'] = '#';
-        $G_PUBLISH->AddContent('dynaform', 'xmlform', $_SESSION['PROCESS']. '/' . $_POST['DYN_UID'], $Fields['APP_DATA'], '','','','view');
+        $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['NEXT_ACTION'] = 'return false;';
+  
+        $G_PUBLISH->AddContent('dynaform', 'xmlform', $_SESSION['PROCESS']. '/' . $_POST['DYN_UID'], '', $Fields['APP_DATA'],'','','view');
         G::RenderPage('publish', 'raw');
         break;
 

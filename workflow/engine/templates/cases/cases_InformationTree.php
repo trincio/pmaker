@@ -48,17 +48,17 @@ $oNode->plus  = '';
 $oNode->minus = '';
 $oNode->point = '';
 
+$oNode        =& $oTree->addChild('6', '<a class="linkInBlue" href="#" onclick="showDynaforms();return false;">' . G::LoadTranslation('ID_DYNAFORMS') . '</a>', array('nodeType'=>'parentBlue'));
+$oNode->plus  = '';
+$oNode->minus = '';
+$oNode->point = '';
+
 $oNode        =& $oTree->addChild('5', '<a class="linkInBlue" href="#" onclick="showUploadedDocuments();return false;">' . G::LoadTranslation('ID_UPLOADED_DOCUMENTS') . '</a>', array('nodeType'=>'parentBlue'));
 $oNode->plus  = '';
 $oNode->minus = '';
 $oNode->point = '';
 
 $oNode        =& $oTree->addChild('6', '<a class="linkInBlue" href="#" onclick="showGeneratedDocuments();return false;">' . G::LoadTranslation('ID_GENERATED_DOCUMENTS') . '</a>', array('nodeType'=>'parentBlue'));
-$oNode->plus  = '';
-$oNode->minus = '';
-$oNode->point = '';
-
-$oNode        =& $oTree->addChild('6', '<a class="linkInBlue" href="#" onclick="showDynaforms();return false;">' . G::LoadTranslation('ID_DYNAFORMS') . '</a>', array('nodeType'=>'parentBlue'));
 $oNode->plus  = '';
 $oNode->minus = '';
 $oNode->point = '';
