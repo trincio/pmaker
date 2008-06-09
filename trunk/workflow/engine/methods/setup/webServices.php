@@ -62,6 +62,16 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
     oRPC.make();
     document.getElementById('spanUsersList').innerHTML = oRPC.xmlhttp.responseText;
   }
+  function execWebService( uid) {
+    var oRPC = new leimnud.module.rpc.xmlhttp({
+      url   : '../setup/webServicesAjax',
+      async : false,
+      method: 'POST',
+      args  : 'action=execWebService&wsID=' + uid
+    });
+    oRPC.make();
+    document.getElementById('spanUsersList').innerHTML = oRPC.xmlhttp.responseText;
+  }
   function saveGroup( form ) {
     ajax_post( form.action, form, 'POST' );
     currentPopupWindow.remove();

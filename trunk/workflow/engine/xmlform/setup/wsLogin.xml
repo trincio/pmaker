@@ -9,7 +9,7 @@
   <en>Password</en>
 </PASSWORD>
 
-<ACTION type="submit" >
+<ACTION type="button" onclick="execWebService('Login');" >
   <en>Login</en>
 </ACTION>
 
