@@ -442,7 +442,10 @@ switch ($_POST['action']) {
         break;
 
     case 'showDynaform':
+        G::LoadClass('case');
         $G_PUBLISH = new Publisher;
+        $oCase = new Cases();
+        $Fields = $oCase->loadCase( $_SESSION['APPLICATION'] );
         $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['PREVIOUS_STEP_LABEL'] = '';
         $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['NEXT_STEP_LABEL'] = '';
         $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['NEXT_STEP'] = '#';
