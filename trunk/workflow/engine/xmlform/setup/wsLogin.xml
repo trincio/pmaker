@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dynaForm name="webservices" width="500" mode="edit" border="0" enableTemplate="0" height="105px">
+<dynaForm name="webservices" width="500" mode="edit" border="0" enableTemplate="0" height="105px" 
+  ajaxSubmit="true"  callback="callbackWebService">
 
 <USER_ID type="text" size="32" maxlength="32"  >
   <en>User ID</en>
@@ -9,8 +10,28 @@
   <en>Password</en>
 </PASSWORD>
 
-<ACTION type="button" onclick="execWebService('Login');" >
+<ACTION type="button" onclick="submitThisForm(this.form);" >
   <en>Login</en>
 </ACTION>
 
+<JS type="javascript" replacetags="1">
+var submitThisForm = function(oForm)
+{
+	var oAux;
+	var bContinue = true;
+	/*
+	oAux = oForm.elements['form[PRO_TITLE]'];
+	if (oAux.value == '')
+	{
+		alert("@#MESSAGE1");
+		oAux.focus();
+		bContinue = false;
+	}
+	*/
+	if (bContinue)
+	{
+		ajax_post(oForm.action, oForm, 'POST');
+	}
+};
+</JS>
 </dynaForm>

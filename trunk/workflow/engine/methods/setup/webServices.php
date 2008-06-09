@@ -72,6 +72,41 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
     oRPC.make();
     document.getElementById('spanUsersList').innerHTML = oRPC.xmlhttp.responseText;
   }
+  
+  var submitThisForm = function(oForm)
+{
+	var oAux;
+	var bContinue = true;
+	/*
+	oAux = oForm.elements['form[PRO_TITLE]'];
+	if (oAux.value == '')
+	{
+		alert("@#MESSAGE1");
+		oAux.focus();
+		bContinue = false;
+	}
+	*/
+	if (bContinue)
+	{
+		result = ajax_post(oForm.action, oForm, 'POST');
+		document.getElementById('spanUsersList').innerHTML = result;
+	}
+};
+
+
+  function callbackWebService( ) {
+/*
+    var oRPC = new leimnud.module.rpc.xmlhttp({
+      url   : '../setup/webServicesAjax',
+      async : false,
+      method: 'POST',
+      args  : 'action=execWebService&wsID=' + uid
+    });
+    oRPC.make();
+    document.getElementById('spanUsersList').innerHTML = oRPC.xmlhttp.responseText;
+*/
+    document.getElementById('spanUsersList').innerHTML = 'hola';
+  }
   function saveGroup( form ) {
     ajax_post( form.action, form, 'POST' );
     currentPopupWindow.remove();
