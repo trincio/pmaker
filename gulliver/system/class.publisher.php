@@ -40,6 +40,7 @@ class Publisher
   var $dbc   = NULL;
   var $scriptFile = '';
   var $publisherId = 'publisherContent';
+  var $localMode = '';
 
   /* PHP 4 doesn't provide destructor where to free $scriptFileHandler resource */
   //var $scriptFileHandler = FALSE;
@@ -58,8 +59,11 @@ class Publisher
    * @return void
    *
    */
-  function AddContent( $strType = "form", $strLayout = "form", $strName = "", $strContent = "", $arrData = NULL, $strTarget = "", $ajaxServer='')
+  function AddContent( $strType = "form", $strLayout = "form", $strName = "", $strContent = "", $arrData = NULL, $strTarget = "", $ajaxServer='', $mode='')
   {
+    if($mode != '') {
+       $this->localMode = $mode;
+    }
     $pos = 0;
     if( is_array($this->Parts ))
     {
@@ -212,7 +216,9 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
         $G_FORM->ajaxServer  = $Part['ajaxServer'];
 
       $G_FORM->setValues ($Part['Data']);
+
       $G_FORM->setValues ( array( 'G_FORM_ID' => $G_FORM->id ) );
+
       //Asegurese de que no entre cuando $Part['Template']=="grid"
       //de hecho soo deberia usarse cuando $Part['Template']=="xmlform"
       if ((($Part['Type'] == 'dynaform') && $Part['Template']=="xmlform") || ($Part['Template']=="xmlform"))
@@ -226,6 +232,11 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
         $template = PATH_CORE . 'templates/'  . $Part['Template'] . '.html';
         if ($Part['Template'] == 'grid') print ('<form class="formDefault">');
         $scriptCode='';
+
+        if($this->localMode != '') { @# las modification by erik in 09/06/2008
+            $G_FORM->mode = $this->localMode;
+        }
+      
         print $G_FORM->render( $template , $scriptCode );
         if ($Part['Template'] == 'grid') print ('</form>');
         $G_HEADER->addScriptFile( $G_FORM->scriptURL );

@@ -90,7 +90,7 @@ class Form extends XmlForm
 
     if ( substr($filename, -4) !== '.xml' ) $filename = $filename . '.xml';
 
-    $this->home=$home;
+    $this->home=$home; 
     $res = parent::parseFile( $filename , $language, $forceParse );
     if ($res==1) trigger_error('Faild to parse file ' . $filename . '.', E_USER_ERROR );
     if ($res==2) trigger_error('Faild to create cache file "' . $xmlform->parsedFile . '".', E_USER_ERROR );
@@ -170,9 +170,9 @@ class Form extends XmlForm
     } else {
       $o->template = $o->printTemplate( $this );
     }
-    $scriptContent = $o->printJavaScript( $this );
+    $scriptContent = $o->printJavaScript( $this ); 
     return $o->printObject($this);
-
+     
     $tpl->template=$tpl->printTemplate($this);
     //In the header
       global $G_HEADER;

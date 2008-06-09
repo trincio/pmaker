@@ -659,14 +659,14 @@ class XmlForm_Field_Text extends XmlForm_Field_SimpleText
     if ($this->replaceTags == 1) {
       $value = G::replaceDataField( $value, $owner->values );
     }
-	  if ($this->mode==='edit') {
-	    if ($this->readOnly)
-		    return '<input class="module_app_input___gray" id="form['.$this->name.']" name="form['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $value , ENT_COMPAT, 'utf-8').'\' readOnly="readOnly" style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'" onkeypress="'.htmlentities( $onkeypress , ENT_COMPAT, 'utf-8').'"/>';
-		  else
-		    return '<input class="module_app_input___gray" id="form['.$this->name.']" name="form['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $value , ENT_COMPAT, 'utf-8').'\' style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'" onkeypress="'.htmlentities( $onkeypress , ENT_COMPAT, 'utf-8').'"/>';
+	    if ($this->mode==='edit') {
+	        if ($this->readOnly)
+		        return '<input class="module_app_input___gray" id="form['.$this->name.']" name="form['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $value , ENT_COMPAT, 'utf-8').'\' readOnly="readOnly" style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'" onkeypress="'.htmlentities( $onkeypress , ENT_COMPAT, 'utf-8').'"/>';
+		    else
+		        return '<input class="module_app_input___gray" id="form['.$this->name.']" name="form['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $value , ENT_COMPAT, 'utf-8').'\' style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'" onkeypress="'.htmlentities( $onkeypress , ENT_COMPAT, 'utf-8').'"/>';
 		} elseif ($this->mode==='view') {
 		    return '<input class="module_app_input___gray" id="form['.$this->name.']" name="form['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $value , ENT_COMPAT, 'utf-8').'\' style="display:none;'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'" onkeypress="'.htmlentities( $onkeypress , ENT_COMPAT, 'utf-8').'"/>' .
-		      $this->htmlentities( $value , ENT_COMPAT, 'utf-8');
+		    $this->htmlentities( $value , ENT_COMPAT, 'utf-8');
 		} else {
 		  return $this->htmlentities( $value , ENT_COMPAT, 'utf-8');
 		}
@@ -1160,19 +1160,20 @@ class XmlForm_Field_YesNo extends XmlForm_Field
 {
 	var $required=false;
 	var $readonly=false;
-  /**
-   * Function render
-   * @author David S. Callizaya S. <davidsantos@colosa.com>
-   * @access public
-   * @parameter string value
-   * @return string
-   */
-  function render( $value = NULL )
-  {
-			$html='<select id="form['.$this->name.']" name="form['.$this->name.']">';
-				$html.='<option value="'.'0'.'"'.($value==='0'?' selected':'').'>'.'NO'.'</input>';
-				$html.='<option value="'.'1'.'"'.($value==='1'?' selected':'').'>'.'YES'.'</input>';
-			$html.='</select>';
+    /**
+    * Function render
+    * @author David S. Callizaya S. <davidsantos@colosa.com>
+    * @access public
+    * @parameter string value
+    * @return string
+    */
+    function render( $value = NULL )
+    {
+        $mode = ($this->mode == 'view')?' disabled="disabled"':'';
+		$html='<select id="form['.$this->name.']" name="form['.$this->name.']"'.$mode.'>';
+		$html.='<option value="'.'0'.'"'.($value==='0'?' selected':'').'>'.'NO'.'</input>';
+		$html.='<option value="'.'1'.'"'.($value==='1'?' selected':'').'>'.'YES'.'</input>';
+		$html.='</select>';
 		return $html;
 	}
 }
@@ -1227,10 +1228,11 @@ class XmlForm_Field_File extends XmlForm_Field
    * @parameter string value
    * @return string
    */
-  function render( $value = NULL )
-  {
-		return '<input class="module_app_input___gray_file" id="form['.$this->name.']" name="form['.$this->name.']" type=\'file\' value=\''. $value .'\'/>';
-	}
+    function render( $value = NULL )
+    {
+        $mode = ($this->mode == 'view')?' disabled="disabled"':'';
+	    return '<input class="module_app_input___gray_file" '.$mode.'id="form['.$this->name.']" name="form['.$this->name.']" type=\'file\' value=\''. $value .'\'/>';
+    }
 }
 /*
 //DEPRECATED
@@ -1369,9 +1371,10 @@ class XmlForm_Field_Reset extends XmlForm_Field
    */
 	function render( $value = NULL ,$owner)
 	{
-    		$onclick = G::replaceDataField( $this->onclick,$owner->values );
+    	$onclick = G::replaceDataField( $this->onclick,$owner->values );
+        $mode = ($this->mode == 'view')?' disabled="disabled"':''; 
 		//return '<input name="'.$this->name.'" type ="reset" value="'.$this->label.'"/>';
-		return "<input style=\"{$this->style}\" class='module_app_button___gray {$this->className}' id=\"form[{$this->name}]\" name=\"form[{$this->name}]\" type='reset' value=\"{$this->label}\" ".(($this->onclick)?'onclick="'.htmlentities($onclick,ENT_COMPAT, 'utf-8').'"':'')." />";
+		return "<input style=\"{$this->style}\" $mode class='module_app_button___gray {$this->className}' id=\"form[{$this->name}]\" name=\"form[{$this->name}]\" type='reset' value=\"{$this->label}\" ".(($this->onclick)?'onclick="'.htmlentities($onclick,ENT_COMPAT, 'utf-8').'"':'')." />";
 	}
 }
 /**
@@ -1974,7 +1977,7 @@ class XmlForm_Field_Xmlform extends XmlForm_Field
    */
   function render( $values )
   {
-    $html='';
+    $html=''; 
     foreach($this->fields as $f => $v)    {
       $html.=$v->render('');
     }
@@ -2034,7 +2037,7 @@ class XmlForm
    * @return string
    */
   function parseFile($filename, $language, $forceParse)
-  {
+  {           
     $this->language = $language;
     $filename=$this->home . $filename;
     $this->fileName = $filename;
@@ -2080,12 +2083,15 @@ class XmlForm
       //Reeplace non valid characters in xmlform name with "_"
       $this->name = preg_replace( '/\W/' , '_' , $this->name );
       //Create fields
+         
       foreach( $xmlNode as $k => $v){
         if (($xmlNode[$k]->type !== 'cdata' )&&
             isset($xmlNode[$k]->attributes['type'])) {
-          if ( class_exists( 'XmlForm_Field_' . $xmlNode[$k]->attributes['type'] ))
-            eval('$field = new XmlForm_Field_' . $xmlNode[$k]->attributes['type'] .
-                  '($xmlNode[$k], $language, $this->home, $this);');
+              if ( class_exists( 'XmlForm_Field_' . $xmlNode[$k]->attributes['type'] )) {
+                $x = '$field = new XmlForm_Field_' . $xmlNode[$k]->attributes['type'] .
+                     '($xmlNode[$k], $language, $this->home, $this);';
+                eval($x);
+             }
           else
             $field=new XmlForm_Field( $xmlNode[$k], $language, $this->home, $this);
           $field->language = $this->language;
@@ -2307,8 +2313,12 @@ class xmlformTemplate extends Smarty
    */
   function getFields(&$form)
   {
-    $result=array();
+    
+    $result=array(); 
     foreach( $form->fields as $k => $v)  {
+      if($form->mode != ''){      #@ last modification: erik
+          $v->mode = $form->mode; #@
+      }                           #@
       if (isset($form->fields[$k]->sql)) $form->fields[$k]->executeSQL( $form );
       $value = ( isset ( $form->values[$k ] ) ) ? $form->values[$k ] : NULL;
       $result[$k]         = G::replaceDataField ( $form->fields[$k]->label , $form->values );
@@ -2343,7 +2353,7 @@ class xmlformTemplate extends Smarty
     $result = $this->getFields($form);
 
     $this->assign(array('PATH_TPL' => PATH_TPL));
-    $this->assign($result);
+    $this->assign($result);             
     $this->assign(array('_form' => $form));
     //'mem:defaultTemplate'.$form->name obtains the template generated for the
     //current "form" object, then this resource y saved by Smarty in the
