@@ -9,7 +9,7 @@ var showInformation = function()
   	target     : "cases_target",
   	dataServer : "cases_Ajax",
   	action     : "information",
-  	title      : "Information",
+  	title      : G_STRINGS.ID_INFORMATION,
   	lang       : "en",
   	theme      : "processmaker",
   	images_dir :leimnud.path_root + "cases/core/images/"
@@ -26,7 +26,7 @@ var showInformation = function()
 	});
 	r.make();
    };
-   Cse.panels.step.elements.title.innerHTML = "Information";
+   Cse.panels.step.elements.title.innerHTML = G_STRINGS.ID_INFORMATION;
    Cse.panels.step.clearContent();
    Cse.panels.step.loader.show();
    var oRPC = new leimnud.module.rpc.xmlhttp({
@@ -51,7 +51,7 @@ var showActions = function()
   	  target     : "cases_target",
   	  dataServer : "cases_Ajax",
   	  action     : "actions",
-  	  title      : "Actions",
+  	  title      : G_STRINGS.ID_ACTIONS,
   	  lang       : "en",
   	  theme      : "processmaker",
   	  images_dir :leimnud.path_root + "cases/core/images/"
@@ -68,7 +68,7 @@ var showActions = function()
 	});
 	r.make();
    };
-    Cse.panels.step.elements.title.innerHTML = "Actions";
+    Cse.panels.step.elements.title.innerHTML = G_STRINGS.ID_ACTIONS;
     Cse.panels.step.clearContent();
     Cse.panels.step.loader.show();
     var oRPC = new leimnud.module.rpc.xmlhttp({
@@ -84,7 +84,7 @@ var showActions = function()
     oRPC.make();
   }
 };
-var showKT = function()
+/*var showKT = function()
 {
   if (!Cse.panels.step)
   {
@@ -117,14 +117,14 @@ var showKT = function()
     }.extend(this);
     oRPC.make();
   }
-};
+};*/
 var showProcessMap = function ()
 {
 	oPanel = new leimnud.module.panel();
   oPanel.options = {
   	size	:{w:(document.body.clientWidth * 95) / 100,h:(document.body.clientHeight * 95) / 100},
   	position:{x:0,y:0,center:true},
-  	title	:"Process Map",
+  	title	:G_STRINGS.ID_PROCESS_MAP,
   	theme	:"processmaker",
   	statusBar:false,
   	control	:{resize:false,roll:false,drag:false},
@@ -181,7 +181,7 @@ var showProcessInformation = function()
   oPanel.options = {
   	size	:{w:450,h:260},
   	position:{x:0,y:0,center:true},
-  	title	:"Process Information",
+  	title	:G_STRINGS.ID_PROCESS_INFORMATION,
   	theme	:"processmaker",
   	statusBar:false,
   	control	:{resize:false,roll:false},
@@ -355,7 +355,7 @@ var view_reassignCase = function()
 								{value:G_STRINGS.ID_DELETE},
 								{value:G_STRINGS.CANCEL}
 							],*/
-							title	:G_STRINGS.ID_PROSESSESCASE,
+							title	:'',
 							control	:{close:true,resize:false},fx:{modal:true},
 							statusBar:false,
 							fx	:{shadow:true,modal:true}
@@ -382,17 +382,46 @@ var view_reassignCase = function()
 
 };
 
-var reassignCase = function(USR_UID)
+var reassignCase = function(USR_UID, THETYPE)
 {
   var oRPC = new leimnud.module.rpc.xmlhttp({
         url:  'cases_Ajax',
-        args: 'action=reassignCase'+'&USR_UID='+USR_UID
+        args: 'action=reassignCase'+'&USR_UID='+USR_UID + '&THETYPE=' + THETYPE
       });
 
       oRPC.callback = function(oRPC) {
         window.location = 'cases_List';
       }.extend(this);
       oRPC.make();
+};
+
+var adhocAssignmentUsers = function () {
+  oPanel = new leimnud.module.panel();
+  oPanel.options = {
+  	size	:{w:450,h:450},
+  	position:{x:0,y:0,center:true},
+  	title	:'',
+  	theme	:"processmaker",
+  	statusBar:false,
+  	control	:{resize:false,roll:false},
+  	fx	:{modal:true,opacity:true,blinkToFront:true,fadeIn:false}
+  };
+  oPanel.events = {
+  	remove: function() { delete(oPanel); }.extend(this)
+  };
+  oPanel.make();
+  oPanel.loader.show();
+  var oRPC = new leimnud.module.rpc.xmlhttp({
+  	url : 'cases_Ajax',
+  	args: 'action=adhocAssignmentUsers'
+  });
+  oRPC.callback = function(rpc){
+  	oPanel.loader.hide();
+  	var scs=rpc.xmlhttp.responseText.extractScript();
+  	oPanel.addContent(rpc.xmlhttp.responseText);
+  	scs.evalScript();
+  }.extend(this);
+  oRPC.make();
 };
 
 var showUploadedDocuments = function()

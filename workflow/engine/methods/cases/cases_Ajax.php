@@ -174,7 +174,7 @@ switch ($_POST['action']) {
         $oTask = new Task();
         $aRow = $oTask->load($_POST['sTaskUID']);
         $sTitle = $aRow['TAS_TITLE'];
-        $oCriteria = new Criteria();
+        $oCriteria = new Criteria('workflow');
         $oCriteria->addSelectColumn(UsersPeer::USR_UID);
         $oCriteria->addSelectColumn(UsersPeer::USR_FIRSTNAME);
         $oCriteria->addSelectColumn(UsersPeer::USR_LASTNAME);
@@ -333,7 +333,7 @@ switch ($_POST['action']) {
         }
 
         require_once 'classes/model/Users.php';
-        $c = new Criteria();
+        $c = new Criteria('workflow');
         $c->addSelectColumn(UsersPeer::USR_UID);
         $c->addSelectColumn(UsersPeer::USR_FIRSTNAME);
         $c->addSelectColumn(UsersPeer::USR_LASTNAME);
@@ -350,7 +350,7 @@ switch ($_POST['action']) {
     case 'reassignCase':
         G::LoadClass('case');
         $cases = new Cases();
-        $cases->reassignCase($_SESSION['APPLICATION'], $_SESSION['INDEX'], $_POST['USR_UID']);
+        $cases->reassignCase($_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['USER_LOGGED'], $_POST['USR_UID'], $_POST['THETYPE']);
         break;
     case 'toRevisePanel':
       //$G_HEADER->addScriptFile('/js/common/tree/tree.js');
@@ -427,7 +427,42 @@ switch ($_POST['action']) {
         $aFields['FILE2'] = 'cases_ShowOutputDocument?a=' . $aFields['APP_DOC_UID'] . '&ext=pdf&random=' . rand();
         $G_PUBLISH = new Publisher();
         $G_PUBLISH->AddContent('xmlform', 'xmlform', 'cases/cases_ViewAnyOutputDocument', '', G::array_merges($aOD, $aFields), '');
-        //$G_PUBLISH->AddContent('xmlform', 'xmlform', 'cases/cases_ViewAnyOutputDocument', '', $aFields, '');
+        G::RenderPage('publish', 'raw');
+      break;
+    case 'adhocAssignmentUsers':
+        G::LoadClass('groups');
+        G::LoadClass('tasks');
+        $oTasks = new Tasks();
+        $aAux = $oTasks->getGroupsOfTask($_SESSION['TASK'], 2);
+        $aAdhocUsers = array();
+        $oGroups = new Groups();
+        foreach ($aAux as $aGroup) {
+          $aUsers = $oGroups->getUsersOfGroup($aGroup['GRP_UID']);
+          foreach ($aUsers as $aUser) {
+            if ($aUser['USR_UID'] != $_SESSION['USER_LOGGED']) {
+              $aAdhocUsers[] = $aUser['USR_UID'];
+            }
+          }
+        }
+        $aAux = $oTasks->getUsersOfTask($_SESSION['TASK'], 2);
+        foreach ($aAux as $aUser) {
+          if ($aUser['USR_UID'] != $_SESSION['USER_LOGGED']) {
+            $aAdhocUsers[] = $aUser['USR_UID'];
+          }
+        }
+        require_once 'classes/model/Users.php';
+        $oCriteria = new Criteria('workflow');
+        $oCriteria->addSelectColumn(UsersPeer::USR_UID);
+        $oCriteria->addSelectColumn(UsersPeer::USR_FIRSTNAME);
+        $oCriteria->addSelectColumn(UsersPeer::USR_LASTNAME);
+        $oCriteria->add(UsersPeer::USR_UID, $aAdhocUsers, Criteria::IN);
+
+        global $G_PUBLISH;
+        global $G_HEADER;
+        $G_PUBLISH = new Publisher();
+        $G_PUBLISH->AddContent('propeltable', 'paged-table', 'processes/processes_viewreassignCase', $oCriteria, array('THETYPE' => 'ADHOC'));
+        $G_HEADER->clearScripts();
+        $G_HEADER->addScriptFile('/js/form/core/pagedTable.js');
         G::RenderPage('publish', 'raw');
       break;
     default: echo 'default';

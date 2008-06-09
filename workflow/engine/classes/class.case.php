@@ -1851,7 +1851,7 @@ class Cases
         //$this->ReactivateCurrentDelegation($sApplicationUID);
     }
 
-    function reassignCase($sApplicationUID, $iDelegation, $newUserUID)
+    function reassignCase($sApplicationUID, $iDelegation, $sUserUID, $newUserUID, $sType)
     {
         $this->CloseCurrentDelegation($sApplicationUID, $iDelegation);
         $oAppDelegation = new AppDelegation();
@@ -1870,6 +1870,20 @@ class Cases
         $oAppDelegation->update($aData);
         $oAppThread = new AppThread();
         $oAppThread->update(array('APP_UID' => $sApplicationUID, 'APP_THREAD_INDEX' => $aFieldsDel['DEL_THREAD'], 'DEL_INDEX' => $iIndex));
+        //Save in APP_DELAY
+        $oApplication = new Application();
+        $aFields = $oApplication->Load($sApplicationUID);
+        $aData['PRO_UID'] = $aFieldsDel['PRO_UID'];
+        $aData['APP_UID'] = $sApplicationUID;
+        $aData['APP_THREAD_INDEX'] = $aFieldsDel['DEL_THREAD'];
+        $aData['APP_DEL_INDEX'] = $iDelegation;
+        $aData['APP_TYPE'] = ($sType != '' ? $sType : 'REASSIGN');
+        $aData['APP_STATUS'] = $aFields['APP_STATUS'];
+        $aData['APP_DELEGATION_USER'] = $sUserUID;
+        $aData['APP_ENABLE_ACTION_USER'] = $sUserUID;
+        $aData['APP_ENABLE_ACTION_DATE'] = date('Y-m-d H:i:s');
+        $oAppDelay = new AppDelay();
+        $oAppDelay->create($aData);
     }
 
     function getAllStepsToRevise($APP_UID, $DEL_INDEX)
