@@ -110,9 +110,8 @@ class Report {
     $oCriteria->addJoin(AppDelegationPeer::USR_UID, UsersPeer::USR_UID, Criteria::LEFT_JOIN);    
     //$oCriteria->add(AppDelegationPeer::DEL_DURATION,  $from, Criteria::GREATER_EQUAL);
     //$oCriteria->add(AppDelegationPeer::DEL_DURATION,  $to, Criteria::LESS_EQUAL);
-    //$aAux1 = explode('-', $from);  date('Y-m-d H:i:s', mktime(0, 0, 0, $aAux1[1], $aAux1[2], $aAux1[0]))
-    $oCriteria->add($oCriteria->getNewCriterion(AppDelegationPeer::DEL_INIT_DATE, $from, Criteria::GREATER_EQUAL)->addAnd($oCriteria->getNewCriterion(AppDelegationPeer::DEL_INIT_DATE,  $to, Criteria::LESS_EQUAL)));   
-    
+    //$aAux1 = explode('-', $from);  date('Y-m-d H:i:s', mktime(0, 0, 0, $aAux1[1], $aAux1[2], $aAux1[0]))        
+    $oCriteria->add($oCriteria->getNewCriterion(AppDelegationPeer::DEL_INIT_DATE, $from.' 00:00:00', Criteria::GREATER_EQUAL)->addAnd($oCriteria->getNewCriterion(AppDelegationPeer::DEL_INIT_DATE, $to.' 23:59:59', Criteria::LESS_EQUAL)));   
     
     if($startedby!='') $oCriteria->add(AppDelegationPeer::USR_UID,  $startedby);
         		    
@@ -306,7 +305,7 @@ class Report {
 		$proContentConds[] = array('C.CON_LANG',     $del . SYS_LANG . $del);
 		$oCriteria->addJoinMC($proContentConds,      Criteria::LEFT_JOIN);
 
-    $oCriteria->add($oCriteria->getNewCriterion(AppDelegationPeer::DEL_INIT_DATE, $from, Criteria::GREATER_EQUAL)->addAnd($oCriteria->getNewCriterion(AppDelegationPeer::DEL_INIT_DATE,  $to, Criteria::LESS_EQUAL)));   
+    $oCriteria->add($oCriteria->getNewCriterion(AppDelegationPeer::DEL_INIT_DATE, $from.' 00:00:00', Criteria::GREATER_EQUAL)->addAnd($oCriteria->getNewCriterion(AppDelegationPeer::DEL_INIT_DATE,  $to.' 23:59:59', Criteria::LESS_EQUAL)));   
     
     if($startedby!='') $oCriteria->add(AppDelegationPeer::USR_UID,  $startedby);
     
@@ -336,7 +335,7 @@ class Report {
     $oCriteria->addJoinMC($proTitleConds ,    Criteria::LEFT_JOIN);
     $oCriteria->addGroupByColumn(AppDelegationPeer::PRO_UID);
     
-    $oCriteria->add($oCriteria->getNewCriterion(AppDelegationPeer::DEL_INIT_DATE, $from, Criteria::GREATER_EQUAL)->addAnd($oCriteria->getNewCriterion(AppDelegationPeer::DEL_INIT_DATE,  $to, Criteria::LESS_EQUAL)));   
+    $oCriteria->add($oCriteria->getNewCriterion(AppDelegationPeer::DEL_INIT_DATE, $from.' 00:00:00', Criteria::GREATER_EQUAL)->addAnd($oCriteria->getNewCriterion(AppDelegationPeer::DEL_INIT_DATE,  $to.' 23:59:59', Criteria::LESS_EQUAL)));   
     
     if($startedby!='') $oCriteria->add(AppDelegationPeer::USR_UID,  $startedby);
     
@@ -545,9 +544,9 @@ class Report {
               LEFT JOIN PROCESS AS P ON (P.PRO_UID = AD.PRO_UID)
               LEFT JOIN APPLICATION AS A ON(A.APP_UID = AD.APP_UID)
               LEFT JOIN USERS AS U ON(U.USR_UID = A.APP_INIT_USER)
-              WHERE AD.APP_UID<>'' AND P.PRO_STATUS<>'DISABLED' 
+              WHERE AD.APP_UID<>'' 
               GROUP BY USER";
-
+          // AND P.PRO_STATUS<>'DISABLED'  que sucede cuando se crea una new version del proceso q ya existe al momento de importar
 			$con = Propel::getConnection("workflow");
 			$stmt = $con->prepareStatement($sql);
 			$rs = $stmt->executeQuery();
@@ -591,18 +590,18 @@ class Report {
 		$oCriteria = new Criteria('workflow');
 		$del = DBAdapter::getStringDelimiter();  
 	  if($process=='')
-	  { $var=" WHERE P.PRO_STATUS<>'DISABLED'";	  	  
+	  { $var=" ";	  	  
 	  }	
 	  else
 	  {
 	  	if($task=='')
 	  	{ 
 	  	 	 $var=" LEFT JOIN TASK AS T ON (AD.TAS_UID = T.TAS_UID)
-                WHERE P.PRO_STATUS<>'DISABLED' AND AD.PRO_UID='".$process."'";
+                WHERE AD.PRO_UID='".$process."'";
     	}    
 	  	else
 	  	{ $var=" LEFT JOIN TASK AS T ON (AD.TAS_UID = T.TAS_UID)
-             WHERE P.PRO_STATUS<>'DISABLED' AND AD.PRO_UID='".$process."' AND AD.TAS_UID='".$task."' "; 
+             WHERE AD.PRO_UID='".$process."' AND AD.TAS_UID='".$task."' "; 
     	}
     }	
 	  $sql = "SELECT CONCAT(U.USR_LASTNAME,' ',USR_FIRSTNAME) AS USER, 
@@ -668,7 +667,7 @@ class Report {
               FROM APP_DELEGATION AS AD 
               LEFT JOIN PROCESS AS P ON (P.PRO_UID = AD.PRO_UID)              
               LEFT JOIN USERS AS U ON(U.USR_UID = AD.USR_UID)
-              WHERE AD.APP_UID<>'' AND P.PRO_STATUS<>'DISABLED' AND AD.DEL_FINISH_DATE IS NULL
+              WHERE AD.APP_UID<>'' AND AD.DEL_FINISH_DATE IS NULL
               GROUP BY USER";
 
 			$con = Propel::getConnection("workflow");
@@ -714,18 +713,18 @@ class Report {
 		$oCriteria = new Criteria('workflow');
 		$del = DBAdapter::getStringDelimiter();  
 	  if($process=='')
-	  { $var=" WHERE P.PRO_STATUS<>'DISABLED' AND AD.DEL_FINISH_DATE IS NULL";	  	  
+	  { $var=" WHERE AD.DEL_FINISH_DATE IS NULL";	  	  
 	  }	
 	  else
 	  {
 	  	if($task=='')
 	  	{ 
 	  	 	 $var=" LEFT JOIN TASK AS T ON (AD.TAS_UID = T.TAS_UID)
-                WHERE P.PRO_STATUS<>'DISABLED' AND AD.PRO_UID='".$process."' AND AD.DEL_FINISH_DATE IS NULL";
+                WHERE AD.PRO_UID='".$process."' AND AD.DEL_FINISH_DATE IS NULL";
     	}    
 	  	else
 	  	{ $var=" LEFT JOIN TASK AS T ON (AD.TAS_UID = T.TAS_UID)
-             WHERE P.PRO_STATUS<>'DISABLED' AND AD.PRO_UID='".$process."' AND AD.TAS_UID='".$task."' "; 
+             WHERE AD.PRO_UID='".$process."' AND AD.TAS_UID='".$task."' "; 
     	}
     }	
 	  $sql = "SELECT CONCAT(U.USR_LASTNAME,' ',USR_FIRSTNAME) AS USER, 

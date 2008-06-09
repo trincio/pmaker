@@ -105,8 +105,9 @@ class Cases
         $c->clearSelectColumns();
         $c->addSelectColumn(TaskPeer::TAS_UID);
         $c->addSelectColumn(TaskPeer::PRO_UID);
-
+        $c->addJoin(TaskPeer::PRO_UID, ProcessPeer::PRO_UID, Criteria::LEFT_JOIN);
         $c->addJoin(TaskPeer::TAS_UID, TaskUserPeer::TAS_UID, Criteria::LEFT_JOIN);
+        $c->add(ProcessPeer::PRO_STATUS, 'DISABLED', Criteria::NOT_EQUAL);
         $c->add(TaskPeer::TAS_START, 'TRUE');
         $c->add(TaskUserPeer::USR_UID, $sUIDUser);
 

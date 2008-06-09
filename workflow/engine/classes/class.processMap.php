@@ -781,9 +781,9 @@ class processMap {
   	  $aFields            = $oProcess->load($sProcessUID);
   	  $oTask              = new Task();
   	  $aFields            = $oTask->load($sTaskUID);
-  	  
+
   	  $_SESSION['iType'] = 1;
-  	  
+
   	  $aFields['TASK']         = $sTaskUID;
   	  $aFields['TYPE']         = $_SESSION['iType'];
   	  $aFields['OF_TO_ASSIGN'] = G::LoadTranslation('ID_DE_ASSIGN');
@@ -804,14 +804,14 @@ class processMap {
   	  $G_HEADER->clearScripts();
   	  $oTask = new Task();
   	  $aTask = $oTask->load($sTaskUID);
-  	 
+
   	  if ($aFields['TAS_TYPE'] == 'TRUE') {
   	  	    $G_PUBLISH->AddContent('propeltable', 'paged-table', 'users/users_ShortList', $this->getTaskUsersCriteria($sTaskUID, $_SESSION['iType']), $aFields);
   	  	  }
   	  else {
   	  	  	$G_PUBLISH->AddContent('propeltable', 'paged-table', 'users/users_ShortList2', $this->getTaskUsersCriteria($sTaskUID, $_SESSION['iType']), $aFields);
   	  	  }
-  	  	 	  	  	 
+
       G::RenderPage('publish', 'raw');
       return true;
     }
@@ -827,14 +827,14 @@ class processMap {
 	* @return boolean
 	*/
 	function users_adhoc($sProcessUID = '', $sTaskUID= '') {
-		try {			
+		try {
 		  $oProcess           = new Process();
   	  $aFields            = $oProcess->load($sProcessUID);
   	  $oTask              = new Task();
   	  $aFields            = $oTask->load($sTaskUID);
-  	  
+
   	  $_SESSION['iType'] = 2;
-  	  
+
   	  $aFields['TASK']         = $sTaskUID;
   	  $aFields['TYPE']         = $_SESSION['iType'];
   	  $aFields['OF_TO_ASSIGN'] = G::LoadTranslation('ID_DE_ASSIGN');
@@ -842,10 +842,10 @@ class processMap {
   	  $aFields['UIDS']         = "'0'";
   	  $oTasks  = new Tasks();
   	  $oGroups = new Groups();
-  	  $aAux1   = $oTasks->getGroupsOfTask($sTaskUID, $_SESSION['iType']);  	  
-  	  foreach ($aAux1 as $aGroup) 
+  	  $aAux1   = $oTasks->getGroupsOfTask($sTaskUID, $_SESSION['iType']);
+  	  foreach ($aAux1 as $aGroup)
   	  {	$aAux2 = $oGroups->getUsersOfGroup($aGroup['GRP_UID']);
-  	    foreach ($aAux2 as $aUser) 
+  	    foreach ($aAux2 as $aUser)
   	    {  $aFields['UIDS'] .= ",'" . $aUser['USR_UID'] . "'";
   	    }
   	  }
@@ -855,9 +855,9 @@ class processMap {
   	  $G_HEADER->clearScripts();
   	  $oTask = new Task();
   	  $aTask = $oTask->load($sTaskUID);
-  	  
+
   	  $G_PUBLISH->AddContent('propeltable', 'paged-table', 'users/users_ShortListAdhoc', $this->getTaskUsersCriteria($sTaskUID, $_SESSION['iType']), $aFields);
-  	  	
+
       G::RenderPage('publish', 'raw');
       return true;
     }
@@ -2008,7 +2008,7 @@ class processMap {
     $proDescripConds[] = array( 'C2.CON_CATEGORY' , $del . 'PRO_DESCRIPTION' . $del );
     $proDescripConds[] = array( 'C2.CON_LANG' ,     $del . SYS_LANG . $del );
     $c->addJoinMC ( $proDescripConds ,      Criteria::LEFT_JOIN );
-
+    $c->add(ProcessPeer::PRO_STATUS, 'DISABLED', Criteria::NOT_EQUAL);
     return $c;
   }
 
