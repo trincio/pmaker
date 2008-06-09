@@ -541,3 +541,63 @@ var showGeneratedDocument = function(APP_DOC_UID) {
   }.extend(this);
   oRPC.make();
 };
+
+var showDynaforms = function() {
+
+  oPanel2 = new leimnud.module.panel();
+  oPanel2.options = {
+    size    :{w:400,h:300},
+    position:{x:0,y:0,center:true},
+    title   :'',
+    theme   :'processmaker',
+    statusBar:true,
+    control :{resize:false,roll:false},
+    fx  :{modal:true,opacity:true,blinkToFront:true,fadeIn:false}
+  };
+  oPanel2.events = {
+    remove: function() { delete(oPanel2); }.extend(this)
+  };
+  oPanel2.make();
+  oPanel2.loader.show();
+  var oRPC = new leimnud.module.rpc.xmlhttp({
+    url : 'cases_Ajax',
+    args: 'action=showDynaformList'
+  });
+  oRPC.callback = function(rpc){
+    oPanel2.loader.hide();
+    var scs=rpc.xmlhttp.responseText.extractScript();
+    oPanel2.addContent(rpc.xmlhttp.responseText);
+    scs.evalScript();
+  }.extend(this);
+  oRPC.make();
+  };
+
+  function showDynaform(DYN_UID)
+  {
+    oPanel2 = new leimnud.module.panel();
+    oPanel2.options = {
+        size    :{w:550,h:400},
+        position:{x:0,y:0,center:true},
+        title   :'',
+        theme   :'processmaker',
+        statusBar:true,
+        control :{resize:false,roll:false},
+        fx  :{modal:true,opacity:true,blinkToFront:true,fadeIn:false}
+    };
+    oPanel2.events = {
+        remove: function() { delete(oPanel2); }.extend(this)
+    };
+    oPanel2.make();
+    oPanel2.loader.show();
+    var oRPC = new leimnud.module.rpc.xmlhttp({
+        url : 'cases_Ajax',
+        args: 'action=showDynaform&DYN_UID='+DYN_UID
+    });
+    oRPC.callback = function(rpc){
+        oPanel2.loader.hide();
+        var scs=rpc.xmlhttp.responseText.extractScript();
+        oPanel2.addContent(rpc.xmlhttp.responseText);
+        scs.evalScript();
+    }.extend(this);
+    oRPC.make();
+  }

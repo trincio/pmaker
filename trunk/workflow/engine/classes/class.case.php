@@ -1982,4 +1982,40 @@ class Cases
       return $oCriteria;
     }
 
+    function getallDynaformsCriteria($sApplicationUID)
+    {
+      $oCriteria = new Criteria('workflow');
+      $oCriteria->add(ApplicationPeer::APP_UID, $sApplicationUID);
+      $oCriteria->addJoin(ApplicationPeer::PRO_UID, StepPeer::PRO_UID);
+      $oCriteria->addJoin(StepPeer::STEP_UID_OBJ, DynaformPeer::DYN_UID);
+      $oCriteria->add(StepPeer::STEP_TYPE_OBJ, 'DYNAFORM');
+      $oCriteria->addAscendingOrderByColumn(StepPeer::STEP_POSITION);
+
+      $oDataset = DynaformPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      $aInputDocuments = array();
+      $aInputDocuments[] = array(
+        'DYN_DESCRIPTION' => 'char'
+      );
+        
+      while ($aRow = $oDataset->getRow()) {
+          $o = new Dynaform();
+          $o->setDynUid($aRow['DYN_UID']);
+          $aFields['DYN_DESCRIPTION'] = $o->getDynTitle();
+          $aFields['DYN_UID'] = $aRow['DYN_UID'];
+          $aFields['EDIT'] = G::LoadTranslation('ID_EDIT');
+          $aInputDocuments[] = $aFields;
+          $oDataset->next();
+      }
+      global $_DBArray;
+      $_DBArray['Dynaforms'] = $aInputDocuments;
+      $_SESSION['_DBArray'] = $_DBArray;
+      G::LoadClass('ArrayPeer');
+      $oCriteria = new Criteria('dbarray');
+      $oCriteria->setDBArrayTable('Dynaforms');
+      //$oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_CREATE_DATE);
+      return $oCriteria;
+    }
+
 }

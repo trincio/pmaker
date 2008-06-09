@@ -429,6 +429,27 @@ switch ($_POST['action']) {
         $G_PUBLISH->AddContent('xmlform', 'xmlform', 'cases/cases_ViewAnyOutputDocument', '', G::array_merges($aOD, $aFields), '');
         G::RenderPage('publish', 'raw');
       break;
+
+
+    case 'showDynaformList':
+        G::LoadClass('case');
+        $oCase = new Cases();
+        global $G_PUBLISH;
+        global $G_HEADER;
+        $G_PUBLISH = new Publisher();
+        $G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_AllDynaformsList', $oCase->getallDynaformsCriteria($_SESSION['APPLICATION']));
+        G::RenderPage('publish', 'raw');
+        break;
+
+    case 'showDynaform':
+        $G_PUBLISH = new Publisher;
+        $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['PREVIOUS_STEP_LABEL'] = '';
+        $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['NEXT_STEP_LABEL'] = '';
+        $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['NEXT_STEP'] = '#';
+        $G_PUBLISH->AddContent('dynaform', 'xmlform', $_SESSION['PROCESS']. '/' . $_POST['DYN_UID'], $Fields['APP_DATA'], '','','','view');
+        G::RenderPage('publish', 'raw');
+        break;
+
     case 'adhocAssignmentUsers':
         G::LoadClass('groups');
         G::LoadClass('tasks');
@@ -465,5 +486,6 @@ switch ($_POST['action']) {
         $G_HEADER->addScriptFile('/js/form/core/pagedTable.js');
         G::RenderPage('publish', 'raw');
       break;
+
     default: echo 'default';
 }
