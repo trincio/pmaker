@@ -1996,13 +1996,13 @@ class Cases
       $oDataset->next();
       $aInputDocuments = array();
       $aInputDocuments[] = array(
-        'DYN_DESCRIPTION' => 'char'
+        'DYN_TITLE' => 'char'
       );
-        
+
       while ($aRow = $oDataset->getRow()) {
           $o = new Dynaform();
           $o->setDynUid($aRow['DYN_UID']);
-          $aFields['DYN_DESCRIPTION'] = $o->getDynTitle();
+          $aFields['DYN_TITLE'] = $o->getDynTitle();
           $aFields['DYN_UID'] = $aRow['DYN_UID'];
           $aFields['EDIT'] = G::LoadTranslation('ID_EDIT');
           $aInputDocuments[] = $aFields;

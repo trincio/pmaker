@@ -548,7 +548,7 @@ var showDynaforms = function() {
   oPanel2.options = {
     size    :{w:400,h:300},
     position:{x:0,y:0,center:true},
-    title   :'',
+    title   :G_STRINGS.ID_DYNAFORMS,
     theme   :'processmaker',
     statusBar:true,
     control :{resize:false,roll:false},

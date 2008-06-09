@@ -6,9 +6,9 @@
 
 <DYN_UID type="hidden" showInTable="0"/>
 
-<DYN_DESCRIPTION type="text" colWidth="275" titleAlign="left" align="left">
-  <en>Dynaform Description</en>
-</DYN_DESCRIPTION>
+<DYN_TITLE type="text" colWidth="275" titleAlign="left" align="left">
+  <en>Title</en>
+</DYN_TITLE>
 
 <VIEW type="link" colWidth="25" value="@G::LoadTranslation(ID_VIEW)" link="javascript:showDynaform('@#DYN_UID');"/>
 
