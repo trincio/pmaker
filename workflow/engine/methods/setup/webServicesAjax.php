@@ -35,7 +35,7 @@ switch ($_POST['action'])
   	if ( file_exists ( PATH_XMLFORM . $xmlform . '.xml') ) {
   	  $G_PUBLISH = new Publisher();
       $G_HEADER->clearScripts();
-  	  $G_PUBLISH->AddContent('xmlform', 'xmlform', $xmlform, null, null   );
+      $G_PUBLISH->AddContent('xmlform', 'xmlform', $xmlform, '', '', '../setup/webServicesAjax');
       G::RenderPage('publish', 'raw');
     }
 	break;
