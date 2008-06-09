@@ -35,9 +35,17 @@ switch ($_POST['action'])
   	if ( file_exists ( PATH_XMLFORM . $xmlform . '.xml') ) {
   	  $G_PUBLISH = new Publisher();
       $G_HEADER->clearScripts();
-  	  $G_PUBLISH->AddContent('xmlform', 'xmlform', $xmlform );
+  	  $G_PUBLISH->AddContent('xmlform', 'xmlform', $xmlform, null, null   );
       G::RenderPage('publish', 'raw');
     }
+	break;
+	case 'execWebService':
+	  global $G_PUBLISH;
+  	global $G_HEADER;
+  	$method = isset($_POST['wsID']) ? $_POST['wsID'] : '';
+  	print_r ($_POST);
+  	print "execWebService <br>";
+  	print $method;
 	break;
 	case 'showUsers':
 	  G::LoadClass('groups');
