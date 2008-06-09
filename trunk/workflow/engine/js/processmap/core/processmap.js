@@ -940,7 +940,7 @@ var processmap=function(){
 						}.extend(this,panel);
 						r.make();
 					}.extend(this,index)},
-					
+
 					{image:"/images/users.png",text:G_STRINGS.ID_PROCESSMAP_USERS_AND_GROUPS_ADHOC,launch:function(event,index){
 						var panel;
 						this.tmp.usersPanel = panel =new leimnud.module.panel();
@@ -973,7 +973,7 @@ var processmap=function(){
 						}.extend(this,panel);
 						r.make();
 					}.extend(this,index)},
-					
+
 					{image:"/images/rules.png",text:G_STRINGS.ID_PROCESSMAP_WORKFLOW_PATTERNS,launch:this.patternPanel.args(index)},
 					{image:"/images/delete_rules.png",text:G_STRINGS.ID_PROCESSMAP_WORKFLOW_DELETE_PATTERNS,launch:this.parent.closure({instance:this,method:function() {
 						var data = this.data.db.task[index];
@@ -1094,11 +1094,11 @@ var processmap=function(){
 									title	: G_STRINGS.ID_PROCESSMAP_TASK_PROPERTIES_TIMING,
 									content	: this.parent.closure({instance:this,method:iForm,args:[panel,index,3]}),
 									noClear : true
-								},/*{
+								},{
 									title	: G_STRINGS.ID_PROCESSMAP_TASK_PROPERTIES_PERMISSIONS,
 									content	: this.parent.closure({instance:this,method:iForm,args:[panel,index,5]}),
 									noClear : true
-								},*/{
+								},{
 									title	: G_STRINGS.ID_PROCESSMAP_TASK_PROPERTIES_LABELS,
 									content	: this.parent.closure({instance:this,method:iForm,args:[panel,index,6]}),
 									noClear : true

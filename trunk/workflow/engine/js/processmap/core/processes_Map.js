@@ -45,11 +45,11 @@ var saveDataTaskTemporal = function(iForm)
       break;
       case 5:
       case '5':
-        oTaskData.TAS_CAN_CANCEL                    = (getField('TAS_CAN_CANCEL').checked ? 'TRUE' : 'FALSE');
-        oTaskData.TAS_CAN_PAUSE                     = (getField('TAS_CAN_PAUSE').checked ? 'TRUE' : 'FALSE');
+        /*oTaskData.TAS_CAN_CANCEL                    = (getField('TAS_CAN_CANCEL').checked ? 'TRUE' : 'FALSE');
+        oTaskData.TAS_CAN_PAUSE                     = (getField('TAS_CAN_PAUSE').checked ? 'TRUE' : 'FALSE');*/
         oTaskData.TAS_TYPE                          = (getField('TAS_TYPE').checked ? 'ADHOC' : 'NORMAL');
-        oTaskData.TAS_CAN_SEND_MESSAGE              = (getField('TAS_CAN_SEND_MESSAGE').checked ? 'TRUE' : 'FALSE');
-        /*oTaskData.TAS_CAN_UPLOAD                    = (getField('TAS_CAN_UPLOAD').checked ? 'TRUE' : 'FALSE');
+        /*oTaskData.TAS_CAN_SEND_MESSAGE              = (getField('TAS_CAN_SEND_MESSAGE').checked ? 'TRUE' : 'FALSE');
+        oTaskData.TAS_CAN_UPLOAD                    = (getField('TAS_CAN_UPLOAD').checked ? 'TRUE' : 'FALSE');
         oTaskData.TAS_VIEW_UPLOAD                   = (getField('TAS_VIEW_UPLOAD').checked ? 'TRUE' : 'FALSE');
         oTaskData.TAS_VIEW_ADDITIONAL_DOCUMENTATION = (getField('TAS_VIEW_ADDITIONAL_DOCUMENTATION').checked ? 'TRUE' : 'FALSE');
         oTaskData.TAS_CAN_DELETE_DOCS               = getField('TAS_CAN_DELETE_DOCS').value;*/

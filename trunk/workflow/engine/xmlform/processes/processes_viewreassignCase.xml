@@ -16,7 +16,7 @@
 </USR_LASTNAME>
 
 
-<ASSIGN type="link" colWidth="50" value="@G::LoadTranslation(ID_REASSIGN)" link="#" onclick="reassignCase(@QUSR_UID);return false;"/>
+<ASSIGN type="link" colWidth="50" value="@G::LoadTranslation(ID_REASSIGN)" link="#" onclick="reassignCase(@QUSR_UID, '@#THETYPE');return false;"/>
 
 <PAGED_TABLE_ID type="private" showInTable="0"/>
 
