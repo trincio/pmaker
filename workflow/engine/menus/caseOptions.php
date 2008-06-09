@@ -23,14 +23,20 @@
  *
  */
 global $G_TMP_MENU;
+global $Fields;
 
-if (isset($_SESSION['bNoShowSteps'])) {
-  unset($_SESSION['bNoShowSteps']);
+if (($Fields['APP_STATUS'] == 'DRAFT') || ($Fields['APP_STATUS'] == 'TO_DO')) {
+  if (isset($_SESSION['bNoShowSteps'])) {
+    unset($_SESSION['bNoShowSteps']);
+  }
+  else {
+    $G_TMP_MENU->AddIdOption('STEPS' , G::LoadTranslation('ID_STEPS')      , 'javascript:showSteps();'      , 'absolute');
+    $G_TMP_MENU->AddIdOption('INFO'  , G::LoadTranslation('ID_INFORMATION'), 'javascript:showInformation();', 'absolute');
+  }
+  $G_TMP_MENU->AddIdOption('ACTIONS' , G::LoadTranslation('ID_ACTIONS')    , 'javascript:showActions();'    , 'absolute');
 }
 else {
-  $G_TMP_MENU->AddIdOption('STEPS' , G::LoadTranslation('ID_STEPS')      , 'javascript:showSteps();'      , 'absolute');
   $G_TMP_MENU->AddIdOption('INFO'  , G::LoadTranslation('ID_INFORMATION'), 'javascript:showInformation();', 'absolute');
 }
-$G_TMP_MENU->AddIdOption('ACTIONS' , G::LoadTranslation('ID_ACTIONS')    , 'javascript:showActions();'    , 'absolute');
 
 ?>

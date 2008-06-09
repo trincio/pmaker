@@ -51,7 +51,7 @@
 
  /* Prepare page before to show */
   $oCase = new Cases();
-  $aFields = $oCase->loadCase( $_SESSION['APPLICATION'], $_SESSION['INDEX'] );
+  $Fields = $oCase->loadCase( $_SESSION['APPLICATION'], $_SESSION['INDEX'] );
 
   /* Render page */
   $G_HEADER->addScriptCode('
@@ -65,11 +65,11 @@
   leimnud.Package.Load("cases_Step",{Type:"file",Absolute:true,Path:"/jscore/cases/core/cases_Step.js"});
   leimnud.Package.Load("processmap",{Type:"file",Absolute:true,Path:"/jscore/processmap/core/processmap.js"});
   leimnud.exec(leimnud.fix.memoryLeak);
-  leimnud.event.add(window,"load",function(){
+  /*leimnud.event.add(window,"load",function(){
 	  '.(isset($_SESSION['showCasesWindow'])?'try{'.$_SESSION['showCasesWindow'].'}catch(e){}':'').'
-});
+});*/
   ');
   $G_HEADER->addScriptFile('/jscore/cases/core/cases_Step.js');
   $G_PUBLISH = new Publisher;
-  $G_PUBLISH->AddContent('xmlform', 'xmlform', 'cases/cases_Resume.xml', '', $aFields, '');
+  $G_PUBLISH->AddContent('xmlform', 'xmlform', 'cases/cases_Resume.xml', '', $Fields, '');
   G::RenderPage( 'publish' );

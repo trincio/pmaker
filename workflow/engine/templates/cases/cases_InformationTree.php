@@ -38,10 +38,12 @@ $oNode->plus  = '';
 $oNode->minus = '';
 $oNode->point = '';
 
-$oNode        =& $oTree->addChild('3', '<a class="linkInBlue" href="#" onclick="showTaskInformation();return false;">' . G::LoadTranslation('ID_TASK_INFORMATION') . '</a>', array('nodeType'=>'parentBlue'));
-$oNode->plus  = '';
-$oNode->minus = '';
-$oNode->point = '';
+if ($_SESSION['TASK'] != -1) {
+  $oNode        =& $oTree->addChild('3', '<a class="linkInBlue" href="#" onclick="showTaskInformation();return false;">' . G::LoadTranslation('ID_TASK_INFORMATION') . '</a>', array('nodeType'=>'parentBlue'));
+  $oNode->plus  = '';
+  $oNode->minus = '';
+  $oNode->point = '';
+}
 
 $oNode        =& $oTree->addChild('4', '<a class="linkInBlue" href="#" onclick="showTransferHistory();return false;">' . G::LoadTranslation('ID_CASE_HISTORY') . '</a>', array('nodeType'=>'parentBlue'));
 $oNode->plus  = '';
@@ -62,6 +64,6 @@ $oNode        =& $oTree->addChild('6', '<a class="linkInBlue" href="#" onclick="
 $oNode->plus  = '';
 $oNode->minus = '';
 $oNode->point = '';
- 
+
 echo $oTree->render();
 ?>
