@@ -58,5 +58,10 @@ $oNode->plus  = '';
 $oNode->minus = '';
 $oNode->point = '';
 
+$oNode        =& $oTree->addChild('6', '<a class="linkInBlue" href="#" onclick="showDynaforms();return false;">' . G::LoadTranslation('ID_DYNAFORMS') . '</a>', array('nodeType'=>'parentBlue'));
+$oNode->plus  = '';
+$oNode->minus = '';
+$oNode->point = '';
+ 
 echo $oTree->render();
 ?>
