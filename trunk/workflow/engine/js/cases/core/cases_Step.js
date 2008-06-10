@@ -2,7 +2,7 @@ var oLeyendsPanel;
 
 var showInformation = function()
 {
-  if (!Cse.panels.step)
+ if (!Cse.panels.step)
  {
    Cse=new cases();
    Cse.options = {
@@ -96,7 +96,7 @@ var showActions = function()
     	title      : "Knowledge Tree",
     	lang       : "en",
     	theme      : "processmaker",
-    	images_dir :leimnud.path_root + "cases/core/images/"
+    	images_dir :leimnud.path_rofile:///rodimus.erik/processmaker/trunk/workflow/engine/js/cases/core/cases_Step.jsot + "cases/core/images/"
     }
     Cse.make();
   }
@@ -294,9 +294,11 @@ var reactivateCase = function()
     }.extend(this)
   });
 };
-var pauseCase = function()
+
+var pausecasePanel;
+var pauseCase = function() //we work here @erik
 {
-  new leimnud.module.app.confirm().make({
+  /*new leimnud.module.app.confirm().make({
     label : G_STRINGS.ID_CONFIRM_PAUSE_CASE,
     action: function() {
       var oRPC = new leimnud.module.rpc.xmlhttp({
@@ -308,8 +310,55 @@ var pauseCase = function()
       }.extend(this);
       oRPC.make();
     }.extend(this)
-  });
+  });*/
+
+	oPanel2 = new leimnud.module.panel();
+	pausecasePanel = oPanel2;
+	oPanel2.options = {
+		size    :{w:400,h:120},
+		position:{x:0,y:0,center:true},
+		title   :'',
+		theme   :'processmaker',
+		statusBar:true,
+		control :{drag: false, resize:false,roll:false,close:true},
+		fx  	:{modal:true,opacity:true,blinkToFront:true,fadeIn:false}
+	};
+	oPanel2.events = {
+		remove: function() { delete(oPanel2); }.extend(this)
+	};
+	oPanel2.make();
+	oPanel2.loader.show();
+	var oRPC = new leimnud.module.rpc.xmlhttp({
+		url : 'cases_Ajax',
+		args: 'action=showPauseCaseInput'
+	});
+	oRPC.callback = function(rpc){
+		oPanel2.loader.hide();
+		//var scs=rpc.xmlhttp.responseText.extractScript();
+		oPanel2.addContent(rpc.xmlhttp.responseText);
+		//scs.evalScript();
+	}.extend(this);
+	oRPC.make();
 };
+
+function pauseConfirm()
+{
+	unpausedate = document.getElementById('form[unpause_date]').value;
+	new leimnud.module.app.confirm().make({
+		label : G_STRINGS.ID_CONFIRM_PAUSE_CASE,
+		action: function() {
+			var oRPC = new leimnud.module.rpc.xmlhttp({
+				url:  'cases_Ajax',
+				args: 'action=pauseCase&unpausedate='+unpausedate
+			});
+			oRPC.callback = function(oRPC) {
+				pausecasePanel.remove();
+				window.location = 'cases_List';
+			}.extend(this);
+			oRPC.make();
+		}.extend(this)
+	});
+}
 
 var deleteCase = function(sApplicationUID)
 {

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm name="languages_ImportForm" type="xmlform" width="100%" labelWidth="40%">
+
+<DBS_UID type="hidden" />
+<PRO_UID type="hidden" />
+
+<unpause_date type="date" beforedate="1m" size="15">
+  <en>Unpause Date</en>
+</unpause_date>
+
+<pause_exec type="button" onclick="javascript:pauseConfirm()">
+  <en>Pause this case</en>
+</pause_exec>
+
+</dynaForm>
