@@ -34,6 +34,7 @@ require_once ( "classes/model/Application.php" );
 require_once ( "classes/model/AppDelegation.php" );
 require_once ( "classes/model/AppThread.php" );
 require_once ( "classes/model/Dynaform.php" );
+require_once ( "classes/model/Groupwf.php" );
 require_once ( "classes/model/InputDocument.php" );
 require_once ( "classes/model/Language.php" );
 require_once ( "classes/model/OutputDocument.php" );
@@ -168,4 +169,100 @@ class wsBase
     }		
 	}
 
+	public function roleList( ) {
+   try {	
+  	  $result  = array();
+      G::LoadClass("BasePeer" );
+      G::LoadClass("ArrayPeer" );
+
+      $RBAC =& RBAC::getSingleton();
+      $RBAC->initRBAC();
+      $oCriteria = $RBAC->listAllRoles ();
+      $oDataset = GulliverBasePeer::doSelectRs ( $oCriteria);;
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      
+      while ($aRow = $oDataset->getRow()) {
+      	$result[] = array ( 'guid' => $aRow['ROL_UID'], 'name' => $aRow['ROL_CODE'] );
+      	$oDataset->next();
+      }
+      
+      return $result;
+    }
+    catch ( Exception $e ) {
+    	$result[] = array ( 'guid' => $e->getMessage(), 'name' => $e->getMessage() );
+      return $result;
+    }		
+	}
+
+	public function groupList( ) {
+   try {	
+  	  $result  = array();
+  	  $oCriteria = new Criteria('workflow');
+      $oCriteria->add(GroupwfPeer::GRP_STATUS ,  'ACTIVE' );
+      $oDataset = GroupwfPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      
+      while ($aRow = $oDataset->getRow()) {
+      	$oGroupwf = new Groupwf();
+      	$arrayGroupwf = $oGroupwf->Load( $aRow['GRP_UID'] );
+      	$result[] = array ( 'guid' => $aRow['GRP_UID'], 'name' => $arrayGroupwf['GRP_TITLE'] );
+      	//$result[] = array ( 'guid' => $aRow['GRP_UID'], 'name' => $aRow['GRP_UID'] );
+      	$oDataset->next();
+      }
+      return $result;
+    }
+    catch ( Exception $e ) {
+    	$result[] = array ( 'guid' => $e->getMessage(), 'name' => $e->getMessage() );
+      return $result;
+    }		
+	}
+	
+	public function caseList( ) {
+   try {	
+  	  $result  = array();
+  	  $oCriteria = new Criteria('workflow');
+      $oCriteria->add(ProcessPeer::PRO_STATUS ,  'ACTIVE' );
+      $oDataset = ProcessPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      
+      while ($aRow = $oDataset->getRow()) {
+      	$oProcess = new Process();
+      	$arrayProcess = $oProcess->Load( $aRow['PRO_UID'] );
+      	$result[] = array ( 'guid' => $aRow['PRO_UID'], 'name' => $arrayProcess['PRO_TITLE'] );
+      	$oDataset->next();
+      }
+      return $result;
+    }
+    catch ( Exception $e ) {
+    	$result[] = array ( 'guid' => $e->getMessage(), 'name' => $e->getMessage() );
+      return $result;
+    }		
+	}
+
+	public function userList( ) {
+   try {	
+  	  $result  = array();
+  	  $oCriteria = new Criteria('workflow');
+      $oCriteria->add(UsersPeer::USR_STATUS ,  'ACTIVE' );
+      $oDataset = UsersPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      
+      while ($aRow = $oDataset->getRow()) {
+      	//$oProcess = new User();
+      	//$arrayProcess = $oUser->Load( $aRow['PRO_UID'] );
+      	$result[] = array ( 'guid' => $aRow['USR_UID'], 'name' => $aRow['USR_USERNAME'] );
+      	$oDataset->next();
+      }
+      return $result;
+    }
+    catch ( Exception $e ) {
+    	$result[] = array ( 'guid' => $e->getMessage(), 'name' => $e->getMessage() );
+      return $result;
+    }		
+	}
+	
 }

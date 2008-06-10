@@ -907,6 +907,7 @@ class Cases
         }
     }
 
+	
 
     /*
     * ReactivateCurrentDelegation
@@ -1317,7 +1318,7 @@ class Cases
         $c->addAsColumn('APP_PRO_TITLE', 'PRO_TITLE.CON_VALUE');
         $c->addAsColumn('APP_TAS_TITLE', 'TAS_TITLE.CON_VALUE');
         //$c->addAsColumn('APP_DEL_PREVIOUS_USER', 'APP_LAST_USER.USR_USERNAME');
-				$c->addAsColumn('APP_DEL_PREVIOUS_USER', "CONCAT(APP_LAST_USER.USR_LASTNAME, ' ', APP_LAST_USER.USR_FIRSTNAME)");
+		$c->addAsColumn('APP_DEL_PREVIOUS_USER', "CONCAT(APP_LAST_USER.USR_LASTNAME, ' ', APP_LAST_USER.USR_FIRSTNAME)");
 
         $c->addAlias("APP_TITLE", 'CONTENT');
         $c->addAlias("PRO_TITLE", 'CONTENT');
@@ -1458,6 +1459,38 @@ class Cases
         return array($c, $xmlfile);
     }
 
+	/**
+	*  @Author: erik@colosa.com
+    *  @Description: This method set all cases with the APP_DISABLE_ACTION_DATE for today
+	*/
+
+    function ThrowUnpauseDaemon($sTypeList, $sUIDUserLogged)
+	{
+		list($eCriteria,$dropTmp) = $this->getConditionCasesList( $sTypeList, $sUIDUserLogged);
+		$oDataset = ApplicationPeer::doSelectRS($eCriteria);
+		$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+		$oDataset->next();
+		$aRow = $oDataset->getRow();
+	
+		while ($aRow = $oDataset->getRow()) {
+			$c = new Criteria('workflow');
+        	$c->clearSelectColumns();
+			$c->add(AppDelayPeer::APP_UID, $aRow['APP_UID']);
+			$c->add(AppDelayPeer::APP_DISABLE_ACTION_USER, null, Criteria::ISNULL);
+			$d = AppDelayPeer::doSelectRS($c);
+			$d->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+			$d->next();
+		    $reg = $d->getRow();
+			/*@#erik::we ask if is today the day that we must set unpause the case*/
+			$today = date('Y-m-d');
+			$unpause_date = substr(trim($reg['APP_DISABLE_ACTION_DATE']), 0, 10);
+			if($today == $unpause_date) {
+				$this->unpauseCase($aRow['APP_UID'], $reg['APP_DEL_INDEX'], 'System Daemon');
+			}
+			$oDataset->next();
+		}
+	}
+	
     /*
     * Get the application UID by case number
     * @param integer $iApplicationNumber
@@ -1758,7 +1791,7 @@ class Cases
         $oCriteria->add(AppDelayPeer::APP_DEL_INDEX, $iDelegation);
         $oCriteria->add(AppDelayPeer::APP_TYPE, 'PAUSE');
         $oCriteria->add(AppDelayPeer::APP_DISABLE_ACTION_USER, null);
-        $oCriteria->add(AppDelayPeer::APP_DISABLE_ACTION_DATE, null);
+		
         $oDataset = AppDelayPeer::doSelectRS($oCriteria);
         $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
         $oDataset->next();
@@ -1997,13 +2030,13 @@ class Cases
       $oDataset->next();
       $aInputDocuments = array();
       $aInputDocuments[] = array(
-        'DYN_TITLE' => 'char'
+        'DYN_DESCRIPTION' => 'char'
       );
-
+        
       while ($aRow = $oDataset->getRow()) {
           $o = new Dynaform();
           $o->setDynUid($aRow['DYN_UID']);
-          $aFields['DYN_TITLE'] = $o->getDynTitle();
+          $aFields['DYN_DESCRIPTION'] = $o->getDynTitle();
           $aFields['DYN_UID'] = $aRow['DYN_UID'];
           $aFields['EDIT'] = G::LoadTranslation('ID_EDIT');
           $aInputDocuments[] = $aFields;

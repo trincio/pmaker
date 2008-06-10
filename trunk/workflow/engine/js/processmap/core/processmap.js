@@ -1059,7 +1059,7 @@ var processmap=function(){
 						var data = this.data.db.task[index];
 						panel.options={
 							limit:true,
-							size:{w:500,h:430},
+							size:{w:600,h:430},
 							position:{x:50,y:50,center:true},
 							title:G_STRINGS.ID_PROCESSMAP_TASK+": "+data.label,
 							theme:this.options.theme,
