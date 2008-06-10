@@ -62,8 +62,15 @@
   $G_ID_MENU_SELECTED     = 'CASES';
   $G_ID_SUB_MENU_SELECTED = 'CASES_' . strtoupper($sTypeList);
 
-  /* Prepare page before to show */
   $oCases = new Cases();
+  //echo $_SESSION['PROCESS'].'<br>';
+  /** here we verify if there is a any case with a unpause on this day*/
+  if( $sTypeList === 'to_do' or $sTypeList === 'draft' or $sTypeList === 'paused') {
+	$oCases->ThrowUnpauseDaemon($sTypeList, $sUIDUserLogged);
+  }
+  
+  /* Prepare page before to show */
+  
   list($Criteria,$xmlfile) = $oCases->getConditionCasesList( $sTypeList, $sUIDUserLogged);
   
   /* Render page */

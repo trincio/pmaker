@@ -49,7 +49,7 @@ $oCriteria->add(AppDelayPeer::APP_UID, $_SESSION['APPLICATION']);
 $oCriteria->add(AppDelayPeer::APP_DEL_INDEX, $_SESSION['INDEX']);
 $oCriteria->add(AppDelayPeer::APP_TYPE, 'PAUSE');
 $oCriteria->add(AppDelayPeer::APP_DISABLE_ACTION_USER, null);
-$oCriteria->add(AppDelayPeer::APP_DISABLE_ACTION_DATE, null);
+
 $oDataset = AppDelayPeer::doSelectRS($oCriteria);
 $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
 $oDataset->next();
