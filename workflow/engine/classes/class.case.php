@@ -1707,7 +1707,7 @@ class Cases
         return $c;
     }
 
-    function pauseCase($sApplicationUID, $iDelegation, $sUserUID)
+    function pauseCase($sApplicationUID, $iDelegation, $sUserUID, $sUnpauseDate='')
     {
         $this->CloseCurrentDelegation($sApplicationUID, $iDelegation);
         $oApplication = new Application();
@@ -1730,6 +1730,7 @@ class Cases
         $aData['APP_DELEGATION_USER'] = $sUserUID;
         $aData['APP_ENABLE_ACTION_USER'] = $sUserUID;
         $aData['APP_ENABLE_ACTION_DATE'] = date('Y-m-d H:i:s');
+		$aData['APP_DISABLE_ACTION_DATE'] = $sUnpauseDate;
         $oAppDelay = new AppDelay();
         $oAppDelay->create($aData);
     }
