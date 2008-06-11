@@ -53,6 +53,14 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
         $_POST['form']['PME_DEFAULTVALUE']=$_POST['form']['PME_FALSEVALUE'];
       }
     }
+    if ($type==='grid') {
+      if (!isset($_POST['form']['PME_ADDROW'])) {
+        $_POST['form']['PME_ADDROW'] = '0';
+      }
+      if (!isset($_POST['form']['PME_DELETEROW'])) {
+        $_POST['form']['PME_DELETEROW'] = '0';
+      }
+    }
   }
   foreach($_POST['form'] as $key => $value){
     if (substr($key,0,4)==='PME_')

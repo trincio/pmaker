@@ -23,9 +23,9 @@ SELECT DYN_FILENAME, C.CON_VALUE FROM DYNAFORM LEFT JOIN CONTENT C ON (DYN_UID=C
   <en>Grid</en>
 </PME_XMLGRID>
 
-<PME_INSERTROW type="checkbox" falseValue="0" value="1" defaultvalue="1" >
+<PME_ADDROW type="checkbox" falseValue="0" value="1" defaultvalue="1" >
   <en>Add new rows</en>
-</PME_INSERTROW>
+</PME_ADDROW>
 
 <PME_DELETEROW type="checkbox" falseValue="0" value="1" defaultvalue="1" >
   <en>Delete rows</en>
