@@ -19,24 +19,24 @@
   <option name='subtitle'>Subtitle</option>
   <option name='text'>Text</option>
   <option name='password'>Password</option>
-  <option name='textarea'>Text Area</option>
+  <option name='textarea'>Textarea</option>
   <option name='currency'>Currency</option>
   <option name='percentage'>Percentage</option>
-  <option name='date'>date</option>
+  <option name='date'>Date</option>
   <option name='yesno'>Yes/No</option>
-  <option name='link'>link</option>
-  <option name='file'>file</option>
-  <option name='checkbox'>Check Box</option>
+  <option name='link'>Link</option>
+  <option name='file'>File</option>
+  <option name='checkbox'>Checkbox</option>
   <option name='button'>Button</option>
   <option name='reset'>Reset</option>
   <option name='submit'>Submit</option>
   <option name='hidden'>Hidden</option>
   <option name='dropdown'>Dropdown</option>
-  <option name='listbox'>List Box</option>
-  <option name='radiogroup'>Radio Group</option>
-  <option name='checkgroup'>Check Group</option>
+  <option name='listbox'>Listbox</option>
+  <option name='radiogroup'>Radios Group</option>
+  <option name='checkgroup'>Checkboxes Group</option>
   <option name='grid'>grid</option>
-  <option name='javascript'>Java Script</option>
+  <option name='javascript'>Javascript Code</option>
   <option name='private'>Private</option>
   </en>
 </TYPE>
