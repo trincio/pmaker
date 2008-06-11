@@ -101,6 +101,7 @@
       $_SESSION['STEP_POSITION'] = 0;
 
       /* Redirect to next step */
+      unset($_SESSION['bNoShowSteps']);
       $aNextStep = $oCase->getNextStep( $_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['STEP_POSITION'] );
       $sPage     = $aNextStep['PAGE'];
       G::header('location: ' . $sPage);

@@ -907,7 +907,7 @@ class Cases
         }
     }
 
-	
+
 
     /*
     * ReactivateCurrentDelegation
@@ -1479,7 +1479,7 @@ class Cases
 			$d->next();
 		}
 	}
-	
+
     /*
     * Get the application UID by case number
     * @param integer $iApplicationNumber
@@ -1729,7 +1729,7 @@ class Cases
         return $c;
     }
 
-    function pauseCase($sApplicationUID, $iDelegation, $sUserUID, $sUnpauseDate='')
+    function pauseCase($sApplicationUID, $iDelegation, $sUserUID, $sUnpauseDate = null)
     {
         $this->CloseCurrentDelegation($sApplicationUID, $iDelegation);
         $oApplication = new Application();
@@ -1752,7 +1752,7 @@ class Cases
         $aData['APP_DELEGATION_USER'] = $sUserUID;
         $aData['APP_ENABLE_ACTION_USER'] = $sUserUID;
         $aData['APP_ENABLE_ACTION_DATE'] = date('Y-m-d H:i:s');
-		$aData['APP_DISABLE_ACTION_DATE'] = $sUnpauseDate;
+        $aData['APP_DISABLE_ACTION_DATE'] = $sUnpauseDate;
         $oAppDelay = new AppDelay();
         $oAppDelay->create($aData);
     }
@@ -1780,7 +1780,7 @@ class Cases
         $oCriteria->add(AppDelayPeer::APP_DEL_INDEX, $iDelegation);
         $oCriteria->add(AppDelayPeer::APP_TYPE, 'PAUSE');
         $oCriteria->add(AppDelayPeer::APP_DISABLE_ACTION_USER, null);
-		
+
         $oDataset = AppDelayPeer::doSelectRS($oCriteria);
         $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
         $oDataset->next();
@@ -2019,13 +2019,13 @@ class Cases
       $oDataset->next();
       $aInputDocuments = array();
       $aInputDocuments[] = array(
-        'DYN_DESCRIPTION' => 'char'
+        'DYN_TITLE' => 'char'
       );
-        
+
       while ($aRow = $oDataset->getRow()) {
           $o = new Dynaform();
           $o->setDynUid($aRow['DYN_UID']);
-          $aFields['DYN_DESCRIPTION'] = $o->getDynTitle();
+          $aFields['DYN_TITLE'] = $o->getDynTitle();
           $aFields['DYN_UID'] = $aRow['DYN_UID'];
           $aFields['EDIT'] = G::LoadTranslation('ID_EDIT');
           $aInputDocuments[] = $aFields;

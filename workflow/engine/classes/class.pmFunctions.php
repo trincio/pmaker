@@ -1,6 +1,6 @@
 <?php
 /**
- * caseOptions.php
+ * class.pmFunctions.php
  *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
@@ -22,21 +22,31 @@
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
  *
  */
-global $G_TMP_MENU;
-global $Fields;
+////////////////////////////////////////////////////
+// PM Functions
+//
+// Copyright (C) 2007 COLOSA
+//
+// License: LGPL, see LICENSE
+////////////////////////////////////////////////////
 
-if ((($Fields['APP_STATUS'] == 'DRAFT') || ($Fields['APP_STATUS'] == 'TO_DO')) && ($_SESSION['TASK'] != -1)) {
-  if (isset($_SESSION['bNoShowSteps'])) {
-    unset($_SESSION['bNoShowSteps']);
+function pauseCase($sApplicationUID = '', $iDelegation = 0, $sUserUID = '', $sUnpauseDate = null) {//var_dump($sApplicationUID, $iDelegation, $sUserUID, $sUnpauseDate);die(':|');
+  try {
+    if ($sApplicationUID == '') {
+      throw new Exception('The application UID cannot be empty!');
+    }
+    if ($iDelegation == 0) {
+      throw new Exception('The delegation index cannot be 0!');
+    }
+    if ($sUserUID == '') {
+      throw new Exception('The user UID cannot be empty!');
+    }
+    G::LoadClass('case');
+    $oCase = new Cases();
+    $oCase->pauseCase($sApplicationUID, $iDelegation, $sUserUID, $sUnpauseDate);
   }
-  else {
-    $G_TMP_MENU->AddIdOption('STEPS' , G::LoadTranslation('ID_STEPS')      , 'javascript:showSteps();'      , 'absolute');
-    $G_TMP_MENU->AddIdOption('INFO'  , G::LoadTranslation('ID_INFORMATION'), 'javascript:showInformation();', 'absolute');
+  catch (Exception $oException) {
+    throw $oException;
   }
-  $G_TMP_MENU->AddIdOption('ACTIONS' , G::LoadTranslation('ID_ACTIONS')    , 'javascript:showActions();'    , 'absolute');
 }
-else {
-  $G_TMP_MENU->AddIdOption('INFO'  , G::LoadTranslation('ID_INFORMATION'), 'javascript:showInformation();', 'absolute');
-}
-
 ?>
