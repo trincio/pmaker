@@ -4,7 +4,6 @@
  *
  */
 
-
   if (!isset($_POST['form']) ) {
     G::SendTemporalMessage ('ID_USER_HAVENT_RIGHTS_SYSTEM', "error");
     G::header  ("location: login.html");die;
@@ -53,7 +52,7 @@ try {
 
   // Asign the uid of user to userloggedobj
   $RBAC->loadUserRolePermission( $RBAC->sSystem, $uid );
-	$res = $RBAC->userCanAccess("PM_LOGIN");
+	$res = $RBAC->userCanAccess("{siglaProjectName}_LOGIN");
 
 
 	if ($res != 1 ) {
@@ -80,19 +79,17 @@ try {
   }
 
 
-	$accessPMProcess   = $RBAC->userCanAccess("PM_FACTORY");
-	$accessPMCases     = $RBAC->userCanAccess("PM_CASES");
-
+	$accessLogin   = $RBAC->userCanAccess("{siglaProjectName}_LOGIN");
 
 	//administrator
-	if ( $accessPMProcess == 1) {
-    G::header('location: /sys' .  SYS_TEMP . '/' . $lang . '/' . SYS_SKIN . '/' . 'processes/processes_List');
+	if ( $accessLogin == 1) {
+    G::header('location: /sys' .  SYS_TEMP . '/' . $lang . '/' . SYS_SKIN . '/' . 'login/welcome');
 	  die;
 	}
 
 	//Operador
-	if ( $accessPMCases == 1) {
-    G::header('location: /sys' .  SYS_TEMP . '/' . $lang . '/' . SYS_SKIN . '/' . 'cases/cases_List');
+	if ( $accessLogin == 1) {
+    G::header('location: /sys' .  SYS_TEMP . '/' . $lang . '/' . SYS_SKIN . '/' . 'login/welcome');
 	  die;
 	}
 

@@ -122,7 +122,7 @@ abstract class BaseRbacUsersPeer {
 	 */
 	public static function getMapBuilder()
 	{
-		include_once 'classes/model/map/UsersMapBuilder.php';
+		include_once 'classes/model/map/RbacUsersMapBuilder.php';
 		return BasePeer::getMapBuilder('classes.model.map.RbacUsersMapBuilder');
 	}
 	/**
