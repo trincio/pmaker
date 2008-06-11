@@ -84,5 +84,38 @@ class Systems extends BaseSystems {
     }
   }
 
+  function create ( $aData ) {
+    $con = Propel::getConnection(SystemsPeer::DATABASE_NAME);
+    try {
+      $SysUid = $aData['SYS_CODE'];
+      $c = new Criteria( 'rbac' );
+      $c->add ( SystemsPeer::SYS_CODE, $SysUid );
+      $rs = SystemsPeer::doSelect( $c );
+      $exists = ( is_array($rs) && isset( $rs[0] ) && get_class ( $rs[0] ) == 'Systems' );
+      
+      if ( $exists ) return; 
+
+      $aData['SYS_UID']         = G::generateUniqueId();
+      $aData['SYS_CREATE_DATE'] = date ('Y-m-d H:i:s');
+      $aData['SYS_UPDATE_DATE'] = date ('Y-m-d H:i:s');
+      $aData['SYS_STATUS']      = '1';
+
+      $this->fromArray($aData, BasePeer::TYPE_FIELDNAME);
+      if ($this->validate()) {
+          $result = $this->save();
+      } 
+      else {
+        $e = new Exception("Failed Validation in class " . get_class($this) . ".");
+        $e->aValidationFailures = $this->getValidationFailures();
+        throw ($e);
+      }
+      $con->commit();
+      return $result;
+    }
+    catch (exception $e) {
+      $con->rollback();
+      throw ($e);
+    }
+  }
 
 } // Systems

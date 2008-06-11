@@ -109,8 +109,20 @@ class Roles extends BaseRoles
     
     function createRole($aData)
     {
-		$con = Propel::getConnection(RolesPeer::DATABASE_NAME);
+	$con = Propel::getConnection(RolesPeer::DATABASE_NAME);
         try {
+            $sRolCode   = $aData['ROL_CODE'];
+            $sRolSystem = $aData['ROL_SYSTEM'];
+            $oCriteria = new Criteria('rbac');
+            $oCriteria->add(RolesPeer::ROL_CODE,   $sRolCode);
+            $oCriteria->add(RolesPeer::ROL_SYSTEM, $sRolSystem );
+            $oDataset = RolesPeer::doSelectRS($oCriteria);
+            $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+            $oDataset->next();
+            $aRow = $oDataset->getRow();
+            if (is_array($aRow)) {
+                return $aRow;
+            } 
             $this->fromArray($aData, BasePeer::TYPE_FIELDNAME);
             if ($this->validate()) {
                 $result = $this->save();
@@ -169,10 +181,10 @@ class Roles extends BaseRoles
     function verifyNewRole($code)
     {
     	$code = trim($code);
-		$oCriteria = new Criteria('rbac');
+	$oCriteria = new Criteria('rbac');
         $oCriteria->addSelectColumn(RolesPeer::ROL_UID);
         $oCriteria->add(RolesPeer::ROL_CODE, $code);
-		$count = RolesPeer::doCount($oCriteria);
+	$count = RolesPeer::doCount($oCriteria);
         
         if($count == 0){
 			return true;
@@ -291,28 +303,53 @@ class Roles extends BaseRoles
     }
     
     function assignUserToRole($aData)
-	{
-		/*Remove first*/
-		$this->deleteUserRole('%', $aData['USR_UID']);
+    {
+        /*Remove first*/
+        /*find the system uid for this role */
+        $c = new Criteria();
+        $c->add(RolesPeer::ROL_UID, $aData['ROL_UID']);
+    	$result = RolesPeer::doSelectRS($c);
+    	$result->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    	$result->next();
+    	$row = $result->getRow();
+    	$sSystemId = $row['ROL_SYSTEM'];
+    	
+        $c = new Criteria();
+        $c->add(UsersRolesPeer::USR_UID, $aData['USR_UID']);
+	//$c->addJoin(RolesPeer::ROL_UID, UsersRolesPeer::ROL_UID);
+	$c->addJoin(UsersRolesPeer::ROL_UID, RolesPeer::ROL_UID);
+    	$result = UsersRolesPeer::doSelectRS($c);
+    	$result->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    	$result->next();
+        	
+    	$a = Array();
+        while($row = $result->getRow() ) {
+          print_r ($row );
+          $a[] = $row['ROL_UID'];
+          $result->next();	
+        }
+        //print_r ( $a );
+        die;
+	$this->deleteUserRole('%', $aData['USR_UID']);
             
-		$oUsersRoles = new UsersRoles();
-		$oUsersRoles->setUsrUid($aData['USR_UID']);
-		$oUsersRoles->setRolUid($aData['ROL_UID']);
-		$oUsersRoles->save();
-	} 
+	$oUsersRoles = new UsersRoles();
+	$oUsersRoles->setUsrUid($aData['USR_UID']);
+	$oUsersRoles->setRolUid($aData['ROL_UID']);
+	$oUsersRoles->save();
+    } 
     
     function deleteUserRole($ROL_UID, $USR_UID)
     {
     	$crit = new Criteria();
-		$crit->add(UsersRolesPeer::USR_UID, $USR_UID);
+	$crit->add(UsersRolesPeer::USR_UID, $USR_UID);
 		
-		if($ROL_UID != '%'){
-			$crit->add(UsersRolesPeer::ROL_UID, $ROL_UID);	
-		}
-		UsersRolesPeer::doDelete($crit);
+	if($ROL_UID != '%'){
+	   $crit->add(UsersRolesPeer::ROL_UID, $ROL_UID);	
 	}
+	UsersRolesPeer::doDelete($crit);
+    }
 	
-	function getRolePermissions($ROL_UID)
+    function getRolePermissions($ROL_UID)
     {
         try {
             $criteria = new Criteria();

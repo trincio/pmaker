@@ -132,6 +132,7 @@ abstract class BaseSystems extends BaseObject  implements Persistent {
 	public function getSysCreateDate($format = 'Y-m-d H:i:s')
 	{
 
+		return $this->sys_create_date;
 		if ($this->sys_create_date === null || $this->sys_create_date === '') {
 			return null;
 		} elseif (!is_int($this->sys_create_date)) {
@@ -162,6 +163,7 @@ abstract class BaseSystems extends BaseObject  implements Persistent {
 	 */
 	public function getSysUpdateDate($format = 'Y-m-d H:i:s')
 	{
+		return $this->sys_update_date;
 
 		if ($this->sys_update_date === null || $this->sys_update_date === '') {
 			return null;
@@ -246,7 +248,15 @@ abstract class BaseSystems extends BaseObject  implements Persistent {
 	 */
 	public function setSysCreateDate($v)
 	{
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
 
+		if ($this->sys_create_date !== $v || $v === '') {
+			$this->sys_create_date = $v;
+			$this->modifiedColumns[] = SystemsPeer::SYS_CREATE_DATE;
+		}
+            return;
 		if ($v !== null && !is_int($v)) {
 			$ts = strtotime($v);
 			if ($ts === -1 || $ts === false) { // in PHP 5.1 return value changes to FALSE
@@ -270,6 +280,15 @@ abstract class BaseSystems extends BaseObject  implements Persistent {
 	 */
 	public function setSysUpdateDate($v)
 	{
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->sys_update_date !== $v || $v === '') {
+			$this->sys_update_date = $v;
+			$this->modifiedColumns[] = SystemsPeer::SYS_UPDATE_DATE;
+		}
+            return;
 
 		if ($v !== null && !is_int($v)) {
 			$ts = strtotime($v);
@@ -329,9 +348,11 @@ abstract class BaseSystems extends BaseObject  implements Persistent {
 
 			$this->sys_code = $rs->getString($startcol + 1);
 
-			$this->sys_create_date = $rs->getTimestamp($startcol + 2, null);
+//			$this->sys_create_date = $rs->getTimestamp($startcol + 2, null);
+			$this->sys_create_date = $rs->getString($startcol + 2, null);
 
-			$this->sys_update_date = $rs->getTimestamp($startcol + 3, null);
+//			$this->sys_update_date = $rs->getTimestamp($startcol + 3, null);
+			$this->sys_update_date = $rs->getString($startcol + 3, null);
 
 			$this->sys_status = $rs->getInt($startcol + 4);
 
@@ -343,7 +364,7 @@ abstract class BaseSystems extends BaseObject  implements Persistent {
 			return $startcol + 5; // 5 = SystemsPeer::NUM_COLUMNS - SystemsPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
-			throw new PropelException("Error populating Systems object", $e);
+			throw new PropelException("Error populating Systems object ", $e);
 		}
 	}
 
