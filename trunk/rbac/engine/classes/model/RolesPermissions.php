@@ -40,6 +40,15 @@ require_once 'classes/model/om/BaseRolesPermissions.php';
 class RolesPermissions extends BaseRolesPermissions {
   function create($aData) {
     try {
+  		$oCriteria = new Criteria('rbac');
+      $oCriteria->add(RolesPermissionsPeer::ROL_UID, $aData['ROL_UID']);
+      $oCriteria->add(RolesPermissionsPeer::PER_UID, $aData['PER_UID']);
+      $oDataset = RolesPermissionsPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      $aRow = $oDataset->getRow();
+  	  if (is_array($aRow)) return true;
+
   	  $oRolesPermissions = new RolesPermissions();
   	  $oRolesPermissions->fromArray($aData, BasePeer::TYPE_FIELDNAME);
   	  $iResult = $oRolesPermissions->save();

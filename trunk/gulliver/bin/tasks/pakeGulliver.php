@@ -704,12 +704,19 @@ function create_file_from_tpl ( $tplName, $newFilename )
 {
   global $pathHome;
   global $projectName;
+   
   $httpdTpl = PATH_GULLIVER_HOME . 'bin' . PATH_SEP . 'tasks' . PATH_SEP . $tplName . '.tpl';
-  $httpFilename = $pathHome . PATH_SEP . $newFilename;
+  if ( substr ( $newFilename, 0,1 ) == PATH_SEP ) 
+    $httpFilename = $newFilename;
+  else  
+    $httpFilename = $pathHome . PATH_SEP . $newFilename;
   $template = new TemplatePower( $httpdTpl );
   $template->prepare();
   $template->assign ( 'pathHome', $pathHome);
   $template->assign ( 'projectName', $projectName);
+  $template->assign ( 'rbacProjectName', strtoupper( $projectName)) ;
+  $template->assign ( 'siglaProjectName', substr ( strtoupper( $projectName),0,3) ) ;
+  
   $content = $template->getOutputContent();
   $iSize = file_put_contents ( $httpFilename, $content );
   printf("saved %s bytes in file %s \n", pakeColor::colorize( $iSize, 'INFO'), pakeColor::colorize( $tplName, 'INFO') );    
@@ -737,8 +744,11 @@ function run_new_project ( $task, $args)
     printf("invalid Project Name\n", pakeColor::colorize( $class, 'ERROR'));
     exit (0);
   }  
+  $createProject = strtolower ( prompt ( "Do you want to create the project '$projectName' ? [Y/n]" ));
+  if ( $createProject == 'n' ) die;
 
   G::LoadSystem ('templatePower');
+	define ( 'PATH_SHARED', PATH_SEP . 'shared' . PATH_SEP . $projectName . '_data' . PATH_SEP );
   $pathHome = PATH_TRUNK . $projectName;
   printf("creating project %s in %s\n", pakeColor::colorize($projectName, 'INFO'), pakeColor::colorize($pathHome, 'INFO'));
 
@@ -757,6 +767,8 @@ function run_new_project ( $task, $args)
   $RBAC->initRBAC();
   $RBAC->createSystem ($rbacProjectName);
   $RBAC->createPermision ( substr( $rbacProjectName,0,3) . '_LOGIN' );
+  $permData = $RBAC->permissionsObj->LoadByCode (substr( $rbacProjectName,0,3) . '_LOGIN') ;
+  $permissionId = $permData['PER_UID'];
   $systemData = $RBAC->systemObj->LoadByCode ($rbacProjectName) ;
   $roleData['ROL_UID'] = G::GenerateUniqueId();
   $roleData['ROL_PARENT'] = '';
@@ -768,13 +780,11 @@ function run_new_project ( $task, $args)
   $RBAC->createRole ( $roleData );
   $roleData = $RBAC->rolesObj->LoadByCode ( $roleData['ROL_CODE'] ) ;
   
+  $RBAC->assignPermissionToRole($roleData['ROL_UID'], $permissionId); 
   $userRoleData['ROL_UID'] = $roleData['ROL_UID'];
   $userRoleData['USR_UID'] = '00000000000000000000000000000001';
   $RBAC->assignUserToRole( $userRoleData );
                
-//print_r ( $RBAC);
-die;
-  
   //create folder and structure
   G::mk_dir ($pathHome );
   G::mk_dir ($pathHome . PATH_SEP . 'public_html' );
@@ -803,7 +813,9 @@ die;
   G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'test' . PATH_SEP . 'unit');
   G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'xmlform' );
   G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'xmlform' . PATH_SEP . 'login');
-  
+  G::mk_dir (PATH_SHARED . 'sites' . PATH_SEP );
+  G::mk_dir (PATH_SHARED . 'sites' . PATH_SEP . $projectName );
+
   //create project.conf for httpd conf
   create_file_from_tpl ( 'httpd.conf',       $projectName . '.conf' );
   create_file_from_tpl ( 'sysGeneric.php',  'public_html' . PATH_SEP . 'sysGeneric.php' );
@@ -813,17 +825,20 @@ die;
   create_file_from_tpl ( 'index.html',      'public_html' . PATH_SEP . 'index.html' );
   create_file_from_tpl ( 'paths.php',       'engine' . PATH_SEP . 'config' . PATH_SEP . 'paths.php' );
   create_file_from_tpl ( 'defines.php',     'engine' . PATH_SEP . 'config' . PATH_SEP . 'defines.php' );
+  create_file_from_tpl ( 'databases.php',   'engine' . PATH_SEP . 'config' . PATH_SEP . 'databases.php' );
   create_file_from_tpl ( 'sysLogin.php',    'engine' . PATH_SEP . 'methods' . PATH_SEP . 'login' . PATH_SEP . 'sysLogin.php' );
   create_file_from_tpl ( 'login.php',       'engine' . PATH_SEP . 'methods' . PATH_SEP . 'login' . PATH_SEP . 'login.php' );
   create_file_from_tpl ( 'authentication.php','engine'.PATH_SEP . 'methods' . PATH_SEP . 'login' . PATH_SEP . 'authentication.php' );
+  create_file_from_tpl ( 'welcome.php',     'engine'.PATH_SEP . 'methods' . PATH_SEP . 'login' . PATH_SEP . 'welcome.php' );
   create_file_from_tpl ( 'sysLogin.xml',    'engine' . PATH_SEP . 'xmlform' . PATH_SEP . 'login' . PATH_SEP . 'sysLogin.xml' );
   create_file_from_tpl ( 'login.xml',       'engine' . PATH_SEP . 'xmlform' . PATH_SEP . 'login' . PATH_SEP . 'login.xml' );
   create_file_from_tpl ( 'showMessage.xml', 'engine' . PATH_SEP . 'xmlform' . PATH_SEP . 'login' . PATH_SEP . 'showMessage.xml' );
+  create_file_from_tpl ( 'welcome.xml',     'engine' . PATH_SEP . 'xmlform' . PATH_SEP . 'login' . PATH_SEP . 'welcome.xml' );
   copy_file_from_tpl   ( 'xmlform.html',    'engine' . PATH_SEP . 'templates' . PATH_SEP . 'xmlform.html' );
   copy_file_from_tpl   ( 'publish.php',     'engine' . PATH_SEP . 'templates' . PATH_SEP . 'publish.php' );
   copy_file_from_tpl   ( 'green.html',      'engine' . PATH_SEP . 'skins' . PATH_SEP . 'green.html' );
   copy_file_from_tpl   ( 'green.php',       'engine' . PATH_SEP . 'skins' . PATH_SEP . 'green.php' );
-  //create_file_from_tpl ( 'httpd.conf', xxx );
+  create_file_from_tpl ( 'db.php',          PATH_SEP . PATH_SHARED . 'sites' . PATH_SEP . $projectName . PATH_SEP . 'db.php' );
 
   //create schema.xml with empty databases
   //create welcome page
