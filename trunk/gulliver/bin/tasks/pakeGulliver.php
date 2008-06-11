@@ -875,14 +875,17 @@ function run_new_project ( $task, $args)
   copy_file ( 'engine' . PATH_SEP . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'map' . PATH_SEP .  'ApplicationMapBuilder.php' );
   copy_file ( 'engine' . PATH_SEP . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'map' . PATH_SEP .  'ContentMapBuilder.php' );
   copy_file ( 'engine' . PATH_SEP . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'map' . PATH_SEP .  'ConfigurationMapBuilder.php' );
+  copy_file ( 'engine' . PATH_SEP . 'config' . PATH_SEP . 'environments.php' );
   copy_file ( 'engine' . PATH_SEP . 'methods' . PATH_SEP . 'login' . PATH_SEP . 'dbInfo.php' );
   copy_file ( 'engine' . PATH_SEP . 'xmlform' . PATH_SEP . 'login' . PATH_SEP . 'dbInfo.xml' );
   copy_file ( 'engine' . PATH_SEP . 'xmlform' . PATH_SEP . 'gulliver' . PATH_SEP . 'pagedTable_PopupMenu.xml' );
   copy_file ( 'engine' . PATH_SEP . 'templates' . PATH_SEP . 'popupMenu.html' );
   copy_file ( 'engine' . PATH_SEP . 'templates' . PATH_SEP . 'paged-table.html' );
 
+  printf("creating symlinks %s \n", pakeColor::colorize( $pathHome . PATH_SEP . 'engine' . PATH_SEP . 'gulliver', 'INFO'));
+  symlink (PATH_GULLIVER_HOME . 'bin' . PATH_SEP . 'gulliver', $pathHome . PATH_SEP . 'engine' . PATH_SEP . 'gulliver');
+
   //create schema.xml with empty databases
-  //create welcome page
   
   exit(0);
 }

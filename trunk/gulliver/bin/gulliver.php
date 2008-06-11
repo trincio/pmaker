@@ -28,7 +28,6 @@
 
   // set magic_quotes_runtime to off
   ini_set('magic_quotes_runtime', 'Off');
-
   require_once( PATH_THIRDPARTY . 'pake' . PATH_SEP . 'pakeFunction.php');
   require_once( PATH_THIRDPARTY . 'pake' . PATH_SEP . 'pakeGetopt.class.php');
   require_once( PATH_CORE . 'config' . PATH_SEP . 'environments.php');
