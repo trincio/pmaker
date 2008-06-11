@@ -733,6 +733,16 @@ function copy_file_from_tpl ( $tplName, $newFilename )
   printf("saved %s bytes in file %s \n", pakeColor::colorize( $iSize, 'INFO'), pakeColor::colorize( $tplName, 'INFO') );    
 }
 
+function copy_file( $newFilename )
+{
+  global $pathHome;
+  $httpdTpl = PATH_HOME . $newFilename;
+  $httpFilename = $pathHome . PATH_SEP . $newFilename;
+  $content = file_get_contents ( $httpdTpl );
+  $iSize = file_put_contents ( $httpFilename, $content );
+  printf("saved %s bytes in file %s \n", pakeColor::colorize( $iSize, 'INFO'), pakeColor::colorize( $newFilename , 'INFO') );    
+}
+
 function run_new_project ( $task, $args)
 {
   global $pathHome;
@@ -791,9 +801,12 @@ function run_new_project ( $task, $args)
   G::mk_dir ($pathHome . PATH_SEP . 'public_html' . PATH_SEP . 'images');
   G::mk_dir ($pathHome . PATH_SEP . 'public_html' . PATH_SEP . 'skins');
   G::mk_dir ($pathHome . PATH_SEP . 'public_html' . PATH_SEP . 'skins'. PATH_SEP . 'green');
+  G::mk_dir ($pathHome . PATH_SEP . 'public_html' . PATH_SEP . 'skins'. PATH_SEP . 'green'. PATH_SEP . 'images');
   G::mk_dir ($pathHome . PATH_SEP . 'engine' );
   G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'classes' );
   G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'classes' . PATH_SEP . 'model');  
+  G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'classes' . PATH_SEP . 'model'. PATH_SEP . 'map');  
+  G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'classes' . PATH_SEP . 'model'. PATH_SEP . 'om');  
   G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'config' );
   G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'content' );
   G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'content' . PATH_SEP . 'languages');
@@ -813,13 +826,13 @@ function run_new_project ( $task, $args)
   G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'test' . PATH_SEP . 'unit');
   G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'xmlform' );
   G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'xmlform' . PATH_SEP . 'login');
+  G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'xmlform' . PATH_SEP . 'gulliver');
   G::mk_dir (PATH_SHARED . 'sites' . PATH_SEP );
   G::mk_dir (PATH_SHARED . 'sites' . PATH_SEP . $projectName );
 
   //create project.conf for httpd conf
   create_file_from_tpl ( 'httpd.conf',       $projectName . '.conf' );
   create_file_from_tpl ( 'sysGeneric.php',  'public_html' . PATH_SEP . 'sysGeneric.php' );
-  copy_file_from_tpl   ( 'style.css',       'public_html' . PATH_SEP . 'skins' . PATH_SEP . 'green' . PATH_SEP . 'style.css' );
   copy_file_from_tpl   ( 'bm.jpg',          'public_html' . PATH_SEP . 'skins' . PATH_SEP . 'green' . PATH_SEP . 'images' . PATH_SEP . 'bm.jpg' );
   copy_file_from_tpl   ( 'bsm.jpg',         'public_html' . PATH_SEP . 'skins' . PATH_SEP . 'green' . PATH_SEP . 'images' . PATH_SEP . 'bsm.jpg' );
   create_file_from_tpl ( 'index.html',      'public_html' . PATH_SEP . 'index.html' );
@@ -839,6 +852,34 @@ function run_new_project ( $task, $args)
   copy_file_from_tpl   ( 'green.html',      'engine' . PATH_SEP . 'skins' . PATH_SEP . 'green.html' );
   copy_file_from_tpl   ( 'green.php',       'engine' . PATH_SEP . 'skins' . PATH_SEP . 'green.php' );
   create_file_from_tpl ( 'db.php',          PATH_SEP . PATH_SHARED . 'sites' . PATH_SEP . $projectName . PATH_SEP . 'db.php' );
+  copy_file ( 'public_html' . PATH_SEP . 'skins' . PATH_SEP . 'green' . PATH_SEP . 'style.css' );
+  copy_file ( 'engine' . PATH_SEP . 'classes' . PATH_SEP . 'class.ArrayPeer.php' );
+  copy_file ( 'engine' . PATH_SEP . 'classes' . PATH_SEP . 'class.BasePeer.php' );
+  copy_file ( 'engine' . PATH_SEP . 'classes' . PATH_SEP . 'class.configuration.php' );
+  copy_file ( 'engine' . PATH_SEP . 'classes' . PATH_SEP . 'class.plugin.php' );
+  copy_file ( 'engine' . PATH_SEP . 'classes' . PATH_SEP . 'class.pluginRegistry.php' );
+  copy_file ( 'engine' . PATH_SEP . 'classes' . PATH_SEP . 'class.popupMenu.php' );
+  copy_file ( 'engine' . PATH_SEP . 'classes' . PATH_SEP . 'class.propelTable.php' );
+  copy_file ( 'engine' . PATH_SEP . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'Application.php' );
+  copy_file ( 'engine' . PATH_SEP . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'ApplicationPeer.php' );
+  copy_file ( 'engine' . PATH_SEP . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'Content.php' );
+  copy_file ( 'engine' . PATH_SEP . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'ContentPeer.php' );
+  copy_file ( 'engine' . PATH_SEP . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'Configuration.php' );
+  copy_file ( 'engine' . PATH_SEP . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'ConfigurationPeer.php' );
+  copy_file ( 'engine' . PATH_SEP . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'om' . PATH_SEP .  'BaseApplication.php' );
+  copy_file ( 'engine' . PATH_SEP . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'om' . PATH_SEP .  'BaseApplicationPeer.php' );
+  copy_file ( 'engine' . PATH_SEP . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'om' . PATH_SEP .  'BaseContent.php' );
+  copy_file ( 'engine' . PATH_SEP . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'om' . PATH_SEP .  'BaseContentPeer.php' );
+  copy_file ( 'engine' . PATH_SEP . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'om' . PATH_SEP .  'BaseConfiguration.php' );
+  copy_file ( 'engine' . PATH_SEP . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'om' . PATH_SEP .  'BaseConfigurationPeer.php' );
+  copy_file ( 'engine' . PATH_SEP . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'map' . PATH_SEP .  'ApplicationMapBuilder.php' );
+  copy_file ( 'engine' . PATH_SEP . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'map' . PATH_SEP .  'ContentMapBuilder.php' );
+  copy_file ( 'engine' . PATH_SEP . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'map' . PATH_SEP .  'ConfigurationMapBuilder.php' );
+  copy_file ( 'engine' . PATH_SEP . 'methods' . PATH_SEP . 'login' . PATH_SEP . 'dbInfo.php' );
+  copy_file ( 'engine' . PATH_SEP . 'xmlform' . PATH_SEP . 'login' . PATH_SEP . 'dbInfo.xml' );
+  copy_file ( 'engine' . PATH_SEP . 'xmlform' . PATH_SEP . 'gulliver' . PATH_SEP . 'pagedTable_PopupMenu.xml' );
+  copy_file ( 'engine' . PATH_SEP . 'templates' . PATH_SEP . 'popupMenu.html' );
+  copy_file ( 'engine' . PATH_SEP . 'templates' . PATH_SEP . 'paged-table.html' );
 
   //create schema.xml with empty databases
   //create welcome page
