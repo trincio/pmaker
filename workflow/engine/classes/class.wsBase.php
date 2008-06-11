@@ -29,7 +29,7 @@
 //
 // License: LGPL, see LICENSE
 ////////////////////////////////////////////////////
-
+//global $RBAC;
 require_once ( "classes/model/Application.php" );
 require_once ( "classes/model/AppDelegation.php" );
 require_once ( "classes/model/AppThread.php" );
@@ -290,6 +290,52 @@ class wsBase
     	$result[] = array ( 'guid' => $e->getMessage(), 'name' => $e->getMessage() );
       return $result;
     }		
+	}
+	
+	public function createUser($sessionId, $userId, $first_name, $last_name, $email, $role) {
+   try {
+   			global $RBAC;  
+   			$RBAC->initRBAC();
+	  	  
+	  	  $rol=$RBAC->loadById($role);
+	  	  
+	  	  $aData['USR_USERNAME']    = $userId;
+				$aData['USR_PASSWORD']    = '5e8ff9bf55ba3508199d22e984129be6';
+				$aData['USR_FIRSTNAME']   = $first_name;
+				$aData['USR_LASTNAME']    = $last_name;
+				$aData['USR_EMAIL']       = $email;
+				$aData['USR_DUE_DATE']    = date('Y-m-d H:i:s');
+				$aData['USR_CREATE_DATE'] = date('Y-m-d H:i:s');
+				$aData['USR_UPDATE_DATE'] = date('Y-m-d H:i:s');  	  
+	  	  $aData['USR_STATUS']      = 1;	  	
+	  	  
+				$sUserUID                 = $RBAC->createUser($aData,  $rol['ROL_CODE']);		
+				
+				$aData['USR_UID']         = $sUserUID;
+				$aData['USR_PASSWORD']    = md5($sUserUID);					
+				$aData['USR_STATUS']      = 'ACTIVE';			
+				$aData['USR_COUNTRY']     = 'BO';
+				$aData['USR_CITY']        = 'L';
+				$aData['USR_LOCATION']    = 'LPB';
+				$aData['USR_ADDRESS']     = 'papas';
+				$aData['USR_PHONE']       = '646645465645';							
+				$aData['USR_ZIP_CODE']    = '77001';				
+				$aData['USR_POSITION']    = 'back';
+				$aData['USR_RESUME']      = 'blabla';
+				$aData['USR_BIRTHDAY']    = date('Y-m-d');	
+				$aData['USR_ROLE']        = $rol['ROL_CODE'];//'PROCESSMAKER_OPERATOR';
+	    	  
+	  	  $oUser = new Users();
+			  $oUser->create($aData);
+			  
+	      $result = new wsResponse (0, "user $first_name $last_name [$userId] created sucessful.");
+	      return $result;
+    }
+    catch ( Exception $e ) {
+      $result = new wsResponse (-100, $e->getMessage());
+      return $result;
+    }
+    
 	}
 	
 }
