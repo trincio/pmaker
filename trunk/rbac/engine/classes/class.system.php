@@ -176,5 +176,34 @@ class RBAC_System extends DBTable
     	                        true);
   	}
   }
+  
+  /*
+	* create a system record
+	* @param string $sCode
+	* @return variant
+	*/
+	function create($sCode = '')
+  {
+    if ($sCode !== '')
+  	{
+  		$this->table_keys = array('SYS_CODE');
+  		$this->oObject    = parent::load($sCode);
+  		$this->table_keys = array('SYS_UID');
+  		return $this->oObject;
+  	}
+  	else
+  	{
+	  return PEAR::raiseError(null,
+    	        G_ERROR_SYSTEM_CODE,
+    	        null,
+    	        null,
+    	        'You tried to call to a loadByCode method without send the System Code!',
+    	        'G_Error',
+    	        true);
+  	}
+  }
+  
+  
+  
 }
 ?>

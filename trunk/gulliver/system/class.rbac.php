@@ -309,6 +309,10 @@ class RBAC
   function numUsersWithRole($ROL_UID){
 	return $this->rolesObj->numUsersWithRole($ROL_UID);
   }
+
+  function createSystem($sCode) {
+    return $this->systemObj->create(array('SYS_CODE' => $sCode));
+  }
  
   
 }

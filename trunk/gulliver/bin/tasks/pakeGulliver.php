@@ -740,6 +740,40 @@ function run_new_project ( $task, $args)
 
   G::LoadSystem ('templatePower');
   $pathHome = PATH_TRUNK . $projectName;
+  printf("creating project %s in %s\n", pakeColor::colorize($projectName, 'INFO'), pakeColor::colorize($pathHome, 'INFO'));
+
+  define ( 'G_ENVIRONMENT', G_DEV_ENV );
+  require_once ( "propel/Propel.php" );
+  Propel::init(  PATH_CORE . "config/databases.php");  
+  $configuration = Propel::getConfiguration();
+  $connectionDSN = $configuration['datasources']['workflow']['connection'];
+  printf("using DSN Connection %s \n", pakeColor::colorize( $connectionDSN, 'INFO'));
+
+  $rbacProjectName = strtoupper ( $projectName );
+          
+  G::LoadSystem ('rbac');
+  $RBAC = RBAC::getSingleton() ;
+  $RBAC->sSystem = $rbacProjectName;
+  $RBAC->initRBAC();
+  $RBAC->createSystem ($rbacProjectName);
+  $RBAC->createPermision ( substr( $rbacProjectName,0,3) . '_LOGIN' );
+  $systemData = $RBAC->systemObj->LoadByCode ($rbacProjectName) ;
+  $roleData['ROL_UID'] = G::GenerateUniqueId();
+  $roleData['ROL_PARENT'] = '';
+  $roleData['ROL_SYSTEM'] = $systemData['SYS_UID'];
+  $roleData['ROL_CODE'] = substr( $rbacProjectName,0,3) . '_ADMIN';
+  $roleData['ROL_CREATE_DATE'] = date('Y-m-d H:i:s');
+  $roleData['ROL_UPDATE_DATE'] = date('Y-m-d H:i:s');
+  $roleData['ROL_STATUS'] = '1';
+  $RBAC->createRole ( $roleData );
+  $roleData = $RBAC->rolesObj->LoadByCode ( $roleData['ROL_CODE'] ) ;
+  
+  $userRoleData['ROL_UID'] = $roleData['ROL_UID'];
+  $userRoleData['USR_UID'] = '00000000000000000000000000000001';
+  $RBAC->assignUserToRole( $userRoleData );
+               
+//print_r ( $RBAC);
+die;
   
   //create folder and structure
   G::mk_dir ($pathHome );
@@ -771,7 +805,7 @@ function run_new_project ( $task, $args)
   G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'xmlform' . PATH_SEP . 'login');
   
   //create project.conf for httpd conf
-  create_file_from_tpl ( 'httpd.conf', 'engine' . PATH_SEP . $projectName . '.conf' );
+  create_file_from_tpl ( 'httpd.conf',       $projectName . '.conf' );
   create_file_from_tpl ( 'sysGeneric.php',  'public_html' . PATH_SEP . 'sysGeneric.php' );
   copy_file_from_tpl   ( 'style.css',       'public_html' . PATH_SEP . 'skins' . PATH_SEP . 'green' . PATH_SEP . 'style.css' );
   copy_file_from_tpl   ( 'bm.jpg',          'public_html' . PATH_SEP . 'skins' . PATH_SEP . 'green' . PATH_SEP . 'images' . PATH_SEP . 'bm.jpg' );
@@ -794,6 +828,5 @@ function run_new_project ( $task, $args)
   //create schema.xml with empty databases
   //create welcome page
   
-  printf("creating project %s in %s\n", pakeColor::colorize($projectName, 'INFO'), pakeColor::colorize($pathHome, 'INFO'));
   exit(0);
 }

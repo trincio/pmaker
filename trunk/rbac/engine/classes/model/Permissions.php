@@ -60,6 +60,15 @@ class Permissions extends BasePermissions {
 
   function create($aData) {
     try {
+      $sCode = $aData['PER_CODE'];
+      $oCriteria = new Criteria('rbac');
+      $oCriteria->add(PermissionsPeer::PER_CODE, $sCode);
+      $oDataset = PermissionsPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      $aRow = $oDataset->getRow();
+      if (is_array($aRow)) return 1;
+      
       $aData['PER_UID']         = G::generateUniqueID();
       $aData['PER_CODE']        = $aData['PER_CODE'];
       $aData['PER_CREATE_DATE'] = date('Y-m-d H:i:s');

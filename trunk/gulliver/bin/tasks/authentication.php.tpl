@@ -2,25 +2,6 @@
 /**
  * authentication.php
  *
- * ProcessMaker Open Source Edition
- * Copyright (C) 2004 - 2008 Colosa Inc.23
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- *
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
- * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- *
  */
 
 
@@ -98,34 +79,10 @@ try {
   	}
   }
 
-  //TODO:
-  /****************** THIS LINE IS NEEDED UNTIL THERE WERE FACOTORY ,...*/
-  /*
-  $_SESSION['USER_ROLE']  = 'ADMIN';
-  $frm['USER_LANG'] = (isset($frm['USER_LANG']) && $frm['USER_LANG'])?$frm['USER_LANG']:
-    defined('SYS_LANG')?SYS_LANG:'en';
-  $_SESSION['USR_USERNAME'] = $frm['USR_USERNAME'];
-  G::header('location: /sys' .  SYS_TEMP . '/' . $frm['USER_LANG'] . '/' . SYS_SKIN . '/' . 'cases/cases_List'); die;
-  */
-  /****************** THIS LINE IS NEEDED UNTIL THERE WERE FACOTORY ,...*/
-
-	//G::LoadClass('log');
-	//$log = new Log;
-	//$log->SaveLogin ( $uid, $usr );
-
-	//if ( file_exists ( PATH_METHODS . 'login/'. SYS_SYS . ".php" ) ) {
-	//  include ( SYS_SYS . ".php" );
-	//}
 
 	$accessPMProcess   = $RBAC->userCanAccess("PM_FACTORY");
 	$accessPMCases     = $RBAC->userCanAccess("PM_CASES");
 
-	//if ( $accessWfArchitect == 1 )
-	//  $_SESSION['USER_ROLE']  = 'ARCHITECT';
-	//else if ( $accessWfProcess == 1 )
-	//    $_SESSION['USER_ROLE']  = 'ADMIN';
-	//  else
-	//    $_SESSION['USER_ROLE']  = 'USER';
 
 	//administrator
 	if ( $accessPMProcess == 1) {
