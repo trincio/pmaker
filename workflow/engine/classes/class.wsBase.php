@@ -265,4 +265,31 @@ class wsBase
     }		
 	}
 	
+	public function sendMessage( ) {
+   try {	
+  	  /*
+  	  $result  = array();
+  	  $oCriteria = new Criteria('workflow');
+      $oCriteria->add(UsersPeer::USR_STATUS ,  'ACTIVE' );
+      $oDataset = UsersPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      
+      while ($aRow = $oDataset->getRow()) {
+      	//$oProcess = new User();
+      	//$arrayProcess = $oUser->Load( $aRow['PRO_UID'] );
+      	$result[] = array ( 'guid' => $aRow['USR_UID'], 'name' => $aRow['USR_USERNAME'] );
+      	$oDataset->next();
+      }
+      */
+      /*for the moment*/
+      $result = new wsResponse (5, G::loadTranslation ('ID_USER_INACTIVE'));
+      return $result;
+    }
+    catch ( Exception $e ) {
+    	$result[] = array ( 'guid' => $e->getMessage(), 'name' => $e->getMessage() );
+      return $result;
+    }		
+	}
+	
 }

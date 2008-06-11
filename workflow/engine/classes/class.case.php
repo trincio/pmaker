@@ -1464,30 +1464,19 @@ class Cases
     *  @Description: This method set all cases with the APP_DISABLE_ACTION_DATE for today
 	*/
 
-    function ThrowUnpauseDaemon($sTypeList, $sUIDUserLogged)
+    function ThrowUnpauseDaemon()
 	{
-		list($eCriteria,$dropTmp) = $this->getConditionCasesList( $sTypeList, $sUIDUserLogged);
-		$oDataset = ApplicationPeer::doSelectRS($eCriteria);
-		$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-		$oDataset->next();
-		$aRow = $oDataset->getRow();
-	
-		while ($aRow = $oDataset->getRow()) {
-			$c = new Criteria('workflow');
-        	$c->clearSelectColumns();
-			$c->add(AppDelayPeer::APP_UID, $aRow['APP_UID']);
-			$c->add(AppDelayPeer::APP_DISABLE_ACTION_USER, null, Criteria::ISNULL);
-			$d = AppDelayPeer::doSelectRS($c);
-			$d->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+		$today = date('Y-m-d');
+		$c = new Criteria('workflow');
+		$c->clearSelectColumns();
+		$c->add(AppDelayPeer::APP_DISABLE_ACTION_USER, null, Criteria::ISNULL);
+		$c->add($c->getNewCriterion(AppDelayPeer::APP_DISABLE_ACTION_DATE, $today.' 23:59:59', Criteria::LESS_EQUAL)->addAnd($c->getNewCriterion(AppDelayPeer::APP_DISABLE_ACTION_DATE, null, Criteria::ISNOTNULL)));
+		$d = AppDelayPeer::doSelectRS($c);
+		$d->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+		$d->next();
+		while ($aRow = $d->getRow()) {
+			$this->unpauseCase($aRow['APP_UID'], $aRow['APP_DEL_INDEX'], 'System Daemon');
 			$d->next();
-		    $reg = $d->getRow();
-			/*@#erik::we ask if is today the day that we must set unpause the case*/
-			$today = date('Y-m-d');
-			$unpause_date = substr(trim($reg['APP_DISABLE_ACTION_DATE']), 0, 10);
-			if($today == $unpause_date) {
-				$this->unpauseCase($aRow['APP_UID'], $reg['APP_DEL_INDEX'], 'System Daemon');
-			}
-			$oDataset->next();
 		}
 	}
 	

@@ -1135,8 +1135,9 @@ INPUT {
 /*	Theme leimnud.module.app.input	BEGIN */
 .module_app_input___gray
 {
+	padding:1px;
 	border:1px solid #AAA;
-	margin-left:2px;
+	padding-left:3px;
 	background: #FFFFFF url(../images/input_back.gif) repeat-x;
 	background-position:0px 0px;
 	color	:#333333;
@@ -1146,9 +1147,33 @@ INPUT {
 {
 	border:1px solid #AAA;
 }
+.module_app_inputPassed___gray
+{
+	padding:1px;
+	border:1px solid green;
+	padding-left:2px;
+	padding-right:20px;
+	background: #FFFFFF url(../images/ok.png) no-repeat;
+	background-position:99% 50%;
+	color	:#000000;
+	font	:normal 8pt sans-serif;
+	width:100%;
+}
+.module_app_inputFailed___gray
+{
+	border:1px solid red;
+	padding:1px;
+	padding-left:2px;
+	padding-right:20px;
+	background: #FFFFFF url(../images/failed.png) no-repeat;
+	background-position:99% 50%;
+	color	:#000000;
+	font	:normal 8pt sans-serif;
+
+}
 .module_app_inputDisabled___gray
 {
-	border:1px solid #9f9f9f;
+	background-color:#f0f0f0;
 	color:#9f9f9f;
 }
 

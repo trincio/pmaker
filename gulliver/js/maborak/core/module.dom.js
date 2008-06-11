@@ -55,29 +55,41 @@ leimnud.Package.Public({
 			this.expand();
 			return this.make(label,go,style,prop);
 		},
-		input:function(label,style)
+		input:function(options)
 		{
-			this.make=function(label,style)
+			this.make=function(options)
 			{
-				this.input = document.createElement("input");
-				this.input.className="module_app_input___gray";
-				this.input.type="text";
-				this.input.value=label || "";
+				this.input = new this.parent.module.dom.create("input",{
+					className:"module_app_input___gray",
+					type	:"text",
+					value	:options.label || ""
+				}.concat(options.properties || {}),(options.style || {}));
+
 				this.input.disable=function()
 				{
 					this.input.disabled=true;
-					this.input.className="module_app_input___gray module_app_inputDisabled___gray";
-					return this.button;
+					this.input.className=this.input.className+" module_app_inputDisabled___gray";
+					return this.input;
 				}.extend(this);
 				this.input.enable=function()
 				{
 					this.input.disabled=false;
-					this.input.className="module_app_input___gray";
-					return this.button;
+					this.input.className=this.input.className.split(" ")[0];
+					return this.input;
 				}.extend(this);
-				this.parent.event.add(this.input,"mouseover",this.mouseover);
-				this.parent.event.add(this.input,"mouseout",this.mouseout);
-				this.parent.dom.setStyle(this.input,style || {});
+				this.input.passed=function()
+				{
+					this.input.className="module_app_inputPassed___gray "+(this.input.className.split(' ')[1] || '');
+					return this.input;
+				}.extend(this);
+				this.input.failed=function()
+				{
+					this.input.className="module_app_inputFailed___gray "+(this.input.className.split(' ')[1] || '');
+					return this.input;
+				}.extend(this);
+//				this.parent.event.add(this.input,"mouseover",this.mouseover);
+//				this.parent.event.add(this.input,"mouseout",this.mouseout);
+				//this.parent.dom.setStyle(this.input,style || {});
 				return this.input;
 			};
 			this.mouseover=function()
@@ -91,7 +103,7 @@ leimnud.Package.Public({
 				return false;
 			};
 			this.expand();
-			return this.make(label,style);
+			return this.make(options || {});
 		},
 		select:function(options)
 		{
@@ -104,7 +116,7 @@ leimnud.Package.Public({
 			this.make=function()
 			{
                 this.select = new this.parent.module.dom.create("select",this.options.properties,this.options.style);
-				this.select.className="module_app_select___gray";
+		this.select.className="module_app_select___gray";
                 this.makeData();
                 this.select.selected=function()
                 {
@@ -138,8 +150,8 @@ leimnud.Package.Public({
                         this.select.selectedIndex=data.key;
                     }
                 }.extend(this);
-				return this.select;
-			};
+		return this.select;
+		};
             this.makeData=function(){
                 var d = this.options.data;
                 var j = d.length;
