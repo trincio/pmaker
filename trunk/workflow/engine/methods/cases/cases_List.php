@@ -66,7 +66,7 @@
   //echo $_SESSION['PROCESS'].'<br>';
   /** here we verify if there is a any case with a unpause on this day*/
   if( $sTypeList === 'to_do' or $sTypeList === 'draft' or $sTypeList === 'paused') {
-	$oCases->ThrowUnpauseDaemon($sTypeList, $sUIDUserLogged);
+	$oCases->ThrowUnpauseDaemon();
   }
   
   /* Prepare page before to show */

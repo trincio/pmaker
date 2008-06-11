@@ -7,3 +7,4 @@ var button	= leimnud.module.dom.button;
 var input	= leimnud.module.dom.input;
 var DOM		= leimnud.module.dom.create;
 var panel	= leimnud.module.panel;
+var select	= leimnud.module.dom.select;
