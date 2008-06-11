@@ -252,7 +252,7 @@ class PMScript
   function evaluate()
   {
   	$bResult = null;
-  	$sScript = "try {\n";
+  	$sScript = '';
   	$iAux    = 0;
   	$bEqual  = false;
   	$iOcurrences = preg_match_all('/\@(?:([\@\%\#\?\$])([a-zA-Z\_]\w*)|([a-zA-Z\_][\w\-\>\:]*)\(((?:[^\\\\\)]*(?:[\\\\][\w\W])?)*)\))((?:\s*\[[\'"]?\w+[\'"]?\])+)?/', $this->sScript, $aMatch, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE);
@@ -388,7 +388,6 @@ class PMScript
   	}
   	$sScript .= substr($this->sScript, $iAux);
   	$sScript  = '$bResult = ' . $sScript . ';';
-  	$sScript .= "\n} catch (Exception \$oException) {\n  \$this->aFields['__ERROR__'] = \$oException->getMessage();\n}";
   	if ($this->validSyntax($sScript))
   	{
   		$this->bError = false;
