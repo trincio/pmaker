@@ -260,9 +260,19 @@ function run_generate_crud ( $task, $args)
 
   Propel::init(  PATH_CORE . "config/databases.php");  
   $configuration = Propel::getConfiguration();
-  $connectionDSN = $configuration['datasources']['propel']['connection'];
+  $connectionDSN = $configuration['datasources']['workflow']['connection'];
   printf("using DSN Connection %s \n", pakeColor::colorize( $connectionDSN, 'INFO'));
 
+  $dirs = explode ( PATH_SEP, PATH_HOME);
+  $projectName = $dirs[ count($dirs) -1 ];
+
+  if ( strlen ( trim( $projectName) ) == 0 )  {
+    printf("Project name not found \n", pakeColor::colorize( $class, 'ERROR'));
+    exit (0);
+  }  
+  
+  printf("using Project Name %s \n", pakeColor::colorize( $projectName, 'INFO'));
+die;
   $pluginDirectory = PATH_PLUGINS . $class;
   $pluginOutDirectory = PATH_OUTTRUNK . 'plugins' . PATH_SEP . $class;
 
