@@ -30,6 +30,75 @@
 // License: LGPL, see LICENSE
 ////////////////////////////////////////////////////
 
+/*
+   */
+
+function getCurrentDate()
+{
+	return G::CurDate('Y-m-d');
+}
+
+function getCurrentTime()
+{
+	return G::CurDate('H:i:s');
+}
+
+function userInfo($user_uid)
+{
+	try {
+		require_once 'classes/model/Users.php';
+    	$oUser = new Users();
+		return $oUser->getAllInformation($user_uid);
+	}
+	catch (Exception $oException) {
+		throw $oException;
+	}
+}
+
+function upperCase($sText)
+{
+	return G::toUpper($sText);
+}
+           
+function lowerCase($sText)
+{
+	return G::toLower($sText);
+}
+
+function capitalize($sText)
+{
+	return G::capitalizeWords($sText);
+}
+
+function formatDate($date, $format='', $lang='en')
+{
+	if( !isset($date) or $date == '') {
+		throw new Exception('function:formatDate::Bad param');
+	}
+	try{
+    	return G::getformatedDate($date, $format, $lang);
+	} catch (Exception $oException) {
+    	throw $oException;
+	}
+}
+
+function literalDate($date, $lang = 'en')
+{
+    if( !isset($date) or $date == '' ) {
+		throw new Exception('function:formatDate::Bad param');
+	}
+	try{
+		switch($lang)
+		{
+			case 'en': $ret = G::getformatedDate($date, 'M d,yyyy', $lang); break;
+			case 'es': $ret = G::getformatedDate($date, 'd de M de yyyy', $lang); break;
+		}
+    	return $ret;
+	} catch (Exception $oException) {
+    	throw $oException;
+  	}
+}
+ 
 function pauseCase($sApplicationUID = '', $iDelegation = 0, $sUserUID = '', $sUnpauseDate = null) {//var_dump($sApplicationUID, $iDelegation, $sUserUID, $sUnpauseDate);die(':|');
   try {
     if ($sApplicationUID == '') {
@@ -49,4 +118,13 @@ function pauseCase($sApplicationUID = '', $iDelegation = 0, $sUserUID = '', $sUn
     throw $oException;
   }
 }
+/*
+$x = formatDate('2008-06-07','dd/mm/yy');
+
+echo '<pre>-->';
+print_r(userInfo($_SESSION['USER_LOGGED']));
+echo '<pre>';
+*/
+	
+	
 ?>
