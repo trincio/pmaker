@@ -58,7 +58,7 @@ var showDynaformsFormVars = function(sFieldName, sAjaxServer, sProcess, sSymbol)
   oRPC = new leimnud.module.rpc.xmlhttp({
     url   : sAjaxServer,
     method: 'POST',
-    args  : 'sFieldName=' + sFieldName + '&sProcess=' + sProcess + '&sSymbol=' + sSymbol
+    args  : 'sFieldName=' + sFieldName + '&sProcess=' + sProcess + '&sSymbol=' + sSymbol + '&sType=2'
   });
   oRPC.callback = function(oRPC) {
     _oVarsPanel_.loader.hide();

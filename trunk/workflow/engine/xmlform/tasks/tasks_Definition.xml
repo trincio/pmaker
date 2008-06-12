@@ -17,7 +17,7 @@
   <en>Description</en>
 </TAS_DESCRIPTION>
 
-<TAS_PRIORITY_VARIABLE type="textpm" size="48" maxlength="155" defaultvalue="@@SYS_CASE_PRIORITY" showVars="1" process="@#PRO_UID" group="1">
+<TAS_PRIORITY_VARIABLE type="textpm" size="48" maxlength="155" defaultvalue="@@SYS_CASE_PRIORITY" showVars="1" process="@#PRO_UID" group="1" readOnly="readOnly">
   <en>Variable for Case priority</en>
 </TAS_PRIORITY_VARIABLE>
 
@@ -80,7 +80,7 @@ var showDynaformsFormVars = function(sFieldName, sAjaxServer, sProcess, sSymbol)
   oRPC = new leimnud.module.rpc.xmlhttp({
     url   : sAjaxServer,
     method: 'POST',
-    args  : 'sFieldName=' + sFieldName + '&sProcess=' + sProcess + '&sSymbol=' + sSymbol
+    args  : 'sFieldName=' + sFieldName + '&sProcess=' + sProcess + '&sSymbol=' + sSymbol + '&sNoShowLeyend=1'
   });
   oRPC.callback = function(oRPC) {
     _oVarsPanel_.loader.hide();
@@ -94,6 +94,7 @@ var showDynaformsFormVars = function(sFieldName, sAjaxServer, sProcess, sSymbol)
 var insertFormVar = function(sFieldName, sValue) {
 	oAux = document.getElementById(sFieldName);
 	if (oAux.setSelectionRange) {
+	  oAux.value     = '';
 		var rangeStart = oAux.selectionStart;
     var rangeEnd   = oAux.selectionEnd;
     var tempStr1   = oAux.value.substring(0,rangeStart);
