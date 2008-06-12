@@ -223,15 +223,13 @@ class wsBase
    try {	
   	  $result  = array();
   	  $oCriteria = new Criteria('workflow');
-      $oCriteria->add(ProcessPeer::PRO_STATUS ,  'ACTIVE' );
-      $oDataset = ProcessPeer::doSelectRS($oCriteria);
+      $oCriteria->add(ApplicationPeer::APP_STATUS ,  array('TO_DO','DRAFT'), Criteria::IN);      
+      $oDataset = ApplicationPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
       $oDataset->next();
       
-      while ($aRow = $oDataset->getRow()) {
-      	$oProcess = new Process();
-      	$arrayProcess = $oProcess->Load( $aRow['PRO_UID'] );
-      	$result[] = array ( 'guid' => $aRow['PRO_UID'], 'name' => $arrayProcess['PRO_TITLE'] );
+      while ($aRow = $oDataset->getRow()) {      	
+      	$result[] = array ( 'guid' => $aRow['APP_UID'], 'name' => $aRow['APP_UID'] );
       	$oDataset->next();
       }
       return $result;
@@ -366,6 +364,30 @@ class wsBase
 		    		  
 	      $result = new wsResponse (0, "User assigned to group sucessful");
 	      
+	      return $result;
+    }
+    catch ( Exception $e ) {
+      $result = new wsResponse (100, $e->getMessage());
+      return $result;
+    }    
+	}
+	
+	public function sendVariables($sessionId, $caseId, $variables) {
+   try {   			
+				G::LoadClass('case'); 						
+		    $oCase = new Cases();
+		    
+		    $Fields['1']='xUNO';
+		    $Fields['2']='xDOS';
+		    $Fields['3']='xTRES';
+		    $Fields['4']='xCUATRO';
+		    $Fields['5']='xCINCO';
+		  
+        $oldFields = $oCase->loadCase( $caseId );
+        $oldFields['APP_DATA'] = array_merge( $oldFields['APP_DATA'], $Fields);
+        
+		    $up_case = $oCase->updateCase($caseId, $oldFields);				            
+	      $result = new wsResponse (0, "Sucessful");	      
 	      return $result;
     }
     catch ( Exception $e ) {

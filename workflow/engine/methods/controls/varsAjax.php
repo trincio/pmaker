@@ -24,20 +24,31 @@
  */
 G::LoadClass('xmlfield_InputPM');
 $aFields = getDynaformsVars($_POST['sProcess']);
-$sHTML   = '<select name="_Var_Form_" id="_Var_Form_" size="' . count($aFields) . '" style="width:100%;height:50%;" ondblclick="insertFormVar(\'' . $_POST['sFieldName'] . '\', this.value);">';
+$sHTML   = '<select name="_Var_Form_" id="_Var_Form_" size="' . count($aFields) . '" style="width:100%;' . (!isset($_POST['sNoShowLeyend']) ? 'height:50%;' : '') . '" ondblclick="insertFormVar(\'' . $_POST['sFieldName'] . '\', this.value);">';
 foreach ($aFields as $aField) {
 	$sHTML .= '<option value="' . $_POST['sSymbol'] . $aField['sName'] . '">' . $_POST['sSymbol'] . $aField['sName'] . ' (' . $aField['sType'] . ')</option>';
 }
 $sHTML .= '</select>';
-$sHTML .= '<table>';
-$sHTML .= '<tr><td align="center" class="module_app_input___gray">' . G::LoadTranslation('ID_DOCLICK') . '</td></tr>';
-$sHTML .= '<tr><td class="module_app_input___gray">' . G::LoadTranslation('ID_ESC') . '</td></tr>';
-$sHTML .= '<tr><td class="module_app_input___gray">' . G::LoadTranslation('ID_NONEC') . '</td></tr>';
-$sHTML .= '<tr><td class="module_app_input___gray">' . G::LoadTranslation('ID_EURL') . '</td></tr>';
-$sHTML .= '<tr><td class="module_app_input___gray">' . G::LoadTranslation('ID_EVAL') . '</td></tr>';
-$sHTML .= '<tr><td class="module_app_input___gray">' . G::LoadTranslation('ID_ESCJS') . '</td></tr>';
-$sHTML .= '<tr><td class="module_app_input___gray">' . G::LoadTranslation('ID_ESCSJS') . '</td></tr>';
-$sHTML .= '<tr><td class="module_app_input___gray">' . G::LoadTranslation('ID_FUNCTION') . '</td></tr>';
-$sHTML .= '</table>';
+if (!isset($_POST['sNoShowLeyend'])) {
+  $sHTML .= '<table width="100%">';
+  $sHTML .= '<tr><td align="center" class="module_app_input___gray" colspan="2">' . G::LoadTranslation('ID_DOCLICK') . '</td></tr>';
+  if (isset($_POST['sType'])) {
+    $sHTML .= '<tr><td class="module_app_input___gray">' . G::LoadTranslation('ID_ESC') . '</td></tr>';
+    $sHTML .= '<tr><td class="module_app_input___gray">' . G::LoadTranslation('ID_NONEC') . '</td></tr>';
+    /*$sHTML .= '<tr><td class="module_app_input___gray">' . G::LoadTranslation('ID_EURL') . '</td></tr>';
+    $sHTML .= '<tr><td class="module_app_input___gray">' . G::LoadTranslation('ID_EVAL') . '</td></tr>';
+    $sHTML .= '<tr><td class="module_app_input___gray">' . G::LoadTranslation('ID_ESCJS') . '</td></tr>';
+    $sHTML .= '<tr><td class="module_app_input___gray">' . G::LoadTranslation('ID_ESCSJS') . '</td></tr>';
+    $sHTML .= '<tr><td class="module_app_input___gray">' . G::LoadTranslation('ID_FUNCTION') . '</td></tr>';*/
+  }
+  else {
+    $sHTML .= '<tr><td class="module_app_input___gray" width="5%">@@</td><td class="module_app_input___gray">' . G::LoadTranslation('ID_TO_STRING') . '</td></tr>';
+    $sHTML .= '<tr><td class="module_app_input___gray" width="5%">@#</td><td class="module_app_input___gray">' . G::LoadTranslation('ID_TO_FLOAT') . '</td></tr>';
+    $sHTML .= '<tr><td class="module_app_input___gray" width="5%">@%</td><td class="module_app_input___gray">' . G::LoadTranslation('ID_TO_INTEGER') . '</td></tr>';
+    $sHTML .= '<tr><td class="module_app_input___gray" width="5%">@?</td><td class="module_app_input___gray">' . G::LoadTranslation('ID_TO_URL') . '</td></tr>';
+    $sHTML .= '<tr><td class="module_app_input___gray" width="5%">@$</td><td class="module_app_input___gray">' . G::LoadTranslation('ID_SQL_ESCAPE') . '</td></tr>';
+  }
+  $sHTML .= '</table>';
+}
 echo $sHTML;
 ?>
