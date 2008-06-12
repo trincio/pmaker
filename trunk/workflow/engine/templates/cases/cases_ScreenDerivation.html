@@ -1,12 +1,10 @@
-<td align="center">
-
 <DIV id="publisherContent[1]" style="; margin:0px;" align="center" >
   <form name="frmDerivation" id="frmDerivation" action="cases_Derivate" method="POST" class="formDefault" style="margin:0px;">
   <input type="hidden" name="form[ROU_TYPE]" id="form[ROU_TYPE]" value="{$PROCESS.ROU_TYPE}">
 
   <div class="borderForm" style="width:500px; padding-left:0; padding-right:0; border-width:1;">
 		<div class="boxTop"><div class="a"></div><div class="b"></div><div class="c"></div></div>
-		
+
     <div class="content" style="height:100%;" >
 	  <table width="99%">
       <tr>
@@ -50,7 +48,7 @@
     <td class='FormTitle' colspan="2" align="">Assign Task</td>
   {/if}
   </tr>
-  
+
 	{foreach key=id item=data from=$TASK}
  	 <tr height="5">
       <td>&nbsp;</td>
@@ -63,14 +61,14 @@
         <td class="FormFieldContent">{$data.ROU_CONDITION }</td>
     </tr>
     {/if}
-    
+
     {if $PROCESS.ERROR eq '' }
   	<tr>
   		<td class="FormLabel" width="100">Next Task:</td>
       <td class="FormFieldContent">{$data.NEXT_TASK.TAS_TITLE}{$data.NEXT_TASK.TAS_HIDDEN_FIELD}</td>
   	</tr>
     {/if}
-  
+
     {if not $data.NEXT_TASK.ROU_FINISH_FLAG }
       <tr>
    	 	<td class="FormLabel" width="100">Employee:</td>
@@ -82,11 +80,11 @@
         <td class="FormFieldContent">{$data.NEXT_TASK.USR_UID}{$data.NEXT_TASK.USR_HIDDEN_FIELD}</td>
    	 </tr>
     {/if}
-  
+
  	 <tr height="0">
       <td> {$data.NEXT_TASK.TAS_ASSIGN_TYPE}{$data.NEXT_TASK.TAS_DEF_PROC_CODE}{$data.NEXT_TASK.DEL_PRIORITY}</td>
     </tr>
-   
+
     {if $PROCESS.ROU_TYPE eq 'SELECT'}
     <tr>
   		<td colspan="2" align="center">
@@ -97,11 +95,11 @@
         <input type="submit" class='module_app_button___gray' name="btnContinue" id="btnContinue" value="Finish with option {$id} " >
       {$data.NEXT_TASK.TAS_ASSIGN_TYPE}
       {/if}
-      </td>  
+      </td>
     </tr>
     </form>
     {/if}
-	{/foreach}  
+	{/foreach}
 
   {if $PROCESS.ERROR eq '' && $PROCESS.ROU_TYPE neq 'SELECT' && ! $PROCESS.ROU_FINISH_FLAG  }
 	<tr>
@@ -122,8 +120,6 @@
     		</div>
 		<div class="boxBottom"><div class="a"></div><div class="b"></div><div class="c"></div></div>
   </div>
-
-
 
 {if $PROCESS.ROU_TYPE neq 'SELECT'}
   </form>
