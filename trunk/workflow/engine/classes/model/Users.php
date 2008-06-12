@@ -137,5 +137,54 @@ class Users extends BaseUsers {
     $c->add(UsersPeer::USR_USERNAME, $sUsername);    
     return $c;   
   }
+
+  function getAllInformation($UsrUid)
+  {
+	if( !isset($UsrUid) or $UsrUid == '' ) {
+		throw $oException;
+	}
+	try {
+
+		require_once 'classes/model/IsoCountry.php';
+		require_once 'classes/model/IsoLocation.php';
+		require_once 'classes/model/IsoSubdivision.php';
+		require_once 'classes/model/Language.php';
+		
+		$aFields = $this->load($UsrUid);
+		$c = new Criteria('workflow');
+		$c->add(IsoCountryPeer::IC_UID, $aFields['USR_COUNTRY']);
+		$rs = IsoCountryPeer::doSelectRS($c);
+		$rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+		$rs->next();
+		$Crow = $rs->getRow();
+	
+		$c->clearSelectColumns();
+		$c->add(IsoSubdivisionPeer::IC_UID, $aFields['USR_COUNTRY']);
+		$c->add(IsoSubdivisionPeer::IS_UID, $aFields['USR_CITY']);
+		$rs = IsoSubdivisionPeer::doSelectRS($c);
+		$rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+		$rs->next();
+		$Srow = $rs->getRow();
+
+		$aRet['username'] 	= $aFields['USR_USERNAME'];
+		$aRet['firstname'] 	= $aFields['USR_FIRSTNAME'];
+		$aRet['lastname']	= $aFields['USR_LASTNAME'];
+		$aRet['mail'] 		= $aFields['USR_EMAIL'];
+		$aRet['status'] 	= $aFields['USR_STATUS'];
+		$aRet['address'] 	= $aFields['USR_ADDRESS'];
+		$aRet['phone'] 		= $aFields['USR_PHONE'];
+		$aRet['fax'] 		= $aFields['USR_FAX'];
+		$aRet['cellular'] 	= $aFields['USR_CELLULAR'];
+		$aRet['birthday'] 	= $aFields['USR_BIRTHDAY'];
+		$aRet['coutry']   	= $Crow['IC_NAME'];
+		$aRet['city']   	= $Srow['IS_NAME'];
+
+		return $aRet;
+	}
+	catch (Exception $oException) {
+		throw $oException;
+	}
+  }
 } // Users
+
 ?>
