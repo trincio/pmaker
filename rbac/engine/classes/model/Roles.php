@@ -208,18 +208,25 @@ class Roles extends BaseRoles
 		
         $result = RolesPeer::doSelectRS($oCriteria);
         $result->next();
-        $row = $result->getRow();
-
-        $aFields['ROL_UID'] = $row[0];
-        $aFields['ROL_PARENT'] = $row[1];
-        $aFields['ROL_SYSTEM'] = $row[2];
-        $aFields['ROL_CODE'] = $row[3];
-        $aFields['ROL_CREATE_DATE'] = $row[4];
-        $aFields['ROL_UPDATE_DATE'] = $row[5];
-        $aFields['ROL_STATUS'] = $row[6];
         
-        return $aFields;
+        $row = $result->getRow();
+				 if (is_array($row)) 
+				 {
+             $aFields['ROL_UID'] = $row[0];
+				     $aFields['ROL_PARENT'] = $row[1];
+				     $aFields['ROL_SYSTEM'] = $row[2];
+				     $aFields['ROL_CODE'] = $row[3];
+				     $aFields['ROL_CREATE_DATE'] = $row[4];
+				     $aFields['ROL_UPDATE_DATE'] = $row[5];
+				     $aFields['ROL_STATUS'] = $row[6];        
+        	   return $aFields;
+         } 
+         else 
+         {
+            return null;
+         }        
 	}
+	
 	function getRoleCode($ROL_UID)
 	{
 		$oCriteria = new Criteria('rbac');
@@ -450,4 +457,23 @@ class Roles extends BaseRoles
         return RolesPeer::doCount($criteria); 
 	}
 
+  function verifyByCode($sRolCode = '')
+    {
+        try {
+            $oCriteria = new Criteria('rbac');
+            $oCriteria->add(RolesPeer::ROL_CODE, $sRolCode);
+            $oDataset = RolesPeer::doSelectRS($oCriteria);
+            $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+            $oDataset->next();
+            $aRow = $oDataset->getRow();
+            if (is_array($aRow)) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+        catch (exception $oError) {
+            throw ($oError);
+        }
+    }
 } // Roles

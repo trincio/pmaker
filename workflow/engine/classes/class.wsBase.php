@@ -29,7 +29,7 @@
 //
 // License: LGPL, see LICENSE
 ////////////////////////////////////////////////////
-//global $RBAC;
+
 require_once ( "classes/model/Application.php" );
 require_once ( "classes/model/AppDelegation.php" );
 require_once ( "classes/model/AppThread.php" );
@@ -292,19 +292,32 @@ class wsBase
     }		
 	}
 	
-	public function createUser($sessionId, $userId, $first_name, $last_name, $email, $role) {
+	public function createUser($sessionId, $userId, $firstname, $lastname, $email, $role, $password) {
    try {
    			global $RBAC;  
    			$RBAC->initRBAC();
-	  	  
+
+				$user=$RBAC->verifyUser($userId);	        
+        if($user==1)
+        {  $result = new wsResponse (7, "User ID: $userId already exist!!!");
+           return $result;
+        }
+        	  	  	  						  	  	  	
 	  	  $rol=$RBAC->loadById($role);
+	  	  if(!is_array($rol))
+	  	  {		$very_rol=$RBAC->verifyByCode($role);
+	  	  	  if($very_rol==0)
+	  	  	  {		$result = new wsResponse (6, "Invalid role: $role");
+	  	  	  		return $result;
+	  	  	  }		
+	  	  }	  	  	  	  
 	  	  
 	  	  $aData['USR_USERNAME']    = $userId;
-				$aData['USR_PASSWORD']    = '5e8ff9bf55ba3508199d22e984129be6';
-				$aData['USR_FIRSTNAME']   = $first_name;
-				$aData['USR_LASTNAME']    = $last_name;
+				$aData['USR_PASSWORD']    = md5($password);
+				$aData['USR_FIRSTNAME']   = $firstname;
+				$aData['USR_LASTNAME']    = $lastname;
 				$aData['USR_EMAIL']       = $email;
-				$aData['USR_DUE_DATE']    = date('Y-m-d H:i:s');
+				$aData['USR_DUE_DATE']    = mktime(0, 0, 0, date("m"), date("d"), date("Y")+1);
 				$aData['USR_CREATE_DATE'] = date('Y-m-d H:i:s');
 				$aData['USR_UPDATE_DATE'] = date('Y-m-d H:i:s');  	  
 	  	  $aData['USR_STATUS']      = 1;	  	
@@ -314,28 +327,51 @@ class wsBase
 				$aData['USR_UID']         = $sUserUID;
 				$aData['USR_PASSWORD']    = md5($sUserUID);					
 				$aData['USR_STATUS']      = 'ACTIVE';			
-				$aData['USR_COUNTRY']     = 'BO';
-				$aData['USR_CITY']        = 'L';
-				$aData['USR_LOCATION']    = 'LPB';
-				$aData['USR_ADDRESS']     = 'papas';
-				$aData['USR_PHONE']       = '646645465645';							
-				$aData['USR_ZIP_CODE']    = '77001';				
-				$aData['USR_POSITION']    = 'back';
-				$aData['USR_RESUME']      = 'blabla';
+				$aData['USR_COUNTRY']     = 'US';
+				$aData['USR_CITY']        = 'FL';
+				$aData['USR_LOCATION']    = 'MIA';
+				$aData['USR_ADDRESS']     = ''; 
+				$aData['USR_PHONE']       = '';							
+				$aData['USR_ZIP_CODE']    = '33314';				
+				$aData['USR_POSITION']    = '';
+				$aData['USR_RESUME']      = '';
 				$aData['USR_BIRTHDAY']    = date('Y-m-d');	
-				$aData['USR_ROLE']        = $rol['ROL_CODE'];//'PROCESSMAKER_OPERATOR';
+				$aData['USR_ROLE']        = $rol['ROL_CODE'];
 	    	  
 	  	  $oUser = new Users();
 			  $oUser->create($aData);
 			  
-	      $result = new wsResponse (0, "user $first_name $last_name [$userId] created sucessful.");
+	      $result = new wsResponse (0, "User $firstname $lastname [$userId] created sucessful.");
+	      
 	      return $result;
     }
     catch ( Exception $e ) {
-      $result = new wsResponse (-100, $e->getMessage());
+      $result = new wsResponse (100, $e->getMessage());
       return $result;
+    }    
+	}
+	
+	public function assignUserToGroup($sessionId, $userId, $groupId) {
+   try {   			
+				G::LoadClass('groups');  	      	      	    
+  	    $groups = new Groups;
+  	    
+  	    $very_user=$groups->verifyUsertoGroup( $groupId, $userId);								
+			  if($very_user==1)
+			  { 
+			  	$result = new wsResponse (8, "User exist in the group");
+	      	return $result;
+			  }  	      	    
+  	    $groups->addUserToGroup( $groupId, $userId);								
+		    		  
+	      $result = new wsResponse (0, "User assigned to group sucessful");
+	      
+	      return $result;
     }
-    
+    catch ( Exception $e ) {
+      $result = new wsResponse (100, $e->getMessage());
+      return $result;
+    }    
 	}
 	
 }

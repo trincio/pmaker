@@ -25,13 +25,22 @@
 
   //G::genericForceLogin( 'WF_MYINFO' , 'login/noViewPage', $urlLogin = 'login/login' );
 
-  //G::LoadClass('group');
-  G::LoadClass('groups');
   G::LoadClass('tree');
+
+	$wsSessionId = '';
+	if ( isset ( $_SESSION['WS_SESSION_ID'] ) ) {
+		$wsSessionId = $_SESSION['WS_SESSION_ID'];
+	};
 
   global $G_HEADER;
   $G_HEADER->addScriptFile('/js/common/tree/tree.js');
-  $groups = new Groups();
+
+  $defaultEndpoint = 'http://' .$_SERVER['SERVER_NAME'] . ':' .$_SERVER['SERVER_PORT'] . 
+              '/sys' .SYS_SYS.'/en/green/services/wsdl';
+
+      $endpoint = isset( $_SESSION['END_POINT'] ) ? $_SESSION['END_POINT'] : $defaultEndpoint;
+
+  $wsdl = '';
 
   $tree = new Tree();
   $tree->name = 'WebServices';
@@ -43,13 +52,16 @@
 
 	  <table width="100%" style="margin:0px;" cellspacing="0" cellpadding="0">
 	  <tr>
-		  <td class="userGroupTitle">'.G::loadTranslation("	ID_WEB_SERVICES").'</td>
+		  <td class="userGroupTitle">'.G::loadTranslation("ID_WEB_SERVICES").'</td>
 	  </tr>
 	</table>
 	</div>
 	<div class="boxBottomBlue"><div class="a"></div><div class="b"></div><div class="c"></div></div>
   	<div class="userGroupLink"><a href="#" onclick="webServicesSetup();return false;">'.G::LoadTranslation('ID_SETUP_WEBSERVICES').'</a></div>
+    <div class="boxContentBlue"><b>Session: </b><span id="spanWsSessionId">' . $wsSessionId .'</span></div><br>  	
+    <div class="boxContentBlue"><b>EndPoin: </b><span id="spanWsSessionId">' . $wsdl .'</span></div><br>  	
 	';
+	
   $tree->showSign=false;
   
   $allWebservices = array();
@@ -70,14 +82,17 @@
     $ID_TEST     = G::LoadTranslation('ID_TEST');
     $UID         = htmlentities($ws);
     $WS_TITLE    = strip_tags($ws);
-    $htmlGroup   = <<<GHTML
-      <table cellspacing='0' cellpadding='0' border='1' style='border:0px;'>
-        <tr>
-          <td width='200px' class='treeNode' style='border:0px;background-color:transparent;'>{$WS_TITLE}</td>
-          <td class='treeNode' style='border:0px;background-color:transparent;'>[<a href="#" onclick="showFormWS('{$UID}');return false;">{$ID_TEST}</a>]</td>
-        </tr>
-      </table>
-GHTML;
+
+    $htmlGroup = '';
+    $htmlGroup .= "<table cellspacing='0' cellpadding='0' border='1' style='border:0px;'>";
+    $htmlGroup .= "<tr>";
+    $htmlGroup .= "<td width='200px' class='treeNode' style='border:0px;background-color:transparent;'>{$WS_TITLE}</td>";
+    $htmlGroup .= "<td class='treeNode' style='border:0px;background-color:transparent;'>";
+    if ( $WS_TITLE == 'Login' || $wsSessionId != '' ) 
+      $htmlGroup .= "[<a href='#' onclick=\"showFormWS('{$UID}');return false;\">{$ID_TEST}</a>]";
+    $htmlGroup .= "</td></tr></table>";
+
+
     $ch =& $tree->addChild($ws, $htmlGroup, array('nodeType'=>'child'));
     $ch->point = '<img src="/images/trigger.gif" />';
   }

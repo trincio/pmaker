@@ -249,8 +249,7 @@ class Groups
         catch (exception $oError) {
             print_r($oError);
         }
-
-	}
+	  }
 
     /*
     * Return the available users list criteria object
@@ -285,5 +284,20 @@ class Groups
             throw ($oError);
         }
     }
+    
+    function verifyUsertoGroup($GrpUid, $UsrUid)
+    {		
+    	  try {
+            $oGrp = GroupUserPeer::retrieveByPk($GrpUid, $UsrUid);
+            if (get_class($oGrp) == 'GroupUser') {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+        catch (exception $oError) {
+            throw ($oError);
+        }
+	  }
 }
 ?>
