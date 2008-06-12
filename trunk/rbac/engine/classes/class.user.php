@@ -277,5 +277,31 @@ class RBAC_User extends DBTable
     }
   }
 
+
+	 /*
+	* Verify the username 
+	* @param string $sUsername	
+	* @return variant
+	*/
+  function verifyUser($sUsername)
+  {
+  	if ($sUsername !== '')
+  	{  		
+  	    $this->table_keys = array('USR_USERNAME');
+  	    $this->oObject    = parent::load($sUsername);
+  	    $this->table_keys = array('USR_UID');
+  	    if (is_array($this->Fields))
+        {
+        	return 1;
+        }
+        else
+        {
+        	return 0;
+        }            
+    }
+    else
+    {
+    	return 0;
+    }  
 }
 ?>

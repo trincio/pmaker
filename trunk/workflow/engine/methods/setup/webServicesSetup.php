@@ -41,7 +41,7 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
   }
   $G_PUBLISH = new Publisher();
   $G_HEADER->clearScripts();
-  $G_PUBLISH->AddContent('xmlform', 'xmlform', 'groups/groups_Edit', '', $aFields , 'groups_Save');
+  $G_PUBLISH->AddContent('xmlform', 'xmlform', 'setup/webServicesSetup', '', $aFields , 'webServicesSave');
 
   G::RenderPage( "publish" , "raw" );
 

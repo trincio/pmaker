@@ -145,6 +145,16 @@ class RBAC
     return $res;
   }
 
+  /**
+   * Verify if the user has a right
+   *
+   * @author Everth S. Berrios
+   * @access public   
+   */
+  function verifyUser($strUser) {  	
+    $res = $this->userObj->verifyUser($strUser);
+    return $res;    
+  }
 
   /**
    * Verify if the user has a right
@@ -314,6 +324,9 @@ class RBAC
     return $this->systemObj->create(array('SYS_CODE' => $sCode));
   }
  
-  
+  function verifyByCode($sCode) {
+    return $this->rolesObj->verifyByCode($sCode);
+  }
+    
 }
 ?>
