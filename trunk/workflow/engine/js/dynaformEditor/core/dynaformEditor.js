@@ -87,7 +87,7 @@ var dynaformEditor={
 		var xmlCode = this.getXMLCode();
 		var todoRefreshXmlCode = xmlCode === null;
 		if (todoRefreshXmlCode) return;
-		var res = this.ajax.set_xmlcode(this.A,xmlCode);
+		var res = this.ajax.set_xmlcode(this.A,xmlCode.replace(/\+/g, '%2B'));
 		if (res!=="") G.alert(res);
 	},
 	saveHtmlCode:function()

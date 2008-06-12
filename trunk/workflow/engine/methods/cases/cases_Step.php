@@ -1,5 +1,5 @@
 <?php
-/** 
+/**
  * cases_Step.php
  *
  * ProcessMaker Open Source Edition
@@ -100,7 +100,7 @@
 
   $oCase = new Cases();
   $Fields = $oCase->loadCase( $_SESSION['APPLICATION'] );
-	
+
   $APP_NUMBER = $Fields['APP_NUMBER'];
   $APP_TITLE = $Fields['TITLE'];
 
@@ -131,7 +131,7 @@ try {
 //Add content content step - Start
 $array['APP_NUMBER'] = $APP_NUMBER;
 $array['APP_TITLE'] = $APP_TITLE;
-$G_PUBLISH->AddContent('smarty', 'cases/cases_title', '', '', $array);  
+$G_PUBLISH->AddContent('smarty', 'cases/cases_title', '', '', $array);
 
 switch ($_GET['TYPE'])
 {
@@ -153,11 +153,11 @@ switch ($_GET['TYPE'])
 	 * Description: this was added for the additional database connections */
     G::LoadClass ('dbConnections');
     $oDbConnections = new dbConnections($_SESSION['PROCESS']);
-    $oDbConnections->loadAdditionalConnections();		 
+    $oDbConnections->loadAdditionalConnections();
 
     $G_PUBLISH->AddContent('dynaform', 'xmlform', $_SESSION['PROCESS']. '/' . $_GET['UID'], '', $Fields['APP_DATA'], 'cases_SaveData?UID=' . $_GET['UID']);
     break;
-    
+
   case 'INPUT_DOCUMENT':
     $oInputDocument = new InputDocument();
     $Fields = $oInputDocument->load($_GET['UID']);
@@ -191,7 +191,7 @@ switch ($_GET['TYPE'])
         }
         $Fields['MESSAGE1'] = G::LoadTranslation('ID_PLEASE_ENTER_COMMENTS');
         $Fields['MESSAGE2'] = G::LoadTranslation('ID_PLEASE_SELECT_FILE');
-                                            
+
         $G_PUBLISH->AddContent('xmlform', 'xmlform', $sXmlForm, '', $Fields, 'cases_SaveDocument?UID=' . $_GET['UID']);
 
     //call plugin
@@ -232,7 +232,7 @@ switch ($_GET['TYPE'])
       break;
     }
   break;
-  
+
   case 'OUTPUT_DOCUMENT':
     require_once 'classes/model/OutputDocument.php';
     $oOutputDocument = new OutputDocument();
@@ -427,7 +427,7 @@ switch ($_GET['TYPE'])
   	$sNamespace = '';
   	$sStepName  = '';
     foreach ( $externalSteps as $key=>$val ) {
-      if ( $val->sStepId == $_GET['UID'] ) 
+      if ( $val->sStepId == $_GET['UID'] )
         $sNamespace = $val->sNamespace;
         $sStepName  = $val->sStepName;
       }
@@ -452,7 +452,7 @@ switch ($_GET['TYPE'])
     $G_PUBLISH->AddContent('content', $stepFilename );
     //$G_PUBLISH->AddContent('dynaform', 'xmlform', $_SESSION['PROCESS']. '/' . $_GET['UID'], '', $Fields['APP_DATA'], 'cases_SaveData?UID=' . $_GET['UID']);
     break;
-    
+
 }
 //Add content content step - End
 }

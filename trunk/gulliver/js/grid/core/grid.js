@@ -448,7 +448,7 @@ var G_Grid = function(oForm, sGridName)
    			leimnud.event.add(oAux, sEvent, {
    				method:this.evaluateFormula,
    				instance:this,
-   				arguments:[oAux, aFields[i]],
+   				args:[oAux, aFields[i]],
    				event:true
    			});
    		  j++;
