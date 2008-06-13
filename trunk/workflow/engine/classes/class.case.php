@@ -2013,6 +2013,7 @@ class Cases
       $oCriteria->addJoin(StepPeer::STEP_UID_OBJ, DynaformPeer::DYN_UID);
       $oCriteria->add(StepPeer::STEP_TYPE_OBJ, 'DYNAFORM');
       $oCriteria->addAscendingOrderByColumn(StepPeer::STEP_POSITION);
+      $oCriteria->setDistinct();
 
       $oDataset = DynaformPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
