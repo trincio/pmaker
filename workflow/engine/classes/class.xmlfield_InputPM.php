@@ -241,7 +241,7 @@ class XmlForm_Field_hours extends XmlForm_Field_SimpleText
 	var $showVars    = 0;
 	var $process     = '';
 	var $symbol      = '@@';
-	
+
   /**
    * Function render
    * @author Julio Cesar Laura Avenda?o <juliocesar@colosa.com>
@@ -251,7 +251,7 @@ class XmlForm_Field_hours extends XmlForm_Field_SimpleText
    * @return string
    */
   function render( $value = NULL , $owner = NULL )
-  {		
+  {
 	  if ($this->strTo==='UPPER') $value = strtoupper($value);
 	  if ($this->strTo==='LOWER') $value = strtolower($value);
 	  //if ($this->strTo==='CAPITALIZE') $value = strtocapitalize($value);
@@ -340,17 +340,19 @@ function getDynaformsVars($sProcessUID, $bSystemVars = true) {
   $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
   $oDataset->next();
   while ($aRow = $oDataset->getRow()) {
-  	$G_FORM  = new Form($aRow['DYN_FILENAME'], PATH_DYNAFORM, SYS_LANG);
-  	if ($G_FORM->type == 'xmlform') {
-  	  foreach($G_FORM->fields as $k => $v) {
-	    	if (($v->type != 'title')  && ($v->type != 'subtitle') && ($v->type != 'link')       &&
-	    	    ($v->type != 'file')   && ($v->type != 'button')   && ($v->type != 'reset')      &&
-	    	    ($v->type != 'submit') && ($v->type != 'listbox')  && ($v->type != 'checkgroup') &&
-	    	    ($v->type != 'grid')   && ($v->type != 'javascript')) {
-	    	  if (!in_array($k, $aFieldsNames)) {
-	    	    $aFields[] = array('sName' => $k, 'sType' => $v->type);
-	    	    $aFieldsNames[] = $k;
-	    	  }
+    if (file_exists(PATH_DYNAFORM . PATH_SEP . $aRow['DYN_FILENAME'] . '.xml')) {
+  	  $G_FORM  = new Form($aRow['DYN_FILENAME'], PATH_DYNAFORM, SYS_LANG);
+  	  if ($G_FORM->type == 'xmlform') {
+  	    foreach($G_FORM->fields as $k => $v) {
+	      	if (($v->type != 'title')  && ($v->type != 'subtitle') && ($v->type != 'link')       &&
+	      	    ($v->type != 'file')   && ($v->type != 'button')   && ($v->type != 'reset')      &&
+	      	    ($v->type != 'submit') && ($v->type != 'listbox')  && ($v->type != 'checkgroup') &&
+	      	    ($v->type != 'grid')   && ($v->type != 'javascript')) {
+	      	  if (!in_array($k, $aFieldsNames)) {
+	      	    $aFields[] = array('sName' => $k, 'sType' => $v->type);
+	      	    $aFieldsNames[] = $k;
+	      	  }
+	        }
 	      }
 	    }
 	  }
