@@ -35,7 +35,7 @@
   <option name='listbox'>Listbox</option>
   <option name='radiogroup'>Radios Group</option>
   <option name='checkgroup'>Checkboxes Group</option>
-  <option name='grid'>grid</option>
+  <option name='grid'>Grid</option>
   <option name='javascript'>Javascript Code</option>
   <option name='private'>Private</option>
   </en>
