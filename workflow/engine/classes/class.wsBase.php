@@ -263,32 +263,30 @@ class wsBase
     }		
 	}
 	
-	public function sendMessage( ) {
-   try {	
-  	  /*
-  	  $result  = array();
-  	  $oCriteria = new Criteria('workflow');
-      $oCriteria->add(UsersPeer::USR_STATUS ,  'ACTIVE' );
-      $oDataset = UsersPeer::doSelectRS($oCriteria);
-      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-      $oDataset->next();
-      
-      while ($aRow = $oDataset->getRow()) {
-      	//$oProcess = new User();
-      	//$arrayProcess = $oUser->Load( $aRow['PRO_UID'] );
-      	$result[] = array ( 'guid' => $aRow['USR_UID'], 'name' => $aRow['USR_USERNAME'] );
-      	$oDataset->next();
-      }
-      */
-      /*for the moment*/
-      $result = new wsResponse (5, G::loadTranslation ('ID_USER_INACTIVE'));
-      return $result;
+	public function sendMessage( $sessionId, $caseId, $message) {
+   try {   			
+				G::LoadClass('case'); 						
+		    $oCase = new Cases();
+		    
+		    $Fields['1']='xUNO';
+		    $Fields['2']='xDOS';
+		    $Fields['3']='xTRES';
+		    $Fields['4']='xCUATRO';
+		    $Fields['5']='xCINCO';
+		  
+        $oldFields = $oCase->loadCase( $caseId );
+        $oldFields['APP_DATA'] = array_merge( $oldFields['APP_DATA'], $Fields);
+        
+		    $up_case = $oCase->updateCase($caseId, $oldFields);				            
+	      $result = new wsResponse (0, "Sucessful");	      
+	      return $result;
     }
     catch ( Exception $e ) {
-    	$result[] = array ( 'guid' => $e->getMessage(), 'name' => $e->getMessage() );
+      $result = new wsResponse (100, $e->getMessage());
       return $result;
-    }		
+    }    
 	}
+	
 	
 	public function createUser($sessionId, $userId, $firstname, $lastname, $email, $role, $password) {
    try {
@@ -373,6 +371,95 @@ class wsBase
 	}
 	
 	public function sendVariables($sessionId, $caseId, $variables) {
+   try {   			
+				G::LoadClass('case'); 						
+		    $oCase = new Cases();
+
+	      //$result = new wsResponse (123, print_r ( $variables,1) );	      //
+	      //return $result;
+		    foreach ( $variables as $key=>$val ) {
+		    	$Fields[ $val->name ]= $val->value ;
+		    }
+        $cant = count ( $Fields );
+		    
+        $oldFields = $oCase->loadCase( $caseId );
+        $oldFields['APP_DATA'] = array_merge( $oldFields['APP_DATA'], $Fields );
+		    $up_case = $oCase->updateCase($caseId, $oldFields);				            
+	      $result = new wsResponse (0, "$cant variables received.");	      
+	      return $result;
+    }
+    catch ( Exception $e ) {
+      $result = new wsResponse (100, $e->getMessage());
+      return $result;
+    }    
+	}
+	///OJASO AUMENTAR LA CFUNCTION PARA VER USERS A TRAVES DE USERS
+	public function newCase($sessionId, $processId, $taskId, $variables) {
+   try { 
+   	
+   			G::LoadClass('case'); 						
+		    $oCase = new Cases();  							
+				G::LoadClass('processes'); 
+				$oProcesses = new Processes();
+				$pro = $oProcesses->processExists($processId);
+				
+				if(!$pro)
+				{  $result = new wsResponse (9, "Invalid process $processId!!");	      
+	          return $result;
+				}
+				
+				if($taskId=='')
+				{
+					 $tasks = $oProcesses->getStartingTaskForUser($processId,$pro); //POR EL MOMENTO PRO ES EL USER POR DEFAULT USAR CLASE 
+					  
+	          
+	         $case = $oCase->startCase($tasks[0]['TAS_UID'], '12090688047fa3cfda74f91.34325182');
+	         $result = new wsResponse (0, print_r($case,1));	      
+	      return $result;
+				}
+				
+				
+			
+        		   
+		  
+        $oldFields = $oCase->loadCase( $caseId );
+        $oldFields['APP_DATA'] = array_merge( $oldFields['APP_DATA'], $Fields);
+        
+		    $up_case = $oCase->updateCase($caseId, $oldFields);				            
+	      $result = new wsResponse (0, "Sucessful");	      
+	      return $result;
+    }
+    catch ( Exception $e ) {
+      $result = new wsResponse (100, $e->getMessage());
+      return $result;
+    }    
+	}
+	
+	public function newCaseImpersonate($sessionId, $processId, $userId, $variables) {
+   try {   			
+				G::LoadClass('case'); 						
+		    $oCase = new Cases();
+		    
+		    $Fields['1']='xUNO';
+		    $Fields['2']='xDOS';
+		    $Fields['3']='xTRES';
+		    $Fields['4']='xCUATRO';
+		    $Fields['5']='xCINCO';
+		  
+        $oldFields = $oCase->loadCase( $caseId );
+        $oldFields['APP_DATA'] = array_merge( $oldFields['APP_DATA'], $Fields);
+        
+		    $up_case = $oCase->updateCase($caseId, $oldFields);				            
+	      $result = new wsResponse (0, "Sucessful");	      
+	      return $result;
+    }
+    catch ( Exception $e ) {
+      $result = new wsResponse (100, $e->getMessage());
+      return $result;
+    }    
+	}
+	
+	public function derivateCase($sessionId, $caseId) {
    try {   			
 				G::LoadClass('case'); 						
 		    $oCase = new Cases();

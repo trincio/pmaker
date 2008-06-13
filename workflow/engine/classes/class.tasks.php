@@ -443,5 +443,32 @@ class Tasks {
     	throw($oError);
     }
   }
+  
+  /*
+	* Get all tasks for any Process
+	* @param string $sProUid
+	* @return array
+	*/
+  public function getStartingTaskForUser($sProUid, $sUsrUid) {
+  	try {
+  	  $aTasks   = array();
+  	  $oCriteria = new Criteria('workflow');
+      $oCriteria->add(TaskPeer::PRO_UID,     $sProUid);
+      //$oCriteria->add(TaskPeer::TAS_USER,    $sUsrUid);  
+      $oCriteria->add(TaskPeer::TAS_START,    'TRUE');
+      $oDataset = TaskPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      while ($aRow = $oDataset->getRow()) {
+      	$oTask = new Task();
+      	$aTasks[] = $oTask->Load($aRow['TAS_UID']);
+      	$oDataset->next();
+      }
+      return $aTasks;
+    }
+  	catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
 }
 ?>

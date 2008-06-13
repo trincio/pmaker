@@ -118,13 +118,48 @@ function pauseCase($sApplicationUID = '', $iDelegation = 0, $sUserUID = '', $sUn
     throw $oException;
   }
 }
-/*
-$x = formatDate('2008-06-07','dd/mm/yy');
 
+function executeQuery($SqlStatement, $DBConnectionUID = 'workflow')
+{	
+	try {
+		$con = Propel::getConnection($DBConnectionUID);
+		$con->begin();
+		$stmt = $con->prepareStatement($SqlStatement);
+		$rs = $stmt->executeQuery(ResultSet::FETCHMODE_ASSOC);
+ 		$lastId = $con->getIdGenerator();
+ 		$con->commit();
+		switch(true) {
+			case eregi("SELECT", $SqlStatement):
+				$result = Array();
+				$i=1;
+				while ($rs->next()) {
+					$result[$i++] = $rs->getRow();
+				}
+			break;
+			case eregi("INSERT*", $SqlStatement):
+				$result = $lastId->getId();
+			break;
+			case eregi("UPDATE*", $SqlStatement):
+				 $result =  $con->getUpdateCount();
+			break;
+			case eregi("DELETE*", $SqlStatement):
+				$result =  $con->getUpdateCount();
+			break;
+		}
+		return $result;
+	} catch (SQLException $sqle) {
+		$con->rollback();
+		throw $sqle;
+	}
+}
+
+//$x = formatDate('2008-06-07','dd/mm/yy');
+/*$x = executeQuery("insert into USERS (USR_UID,USR_USERNAME) values ('erik','erik')");
+//$x = executeQuery("delete from USERS where USR_UID='erik'");
 echo '<pre>-->';
-print_r(userInfo($_SESSION['USER_LOGGED']));
-echo '<pre>';
-*/
+print_r($x);
+echo '<pre>';*/
+//print_r(userInfo($_SESSION['USER_LOGGED']));
 	
 	
 ?>

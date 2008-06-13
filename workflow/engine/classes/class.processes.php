@@ -1287,4 +1287,10 @@ class Processes {
     $this->createDynamformFiles ( $oData, $pmFilename  );
     $this->createStepSupervisorRows($oData->stepSupervisor);
  }
+ 
+ function getStartingTaskForUser ($sProUid, $sUsrUid ){        
+    $oTask = new Tasks( );
+    
+    return $oTask->getStartingTaskForUser( $sProUid, $sUsrUid );
+  }
 }
