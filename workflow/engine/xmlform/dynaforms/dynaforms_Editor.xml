@@ -54,6 +54,7 @@ function loadEditor()
     else
     {
 			mainPanel.cancelClose=true;
+			mainPanel.inRemove = false;
       return false;
     }
   }
