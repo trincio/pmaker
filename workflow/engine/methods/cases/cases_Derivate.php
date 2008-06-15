@@ -94,8 +94,19 @@ try {
   $oCriteria->add(ConfigurationPeer::PRO_UID, '');
   $oCriteria->add(ConfigurationPeer::USR_UID, '');
   $oCriteria->add(ConfigurationPeer::APP_UID, '');
-  $aConfiguration = $oConfiguration->load('Emails', '', '', '', '');
-  $aConfiguration = unserialize($aConfiguration['CFG_VALUE']);
+  if (ConfigurationPeer::doCount($oCriteria) == 0) {
+    $oConfiguration->create(array('CFG_UID' => 'Emails', 'OBJ_UID' => '', 'CFG_VALUE' => '', 'PRO_UID' => '', 'USR_UID' => '', 'APP_UID' => ''));
+    $aConfiguration = array();
+  }
+  else {
+    $aConfiguration = $oConfiguration->load('Emails', '', '', '', '');
+    if ($aConfiguration['CFG_VALUE'] != '') {
+      $aConfiguration = unserialize($aConfiguration['CFG_VALUE']);
+    }
+    else {
+      $aConfiguration = array();
+    }
+  }
   if ($aConfiguration['MESS_ENABLED'] == '1') {
     $oTask     = new Task();
     $aTaskInfo = $oTask->load($_SESSION['TASK']);
