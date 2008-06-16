@@ -125,6 +125,14 @@ class PMScript
 						$bEqual = false;
 					}
 				}
+				if ($bEqual) {
+				  if (!isset($aMatch[5][$i][0])) {
+			      eval("if (!isset(\$this->aFields['" . $aMatch[2][$i][0] . "'])) { \$this->aFields['" . $aMatch[2][$i][0] . "'] = null; }");
+			    }
+			    else {
+			      eval("if (!isset(\$this->aFields" . $aMatch[5][$i][0] . ")) { \$this->aFields" . $aMatch[5][$i][0] . " = null; }");
+			    }
+				}
 				$sScript .= $sAux;
 				$iAux     = $aMatch[0][$i][1] + strlen($aMatch[0][$i][0]);
 				switch ($aMatch[1][$i][0])
