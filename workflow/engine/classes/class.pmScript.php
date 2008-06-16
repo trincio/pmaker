@@ -105,7 +105,7 @@ class PMScript
   	$sScript = "try {\n";
   	$iAux    = 0;
   	$bEqual  = false;
-  	$iOcurrences = preg_match_all('/\@(?:([\@\%\#\?\$])([a-zA-Z\_]\w*)|([a-zA-Z\_][\w\-\>\:]*)\(((?:[^\\\\\)]*(?:[\\\\][\w\W])?)*)\))((?:\s*\[[\'"]?\w+[\'"]?\])+)?/', $this->sScript, $aMatch, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE);
+  	$iOcurrences = preg_match_all('/\@(?:([\@\%\#\?\$\=])([a-zA-Z\_]\w*)|([a-zA-Z\_][\w\-\>\:]*)\(((?:[^\\\\\)]*(?:[\\\\][\w\W])?)*)\))((?:\s*\[[\'"]?\w+[\'"]?\])+)?/', $this->sScript, $aMatch, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE);
   	if ($iOcurrences)
   	{
   		for($i = 0; $i < $iOcurrences; $i++)
@@ -237,6 +237,26 @@ class PMScript
 					  	}
 					  }
 					break;
+					case '=':
+					  if ($bEqual)
+					  {
+					    if (!isset($aMatch[5][$i][0])) {
+					  	  $sScript .= "\$this->aFields['" . $aMatch[2][$i][0] . "']";
+					  	}
+					  	else {
+					  	  $sScript .= "\$this->aFields" . $aMatch[5][$i][0];
+					  	}
+					  }
+					  else
+					  {
+					    if (!isset($aMatch[5][$i][0])) {
+					  	  $sScript .= "\$this->aFields['" . $aMatch[2][$i][0] . "']";
+					    }
+					  	else {
+					  	  $sScript .= "\$this->aFields" . $aMatch[5][$i][0];
+					  	}
+					  }
+					break;
 				}
 			}
   	}
@@ -263,7 +283,7 @@ class PMScript
   	$sScript = '';
   	$iAux    = 0;
   	$bEqual  = false;
-  	$iOcurrences = preg_match_all('/\@(?:([\@\%\#\?\$])([a-zA-Z\_]\w*)|([a-zA-Z\_][\w\-\>\:]*)\(((?:[^\\\\\)]*(?:[\\\\][\w\W])?)*)\))((?:\s*\[[\'"]?\w+[\'"]?\])+)?/', $this->sScript, $aMatch, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE);
+  	$iOcurrences = preg_match_all('/\@(?:([\@\%\#\?\$\=])([a-zA-Z\_]\w*)|([a-zA-Z\_][\w\-\>\:]*)\(((?:[^\\\\\)]*(?:[\\\\][\w\W])?)*)\))((?:\s*\[[\'"]?\w+[\'"]?\])+)?/', $this->sScript, $aMatch, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE);
   	if ($iOcurrences)
   	{
   		for($i = 0; $i < $iOcurrences; $i++)
@@ -379,6 +399,26 @@ class PMScript
 					  	}
 					  	else {
 					  	  $sScript .= "pmSqlEscape(\$this->aFields" . $aMatch[5][$i][0] . ")";
+					  	}
+					  }
+					  else
+					  {
+					    if (!isset($aMatch[5][$i][0])) {
+					  	  $sScript .= "\$this->aFields['" . $aMatch[2][$i][0] . "']";
+					    }
+					  	else {
+					  	  $sScript .= "\$this->aFields" . $aMatch[5][$i][0];
+					  	}
+					  }
+					break;
+					case '=':
+					  if ($bEqual)
+					  {
+					    if (!isset($aMatch[5][$i][0])) {
+					  	  $sScript .= "\$this->aFields['" . $aMatch[2][$i][0] . "']";
+					  	}
+					  	else {
+					  	  $sScript .= "\$this->aFields" . $aMatch[5][$i][0];
 					  	}
 					  }
 					  else

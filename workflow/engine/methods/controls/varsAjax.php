@@ -47,6 +47,7 @@ if (!isset($_POST['sNoShowLeyend'])) {
     $sHTML .= '<tr><td class="module_app_input___gray" width="5%">@%</td><td class="module_app_input___gray">' . G::LoadTranslation('ID_TO_INTEGER') . '</td></tr>';
     $sHTML .= '<tr><td class="module_app_input___gray" width="5%">@?</td><td class="module_app_input___gray">' . G::LoadTranslation('ID_TO_URL') . '</td></tr>';
     $sHTML .= '<tr><td class="module_app_input___gray" width="5%">@$</td><td class="module_app_input___gray">' . G::LoadTranslation('ID_SQL_ESCAPE') . '</td></tr>';
+    $sHTML .= '<tr><td class="module_app_input___gray" width="5%">@=</td><td class="module_app_input___gray">' . G::LoadTranslation('ID_REPLACE_WITHOUT_CHANGES') . '</td></tr>';
   }
   $sHTML .= '</table>';
 }
