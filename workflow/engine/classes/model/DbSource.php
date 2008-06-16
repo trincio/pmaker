@@ -1,5 +1,29 @@
 <?php
+/**
+ * DbSource.php
+ *
+ * ProcessMaker Open Source Edition
+ * Copyright (C) 2004 - 2008 Colosa Inc.23
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
+ * Coral Gables, FL, 33134, USA, or email info@colosa.com.
+ *
+ */
 
+require_once 'classes/model/Content.php';
 require_once 'classes/model/om/BaseDbSource.php';
 
 
@@ -16,6 +40,26 @@ require_once 'classes/model/om/BaseDbSource.php';
  */
 class DbSource extends BaseDbSource
 {
+
+    /**
+     * This value goes in the content table
+     * @var        string
+     */
+    protected $db_source_description = '';
+
+    /**
+     * Get the rep_tab_title column value.
+     * @return     string
+     */
+    public function getDBSourceDescription() {
+      if ( $this->getDbsUid() == "" ) {
+        throw ( new Exception( "Error in getDBSourceDescription, the getDbsUid() can't be blank") );
+      }
+      $lang = defined ( 'SYS_LANG' ) ? SYS_LANG : 'en';
+      $this->db_source_description = Content::load ( 'DBS_DESCRIPTION', '', $this->getDbsUid(), $lang );
+      return $this->db_source_description;
+    }
+
     function getCriteriaDBSList($sProcessUID)
     {
         $sDelimiter = DBAdapter::getStringDelimiter();
@@ -46,6 +90,7 @@ class DbSource extends BaseDbSource
             if (!is_null($oRow)) {
                 $aFields = $oRow->toArray(BasePeer::TYPE_FIELDNAME);
                 $this->fromArray($aFields, BasePeer::TYPE_FIELDNAME);
+                $aFields['DBS_DESCRIPTION'] = $this->getDBSourceDescription();
                 $this->setNew(false);
                 return $aFields;
             } else {

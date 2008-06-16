@@ -1,10 +1,10 @@
 <?php
 /**
  * Users.php
- *  
+ *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -14,13 +14,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
 
 require_once 'classes/model/om/BaseUsers.php';
@@ -125,17 +125,17 @@ class Users extends BaseUsers {
       throw($e);
     }
   }
- 
+
   function loadByUsername($sUsername)
   {
-  	$c = new Criteria('workflow');    
+  	$c = new Criteria('workflow');
     $del = DBAdapter::getStringDelimiter();
 
     $c->clearSelectColumns();
-    $c->addSelectColumn( UsersPeer::USR_USERNAME );    
-                        
-    $c->add(UsersPeer::USR_USERNAME, $sUsername);    
-    return $c;   
+    $c->addSelectColumn( UsersPeer::USR_USERNAME );
+
+    $c->add(UsersPeer::USR_USERNAME, $sUsername);
+    return $c;
   }
 
   function getAllInformation($UsrUid)
@@ -149,7 +149,7 @@ class Users extends BaseUsers {
 		require_once 'classes/model/IsoLocation.php';
 		require_once 'classes/model/IsoSubdivision.php';
 		require_once 'classes/model/Language.php';
-		
+
 		$aFields = $this->load($UsrUid);
 		$c = new Criteria('workflow');
 		$c->add(IsoCountryPeer::IC_UID, $aFields['USR_COUNTRY']);
@@ -157,7 +157,7 @@ class Users extends BaseUsers {
 		$rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
 		$rs->next();
 		$Crow = $rs->getRow();
-	
+
 		$c->clearSelectColumns();
 		$c->add(IsoSubdivisionPeer::IC_UID, $aFields['USR_COUNTRY']);
 		$c->add(IsoSubdivisionPeer::IS_UID, $aFields['USR_CITY']);
@@ -176,7 +176,7 @@ class Users extends BaseUsers {
 		$aRet['fax'] 		= $aFields['USR_FAX'];
 		$aRet['cellular'] 	= $aFields['USR_CELLULAR'];
 		$aRet['birthday'] 	= $aFields['USR_BIRTHDAY'];
-		$aRet['coutry']   	= $Crow['IC_NAME'];
+		$aRet['country']   	= $Crow['IC_NAME'];
 		$aRet['city']   	= $Srow['IS_NAME'];
 
 		return $aRet;
