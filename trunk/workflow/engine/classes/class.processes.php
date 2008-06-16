@@ -743,6 +743,7 @@ class Processes {
       $oDataset = StepSupervisorPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
       $oDataset->next();
+      $aStepSup = array();
       while ($aRow  = $oDataset->getRow()) {
         $aStepSup[] = $aRow;
         $oDataset->next();
@@ -1287,10 +1288,10 @@ class Processes {
     $this->createDynamformFiles ( $oData, $pmFilename  );
     $this->createStepSupervisorRows($oData->stepSupervisor);
  }
- 
- function getStartingTaskForUser ($sProUid, $sUsrUid ){        
+
+ function getStartingTaskForUser ($sProUid, $sUsrUid ){
     $oTask = new Tasks( );
-    
+
     return $oTask->getStartingTaskForUser( $sProUid, $sUsrUid );
   }
 }
