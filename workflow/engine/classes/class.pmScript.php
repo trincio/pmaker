@@ -107,9 +107,9 @@ class PMScript
   	$bEqual  = false;
   	$iOcurrences = preg_match_all('/\@(?:([\@\%\#\?\$\=])([a-zA-Z\_]\w*)|([a-zA-Z\_][\w\-\>\:]*)\(((?:[^\\\\\)]*(?:[\\\\][\w\W])?)*)\))((?:\s*\[[\'"]?\w+[\'"]?\])+)?/', $this->sScript, $aMatch, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE);
   	if ($iOcurrences)
-  	{
+  	{//var_dump($aMatch);die;
   		for($i = 0; $i < $iOcurrences; $i++)
-			{
+			{//var_dump($aMatch[2][$i]);echo "\n";
 				$sAux = substr($this->sScript, $iAux, $aMatch[0][$i][1] - $iAux);
 				if (!$bEqual)
 				{
@@ -130,7 +130,7 @@ class PMScript
 			      eval("if (!isset(\$this->aFields['" . $aMatch[2][$i][0] . "'])) { \$this->aFields['" . $aMatch[2][$i][0] . "'] = null; }");
 			    }
 			    else {
-			      eval("if (!isset(\$this->aFields" . $aMatch[5][$i][0] . ")) { \$this->aFields" . $aMatch[5][$i][0] . " = null; }");
+			      eval("if (!isset(\$this->aFields" . (isset($aMatch[2][$i][0]) ? "['" . $aMatch[2][$i][0] . "']" : '') . $aMatch[5][$i][0] . ")) { \$this->aFields" . (isset($aMatch[2][$i][0]) ? "['" . $aMatch[2][$i][0] . "']" : '') . $aMatch[5][$i][0] . " = null; }");
 			    }
 				}
 				$sScript .= $sAux;
@@ -144,7 +144,7 @@ class PMScript
 					  	  $sScript .= "pmToString(\$this->aFields['" . $aMatch[2][$i][0] . "'])";
 					  	}
 					  	else {
-					  	  $sScript .= "pmToString(\$this->aFields" . $aMatch[5][$i][0] . ")";
+					  	  $sScript .= "pmToString(\$this->aFields" . (isset($aMatch[2][$i][0]) ? "['" . $aMatch[2][$i][0] . "']" : '') . $aMatch[5][$i][0] . ")";
 					  	}
 					  }
 					  else
@@ -153,7 +153,7 @@ class PMScript
 					  	  $sScript .= "\$this->aFields['" . $aMatch[2][$i][0] . "']";
 					  	}
 					  	else {
-					  	  $sScript .= "\$this->aFields" . $aMatch[5][$i][0];
+					  	  $sScript .= "\$this->aFields" . (isset($aMatch[2][$i][0]) ? "['" . $aMatch[2][$i][0] . "']" : '') . $aMatch[5][$i][0];
 					  	}
 					  }
 					break;
@@ -164,7 +164,7 @@ class PMScript
 					  	  $sScript .= "pmToInteger(\$this->aFields['" . $aMatch[2][$i][0] . "'])";
               }
 					  	else {
-					  	  $sScript .= "pmToInteger(\$this->aFields" . $aMatch[5][$i][0] . ")";
+					  	  $sScript .= "pmToInteger(\$this->aFields" . (isset($aMatch[2][$i][0]) ? "['" . $aMatch[2][$i][0] . "']" : '') . $aMatch[5][$i][0] . ")";
 					  	}
 					  }
 					  else
@@ -173,7 +173,7 @@ class PMScript
 					  	  $sScript .= "\$this->aFields['" . $aMatch[2][$i][0] . "']";
 					  	}
 					  	else {
-					  	  $sScript .= "\$this->aFields" . $aMatch[5][$i][0];
+					  	  $sScript .= "\$this->aFields" . (isset($aMatch[2][$i][0]) ? "['" . $aMatch[2][$i][0] . "']" : '') . $aMatch[5][$i][0];
 					  	}
 					  }
 					break;
@@ -184,7 +184,7 @@ class PMScript
 					  	  $sScript .= "pmToFloat(\$this->aFields['" . $aMatch[2][$i][0] . "'])";
 					  	}
 					  	else {
-					  	  $sScript .= "pmToFloat(\$this->aFields" . $aMatch[5][$i][0] . ")";
+					  	  $sScript .= "pmToFloat(\$this->aFields" . (isset($aMatch[2][$i][0]) ? "['" . $aMatch[2][$i][0] . "']" : '') . $aMatch[5][$i][0] . ")";
 					  	}
 					  }
 					  else
@@ -193,7 +193,7 @@ class PMScript
 					  	  $sScript .= "\$this->aFields['" . $aMatch[2][$i][0] . "']";
 					  	}
 					  	else {
-					  	  $sScript .= "\$this->aFields" . $aMatch[5][$i][0];
+					  	  $sScript .= "\$this->aFields" . (isset($aMatch[2][$i][0]) ? "['" . $aMatch[2][$i][0] . "']" : '') . $aMatch[5][$i][0];
 					  	}
 					  }
 					break;
@@ -204,7 +204,7 @@ class PMScript
 					  	  $sScript .= "pmToUrl(\$this->aFields['" . $aMatch[2][$i][0] . "'])";
 					  	}
 					  	else {
-					  	  $sScript .= "pmToUrl(\$this->aFields" . $aMatch[5][$i][0] . ")";
+					  	  $sScript .= "pmToUrl(\$this->aFields" . (isset($aMatch[2][$i][0]) ? "['" . $aMatch[2][$i][0] . "']" : '') . $aMatch[5][$i][0] . ")";
 					  	}
 					  }
 					  else
@@ -213,7 +213,7 @@ class PMScript
 					  	  $sScript .= "\$this->aFields['" . $aMatch[2][$i][0] . "']";
 					  	}
 					  	else {
-					  	  $sScript .= "\$this->aFields" . $aMatch[5][$i][0];
+					  	  $sScript .= "\$this->aFields" . (isset($aMatch[2][$i][0]) ? "['" . $aMatch[2][$i][0] . "']" : '') . $aMatch[5][$i][0];
 					  	}
 					  }
 					break;
@@ -224,7 +224,7 @@ class PMScript
 					  	  $sScript .= "pmSqlEscape(\$this->aFields['" . $aMatch[2][$i][0] . "'])";
 					  	}
 					  	else {
-					  	  $sScript .= "pmSqlEscape(\$this->aFields" . $aMatch[5][$i][0] . ")";
+					  	  $sScript .= "pmSqlEscape(\$this->aFields" . (isset($aMatch[2][$i][0]) ? "['" . $aMatch[2][$i][0] . "']" : '') . $aMatch[5][$i][0] . ")";
 					  	}
 					  }
 					  else
@@ -233,7 +233,7 @@ class PMScript
 					  	  $sScript .= "\$this->aFields['" . $aMatch[2][$i][0] . "']";
 					    }
 					  	else {
-					  	  $sScript .= "\$this->aFields" . $aMatch[5][$i][0];
+					  	  $sScript .= "\$this->aFields" . (isset($aMatch[2][$i][0]) ? "['" . $aMatch[2][$i][0] . "']" : '') . $aMatch[5][$i][0];
 					  	}
 					  }
 					break;
@@ -244,7 +244,7 @@ class PMScript
 					  	  $sScript .= "\$this->aFields['" . $aMatch[2][$i][0] . "']";
 					  	}
 					  	else {
-					  	  $sScript .= "\$this->aFields" . $aMatch[5][$i][0];
+					  	  $sScript .= "\$this->aFields" . (isset($aMatch[2][$i][0]) ? "['" . $aMatch[2][$i][0] . "']" : '') . $aMatch[5][$i][0];
 					  	}
 					  }
 					  else
@@ -253,7 +253,7 @@ class PMScript
 					  	  $sScript .= "\$this->aFields['" . $aMatch[2][$i][0] . "']";
 					    }
 					  	else {
-					  	  $sScript .= "\$this->aFields" . $aMatch[5][$i][0];
+					  	  $sScript .= "\$this->aFields" . (isset($aMatch[2][$i][0]) ? "['" . $aMatch[2][$i][0] . "']" : '') . $aMatch[5][$i][0];
 					  	}
 					  }
 					break;
@@ -318,7 +318,7 @@ class PMScript
 					  	  $sScript .= "pmToString(\$this->aFields['" . $aMatch[2][$i][0] . "'])";
 					  	}
 					  	else {
-					  	  $sScript .= "pmToString(\$this->aFields" . $aMatch[5][$i][0] . ")";
+					  	  $sScript .= "pmToString(\$this->aFields" . (isset($aMatch[2][$i][0]) ? "['" . $aMatch[2][$i][0] . "']" : '') . $aMatch[5][$i][0] . ")";
 					  	}
 					  }
 					  else
@@ -327,7 +327,7 @@ class PMScript
 					  	  $sScript .= "\$this->aFields['" . $aMatch[2][$i][0] . "']";
 					  	}
 					  	else {
-					  	  $sScript .= "\$this->aFields" . $aMatch[5][$i][0];
+					  	  $sScript .= "\$this->aFields" . (isset($aMatch[2][$i][0]) ? "['" . $aMatch[2][$i][0] . "']" : '') . $aMatch[5][$i][0];
 					  	}
 					  }
 					break;
@@ -338,7 +338,7 @@ class PMScript
 					  	  $sScript .= "pmToInteger(\$this->aFields['" . $aMatch[2][$i][0] . "'])";
               }
 					  	else {
-					  	  $sScript .= "pmToInteger(\$this->aFields" . $aMatch[5][$i][0] . ")";
+					  	  $sScript .= "pmToInteger(\$this->aFields" . (isset($aMatch[2][$i][0]) ? "['" . $aMatch[2][$i][0] . "']" : '') . $aMatch[5][$i][0] . ")";
 					  	}
 					  }
 					  else
@@ -347,7 +347,7 @@ class PMScript
 					  	  $sScript .= "\$this->aFields['" . $aMatch[2][$i][0] . "']";
 					  	}
 					  	else {
-					  	  $sScript .= "\$this->aFields" . $aMatch[5][$i][0];
+					  	  $sScript .= "\$this->aFields" . (isset($aMatch[2][$i][0]) ? "['" . $aMatch[2][$i][0] . "']" : '') . $aMatch[5][$i][0];
 					  	}
 					  }
 					break;
@@ -358,7 +358,7 @@ class PMScript
 					  	  $sScript .= "pmToFloat(\$this->aFields['" . $aMatch[2][$i][0] . "'])";
 					  	}
 					  	else {
-					  	  $sScript .= "pmToFloat(\$this->aFields" . $aMatch[5][$i][0] . ")";
+					  	  $sScript .= "pmToFloat(\$this->aFields" . (isset($aMatch[2][$i][0]) ? "['" . $aMatch[2][$i][0] . "']" : '') . $aMatch[5][$i][0] . ")";
 					  	}
 					  }
 					  else
@@ -367,7 +367,7 @@ class PMScript
 					  	  $sScript .= "\$this->aFields['" . $aMatch[2][$i][0] . "']";
 					  	}
 					  	else {
-					  	  $sScript .= "\$this->aFields" . $aMatch[5][$i][0];
+					  	  $sScript .= "\$this->aFields" . (isset($aMatch[2][$i][0]) ? "['" . $aMatch[2][$i][0] . "']" : '') . $aMatch[5][$i][0];
 					  	}
 					  }
 					break;
@@ -378,7 +378,7 @@ class PMScript
 					  	  $sScript .= "pmToUrl(\$this->aFields['" . $aMatch[2][$i][0] . "'])";
 					  	}
 					  	else {
-					  	  $sScript .= "pmToUrl(\$this->aFields" . $aMatch[5][$i][0] . ")";
+					  	  $sScript .= "pmToUrl(\$this->aFields" . (isset($aMatch[2][$i][0]) ? "['" . $aMatch[2][$i][0] . "']" : '') . $aMatch[5][$i][0] . ")";
 					  	}
 					  }
 					  else
@@ -387,7 +387,7 @@ class PMScript
 					  	  $sScript .= "\$this->aFields['" . $aMatch[2][$i][0] . "']";
 					  	}
 					  	else {
-					  	  $sScript .= "\$this->aFields" . $aMatch[5][$i][0];
+					  	  $sScript .= "\$this->aFields" . (isset($aMatch[2][$i][0]) ? "['" . $aMatch[2][$i][0] . "']" : '') . $aMatch[5][$i][0];
 					  	}
 					  }
 					break;
@@ -398,7 +398,7 @@ class PMScript
 					  	  $sScript .= "pmSqlEscape(\$this->aFields['" . $aMatch[2][$i][0] . "'])";
 					  	}
 					  	else {
-					  	  $sScript .= "pmSqlEscape(\$this->aFields" . $aMatch[5][$i][0] . ")";
+					  	  $sScript .= "pmSqlEscape(\$this->aFields" . (isset($aMatch[2][$i][0]) ? "['" . $aMatch[2][$i][0] . "']" : '') . $aMatch[5][$i][0] . ")";
 					  	}
 					  }
 					  else
@@ -407,7 +407,7 @@ class PMScript
 					  	  $sScript .= "\$this->aFields['" . $aMatch[2][$i][0] . "']";
 					    }
 					  	else {
-					  	  $sScript .= "\$this->aFields" . $aMatch[5][$i][0];
+					  	  $sScript .= "\$this->aFields" . (isset($aMatch[2][$i][0]) ? "['" . $aMatch[2][$i][0] . "']" : '') . $aMatch[5][$i][0];
 					  	}
 					  }
 					break;
@@ -418,7 +418,7 @@ class PMScript
 					  	  $sScript .= "\$this->aFields['" . $aMatch[2][$i][0] . "']";
 					  	}
 					  	else {
-					  	  $sScript .= "\$this->aFields" . $aMatch[5][$i][0];
+					  	  $sScript .= "\$this->aFields" . (isset($aMatch[2][$i][0]) ? "['" . $aMatch[2][$i][0] . "']" : '') . $aMatch[5][$i][0];
 					  	}
 					  }
 					  else
@@ -427,7 +427,7 @@ class PMScript
 					  	  $sScript .= "\$this->aFields['" . $aMatch[2][$i][0] . "']";
 					    }
 					  	else {
-					  	  $sScript .= "\$this->aFields" . $aMatch[5][$i][0];
+					  	  $sScript .= "\$this->aFields" . (isset($aMatch[2][$i][0]) ? "['" . $aMatch[2][$i][0] . "']" : '') . $aMatch[5][$i][0];
 					  	}
 					  }
 					break;

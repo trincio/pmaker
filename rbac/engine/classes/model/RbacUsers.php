@@ -100,7 +100,7 @@ class RbacUsers extends BaseRbacUsers {
       $c = new Criteria( 'rbac' );
       $c->add ( RbacUsersPeer::USR_USERNAME, $sUsername );
       $rs = RbacUsersPeer::doSelect( $c );
-      if (is_array($rs)) 
+      if (is_array($rs) && isset( $rs[0] ) && get_class ( $rs[0] ) == 'RbacUsers') 
       {
   	    return 1;
   	  }

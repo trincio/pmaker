@@ -265,6 +265,15 @@ class wsBase
 	
 	public function sendMessage( $sessionId, $caseId, $message) {
    try {   			
+   	    G::LoadClass('sessions'); 
+				$oSessions = new Sessions();
+				$session   = $oSessions->verifySession($sessionId);
+				if($session=='')
+   			 {
+   				 $result = new wsResponse (9, 'Session expired');
+           return $result;
+         } 
+         
 				G::LoadClass('case'); 						
 		    $oCase = new Cases();
 		    
@@ -290,10 +299,18 @@ class wsBase
 	
 	public function createUser($sessionId, $userId, $firstname, $lastname, $email, $role, $password) {
    try {
+   			G::LoadClass('sessions'); 
+				$oSessions = new Sessions();
+				$session   = $oSessions->verifySession($sessionId);
+				if($session=='')
+   			 {
+   				 $result = new wsResponse (9, 'Session expired');
+           return $result;
+         } 
+   			
    			global $RBAC;  
    			$RBAC->initRBAC();
-
-				$user=$RBAC->verifyUser($userId);	        
+				$user=$RBAC->verifyUser($userId);	         			  
         if($user==1)
         {  $result = new wsResponse (7, "User ID: $userId already exist!!!");
            return $result;
@@ -348,7 +365,16 @@ class wsBase
 	}
 	
 	public function assignUserToGroup($sessionId, $userId, $groupId) {
-   try {   			
+   try {   		
+   			G::LoadClass('sessions'); 
+				$oSessions = new Sessions();
+				$session   = $oSessions->verifySession($sessionId);
+				if($session=='')
+   			 {
+   				 $result = new wsResponse (9, 'Session expired');
+           return $result;
+         } 
+   		
 				G::LoadClass('groups');  	      	      	    
   	    $groups = new Groups;
   	    
@@ -372,11 +398,18 @@ class wsBase
 	
 	public function sendVariables($sessionId, $caseId, $variables) {
    try {   			
+				G::LoadClass('sessions'); 
+				$oSessions = new Sessions();
+				$session   = $oSessions->verifySession($sessionId);
+				if($session=='')
+   			 {
+   				 $result = new wsResponse (9, 'Session expired');
+           return $result;
+         } 
+         
 				G::LoadClass('case'); 						
 		    $oCase = new Cases();
-
-	      //$result = new wsResponse (123, print_r ( $variables,1) );	      //
-	      //return $result;
+		    	    
 		    foreach ( $variables as $key=>$val ) {
 		    	$Fields[ $val->name ]= $val->value ;
 		    }
@@ -393,41 +426,121 @@ class wsBase
       return $result;
     }    
 	}
-	///OJASO AUMENTAR LA CFUNCTION PARA VER USERS A TRAVES DE USERS
+	
 	public function newCase($sessionId, $processId, $taskId, $variables) {
-   try { 
-   	
-   			G::LoadClass('case'); 						
-		    $oCase = new Cases();  							
+   try {   	   			
+   			G::LoadClass('sessions'); 
+				$oSessions = new Sessions();
+				$session   = $oSessions->getSessionUser($sessionId);
+				$userId    = $session['USR_UID'];
+				if($session['SES_STATUS']!='ACTIVE')				
+				{ if($session['SES_DUE_DATE'] > date('Y-m-d'))
+			  	{ 
+			  		$result = new wsResponse (9, "Session expired");	      
+			      return $result;	       
+			    }
+			  }				      
+	      	      
+	      if(count($variables)>0)
+				{ $c=0;
+        	foreach ( $variables as $key=>$val ) 
+        		{ $name  = $val->name;
+        			$value = $val->value;	      
+	            $Fields[ $val->name ]= $val->value ; //arma el array
+		    			if($name!='' && $value!='')
+		    				{  
+		    					$c++;
+		    				}
+		    		}	      	 
+		    	
+		    	if($c == 0)  //Si no tenenmos ninguna variables en el array variables.
+		    	{ $result = new wsResponse (10, "Array of variables is empty");	      
+	          return $result;
+		    	}			    		     
+		    }			      	         								    
+				
 				G::LoadClass('processes'); 
 				$oProcesses = new Processes();
 				$pro = $oProcesses->processExists($processId);
-				
+								
 				if(!$pro)
-				{  $result = new wsResponse (9, "Invalid process $processId!!");	      
+				{  $result = new wsResponse (11, "Invalid process $processId!!");	      
 	          return $result;
 				}
+																
+				G::LoadClass('case'); 						
+		    $oCase = new Cases();  
 				
 				if($taskId=='')
 				{
-					 $tasks = $oProcesses->getStartingTaskForUser($processId,$pro); //POR EL MOMENTO PRO ES EL USER POR DEFAULT USAR CLASE 
-					  
-	          
-	         $case = $oCase->startCase($tasks[0]['TAS_UID'], '12090688047fa3cfda74f91.34325182');
-	         $result = new wsResponse (0, print_r($case,1));	      
-	      return $result;
+					 $tasks  = $oProcesses->getStartingTaskForUser($processId, $userId);  	          					 
+					 $numTasks=count($tasks);
+					
+					 if($numTasks==1)
+					  {     					  			
+					  		$case   = $oCase->startCase($tasks[0]['TAS_UID'], $userId);	         					  			          		
+								$caseId = $case['APPLICATION'];
+
+	          		$oldFields = $oCase->loadCase( $caseId );		        		 	          		
+		        			
+		        		$oldFields['APP_DATA'] = array_merge( $oldFields['APP_DATA'], $Fields);		        
+				    		
+				    		$up_case = $oCase->updateCase($caseId, $oldFields);				            				    		      			        
+			      		$result = new wsResponse (0, "Sucessful");	      
+			      		return $result;					  		
+					  }	
+					 else
+					  { 
+					  	if($numTasks==0)
+					  	 {					 	  	
+					  	  	$result = new wsResponse (12, "No staring task defined");
+      			 		  return $result;
+      			 	 }
+      			 	if($numTasks > 1)
+					  	 {					 	  	
+					  	  	$result = new wsResponse (13, "Multiple starting task");
+      			 		  return $result;
+      			 	 }	
+					  }				 					 					 				         					 
+				}											        		   
+				else		          
+				{
+					 require_once 'classes/model/Task.php';					 
+					 $oTask = new Task();
+   				 $task  = $oTask->taskExists( $taskId );
+   				 if(!$task)
+   				  {
+   				    $result = new wsResponse (14, "Task invalid");
+      			  return $result;
+   				  }
+   				  
+   				 $tasks  = $oProcesses->getStartingTaskForUser($processId,$userId);  	          					 
+					 $numTasks=count($tasks);
+					 if($numTasks==1)
+					  {
+					  		$case   = $oCase->startCase($taskId, $userId);	         
+	          		$caseId = $case['APPLICATION'];
+	          		$oldFields = $oCase->loadCase( $caseId );
+		        		 
+		        		$oldFields['APP_DATA'] = array_merge( $oldFields['APP_DATA'], $Fields);		        
+				    		$up_case = $oCase->updateCase($caseId, $oldFields);				            
+			      		$result = new wsResponse (0, "Sucessful");	      
+			      		return $result;					  		
+					  }	
+					 else
+					  { 
+					  	if($numTasks==0)
+					  	 {					 	  	
+					  	  	$result = new wsResponse (12, "No staring task defined");
+      			 		  return $result;
+      			 	 }
+      			 	if($numTasks > 1)
+					  	 {					 	  	
+					  	  	$result = new wsResponse (13, "Multiple starting task");
+      			 		  return $result;
+      			 	 }	
+					  }				 					   
 				}
-				
-				
-			
-        		   
-		  
-        $oldFields = $oCase->loadCase( $caseId );
-        $oldFields['APP_DATA'] = array_merge( $oldFields['APP_DATA'], $Fields);
-        
-		    $up_case = $oCase->updateCase($caseId, $oldFields);				            
-	      $result = new wsResponse (0, "Sucessful");	      
-	      return $result;
     }
     catch ( Exception $e ) {
       $result = new wsResponse (100, $e->getMessage());
@@ -436,22 +549,78 @@ class wsBase
 	}
 	
 	public function newCaseImpersonate($sessionId, $processId, $userId, $variables) {
-   try {   			
+   try {   								         			
+   			G::LoadClass('sessions'); 
+				$oSessions = new Sessions();
+				$session   = $oSessions->getSessionUser($sessionId);
+				
+				if($session['SES_STATUS']!='ACTIVE')				
+				{ if($session['SES_DUE_DATE'] > date('Y-m-d'))
+			  	{ 
+			  		$result = new wsResponse (9, "Session expired");	      
+			      return $result;	       
+			    }
+			  }				      
+	      	      
+	      if(count($variables)>0)
+				{ $c=0;
+        	foreach ( $variables as $key=>$val ) 
+        		{ $name  = $val->name;
+        			$value = $val->value;	      
+	            $Fields[ $val->name ]= $val->value ; //arma el array
+		    			if($name!='' && $value!='')
+		    				{  
+		    					$c++;
+		    				}
+		    		}	      	 
+		    	
+		    	if($c == 0)  //Si no tenenmos ninguna variables en el array variables.
+		    	{ $result = new wsResponse (10, "Array of variables is empty");	      
+	          return $result;
+		    	}			    		     
+		    }			      	         								    
+				
+				G::LoadClass('processes'); 
+				$oProcesses = new Processes();
+				$pro = $oProcesses->processExists($processId);
+								
+				if(!$pro)
+				{  $result = new wsResponse (11, "Invalid process $processId!!");	      
+	          return $result;
+				}
+																
 				G::LoadClass('case'); 						
-		    $oCase = new Cases();
-		    
-		    $Fields['1']='xUNO';
-		    $Fields['2']='xDOS';
-		    $Fields['3']='xTRES';
-		    $Fields['4']='xCUATRO';
-		    $Fields['5']='xCINCO';
-		  
-        $oldFields = $oCase->loadCase( $caseId );
-        $oldFields['APP_DATA'] = array_merge( $oldFields['APP_DATA'], $Fields);
-        
-		    $up_case = $oCase->updateCase($caseId, $oldFields);				            
-	      $result = new wsResponse (0, "Sucessful");	      
-	      return $result;
+		    $oCase = new Cases();  
+								
+				$tasks  = $oProcesses->getStartingTaskForUser($processId, $userId);  	          					 
+				$numTasks=count($tasks);
+				
+				if($numTasks==1)
+				 {     					  			
+				 		$case   = $oCase->startCase($tasks[0]['TAS_UID'], $userId);	         					  			          		
+						$caseId = $case['APPLICATION'];
+
+	       		$oldFields = $oCase->loadCase( $caseId );		        		 	          		
+		     			
+		     		$oldFields['APP_DATA'] = array_merge( $oldFields['APP_DATA'], $Fields);		        
+				 		
+				 		$up_case = $oCase->updateCase($caseId, $oldFields);				            				    		      			        
+			   		$result = new wsResponse (0, "Sucessful");	      
+			   		return $result;					  		
+				 }	
+				else
+				 { 
+				 	if($numTasks==0)
+				 	 {					 	  	
+				 	  	$result = new wsResponse (12, "No staring task defined");
+      	 		  return $result;
+      	 	 }
+      	 	if($numTasks > 1)
+				 	 {					 	  	
+				 	  	$result = new wsResponse (13, "Multiple starting task");
+      	 		  return $result;
+      	 	 }	
+				 }				 					 					 				         					 				
     }
     catch ( Exception $e ) {
       $result = new wsResponse (100, $e->getMessage());
@@ -461,6 +630,15 @@ class wsBase
 	
 	public function derivateCase($sessionId, $caseId) {
    try {   			
+   	    G::LoadClass('sessions'); 
+				$oSessions = new Sessions();
+				$session   = $oSessions->verifySession($sessionId);
+				if($session=='')
+   			 {
+   				 $result = new wsResponse (9, 'Session expired');
+           return $result;
+         } 
+         
 				G::LoadClass('case'); 						
 		    $oCase = new Cases();
 		    
