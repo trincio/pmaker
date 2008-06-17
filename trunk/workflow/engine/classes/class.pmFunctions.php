@@ -153,9 +153,37 @@ function executeQuery($SqlStatement, $DBConnectionUID = 'workflow')
 	}
 }
 
+function orderGrid($dataM, $field, $ord = 'ASC')
+{
+	if(!is_array($dataM) or !isset($field) or $field==''){
+		throw new Exception('function:orderGrid Error!, bad parameters found!');
+	}
+	for($i=1; $i <= count($dataM)-1; $i++){
+		for($j=$i+1; $j <= count($dataM); $j++){
+			if(strtoupper($ord) == 'ASC'){
+				if(strtolower($dataM[$j][$field]) < strtolower($dataM[$i][$field])){
+					$swap  = $dataM[$i];
+					$dataM[$i] = $dataM[$j];
+					$dataM[$j] = $swap;
+				}
+			} else {
+				if($dataM[$j][$field] > $dataM[$i][$field]){
+					$swap  = $dataM[$i];
+					$dataM[$i] = $dataM[$j];
+					$dataM[$j] = $swap;
+				}
+			}	
+		}
+	}
+	return $dataM;
+}
+
+
 //$x = formatDate('2008-06-07','dd/mm/yy');
 /*$x = executeQuery("insert into USERS (USR_UID,USR_USERNAME) values ('erik','erik')");
 //$x = executeQuery("delete from USERS where USR_UID='erik'");
+*//*
+$x = orderGrid($a, 'uno', 'ASC');
 echo '<pre>-->';
 print_r($x);
 echo '<pre>';*/
