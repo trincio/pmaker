@@ -107,9 +107,9 @@ class PMScript
   	$bEqual  = false;
   	$iOcurrences = preg_match_all('/\@(?:([\@\%\#\?\$\=])([a-zA-Z\_]\w*)|([a-zA-Z\_][\w\-\>\:]*)\(((?:[^\\\\\)]*(?:[\\\\][\w\W])?)*)\))((?:\s*\[[\'"]?\w+[\'"]?\])+)?/', $this->sScript, $aMatch, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE);
   	if ($iOcurrences)
-  	{//var_dump($aMatch);die;
+  	{
   		for($i = 0; $i < $iOcurrences; $i++)
-			{//var_dump($aMatch[2][$i]);echo "\n";
+			{
 				$sAux = substr($this->sScript, $iAux, $aMatch[0][$i][1] - $iAux);
 				if (!$bEqual)
 				{
