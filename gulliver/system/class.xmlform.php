@@ -1372,7 +1372,7 @@ class XmlForm_Field_Reset extends XmlForm_Field
 	function render( $value = NULL ,$owner)
 	{
     	$onclick = G::replaceDataField( $this->onclick,$owner->values );
-        $mode = ($this->mode == 'view')?' disabled="disabled"':''; 
+        $mode = ($this->mode == 'view')?' disabled="disabled"':'';
 		//return '<input name="'.$this->name.'" type ="reset" value="'.$this->label.'"/>';
 		return "<input style=\"{$this->style}\" $mode class='module_app_button___gray {$this->className}' id=\"form[{$this->name}]\" name=\"form[{$this->name}]\" type='reset' value=\"{$this->label}\" ".(($this->onclick)?'onclick="'.htmlentities($onclick,ENT_COMPAT, 'utf-8').'"':'')." />";
 	}
@@ -1689,7 +1689,7 @@ class XmlForm_Field_CheckGroup extends XmlForm_Field
     if (!is_array($value)) $value = explode('|', $value);
     if ($this->mode==='edit') {
       $html='';
-      foreach($this->option as $optionName => $option)
+      foreach($this->options as $optionName => $option)
       {
         $html.='<input id="form['.$this->name.']['.$optionName.']" name="form['.$this->name.
                 ']['.$optionName.']" type=\'checkbox\' value="'.$optionName.'"'.
@@ -1698,7 +1698,7 @@ class XmlForm_Field_CheckGroup extends XmlForm_Field
       return $html;
     } elseif ($this->mode==='view') {
       $html='';
-      foreach($this->option as $optionName => $option)
+      foreach($this->option2 as $optionName => $option)
       {
         $html.='<input class="FormCheck" id="form['.$this->name.']['.$optionName.']" name="form['.$this->name.
                 ']['.$optionName.']" type=\'checkbox\' value="'.$optionName.'"'.
@@ -1977,7 +1977,7 @@ class XmlForm_Field_Xmlform extends XmlForm_Field
    */
   function render( $values )
   {
-    $html=''; 
+    $html='';
     foreach($this->fields as $f => $v)    {
       $html.=$v->render('');
     }
@@ -2037,7 +2037,7 @@ class XmlForm
    * @return string
    */
   function parseFile($filename, $language, $forceParse)
-  {           
+  {
     $this->language = $language;
     $filename=$this->home . $filename;
     $this->fileName = $filename;
@@ -2083,7 +2083,7 @@ class XmlForm
       //Reeplace non valid characters in xmlform name with "_"
       $this->name = preg_replace( '/\W/' , '_' , $this->name );
       //Create fields
-         
+
       foreach( $xmlNode as $k => $v){
         if (($xmlNode[$k]->type !== 'cdata' )&&
             isset($xmlNode[$k]->attributes['type'])) {
@@ -2313,8 +2313,8 @@ class xmlformTemplate extends Smarty
    */
   function getFields(&$form)
   {
-    
-    $result=array(); 
+
+    $result=array();
     foreach( $form->fields as $k => $v)  {
       if($form->mode != ''){      #@ last modification: erik
           $v->mode = $form->mode; #@
@@ -2353,7 +2353,7 @@ class xmlformTemplate extends Smarty
     $result = $this->getFields($form);
 
     $this->assign(array('PATH_TPL' => PATH_TPL));
-    $this->assign($result);             
+    $this->assign($result);
     $this->assign(array('_form' => $form));
     //'mem:defaultTemplate'.$form->name obtains the template generated for the
     //current "form" object, then this resource y saved by Smarty in the
