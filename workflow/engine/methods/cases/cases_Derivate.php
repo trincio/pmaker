@@ -85,67 +85,7 @@ try {
   $oCase->updateCase ( $_SESSION['APPLICATION'], $appFields);
   //Save data - End
   //Send notifications - Start
-  require_once 'classes/model/Configuration.php';
-  $oConfiguration = new Configuration();
-  $sDelimiter     = DBAdapter::getStringDelimiter();
-  $oCriteria      = new Criteria('workflow');
-  $oCriteria->add(ConfigurationPeer::CFG_UID, 'Emails');
-  $oCriteria->add(ConfigurationPeer::OBJ_UID, '');
-  $oCriteria->add(ConfigurationPeer::PRO_UID, '');
-  $oCriteria->add(ConfigurationPeer::USR_UID, '');
-  $oCriteria->add(ConfigurationPeer::APP_UID, '');
-  if (ConfigurationPeer::doCount($oCriteria) == 0) {
-    $oConfiguration->create(array('CFG_UID' => 'Emails', 'OBJ_UID' => '', 'CFG_VALUE' => '', 'PRO_UID' => '', 'USR_UID' => '', 'APP_UID' => ''));
-    $aConfiguration = array();
-  }
-  else {
-    $aConfiguration = $oConfiguration->load('Emails', '', '', '', '');
-    if ($aConfiguration['CFG_VALUE'] != '') {
-      $aConfiguration = unserialize($aConfiguration['CFG_VALUE']);
-    }
-    else {
-      $aConfiguration = array();
-    }
-  }
-  if ($aConfiguration['MESS_ENABLED'] == '1') {
-    $oTask     = new Task();
-    $aTaskInfo = $oTask->load($_SESSION['TASK']);
-    if ($aTaskInfo['TAS_SEND_LAST_EMAIL'] == 'TRUE') {
-      $sFrom    = '"ProcessMaker" <info@processmaker.com>';
-      $sSubject = G::LoadTranslation('ID_MESSAGE_SUBJECT_DERIVATION');
-      $sBody    = G::replaceDataField($aTaskInfo['TAS_DEF_MESSAGE'], $appFields['APP_DATA']);
-      G::LoadClass('spool');
-      $oUser = new Users();
-      foreach ($_POST['form']['TASKS'] as $aTask) {
-        if (isset($aTask['USR_UID'])) {
-          $aUser = $oUser->load($aTask['USR_UID']);
-          $sTo   = ((($aUser['USR_FIRSTNAME'] != '') || ($aUser['USR_LASTNAME'] != '')) ? $aUser['USR_FIRSTNAME'] . ' ' . $aUser['USR_LASTNAME'] . ' ' : '') . '<' . $aUser['USR_EMAIL'] . '>';
-          $oSpool = new spoolRun();
-          $oSpool->setConfig(array('MESS_ENGINE'   => $aConfiguration['MESS_ENGINE'],
-                                   'MESS_SERVER'   => $aConfiguration['MESS_SERVER'],
-                                   'MESS_PORT'     => $aConfiguration['MESS_PORT'],
-                                   'MESS_ACCOUNT'  => $aConfiguration['MESS_ACCOUNT'],
-                                   'MESS_PASSWORD' => $aConfiguration['MESS_PASSWORD']));
-          $oSpool->create(array('msg_uid'          => '',
-                                'app_uid'          => $_SESSION['APPLICATION'],
-                                'del_index'        => $_SESSION['INDEX'],
-                                'app_msg_type'     => 'DERIVATION',
-                                'app_msg_subject'  => $sSubject,
-                                'app_msg_from'     => $sFrom,
-                                'app_msg_to'       => $sTo,
-                                'app_msg_body'     => $sBody,
-                                'app_msg_cc'       => '',
-                                'app_msg_bcc'      => '',
-                                'app_msg_attach'   => '',
-                                'app_msg_template' => '',
-                                'app_msg_status'   => 'pending'));
-          if (($aConfiguration['MESS_BACKGROUND'] == '') || ($aConfiguration['MESS_TRY_SEND_INMEDIATLY'] == '1')) {
-            $oSpool->sendMail();
-          }
-        }
-      }
-    }
-  }
+  $oCase->sendNotifications($_SESSION['TASK'], $_POST['form']['TASKS'], $appFields['APP_DATA'], $_SESSION['APPLICATION'], $_SESSION['INDEX']);
   //Send notifications - End
   /* Redirect */
   G::header('location: cases_List');
