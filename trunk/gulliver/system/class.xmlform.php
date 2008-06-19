@@ -1169,13 +1169,38 @@ class XmlForm_Field_YesNo extends XmlForm_Field
     */
     function render( $value = NULL )
     {
-        $mode = ($this->mode == 'view')?' disabled="disabled"':'';
-		$html='<select id="form['.$this->name.']" name="form['.$this->name.']"'.$mode.'>';
-		$html.='<option value="'.'0'.'"'.($value==='0'?' selected':'').'>'.'NO'.'</input>';
-		$html.='<option value="'.'1'.'"'.($value==='1'?' selected':'').'>'.'YES'.'</input>';
-		$html.='</select>';
-		return $html;
-	}
+      $mode = ($this->mode == 'view')?' disabled="disabled"':'';
+		  $html='<select id="form['.$this->name.']" name="form['.$this->name.']"'.$mode.'>';
+		  $html.='<option value="'.'0'.'"'.($value==='0'?' selected':'').'>'.'NO'.'</input>';
+		  $html.='<option value="'.'1'.'"'.($value==='1'?' selected':'').'>'.'YES'.'</input>';
+		  $html.='</select>';
+		  return $html;
+	  }
+
+	  function renderGrid( $values=array() , $owner )
+    {
+      $result=array();$r=1;
+      foreach($values as $v)  {
+    	  /*if ($this->mode==='edit') {
+    	    if ($this->readOnly)
+    		    $result[] = '<input class="module_app_input___gray" id="form['. $owner->name .']['.$r.']['.$this->name.']" name="form['. $owner->name .']['.$r.']['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value="'.$this->htmlentities( $v , ENT_COMPAT, 'utf-8').'" readOnly="readOnly" style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'"/>';
+    		  else
+    		    $result[] = '<input class="module_app_input___gray" id="form['. $owner->name .']['.$r.']['.$this->name.']" name="form['. $owner->name .']['.$r.']['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value="'.$this->htmlentities( $v , ENT_COMPAT, 'utf-8').'" style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'"/>';
+    		} elseif ($this->mode==='view') {
+    		    $result[] = $this->htmlentities( $v , ENT_COMPAT, 'utf-8');
+    		} else {
+    		    $result[] = $this->htmlentities( $v , ENT_COMPAT, 'utf-8');
+    		}*/
+    		$mode = ($this->mode == 'view')?' disabled="disabled"':'';
+    		$html='<select id="form['. $owner->name .']['.$r.']['.$this->name.']" name="form['. $owner->name .']['.$r.']['.$this->name.']"'.$mode.'>';
+		    $html.='<option value="'.'0'.'"'.($v==='0'?' selected':'').'>'.'NO'.'</input>';
+		    $html.='<option value="'.'1'.'"'.($v==='1'?' selected':'').'>'.'YES'.'</input>';
+		    $html.='</select>';
+    		$result[] = $html;
+        $r++;
+      }
+      return $result;
+	  }
 }
 /**
  * Class XmlForm_Field_Link
@@ -1698,7 +1723,7 @@ class XmlForm_Field_CheckGroup extends XmlForm_Field
       return $html;
     } elseif ($this->mode==='view') {
       $html='';
-      foreach($this->option2 as $optionName => $option)
+      foreach($this->options as $optionName => $option)
       {
         $html.='<input class="FormCheck" id="form['.$this->name.']['.$optionName.']" name="form['.$this->name.
                 ']['.$optionName.']" type=\'checkbox\' value="'.$optionName.'"'.
