@@ -48,6 +48,7 @@ require_once ( "classes/model/TaskUser.php" );
 require_once ( "classes/model/Triggers.php" );
 require_once ( "classes/model/Users.php" );
 require_once ( "classes/model/Session.php" );
+require_once ( "classes/model/Content.php" );
 G::LoadClass('pmScript');
 
 class wsResponse
@@ -219,21 +220,40 @@ class wsBase
     }		
 	}
 	
-	public function caseList( ) {
+	public function caseList( $sessionId ) {
    try {	
-  	  $result  = array();
-  	  $oCriteria = new Criteria('workflow');
-      $oCriteria->add(ApplicationPeer::APP_STATUS ,  array('TO_DO','DRAFT'), Criteria::IN);      
-      $oDataset = ApplicationPeer::doSelectRS($oCriteria);
-      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-      $oDataset->next();
-      
-      while ($aRow = $oDataset->getRow()) {      	
-      	$result[] = array ( 'guid' => $aRow['APP_UID'], 'name' => $aRow['APP_UID'] );
-      	$oDataset->next();
-      }
-      return $result;
-    }
+   	     G::LoadClass('sessions'); 
+			   $oSessions = new Sessions();
+   		   $session   = $oSessions->getSessionUser($sessionId);
+			   $userId    = $session['USR_UID'];     			
+   	        	     
+  	     $result  = array();
+  	     $oCriteria = new Criteria('workflow');
+  	     $del = DBAdapter::getStringDelimiter();
+  	     $oCriteria->addSelectColumn(ApplicationPeer::APP_UID);	    	    	  
+  	     $oCriteria->addAsColumn('CASE_TITLE', 'C1.CON_VALUE' );
+  	     $oCriteria->addAlias("C1",  'CONTENT');
+  	     $caseTitleConds = array();
+         $caseTitleConds[] = array( ApplicationPeer::APP_UID ,  'C1.CON_ID'  );
+         $caseTitleConds[] = array( 'C1.CON_CATEGORY' , $del . 'APP_TITLE' . $del );
+         $caseTitleConds[] = array( 'C1.CON_LANG' ,    $del . SYS_LANG . $del );
+         $oCriteria->addJoinMC($caseTitleConds ,    Criteria::LEFT_JOIN);
+  	       	                
+         $oCriteria->addJoin(ApplicationPeer::APP_UID, AppDelegationPeer::APP_UID, Criteria::LEFT_JOIN);  	         
+  	       
+  	     $oCriteria->add(ApplicationPeer::APP_STATUS ,  array('TO_DO','DRAFT'), Criteria::IN);      
+  	     $oCriteria->add(AppDelegationPeer::USR_UID, $userId );        
+         $oCriteria->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);     
+         $oDataset = ApplicationPeer::doSelectRS($oCriteria);
+         $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+         $oDataset->next();
+         
+         while ($aRow = $oDataset->getRow()) {      	
+         	$result[] = array ( 'guid' => $aRow['APP_UID'], 'name' => $aRow['CASE_TITLE'] );
+         	$oDataset->next();
+         }
+         return $result;
+    }    
     catch ( Exception $e ) {
     	$result[] = array ( 'guid' => $e->getMessage(), 'name' => $e->getMessage() );
       return $result;
@@ -629,29 +649,67 @@ class wsBase
 	}
 	
 	public function derivateCase($sessionId, $caseId) {
-   try {   			
+   try {   		   	     
+   	    require_once ("classes/model/AppDelegation.php");
    	    G::LoadClass('sessions'); 
 				$oSessions = new Sessions();
+				/*
 				$session   = $oSessions->verifySession($sessionId);
 				if($session=='')
    			 {
    				 $result = new wsResponse (9, 'Session expired');
            return $result;
          } 
-         
+        */                
+        $session   = $oSessions->getSessionUser($sessionId);
+				$userId    = $session['USR_UID'];         
+				
 				G::LoadClass('case'); 						
-		    $oCase = new Cases();
-		    
-		    $Fields['1']='xUNO';
-		    $Fields['2']='xDOS';
-		    $Fields['3']='xTRES';
-		    $Fields['4']='xCUATRO';
-		    $Fields['5']='xCINCO';
-		  
-        $oldFields = $oCase->loadCase( $caseId );
-        $oldFields['APP_DATA'] = array_merge( $oldFields['APP_DATA'], $Fields);
+		    $oCase = new Cases();		    		    		    	     
+        $appFields = $oCase->loadCase( $caseId );                                                     
+                           
+        $iDelIndex = $oCase->getCurrentDelegation( $caseId, $userId );                
+        if ( $iDelIndex == '' ) {
+   				 $result = new wsResponse (16, "The user $userId don't have a valid task in Case: $caseId.");
+           return $result;
+        }        
+
+       
+        $oAppDel = new AppDelegation();
+        $appdel  = $oAppDel->Load($caseId, $iDelIndex);
+
+				$result = new wsResponse (9, print_r($appdel,1));
+        return $result;                                                  
+                      		
+            
+        //Execute triggers before derivation
+        $appFields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], 'ASSIGN_TASK', -2, 'BEFORE', $appFields['APP_DATA'] ); //id de la tarea actual
+        $appFields['DEL_INDEX']= $_SESSION['INDEX'];
+        $appFields['TAS_UID']  = $_SESSION['TASK'];
         
-		    $up_case = $oCase->updateCase($caseId, $oldFields);				            
+        //Save data - Start
+        $oCase->updateCase ( $caseId, $appFields);        
+        
+        //derivate case
+        $oDerivation = new Derivation();
+        $aCurrentDerivation = array(
+          'APP_UID'    => $caseId,
+          'DEL_INDEX'  => $_SESSION['INDEX'],
+          'APP_STATUS' => $sStatus,
+          'TAS_UID'    => $_SESSION['TASK'],
+          'ROU_TYPE'   => $_POST['form']['ROU_TYPE']
+        );
+        $oDerivation->derivate( $aCurrentDerivation, $_POST['form']['TASKS'] ); //array 
+        
+        //Execute triggers after derivation
+        $appFields = $oCase->loadCase( $caseId ); //refresh appFields, because in derivations should change some values
+        $appFields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], 'ASSIGN_TASK', -2, 'AFTER', $appFields['APP_DATA'] );
+                
+        //Save data - Start
+        $oCase->updateCase ( $caseId, $appFields);        
+		    
+		    		    		    		    		    		            
+		    
 	      $result = new wsResponse (0, "Sucessful");	      
 	      return $result;
     }
@@ -659,6 +717,44 @@ class wsBase
       $result = new wsResponse (100, $e->getMessage());
       return $result;
     }    
+	}
+	
+	public function taskList( $sessionId ) {
+   try {	   	 
+   	  G::LoadClass('sessions'); 
+			$oSessions = new Sessions();
+   		$session   = $oSessions->getSessionUser($sessionId);
+			$userId    = $session['USR_UID'];  
+			   	 
+  	  $result  = array();
+  	  $oCriteria = new Criteria('workflow');  
+  	  $del = DBAdapter::getStringDelimiter();
+  	  $oCriteria->addSelectColumn(TaskPeer::TAS_UID);	    	  
+  	  $oCriteria->addAsColumn('TAS_TITLE', 'C1.CON_VALUE' );
+  	  $oCriteria->addAlias("C1",  'CONTENT');
+  	  $tasTitleConds = array();
+      $tasTitleConds[] = array( TaskPeer::TAS_UID ,  'C1.CON_ID'  );
+      $tasTitleConds[] = array( 'C1.CON_CATEGORY' , $del . 'TAS_TITLE' . $del );
+      $tasTitleConds[] = array( 'C1.CON_LANG' ,    $del . SYS_LANG . $del );
+      $oCriteria->addJoinMC($tasTitleConds ,    Criteria::LEFT_JOIN);
+      
+      $oCriteria->addJoin(TaskPeer::TAS_UID, TaskUserPeer::TAS_UID, Criteria::LEFT_JOIN);
+      
+      $oCriteria->add(TaskUserPeer::USR_UID, $userId );    
+      $oDataset = TaskPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      
+      while ($aRow = $oDataset->getRow()) {      	
+      	$result[] = array ( 'guid' => $aRow['TAS_UID'], 'name' => $aRow['TAS_TITLE'] );
+      	$oDataset->next();
+      }
+      return $result;
+    }
+    catch ( Exception $e ) {
+    	$result[] = array ( 'guid' => $e->getMessage(), 'name' => $e->getMessage() );
+      return $result;
+    }		
 	}
 	
 }

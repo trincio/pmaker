@@ -41,7 +41,7 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
   G::RenderPage( "publish-treeview" );
 
   $link_Edit = G::encryptlink('webServicesSetup');
-  $link_List = G::encryptlink('webServicesSetup');
+  $link_List = G::encryptlink('webServicesList');
 ?>
 <script>
   var oAux = document.getElementById("publisherContent[0]");
@@ -60,6 +60,8 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
       args  : 'action=showForm&wsID=' + uid
     });
     oRPC.make();
+    //var scs=oRPC.xmlhttp.responseText.extractScript();
+    //scs.evalScript();
     document.getElementById('spanUsersList').innerHTML = oRPC.xmlhttp.responseText;
   }
   function execWebService( uid) {
@@ -73,24 +75,15 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
     document.getElementById('spanUsersList').innerHTML = oRPC.xmlhttp.responseText;
   }
   
-  var submitThisForm = function(oForm)
-{
-	var oAux;
-	var bContinue = true;
-	/*
-	oAux = oForm.elements['form[PRO_TITLE]'];
-	if (oAux.value == '')
-	{
-		alert("@#MESSAGE1");
-		oAux.focus();
-		bContinue = false;
-	}
-	*/
-	if (bContinue)
-	{
-		result = ajax_post(oForm.action, oForm, 'POST');
-		document.getElementById('spanUsersList').innerHTML = result;
-	}
+  submitThisForm = function(oForm) {
+	  var oAux;
+	  var bContinue = true;
+	  if (bContinue) {
+		  result = ajax_post(oForm.action, oForm, 'POST');
+		  document.getElementById('spanUsersList').innerHTML = result;
+		  //alert ( oForm.action );
+      refreshTree();
+	  }
 };
 
 
@@ -112,50 +105,8 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
     currentPopupWindow.remove();
     refreshTree();
   }
-  function selectGroup( uid, element ){
-    currentGroup = uid;
-    var oRPC = new leimnud.module.rpc.xmlhttp({
-      url   : '../groups/groups_Ajax',
-      async : false,
-      method: 'POST',
-      args  : 'action=showUsers&sGroupUID=' + uid
-    });
-    oRPC.make();
-    document.getElementById('spanUsersList').innerHTML = oRPC.xmlhttp.responseText;
-  }
   function refreshTree(){
-    tree.refresh( document.getElementById("publisherContent[777]") , '<?=$link_List?>');
+    tree.refresh( document.getElementById("publisherContent[666]") , '<?=$link_List?>');
   }
 
-  var ofToAssignUser = function(sGroup, sUser)
-  {
-  	new leimnud.module.app.confirm().make({
-    	label:"<?=G::LoadTranslation('ID_MSG_CONFIRM_REMOVE_USER')?>",
-    	action:function()
-    	{
-        var oRPC = new leimnud.module.rpc.xmlhttp({
-          url   : '../groups/groups_Ajax',
-          async : false,
-          method: 'POST',
-          args  : 'action=ofToAssignUser&GRP_UID=' + sGroup + '&USR_UID=' + sUser
-        });
-        oRPC.make();
-        currentGroup = sGroup;
-        selectGroup(currentGroup);
-      }.extend(this)
-    });
-  };
-
-  function saveUserGroup(sUser) {
-
-    var oRPC = new leimnud.module.rpc.xmlhttp({
-      url   : '../groups/groups_Ajax',
-      async : false,
-      method: 'POST',
-      args  : 'action=assignUser&GRP_UID=' + currentGroup + '&USR_UID=' + sUser
-    });
-    oRPC.make();
-    currentPopupWindow.remove();
-    selectGroup(currentGroup);
-  }
 </script>
