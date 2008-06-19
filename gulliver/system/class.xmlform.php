@@ -1181,16 +1181,6 @@ class XmlForm_Field_YesNo extends XmlForm_Field
     {
       $result=array();$r=1;
       foreach($values as $v)  {
-    	  /*if ($this->mode==='edit') {
-    	    if ($this->readOnly)
-    		    $result[] = '<input class="module_app_input___gray" id="form['. $owner->name .']['.$r.']['.$this->name.']" name="form['. $owner->name .']['.$r.']['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value="'.$this->htmlentities( $v , ENT_COMPAT, 'utf-8').'" readOnly="readOnly" style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'"/>';
-    		  else
-    		    $result[] = '<input class="module_app_input___gray" id="form['. $owner->name .']['.$r.']['.$this->name.']" name="form['. $owner->name .']['.$r.']['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value="'.$this->htmlentities( $v , ENT_COMPAT, 'utf-8').'" style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'"/>';
-    		} elseif ($this->mode==='view') {
-    		    $result[] = $this->htmlentities( $v , ENT_COMPAT, 'utf-8');
-    		} else {
-    		    $result[] = $this->htmlentities( $v , ENT_COMPAT, 'utf-8');
-    		}*/
     		$mode = ($this->mode == 'view')?' disabled="disabled"':'';
     		$html='<select id="form['. $owner->name .']['.$r.']['.$this->name.']" name="form['. $owner->name .']['.$r.']['.$this->name.']"'.$mode.'>';
 		    $html.='<option value="'.'0'.'"'.($v==='0'?' selected':'').'>'.'NO'.'</input>';
