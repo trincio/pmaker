@@ -427,10 +427,11 @@ switch ($_GET['TYPE'])
   	$sNamespace = '';
   	$sStepName  = '';
     foreach ( $externalSteps as $key=>$val ) {
-      if ( $val->sStepId == $_GET['UID'] )
+      if ( $val->sStepId == $_GET['UID'] ) {
         $sNamespace = $val->sNamespace;
         $sStepName  = $val->sStepName;
       }
+    }
     if (!$aPreviousStep)
     {
       $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['PREVIOUS_STEP_LABEL'] = '';
