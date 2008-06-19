@@ -127,7 +127,9 @@ class dbConnections
                 'id'        => 'oracle',
                 'command'   => 'oci_connect',
                 'name'      => 'Oracle'
-            ),
+            )
+		);
+		/*,
 			'informix'=> Array(
                 'id'        => 'informix',
                 'command'   => 'ifx_connect',
@@ -138,7 +140,7 @@ class dbConnections
                 'command'   => 'sqlite_open',
                 'name'      => 'SQLite'
             )
-		);
+		*/
 			
 		foreach($dbServices as $service) {
 			if(@function_exists($service['command'])){
