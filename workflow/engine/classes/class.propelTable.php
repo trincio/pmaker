@@ -23,10 +23,10 @@
  *
  */
 
-G::LoadClass('filterForm');
-G::LoadClass('xmlMenu');
-G::LoadClass("BasePeer" );
-G::LoadClass("ArrayPeer" );
+  G::LoadClass('filterForm');
+  G::LoadClass('xmlMenu');
+  G::LoadClass("BasePeer" );
+  G::LoadClass("ArrayPeer" );
 
 /**
  * Class pagedTable
@@ -107,41 +107,6 @@ class propelTable
    */
   function prepareQuery( $limitPage = false )
   {
-      //Filter
-      /*
-      if (is_array($this->filter)) {
-        $filterFields = $this->filter;
-      } else {
-        parse_str($this->filter,$filterFields);
-      }
-      $this->aFilter=$filterFields;
-      $filter='';
-      foreach ($filterFields as $field => $like)
-      if ($like!='')
-      {
-        if ($filter!=='')
-          $filter.=' AND ';
-        if (isset($this->filterType[$field])) {
-          switch ($this->filterType[$field]) {
-            case '=':
-              $filter .= $field . ' = "' . mysql_real_escape_string($like) . '"';
-              break;
-            case '<>':
-              $filter .= $field . ' <> "' . mysql_real_escape_string($like) . '"';
-              break;
-            case 'contains':
-              $filter .= $field . ' LIKE "%' . mysql_real_escape_string($like) . '%"';
-              break;
-            case 'like':
-              $filter .= $field . ' LIKE "' . mysql_real_escape_string($like) . '"';
-              break;
-          }
-        } else {
-          $filter .= $field . ' = "' . mysql_real_escape_string($like) . '"';
-        }
-      }
-
-      */
       /*
        * QuickSearch
        */
@@ -204,7 +169,7 @@ class propelTable
        * Add limits
        */
       $this->criteria->setLimit( 0 );
-   	  $this->criteria->setOffset( 0 );
+      $this->criteria->setOffset( 0 );
       if ( $this->criteria->getDbName() == 'dbarray' ) {
         $this->totRows = ArrayBasePeer::doCount( $this->criteria );
       }
@@ -214,11 +179,12 @@ class propelTable
       $this->totPages = ceil( $this->totRows / $this->rowsPerPage);
       if ($limitPage)
       {
-      	$this->criteria->setLimit( $this->rowsPerPage );
-      	$this->criteria->setOffset( ($this->currentPage-1) * $this->rowsPerPage );
+        $this->criteria->setLimit( $this->rowsPerPage );
+        $this->criteria->setOffset( ($this->currentPage-1) * $this->rowsPerPage );
       }
       return;
   }
+
   /**
    * Function setupFromXmlform
    *
@@ -241,14 +207,6 @@ class propelTable
 
     $this->ajaxServer = G::encryptLink( '../gulliver/propelTableAjax' );
     $this->ownerPage  = G::encryptLink( SYS_CURRENT_URI );
-
-    /*
-    //Needed for $mysql_real_escape_string
-    if (isset($this->xmlForm->sql))
-      $this->sqlSelect = G::replaceDataField($this->xmlForm->sql,$this->xmlForm->values);
-    else
-      trigger_Error('Warning: sql query is empty', E_USER_WARNING);
-    */
 
     // Config attributes from XMLFORM file
     $myAttributes = get_class_vars(get_class($this));
@@ -316,6 +274,7 @@ class propelTable
     $this->prepareQuery();
     return $this->totRows;
   }
+
   /**
    * Function renderTitle
    * @author David S. Callizaya S. <davidsantos@colosa.com>
@@ -382,92 +341,54 @@ class propelTable
    */
   function renderField( $row, $r, $result)
   {
-      global $G_DATE_FORMAT;
-      //BEGIN: Special content:
-        $result['row__']            = $row;
-      //END: Special content.
-      //Merge $result with $xmlForm values (for default valuesSettings)
-      if ( is_array ( $this->xmlForm->values ) )
-        $result = array_merge($this->xmlForm->values, $result);
-      switch (true)
-      {
-        case ($this->style[$r]['data'] != '') :
-             $value = ((isset($result[$this->style[$r]['data']])) ? $result[$this->style[$r]['data']] : '' );
-             break;
-        default:
-             $value = $this->fields[$r]['Label'];
-      }
+    global $G_DATE_FORMAT;
+//to do: special content??    
+    //$result['row__']            = $row;   //Special content:
 
-      $this->tpl->newBlock( "field" );
-      $this->tpl->assign('width', $this->style[$r]['colWidth']);
-      $this->tpl->assign('widthPercent', ($this->style[$r]['colWidth']*100/$this->totalWidth) . '%' );
-      $this->tpl->assign('className',
-              (isset($this->style[$r]['colClassName']) && ($this->style[$r]['colClassName']))?
-              $this->style[$r]['colClassName'] : $this->tdClass);
-      $this->tpl->assign('style', $this->tdStyle);
+    $styleData = $this->style[$r];
+    $fielDataName = $styleData['data'];    
+    $fieldClassName = isset( $styleData['colClassName']) && ($styleData['colClassName']) ? $styleData['colClassName'] : $this->tdClass;
+            
+    if ( $fielDataName != '' ) 
+      $value = ((isset($result[ $fielDataName ])) ? $result[ $fielDataName ] : '' );
+    else
+      $value = $this->fields[$r]['Label'];
+    
+    $this->tpl->newBlock( "field" );
 
-      if (isset($this->style[$r]['align']))
-        $this->tpl->assign( "align" , $this->style[$r]['align']);
+    $this->tpl->assign('width', $this->style[$r]['colWidth']);
+    $classAttr = ( trim($fieldClassName) != '' ) ? " class=\"$fieldClassName\"" : '';
+    $this->tpl->assign('classAttr', $classAttr );
+    //to do: style is needed or not?
+    //$this->tpl->assign('style', $this->tdStyle);
 
-      if (isset($this->style[$r]['colAlign']))
-        $this->tpl->assign( "align" , $this->style[$r]['colAlign']);
+    $alignAttr = ( isset($this->style[$r]['align']) && strlen($this->style[$r]['align']>0) ) ? " align=\"" . $this->style[$r]['align'] . "\"" : '';
+    $this->tpl->assign( "alignAttr" , $alignAttr);
 
-      /**
-       * BEGIN : Reeplace of @@, @%,... in field's attributes like onclick, link,
-       *         ...
-       */
-      if (isset($this->xmlForm->fields[ $this->fields[$r]['Name'] ]->onclick)) {
-        $this->xmlForm->fields[ $this->fields[$r]['Name'] ]->onclick
-          = G::replaceDataField($this->style[$r]['onclick'],$result);
-      }
-      if (isset($this->xmlForm->fields[ $this->fields[$r]['Name'] ]->link)) {
-        $this->xmlForm->fields[ $this->fields[$r]['Name'] ]->link
-          = G::replaceDataField($this->style[$r]['link'],$result);
-      }
-      if (isset($this->xmlForm->fields[ $this->fields[$r]['Name'] ]->value)) {
-        $this->xmlForm->fields[ $this->fields[$r]['Name'] ]->value
-          = G::replaceDataField($this->style[$r]['value'],$result);
-      }
-      /**
-       * BREAK : Reeplace of @@, @%,...
-       */
-      /**
-       * Rendering of the field
-       */
+    $fieldName  = $this->fields[$r]['Name'];
+    $fieldClass = get_class( $this->xmlForm->fields[ $fieldName ] );
 
-      $this->xmlForm->fields[ $this->fields[$r]['Name'] ]->mode = 'view';
-      $this->xmlForm->setDefaultValues();
-      $this->xmlForm->setValues( $result );
-      //var_dump($this->fields[$r]['Name'],get_class($this->xmlForm->fields[ $this->fields[$r]['Name'] ]));echo '<br /><br />';
-      //
-      if ((array_search( 'rendergrid', get_class_methods( get_class($this->xmlForm->fields[ $this->fields[$r]['Name'] ])) )!==FALSE)
-          ||(array_search( 'renderGrid', get_class_methods( get_class($this->xmlForm->fields[ $this->fields[$r]['Name'] ])) )!==FALSE)) {
-        $htmlField = $this->xmlForm->fields[ $this->fields[$r]['Name'] ]->renderGrid( array($value) , $this->xmlForm, true );
-        $this->tpl->assign( "value" , $htmlField[0] );
-      } else {
-      }
+    /*** BEGIN : Reeplace of @@, @%,... in field's attributes like onclick, link,  */
+    if (isset($this->xmlForm->fields[ $this->fields[$r]['Name'] ]->link)) {
+      $this->xmlForm->fields[ $this->fields[$r]['Name'] ]->link
+        = G::replaceDataField($this->style[$r]['link'],$result);
+    }
+    if (isset($this->xmlForm->fields[ $fieldName ]->value)) {
+      $this->xmlForm->fields[ $fieldName ]->value = G::replaceDataField($styleData['value'],$result);
+    }
+    /*** END : Reeplace of @@, @%,...    */
 
-      /**
-       * CONTINUE : Reeplace of @@, @%,...
-       */
-       /*
-      if (isset($this->xmlForm->fields[ $this->fields[$r]['Name'] ]->onclick)) {
-        $this->xmlForm->fields[ $this->fields[$r]['Name'] ]->onclick
-          = $this->style[$r]['onclick'];
-      }
-      if (isset($this->xmlForm->fields[ $this->fields[$r]['Name'] ]->link)) {
-        $this->xmlForm->fields[ $this->fields[$r]['Name'] ]->link
-          = $this->style[$r]['link'];
-      }
-      if (isset($this->xmlForm->fields[ $this->fields[$r]['Name'] ]->value)) {
-        $this->xmlForm->fields[ $this->fields[$r]['Name'] ]->value
-          = $this->style[$r]['value'];
-      }
-      */
-      /**
-       * END : Reeplace of @@, @%,...
-       */
-
+    /*** Rendering of the field  */
+    $this->xmlForm->fields[ $fieldName ]->mode = 'view';
+    $this->xmlForm->setDefaultValues();
+    $this->xmlForm->setValues( $result );
+    //var_dump($fieldName, $fieldClass );echo '<br /><br />';
+    
+    if ( array_search( 'renderTable', get_class_methods( $fieldClass ) )!== FALSE ) {
+      $htmlField = $this->xmlForm->fields[ $fieldName ]->renderTable( $value, $this->xmlForm, true );
+      $this->tpl->assign( "value" , $htmlField );
+    }
+  
     return $this->fields[$r]['Type'];
   }
 
@@ -547,6 +468,7 @@ class propelTable
    */
   function renderTable( $block = '' )
   {
+    $t1 = G::microtime_float();
     global $G_HEADER;
     $G_HEADER->addInstanceModule('leimnud', 'panel');
 
@@ -637,19 +559,22 @@ class propelTable
     print "</table></div>";
   */
 
+//      krumo ( G::microtime_float() - $t1);
       $gridRows=0;
+      $rs->next();
       for($j=0;$j< $rs->getRecordCount() ;$j++)
       {
-        //$result=$this->query->read();
-        $rs->next();
         $result = $rs->getRow();
-        // propel
+        $rs->next();
 
         $gridRows++;
         $this->tpl->newBlock( "row" );
         $this->tpl->assign( "class" , "Row".(($j%2)+1));
         $this->tdStyle='';
         $this->tdClass='';
+       //Merge $result with $xmlForm values (for default valuesSettings)
+        if ( is_array ( $this->xmlForm->values ) )
+        $result = array_merge($this->xmlForm->values, $result);
         foreach($this->fields as $r => $rval)
         {
           if (strcasecmp($this->fields[$r]['Type'],'cellMark')==0)
@@ -664,9 +589,10 @@ class propelTable
           }
           elseif ($this->style[$r]['showInTable'] != '0' )
           {
+            if ($this->style[$r]['showInTable'] != '0' )
             $this->renderField($j+1,$r,$result);
           }
-        }
+        }        
       }
       $this->tpl->assign('_ROOT.gridRows','='. $gridRows);  //number of rows in the current page
       $this->tpl->newBlock('rowTag');
