@@ -67,18 +67,12 @@
     global $G_ID_SUB_MENU_SELECTED;
 
  	  $oMenu = new Menu();
- 	  $menus = $oMenu->generateArrayForTemplate ( $G_MAIN_MENU,'mnu',$G_MENU_SELECTED, $G_ID_MENU_SELECTED );
+ 	  $menus = $oMenu->generateArrayForTemplate ( $G_MAIN_MENU,'SelectedMenu', 'mainMenu',$G_MENU_SELECTED, $G_ID_MENU_SELECTED );
 	  $smarty->assign('menus', $menus  );
 
  	  $oSubMenu = new Menu();
- 	  $subMenus = $oSubMenu->generateArrayForTemplate ( $G_SUB_MENU,'mnu',$G_SUB_MENU_SELECTED, $G_ID_SUB_MENU_SELECTED );
+ 	  $subMenus = $oSubMenu->generateArrayForTemplate ( $G_SUB_MENU,'selectedSubMenu', 'subMenu',$G_SUB_MENU_SELECTED, $G_ID_SUB_MENU_SELECTED );
 	  $smarty->assign('subMenus', $subMenus  );
-
-		$G_MENU = new Menu;
-		$G_MENU->Load($G_SUB_MENU);
-		$G_MENU->optionOn = $G_SUB_MENU_SELECTED;
-		$G_MENU->id_optionOn = $G_ID_SUB_MENU_SELECTED;
-		$G_MENU->Class = 'subMnu';
 
 	  $smarty->assign('user',   isset($_SESSION['USR_USERNAME']) ? $_SESSION['USR_USERNAME'] : '');
 	  $smarty->assign('pipe',   isset($_SESSION['USR_USERNAME']) ? ' | ' : '');	  
