@@ -13,21 +13,15 @@
 {elseif ($field->type==='hidden')}
 {elseif ($field->type==='')}
 {elseif ($field->type==='button')}
-      <td class='tableOption' align="{$field->colAlign}" width="{$field->colWidth}">
-        {$field->field}
-      </td>
+     <td class='tableOption' align="{$field->colAlign}" width="{$field->colWidth}">{$field->field}</td>
 {elseif ($field->type==='link') || ($field->type==='menu')}
-      <td class='tableOption' align="{$field->colAlign}" width="{$field->colWidth}">
-        <img src="/images/bulletButton.gif" width="6" />&nbsp;{$field->field}
-      </td>
+     <td class='tableOption' align="{$field->colAlign}" width="{$field->colWidth}"><img src="/images/bulletButton.gif" width="6" />&nbsp;{$field->field}</td>
 {else}
-      <td class='tableOption' align="{$field->colAlign}" width="{$field->colWidth}">
-        <img src="/images/bulletButton.gif" width="6" />&nbsp;{$field->label}&nbsp;{$field->field}
-      </td>
+     <td class='tableOption' align="{$field->colAlign}" width="{$field->colWidth}"><img src="/images/bulletButton.gif" width="6" />&nbsp;{$field->label}&nbsp;{$field->field}</td>
 {/if}
 {/if}
 {/foreach}
-      <td class='tableOption'>&nbsp;</td>
+     <td class='tableOption'>&nbsp;</td>
     </tr>
    </table>
   </td>
@@ -43,17 +37,11 @@
 {elseif ($field->type==='hidden')}
 {elseif ($field->type==='')}
 {elseif ($field->type==='button')}
-      <td class='tableOption' align="{$field->colAlign}" width="{$field->colWidth}">
-        {$field->field}
-      </td>
+     <td class='tableOption' align="{$field->colAlign}" width="{$field->colWidth}">{$field->field}</td>
 {elseif ($field->type==='link') || ($field->type==='menu')}
-      <td class='tableOption' align="{$field->colAlign}" width="{$field->colWidth}">
-        {$field->field}
-      </td>
+     <td class='tableOption' align="{$field->colAlign}" width="{$field->colWidth}">{$field->field}</td>
 {else}
-      <td class='tableOption' align="{$field->colAlign}" width="{$field->colWidth}">
-        <img src="/images/bulletButton.gif" width="6" />&nbsp;{$field->label}&nbsp;{$field->field}
-      </td>
+     <td class='tableOption' align="{$field->colAlign}" width="{$field->colWidth}"><img src="/images/bulletButton.gif" width="6" />&nbsp;{$field->label}&nbsp;{$field->field}</td>
 {/if}
 {/if}
 {/foreach}
@@ -72,17 +60,11 @@
 {elseif ($field->type==='hidden')}
 {elseif ($field->type==='')}
 {elseif ($field->type==='button')}
-      <td class='tableOption' align="{$field->colAlign}" width="{$field->colWidth}">
-        {$field->field}
-      </td>
+     <td class='tableOption' align="{$field->colAlign}" width="{$field->colWidth}">{$field->field}</td>
 {elseif ($field->type==='link') || ($field->type==='menu')}
-      <td class='tableOption' align="{$field->colAlign}" width="{$field->colWidth}">
-      	<img id="form[{$field->name}][bullet]" src="/images/bulletButton.gif" />&nbsp;{$field->field}
-      </td>
+     <td class='tableOption' align="{$field->colAlign}" width="{$field->colWidth}"><img id="form[{$field->name}][bullet]" src="/images/bulletButton.gif" />&nbsp;{$field->field}</td>
 {else}
-      <td class='tableOption' align="{$field->colAlign}" width="{$field->colWidth}">
-      	<img id="form[{$field->name}][bullet]" src="/images/bulletButton.gif" />&nbsp;{$field->label}&nbsp;{$field->field}
-      </td>
+     <td class='tableOption' align="{$field->colAlign}" width="{$field->colWidth}"><img id="form[{$field->name}][bullet]" src="/images/bulletButton.gif" />&nbsp;{$field->label}&nbsp;{$field->field}</td>
 {/if}
 {/if}
 {/foreach}
