@@ -305,7 +305,7 @@ class Derivation
     foreach($nextDelegations as $nextDel)
     {
       switch ( $nextDel['TAS_UID'] ) {
-        case TASK_FINISH_PROCESS:
+        case TASK_FINISH_PROCESS: 
           /*Close all delegations of $currentDelegation['APP_UID'] */
           $this->case->closeAllDelegations ( $currentDelegation['APP_UID'] );
           $this->case->closeAllThreads ( $currentDelegation['APP_UID']);
@@ -329,8 +329,8 @@ class Derivation
 
             $iAppThreadIndex = $appFields['DEL_THREAD'];
             // the new delegation
-            $delType = 'NORMAL';
-            $iNewDelIndex = $this->case->newAppDelegation( $_SESSION['PROCESS'],
+            $delType = 'NORMAL'; 
+            $iNewDelIndex = $this->case->newAppDelegation( $appFields['PRO_UID'],
               $currentDelegation['APP_UID'],
               $nextDel['TAS_UID'],
               $nextDel['USR_UID'],
@@ -374,7 +374,7 @@ class Derivation
     $appFields['APP_STATUS'] = $currentDelegation['APP_STATUS'];
 
     /* Start Block : Count the open threads of $currentDelegation['APP_UID'] */
-    $openThreads = $this->case->GetOpenThreads( $currentDelegation['APP_UID'] );
+    $openThreads = $this->case->GetOpenThreads( $currentDelegation['APP_UID'] ); 
     if ( $openThreads == 0) {       //Close case
       $appFields['APP_STATUS']      = 'COMPLETED';
       $appFields['APP_FINISH_DATE'] = 'now';
@@ -382,8 +382,8 @@ class Derivation
 
     $appFields['DEL_INDEX']       = (isset($iNewDelIndex) ? $iNewDelIndex : 0);
     $appFields['TAS_UID']         = $nextDel['TAS_UID'];
-    /* Start Block : UPDATES APPLICATION */
-    $this->case->updateCase ( $currentDelegation['APP_UID'], $appFields );
+    /* Start Block : UPDATES APPLICATION */ 
+    $this->case->updateCase ( $currentDelegation['APP_UID'], $appFields ); 
     /* End Block : UPDATES APPLICATION */
     //krumo ($appFields);die;
   }
