@@ -8,7 +8,7 @@
 <PRO_TITLE type="text" titlealign="left" colWidth="300">
   <en>Title</en>
 </PRO_TITLE>
-<PRO_DESCRIPTION type="textarea" titlealign="left" colWidth="400" enableHtml="0">
+<PRO_DESCRIPTION type="text" titlealign="left" colWidth="400" >
   <en>Description</en>
 </PRO_DESCRIPTION>
 

@@ -1,7 +1,7 @@
 <!-- START BLOCK : headBlock -->
 <table cellpadding="0" cellspacing="0" border="0"><tr><td>
 <div class="boxTop"><div class="a"></div><div class="b"></div><div class="c"></div></div>
-<div class="pagedTableDefault" style="height: ;">
+<div class="pagedTableDefault">
 	<table id="pagedtable[{pagedTable_Id}]" name="pagedtable[{pagedTable_Name}]" border="0" cellspacing="0" cellpadding="0" class="Default">
 <tr >
 	<td valign="top">
@@ -24,14 +24,13 @@
 		</td>
   	<!-- END BLOCK : headers -->
     </tr>
-  	<!-- START BLOCK : row -->
+<!-- START BLOCK : row -->
 	<tr class='{class}' onmouseover="setRowClass(this, 'RowPointer' )" onmouseout="setRowClass(this, '{class}')" >
-		<!--<tr class='{class}' >-->
-    	<!-- START BLOCK : field -->
-      <td class="{className}" style="{style}"></td><td class="{className}" align="{align}" width="{width}" style="{style}">{value}</td>
-    	<!-- END BLOCK : field -->
+    <!-- START BLOCK : field -->
+      <td{classAttr}></td><td{classAttr}{alignAttr}>{value}</td>
+    <!-- END BLOCK : field -->
     </tr>
-  	<!-- END BLOCK : row -->
+<!-- END BLOCK : row -->
   	<!-- START BLOCK : rowTag -->
   	<!-- END BLOCK : rowTag -->
 
