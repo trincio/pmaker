@@ -47,7 +47,6 @@ class Menu
   var $Enabled = NULL;
   var $optionOn = -1;
   var $id_optionOn = "";
-  var $WhatIsThis = NULL;
 
 /**
    * Set menu style
@@ -107,7 +106,6 @@ class Menu
       $this->Enabled[$c] = $G_TMP_MENU->Enabled[$i];
       $this->Id     [$c] = $G_TMP_MENU->Id[$i];
       $this->Classes[$c] = $G_TMP_MENU->Classes[$i];
-      //$this->WhatIsThis[$c] = $G_TMP_MENU->WhatIsThis[$i];
       $c ++;
     }
     else {
@@ -212,7 +210,6 @@ class Menu
    * @param string $strLabel label to show
    * @param string $strURL link
    * @param string $strType type, defualt value ='relative'
-   * @param string $whatisthis
    * @return void
    */
   function AddIdRawOption( $strId, $strURL = "", $label = "", $icon = "",$js = "")
@@ -222,9 +219,8 @@ class Menu
     $this->Labels[$pos] = $label;
     $this->Icons[$pos] = $icon;
     $this->JS[$pos] = $js;
-    $this->Types[$pos] = $strType;
+    $this->Types[$pos] = 'relative';
     $this->Enabled[$pos] = 1;
-    $this->WhatIsThis[$pos] = $whatisthis;
     if (is_array ($strId)) {
       $this->Id[$pos]      = $strId[0];
       $this->Classes[$pos]      = $strId[1];
@@ -289,15 +285,55 @@ class Menu
           $target = "/sys/" . SYS_LANG . "/" . SYS_SKIN . "/" . $target;
     }
     $label = $this->Labels[$intPos];
-    $whatisthis = $this->WhatIsThis[$intPos];
     $result = "<a href=\"$target\"";
     $result .= " class=\"$classname\">";
     $result .= htmlentities( $label , ENT_NOQUOTES , 'utf-8');
     $result .= "</a>";
-    $result .="$whatisthis";
     print( $result );
 
   }
+  
+  function generateArrayForTemplate($G_MAIN_MENU,$G_MENU_CLASS,$G_MENU_SELECTED, $G_ID_MENU_SELECTED ) {
+  	$menus = array();
+    if ($G_MAIN_MENU == null) {
+    	return $menus;
+    }
+  	$this->Load ($G_MAIN_MENU);
+  	$this->optionOn = $G_MENU_SELECTED;
+  	$this->id_optionOn = $G_ID_MENU_SELECTED;
+  	$this->Class = $G_MENU_CLASS;
+  	if (is_array($this->Options)) 
+  	{
+  		for ($ncount = 0; $ncount < $this->OptionCount(); $ncount++)
+  		{
+  			$target = $this->Options[$ncount];
+  			if ($this->Types[$ncount] == 'absolute') {
+  			  $target = G::encryptLink(str_replace('sys' . SYS_TEMP, SYS_TEMP, $this->Options[$ncount]));
+  			}
+  			if ($this->Types[$ncount] != 'absolute')   			{
+  			  if (defined('SYS_SYS'))   			  {
+  				  $target = '/sys' . SYS_TEMP . G::encryptLink('/' . SYS_LANG . '/' . SYS_SKIN . '/' . $this->Options[$ncount]);
+  				}
+  				else {
+  				  $target = '/sys/' . G::encryptLink(SYS_LANG . '/' . SYS_SKIN . '/' . $this->Options[$ncount]);
+  				}
+  			}
+  			$label = $this->Labels[$ncount];
+  			if ($this->id_optionOn != '') {
+  				$onMenu = ($this->Id[$ncount] == $this->id_optionOn ? true : false);
+  			}
+  			else {
+  				$onMenu = ($ncount == $this->optionOn ? true : false);
+  			}
+  			$classname = ($onMenu ? 'SelectedMenu' : 'mainMenu');
+  			if ( $this->Classes[$ncount] != '') {
+  			  $classname = $this->Classes[$ncount];
+  			}
+        $menus[] = array ( 'id' => $ncount, 'target' => $target, 'label' => $label, 'onMenu' => $onMenu, 'classname' => $classname ); 
+      }
+    }
+    return $menus;
+  }
+  
+  
 }
-
-?>

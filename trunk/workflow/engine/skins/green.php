@@ -44,10 +44,47 @@
     $smarty->display('blank.html');
   }
   else {
-	  if (isset($GLOBALS['G_HEADER'])) $header = $GLOBALS['G_HEADER']->printHeader();
-	  $smarty->assign('user', isset($_SESSION['USR_USERNAME']) ? $_SESSION['USR_USERNAME'] : '');
-	  $smarty->assign('username', (isset($_SESSION['USR_USERNAME']) ? '(' . $_SESSION['USR_USERNAME'] . ' ' . G::LoadTranslation('ID_IN') . ' ' . SYS_SYS . ')' : '') );
+	  
+	  $header = '';
+	  if (isset($GLOBALS['G_HEADER'])) {
+      $GLOBALS['G_HEADER']->title = isset($_SESSION['USR_USERNAME']) ? '(' . $_SESSION['USR_USERNAME'] . ' ' . G::LoadTranslation('ID_IN') . ' ' . SYS_SYS . ')' : '';	  
+	  	$header = $GLOBALS['G_HEADER']->printHeader();
+	  }
+	  $footer = '';
+    if (strpos($_SERVER['REQUEST_URI'], '/login/login') !== false) {
+      if ( defined('SYS_SYS') ) {
+        $footer = "<a href=\"#\" onclick=\"openInfoPanel();return false;\" class=\"FooterLink\">| System Information |</a><br />";
+      }
+      $footer .= "<br />Copyright © 2003-2008 Colosa, Inc. All rights reserved.";
+    }
+
+    //menu
+    global $G_MAIN_MENU;
+    global $G_SUB_MENU;
+    global $G_MENU_SELECTED;
+    global $G_SUB_MENU_SELECTED;
+    global $G_ID_MENU_SELECTED;
+    global $G_ID_SUB_MENU_SELECTED;
+
+ 	  $oMenu = new Menu();
+ 	  $menus = $oMenu->generateArrayForTemplate ( $G_MAIN_MENU,'mnu',$G_MENU_SELECTED, $G_ID_MENU_SELECTED );
+	  $smarty->assign('menus', $menus  );
+
+ 	  $oSubMenu = new Menu();
+ 	  $subMenus = $oSubMenu->generateArrayForTemplate ( $G_SUB_MENU,'mnu',$G_SUB_MENU_SELECTED, $G_ID_SUB_MENU_SELECTED );
+	  $smarty->assign('subMenus', $subMenus  );
+
+		$G_MENU = new Menu;
+		$G_MENU->Load($G_SUB_MENU);
+		$G_MENU->optionOn = $G_SUB_MENU_SELECTED;
+		$G_MENU->id_optionOn = $G_ID_SUB_MENU_SELECTED;
+		$G_MENU->Class = 'subMnu';
+
+	  $smarty->assign('user',   isset($_SESSION['USR_USERNAME']) ? $_SESSION['USR_USERNAME'] : '');
+	  $smarty->assign('pipe',   isset($_SESSION['USR_USERNAME']) ? ' | ' : '');	  
+	  $smarty->assign('logout', G::LoadTranslation('ID_LOGOUT'));
   	$smarty->assign('header', $header );
+  	$smarty->assign('footer', $footer);
 	  $smarty->assign('tpl_menu', PATH_TEMPLATE . 'menu.html' );
 	  $smarty->assign('tpl_submenu', PATH_TEMPLATE . 'submenu.html' );
 
@@ -61,3 +98,4 @@
 	  $smarty->assign('logo_company', $sCompanyLogo );
     $smarty->display('green.html');
   }
+  
