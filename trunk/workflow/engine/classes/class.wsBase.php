@@ -648,68 +648,58 @@ class wsBase
     }    
 	}
 	
-	public function derivateCase($sessionId, $caseId) {
-   try {   		   	     
-   	    require_once ("classes/model/AppDelegation.php");
-   	    G::LoadClass('sessions'); 
-				$oSessions = new Sessions();
-				/*
-				$session   = $oSessions->verifySession($sessionId);
-				if($session=='')
-   			 {
-   				 $result = new wsResponse (9, 'Session expired');
-           return $result;
-         } 
-        */                
-        $session   = $oSessions->getSessionUser($sessionId);
-				$userId    = $session['USR_UID'];         
-				
-				G::LoadClass('case'); 						
-		    $oCase = new Cases();		    		    		    	     
-        $appFields = $oCase->loadCase( $caseId );                                                     
-                           
-        $iDelIndex = $oCase->getCurrentDelegation( $caseId, $userId );                
-        if ( $iDelIndex == '' ) {
-   				 $result = new wsResponse (16, "The user $userId don't have a valid task in Case: $caseId.");
-           return $result;
-        }        
-
-       
+	public function derivateCase($sessionId, $caseId, $delIndex) {
+   try { 
+   	   	/*
+   	   	$result = new wsResponse (0, print_r($appFields['STATUS'],1));	      
+	      return $result;  
+   	   	*/    	   	      
+	      require_once ("classes/model/AppDelegation.php");
+	      G::LoadClass('case');
+        G::LoadClass('derivation');
+        
         $oAppDel = new AppDelegation();
-        $appdel  = $oAppDel->Load($caseId, $iDelIndex);
-
-				$result = new wsResponse (9, print_r($appdel,1));
-        return $result;                                                  
-                      		
-            
-        //Execute triggers before derivation
-        $appFields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], 'ASSIGN_TASK', -2, 'BEFORE', $appFields['APP_DATA'] ); //id de la tarea actual
-        $appFields['DEL_INDEX']= $_SESSION['INDEX'];
-        $appFields['TAS_UID']  = $_SESSION['TASK'];
+        $appdel  = $oAppDel->Load($caseId, $delIndex);                                     
         
-        //Save data - Start
-        $oCase->updateCase ( $caseId, $appFields);        
+        $aData['APP_UID']   = $caseId;
+        $aData['DEL_INDEX'] = $delIndex;
         
-        //derivate case
         $oDerivation = new Derivation();
+        $derive  = $oDerivation->prepareInformation($aData);                       
+	     
+	      foreach ( $derive['NEXT_TASK'] as $key=>$val ) 
+        {   
+        	$nextDelegations[] = array('TAS_UID' => $val['TAS_UID'],        																			 	  
+																		 'USR_UID' => $val['USER_ASSIGNED']['USR_UID'],
+																		 'TAS_ASSIGN_TYPE' =>	$val['TAS_ASSIGN_TYPE'],         
+																		 'TAS_DEF_PROC_CODE' => $val['TAS_DEF_PROC_CODE'],       
+																		 'DEL_PRIORITY'	=>	$appdel['DEL_PRIORITY']   			         																			         																			         																			         																			         																			 				        	                                     
+        														);	 	                               
+		     }	 
+	      	          	     	                                          	        	                 
+        //load data
+        $oCase     = new Cases ();       
+        $appFields = $oCase->loadCase( $caseId );
+       	
+        //Execute triggers before derivation
+        $appFields['APP_DATA']  = $oCase->ExecuteTriggers ( $derive['TAS_UID'], 'ASSIGN_TASK', -2, 'BEFORE', $appFields['APP_DATA'] );
+        $appFields['DEL_INDEX'] = $delIndex;
+        $appFields['TAS_UID']   = $derive['TAS_UID'];
+        //Save data - Start
+        $oCase->updateCase ( $caseId, $appFields );
+        //Save data - End
+                        
+        //derivate case        
         $aCurrentDerivation = array(
           'APP_UID'    => $caseId,
-          'DEL_INDEX'  => $_SESSION['INDEX'],
-          'APP_STATUS' => $sStatus,
-          'TAS_UID'    => $_SESSION['TASK'],
-          'ROU_TYPE'   => $_POST['form']['ROU_TYPE']
+          'DEL_INDEX'  => $delIndex,
+          'APP_STATUS' => $appFields['STATUS'],
+          'TAS_UID'    => $derive['TAS_UID'],
+          'ROU_TYPE'   => $derive['ROU_TYPE']
         );
-        $oDerivation->derivate( $aCurrentDerivation, $_POST['form']['TASKS'] ); //array 
         
-        //Execute triggers after derivation
-        $appFields = $oCase->loadCase( $caseId ); //refresh appFields, because in derivations should change some values
-        $appFields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], 'ASSIGN_TASK', -2, 'AFTER', $appFields['APP_DATA'] );
-                
-        //Save data - Start
-        $oCase->updateCase ( $caseId, $appFields);        
-		    
-		    		    		    		    		    		            
-		    
+        $oDerivation->derivate( $aCurrentDerivation, $nextDelegations );   
+         	       	  		    		    		    		    		    		    		            		    
 	      $result = new wsResponse (0, "Sucessful");	      
 	      return $result;
     }
@@ -747,6 +737,40 @@ class wsBase
       
       while ($aRow = $oDataset->getRow()) {      	
       	$result[] = array ( 'guid' => $aRow['TAS_UID'], 'name' => $aRow['TAS_TITLE'] );
+      	$oDataset->next();
+      }
+      return $result;
+    }
+    catch ( Exception $e ) {
+    	$result[] = array ( 'guid' => $e->getMessage(), 'name' => $e->getMessage() );
+      return $result;
+    }		
+	}
+	
+	public function taskCase( $sessionId, $caseId ) {
+   try {	   	    	   			   
+  	  $result  = array();
+  	  $oCriteria = new Criteria('workflow');  
+  	  $del = DBAdapter::getStringDelimiter();
+  	  $oCriteria->addSelectColumn(AppDelegationPeer::DEL_INDEX);	    	  
+      
+      $oCriteria->addAsColumn('TAS_TITLE', 'C1.CON_VALUE' );      
+  	  $oCriteria->addAlias("C1",  'CONTENT');
+  	  $tasTitleConds = array();
+      $tasTitleConds[] = array( AppDelegationPeer::TAS_UID ,  'C1.CON_ID'  );
+      $tasTitleConds[] = array( 'C1.CON_CATEGORY' , $del . 'TAS_TITLE' . $del );
+      $tasTitleConds[] = array( 'C1.CON_LANG' ,    $del . SYS_LANG . $del );
+      $oCriteria->addJoinMC($tasTitleConds ,    Criteria::LEFT_JOIN);
+						
+      $oCriteria->add(AppDelegationPeer::APP_UID, $caseId );    
+      $oCriteria->add(AppDelegationPeer::DEL_THREAD_STATUS, 'OPEN');   
+      $oCriteria->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL );   
+      $oDataset = AppDelegationPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      
+      while ($aRow = $oDataset->getRow()) {      	
+      	$result[] = array ( 'guid' => $aRow['DEL_INDEX'], 'name' => $aRow['TAS_TITLE'] );
       	$oDataset->next();
       }
       return $result;

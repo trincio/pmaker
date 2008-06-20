@@ -285,7 +285,7 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
   		  $oTable->ajaxServer  = $Part['ajaxServer'];
   		/* Start Block: Load user configuration for the pagedTable */
         G::LoadClass('configuration');
-		$objUID = $Part['File'];
+		    $objUID = $Part['File'];
         $conf = new Configurations(  );
         $conf->loadConfig($oTable,'pagedTable',$objUID,'',$_SESSION['USER_LOGGED'],'');
         $oTable->__OBJ_UID=$objUID;
@@ -369,8 +369,10 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
         G::LoadClass('configuration');
       $objUID = $Part['File'];
       $conf = new Configurations( /*$oTable*/ );
-      $conf->loadConfig($oTable,'pagedTable',$objUID,'',$_SESSION['USER_LOGGED'],'');
-      $oTable->__OBJ_UID = $objUID;
+      //$conf->loadConfig($oTable,'pagedTable',$objUID,'',$_SESSION['USER_LOGGED'],'');
+      //$oTable->__OBJ_UID = $objUID;
+      //$_SESSION['USER_LOGGED']
+      $oTable->__OBJ_UID = '';
       /* End Block */
 
       /* Start Block: PagedTable Right Click */
@@ -380,7 +382,6 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
       /* End Block */
       try {
     		$oTable->renderTable();
-
         print($sc);
       }
       catch ( Exception $e ) {

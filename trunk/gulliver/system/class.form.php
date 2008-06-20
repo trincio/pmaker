@@ -171,17 +171,11 @@ class Form extends XmlForm
       $o->template = $o->printTemplate( $this );
     }
     $scriptContent = $o->printJavaScript( $this ); 
-    return $o->printObject($this);
-     
-    $tpl->template=$tpl->printTemplate($this);
-    //In the header
-      global $G_HEADER;
-      $G_HEADER->addScriptFile( $this->scriptURL );
-      $G_HEADER->addScriptCode( $tpl->printJavaScript($this) );
-    return $tpl->printObject($this);
-
+    $content = $o->printObject($this);
+    return $content;
   }
-  /**
+
+ /**
    * Function setValues
    * @author David S. Callizaya S. <davidsantos@colosa.com>
    * @access public

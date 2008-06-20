@@ -41,7 +41,7 @@ switch ($RBAC->userCanAccess('PM_CASES'))
 G::LoadClass('pmScript');
 G::LoadClass('case');
 G::LoadClass('derivation');
-
+print_r($_POST['form']['TASKS']); die;
 /* GET , POST & $_SESSION Vars */
 /* Process the info */
 $sStatus = 'TO_DO';

@@ -1958,25 +1958,18 @@ class G
    */
   function getSystemConstants()
   {
-  	$aBlackList = array('SYS_TEMP', 'SYS_CURRENT_PARMS', 'SYS_COLLECTION', 'SYS_TARGET', 'SYS_URI', 'SYS_UPLOAD_PATH', 'SYS_CURRENT_URI');
+    $t1 = G::microtime_float();
     $sysCon = array();
-    $constants=get_defined_constants();
-    foreach( $constants as $cons => $value )
-    {
-    	if (!in_array($cons, $aBlackList)) {
-        if ( substr($cons,0,4)==='SYS_' ) $sysCon[$cons] = $value;
-      }
-    }
-    $sysCon['APPLICATION'] = (isset($_SESSION['APPLICATION']) ? $_SESSION['APPLICATION'] : '');
-    $sysCon['PROCESS'] = (isset($_SESSION['PROCESS']) ? $_SESSION['PROCESS'] : '');
-    $sysCon['TASK'] = (isset($_SESSION['TASK']) ? $_SESSION['TASK'] : '');
-    $sysCon['INDEX'] = (isset($_SESSION['INDEX']) ? $_SESSION['INDEX'] : 0);
-    $_SESSION = isset($_SESSION) ? $_SESSION : Array();
-    foreach( $_SESSION as $name => $value )
-    {
-      if ( substr($name,0,5)==='USER_' ) $sysCon[$name] = $value;
-      if ( substr($name,0,4)==='USR_' ) $sysCon[$name] = $value;
-    }
+    if ( defined('SYS_LANG' )) $sysCon['SYS_LANG'] = SYS_LANG;
+    if ( defined('SYS_SKIN' )) $sysCon['SYS_SKIN'] = SYS_SKIN;
+    if ( defined('SYS_SYS' ) ) $sysCon['SYS_SYS']  = SYS_SYS;
+
+    if (isset($_SESSION['APPLICATION']) ) $sysCon['APPLICATION'] = $_SESSION['APPLICATION'];
+    if (isset($_SESSION['PROCESS'])     ) $sysCon['PROCESS']     = $_SESSION['PROCESS'];
+    if (isset($_SESSION['TASK'])        ) $sysCon['TASK']        = $_SESSION['TASK'];
+    if (isset($_SESSION['INDEX'])       ) $sysCon['INDEX']       = $_SESSION['INDEX'];
+    if (isset($_SESSION['USER_LOGGED']) ) $sysCon['USER_LOGGED'] = $_SESSION['USER_LOGGED'];
+    if (isset($_SESSION['USR_USERNAME'])) $sysCon['USR_USERNAME']= $_SESSION['USR_USERNAME'];
 
     return $sysCon;
   }
