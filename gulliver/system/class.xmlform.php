@@ -258,6 +258,13 @@ class XmlForm_Field
     }
     return $result;
 	}
+  function renderTable( $values='', $owner = NULL, $onlyValue = false )
+  {
+  	$r=1;
+    $result = $this->render($values, $owner, '['. $owner->name .']['.$r.']', $onlyValue);
+  	return $result;
+	}
+
   /**
    * Function dependentOf
    * @author David S. Callizaya S. <davidsantos@colosa.com>
@@ -700,6 +707,13 @@ class XmlForm_Field_Text extends XmlForm_Field_SimpleText
     }
     return $result;
 	}
+
+  function renderTable( $values='' , $owner )
+  {
+  	$result = $this->htmlentities( $values , ENT_COMPAT, 'utf-8');
+  	return $result;
+	}
+	
 }
 
 /*DEPRECATED*/
@@ -1225,6 +1239,20 @@ class XmlForm_Field_Link extends XmlForm_Field
 		  (($this->onclick)? ' onclick="' . htmlentities($onclick , ENT_QUOTES, 'utf-8') . '"' : '') .
 		  (($this->target)? ' target="' . htmlentities($target , ENT_QUOTES, 'utf-8') . '"' : '') .
 		  '>'.$this->htmlentities($this->value===''? $label: $value, ENT_QUOTES, 'utf-8').'</a>';
+	}
+	
+  function renderTable( $value = NULL , $owner = NULL )
+  {
+    $onclick = $this->htmlentities( G::replaceDataField( $this->onclick, $owner->values ), ENT_QUOTES, 'utf-8');
+    $link    = $this->htmlentities( G::replaceDataField( $this->link, $owner->values ) , ENT_QUOTES, 'utf-8');
+    $target  = G::replaceDataField( $this->target, $owner->values );
+    $value   = G::replaceDataField( $this->value, $owner->values );
+    $label   = G::replaceDataField( $this->label, $owner->values );
+    $aLabel  = $this->htmlentities( $this->value==='' ? $label : $value, ENT_QUOTES, 'utf-8');
+		return '<a class="tableOption" href=\'' . $link . '\'' .
+		  (($this->onclick)? ' onclick="' . $onclick  . '"' : '') .
+		  (($this->target)? ' target="' . htmlentities($target , ENT_QUOTES, 'utf-8') . '"' : '') .
+		  '>' . $aLabel . '</a>';
 	}
 }
 /**
