@@ -413,7 +413,7 @@ var maborak = function(){
 		Object.prototype.propertyIsEnumerable=function(i)
 		{
 			return (typeof Object.prototype[i]==="undefined")?true:false;
-		}
+		};
 		/**
 		* Length of Object
 		* @return Int
@@ -1880,7 +1880,7 @@ var maborak = function(){
 				//alert(window.innerWidth)
 				window.scrollTo(0,1);
 			});
-		}
-	}
+		};
+	};
 	return this;
 };

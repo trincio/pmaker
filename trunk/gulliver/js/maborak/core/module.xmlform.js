@@ -48,7 +48,7 @@ leimnud.Package.Public({
 					target	: this.options.target,
 					zIndex	: 11
 				}
-			});
+			})
 			this.dropables = new this.parent.module.drop();
 			this.dropables.make();
 
@@ -138,7 +138,71 @@ leimnud.Package.Public({
 				}.extend(this)
 			};
 			this.dragables.make();
+			
+			/*Samples load XML*/
+			this.loadXML('myInfo.xml');
+		};
+		this.loadXML=function(xml)
+		{
+			var r = new this.parent.module.rpc.xmlhttp({
+				url:xml
+			});
+			r.callback=function(rpc)
+			{
+				window.d = rpc.xmlhttp.responseXML;
+				if((typeof XMLSerializer)==='undefined')
+				{
+					window.XMLSerializer = function() {
+						this.toString=function()
+						{
+							return "[object XMLSerializer]";
+						};
+						this.serializeToString=function(xml){
+							return xml.xml || xml.outerHTML || "Error XMLSerializer";
+						};
+					};	
+				}
+				//alert(XMLSerializer)
+				var w = d.createElement('wilmer');
+				//crear CDATA
+				var f = d.createCDATASection('Secci�n CDATA');
+				w.appendChild(f);
+				//crear ATRIBUTO
+				var af = d.createAttribute("mi_atributo");
+				af.nodeValue="valor de mi atributo";
+				w.setAttributeNode(af);
+				
+				//d.documentElement.appendChild(w);
+				d.documentElement.insertBefore(w,d.documentElement.childNodes.item(0));
+				
+				/*asd*/
+				var s = new XMLSerializer();
+				var str = s.serializeToString(d);
+				$(document.body).append(
+					new DOM('textarea',{value:str},{width:'100%',height:400})
+				);
+				
+				//alert(d.documentElement.childNodes.length);
+				
+				var table = new DOM('table',{border:1},{width:'100%',borderCollapse:'collapse'});
 
+				var tr = table.insertRow(-1);
+				$(tr).append(
+					new DOM('td',{innerHTML:'<b>CAMPO</b>'},{width:"50%",border:'1px solid black'}),
+					new DOM('td',{innerHTML:'<b>TIPO</b>'},{width:"50%",border:'1px solid black'})
+				);
+				for(var i=0;i<d.documentElement.childNodes.length;i++)
+				{
+					window.c = d.documentElement.childNodes[i];
+					var tr = table.insertRow(-1);
+					$(tr).append(
+						new DOM('td',{innerHTML:c.nodeName},{width:"50%",border:'1px solid black'}),
+						new DOM('td',{innerHTML:(c.getAttribute)?c.getAttribute('type'):''},{width:"50%",border:'1px solid black'})
+					);
+				}
+				document.body.appendChild(table);
+			}.extend(this);
+			r.make();
 		};
 		this.expand(this);
 	}
