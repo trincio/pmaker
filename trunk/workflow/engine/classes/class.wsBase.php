@@ -649,12 +649,13 @@ class wsBase
 	}
 	
 	public function derivateCase($sessionId, $caseId, $delIndex) {
-   try { 
+   try { $sStatus = 'TO_DO';
    	   	/*
    	   	$result = new wsResponse (0, print_r($appFields['STATUS'],1));	      
 	      return $result;  
    	   	*/    	   	      
 	      require_once ("classes/model/AppDelegation.php");
+	      require_once ("classes/model/Route.php");
 	      G::LoadClass('case');
         G::LoadClass('derivation');
         
@@ -667,20 +668,20 @@ class wsBase
         $oDerivation = new Derivation();
         $derive  = $oDerivation->prepareInformation($aData);                       
 	     
-	      foreach ( $derive['NEXT_TASK'] as $key=>$val ) 
+	      foreach ( $derive as $key=>$val ) 
         {   
-        	$nextDelegations[] = array('TAS_UID' => $val['TAS_UID'],        																			 	  
-																		 'USR_UID' => $val['USER_ASSIGNED']['USR_UID'],
-																		 'TAS_ASSIGN_TYPE' =>	$val['TAS_ASSIGN_TYPE'],         
-																		 'TAS_DEF_PROC_CODE' => $val['TAS_DEF_PROC_CODE'],       
+        	$nextDelegations[] = array('TAS_UID' => $val['NEXT_TASK']['TAS_UID'],        																			 	  
+																		 'USR_UID' => $val['NEXT_TASK']['USER_ASSIGNED']['USR_UID'],
+																		 'TAS_ASSIGN_TYPE' =>	$val['NEXT_TASK']['TAS_ASSIGN_TYPE'],         
+																		 'TAS_DEF_PROC_CODE' => $val['NEXT_TASK']['TAS_DEF_PROC_CODE'],       
 																		 'DEL_PRIORITY'	=>	$appdel['DEL_PRIORITY']   			         																			         																			         																			         																			         																			 				        	                                     
         														);	 	                               
 		     }	 
-	      	          	     	                                          	        	                 
+	      
         //load data
         $oCase     = new Cases ();       
         $appFields = $oCase->loadCase( $caseId );
-       	
+               	
         //Execute triggers before derivation
         $appFields['APP_DATA']  = $oCase->ExecuteTriggers ( $derive['TAS_UID'], 'ASSIGN_TASK', -2, 'BEFORE', $appFields['APP_DATA'] );
         $appFields['DEL_INDEX'] = $delIndex;
@@ -688,18 +689,32 @@ class wsBase
         //Save data - Start
         $oCase->updateCase ( $caseId, $appFields );
         //Save data - End
-                        
+                   
+				$row  = array();
+        $oCriteria = new Criteria('workflow');  
+  	    $del = DBAdapter::getStringDelimiter();
+  	    $oCriteria->addSelectColumn(RoutePeer::ROU_TYPE);
+  	    $oCriteria->addSelectColumn(RoutePeer::ROU_NEXT_TASK);
+  	    $oCriteria->add(RoutePeer::TAS_UID, $appdel['TAS_UID']); 
+        $oDataset = TaskPeer::doSelectRS($oCriteria);
+        $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+        $oDataset->next();        
+        while ($aRow = $oDataset->getRow()) {      	
+        	$row[] = array ( 'ROU_TYPE' => $aRow['ROU_TYPE'], 'ROU_NEXT_TASK' => $aRow['ROU_NEXT_TASK'] );
+        	$oDataset->next();
+        }
+        
         //derivate case        
         $aCurrentDerivation = array(
           'APP_UID'    => $caseId,
           'DEL_INDEX'  => $delIndex,
-          'APP_STATUS' => $appFields['STATUS'],
-          'TAS_UID'    => $derive['TAS_UID'],
-          'ROU_TYPE'   => $derive['ROU_TYPE']
+          'APP_STATUS' => $sStatus,         
+          'TAS_UID'    => $appdel['TAS_UID'],
+          'ROU_TYPE'   => $row[0]['ROU_TYPE']
         );
+         
+        $oDerivation->derivate( $aCurrentDerivation, $nextDelegations );         	    		    		    		    		    		    		            		    
         
-        $oDerivation->derivate( $aCurrentDerivation, $nextDelegations );   
-         	       	  		    		    		    		    		    		    		            		    
 	      $result = new wsResponse (0, "Sucessful");	      
 	      return $result;
     }

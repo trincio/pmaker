@@ -291,7 +291,7 @@ class Application extends BaseApplication {
          foreach($this->getValidationFailures() as $objValidationFailure) 
            $msg .= $objValidationFailure->getMessage() . "<br/>";
          
-         throw ( new PropelException ( 'The row cannot be created!', new PropelException ( $msg ) ) );
+         throw ( new PropelException ( 'The row cannot be updated!', new PropelException ( $msg ) ) );
   	    }
       }
       else {

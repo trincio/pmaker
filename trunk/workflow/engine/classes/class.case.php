@@ -276,7 +276,7 @@ class Cases
     */
     function updateCase($sAppUid, $Fields = array())
     {
-        try {
+        try {        	  
             $aApplicationFields = $Fields['APP_DATA'];
             $oApp = new Application;
             $Fields['APP_UID'] = $sAppUid;
