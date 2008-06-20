@@ -293,7 +293,7 @@ class Menu
 
   }
   
-  function generateArrayForTemplate($G_MAIN_MENU,$G_MENU_CLASS,$G_MENU_SELECTED, $G_ID_MENU_SELECTED ) {
+  function generateArrayForTemplate($G_MAIN_MENU,$classOn,$classOff,$G_MENU_SELECTED, $G_ID_MENU_SELECTED ) {
   	$menus = array();
     if ($G_MAIN_MENU == null) {
     	return $menus;
@@ -301,7 +301,7 @@ class Menu
   	$this->Load ($G_MAIN_MENU);
   	$this->optionOn = $G_MENU_SELECTED;
   	$this->id_optionOn = $G_ID_MENU_SELECTED;
-  	$this->Class = $G_MENU_CLASS;
+  	//$this->Class = $G_MENU_CLASS;
   	if (is_array($this->Options)) 
   	{
   		for ($ncount = 0; $ncount < $this->OptionCount(); $ncount++)
@@ -325,11 +325,12 @@ class Menu
   			else {
   				$onMenu = ($ncount == $this->optionOn ? true : false);
   			}
-  			$classname = ($onMenu ? 'SelectedMenu' : 'mainMenu');
+  			$classname = ($onMenu ? $classOn : $classOff);
+  			$imageLeft = ($onMenu ? "<img src=\"/images/bulletSubMenu.jpg\" />" : '');
   			if ( $this->Classes[$ncount] != '') {
   			  $classname = $this->Classes[$ncount];
   			}
-        $menus[] = array ( 'id' => $ncount, 'target' => $target, 'label' => $label, 'onMenu' => $onMenu, 'classname' => $classname ); 
+        $menus[] = array ( 'id' => $ncount, 'target' => $target, 'label' => $label, 'onMenu' => $onMenu, 'classname' => $classname, 'imageLeft' => $imageLeft ); 
       }
     }
     return $menus;

@@ -144,9 +144,9 @@ class headPublisher
   {
     if ($this->disableHeaderScripts) return '';
     $head = '';
-    $head .= '<TITLE>'.$this->title.'</TITLE>';
+    $head .= '<TITLE>'.$this->title . "</TITLE>\n";
     foreach($this->scriptFiles as $file)
-      $head .= "  <script type='text/javascript' src='" . $file . "'></script>\n";
+      $head .= "<script type='text/javascript' src='" . $file . "'></script>\n";
     $head .= "<script type='text/javascript'>\n";
     $head .= $this->leimnudInitString;
     foreach($this->leimnudLoad as $file)
