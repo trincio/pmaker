@@ -59,21 +59,34 @@ try {
   $aAvailableDashboards = $oPluginRegistry->getDashboards();
   $aLeftColumn          = array ();
   $aRightColumn         = array ();
-  /*$colIndex = 0;
-  foreach ($aAvailableDashboards as $sNamespace) {
-    require_once ( PATH_PLUGINS. $sNamespace  . PATH_SEP . 'class.' . $sNamespace . '.php' );
-    $sClassName = $sNamespace . 'Class';
-    $obj = new $sClassName();
-    $charts = $obj->getAvailableCharts ();
-    foreach ( $charts as $key => $chart ) {
-      $oChart = $obj->getChart( $chart );
-      $aColumn[ $colIndex ][] = $oChart;
-      $colIndex = 1 - $colIndex;
+  $iColumn              = 0;
+  foreach ($aAvailableDashboards as $sDashboardClass) {
+    require_once PATH_PLUGINS. $sDashboardClass  . PATH_SEP . 'class.' . $sDashboardClass . '.php';
+    $sClassName = $sDashboardClass . 'Class';
+    $oInstance  = new $sClassName();
+    $aCharts    = $oInstance->getAvailableCharts();
+    $iColumn    = 0;
+    foreach ($aCharts as $sChart) {
+      $bFree = false;
+      foreach ($aConfiguration as $aDashboard) {
+        if (($aDashboard['class'] == $sDashboardClass) && ($aDashboard['type'] == $sChart)) {
+          $bFree = true;
+        }
+      }
+      if ($bFree) {
+        $oChart = $oInstance->getChart($sChart);
+        if ($iColumn === 0) {
+          $aLeftColumn[] = $oChart;
+        }
+        else {
+          $aRightColumn[] = $oChart;
+        }
+        $iColumn = 1- $iColumn;
+      }
     }
-  }*/
-
-  //Show dashboards
+  }
   $aDashboards = array($aLeftColumn, $aRightColumn);
+  //Show dashboards
   $oJSON       = new Services_JSON();
   $G_PUBLISH   = new Publisher;
   $G_PUBLISH->AddContent('smarty', 'dashboard/frontend', '', '', array('ID_NEW' => G::LoadTranslation('ID_NEW')));

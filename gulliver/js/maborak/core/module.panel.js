@@ -436,7 +436,7 @@ leimnud.Package.Public({
 						duration:500,
 						end		:opt,
 						dom		:this.elements.containerWindow,
-						onFinish:opt.onFinish || false
+						onFinish:opt.onFinish || function(){}
 					});
 					if(this.options.fx.shadow)
 					{
