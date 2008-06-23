@@ -25,9 +25,12 @@
 
 if (($RBAC_Response=$RBAC->userCanAccess('PM_LOGIN'))!=1) return $RBAC_Response;
 
+G::LoadClass('dashboards');
+$oDashboards = new Dashboards();
+
 switch ($_POST['action']) {
 	case 'showAvailableDashboards':
-	  $aConfiguration = getDashboardsConfiguration();
+	  $aConfiguration = $oDashboards->getConfiguration($_SESSION['USER_LOGGED']);
     //Load available charts
     $oPluginRegistry      = &PMPluginRegistry::getSingleton();
     $aAvailableDashboards = $oPluginRegistry->getDashboards();
@@ -70,48 +73,26 @@ switch ($_POST['action']) {
 	  require_once PATH_PLUGINS. $_POST['sDashboardClass']  . PATH_SEP . 'class.' . $_POST['sDashboardClass'] . '.php';
     $sClassName = $_POST['sDashboardClass'] . 'Class';
     $oInstance  = new $sClassName();
-	  $aConfiguration = getDashboardsConfiguration();
+	  $aConfiguration = $oDashboards->getConfiguration($_SESSION['USER_LOGGED']);
 	  $aConfiguration[] = array('class'  => $_POST['sDashboardClass'],
 	                            'type'   => $_POST['sChart'],
 	                            'object' => $oInstance->getChart($_POST['sChart']),
 	                            'config' => '');
-	  saveDashboardsConfiguration($aConfiguration);
+	  $oDashboards->saveConfiguration($_SESSION['USER_LOGGED'], $aConfiguration);
+	  echo 'oDashboards = ' . $oDashboards->getDashboardsObject($_SESSION['USER_LOGGED']) . ';';
 	break;
-}
-
-function getDashboardsConfiguration() {
-  require_once 'classes/model/Configuration.php';
-  $oConfiguration = new Configuration();
-  $sDelimiter     = DBAdapter::getStringDelimiter();
-  $oCriteria      = new Criteria('workflow');
-  $oCriteria->add(ConfigurationPeer::CFG_UID, 'Dashboards');
-  $oCriteria->add(ConfigurationPeer::OBJ_UID, '');
-  $oCriteria->add(ConfigurationPeer::PRO_UID, '');
-  $oCriteria->add(ConfigurationPeer::USR_UID, $_SESSION['USER_LOGGED']);
-  $oCriteria->add(ConfigurationPeer::APP_UID, '');
-  if (ConfigurationPeer::doCount($oCriteria) == 0) {
-    $oConfiguration->create(array('CFG_UID' => 'Dashboards', 'OBJ_UID' => '', 'CFG_VALUE' => '', 'PRO_UID' => '', 'USR_UID' => $_SESSION['USER_LOGGED'], 'APP_UID' => ''));
-    $aConfiguration = array();
-  }
-  else {
-    $aConfiguration = $oConfiguration->load('Dashboards', '', '', $_SESSION['USER_LOGGED'], '');
-    if ($aConfiguration['CFG_VALUE'] != '') {
-      $aConfiguration = unserialize($aConfiguration['CFG_VALUE']);
-    }
-    else {
-      $aConfiguration = array();
-    }
-  }
-  return $aConfiguration;
-}
-
-function saveDashboardsConfiguration($aConfiguration) {
-  require_once 'classes/model/Configuration.php';
-  $oConfiguration = new Configuration();
-  $oConfiguration->update(array('CFG_UID'   => 'Dashboards',
-                                'OBJ_UID'   => '',
-                                'CFG_VALUE' => serialize($aConfiguration),
-                                'PRO_UID'   => '',
-                                'USR_UID'   => $_SESSION['USER_LOGGED'],
-                                'APP_UID'   => ''));
+	case 'removeDashboard':
+	  $aConfiguration    = $oDashboards->getConfiguration($_SESSION['USER_LOGGED']);
+	  $aNewConfiguration = array();
+	  foreach ($aConfiguration as $aDashboard) {
+	    if (($aDashboard['class'] == $_POST['sDashboardClass']) && ($aDashboard['type'] == $_POST['sChart'])) {
+        //Nothing
+      }
+      else {
+        $aNewConfiguration[] = $aDashboard;
+      }
+	  }
+	  $oDashboards->saveConfiguration($_SESSION['USER_LOGGED'], $aNewConfiguration);
+	  echo 'oDashboards = ' . $oDashboards->getDashboardsObject($_SESSION['USER_LOGGED']) . ';';
+	break;
 }

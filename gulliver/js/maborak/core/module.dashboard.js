@@ -80,7 +80,8 @@ leimnud.Package.Public({
 					var wd = column[j];
 					this.panel({
 						target:this.elements.column[i],
-						column:i
+						column:i,
+						index:j
 					}.concat(wd));
 					this.matriz[i].push(j);
 				}
@@ -88,17 +89,20 @@ leimnud.Package.Public({
 		};
 		this.panel=function(options)
 		{
-			var panel = new this.parent.module.panel();
-			panel.options={
+			var _panel = new this.parent.module.panel();
+			_panel.options={
 				target:options.target,
 				title	:options.title || "",
 				size:{w:this.widthColumn,h:options.height || 300},
 				position:{x:0,y:0},
-				statusBar:false,
+				statusBarButtons:[
+				  {value:G_STRINGS.ID_REMOVE}
+				],
+				statusbar:true,
 				control:{resize:false,roll:true,drag:this.options.drag,close:false},
 				fx:{shadow:false,opacity:false}
 			};
-			panel.setStyle={
+			_panel.setStyle={
 				title	:{fontWeight:'normal'},
 				containerWindow:{
 					position:'relative',
@@ -127,18 +131,18 @@ leimnud.Package.Public({
 			};
 			if(options.noBg)
 			{
-				panel.setStyle.content.concat({
+				_panel.setStyle.content.concat({
 					backgroundColor	: "#DFDFDF",
 					borderWidth	: 0
 				});
-				panel.setStyle.containerWindow.concat({
-					backgroundColor	: "#DFDFDF"					
+				_panel.setStyle.containerWindow.concat({
+					backgroundColor	: "#DFDFDF"
 				});
-				panel.setStyle.frontend={
+				_panel.setStyle.frontend={
 					backgroundColor	: "#DFDFDF"
 				};
 			}
-			panel.events={
+			_panel.events={
 				roll:function(){return this.drop.setArrayPositions(true);}.extend(this),
 				init:[function(i){
 					if(this.lock===true || this.moving==true){return false;}
@@ -235,21 +239,29 @@ leimnud.Package.Public({
 					});
 				}.extend(this,this.options.panel.length)
 			};
-			panel.make();
+			_panel.make();
+			_panel.elements.statusBarButtons[0].onclick = function() {
+			  new leimnud.module.app.confirm().make({
+          label : G_STRINGS.ID_CONFIRM_REMOVE_DASHBOARD,
+          action: function() {
+            removeDashboard(options.class, options.chart);
+          }.extend(this)
+        });
+			};
 			if(options.open)
 			{
-				panel.open(options.open);
+				_panel.open(options.open);
 			}
 			this.options.panel.push({
-				panel	:panel,
+				panel	:_panel,
 				index	:this.options.panel.length-1,
 				column	:options.column
 			});
 			this.drop.register({
-				element:panel.elements.containerWindow,
+				element:_panel.elements.containerWindow,
 				value:this.options.panel.length-1
 			});
-			return panel;	
+			return _panel;
 		};
 		this.expand(this);
 	}

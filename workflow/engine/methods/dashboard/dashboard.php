@@ -30,69 +30,16 @@ try {
   $G_SUB_MENU         = 'dashboard';
   $G_ID_MENU_SELECTED = 'DASHBOARD';
 
-  //Obtain user dashboards configuration
-  require_once 'classes/model/Configuration.php';
-  $oConfiguration = new Configuration();
-  $sDelimiter     = DBAdapter::getStringDelimiter();
-  $oCriteria      = new Criteria('workflow');
-  $oCriteria->add(ConfigurationPeer::CFG_UID, 'Dashboards');
-  $oCriteria->add(ConfigurationPeer::OBJ_UID, '');
-  $oCriteria->add(ConfigurationPeer::PRO_UID, '');
-  $oCriteria->add(ConfigurationPeer::USR_UID, $_SESSION['USER_LOGGED']);
-  $oCriteria->add(ConfigurationPeer::APP_UID, '');
-  if (ConfigurationPeer::doCount($oCriteria) == 0) {
-    $oConfiguration->create(array('CFG_UID' => 'Dashboards', 'OBJ_UID' => '', 'CFG_VALUE' => '', 'PRO_UID' => '', 'USR_UID' => $_SESSION['USER_LOGGED'], 'APP_UID' => ''));
-    $aConfiguration = array();
-  }
-  else {
-    $aConfiguration = $oConfiguration->load('Dashboards', '', '', $_SESSION['USER_LOGGED'], '');
-    if ($aConfiguration['CFG_VALUE'] != '') {
-      $aConfiguration = unserialize($aConfiguration['CFG_VALUE']);
-    }
-    else {
-      $aConfiguration = array();
-    }
-  }
+  //Load dashboards class
+  G::LoadClass('dashboards');
+  $oDashboards = new Dashboards();
 
-  //Load dashboards
-  $oPluginRegistry      = &PMPluginRegistry::getSingleton();
-  $aAvailableDashboards = $oPluginRegistry->getDashboards();
-  $aLeftColumn          = array ();
-  $aRightColumn         = array ();
-  $iColumn              = 0;
-  foreach ($aAvailableDashboards as $sDashboardClass) {
-    require_once PATH_PLUGINS. $sDashboardClass  . PATH_SEP . 'class.' . $sDashboardClass . '.php';
-    $sClassName = $sDashboardClass . 'Class';
-    $oInstance  = new $sClassName();
-    $aCharts    = $oInstance->getAvailableCharts();
-    $iColumn    = 0;
-    foreach ($aCharts as $sChart) {
-      $bFree = false;
-      foreach ($aConfiguration as $aDashboard) {
-        if (($aDashboard['class'] == $sDashboardClass) && ($aDashboard['type'] == $sChart)) {
-          $bFree = true;
-        }
-      }
-      if ($bFree) {
-        $oChart = $oInstance->getChart($sChart);
-        if ($iColumn === 0) {
-          $aLeftColumn[] = $oChart;
-        }
-        else {
-          $aRightColumn[] = $oChart;
-        }
-        $iColumn = 1- $iColumn;
-      }
-    }
-  }
-  $aDashboards = array($aLeftColumn, $aRightColumn);
   //Show dashboards
-  $oJSON       = new Services_JSON();
   $G_PUBLISH   = new Publisher;
   $G_PUBLISH->AddContent('smarty', 'dashboard/frontend', '', '', array('ID_NEW' => G::LoadTranslation('ID_NEW')));
   $G_HEADER->addScriptFile('/jscore/dashboard/core/dashboard.js');
   $G_HEADER->addInstanceModule('leimnud', 'dashboard');
-  $G_HEADER->addScriptCode('leimnud.event.add(window,"load",function(){window.Da=new leimnud.module.dashboard();Da.make({target:$("dashboard"),data:' . $oJSON->encode($aDashboards) . '});});');
+  $G_HEADER->addScriptCode('leimnud.event.add(window,"load",function(){window.Da=new leimnud.module.dashboard();Da.make({target:$("dashboard"),data:' . $oDashboards->getDashboardsObject($_SESSION['USER_LOGGED']) . '});});');
   G::RenderPage('publish');
 }
 catch ( Exception $e ) {
