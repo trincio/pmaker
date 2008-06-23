@@ -666,10 +666,15 @@ class wsBase
         $aData['DEL_INDEX'] = $delIndex;
         
         $oDerivation = new Derivation();
-        $derive  = $oDerivation->prepareInformation($aData);                       
-	     
+        $derive  = $oDerivation->prepareInformation($aData);   
+        
 	      foreach ( $derive as $key=>$val ) 
-        {   
+        {           		        		          
+	        if($val['NEXT_TASK']['TAS_ASSIGN_TYPE']=='MANUAL')
+	        {
+	        	$result = new wsResponse (15, "The task is a Manual assined");	      
+	          return $result;
+	        }  
         	$nextDelegations[] = array('TAS_UID' => $val['NEXT_TASK']['TAS_UID'],        																			 	  
 																		 'USR_UID' => $val['NEXT_TASK']['USER_ASSIGNED']['USR_UID'],
 																		 'TAS_ASSIGN_TYPE' =>	$val['NEXT_TASK']['TAS_ASSIGN_TYPE'],         
@@ -703,7 +708,9 @@ class wsBase
         	$row[] = array ( 'ROU_TYPE' => $aRow['ROU_TYPE'], 'ROU_NEXT_TASK' => $aRow['ROU_NEXT_TASK'] );
         	$oDataset->next();
         }
-        
+       
+        //verificar cant row != cant derive 
+         
         //derivate case        
         $aCurrentDerivation = array(
           'APP_UID'    => $caseId,
