@@ -880,9 +880,13 @@ class G
     if(strtolower($typefile==="js"))
     {
         $a = file_get_contents($filename);
-        //$b = preg_replace("/(\/\*[\w\W]*?\*\/|\/\/[\w\W]*?\n| {4}|\t|\r|\n)/","", $a);
+		/* External component Begin */
+		G::LoadThirdParty('jsmin','jsmin');
+		$b = JSMin::minify($a);
+		/* External component End */
+        //$b = preg_replace("/(\/\*[\w\W]*?\*\/|\/\/[\w\W]*?\n|\t|\r|\n)/","", $a);
         //$b = preg_replace("/(\/\*[\w\W]*?\*\/|\/\/[\w\W]*?\n| {4}|\t)/","", $a);
-        $b = preg_replace("/(\/\*[\w\W]*?\*\/)/","", $a);
+        //$b = preg_replace("/(\/\*[\w\W]*?\*\/)/","", $a);
         //$b = preg_replace("/(\/\/[\w\W]*?\n|\n\n|\r\r)/","\n", $b);
         //$b = preg_replace("/(\/\*[\w\W]*?\*\/|\/\/[\w\W]*?\n)/","", $a);
         //$b = preg_replace("/(\/\*[\w\W]*?\*\/)/","", $a);
