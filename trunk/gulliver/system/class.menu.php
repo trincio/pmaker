@@ -307,6 +307,8 @@ class Menu
   		for ($ncount = 0; $ncount < $this->OptionCount(); $ncount++)
   		{
   			$target = $this->Options[$ncount];
+  			//$aux = $this->Icons[$ncount];
+  			$aux = $this->JS[$ncount];
   			if ($this->Types[$ncount] == 'absolute') {
   			  $target = G::encryptLink(str_replace('sys' . SYS_TEMP, SYS_TEMP, $this->Options[$ncount]));
   			}
@@ -327,10 +329,23 @@ class Menu
   			}
   			$classname = ($onMenu ? $classOn : $classOff);
   			$imageLeft = ($onMenu ? "<img src=\"/images/bulletSubMenu.jpg\" />" : '');
+  			$onclick = '';
+  			if ($this->JS[$ncount] !== '' ) {
+          $onclick = " onclick=\"" . $this->JS[$ncount] . "\"";
+  			}
+  			$icon = '';
+  			if ($this->Icons[$ncount] !== '' ) {
+          $icon = " <a href=\"#\" onclick=\"" . $this->JS[$ncount] . "\" class=\"$classname\">" .
+	      	  	  "<img src=\"". $this->Icons[$ncount] . "\" border=\"0\"/></a>";
+          $icon = $this->Icons[$ncount];
+  			}
   			if ( $this->Classes[$ncount] != '') {
   			  $classname = $this->Classes[$ncount];
+  			  $target = "#";
   			}
-        $menus[] = array ( 'id' => $ncount, 'target' => $target, 'label' => $label, 'onMenu' => $onMenu, 'classname' => $classname, 'imageLeft' => $imageLeft ); 
+        $menus[] = array ( 'id' => $ncount, 'target' => $target, 'label' => $label, 'onMenu' => $onMenu, 'classname' => $classname, 
+                           'imageLeft' => $imageLeft, 'onclick' => $onclick, 
+                           'icon' => $icon, 'aux' => $aux ); 
       }
     }
     return $menus;
