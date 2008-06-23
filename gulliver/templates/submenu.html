@@ -1,3 +1,6 @@
 {foreach from=$subMenus item=field key=name}
-<td height="23" align="center" valign="middle" nowrap="nowrap" class="{$field.classname}">{$field.imageLeft}<a href="{$field.target}" class="{$field.classname}">&nbsp;&nbsp;<b>{$field.label}</b>&nbsp;&nbsp;</a></td>
+{if $field.icon neq ""}
+<td height="23" align="center" valign="middle" class="{$field.classname}" nowrap="nowrap"><a href="{$field.target}" {$field.onclick} class="{$field.classname}"><img src="{$field.icon}" border="0"></a></td>
+{/if}
+<td height="23" align="center" valign="middle" class="{$field.classname}" nowrap="nowrap">{$field.imageLeft}<a href="{$field.target}" {$field.onclick} class="{$field.classname}">&nbsp;&nbsp;<b>{$field.label}</b>&nbsp;&nbsp;</a></td>
 {/foreach}
