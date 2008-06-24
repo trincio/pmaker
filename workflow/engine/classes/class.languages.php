@@ -31,7 +31,7 @@ G::LoadClass('xmlDb');
 /**
  * languages - Languages class
  * @package ProcessMaker
- * @author Julio Cesar Laura Avenda�o
+ * @author Julio Cesar Laura Avendaï¿½o
  * @copyright 2007 COLOSA
  */
 class languages {
@@ -112,6 +112,10 @@ class languages {
       		  	if (count($aAux) == 2) {
       		  	  $oDataset = $oSession->Execute('SELECT * FROM dynaForm WHERE XMLNODE_NAME = "' . $sFieldName . '"');
       		  	  if ($oDataset->count() > 0) {
+      		  	    $oDataset2 = $oSession->Execute('SELECT * FROM dynaForm WHERE XMLNODE_NAME = "' . $sFieldName . '.' . $sLanguageID . '"');
+      		  	    if ($oDataset2->count() == 0) {
+      		  	      $oSession->Execute('INSERT INTO dynaForm.' . $sFieldName . ' (XMLNODE_NAME) VALUES ("' . $sLanguageID . '")');
+      		  	    }
       		  	    $oSession->Execute('UPDATE dynaForm.' . $sFieldName . ' SET XMLNODE_VALUE = "' . str_replace("'", "\'", str_replace('"', '""', stripslashes(substr(trim(str_replace(chr(10), '', $sLine)), 8, -1)))) . '" WHERE XMLNODE_NAME = "' . $sLanguageID . '"');
       		  	  }
       		  	  else {
@@ -124,6 +128,10 @@ class languages {
       		    	if ($bDelete) {
       		    	  $oDataset = $oSession->Execute('SELECT * FROM dynaForm WHERE XMLNODE_NAME = "' . $sFieldName . '"');
       		    	  if ($oDataset->count() > 0) {
+      		    	    $oDataset2 = $oSession->Execute('SELECT * FROM dynaForm WHERE XMLNODE_NAME = "' . $sFieldName . '.' . $sLanguageID . '"');
+      		  	      if ($oDataset2->count() == 0) {
+      		  	        $oSession->Execute('INSERT INTO dynaForm.' . $sFieldName . ' (XMLNODE_NAME) VALUES ("' . $sLanguageID . '")');
+      		  	      }
       		    	    $oDataset = $oSession->Execute('SELECT * FROM dynaForm.' . $sFieldName . ' WHERE XMLNODE_NAME = "' . $sLanguageID . '"');
       		    	    if ($oDataset->count() > 0) {
       		    		    $oSession->Execute('DELETE FROM dynaForm.' . $sFieldName . '.' . $sLanguageID . ' WHERE 1');
@@ -143,6 +151,10 @@ class languages {
 	    		    if (count($aAux) == 2) {
 	    		      $oDataset = $oSession->Execute('SELECT * FROM dynaForm WHERE XMLNODE_NAME = "' . $sFieldName . '"');
       		  	  if ($oDataset->count() > 0) {
+      		  	    $oDataset2 = $oSession->Execute('SELECT * FROM dynaForm WHERE XMLNODE_NAME = "' . $sFieldName . '.' . $sLanguageID . '"');
+      		  	    if ($oDataset2->count() == 0) {
+      		  	      $oSession->Execute('INSERT INTO dynaForm.' . $sFieldName . ' (XMLNODE_NAME) VALUES ("' . $sLanguageID . '")');
+      		  	    }
 	    		        $oSession->Execute('UPDATE dynaForm.' . $sFieldName . ' SET XMLNODE_VALUE = "' . str_replace("'", "\'", str_replace('"', '""', stripslashes(substr(trim(str_replace(chr(10), '', $sLine)), 8, -1)))) . '" WHERE XMLNODE_NAME = "' . $sLanguageID . '"');
 	    		      }
 	    		      else {
@@ -155,6 +167,10 @@ class languages {
       		    	if ($bDelete) {
       		    	  $oDataset = $oSession->Execute('SELECT * FROM dynaForm WHERE XMLNODE_NAME = "' . $sFieldName . '"');
       		    	  if ($oDataset->count() > 0) {
+      		    	    $oDataset2 = $oSession->Execute('SELECT * FROM dynaForm WHERE XMLNODE_NAME = "' . $sFieldName . '.' . $sLanguageID . '"');
+      		  	      if ($oDataset2->count() == 0) {
+      		  	        $oSession->Execute('INSERT INTO dynaForm.' . $sFieldName . ' (XMLNODE_NAME) VALUES ("' . $sLanguageID . '")');
+      		  	      }
       		    	    $oDataset = $oSession->Execute('SELECT * FROM dynaForm.' . $sFieldName . ' WHERE XMLNODE_NAME = "' . $sLanguageID . '"');
       		    	    if ($oDataset->count() > 0) {
       		    		    $oSession->Execute('DELETE FROM dynaForm.' . $sFieldName . '.' . $sLanguageID . ' WHERE 1');
