@@ -70,7 +70,7 @@ select XMLNODE_NAME, XMLNODE_NAME AS NAME FROM dynaForm WHERE XMLNODE_NAME &lt;&
   SELECT DBS_UID, CONCAT('[',DBS_SERVER,'] ',DBS_TYPE,': ',DBS_DATABASE_NAME) AS CVALUE FROM DB_SOURCE WHERE PRO_UID = @@PME_PRO_UID
   <en>Sql Connection
   	<option name="">(none)</option>
-  </en> 
+  </en>
 </PME_SQLCONNECTION>
 
 <PME_XMLNODE_VALUE type="textarea" cols="47" rows="3">
@@ -86,7 +86,8 @@ select XMLNODE_NAME, XMLNODE_NAME AS NAME FROM dynaForm WHERE XMLNODE_NAME &lt;&
 </PME_ACCEPT>
 
 <PME_G_FORM_ID type="phpvariable"/>
-<PME_JS type="javascript"><![CDATA[
+<PME_JS type="javascript">
+<![CDATA[
 function hideElement( element ) {
   var tr = myTR( element );
   tr.style.display='none';
@@ -113,8 +114,6 @@ function myTR( element ){
   }
   return element;
 }
-]]></PME_JS>
-<PME_JS type="javascript"><![CDATA[
 var fieldForm="dropdown";
 var fieldName=getField("PME_XMLNODE_NAME",fieldForm);
 var savedFieldName=fieldName.value;
@@ -138,5 +137,6 @@ function verifyFieldName1(){
   pme_validating=false;
   return valid;
 }
-]]></PME_JS>
+]]>
+</PME_JS>
 </dynaForm>
