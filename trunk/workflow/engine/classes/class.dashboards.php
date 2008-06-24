@@ -75,15 +75,14 @@ class Dashboards {
     $aLeftColumn          = array ();
     $aRightColumn         = array ();
     $iColumn              = 0;
-    foreach ($aAvailableDashboards as $sDashboardClass) {
-      require_once PATH_PLUGINS. $sDashboardClass  . PATH_SEP . 'class.' . $sDashboardClass . '.php';
-      $sClassName = $sDashboardClass . 'Class';
+    foreach ($aConfiguration as $aDashboard) {
+      require_once PATH_PLUGINS. $aDashboard['class']  . PATH_SEP . 'class.' . $aDashboard['class'] . '.php';
+      $sClassName = $aDashboard['class'] . 'Class';
       $oInstance  = new $sClassName();
       $aCharts    = $oInstance->getAvailableCharts();
-      $iColumn    = 0;
       foreach ($aCharts as $sChart) {
         $bFree = false;
-        foreach ($aConfiguration as $aDashboard) {
+        foreach ($aAvailableDashboards as $sDashboardClass) {
           if (($aDashboard['class'] == $sDashboardClass) && ($aDashboard['type'] == $sChart)) {
             $bFree = true;
           }
@@ -98,7 +97,7 @@ class Dashboards {
           else {
             $aRightColumn[] = $oChart;
           }
-          $iColumn = 1- $iColumn;
+          $iColumn = 1 - $iColumn;
         }
       }
     }

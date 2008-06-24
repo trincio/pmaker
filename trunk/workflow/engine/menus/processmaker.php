@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * processmaker.php
  *
@@ -31,7 +31,7 @@ $G_TMP_MENU->AddIdRawOption('CASES',      'cases/cases_List');
 $G_TMP_MENU->AddIdRawOption('PROCESSES',  'processes/processes_List');
 $G_TMP_MENU->AddIdRawOption('REPORTS',    'reports/reportsList');
 $G_TMP_MENU->AddIdRawOption('SETUP',      'setup/pluginsList');
-//$G_TMP_MENU->AddIdRawOption('DASHBOARD',  'dashboard/dashboard');//next release
+$G_TMP_MENU->AddIdRawOption('DASHBOARD',  'dashboard/dashboard');
 
 $G_TMP_MENU->Labels = array(
   //G::LoadTranslation('ID_MY_ACCOUNT'),
@@ -39,9 +39,9 @@ $G_TMP_MENU->Labels = array(
   G::LoadTranslation('ID_CASES'),
   G::LoadTranslation('ID_APPLICATIONS'),
   G::LoadTranslation('ID_REPORTS'),
-  G::LoadTranslation('ID_SETUP'),  
+  G::LoadTranslation('ID_SETUP'),
   G::LoadTranslation('ID_DASHBOARD')
-  
+
 );
 
 if ( file_exists ( PATH_CORE . 'menus/plugin.php' ) ) {

@@ -66,7 +66,12 @@ switch ($_POST['action']) {
   	global $G_HEADER;
   	$G_PUBLISH = new Publisher();
     $G_HEADER->clearScripts();
-    $G_PUBLISH->AddContent('xmlform', 'xmlform', 'dashboard/dashboard_AvailableDashboards', '', array());
+    if (count($aAvailableCharts) > 1) {
+      $G_PUBLISH->AddContent('xmlform', 'xmlform', 'dashboard/dashboard_AvailableDashboards');
+    }
+    else {
+      $G_PUBLISH->AddContent('xmlform', 'xmlform', 'dashboard/dashboard_NoAvailableDashboards');
+    }
     G::RenderPage('publish', 'raw');
 	break;
 	case 'addDashboard':
