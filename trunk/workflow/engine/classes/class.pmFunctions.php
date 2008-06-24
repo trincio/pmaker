@@ -289,7 +289,7 @@ function WSTaskCase($caseId)
 	}*/
 }
 
-	echo 'session : '.$_SESSION['WS_SESSION_ID'];
-	WSTaskCase('1');
+	//echo 'session : '.$_SESSION['WS_SESSION_ID'];
+	//WSTaskCase('355657143484d5e75a54bf7076495068');
 
 ?>
