@@ -877,27 +877,80 @@ class G
     else {
       throw new Exception ( "file '$file' doesn't exists. " );
     }
-    if(strtolower($typefile==="js"))
-    {
-        $a = file_get_contents($filename);
-		/* External component Begin */
-		G::LoadThirdParty('jsmin','jsmin');
-		$b = JSMin::minify($a);
-		/* External component End */
-        //$b = preg_replace("/(\/\*[\w\W]*?\*\/|\/\/[\w\W]*?\n|\t|\r|\n)/","", $a);
-        //$b = preg_replace("/(\/\*[\w\W]*?\*\/|\/\/[\w\W]*?\n| {4}|\t)/","", $a);
-        //$b = preg_replace("/(\/\*[\w\W]*?\*\/)/","", $a);
-        //$b = preg_replace("/(\/\/[\w\W]*?\n|\n\n|\r\r)/","\n", $b);
-        //$b = preg_replace("/(\/\*[\w\W]*?\*\/|\/\/[\w\W]*?\n)/","", $a);
-        //$b = preg_replace("/(\/\*[\w\W]*?\*\/)/","", $a);
-        print_r($b);
-    }
-    else
-    {
+    
+    switch ( strtolower($typefile ) ) {
+    	case "js" :
+      	$paths = explode ( '/', $filename);
+      	$jsName = $paths[ count ($paths) -1 ];
+      	$output = '';
+      	if ( $jsName == 'maborak.js' ) {
+          $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/maborak.js' );
+          $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'common/core/common.js' );
+          $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'common/core/webResource.js' );
+          $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'json/core/json.js' );
+          $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'form/core/form.js' );
+          $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'form/core/pagedTable.js' );
+          $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'grid/core/grid.js' );
+          //$output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.panel.js' );
+          //$output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.validator.js' );
+      	}
+      	else
+          $output = G::trimSourceCodeFile ($filename );
+        print $output;  
+      break;
+      case 'css' :
+       print G::trimSourceCodeFile ($filename );
+        break;
+     default : 
         readfile($filename);
     }
   }
 
+  function trimSourceCodeFile ( $filename ) {
+    $handle = fopen ($filename, "r");
+    $lastChar = '';
+    $firstChar = '';
+    $content = '';
+    $line = '';
+    if ($handle) {
+      while (!feof($handle)) {
+        $lastChar = ( strlen ( $line ) > 5 ) ? $line[strlen($line)-1] : '';
+
+        $line = trim( fgets($handle, 16096) ) ;
+        if ( substr ($line,0,2 ) == '//' )  $line = '';
+        $firstChar = ( strlen ( $line ) > 6 ) ? strtolower($line[0]) : '';
+        if ( ord( $firstChar ) > 96 && ord($firstChar) < 122 && $lastChar == ';') 
+          $content .= '';
+        else
+          $content .= "\n";
+//          $content .= '('.$firstChar . $lastChar . ord( $firstChar ).'-'. ord( $lastChar ) . ")\n";
+
+        $content .= $line;
+      }
+      fclose($handle);
+    }
+
+    $index = 0;
+    $output = '';
+    while ( $index < strlen ($content) ) {
+    	$car = $content[$index];
+    	$index++;
+    	if ( $car == '/' && isset($content[$index]) && $content[$index] == '*' ) {
+      	$endComment = false;
+    		$index ++;
+        while ( $endComment == false && $index < strlen ($content) ) {
+          if ($content[$index] == '*' && isset($content[$index+1]) && $content[$index+1] == '/' ) {
+          	$endComment = true; $index ++;
+          }
+          $index ++;		
+        }
+        $car = '';
+    	}
+    	$output .= $car;
+    }
+    return $output;
+  }
+  
   function sendHeaders ( $filename , $contentType = '', $download = false, $downloadFileName = '' )
   {
   	if ($download) {

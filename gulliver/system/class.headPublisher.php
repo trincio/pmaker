@@ -33,6 +33,8 @@ class headPublisher
 {
   var $scriptFiles  = array();
   var $leimnudLoad  = array();
+  //leimnud.Package.Load("panel,validator,app,rpc,fx,drag,drop,dom,abbr",{Instance:leimnud,Type:"module"});';
+  
   var $leimnudInitString = '  var leimnud = new maborak();
   leimnud.make();
   leimnud.Package.Load("panel,validator,app,rpc,fx,drag,drop,dom,abbr",{Instance:leimnud,Type:"module"});';
@@ -52,27 +54,24 @@ class headPublisher
    */
   function headPublisher()
   {
-    $this->addScriptFile("/js/maborak/core/maborak.js");
-    if ( defined( 'SYS_LANG' ) )
-    {
-      $jslabel = 'labels/' . SYS_LANG . '.js';
+    $jslabel = 'labels/en.js';
+    if ( defined( 'SYS_LANG' ) )  {
+      $jslabel = 'labels' . PATH_SEP . SYS_LANG . '.js';
       if ( ! file_exists( PATH_CORE . 'js' . PATH_SEP . $jslabel ) )
         $jslabel = 'labels/en.js';
     }
-    else
-      $jslabel = 'labels/en.js';
-      
     if ( file_exists( PATH_CORE . 'js' . PATH_SEP . $jslabel ) ) {
       $this->addScriptFile( '/jscore/' . $jslabel , 1 );
     }
-    $this->addScriptFile("/js/common/core/common.js",1);
-    $this->addScriptFile("/js/common/core/webResource.js",1);
-    $this->addScriptFile("/js/json/core/json.js",1);
-    $this->addScriptFile("/js/form/core/form.js",1);
-    //$this->addScriptFile("/js/grid/core/grid.js",2);
+
+    $this->addScriptFile("/js/maborak/core/maborak.js");
+      
+//    $this->addScriptFile("/js/common/core/common.js",1);
+//    $this->addScriptFile("/js/common/core/webResource.js",1);
+//    $this->addScriptFile("/js/json/core/json.js",1);
+//    $this->addScriptFile("/js/form/core/form.js",1);
+//    $this->addScriptFile("/js/grid/core/grid.js",2);
     //$this->addScriptFile("/skins/JSForms.js",1);
-    //$this->addInstanceModule("leimnud", "drag");
-    //$this->addInstanceModule("leimnud", "panel");
   }
   /**
    * Function setTitle

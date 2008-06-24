@@ -377,7 +377,7 @@ function getElementByName( fieldName )
       return elements[0];
     else if (elements.length === 0)
       return elements[0];
-    else
+    else 
       return elements;
   } catch (E)
   {}
