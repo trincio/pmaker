@@ -178,16 +178,118 @@ function orderGrid($dataM, $field, $ord = 'ASC')
 	return $dataM;
 }
 
+function evaluateFunction($aGrid, $sExpresion)
+{
+	G::LoadClass('pmScript');
+	$pmScript = new PMScript();
+	$pmScript->setScript($sExpresion);
+	
+	for($i=1; $i<=count($aGrid); $i++){
+		$aFields = $aGrid[$i];
+		$pmScript->setFields($aFields);
+		$pmScript->execute();
+		$aGrid[$i] = $pmScript->aFields;
+	}
+	return $aGrid;
+}
 
-//$x = formatDate('2008-06-07','dd/mm/yy');
-/*$x = executeQuery("insert into USERS (USR_UID,USR_USERNAME) values ('erik','erik')");
-//$x = executeQuery("delete from USERS where USR_UID='erik'");
-*//*
-$x = orderGrid($a, 'uno', 'ASC');
-echo '<pre>-->';
-print_r($x);
-echo '<pre>';*/
-//print_r(userInfo($_SESSION['USER_LOGGED']));
+/** Web Services Functions **/
+
+function WSLogin($user, $pass, $endpoint='')
+{
+	$client = wSOpen(true);
+	$params = array('userid'=>$user, 'password'=>$pass);
+	$result = $client->__SoapCall('login', array($params));
 	
+	if($result->status_code == 0){
+		if($endpoint != ''){
+			$_SESSION['WS_END_POINT'] = $endpoint;
+		}
+		return $_SESSION['WS_SESSION_ID'] = $result->message;
+	} else {
+		unset($_SESSION['WS_SESSION_ID']);
+		$wp = (trim($pass) != "")?'YES':'NO';
+		throw new Exception("WSAccess denied! for user $user with password $wp");
+	}
+}
+
+function WSOpen($force=false)
+{
+	if(isset($_SESSION['WS_SESSION_ID']) or $force){
+		if( !isset ($_SESSION['WS_END_POINT']) ){
+			$defaultEndpoint = 'http://'.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'].'/sys'.SYS_SYS.'/en/green/services/wsdl';
+		}
+		$endpoint = isset( $_SESSION['WS_END_POINT'] ) ? $_SESSION['WS_END_POINT'] : $defaultEndpoint;
+		$client = new SoapClient( $endpoint );
+		return $client;
+	} else {
+		throw new Exception('WS session is not open');
+	}
+}
+
+function WSgetParam()
+{
+	if(isset($_SESSION['WS_SESSION_ID'])){
+		$sessionId = $_SESSION['WS_SESSION_ID'];
+		$params = array('sessionId'=>$sessionId);
+		return $params;
+	} else {
+		throw new Exception('WS session is not open');
+	}
+}
+
+function WSCreateUser($sessionId, $userId, $password, $firstname, $lastname, $email, $role)
+{	
+	$client = WSOpen();
+	$sessionId = $_SESSION['WS_SESSION_ID'];
+	$params = array('sessionId'=>$sessionId, 'userId'=>$userId, 'firstname'=>$firstname, 'lastname'=>$lastname, 'email'=>$email, 'role'=>$role, 'password'=>$password);
+	$result = $client->__SoapCall('CreateUser', array($params));
+
+	$result->status_code;
+	if($result->status_code == 0){
+		return true;
+	} else {
+		throw new Exception('WS[Create user]:failed!, '.$result->message);
+	}
+}
+
+function WSTaskCase($caseId)
+{
+	$client = WSOpen();
 	
+	$sessionId = $_SESSION['WS_SESSION_ID'];
+
+	$params = array('sessionId'=>$sessionId, 'caseId'=>$caseId);
+	echo '<pre>';
+	echo print_r($params);
+	echo '</pre>';
+	$result = $client->__SoapCall('TaskCase', array($params));
+
+	//$rows[] = array ( 'guid' => 'char', 'name' => 'char' );
+
+	//$i = 1;
+	
+	//if ( isset ( $result->taskCases ) )
+	//echo '<pre>';
+	//echo ($result->taskCases);
+	//echo '</pre>';
+	
+	/*foreach ( $result->taskCases as $key=>$item) {
+		if ( isset ($item->item) )
+		foreach ( $item->item as $index=> $val ) {
+			if ( $val->key == 'guid' ) $guid = $val->value;
+			if ( $val->key == 'name' ) $name = $val->value;
+		}
+		else
+		foreach ( $item as $index=> $val ) {
+			if ( $val->key == 'guid' ) $guid = $val->value;
+			if ( $val->key == 'name' ) $name = $val->value;
+		}
+		$rows[] = array ( 'guid' => $guid, 'name' => $name );
+	}*/
+}
+
+	echo 'session : '.$_SESSION['WS_SESSION_ID'];
+	WSTaskCase('1');
+
 ?>
