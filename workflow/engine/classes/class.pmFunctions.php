@@ -227,27 +227,10 @@ function WSOpen($force=false)
 	}
 }
 
-function WSgetParam()
-{
-	if(isset($_SESSION['WS_SESSION_ID'])){
-		$sessionId = $_SESSION['WS_SESSION_ID'];
-		$params = array('sessionId'=>$sessionId);
-		return $params;
-	} else {
-		throw new Exception('WS session is not open');
-	}
-}
-
 function WSTaskCase($caseId)
 {
 	$client = WSOpen();
-	/*if( !isset ($_SESSION['WS_END_POINT']) ){
-			$defaultEndpoint = 'http://'.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'].'/sys'.SYS_SYS.'/en/green/services/wsdl';
-		}
 
-	$endpoint = isset( $_SESSION['WS_END_POINT'] ) ? $_SESSION['WS_END_POINT'] : $defaultEndpoint;
-	$client = new SoapClient( $endpoint );
-	*/
 	$sessionId = $_SESSION['WS_SESSION_ID'];
 
 	$params = array('sessionId'=>$sessionId, 'caseId'=>$caseId);
@@ -255,8 +238,20 @@ function WSTaskCase($caseId)
 	
 	$i = 1;
 	if(isset ($result->taskCases)){
-		foreach($result->taskCases as $item){
-			$rows[$i++] = $item;
+		foreach ( $result->taskCases as $key=> $item) {
+			if ( isset ($item->item) ){
+				foreach ( $item->item as $index=> $val ) {
+					if ( $val->key == 'guid' ) $guid = $val->value;
+					if ( $val->key == 'name' ) $name = $val->value;
+				}
+			} else {
+				foreach ( $item as $index=> $val ) {
+					if ( $val->key == 'guid' ) $guid = $val->value;
+					if ( $val->key == 'name' ) $name = $val->value;
+				}
+			}
+
+			$rows[$i++] = array ( 'guid' => $guid, 'name' => $name );
 		}
 	}
 	return $rows;	
@@ -265,21 +260,27 @@ function WSTaskCase($caseId)
 function WSTaskList()
 {
 	$client = WSOpen();
-	/*if( !isset ($_SESSION['WS_END_POINT']) ){
-			$defaultEndpoint = 'http://'.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'].'/sys'.SYS_SYS.'/en/green/services/wsdl';
-		}
 
-	$endpoint = isset( $_SESSION['WS_END_POINT'] ) ? $_SESSION['WS_END_POINT'] : $defaultEndpoint;
-	$client = new SoapClient( $endpoint );
-	*/
 	$sessionId = $_SESSION['WS_SESSION_ID'];
 	$params = array('sessionId'=>$sessionId );
 	$result = $client->__SoapCall('TaskList', array($params));
 
 	$i = 1;
 	if(isset ($result->tasks)){
-		foreach($result->taskCases as $item){
-			$rows[$i++] = $item;
+		foreach ( $result->tasks as $key=> $item) {
+			if ( isset ($item->item) ){
+				foreach ( $item->item as $index=> $val ) {
+					if ( $val->key == 'guid' ) $guid = $val->value;
+					if ( $val->key == 'name' ) $name = $val->value;
+				}
+			} else {
+				foreach ( $item as $index=> $val ) {
+					if ( $val->key == 'guid' ) $guid = $val->value;
+					if ( $val->key == 'name' ) $name = $val->value;
+				}
+			}
+
+			$rows[$i++] = array ( 'guid' => $guid, 'name' => $name );
 		}
 	}
 	return $rows;	
@@ -288,21 +289,27 @@ function WSTaskList()
 function WSUserList()
 {
 	$client = WSOpen();
-	/*if( !isset ($_SESSION['WS_END_POINT']) ){
-			$defaultEndpoint = 'http://'.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'].'/sys'.SYS_SYS.'/en/green/services/wsdl';
-		}
 
-	$endpoint = isset( $_SESSION['WS_END_POINT'] ) ? $_SESSION['WS_END_POINT'] : $defaultEndpoint;
-	$client = new SoapClient( $endpoint );
-	*/
 	$sessionId = $_SESSION['WS_SESSION_ID'];
 	$params = array('sessionId'=>$sessionId );
     $result = $client->__SoapCall('UserList', array($params));
 
 	$i = 1;
 	if(isset ($result->users)){
-		foreach($result->taskCases as $item){
-			$rows[$i++] = $item;
+		foreach ( $result->users as $key=> $item) {
+			if ( isset ($item->item) ){
+				foreach ( $item->item as $index=> $val ) {
+					if ( $val->key == 'guid' ) $guid = $val->value;
+					if ( $val->key == 'name' ) $name = $val->value;
+				}
+			} else {
+				foreach ( $item as $index=> $val ) {
+					if ( $val->key == 'guid' ) $guid = $val->value;
+					if ( $val->key == 'name' ) $name = $val->value;
+				}
+			}
+
+			$rows[$i++] = array ( 'guid' => $guid, 'name' => $name );
 		}
 	}
 	return $rows;	
@@ -311,55 +318,56 @@ function WSUserList()
 function WSGroupList()
 {
 	$client = WSOpen();
-	/*if( !isset ($_SESSION['WS_END_POINT']) ){
-			$defaultEndpoint = 'http://'.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'].'/sys'.SYS_SYS.'/en/green/services/wsdl';
-		}
 
-	$endpoint = isset( $_SESSION['WS_END_POINT'] ) ? $_SESSION['WS_END_POINT'] : $defaultEndpoint;
-	$client = new SoapClient( $endpoint );
-	*/
 	$sessionId = $_SESSION['WS_SESSION_ID'];
 	$params = array('sessionId'=>$sessionId );
     $result = $client->__SoapCall('GroupList', array($params));
 
 	$i = 1;
 	if(isset ($result->groups)){
-		foreach($result->taskCases as $item){
-			$rows[$i++] = $item;
+		foreach ( $result->groups as $key=> $item) {
+			if ( isset ($item->item) ){
+				foreach ( $item->item as $index=> $val ) {
+					if ( $val->key == 'guid' ) $guid = $val->value;
+					if ( $val->key == 'name' ) $name = $val->value;
+				}
+			} else {
+				foreach ( $item as $index=> $val ) {
+					if ( $val->key == 'guid' ) $guid = $val->value;
+					if ( $val->key == 'name' ) $name = $val->value;
+				}
+			}
+
+			$rows[$i++] = array ( 'guid' => $guid, 'name' => $name );
 		}
 	}
 	return $rows;		
 }
 
-<<<<<<< .mine
+
 function WSRoleList()
 {
 	$client = WSOpen();
-	/*if( !isset ($_SESSION['WS_END_POINT']) ){
-			$defaultEndpoint = 'http://'.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'].'/sys'.SYS_SYS.'/en/green/services/wsdl';
-		}
-=======
-<<<<<<< .mine
-	//echo 'session : '.$_SESSION['WS_SESSION_ID'];
 	
-	//WSTaskCase('1');
-=======
-	//echo 'session : '.$_SESSION['WS_SESSION_ID'];
-	//WSTaskCase('355657143484d5e75a54bf7076495068');
->>>>>>> .r1551
->>>>>>> .r1548
-
-	$endpoint = isset( $_SESSION['WS_END_POINT'] ) ? $_SESSION['WS_END_POINT'] : $defaultEndpoint;
-	$client = new SoapClient( $endpoint );
-	*/
 	$sessionId = $_SESSION['WS_SESSION_ID'];
 	$params = array('sessionId'=>$sessionId );
 	$result = $client->__SoapCall('RoleList', array($params));
 
-	$i = 1;
 	if(isset ($result->roles)){
-		foreach($result->taskCases as $item){
-			$rows[$i++] = $item;
+		foreach ( $result->roles as $key=> $item) {
+			if ( isset ($item->item) ){
+				foreach ( $item->item as $index=> $val ) {
+					if ( $val->key == 'guid' ) $guid = $val->value;
+					if ( $val->key == 'name' ) $name = $val->value;
+				}
+			} else {
+				foreach ( $item as $index=> $val ) {
+					if ( $val->key == 'guid' ) $guid = $val->value;
+					if ( $val->key == 'name' ) $name = $val->value;
+				}
+			}
+
+			$rows[$i++] = array ( 'guid' => $guid, 'name' => $name );
 		}
 	}
 	return $rows;	
@@ -368,44 +376,56 @@ function WSRoleList()
 function WSCaseList()
 {
 	$client = WSOpen();
-	/*if( !isset ($_SESSION['WS_END_POINT']) ){
-			$defaultEndpoint = 'http://'.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'].'/sys'.SYS_SYS.'/en/green/services/wsdl';
-		}
 
-	$endpoint = isset( $_SESSION['WS_END_POINT'] ) ? $_SESSION['WS_END_POINT'] : $defaultEndpoint;
-	$client = new SoapClient( $endpoint );
-	*/
 	$sessionId = $_SESSION['WS_SESSION_ID'];
 	$params = array('sessionId'=>$sessionId );
 	$result = $client->__SoapCall('CaseList', array($params));
 
-	$i = 1;
 	if(isset ($result->cases)){
-		foreach($result->taskCases as $item){
-			$rows[$i++] = $item;
+		foreach ( $result->cases as $key=> $item) {
+			if ( isset ($item->item) ){
+				foreach ( $item->item as $index=> $val ) {
+					if ( $val->key == 'guid' ) $guid = $val->value;
+					if ( $val->key == 'name' ) $name = $val->value;
+				}
+			} else {
+				foreach ( $item as $index=> $val ) {
+					if ( $val->key == 'guid' ) $guid = $val->value;
+					if ( $val->key == 'name' ) $name = $val->value;
+				}
+			}
+
+			$rows[$i++] = array ( 'guid' => $guid, 'name' => $name );
 		}
 	}
+	
 	return $rows;	
 }
 
 function WSProcessList()
 {
 	$client = WSOpen();
-	/*if( !isset ($_SESSION['WS_END_POINT']) ){
-			$defaultEndpoint = 'http://'.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'].'/sys'.SYS_SYS.'/en/green/services/wsdl';
-		}
 
-	$endpoint = isset( $_SESSION['WS_END_POINT'] ) ? $_SESSION['WS_END_POINT'] : $defaultEndpoint;
-	$client = new SoapClient( $endpoint );
-	*/
 	$sessionId = $_SESSION['WS_SESSION_ID'];
 	$params = array('sessionId'=>$sessionId );
 	$result = $client->__SoapCall('ProcessList', array($params));
 
 	$i = 1;
 	if(isset ($result->processes)){
-		foreach($result->taskCases as $item){
-			$rows[$i++] = $item;
+		foreach ( $result->processes as $key=> $item) {
+			if ( isset ($item->item) ){
+				foreach ( $item->item as $index=> $val ) {
+					if ( $val->key == 'guid' ) $guid = $val->value;
+					if ( $val->key == 'name' ) $name = $val->value;
+				}
+			} else {
+				foreach ( $item as $index=> $val ) {
+					if ( $val->key == 'guid' ) $guid = $val->value;
+					if ( $val->key == 'name' ) $name = $val->value;
+				}
+			}
+
+			$rows[$i++] = array ( 'guid' => $guid, 'name' => $name );
 		}
 	}
 	return $rows;	
