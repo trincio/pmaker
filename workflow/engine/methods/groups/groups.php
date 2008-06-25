@@ -29,7 +29,7 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_USERS"))!=1) return $RBAC_Response;
   $G_ID_MENU_SELECTED     = 'USERS';
   $G_ID_SUB_MENU_SELECTED = 'GROUPS';
 
-  $G_HEADER->addScriptFile('/js/common/tree/tree.js');
+//  $G_HEADER->addScriptFile('/js/common/tree/tree.js');
   $G_HEADER->addInstanceModule('leimnud','rpc');
 
   $dbc = new DBConnection();
@@ -40,7 +40,6 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_USERS"))!=1) return $RBAC_Response;
   $G_PUBLISH = new Publisher;
   $G_PUBLISH->AddContent('view', 'groups/groups_Tree' );
   $G_PUBLISH->AddContent('smarty', 'groups/groups_usersList', '', '', array());
-  $G_HEADER->addScriptFile('/js/form/core/pagedTable.js');
 
   G::RenderPage( "publish-treeview" );
 

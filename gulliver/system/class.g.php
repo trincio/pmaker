@@ -883,15 +883,21 @@ class G
       	$paths = explode ( '/', $filename);
       	$jsName = $paths[ count ($paths) -1 ];
       	$output = '';
-      	if ( $jsName == 'maborak.js' ) {
+      	switch ( $jsName ) { 
+      		case 'maborak.js' :
           $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/maborak.js' );
           $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'common/core/common.js' );
           $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'common/core/webResource.js' );
+          $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'common/tree/tree.js' );
           $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'json/core/json.js' );
           $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'form/core/form.js' );
           $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'form/core/pagedTable.js' );
           $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'grid/core/grid.js' );
-/*          $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.panel.js' );
+  
+          break;
+      	  case 'maborak.loader.js':
+          //$output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/maborak.loader.js' );
+          $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.panel.js' );
           $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.validator.js' );
           $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.app.js' );
           $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.rpc.js' );
@@ -900,10 +906,15 @@ class G
           $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.drop.js' );
           $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.dom.js' );
           $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.abbr.js' );
-          //$output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.dashboards.js' );*/
-      	}
-      	else
+          $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.dashboard.js' );
+          $output .= G::trimSourceCodeFile (PATH_CORE . 'js' . PATH_SEP . 'cases/core/cases.js');
+          $output .= G::trimSourceCodeFile (PATH_CORE . 'js' . PATH_SEP . 'cases/core/cases_Step.js');
+          $output .= G::trimSourceCodeFile (PATH_CORE . 'js' . PATH_SEP . 'processmap/core/processmap.js');
+          $output .= G::trimSourceCodeFile (PATH_THIRDPARTY . 'htmlarea/editor.js' );
+          break;
+      	default : 
           $output = G::trimSourceCodeFile ($filename );
+      	}
         print $output;  
       break;
       case 'css' :
@@ -920,6 +931,19 @@ class G
     $firstChar = '';
     $content = '';
     $line = '';
+
+//no optimizing code
+    if ($handle) {
+      while (!feof($handle)) {
+        $line = trim( fgets($handle, 16096) ) . "\n" ;
+        $content .= $line;
+      }
+      fclose($handle);
+    }
+
+    return $content;
+//end NO optimizing code
+
     if ($handle) {
       while (!feof($handle)) {
         $lastChar = ( strlen ( $line ) > 5 ) ? $line[strlen($line)-1] : '';
