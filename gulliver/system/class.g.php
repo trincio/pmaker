@@ -891,8 +891,16 @@ class G
           $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'form/core/form.js' );
           $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'form/core/pagedTable.js' );
           $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'grid/core/grid.js' );
-          //$output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.panel.js' );
-          //$output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.validator.js' );
+          $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.panel.js' );
+          $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.validator.js' );
+          $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.app.js' );
+          $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.rpc.js' );
+          $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.fx.js' );
+          $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.drag.js' );
+          $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.drop.js' );
+          $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.dom.js' );
+          $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.abbr.js' );
+          //$output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.dashboards.js' );
       	}
       	else
           $output = G::trimSourceCodeFile ($filename );
