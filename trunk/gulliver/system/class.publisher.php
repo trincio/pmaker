@@ -269,7 +269,7 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
       $G_FORM->setValues ($Part['Data']);
       if (isset($_SESSION)) $_SESSION[$G_FORM->id]=$G_FORM->values;
 
-  		$G_HEADER->addScriptFile( '/js/form/core/pagedTable.js' );
+  		//$G_HEADER->addScriptFile( '/js/form/core/pagedTable.js' );
 
   		$oTable                           = new pagedTable();
   		$oTable->template                 = 'templates/'.$Part['Template'] . '.html';
@@ -350,7 +350,7 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
 
       //$G_FORM->setValues ($Part['Data']);
       if (isset($_SESSION)) $_SESSION[$G_FORM->id] = $G_FORM->values;
-  		$G_HEADER->addScriptFile( '/js/form/core/pagedTable.js' );
+  		//$G_HEADER->addScriptFile( '/js/form/core/pagedTable.js' );
       G::LoadClass('propelTable');
 
       $oTable                           = new propelTable();

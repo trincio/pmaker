@@ -61,6 +61,7 @@
   $oTemplatePower = new TemplatePower(PATH_TPL . 'cases/cases_Step.html');
   $oTemplatePower->prepare();
   $G_PUBLISH = new Publisher;
+/*
   $G_HEADER->clearScripts();
     if ( defined( 'SYS_LANG' ) )
     {
@@ -75,22 +76,13 @@
       $G_HEADER->addScriptFile( '/jscore/' . $jslabel , 1 );
     }
   $G_HEADER->addScriptFile('/js/maborak/core/maborak.js');
-  $G_HEADER->addScriptFile('/js/maborak/core/maborak.js');
-  $G_HEADER->addScriptFile('/js/common/core/common.js');
-  $G_HEADER->addScriptFile('/js/common/core/webResource.js');
-  $G_HEADER->addScriptFile('/js/form/core/form.js');
-  $G_HEADER->addScriptFile('/js/grid/core/grid.js');
-
+*/
   $G_HEADER->addScriptCode('
   var Cse = {};
   Cse.panels = {};
   var leimnud = new maborak();
   leimnud.make();
   leimnud.Package.Load("rpc,drag,drop,panel,app,validator,fx,dom,abbr",{Instance:leimnud,Type:"module"});
-  leimnud.Package.Load("json",{Type:"file"});
-  leimnud.Package.Load("cases",{Type:"file",Absolute:true,Path:"/jscore/cases/core/cases.js"});
-  leimnud.Package.Load("cases_Step",{Type:"file",Absolute:true,Path:"/jscore/cases/core/cases_Step.js"});
-  leimnud.Package.Load("processmap",{Type:"file",Absolute:true,Path:"/jscore/processmap/core/processmap.js"});
   leimnud.exec(leimnud.fix.memoryLeak);
   leimnud.event.add(window,"load",function(){
 	  '.(isset($_SESSION['showCasesWindow'])?'try{'.$_SESSION['showCasesWindow'].'}catch(e){}':'').'

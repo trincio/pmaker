@@ -65,6 +65,7 @@ class headPublisher
     }
 
     $this->addScriptFile("/js/maborak/core/maborak.js");
+//    $this->addScriptFile("/js/maborak/core/maborak.loader.js");
       
 //    $this->addScriptFile("/js/common/core/common.js",1);
 //    $this->addScriptFile("/js/common/core/webResource.js",1);
