@@ -215,7 +215,7 @@ function WSLogin($user, $pass, $endpoint='')
 
 function WSOpen($force=false)
 {
-	if(isset($_SESSION['WS_SESSION_ID']) or $force){
+	if(isset($_SESSION['WS_SESSION_ID']) || $force){
 		if( !isset ($_SESSION['WS_END_POINT']) ){
 			$defaultEndpoint = 'http://'.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'].'/sys'.SYS_SYS.'/en/green/services/wsdl';
 		}
@@ -238,57 +238,107 @@ function WSgetParam()
 	}
 }
 
-function WSCreateUser($sessionId, $userId, $password, $firstname, $lastname, $email, $role)
-{	
-	$client = WSOpen();
-	$sessionId = $_SESSION['WS_SESSION_ID'];
-	$params = array('sessionId'=>$sessionId, 'userId'=>$userId, 'firstname'=>$firstname, 'lastname'=>$lastname, 'email'=>$email, 'role'=>$role, 'password'=>$password);
-	$result = $client->__SoapCall('CreateUser', array($params));
-
-	$result->status_code;
-	if($result->status_code == 0){
-		return true;
-	} else {
-		throw new Exception('WS[Create user]:failed!, '.$result->message);
-	}
-}
-
 function WSTaskCase($caseId)
 {
 	$client = WSOpen();
-	
+	/*if( !isset ($_SESSION['WS_END_POINT']) ){
+			$defaultEndpoint = 'http://'.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'].'/sys'.SYS_SYS.'/en/green/services/wsdl';
+		}
+
+	$endpoint = isset( $_SESSION['WS_END_POINT'] ) ? $_SESSION['WS_END_POINT'] : $defaultEndpoint;
+	$client = new SoapClient( $endpoint );
+	*/
 	$sessionId = $_SESSION['WS_SESSION_ID'];
 
 	$params = array('sessionId'=>$sessionId, 'caseId'=>$caseId);
-	echo '<pre>';
-	echo print_r($params);
-	echo '</pre>';
-	$result = $client->__SoapCall('TaskCase', array($params));
-
-	//$rows[] = array ( 'guid' => 'char', 'name' => 'char' );
-
-	//$i = 1;
+	$result = $client->__soapCall('taskCase', array($params));
 	
-	//if ( isset ( $result->taskCases ) )
-	//echo '<pre>';
-	//echo ($result->taskCases);
-	//echo '</pre>';
-	
-	/*foreach ( $result->taskCases as $key=>$item) {
-		if ( isset ($item->item) )
-		foreach ( $item->item as $index=> $val ) {
-			if ( $val->key == 'guid' ) $guid = $val->value;
-			if ( $val->key == 'name' ) $name = $val->value;
+	$i = 1;
+	if(isset ($result->taskCases)){
+		foreach($result->taskCases as $item){
+			$rows[$i++] = $item;
 		}
-		else
-		foreach ( $item as $index=> $val ) {
-			if ( $val->key == 'guid' ) $guid = $val->value;
-			if ( $val->key == 'name' ) $name = $val->value;
-		}
-		$rows[] = array ( 'guid' => $guid, 'name' => $name );
-	}*/
+	}
+	return $rows;	
 }
 
+function WSTaskList()
+{
+	$client = WSOpen();
+	/*if( !isset ($_SESSION['WS_END_POINT']) ){
+			$defaultEndpoint = 'http://'.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'].'/sys'.SYS_SYS.'/en/green/services/wsdl';
+		}
+
+	$endpoint = isset( $_SESSION['WS_END_POINT'] ) ? $_SESSION['WS_END_POINT'] : $defaultEndpoint;
+	$client = new SoapClient( $endpoint );
+	*/
+	$sessionId = $_SESSION['WS_SESSION_ID'];
+	$params = array('sessionId'=>$sessionId );
+	$result = $client->__SoapCall('TaskList', array($params));
+
+	$i = 1;
+	if(isset ($result->tasks)){
+		foreach($result->taskCases as $item){
+			$rows[$i++] = $item;
+		}
+	}
+	return $rows;	
+}
+
+function WSUserList()
+{
+	$client = WSOpen();
+	/*if( !isset ($_SESSION['WS_END_POINT']) ){
+			$defaultEndpoint = 'http://'.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'].'/sys'.SYS_SYS.'/en/green/services/wsdl';
+		}
+
+	$endpoint = isset( $_SESSION['WS_END_POINT'] ) ? $_SESSION['WS_END_POINT'] : $defaultEndpoint;
+	$client = new SoapClient( $endpoint );
+	*/
+	$sessionId = $_SESSION['WS_SESSION_ID'];
+	$params = array('sessionId'=>$sessionId );
+    $result = $client->__SoapCall('UserList', array($params));
+
+	$i = 1;
+	if(isset ($result->users)){
+		foreach($result->taskCases as $item){
+			$rows[$i++] = $item;
+		}
+	}
+	return $rows;	
+}
+
+function WSGroupList()
+{
+	$client = WSOpen();
+	/*if( !isset ($_SESSION['WS_END_POINT']) ){
+			$defaultEndpoint = 'http://'.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'].'/sys'.SYS_SYS.'/en/green/services/wsdl';
+		}
+
+	$endpoint = isset( $_SESSION['WS_END_POINT'] ) ? $_SESSION['WS_END_POINT'] : $defaultEndpoint;
+	$client = new SoapClient( $endpoint );
+	*/
+	$sessionId = $_SESSION['WS_SESSION_ID'];
+	$params = array('sessionId'=>$sessionId );
+    $result = $client->__SoapCall('GroupList', array($params));
+
+	$i = 1;
+	if(isset ($result->groups)){
+		foreach($result->taskCases as $item){
+			$rows[$i++] = $item;
+		}
+	}
+	return $rows;		
+}
+
+<<<<<<< .mine
+function WSRoleList()
+{
+	$client = WSOpen();
+	/*if( !isset ($_SESSION['WS_END_POINT']) ){
+			$defaultEndpoint = 'http://'.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'].'/sys'.SYS_SYS.'/en/green/services/wsdl';
+		}
+=======
 <<<<<<< .mine
 	//echo 'session : '.$_SESSION['WS_SESSION_ID'];
 	
@@ -296,6 +346,189 @@ function WSTaskCase($caseId)
 =======
 	//echo 'session : '.$_SESSION['WS_SESSION_ID'];
 	//WSTaskCase('355657143484d5e75a54bf7076495068');
+>>>>>>> .r1551
 >>>>>>> .r1548
 
+	$endpoint = isset( $_SESSION['WS_END_POINT'] ) ? $_SESSION['WS_END_POINT'] : $defaultEndpoint;
+	$client = new SoapClient( $endpoint );
+	*/
+	$sessionId = $_SESSION['WS_SESSION_ID'];
+	$params = array('sessionId'=>$sessionId );
+	$result = $client->__SoapCall('RoleList', array($params));
+
+	$i = 1;
+	if(isset ($result->roles)){
+		foreach($result->taskCases as $item){
+			$rows[$i++] = $item;
+		}
+	}
+	return $rows;	
+}
+
+function WSCaseList()
+{
+	$client = WSOpen();
+	/*if( !isset ($_SESSION['WS_END_POINT']) ){
+			$defaultEndpoint = 'http://'.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'].'/sys'.SYS_SYS.'/en/green/services/wsdl';
+		}
+
+	$endpoint = isset( $_SESSION['WS_END_POINT'] ) ? $_SESSION['WS_END_POINT'] : $defaultEndpoint;
+	$client = new SoapClient( $endpoint );
+	*/
+	$sessionId = $_SESSION['WS_SESSION_ID'];
+	$params = array('sessionId'=>$sessionId );
+	$result = $client->__SoapCall('CaseList', array($params));
+
+	$i = 1;
+	if(isset ($result->cases)){
+		foreach($result->taskCases as $item){
+			$rows[$i++] = $item;
+		}
+	}
+	return $rows;	
+}
+
+function WSProcessList()
+{
+	$client = WSOpen();
+	/*if( !isset ($_SESSION['WS_END_POINT']) ){
+			$defaultEndpoint = 'http://'.$_SERVER['SERVER_NAME'].':'.$_SERVER['SERVER_PORT'].'/sys'.SYS_SYS.'/en/green/services/wsdl';
+		}
+
+	$endpoint = isset( $_SESSION['WS_END_POINT'] ) ? $_SESSION['WS_END_POINT'] : $defaultEndpoint;
+	$client = new SoapClient( $endpoint );
+	*/
+	$sessionId = $_SESSION['WS_SESSION_ID'];
+	$params = array('sessionId'=>$sessionId );
+	$result = $client->__SoapCall('ProcessList', array($params));
+
+	$i = 1;
+	if(isset ($result->processes)){
+		foreach($result->taskCases as $item){
+			$rows[$i++] = $item;
+		}
+	}
+	return $rows;	
+}
+
+function WSsendMessage($caseId, $message)
+{
+	$client = WSOpen();
+	$sessionId = $_SESSION['WS_SESSION_ID'];
+	
+	$params = array('sessionId'=>$sessionId, 'caseId'=>$caseId, 'message'=>$message);
+	$result = $client->__SoapCall('sendMessage', array($params));
+
+	$fields['status_code'] = $result->status_code;
+	$fields['message']     = $result->message;
+	$fields['time_stamp']  = $result->timestamp;
+
+	return $fields;
+}
+
+function WSSendVariables($caseId, $name1, $value1, $name2, $value2)
+{
+	$client = WSOpen();
+	$sessionId = $_SESSION['WS_SESSION_ID'];
+
+	$variables[1]->name  = $name1;
+	$variables[1]->value = $value1;
+	$variables[2]->name  = $name2;
+	$variables[2]->value = $value2;
+	$params = array('sessionId'=>$sessionId, 'caseId'=>$caseId, 'variables'=>$variables);
+	$result = $client->__SoapCall('SendVariables', array($params));
+
+	$fields['status_code'] = $result->status_code;
+	$fields['message']     = $result->message;
+	$fields['time_stamp']  = $result->timestamp;
+	return $fields;
+}
+
+function WSDerivateCase($caseId, $delIndex)
+{
+	$client = WSOpen();
+	$sessionId = $_SESSION['WS_SESSION_ID'];
+
+	$params = array('sessionId'=>$sessionId, 'caseId'=>$caseId, 'delIndex'=>$delIndex );
+	$result = $client->__SoapCall('DerivateCase', array($params));
+		  
+	$fields['status_code'] = $result->status_code;
+	$fields['message']     = $result->message;
+	$fields['time_stamp']  = $result->timestamp;
+	return $fields;
+}
+
+function WSNewCaseImpersonate($processId, $userId, $name1, $value1, $name2, $value2)
+{
+	$client = WSOpen();
+	$sessionId = $_SESSION['WS_SESSION_ID'];
+
+	$variables[1]->name  = $name1;
+	$variables[1]->value = $value1;
+	$variables[2]->name  = $name2;
+	$variables[2]->value = $value2;
+
+	$params = array('sessionId'=>$sessionId, 'processId'=>$processId, 'userId'=>$userId, 'variables'=>$variables );
+	$result = $client->__SoapCall('NewCaseImpersonate', array($params));
+		  
+	$fields['status_code'] = $result->status_code;
+	$fields['message']     = $result->message;
+	$fields['time_stamp']  = $result->timestamp;
+	return $fields;
+}
+
+function WSNewCase($processId, $taskId, $name1, $value1, $name2, $value2)
+{
+	$client = WSOpen();
+	$sessionId = $_SESSION['WS_SESSION_ID'];
+
+	$variables[1]->name  = $name1;
+	$variables[1]->value = $value1;
+	$variables[2]->name  = $name2;
+	$variables[2]->value = $value2;
+
+	$params = array('sessionId'=>$sessionId, 'processId'=>$processId, 'taskId'=>$taskId, 'variables'=>$variables );
+	$result = $client->__SoapCall('NewCase', array($params));
+  		  
+	$fields['status_code'] = $result->status_code;
+	$fields['message']     = $result->message;
+	$fields['time_stamp']  = $result->timestamp;
+	return $fields;
+}
+
+function WSAssignUserToGroup($userId, $groupId)
+{
+	$client = WSOpen();
+	$sessionId = $_SESSION['WS_SESSION_ID'];
+
+	$params = array('sessionId'=>$sessionId, 'userId'=>$userId, 'groupId'=>$groupId);
+	$result = $client->__SoapCall('AssignUserToGroup', array($params));
+  		  
+	$fields['status_code'] = $result->status_code;
+	$fields['message']     = $result->message;
+	$fields['time_stamp']  = $result->timestamp;
+	return $fields;
+}
+
+function WSCreateUser($sessionId, $userId, $password, $firstname, $lastname, $email, $role)
+{	
+	$client = WSOpen();
+	$sessionId = $_SESSION['WS_SESSION_ID'];
+	$params = array('sessionId'=>$sessionId, 'userId'=>$userId, 'firstname'=>$firstname, 'lastname'=>$lastname, 'email'=>$email, 'role'=>$role, 'password'=>$password);
+	$result = $client->__SoapCall('CreateUser', array($params));
+
+	$fields['status_code'] = $result->status_code;
+	$fields['message']     = $result->message;
+	$fields['time_stamp']  = $result->timestamp;
+	return $fields;
+}
+
+function WSGetSession()
+{
+	if(isset($_SESSION['WS_SESSION_ID'])){
+		return $_SESSION['WS_SESSION_ID'];
+	} else {
+		throw new Exception("SW session is not opem!");
+	}
+}
 ?>
