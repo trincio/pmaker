@@ -352,7 +352,7 @@ function WSRoleList()
 	$sessionId = $_SESSION['WS_SESSION_ID'];
 	$params = array('sessionId'=>$sessionId );
 	$result = $client->__SoapCall('RoleList', array($params));
-
+	$i = 1;
 	if(isset ($result->roles)){
 		foreach ( $result->roles as $key=> $item) {
 			if ( isset ($item->item) ){
@@ -381,6 +381,7 @@ function WSCaseList()
 	$params = array('sessionId'=>$sessionId );
 	$result = $client->__SoapCall('CaseList', array($params));
 
+	$i = 1;
 	if(isset ($result->cases)){
 		foreach ( $result->cases as $key=> $item) {
 			if ( isset ($item->item) ){
