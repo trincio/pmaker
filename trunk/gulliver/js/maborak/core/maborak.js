@@ -1049,7 +1049,7 @@ var maborak = function(){
 		this.Load	= function(file,options)
 		{
 			this.options	=	{
-				zip:false,
+				zip:true,
 				noWrite:false
 			}.concat(options || {});			
 			if(arguments.length<2 || !this.check()){return false;}
@@ -1065,13 +1065,15 @@ var maborak = function(){
 						this.write(false);
 					}
 				}
-				var script = $dce("script");
-				this.parent.dom.capture("tag.head 0").appendChild(script);
-				script.src = this.path+'server/maborak.loader.php?load='+tl.join(',');
-				script.type = "text/javascript";
-				script.charset = this.parent.charset;
-				if (this.type == "module") {
+				if (tl.length > 0) {
+					var script = $dce("script");
+					this.parent.dom.capture("tag.head 0").appendChild(script);
+					script.src = this.path + 'server/maborak.loader.php?load=' + tl.join(',');
+					script.type = "text/javascript";
+					script.charset = this.parent.charset;
+					if (this.type == "module") {
 						this.write(script);
+					}
 				}
 			}
 			else

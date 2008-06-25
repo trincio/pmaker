@@ -244,7 +244,7 @@ leimnud.Package.Public({
 			  new leimnud.module.app.confirm().make({
           label : G_STRINGS.ID_CONFIRM_REMOVE_DASHBOARD,
           action: function() {
-            removeDashboard(options.class, options.chart);
+            removeDashboard(options.class,options.chart);
           }.extend(this)
         });
 			};
