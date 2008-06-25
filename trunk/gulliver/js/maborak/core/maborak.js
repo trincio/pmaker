@@ -1049,9 +1049,9 @@ var maborak = function(){
 		this.Load	= function(file,options)
 		{
 			this.options	=	{
-				zip:true,
-				noWrite:false
-			}.concat(options || {});			
+				zip:false,
+				noWrite:true
+			}.concat(options || {});
 			if(arguments.length<2 || !this.check()){return false;}
 			this.toLoad = ((this.options.Absolute===true)?this.options.Path:file).split(",");
 			if(this.type === 'module' && this.options.zip===true)
@@ -1082,8 +1082,8 @@ var maborak = function(){
 				{
 					this.name = this.toLoad[this.toLoad.length - i];
 					if (!this.isset()) {
-						if (this.options.noWrite === false && this.type!='module')
-						{
+						//if (this.options.noWrite === false && this.type!='module')
+						//{
 							this.src = this.source();
 							var script = $dce("script");
 							this.parent.dom.capture("tag.head 0").appendChild(script);
@@ -1091,7 +1091,7 @@ var maborak = function(){
 							script.src = this.src;
 							script.type = "text/javascript";
 							script.charset = this.parent.charset;
-						}
+						//}
 						if (this.type == "module") {
 							this.write(script);
 						}
@@ -1360,8 +1360,9 @@ var maborak = function(){
 			* @return DOM object
 			*/
 			this.element=function(element)
-			{
-				return (!element)?false:((typeof element=="object")?element:(($(element))?$(element):false));
+			{//return document.getElementById(element);
+				//return (!element)?false:((typeof element=="object")?element:(($(element))?$(element):false));
+				return (!element)?false:((typeof element=="object")?element:((document.getElementById(element))?document.getElementById(element):false));
 			};
 			/**
 			* Remove Elements
