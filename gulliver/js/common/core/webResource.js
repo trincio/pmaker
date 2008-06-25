@@ -21,7 +21,7 @@ function WebResource(uri,parameters,method)
       if (method==='POST') request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
       request.send(((method==='GET')? null : data));
       var type=request.getResponseHeader('Content-Type');
-      var reType=/\w+\/\w+/
+      var reType=/\w+\/\w+/;
       var maType=reType.exec(type);
       type=maType?maType[0]:'';//type.split(String.fromCharCode(9)).join("").trim();
   	}catch(ss)
