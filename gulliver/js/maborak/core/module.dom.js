@@ -173,6 +173,7 @@ leimnud.Package.Public({
 		},
 		methods:function(dom)
 		{
+			if(!dom){return false;}
 			this.dom = dom;
 			this.dom.dom = this.dom;
 			this.dom.append = function()

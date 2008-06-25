@@ -1439,7 +1439,7 @@ leimnud.Package.Public({
 					this.tab.diffWidthBugPadding = ((this.parent.browser.isIE)?0:20);
 					this.elements.tabOptions=[];
 					var lastBul = 0;
-					for(var	i=0;i<this.tab.options.length;i++)
+					for(var i=0;i<this.tab.options.length;i++)
 					{
 						var opH = this.tab.initIn+(this.tab.step*i)+(this.tab.optHeight*i);
 						//var opW = beginLeft+this.tab.initIn+(this.tab.step*i)+((this.tab.optWidth-this.tab.diffWidthBugPadding)*i);
