@@ -2,7 +2,7 @@ msgid ""
 msgstr "" 
 "Project-Id-Version: PM 4.0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-06-16 10:05+0100 \n"
+"PO-Revision-Date: 2008-06-25 12:03+0100 \n"
 "Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
 "Language-Team: Colosa Developers Team <developers@colosa.com>\n"
 "MIME-Version: 1.0\n"
@@ -2353,6 +2353,24 @@ msgstr "Replace the value with url encoding"
 msgid "Replace the value for use in SQL sentences"
 msgstr "Replace the value for use in SQL sentences"
 
+# TRANSLATION
+# LABEL/ID_REPLACE_WITHOUT_CHANGES
+#: LABEL/ID_REPLACE_WITHOUT_CHANGES
+msgid "Replace the value without changes"
+msgstr "Replace the value without changes"
+
+# TRANSLATION
+# JAVASCRIPT/ID_REMOVE
+#: JAVASCRIPT/ID_REMOVE
+msgid "[JAVASCRIPT/ID_REMOVE] Remove"
+msgstr "Remove"
+
+# TRANSLATION
+# JAVASCRIPT/ID_CONFIRM_REMOVE_DASHBOARD
+#: JAVASCRIPT/ID_CONFIRM_REMOVE_DASHBOARD
+msgid "Are you sure you want to remove this dashboard?"
+msgstr "Are you sure you want to remove this dashboard?"
+
 # messages/messages_Edit.xml?MESS_TITLE
 # messages/messages_Edit.xml
 #: text - MESS_TITLE
@@ -2814,6 +2832,12 @@ msgstr "Create date"
 #: text - ROL_UPDATE_DATE
 msgid "Update date"
 msgstr "Update date"
+
+# dbConnections/dbConnections_Edit.xml?DBS_UID
+# dbConnections/dbConnections_Edit.xml
+#: text - DBS_UID
+msgid "UID"
+msgstr "UID"
 
 # dbConnections/dbConnections_Edit.xml?DBS_SERVER
 # dbConnections/dbConnections_Edit.xml
@@ -5653,6 +5677,36 @@ msgstr "Description"
 msgid "[inputdocs/inputdocs_Edit.xml?ACCEPT] Save"
 msgstr "Save"
 
+# dashboard/dashboard_AvailableDashboards.xml?TITLE
+# dashboard/dashboard_AvailableDashboards.xml
+#: title - TITLE
+msgid "Add availables charts or reports"
+msgstr "Add availables charts or reports"
+
+# dashboard/dashboard_AvailableDashboards.xml?DASHBOARD
+# dashboard/dashboard_AvailableDashboards.xml
+#: dropdown - DASHBOARD
+msgid "Chart or Report"
+msgstr "Chart or Report"
+
+# dashboard/dashboard_AvailableDashboards.xml?ADD
+# dashboard/dashboard_AvailableDashboards.xml
+#: button - ADD
+msgid "[dashboard/dashboard_AvailableDashboards.xml?ADD] Add"
+msgstr "Add"
+
+# dashboard/dashboard_NoAvailableDashboards.xml?TITLE
+# dashboard/dashboard_NoAvailableDashboards.xml
+#: title - TITLE
+msgid "No availables charts or reports"
+msgstr "No availables charts or reports"
+
+# dashboard/dashboard_NoAvailableDashboards.xml?CLOSE
+# dashboard/dashboard_NoAvailableDashboards.xml
+#: button - CLOSE
+msgid "Close"
+msgstr "Close"
+
 # reportTables/reportTables_Edit.xml?TITLE
 # reportTables/reportTables_Edit.xml
 #: title - TITLE
@@ -5755,6 +5809,12 @@ msgstr "Output Document Information"
 msgid "[outputdocs/outputdocs_Edit.xml?OUT_DOC_TITLE] Title"
 msgstr "Title"
 
+# outputdocs/outputdocs_Edit.xml?OUT_DOC_FILENAME
+# outputdocs/outputdocs_Edit.xml
+#: textpm - OUT_DOC_FILENAME
+msgid "Filename generated"
+msgstr "Filename generated"
+
 # outputdocs/outputdocs_Edit.xml?OUT_DOC_DESCRIPTION
 # outputdocs/outputdocs_Edit.xml
 #: textarea - OUT_DOC_DESCRIPTION
@@ -5800,7 +5860,7 @@ msgstr "Apply Filter"
 # processes/processes_Search.xml?PRO_UID
 # processes/processes_Search.xml
 #: text - PRO_UID
-msgid "UID"
+msgid "[processes/processes_Search.xml?PRO_UID] UID"
 msgstr "UID"
 
 # processes/processes_Search.xml?PRO_TITLE
@@ -5979,7 +6039,7 @@ msgstr "Title"
 
 # processes/processes_List.xml?PRO_DESCRIPTION
 # processes/processes_List.xml
-#: textarea - PRO_DESCRIPTION
+#: text - PRO_DESCRIPTION
 msgid "[processes/processes_List.xml?PRO_DESCRIPTION] Description"
 msgstr "Description"
 
@@ -7737,7 +7797,7 @@ msgstr "Code"
 
 # setup/languages.xml?LAN_NAME
 # setup/languages.xml
-#: textarea - LAN_NAME
+#: text - LAN_NAME
 msgid "Language"
 msgstr "Language"
 
@@ -8017,6 +8077,24 @@ msgstr "Message"
 msgid "SendMessage"
 msgstr "SendMessage"
 
+# setup/wsTaskCase.xml?SESSION_ID
+# setup/wsTaskCase.xml
+#: text - SESSION_ID
+msgid "[setup/wsTaskCase.xml?SESSION_ID] Session Id"
+msgstr "Session Id"
+
+# setup/wsTaskCase.xml?CASE_ID
+# setup/wsTaskCase.xml
+#: dropdown - CASE_ID
+msgid "[setup/wsTaskCase.xml?CASE_ID] Case ID"
+msgstr "Case ID"
+
+# setup/wsTaskCase.xml?ACTION
+# setup/wsTaskCase.xml
+#: button - ACTION
+msgid "TaskCase"
+msgstr "TaskCase"
+
 # setup/wsLogin.xml?USER_ID
 # setup/wsLogin.xml
 #: text - USER_ID
@@ -8053,6 +8131,18 @@ msgstr "File"
 msgid "[setup/pluginImport.xml?SAVE] Import"
 msgstr "Import"
 
+# setup/wsTaskList.xml?SESSION_ID
+# setup/wsTaskList.xml
+#: text - SESSION_ID
+msgid "[setup/wsTaskList.xml?SESSION_ID] Session Id"
+msgstr "Session Id"
+
+# setup/wsTaskList.xml?ACTION
+# setup/wsTaskList.xml
+#: button - ACTION
+msgid "TaskList"
+msgstr "TaskList"
+
 # setup/wsRoleList.xml?SESSION_ID
 # setup/wsRoleList.xml
 #: text - SESSION_ID
@@ -8079,7 +8169,7 @@ msgstr "Process ID"
 
 # setup/wsNewCase.xml?TASK_ID
 # setup/wsNewCase.xml
-#: text - TASK_ID
+#: dropdown - TASK_ID
 msgid "Task ID"
 msgstr "Task ID"
 
@@ -8122,7 +8212,7 @@ msgstr "@#MESSAGE_VALUE"
 # setup/emails_Sended.xml?ClOSE
 # setup/emails_Sended.xml
 #: button - ClOSE
-msgid "Close"
+msgid "[setup/emails_Sended.xml?ClOSE] Close"
 msgstr "Close"
 
 # setup/wsShowResult.xml?status_code
@@ -8160,6 +8250,18 @@ msgstr "ProcessList"
 #: subtitle - MESSAGE
 msgid "No processes available for this environment"
 msgstr "No processes available for this environment"
+
+# setup/wsVariablesGrid.xml?NAME
+# setup/wsVariablesGrid.xml
+#: text - NAME
+msgid "[setup/wsVariablesGrid.xml?NAME] Name"
+msgstr "Name"
+
+# setup/wsVariablesGrid.xml?VALUE
+# setup/wsVariablesGrid.xml
+#: text - VALUE
+msgid "[setup/wsVariablesGrid.xml?VALUE] Value"
+msgstr "Value"
 
 # setup/holidayList.xml?UID
 # setup/holidayList.xml
@@ -8245,11 +8347,29 @@ msgstr "Process ID"
 msgid "[setup/wsNewCaseImpersonate.xml?USER_ID] User ID"
 msgstr "User ID"
 
-# setup/wsNewCaseImpersonate.xml?VARIABLES
+# setup/wsNewCaseImpersonate.xml?NAME1
 # setup/wsNewCaseImpersonate.xml
-#: textarea - VARIABLES
-msgid "Variables"
-msgstr "Variables"
+#: text - NAME1
+msgid "[setup/wsNewCaseImpersonate.xml?NAME1] Name 1"
+msgstr "Name 1"
+
+# setup/wsNewCaseImpersonate.xml?VALUE1
+# setup/wsNewCaseImpersonate.xml
+#: text - VALUE1
+msgid "[setup/wsNewCaseImpersonate.xml?VALUE1] Value 1"
+msgstr "Value 1"
+
+# setup/wsNewCaseImpersonate.xml?NAME2
+# setup/wsNewCaseImpersonate.xml
+#: text - NAME2
+msgid "[setup/wsNewCaseImpersonate.xml?NAME2] Name 2"
+msgstr "Name 2"
+
+# setup/wsNewCaseImpersonate.xml?VALUE2
+# setup/wsNewCaseImpersonate.xml
+#: text - VALUE2
+msgid "[setup/wsNewCaseImpersonate.xml?VALUE2] Value 2"
+msgstr "Value 2"
 
 # setup/wsNewCaseImpersonate.xml?ACTION
 # setup/wsNewCaseImpersonate.xml
@@ -8592,6 +8712,12 @@ msgstr "Session Id"
 #: dropdown - CASE_ID
 msgid "[setup/wsDerivateCase.xml?CASE_ID] Case ID"
 msgstr "Case ID"
+
+# setup/wsDerivateCase.xml?DEL_INDEX
+# setup/wsDerivateCase.xml
+#: dropdown - DEL_INDEX
+msgid "Task Case(delindex)"
+msgstr "Task Case(delindex)"
 
 # setup/wsDerivateCase.xml?ACTION
 # setup/wsDerivateCase.xml
@@ -9643,6 +9769,12 @@ msgstr "Allow arbitrary transfer (Ad hoc)"
 msgid "After derivation notify to each next user"
 msgstr "After derivation notify to each next user"
 
+# tasks/tasks_Notifications.xml?TAS_DEF_MESSAGE
+# tasks/tasks_Notifications.xml
+#: textareapm - TAS_DEF_MESSAGE
+msgid "[tasks/tasks_Notifications.xml?TAS_DEF_MESSAGE] Message"
+msgstr "Message"
+
 # tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_TYPE
 # tasks/tasks_AssignmentRules.xml
 #: radiogroup - TAS_ASSIGN_TYPE
@@ -9666,6 +9798,30 @@ msgstr "Manual Assignment"
 #: radiogroup - TAS_ASSIGN_TYPE - EVALUATE
 msgid "[tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_TYPE-EVALUATE]"
 msgstr "Value Based Assignment"
+
+# tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_VARIABLE
+# tasks/tasks_AssignmentRules.xml
+#: textpm - TAS_ASSIGN_VARIABLE
+msgid "Variable for Value Based Assignment"
+msgstr "Variable for Value Based Assignment"
+
+# tasks/tasks_Labels.xml?TAS_DEF_TITLE
+# tasks/tasks_Labels.xml
+#: textareapm - TAS_DEF_TITLE
+msgid "Case Title"
+msgstr "Case Title"
+
+# tasks/tasks_Labels.xml?TAS_DEF_DESCRIPTION
+# tasks/tasks_Labels.xml
+#: textareapm - TAS_DEF_DESCRIPTION
+msgid "Case Description"
+msgstr "Case Description"
+
+# tasks/tasks_Labels.xml?TAS_DEF_PROC_CODE
+# tasks/tasks_Labels.xml
+#: textareapm - TAS_DEF_PROC_CODE
+msgid "Case Status"
+msgstr "Case Status"
 
 # tasks/tasks_Owner.xml?TAS_OWNER_APP
 # tasks/tasks_Owner.xml
@@ -9798,6 +9954,12 @@ msgstr "Title"
 #: textarea - TAS_DESCRIPTION
 msgid "[tasks/tasks_Definition.xml?TAS_DESCRIPTION] Description"
 msgstr "Description"
+
+# tasks/tasks_Definition.xml?TAS_PRIORITY_VARIABLE
+# tasks/tasks_Definition.xml
+#: textpm - TAS_PRIORITY_VARIABLE
+msgid "Variable for Case priority"
+msgstr "Variable for Case priority"
 
 # tasks/tasks_Definition.xml?TAS_START
 # tasks/tasks_Definition.xml
@@ -11620,7 +11782,7 @@ msgstr "Case Resume"
 # cases/cases_Resume.xml?TITLE
 # cases/cases_Resume.xml
 #: text - TITLE
-msgid "Case Title"
+msgid "[cases/cases_Resume.xml?TITLE] Case Title"
 msgstr "Case Title"
 
 # cases/cases_Resume.xml?CREATOR
@@ -11644,7 +11806,7 @@ msgstr "Last Update"
 # cases/cases_Resume.xml?STATUS
 # cases/cases_Resume.xml
 #: text - STATUS
-msgid "Case Status"
+msgid "[cases/cases_Resume.xml?STATUS] Case Status"
 msgstr "Case Status"
 
 # cases/cases_Resume.xml?DEL_THREAD_STATUS
@@ -11688,6 +11850,12 @@ msgstr "Name"
 #: submit - NW_SUB
 msgid "[login/newSite.xml?NW_SUB] Create"
 msgstr "Create"
+
+# login/nologin.xml?subtitle
+# login/nologin.xml
+#: subtitle - subtitle
+msgid "subtitle"
+msgstr ""
 
 # login/nologin.xml?BSUBMIT
 # login/nologin.xml
@@ -11929,6 +12097,12 @@ msgstr "Documentation"
 msgid "[steps/steps_availableBB.xml?STEP_TYPE_OBJ-EXTERNAL]"
 msgstr "External Step"
 
+# steps/conditions_Edit.xml?STEP_CONDITION
+# steps/conditions_Edit.xml
+#: textareapm - STEP_CONDITION
+msgid "[steps/conditions_Edit.xml?STEP_CONDITION] Condition"
+msgstr "Condition"
+
 # steps/conditions_Edit.xml?ACCEPT
 # steps/conditions_Edit.xml
 #: button - ACCEPT
@@ -12049,6 +12223,12 @@ msgstr "All the triggers available were assigned!"
 msgid "[steps/triggers_NoAssign.xml?ClOSE] Close"
 msgstr "Close"
 
+# steps/triggersCondition_Edit.xml?ST_CONDITION
+# steps/triggersCondition_Edit.xml
+#: textareapm - ST_CONDITION
+msgid "[steps/triggersCondition_Edit.xml?ST_CONDITION] Condition"
+msgstr "Condition"
+
 # steps/triggersCondition_Edit.xml?SAVE
 # steps/triggersCondition_Edit.xml
 #: button - SAVE
@@ -12066,6 +12246,12 @@ msgstr "Next Task"
 #: dropdown - ROU_NEXT_TASK - -1
 msgid "[patterns/patterns_GridEvaluateType.xml?ROU_NEXT_TASK--1]"
 msgstr "End of process"
+
+# patterns/patterns_GridEvaluateType.xml?ROU_CONDITION
+# patterns/patterns_GridEvaluateType.xml
+#: textpm - ROU_CONDITION
+msgid "[patterns/patterns_GridEvaluateType.xml?ROU_CONDITION] Condition"
+msgstr "Condition"
 
 # patterns/patterns_Select.xml?TITLE
 # patterns/patterns_Select.xml
