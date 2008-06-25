@@ -23,7 +23,7 @@ function G_Tree() {
     while(element.nodeName!='BODY') {
       if (element.getAttribute('name')) {
         if (element.getAttribute('name').substr(0,9)==='treeNode[') {
-          var regexp = /^treeNode\[[^\]]+\]\[([^\]]+)\]$/
+          var regexp = /^treeNode\[[^\]]+\]\[([^\]]+)\]$/;
           result = regexp.exec(element.getAttribute('name'));
           if (!(result && result.length>=2)) return false;
           //Now element is the TR of the current node.
@@ -59,9 +59,9 @@ this.expand=function( element ){
     //me.lastSelected.cells[1].filters['Light'].addAmbient(155,155,155,255);
     me.lastSelectedClassName=me.lastSelected.cells[1].className;
     me.lastSelected.cells[1].className="treeNodeSelected";
-  }
+  };
   this.refresh=function( div , server ) {
     div.innerHTML = ajax_function( server ,'','' );
-  }
+  };
 };
 var tree = new G_Tree();

@@ -69,4 +69,4 @@ var cases=function()
 		//this.panels.list.make();
 	}
 	this.expand(this);
-}
+};
