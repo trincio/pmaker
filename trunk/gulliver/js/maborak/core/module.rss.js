@@ -589,7 +589,7 @@ leimnud.Package.Public({
 				content:{padding:10,background:"transparent",borderWidth:0,overflow:"hidden"}
 			};
 			myPanel.make();
-			var table = document.createElement("table");
+			var table = $dce("table");
 			myPanel.addContent(table);
 			table.className="app_grid_table___"+this.options.theme;
 			var url,title,probe;

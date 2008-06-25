@@ -128,7 +128,7 @@ var samp = function()
 						search	:true,
 						data	:rpc.xmlhttp.responseText.parseJSON()
 					});
-					var dv = document.createElement("div");
+					var dv = $dce("div");
 					myPanel.addContent(dv);
 					var r = new leimnud.module.rpc.xmlhttp({url:"ex.grid.php"});
 					r.callback=function(rpc){

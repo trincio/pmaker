@@ -7,7 +7,7 @@ var G_Grid = function(oForm, sGridName)
   //G_Field integration - End
 	this.sGridName  = sGridName;
 	this.sAJAXPage  = oForm.ajaxServer || '';
-	this.oGrid      = document.getElementById(this.sGridName);
+	this.oGrid      = $(this.sGridName);
 	this.aFields    = [];
 	this.aElements  = [];
 	this.aFunctions = [];
@@ -22,9 +22,9 @@ var G_Grid = function(oForm, sGridName)
 			switch (this.aFields[i].sType)
 			{
 				case 'text':
-				  while (oAux = document.getElementById('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'))
+				  while (oAux = $('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'))
    		    {
-   		    	this.aElements.push(new G_Text(oForm, document.getElementById('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'), 'form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'));
+   		    	this.aElements.push(new G_Text(oForm, $('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'), 'form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'));
    		    	if (aFields[i].sDependentFields)
 			      {
 			      	aAux = aFields[i].sDependentFields.split(',');
@@ -44,9 +44,9 @@ var G_Grid = function(oForm, sGridName)
    		    }
 				break;
 				case 'currency':
-				  while (oAux = document.getElementById('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'))
+				  while (oAux = $('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'))
    		    {
-   		    	this.aElements.push(new G_Currency(oForm, document.getElementById('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'), 'form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'));
+   		    	this.aElements.push(new G_Currency(oForm, $('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'), 'form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'));
    		    	if (aFields[i].sDependentFields)
 			      {
 			      	aAux = aFields[i].sDependentFields.split(',');
@@ -66,9 +66,9 @@ var G_Grid = function(oForm, sGridName)
    		    }
 				break;
 				case 'percentage':
-				  while (oAux = document.getElementById('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'))
+				  while (oAux = $('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'))
    		    {
-   		    	this.aElements.push(new G_Percentage(oForm, document.getElementById('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'), 'form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'));
+   		    	this.aElements.push(new G_Percentage(oForm, $('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'), 'form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'));
    		    	if (aFields[i].sDependentFields)
 			      {
 			      	aAux = aFields[i].sDependentFields.split(',');
@@ -88,9 +88,9 @@ var G_Grid = function(oForm, sGridName)
    		    }
 				break;
 				case 'dropdown':
-				  while (oAux = document.getElementById('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'))
+				  while (oAux = $('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'))
    		    {
-   		    	this.aElements.push(new G_DropDown(oForm, document.getElementById('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'), 'form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'));
+   		    	this.aElements.push(new G_DropDown(oForm, $('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'), 'form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'));
    		    	if (aFields[i].sDependentFields)
 			      {
 			      	aAux = aFields[i].sDependentFields.split(',');
@@ -130,7 +130,7 @@ var G_Grid = function(oForm, sGridName)
   };
   this.getElementValueByName = function(iRow, sName)
   {
-    var oAux = document.getElementById('form[' + this.sGridName + '][' + iRow + '][' + sName + ']');
+    var oAux = $('form[' + this.sGridName + '][' + iRow + '][' + sName + ']');
     if (oAux)
   	{
   		return oAux.value;
@@ -142,7 +142,7 @@ var G_Grid = function(oForm, sGridName)
   };
   this.getFunctionResult = function(sName)
   {
-  	var oAux = document.getElementById('form[SYS_GRID_AGGREGATE_' + this.sGridName + '_' + sName + ']');
+  	var oAux = $('form[SYS_GRID_AGGREGATE_' + this.sGridName + '_' + sName + ']');
   	if (oAux)
   	{
   		return oAux.value;
@@ -155,7 +155,7 @@ var G_Grid = function(oForm, sGridName)
   this.addGridRow = function()
   {
   	var i, aObjects;
-  	var oRow     = document.getElementById('firstRow_' + this.sGridName);
+  	var oRow     = $('firstRow_' + this.sGridName);
   	var aCells   = oRow.getElementsByTagName('td');
   	var oNewRow  = this.oGrid.insertRow(this.oGrid.rows.length - 1);
   	for (i = 0; i < aCells.length; i++)
@@ -326,7 +326,7 @@ var G_Grid = function(oForm, sGridName)
         {
         	for (i = 0; i < this.aFunctions.length; i++)
         	{
-        		oAux = document.getElementById('form[' + this.sGridName + '][1][' + this.aFunctions[i].sFieldName + ']');
+        		oAux = $('form[' + this.sGridName + '][1][' + this.aFunctions[i].sFieldName + ']');
         		if (oAux)
         		{
         			switch (this.aFunctions[i].sFunction)
@@ -361,7 +361,7 @@ var G_Grid = function(oForm, sGridName)
    	for (i = 0; i < aFields.length; i++)
    	{
    		j = iRow;
-   		while (oAux = document.getElementById('form[' + this.sGridName + '][' + j + '][' + aFields[i].sFieldName + ']'))
+   		while (oAux = $('form[' + this.sGridName + '][' + j + '][' + aFields[i].sFieldName + ']'))
    		{
    			switch (aFields[i].sFunction)
    			{
@@ -398,9 +398,9 @@ var G_Grid = function(oForm, sGridName)
   		sMask   = oAux.mask;
   		i++;
   	}
-  	oAux           = document.getElementById('form[SYS_GRID_AGGREGATE_' + oGrid.sGridName + '_' + aAux[2] + ']');
+  	oAux           = $('form[SYS_GRID_AGGREGATE_' + oGrid.sGridName + '_' + aAux[2] + ']');
   	oAux.value     = fTotal;
-  	oAux           = document.getElementById('form[SYS_GRID_AGGREGATE_' + oGrid.sGridName + '__' + aAux[2] + ']');
+  	oAux           = $('form[SYS_GRID_AGGREGATE_' + oGrid.sGridName + '__' + aAux[2] + ']');
   	//oAux.innerHTML = G.toMask(fTotal, sMask).result;
   	oAux.innerHTML = fTotal;
   };
@@ -421,17 +421,17 @@ var G_Grid = function(oForm, sGridName)
   	i--;
   	if (fTotal > 0)
   	{
-  	  oAux           = document.getElementById('form[SYS_GRID_AGGREGATE_' + oGrid.sGridName + '_' + aAux[2] + ']');
+  	  oAux           = $('form[SYS_GRID_AGGREGATE_' + oGrid.sGridName + '_' + aAux[2] + ']');
   	  oAux.value     = (fTotal / i);
-  	  oAux           = document.getElementById('form[SYS_GRID_AGGREGATE_' + oGrid.sGridName + '__' + aAux[2] + ']');
+  	  oAux           = $('form[SYS_GRID_AGGREGATE_' + oGrid.sGridName + '__' + aAux[2] + ']');
   	  //oAux.innerHTML = G.toMask((fTotal / i), sMask).result;
   	  oAux.innerHTML = fTotal;
     }
     else
     {
-    	oAux           = document.getElementById('form[SYS_GRID_AGGREGATE_' + oGrid.sGridName + '_' + aAux[2] + ']');
+    	oAux           = $('form[SYS_GRID_AGGREGATE_' + oGrid.sGridName + '_' + aAux[2] + ']');
   	  oAux.value     = 0;
-  	  oAux           = document.getElementById('form[SYS_GRID_AGGREGATE_' + oGrid.sGridName + '__' + aAux[2] + ']');
+  	  oAux           = $('form[SYS_GRID_AGGREGATE_' + oGrid.sGridName + '__' + aAux[2] + ']');
   	  //oAux.innerHTML = G.toMask(0, sMask).result;
   	  oAux.innerHTML = 0;
     }
@@ -443,7 +443,7 @@ var G_Grid = function(oForm, sGridName)
    	for (i = 0; i < aFields.length; i++)
    	{
    		j = iRow;
-   		while (oAux = document.getElementById('form[' + this.sGridName + '][' + j + '][' + aFields[i].sDependentOf + ']'))
+   		while (oAux = $('form[' + this.sGridName + '][' + j + '][' + aFields[i].sDependentOf + ']'))
    		{
    			leimnud.event.add(oAux, sEvent, {
    				method:this.evaluateFormula,
@@ -481,19 +481,19 @@ var G_Grid = function(oForm, sGridName)
   		{
   		  oAux = this.getElementByName(aAux[1], aFields[i]);
   		  sAux = sAux.replace(aFields[i], "parseFloat(G.cleanMask(this.getElementByName(" + aAux[1] + ", '" + aFields[i] + "').value() || 0, '" + (oAux.sMask ? oAux.sMask : '') + "').result)");
-  		  eval("if (!document.getElementById('" + aAux[0] + '][' + aAux[1] + '][' + aFields[i] + "]')) { oContinue = false; }");
+  		  eval("if (!$('" + aAux[0] + '][' + aAux[1] + '][' + aFields[i] + "]')) { oContinue = false; }");
   	  }
   	}
-  	eval("if (!document.getElementById('" + aAux[0] + '][' + aAux[1] + '][' + oField.sFieldName + "]')) { oContinue = false; }");
+  	eval("if (!$('" + aAux[0] + '][' + aAux[1] + '][' + oField.sFieldName + "]')) { oContinue = false; }");
   	if (oContinue)
   	{
-  		eval("document.getElementById('" + aAux[0] + '][' + aAux[1] + '][' + oField.sFieldName + "]').value = " + sAux + ';');
-  		//eval("document.getElementById('" + aAux[0] + '][' + aAux[1] + '][' + oField.sFieldName + "]').value");
+  		eval("$('" + aAux[0] + '][' + aAux[1] + '][' + oField.sFieldName + "]').value = " + sAux + ';');
+  		//eval("$('" + aAux[0] + '][' + aAux[1] + '][' + oField.sFieldName + "]').value");
   		if (this.aFunctions.length > 0)
       {
       	for (i = 0; i < this.aFunctions.length; i++)
       	{
-      		oAux = document.getElementById('form[' + this.sGridName + '][1][' + this.aFunctions[i].sFieldName + ']');
+      		oAux = $('form[' + this.sGridName + '][1][' + this.aFunctions[i].sFieldName + ']');
       		if (oAux)
       		{
       			if (oAux.name == aAux[0] + '][' + aAux[1] + '][' + oField.sFieldName + ']')

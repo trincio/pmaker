@@ -2,7 +2,7 @@ function DVEditor(where,body,oHiddenInput,height)
 {
   var me=this;
   var hiddenInput=oHiddenInput;
-  var iframe=document.createElement("iframe");
+  var iframe=$dce("iframe");
   //NOTE: className no funciona en FIREFOX
   iframe.style.width="100%";
   iframe.style.height=height;
@@ -20,7 +20,7 @@ function DVEditor(where,body,oHiddenInput,height)
   {
     var doc=iframe.contentDocument;
   }
-  var _header=document.createElement("head");// head.cloneNode(true);
+  var _header=$dce("head");// head.cloneNode(true);
   for(var i=0;i<head.childNodes.length;i++) {
     try{
       if ((head.childNodes[i].tagName==='LINK')&&

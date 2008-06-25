@@ -16,7 +16,7 @@ leimnud.Package.Public({
 					type	:"button",
 					value	:label || "Button"
 				}.concat(prop || {}),style || {});
-/*				this.button = document.createElement("input");
+/*				this.button = $dce("input");
 				this.button.className="module_app_button___gray";
 				this.button.type="button";
 				this.button.value=label || "Button";*/
@@ -166,7 +166,7 @@ leimnud.Package.Public({
 		},
 		create:function(dom,properties,style)
 		{
-			this.dom = document.createElement(dom);
+			this.dom = $dce(dom);
 			this.parent.dom.setProperties(this.dom,properties || {});
 			this.parent.dom.setStyle(this.dom,style || {});
 			return new this.parent.module.dom.methods(this.dom);
@@ -196,6 +196,19 @@ leimnud.Package.Public({
 			}.extend(this);
 
 			return this.dom;
+		},
+		radioByValue:function(param)
+		{
+			var radio_name=$n(param.name) || false;
+			var radio_value=param.value || false;
+			for(var i=0;i<radio_name.length;i++)
+			{
+				if(radio_name[i].value==radio_value)
+				{
+					return radio_name[i];
+				}
+			}
+			return false;
 		}
 	}
 });

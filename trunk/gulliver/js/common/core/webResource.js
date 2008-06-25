@@ -49,7 +49,7 @@ function WebResource(uri,parameters,method)
               window.setTimeout( request.responseText, 0 );
           break;
         case "text/html":
-          response=document.createElement('div');
+          response=$dce('div');
           response.innerHTML=request.responseText;
           break;
       }

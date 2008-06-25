@@ -18,7 +18,7 @@ leimnud.Package.Public({
 				this.elements	= [];
 				for(var i=0;i<5;i++)
 				{
-					var a = document.createElement("div");
+					var a = $dce("div");
 					this.parent.dom.setStyle(a,{
 						position	:"absolute",
 						width		:this.options.size || 1,
@@ -31,7 +31,7 @@ leimnud.Package.Public({
 					this.options.target.appendChild(a);
 					this.elements.push(a);
 				}
-				var b= document.createElement("img");
+				var b= $dce("img");
 				b.src=this.options.arrow || this.parent.info.base+"/images/arrowB.gif";
 				this.parent.dom.setStyle(b,{
 					position:"absolute",
@@ -291,9 +291,9 @@ leimnud.Package.Public({
 				this.maked=true;
 				this.cursor	= this.parent.dom.mouse(evt);
 				this.positionTarget =	this.parent.dom.position(this.options.target);
-				this.elements.shadow = document.createElement("div");
+				this.elements.shadow = $dce("div");
 				this.elements.shadow.className = "app_menuRight_shadow___"+this.options.theme;
-				this.elements.container = document.createElement("div");
+				this.elements.container = $dce("div");
 				this.elements.container.className = "app_menuRight_container___"+this.options.theme;
 				this.parent.dom.setStyle(this.elements.container,{
 					width:this.options.width || 150,
@@ -319,10 +319,10 @@ leimnud.Package.Public({
 				{
 					if(this.options.menu[i].separator!==true)
 					{
-						var dv=document.createElement("div");
+						var dv=$dce("div");
 						dv.className = "app_menuRight_option___"+this.options.theme;
 						this.elements.container.appendChild(dv);
-						var spI=document.createElement("div");
+						var spI=$dce("div");
 						spI.innerHTML="";
 						spI.className = "app_menuRight_option_image___"+this.options.theme;
 						this.parent.dom.setStyle(spI,{
@@ -333,13 +333,13 @@ leimnud.Package.Public({
 						var im;
 						if(this.options.menu[i].image)
 						{
-							im = document.createElement("img");
+							im = $dce("img");
 							im.className="app_menuRight_option_image_element___"+this.options.theme;
 							im.src=this.options.menu[i].image;
 							spI.appendChild(im);
 						}
 
-						var spT=document.createElement("div");
+						var spT=$dce("div");
 						spT.className = "app_menuRight_option_text___"+this.options.theme;
 						spT.innerHTML=this.options.menu[i].text || "";
 						dv.appendChild(spT);
@@ -361,16 +361,16 @@ leimnud.Package.Public({
 					}
 					else
 					{
-						var dv=document.createElement("div");
+						var dv=$dce("div");
 						dv.className = "app_menuRight_optionNull___"+this.options.theme;
 						this.elements.container.appendChild(dv);
 
-						var spI=document.createElement("div");
+						var spI=$dce("div");
 						spI.innerHTML="";
 						spI.className = "app_menuRight_option_imageNull___"+this.options.theme;
 						dv.appendChild(spI);
 
-						var sep=document.createElement("div");
+						var sep=$dce("div");
 						sep.className = "app_menuRight_separator___"+this.options.theme;
 						dv.appendChild(sep);
 						this.parent.dom.setStyle([dv,sep],{
@@ -502,7 +502,7 @@ leimnud.Package.Public({
 					images:[]
 				}.concat(options || {});
 				this.windowImage();
-				this.image=document.createElement("img");
+				this.image=$dce("img");
 				this.image.id=this.id;
 				this.panel.elements.content.appendChild(this.image);
 				this.load(this.options.initIn);
@@ -590,30 +590,30 @@ leimnud.Package.Public({
 			this.buttons=function()
 			{
 				var target	 = this.panel.elements.statusBar;
-				var end		 = document.createElement("div");
+				var end		 = $dce("div");
 				this.parent.dom.setStyle(end,{
 					right	:5
 				});
-				var next	 = document.createElement("div");
+				var next	 = $dce("div");
 				this.parent.dom.setStyle(next,{
 					right	:parseInt(end.style.right,10)+20
 				});
-				var play	 = document.createElement("div");
+				var play	 = $dce("div");
 				this.parent.dom.setStyle(play,{
 					right	:parseInt(next.style.right,10)+20
 				});
-				var prev	 = document.createElement("div");
+				var prev	 = $dce("div");
 				this.parent.dom.setStyle(prev,{
 					right	:parseInt(play.style.right,10)+20
 				});
-				var begin	 = document.createElement("div");
+				var begin	 = $dce("div");
 				this.parent.dom.setStyle(begin,{
 					right	:parseInt(prev.style.right,10)+20
 				});
 				var title;
-				this.domTitle = title = document.createElement("div");
+				this.domTitle = title = $dce("div");
 				var counter;
-				this.domCounter = counter= document.createElement("div");
+				this.domCounter = counter= $dce("div");
 				target.appendChild(end);
 				target.appendChild(next);
 				target.appendChild(play);
@@ -706,7 +706,7 @@ leimnud.Package.Public({
 				//alert(this.options.target)
 				this.windowImage();
 				this.toolbarImage();
-				this.image=document.createElement("img");
+				this.image=$dce("img");
 				this.panel.elements.content.appendChild(this.image);
 				this.load(this.options.initIn);
 				this.current=this.options.initIn;
@@ -797,8 +797,8 @@ leimnud.Package.Public({
 			};
 			this.toolbarImage=function()
 			{
-				this.toolbar = document.createElement("div");
-				var div = document.createElement("div");
+				this.toolbar = $dce("div");
+				var div = $dce("div");
 				var thu = this.options.thumbnail;
 				var g = this.options.thumbnail.images.length;
 				var h = 4-(g % 4);
@@ -830,7 +830,7 @@ leimnud.Package.Public({
 				this.elements.thumbs=[];
 				for(var i=0;i<this.options.thumbnail.images.length;i++)
 				{
-					var image = document.createElement("img");
+					var image = $dce("img");
 					image.src=this.options.thumbnail.images[i].src;
 					div.appendChild(image);
 					this.parent.dom.setStyle(image,{
@@ -840,7 +840,7 @@ leimnud.Package.Public({
 						cursor	:"pointer",
 						height	:thu.size.h
 					});
-					this.parent.dom.opacity(image,50)
+					this.parent.dom.opacity(image,50);
 					image.onmouseup=this.load.args(i);
 					this.elements.thumbs.push(image);
 				}
@@ -915,13 +915,13 @@ leimnud.Package.Public({
 						borderWidth:0,
 						margin:2
 					});
-					this.parent.dom.opacity(this.elements.thumbs[this.last],50)
+					this.parent.dom.opacity(this.elements.thumbs[this.last],50);
 				}
 				this.parent.dom.setStyle(this.elements.thumbs[index],{
 					border:"2px solid orange",
 					margin:0
 				});
-				this.parent.dom.opacity(this.elements.thumbs[index],100)
+				this.parent.dom.opacity(this.elements.thumbs[index],100);
 				this.last=index;
 				var image = new Image();
 				image.onload=this.show.args(image);
@@ -972,9 +972,9 @@ leimnud.Package.Public({
 			this.buttons=function()
 			{
 				var target	 = this.options.target;
-				this.footer	 = document.createElement("div");
+				this.footer	 = $dce("div");
 				target.appendChild(this.footer);
-				this.buttonNext	 = document.createElement("div");
+				this.buttonNext	 = $dce("div");
 				var rr = this.panel.elements.containerWindow;
 				this.parent.dom.setStyle(this.footer,{
 					position	: "absolute",
@@ -986,7 +986,7 @@ leimnud.Package.Public({
 					zIndex		:this.panel.elements.containerWindow.style.zIndex
 				});
 				//alert(this.panel.options.position.y+rr.offsetHeight)
-				this.buttonPrevious = document.createElement("div");
+				this.buttonPrevious = $dce("div");
 				this.parent.dom.setStyle([this.buttonNext,this.buttonPrevious],{
 					position	: "absolute",
 					backgroundColor:"#006699",
@@ -995,7 +995,7 @@ leimnud.Package.Public({
 					height	: this.toolbar.clientHeight,
 					zIndex	: this.panel.elements.containerWindow.style.zIndex
 				});
-				/*var play	 = document.createElement("div");
+				/*var play	 = $dce("div");
 				this.parent.dom.setStyle(play,{
 				right	:parseInt(next.style.right,10)+20
 				});*/
@@ -1007,15 +1007,15 @@ leimnud.Package.Public({
 
 
 
-				/*var end		 = document.createElement("div");
+				/*var end		 = $dce("div");
 				this.parent.dom.setStyle(end,{
 				right	:5
 				});
-				var begin	 = document.createElement("div");
+				var begin	 = $dce("div");
 				this.parent.dom.setStyle(begin,{
 				right	:parseInt(prev.style.right,10)+20
 				});*/
-				this.domNext	 = document.createElement("img");
+				this.domNext	 = $dce("img");
 				this.domNext.src = this.options.skin_images+"next.png";
 				this.domNext.onmouseover = function()
 				{
@@ -1035,7 +1035,7 @@ leimnud.Package.Public({
 					left	:this.panel.options.position.x+295,
 					zIndex	:this.panel.elements.containerWindow.style.zIndex+1
 				});
-				this.domPlay	 = document.createElement("img");
+				this.domPlay	 = $dce("img");
 				this.control.setPlay();
 				this.parent.dom.setStyle(this.domPlay,{
 					position	: "absolute",
@@ -1047,7 +1047,7 @@ leimnud.Package.Public({
 					left	:this.panel.options.position.x+239,
 					zIndex	:this.panel.elements.containerWindow.style.zIndex+1
 				});
-				this.domPrev = document.createElement("img");
+				this.domPrev = $dce("img");
 				this.domPrev.src = this.options.skin_images+"back.png";
 				this.domPrev.onmouseover = function()
 				{
@@ -1069,9 +1069,9 @@ leimnud.Package.Public({
 				});
 
 				var counter;
-				this.domCounter = counter= document.createElement("div");
-				this.domTitle	= document.createElement("div");
-				this.domClose	= document.createElement("img");
+				this.domCounter = counter= $dce("div");
+				this.domTitle	= $dce("div");
+				this.domClose	= $dce("img");
 				this.domClose.src=this.options.skin_images+"close.gif";
 				this.parent.dom.setStyle(this.domClose,{
 					cursor	: "pointer"
@@ -1113,7 +1113,7 @@ leimnud.Package.Public({
 				//end.onmouseup	= this.control.last;
 				if(this.options.banner)
 				{
-					this.banner=document.createElement("img");
+					this.banner=$dce("img");
 					this.banner.src=this.options.banner;
 					this.options.target.appendChild(this.banner);
 				}
@@ -1445,7 +1445,7 @@ leimnud.Package.Public({
 				this.panel.make();
 				this.panel.addContent(this.options.label || "");
 				this.panel.addContent("<br>");
-				this.input = document.createElement("input");
+				this.input = $dce("input");
 				this.input.type="text"
 				this.parent.dom.setStyle(this.input,{
 					font:"normal 8pt Tahoma,MiscFixed",
@@ -1494,6 +1494,203 @@ leimnud.Package.Public({
 				}
 				this.panel.remove();
 				return false;
+			};
+			this.expand(this);
+		},
+		radioEvents:function()
+		{
+			this.makes=[];
+			this.add=function(param)
+			{
+				var radio=this.parent.module.dom.radioByValue({
+					name:param.name,
+					value:param.value}
+				);
+				var idName=param.name+param.value;
+				param.activated=false;
+				radio.id=idName;
+
+				/*leimnud.event.add(radio,"click",leimnud.aplication.event.launch);
+				
+				leimnud.aplication.event.dispatcher(
+				{
+					name:idName,no t
+					_function:this.engine,
+					arguments:{inst:this,options:param,radio:radio}
+				});*/
+				
+				radio.onclick=this.engine.args({options:param,radio:radio});
+				
+				if(param.make){this.makes[this.makes.length]=idName;}
+			};
+			this.engine=function(param)
+			{
+				/*var inst=param.arguments.inst;
+				
+				this.conditions(param.arguments.radio,param.arguments.options.event,true,false);
+				
+				if(param.arguments.options.revert)
+				{
+					var rv=param.arguments.options.revert.split(",");
+					for(var i=0;i<rv.length;i++)
+					{
+						inst.revert(rv[i],param.arguments);
+					}
+				}
+				else
+				{
+					param.arguments.options.activated=true;
+				}
+				inst.engineChilds(param.arguments.options.childs,false);*/
+				//var inst=param.arguments.inst;
+				
+				this.conditions(param.radio,param.options.event,true,false);
+				if(param.options.revert)
+				{
+					var rv=param.arguments.options.revert.split(",");
+					for(var i=0;i<rv.length;i++)
+					{
+						this.revert(rv[i],param);
+					}
+				}
+				else
+				{
+					param.options.activated=true;
+				}
+				this.engineChilds(param.options.childs,false);
+			};
+			this.engineChilds=function(childs,reverse)
+			{
+				if(childs)
+				{
+					var childs=childs.split(",");
+					for(var i=0;i<childs.length;i++)
+					{
+						var state=childs[i].split("|");
+						var r_name=state[0],r_value=state[1],r_action=state[2];
+						r_value=r_value.split("-");
+						for(var j=0;j<r_value.length;j++)
+						{
+							var r_adio=this.parent.module.dom.radioByValue({name:r_name,value:r_value[j]});
+							this.conditions(r_adio,r_action,false,reverse);
+						}
+					}
+				}
+			};
+			this.conditions=function(radio,action,probe,revert)
+			{
+				var revert = revert || false;
+				//alert(action)
+
+				if(action=="c")
+				{
+					if(revert)
+					{
+						radio.checked=false;
+					}else
+					{
+						radio.checked=true;
+					}
+					this.recursive(radio.id,action,probe);
+				}
+				else if(action=="d")
+				{
+					if(revert)
+					{
+						radio.disabled=false;
+					}else
+					{
+						radio.disabled=true;
+					}
+					this.recursive(radio.id,action,probe);
+				}
+				else if(action=="cd")
+				{
+					if(revert)
+					{
+						radio.disabled=false;
+					//	radio.checked=true;
+					}else
+					{
+						radio.disabled=true;
+						radio.checked=false;
+					}
+					this.recursive(radio.id,(revert)?"ce":"cd",probe);
+				}
+				else if(action=="ce")
+				{
+					if(revert)
+					{
+						radio.disabled=true;
+						//radio.checked=true;
+					}else
+					{
+						radio.disabled=false;
+						radio.checked=true;
+					}
+					this.recursive(radio.id,action,probe);
+				}
+				else if(action=="u")
+				{
+					if(revert)
+					{
+						radio.checked=true;
+					}else
+					{
+						radio.checked=false;
+					}
+					this.recursive(radio.id,(revert)?"c":"u",probe);
+				}
+				else if(action=="e")
+				{
+					if(revert)
+					{
+						radio.disabled=true;
+						radio.checked=false;
+					}else
+					{
+						radio.disabled=false;
+					}
+					this.recursive(radio.id,action,probe);
+				}
+			};
+			this.recursive=function(r_id,action,probe)
+			{
+				if(!probe)
+				{
+/*					if(r_id && leimnud.aplication.event.isset(r_id) && leimnud.aplication.event.query(r_id).arguments.options.event==action)
+					{
+						leimnud.aplication.event.launch(false,r_id);
+					}*/
+				}
+			};
+			this.revert=function(r_id,ref)
+			{
+				var idName=r_id.split("|");
+				if(idName.length==2)
+				{
+					idName=idName[0]+idName[1];
+					if(leimnud.aplication.event.isset(idName) && leimnud.aplication.event.query(idName).arguments.options.activated)
+					{
+						var id=leimnud.aplication.event.query(idName).arguments;
+						var child=id.options.childs;
+						id.options.activated=false;
+						ref.options.activated=true;
+						this.conditions(id.radio,id.options.event,true,true);
+						this.engineChilds(child,true);
+					}
+					else
+					{
+						ref.options.activated=true;
+					}
+				}
+			};
+			this.make=function()
+			{
+				for(var i=0;i<this.makes.length;i++)
+				{
+					leimnud.aplication.event.launch(false,this.makes[i]);
+				}
 			};
 			this.expand(this);
 		}

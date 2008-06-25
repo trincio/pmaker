@@ -47,7 +47,7 @@ leimnud.Package.Public({
 			);
 			this.options.target.append(this.elements.add);*/
 			/* Button ADD END   */
-			this.elements.table 	= document.createElement('table');
+			this.elements.table 	= $dce('table');
 			$(this.elements.table).setStyle({
 				width:width,
 				borderCollapse:'collapse'
