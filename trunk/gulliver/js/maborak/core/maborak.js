@@ -1361,7 +1361,7 @@ var maborak = function(){
 			*/
 			this.element=function(element)
 			{//return document.getElementById(element);
-				//return (!element)?false:((typeof element=="object")?element:(($(element))?$(element):false));
+//				return (!element)?false:((typeof element=="object")?element:(($(element))?$(element):false));
 				return (!element)?false:((typeof element=="object")?element:((document.getElementById(element))?document.getElementById(element):false));
 			};
 			/**
