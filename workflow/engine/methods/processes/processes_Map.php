@@ -53,11 +53,11 @@ $G_PUBLISH->AddContent('template', '', '', '', $oTemplatePower);
 $G_HEADER->clearScripts();
 $G_HEADER->addScriptFile('/jscore/labels/en.js');
 $G_HEADER->addScriptFile('/js/maborak/core/maborak.js');
-$G_HEADER->addScriptFile('/js/form/core/pagedTable.js');
+/*$G_HEADER->addScriptFile('/js/form/core/pagedTable.js');
 $G_HEADER->addScriptFile('/js/common/core/common.js');
 $G_HEADER->addScriptFile('/js/common/core/webResource.js');
 $G_HEADER->addScriptFile('/js/form/core/form.js');
-$G_HEADER->addScriptFile('/js/grid/core/grid.js');
+$G_HEADER->addScriptFile('/js/grid/core/grid.js');*/
 $G_HEADER->addScriptFile('/htmlarea/editor.js');
 $G_HEADER->addScriptCode( '
 	var leimnud = new maborak();
