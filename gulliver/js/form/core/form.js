@@ -177,7 +177,7 @@
       var dd=me.element;
       while(dd.options.length>0) dd.remove(0);
       for(var o=0;o<content.options.length;o++) {
-        var optn = document.createElement ("OPTION");
+        var optn = $dce("OPTION");
         optn.text = content.options[o].value;
         optn.value = content.options[o].key;
         dd.options[o]=optn;
@@ -655,7 +655,7 @@ function G()
   this.autoFirstField=true;
   this.pi=Math.atan(1)*4;
   this.highLight = function(element){
-    var newdiv = document.createElement('div');
+    var newdiv = $dce('div');
     newdiv.style.position="absolute";
     newdiv.style.display="inline";
     newdiv.style.height=element.clientHeight+2;
@@ -768,7 +768,7 @@ function G_Debugger()
     }
     else
       dump=obj;
-    debugDiv = document.getElementById('debug');
+    debugDiv = $('debug');
     if (debugDiv) debugDiv.innerHTML=dump;
     return dump;
   }

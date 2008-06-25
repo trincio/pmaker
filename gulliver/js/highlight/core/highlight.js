@@ -300,7 +300,7 @@ function initHighlight(block) {
 function highlightLanguage(block, language) {
   var highlight = new Highlighter(language, blockText(block));
   // See these 4 lines? This is IE's notion of "block.innerHTML = result". Love this browser :-/
-  var container = document.createElement('div');
+  var container = $dce('div');
   container.innerHTML = '<pre><code class="' + block.className + '">' + highlight.result + '</code></pre>';
   var environment = block.parentNode.parentNode;
   environment.replaceChild(container.firstChild, block.parentNode);
@@ -323,7 +323,7 @@ function highlightAuto(block) {
   
   if(result) {
     // See these 4 lines? This is IE's notion of "block.innerHTML = result". Love this browser :-/
-    var container = document.createElement('div');
+    var container = $dce('div');
     container.innerHTML = '<pre><code class="' + result.language_name + '">' + result.result + '</code></pre>';
     var environment = block.parentNode.parentNode;
     environment.replaceChild(container.firstChild, block.parentNode);

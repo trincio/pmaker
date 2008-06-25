@@ -73,7 +73,7 @@ leimnud.Package.Public({
 			* containerWindow Begin
 			*
 			*/
-			this.elements.containerWindow = document.createElement("div");
+			this.elements.containerWindow = $dce("div");
 			this.elements.containerWindow.className="panel_containerWindow___"+this.getTheme("containerWindow");
 			this.styles.containerWindow();
 			if(this.options.fx.fadeIn===true)
@@ -92,7 +92,7 @@ leimnud.Package.Public({
 			* mfrontend Begin
 			*
 			*/
-			this.elements.frontend = document.createElement("div");
+			this.elements.frontend = $dce("div");
 			this.elements.frontend.className="panel_frontend___"+this.getTheme("frontend");
 			this.styles.frontend();
 			this.elements.containerWindow.appendChild(this.elements.frontend);
@@ -102,14 +102,14 @@ leimnud.Package.Public({
 			* titlebar Begin
 			*
 			*/
-			this.elements.titleBar = document.createElement("div");
+			this.elements.titleBar = $dce("div");
 			this.elements.titleBar.className="panel_titleBar___"+this.getTheme("titleBar");
 			this.parent.exec(this.styles.titleBar,false,false,this);
 			this.elements.frontend.appendChild(this.elements.titleBar);
 
 			/** Title */
 
-			this.elements.title = document.createElement("div");
+			this.elements.title = $dce("div");
 			this.elements.title.className="panel_title___"+this.getTheme("title");
 			this.parent.exec(this.styles.title,false,false,this);
 			this.elements.title.innerHTML=this.options.title ||"";
@@ -123,7 +123,7 @@ leimnud.Package.Public({
 
 			/** HeaderBar Begin */
 
-			this.elements.headerBar = document.createElement("div");
+			this.elements.headerBar = $dce("div");
 			this.elements.headerBar.className="panel_headerBar___"+this.getTheme("headerBar");
 			this.styles.headerBar();
 			this.elements.frontend.appendChild(this.elements.headerBar);
@@ -142,7 +142,7 @@ leimnud.Package.Public({
 			* tab Vertical Begin
 			*
 			*/
-			this.elements.tab = document.createElement("div");
+			this.elements.tab = $dce("div");
 			this.elements.tab.className="panel_tab___"+this.getTheme("tab");
 
 			/**
@@ -156,13 +156,13 @@ leimnud.Package.Public({
 			* content Begin
 			*
 			*/
-			this.elements.content = document.createElement("div");
+			this.elements.content = $dce("div");
 			this.elements.content.className="panel_content___"+this.getTheme("content");
 			//this.elements.content.innerHTML="&nbsp;";
 
 			/** Loader */
 
-			this.elements.loader = document.createElement("div");
+			this.elements.loader = $dce("div");
 			this.elements.loader.className="panel_loader___"+this.getTheme("loader");
 			this.elements.frontend.appendChild(this.elements.content);
 			this.elements.frontend.appendChild(this.elements.tab);
@@ -179,7 +179,7 @@ leimnud.Package.Public({
 			* statusBar Begin
 			*
 			*/
-			this.elements.statusBar = document.createElement("div");
+			this.elements.statusBar = $dce("div");
 			this.elements.statusBar.className="panel_statusBar___"+this.getTheme("statusBar");
 			this.styles.statusBar();
 			this.elements.frontend.appendChild(this.elements.statusBar);
@@ -193,7 +193,7 @@ leimnud.Package.Public({
 			* statusButttons Begin
 			*
 			*/
-			this.elements.statusButtons = document.createElement("div");
+			this.elements.statusButtons = $dce("div");
 			this.elements.statusButtons.className="panel_statusButtons___"+this.getTheme("statusButtons");
 			this.styles.statusButtons();
 			this.elements.statusBar.appendChild(this.elements.statusButtons);
@@ -207,7 +207,7 @@ leimnud.Package.Public({
 			* status Begin
 			*
 			*/
-			this.elements.status = document.createElement("div");
+			this.elements.status = $dce("div");
 			this.elements.status.innerHTML="&nbsp;";
 			this.elements.status.className="panel_status___"+this.getTheme("status");
 			this.parent.exec(this.styles.status,false,false,this);
@@ -223,7 +223,7 @@ leimnud.Package.Public({
 			* resize Begin
 			*
 			*/
-			this.elements.resize = document.createElement("div");
+			this.elements.resize = $dce("div");
 			this.elements.resize.className="panel_resize___"+this.getTheme("resize");
 			this.styles.resize();
 			this.elements.statusBar.appendChild(this.elements.resize);
@@ -261,14 +261,14 @@ leimnud.Package.Public({
 			* backend Begin
 			*
 			*/
-			this.elements.backend = document.createElement("div");
+			this.elements.backend = $dce("div");
 			this.elements.backend.className="panel_backend___"+this.getTheme("backend");
 			this.parent.exec(this.styles.backend,false,false,this);
 			this.elements.containerWindow.appendChild(this.elements.backend);
 			/* Iframe for IE */
 			if(this.parent.browser.isIE)
 			{
-				this.elements.iframe=document.createElement("iframe");
+				this.elements.iframe=$dce("iframe");
 				this.elements.iframe.className="panel_iframe___"+this.getTheme("iframe");
 				this.elements.iframe.frameBorder="no";
 				this.elements.iframe.scrolling="no";
@@ -344,7 +344,7 @@ leimnud.Package.Public({
 		{
 			if(this.options.fx.shadow)
 			{
-				this.elements.shadow = document.createElement("div");
+				this.elements.shadow = $dce("div");
 				this.elements.shadow.className="panel_shadow___"+this.getTheme("shadow");
 				this.parent.exec(this.styles.shadow,false,false,this);
 				if(this.options.fx.fadeIn===true)
@@ -360,7 +360,7 @@ leimnud.Package.Public({
 			}
 			if(this.options.fx.modal)
 			{
-				this.elements.modal = document.createElement("div");
+				this.elements.modal = $dce("div");
 				this.elements.modal.className="panel_modal___"+this.getTheme("modal");
 				this.elements.modal.id="panel_modal___"+this.getTheme("modal");
 				if(this.options.fx.fadeIn===true)
@@ -396,7 +396,7 @@ leimnud.Package.Public({
 				this.elements.statusBarButtons=[];
 				for(var i=0;i<t.length;i++)
 				{
-/*					var b = document.createElement("input");
+/*					var b = $dce("input");
 					b.type = t[i].type || "button";
 					b.value = t[i].value || "Button";
 					this.parent.dom.setStyle(b,{
@@ -599,7 +599,7 @@ leimnud.Package.Public({
 			/** Close */
 			if(this.options.control.close)
 			{
-				this.elements.close = document.createElement("div");
+				this.elements.close = $dce("div");
 				this.elements.close.className="panel_close___"+this.getTheme("close");
 				this.parent.exec(this.styles.close,false,false,this);
 				this.controls.push(this.elements.close);
@@ -608,7 +608,7 @@ leimnud.Package.Public({
 			/** Rollup/Rolldown */
 			if(this.options.control.roll)
 			{
-				this.elements.roll = document.createElement("div");
+				this.elements.roll = $dce("div");
 				this.elements.roll.className="panel_roll___"+this.getTheme("roll");
 				this.styles.roll();
 				this.controls.push(this.elements.roll);
@@ -1444,7 +1444,7 @@ leimnud.Package.Public({
 						var opH = this.tab.initIn+(this.tab.step*i)+(this.tab.optHeight*i);
 						//var opW = beginLeft+this.tab.initIn+(this.tab.step*i)+((this.tab.optWidth-this.tab.diffWidthBugPadding)*i);
 						var opW = (this.tab.initIn+((this.tab.widthFixed===true)?(this.tab.optWidth*i):lastBul))+(this.tab.step*i);
-						var tb = document.createElement("div");
+						var tb = $dce("div");
 						this.parent.dom.setStyle(tb,{
 							padding:5,
 							paddingLeft:((this.tab.display==="vertical")?15:5),

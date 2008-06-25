@@ -53,7 +53,7 @@ var maborak = function(){
 		this.exec(this.fix.memoryLeak);
 
 		/* create Stylesheet BEGIN  */
-		var st	=document.createElement('link');
+		var st	=$dce('link');
 		st.rel	='stylesheet';
 		st.type	='text/css';
 		st.href	=this.info.base+'stylesheet/default.css';
@@ -165,6 +165,27 @@ var maborak = function(){
 	*/
 	this.protoCore=function()
 	{
+		/**
+		 * document.getElementById
+		 * @param {Object || String} el
+		 */
+		window['$'] = function(el){
+			return (typeof el == "string") ? document.getElementById(el) : el;
+		};
+		/**
+		 * document.createElement
+		 * @param {String} el
+		 */
+		window['$dce'] = function(el){
+			return document.createElement(el);
+		};
+		/**
+		 * document.getElementsByName
+		 * @param {Object || String} el
+		 */
+		window['$n'] = function(el){
+			return (typeof el == "string")?document.getElementsByName(el):el;
+		};
 		Array.prototype.isArray		= true;
 		Array.prototype.isObject	= false;
 		/**
@@ -596,7 +617,7 @@ var maborak = function(){
 		*/
 		String.prototype.escapeHTML = function()
 		{
-			var div = document.createElement('div');
+			var div = $dce('div');
 			var text = document.createTextNode(this);
 			div.appendChild(text);
 			return div.innerHTML;
@@ -607,7 +628,7 @@ var maborak = function(){
 		*/
 		String.prototype.unescapeHTML = function()
 		{
-			var div = document.createElement('div');
+			var div = $dce('div');
 			div.innerHTML = this.trim();
 			return div.childNodes[0] ? div.childNodes[0].nodeValue : '';
 		};
@@ -1027,22 +1048,52 @@ var maborak = function(){
 		*/
 		this.Load	= function(file,options)
 		{
-			this.options	=	options || {};
+			this.options	=	{
+				zip:false,
+				noWrite:false
+			}.concat(options || {});			
 			if(arguments.length<2 || !this.check()){return false;}
 			this.toLoad = ((this.options.Absolute===true)?this.options.Path:file).split(",");
-			for(var i=this.toLoad.length;i>0;i--)
+			if(this.type === 'module' && this.options.zip===true)
 			{
-				this.name=this.toLoad[this.toLoad.length-i];
-				if(!this.isset())
+				var tl = [];
+				for (var i = this.toLoad.length; i > 0; i--)
 				{
-					this.src	=	this.source();
-					var script 	= 	document.createElement("script");
-					this.parent.dom.capture("tag.head 0").appendChild(script);
-					//script.src	=	this.src+"?d="+Math.random();
-					script.src	=	this.src;
-					script.type	=	"text/javascript";
-					script.charset	=	this.parent.charset;
-					if(this.type=="module"){this.write(script);}
+					this.name = this.toLoad[this.toLoad.length - i];
+					if (!this.isset()) {
+						tl.push(this.name);
+						this.write(false);
+					}
+				}
+				var script = $dce("script");
+				this.parent.dom.capture("tag.head 0").appendChild(script);
+				script.src = this.path+'server/maborak.loader.php?load='+tl.join(',');
+				script.type = "text/javascript";
+				script.charset = this.parent.charset;
+				if (this.type == "module") {
+						this.write(script);
+				}
+			}
+			else
+			{
+				for (var i = this.toLoad.length; i > 0; i--)
+				{
+					this.name = this.toLoad[this.toLoad.length - i];
+					if (!this.isset()) {
+						if (this.options.noWrite === false && this.type!='module')
+						{
+							this.src = this.source();
+							var script = $dce("script");
+							this.parent.dom.capture("tag.head 0").appendChild(script);
+							//script.src	=	this.src+"?d="+Math.random();
+							script.src = this.src;
+							script.type = "text/javascript";
+							script.charset = this.parent.charset;
+						}
+						if (this.type == "module") {
+							this.write(script);
+						}
+					}
 				}
 			}
 			delete this.Class;
@@ -1308,7 +1359,7 @@ var maborak = function(){
 			*/
 			this.element=function(element)
 			{
-				return (!element)?false:((typeof element=="object")?element:((document.getElementById(element))?document.getElementById(element):false));
+				return (!element)?false:((typeof element=="object")?element:(($(element))?$(element):false));
 			};
 			/**
 			* Remove Elements
@@ -1664,7 +1715,7 @@ var maborak = function(){
 				switch (by)
 				{
 					case "id":
-					return document.getElementById(el);
+					return $(el);
 					case "name":
 					oDom=document.getElementsByName(el);
 					break;
@@ -1741,7 +1792,7 @@ var maborak = function(){
 						return false;
 					}
 				}
-				var script = document.createElement("script");
+				var script = $dce("script");
 				this.capture("tag.head 0").appendChild(script);
 				script.src = file;
 				script.type = "text/javascript";

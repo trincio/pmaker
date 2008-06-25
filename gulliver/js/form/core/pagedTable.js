@@ -20,7 +20,7 @@ function G_PagedTable( )
 	this.form;
 	var me = this;
   function loadTable( func, uri )  {
-  	var div = document.getElementById('table[' + me.id + ']');
+  	var div = $('table[' + me.id + ']');
     var newContent=ajax_function(me.ajaxUri,func,uri);
   	if (div.outerHTML) {
   	  div.outerHTML=div.outerHTML.split(div.innerHTML).join(newContent);
@@ -60,7 +60,7 @@ function G_PagedTable( )
 	  width = width  || 500;
 	  height= height || 200;
 		popupWindow(title,this.popupPage + '&field='+ encodeURIComponent(field), width, height);
-		//this.form=document.getElementById('xmlPopup');
+		//this.form=$('xmlPopup');
 	}
 	this.deleteField=function(field)
 	{
@@ -81,7 +81,7 @@ function G_PagedTable( )
   	if(me.currentFilter!='')
   		uri=uri		+'&filter='+encodeURIComponent(me.currentFilter);
     loadTable('paint',uri);
-  	/*var ee = document.getElementById('table[' + me.id + ']');
+  	/*var ee = $('table[' + me.id + ']');
   	var newContent=ajax_function(me.ajaxUri,'paint',uri);
   	if (ee.outerHTML) {
   	  ee.outerHTML=ee.outerHTML.split(ee.innerHTML).join(newContent);
@@ -94,7 +94,7 @@ function G_PagedTable( )
   this.doFastSearch = function( criteria )
   {
     uri='fastSearch='+encodeURIComponent(criteria);
-  	/*var ee = document.getElementById('table[' + me.id + ']');
+  	/*var ee = $('table[' + me.id + ']');
   	var newContent=ajax_function(me.ajaxUri,'paint',uri);
   	if (ee.outerHTML) {
   	  ee.outerHTML=ee.outerHTML.split(ee.innerHTML).join(newContent);
@@ -117,7 +117,7 @@ function G_PagedTable( )
   	if(me.currentFilter!='')
   		uri=uri		+'&filter='+encodeURIComponent(me.currentFilter);
   	loadTable('paint',uri);
-  	/*var ee = document.getElementById('table[' + me.id + ']');
+  	/*var ee = $('table[' + me.id + ']');
   	var newContent=ajax_function(me.ajaxUri,'paint',uri);
   	if (ee.outerHTML)
   	  ee.outerHTML=ee.outerHTML.split(ee.innerHTML).join(newContent);
@@ -129,7 +129,7 @@ function G_PagedTable( )
   this.refresh = function()
   {
     loadTable('paint','');
-  	/*var ee = document.getElementById('table[' + me.id + ']');
+  	/*var ee = $('table[' + me.id + ']');
   	var newContent=ajax_function(me.ajaxUri,'paint','');
   	if (ee.outerHTML)
   	  ee.outerHTML=ee.outerHTML.split(ee.innerHTML).join(newContent);
@@ -146,7 +146,7 @@ function G_PagedTable( )
   					+'&page='+me.currentPage;
   	if(me.currentFilter!='')
   		uri=uri		+'&filter='+encodeURIComponent(me.currentFilter);
-  	var ee = document.getElementById('table[' + me.id + ']');
+  	var ee = $('table[' + me.id + ']');
   	var newContent=ajax_function(me.ajaxUri,'paint',uri);
   	if (ee.outerHTML)
   	  ee.outerHTML=ee.outerHTML.split(ee.innerHTML).join(newContent);
@@ -196,7 +196,7 @@ function popup(url)
 			_function	:function($)
 			{
 				leimnud.panel.loader.end($.arguments.obj);
-				dc=document.createElement("div");
+				dc=$dce("div");
 				leimnud.style.set(dc,{textAlign:"justify"});
 				dc.innerHTML=$.request.responseText;
 				leimnud.panel.html($.arguments.obj,dc);

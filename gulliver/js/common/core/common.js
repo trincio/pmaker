@@ -1,180 +1,3 @@
-/* PACKAGE : COMMON
- */
-  function get_xmlhttp() {
-    try {
-      xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
-    } catch (e) {
-      try {
-        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-      } catch (E) {
-        xmlhttp = false;
-      }
-    }
-    if (!xmlhttp && typeof XMLHttpRequest!='undefined') {
-        xmlhttp = new XMLHttpRequest();
-    }
-    return xmlhttp;
-  }
-  /* ajax_function
-   * Envia una solicitud GET a ajax_server con la variables "function" y las definidas en parameters.
-   * @author       David Callizaya <calidavidx21@hotmail.com>
-   * @version 1.0
-   * @package ajax
-   * @param string ajax_server  url de la pagina servidor
-   * @param string function     función solicitada en el lado del servidor
-   * @param string parameters   variables pasadas por url. Ej. variable=valor&otravariable=suvalor
-   */
-  function ajax_function(ajax_server, funcion, parameters, method)
-  {
-      var objetus;
-      objetus = get_xmlhttp();
-      var response;
-      try
-      {
-      	if (parameters) parameters = '&' + encodeURI(parameters);
-      	if (!method ) method ="POST";
-      	data = "function=" + funcion + parameters;
-      	questionMark = (ajax_server.split('?').length > 1 ) ? '&' : '?';
-        var callServer;
-        callServer = new leimnud.module.rpc.xmlhttp({
-        		url			: ajax_server,
-        		async   : false,
-        		method	: method,
-        		args    : data
-        	});
-      	callServer.make();
-      	response = callServer.xmlhttp.responseText;
-      	delete callServer;
-    	}catch(ss)
-    	{
-    		alert("Error: "+ss.message+var_dump(ss));
-    	}
-      return response;//objetus.responseText;
-  }
-  /* ajax_message
-   * Envia una solicitud GET a ajax_server con la variables "function" y las definidas en parameters.
-   * @author       David Callizaya <calidavidx21@hotmail.com>
-   * @version 1.0
-   * @package ajax
-   * @param string ajax_server  url de la pagina servidor
-   * @param string function     función solicitada en el lado del servidor
-   * @param string parameters   variables pasadas por url. Ej. variable=valor&otravariable=suvalor
-   */
-  function ajax_message(ajax_server, funcion, parameters, method, callback)
-  {
-      var objetus;
-      objetus = get_xmlhttp();
-      var response;
-      try
-      {
-      	if (parameters) parameters = '&' + encodeURI(parameters);
-      	if (!method ) method ="POST";
-      	data = "function=" + funcion + parameters;
-      	questionMark = (ajax_server.split('?').length > 1 ) ? '&' : '?';
-      	objetus.open( method, ajax_server + ((method==='GET')? questionMark+data : '') , true );
-        objetus.onreadystatechange=function() {
-          if ( objetus.readyState==4)
-          {
-            if( objetus.status==200)
-            {
-                if ( callback ) callback(objetus.responseText);
-            }
-          }
-        }
-        if (method==='POST') objetus.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-        objetus.send(((method==='GET')? null : data));
-    	}catch(ss)
-    	{
-    		alert("error"+ss.message);
-    	}
-  }
-  /* ajax_post
-   * Envia una solicitud GET/POST a ajax_server con los parametros definidos
-   * o los campos de un formulario
-   * @author       David Callizaya <calidavidx21@hotmail.com>
-   * @version 1.0
-   * @package ajax
-   * @param string ajax_server  url de la pagina servidor
-   * @param string function     función solicitada en el lado del servidor
-   * @param string parameters   variables pasadas por url o formulario.
-   * @example: ajax_post('foo.com', document.form[0], "POST", callback )
-   */
-  function ajax_post(ajax_server, parameters, method, callback, asynchronous )
-  {
-      var objetus;
-      objetus = get_xmlhttp();
-      var response;
-      try
-      {
-        if (typeof(parameters)==='object') parameters = ajax_getForm(parameters);
-      	if (!method ) method ="POST";
-      	if (typeof(asynchronous)==='undefined') asynchronous = false;
-      	data = parameters;
-      	questionMark = (ajax_server.split('?').length > 1 ) ? '&' : '?';
-      	if (method==='GET/POST') {
-      	  objetus.open( 'POST', ajax_server + ((data.length<1024)?(questionMark+data):''), asynchronous );
-      	} else {
-      	  objetus.open( method, ajax_server + ((method==='GET')? questionMark+data : '') , asynchronous );
-      	}
-        objetus.onreadystatechange=function() {
-          if ( objetus.readyState==4)
-          {
-            if( objetus.status==200)
-            {
-                if ( callback ) callback(objetus.responseText);
-            }
-          }
-        }
-        if ((method==='POST')||(method==='GET/POST')) objetus.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
-        objetus.send(((method==='GET')? null : data));
-      	if (!asynchronous)
-      	{
-          if ( callback ) callback(objetus.responseText);
-      	  return objetus.responseText;
-        }
-    	}catch(ss)
-    	{
-    		alert("Error: "+ var_dump(ss));
-    	}
-  }
-  function ajax_getForm( thisform ) {
-    var formdata='';
-    // Loop through form fields
-    for (var i=0; i < thisform.length; i++)
-    {
-      if ( formdata!=='' ) formdata = formdata + '&';
-      //Build Send String
-      if(thisform.elements[i].type == "text"){ //Handle Textbox's
-        formdata = formdata + thisform.elements[i].name + "=" + encodeURIComponent(thisform.elements[i].value);
-      }else if(thisform.elements[i].type == "textarea"){ //Handle textareas
-        formdata = formdata + thisform.elements[i].name + "=" + encodeURIComponent(thisform.elements[i].value);
-      }else if(thisform.elements[i].type == "checkbox"){ //Handle checkbox's
-        if (thisform.elements[i].checked) formdata = formdata + thisform.elements[i].name + "=" + thisform.elements[i].value;
-      }else if(thisform.elements[i].type == "radio"){ //Handle Radio buttons
-        if(thisform.elements[i].checked==true){
-           formdata = formdata + thisform.elements[i].name + "=" + thisform.elements[i].value;
-        }
-      }else if(thisform.elements[i].type == "select-multiple"){ //Handle list box
-        for(var j=0; j<thisform.elements[i].options.length ;j++){
-           if ( j!==0 ) formdata = formdata + '&';
-           formdata = formdata + (
-            (thisform.elements[i].options[j].selected)?
-              thisform.elements[i].name + "=" + encodeURIComponent(thisform.elements[i].options[j].value)
-              :''
-            );
-        }
-      }else{
-        //finally, this should theoretically this is a select box.
-        formdata = formdata + thisform.elements[i].name + "=" + encodeURIComponent(thisform.elements[i].value);
-      }
-    }
-    return formdata;
-  }
-
-/* COMMON FUNCTIONS
- */
-
-
 function isNumber (sValue)
 {
 	var sValue = new String(sValue);
@@ -252,26 +75,26 @@ function toMaskNumber(iNumber,dec)
 	iNumber = fix(iNumber.toString(),dec || 2);
 	var t=iNumber.split(".");
 	var arrayResult=iNumber.replace(/\D/g,'').replace(/^0*/,'').split("").reverse();
-	var final="";
+	var _final="";
 	var aux=0;
 	var sep=0;
 	for(var i=0;i<arrayResult.length;i++)
 	{
 		if(i==1)
 		{
-			final="."+arrayResult[i]+final;
+			_final="."+arrayResult[i]+_final;
 		}
 		else
 		{
 			if(i>1 && aux>=3 && ((aux%3)==0))
 			{
-				final=arrayResult[i]+","+final;
+				_final=arrayResult[i]+","+_final;
 				aux+=1;
 				sep+=1;
 			}
 			else
 			{
-				final=arrayResult[i]+final;
+				_final=arrayResult[i]+_final;
 				if(i>1)
 				{
 					aux+=1;
@@ -279,7 +102,7 @@ function toMaskNumber(iNumber,dec)
 			}
 		}
 	}
-	return final;
+	return _final;
 }
 
 function fix(val, dec)
@@ -343,7 +166,7 @@ function getField( fieldName , formId )
 {
   if (formId)
   {
-    var form = document.getElementById(formId);
+    var form = $(formId);
     if (!form) {form=document.getElementsByName(formId);
       if (form) {
       	if (form.length > 0) {
@@ -356,12 +179,12 @@ function getField( fieldName , formId )
     }
     else {
     	//return null;
-    	return document.getElementById( 'form[' + fieldName + ']' );
+    	return $( 'form[' + fieldName + ']' );
     }
   }
   else
   {
-    return document.getElementById( 'form[' + fieldName + ']' );
+    return $( 'form[' + fieldName + ']' );
   }
 }
 
@@ -563,7 +386,7 @@ function showHideElement(id)
 {
   var element;
   if (typeof(id)=='object') element=id;
-  else element=document.getElementById(id);
+  else element=$(id);
   if (element.style.display==='none') {
     switch(element.type) {
       case 'table':
@@ -580,29 +403,29 @@ function showHideElement(id)
  */
 function showHideSearch(id,aElement,openText,closeText)
 {
-  var element=document.getElementById(id);
+  var element=$(id);
   if (element.style.display==='none') {
     if (!closeText) closeText=G_STRINGS.ID_CLOSE_SEARCH;
     if (aElement) {
       aElement.innerHTML=closeText;
-      var bullet = document.getElementById(aElement.id+'[bullet]');
+      var bullet = $(aElement.id+'[bullet]');
       bullet.src='/images/bulletButtonDown.gif';
     }
     switch(element.type) {
       case 'table':
-        document.getElementById(id).style.display = 'table';
+        $(id).style.display = 'table';
         break;
       default:
-        document.getElementById(id).style.display = '';
+        $(id).style.display = '';
     }
   } else {
     if (!openText) openText=G_STRINGS.ID_OPEN_SEARCH;
     if (aElement) {
       aElement.innerHTML=openText;
-      var bullet = document.getElementById(aElement.id+'[bullet]');
+      var bullet = $(aElement.id+'[bullet]');
       bullet.src='/images/bulletButton.gif';
     }
-    document.getElementById(id).style.display = 'none';
+    $(id).style.display = 'none';
   }
 }
 /* Loads a page but in a non visible div with absolute on (x,y)
@@ -635,7 +458,7 @@ function loadPage ( url, x, y , visibility , div )  {
 }
 function createDiv(id) {
 
-   var newdiv = document.createElement('div');
+   var newdiv = $dce('div');
    newdiv.setAttribute('id', id);
 
    newdiv.style.position = "absolute";
@@ -688,9 +511,9 @@ function refillText( fldName, ajax_server, values ) {
     objetus.onreadystatechange=function() {
         if ( objetus.readyState == 1 )
         {
-          var textfield = document.getElementById( 'form[' + fldName + ']' );
+          var textfield = $( 'form[' + fldName + ']' );
           if ( ! isdefined( textfield ))
-            var textfield = document.getElementById( fldName );
+            var textfield = $( fldName );
           textfield.value = '';
 
         }
@@ -701,9 +524,9 @@ function refillText( fldName, ajax_server, values ) {
 //              alert ( objetus.responseText );
               var xmlDoc = objetus.responseXML;
               if ( xmlDoc ) {
-                 var textfield = document.getElementById( 'form[' + fldName + ']' );
+                 var textfield = $( 'form[' + fldName + ']' );
                  if ( ! isdefined( textfield ))
-                   var textfield = document.getElementById( fldName );
+                   var textfield = $( fldName );
                  var dataArray = xmlDoc.getElementsByTagName('value');
                  if (dataArray[0].firstChild)
                  	 if((dataArray[0].firstChild.xml)!='_vacio'){
@@ -730,7 +553,7 @@ function refillCaption( fldName, ajax_server, values ){
     objetus.onreadystatechange=function() {
         if ( objetus.readyState == 1 )
         {
-          var textfield = document.getElementById( 'FLD_' + fldName );
+          var textfield = $( 'FLD_' + fldName );
           textfield.innerHTML = '';
 
         }
@@ -740,7 +563,7 @@ function refillCaption( fldName, ajax_server, values ){
             {
               var xmlDoc = objetus.responseXML;
               if ( xmlDoc ) {
-                 var textfield = document.getElementById( 'FLD_' + fldName );
+                 var textfield = $( 'FLD_' + fldName );
                  var dataArray = xmlDoc.getElementsByTagName('value');
                  if (dataArray[0].firstChild)
                  	  if((dataArray[0].firstChild.xml)!='_vacio')
@@ -767,7 +590,7 @@ function refillDropdown( fldName, ajax_server, values , InitValue)
     objetus.onreadystatechange=function() {
         if ( objetus.readyState == 1 )
         {
-          var dropdown = document.getElementById( 'form[' + fldName + ']' );
+          var dropdown = $( 'form[' + fldName + ']' );
 
           while ( dropdown.hasChildNodes() )
             dropdown.removeChild(dropdown.childNodes[0]);
@@ -780,7 +603,7 @@ function refillDropdown( fldName, ajax_server, values , InitValue)
               var xmlDoc = objetus.responseXML;
 
               if ( xmlDoc ) {
-                 var dropdown = document.getElementById( 'form[' + fldName + ']' );
+                 var dropdown = $( 'form[' + fldName + ']' );
                  var dataArray = xmlDoc.getElementsByTagName('item');
                  itemsNumber = dataArray.length;
 
@@ -846,9 +669,9 @@ function refillTextError( div_container, fldName, ajax_server, values )
     objetus.onreadystatechange=function() {
         if ( objetus.readyState == 1 )
         {
-          var textfield = document.getElementById( 'form[' + fldName + ']' );
+          var textfield = $( 'form[' + fldName + ']' );
           textfield.value = '';
-          document.getElementById(div_container).innerHTML = '';
+          $(div_container).innerHTML = '';
 
         }
         else if ( objetus.readyState==4)
@@ -857,12 +680,12 @@ function refillTextError( div_container, fldName, ajax_server, values )
             {
               var xmlDoc = objetus.responseXML;
               if ( xmlDoc ) {
-                 var textfield = document.getElementById( 'form[' + fldName + ']' );
+                 var textfield = $( 'form[' + fldName + ']' );
                  var dataArray = xmlDoc.getElementsByTagName('value');
                  textfield.value = dataArray[0].firstChild.xml;
                  var dataArray = xmlDoc.getElementsByTagName('message');
                  if ( dataArray[0].firstChild )
-                   document.getElementById(div_container).innerHTML = '<b>' + dataArray[0].firstChild.xml + '</b>';
+                   $(div_container).innerHTML = '<b>' + dataArray[0].firstChild.xml + '</b>';
               }
             }
             else
@@ -898,12 +721,12 @@ function iframe_ajax_init(ajax_server, div_container, values, callback) {
   objetus.open ('GET', ajax_server + '?' + values, true);
   objetus.onreadystatechange = function() {
     if ( objetus.readyState == 1 ) {
-      document.getElementById(div_container).style.display = '';
-      document.getElementById(div_container).innerHTML = '...';
+      $(div_container).style.display = '';
+      $(div_container).innerHTML = '...';
     }
     else if (objetus.readyState==4) {
       if (objetus.status==200) {
-        document.getElementById(div_container).innerHTML = objetus.responseText;
+        $(div_container).innerHTML = objetus.responseText;
         if (callback != '')
           callback();
       }
@@ -1069,7 +892,7 @@ function removeCurrencySign (snumber) {
  }
 
 function getGridField(Grid, Row, Field) {
-	obj = document.getElementById('form[' + Grid + ']' + '[' + Row + ']' + '[' + Field + ']');
+	obj = $('form[' + Grid + ']' + '[' + Row + ']' + '[' + Field + ']');
   return obj;
 }
 
@@ -1112,7 +935,7 @@ function attachFunctionEventOnKeypressById(Id, TheFunction) {
 }
 
 function unselectOptions ( field ) {
-var radios = document.getElementById('form[' + field + ']');
+var radios = $('form[' + field + ']');
 	if (radios) {
 	  var inputs = radios.getElementsByTagName ('input');
 	  if (inputs) {

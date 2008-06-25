@@ -167,7 +167,7 @@ leimnud.Package.Public({
 			this.make=function(options)
 			{
 				if(!this.options.url || !this.par){return false;}
-				this.script		= document.createElement("script");
+				this.script		= $dce("script");
 				this.par.appendChild(this.script);
 				//this.script.src  	= this.server+"?data="+escape(this.options.toJSONString())+"&tmp="+this.tmp;
 				this.script.src  	= this.server

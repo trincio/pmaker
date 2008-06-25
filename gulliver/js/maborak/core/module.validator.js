@@ -119,7 +119,7 @@ leimnud.Package.Public({
 			//alert(p);
 			//alert(leimnud.tools.object.toString(this.patron))
 			var valid=false;
-			//document.getElementById("d").innerHTML=" ";
+			//$("d").innerHTML=" ";
 			//alert(this.patron.toStr(true))
 			for(var i=0;i<this.patron.length;i++)
 			{
@@ -143,7 +143,7 @@ leimnud.Package.Public({
 					{
 						//valid=(String.fromCharCode(this.key)==String.fromCharCode(this.patron[i]))?true:false;
 						valid=(this.key==this.patron[i])?true:false;
-						//document.getElementById("d").innerHTML+="[ "+String.fromCharCode(this.key)+" : "+String.fromCharCode(this.patron[i])+" [mykey:"+String.fromCharCode(this.patron[i]).charCodeAt(0)+"] ] [2007]["+this.key+"]["+this.patron[i]+"]<br> ";
+						//$("d").innerHTML+="[ "+String.fromCharCode(this.key)+" : "+String.fromCharCode(this.patron[i])+" [mykey:"+String.fromCharCode(this.patron[i]).charCodeAt(0)+"] ] [2007]["+this.key+"]["+this.patron[i]+"]<br> ";
 					}
 					else
 					{

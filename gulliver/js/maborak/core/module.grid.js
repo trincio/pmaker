@@ -37,13 +37,13 @@ leimnud.Package.Public({
 			/* Grid table BEGIN */
 			if(this.options.title)
 			{
-				this.elements.titleBar = document.createElement("div");
+				this.elements.titleBar = $dce("div");
 				this.elements.titleBar.innerHTML=this.options.title || "";
 				this.elements.titleBar.className="app_grid_headerBar___"+this.options.theme;
 				this.parent.dom.setStyle(this.elements.titleBar,this.options.styleHeaderBar || {});
 				this.options.target.appendChild(this.elements.titleBar);
 			}
-			table = this.elements.table = document.createElement("table");
+			table = this.elements.table = $dce("table");
 			this.elements.table.className="app_grid_table___"+this.options.theme;
 			this.parent.dom.setStyle(table,{
 				/*font:"normal 11px arial,tahoma,helvetica,sans-serif",
@@ -182,7 +182,7 @@ leimnud.Package.Public({
 					}
 					else if(dataColumn[j].type=="checkbox")
 					{
-						var cb	= document.createElement("input");
+						var cb	= $dce("input");
 						cb.type	= "checkbox";
 						cell.appendChild(cb);
 						cb.checked = (dataRow.value);
@@ -209,14 +209,14 @@ leimnud.Package.Public({
 						this.parent.dom.setStyle(cell,{
 							padding		:2
 						});
-						var select		= document.createElement("select");
+						var select		= $dce("select");
 						dataCellHeader = dataColumn[j];
 						//alert(dataCell.data)
 						for(var k=0;k<dataCellHeader.data.length;k++)
 						{
 							var selected = (dataRow.value===dataCellHeader.data[k][0]);
 							//select.options[i]=new Option(dataCell.data[i][1],dataCell.data[i][0],true);
-							var option		= document.createElement("option");
+							var option		= $dce("option");
 							select.appendChild(option);
 							option.value	=dataCellHeader.data[k][0];
 							option.selected 	= selected;
@@ -240,13 +240,13 @@ leimnud.Package.Public({
 		};
 		this.paginator=function()
 		{
-			/*this.paginatorDOM = document.createElement("div");
-			var headerP	= document.createElement("div");
+			/*this.paginatorDOM = $dce("div");
+			var headerP	= $dce("div");
 			var theme		= this.options.theme;
 			headerP.className="app_grid_paginatorHeader___"+theme;
 			for(var i=0;i<this.options.paginator.pages;i++)
 			{
-				var li = document.createElement("a");
+				var li = $dce("a");
 				li.innerHTML	= i+1;
 				li.href		= "#";
 				headerP.appendChild(li);
@@ -276,8 +276,8 @@ leimnud.Package.Public({
 			});
 			this.options.target.appendChild(this.paginatorDOM);*/
 
-			this.paginatorDOM = document.createElement("div");
-			var headerP	= document.createElement("div");
+			this.paginatorDOM = $dce("div");
+			var headerP	= $dce("div");
 			var theme		= this.options.theme;
 			headerP.className="app_grid_paginatorHeader___"+theme;
 			this.paginatorDOM.appendChild(headerP);
@@ -288,14 +288,14 @@ leimnud.Package.Public({
 			this.options.target.appendChild(this.paginatorDOM);
 			var p = headerP;
 
-			(p.appendChild(this.pDf = document.createElement("a"))).href="#";
+			(p.appendChild(this.pDf = $dce("a"))).href="#";
 			this.pDf.className="app_grid_pDf___"+theme;
 			this.pDf.onmouseup=function()
 			{
 				return this.paginatorTo(1);
 			}.extend(this);
 
-			(p.appendChild(this.pDp = document.createElement("a"))).href="#";
+			(p.appendChild(this.pDp = $dce("a"))).href="#";
 			this.pDp.className="app_grid_pDp___"+theme;
 			this.pDp.onmouseup=function()
 			{
@@ -303,9 +303,9 @@ leimnud.Package.Public({
 			}.extend(this);
 
 			//p.innerHTML+=" Page ";
-			(p.appendChild(this.pDt1 = document.createElement("span"))).innerHTML=" Page ";
+			(p.appendChild(this.pDt1 = $dce("span"))).innerHTML=" Page ";
 
-			(p.appendChild(this.pDC = document.createElement("input"))).type="text";
+			(p.appendChild(this.pDC = $dce("input"))).type="text";
 			this.pDC.value		= this.options.paginator.page;
 			this.pDC.className	= "app_grid_pDC___"+theme;
 			this.pDC.onkeyup=function(evt)
@@ -321,20 +321,20 @@ leimnud.Package.Public({
 				return false;
 			}.extend(this);
 
-			(p.appendChild(this.pDt2 = document.createElement("span"))).innerHTML=" of ";
+			(p.appendChild(this.pDt2 = $dce("span"))).innerHTML=" of ";
 
-			(p.appendChild(this.pDT = document.createElement("span"))).innerHTML=this.options.paginator.pages;
+			(p.appendChild(this.pDT = $dce("span"))).innerHTML=this.options.paginator.pages;
 			this.pDT.className="app_grid_pDT___"+theme;
 
 
-			(p.appendChild(this.pDn = document.createElement("a"))).href="#";
+			(p.appendChild(this.pDn = $dce("a"))).href="#";
 			this.pDn.className="app_grid_pDn___"+theme;
 			this.pDn.onmouseup=function()
 			{
 				return this.paginatorTo(this.options.paginator.page+1);
 			}.extend(this);
 
-			(p.appendChild(this.pDl = document.createElement("a"))).href="#";
+			(p.appendChild(this.pDl = $dce("a"))).href="#";
 			this.pDl.className="app_grid_pDl___"+theme;
 			this.pDl.onmouseup=function()
 			{
@@ -484,7 +484,7 @@ leimnud.Package.Public({
 		};
 		this.renderSearch=function()
 		{
-			var div = document.createElement("div");
+			var div = $dce("div");
 			div.className="app_grid_headerBar___"+this.options.theme;
 			this.parent.dom.setStyle(div,{
 				padding:1,
@@ -540,21 +540,21 @@ leimnud.Package.Public({
 				};
 				options.make();
 				//options.addContent("<div style='text-align:right;'><b>Search in:</b></div><br />");
-				var fs = document.createElement("fieldset");
+				var fs = $dce("fieldset");
 				this.parent.dom.setStyle(fs,{
 					fontWeight	:"bold",
 					//border		:"1px solid #99BBE8",
 					//height		:"100%",
 					color		:"#000"
 				});
-				var lg = document.createElement("legend");
+				var lg = $dce("legend");
 				lg.innerHTML="Search in:";
 				fs.appendChild(lg);
 				options.addContent(fs);
 
 				var dr = this.options.data.column;
 				var se = [];
-				var cn = document.createElement("div");
+				var cn = $dce("div");
 				this.parent.dom.setStyle(cn,{
 					fontWeight	:"normal",
 					textAlign	:"right",
@@ -567,14 +567,14 @@ leimnud.Package.Public({
 				{
 					if(dr[i].type==="text" || dr[i].type==="textDropdown" || dr[i].type==="dropdown" || dr[i].type==="textarea")
 					{
-						var ti = document.createElement("div");
+						var ti = $dce("div");
 						this.parent.dom.setStyle(ti,{
 							verticalAlign	:"middle",
 							padding			:1
 						});
 						ti.innerHTML=dr[i].title+"&nbsp;&nbsp;&nbsp;";
 						cn.appendChild(ti);
-						var sl = document.createElement("input");
+						var sl = $dce("input");
 						sl.type	= "checkbox";
 						ti.appendChild(sl);
 						sl.checked = dr[i].searchable;
@@ -602,7 +602,7 @@ leimnud.Package.Public({
 				var dataRow 	= this.options.data.rows[indexRow].data[indexCell];
 				//alert(indexRow+":"+indexCell+":"+dom.offsetWidth+":"+dom.offsetHeight);
 				var tp	  = (dataCell.type=="text")?"input":"textarea";
-				var input = document.createElement(tp);
+				var input = $dce(tp);
 				if(dataCell.type=="textarea")
 				{
 					this.parent.dom.setStyle(input,{
@@ -659,7 +659,7 @@ leimnud.Package.Public({
 				this.parent.dom.setStyle(dom,{
 					padding	:1
 				});
-				var select		= document.createElement("select");
+				var select		= $dce("select");
 				this.parent.dom.setStyle(select,{
 					font:"normal 11px arial,tahoma,helvetica,sans-serif",
 					width:"100%"
@@ -668,7 +668,7 @@ leimnud.Package.Public({
 				{
 					var selected = (dataRow.value===dataCell.data[i][0]);
 					//select.options[i]=new Option(dataCell.data[i][1],dataCell.data[i][0],true);
-					var option	= document.createElement("option");
+					var option	= $dce("option");
 					select.appendChild(option);
 					option.value=dataCell.data[i][0];
 					option.selected = selected;
@@ -748,8 +748,8 @@ leimnud.Package.Public({
 			cellIndex	= (this.parent.browser.isIE)?evt:cellIndex;
 			//var domRow = this.elements.table.rows[row+1];
 			var domCell = this.parent.event.dom(event);
-			this.phantomCellStatic = document.createElement("div");
-			this.phantomCell = document.createElement("div");
+			this.phantomCellStatic = $dce("div");
+			this.phantomCell = $dce("div");
 			var j = this.parent.dom.position(domCell,false,true);
 			var k = this.parent.dom.position(this.elements.table.rows[this.elements.table.rows.length-1].cells[domCell.cellIndex],true,true);
 			//console.info(k)
@@ -855,7 +855,7 @@ leimnud.Package.Public({
 			};
 			this.dragToCell.make();
 			this.dragToCell.onInit(event,0);
-			this.imageAddCell = document.createElement("img");
+			this.imageAddCell = $dce("img");
 			this.imageAddCell.src=this.parent.info.images+"nc.gif";
 			this.setImageAddCell(domCell.cellIndex-1);
 			this.options.target.appendChild(this.imageAddCell);
@@ -875,8 +875,8 @@ leimnud.Package.Public({
 			//var domRow = this.elements.table.rows[row+1];
 			var domRow = this.parent.event.dom(event).parentNode;
 			//alert(domRow.rowIndex)
-			this.phantomRowStatic = document.createElement("div");
-			this.phantomRow = document.createElement("div");
+			this.phantomRowStatic = $dce("div");
+			this.phantomRow = $dce("div");
 			var j = this.parent.dom.position(domRow,false,true);
 			this.parent.dom.setStyle([this.phantomRow,this.phantomRowStatic],{
 				position:"absolute",
@@ -982,7 +982,7 @@ leimnud.Package.Public({
 			};
 			this.drag.make();
 			this.drag.onInit(event,0);
-			this.imageAddRow = document.createElement("img");
+			this.imageAddRow = $dce("img");
 			this.imageAddRow.src=this.parent.info.images+"nr.gif";
 			this.setImageAddRow(domRow.rowIndex-1);
 			this.options.target.appendChild(this.imageAddRow);
