@@ -2031,6 +2031,21 @@ class processMap {
     	throw($oError);
     }
   }
+  
+  function webEntry($sProcessUID) {
+    try {     	
+      global $G_PUBLISH;
+      global $G_HEADER;
+      $G_PUBLISH = new Publisher;
+      $G_HEADER->clearScripts();    
+      $G_PUBLISH->AddContent('xmlform', 'xmlform', 'dynaforms/dynaforms_WebEntry', '', array('PRO_UID' => $sProcessUID));
+      G::RenderPage('publish', 'raw');
+    	return true;
+    }
+  	catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
 
   /*
 	* Return the supervisors dynaforms list criteria object
@@ -2190,5 +2205,10 @@ class processMap {
     $oProcessUser = new ProcessUser();
     $oProcessUser->remove($sPUUID);
   }
+  /*
+  function webEntryGenerate($sPRO_UID, $sTASKS, $sDYNAFORM){
+    echo "$sTASKS";
+  }
+  */
 } // processMap
 ?>

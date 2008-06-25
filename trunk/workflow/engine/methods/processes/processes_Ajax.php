@@ -70,6 +70,10 @@ try {
   	break;
   	case 'availableProcessesUser':  	  	  	  
   	  include(PATH_METHODS . 'processes/processes_availableProcessesUser.php');
+  	break; 
+  	case 'webEntry_generate':   	 	  	  	  
+  	  include(PATH_METHODS . 'processes/processes_webEntryGenerate.php');
+  	  //$oProcessMap->webEntryGenerate($oData->PRO_UID, $oData->TASKS, $oData->DYNAFORM);
   	break;  	
   	case 'assignProcessUser':  	  	  	    	  
   	  $oProcessMap->assignProcessUser($oData->PRO_UID, $oData->USR_UID);
@@ -79,6 +83,9 @@ try {
   	break;  	
   	case 'supervisorDynaforms':
   	  $oProcessMap->supervisorDynaforms($oData->pro_uid);
+  	break;
+  	case 'webEntry':
+  	  $oProcessMap->webEntry($oData->pro_uid);
   	break;
   	case 'saveTitlePosition':
   	  $sOutput = $oProcessMap->saveTitlePosition($oData->pro_uid, $oData->position->x, $oData->position->y);
