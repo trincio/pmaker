@@ -27,6 +27,7 @@
     G::LoadClass('case');
     $oCase  = new Cases();
     $Fields = $oCase->loadCase($_SESSION['APPLICATION']);
+    $Fields['APP_DATA'] = array_merge($Fields['APP_DATA'], G::getSystemConstants());
     //Execute after triggers - Start
     $Fields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], 'INPUT_DOCUMENT', $_GET['UID'], 'AFTER', $Fields['APP_DATA'] );
     //Execute after triggers - End

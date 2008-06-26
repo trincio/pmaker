@@ -449,7 +449,7 @@ class processMap {
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
       $oDataset->next();
       while ($aRow = $oDataset->getRow()) {
-      	$oConfiguration->remove($aRow['CFG_UID']);
+      	$oConfiguration->remove($aRow['CFG_UID'], $aRow['OBJ_UID'], $aRow['PRO_UID'], $aRow['USR_UID'], $aRow['APP_UID']);
       	$oDataset->next();
       }
       //Delete the DB sources of process
@@ -1998,9 +1998,9 @@ class processMap {
     	throw($oError);
     }
   }
-  
+
   function webEntry($sProcessUID) {
-    try {     	
+    try {
       global $G_PUBLISH;
       $G_PUBLISH = new Publisher;
       $G_PUBLISH->AddContent('xmlform', 'xmlform', 'dynaforms/dynaforms_WebEntry', '', array('PRO_UID' => $sProcessUID));

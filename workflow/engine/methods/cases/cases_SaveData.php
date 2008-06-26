@@ -32,6 +32,7 @@
   //load the variables
   $oCase = new Cases();
   $Fields = $oCase->loadCase( $_SESSION['APPLICATION'] );
+  $Fields['APP_DATA'] = array_merge($Fields['APP_DATA'], G::getSystemConstants());
   $Fields['APP_DATA'] = array_merge( $Fields['APP_DATA'], $_POST['form']);
 
   //Execute after triggers - Start

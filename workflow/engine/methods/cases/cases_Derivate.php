@@ -57,6 +57,7 @@ try {
   //load data
   $oCase     = new Cases ();
   $appFields = $oCase->loadCase( $_SESSION['APPLICATION'] );
+  $appFields['APP_DATA'] = array_merge($appFields['APP_DATA'], G::getSystemConstants());
 
   //Execute triggers before derivation
   $appFields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], 'ASSIGN_TASK', -2, 'BEFORE', $appFields['APP_DATA'] );
