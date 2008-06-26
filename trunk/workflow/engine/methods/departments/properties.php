@@ -40,7 +40,6 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_USERS"))!=1) return $RBAC_Response;
 
   $G_PUBLISH = new Publisher;
   $G_PUBLISH->publisherId='departmentProperties';
-  $G_HEADER->clearScripts();
   
   $G_PUBLISH->AddContent('panel-init', 'mainPanel', array('title'=>G::LoadTranslation('ID_DEPARTMENT'),'left'=>'200','top'=>'100','width'=>600,'height'=>500,'tabWidth'=>120,'modal'=>true));
   $G_PUBLISH->AddContent('xmlform', 'xmlform', 'departments/properties', '', $Fields , 'department_Update');

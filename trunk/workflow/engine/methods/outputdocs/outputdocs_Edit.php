@@ -47,7 +47,6 @@ try {
   }
   G::LoadClass('xmlfield_InputPM');
   $G_PUBLISH = new Publisher();
-  $G_HEADER->clearScripts();
   $G_PUBLISH->AddContent('xmlform', 'xmlform', 'outputdocs/outputdocs_Edit', '', $aFields , '../outputdocs/outputdocs_Save');
   G::RenderPage('publish', 'raw');
 }

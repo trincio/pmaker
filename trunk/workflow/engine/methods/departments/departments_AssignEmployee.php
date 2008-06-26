@@ -38,7 +38,6 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_USERS"))!=1) return $RBAC_Response;
   $Fields = $department->Fields;
 
   $G_PUBLISH = new Publisher;
-  $G_HEADER->clearScripts();
   
   $G_PUBLISH->AddContent('xmlform', 'xmlform', 'departments/departments_AssignEmployee', '', $Fields , 'department_SaveAssign');
 

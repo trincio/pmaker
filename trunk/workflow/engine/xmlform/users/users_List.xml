@@ -1,10 +1,6 @@
 <?xml version="1.0"?>
 <dynaForm type="pagetable"
-  sql="SELECT USR_UID, CONCAT(USR_LASTNAME, ' ', USR_FIRSTNAME) AS USR_COMPLETENAME,USR_USERNAME, USR_EMAIL, USR_ROLE, USR_DUE_DATE, '@#VIEW' AS USR_VIEW, '@#EDIT' AS USR_EDIT, '@#DELETE' AS USR_DELETE, '@#CONFIRM' AS USR_CONFIRM FROM USERS WHERE USR_STATUS NOT IN ('CLOSED') ORDER BY USR_USERNAME"
-  sqlConnection=""
-  deleteRow="0"
   menu="users/users_Options"
-  filterForm="users/users_Search"
   searchBy="CONCAT(USR_LASTNAME, ' ', USR_FIRSTNAME) | USR_EMAIL"
 >
 <USR_COMPLETENAME type="text" titlealign="left" align="left" colWidth="200">

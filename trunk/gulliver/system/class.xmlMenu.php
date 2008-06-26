@@ -39,13 +39,14 @@
     }
 
     function render( $value ) {
-      global $G_HEADER;
       $this->xmlMenu = new xmlMenu( $this->xmlfile , $this->home );
       $this->xmlMenu->setValues($value);
       $template = PATH_CORE . 'templates/'  . $this->type . '.html';
     	$out =  $this->xmlMenu->render( $template , $scriptCode ) ;
-      $G_HEADER->addScriptFile( $this->xmlMenu->scriptURL );
-      $G_HEADER->addScriptCode( $scriptCode );
+    	
+      $oHeadPublisher =& headPublisher::getSingleton();
+      $oHeadPublisher->addScriptFile( $this->xmlMenu->scriptURL );
+      $oHeadPublisher->addScriptCode( $scriptCode );
       return $out;
     }
     function renderGrid ($value){
@@ -54,4 +55,3 @@
 
 
   }
-?>

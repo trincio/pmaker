@@ -95,6 +95,5 @@ function lookup($target)
 
   $G_PUBLISH = new Publisher;
   $G_PUBLISH->AddContent('xmlform', 'xmlform', 'login/dbInfo', '', $Fields, 'appNew2');
-  $G_HEADER->clearScripts();
   G::RenderPage('publish', 'raw');
 ?>

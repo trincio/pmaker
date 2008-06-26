@@ -28,5 +28,4 @@
   $oGroup = new Groups();
   $G_PUBLISH = new Publisher();
   $G_PUBLISH->AddContent('propeltable', 'paged-table', 'groups/groups_AvailableUsers', $oGroup->getAvailableUsersCriteria($_GET['UID']));
-  $G_HEADER->clearScripts();
   G::RenderPage('publish', 'raw');

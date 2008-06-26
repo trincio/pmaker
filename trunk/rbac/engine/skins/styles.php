@@ -37,8 +37,8 @@ $smarty->compile_dir  = PATH_SMARTY_C;
 $smarty->cache_dir    = PATH_SMARTY_CACHE;
 $smarty->config_dir   = PATH_THIRDPARTY . 'smarty/configs';
 
-global $G_HEADER;
-if (isset($GLOBALS['G_HEADER'])) $header = $GLOBALS['G_HEADER']->printHeader();
+$oHeadPublisher =& headPublisher::getSingleton();
+if (isset($oHeadPublisher)) $header = $oHeadPublisher->printHeader();
 $smarty->assign('header', $header );
 $smarty->assign('tpl_menu', PATH_TEMPLATE . 'menu.html' );
 $smarty->assign('tpl_submenu', PATH_TEMPLATE . 'submenu.html' );

@@ -126,7 +126,6 @@ class dynaformEditor extends WebResource
 	 **/
 	function _render()
 	{
-		global $G_HEADER;
 		global $G_PUBLISH;
 		$script='';
 		/* Start Block: Load (Create if not exists) the xmlform */
@@ -175,7 +174,8 @@ class dynaformEditor extends WebResource
 		$G_PUBLISH = new Publisher;
 		$sName='dynaformEditor';
 		$G_PUBLISH->publisherId=$sName;
-		$G_HEADER->setTitle(G::LoadTranslation('ID_DYNAFORM_EDITOR'). ' - ' . $Properties['DYN_TITLE']);
+    $oHeadPublisher =& headPublisher::getSingleton();
+		$oHeadPublisher->setTitle(G::LoadTranslation('ID_DYNAFORM_EDITOR'). ' - ' . $Properties['DYN_TITLE']);
 
 		$G_PUBLISH->AddContent('blank');
 		$this->panelConf['title']=$this->title;
@@ -229,11 +229,11 @@ class dynaformEditor extends WebResource
 		$G_PUBLISH->AddContent('panel-tab',G::LoadTranslation("ID_JAVASCRIPTS"),$sName.'[7]','dynaformEditor.changeToJavascripts','dynaformEditor.saveCurrentView');
 		$G_PUBLISH->AddContent('panel-tab',G::LoadTranslation("ID_PROPERTIES"),$sName.'[8]','dynaformEditor.changeToProperties','dynaformEditor.saveCurrentView');
 		$G_PUBLISH->AddContent('panel-close');
-		$G_HEADER->addScriptFile('/jscore/dynaformEditor/core/dynaformEditor.js');
-		$G_HEADER->addScriptFile('/js/dveditor/core/dveditor.js');
-		$G_HEADER->addScriptFile('/codepress/codepress.js',1);
-		$G_HEADER->addScriptFile('/js/grid/core/grid.js');
-		$G_HEADER->addScriptCode('leimnud.event.add(window,"load",function(){' .
+		$oHeadPublisher->addScriptFile('/jscore/dynaformEditor/core/dynaformEditor.js');
+		$oHeadPublisher->addScriptFile('/js/dveditor/core/dveditor.js');
+		$oHeadPublisher->addScriptFile('/codepress/codepress.js',1);
+		$oHeadPublisher->addScriptFile('/js/grid/core/grid.js');
+		$oHeadPublisher->addScriptCode('leimnud.event.add(window,"load",function(){' .
 				'loadEditor();' .
 				'});');
 		G::RenderPage( "publish-treeview" );
@@ -304,11 +304,9 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 	{
 		ob_start();
 		$file = G::decrypt( $A , URL_KEY );
-		global $G_HEADER;
 		global $G_PUBLISH;
 		$G_PUBLISH = new Publisher;
 		$G_PUBLISH->publisherId='preview';
-		$G_HEADER->clearScripts();
 		$form = new Form( $file , PATH_DYNAFORM, SYS_LANG, true );
 		switch(basename($form->template,'.html'))
 		{
@@ -344,12 +342,10 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 		$script='';
 		$file = G::decrypt( $A , URL_KEY );
 		ob_start();
-		global $G_HEADER;
 		global $G_PUBLISH;
 		$form = new Form( $file , PATH_DYNAFORM, SYS_LANG, true );
 		$G_PUBLISH = new Publisher;
 		$G_PUBLISH->publisherId='';
-		$G_HEADER->clearScripts();
 		$html=$this->get_htmlcode($A);
 		if (!is_string($html))
 		{

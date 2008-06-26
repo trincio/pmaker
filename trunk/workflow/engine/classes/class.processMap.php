@@ -266,9 +266,7 @@ class processMap {
     	  $aFields            = $oProcess->load($sProcessUID);
     	  $aFields['THETYPE'] = 'UPDATE';
     	  global $G_PUBLISH;
-  	    global $G_HEADER;
   	    $G_PUBLISH = new Publisher();
-        $G_HEADER->clearScripts();
         $G_PUBLISH->AddContent('xmlform', 'xmlform', 'processes/processes_Edit', '', $aFields, 'processes_Save');
         G::RenderPage('publish', 'raw');
     	  return true;
@@ -530,10 +528,8 @@ class processMap {
   	  $aFields['TASK']    = $sTaskUID;
   	  $aFields['CONFIRM'] = G::LoadTranslation('ID_MSG_CONFIRM_DELETE_STEP');
   	  global $G_PUBLISH;
-  	  global $G_HEADER;
   	  $G_PUBLISH = new Publisher();
   	  $G_PUBLISH->AddContent('propeltable', 'paged-table', 'steps/steps_List', $this->getStepsCriteria($sTaskUID), $aFields);
-      $G_HEADER->clearScripts();
       G::RenderPage('publish', 'raw');
       return true;
     }
@@ -799,9 +795,7 @@ class processMap {
   	    }
   	  }
   	  global $G_PUBLISH;
-  	  global $G_HEADER;
   	  $G_PUBLISH = new Publisher();
-  	  $G_HEADER->clearScripts();
   	  $oTask = new Task();
   	  $aTask = $oTask->load($sTaskUID);
 
@@ -850,9 +844,7 @@ class processMap {
   	    }
   	  }
   	  global $G_PUBLISH;
-  	  global $G_HEADER;
   	  $G_PUBLISH = new Publisher();
-  	  $G_HEADER->clearScripts();
   	  $oTask = new Task();
   	  $aTask = $oTask->load($sTaskUID);
 
@@ -1065,10 +1057,8 @@ class processMap {
   	  $aFields['PROCESS'] = $sProcessUID;
   	  $aFields['TASK']    = $sTaskUID;
   	  global $G_PUBLISH;
-  	  global $G_HEADER;
   	  $G_PUBLISH = new Publisher();
   	  $G_PUBLISH->AddContent('propeltable', 'paged-table', 'steps/conditions_List', $this->getStepsCriteria($sTaskUID), $aFields);
-      $G_HEADER->clearScripts();
       G::RenderPage('publish', 'raw');
       return true;
     }
@@ -1092,11 +1082,8 @@ class processMap {
   	  $_SESSION['PROCESS'] = $sProcessUID;
   	  $_SESSION['TASK']    = $sTaskUID;
   	  global $G_PUBLISH;
-  	  global $G_HEADER;
   	  $G_PUBLISH = new Publisher();
   	  $G_PUBLISH->AddContent('view', 'steps/triggers_Tree');
-      $G_HEADER->clearScripts();
-      $G_HEADER->addScriptFile('/js/common/tree/tree.js');
       G::RenderPage('publish', 'raw');
       return true;
     }
@@ -1196,11 +1183,9 @@ class processMap {
   	  $aFields['IFORM'] = $iForm;
   	  $aFields['LANG']  = SYS_LANG;
   	  global $G_PUBLISH;
-  	  global $G_HEADER;
   	  G::LoadClass('xmlfield_InputPM');
   	  $G_PUBLISH = new Publisher();
       $G_PUBLISH->AddContent('xmlform', 'xmlform', $sFilename, '', $aFields);
-      $G_HEADER->clearScripts();
       G::RenderPage('publish', 'raw');
       return true;
     }
@@ -1420,9 +1405,7 @@ class processMap {
       $oProcess = new Process();
   	  $aFields  = $oProcess->load($sProcessUID);
       global $G_PUBLISH;
-      global $G_HEADER;
       $G_PUBLISH = new Publisher;
-      $G_HEADER->clearScripts();
       $G_PUBLISH->AddContent('propeltable', 'paged-table', 'dynaforms/dynaforms_ShortList', $this->getDynaformsCriteria($sProcessUID), $aFields);
       G::RenderPage('publish', 'raw');
       return true;
@@ -1472,9 +1455,7 @@ class processMap {
 			$oProcess = new Process();
   	  $aFields  = $oProcess->load($sProcessUID);
       global $G_PUBLISH;
-      global $G_HEADER;
       $G_PUBLISH = new Publisher;
-      $G_HEADER->clearScripts();
       $G_PUBLISH->AddContent('propeltable', 'paged-table', 'outputdocs/outputdocs_ShortList', $this->getOutputDocumentsCriteria($sProcessUID), $aFields);
       G::RenderPage('publish', 'raw');
       return true;
@@ -1523,9 +1504,7 @@ class processMap {
 			$oProcess = new Process();
   	  $aFields  = $oProcess->load($sProcessUID);
       global $G_PUBLISH;
-      global $G_HEADER;
       $G_PUBLISH = new Publisher;
-      $G_HEADER->clearScripts();
       $G_PUBLISH->AddContent('propeltable', 'paged-table', 'inputdocs/inputdocs_ShortList', $this->getInputDocumentsCriteria($sProcessUID), $aFields);
       G::RenderPage('publish', 'raw');
       return true;
@@ -1574,9 +1553,7 @@ class processMap {
 			$oProcess = new Process();
   	  $aFields  = $oProcess->load($sProcessUID);
       global $G_PUBLISH;
-      global $G_HEADER;
       $G_PUBLISH = new Publisher;
-      $G_HEADER->clearScripts();
       $G_PUBLISH->AddContent('propeltable', 'paged-table', 'triggers/triggers_ShortList', $this->getTriggersCriteria($sProcessUID), $aFields);
       G::RenderPage('publish', 'raw');
       return true;
@@ -1625,11 +1602,9 @@ class processMap {
 			$oProcess = new Process();
   	  $aFields  = $oProcess->load($sProcessUID);
       global $G_PUBLISH;
-      global $G_HEADER;
       $aFields['PRO_UID']  = $sProcessUID;
       $aFields['SYS_LANG'] = SYS_LANG;
       $G_PUBLISH = new Publisher;
-      $G_HEADER->clearScripts();
       //$G_PUBLISH->AddContent('pagedtable', 'paged-table', 'messages/messages_ShortList', $this->getMessagesCriteria($sProcessUID));
       G::RenderPage('publish', 'raw');
       return true;
@@ -1649,9 +1624,7 @@ class processMap {
 			$oProcess = new Process();
   	  $aFields  = $oProcess->load($sProcessUID);
       global $G_PUBLISH;
-      global $G_HEADER;
       $G_PUBLISH = new Publisher;
-      $G_HEADER->clearScripts();
       $G_PUBLISH->AddContent('propeltable', 'paged-table', 'reportTables/reportTables_ShortList', $this->getReportTablesCriteria($sProcessUID), $aFields);
       G::RenderPage('publish', 'raw');
       return true;
@@ -1779,9 +1752,7 @@ class processMap {
   	  $aFields['PROCESS'] = $sProcessUID;
   	  $aFields['TASK']    = $sTaskUID;
   	  global $G_PUBLISH;
-  	  global $G_HEADER;
   	  $G_PUBLISH = new Publisher();
-  	  $G_HEADER->clearScripts();
       $G_PUBLISH->AddContent('xmlform', 'xmlform', 'patterns/' . $sXmlform, '', $aFields, '../patterns/patterns_Ajax');
       G::RenderPage('publish', 'raw');
       return true;
@@ -1909,9 +1880,7 @@ class processMap {
   	  $aFields['PROCESS'] = $sProcessUID;
   	  $aFields['TASK']    = $sTaskUID;
   	  global $G_PUBLISH;
-  	  global $G_HEADER;
   	  $G_PUBLISH = new Publisher();
-  	  $G_HEADER->clearScripts();
       $G_PUBLISH->AddContent('xmlform', 'xmlform', 'patterns/patterns_Current', '', $aFields, '../patterns/patterns_Ajax');
       G::RenderPage('publish', 'raw');
       return true;
@@ -2020,9 +1989,7 @@ class processMap {
   function supervisorDynaforms($sProcessUID) {
     try {
       global $G_PUBLISH;
-      global $G_HEADER;
       $G_PUBLISH = new Publisher;
-      $G_HEADER->clearScripts();
       $G_PUBLISH->AddContent('propeltable', 'paged-table', 'dynaforms/dynaforms_Supervisor', $this->getSupervisorDynaformsCriteria($sProcessUID), array('PRO_UID' => $sProcessUID));
       G::RenderPage('publish', 'raw');
     	return true;
@@ -2035,9 +2002,7 @@ class processMap {
   function webEntry($sProcessUID) {
     try {     	
       global $G_PUBLISH;
-      global $G_HEADER;
       $G_PUBLISH = new Publisher;
-      $G_HEADER->clearScripts();    
       $G_PUBLISH->AddContent('xmlform', 'xmlform', 'dynaforms/dynaforms_WebEntry', '', array('PRO_UID' => $sProcessUID));
       G::RenderPage('publish', 'raw');
     	return true;
@@ -2086,9 +2051,7 @@ class processMap {
   function availableSupervisorDynaforms($sProcessUID) {
     try {
       global $G_PUBLISH;
-      global $G_HEADER;
       $G_PUBLISH = new Publisher;
-      $G_HEADER->clearScripts();
       $G_PUBLISH->AddContent('propeltable', 'paged-table', 'dynaforms/dynaforms_AvailableSupervisorDynaforms', $this->getAvailableSupervisorDynaformsCriteria($sProcessUID), array('PRO_UID' => $sProcessUID));
       G::RenderPage('publish', 'raw');
     	return true;

@@ -41,8 +41,6 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
   $aFields['PRO_UID'] = isset($dynaform->Fields['PRO_UID'])?$dynaform->Fields['PRO_UID']:$_GET['PRO_UID'];
 
   $G_PUBLISH = new Publisher();
-  $G_HEADER->clearScripts();
   $G_PUBLISH->AddContent('xmlform', 'xmlform', 'dynaforms/dynaforms_Edit', '', $aFields , SYS_URI.'dynaforms/dynaforms_Save');
   
   G::RenderPage( "publish-raw" , "raw" );
-?>

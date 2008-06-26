@@ -37,8 +37,8 @@ $smarty->cache_dir   = '/tmp/smarty/cache'; //web/www.domain.com/smarty/cache';
 $smarty->config_dir = PATH_THIRDPARTY . 'smarty/configs';
 $smarty->caching      = false;
 
-global $G_HEADER;
-if (isset($GLOBALS['G_HEADER'])) $header = $GLOBALS['G_HEADER']->printHeader();
+$oHeadPublisher =& headPublisher::getSingleton();
+if (isset($oHeadPublisher)) $header = $oHeadPublisher->printHeader();
 $smarty->assign('header', $header );
 $smarty->display('index.html');
 

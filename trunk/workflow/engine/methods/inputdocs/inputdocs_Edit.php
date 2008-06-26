@@ -46,7 +46,6 @@ try {
   	$aFields['PRO_UID'] = $_GET['PRO_UID'];
   }
   $G_PUBLISH = new Publisher();
-  $G_HEADER->clearScripts();
   $G_PUBLISH->AddContent('xmlform', 'xmlform', 'inputdocs/inputdocs_Edit', '', $aFields , '../inputdocs/inputdocs_Save');
   G::RenderPage('publish', 'raw');
 }

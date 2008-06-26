@@ -888,6 +888,7 @@ class G
           $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/maborak.js' );
           $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'common/core/common.js' );
           $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'common/core/webResource.js' );
+          $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'dveditor/core/dveditor.js' );
           $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'common/tree/tree.js' );
           $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'json/core/json.js' );
           $output .= G::trimSourceCodeFile (PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'form/core/form.js' );
@@ -941,9 +942,9 @@ class G
       fclose($handle);
     }
 
-    return $content;
 //end NO optimizing code
-
+//begin optimizing code
+/*
     if ($handle) {
       while (!feof($handle)) {
         $lastChar = ( strlen ( $line ) > 5 ) ? $line[strlen($line)-1] : '';
@@ -961,6 +962,8 @@ class G
       }
       fclose($handle);
     }
+*/
+//end optimizing code
 
     $index = 0;
     $output = '';

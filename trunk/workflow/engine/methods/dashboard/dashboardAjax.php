@@ -30,13 +30,30 @@ $oDashboards = new Dashboards();
 
 switch ($_POST['action']) {
 	case 'showAvailableDashboards':
-	  $aConfiguration = $oDashboards->getConfiguration($_SESSION['USER_LOGGED']);
+	  $aConfiguration     = $oDashboards->getConfiguration($_SESSION['USER_LOGGED']);
+	  $aAvailableCharts   = array();
+    $aAvailableCharts[] = array('DASH_CODE'  => 'char',
+                                'DASH_LABEL' => 'char');
+	  //Load available ProcessMaker reports
+	  G::LoadClass('report');
+	  $oReport  = new Report();
+	  $aReports = $oReport->getAvailableReports();
+	  $iColumn  = 0;
+    foreach ($aReports as $sReport) {
+      $bFree = true;
+      foreach ($aConfiguration as $aDashboard) {
+        if (($aDashboard['class'] == 'PM_Reports') && ($aDashboard['type'] == $sReport)) {
+          $bFree = false;
+        }
+      }
+      if ($bFree) {
+        $aAvailableCharts[] = array('DASH_CODE'  => 'PM_Reports^' . $sReport,
+                                    'DASH_LABEL' => 'PM_Reports - ' . G::LoadTranslation($sReport));
+      }
+    }
     //Load available charts
     $oPluginRegistry      = &PMPluginRegistry::getSingleton();
     $aAvailableDashboards = $oPluginRegistry->getDashboards();
-    $aAvailableCharts     = array();
-    $aAvailableCharts[]   = array('DASH_CODE'  => 'char',
-                                  'DASH_LABEL' => 'char');
     foreach ($aAvailableDashboards as $sDashboardClass) {
       require_once PATH_PLUGINS. $sDashboardClass  . PATH_SEP . 'class.' . $sDashboardClass . '.php';
       $sClassName = $sDashboardClass . 'Class';
@@ -51,7 +68,6 @@ switch ($_POST['action']) {
           }
         }
         if ($bFree) {
-          $oChart = $oInstance->getChart($sChart);
           $aAvailableCharts[] = array('DASH_CODE'  => $sDashboardClass . '^' . $sChart,
                                       'DASH_LABEL' => $sDashboardClass . ' - ' . $sChart);
         }
@@ -63,9 +79,7 @@ switch ($_POST['action']) {
     $_SESSION['_DBArray']        = $_DBArray;
     //Show form
     global $G_PUBLISH;
-  	global $G_HEADER;
   	$G_PUBLISH = new Publisher();
-    $G_HEADER->clearScripts();
     if (count($aAvailableCharts) > 1) {
       $G_PUBLISH->AddContent('xmlform', 'xmlform', 'dashboard/dashboard_AvailableDashboards');
     }
@@ -75,15 +89,24 @@ switch ($_POST['action']) {
     G::RenderPage('publish', 'raw');
 	break;
 	case 'addDashboard':
-	  require_once PATH_PLUGINS. $_POST['sDashboardClass']  . PATH_SEP . 'class.' . $_POST['sDashboardClass'] . '.php';
-    $sClassName = $_POST['sDashboardClass'] . 'Class';
-    $oInstance  = new $sClassName();
-	  $aConfiguration = $oDashboards->getConfiguration($_SESSION['USER_LOGGED']);
-	  $aConfiguration[] = array('class'  => $_POST['sDashboardClass'],
-	                            'type'   => $_POST['sChart'],
-	                            'object' => $oInstance->getChart($_POST['sChart']),
-	                            'config' => '');
-	  $oDashboards->saveConfiguration($_SESSION['USER_LOGGED'], $aConfiguration);
+	  if ($_POST['sDashboardClass'] == 'PM_Reports') {
+	    /*$aConfiguration = $oDashboards->getConfiguration($_SESSION['USER_LOGGED']);
+	    $aConfiguration[] = array('class'  => $_POST['sDashboardClass'],
+	                              'type'   => $_POST['sChart'],
+	                              'object' => ''),
+	                              'config' => '');*/
+	  }
+	  else {
+	    require_once PATH_PLUGINS. $_POST['sDashboardClass']  . PATH_SEP . 'class.' . $_POST['sDashboardClass'] . '.php';
+      $sClassName = $_POST['sDashboardClass'] . 'Class';
+      $oInstance  = new $sClassName();
+	    $aConfiguration = $oDashboards->getConfiguration($_SESSION['USER_LOGGED']);
+	    $aConfiguration[] = array('class'  => $_POST['sDashboardClass'],
+	                              'type'   => $_POST['sChart'],
+	                              'object' => $oInstance->getChart($_POST['sChart']),
+	                              'config' => '');
+      $oDashboards->saveConfiguration($_SESSION['USER_LOGGED'], $aConfiguration);
+    }
 	  echo 'oDashboards = ' . $oDashboards->getDashboardsObject($_SESSION['USER_LOGGED']) . ';';
 	break;
 	case 'removeDashboard':

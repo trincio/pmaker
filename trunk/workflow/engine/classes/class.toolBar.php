@@ -40,12 +40,12 @@
     }
 
     function render( $value ) {
-      global $G_HEADER;
       $this->toolBar = new toolBar( $this->xmlfile , $this->home );
       $template = PATH_CORE . 'templates/'  . $this->type . '.html';
     	$out =  $this->toolBar->render( $template , $scriptCode ) ;
-      $G_HEADER->addScriptFile( $this->toolBar->scriptURL );
-      $G_HEADER->addScriptCode( $scriptCode );
+      $oHeadPublisher =& headPublisher::getSingleton();
+      $oHeadPublisher->addScriptFile( $this->toolBar->scriptURL );
+      $oHeadPublisher->addScriptCode( $scriptCode );
       return $out;
     }
 

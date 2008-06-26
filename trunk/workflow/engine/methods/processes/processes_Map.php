@@ -50,16 +50,9 @@ $G_ID_SUB_MENU_SELECTED = '_';
 $G_PUBLISH = new Publisher;
 $G_PUBLISH->AddContent('template', '', '', '', $oTemplatePower);
 
-$G_HEADER->clearScripts();
-$G_HEADER->addScriptFile('/jscore/labels/en.js');
-$G_HEADER->addScriptFile('/js/maborak/core/maborak.js');
-/*$G_HEADER->addScriptFile('/js/form/core/pagedTable.js');
-$G_HEADER->addScriptFile('/js/common/core/common.js');
-$G_HEADER->addScriptFile('/js/common/core/webResource.js');
-$G_HEADER->addScriptFile('/js/form/core/form.js');
-$G_HEADER->addScriptFile('/js/grid/core/grid.js');*/
-$G_HEADER->addScriptFile('/htmlarea/editor.js');
-$G_HEADER->addScriptCode( '
+$oHeadPublisher =& headPublisher::getSingleton();
+//$oHeadPublisher->addScriptFile('/htmlarea/editor.js');
+$oHeadPublisher->addScriptCode( '
 	var leimnud = new maborak();
 	leimnud.make();
 	leimnud.Package.Load("rpc,drag,drop,panel,app,validator,fx,dom,abbr",{Instance:leimnud,Type:"module"});
@@ -82,4 +75,3 @@ $G_HEADER->addScriptCode( '
 		Pm.make();
 	});' );
 G::RenderPage('publish');
-?>

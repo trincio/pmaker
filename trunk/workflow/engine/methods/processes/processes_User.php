@@ -42,7 +42,8 @@ try {
   $oProcessMap = new ProcessMap();
   $c = $oProcessMap->listProcessesUser($sProUid);
     
-  $G_HEADER->addScriptFile('/jscore/processmap/core/processUser.js');
+  $oHeadPublisher =& headPublisher::getSingleton();
+  $oHeadPublisher->addScriptFile('/jscore/processmap/core/processUser.js');
   
   $G_PUBLISH = new Publisher;
   $G_PUBLISH->AddContent('propeltable', 'paged-table', 'processes/processes_User', $c, array('PRO_UID' => $sProUid));

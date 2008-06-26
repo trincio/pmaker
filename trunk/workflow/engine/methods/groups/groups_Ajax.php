@@ -32,17 +32,17 @@ switch ($_POST['action'])
 	  G::LoadClass('groups');
 	  $oGroup = new Groups();
 	  global $G_PUBLISH;
-  	global $G_HEADER;
   	$G_PUBLISH = new Publisher();
   	$G_PUBLISH->AddContent('propeltable', 'paged-table', 'groups/groups_UsersList', $oGroup->getUsersGroupCriteria($_POST['sGroupUID']), array('GRP_UID' => $_POST['sGroupUID']));
-    $G_HEADER->clearScripts();
     G::RenderPage('publish', 'raw');
 	break;
+
 	case 'assignUser':
 	  G::LoadClass('groups');
 	  $oGroup = new Groups();
 	  $oGroup->addUserToGroup($_POST['GRP_UID'], $_POST['USR_UID']);
 	break;
+
 	case 'ofToAssignUser':
 	  G::LoadClass('groups');
 	  $oGroup = new Groups();
@@ -77,4 +77,3 @@ switch ($_POST['action'])
   	  }
   	break;
 }
-?>
