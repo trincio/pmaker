@@ -76,6 +76,34 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
  /*** enable ERROR_LOG_NOTICE_ERROR to log Notices messages in default apache log ***/
   //  define ( 'ERROR_LOG_NOTICE_ERROR', true );
 
+//  ************* creat headPublisher singleton *****************
+  G::LoadSystem('headPublisher');
+  $oHeadPublisher =& headPublisher::getSingleton();
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/maborak.js' );   
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'common/core/common.js' );     
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'common/core/webResource.js' );
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'dveditor/core/dveditor.js' ); 
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'common/tree/tree.js' );       
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'json/core/json.js' );         
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'form/core/form.js' );         
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'form/core/pagedTable.js' );   
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'grid/core/grid.js' );         
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.panel.js'    , true );
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.validator.js', true );
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.app.js'      , true );
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.rpc.js'      , true );
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.fx.js'       , true );
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.drag.js'     , true );
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.drop.js'     , true );
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.dom.js'      , true );
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.abbr.js'     , true );
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.dashboard.js', true );
+  $oHeadPublisher->addMaborakFile( PATH_CORE . 'js' . PATH_SEP . 'cases/core/cases.js' , true );
+  $oHeadPublisher->addMaborakFile( PATH_CORE . 'js' . PATH_SEP . 'cases/core/cases_Step.js', true );
+  $oHeadPublisher->addMaborakFile( PATH_CORE . 'js' . PATH_SEP . 'processmap/core/processmap.js', true );
+  $oHeadPublisher->addMaborakFile( PATH_THIRDPARTY . 'htmlarea/editor.js', true );
+  
+
 //************ defining Virtual URLs ****************/
   $virtualURITable = array();
   $virtualURITable['/plugin/(*)']                    = 'plugin';
@@ -157,7 +185,6 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
   G::LoadSystem('rbac' );
   G::LoadSystem('publisher');
   G::LoadSystem('templatePower');
-  G::LoadSystem('headPublisher');
   G::LoadSystem('xmlDocument');
   G::LoadSystem('xmlform');
   G::LoadSystem('xmlformExtension');
@@ -169,9 +196,6 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
   G::LoadSystem('pagedTable');
   //G::LoadSystem("fckEditor");
   //G::LoadSystem("htmlArea");
-
-
-  $GLOBALS['G_HEADER'] = new headPublisher();  //$G_HEADER->addScriptFile
 
   /***************** Installer  ******************************/
   if(!defined('PATH_DATA') || !file_exists(PATH_DATA))

@@ -32,6 +32,8 @@
 class headPublisher
 {
   static private $instance = NULL;
+  var $maborakFiles = array();
+  var $maborakLoaderFiles = array();
   var $scriptFiles  = array();
   var $leimnudLoad  = array();
 
@@ -87,6 +89,21 @@ class headPublisher
   function setTitle( $title )
   {
     $this->title = $title;
+  }
+
+  /**
+   * Function addMaborakFile
+   * @access public
+   * @parameter string filename
+   * @parameter string loader;   false -> maborak files, true maborak.loader
+   * @return string
+   */
+  function addMaborakFile( $filename, $loader = false)
+  {
+  	if ( $loader )
+      $this->maborakLoaderFiles[] = $filename;
+    else    
+      $this->maborakFiles[] = $filename;
   }
 
   /**
