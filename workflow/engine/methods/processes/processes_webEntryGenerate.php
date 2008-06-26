@@ -30,9 +30,9 @@
     $js3   = $http.$_SERVER['HTTP_HOST'].'/js/form/core/form.js';
     $js4   = $http.$_SERVER['HTTP_HOST'].'/js/grid/core/grid.js';
     $js5   = $http.$_SERVER['HTTP_HOST'].'/js/maborak/core/maborak.loader.js';
-    $js6   = $http.$_SERVER['HTTP_HOST'].'/jsform/'.$aRow['DYN_FILENAME'].'.js';
-    //$js7   = $http.$_SERVER['HTTP_HOST'].'/jsform/'.$aRow['DYN_FILENAME'].'.js';
-    					
+    $js6   = $http.$_SERVER['HTTP_HOST'].'/jsform/'.$aRow['DYN_FILENAME'].'.js';    
+    $x = $http.$_SERVER['HTTP_HOST'].'/gulliver/defaultAjaxDynaform';
+        					
 		$link1 = '<link rel="shortcut icon" href="'.$link1.'"   type="image/x-icon"/>';
     $link2 = '<link rel="stylesheet" type="text/css" href="'.$link2.'"/>'; 	  
     $js1  = '<script type="text/javascript" src="'.$js1.'"></script>';
@@ -41,6 +41,7 @@
 		$js4  = '<script type="text/javascript" src="'.$js4.'"></script>';
 		$js5  = '<script type="text/javascript" src="'.$js5.'"></script>';
 		$js6  = '<script type="text/javascript" src="'.$js6.'"></script>';
+		
 		$js7  = '
 		<script type="text/javascript">
   		var leimnud = new maborak();
@@ -51,10 +52,11 @@
 			{
 				leimnud.iphone.make();
 			}
-			leimnud.event.add(window,"load",function(){loadForm_YXBaZ29XbWtaMm1ucUdtZnBaZHNxWldqbHBTV29HQ2piV21pcVdPaXEyeG9xR21rYVpOa3BHR21hR2lpcDJIUXBwaWIxSmVpWkpOZ28ybW5aMkNqcVdXYjdhS2w___("../gulliver/defaultAjaxDynaform");});
+			
+	    leimnud.event.add(window,"load",function()loadForm_'.$G_FORM->id.'("'.$x.'"););
+			//leimnud.event.add(window,"load",function(){loadForm_YXBaZ29XbWtaMm1ucUdtZnBaZHNxWldqbHBTV29HQ2piV21pcVdPaXEyeG9xR21rYVpOa3BHR21hR2lpcDJIUXBwaWIxSmVpWkpOZ28ybW5aMkNqcVdXYjdhS2w___("../gulliver/defaultAjaxDynaform");});
     </script>';
-    
-    //print_r('<textarea cols="50" rows="20">'.print_r($G_FORM->fields,1).'</textarea>'); die;
+        
     
    	$Target = $http.$_SERVER['HTTP_HOST'].'/sys'.SYS_SYS.'/'.SYS_LANG.'/'.SYS_SKIN.'/cases/cases_StartExternal.php';   			          
                   
