@@ -41,12 +41,6 @@ leimnud.Package.Public({
 			this.columns	= this.options.data.length;
 			this.widthColumn = (width/this.columns);
 			this.elements.column=[];
-			/* Button ADD BEGIN */
-			/*this.elements.add = new DOM('div',false,{padding:6,textAlign:'left'}).append(
-				new button('Add Content')
-			);
-			this.options.target.append(this.elements.add);*/
-			/* Button ADD END   */
 			this.elements.table 	= $dce('table');
 			$(this.elements.table).setStyle({
 				width:width,
@@ -70,7 +64,7 @@ leimnud.Package.Public({
 			this.drop.setArrayPositions(true);
 		};
 
-		this.parseData=function()
+        this.parseData=function()
 		{
 			for(var i=0;i<this.columns;i++)
 			{
@@ -231,6 +225,8 @@ leimnud.Package.Public({
 							this.moving=false;
 							if(this.drop.selected!==false)
 							{
+  //                              var inp = this.drop.elements[this.drop.selected].value;
+//                                console.debug(this.options.panel[inp]);
 								//console.info("========================");
 								//console.info(i+":"+this.drop.selected);
 								//console.info(this.drop.elements[this.drop.selected].value);
@@ -239,14 +235,15 @@ leimnud.Package.Public({
 					});
 				}.extend(this,this.options.panel.length)
 			};
-			_panel.make();
-			_panel.elements.statusBarButtons[0].onclick = function() {
-			  new leimnud.module.app.confirm().make({
-          label : G_STRINGS.ID_CONFIRM_REMOVE_DASHBOARD,
-          action: function() {
-            removeDashboard(options.class,options.chart);
-          }.extend(this)
-        });
+	        _panel.make();
+			_panel.elements.statusBarButtons[0].onclick = function()
+            {
+	            new leimnud.module.app.confirm().make({
+                    label : G_STRINGS.ID_CONFIRM_REMOVE_DASHBOARD,
+                    action: function() {
+                        removeDashboard(options['class'],options.chart);
+                    }.extend(this)
+                });
 			};
 			if(options.open)
 			{
@@ -266,4 +263,3 @@ leimnud.Package.Public({
 		this.expand(this);
 	}
 });
-

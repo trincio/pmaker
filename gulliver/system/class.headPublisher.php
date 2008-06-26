@@ -37,7 +37,7 @@ class headPublisher
 
   var $leimnudInitString = '  var leimnud = new maborak();
   leimnud.make();
-  leimnud.Package.Load("panel,validator,app,rpc,fx,drag,drop,dom,abbr",{Instance:leimnud,Type:"module"});';
+  leimnud.Package.Load("panel,validator,app,rpc,fx,drag,drop,dom,abbr,dashboard",{Instance:leimnud,Type:"module"});';
   var $headerScript = '
 	  leimnud.exec(leimnud.fix.memoryLeak);
   	if(leimnud.browser.isIphone)
