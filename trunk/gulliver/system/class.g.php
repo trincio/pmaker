@@ -29,6 +29,18 @@
 
 class G
 {
+	
+	function is_https()
+	{
+		if(isset($_SERVER['HTTPS']))
+		{		if($_SERVER['HTTPS']=='on')
+						return true;
+				else
+						return false;
+		}
+		else
+			return false;				
+	}
 	/**
 	* Fill array values (recursive)
 	* @author maborak <maborak@maborak.com>
