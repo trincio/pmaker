@@ -1,17 +1,17 @@
 /*
  * CodePress - Real Time Syntax Highlighting Editor written in JavaScript - http://codepress.org/
- * 
+ *
  * Copyright (C) 2006 Fernando M.A.d.S. <fermads@gmail.com>
  *
- * This program is free software; you can redistribute it and/or modify it under the terms of the 
+ * This program is free software; you can redistribute it and/or modify it under the terms of the
  * GNU Lesser General Public License as published by the Free Software Foundation.
- * 
+ *
  * Read the full licence: http://www.opensource.org/licenses/lgpl-license.php
  */
 if (typeof(CodePress)==="undefined")
 {
 CodePress = function(obj,language) {
-	var self = document.createElement('iframe');
+	var self = $dce('iframe');
 	self.textarea = obj;
 	self.textarea.disabled = true;
 	self.textarea.style.overflow = 'hidden';
@@ -24,7 +24,7 @@ CodePress = function(obj,language) {
 	self.style.position = 'absolute';
 	self.options = self.textarea.className;
 	self.language=language;
-	
+
 	self.initialize = function() {
 		self.editor = self.contentWindow.CodePress;
 		self.editor.body = self.contentWindow.document.getElementsByTagName('body')[0];
@@ -36,30 +36,31 @@ CodePress = function(obj,language) {
 		self.style.visibility = 'visible';
 		self.style.display = 'inline';
 	}
-	
+
 	// obj can by a textarea id or a string (code)
 	self.edit = function(obj,language) {
+		//if(obj) self.textarea.value = $(obj) ? $(obj).value : obj;
 		if(obj) self.textarea.value = document.getElementById(obj) ? document.getElementById(obj).value : obj;
 		if(!self.textarea.disabled) return;
 		self.language = language ? language : self.getLanguage();
-		
+
 		self.src = CodePress.path+'codepress.html?language='+self.language+'&ts='+(new Date).getTime();
 		if(self.attachEvent) self.attachEvent('onload',self.initialize);
 		else self.addEventListener('load',self.initialize,false);
 	}
 
 	self.getLanguage = function() {
-		for (language in CodePress.languages) 
-			if(self.options.match('\\b'+language+'\\b')) 
+		for (language in CodePress.languages)
+			if(self.options.match('\\b'+language+'\\b'))
 				return CodePress.languages[language] ? language : 'generic';
 	}
-	
+
 	self.setOptions = function() {
 		if(self.options.match('autocomplete-off')) self.toggleAutoComplete();
 		if(self.options.match('readonly-on')) self.toggleReadOnly();
 		if(self.options.match('linenumbers-off')) self.toggleLineNumbers();
 	}
-	
+
 	self.getCode = function() {
 		return self.textarea.disabled ? self.editor.getCode() : self.textarea.value;
 	}
@@ -76,18 +77,18 @@ CodePress = function(obj,language) {
 	self.toggleAutoComplete = function() {
 		self.editor.autocomplete = (self.editor.autocomplete) ? false : true;
 	}
-	
+
 	self.toggleReadOnly = function() {
 		self.textarea.readOnly = (self.textarea.readOnly) ? false : true;
 		if(self.style.display != 'none') // prevent exception on FF + iframe with display:none
 			self.editor.readOnly(self.textarea.readOnly ? true : false);
 	}
-	
+
 	self.toggleLineNumbers = function() {
 		var cn = self.editor.body.className;
 		self.editor.body.className = (cn==''||cn=='show-line-numbers') ? 'hide-line-numbers' : 'show-line-numbers';
 	}
-	
+
 	self.toggleEditor = function() {
 		if(self.textarea.disabled) {
 			self.textarea.value = self.getCode();
@@ -108,17 +109,17 @@ CodePress = function(obj,language) {
 	return self;
 }
 
-CodePress.languages = {	
-	csharp : 'C#', 
-	css : 'CSS', 
+CodePress.languages = {
+	csharp : 'C#',
+	css : 'CSS',
 	generic : 'Generic',
 	html : 'HTML',
-	java : 'Java', 
-	javascript : 'JavaScript', 
-	perl : 'Perl', 
-	ruby : 'Ruby',	
-	php : 'PHP', 
-	text : 'Text', 
+	java : 'Java',
+	javascript : 'JavaScript',
+	perl : 'Perl',
+	ruby : 'Ruby',
+	php : 'PHP',
+	text : 'Text',
 	sql : 'SQL',
 	vbscript : 'VBScript'
 }
@@ -139,7 +140,7 @@ CodePress.run = function() {
 			t[i].id = id+'_cp';
 			eval(id+' = new CodePress(t[i])');
 			t[i].parentNode.insertBefore(eval(id), t[i]);
-		} 
+		}
 	}*/
 }
 

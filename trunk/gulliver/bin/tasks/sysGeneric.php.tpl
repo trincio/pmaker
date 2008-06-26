@@ -43,9 +43,6 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
 //***************** In this file we cant to get the PM definitions  ******************************
   require_once ( $pathhome . PATH_SEP . 'engine' . PATH_SEP . 'config' . PATH_SEP . 'defines.php' );
 
-
-
-
 //******************* Error handler and log error *******************
   //to do: make different environments.  sys
   //G::setErrorHandler ( );
@@ -56,6 +53,29 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
 
  /*** enable ERROR_LOG_NOTICE_ERROR to log Notices messages in default apache log ***/
   //  define ( 'ERROR_LOG_NOTICE_ERROR', true );
+
+//  ************* creat headPublisher singleton *****************
+  G::LoadSystem('headPublisher');
+  $oHeadPublisher =& headPublisher::getSingleton();
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/maborak.js' );   
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'common/core/common.js' );     
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'common/core/webResource.js' );
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'dveditor/core/dveditor.js' ); 
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'common/tree/tree.js' );       
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'json/core/json.js' );         
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'form/core/form.js' );         
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'form/core/pagedTable.js' );   
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'grid/core/grid.js' );         
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.panel.js'    , true );
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.validator.js', true );
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.app.js'      , true );
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.rpc.js'      , true );
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.fx.js'       , true );
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.drag.js'     , true );
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.drop.js'     , true );
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.dom.js'      , true );
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.abbr.js'     , true );
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.dashboard.js', true );
 
 //************ defining Virtual URLs ****************/
   $virtualURITable = array();
@@ -85,8 +105,7 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
   if ( G::virtualURI($_SERVER['REQUEST_URI'], $virtualURITable , $realPath )) {
   	// review if the file requested belongs to public_html plugin
     if ( substr ( $realPath, 0,6) == 'plugin' ) {
-    	
-      $paths = explode ( PATH_SEP, $realPath );  
+      $paths = explode ( PATH_SEP, $realPath );
       $paths[0] = substr ( $paths[0],6);
       if ( count($paths) == 2 )  {
         $pathsQuery = explode('?', $paths[1]);
@@ -150,8 +169,8 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
   G::LoadSystem('table');
   G::LoadSystem('pagedTable');
 
-  $GLOBALS['G_HEADER'] = new headPublisher();  
-
+  $oHeadPublisher =& headPublisher::getSingleton();
+  
   //***************** database and workspace definition  ************************
   //if SYS_TEMP exists, the URL has a workspace, now we need to verify if exists their db.php file
   if ( defined('SYS_TEMP') && SYS_TEMP != '')
@@ -300,9 +319,9 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
     //  logPage ( $URL , SYS_CURRENT_PARMS);
 
     //*********jump to php file in methods directory *************
-    //if ( $oPluginRegistry->isRegisteredFolder( SYS_COLLECTION ) )
-    //  $phpFile = PATH_PLUGINS . SYS_COLLECTION . PATH_SEP . SYS_TARGET.'.php';
-    //else
+//    if ( $oPluginRegistry->isRegisteredFolder( SYS_COLLECTION ) )
+//      $phpFile = PATH_PLUGINS . SYS_COLLECTION . PATH_SEP . SYS_TARGET.'.php';
+//    else
       $phpFile = G::ExpandPath('methods') . SYS_COLLECTION . PATH_SEP . SYS_TARGET.'.php';
 
     //the index.php file, this new feature will allow automatically redirects to valid php file inside the methods directory
@@ -333,14 +352,15 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
       header('Cache-Control: no-cache, must-revalidate, post-check=0,pre-check=0 ');
       header('P3P: CP="CAO PSA OUR"');
 
-      if(isset($_SESSION['USER_LOGGED'])) {
+      if(isset( $_SESSION['USER_LOGGED'] )) {
         $RBAC->initRBAC();
         $RBAC->loadUserRolePermission( $RBAC->sSystem, $_SESSION['USER_LOGGED'] );
       }
       else {
         //This sentence is used when you lost the Session
-        if(SYS_TARGET != 'authentication' and  SYS_TARGET != 'login' and  SYS_TARGET != 'dbInfo' and  SYS_TARGET != 'sysLoginVerify' and  SYS_TARGET != 'updateTranslation'  and  SYS_TARGET != 'updateTranslation' 
-        and  SYS_TARGET != 'wsBase' and  SYS_TARGET != 'demo'){
+        if ( SYS_TARGET != 'authentication' and  SYS_TARGET != 'login'
+        and  SYS_TARGET != 'dbInfo'         and  SYS_TARGET != 'sysLoginVerify'
+        and  SYS_TARGET != 'updateTranslation'  and  SYS_COLLECTION != 'services' ){
           header ("location: ".SYS_URI."login/login.php");
           die();
         }
