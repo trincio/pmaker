@@ -77,6 +77,7 @@
 
   $oCase = new Cases();
   $Fields = $oCase->loadCase( $_SESSION['APPLICATION'] );
+  $Fields['APP_DATA'] = array_merge($Fields['APP_DATA'], G::getSystemConstants());
   $sStatus = $Fields['APP_STATUS'];
 
   $APP_NUMBER = $Fields['APP_NUMBER'];

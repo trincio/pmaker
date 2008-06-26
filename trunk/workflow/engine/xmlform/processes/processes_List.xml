@@ -5,6 +5,7 @@
   searchBy = " C1.CON_VALUE | C2.CON_VALUE "
   filterForm="processes/processes_Search"
 >
+<PRO_UID type="private" showInTable="0" />
 <PRO_TITLE type="text" titlealign="left" colWidth="300">
   <en>Title</en>
 </PRO_TITLE>
