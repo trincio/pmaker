@@ -31,9 +31,9 @@
  */
 class headPublisher
 {
+  static private $instance = NULL;
   var $scriptFiles  = array();
   var $leimnudLoad  = array();
-  //leimnud.Package.Load("panel,validator,app,rpc,fx,drag,drop,dom,abbr",{Instance:leimnud,Type:"module"});';
   
   var $leimnudInitString = '  var leimnud = new maborak();
   leimnud.make();
@@ -46,14 +46,15 @@ class headPublisher
 	}';
   var $disableHeaderScripts = false; 
   var $title='';
+
   /**
    * Function headPublisher
    * @author David S. Callizaya S. <davidsantos@colosa.com>
    * @access public
    * @return string
    */
-  function headPublisher()
-  {
+
+  private function __construct() {
     $jslabel = 'labels/en.js';
     if ( defined( 'SYS_LANG' ) )  {
       $jslabel = 'labels' . PATH_SEP . SYS_LANG . '.js';
@@ -65,15 +66,16 @@ class headPublisher
     }
 
     $this->addScriptFile("/js/maborak/core/maborak.js");
-//    $this->addScriptFile("/js/maborak/core/maborak.loader.js");
-      
-//    $this->addScriptFile("/js/common/core/common.js",1);
-//    $this->addScriptFile("/js/common/core/webResource.js",1);
-//    $this->addScriptFile("/js/json/core/json.js",1);
-//    $this->addScriptFile("/js/form/core/form.js",1);
-//    $this->addScriptFile("/js/grid/core/grid.js",2);
-    //$this->addScriptFile("/skins/JSForms.js",1);
   }
+
+  function &getSingleton() {
+    if (self::$instance == NULL) {
+      self::$instance = new headPublisher();
+    }
+    return self::$instance;
+  }
+
+  
   /**
    * Function setTitle
    * @author David S. Callizaya S. <davidsantos@colosa.com>
@@ -86,6 +88,7 @@ class headPublisher
   {
     $this->title = $title;
   }
+  
   /**
    * Function addScriptFile
    * @author David S. Callizaya S. <davidsantos@colosa.com>
@@ -99,6 +102,7 @@ class headPublisher
     if ($LoadType==1) $this->scriptFiles[$url]=$url;
     if ($LoadType==2) $this->leimnudLoad[$url]=$url;
   }
+  
   /**
    * Function addInstanceModule
    * @author David S. Callizaya S. <davidsantos@colosa.com>
@@ -107,10 +111,12 @@ class headPublisher
    * @parameter string module
    * @return string
    */
+   
   function addInstanceModule( $instance , $module )
   {
     $this->headerScript .= "leimnud.Package.Load('".$module."',{Instance:".$instance.",Type:'module'});\n";
   }
+  
   /**
    * Function addClassModule
    * @author David S. Callizaya S. <davidsantos@colosa.com>
@@ -123,6 +129,7 @@ class headPublisher
   {
     $this->headerScript .= "leimnud.Package.Load('".$module."',{Class:".$class.",Type:'module'});\n";
   }
+  
   /**
    * Function addScriptCode
    * @author David S. Callizaya S. <davidsantos@colosa.com>
@@ -134,6 +141,7 @@ class headPublisher
   {
     $this->headerScript .= $script;
   }
+  
   /**
    * Function printHeader
    * @author David S. Callizaya S. <davidsantos@colosa.com>
@@ -155,6 +163,7 @@ class headPublisher
     $head .= "</script>\n";
     return $head;
   }
+  
   /**
    * Function printRawHeader
    * Its prupose is to load el HEADs initialization javascript
@@ -179,6 +188,7 @@ class headPublisher
     //$head .= "</script>\n";
     return $head;
   }
+  
   /**
    * Function clearScripts
    * Its prupose is to clear all the scripts of the header.

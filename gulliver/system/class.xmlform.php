@@ -1873,9 +1873,9 @@ class XmlForm_Field_Grid extends XmlForm_Field
     $this->values=$values;
     $tpl->template=$tpl->printTemplate($this);
     //In the header
-      global $G_HEADER;
-      $G_HEADER->addScriptFile( $this->scriptURL );
-      $G_HEADER->addScriptCode( $tpl->printJavaScript($this) );
+    $oHeadPublisher =& headPublisher::getSingleton();
+    $oHeadPublisher->addScriptFile( $this->scriptURL );
+    $oHeadPublisher->addScriptCode( $tpl->printJavaScript($this) );
     return $tpl->printObject($this);
   }
   function flipValues( $values )
@@ -2030,9 +2030,9 @@ class XmlForm_Field_Xmlform extends XmlForm_Field
     //$this->rows=count(reset($values));
     $tpl->template=$tpl->printTemplate($this);
     //In the header
-      global $G_HEADER;
-      $G_HEADER->addScriptFile( $this->scriptURL );
-      $G_HEADER->addScriptCode( $tpl->printJavaScript($this) );
+    $oHeadPublisher =& headPublisher::getSingleton();
+    $oHeadPublisher->addScriptFile( $this->scriptURL );
+    $oHeadPublisher->addScriptCode( $tpl->printJavaScript($this) );
     return $tpl->printObject($this);
   }
 }

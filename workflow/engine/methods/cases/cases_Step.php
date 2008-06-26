@@ -61,23 +61,8 @@
   $oTemplatePower = new TemplatePower(PATH_TPL . 'cases/cases_Step.html');
   $oTemplatePower->prepare();
   $G_PUBLISH = new Publisher;
-/*
-  $G_HEADER->clearScripts();
-    if ( defined( 'SYS_LANG' ) )
-    {
-      $jslabel = 'labels/' . SYS_LANG . '.js';
-      if ( ! file_exists( PATH_CORE . 'js' . PATH_SEP . $jslabel ) )
-        $jslabel = 'labels/en.js';
-    }
-    else
-      $jslabel = 'labels/en.js';
-
-    if ( file_exists( PATH_CORE . 'js' . PATH_SEP . $jslabel ) ) {
-      $G_HEADER->addScriptFile( '/jscore/' . $jslabel , 1 );
-    }
-  $G_HEADER->addScriptFile('/js/maborak/core/maborak.js');
-*/
-  $G_HEADER->addScriptCode('
+  $oHeadPublisher =& headPublisher::getSingleton();
+  $oHeadPublisher->addScriptCode('
   var Cse = {};
   Cse.panels = {};
   var leimnud = new maborak();
@@ -92,6 +77,7 @@
 
   $oCase = new Cases();
   $Fields = $oCase->loadCase( $_SESSION['APPLICATION'] );
+  $sStatus = $Fields['APP_STATUS'];
 
   $APP_NUMBER = $Fields['APP_NUMBER'];
   $APP_TITLE = $Fields['TITLE'];
@@ -458,7 +444,8 @@ catch ( Exception $e ) {
 }
 
 /* Render page */
-$G_HEADER->addScriptCode('
+$oHeadPublisher =& headPublisher::getSingleton();
+$oHeadPublisher->addScriptCode('
   var showSteps = function()
   {
     if (!Cse.panels.step)

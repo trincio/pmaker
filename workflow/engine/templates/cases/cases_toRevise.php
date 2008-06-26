@@ -28,7 +28,6 @@ G::LoadClass('groups');
 G::LoadClass('tree');
 
 global $G_HEADER;
-$G_HEADER->addScriptFile('/js/common/tree/tree.js');
 
 $tree = new Tree();
 $tree->name = 'Groups';

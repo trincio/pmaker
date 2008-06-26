@@ -80,8 +80,6 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
   $Fields['PME_PRO_UID'] = $proUid;
   $Fields['PME_XMLNODE_NAME_OLD'] = (isset($Fields['PME_XMLNODE_NAME']) ? $Fields['PME_XMLNODE_NAME'] : '');
   $G_PUBLISH = new Publisher();
-  $G_HEADER->clearScripts();
-  $G_HEADER->addScriptFile('/js/grid/core/grid.js');
 
   if ( !( isset($fields->Fields['XMLNODE_NAME']) &&
       ($fields->Fields['XMLNODE_NAME']!=='') ) ) {
@@ -113,6 +111,6 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
       print(G::LoadTranslation('ID_UNKNOWN_FIELD_TYPE'));
     }
   }
-
+	
   G::RenderPage( "publish" , "raw" );
 ?>

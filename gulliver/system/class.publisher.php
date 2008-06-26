@@ -80,7 +80,7 @@ class Publisher
 			  );
 
     //This is needed to prepare the "header content"
-		//before to send the body content. ($G_HEADER)
+		//before to send the body content. ($oHeadPublisher)
 		ob_start();
 		$this->RenderContent0($pos);
 		if ((ob_get_contents()!=='') && ($this->publisherId!=='')) {
@@ -157,8 +157,8 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
 
     case 'xmlform':
     case 'dynaform':
-      global $G_FORM, $G_HEADER;
-      global $G_HEADER;
+      global $G_FORM;
+
       if ($Part['Type'] == 'xmlform')
       	$sPath = PATH_XMLFORM;
       else
@@ -195,8 +195,6 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
       }
 
       //Needed to make ajax calls
-      //Now it's is part of the default modules.
-      //$G_HEADER->addInstanceModule('leimnud', 'rpc');
 
       //The action in the form tag.
       if ( defined ( 'ENABLE_ENCRYPT' ) && ENABLE_ENCRYPT == 'yes' )
@@ -239,13 +237,13 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
       
         print $G_FORM->render( $template , $scriptCode );
         if ($Part['Template'] == 'grid') print ('</form>');
-        $G_HEADER->addScriptFile( $G_FORM->scriptURL );
-        $G_HEADER->addScriptCode( $scriptCode );
+        $oHeadPublisher =& headPublisher::getSingleton();
+        $oHeadPublisher->addScriptFile( $G_FORM->scriptURL );
+        $oHeadPublisher->addScriptCode( $scriptCode );
       break;
 
     case 'pagedtable':
       global $G_FORM;
-      global $G_HEADER;
 
       //if the xmlform file doesn't exists, then try with the plugins folders
       $sPath = PATH_XMLFORM;
@@ -269,7 +267,6 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
       $G_FORM->setValues ($Part['Data']);
       if (isset($_SESSION)) $_SESSION[$G_FORM->id]=$G_FORM->values;
 
-  		//$G_HEADER->addScriptFile( '/js/form/core/pagedTable.js' );
 
   		$oTable                           = new pagedTable();
   		$oTable->template                 = 'templates/'.$Part['Template'] . '.html';
@@ -330,7 +327,6 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
 
     case 'propeltable':
       global $G_FORM;
-      global $G_HEADER;
 
       //if the xmlform file doesn't exists, then try with the plugins folders
       $sPath = PATH_XMLFORM;
@@ -350,7 +346,7 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
 
       //$G_FORM->setValues ($Part['Data']);
       if (isset($_SESSION)) $_SESSION[$G_FORM->id] = $G_FORM->values;
-  		//$G_HEADER->addScriptFile( '/js/form/core/pagedTable.js' );
+
       G::LoadClass('propelTable');
 
       $oTable                           = new propelTable();
@@ -391,13 +387,11 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
       break;
 
     case 'panel-init':
-      global $G_HEADER;
       global $mainPanelScript;
       global $panelName;
       global $tabCount;
       G::LoadThirdParty('pear/json','class.json');
       $json=new Services_JSON();
-      //$G_HEADER->addInstanceModule('leimnud', 'panel');
       $tabCount = 0;
       $panelName = $Part['Template'];
       $data = $Part['File'];
@@ -451,7 +445,6 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
        print(' ');
       break;
     case 'panel-tab':
-        global $G_HEADER;
         global $tabCount;
         global $mainPanelScript;
         global $panelName;
@@ -479,7 +472,6 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
 
       break;
     case 'panel-close':
-      global $G_HEADER;
       global $mainPanelScript;
       global $panelName;
       global $tabCount;
@@ -491,7 +483,8 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
       $mainPanelScript .= 'function '.$panelName.'Clear(){';
       $mainPanelScript .= 'for(var r=0;r<'.$tabCount.';r++)'.
         'if ('.$panelName.'Tabs[r])'.$panelName.'Tabs[r].style.display="none";}';
-      $G_HEADER->addScriptCode( $mainPanelScript );
+      $oHeadPublisher =& headPublisher::getSingleton();
+      $oHeadPublisher->addScriptCode( $mainPanelScript );
 
       break;
     case 'blank';

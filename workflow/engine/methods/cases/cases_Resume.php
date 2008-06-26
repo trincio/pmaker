@@ -54,7 +54,8 @@
   $Fields = $oCase->loadCase( $_SESSION['APPLICATION'], $_SESSION['INDEX'] );
 
   /* Render page */
-  $G_HEADER->addScriptCode('
+  $oHeadPublisher =& headPublisher::getSingleton();
+  $oHeadPublisher->addScriptCode('
   var Cse = {};
   Cse.panels = {};
   var leimnud = new maborak();
@@ -69,7 +70,8 @@
 	  '.(isset($_SESSION['showCasesWindow'])?'try{'.$_SESSION['showCasesWindow'].'}catch(e){}':'').'
 });*/
   ');
-  $G_HEADER->addScriptFile('/jscore/cases/core/cases_Step.js');
+  $oHeadPublisher =& headPublisher::getSingleton();
+  $oHeadPublisher->addScriptFile('/jscore/cases/core/cases_Step.js');
   $G_PUBLISH = new Publisher;
   $G_PUBLISH->AddContent('xmlform', 'xmlform', 'cases/cases_Resume.xml', '', $Fields, '');
   G::RenderPage( 'publish' );

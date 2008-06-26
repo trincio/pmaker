@@ -46,51 +46,29 @@ if (!isset($_POST['action'])) {
 switch ($_POST['action']) {
 	case 'steps':
 		global $G_PUBLISH;
-		global $G_HEADER;
 		$G_PUBLISH = new Publisher();
 		$G_PUBLISH->AddContent('view', 'cases/cases_StepsTree');
-		$G_HEADER->clearScripts();
-		$G_HEADER->addScriptFile('/js/common/tree/tree.js');
 		G::RenderPage('publish', 'raw');
 		break;
 	case 'information':
 		global $G_PUBLISH;
-		global $G_HEADER;
 		$G_PUBLISH = new Publisher();
 		$G_PUBLISH->AddContent('view', 'cases/cases_InformationTree');
-		$G_HEADER->clearScripts();
-		$G_HEADER->addScriptFile('/js/common/tree/tree.js');
 		G::RenderPage('publish', 'raw');
 		break;
 	case 'actions':
 		global $G_PUBLISH;
-		global $G_HEADER;
 		$G_PUBLISH = new Publisher();
 		$G_PUBLISH->AddContent('view', 'cases/cases_ActionsTree');
-		$G_HEADER->clearScripts();
-		$G_HEADER->addScriptFile('/js/common/tree/tree.js');
 		G::RenderPage('publish', 'raw');
 		break;
-
-		/*  what is this?
-		case 'KT':
-		global $G_PUBLISH;
-		global $G_HEADER;
-		$G_PUBLISH = new Publisher();
-		$G_PUBLISH->AddContent('view', 'cases/cases_KTTree');
-		$G_HEADER->clearScripts();
-		$G_HEADER->addScriptFile('/js/common/tree/tree.js');
-		G::RenderPage('publish', 'raw');
-		break;
-		*/
 	case 'showProcessMap':
 		$oTemplatePower = new TemplatePower(PATH_TPL . 'processes/processes_Map.html');
 		$oTemplatePower->prepare();
 		$G_PUBLISH = new Publisher;
 		$G_PUBLISH->AddContent('template', '', '', '', $oTemplatePower);
-		$G_HEADER->clearScripts();
-		$G_HEADER->addScriptFile('/jscore/labels/en.js');
-		$G_HEADER->addScriptCode('
+$oHeadPublisher =& headPublisher::getSingleton();
+$oHeadPublisher->addScriptCode('
 		var pb=leimnud.dom.capture("tag.body 0");
 		Pm=new processmap();
 		Pm.options = {
@@ -115,7 +93,6 @@ switch ($_POST['action']) {
 		$aFields['sLabel4'] = G::LoadTranslation('ID_PARALLEL_TASK');
 		$G_PUBLISH = new Publisher;
 		$G_PUBLISH->AddContent('smarty', 'cases/cases_Leyends', '', '', $aFields);
-		$G_HEADER->clearScripts();
 		G::RenderPage('publish', 'raw');
 		break;
 	case 'showProcessInformation':
@@ -128,17 +105,14 @@ switch ($_POST['action']) {
 		$aFields['PRO_AUTHOR'] = $aUser['USR_FIRSTNAME'] . ' ' . $aUser['USR_LASTNAME'];
 		$aFields['PRO_CREATE_DATE'] = date('F j, Y', strtotime($aFields['PRO_CREATE_DATE']));
 		global $G_PUBLISH;
-		global $G_HEADER;
 		$G_PUBLISH = new Publisher();
 		$G_PUBLISH->AddContent('xmlform', 'xmlform', 'cases/cases_ProcessInformation', '', $aFields);
-		$G_HEADER->clearScripts();
 		G::RenderPage('publish', 'raw');
 		break;
 	case 'showTransferHistory':
 		G::LoadClass("case");
 		$c = Cases::getTransferHistoryCriteria($_SESSION['APPLICATION']);
 		$G_PUBLISH = new Publisher();
-		$G_HEADER->clearScripts();
 		$G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_TransferHistory', $c, array());
 		G::RenderPage('publish', 'raw');
 		break;
@@ -162,10 +136,8 @@ switch ($_POST['action']) {
 			(($iDiff % 3600) / 60) . ' ' . ((int)(($iDiff % 3600) / 60) == 1 ? G::LoadTranslation('ID_MINUTE') : G::LoadTranslation('ID_MINUTES')) . ' ' . (int)(($iDiff % 3600) % 60) . ' ' . ((int)(($iDiff % 3600) %
 			60) == 1 ? G::LoadTranslation('ID_SECOND') : G::LoadTranslation('ID_SECONDS')) : G::LoadTranslation('ID_NOT_FINISHED'));
 		global $G_PUBLISH;
-		global $G_HEADER;
 		$G_PUBLISH = new Publisher();
 		$G_PUBLISH->AddContent('xmlform', 'xmlform', 'cases/cases_TaskInformation', '', $aFields);
-		$G_HEADER->clearScripts();
 		G::RenderPage('publish', 'raw');
 		break;
 	case 'showTaskDetails':
@@ -201,10 +173,8 @@ switch ($_POST['action']) {
 			3600) / 60) . ' ' . ((int)(($iDiff % 3600) / 60) == 1 ? G::LoadTranslation('ID_MINUTE') : G::LoadTranslation('ID_MINUTES')) . ' ' . (int)(($iDiff % 3600) % 60) . ' ' . ((int)(($iDiff % 3600) % 60) ==
 			1 ? G::LoadTranslation('ID_SECOND') : G::LoadTranslation('ID_SECONDS')) : G::LoadTranslation('ID_NOT_FINISHED'));
 		global $G_PUBLISH;
-		global $G_HEADER;
 		$G_PUBLISH = new Publisher();
 		$G_PUBLISH->AddContent('xmlform', 'xmlform', 'cases/cases_TaskDetails', '', $aFields);
-		$G_HEADER->clearScripts();
 		G::RenderPage('publish', 'raw');
 		break;
 	case 'showUsers':
@@ -274,7 +244,7 @@ switch ($_POST['action']) {
 		$oCase = new Cases();
 		$oCase->cancelCase($sApplicationUID, $iIndex, $_SESSION['USER_LOGGED']);
 		break;
-		
+
 	case 'reactivateCase':
 		$sApplicationUID = isset($_POST['sApplicationUID']) ? $_POST['sApplicationUID']:
 		$_SESSION['APPLICATION'];
@@ -350,11 +320,8 @@ switch ($_POST['action']) {
 		$c->add(UsersPeer::USR_UID, $row, Criteria::IN);
 
 		global $G_PUBLISH;
-		global $G_HEADER;
 		$G_PUBLISH = new Publisher();
 		$G_PUBLISH->AddContent('propeltable', 'paged-table', 'processes/processes_viewreassignCase', $c);
-		$G_HEADER->clearScripts();
-		$G_HEADER->addScriptFile('/js/form/core/pagedTable.js');
 		G::RenderPage('publish', 'raw');
 		break;
 	case 'reassignCase':
@@ -363,26 +330,19 @@ switch ($_POST['action']) {
 		$cases->reassignCase($_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['USER_LOGGED'], $_POST['USR_UID'], $_POST['THETYPE']);
 		break;
 	case 'toRevisePanel':
-		//$G_HEADER->addScriptFile('/js/common/tree/tree.js');
-		//$G_HEADER->addInstanceModule('leimnud', 'rpc');
 			$_GET['APP_UID'] = $_POST['APP_UID'];
 			$_GET['DEL_INDEX'] = $_POST['DEL_INDEX'];
-		$G_PUBLISH = new Publisher;
-		$G_PUBLISH->AddContent('view', 'cases/cases_toRevise');
-		$G_PUBLISH->AddContent('smarty', 'cases/cases_toReviseIn', '', '', array());
-		//$G_HEADER->addScriptFile('/js/form/core/pagedTable.js');
-		//G::RenderPage("publish-treeview");
+		  $G_PUBLISH = new Publisher;
+		  $G_PUBLISH->AddContent('view', 'cases/cases_toRevise');
+		  $G_PUBLISH->AddContent('smarty', 'cases/cases_toReviseIn', '', '', array());
 			G::RenderPage('publish', 'raw');
 		break;
 	case 'showUploadedDocuments':
 		G::LoadClass('case');
 		$oCase = new Cases();
 		global $G_PUBLISH;
-		global $G_HEADER;
 		$G_PUBLISH = new Publisher();
 		$G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_AllInputdocsList', $oCase->getAllUploadedDocumentsCriteria($_SESSION['APPLICATION']));
-		$G_HEADER->clearScripts();
-		$G_HEADER->addScriptFile('/js/form/core/pagedTable.js');
 		G::RenderPage('publish', 'raw');
 		break;
 	case 'showUploadedDocument':
@@ -418,11 +378,8 @@ switch ($_POST['action']) {
 		G::LoadClass('case');
 		$oCase = new Cases();
 		global $G_PUBLISH;
-		global $G_HEADER;
 		$G_PUBLISH = new Publisher();
 		$G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_AllOutputdocsList', $oCase->getAllGeneratedDocumentsCriteria($_SESSION['APPLICATION']));
-		$G_HEADER->clearScripts();
-		$G_HEADER->addScriptFile('/js/form/core/pagedTable.js');
 		G::RenderPage('publish', 'raw');
 		break;
 	case 'showGeneratedDocument':
@@ -445,7 +402,6 @@ switch ($_POST['action']) {
 		G::LoadClass('case');
 		$oCase = new Cases();
 		global $G_PUBLISH;
-		global $G_HEADER;
 		$G_PUBLISH = new Publisher();
 		$G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_AllDynaformsList', $oCase->getallDynaformsCriteria($_SESSION['APPLICATION']));
 		G::RenderPage('publish', 'raw');
@@ -460,7 +416,6 @@ switch ($_POST['action']) {
 		$Fields['APP_DATA']['__DYNAFORM_OPTIONS']['NEXT_STEP_LABEL'] = '';
 		$Fields['APP_DATA']['__DYNAFORM_OPTIONS']['NEXT_STEP'] = '#';
 		$Fields['APP_DATA']['__DYNAFORM_OPTIONS']['NEXT_ACTION'] = 'return false;';
-
 		$G_PUBLISH->AddContent('dynaform', 'xmlform', $_SESSION['PROCESS']. '/' . $_POST['DYN_UID'], '', $Fields['APP_DATA'],'','','view');
 		G::RenderPage('publish', 'raw');
 		break;
@@ -494,11 +449,8 @@ switch ($_POST['action']) {
 		$oCriteria->add(UsersPeer::USR_UID, $aAdhocUsers, Criteria::IN);
 
 		global $G_PUBLISH;
-		global $G_HEADER;
 		$G_PUBLISH = new Publisher();
 		$G_PUBLISH->AddContent('propeltable', 'paged-table', 'processes/processes_viewreassignCase', $oCriteria, array('THETYPE' => 'ADHOC'));
-		$G_HEADER->clearScripts();
-		$G_HEADER->addScriptFile('/js/form/core/pagedTable.js');
 		G::RenderPage('publish', 'raw');
 		break;
 

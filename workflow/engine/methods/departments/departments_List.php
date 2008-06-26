@@ -64,7 +64,6 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_USERS"))!=1) return $RBAC_Response;
   $Fields['AJAXSERVER'] = G::encryptLink(SYS_URI.'departments/departments_Ajax');
 
   $G_PUBLISH = new Publisher;
-  $G_HEADER->addInstanceModule('leimnud', 'app');
   $G_PUBLISH->AddContent('xmlform', 'popupMenu', 'departments/popupMenu', '', '' , 'authentication.php');
   $G_PUBLISH->AddContent('xmlform', 'xmlform', 'departments/organizationalChart', '', $Fields , '');
   

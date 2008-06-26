@@ -29,9 +29,6 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_USERS"))!=1) return $RBAC_Response;
   $G_ID_MENU_SELECTED     = 'USERS';
   $G_ID_SUB_MENU_SELECTED = 'GROUPS';
 
-//  $G_HEADER->addScriptFile('/js/common/tree/tree.js');
-  $G_HEADER->addInstanceModule('leimnud','rpc');
-
   $dbc = new DBConnection();
   $ses = new DBSession($dbc);
 

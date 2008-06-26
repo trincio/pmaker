@@ -30,10 +30,7 @@ class XmlForm_Field_HTML extends XmlForm_Field
   var $height = '200' ;
   var $defaultValue='<br/>';
   function render( $value , $owner=NULL ) {
-    global $G_HEADER;
     $value = ($value=='')?'<br/>':$value;
-    $G_HEADER->addScriptFile("/js/dveditor/core/dveditor.js",1);
-    $G_HEADER->addScriptFile("/js/common/core/webResource.js",1);
     return '<div style="width:'.$this->width.';"><input id="form['.$this->name.']" name="form['.$this->name.']" type="hidden" value="'.htmlentities($value,ENT_QUOTES,'UTF-8').'"/></div>';
   }
   function attachEvents($element) {

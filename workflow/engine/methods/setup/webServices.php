@@ -30,7 +30,6 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
   $G_ID_MENU_SELECTED     = 'SETUP';
   $G_ID_SUB_MENU_SELECTED = 'WEBSERVICES';
 
-  $G_HEADER->addScriptFile('/js/common/tree/tree.js');
   $G_HEADER->addInstanceModule('leimnud','rpc');
 
   $G_PUBLISH = new Publisher;

@@ -40,7 +40,6 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_USERS"))!=1) return $RBAC_Response;
     $aFields=array();
   }
   $G_PUBLISH = new Publisher();
-  $G_HEADER->clearScripts();
   $G_PUBLISH->AddContent('xmlform', 'xmlform', 'groups/groups_Edit', '', $aFields , 'groups_Save');
 
   G::RenderPage( "publish" , "raw" );

@@ -745,8 +745,6 @@ class pagedTable
    */
   function renderTable( $block = '' )
   {
-    global $G_HEADER;
-    $G_HEADER->addInstanceModule('leimnud', 'panel');
     // DBConnection
     $this->prepareQuery();
     //Query para obtener el numero de filas
@@ -765,7 +763,6 @@ class pagedTable
       $this->tpl->assign( 'pagedTable_Id' , $this->id );
       $this->tpl->assign( 'pagedTable_Name' , $this->name );
       $this->tpl->assign( 'pagedTable_Height' , $this->xmlForm->height );
-      global $G_HEADER;
       if (file_exists($this->xmlForm->home . $this->filterForm . '.xml')) {
         $filterForm = new filterForm( $this->filterForm , $this->xmlForm->home );
         if ($this->menu==='') $this->menu= 'gulliver/pagedTable_Options';
@@ -782,8 +779,9 @@ class pagedTable
           $menu->setValues(array('SEARCH_FILTER_FORM' => $filterForm->name));
         }
         $this->tpl->assign( 'content' ,  $menu->render( $template , $scriptCode ) );
-        $G_HEADER->addScriptFile( $menu->scriptURL );
-        $G_HEADER->addScriptCode( $scriptCode );
+        $oHeadPublisher =& headPublisher::getSingleton();        
+        $oHeadPublisher->addScriptFile( $menu->scriptURL );
+        $oHeadPublisher->addScriptCode( $scriptCode );
       }
 
       if (file_exists($this->xmlForm->home . $this->filterForm . '.xml')) {
@@ -796,8 +794,9 @@ class pagedTable
         $filterForm->setValues(array('PAGED_TABLE_ID' => $this->id ));
         $filterForm->setValues(array( 'PAGED_TABLE_FAST_SEARCH' => $this->fastSearch ));
         $this->tpl->assign( 'content' ,  $filterForm->render( $template , $scriptCode ) );
-        $G_HEADER->addScriptFile( $filterForm->scriptURL );
-        $G_HEADER->addScriptCode( $scriptCode );
+        $oHeadPublisher =& headPublisher::getSingleton();        
+        $oHeadPublisher->addScriptFile( $filterForm->scriptURL );
+        $oHeadPublisher->addScriptCode( $scriptCode );
         if (isset($_SESSION)) $_SESSION[$filterForm->id]=$filterForm->values;
       }
     }

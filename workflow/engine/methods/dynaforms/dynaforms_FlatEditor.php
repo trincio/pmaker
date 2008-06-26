@@ -147,8 +147,8 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
   
   $G_PUBLISH = new Publisher;
   $G_PUBLISH->publisherId='dynaformEditor';
-  $G_HEADER->clearScripts();
-  $G_HEADER->setTitle("Dynaform Editor");
+  $oHeadPublisher =& headPublisher::getSingleton();
+  $oHeadPublisher->setTitle("Dynaform Editor");
     
   //$G_PUBLISH->AddContent('pagedtable', 'paged-table', 'dynaforms/fields_ShortList', '', $Parameters , '', SYS_URI.'dynaforms/dynaforms_PagedTableAjax');
   $G_PUBLISH->AddContent('blank');

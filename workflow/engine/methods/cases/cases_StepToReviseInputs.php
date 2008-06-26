@@ -60,27 +60,8 @@ $G_ID_SUB_MENU_SELECTED = 'CASES_TO_REVISE';
   $oTemplatePower = new TemplatePower(PATH_TPL . 'cases/cases_Step.html');
   $oTemplatePower->prepare();
   $G_PUBLISH = new Publisher;
-  $G_HEADER->clearScripts();
-    if ( defined( 'SYS_LANG' ) )
-    {
-      $jslabel = 'labels/' . SYS_LANG . '.js';
-      if ( ! file_exists( PATH_CORE . 'js' . PATH_SEP . $jslabel ) )
-        $jslabel = 'labels/en.js';
-    }
-    else
-      $jslabel = 'labels/en.js';
-
-    if ( file_exists( PATH_CORE . 'js' . PATH_SEP . $jslabel ) ) {
-      $G_HEADER->addScriptFile( '/jscore/' . $jslabel , 1 );
-    }
-  $G_HEADER->addScriptFile('/js/maborak/core/maborak.js');
-  $G_HEADER->addScriptFile('/js/maborak/core/maborak.js');
-  $G_HEADER->addScriptFile('/js/common/core/common.js');
-  $G_HEADER->addScriptFile('/js/common/core/webResource.js');
-  $G_HEADER->addScriptFile('/js/form/core/form.js');
-  $G_HEADER->addScriptFile('/js/grid/core/grid.js');
-
-  $G_HEADER->addScriptCode('
+$oHeadPublisher =& headPublisher::getSingleton();
+$oHeadPublisher->addScriptCode('
   var Cse = {};
   Cse.panels = {};
   var leimnud = new maborak();

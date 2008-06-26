@@ -37,9 +37,10 @@ try {
   //Show dashboards
   $G_PUBLISH   = new Publisher;
   $G_PUBLISH->AddContent('smarty', 'dashboard/frontend', '', '', array('ID_NEW' => G::LoadTranslation('ID_NEW')));
-//  $G_HEADER->addScriptFile('/jscore/dashboard/core/dashboard.js');
-//  $G_HEADER->addInstanceModule('leimnud', 'dashboard');
-  $G_HEADER->addScriptCode('leimnud.event.add(window,"load",function(){window.Da=new leimnud.module.dashboard();Da.make({target:$("dashboard"),data:' . $oDashboards->getDashboardsObject($_SESSION['USER_LOGGED']) . '});});');
+  //$oHeadPublisher =& headPublisher::getSingleton();
+  //$oHeadPublisher->addScriptFile('/jscore/dashboard/core/dashboard.js');
+  //$oHeadPublisher->addInstanceModule('leimnud', 'dashboard');
+  $oHeadPublisher->addScriptCode('leimnud.event.add(window,"load",function(){window.Da=new leimnud.module.dashboard();Da.make({target:$("dashboard"),data:' . $oDashboards->getDashboardsObject($_SESSION['USER_LOGGED']) . '});});');
   G::RenderPage('publish');
 }
 catch ( Exception $e ) {

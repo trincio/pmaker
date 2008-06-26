@@ -1,10 +1,10 @@
 <?php
 /**
  * users_List.php
- *  
+ *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -14,13 +14,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
 if (($RBAC_Response=$RBAC->userCanAccess("PM_LOGIN"))!=1) return $RBAC_Response;
 global $RBAC;
@@ -43,14 +43,22 @@ $G_SUB_MENU             = 'users';
 $G_ID_MENU_SELECTED     = 'USERS';
 $G_ID_SUB_MENU_SELECTED = 'USERS';
 
-$aLabels['VIEW']     = G::LoadTranslation('ID_VIEW');
-$aLabels['EDIT']     = G::LoadTranslation('ID_EDIT');
-$aLabels['DELETE']   = G::LoadTranslation('ID_DELETE');
-$aLabels['ACTIVE']   = G::LoadTranslation('ID_ACTIVE');
-$aLabels['INACTIVE'] = G::LoadTranslation('ID_INACTIVE');
-$aLabels['CONFIRM']  = G::LoadTranslation('ID_MSG_CONFIRM_DELETE_USER');
+$sDelimiter = DBAdapter::getStringDelimiter();
+require_once 'classes/model/Users.php';
+$oCriteria = new Criteria('workflow');
+$oCriteria->addSelectColumn(UsersPeer::USR_UID);
+$oCriteria->addAsColumn('USR_COMPLETENAME', "CONCAT(USR_LASTNAME, ' ', USR_FIRSTNAME)");
+$oCriteria->addSelectColumn(UsersPeer::USR_USERNAME);
+$oCriteria->addSelectColumn(UsersPeer::USR_EMAIL);
+$oCriteria->addSelectColumn(UsersPeer::USR_ROLE);
+$oCriteria->addSelectColumn(UsersPeer::USR_DUE_DATE);
+$oCriteria->addAsColumn('USR_VIEW', $sDelimiter . G::LoadTranslation('ID_VIEW') . $sDelimiter);
+$oCriteria->addAsColumn('USR_EDIT', $sDelimiter . G::LoadTranslation('ID_EDIT') . $sDelimiter);
+$oCriteria->addAsColumn('USR_DELETE', $sDelimiter . G::LoadTranslation('ID_DELETE') . $sDelimiter);
+$oCriteria->addAsColumn('USR_CONFIRM', $sDelimiter . G::LoadTranslation('ID_MSG_CONFIRM_DELETE_USER') . $sDelimiter);
+$oCriteria->add(UsersPeer::USR_STATUS, array('CLOSE'), Criteria::NOT_IN);
 
 $G_PUBLISH = new Publisher;
-$G_PUBLISH->AddContent('pagedtable', 'paged-table', 'users/users_List', '', $aLabels, '');
+$G_PUBLISH->AddContent('propeltable', 'paged-table', 'users/users_List', $oCriteria);
 G::RenderPage('publish');
 ?>

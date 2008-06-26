@@ -76,28 +76,33 @@ class Dashboards {
     $aRightColumn         = array ();
     $iColumn              = 0;
     foreach ($aConfiguration as $aDashboard) {
-      require_once PATH_PLUGINS. $aDashboard['class']  . PATH_SEP . 'class.' . $aDashboard['class'] . '.php';
-      $sClassName = $aDashboard['class'] . 'Class';
-      $oInstance  = new $sClassName();
-      $aCharts    = $oInstance->getAvailableCharts();
-      foreach ($aCharts as $sChart) {
-        $bFree = false;
-        foreach ($aAvailableDashboards as $sDashboardClass) {
-          if (($aDashboard['class'] == $sDashboardClass) && ($aDashboard['type'] == $sChart)) {
-            $bFree = true;
+      if ($aDashboard['class'] == 'PM_Reports') {
+        //var_dump($aDashboard);echo '<br />';
+      }
+      else {
+        require_once PATH_PLUGINS. $aDashboard['class']  . PATH_SEP . 'class.' . $aDashboard['class'] . '.php';
+        $sClassName = $aDashboard['class'] . 'Class';
+        $oInstance  = new $sClassName();
+        $aCharts    = $oInstance->getAvailableCharts();
+        foreach ($aCharts as $sChart) {
+          $bFree = false;
+          foreach ($aAvailableDashboards as $sDashboardClass) {
+            if (($aDashboard['class'] == $sDashboardClass) && ($aDashboard['type'] == $sChart)) {
+              $bFree = true;
+            }
           }
-        }
-        if ($bFree) {
-          $oChart = $oInstance->getChart($sChart);
-          $oChart->class = $sDashboardClass;
-          $oChart->chart = $sChart;
-          if ($iColumn === 0) {
-            $aLeftColumn[] = $oChart;
+          if ($bFree) {
+            $oChart = $oInstance->getChart($sChart);
+            $oChart->class = $sDashboardClass;
+            $oChart->chart = $sChart;
+            if ($iColumn === 0) {
+              $aLeftColumn[] = $oChart;
+            }
+            else {
+              $aRightColumn[] = $oChart;
+            }
+            $iColumn = 1 - $iColumn;
           }
-          else {
-            $aRightColumn[] = $oChart;
-          }
-          $iColumn = 1 - $iColumn;
         }
       }
     }

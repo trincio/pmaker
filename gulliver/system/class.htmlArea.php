@@ -22,8 +22,6 @@
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
  * 
  */
-global $G_HEADER;
-//$G_HEADER->addScriptFile('/htmlarea/editor.js');
 class XmlForm_Field_HTML extends XmlForm_Field_Textarea
 {
  /* //'default','office2003','silver'

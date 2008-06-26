@@ -23,9 +23,9 @@
  *
  */
 global $G_TMP_MENU;
-global $Fields;
+global $sStatus;
 
-if ((($Fields['APP_STATUS'] == 'DRAFT') || ($Fields['APP_STATUS'] == 'TO_DO')) && ($_SESSION['TASK'] != -1)) {
+if ((($sStatus == 'DRAFT') || ($sStatus == 'TO_DO')) && ($_SESSION['TASK'] != -1)) {
   if (isset($_SESSION['bNoShowSteps'])) {
     unset($_SESSION['bNoShowSteps']);
   }
