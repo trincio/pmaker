@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm type="xmlform" name="" width="450" enabletemplate="0" mode="edit">
+
+<PRO_UID type="hidden" showInTable="0"/>
+
+<WEB_ENTRY type="dropdown" mode="edit">
+  <en>Web Entry 
+  		<option name="1">Simple form</option>  		
+  </en>
+</WEB_ENTRY>
+
+<TASKS type="dropdown" defaultvalue="" mode="edit" options="Array">
+	SELECT TASK.TAS_UID AS TUID, CONTENT.CON_VALUE AS TVALUE FROM TASK 
+  LEFT JOIN PROCESS ON (PROCESS.PRO_UID=TASK.PRO_UID)
+  LEFT JOIN CONTENT ON (TASK.TAS_UID=CONTENT.CON_ID AND CONTENT.CON_CATEGORY='TAS_TITLE' AND CONTENT.CON_LANG='en')
+  WHERE TASK.PRO_UID=@@PRO_UID AND TASK.TAS_START='TRUE' ORDER BY CONTENT.CON_VALUE
+  <en>Select the initial task </en>
+</TASKS>
+
+<DYNAFORM type="dropdown" defaultvalue="" mode="edit" options="Array">	
+  SELECT DYNAFORM.DYN_UID, CONTENT.CON_VALUE FROM DYNAFORM
+  LEFT JOIN PROCESS ON (PROCESS.PRO_UID=DYNAFORM.PRO_UID)
+  LEFT JOIN CONTENT ON (DYNAFORM.DYN_UID=CONTENT.CON_ID AND CONTENT.CON_CATEGORY='DYN_TITLE' AND CONTENT.CON_LANG='en')
+  WHERE DYNAFORM.PRO_UID=@@PRO_UID AND DYNAFORM.DYN_TYPE!='grid' ORDER BY CONTENT.CON_VALUE
+  <en>Select the initial Dynaform </en>
+</DYNAFORM>
+
+<SEARCH type="button" onclick="webEntry_generate(@QPRO_UID);">
+  <en>Generate html</en>
+</SEARCH>
+
+
+<js type="javascript">
+
+var oPanel1;
+var webEntry_generate = function(PRO_UID, TASKS, DYNAFORM) {    
+  oPanel1 = new leimnud.module.panel();
+  oPanel1.options = {
+  	size	:{w:600,h:400},
+  	position:{x:0,y:0,center:true},
+  	title	:"Web Entry",  	
+  	statusBar:true,
+  	control	:{resize:false,roll:false},
+  	fx	:{modal:true,opacity:true,blinkToFront:true,fadeIn:false}
+  };
+  oPanel1.events = {
+  	remove: function() { delete(oPanel1); }.extend(this)
+  };
+  oPanel1.make();
+  oPanel1.loader.show();
+  var oRPC = new leimnud.module.rpc.xmlhttp({  	    	    
+  	    url   : '../processes/processes_Ajax',
+        async : true,
+        method: 'POST',        
+        args  : "action=webEntry_generate&amp;data="+{PRO_UID:PRO_UID, TASKS:getField('TASKS').value, DYNAFORM:getField('DYNAFORM').value}.toJSONString()
+  });
+  oRPC.callback = function(rpc){
+  	oPanel1.loader.hide();
+  	var scs=rpc.xmlhttp.responseText.extractScript();
+  	oPanel1.addContent(rpc.xmlhttp.responseText);
+  	scs.evalScript();
+  }.extend(this);
+  oRPC.make();
+};
+
+</js>
+
+</dynaForm>
+
