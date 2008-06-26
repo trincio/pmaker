@@ -552,4 +552,224 @@ function WSGetSession()
 		throw new Exception("SW session is not opem!");
 	}
 }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/** Local Services Functions **/
+
+function PMFTaskCase($caseId) #its test was successfull
+{
+	G::LoadClass('wsBase');
+	$ws = new wsBase ();
+    $result = $ws->taskCase($caseId);
+	$rows = Array();
+	$i = 1;
+	if(isset ($result)){
+		foreach ( $result as $item) {
+			$rows[$i++] = $item;
+		}
+	}
+	return $rows;	
+}
+
+function PMFTaskList($userId) #its test was successfull
+{
+	G::LoadClass('wsBase');
+	$ws = new wsBase ();
+    $result = $ws->taskList($userId);
+	$rows = Array();
+	$i = 1;
+	if(isset ($result)){
+		foreach ( $result as $item) {
+			$rows[$i++] = $item;
+		}
+	}
+	return $rows;	
+}
+
+function PMFUserList() #its test was successfull
+{
+	G::LoadClass('wsBase');
+	$ws = new wsBase ();
+    $result = $ws->userList();
+	$rows = Array();
+	$i = 1;
+	if(isset ($result)){
+		foreach ( $result as $item) {
+			$rows[$i++] = $item;
+		}
+	}
+	return $rows;	
+}
+
+function PMFGroupList() #its test was successfull
+{
+	G::LoadClass('wsBase');
+	$ws = new wsBase ();
+    $result = $ws->groupList();
+	$rows = Array();
+	$i = 1;
+	if(isset ($result)){
+		foreach ( $result as $item) {
+			$rows[$i++] = $item;
+		}
+	}
+	return $rows;	
+}
+
+
+function PMFRoleList() #its test was successfull
+{
+	G::LoadClass('wsBase');
+	$ws = new wsBase ();
+    $result = $ws->roleList();
+	$rows = Array();
+	$i = 1;
+	if(isset ($result)){
+		foreach ( $result as $item) {
+			$rows[$i++] = $item;
+		}
+	}
+	return $rows;	
+}
+
+function PMFCaseList($userId) #its test was successfull
+{
+	G::LoadClass('wsBase');
+	$ws = new wsBase ();
+    $result = $ws->caseList($userId);
+	$rows = Array();
+	$i = 1;
+	if(isset ($result)){
+		foreach ( $result as $item) {
+			$rows[$i++] = $item;
+		}
+	}
+	return $rows;	
+}
+
+function PMFProcessList() #its test was successfull
+{
+	G::LoadClass('wsBase');
+	$ws = new wsBase ();
+    $result = $ws->processList();
+	$rows = Array();
+	$i = 1;
+	if(isset ($result)){
+		foreach ( $result as $item) {
+			$rows[$i++] = $item;
+		}
+	}
+	return $rows;
+}
+
+function PMFsendMessage($caseId, $message) 
+{
+	G::LoadClass('wsBase');
+	$ws = new wsBase ();
+    $result = $ws->sendMessage($sessionId, $caseId, $message);
+	$result = $result->getPayloadArray ();
+	$fields['status_code'] = $result->status_code;
+	$fields['message']     = $result->message;
+	$fields['time_stamp']  = $result->timestamp;
+	return $fields;
+}
+
+function PMFSendVariables($caseId, $name1, $value1, $name2, $value2)
+{
+	G::LoadClass('wsBase');
+	$ws = new wsBase ();
+	
+	$variables[1]->name  = $name1;
+	$variables[1]->value = $value1;
+	$variables[2]->name  = $name2;
+	$variables[2]->value = $value2;
+	
+    $result = $ws->sendMessage($caseId, $variables);
+	$result = $result->getPayloadArray ();
+	$fields['status_code'] = $result->status_code;
+	$fields['message']     = $result->message;
+	$fields['time_stamp']  = $result->timestamp;
+	return $fields;
+}
+
+function PMFDerivateCase($caseId, $delIndex)
+{
+	$client = WSOpen();
+	$sessionId = $_SESSION['WS_SESSION_ID'];
+
+	$params = array('sessionId'=>$sessionId, 'caseId'=>$caseId, 'delIndex'=>$delIndex );
+	$result = $client->__SoapCall('DerivateCase', array($params));
+		  
+	$fields['status_code'] = $result->status_code;
+	$fields['message']     = $result->message;
+	$fields['time_stamp']  = $result->timestamp;
+	return $fields;
+}
+
+function PMFNewCaseImpersonate($processId, $userId, $name1, $value1, $name2, $value2)
+{
+	$client = WSOpen();
+	$sessionId = $_SESSION['WS_SESSION_ID'];
+
+	$variables[1]->name  = $name1;
+	$variables[1]->value = $value1;
+	$variables[2]->name  = $name2;
+	$variables[2]->value = $value2;
+
+	$params = array('sessionId'=>$sessionId, 'processId'=>$processId, 'userId'=>$userId, 'variables'=>$variables );
+	$result = $client->__SoapCall('NewCaseImpersonate', array($params));
+		  
+	$fields['status_code'] = $result->status_code;
+	$fields['message']     = $result->message;
+	$fields['time_stamp']  = $result->timestamp;
+	return $fields;
+}
+
+function PMFNewCase($processId, $taskId, $name1, $value1, $name2, $value2)
+{
+	$client = WSOpen();
+	$sessionId = $_SESSION['WS_SESSION_ID'];
+
+	$variables[1]->name  = $name1;
+	$variables[1]->value = $value1;
+	$variables[2]->name  = $name2;
+	$variables[2]->value = $value2;
+
+	$params = array('sessionId'=>$sessionId, 'processId'=>$processId, 'taskId'=>$taskId, 'variables'=>$variables );
+	$result = $client->__SoapCall('NewCase', array($params));
+  		  
+	$fields['status_code'] = $result->status_code;
+	$fields['message']     = $result->message;
+	$fields['time_stamp']  = $result->timestamp;
+	return $fields;
+}
+
+function PMFAssignUserToGroup($userId, $groupId)
+{
+	$client = WSOpen();
+	$sessionId = $_SESSION['WS_SESSION_ID'];
+
+	$params = array('sessionId'=>$sessionId, 'userId'=>$userId, 'groupId'=>$groupId);
+	$result = $client->__SoapCall('AssignUserToGroup', array($params));
+  		  
+	$fields['status_code'] = $result->status_code;
+	$fields['message']     = $result->message;
+	$fields['time_stamp']  = $result->timestamp;
+	return $fields;
+}
+
+function PMFCreateUser($sessionId, $userId, $password, $firstname, $lastname, $email, $role)
+{	
+	$client = WSOpen();
+	$sessionId = $_SESSION['WS_SESSION_ID'];
+	$params = array('sessionId'=>$sessionId, 'userId'=>$userId, 'firstname'=>$firstname, 'lastname'=>$lastname, 'email'=>$email, 'role'=>$role, 'password'=>$password);
+	$result = $client->__SoapCall('CreateUser', array($params));
+
+	$fields['status_code'] = $result->status_code;
+	$fields['message']     = $result->message;
+	$fields['time_stamp']  = $result->timestamp;
+	return $fields;
+}
+
 ?>
