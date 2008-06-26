@@ -22,12 +22,12 @@
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
  *
  */
- 
+
  /**
   * @Description This is a callback for the View of all groups from a determinated user
   * @author Erik Amaru Ortiz <erik@colosa.com>
   * @Date 24/04/2008
-  * @LastModification none 
+  * @LastModification none
   */
 try {
     global $RBAC;
@@ -49,7 +49,7 @@ try {
     G::RenderPage('publish', 'raw');
 }
 catch (exception $oException) {
-    die($oException->getMessage());	
+    die($oException->getMessage());
 }
 ?>
 

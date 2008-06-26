@@ -1,10 +1,10 @@
 <?php
 /**
  * class.headPublisher.php
- *  
+ *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -14,13 +14,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
 /**
  * Class headPublisher
@@ -34,7 +34,7 @@ class headPublisher
   static private $instance = NULL;
   var $scriptFiles  = array();
   var $leimnudLoad  = array();
-  
+
   var $leimnudInitString = '  var leimnud = new maborak();
   leimnud.make();
   leimnud.Package.Load("panel,validator,app,rpc,fx,drag,drop,dom,abbr",{Instance:leimnud,Type:"module"});';
@@ -44,7 +44,7 @@ class headPublisher
 	{
 		leimnud.iphone.make();
 	}';
-  var $disableHeaderScripts = false; 
+  var $disableHeaderScripts = false;
   var $title='';
 
   /**
@@ -75,7 +75,7 @@ class headPublisher
     return self::$instance;
   }
 
-  
+
   /**
    * Function setTitle
    * @author David S. Callizaya S. <davidsantos@colosa.com>
@@ -88,7 +88,7 @@ class headPublisher
   {
     $this->title = $title;
   }
-  
+
   /**
    * Function addScriptFile
    * @author David S. Callizaya S. <davidsantos@colosa.com>
@@ -102,7 +102,7 @@ class headPublisher
     if ($LoadType==1) $this->scriptFiles[$url]=$url;
     if ($LoadType==2) $this->leimnudLoad[$url]=$url;
   }
-  
+
   /**
    * Function addInstanceModule
    * @author David S. Callizaya S. <davidsantos@colosa.com>
@@ -111,12 +111,12 @@ class headPublisher
    * @parameter string module
    * @return string
    */
-   
+
   function addInstanceModule( $instance , $module )
   {
     $this->headerScript .= "leimnud.Package.Load('".$module."',{Instance:".$instance.",Type:'module'});\n";
   }
-  
+
   /**
    * Function addClassModule
    * @author David S. Callizaya S. <davidsantos@colosa.com>
@@ -129,7 +129,7 @@ class headPublisher
   {
     $this->headerScript .= "leimnud.Package.Load('".$module."',{Class:".$class.",Type:'module'});\n";
   }
-  
+
   /**
    * Function addScriptCode
    * @author David S. Callizaya S. <davidsantos@colosa.com>
@@ -141,7 +141,7 @@ class headPublisher
   {
     $this->headerScript .= $script;
   }
-  
+
   /**
    * Function printHeader
    * @author David S. Callizaya S. <davidsantos@colosa.com>
@@ -163,7 +163,7 @@ class headPublisher
     $head .= "</script>\n";
     return $head;
   }
-  
+
   /**
    * Function printRawHeader
    * Its prupose is to load el HEADs initialization javascript
@@ -176,10 +176,19 @@ class headPublisher
    * @return string
    */
   function printRawHeader(){
+    $jslabel = '/jscore/labels/en.js';
+    if ( defined( 'SYS_LANG' ) )  {
+      $jslabel1 = 'labels' . PATH_SEP . SYS_LANG . '.js';
+      if ( ! file_exists( PATH_CORE . 'js' . PATH_SEP . $jslabel1 ) )
+        $jslabel = '/jscore/labels/en.js';
+    }
     $head = '';
     //$head .= "<script language='javascript'>\n";
-    foreach($this->scriptFiles as $file)
-      $head .= "  eval(ajax_function('".$file."','',''));\n";
+    foreach($this->scriptFiles as $file) {
+      if (($file != "/js/maborak/core/maborak.js") && ($file != $jslabel)) {
+        $head .= "  eval(ajax_function('".$file."','',''));\n";
+      }
+    }
     foreach($this->leimnudLoad as $file)
       $head .= "  eval(ajax_function('".$file."','',''));\n";
     //Adapts the add events on load to simple javascript sentences.
@@ -188,7 +197,7 @@ class headPublisher
     //$head .= "</script>\n";
     return $head;
   }
-  
+
   /**
    * Function clearScripts
    * Its prupose is to clear all the scripts of the header.
