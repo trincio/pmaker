@@ -37,9 +37,9 @@ try {
   //Show dashboards
   $G_PUBLISH   = new Publisher;
   $G_PUBLISH->AddContent('smarty', 'dashboard/frontend', '', '', array('ID_NEW' => G::LoadTranslation('ID_NEW')));
-  //$oHeadPublisher =& headPublisher::getSingleton();
-  //$oHeadPublisher->addScriptFile('/jscore/dashboard/core/dashboard.js');
-  //$oHeadPublisher->addInstanceModule('leimnud', 'dashboard');
+  $oHeadPublisher =& headPublisher::getSingleton();
+  $oHeadPublisher->addScriptFile('/jscore/dashboard/core/dashboard.js');
+  $oHeadPublisher->addInstanceModule('leimnud', 'dashboard');
   $oHeadPublisher->addScriptCode('leimnud.event.add(window,"load",function(){window.Da=new leimnud.module.dashboard();Da.make({target:$("dashboard"),data:' . $oDashboards->getDashboardsObject($_SESSION['USER_LOGGED']) . '});});');
   G::RenderPage('publish');
 }
