@@ -53,7 +53,7 @@
 				leimnud.iphone.make();
 			}
 			
-	    leimnud.event.add(window,"load",function()loadForm_'.$G_FORM->id.'("'.$x.'"););
+	    leimnud.event.add(window,"load",function(){loadForm_'.$G_FORM->id.'("'.$x.'");});
 			//leimnud.event.add(window,"load",function(){loadForm_YXBaZ29XbWtaMm1ucUdtZnBaZHNxWldqbHBTV29HQ2piV21pcVdPaXEyeG9xR21rYVpOa3BHR21hR2lpcDJIUXBwaWIxSmVpWkpOZ28ybW5aMkNqcVdXYjdhS2w___("../gulliver/defaultAjaxDynaform");});
     </script>';
         
