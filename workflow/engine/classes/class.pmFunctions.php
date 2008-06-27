@@ -669,10 +669,12 @@ function PMFsendMessage($caseId, $message)
 	$ws = new wsBase ();
     $result = $ws->sendMessage($caseId, $message);
 	$result = $result->getPayloadArray ();
-	$fields['status_code'] = $result->status_code;
-	$fields['message']     = $result->message;
-	$fields['time_stamp']  = $result->timestamp;
-	return $fields;
+
+	if($result->status_code == 0){
+		return true;
+	} else {
+		return false;
+	}
 }
 
 function PMFSendVariables($caseId, $name1, $value1, $name2, $value2)
@@ -687,10 +689,11 @@ function PMFSendVariables($caseId, $name1, $value1, $name2, $value2)
 	
     $result = $ws->sendMessage($caseId, $variables);
 	$result = $result->getPayloadArray ();
-	$fields['status_code'] = $result->status_code;
-	$fields['message']     = $result->message;
-	$fields['time_stamp']  = $result->timestamp;
-	return $fields;
+	if($result->status_code == 0){
+		return true;
+	} else {
+		return false;
+	}
 }
 
 function PMFDerivateCase($caseId, $delIndex)
@@ -699,10 +702,11 @@ function PMFDerivateCase($caseId, $delIndex)
 	$ws = new wsBase ();
 	$result = $ws->derivateCase($caseId, $delIndex);
 	$result = $result->getPayloadArray ();  
-	$fields['status_code'] = $result->status_code;
-	$fields['message']     = $result->message;
-	$fields['time_stamp']  = $result->timestamp;
-	return $fields;
+	if($result->status_code == 0){
+		return true;
+	} else {
+		return false;
+	}
 }
 
 function PMFNewCaseImpersonate($processId, $userId, $name1, $value1, $name2, $value2)
@@ -716,10 +720,11 @@ function PMFNewCaseImpersonate($processId, $userId, $name1, $value1, $name2, $va
 	$result = $ws->newCaseImpersonate($processId, $userId, $variables);
 
 	$result = $result->getPayloadArray();
-	$fields['status_code'] = $result->status_code;
-	$fields['message']     = $result->message;
-	$fields['time_stamp']  = $result->timestamp;
-	return $fields;
+	if($result->status_code == 0){
+		return true;
+	} else {
+		return false;
+	}
 }
 
 function PMFNewCase($processId, $taskId, $name1, $value1, $name2, $value2)
@@ -732,10 +737,11 @@ function PMFNewCase($processId, $taskId, $name1, $value1, $name2, $value2)
 	$variables[2]->value = $value2;
 	$result = $ws->newCase($processId, $taskId, $variables);
 	$result = $result->getPayloadArray();
-	$fields['status_code'] = $result->status_code;
-	$fields['message']     = $result->message;
-	$fields['time_stamp']  = $result->timestamp;
-	return $fields;
+	if($result->status_code == 0){
+		return true;
+	} else {
+		return false;
+	}
 }
 
 function PMFAssignUserToGroup($userId, $groupId)
@@ -744,10 +750,11 @@ function PMFAssignUserToGroup($userId, $groupId)
 	$ws = new wsBase ();
 	$result = $ws->assignUserToGroup($userId, $groupId);
 	$result = $result->getPayloadArray();
-	$fields['status_code'] = $result->status_code;
-	$fields['message']     = $result->message;
-	$fields['time_stamp']  = $result->timestamp;
-	return $fields;
+	if($result->status_code == 0){
+		return true;
+	} else {
+		return false;
+	}
 }
 
 function PMFCreateUser($userId, $password, $firstname, $lastname, $email, $role)
@@ -756,10 +763,11 @@ function PMFCreateUser($userId, $password, $firstname, $lastname, $email, $role)
 	$ws = new wsBase ();
 	$result = $ws->createUser($userId, $firstname, $lastname, $email, $role, $password);
 	$result = $result->getPayloadArray();
-	$fields['status_code'] = $result->status_code;
-	$fields['message']     = $result->message;
-	$fields['time_stamp']  = $result->timestamp;
-	return $fields;
+	if($result->status_code == 0){
+		return true;
+	} else {
+		return false;
+	}
 }
 
 ?>
