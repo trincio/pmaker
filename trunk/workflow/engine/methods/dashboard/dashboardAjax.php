@@ -66,8 +66,9 @@ switch ($_POST['action']) {
           }
         }
         if ($bFree) {
+          $oChart = $oInstance->getChart($sChart);
           $aAvailableCharts[] = array('DASH_CODE'  => $sDashboardClass . '^' . $sChart,
-                                      'DASH_LABEL' => $sDashboardClass . ' - ' . $sChart);
+                                      'DASH_LABEL' => $sDashboardClass . ' - ' . $oChart->title);
         }
       }
     }

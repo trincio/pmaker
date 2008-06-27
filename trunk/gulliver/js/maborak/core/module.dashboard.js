@@ -92,8 +92,9 @@ leimnud.Package.Public({
 				statusBarButtons:[
 				  {value:G_STRINGS.ID_REMOVE}
 				],
+                setup:function(){alert(4564565)},
 				statusbar:true,
-				control:{resize:false,roll:true,drag:this.options.drag,close:false},
+				control:{resize:false,roll:true,setup:true,drag:this.options.drag,close:false},
 				fx:{shadow:false,opacity:false}
 			};
 			_panel.setStyle={
@@ -121,7 +122,11 @@ leimnud.Package.Public({
 				},
 				roll:{
 					top:1
+				},
+				setup:{
+					top:1
 				}
+
 			};
 			if(options.noBg)
 			{
@@ -225,8 +230,8 @@ leimnud.Package.Public({
 							this.moving=false;
 							if(this.drop.selected!==false)
 							{
-  //                              var inp = this.drop.elements[this.drop.selected].value;
-//                                console.debug(this.options.panel[inp]);
+                                var inp = this.drop.elements[this.drop.selected].value;
+                                console.log(this.options.panel[inp]);
 								//console.info("========================");
 								//console.info(i+":"+this.drop.selected);
 								//console.info(this.drop.elements[this.drop.selected].value);
@@ -241,6 +246,8 @@ leimnud.Package.Public({
 	            new leimnud.module.app.confirm().make({
                     label : G_STRINGS.ID_CONFIRM_REMOVE_DASHBOARD,
                     action: function() {
+                        
+   //                     removeDashboard(options.class,options.chart);
                         removeDashboard(options['class'],options.chart);
                     }.extend(this)
                 });
