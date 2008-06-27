@@ -768,7 +768,7 @@ function G_Debugger()
     }
     else
       dump=obj;
-    debugDiv = $('debug');
+    debugDiv = document.getElementById('debug');
     if (debugDiv) debugDiv.innerHTML=dump;
     return dump;
   }
