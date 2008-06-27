@@ -574,6 +574,11 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
       }
     
       break;
+      case 'graphLayout': //Added by JHL to render GraphLayout component
+    	$G_OBJGRAPH = $Part['Data'];
+    	$G_TMP_TARGET = $Part['Target'];   	
+		$G_TMP_FILE = $Part['File'];   	
+      break;
     }
 
     G::LoadTemplate( $Part['Template'] );
