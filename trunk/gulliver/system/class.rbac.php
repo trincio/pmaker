@@ -266,8 +266,8 @@ class RBAC
   
   
   /** @erik adds ****/
-  function listAllRoles () {
-      return $this->rolesObj->listAllRoles();
+  function listAllRoles ( $systemCode = 'PROCESSMAKER') {
+      return $this->rolesObj->listAllRoles($systemCode);
   }
   
   function createRole($aData) {
