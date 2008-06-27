@@ -667,7 +667,7 @@ function PMFsendMessage($caseId, $message)
 {
 	G::LoadClass('wsBase');
 	$ws = new wsBase ();
-    $result = $ws->sendMessage($sessionId, $caseId, $message);
+    $result = $ws->sendMessage($caseId, $message);
 	$result = $result->getPayloadArray ();
 	$fields['status_code'] = $result->status_code;
 	$fields['message']     = $result->message;
@@ -695,12 +695,10 @@ function PMFSendVariables($caseId, $name1, $value1, $name2, $value2)
 
 function PMFDerivateCase($caseId, $delIndex)
 {
-	$client = WSOpen();
-	$sessionId = $_SESSION['WS_SESSION_ID'];
-
-	$params = array('sessionId'=>$sessionId, 'caseId'=>$caseId, 'delIndex'=>$delIndex );
-	$result = $client->__SoapCall('DerivateCase', array($params));
-		  
+	G::LoadClass('wsBase');
+	$ws = new wsBase ();
+	$result = $ws->derivateCase($caseId, $delIndex);
+	$result = $result->getPayloadArray ();  
 	$fields['status_code'] = $result->status_code;
 	$fields['message']     = $result->message;
 	$fields['time_stamp']  = $result->timestamp;
@@ -709,17 +707,15 @@ function PMFDerivateCase($caseId, $delIndex)
 
 function PMFNewCaseImpersonate($processId, $userId, $name1, $value1, $name2, $value2)
 {
-	$client = WSOpen();
-	$sessionId = $_SESSION['WS_SESSION_ID'];
-
+	G::LoadClass('wsBase');
+	$ws = new wsBase ();
 	$variables[1]->name  = $name1;
 	$variables[1]->value = $value1;
 	$variables[2]->name  = $name2;
 	$variables[2]->value = $value2;
+	$result = $ws->newCaseImpersonate($processId, $userId, $variables);
 
-	$params = array('sessionId'=>$sessionId, 'processId'=>$processId, 'userId'=>$userId, 'variables'=>$variables );
-	$result = $client->__SoapCall('NewCaseImpersonate', array($params));
-		  
+	$result = $result->getPayloadArray();
 	$fields['status_code'] = $result->status_code;
 	$fields['message']     = $result->message;
 	$fields['time_stamp']  = $result->timestamp;
@@ -728,17 +724,14 @@ function PMFNewCaseImpersonate($processId, $userId, $name1, $value1, $name2, $va
 
 function PMFNewCase($processId, $taskId, $name1, $value1, $name2, $value2)
 {
-	$client = WSOpen();
-	$sessionId = $_SESSION['WS_SESSION_ID'];
-
+	G::LoadClass('wsBase');
+	$ws = new wsBase ();
 	$variables[1]->name  = $name1;
 	$variables[1]->value = $value1;
 	$variables[2]->name  = $name2;
 	$variables[2]->value = $value2;
-
-	$params = array('sessionId'=>$sessionId, 'processId'=>$processId, 'taskId'=>$taskId, 'variables'=>$variables );
-	$result = $client->__SoapCall('NewCase', array($params));
-  		  
+	$result = $ws->newCase($processId, $taskId, $variables);
+	$result = $result->getPayloadArray();
 	$fields['status_code'] = $result->status_code;
 	$fields['message']     = $result->message;
 	$fields['time_stamp']  = $result->timestamp;
@@ -747,25 +740,22 @@ function PMFNewCase($processId, $taskId, $name1, $value1, $name2, $value2)
 
 function PMFAssignUserToGroup($userId, $groupId)
 {
-	$client = WSOpen();
-	$sessionId = $_SESSION['WS_SESSION_ID'];
-
-	$params = array('sessionId'=>$sessionId, 'userId'=>$userId, 'groupId'=>$groupId);
-	$result = $client->__SoapCall('AssignUserToGroup', array($params));
-  		  
+	G::LoadClass('wsBase');
+	$ws = new wsBase ();
+	$result = $ws->assignUserToGroup($userId, $groupId);
+	$result = $result->getPayloadArray();
 	$fields['status_code'] = $result->status_code;
 	$fields['message']     = $result->message;
 	$fields['time_stamp']  = $result->timestamp;
 	return $fields;
 }
 
-function PMFCreateUser($sessionId, $userId, $password, $firstname, $lastname, $email, $role)
+function PMFCreateUser($userId, $password, $firstname, $lastname, $email, $role)
 {	
-	$client = WSOpen();
-	$sessionId = $_SESSION['WS_SESSION_ID'];
-	$params = array('sessionId'=>$sessionId, 'userId'=>$userId, 'firstname'=>$firstname, 'lastname'=>$lastname, 'email'=>$email, 'role'=>$role, 'password'=>$password);
-	$result = $client->__SoapCall('CreateUser', array($params));
-
+	G::LoadClass('wsBase');
+	$ws = new wsBase ();
+	$result = $ws->createUser($userId, $firstname, $lastname, $email, $role, $password);
+	$result = $result->getPayloadArray();
 	$fields['status_code'] = $result->status_code;
 	$fields['message']     = $result->message;
 	$fields['time_stamp']  = $result->timestamp;

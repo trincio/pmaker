@@ -38,7 +38,6 @@ switch ($_POST['action']) {
 	  G::LoadClass('report');
 	  $oReport  = new Report();
 	  $aReports = $oReport->getAvailableReports();
-	  $iColumn  = 0;
     foreach ($aReports as $sReport) {
       $bFree = true;
       foreach ($aConfiguration as $aDashboard) {
@@ -59,7 +58,6 @@ switch ($_POST['action']) {
       $sClassName = $sDashboardClass . 'Class';
       $oInstance  = new $sClassName();
       $aCharts    = $oInstance->getAvailableCharts();
-      $iColumn    = 0;
       foreach ($aCharts as $sChart) {
         $bFree = true;
         foreach ($aConfiguration as $aDashboard) {
@@ -90,11 +88,16 @@ switch ($_POST['action']) {
 	break;
 	case 'addDashboard':
 	  if ($_POST['sDashboardClass'] == 'PM_Reports') {
-	    /*$aConfiguration = $oDashboards->getConfiguration($_SESSION['USER_LOGGED']);
+	    $oObject            = new StdClass();
+	    $oObject->title     = G::LoadTranslation($_POST['sChart']);
+	    $oObject->height    = 220;
+	    $oObject->open      = new StdClass();
+	    $oObject->open->url = '/sys' . SYS_SYS . '/' . SYS_LANG . '/blank/reports/reports_Dashboard?sType=' . $_POST['sChart'];
+	    $aConfiguration = $oDashboards->getConfiguration($_SESSION['USER_LOGGED']);
 	    $aConfiguration[] = array('class'  => $_POST['sDashboardClass'],
 	                              'type'   => $_POST['sChart'],
-	                              'object' => ''),
-	                              'config' => '');*/
+	                              'object' => $oObject,
+	                              'config' => '');
 	  }
 	  else {
 	    require_once PATH_PLUGINS. $_POST['sDashboardClass']  . PATH_SEP . 'class.' . $_POST['sDashboardClass'] . '.php';
@@ -105,8 +108,8 @@ switch ($_POST['action']) {
 	                              'type'   => $_POST['sChart'],
 	                              'object' => $oInstance->getChart($_POST['sChart']),
 	                              'config' => '');
-      $oDashboards->saveConfiguration($_SESSION['USER_LOGGED'], $aConfiguration);
     }
+    $oDashboards->saveConfiguration($_SESSION['USER_LOGGED'], $aConfiguration);
 	  echo 'oDashboards = ' . $oDashboards->getDashboardsObject($_SESSION['USER_LOGGED']) . ';';
 	break;
 	case 'removeDashboard':
