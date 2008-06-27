@@ -168,6 +168,7 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
   G::LoadSystem('dvEditor');
   G::LoadSystem('table');
   G::LoadSystem('pagedTable');
+  G::LoadSystem('tree');
 
   $oHeadPublisher =& headPublisher::getSingleton();
   

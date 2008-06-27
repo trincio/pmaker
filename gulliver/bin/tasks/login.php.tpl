@@ -1,7 +1,7 @@
 <?php
 /**
  * login.php
- *
+ * {projectName}
  *
  */
 if (!isset($_SESSION['G_MESSAGE']))
@@ -33,3 +33,34 @@ $G_PUBLISH->AddContent('xmlform', 'xmlform', 'login/login', '', '', SYS_URI.'log
 
 G::RenderPage( "publish" );
 ?>
+<script type="text/javascript">
+    var openInfoPanel = function()
+    {
+      var oInfoPanel = new leimnud.module.panel();
+      oInfoPanel.options = {
+        size    :{ w:500,h:424 },
+        position:{ x:0,y:0,center:true },
+        title   :'System Information',
+        theme   :'processmaker',
+        control :{
+          close :true,
+          drag  :false
+        },
+        fx:{
+          modal:true
+        }
+      };
+      oInfoPanel.setStyle = {modal: {
+        backgroundColor: 'white'
+      }};
+      oInfoPanel.make();
+      var oRPC = new leimnud.module.rpc.xmlhttp({
+        url   : '../login/dbInfo',
+        async : false,
+        method: 'POST',
+        args  : ''
+      });
+      oRPC.make();
+      oInfoPanel.addContent(oRPC.xmlhttp.responseText);
+    };
+</script>

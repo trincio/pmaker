@@ -787,6 +787,8 @@ function run_new_project ( $task, $args)
   $RBAC->initRBAC();
   $RBAC->createSystem ($rbacProjectName);
   $RBAC->createPermision ( substr( $rbacProjectName,0,3) . '_LOGIN' );
+  $RBAC->createPermision ( substr( $rbacProjectName,0,3) . '_ADMIN' );
+  $RBAC->createPermision ( substr( $rbacProjectName,0,3) . '_OPERATOR' );
   $permData = $RBAC->permissionsObj->LoadByCode (substr( $rbacProjectName,0,3) . '_LOGIN') ;
   $permissionId = $permData['PER_UID'];
   $systemData = $RBAC->systemObj->LoadByCode ($rbacProjectName) ;
@@ -794,6 +796,15 @@ function run_new_project ( $task, $args)
   $roleData['ROL_PARENT'] = '';
   $roleData['ROL_SYSTEM'] = $systemData['SYS_UID'];
   $roleData['ROL_CODE'] = substr( $rbacProjectName,0,3) . '_ADMIN';
+  $roleData['ROL_CREATE_DATE'] = date('Y-m-d H:i:s');
+  $roleData['ROL_UPDATE_DATE'] = date('Y-m-d H:i:s');
+  $roleData['ROL_STATUS'] = '1';
+  $RBAC->createRole ( $roleData );
+
+  $roleData['ROL_UID'] = G::GenerateUniqueId();
+  $roleData['ROL_PARENT'] = '';
+  $roleData['ROL_SYSTEM'] = $systemData['SYS_UID'];
+  $roleData['ROL_CODE'] = substr( $rbacProjectName,0,3) . '_OPERATOR';
   $roleData['ROL_CREATE_DATE'] = date('Y-m-d H:i:s');
   $roleData['ROL_UPDATE_DATE'] = date('Y-m-d H:i:s');
   $roleData['ROL_STATUS'] = '1';
@@ -830,6 +841,7 @@ function run_new_project ( $task, $args)
   G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'methods' . PATH_SEP . 'login');
   G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'skins' );
   G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'templates' );
+  G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'templates' . PATH_SEP . 'roles' );
   G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'test' );
   G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'test' . PATH_SEP . 'bootstrap');
   G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'test' . PATH_SEP . 'fixtures');
@@ -852,17 +864,35 @@ function run_new_project ( $task, $args)
   create_file_from_tpl ( 'sysLogin.php',    'engine' . PATH_SEP . 'methods' . PATH_SEP . 'login' . PATH_SEP . 'sysLogin.php' );
   create_file_from_tpl ( 'login.php',       'engine' . PATH_SEP . 'methods' . PATH_SEP . 'login' . PATH_SEP . 'login.php' );
   create_file_from_tpl ( 'authentication.php','engine'.PATH_SEP . 'methods' . PATH_SEP . 'login' . PATH_SEP . 'authentication.php' );
-  create_file_from_tpl ( 'welcome.php',     'engine'.PATH_SEP . 'methods' . PATH_SEP . 'login' . PATH_SEP . 'welcome.php' );
+  create_file_from_tpl ( 'welcome.php',     'engine' . PATH_SEP . 'methods' . PATH_SEP . 'login' . PATH_SEP . 'welcome.php' );
+  create_file_from_tpl ( 'dbInfo.php' ,     'engine' . PATH_SEP . 'methods' . PATH_SEP . 'login' . PATH_SEP . 'dbInfo.php' );
   create_file_from_tpl ( 'sysLogin.xml',    'engine' . PATH_SEP . 'xmlform' . PATH_SEP . 'login' . PATH_SEP . 'sysLogin.xml' );
   create_file_from_tpl ( 'login.xml',       'engine' . PATH_SEP . 'xmlform' . PATH_SEP . 'login' . PATH_SEP . 'login.xml' );
   create_file_from_tpl ( 'showMessage.xml', 'engine' . PATH_SEP . 'xmlform' . PATH_SEP . 'login' . PATH_SEP . 'showMessage.xml' );
   create_file_from_tpl ( 'welcome.xml',     'engine' . PATH_SEP . 'xmlform' . PATH_SEP . 'login' . PATH_SEP . 'welcome.xml' );
   copy_file_from_tpl   ( 'xmlform.html',    'engine' . PATH_SEP . 'templates' . PATH_SEP . 'xmlform.html' );
   copy_file_from_tpl   ( 'publish.php',     'engine' . PATH_SEP . 'templates' . PATH_SEP . 'publish.php' );
-  copy_file_from_tpl   ( 'green.html',      'engine' . PATH_SEP . 'skins' . PATH_SEP . 'green.html' );
-  copy_file_from_tpl   ( 'green.php',       'engine' . PATH_SEP . 'skins' . PATH_SEP . 'green.php' );
+  copy_file_from_tpl   ( 'publish.php',     'engine' . PATH_SEP . 'templates' . PATH_SEP . 'publish-treeview.php' );
+  create_file_from_tpl ( 'dbInfo.xml',      'engine' . PATH_SEP . 'xmlform'. PATH_SEP . 'login' . PATH_SEP . 'dbInfo.xml' );
+  create_file_from_tpl ( 'mainmenu.php',    'engine' . PATH_SEP . 'menus'. PATH_SEP . $projectName . '.php' );
+  create_file_from_tpl ( 'users.menu.php',    'engine' . PATH_SEP . 'menus'. PATH_SEP . 'users.php' );
   create_file_from_tpl ( 'db.php',          PATH_SEP . PATH_SHARED . 'sites' . PATH_SEP . $projectName . PATH_SEP . 'db.php' );
   copy_file ( 'public_html' . PATH_SEP . 'skins' . PATH_SEP . 'green' . PATH_SEP . 'style.css' );
+  copy_file ( 'public_html' . PATH_SEP . 'skins' . PATH_SEP . 'green' . PATH_SEP . 'images' . PATH_SEP . 'bsms.jpg' );
+  copy_file ( 'public_html' . PATH_SEP . 'skins' . PATH_SEP . 'green' . PATH_SEP . 'images' . PATH_SEP . 'ftl.png' );
+  copy_file ( 'public_html' . PATH_SEP . 'skins' . PATH_SEP . 'green' . PATH_SEP . 'images' . PATH_SEP . 'ftr.png' );
+  copy_file ( 'public_html' . PATH_SEP . 'skins' . PATH_SEP . 'green' . PATH_SEP . 'images' . PATH_SEP . 'fbl.png' );
+  copy_file ( 'public_html' . PATH_SEP . 'skins' . PATH_SEP . 'green' . PATH_SEP . 'images' . PATH_SEP . 'fbr.png' );
+  copy_file ( 'public_html' . PATH_SEP . 'skins' . PATH_SEP . 'green' . PATH_SEP . 'images' . PATH_SEP . 'fbc.png' );
+  copy_file ( 'public_html' . PATH_SEP . 'images' . PATH_SEP . 'favicon.ico' );
+  copy_file ( 'public_html' . PATH_SEP . 'images' . PATH_SEP . 'bulletButton.gif' );
+  copy_file ( 'public_html' . PATH_SEP . 'images' . PATH_SEP . 'bulletSubMenu.jpg' );
+  copy_file ( 'public_html' . PATH_SEP . 'images' . PATH_SEP . 'users.png' );
+
+  copy_file ( 'engine' . PATH_SEP . 'skins' . PATH_SEP . 'green.html' );
+  copy_file ( 'engine' . PATH_SEP . 'skins' . PATH_SEP . 'green.php' );
+  copy_file ( 'engine' . PATH_SEP . 'skins' . PATH_SEP . 'raw.html' );
+  copy_file ( 'engine' . PATH_SEP . 'skins' . PATH_SEP . 'raw.php' );
   copy_file ( 'engine' . PATH_SEP . 'classes' . PATH_SEP . 'class.ArrayPeer.php' );
   copy_file ( 'engine' . PATH_SEP . 'classes' . PATH_SEP . 'class.BasePeer.php' );
   copy_file ( 'engine' . PATH_SEP . 'classes' . PATH_SEP . 'class.configuration.php' );
@@ -886,11 +916,17 @@ function run_new_project ( $task, $args)
   copy_file ( 'engine' . PATH_SEP . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'map' . PATH_SEP .  'ContentMapBuilder.php' );
   copy_file ( 'engine' . PATH_SEP . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'map' . PATH_SEP .  'ConfigurationMapBuilder.php' );
   copy_file ( 'engine' . PATH_SEP . 'config' . PATH_SEP . 'environments.php' );
-  copy_file ( 'engine' . PATH_SEP . 'methods' . PATH_SEP . 'login' . PATH_SEP . 'dbInfo.php' );
-  copy_file ( 'engine' . PATH_SEP . 'xmlform' . PATH_SEP . 'login' . PATH_SEP . 'dbInfo.xml' );
+  copy_file ( 'engine' . PATH_SEP . 'xmlform' . PATH_SEP . 'login' . PATH_SEP . 'login.xml' );
   copy_file ( 'engine' . PATH_SEP . 'xmlform' . PATH_SEP . 'gulliver' . PATH_SEP . 'pagedTable_PopupMenu.xml' );
   copy_file ( 'engine' . PATH_SEP . 'templates' . PATH_SEP . 'popupMenu.html' );
   copy_file ( 'engine' . PATH_SEP . 'templates' . PATH_SEP . 'paged-table.html' );
+  copy_file ( 'engine' . PATH_SEP . 'templates' . PATH_SEP . 'xmlmenu.html' );
+  copy_file ( 'engine' . PATH_SEP . 'templates' . PATH_SEP . 'filterform.html' );
+  copy_file ( 'engine' . PATH_SEP . 'templates' . PATH_SEP . 'tree.html' );
+  copy_file ( 'engine' . PATH_SEP . 'templates' . PATH_SEP . 'roles' . PATH_SEP . 'roles_permissionsTree.php' );
+
+    $filePng = $pathHome . PATH_SEP . 'public_html' . PATH_SEP . 'images' . PATH_SEP . 'processmaker.logo.jpg';
+  createPngLogo ( $filePng, $projectName );
 
   printf("creating symlinks %s \n", pakeColor::colorize( $pathHome . PATH_SEP . 'engine' . PATH_SEP . 'gulliver', 'INFO'));
   symlink (PATH_GULLIVER_HOME . 'bin' . PATH_SEP . 'gulliver', $pathHome . PATH_SEP . 'engine' . PATH_SEP . 'gulliver');

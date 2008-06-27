@@ -82,29 +82,30 @@ class Roles extends BaseRoles
         }
     }
 
-    function listAllRoles()
+    function listAllRoles( $systemCode = 'PROCESSMAKER')
     {
-        try {
-            $oCriteria = new Criteria('rbac');
-            $oCriteria->addSelectColumn(RolesPeer::ROL_UID);
-            $oCriteria->addSelectColumn(RolesPeer::ROL_PARENT);
-            $oCriteria->addSelectColumn(RolesPeer::ROL_SYSTEM);
-            $oCriteria->addSelectColumn(RolesPeer::ROL_CODE);
-            $oCriteria->addSelectColumn(RolesPeer::ROL_CREATE_DATE);
-            $oCriteria->addSelectColumn(RolesPeer::ROL_UPDATE_DATE);
-            $oCriteria->addSelectColumn(RolesPeer::ROL_STATUS);
-            $oCriteria->add(RolesPeer::ROL_UID, '', Criteria::NOT_EQUAL);
-            $oCriteria->add(SystemsPeer::SYS_CODE, 'PROCESSMAKER');
-			      $oCriteria->add(RolesPeer::ROL_CREATE_DATE, '', Criteria::NOT_EQUAL);
-            $oCriteria->add(RolesPeer::ROL_UPDATE_DATE, '', Criteria::NOT_EQUAL);	
-            $oCriteria->addJoin(RolesPeer::ROL_SYSTEM, SystemsPeer::SYS_UID);
-            
-            return $oCriteria;
+      try {
+        $oCriteria = new Criteria('rbac');
+        $oCriteria->addSelectColumn(RolesPeer::ROL_UID);
+        $oCriteria->addSelectColumn(RolesPeer::ROL_PARENT);
+        $oCriteria->addSelectColumn(RolesPeer::ROL_SYSTEM);
+        $oCriteria->addSelectColumn(SystemsPeer::SYS_CODE);
+        $oCriteria->addSelectColumn(RolesPeer::ROL_CODE);
+        $oCriteria->addSelectColumn(RolesPeer::ROL_CREATE_DATE);
+        $oCriteria->addSelectColumn(RolesPeer::ROL_UPDATE_DATE);
+        $oCriteria->addSelectColumn(RolesPeer::ROL_STATUS);
+        $oCriteria->add(RolesPeer::ROL_UID, '', Criteria::NOT_EQUAL);
+        $oCriteria->add(SystemsPeer::SYS_CODE, $systemCode );
+			  $oCriteria->add(RolesPeer::ROL_CREATE_DATE, '', Criteria::NOT_EQUAL);
+        $oCriteria->add(RolesPeer::ROL_UPDATE_DATE, '', Criteria::NOT_EQUAL);	
+        $oCriteria->addJoin(RolesPeer::ROL_SYSTEM, SystemsPeer::SYS_UID);
+        
+        return $oCriteria;
 
-        }
-        catch (exception $oError) {
-            throw (new Exception("CLASS RELES::FATAL ERROR. Criteria with rbac Can't initialized "));
-        }
+      }
+      catch (exception $oError) {
+        throw (new Exception("Class ROLES::FATAL ERROR. Criteria with rbac Can't initialized "));
+      }
     }
     
     function createRole($aData)

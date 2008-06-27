@@ -39,6 +39,9 @@ $_SESSION['_DBArray'] = $_DBArray;
       }
 */
   /* Render page */
+  $G_MAIN_MENU = '{projectName}';
+  $G_ID_MENU_SELECTED     = 'WELCOME';
+  $G_SUB_MENU = '{projectName}';
   $G_PUBLISH = new Publisher;
   $G_PUBLISH->AddContent( 'propeltable', 'paged-table', 'login/welcome', $c );
   G::RenderPage( "publish" );
