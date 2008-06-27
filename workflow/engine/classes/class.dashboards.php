@@ -82,10 +82,8 @@ class Dashboards {
       if ($aDashboard['class'] == 'PM_Reports') {
         foreach ($aReports as $sReport) {
           $bFree = false;
-          foreach ($aConfiguration as $aDashboard) {
-            if (($aDashboard['class'] == 'PM_Reports') && ($aDashboard['type'] == $sReport)) {
-              $bFree = true;
-            }
+          if (($aDashboard['class'] == 'PM_Reports') && ($aDashboard['type'] == $sReport)) {
+            $bFree = true;
           }
           if ($bFree) {
             $oChart        = $aDashboard['object'];

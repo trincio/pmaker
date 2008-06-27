@@ -615,6 +615,15 @@ leimnud.Package.Public({
 				this.elements.titleBar.appendChild(this.elements.roll);
 				this.elements.title.ondblclick=this.roll;
 			}
+			if(this.options.control.setup)
+			{
+				this.elements.setup = $dce("div");
+				this.elements.setup.className="panel_roll___"+this.getTheme("roll");
+				this.styles.setup();
+				this.controls.push(this.elements.setup);
+				this.elements.titleBar.appendChild(this.elements.setup);
+			}
+
 			/**
 			* Drag window
 			*/
@@ -1293,6 +1302,22 @@ leimnud.Package.Public({
 				});
 				this.parent.dom.setStyle(this.elements.roll,this.setStyle.roll || {});
 				this.parent.event.add(this.elements.roll,"mouseup",this.roll,false);
+			},
+			setup:function()
+			{
+				this.parent.dom.setStyle(this.elements.setup,{
+					//position:"absolute",
+					//top:3,
+					//font:"normal 0pt tahoma",
+					//padding:0,
+					right:this.controlPosition(),
+					height:this.controlSize.h,
+					width:this.controlSize.w
+					//border:"1px solid #006699",
+					//zIndex:2
+				});
+				this.parent.dom.setStyle(this.elements.setup,this.setStyle.setup || {});
+				this.parent.event.add(this.elements.setup,"mouseup",(this.options.setup && typeof this.options.setup=='function')?this.options.setup:function(){return false;},false);
 			},
 			close:function()
 			{
