@@ -89,12 +89,12 @@ leimnud.Package.Public({
 				title	:options.title || "",
 				size:{w:this.widthColumn,h:options.height || 300},
 				position:{x:0,y:0},
-				statusBarButtons:[
+				/*statusBarButtons:[
 				  {value:G_STRINGS.ID_REMOVE}
 				],
-                setup:function(){alert(4564565)},
-				statusbar:true,
-				control:{resize:false,roll:true,setup:true,drag:this.options.drag,close:false},
+				statusbar:true,*/
+				//setup:function(){alert('Setup under construction!')},
+				control:{resize:false,roll:false,setup:false,drag:this.options.drag,close:true},
 				fx:{shadow:false,opacity:false}
 			};
 			_panel.setStyle={
@@ -121,6 +121,9 @@ leimnud.Package.Public({
 					fontWeight:"normal"
 				},
 				roll:{
+					top:1
+				},
+				close:{
 					top:1
 				},
 				setup:{
@@ -240,18 +243,22 @@ leimnud.Package.Public({
 					});
 				}.extend(this,this.options.panel.length)
 			};
-	        _panel.make();
-			_panel.elements.statusBarButtons[0].onclick = function()
-            {
-	            new leimnud.module.app.confirm().make({
-                    label : G_STRINGS.ID_CONFIRM_REMOVE_DASHBOARD,
-                    action: function() {
-                        
-   //                     removeDashboard(options.class,options.chart);
-                        removeDashboard(options['class'],options.chart);
-                    }.extend(this)
-                });
-			};
+			_panel.events.remove = function() {
+			  _panel.cancelClose = true;
+			  new leimnud.module.app.confirm().make({
+          label : G_STRINGS.ID_CONFIRM_REMOVE_DASHBOARD,
+          action: function() {
+            removeDashboard(options['class'],options.chart);
+            return true;
+          }.extend(this),
+          cancel: function() {
+            _panel.cancelClose = true;
+      		  _panel.inRemove    = false;
+            return false;
+          }
+        });
+      };
+	    _panel.make();
 			if(options.open)
 			{
 				_panel.open(options.open);
