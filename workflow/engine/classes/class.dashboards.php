@@ -75,9 +75,31 @@ class Dashboards {
     $aLeftColumn          = array ();
     $aRightColumn         = array ();
     $iColumn              = 0;
+    G::LoadClass('report');
+	  $oReport  = new Report();
+	  $aReports = $oReport->getAvailableReports();
     foreach ($aConfiguration as $aDashboard) {
       if ($aDashboard['class'] == 'PM_Reports') {
-        //var_dump($aDashboard);echo '<br />';
+        foreach ($aReports as $sReport) {
+          $bFree = false;
+          foreach ($aConfiguration as $aDashboard) {
+            if (($aDashboard['class'] == 'PM_Reports') && ($aDashboard['type'] == $sReport)) {
+              $bFree = true;
+            }
+          }
+          if ($bFree) {
+            $oChart        = $aDashboard['object'];
+            $oChart->class = $aDashboard['class'];
+            $oChart->chart = $aDashboard['type'];
+            if ($iColumn === 0) {
+              $aLeftColumn[] = $oChart;
+            }
+            else {
+              $aRightColumn[] = $oChart;
+            }
+            $iColumn = 1 - $iColumn;
+          }
+        }
       }
       else {
         require_once PATH_PLUGINS. $aDashboard['class']  . PATH_SEP . 'class.' . $aDashboard['class'] . '.php';
