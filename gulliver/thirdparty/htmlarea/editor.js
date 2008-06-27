@@ -1114,7 +1114,7 @@ function insertAfterEnd(oElement,oNewNode)
 }
 function insertHTMLAfterEnd(oElement,html)
 {
-  var auxDiv=document.createElement('div');
+  var auxDiv=$dce('div');
   auxDiv.innerHTML=html;
   for(var i=auxDiv.childNodes.length-1;i>=0;i--)
   {
