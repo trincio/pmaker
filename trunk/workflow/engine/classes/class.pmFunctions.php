@@ -723,7 +723,7 @@ function PMFNewCase($processId, $userId, $taskId, $variables)
 	G::LoadClass('wsBase');
 	$ws = new wsBase ();
 
-	$result = $ws->newCase($processId, ,$taskId, $variables);
+	$result = $ws->newCase($processId, $userId,$taskId, $variables);
 	$result = $result->getPayloadArray();
 	if($result->status_code == 0){
 		return true;
