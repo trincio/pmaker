@@ -48,14 +48,14 @@
 			$this->username = '';     	// needed for smtp authentication
 			$this->password = '';     	// needed for smtp authentication
 
-			$this->mail_server = '';
+			$this->mail_server = @gethostbyaddr('127.0.0.1');
+			$this->port = 25;
 
 			$this->return_path = '';
 			$this->envelope_to = array();
 			$this->headers = '';
 			$this->body = '';
 
-			$this->port = '';
 			$this->log = array();
 
 
