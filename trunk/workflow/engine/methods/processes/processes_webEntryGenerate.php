@@ -42,7 +42,17 @@
 		$js5  = '<script type="text/javascript" src="'.$js5.'"></script>';
 		$js6  = '<script type="text/javascript" src="'.$js6.'"></script>';
 		
-		$js7  = '
+		$Fields = array();
+		$i=0;            
+    foreach($G_FORM->fields as $key=>$values)
+    {
+      if($values->type=='grid')
+      	{	$i++;
+      		$Fields[$i]=$values->id;        		      		
+        }	      		
+    }    
+    
+		$a  = '
 		<script type="text/javascript">
   		var leimnud = new maborak();
   		leimnud.make();
@@ -52,11 +62,15 @@
 			{
 				leimnud.iphone.make();
 			}
-			
-	    leimnud.event.add(window,"load",function(){loadForm_'.$G_FORM->id.'("'.$x.'");});
-			//leimnud.event.add(window,"load",function(){loadForm_YXBaZ29XbWtaMm1ucUdtZnBaZHNxWldqbHBTV29HQ2piV21pcVdPaXEyeG9xR21rYVpOa3BHR21hR2lpcDJIUXBwaWIxSmVpWkpOZ28ybW5aMkNqcVdXYjdhS2w___("../gulliver/defaultAjaxDynaform");});
-    </script>';
-        
+			leimnud.event.add(window,"load",function(){loadForm_'.$G_FORM->id.'("'.$x.'");
+			';
+		$b='';
+		$js7='';
+		for($j=1; $j<=count($Fields); $j++)	
+	   { $b = $b.' grid_'.$Fields[$j].'("'.$x.'");';
+	   }	         
+    
+    $js7 = $a.' '.$b.' }); </script>';  
     
    	$Target = $http.$_SERVER['HTTP_HOST'].'/sys'.SYS_SYS.'/'.SYS_LANG.'/'.SYS_SKIN.'/cases/cases_StartExternal.php';   			          
                   
