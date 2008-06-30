@@ -74,6 +74,12 @@ class dates
 	  $bFinished   = false;
 	  $fHours1     = 0.0;
 	  $fHours2     = 0.0;
+	  if (count($aInitDate) != 3) {
+	    $aInitDate = array(0, 0, 0);
+	  }
+	  if (count($aEndDate) != 3) {
+	    $aEndDate = array(0, 0, 0);
+	  }
 	  if ($aInitDate !== $aEndDate) {
 	    while (!$bFinished && ($i < 10000)) {
 	      $sAux = implode('-', array($aInitDate[0], $aInitDate[1], $aInitDate[2] + $i));

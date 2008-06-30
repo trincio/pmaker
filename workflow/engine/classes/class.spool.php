@@ -185,7 +185,15 @@
             $oPHPMailer->FromName = $this->fileData['from_name'];
             $oPHPMailer->Subject  = $this->fileData['subject'];
             $oPHPMailer->Body     = $this->fileData['body'];
-            $oPHPMailer->AddAddress($this->fileData['to']);
+            if (strpos($this->fileData['to'], '<') !== false) {
+              $aTo     = explode('<', $this->fileData['to']);
+              $sToName = trim($aTo[0]);
+              $sTo     = trim(str_replace('>', '', $aTo[1]));
+              $oPHPMailer->AddAddress($sTo, $sToName);
+            }
+            else {
+              $oPHPMailer->AddAddress($this->fileData['to']);
+            }
             if ($oPHPMailer->Send()) {
               $this->error = '';
 				      $this->status = 'sent';
@@ -208,7 +216,15 @@
             $oPHPMailer->FromName = $this->fileData['from_name'];
             $oPHPMailer->Subject  = $this->fileData['subject'];
             $oPHPMailer->Body     = $this->fileData['body'];
-            $oPHPMailer->AddAddress($this->fileData['to']);
+            if (strpos($this->fileData['to'], '<') !== false) {
+              $aTo     = explode('<', $this->fileData['to']);
+              $sToName = trim($aTo[0]);
+              $sTo     = trim(str_replace('>', '', $aTo[1]));
+              $oPHPMailer->AddAddress($sTo, $sToName);
+            }
+            else {
+              $oPHPMailer->AddAddress($this->fileData['to']);
+            }
             $oPHPMailer->IsHTML(true);
             if ($oPHPMailer->Send()) {
               $this->error = '';
