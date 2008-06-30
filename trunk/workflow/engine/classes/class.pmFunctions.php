@@ -677,15 +677,10 @@ function PMFsendMessage($caseId, $message)
 	}
 }
 
-function PMFSendVariables($caseId, $name1, $value1, $name2, $value2)
+function PMFSendVariables($caseId, $variables)
 {
 	G::LoadClass('wsBase');
 	$ws = new wsBase ();
-	
-	$variables[1]->name  = $name1;
-	$variables[1]->value = $value1;
-	$variables[2]->name  = $name2;
-	$variables[2]->value = $value2;
 	
     $result = $ws->sendMessage($caseId, $variables);
 	$result = $result->getPayloadArray ();
@@ -709,14 +704,10 @@ function PMFDerivateCase($caseId, $delIndex)
 	}
 }
 
-function PMFNewCaseImpersonate($processId, $userId, $name1, $value1, $name2, $value2)
+function PMFNewCaseImpersonate($processId, $userId, $variables)
 {
 	G::LoadClass('wsBase');
 	$ws = new wsBase ();
-	$variables[1]->name  = $name1;
-	$variables[1]->value = $value1;
-	$variables[2]->name  = $name2;
-	$variables[2]->value = $value2;
 	$result = $ws->newCaseImpersonate($processId, $userId, $variables);
 
 	$result = $result->getPayloadArray();
@@ -727,15 +718,12 @@ function PMFNewCaseImpersonate($processId, $userId, $name1, $value1, $name2, $va
 	}
 }
 
-function PMFNewCase($processId, $taskId, $name1, $value1, $name2, $value2)
+function PMFNewCase($processId, $userId, $taskId, $variables)
 {
 	G::LoadClass('wsBase');
 	$ws = new wsBase ();
-	$variables[1]->name  = $name1;
-	$variables[1]->value = $value1;
-	$variables[2]->name  = $name2;
-	$variables[2]->value = $value2;
-	$result = $ws->newCase($processId, $taskId, $variables);
+
+	$result = $ws->newCase($processId, ,$taskId, $variables);
 	$result = $result->getPayloadArray();
 	if($result->status_code == 0){
 		return true;
