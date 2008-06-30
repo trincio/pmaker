@@ -1,43 +1,37 @@
 <?php
-     //print_r($_POST['PRO_UID'].'<br />'.$_POST['TASKS'].'<br />'.$_POST['DYNAFORM']);
-          
-     require_once ("classes/model/AppDelegation.php");     
-     require_once ( "classes/model/Users.php" );
-     G::LoadClass('case');       
-     G::LoadClass('derivation');       
-     $result  = array();
-		 $oCriteria = new Criteria('workflow');
-		 $del = DBAdapter::getStringDelimiter();
-		 $oCriteria->addSelectColumn(AppDelegationPeer::APP_UID);
-		 $oCriteria->addSelectColumn(AppDelegationPeer::DEL_INDEX);
-		 $oCriteria->add(AppDelegationPeer::PRO_UID, $_POST['PRO_UID']);
-		 $oDataset = AppDelegationPeer::doSelectRS($oCriteria);
-		 $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-		 $oDataset->next();
-     $aRow = $oDataset->getRow();					 
-			
-                     
-     $aData['APP_UID']   = $aRow['APP_UID'];     
-     $aData['DEL_INDEX'] = $aRow['DEL_INDEX'];
-     
-     $oDerivation = new Derivation();
-     $derive  = $oDerivation->prepareInformation($aData);
-     
-     print_r($derive);
-     
      try {  	
+     //print_r($_POST['PRO_UID'].'<br />'.$_POST['TASKS'].'<br />'.$_POST['DYNAFORM']).'<br />';         
+     require_once ( "classes/model/Task.php" );
+     require_once ( "classes/model/Users.php" );
+     G::LoadClass('case');    
+     G::LoadClass('derivation');  
+     
+     $oTask    = new Task();
+     $TaskFields = $oTask->load( $_POST['TASKS'] );          
+     $aDerivation['NEXT_TASK'] = $TaskFields;
+     $oDerivation = new Derivation();  
+     $deriva = $oDerivation->getNextAssignedUser($aDerivation);    
+     
      $oCase = new Cases();
-     $aData = $oCase->startCase( $_POST['TASKS'], $_SESSION['USER_LOGGED'] );
-     $_SESSION['APPLICATION']   = $aData['APPLICATION'];
-     $_SESSION['INDEX']         = $aRow['APP_UID'];
-     $_SESSION['PROCESS']       = $_POST['PRO_UID']; //$aData['PROCESS'];
-     $_SESSION['TASK']          = $_POST['TASKS'];
-     $_SESSION['STEP_POSITION'] = 0;
+     $aData = $oCase->startCase( $_POST['TASKS'], $deriva['USR_UID'] );    		 
      
-     $oCase     = new Cases();
-     $aNextStep = $oCase->getNextStep($_POST['PRO_UID'], $aData['APPLICATION'], $aRow['DEL_INDEX'], $_SESSION['STEP_POSITION']);
      
-     G::header('location: ' . $aNextStep['PAGE']);
+     $case = $oCase->loadCase($aData['APPLICATION'], 1);
+     
+     $Fields = array();
+     $Fields['APP_NUMBER']      = $case['APP_NUMBER'];
+     $Fields['APP_PROC_STATUS'] = 'draft';
+     $Fields['APP_DATA']        = $_POST['form'];
+     $Fields['DEL_INDEX']       = 1;
+     $Fields['TAS_UID']         = $_POST['TASKS'];
+     
+     $oCase->updateCase( $aData['APPLICATION'], $Fields );
+     
+          
+     if($_SERVER['HTTP_REFERER']!='')     
+     		G::header('location: ' . $_SERVER['HTTP_REFERER']);     		
+     else
+     		echo"Se registro ok";		
      }
      catch ( Exception $e ) {
        $_SESSION['G_MESSAGE']      = $e->getMessage();
