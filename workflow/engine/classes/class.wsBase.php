@@ -388,21 +388,27 @@ class wsBase
 		}
 	}
 
-	public function sendVariables($caseId, $variables) { // I stay here, continue tomorrow
+	public function sendVariables($caseId, $variables) { 
 		try {
-			G::LoadClass('case');
-			$oCase = new Cases();
-			
-			foreach ( $variables as $key=>$val ) {
-				$Fields[ $val->name ]= $val->value ;
-			}
-			$cant = count ( $Fields );
+			if(is_array($variables)) {
+				$cant = count ( $variables );
+				if($cant > 0) {
+					G::LoadClass('case');
+					$oCase = new Cases();
 
-			$oldFields = $oCase->loadCase( $caseId );
-			$oldFields['APP_DATA'] = array_merge( $oldFields['APP_DATA'], $Fields );
-			$up_case = $oCase->updateCase($caseId, $oldFields);
-			$result = new wsResponse (0, "$cant variables received.");
-			return $result;
+					$oldFields = $oCase->loadCase( $caseId );
+					$oldFields['APP_DATA'] = array_merge( $oldFields['APP_DATA'], $variables );
+					$up_case = $oCase->updateCase($caseId, $oldFields);
+					$result = new wsResponse (0, "$cant variables received.");
+					return $result;
+				} else {
+					$result = new wsResponse (100, "The variables param lenght is zero");
+					return $result;
+				}
+			} else {
+				$result = new wsResponse (100, "The variables param is not a array!");
+				return $result;
+			}
 		}
 		catch ( Exception $e ) {
 			$result = new wsResponse (100, $e->getMessage());
@@ -410,22 +416,21 @@ class wsBase
 		}
 	}
 
-	public function newCase($processId, $taskId, $variables) {
-		try {	
-			if(count($variables)>0){
-				$c=0;
-				foreach ( $variables as $key=>$val ){
-					$name  = $val->name;
-					$value = $val->value;
-					$Fields[ $val->name ]= $val->value ; //arma el array
-					if($name!='' && $value!=''){
-						$c++;
+	public function newCase($processId, $userId, $taskId, $variables) {
+		try {
+			if(is_array($variables)) {
+				if(count($variables)>0){
+					$c=count($variables);
+					
+					$Fields = $variables;
+					if($c == 0) { //Si no tenenmos ninguna variables en el array variables.
+						$result = new wsResponse (10, "Array of variables is empty");
+						return $result;
 					}
 				}
-				if($c == 0) { //Si no tenenmos ninguna variables en el array variables.
-					$result = new wsResponse (10, "Array of variables is empty");
-					return $result;
-				}
+			} else {
+				$result = new wsResponse (100, "The variables param is not a array!");
+				return $result;
 			}
 
 			G::LoadClass('processes');
@@ -504,23 +509,21 @@ class wsBase
 	}
 
 	public function newCaseImpersonate($processId, $userId, $variables) {
-		try {	
-			if(count($variables)>0) {
-				$c=0;
-				foreach ( $variables as $key=>$val ) {
-					$name  = $val->name;
-					$value = $val->value;
-					$Fields[ $val->name ]= $val->value ; //arma el array
-					if($name!='' && $value!='') {
-						$c++;
+		try {
+			if(is_array($variables)) {
+				if(count($variables)>0) {
+					$c=count($variables);
+					$Fields = $variables;
+					if($c == 0) { //Si no tenenmos ninguna variables en el array variables.
+						$result = new wsResponse (10, "Array of variables is empty");
+						return $result;
 					}
 				}
-				if($c == 0) { //Si no tenenmos ninguna variables en el array variables.
-					$result = new wsResponse (10, "Array of variables is empty");
-					return $result;
-				}
+			} else {
+				$result = new wsResponse (100, "The variables param is not a array!");
+				return $result;
 			}
-
+			
 			G::LoadClass('processes');
 			$oProcesses = new Processes();
 			$pro = $oProcesses->processExists($processId);
