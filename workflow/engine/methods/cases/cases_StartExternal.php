@@ -28,10 +28,11 @@
      $oCase->updateCase( $aData['APPLICATION'], $Fields );
      
           
-     if($_SERVER['HTTP_REFERER']!='')     
+     if(isset($_SERVER['HTTP_REFERER']))     
      		G::header('location: ' . $_SERVER['HTTP_REFERER']);     		
      else
      		echo"Se registro ok";		
+     
      }
      catch ( Exception $e ) {
        $_SESSION['G_MESSAGE']      = $e->getMessage();
