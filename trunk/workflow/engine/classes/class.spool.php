@@ -244,6 +244,8 @@
 				    $send = new smtp();
 				    $send->setServer($this->config['MESS_SERVER']);
 				    $send->setPort($this->config['MESS_PORT']);
+				    $send->setUsername($this->config['MESS_ACCOUNT']);
+				    $send->setPassword($this->config['MESS_PASSWORD']);
 				    $send->setReturnPath($this->fileData['from_email']);
 				    $send->setHeaders($header);
 				    $send->setBody($body);

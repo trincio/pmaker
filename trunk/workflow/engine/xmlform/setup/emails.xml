@@ -13,7 +13,7 @@
   <en>Email Engine
     <option name="MAIL">Mail (PHP)</option>
     <option name="PHPMAILER">SMTP (PHPMailer)</option>
-    <option name="OPENMAIL">SMTP without authentication (OpenMail)</option>
+    <option name="OPENMAIL">SMTP (OpenMail)</option>
   </en>
 </MESS_ENGINE>
 
@@ -25,7 +25,7 @@
   <en>Port</en>
 </MESS_PORT>
 
-<MESS_ACCOUNT type="text" size="25" maxlength="25" required="true" validate="Email">
+<MESS_ACCOUNT type="text" size="25" maxlength="25" validate="Email">
   <en>Account</en>
 </MESS_ACCOUNT>
 
@@ -70,16 +70,11 @@ leimnud.event.add(getField('MESS_ENABLED'), 'click', function() {
         hideRowById('MESS_PASSWORD');
       break;
       case 'PHPMAILER':
+      case 'OPENMAIL':
         showRowById('MESS_SERVER');
         showRowById('MESS_PORT');
         showRowById('MESS_ACCOUNT');
         showRowById('MESS_PASSWORD');
-      break;
-      case 'OPENMAIL':
-        showRowById('MESS_SERVER');
-        showRowById('MESS_PORT');
-        hideRowById('MESS_ACCOUNT');
-        hideRowById('MESS_PASSWORD');
       break;
     }
     //showRowById('MESS_BACKGROUND');////enable this line in the next release
@@ -118,14 +113,11 @@ leimnud.event.add(getField('MESS_ENGINE'), 'change', function() {
       hideRowById('MESS_PASSWORD');
     break;
     case 'PHPMAILER':
+    case 'OPENMAIL':
       showRowById('MESS_SERVER');
       showRowById('MESS_PORT');
       showRowById('MESS_ACCOUNT');
       showRowById('MESS_PASSWORD');
-    break;
-    case 'OPENMAIL':
-      hideRowById('MESS_ACCOUNT');
-      hideRowById('MESS_PASSWORD');
     break;
   }
 }.extend(getField('MESS_ENGINE')));
@@ -164,14 +156,11 @@ switch (getField('MESS_ENGINE').value) {
     hideRowById('MESS_PASSWORD');
   break;
   case 'PHPMAILER':
+  case 'OPENMAIL':
     showRowById('MESS_SERVER');
     showRowById('MESS_PORT');
     showRowById('MESS_ACCOUNT');
     showRowById('MESS_PASSWORD');
-  break;
-  case 'OPENMAIL':
-    hideRowById('MESS_ACCOUNT');
-    hideRowById('MESS_PASSWORD');
   break;
 }
 
@@ -186,19 +175,6 @@ var verifyData = function(oForm) {
   if (getField('MESS_ENABLED').checked) {
 	  switch (getField('MESS_ENGINE').value) {
 	    case 'PHPMAILER':
-	      oAux = getField('MESS_SERVER');
-	      if (oAux.value == '') {
-	        alert(G_STRINGS.ID_MESS_SERVER_REQUIRED);
-	        oAux.focus();
-	        return;
-	      }
-	      oAux = getField('MESS_ACCOUNT');
-	      if (oAux.value == '') {
-	        alert(G_STRINGS.ID_MESS_ACCOUNT_REQUIRED);
-	        oAux.focus();
-	        return;
-	      }
-	    break;
 	    case 'OPENMAIL':
 	      oAux = getField('MESS_SERVER');
 	      if (oAux.value == '') {
@@ -233,12 +209,6 @@ var testEmailConfiguration = function() {
 	  oAux = getField('MESS_SERVER');
 	  if (oAux.value == '') {
 	    alert(G_STRINGS.ID_MESS_SERVER_REQUIRED);
-	    oAux.focus();
-	    return;
-	  }
-	  oAux = getField('MESS_ACCOUNT');
-	  if (oAux.value == '') {
-	    alert(G_STRINGS.ID_MESS_ACCOUNT_REQUIRED);
 	    oAux.focus();
 	    return;
 	  }
