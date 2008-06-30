@@ -149,7 +149,6 @@
 		private function handleEnvelopeTo()
 		{
 			$hold = array();
-			$this->fileData['envelope_to'] = array();
 
 			$text  = '';
 			$text .= trim($this->fileData['to']);
@@ -160,13 +159,15 @@
 			{
 				$hold = explode(',',$text);
 
-				for($i = 0; $i < count($hold); $i++)
-					if(strlen($hold[$i])>0) $this->fileData['envelope_to'][$i] = "{$hold[$i]}";
+				foreach($hold as $val)
+					if(strlen($val)>0) $this->fileData['envelope_to'][] = "$val";
+
 
 			}
 			else
 			{
-				$this->fileData['envelope_to']['0'] = "$text";
+				$this->fileData['envelope_to'][] = "$text";
+
 			}
 
 		}
@@ -230,7 +231,7 @@
 				    $send->setReturnPath($this->fileData['from_email']);
 				    $send->setHeaders($header);
 				    $send->setBody($body);
-				    $send->getEnvelopeTo($this->fileData['envelope_to']);
+				    $send->setEnvelopeTo($this->fileData['envelope_to']);
 				    if ($send->sendMessage()) {
 				      $this->error = '';
 				      $this->status = 'sent';
