@@ -23,7 +23,7 @@
 	//-------------------------------------------------------------
 	// setSmtpAuthentication($sAuth)
 	// setUsername($sName)
-	// setPassword($sPass) 
+	// setPassword($sPass)
 	//-------------------------------------------------------------
 
 	class smtp
@@ -43,7 +43,7 @@
 		function __construct()
 		{
 			$this->status  = false;
-			
+
 			$this->with_auth = false; 	// change to 'true' to use smtp authentication
 			$this->username = '';     	// needed for smtp authentication
 			$this->password = '';     	// needed for smtp authentication
@@ -96,7 +96,7 @@
 		public function setPassword($sPass) {
 			$this->password = $sPass;
 		}
-            
+
 
 		public function returnErrors() {
 			return $this->log;
@@ -125,7 +125,7 @@
 		{
 			// connect
 			$errno = $errstr = '';
-			$cp = fsockopen("$this->mail_server", $this->port, $errno, $errstr, 1);
+			$cp = @fsockopen("$this->mail_server", $this->port, $errno, $errstr, 1);
 
 			if(!$cp)
 			{
@@ -153,7 +153,7 @@
 					fclose($cp);
 					return false;
 				}
-				
+
 				// Request Authentication
 				fputs($cp, 'AUTH LOGIN'."\r\n");
 
