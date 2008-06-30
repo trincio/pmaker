@@ -2,7 +2,7 @@ msgid ""
 msgstr "" 
 "Project-Id-Version: PM 4.0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-06-25 12:03+0100 \n"
+"PO-Revision-Date: 2008-06-30 19:47+0100 \n"
 "Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
 "Language-Team: Colosa Developers Team <developers@colosa.com>\n"
 "MIME-Version: 1.0\n"
@@ -1660,8 +1660,8 @@ msgstr "To Revise"
 # TRANSLATION
 # LABEL/ID_MESS_ENGINE_TYPE_3
 #: LABEL/ID_MESS_ENGINE_TYPE_3
-msgid "SMTP without authentication (OpenMail)"
-msgstr "SMTP without authentication (OpenMail)"
+msgid "SMTP (OpenMail)"
+msgstr "SMTP (OpenMail)"
 
 # TRANSLATION
 # LABEL/ID_MESS_TEST_MESSAGE_ERROR_PHP_MAIL
@@ -3150,6 +3150,36 @@ msgstr "Grid"
 #: button - SEARCH
 msgid "[dynaforms/dynaforms_ShortList.xml?SEARCH] Apply Filter"
 msgstr "Apply Filter"
+
+# dynaforms/dynaforms_WebEntry.xml?WEB_ENTRY
+# dynaforms/dynaforms_WebEntry.xml
+#: dropdown - WEB_ENTRY
+msgid "Web Entry"
+msgstr "Web Entry"
+
+# dynaforms/dynaforms_WebEntry.xml?WEB_ENTRY-1
+# dynaforms/dynaforms_WebEntry.xml
+#: dropdown - WEB_ENTRY - 1
+msgid "[dynaforms/dynaforms_WebEntry.xml?WEB_ENTRY-1]"
+msgstr "Simple form"
+
+# dynaforms/dynaforms_WebEntry.xml?TASKS
+# dynaforms/dynaforms_WebEntry.xml
+#: dropdown - TASKS
+msgid "Select the initial task"
+msgstr "Select the initial task"
+
+# dynaforms/dynaforms_WebEntry.xml?DYNAFORM
+# dynaforms/dynaforms_WebEntry.xml
+#: dropdown - DYNAFORM
+msgid "Select the initial Dynaform"
+msgstr "Select the initial Dynaform"
+
+# dynaforms/dynaforms_WebEntry.xml?SEARCH
+# dynaforms/dynaforms_WebEntry.xml
+#: button - SEARCH
+msgid "Generate html"
+msgstr "Generate html"
 
 # dynaforms/dynaforms_List.xml?DYN_TITLE
 # dynaforms/dynaforms_List.xml
@@ -5680,8 +5710,8 @@ msgstr "Save"
 # dashboard/dashboard_AvailableDashboards.xml?TITLE
 # dashboard/dashboard_AvailableDashboards.xml
 #: title - TITLE
-msgid "Add availables charts or reports"
-msgstr "Add availables charts or reports"
+msgid "Add availables reports or charts"
+msgstr "Add availables reports or charts"
 
 # dashboard/dashboard_AvailableDashboards.xml?DASHBOARD
 # dashboard/dashboard_AvailableDashboards.xml
@@ -5698,8 +5728,8 @@ msgstr "Add"
 # dashboard/dashboard_NoAvailableDashboards.xml?TITLE
 # dashboard/dashboard_NoAvailableDashboards.xml
 #: title - TITLE
-msgid "No availables charts or reports"
-msgstr "No availables charts or reports"
+msgid "No availables reports or charts"
+msgstr "No availables reports or charts"
 
 # dashboard/dashboard_NoAvailableDashboards.xml?CLOSE
 # dashboard/dashboard_NoAvailableDashboards.xml
@@ -5808,12 +5838,6 @@ msgstr "Output Document Information"
 #: text - OUT_DOC_TITLE
 msgid "[outputdocs/outputdocs_Edit.xml?OUT_DOC_TITLE] Title"
 msgstr "Title"
-
-# outputdocs/outputdocs_Edit.xml?OUT_DOC_FILENAME
-# outputdocs/outputdocs_Edit.xml
-#: textpm - OUT_DOC_FILENAME
-msgid "Filename generated"
-msgstr "Filename generated"
 
 # outputdocs/outputdocs_Edit.xml?OUT_DOC_DESCRIPTION
 # outputdocs/outputdocs_Edit.xml
@@ -6175,6 +6199,36 @@ msgstr "First name"
 msgid "[processes/processes_User.xml?USR_LASTNAME] Last name"
 msgstr "Last name"
 
+# reports/report5_dashboard.xml?USER
+# reports/report5_dashboard.xml
+#: text - USER
+msgid "[reports/report5_dashboard.xml?USER] User"
+msgstr "User"
+
+# reports/report5_dashboard.xml?CANTCASES
+# reports/report5_dashboard.xml
+#: text - CANTCASES
+msgid "Total Cases"
+msgstr "Total Cases"
+
+# reports/report5_dashboard.xml?MAX
+# reports/report5_dashboard.xml
+#: hours - MAX
+msgid "Slowest Time"
+msgstr "Slowest Time"
+
+# reports/report5_dashboard.xml?TOTALDUR
+# reports/report5_dashboard.xml
+#: hours - TOTALDUR
+msgid "Total Duration"
+msgstr "Total Duration"
+
+# reports/report5_dashboard.xml?PROMEDIO
+# reports/report5_dashboard.xml
+#: hours - PROMEDIO
+msgid "Average"
+msgstr "Average"
+
 # reports/reportsList.xml?RPT_UID
 # reports/reportsList.xml
 #: text - RPT_UID
@@ -6226,7 +6280,7 @@ msgstr "User"
 # reports/report5.xml?CANTCASES
 # reports/report5.xml
 #: text - CANTCASES
-msgid "Total Cases"
+msgid "[reports/report5.xml?CANTCASES] Total Cases"
 msgstr "Total Cases"
 
 # reports/report5.xml?MIN
@@ -6355,11 +6409,71 @@ msgstr "Cases last month"
 msgid "Cases last day"
 msgstr "Cases last day"
 
+# reports/report1_dashboard.xml?PRO_TITLE
+# reports/report1_dashboard.xml
+#: text - PRO_TITLE
+msgid "[reports/report1_dashboard.xml?PRO_TITLE] Processes"
+msgstr "Processes"
+
+# reports/report1_dashboard.xml?CANTCASES
+# reports/report1_dashboard.xml
+#: text - CANTCASES
+msgid "[reports/report1_dashboard.xml?CANTCASES] Total Cases"
+msgstr "Total Cases"
+
+# reports/report1_dashboard.xml?MAX
+# reports/report1_dashboard.xml
+#: hours - MAX
+msgid "[reports/report1_dashboard.xml?MAX] Slowest Time"
+msgstr "Slowest Time"
+
+# reports/report1_dashboard.xml?TOTALDUR
+# reports/report1_dashboard.xml
+#: hours - TOTALDUR
+msgid "[reports/report1_dashboard.xml?TOTALDUR] Total Duration"
+msgstr "Total Duration"
+
+# reports/report1_dashboard.xml?PROMEDIO
+# reports/report1_dashboard.xml
+#: hours - PROMEDIO
+msgid "[reports/report1_dashboard.xml?PROMEDIO] Average"
+msgstr "Average"
+
 # reports/report1_back.xml?backs
 # reports/report1_back.xml
 #: link - backs
 msgid "Back"
 msgstr "Back"
+
+# reports/report3_dashboard.xml?FECHA
+# reports/report3_dashboard.xml
+#: text - FECHA
+msgid "[reports/report3_dashboard.xml?FECHA] Date"
+msgstr "Date"
+
+# reports/report3_dashboard.xml?CANTCASES
+# reports/report3_dashboard.xml
+#: text - CANTCASES
+msgid "[reports/report3_dashboard.xml?CANTCASES] Total Cases"
+msgstr "Total Cases"
+
+# reports/report3_dashboard.xml?MAX
+# reports/report3_dashboard.xml
+#: hours - MAX
+msgid "[reports/report3_dashboard.xml?MAX] Slowest Time"
+msgstr "Slowest Time"
+
+# reports/report3_dashboard.xml?TOTALDUR
+# reports/report3_dashboard.xml
+#: hours - TOTALDUR
+msgid "[reports/report3_dashboard.xml?TOTALDUR] Total Duration"
+msgstr "Total Duration"
+
+# reports/report3_dashboard.xml?PROMEDIO
+# reports/report3_dashboard.xml
+#: hours - PROMEDIO
+msgid "[reports/report3_dashboard.xml?PROMEDIO] Average"
+msgstr "Average"
 
 # reports/report4.xml?USER
 # reports/report4.xml
@@ -6396,6 +6510,36 @@ msgstr "Total Duration (Hours)"
 #: hours - PROMEDIO
 msgid "[reports/report4.xml?PROMEDIO] Average (Hours)"
 msgstr "Average (Hours)"
+
+# reports/report2_dashboard.xml?PRO_TITLE
+# reports/report2_dashboard.xml
+#: text - PRO_TITLE
+msgid "[reports/report2_dashboard.xml?PRO_TITLE] Processes"
+msgstr "Processes"
+
+# reports/report2_dashboard.xml?CANTCASES
+# reports/report2_dashboard.xml
+#: text - CANTCASES
+msgid "[reports/report2_dashboard.xml?CANTCASES] Total Cases"
+msgstr "Total Cases"
+
+# reports/report2_dashboard.xml?MAX
+# reports/report2_dashboard.xml
+#: hours - MAX
+msgid "[reports/report2_dashboard.xml?MAX] Slowest Time"
+msgstr "Slowest Time"
+
+# reports/report2_dashboard.xml?CASELASTMONTH
+# reports/report2_dashboard.xml
+#: text - CASELASTMONTH
+msgid "Last month"
+msgstr "Last month"
+
+# reports/report2_dashboard.xml?CASELASTDAY
+# reports/report2_dashboard.xml
+#: text - CASELASTDAY
+msgid "Last day"
+msgstr "Last day"
 
 # reports/reports_Description.xml?TAS_TITLE
 # reports/reports_Description.xml
@@ -6498,6 +6642,36 @@ msgstr "All"
 #: submit - FILTER
 msgid "[reports/report1_search.xml?FILTER] Filter"
 msgstr "Filter"
+
+# reports/report4_dashboard.xml?USER
+# reports/report4_dashboard.xml
+#: text - USER
+msgid "[reports/report4_dashboard.xml?USER] User"
+msgstr "User"
+
+# reports/report4_dashboard.xml?CANTCASES
+# reports/report4_dashboard.xml
+#: text - CANTCASES
+msgid "[reports/report4_dashboard.xml?CANTCASES] Total Cases"
+msgstr "Total Cases"
+
+# reports/report4_dashboard.xml?MAX
+# reports/report4_dashboard.xml
+#: hours - MAX
+msgid "[reports/report4_dashboard.xml?MAX] Slowest Time"
+msgstr "Slowest Time"
+
+# reports/report4_dashboard.xml?TOTALDUR
+# reports/report4_dashboard.xml
+#: hours - TOTALDUR
+msgid "[reports/report4_dashboard.xml?TOTALDUR] Total Duration"
+msgstr "Total Duration"
+
+# reports/report4_dashboard.xml?PROMEDIO
+# reports/report4_dashboard.xml
+#: hours - PROMEDIO
+msgid "[reports/report4_dashboard.xml?PROMEDIO] Average"
+msgstr "Average"
 
 # setup/wsCaseList.xml?SESSION_ID
 # setup/wsCaseList.xml
@@ -7835,7 +8009,7 @@ msgstr "SMTP (PHPMailer)"
 # setup/emails.xml
 #: dropdown - MESS_ENGINE - OPENMAIL
 msgid "[setup/emails.xml?MESS_ENGINE-OPENMAIL]"
-msgstr "SMTP without authentication (OpenMail)"
+msgstr "SMTP (OpenMail)"
 
 # setup/emails.xml?MESS_SERVER
 # setup/emails.xml
@@ -9133,12 +9307,6 @@ msgstr "Confirm Password"
 msgid "[users/myInfoView.xml?TITLEADD] Additional Information"
 msgstr "Additional Information"
 
-# users/myInfoView.xml?USR_PHOTO
-# users/myInfoView.xml
-#: image - USR_PHOTO
-msgid "[users/myInfoView.xml?USR_PHOTO] Photo"
-msgstr "Photo"
-
 # users/myInfoView.xml?USR_RESUME
 # users/myInfoView.xml
 #: link - USR_RESUME
@@ -9739,12 +9907,6 @@ msgstr "Confirm Password"
 msgid "[users/users_View.xml?TITLEADD] Additional Information"
 msgstr "Additional Information"
 
-# users/users_View.xml?USR_PHOTO
-# users/users_View.xml
-#: image - USR_PHOTO
-msgid "[users/users_View.xml?USR_PHOTO] Photo"
-msgstr "Photo"
-
 # users/users_View.xml?USR_RESUME
 # users/users_View.xml
 #: link - USR_RESUME
@@ -9769,12 +9931,6 @@ msgstr "Allow arbitrary transfer (Ad hoc)"
 msgid "After derivation notify to each next user"
 msgstr "After derivation notify to each next user"
 
-# tasks/tasks_Notifications.xml?TAS_DEF_MESSAGE
-# tasks/tasks_Notifications.xml
-#: textareapm - TAS_DEF_MESSAGE
-msgid "[tasks/tasks_Notifications.xml?TAS_DEF_MESSAGE] Message"
-msgstr "Message"
-
 # tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_TYPE
 # tasks/tasks_AssignmentRules.xml
 #: radiogroup - TAS_ASSIGN_TYPE
@@ -9798,30 +9954,6 @@ msgstr "Manual Assignment"
 #: radiogroup - TAS_ASSIGN_TYPE - EVALUATE
 msgid "[tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_TYPE-EVALUATE]"
 msgstr "Value Based Assignment"
-
-# tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_VARIABLE
-# tasks/tasks_AssignmentRules.xml
-#: textpm - TAS_ASSIGN_VARIABLE
-msgid "Variable for Value Based Assignment"
-msgstr "Variable for Value Based Assignment"
-
-# tasks/tasks_Labels.xml?TAS_DEF_TITLE
-# tasks/tasks_Labels.xml
-#: textareapm - TAS_DEF_TITLE
-msgid "Case Title"
-msgstr "Case Title"
-
-# tasks/tasks_Labels.xml?TAS_DEF_DESCRIPTION
-# tasks/tasks_Labels.xml
-#: textareapm - TAS_DEF_DESCRIPTION
-msgid "Case Description"
-msgstr "Case Description"
-
-# tasks/tasks_Labels.xml?TAS_DEF_PROC_CODE
-# tasks/tasks_Labels.xml
-#: textareapm - TAS_DEF_PROC_CODE
-msgid "Case Status"
-msgstr "Case Status"
 
 # tasks/tasks_Owner.xml?TAS_OWNER_APP
 # tasks/tasks_Owner.xml
@@ -9954,12 +10086,6 @@ msgstr "Title"
 #: textarea - TAS_DESCRIPTION
 msgid "[tasks/tasks_Definition.xml?TAS_DESCRIPTION] Description"
 msgstr "Description"
-
-# tasks/tasks_Definition.xml?TAS_PRIORITY_VARIABLE
-# tasks/tasks_Definition.xml
-#: textpm - TAS_PRIORITY_VARIABLE
-msgid "Variable for Case priority"
-msgstr "Variable for Case priority"
 
 # tasks/tasks_Definition.xml?TAS_START
 # tasks/tasks_Definition.xml
@@ -11782,7 +11908,7 @@ msgstr "Case Resume"
 # cases/cases_Resume.xml?TITLE
 # cases/cases_Resume.xml
 #: text - TITLE
-msgid "[cases/cases_Resume.xml?TITLE] Case Title"
+msgid "Case Title"
 msgstr "Case Title"
 
 # cases/cases_Resume.xml?CREATOR
@@ -11806,7 +11932,7 @@ msgstr "Last Update"
 # cases/cases_Resume.xml?STATUS
 # cases/cases_Resume.xml
 #: text - STATUS
-msgid "[cases/cases_Resume.xml?STATUS] Case Status"
+msgid "Case Status"
 msgstr "Case Status"
 
 # cases/cases_Resume.xml?DEL_THREAD_STATUS
@@ -11850,12 +11976,6 @@ msgstr "Name"
 #: submit - NW_SUB
 msgid "[login/newSite.xml?NW_SUB] Create"
 msgstr "Create"
-
-# login/nologin.xml?subtitle
-# login/nologin.xml
-#: subtitle - subtitle
-msgid "subtitle"
-msgstr ""
 
 # login/nologin.xml?BSUBMIT
 # login/nologin.xml
@@ -12097,12 +12217,6 @@ msgstr "Documentation"
 msgid "[steps/steps_availableBB.xml?STEP_TYPE_OBJ-EXTERNAL]"
 msgstr "External Step"
 
-# steps/conditions_Edit.xml?STEP_CONDITION
-# steps/conditions_Edit.xml
-#: textareapm - STEP_CONDITION
-msgid "[steps/conditions_Edit.xml?STEP_CONDITION] Condition"
-msgstr "Condition"
-
 # steps/conditions_Edit.xml?ACCEPT
 # steps/conditions_Edit.xml
 #: button - ACCEPT
@@ -12199,12 +12313,6 @@ msgstr "Available Triggers"
 msgid "[steps/triggers_Assign.xml?TRI_UID] Triggers"
 msgstr "Triggers"
 
-# steps/triggers_Assign.xml?ST_CONDITION
-# steps/triggers_Assign.xml
-#: textareapm - ST_CONDITION
-msgid "[steps/triggers_Assign.xml?ST_CONDITION] Condition"
-msgstr "Condition"
-
 # steps/triggers_Assign.xml?ASSIGN
 # steps/triggers_Assign.xml
 #: button - ASSIGN
@@ -12222,12 +12330,6 @@ msgstr "All the triggers available were assigned!"
 #: button - ClOSE
 msgid "[steps/triggers_NoAssign.xml?ClOSE] Close"
 msgstr "Close"
-
-# steps/triggersCondition_Edit.xml?ST_CONDITION
-# steps/triggersCondition_Edit.xml
-#: textareapm - ST_CONDITION
-msgid "[steps/triggersCondition_Edit.xml?ST_CONDITION] Condition"
-msgstr "Condition"
 
 # steps/triggersCondition_Edit.xml?SAVE
 # steps/triggersCondition_Edit.xml
