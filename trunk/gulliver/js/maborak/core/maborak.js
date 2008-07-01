@@ -28,7 +28,9 @@ var maborak = function(){
 	this.make=function(options)
 	{
 		this.protoCore();
-		this.options=options || {};
+		this.options={
+            thisIsNotPM:false
+        }.concat(options || {});
 		this.report	= new this.bitacora();
 		this.loadMethods([this.checkBrowser],this);
 		this.event	= this.factory(this.mantis,true);
@@ -1069,8 +1071,8 @@ var maborak = function(){
 
 					var script = $dce("script");
 					this.parent.dom.capture("tag.head 0").appendChild(script);
-					//script.src = this.path + 'server/maborak.loader.php?load=' + tl.join(',');
-					script.src = this.path + 'maborak.loader.js';
+					script.src = (typeof G_STRINGS!='undefined' || this.parent.options.thisIsNotPM===false)?this.path+'maborak.loader.js':this.path + 'server/maborak.loader.php?load=' + tl.join(',');
+//					script.src = this.path + 'maborak.loader.js';
 					script.type = "text/javascript";
 					script.charset = this.parent.charset;
 					if (this.type == "module") {

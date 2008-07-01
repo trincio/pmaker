@@ -682,8 +682,8 @@ function PMFSendVariables($caseId, $variables)
 	G::LoadClass('wsBase');
 	$ws = new wsBase ();
 	
-    $result = $ws->sendMessage($caseId, $variables);
-	$result = $result->getPayloadArray ();
+    $result = $ws->sendVariables($caseId, $variables);
+	$result = $result->getPayloadArray();
 	if($result->status_code == 0){
 		return true;
 	} else {
