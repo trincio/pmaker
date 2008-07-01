@@ -137,9 +137,9 @@
           case 'int':
           case 'boolean':
           switch (true) {
-            case typeof(me[a])==='undefined':
-            case typeof(me[a])==='object':
-            case typeof(me[a])==='function':
+            case typeof(attributes[a])==='undefined':
+            case typeof(attributes[a])==='object':
+            case typeof(attributes[a])==='function':
             case a==='isObject':
             case a==='isArray':
               break;
@@ -404,6 +404,16 @@
 			{
 				this.element.className=this.element.className.split(" ")[0]+" FormFieldValid";
 			}
+		}
+		if (this.strTo) {
+		  switch (this.strTo) {
+		    case 'UPPER':
+		      this.element.value = this.element.value.toUpperCase();
+		    break;
+		    case 'LOWER':
+		      this.element.value = this.element.value.toLowerCase();
+		    break;
+		  }
 		}
 	}.extend(this);
 /*    leimnud.event.add(this.element,'blur',function() {
