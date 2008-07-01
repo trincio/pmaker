@@ -668,7 +668,6 @@ function PMFsendMessage($caseId, $message)
 	G::LoadClass('wsBase');
 	$ws = new wsBase ();
     $result = $ws->sendMessage($caseId, $message);
-	$result = $result->getPayloadArray ();
 
 	if($result->status_code == 0){
 		return true;
@@ -683,7 +682,6 @@ function PMFSendVariables($caseId, $variables)
 	$ws = new wsBase ();
 	
     $result = $ws->sendVariables($caseId, $variables);
-	$result = $result->getPayloadArray();
 	if($result->status_code == 0){
 		return true;
 	} else {
@@ -696,7 +694,7 @@ function PMFDerivateCase($caseId, $delIndex)
 	G::LoadClass('wsBase');
 	$ws = new wsBase ();
 	$result = $ws->derivateCase($caseId, $delIndex);
-	$result = $result->getPayloadArray ();  
+	
 	if($result->status_code == 0){
 		return true;
 	} else {
@@ -710,7 +708,6 @@ function PMFNewCaseImpersonate($processId, $userId, $variables)
 	$ws = new wsBase ();
 	$result = $ws->newCaseImpersonate($processId, $userId, $variables);
 
-	$result = $result->getPayloadArray();
 	if($result->status_code == 0){
 		return true;
 	} else {
@@ -724,7 +721,7 @@ function PMFNewCase($processId, $userId, $taskId, $variables)
 	$ws = new wsBase ();
 
 	$result = $ws->newCase($processId, $userId,$taskId, $variables);
-	$result = $result->getPayloadArray();
+	
 	if($result->status_code == 0){
 		return true;
 	} else {
@@ -737,7 +734,7 @@ function PMFAssignUserToGroup($userId, $groupId)
 	G::LoadClass('wsBase');
 	$ws = new wsBase ();
 	$result = $ws->assignUserToGroup($userId, $groupId);
-	$result = $result->getPayloadArray();
+	
 	if($result->status_code == 0){
 		return true;
 	} else {
@@ -750,7 +747,7 @@ function PMFCreateUser($userId, $password, $firstname, $lastname, $email, $role)
 	G::LoadClass('wsBase');
 	$ws = new wsBase ();
 	$result = $ws->createUser($userId, $firstname, $lastname, $email, $role, $password);
-	$result = $result->getPayloadArray();
+	
 	if($result->status_code == 0){
 		return true;
 	} else {
