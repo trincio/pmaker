@@ -1,5 +1,12 @@
 <?php
 
+require_once 'creole/Connection.php';
+require_once 'creole/common/ConnectionCommon.php';
+require_once 'creole/PreparedStatement.php';
+require_once 'creole/common/PreparedStatementCommon.php';
+require_once 'creole/ResultSet.php';
+require_once 'creole/common/ResultSetCommon.php';
+
 class DBArrayPreparedStatement extends PreparedStatementCommon implements PreparedStatement {
 
     /**

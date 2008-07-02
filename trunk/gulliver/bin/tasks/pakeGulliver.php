@@ -872,7 +872,7 @@ function run_new_project ( $task, $args)
   create_file_from_tpl ( 'welcome.xml',     'engine' . PATH_SEP . 'xmlform' . PATH_SEP . 'login' . PATH_SEP . 'welcome.xml' );
   copy_file_from_tpl   ( 'xmlform.html',    'engine' . PATH_SEP . 'templates' . PATH_SEP . 'xmlform.html' );
   copy_file_from_tpl   ( 'publish.php',     'engine' . PATH_SEP . 'templates' . PATH_SEP . 'publish.php' );
-  copy_file_from_tpl   ( 'publish.php',     'engine' . PATH_SEP . 'templates' . PATH_SEP . 'publish-treeview.php' );
+  copy_file_from_tpl   ( 'publish-treeview.php','engine'.PATH_SEP.'templates' . PATH_SEP . 'publish-treeview.php' );
   create_file_from_tpl ( 'dbInfo.xml',      'engine' . PATH_SEP . 'xmlform'. PATH_SEP . 'login' . PATH_SEP . 'dbInfo.xml' );
   create_file_from_tpl ( 'mainmenu.php',    'engine' . PATH_SEP . 'menus'. PATH_SEP . $projectName . '.php' );
   create_file_from_tpl ( 'users.menu.php',    'engine' . PATH_SEP . 'menus'. PATH_SEP . 'users.php' );
@@ -888,6 +888,7 @@ function run_new_project ( $task, $args)
   copy_file ( 'public_html' . PATH_SEP . 'images' . PATH_SEP . 'bulletButton.gif' );
   copy_file ( 'public_html' . PATH_SEP . 'images' . PATH_SEP . 'bulletSubMenu.jpg' );
   copy_file ( 'public_html' . PATH_SEP . 'images' . PATH_SEP . 'users.png' );
+  copy_file ( 'public_html' . PATH_SEP . 'images' . PATH_SEP . 'trigger.gif' );
 
   copy_file ( 'engine' . PATH_SEP . 'skins' . PATH_SEP . 'green.html' );
   copy_file ( 'engine' . PATH_SEP . 'skins' . PATH_SEP . 'green.php' );
