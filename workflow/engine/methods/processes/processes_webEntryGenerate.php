@@ -60,10 +60,26 @@
 			leimnud.exec(leimnud.fix.memoryLeak);
   		if(leimnud.browser.isIphone)
 			{  leimnud.iphone.make(); }
-			leimnud.event.add(window,"load",function(){loadForm_'.$G_FORM->id.'("'.$x.'")}); </script>';						    
-        
+			leimnud.event.add(window,"load",function(){loadForm_'.$G_FORM->id.'("'.$x.'")}); 
+			</script>';						    
+
+    $js7 = '<script type="text/javascript">
+  		      var aux1 = window.location.href.split("?");  		        		      
+  		      if(aux1[1]) 
+  		      {
+  		         if(aux1[1]!="")  
+  		         	{	var aux2 = aux1[1].split("&");
+  		         		for(var i=0; i<=aux2.length; i++)
+  		         		{  if(aux2[i]=="__flag__=1")
+  		         				{
+  		         					alert("Request sended"); 
+  		         				}	
+  		         		}  		      		  		      		
+  		         	}
+  		      }
+			      </script>';	        
     
-   	$Target = $http.$_SERVER['HTTP_HOST'].'/sys'.SYS_SYS.'/'.SYS_LANG.'/'.SYS_SKIN.'/cases/cases_StartExternal.php';   			          
+   	$Target = $http.$_SERVER['HTTP_HOST'].'/sys'.SYS_SYS.'/'.SYS_LANG.'/'.SYS_SKIN.'/services/cases_StartExternal.php';   			          
                   
     if ( defined ( 'ENABLE_ENCRYPT' ) && ENABLE_ENCRYPT == 'yes' )
       	$G_FORM->action  = urlencode( G::encrypt( $Target, URL_KEY ) );
@@ -77,11 +93,12 @@
     
     $form=str_replace('/images/bulletButton.gif',$img,$form);
     $form=str_replace('</form>','',$form);
+    
     $hPRO_UID  = '<input type="hidden" name="PRO_UID" value="'.$sPRO_UID.'">';
     $hTASKS    = '<input type="hidden" name="TASKS" value="'.$sTASKS.'">';
     $hDYNAFORM = '<input type="hidden" name="DYNAFORM" value="'.$sDYNAFORM.'">';    
-        
-    $nform = $link1.$link2.$js1.$js2.$js3.$js5.$js4.$js6.$form.'<br />'.$hPRO_UID.'<br />'.$hTASKS.'<br />'.$hDYNAFORM.'</form>';
+                    
+    $nform = $link1.$link2.$js1.$js2.$js3.$js5.$js4.$js6.$js7.$form.'<br />'.$hPRO_UID.'<br />'.$hTASKS.'<br />'.$hDYNAFORM.'</form>';
     
     print_r('<textarea cols="70" rows="20">'.htmlentities($nform).'</textarea>');
     //print_r($nform);
