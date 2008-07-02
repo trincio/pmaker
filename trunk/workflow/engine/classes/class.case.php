@@ -303,12 +303,14 @@ class Cases
 
                 $x = unserialize($Fields['APP_DATA']);
                 if (isset($x[$VAR_PRI])) {
+                	if ($x[$VAR_PRI] != '') {
                     $oDel = new AppDelegation;
                     $array['APP_UID'] = $sAppUid;
                     $array['DEL_INDEX'] = $DEL_INDEX;
                     $array['TAS_UID'] = $TAS_UID;
                     $array['DEL_PRIORITY'] = $x[$VAR_PRI];
                     $oDel->update($array);
+                  }
                 }
             }
             return $Fields;
