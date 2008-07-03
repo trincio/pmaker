@@ -26,7 +26,7 @@
 	G::LoadSystem('pagedTable');
 	G::LoadClass('propelTable');
 	G::LoadInclude('ajax');
-	G::LoadClass('case');
+  G::LoadAllModelClasses();
 
 	$id = get_ajax_value('ptID');
 	$ntable= unserialize($_SESSION['pagedTable['.$id.']']);

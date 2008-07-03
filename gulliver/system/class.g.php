@@ -658,6 +658,25 @@ class G
     }
   }
 
+/**
+   * Include all model files
+   *
+   * @author Fernando Ontiveros Lira <fernando@colosa.com>
+   * @access public
+   * @param  string $strInclude
+   * @return void
+   */
+  function LoadAllModelClasses( )
+  {
+    $baseDir = PATH_CORE . 'classes' . PATH_SEP . 'model';
+    if ($handle = opendir( $baseDir  )) {
+      while ( false !== ($file = readdir($handle))) {
+        if ( strpos($file, '.php',1) && !strpos($file, 'Peer.php',1) ) {
+    	    require_once ( $baseDir . PATH_SEP . $file );
+        }
+      }
+    }
+  }
 
 /**
    * Load a template

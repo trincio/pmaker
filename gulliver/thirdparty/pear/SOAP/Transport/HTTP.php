@@ -392,7 +392,7 @@ class SOAP_Transport_HTTP extends SOAP_Base
                     // _decodeDIMEMessage already raised $this->fault
                     return false;
                 }
-                $this->result_content_type = $this->headers['content-type'];
+                $this->result_content_type = isset($this->headers['content-type']) ? $this->headers['content-type'] : '';
             } elseif (stristr($this->result_content_type,'multipart/related')) {
                 $this->response = $this->incoming_payload;
                 if (PEAR::isError($this->_decodeMimeMessage($this->response,$this->headers,$this->attachments))) {
