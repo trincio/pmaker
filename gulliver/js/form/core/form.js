@@ -131,20 +131,28 @@
 
     }
     this.setAttributes = function (attributes) {
-      for(a in attributes) {
+      for(var a in attributes) {
         switch (typeof(attributes[a])) {
           case 'string':
           case 'int':
           case 'boolean':
-          switch (true) {
-            case typeof(attributes[a])==='undefined':
-            case typeof(attributes[a])==='object':
-            case typeof(attributes[a])==='function':
-            case a==='isObject':
-            case a==='isArray':
-              break;
-            default:
-              me[a] = attributes[a];
+          if (a != 'strTo') {
+            switch (true) {
+              /*case typeof(attributes[a])==='undefined':
+              case typeof(attributes[a])==='object':
+              case typeof(attributes[a])==='function':*/
+              case typeof(me[a])==='undefined':
+              case typeof(me[a])==='object':
+              case typeof(me[a])==='function':
+              case a==='isObject':
+              case a==='isArray':
+                break;
+              default:
+                me[a] = attributes[a];
+            }
+          }
+          else {
+            me[a] = attributes[a];
           }
         }
       }
