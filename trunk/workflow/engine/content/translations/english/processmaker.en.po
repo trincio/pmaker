@@ -2,7 +2,7 @@ msgid ""
 msgstr "" 
 "Project-Id-Version: PM 4.0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-06-30 19:47+0100 \n"
+"PO-Revision-Date: 2008-07-02 19:07+0100 \n"
 "Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
 "Language-Team: Colosa Developers Team <developers@colosa.com>\n"
 "MIME-Version: 1.0\n"
@@ -2370,6 +2370,12 @@ msgstr "Remove"
 #: JAVASCRIPT/ID_CONFIRM_REMOVE_DASHBOARD
 msgid "Are you sure you want to remove this dashboard?"
 msgstr "Are you sure you want to remove this dashboard?"
+
+# TRANSLATION
+# LABEL/ID_REQUEST
+#: LABEL/ID_REQUEST
+msgid "Request sended"
+msgstr "Request sended"
 
 # messages/messages_Edit.xml?MESS_TITLE
 # messages/messages_Edit.xml
@@ -8227,6 +8233,48 @@ msgstr "Send Email"
 msgid "[setup/plugin_ListOptions.xml?MNU_IMPORT] Import"
 msgstr "Import"
 
+# setup/webServicesSetup.xml?title
+# setup/webServicesSetup.xml
+#: title - title
+msgid "Server Setup"
+msgstr "Server Setup"
+
+# setup/webServicesSetup.xml?WS_ENABLE_PHP5
+# setup/webServicesSetup.xml
+#: yesno - WS_ENABLE_PHP5
+msgid "Enable PHP 5 SOAP services"
+msgstr "Enable PHP 5 SOAP services"
+
+# setup/webServicesSetup.xml?WS_ENABLE_WSO2
+# setup/webServicesSetup.xml
+#: yesno - WS_ENABLE_WSO2
+msgid "Enable WSO2 services"
+msgstr "Enable WSO2 services"
+
+# setup/webServicesSetup.xml?title2
+# setup/webServicesSetup.xml
+#: title - title2
+msgid "Client Setup"
+msgstr "Client Setup"
+
+# setup/webServicesSetup.xml?WS_HOST
+# setup/webServicesSetup.xml
+#: text - WS_HOST
+msgid "Server Host"
+msgstr "Server Host"
+
+# setup/webServicesSetup.xml?WS_WORKSPACE
+# setup/webServicesSetup.xml
+#: text - WS_WORKSPACE
+msgid "Workspace"
+msgstr "Workspace"
+
+# setup/webServicesSetup.xml?button
+# setup/webServicesSetup.xml
+#: button - button
+msgid "[setup/webServicesSetup.xml?button] Save"
+msgstr "Save"
+
 # setup/wsSendMessage.xml?SESSION_ID
 # setup/wsSendMessage.xml
 #: text - SESSION_ID
@@ -9307,6 +9355,12 @@ msgstr "Confirm Password"
 msgid "[users/myInfoView.xml?TITLEADD] Additional Information"
 msgstr "Additional Information"
 
+# users/myInfoView.xml?USR_PHOTO
+# users/myInfoView.xml
+#: image - USR_PHOTO
+msgid "[users/myInfoView.xml?USR_PHOTO] Photo"
+msgstr "Photo"
+
 # users/myInfoView.xml?USR_RESUME
 # users/myInfoView.xml
 #: link - USR_RESUME
@@ -9907,6 +9961,12 @@ msgstr "Confirm Password"
 msgid "[users/users_View.xml?TITLEADD] Additional Information"
 msgstr "Additional Information"
 
+# users/users_View.xml?USR_PHOTO
+# users/users_View.xml
+#: image - USR_PHOTO
+msgid "[users/users_View.xml?USR_PHOTO] Photo"
+msgstr "Photo"
+
 # users/users_View.xml?USR_RESUME
 # users/users_View.xml
 #: link - USR_RESUME
@@ -9931,6 +9991,12 @@ msgstr "Allow arbitrary transfer (Ad hoc)"
 msgid "After derivation notify to each next user"
 msgstr "After derivation notify to each next user"
 
+# tasks/tasks_Notifications.xml?TAS_DEF_MESSAGE
+# tasks/tasks_Notifications.xml
+#: textareapm - TAS_DEF_MESSAGE
+msgid "[tasks/tasks_Notifications.xml?TAS_DEF_MESSAGE] Message"
+msgstr "Message"
+
 # tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_TYPE
 # tasks/tasks_AssignmentRules.xml
 #: radiogroup - TAS_ASSIGN_TYPE
@@ -9954,6 +10020,30 @@ msgstr "Manual Assignment"
 #: radiogroup - TAS_ASSIGN_TYPE - EVALUATE
 msgid "[tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_TYPE-EVALUATE]"
 msgstr "Value Based Assignment"
+
+# tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_VARIABLE
+# tasks/tasks_AssignmentRules.xml
+#: textpm - TAS_ASSIGN_VARIABLE
+msgid "Variable for Value Based Assignment"
+msgstr "Variable for Value Based Assignment"
+
+# tasks/tasks_Labels.xml?TAS_DEF_TITLE
+# tasks/tasks_Labels.xml
+#: textareapm - TAS_DEF_TITLE
+msgid "Case Title"
+msgstr "Case Title"
+
+# tasks/tasks_Labels.xml?TAS_DEF_DESCRIPTION
+# tasks/tasks_Labels.xml
+#: textareapm - TAS_DEF_DESCRIPTION
+msgid "Case Description"
+msgstr "Case Description"
+
+# tasks/tasks_Labels.xml?TAS_DEF_PROC_CODE
+# tasks/tasks_Labels.xml
+#: textareapm - TAS_DEF_PROC_CODE
+msgid "Case Status"
+msgstr "Case Status"
 
 # tasks/tasks_Owner.xml?TAS_OWNER_APP
 # tasks/tasks_Owner.xml
@@ -11908,7 +11998,7 @@ msgstr "Case Resume"
 # cases/cases_Resume.xml?TITLE
 # cases/cases_Resume.xml
 #: text - TITLE
-msgid "Case Title"
+msgid "[cases/cases_Resume.xml?TITLE] Case Title"
 msgstr "Case Title"
 
 # cases/cases_Resume.xml?CREATOR
@@ -11932,7 +12022,7 @@ msgstr "Last Update"
 # cases/cases_Resume.xml?STATUS
 # cases/cases_Resume.xml
 #: text - STATUS
-msgid "Case Status"
+msgid "[cases/cases_Resume.xml?STATUS] Case Status"
 msgstr "Case Status"
 
 # cases/cases_Resume.xml?DEL_THREAD_STATUS
@@ -12034,8 +12124,8 @@ msgstr "System Information"
 # login/dbInfo.xml?FLUID
 # login/dbInfo.xml
 #: caption - FLUID
-msgid "ProcessMaker"
-msgstr "ProcessMaker"
+msgid "inventory"
+msgstr "inventory"
 
 # login/dbInfo.xml?SYSTEM
 # login/dbInfo.xml
@@ -12124,7 +12214,7 @@ msgstr "Password"
 # login/sysLogin.xml?USER_ENV
 # login/sysLogin.xml
 #: text - USER_ENV
-msgid "Workspace"
+msgid "[login/sysLogin.xml?USER_ENV] Workspace"
 msgstr "Workspace"
 
 # login/sysLogin.xml?BSUBMIT
@@ -12216,6 +12306,12 @@ msgstr "Documentation"
 #: dropdown - STEP_TYPE_OBJ - EXTERNAL
 msgid "[steps/steps_availableBB.xml?STEP_TYPE_OBJ-EXTERNAL]"
 msgstr "External Step"
+
+# steps/conditions_Edit.xml?STEP_CONDITION
+# steps/conditions_Edit.xml
+#: textareapm - STEP_CONDITION
+msgid "[steps/conditions_Edit.xml?STEP_CONDITION] Condition"
+msgstr "Condition"
 
 # steps/conditions_Edit.xml?ACCEPT
 # steps/conditions_Edit.xml
@@ -12313,6 +12409,12 @@ msgstr "Available Triggers"
 msgid "[steps/triggers_Assign.xml?TRI_UID] Triggers"
 msgstr "Triggers"
 
+# steps/triggers_Assign.xml?ST_CONDITION
+# steps/triggers_Assign.xml
+#: textareapm - ST_CONDITION
+msgid "[steps/triggers_Assign.xml?ST_CONDITION] Condition"
+msgstr "Condition"
+
 # steps/triggers_Assign.xml?ASSIGN
 # steps/triggers_Assign.xml
 #: button - ASSIGN
@@ -12330,6 +12432,12 @@ msgstr "All the triggers available were assigned!"
 #: button - ClOSE
 msgid "[steps/triggers_NoAssign.xml?ClOSE] Close"
 msgstr "Close"
+
+# steps/triggersCondition_Edit.xml?ST_CONDITION
+# steps/triggersCondition_Edit.xml
+#: textareapm - ST_CONDITION
+msgid "[steps/triggersCondition_Edit.xml?ST_CONDITION] Condition"
+msgstr "Condition"
 
 # steps/triggersCondition_Edit.xml?SAVE
 # steps/triggersCondition_Edit.xml
@@ -12624,6 +12732,12 @@ msgstr "Title"
 #: textarea - TRI_DESCRIPTION
 msgid "[triggers/triggers_Edit.xml?TRI_DESCRIPTION] Description"
 msgstr "Description"
+
+# triggers/triggers_Edit.xml?TRI_WEBBOT
+# triggers/triggers_Edit.xml
+#: textareapm - TRI_WEBBOT
+msgid "Script"
+msgstr "Script"
 
 # triggers/triggers_Edit.xml?SAVE
 # triggers/triggers_Edit.xml
