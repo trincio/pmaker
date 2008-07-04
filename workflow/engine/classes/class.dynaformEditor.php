@@ -205,7 +205,8 @@ class dynaformEditor extends WebResource
   		$aFields[] = array('XMLNODE_NAME' => $aRow['XMLNODE_NAME'],
       	                 'TYPE'         => $aRow['TYPE'],
       	                 'UP'           => ($i > 0 ? G::LoadTranslation('ID_UP') : ''),
-      	                 'DOWN'         => ($i < $iMaximun-1 ? G::LoadTranslation('ID_DOWN') : ''));
+      	                 'DOWN'         => ($i < $iMaximun-1 ? G::LoadTranslation('ID_DOWN') : ''),
+      	                 'row__'        => ($i + 1));
       $i++;
 	  }
 	  global $_DBArray;

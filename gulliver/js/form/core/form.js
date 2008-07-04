@@ -138,9 +138,6 @@
           case 'boolean':
           if (a != 'strTo') {
             switch (true) {
-              /*case typeof(attributes[a])==='undefined':
-              case typeof(attributes[a])==='object':
-              case typeof(attributes[a])==='function':*/
               case typeof(me[a])==='undefined':
               case typeof(me[a])==='object':
               case typeof(me[a])==='function':

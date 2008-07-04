@@ -21,12 +21,12 @@ SELECT XMLNODE_NAME, TYPE FROM dynaForm WHERE XMLNODE_NAME = @@PME_XMLNODE_NAME
   <en>Label</en>
 </PME_LABEL>
 
-<PME_SUBTITLE type="title" enableHTML="1">
+<!--<PME_SUBTITLE type="title" enableHTML="1">
   <en>Appearance</en>
-</PME_SUBTITLE>
+</PME_SUBTITLE>-->
 
 <PME_ONCLICK type="text" maxlength="100" size="50" defaultvalue="" group="2">
-  <en>Group</en>
+  <en>Onclick</en>
 </PME_ONCLICK>
 <!--
 <PME_GROUP type="text" maxlength="10" size="10" validate="Int" defaultvalue="0" group="2">

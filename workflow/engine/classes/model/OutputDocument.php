@@ -1,10 +1,10 @@
 <?php
 /**
  * OutputDocument.php
- *  
+ *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -14,13 +14,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
 
 require_once 'classes/model/om/BaseOutputDocument.php';
@@ -100,9 +100,9 @@ class OutputDocument extends BaseOutputDocument {
   {
   	$oConnection = Propel::getConnection(OutputDocumentPeer::DATABASE_NAME);
   	try {
-  	  if ( isset ( $aData['OUT_DOC_UID'] ) && $aData['OUT_DOC_UID']== '' ) 
+  	  if ( isset ( $aData['OUT_DOC_UID'] ) && $aData['OUT_DOC_UID']== '' )
         unset ( $aData['OUT_DOC_UID'] );
-      if ( !isset ( $aData['OUT_DOC_UID'] ) ) 
+      if ( !isset ( $aData['OUT_DOC_UID'] ) )
     		$aData['OUT_DOC_UID'] = G::generateUniqueID();
   	  $oOutputDocument = new OutputDocument();
   	  $oOutputDocument->fromArray($aData, BasePeer::TYPE_FIELDNAME);
@@ -391,10 +391,17 @@ class OutputDocument extends BaseOutputDocument {
   {
   	if (($sUID != '') && is_array($aFields) && ($sPath != ''))
   	{
-  		/*if (!is_array($this->Fields))
-  		{
-  	    $this->load($sUID);
-  	  }*/
+  		$sContent    = G::unhtmlentities($sContent);
+  		/*$iAux        = 0;
+  	  $iOcurrences = preg_match_all('/\@(?:([\>])([a-zA-Z\_]\w*)|([a-zA-Z\_][\w\-\>\:]*)\(((?:[^\\\\\)]*(?:[\\\\][\w\W])?)*)\))((?:\s*\[[\'"]?\w+[\'"]?\])+)?/', $sContent, $aMatch, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE);
+  	  if ($iOcurrences) {
+  	    header('Content-Type: text/plain;');//var_dump($aMatch);die;
+  	    for($i = 0; $i < $iOcurrences; $i++) {
+  	      $sAux = substr($sContent, $iAux, ($aMatch[0][$i][1] + strlen($aMatch[0][$i][0])) - $iAux);
+  	      var_dump($sAux);
+  	    }
+        die;
+  	  }die('nada');*/
   	  $sContent = G::replaceDataField($sContent, $aFields);
   	  G::verifyPath($sPath, true);
   	  /* Start - Create .doc */

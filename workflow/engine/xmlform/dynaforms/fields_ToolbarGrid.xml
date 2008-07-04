@@ -18,9 +18,9 @@
 <percentage type="toolButton" onclick="fieldsAdd('percentage')" file="images/dynamicForm/percentage.gif" fileAlt="images/dynamicForm/hover.gif" home="public_html" style="height:25px;width:25px;" buttonStyle="">
   <en>percentage</en>
 </percentage>
-<password type="toolButton" onclick="fieldsAdd('password')" file="images/dynamicForm/password.gif" fileAlt="images/dynamicForm/hover.gif" home="public_html" style="height:25px;width:25px;" buttonStyle="">
+<!--<password type="toolButton" onclick="fieldsAdd('password')" file="images/dynamicForm/password.gif" fileAlt="images/dynamicForm/hover.gif" home="public_html" style="height:25px;width:25px;" buttonStyle="">
   <en>password</en>
-</password>
+</password>-->
 <!--<textarea type="toolButton" onclick="fieldsAdd('textarea')" file="images/dynamicForm/textarea.gif" fileAlt="images/dynamicForm/hover.gif" home="public_html" style="height:25px;width:25px;" buttonStyle="">
   <en>textarea</en>
 </textarea>-->

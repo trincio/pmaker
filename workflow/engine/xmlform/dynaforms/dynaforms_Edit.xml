@@ -19,7 +19,7 @@
 
 <DYN_TYPE type="dropdown" colWidth="80" align="center">
   <en>Type
-  <option name="xmlform">Master form</option>
+  <option name="xmlform">Normal</option>
   <option name="grid">Grid</option>
   </en>
 </DYN_TYPE>
