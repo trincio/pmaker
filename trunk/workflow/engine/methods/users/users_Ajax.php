@@ -1,10 +1,10 @@
 <?php
 /**
  * users_Ajax.php
- *  
+ *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -14,13 +14,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
 try {
   global $RBAC;
@@ -67,11 +67,11 @@ try {
   	  	require_once 'classes/model/Users.php';
   	  	G::LoadClass('Users');
 	      $oUser = new Users();
-	      $oCriteria=$oUser->loadByUsername($_POST['sUsername']);	        	    
+	      $oCriteria=$oUser->loadByUsername($_POST['sUsername']);
   	  	$oDataset = UsersPeer::doSelectRS($oCriteria);
         $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
         $oDataset->next();
-        $aRow = $oDataset->getRow();                      
+        $aRow = $oDataset->getRow();
         if (!$aRow)
   	  	{
   	  		echo '0';
@@ -79,17 +79,15 @@ try {
   	  	else
   	  	{
   	  		echo '1';
-  	  	} 	   
+  	  	}
   	  }
   	break;
   	case 'availableUsers':
   	  G::LoadClass('processMap');
       $oProcessMap = new ProcessMap();
   	  global $G_PUBLISH;
-    	global $G_HEADER;
     	$G_PUBLISH = new Publisher();
       $G_PUBLISH->AddContent('propeltable', 'paged-table', 'users/users_AvailableUsers', $oProcessMap->getAvailableUsersCriteria($_GET['sTask'], $_GET['iType']));
-      $G_HEADER->clearScripts();
       G::RenderPage('publish', 'raw');
   	break;
   	case 'assign':
@@ -117,7 +115,7 @@ try {
   	  	case 2:
   	  	  echo $oTasks->ofToAssignGroup($_POST['TAS_UID'], $_POST['USR_UID'], $_POST['TU_TYPE']);
   	  	break;
-  	  }
+  	  }die;
   	  G::LoadClass('processMap');
       $oProcessMap = new ProcessMap();
       $oProcessMap->getAvailableUsersCriteria($_POST['TAS_UID'], $_POST['TU_TYPE']);
@@ -125,7 +123,7 @@ try {
   	case 'changeView':
   	  $_SESSION['iType'] = $_POST['TU_TYPE'];
   	break;
-  	
+
   	case 'deleteGroup':
   	  G::LoadClass('groups');
 	  $oGroup = new Groups();
@@ -135,21 +133,21 @@ try {
       $G_PUBLISH->AddContent('view', 'users/users_Tree' );
       G::RenderPage('publish', 'raw');
   	break;
-  	
+
   	case 'showUserGroupInterface':
   	  $_GET['sUserUID'] = $_POST['sUserUID'];
 	  $G_PUBLISH = new Publisher;
 	  $G_PUBLISH->AddContent('view', 'users/users_AssignGroup' );
 	  G::RenderPage('publish', 'raw');
   	break;
-  	
+
   	case 'showUserGroups':
   	  $_GET['sUserUID'] = $_POST['sUserUID'];
 	  $G_PUBLISH = new Publisher;
 	  $G_PUBLISH->AddContent('view', 'users/users_Tree' );
 	  G::RenderPage('publish', 'raw');
   	break;
-  	
+
   	case 'assignUserToGroup':
 	  G::LoadClass('groups');
 	  $oGroup = new Groups();

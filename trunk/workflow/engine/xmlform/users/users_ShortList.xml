@@ -6,12 +6,13 @@
   menu="users/users_ShortOptions"
    height="220px"
 >
+<USR_UID type="private" showInTable="0" />
+<TU_TYPE type="private" showInTable="0" />
+<TU_RELATION type="private" showInTable="0" />
 <LABEL type="text" titlealign="left" align="left" colWidth="250" enableHtml="1">
   <en>Group or User</en>
-  <es>Grupo o Usuario</es>
 </LABEL>
 <OF_TO_ASSIGN type="link" colWidth="80" value="@#OF_TO_ASSIGN" link="" onclick="return ofToAssignGroupOrUser('@#TAS_UID', '@#USR_UID', '@#TU_TYPE', '@#TU_RELATION');">
   <en></en>
-  <es></es>
 </OF_TO_ASSIGN>
 </dynaForm>

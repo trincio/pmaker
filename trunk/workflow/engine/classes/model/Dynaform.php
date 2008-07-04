@@ -170,13 +170,19 @@ class Dynaform extends BaseDynaform {
           $this->setDynDescription (  'Default Dynaform Description' );
 
         $con->commit();
+        $sXml  = '<?xml version="1.0" encoding="UTF-8"?>'."\n";
+		    $sXml .= '<dynaForm type="' . $this->getDynType() . '" name="' . $this->getProUid() . '/' . $this->getDynUid() . '" width="500" enabletemplate="0" mode="edit">'."\n";
+		    $sXml .= '</dynaForm>';
+		    G::verifyPath(PATH_DYNAFORM . $this->getProUid(), true);
+		    $oFile = fopen(PATH_DYNAFORM . $this->getProUid() . '/' . $this->getDynUid() . '.xml', 'w');
+		    fwrite($oFile, $sXml);
+		    fclose($oFile);
         return $this->getDynUid();
       }
       else {
        $msg = '';
        foreach($this->getValidationFailures() as $objValidationFailure)
          $msg .= $objValidationFailure->getMessage() . "<br/>";
-       var_dump($this->getDynType());
        throw ( new PropelException ( 'The row cannot be created!', new PropelException ( $msg ) ) );
       }
 
