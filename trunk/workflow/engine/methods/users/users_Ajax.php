@@ -101,9 +101,6 @@ try {
   	  	  echo $oTasks->assignGroup($_POST['TAS_UID'], $_POST['USR_UID'], $_POST['TU_TYPE']);
   	  	break;
   	  }
-  	  G::LoadClass('processMap');
-      $oProcessMap = new ProcessMap();
-      $oProcessMap->getAvailableUsersCriteria($_POST['TAS_UID'], $_POST['TU_TYPE']);
   	break;
   	case 'ofToAssign':
   	  G::LoadClass('tasks');
@@ -115,10 +112,7 @@ try {
   	  	case 2:
   	  	  echo $oTasks->ofToAssignGroup($_POST['TAS_UID'], $_POST['USR_UID'], $_POST['TU_TYPE']);
   	  	break;
-  	  }die;
-  	  G::LoadClass('processMap');
-      $oProcessMap = new ProcessMap();
-      $oProcessMap->getAvailableUsersCriteria($_POST['TAS_UID'], $_POST['TU_TYPE']);
+  	  }
   	break;
   	case 'changeView':
   	  $_SESSION['iType'] = $_POST['TU_TYPE'];
