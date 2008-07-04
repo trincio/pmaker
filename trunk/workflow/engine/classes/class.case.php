@@ -1319,12 +1319,13 @@ class Cases
         $c->addSelectColumn(AppDelegationPeer::DEL_INIT_DATE);
         $c->addSelectColumn(AppDelegationPeer::DEL_FINISH_DATE);
         $c->addSelectColumn(UsersPeer::USR_UID);
+        $c->addAsColumn('APP_CURRENT_USER', "CONCAT(USERS.USR_LASTNAME, ' ', USERS.USR_FIRSTNAME)");
         $c->addSelectColumn(ApplicationPeer::APP_STATUS);
         $c->addAsColumn('APP_TITLE', 'APP_TITLE.CON_VALUE');
         $c->addAsColumn('APP_PRO_TITLE', 'PRO_TITLE.CON_VALUE');
         $c->addAsColumn('APP_TAS_TITLE', 'TAS_TITLE.CON_VALUE');
         //$c->addAsColumn('APP_DEL_PREVIOUS_USER', 'APP_LAST_USER.USR_USERNAME');
-		$c->addAsColumn('APP_DEL_PREVIOUS_USER', "CONCAT(APP_LAST_USER.USR_LASTNAME, ' ', APP_LAST_USER.USR_FIRSTNAME)");
+		    $c->addAsColumn('APP_DEL_PREVIOUS_USER', "CONCAT(APP_LAST_USER.USR_LASTNAME, ' ', APP_LAST_USER.USR_FIRSTNAME)");
 
         $c->addAlias("APP_TITLE", 'CONTENT');
         $c->addAlias("PRO_TITLE", 'CONTENT');
