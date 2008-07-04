@@ -25,11 +25,15 @@
   <en>Process</en>
 </APP_PRO_TITLE>
 
+<APP_CURRENT_USER type="text" colWidth="120" titleAlign="left" align="left" dataCompareField="USER.USR_USERNAME" dataCompareType="contains" >
+  <en>Current User</en>
+</APP_CURRENT_USER>
+
 <APP_DEL_PREVIOUS_USER type="text" colWidth="120" titleAlign="left" align="left" dataCompareField="APP_LAST_USER.USR_USERNAME" dataCompareType="contains" >
   <en>Sent by</en>
 </APP_DEL_PREVIOUS_USER>
 
-<DEL_TASK_DUE_DATE type="date" rows="3" cols="32" colWidth="120" titleAlign="left" align="left" dataCompareField="APP_DELEGATION.DEL_TASK_DUE_DATE" dataCompareType="contains" >
+<DEL_TASK_DUE_DATE type="date" showInTable="0" rows="3" cols="32" colWidth="120" titleAlign="left" align="left" dataCompareField="APP_DELEGATION.DEL_TASK_DUE_DATE" dataCompareType="contains" >
   <en>Due Date</en>
 </DEL_TASK_DUE_DATE>
 
@@ -37,7 +41,7 @@
   <en>Last Modification</en>
 </APP_UPDATE_DATE>
 
-<DEL_PRIORITY type="dropdown" value="" link="" colWidth="180" titleAlign="left" align="left" dataCompareField="APP_DELEGATION.DEL_PRIORITY" dataCompareType="contains">
+<DEL_PRIORITY type="dropdown" value="" link="" colWidth="50" titleAlign="left" align="left" dataCompareField="APP_DELEGATION.DEL_PRIORITY" dataCompareType="contains">
   <en>Priority
       <option name="1">Very High</option>
       <option name="2">High</option>
@@ -51,7 +55,14 @@
   <en>Start Date</en>
 </DEL_INIT_DATE>
 
-<APP_STATUS type="private" showInTable="0"/>
+<APP_STATUS type="dropdown">
+  <en>Status
+    <option name="DRAFT">Draft</option>
+    <option name="TO_DO">To Do</option>
+    <option name="CANCELLED">Cancelled</option>
+    <option name="COMPLETED">Completed</option>
+  </en>
+</APP_STATUS>
 
 <MARK2 type="cellMark" className="RowLink1" classNameAlt="RowLink2" defaultValue="1"/>
 <!--<EDIT type="link" colWidth="40" value="@G::LoadTranslation(ID_EDIT)" link="#" onclick="casesEdit(@QAPP_UID);return false;"/>-->

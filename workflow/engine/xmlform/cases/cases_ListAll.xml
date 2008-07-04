@@ -30,6 +30,10 @@
   <en>Process</en>
 </APP_PRO_TITLE>
 
+<APP_CURRENT_USER type="text" colWidth="120" titleAlign="left" align="left" dataCompareField="USER.USR_USERNAME" dataCompareType="contains" >
+  <en>Current User</en>
+</APP_CURRENT_USER>
+
 <APP_DEL_PREVIOUS_USER type="text" colWidth="120" titleAlign="left" align="left" dataCompareField="APP_LAST_USER.USR_USERNAME" dataCompareType="contains" >
   <en>Sent by</en>
 </APP_DEL_PREVIOUS_USER>
@@ -63,6 +67,7 @@ SELECT TRN_ID, TRN_VALUE FROM TRANSLATION WHERE TRN_ID = "@#APP_STATUS" AND TRN_
     <option name="COMPLETED">Completed</option>
   </en>
 </APP_STATUS>
+
 
 <MARK2 type="cellMark" className="RowLink1" classNameAlt="RowLink2" defaultValue="1"/>
 <!--
