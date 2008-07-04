@@ -470,5 +470,31 @@ class Tasks {
     	throw($oError);
     }
   }
+  
+  /*
+	* Veryfy the user assig in any task
+	* @param string $sTaskUID
+	* @return array
+	*/
+  public function assignUsertoTask($sTaskUID) {
+  	try {  	     
+  	    $oCriteria = new Criteria('workflow');
+  	    $oCriteria->addSelectColumn(TaskUserPeer::USR_UID);
+        $oCriteria->add(TaskUserPeer::TAS_UID, $sTaskUID);        
+        $oDataset = TaskUserPeer::doSelectRS($oCriteria);
+        $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+        $oDataset->next();
+        $aRow = $oDataset->getRow();       
+        if(is_array($aRow))
+        			$x=1;
+        else        			
+        			$x=0;
+        
+        return $x;
+        }          
+  	catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
 }
 ?>

@@ -2129,12 +2129,16 @@ class processMap {
   }
 
   function listNoProcessesUser($sProcessUID) {
+
+
   	require_once 'classes/model/Users.php';
     require_once 'classes/model/ProcessUser.php';
+    G::LoadSystem('rbac');
 
   	$oCriteria = new Criteria('workflow');
 	  $oCriteria->addSelectColumn(ProcessUserPeer::USR_UID);
-	  $oCriteria->add(ProcessUserPeer::PRO_UID, $sProcessUID);
+	  $oCriteria->add(ProcessUserPeer::PRO_UID, $sProcessUID);	  
+	  $oCriteria->add(ProcessUserPeer::PU_TYPE, 'SUPERVISOR');
 	  $oDataset = ProcessUserPeer::doSelectRS($oCriteria);
 	  $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
     $oDataset->next();
@@ -2146,10 +2150,31 @@ class processMap {
     $sDelimiter = DBAdapter::getStringDelimiter();
   	$oCriteria  = new Criteria('workflow');
   	$oCriteria->addSelectColumn(UsersPeer::USR_UID);
+    $oCriteria->add(UsersPeer::USR_UID, $aUIDS, Criteria::NOT_IN);
+    $oDataset = UsersPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    $aUIDS = array();
+    $oRBAC = RBAC::getSingleton();
+    while ($aRow = $oDataset->getRow()) {
+      $oRBAC->loadUserRolePermission($oRBAC->sSystem, $aRow['USR_UID']);
+      $aPermissions = $oRBAC->aUserInfo[$oRBAC->sSystem]['PERMISSIONS'];
+      $bInclude = false;
+      foreach ($aPermissions as $aPermission) {
+        if ($aPermission['PER_CODE'] == 'PM_SUPERVISOR') {
+          $bInclude = true;
+        }
+      }
+      if ($bInclude) {
+        $aUIDS[] = $aRow['USR_UID'];
+      }
+      $oDataset->next();
+    }
+    $oCriteria  = new Criteria('workflow');
+  	$oCriteria->addSelectColumn(UsersPeer::USR_UID);
   	$oCriteria->addSelectColumn(UsersPeer::USR_FIRSTNAME);
 	  $oCriteria->addSelectColumn(UsersPeer::USR_LASTNAME);
-    $oCriteria->add(UsersPeer::USR_UID, $aUIDS, Criteria::NOT_IN);
-
+    $oCriteria->add(UsersPeer::USR_UID, $aUIDS, Criteria::IN);
     return $oCriteria;
   }
 

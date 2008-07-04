@@ -276,7 +276,7 @@ class Cases
     */
     function updateCase($sAppUid, $Fields = array())
     {
-        try {        	  
+        try {
             $aApplicationFields = $Fields['APP_DATA'];
             $oApp = new Application;
             $Fields['APP_UID'] = $sAppUid;
@@ -982,6 +982,10 @@ class Cases
                 $Fields['APP_DESCRIPTION'] = self::refreshCaseDescription($sAppUid, G::array_merges(G::getSystemConstants(), unserialize($Fields['APP_DATA'])));
                 $Fields['APP_PROC_CODE'] = self::refreshCaseStatusCode($sAppUid, G::array_merges(G::getSystemConstants(), unserialize($Fields['APP_DATA'])));
                 $Application->update($Fields);
+                //Update the task last assigned (for web entry an web services)
+                G::LoadClass('derivation');
+                $oDerivation = new Derivation();
+                $oDerivation->setTasLastAssigned($sTasUid, $sUsrUid);
 
             }
             catch (exception $e) {

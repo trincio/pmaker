@@ -72,8 +72,7 @@ try {
   	  include(PATH_METHODS . 'processes/processes_availableProcessesUser.php');
   	break; 
   	case 'webEntry_generate':   	 	  	  	  
-  	  include(PATH_METHODS . 'processes/processes_webEntryGenerate.php');
-  	  //$oProcessMap->webEntryGenerate($oData->PRO_UID, $oData->TASKS, $oData->DYNAFORM);
+  	  include(PATH_METHODS . 'processes/processes_webEntryGenerate.php');  	  
   	break;  	
   	case 'assignProcessUser':  	  	  	    	  
   	  $oProcessMap->assignProcessUser($oData->PRO_UID, $oData->USR_UID);

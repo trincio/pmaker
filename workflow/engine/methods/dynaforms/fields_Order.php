@@ -80,7 +80,8 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
   $aFields[] = array('XMLNODE_NAME' => 'char',
   	                 'TYPE'         => 'char',
   	                 'UP'           => 'char',
-  	                 'DOWN'         => 'char');
+  	                 'DOWN'         => 'char',
+      	             'row__'        => 'integer');
 	$oSession = new DBSession(new DBConnection($file, '', '', '', 'myxml'));
 	$oDataset = $oSession->Execute('SELECT * FROM dynaForm WHERE NOT( XMLNODE_NAME = "" )');
 	$iMaximun = $oDataset->count();
@@ -88,7 +89,8 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
   	$aFields[] = array('XMLNODE_NAME' => $aRow['XMLNODE_NAME'],
     	                 'TYPE'         => $aRow['TYPE'],
     	                 'UP'           => ($i > 0 ? G::LoadTranslation('ID_UP') : ''),
-    	                 'DOWN'         => ($i < $iMaximun-1 ? G::LoadTranslation('ID_DOWN') : ''));
+    	                 'DOWN'         => ($i < $iMaximun-1 ? G::LoadTranslation('ID_DOWN') : ''),
+      	               'row__'        => ($i + 1));
     $i++;
 	}
 	global $_DBArray;

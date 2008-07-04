@@ -1,10 +1,18 @@
-<?php
+<?php       
     global $G_FORM;  
+    
     $sPRO_UID=$oData->PRO_UID;
     $sTASKS=$oData->TASKS;
-    $sDYNAFORM=$oData->DYNAFORM;      
-
-
+    $sDYNAFORM=$oData->DYNAFORM;    
+    
+    G::LoadClass('tasks');
+    $oTask = new Tasks();    
+    $user = $oTask->assignUsertoTask($sTASKS);    
+    if($user==0)
+    	{ echo "The task has not assigned a user";
+    		die;
+      }          		
+		
     require_once 'classes/model/Dynaform.php';
     $oCriteria = new Criteria('workflow');
 		$del = DBAdapter::getStringDelimiter();
@@ -23,8 +31,8 @@
    	 	  $http= 'http://';   	 	     	 	     	 
    	
    	$img=$http.$_SERVER['HTTP_HOST'].'/images/bulletButton.gif';
-   	$link1 = $http.$_SERVER['HTTP_HOST'].'/images/bulletButton.gif'; 	     	
-   	$link2 = $http.$_SERVER['HTTP_HOST'].'/skins/'.SYS_SKIN.'/style.css'; 	  
+   
+   	$link1 = $http.$_SERVER['HTTP_HOST'].'/skins/'.SYS_SKIN.'/style.css'; 	  
    	
     $js1   = $http.$_SERVER['HTTP_HOST'].'/jscore/labels/en.js'; 
     $js2   = $http.$_SERVER['HTTP_HOST'].'/js/maborak/core/maborak.js';                       
@@ -44,8 +52,8 @@
 	     
     $x = $http.$_SERVER['HTTP_HOST'].'/gulliver/defaultAjaxDynaform';
         					
-		$link1 = '<link rel="shortcut icon" href="'.$link1.'"   type="image/x-icon"/>';
-    $link2 = '<link rel="stylesheet" type="text/css" href="'.$link2.'"/>'; 	  
+		
+    $link1 = '<link rel="stylesheet" type="text/css" href="'.$link1.'"/>'; 	  
     
     $js1  = '<script type="text/javascript" src="'.$js1.'"></script>';
     $js2  = '<script type="text/javascript" src="'.$js2.'"></script>';				
@@ -98,7 +106,7 @@
     $hTASKS    = '<input type="hidden" name="TASKS" value="'.$sTASKS.'">';
     $hDYNAFORM = '<input type="hidden" name="DYNAFORM" value="'.$sDYNAFORM.'">';    
                     
-    $nform = $link1.$link2.$js1.$js2.$js3.$js5.$js4.$js6.$js7.$form.'<br />'.$hPRO_UID.'<br />'.$hTASKS.'<br />'.$hDYNAFORM.'</form>';
+    $nform = $link1."\n".$js1."\n".$js2."\n".$js3."\n".$js5."\n".$js4."\n".$js6."\n".$js7."\n".$form."\n".$hPRO_UID."\n".$hTASKS."\n".$hDYNAFORM.'</form>';
     
     print_r('<textarea cols="70" rows="20">'.htmlentities($nform).'</textarea>');
     //print_r($nform);
