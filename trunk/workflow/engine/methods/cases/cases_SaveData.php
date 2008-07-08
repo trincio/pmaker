@@ -33,7 +33,7 @@
   $oCase = new Cases();
   $Fields = $oCase->loadCase( $_SESSION['APPLICATION'] );
   $Fields['APP_DATA'] = array_merge($Fields['APP_DATA'], G::getSystemConstants());
-  $Fields['APP_DATA'] = array_merge( $Fields['APP_DATA'], $_POST['form']);
+  $Fields['APP_DATA'] = array_merge( $Fields['APP_DATA'], (array)$_POST['form']);
 
   //Execute after triggers - Start
   $Fields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], 'DYNAFORM', $_GET['UID'], 'AFTER', $Fields['APP_DATA'] );

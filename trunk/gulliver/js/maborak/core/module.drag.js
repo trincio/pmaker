@@ -98,6 +98,8 @@ leimnud.Package.Public({
 			{
 				return false;
 			}
+			if(this.lock===true){return false;}
+			this.lock=true;
 			if(arguments.length<2 && this.parent.browser.isIE)
 			{
 				//element	= this.options.elements[elNum];
@@ -128,7 +130,7 @@ leimnud.Package.Public({
 					var ps = this.parent.dom.position(this.options.fx.target);
 
 					var pos = {x:(m.x-ps.x),y:(m.y-ps.y)};
-					//window.status=pos.x+":"+pos.y+"::::"+m.x+":"+m.y+":::"+ps.x+":"+ps.y;
+					window.status=pos.x+":"+pos.y+"::::"+m.x+":"+m.y+":::"+ps.x+":"+ps.y;
 
 
 					var clo = element.cloneNode(true);
@@ -341,6 +343,7 @@ leimnud.Package.Public({
 			this.launchEvents(this.events.finish);
 			this.parent.event.remove(document,"mouseup",this.parent.event.db[hand]._function_,true,hand);
 			this.parent.event.remove(document,"mousemove",this.parent.event.db[hand-1]._function_,true,hand-1);
+			this.lock=false;
 		};
 		this.flush=function()
 		{
@@ -353,7 +356,7 @@ leimnud.Package.Public({
 			{
 				
 				var position=this.parent.dom.position(d0m,false,true);
-				console.info(position);
+				//console.info(position);
 				//alert(position.x+":"+position.y)
 				this.parent.dom.setStyle(d0m,{
 					position:'absolute',

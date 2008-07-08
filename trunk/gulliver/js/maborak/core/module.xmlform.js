@@ -138,7 +138,7 @@ leimnud.Package.Public({
 				}.extend(this)
 			};
 			this.dragables.make();
-			
+
 			/*Samples load XML*/
 			this.loadXML('myInfo.xml');
 		};
@@ -181,7 +181,7 @@ leimnud.Package.Public({
 				$(document.body).append(
 					new DOM('textarea',{value:str},{width:'100%',height:400})
 				);
-				
+							
 				//alert(d.documentElement.childNodes.length);
 				
 				var table = new DOM('table',{border:1},{width:'100%',borderCollapse:'collapse'});
@@ -193,11 +193,16 @@ leimnud.Package.Public({
 				);
 				for(var i=0;i<d.documentElement.childNodes.length;i++)
 				{
-					window.c = d.documentElement.childNodes[i];
+					var c = d.documentElement.childNodes[i];
+					try{
+						var at = c.getAttribute('type');
+					}catch(e){
+						var at = '';
+					}
 					var tr = table.insertRow(-1);
 					$(tr).append(
 						new DOM('td',{innerHTML:c.nodeName},{width:"50%",border:'1px solid black'}),
-						new DOM('td',{innerHTML:(c.getAttribute)?c.getAttribute('type'):''},{width:"50%",border:'1px solid black'})
+						new DOM('td',{innerHTML:at},{width:"50%",border:'1px solid black'})
 					);
 				}
 				document.body.appendChild(table);

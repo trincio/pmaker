@@ -82,7 +82,12 @@ class dates
 	  }
 	  if ($aInitDate !== $aEndDate) {
 	    while (!$bFinished && ($i < 10000)) {
-	      $sAux = implode('-', array($aInitDate[0], $aInitDate[1], $aInitDate[2] + $i));
+	      if (($aInitDate[2] + $i) < 10) {
+	        $sAux = implode('-', array($aInitDate[0], $aInitDate[1], '0' . ($aInitDate[2] + $i)));
+	      }
+	      else {
+	        $sAux = implode('-', array($aInitDate[0], $aInitDate[1], $aInitDate[2] + $i));
+	      }
 	      if ($sAux != implode('-', $aEndDate)) {
           if (!in_array($sAux, $this->holidays)) {
             if (!in_array(date('w', mktime(0, 0, 0, $aInitDate[1], $aInitDate[2] + $i, $aInitDate[0])), $this->weekends)) {
