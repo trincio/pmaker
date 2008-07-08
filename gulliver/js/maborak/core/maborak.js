@@ -1051,13 +1051,12 @@ var maborak = function(){
 		this.Load	= function(file,options)
 		{
 			this.options	=	{
-				zip:true,
-				noWrite:true
-			}.concat(options || {});
+				zip:false
+			}.concat(options || {});			
 			if(arguments.length<2 || !this.check()){return false;}
 			this.toLoad = ((this.options.Absolute===true)?this.options.Path:file).split(",");
-			if(this.type === 'module' && this.options.zip===true)
-			{
+			if(this.type === 'module' && (this.options.zip===true || this.parent.options.zip===true))
+			{				
 				var tl = [];
 				for (var i = this.toLoad.length; i > 0; i--)
 				{
@@ -1067,18 +1066,18 @@ var maborak = function(){
 						this.write(false);
 					}
 				}
+				//alert(this.parent.options.thisIsNotPM);
 				if (tl.length > 0) {
-
 					var script = $dce("script");
 					this.parent.dom.capture("tag.head 0").appendChild(script);
-					script.src = (typeof G_STRINGS!='undefined' || this.parent.options.thisIsNotPM===false)?this.path+'maborak.loader.js':this.path + 'server/maborak.loader.php?load=' + tl.join(',');
+					script.src = (this.parent.options.inGulliver===true)?this.path+'maborak.loader.js':this.path + 'server/maborak.loader.php?load=' + tl.join(',');
 //					script.src = this.path + 'maborak.loader.js';
+//                    alert(script.src)
 					script.type = "text/javascript";
 					script.charset = this.parent.charset;
 					if (this.type == "module") {
 						this.write(script);
 					}
-
 				}
 			}
 			else
@@ -1548,6 +1547,8 @@ var maborak = function(){
 						y:0
 					};
 					if(!DOM){return position;}
+					//var m = parseInt(this.parent.dom.getStyle(DOM,"margin"),10) || 0;
+					
 					position.x=parseInt(DOM.offsetLeft,10);
 					position.y=parseInt(DOM.offsetTop,10);
 					//alert(DOM.offsetParent);

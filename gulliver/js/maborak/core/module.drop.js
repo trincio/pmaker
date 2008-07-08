@@ -33,7 +33,7 @@ leimnud.Package.Public({
 		this.lastSelected= false;
 		this.make=function(options)
 		{
-
+            return this;
 		};
 		this.register = function(data)
 		{
@@ -174,5 +174,6 @@ leimnud.Package.Public({
 			}
 		};
 		this.expand(this);
+		return this;
 	}
 });

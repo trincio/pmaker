@@ -176,7 +176,7 @@ class ReportTables {
   	  	      foreach ($aFields as $aField) {
   	  	      	switch ($aField['sType']) {
   	  	      		case 'number':
-  	  	      		  $sQuery .= ',' . (isset($aData[$aField['sFieldName']]) ? (float)str_replace(',', '.', $aData[$aField['sFieldName']]) : '0');
+  	  	      		  $sQuery .= ',' . (isset($aData[$aField['sFieldName']]) ? (float)str_replace(',', '', $aData[$aField['sFieldName']]) : '0');
   	  	      		break;
   	  	      		case 'char':
   	  	      		case 'text':
@@ -204,7 +204,7 @@ class ReportTables {
   	  	          foreach ($aFields as $aField) {
   	  	          	switch ($aField['sType']) {
   	  	          		case 'number':
-  	  	          		  $sQuery .= ',' . (isset($aGridRow[$aField['sFieldName']]) ? (float)str_replace(',', '.', $aGridRow[$aField['sFieldName']]) : '0');
+  	  	          		  $sQuery .= ',' . (isset($aGridRow[$aField['sFieldName']]) ? (float)str_replace(',', '', $aGridRow[$aField['sFieldName']]) : '0');
   	  	          		break;
   	  	          		case 'char':
   	  	          		case 'text':
@@ -308,7 +308,7 @@ class ReportTables {
   	  	    			$sQuery .= '`' . $aField['sFieldName'] . '` = ';
   	  	        	switch ($aField['sType']) {
   	  	        		case 'number':
-  	  	        		  $sQuery .= (isset($aFields[$aField['sFieldName']]) ? (float)str_replace(',', '.', $aFields[$aField['sFieldName']]) : '0') . ',';
+  	  	        		  $sQuery .= (isset($aFields[$aField['sFieldName']]) ? (float)str_replace(',', '', $aFields[$aField['sFieldName']]) : '0') . ',';
   	  	        		break;
   	  	        		case 'char':
   	  	        		case 'text':
@@ -332,7 +332,7 @@ class ReportTables {
   	  	        foreach ($aTableFields as $aField) {
   	  	        	switch ($aField['sType']) {
   	  	        		case 'number':
-  	  	        		  $sQuery .= ',' . (isset($aFields[$aField['sFieldName']]) ? (float)str_replace(',', '.', $aFields[$aField['sFieldName']]) : '0');
+  	  	        		  $sQuery .= ',' . (isset($aFields[$aField['sFieldName']]) ? (float)str_replace(',', '', $aFields[$aField['sFieldName']]) : '0');
   	  	        		break;
   	  	        		case 'char':
   	  	        		case 'text':
@@ -363,7 +363,7 @@ class ReportTables {
   	  	          foreach ($aTableFields as $aField) {
   	  	          	switch ($aField['sType']) {
   	  	          		case 'number':
-  	  	          		  $sQuery .= ',' . (isset($aGridRow[$aField['sFieldName']]) ? (float)str_replace(',', '.', $aGridRow[$aField['sFieldName']]) : '0');
+  	  	          		  $sQuery .= ',' . (isset($aGridRow[$aField['sFieldName']]) ? (float)str_replace(',', '', $aGridRow[$aField['sFieldName']]) : '0');
   	  	          		break;
   	  	          		case 'char':
   	  	          		case 'text':
