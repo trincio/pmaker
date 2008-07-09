@@ -775,4 +775,5 @@ class Report {
 	function getAvailableReports() {
 	  return array('ID_REPORT1', 'ID_REPORT2', 'ID_REPORT3', 'ID_REPORT4', 'ID_REPORT5');
 	}
+		
 }
