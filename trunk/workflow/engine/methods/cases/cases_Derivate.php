@@ -59,8 +59,32 @@ try {
   $appFields = $oCase->loadCase( $_SESSION['APPLICATION'] );
   $appFields['APP_DATA'] = array_merge($appFields['APP_DATA'], G::getSystemConstants());
 
-  //Execute triggers before derivation
-  $appFields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], 'ASSIGN_TASK', -2, 'BEFORE', $appFields['APP_DATA'] );
+
+  #here we must verify if is a debug session
+  $trigger_debug_session = true; #here we must verify if is a debugg session
+
+  #trigger debug routines...
+  
+  //cleaning debug variables
+  $_SESSION['TRIGGER_DEBUG']['ERRORS'] = Array();
+  $_SESSION['TRIGGER_DEBUG']['DATA'] = Array();
+  $_SESSION['TRIGGER_DEBUG']['TRIGGERS_NAMES'] = '';
+  
+  $triggers = $oCase->loadTriggers( $_SESSION['TASK'], 'ASSIGN_TASK', -2, 'BEFORE');
+  
+  $_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] = count($triggers);
+  $_SESSION['TRIGGER_DEBUG']['TIME'] = 'AFTER';
+  if($_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] != 0){
+	$_SESSION['TRIGGER_DEBUG']['TRIGGERS_NAMES'] = $oCase->getTriggerNames($triggers);
+  }
+  
+  if( $_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] != 0 ) {
+    //Execute triggers before derivation
+  	$appFields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], 'ASSIGN_TASK', -2, 'BEFORE', $appFields['APP_DATA'] );
+	//Execute after triggers - End
+  }
+
+
   $appFields['DEL_INDEX']       = $_SESSION['INDEX'];
   $appFields['TAS_UID']         = $_SESSION['TASK'];
   //Save data - Start
@@ -79,7 +103,16 @@ try {
   $oDerivation->derivate( $aCurrentDerivation, $_POST['form']['TASKS'] );
   //Execute triggers after derivation
   $appFields = $oCase->loadCase( $_SESSION['APPLICATION'] ); //refresh appFields, because in derivations should change some values
-  $appFields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], 'ASSIGN_TASK', -2, 'AFTER', $appFields['APP_DATA'] );
+
+  $triggers = $oCase->loadTriggers( $_SESSION['TASK'], 'ASSIGN_TASK', -2, 'AFTER');
+  $cnt2 = count($triggers);
+  $_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] = $_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] + $cnt2;
+  
+  if( $cnt2 != 0 ) {
+    //Execute triggers before derivation
+  	$appFields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], 'ASSIGN_TASK', -2, 'AFTER', $appFields['APP_DATA'] );
+	//Execute after triggers - End
+  }
   //$appFields['DEL_INDEX'] = $_SESSION['INDEX'];
   //$appFields['TAS_UID']   = $_SESSION['TASK'];
   //Save data - Start
@@ -89,7 +122,40 @@ try {
   $oCase->sendNotifications($_SESSION['TASK'], $_POST['form']['TASKS'], $appFields['APP_DATA'], $_SESSION['APPLICATION'], $_SESSION['INDEX']);
   //Send notifications - End
   /* Redirect */
-  G::header('location: cases_List');
+	
+  #here we must verify if is a debug session
+  $trigger_debug_session = true; #here we must verify if is a debugg session
+
+  #trigger debug routines...
+  
+  //cleaning debug variables
+  $_SESSION['TRIGGER_DEBUG']['ERRORS'] = Array();
+  $_SESSION['TRIGGER_DEBUG']['DATA'] = Array();
+  $_SESSION['TRIGGER_DEBUG']['TRIGGERS_NAMES'] = '';
+  
+  $triggers = $oCase->loadTriggers( $_SESSION['TASK'], 'DYNAFORM', $_GET['UID'], 'AFTER');
+  
+  $_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] = count($triggers);
+  $_SESSION['TRIGGER_DEBUG']['TIME'] = 'AFTER';
+  if($_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] != 0){
+	$_SESSION['TRIGGER_DEBUG']['TRIGGERS_NAMES'] = $oCase->getTriggerNames($triggers);
+  }
+  
+  if( $_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] != 0 ) {
+	//Execute after triggers - Start
+	$Fields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], 'DYNAFORM', $_GET['UID'], 'AFTER', $Fields['APP_DATA'] );
+	//Execute after triggers - End
+  }
+
+  
+  $aNextStep['PAGE'] = 'cases_List';
+  if($trigger_debug_session){
+  	$_SESSION['TRIGGER_DEBUG']['BREAKPAGE'] = $aNextStep['PAGE'];
+	G::header('location: ' . 'cases_Step?' .'breakpoint=triggerdebug');
+  }
+  else {	
+    G::header('location: cases_List');
+  }
 }
 catch ( Exception $e ){
   /* Render Error Page */
