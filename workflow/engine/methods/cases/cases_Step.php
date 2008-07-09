@@ -49,7 +49,9 @@
   G::LoadClass('derivation');
 
   /* GET , POST & $_SESSION Vars */
-  $_SESSION['STEP_POSITION'] = (int)$_GET['POSITION'];
+  if(isset($_GET['POSITION'])) {
+  	$_SESSION['STEP_POSITION'] = (int)$_GET['POSITION'];
+  }
 
   /* Menues */
   $G_MAIN_MENU            = 'processmaker';
@@ -82,13 +84,52 @@
 
   $APP_NUMBER = $Fields['APP_NUMBER'];
   $APP_TITLE = $Fields['TITLE'];
+  
+  $oProcess = new Process();
+  $oProcessFieds = $oProcess->Load($_SESSION['PROCESS']);
+  #trigger debug routines...
+  //echo '<pre>-->'; print_r($oProcessFieds); echo '<---</pre>';
 
-  //Execute before triggers - Start
-  $Fields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], $_GET['TYPE'], $_GET['UID'], 'BEFORE', $Fields['APP_DATA'] );
-  $Fields['DEL_INDEX']= $_SESSION['INDEX'];
-  $Fields['TAS_UID']  = $_SESSION['TASK'];
-  //Execute before triggers - End
+  if( $oProcessFieds['PRO_DEBUG'] ) { #here we must verify if is a debugg session
+  	$_SESSION['TRIGGER_DEBUG']['ISSET'] = 1;
+  }	else {
+	$_SESSION['TRIGGER_DEBUG']['ISSET'] = 0;
+  }
+  //cleaning debug variables
+  if( !isset($_GET['breakpoint']) ) {
+	$_SESSION['TRIGGER_DEBUG']['ERRORS'] = Array();
+	$_SESSION['TRIGGER_DEBUG']['DATA'] = Array();
+	$_SESSION['TRIGGER_DEBUG']['TRIGGERS_NAMES'] = '';
 
+	$triggers = $oCase->loadTriggers( $_SESSION['TASK'], $_GET['TYPE'], $_GET['UID'], 'BEFORE');
+  
+	$_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] = count($triggers);
+	$_SESSION['TRIGGER_DEBUG']['TIME'] = 'BEFORE';
+	if($_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] != 0){
+		$_SESSION['TRIGGER_DEBUG']['TRIGGERS_NAMES'] = $oCase->getTriggerNames($triggers);
+	}
+
+	//Execute before triggers - Start
+	$Fields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], $_GET['TYPE'], $_GET['UID'], 'BEFORE', $Fields['APP_DATA'] );
+	$Fields['DEL_INDEX']= $_SESSION['INDEX'];
+	$Fields['TAS_UID']  = $_SESSION['TASK'];
+	//Execute before triggers - End
+  }
+  
+  if( isset($_GET['breakpoint']) ) {
+    $_POST['NextStep'] = $_SESSION['TRIGGER_DEBUG']['BREAKPAGE'];
+  }
+  
+  if( $_SESSION['TRIGGER_DEBUG']['ISSET'] ){
+	$G_PUBLISH->AddContent('view', 'cases/showDebugFrame');	
+  }
+
+  if( isset($_GET['breakpoint']) ) {
+	G::RenderPage('publish');
+	exit();
+  }
+  #end trigger debug session.......
+  
   //Save data - Start
   $oCase->updateCase ( $_SESSION['APPLICATION'], $Fields );
   //Save data - End
@@ -225,7 +266,9 @@ switch ($_GET['TYPE'])
       $aOD['__DYNAFORM_OPTIONS']['PREVIOUS_STEP'] = $aPreviousStep['PAGE'];
       $aOD['__DYNAFORM_OPTIONS']['PREVIOUS_STEP_LABEL'] = G::loadTranslation("ID_PREVIOUS_STEP");
     }
+
     $aOD['__DYNAFORM_OPTIONS']['NEXT_STEP'] = $aNextStep['PAGE'];
+	
     switch ($_GET['ACTION'])
     {
       case 'GENERATE':
@@ -307,7 +350,11 @@ switch ($_GET['TYPE'])
   	      $oPluginRegistry->executeTriggers ( PM_UPLOAD_DOCUMENT , $documentData );
   	      unlink ( $sPathName . $sFileName );
         }
-        G::header('location: cases_Step?TYPE=OUTPUT_DOCUMENT&UID=' . $_GET['UID'] . '&POSITION=' . $_SESSION['STEP_POSITION'] . '&ACTION=VIEW&DOC=' . $sDocUID);
+		
+		$outputNextStep = 'cases_Step?TYPE=OUTPUT_DOCUMENT&UID=' . $_GET['UID'] . '&POSITION=' . $_SESSION['STEP_POSITION'] . '&ACTION=VIEW&DOC=' . $sDocUID;
+
+        G::header('location: '.$outputNextStep);
+		
         break;
       case 'VIEW':
         require_once 'classes/model/AppDocument.php';

@@ -28,9 +28,28 @@
     $oCase  = new Cases();
     $Fields = $oCase->loadCase($_SESSION['APPLICATION']);
     $Fields['APP_DATA'] = array_merge($Fields['APP_DATA'], G::getSystemConstants());
-    //Execute after triggers - Start
+
+	#trigger debug routines...
+  
+  //cleaning debug variables
+  $_SESSION['TRIGGER_DEBUG']['ERRORS'] = Array();
+  $_SESSION['TRIGGER_DEBUG']['DATA'] = Array();
+  $_SESSION['TRIGGER_DEBUG']['TRIGGERS_NAMES'] = '';
+  
+  $triggers = $oCase->loadTriggers( $_SESSION['TASK'], 'INPUT_DOCUMENT', $_GET['UID'], 'AFTER');
+  
+  $_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] = count($triggers);
+  $_SESSION['TRIGGER_DEBUG']['TIME'] = 'AFTER';
+  if($_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] != 0){
+	$_SESSION['TRIGGER_DEBUG']['TRIGGERS_NAMES'] = $oCase->getTriggerNames($triggers);
+  }
+  
+  if( $_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] != 0 ) {
+	//Execute after triggers - Start
     $Fields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], 'INPUT_DOCUMENT', $_GET['UID'], 'AFTER', $Fields['APP_DATA'] );
     //Execute after triggers - End
+  } 
+
 
     //save data
     $aData = array();
@@ -87,38 +106,64 @@
       //end plugin
       }
     }
+	
+	//go to the next step
+	if (!isset($_POST['form']['MORE'])) {
+		$aNextStep = $oCase->getNextStep( $_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['STEP_POSITION']);
+		$_SESSION['STEP_POSITION'] = $aNextStep['POSITION'];
+		
+		if($_SESSION['TRIGGER_DEBUG']['ISSET']){
+			$_SESSION['TRIGGER_DEBUG']['BREAKPAGE'] = $aNextStep['PAGE'];
+			G::header('location: ' . $aNextStep['PAGE'].'&breakpoint=triggerdebug');
+			die;
+		}
 
-    //go to the next step
-    if (!isset($_POST['form']['MORE'])) {
-      $aNextStep = $oCase->getNextStep( $_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['STEP_POSITION']);
-      $_SESSION['STEP_POSITION'] = $aNextStep['POSITION'];
-      G::header('location: ' . $aNextStep['PAGE']);
-      die;
-    }
-    else {
-      if (isset($_SERVER['HTTP_REFERER'])) {
-        if ($_SERVER['HTTP_REFERER'] != '') {
-    	    G::header('location: ' . $_SERVER['HTTP_REFERER']);
-    	    die;
-    	  }
-    	  else {
-    	    $aNextStep = $oCase->getNextStep( $_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['STEP_POSITION'] - 1);
-          $_SESSION['STEP_POSITION'] = $aNextStep['POSITION'];
-          G::header('location: ' . $aNextStep['PAGE']);
-          die;
-    	  }
-    	}
-    	else {
-    	  $aNextStep = $oCase->getNextStep( $_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['STEP_POSITION'] - 1);
-        $_SESSION['STEP_POSITION'] = $aNextStep['POSITION'];
-        G::header('location: ' . $aNextStep['PAGE']);
-        die;
-    	}
-    }
+		G::header('location: ' . $aNextStep['PAGE']);
+		die;
+	}
+	else { 
+		if (isset($_SERVER['HTTP_REFERER'])) {
+			if ($_SERVER['HTTP_REFERER'] != '') {
 
-  }
+				if($_SESSION['TRIGGER_DEBUG']['ISSET']){
+					$_SESSION['TRIGGER_DEBUG']['BREAKPAGE'] = $_SERVER['HTTP_REFERER'];
+					G::header('location: ' . $_SERVER['HTTP_REFERER'].'&breakpoint=triggerdebug');
+					die;
+				}
 
-  catch ( Exception $e ) {
+				G::header('location: ' . $_SERVER['HTTP_REFERER']);
+				die;
+			}
+			else {
+				$aNextStep = $oCase->getNextStep( $_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['STEP_POSITION'] - 1);
+				$_SESSION['STEP_POSITION'] = $aNextStep['POSITION'];
+
+				if($_SESSION['TRIGGER_DEBUG']['ISSET']){
+					$_SESSION['TRIGGER_DEBUG']['BREAKPAGE'] = $aNextStep['PAGE'];
+					G::header('location: ' . $aNextStep['PAGE'].'&breakpoint=triggerdebug');
+					die;
+				}
+
+				G::header('location: ' . $aNextStep['PAGE']);
+				die;
+			}
+		}
+		else {
+			$aNextStep = $oCase->getNextStep( $_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['STEP_POSITION'] - 1);
+			$_SESSION['STEP_POSITION'] = $aNextStep['POSITION'];
+
+			if($_SESSION['TRIGGER_DEBUG']['ISSET']){
+				$_SESSION['TRIGGER_DEBUG']['BREAKPAGE'] = $aNextStep['PAGE'];
+				G::header('location: ' . $aNextStep['PAGE'].'&breakpoint=triggerdebug');
+				die;
+			}
+				
+			G::header('location: ' . $aNextStep['PAGE']);
+			die;
+		}
+	}
+
+  } catch ( Exception $e ) {
     /* Render Error page */
       $aMessage['MESSAGE'] = $e->getMessage();
       $G_PUBLISH          = new Publisher;
