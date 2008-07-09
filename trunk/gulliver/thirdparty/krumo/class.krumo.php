@@ -60,6 +60,8 @@ if (!defined('KRUMO_TRUNCATE_LENGTH')) {
 */
 Class krumo {
 
+	public static $show_details;
+
 	/**
 	* Return Krumo version
 	*
@@ -581,7 +583,9 @@ This is a list of all the values from the <code><b><?php echo realpath($ini_file
 		?>
 <div class="krumo-root">
 	<ul class="krumo-node krumo-first">
-		<?php echo krumo::_dump($data);?>
+		<?php echo krumo::_dump($data);
+			if( !isset(krumo::$show_details) ){
+		?>
 		<li class="krumo-footnote">
 			<div class="krumo-version" style="white-space:nowrap;">
 				<h6>Krumo version <?php echo krumo::version();?></h6> | <a
@@ -596,6 +600,9 @@ This is a list of all the values from the <code><b><?php echo realpath($ini_file
 		<?php } ?>
 		&nbsp;
 		</li>
+		<?php
+			}
+		?>
 	</ul>
 </div>
 <?php
