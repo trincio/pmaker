@@ -43,6 +43,8 @@ require_once ("classes/model/Task.php");
 require_once ("classes/model/TaskUser.php");
 require_once ("classes/model/Triggers.php");
 require_once ("classes/model/Users.php");
+require_once ("classes/model/Content.php");
+
 G::LoadClass('pmScript');
 
 class Cases
@@ -1548,6 +1550,7 @@ class Cases
         }
         $c = new Criteria();
         $c->clearSelectColumns();
+		$c->addSelectColumn(TriggersPeer::TRI_UID);
         $c->addSelectColumn(StepTriggerPeer::ST_CONDITION);
         $c->addSelectColumn(TriggersPeer::TRI_TYPE);
         $c->addSelectColumn(TriggersPeer::TRI_WEBBOT);
@@ -1590,6 +1593,25 @@ class Cases
             return $aFields;
         }
     }
+
+	function getTriggerNames($triggers)
+	{
+		for($i=0; $i<count($triggers); $i++) {
+			$c = new Criteria(); 
+			$c->clearSelectColumns();
+			$c->addSelectColumn(ContentPeer::CON_VALUE);
+			$c->add(ContentPeer::CON_ID, $triggers[$i]['TRI_UID']);
+			$c->add(ContentPeer::CON_VALUE, "", Criteria::NOT_EQUAL);
+			$c->add(ContentPeer::CON_LANG, SYS_LANG);
+			$rs = TriggersPeer::doSelectRS($c);
+			$rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+			$rs->next();
+			$row = $rs->getRow();
+			
+			$triggers_info[] = $row['CON_VALUE'];
+		}	
+        return $triggers_info;
+	}
 
     /*
     * Return the input documents list criteria object

@@ -37,6 +37,8 @@
  * @copyright 2007 COLOSA
  */
 
+$Err=""; //global var
+
 class PMScript
 {
 	/**
@@ -58,6 +60,8 @@ class PMScript
    * Error has happened?
    */
   var $bError = false;
+
+  var $affected_fields;
 
 	/*
    * Set the fields to use
@@ -90,27 +94,87 @@ class PMScript
 	 * @return boolean
 
 	*/
-	function validSyntax($sScript)
+	function validSyntaxold($sScript)
 	{
 		//
 		return true;
 	}
 
+
+	function executeAndCatchErrors($code) {
+		global $Err;
+		
+		$originalHandler = set_error_handler('minimalErrorCheck',E_USER_ERROR);
+		$r = $this->FatalErrorCheck($code);
+		
+		if($r->errEval) {
+			$this->bError = false;
+			return true;
+		} else { 
+			if($Err != "") { //Syntax error
+				//extracting prat of code for show
+				$ii = strpos($code,'{');
+				$jj = strpos($code,'}');
+				$xcode = substr($code, $ii, $ii+10);
+				$_SESSION['TRIGGER_DEBUG']['ERRORS'][]['SINTAX'] = $Err .'<br/>From: '.$xcode;
+				$this->bError = false;
+				return false;
+			}
+			if($r->errMsg) { //Fatal error
+				//echo $r->errMsg;
+				$ii = strpos($code,'{');
+				$jj = strpos($code,'}');
+				$jj = $jj-$ii;
+				$xcode = substr($code, $ii+1, $jj-1);
+				$xcode = str_replace('$this->aFields', '', $xcode);
+				$r->errMsg = str_replace("unexpected '}'", "expected ';'", $r->errMsg);
+				$_SESSION['TRIGGER_DEBUG']['ERRORS'][]['FATAL'] = $r->errMsg.'<br/>From: '.$xcode;
+				$this->bError = false;
+				return false;
+			}
+		}
+		restore_error_handler();
+	}
+
+	function FatalErrorCheck($code)
+	{
+		// Send any output to buffer
+		ob_start();
+		// Do eval()
+		$check = eval($code);
+		$output = ob_get_contents();
+		ob_end_clean();
+		// Send output or report errors
+		$response = new errObject();
+
+		if ($check===false) {
+			#the fatal errors was passed
+			#then we verify the errors with minus consecuence
+			$response->errEval = false;
+			$output = explode(" in ",$output);
+			$response->errMsg = $output[0];
+		} else {
+			$response->errEval = true;
+		}
+		return $response;
+	}
+
+
 	/*
    * Execute the current script
 	 * @return void
 	 */
-  function execute()
-  {
-  	$sScript = "try {\n";
-  	$iAux    = 0;
-  	$bEqual  = false;
-  	$iOcurrences = preg_match_all('/\@(?:([\@\%\#\?\$\=])([a-zA-Z\_]\w*)|([a-zA-Z\_][\w\-\>\:]*)\(((?:[^\\\\\)]*(?:[\\\\][\w\W])?)*)\))((?:\s*\[[\'"]?\w+[\'"]?\])+)?/', $this->sScript, $aMatch, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE);
-  	if ($iOcurrences)
-  	{
-  		for($i = 0; $i < $iOcurrences; $i++)
-			{
-				$sAux = substr($this->sScript, $iAux, $aMatch[0][$i][1] - $iAux);
+	function execute()
+	{	
+		$sScript = "try {\n";
+		$iAux    = 0;
+		$bEqual  = false;
+		$iOcurrences = preg_match_all('/\@(?:([\@\%\#\?\$\=])([a-zA-Z\_]\w*)|([a-zA-Z\_][\w\-\>\:]*)\(((?:[^\\\\\)]*(?:[\\\\][\w\W])?)*)\))((?:\s*\[[\'"]?\w+[\'"]?\])+)?/', $this->sScript, $aMatch, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE);
+		if ($iOcurrences)
+		{	
+			for($i = 0; $i < $iOcurrences; $i++)
+			{	
+				$sAux = substr($this->sScript, $iAux, $aMatch[0][$i][1] - $iAux); 
 				if (!$bEqual)
 				{
 					if (strpos($sAux, '=') !== false)
@@ -126,12 +190,12 @@ class PMScript
 					}
 				}
 				if ($bEqual) {
-				  if (!isset($aMatch[5][$i][0])) {
-			      eval("if (!isset(\$this->aFields['" . $aMatch[2][$i][0] . "'])) { \$this->aFields['" . $aMatch[2][$i][0] . "'] = null; }");
-			    }
-			    else {
-			      eval("if (!isset(\$this->aFields" . (isset($aMatch[2][$i][0]) ? "['" . $aMatch[2][$i][0] . "']" : '') . $aMatch[5][$i][0] . ")) { \$this->aFields" . (isset($aMatch[2][$i][0]) ? "['" . $aMatch[2][$i][0] . "']" : '') . $aMatch[5][$i][0] . " = null; }");
-			    }
+					if (!isset($aMatch[5][$i][0])) {
+						eval("if (!isset(\$this->aFields['" . $aMatch[2][$i][0] . "'])) { \$this->aFields['" . $aMatch[2][$i][0] . "'] = null; }");
+					}
+					else {
+						eval("if (!isset(\$this->aFields" . (isset($aMatch[2][$i][0]) ? "['" . $aMatch[2][$i][0] . "']" : '') . $aMatch[5][$i][0] . ")) { \$this->aFields" . (isset($aMatch[2][$i][0]) ? "['" . $aMatch[2][$i][0] . "']" : '') . $aMatch[5][$i][0] . " = null; }");
+					}
 				}
 				$sScript .= $sAux;
 				$iAux     = $aMatch[0][$i][1] + strlen($aMatch[0][$i][0]);
@@ -162,7 +226,7 @@ class PMScript
 					  {
 					    if (!isset($aMatch[5][$i][0])) {
 					  	  $sScript .= "pmToInteger(\$this->aFields['" . $aMatch[2][$i][0] . "'])";
-              }
+						}
 					  	else {
 					  	  $sScript .= "pmToInteger(\$this->aFields" . (isset($aMatch[2][$i][0]) ? "['" . $aMatch[2][$i][0] . "']" : '') . $aMatch[5][$i][0] . ")";
 					  	}
@@ -258,19 +322,26 @@ class PMScript
 					  }
 					break;
 				}
+				$this->affected_fields[] = $aMatch[2][$i][0];
+				/*$current_field_from_trigger = $aMatch[2][$i][0];
+				$_SESSION['TRIGGER_DEBUG']['DATA'][]['key'] = $current_field_from_trigger;
+				end($_SESSION['TRIGGER_DEBUG']['DATA']);
+				current($_SESSION['TRIGGER_DEBUG']['DATA']);
+				$fkey = key($_SESSION['TRIGGER_DEBUG']['DATA']);
+				$_SESSION['TRIGGER_DEBUG']['DATA'][$fkey]['value'] = $this->aFields[$current_field_from_trigger];
+							*/
 			}
-  	}
-  	$sScript .= substr($this->sScript, $iAux);
-  	$sScript .= "\n} catch (Exception \$oException) {\n  \$this->aFields['__ERROR__'] = \$oException->getMessage();\n}";
-  	if ($this->validSyntax($sScript))
-  	{
-  		$this->bError = false;
-		  eval($sScript);
-	  }
-	  else
-	  {
-	  	$this->bError = true;
-	  }
+		}
+		$sScript .= substr($this->sScript, $iAux);
+		$sScript .= "\n} catch (Exception \$oException) {\n  \$this->aFields['__ERROR__'] = \$oException->getMessage();\n}";
+
+		$this->executeAndCatchErrors($sScript);
+		for($i=0; $i<count($this->affected_fields); $i++){
+			$_SESSION['TRIGGER_DEBUG']['DATA'][$i]['key']   = $this->affected_fields[$i];
+			$_SESSION['TRIGGER_DEBUG']['DATA'][$i]['value'] = $this->aFields[$this->affected_fields[$i]];
+		}
+		//echo '<pre>-->'; print_r($_SESSION['TRIGGER_DEBUG']['DATA']); echo '<---</pre>';
+		
 	}
 
 	/*
@@ -440,7 +511,8 @@ class PMScript
   	{
   		$this->bError = false;
 		  eval($sScript);
-	  }
+	
+	}
 	  else
 	  {
 	  	$this->bError = true;
@@ -506,4 +578,25 @@ function pmSqlEscape($vValue)
 //Start - Custom functions
 G::LoadClass('pmFunctions');
 //End - Custom functions
+
+
+/***************************************************************************
+* @Check Sintax error handler
+* @author: Erik Amaru Ortiz <erik@colosa.com>
+* @datetime: 01.07.2008 17:29:37 
+***************************************************************************/
+
+
+function minimalErrorCheck($errno, $errstr, $errfile, $errline)
+{
+	global $Err;
+	$Err =  "<font color=red><b>Parse error: </b></font>$errstr<br>";
+}
+
+class errObject
+{
+	public $errEval;
+	public $errMsg;
+}
+
 ?>
