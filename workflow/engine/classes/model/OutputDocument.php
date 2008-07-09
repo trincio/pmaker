@@ -392,16 +392,24 @@ class OutputDocument extends BaseOutputDocument {
   	if (($sUID != '') && is_array($aFields) && ($sPath != ''))
   	{
   		$sContent    = G::unhtmlentities($sContent);
-  		/*$iAux        = 0;
+  		$iAux        = 0;
   	  $iOcurrences = preg_match_all('/\@(?:([\>])([a-zA-Z\_]\w*)|([a-zA-Z\_][\w\-\>\:]*)\(((?:[^\\\\\)]*(?:[\\\\][\w\W])?)*)\))((?:\s*\[[\'"]?\w+[\'"]?\])+)?/', $sContent, $aMatch, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE);
   	  if ($iOcurrences) {
-  	    header('Content-Type: text/plain;');//var_dump($aMatch);die;
   	    for($i = 0; $i < $iOcurrences; $i++) {
-  	      $sAux = substr($sContent, $iAux, ($aMatch[0][$i][1] + strlen($aMatch[0][$i][0])) - $iAux);
-  	      var_dump($sAux);
+  	      preg_match_all('/@>' . $aMatch[2][$i][0] . '([\w\W]*)' . '@<' . $aMatch[2][$i][0] . '/', $sContent, $aMatch2, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE);
+  	      $sGridName       = $aMatch[2][$i][0];
+  	      $sStringToRepeat = $aMatch2[1][0][0];
+  	      if (isset($aFields[$sGridName])) {
+  	        if (is_array($aFields[$sGridName])) {
+  	          $sAux = '';
+  	          foreach ($aFields[$sGridName] as $aRow) {
+  	            $sAux .= G::replaceDataField($sStringToRepeat, $aRow);
+  	          }
+  	        }
+  	      }
+  	      $sContent = str_replace('@>' . $sGridName . $sStringToRepeat . '@<' . $sGridName, $sAux, $sContent);
   	    }
-        die;
-  	  }die('nada');*/
+  	  }
   	  $sContent = G::replaceDataField($sContent, $aFields);
   	  G::verifyPath($sPath, true);
   	  /* Start - Create .doc */
