@@ -670,9 +670,9 @@ function PMFsendMessage($caseId, $message)
     $result = $ws->sendMessage($caseId, $message);
 
 	if($result->status_code == 0){
-		return true;
+		return 1;
 	} else {
-		return false;
+		return 0;
 	}
 }
 
@@ -683,9 +683,9 @@ function PMFSendVariables($caseId, $variables)
 	
     $result = $ws->sendVariables($caseId, $variables);
 	if($result->status_code == 0){
-		return true;
+		return 1;
 	} else {
-		return false;
+		return 0;
 	}
 }
 
@@ -696,9 +696,9 @@ function PMFDerivateCase($caseId, $delIndex)
 	$result = $ws->derivateCase($caseId, $delIndex);
 	
 	if($result->status_code == 0){
-		return true;
+		return 1;
 	} else {
-		return false;
+		return 0;
 	}
 }
 
@@ -709,9 +709,9 @@ function PMFNewCaseImpersonate($processId, $userId, $variables)
 	$result = $ws->newCaseImpersonate($processId, $userId, $variables);
 
 	if($result->status_code == 0){
-		return true;
+		return 1;
 	} else {
-		return false;
+		return 0;
 	}
 }
 
@@ -723,9 +723,9 @@ function PMFNewCase($processId, $userId, $taskId, $variables)
 	$result = $ws->newCase($processId, $userId,$taskId, $variables);
 	
 	if($result->status_code == 0){
-		return true;
+		return 1;
 	} else {
-		return false;
+		return 0;
 	}
 }
 
@@ -736,9 +736,9 @@ function PMFAssignUserToGroup($userId, $groupId)
 	$result = $ws->assignUserToGroup($userId, $groupId);
 	
 	if($result->status_code == 0){
-		return true;
+		return 1;
 	} else {
-		return false;
+		return 0;
 	}
 }
 
@@ -749,9 +749,9 @@ function PMFCreateUser($userId, $password, $firstname, $lastname, $email, $role)
 	$result = $ws->createUser($userId, $firstname, $lastname, $email, $role, $password);
 	
 	if($result->status_code == 0){
-		return true;
+		return 1;
 	} else {
-		return false;
+		return 0;
 	}
 }
 

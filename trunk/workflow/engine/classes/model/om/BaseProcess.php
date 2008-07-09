@@ -181,6 +181,13 @@ abstract class BaseProcess extends BaseObject  implements Persistent {
 	 */
 	protected $pro_title_y = 6;
 
+
+	/**
+	 * The value for the pro_debug field.
+	 * @var        int
+	 */
+	protected $pro_debug = 0;
+
 	/**
 	 * Flag to prevent endless save loop, if this object is referenced
 	 * by another object which falls in this transaction.
@@ -475,6 +482,17 @@ abstract class BaseProcess extends BaseObject  implements Persistent {
 	{
 
 		return $this->pro_title_y;
+	}
+
+	/**
+	 * Get the [pro_debug] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getProDebug()
+	{
+
+		return $this->pro_debug;
 	}
 
 	/**
@@ -960,6 +978,28 @@ abstract class BaseProcess extends BaseObject  implements Persistent {
 	} // setProTitleY()
 
 	/**
+	 * Set the value of [pro_debug] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     void
+	 */
+	public function setProDebug($v)
+	{
+
+		// Since the native PHP type for this column is integer,
+		// we will cast the input value to an int (if it is not).
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->pro_debug !== $v || $v === 0) {
+			$this->pro_debug = $v;
+			$this->modifiedColumns[] = ProcessPeer::PRO_DEBUG;
+		}
+
+	} // setProDebug()
+
+	/**
 	 * Hydrates (populates) the object variables with values from the database resultset.
 	 *
 	 * An offset (1-based "start column") is specified so that objects can be hydrated
@@ -1020,12 +1060,14 @@ abstract class BaseProcess extends BaseObject  implements Persistent {
 
 			$this->pro_title_y = $rs->getInt($startcol + 21);
 
+			$this->pro_debug = $rs->getInt($startcol + 22);
+
 			$this->resetModified();
 
 			$this->setNew(false);
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 22; // 22 = ProcessPeer::NUM_COLUMNS - ProcessPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 23; // 23 = ProcessPeer::NUM_COLUMNS - ProcessPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Process object", $e);
@@ -1294,6 +1336,9 @@ abstract class BaseProcess extends BaseObject  implements Persistent {
 			case 21:
 				return $this->getProTitleY();
 				break;
+			case 22:
+				return $this->getProDebug();
+				break;
 			default:
 				return null;
 				break;
@@ -1336,6 +1381,7 @@ abstract class BaseProcess extends BaseObject  implements Persistent {
 			$keys[19] => $this->getProWidth(),
 			$keys[20] => $this->getProTitleX(),
 			$keys[21] => $this->getProTitleY(),
+			$keys[22] => $this->getProDebug(),
 		);
 		return $result;
 	}
@@ -1433,6 +1479,9 @@ abstract class BaseProcess extends BaseObject  implements Persistent {
 			case 21:
 				$this->setProTitleY($value);
 				break;
+			case 22:
+				$this->setProDebug($value);
+				break;
 		} // switch()
 	}
 
@@ -1478,6 +1527,7 @@ abstract class BaseProcess extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[19], $arr)) $this->setProWidth($arr[$keys[19]]);
 		if (array_key_exists($keys[20], $arr)) $this->setProTitleX($arr[$keys[20]]);
 		if (array_key_exists($keys[21], $arr)) $this->setProTitleY($arr[$keys[21]]);
+		if (array_key_exists($keys[22], $arr)) $this->setProDebug($arr[$keys[22]]);
 	}
 
 	/**
@@ -1511,6 +1561,7 @@ abstract class BaseProcess extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(ProcessPeer::PRO_WIDTH)) $criteria->add(ProcessPeer::PRO_WIDTH, $this->pro_width);
 		if ($this->isColumnModified(ProcessPeer::PRO_TITLE_X)) $criteria->add(ProcessPeer::PRO_TITLE_X, $this->pro_title_x);
 		if ($this->isColumnModified(ProcessPeer::PRO_TITLE_Y)) $criteria->add(ProcessPeer::PRO_TITLE_Y, $this->pro_title_y);
+		if ($this->isColumnModified(ProcessPeer::PRO_DEBUG)) $criteria->add(ProcessPeer::PRO_DEBUG, $this->pro_debug);
 
 		return $criteria;
 	}
@@ -1606,6 +1657,8 @@ abstract class BaseProcess extends BaseObject  implements Persistent {
 		$copyObj->setProTitleX($this->pro_title_x);
 
 		$copyObj->setProTitleY($this->pro_title_y);
+
+		$copyObj->setProDebug($this->pro_debug);
 
 
 		$copyObj->setNew(true);
