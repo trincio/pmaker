@@ -1928,6 +1928,16 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
+	<column name="PRO_DEBUG" type="INTEGER" required="true" default="0">
+		<vendor type="mysql">
+			<parameter name="Field" value="PRO_DEBUG"/>
+			<parameter name="Type" value="int(1)"/>
+			<parameter name="Null" value="YES"/>
+			<parameter name="Key" value=""/>
+			<parameter name="Default" value="0"/>
+			<parameter name="Extra" value=""/>
+		</vendor>
+    </column>
     <validator column="PRO_TIMEUNIT">
       <rule name="validValues" value="WEEKS|MONTHS|DAYS|HOURS|MINUTES" message="Please select a valid Time Unit." />
     </validator>
