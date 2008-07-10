@@ -37,11 +37,18 @@ try {
   	break;
   }
   $oJSON = new Services_JSON();
+  
+  
   $aData = get_object_vars($oJSON->decode($_POST['oData']));
   switch ($_POST['function']) {
   	case 'saveTaskData':
   	  require_once 'classes/model/Task.php';
   	  $oTask = new Task();
+	  if( $aData['SEND_EMAIL'] == 'TRUE' ) {
+		$aData['TAS_SEND_LAST_EMAIL'] = 'TRUE';
+	  } else {
+		$aData['TAS_SEND_LAST_EMAIL'] = 'FALSE';
+	  }
   	  $oTask->update($aData);
   	break;
   }
