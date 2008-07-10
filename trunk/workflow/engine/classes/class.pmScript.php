@@ -94,7 +94,7 @@ class PMScript
 	 * @return boolean
 
 	*/
-	function validSyntaxold($sScript)
+	function validSyntax($sScript)
 	{
 		//
 		return true;
