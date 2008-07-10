@@ -61,7 +61,7 @@ try {
 
 
   #here we must verify if is a debug session
-  $trigger_debug_session = true; #here we must verify if is a debugg session
+  $trigger_debug_session = $_SESSION['TRIGGER_DEBUG']['ISSET']; #here we must verify if is a debugg session
 
   #trigger debug routines...
   
@@ -123,9 +123,6 @@ try {
   //Send notifications - End
   /* Redirect */
 	
-  #here we must verify if is a debug session
-  $trigger_debug_session = true; #here we must verify if is a debugg session
-
   #trigger debug routines...
   
   //cleaning debug variables
