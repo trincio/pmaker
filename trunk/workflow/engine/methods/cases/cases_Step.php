@@ -90,7 +90,7 @@
   #trigger debug routines...
   //echo '<pre>-->'; print_r($oProcessFieds); echo '<---</pre>';
 
-  if( $oProcessFieds['PRO_DEBUG'] ) { #here we must verify if is a debugg session
+  if( isset($oProcessFieds['PRO_DEBUG']) && $oProcessFieds['PRO_DEBUG'] ) { #here we must verify if is a debugg session
   	$_SESSION['TRIGGER_DEBUG']['ISSET'] = 1;
   }	else {
 	$_SESSION['TRIGGER_DEBUG']['ISSET'] = 0;
