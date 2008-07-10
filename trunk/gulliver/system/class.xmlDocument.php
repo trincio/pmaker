@@ -1,10 +1,10 @@
 <?php
 /**
  * class.xmlDocument.php
- *  
+ *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -14,20 +14,20 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
 /**
  * Class Xml_Node
  * @author David S. Callizaya S. <davidsantos@colosa.com>
  * @package gulliver.system.xml
  * @access public
- * @dependencies Xml_Node 
+ * @dependencies Xml_Node
  */
 class Xml_Node
 {
@@ -80,7 +80,7 @@ class Xml_Node
 			$childNode->parent = &$this;
 			$this->children[]  = &$childNode;
 			return true;
-		}	
+		}
 		else {
 			return false;
 		}
@@ -135,7 +135,7 @@ class Xml_Node
 			array_shift($p);
 			$n = & $this->parent->findNode ( implode('/',$p) );
 			if (isset($n) ) return $n;
-		}	
+		}
 		else {
 			foreach( $this->children as $k => $v) {
 				if ( ($v->type!=='cdata')&&($v->name===$p[0]))	{
@@ -143,7 +143,7 @@ class Xml_Node
 						array_shift($p);
 						$n=& $this->children[$k]->findNode(implode('/',$p));
 						if (isset($n)) return $n;
-					} 
+					}
 					else {
 						return $this->children[$k];
 					}
@@ -166,28 +166,34 @@ class Xml_Node
 		{
 			case 'open':
     		$xml  = '<'.$this->name;
-    		foreach( $this->attributes as $attib => $value )
-  	  	  $xml .= ' ' . $attib . '="' . 
-  	  	    htmlentities( $value, ENT_QUOTES, 'utf-8' ) . '"';
+    		foreach( $this->attributes as $attib => $value ) {
+  	  	  $xml .= ' ' . $attib . '="' . htmlentities( $value, ENT_QUOTES, 'utf-8' ) . '"';
+  	  	  if (strpos($xml, '&euro;') !== false) {
+  	  	    $xml = str_replace('&euro;', '€', $xml);
+  	  	  }
+  	  	}
     		$xml .= '>'.$this->getCDATAValue();
     		foreach( $this->children as $child )
     		  $xml .= $child->getXML();
     		$xml  .= '</'.$this->name.'>';
 				break;
-				
+
 			case 'close':
     		$xml  = '</'.$this->name.'>';
 				break;
-				
+
 			case 'cdata':
 			  $xml = $this->getCDATAValue();
 				break;
-				
+
 			case 'complete':
     		$xml  = '<'.$this->name;
-    		foreach( $this->attributes as $attib => $value )
-  	  	  $xml .= ' ' . $attib . '="' . 
-  	  	    htmlentities( $value, ENT_QUOTES, 'utf-8' ) . '"';
+    		foreach( $this->attributes as $attib => $value ) {
+  	  	  $xml .= ' ' . $attib . '="' . htmlentities( $value, ENT_QUOTES, 'utf-8' ) . '"';
+  	  	  if (strpos($xml, '&euro;') !== false) {
+  	  	    $xml = str_replace('&euro;', '€', $xml);
+  	  	  }
+  	  	}
   	  	if ($this->value!=='') {
       		$xml .= '>'.$this->getCDATAValue();
       		$xml .= '</'.$this->name.'>';
@@ -212,7 +218,7 @@ class Xml_Node
  * @author David S. Callizaya S. <davidsantos@colosa.com>
  * @package gulliver.system.xml
  * @access public
- * @dependencies Xml_Node 
+ * @dependencies Xml_Node
  */
 class Xml_document extends Xml_Node
 {
@@ -244,7 +250,7 @@ class Xml_document extends Xml_Node
 	  xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
 	  xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 0);
 	  xml_parse_into_struct($parser, $data, $values, $tags);
-	  if (xml_get_error_code($parser)!== 0) { 
+	  if (xml_get_error_code($parser)!== 0) {
 	   	$msg = sprintf( "XML error in <b>%s</b>: %s at line %d", $filename , xml_error_string(xml_get_error_code($parser)), xml_get_current_line_number($parser));
 	   	trigger_error ( $msg );
 	  }
@@ -259,21 +265,21 @@ class Xml_document extends Xml_Node
 			switch ($v['type'])
 			{
 				case 'open':
-					$this->currentNode->addChildNode ( new Xml_Node ($v['tag'], 
+					$this->currentNode->addChildNode ( new Xml_Node ($v['tag'],
 						$v['type'], isset($v['value'])?$v['value'] : '',
 						isset($v['attributes']) ? $v['attributes']:array()));
 					$this->currentNode = &$this->findNode($v['tag']);
 					break;
-					
+
 				case 'close':
 					$this->currentNode=& $this->findNode('..');
 					break;
-					
+
 				case 'cdata':
 					$this->currentNode->addChildNode(new Xml_Node('',
 					  $v['type'], isset($v['value'])?$v['value']:''));
 					break;
-					
+
 				case 'complete':
 					$this->currentNode->addChildNode( new Xml_Node($v['tag'],
 					  $v['type'], isset($v['value'])?$v['value']:'',
@@ -294,14 +300,14 @@ class Xml_document extends Xml_Node
   {
 		if ( substr( $xpath, 0, 1 ) == '/' ) {
 			return parent::findNode( substr( $xpath,1) );
-		}	
+		}
 		else {
 			if ( isset($this->currentNode) ){
 				if ( $this->currentNode->name === $this->name)
 					return parent::findNode( $xpath );
 				else
 					return $this->currentNode->findNode($xpath);
-			} 
+			}
 			else {
 				return $null;
 			}

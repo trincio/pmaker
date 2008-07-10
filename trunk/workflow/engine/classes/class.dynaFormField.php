@@ -61,6 +61,7 @@ class DynaFormField extends DBTable
     }
     $this->is_new = ($res->count()==0);
     $this->Fields = $Fields;
+    unset($this->Fields['XMLNODE_NAME_OLD']);
     /*
      * MPD-10 al crear campos, que no aparezcan muchos atributos, solo los principales?
      * Se mostraran los que no estan en blanco
@@ -73,7 +74,7 @@ class DynaFormField extends DBTable
       }
     }
     else {
-      $this->Fields['XMLNODE_NAME'] = $this->Fields['XMLNODE_NAME_OLD'];
+      $this->Fields['XMLNODE_NAME'] = $Fields['XMLNODE_NAME_OLD'];
     }
     /*$res = $this->_dbses->Execute('INSERT INTO dynaForm'.
       ' (XMLNODE_TYPE,XMLNODE_VALUE)'.
