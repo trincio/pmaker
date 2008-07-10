@@ -38,8 +38,14 @@ class headPublisher
   var $leimnudLoad  = array();
 
   var $leimnudInitString = '  var leimnud = new maborak();
-  leimnud.make();
-  leimnud.Package.Load("panel,validator,app,rpc,fx,drag,drop,dom,abbr,dashboard",{Instance:leimnud,Type:"module"});';
+  leimnud.make(
+    {
+		zip:true,
+		inGulliver:true,
+		modules	:"dom,abbr,rpc,drag,drop,app,panel,fx,grid,xmlform,validator",
+		files	:"json"
+	}
+  );';
   var $headerScript = '
 	  leimnud.exec(leimnud.fix.memoryLeak);
   	if(leimnud.browser.isIphone)
@@ -102,7 +108,7 @@ class headPublisher
   {
   	if ( $loader )
       $this->maborakLoaderFiles[] = $filename;
-    else    
+    else
       $this->maborakFiles[] = $filename;
   }
 
