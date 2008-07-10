@@ -123,6 +123,7 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
       }
     }
   }
+  unset($attributes['VALIDATE_NAME']);
   $fields->Save( $attributes , $labels , $options );
 
   G::LoadClass('xmlDb');
