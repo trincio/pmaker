@@ -566,9 +566,12 @@ class Processes {
   function createStepSupervisorRows($aStepSupervisor){
     foreach ($aStepSupervisor as $key => $row ) {
       $oStepSupervisor = new StepSupervisor();
-      $oStepSupervisor->create($row);
+	  if( $oStepSupervisor->Exists($row['STEP_UID']) ) {
+		$oStepSupervisor->remove($row['STEP_UID']);
+	  }
+	  $oStepSupervisor->create($row);
     }
-  }
+  } #@!Neyek
 
   /*
   * change and Renew all Step GUID, because the process needs to have a new set of Steps
@@ -850,12 +853,18 @@ class Processes {
     }
   }
 
-  function createDBConnections ($aConnections ) {
+  function createDBConnectionsRows ($aConnections ) {
   	foreach ( $aConnections as $sKey => $aRow ) {
       $oConnection = new DbSource();
+      /*echo '<pre>';
+      print_r($aConnections); exit;
+      echo '</pre>';*/
+	  if( $oConnection->Exists($aRow['DBS_UID']) ) {
+		$oConnection->remove($aRow['DBS_UID']);
+	  }
       $oConnection->create($aRow);
     }
-  }
+  } #@!neyek
 
   function createReportTables($aReportTables, $aReportTablesVars)
   {
@@ -872,7 +881,7 @@ class Processes {
 
   function updateReportTables($aReportTables, $aReportTablesVars)
   {
-    $this->cleanReportTablesReferences($aReportTable);
+    $this->cleanupReportTablesReferences($aReportTable);
     $this->createReportTables($aReportTables, $aReportTablesVars);
   } #@!neyek
 
@@ -884,7 +893,7 @@ class Processes {
     }
   } #@!neyek
 
-  function cleanReportTablesReferences($aReportTables)
+  function cleanupReportTablesReferences($aReportTables)
   {
     foreach ( $aReportTables as $sKey => $aRow ) {
         $oReportTables = new ReportTables();
@@ -1260,7 +1269,7 @@ class Processes {
     $this->createStepTriggerRows ($oData->steptriggers);
     $this->createTaskUserRows ($oData->taskusers);
     $this->createGroupRow ($oData->groupwfs );
-    $this->createDBConnections($oData->dbconnections);
+    $this->createDBConnectionsRows($oData->dbconnections);
     $this->createReportTables($oData->reportTables, $oData->reportTablesVars);
     $this->createDynamformFiles ( $oData, $pmFilename  );
  }
@@ -1283,7 +1292,7 @@ class Processes {
     $this->createTriggerRows ($oData->triggers);
     $this->createStepTriggerRows ($oData->steptriggers);
     $this->createTaskUserRows ($oData->taskusers);
-    $this->createDBConnections($oData->dbconnections);
+    $this->createDBConnectionsRows($oData->dbconnections);
     $this->updateReportTables($oData->reportTables, $oData->reportTablesVars);
     $this->createDynamformFiles ( $oData, $pmFilename  );
     $this->createStepSupervisorRows($oData->stepSupervisor);
