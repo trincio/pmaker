@@ -16,6 +16,41 @@ require_once 'classes/model/om/BaseStepSupervisor.php';
  */
 class StepSupervisor extends BaseStepSupervisor {
 
+  public function load($Uid)
+  {
+    try {
+      $oRow = StepSupervisorPeer::retrieveByPK( $Uid );
+      if (!is_null($oRow))
+      {
+        $aFields = $oRow->toArray(BasePeer::TYPE_FIELDNAME);
+        $this->fromArray($aFields,BasePeer::TYPE_FIELDNAME);
+        $this->setNew(false);
+        return $aFields;
+      }
+      else {
+        throw( new Exception( "This row doesn't exists!" ));
+      }
+    }
+    catch (Exception $oError) {
+      throw($oError);
+    }
+  }
+
+  function Exists ( $Uid ) {
+    try {
+      $oPro = StepSupervisorPeer::retrieveByPk( $Uid );
+  	  if ( get_class ($oPro) == 'StepSupervisor' ) {
+  	    return true;
+  	  }
+      else {
+        return false;
+      }
+    }
+    catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
+  
   /**
 	 * Create the step supervisor registry
    * @param array $aData

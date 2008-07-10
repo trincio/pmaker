@@ -102,6 +102,21 @@ class DbSource extends BaseDbSource
         }
     }
 
+	function Exists ( $Uid ) {
+		try {
+			$oPro = DbSourcePeer::retrieveByPk( $Uid );
+			if ( get_class ($oPro) == 'DbSource' ) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		catch (Exception $oError) {
+			throw($oError);
+		}
+	}
+
     public function update($fields)
     {
         $con = Propel::getConnection(DbSourcePeer::DATABASE_NAME);
