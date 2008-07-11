@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<dynaForm
+  width="95%"
+>
+<title type="title" >
+  <en>Server Setup</en>
+</title>
+
+
+<WS_ENABLE_PHP5 type="yesno" size="30" maxlength="64">
+  <en>Enable PHP 5 SOAP services</en>
+</WS_ENABLE_PHP5>
+
+<WS_ENABLE_WSO2 type="yesno" >
+  <en>Enable WSO2 services</en>
+</WS_ENABLE_WSO2>
+
+<title2 type="title" >
+  <en>Client Setup</en>
+</title2>
+
+<WS_HOST type="text" size="30" maxlength="64">
+  <en>Server Host</en>
+</WS_HOST>
+
+<WS_WORKSPACE type="text" size="30" maxlength="64">
+  <en>Workspace</en>
+</WS_WORKSPACE>
+
+<button type="button" onclick="saveGroup( this.form );" >
+  <en>Save</en>
+</button> 
+
+</dynaForm>
