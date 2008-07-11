@@ -394,40 +394,38 @@ class Roles extends BaseRoles
     
     function getAllPermissions($ROL_UID)
     {
-        try {
-        	$c = new Criteria();
-        	$c->addSelectColumn(PermissionsPeer::PER_UID);
-        	$c->add(RolesPeer::ROL_UID, $ROL_UID);
-            $c->addJoin(RolesPeer::ROL_UID, RolesPermissionsPeer::ROL_UID);
-            $c->addJoin(RolesPermissionsPeer::PER_UID, PermissionsPeer::PER_UID);
-            
-        	$result = PermissionsPeer::doSelectRS($c);
-        	$result->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-        	$result->next();
+      try {
+        $c = new Criteria();
+        $c->addSelectColumn(PermissionsPeer::PER_UID);
+        $c->add(RolesPeer::ROL_UID, $ROL_UID);
+        $c->addJoin(RolesPeer::ROL_UID, RolesPermissionsPeer::ROL_UID);
+        $c->addJoin(RolesPermissionsPeer::PER_UID, PermissionsPeer::PER_UID);
+        
+        $result = PermissionsPeer::doSelectRS($c);
+        $result->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+        $result->next();
+        
+        $a = Array();
+        while($row = $result->getRow()){
+        	$a[] = $row['PER_UID'];
+			    $result->next();	
+			  }
         	
-        	$a = Array();
-            while($row = $result->getRow()){
-            	$a[] = $row['PER_UID'];
-				$result->next();	
-			}
-        	
-        	
-            $criteria = new Criteria();
-
-	        $criteria->addSelectColumn(PermissionsPeer::PER_UID);
-	        $criteria->addSelectColumn(PermissionsPeer::PER_CODE);
-	        $criteria->addSelectColumn(PermissionsPeer::PER_CREATE_DATE);
-	        $criteria->addSelectColumn(PermissionsPeer::PER_UPDATE_DATE);
-	        $criteria->addSelectColumn(PermissionsPeer::PER_STATUS);
-            $criteria->add(PermissionsPeer::PER_UID, $a, Criteria::NOT_IN);
-            
-            $oDataset = PermissionsPeer::doSelectRS($criteria);
-            $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-            return $oDataset;
-        }
-        catch (exception $e) {
-            throw $e;
-        }
+        $criteria = new Criteria();
+	      $criteria->addSelectColumn(PermissionsPeer::PER_UID);
+	      $criteria->addSelectColumn(PermissionsPeer::PER_CODE);
+	      $criteria->addSelectColumn(PermissionsPeer::PER_CREATE_DATE);
+	      $criteria->addSelectColumn(PermissionsPeer::PER_UPDATE_DATE);
+	      $criteria->addSelectColumn(PermissionsPeer::PER_STATUS);
+        $criteria->add(PermissionsPeer::PER_UID, $a, Criteria::NOT_IN);
+        
+        $oDataset = PermissionsPeer::doSelectRS($criteria);
+        $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+        return $oDataset;
+      }
+      catch (exception $e) {
+        throw $e;
+      }
     }
     
     function assignPermissionRole($sData)
