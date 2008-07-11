@@ -245,8 +245,8 @@ class Process extends BaseProcess {
 		$row = $rs->getRow();
 		$fields[] = $row['Field'];
   	}
-  	
-  	if (array ('PRO_DEBUG', $fields)) {
+  
+  	if (in_array ('PRO_DEBUG', $fields)) {
     	$SW_DEBUG = false;
 	} else {
 		$SW_DEBUG = true;
