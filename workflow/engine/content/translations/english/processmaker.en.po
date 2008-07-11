@@ -2,7 +2,7 @@ msgid ""
 msgstr "" 
 "Project-Id-Version: PM 4.0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-07-02 19:07+0100 \n"
+"PO-Revision-Date: 2008-07-11 10:44+0100 \n"
 "Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
 "Language-Team: Colosa Developers Team <developers@colosa.com>\n"
 "MIME-Version: 1.0\n"
@@ -2371,12 +2371,6 @@ msgstr "Remove"
 msgid "Are you sure you want to remove this dashboard?"
 msgstr "Are you sure you want to remove this dashboard?"
 
-# TRANSLATION
-# LABEL/ID_REQUEST
-#: LABEL/ID_REQUEST
-msgid "Request sended"
-msgstr "Request sended"
-
 # messages/messages_Edit.xml?MESS_TITLE
 # messages/messages_Edit.xml
 #: text - MESS_TITLE
@@ -2788,8 +2782,8 @@ msgstr "New"
 # roles/roles_Edit.xml?title
 # roles/roles_Edit.xml
 #: title - title
-msgid "[roles/roles_Edit.xml?title] Create a new Role"
-msgstr "Create a new Role"
+msgid "Edit role"
+msgstr "Edit role"
 
 # roles/roles_Edit.xml?ROL_CODE
 # roles/roles_Edit.xml
@@ -3101,7 +3095,7 @@ msgstr "Type"
 # dynaforms/dynaforms_Edit.xml
 #: dropdown - DYN_TYPE - xmlform
 msgid "[dynaforms/dynaforms_Edit.xml?DYN_TYPE-xmlform]"
-msgstr "Master form"
+msgstr "Normal"
 
 # dynaforms/dynaforms_Edit.xml?DYN_TYPE-grid
 # dynaforms/dynaforms_Edit.xml
@@ -4105,17 +4099,11 @@ msgstr "Field Name"
 msgid "[dynaforms/fields/submit.xml?PME_LABEL] Label"
 msgstr "Label"
 
-# dynaforms/fields/submit.xml?PME_SUBTITLE
-# dynaforms/fields/submit.xml
-#: title - PME_SUBTITLE
-msgid "[dynaforms/fields/submit.xml?PME_SUBTITLE] Appearance"
-msgstr "Appearance"
-
 # dynaforms/fields/submit.xml?PME_ONCLICK
 # dynaforms/fields/submit.xml
 #: text - PME_ONCLICK
-msgid "[dynaforms/fields/submit.xml?PME_ONCLICK] Group"
-msgstr "Group"
+msgid "Onclick"
+msgstr "Onclick"
 
 # dynaforms/fields/submit.xml?PME_ACCEPT
 # dynaforms/fields/submit.xml
@@ -4249,12 +4237,6 @@ msgstr "Field Name"
 msgid "[dynaforms/fields/file.xml?PME_LABEL] Label"
 msgstr "Label"
 
-# dynaforms/fields/file.xml?PME_SUBTITLE
-# dynaforms/fields/file.xml
-#: title - PME_SUBTITLE
-msgid "[dynaforms/fields/file.xml?PME_SUBTITLE] Appearance"
-msgstr "Appearance"
-
 # dynaforms/fields/file.xml?PME_ACCEPT
 # dynaforms/fields/file.xml
 #: button - PME_ACCEPT
@@ -4296,12 +4278,6 @@ msgstr "Link"
 #: text - PME_VALUE
 msgid "[dynaforms/fields/link.xml?PME_VALUE] Value"
 msgstr "Value"
-
-# dynaforms/fields/link.xml?PME_SUBTITLE
-# dynaforms/fields/link.xml
-#: title - PME_SUBTITLE
-msgid "[dynaforms/fields/link.xml?PME_SUBTITLE] Appearance"
-msgstr "Appearance"
 
 # dynaforms/fields/link.xml?PME_ACCEPT
 # dynaforms/fields/link.xml
@@ -4831,17 +4807,11 @@ msgstr "Field Name"
 msgid "[dynaforms/fields/button.xml?PME_LABEL] Label"
 msgstr "Label"
 
-# dynaforms/fields/button.xml?PME_SUBTITLE
-# dynaforms/fields/button.xml
-#: title - PME_SUBTITLE
-msgid "[dynaforms/fields/button.xml?PME_SUBTITLE] Appearance"
-msgstr "Appearance"
-
 # dynaforms/fields/button.xml?PME_ONCLICK
 # dynaforms/fields/button.xml
 #: text - PME_ONCLICK
-msgid "[dynaforms/fields/button.xml?PME_ONCLICK] Group"
-msgstr "Group"
+msgid "[dynaforms/fields/button.xml?PME_ONCLICK] Onclick"
+msgstr "Onclick"
 
 # dynaforms/fields/button.xml?PME_ACCEPT
 # dynaforms/fields/button.xml
@@ -5340,12 +5310,6 @@ msgstr "Field Name"
 #: text - PME_LABEL
 msgid "[dynaforms/fields/reset.xml?PME_LABEL] Label"
 msgstr "Label"
-
-# dynaforms/fields/reset.xml?PME_SUBTITLE
-# dynaforms/fields/reset.xml
-#: title - PME_SUBTITLE
-msgid "[dynaforms/fields/reset.xml?PME_SUBTITLE] Appearance"
-msgstr "Appearance"
 
 # dynaforms/fields/reset.xml?PME_ACCEPT
 # dynaforms/fields/reset.xml
@@ -5929,6 +5893,24 @@ msgstr "Title"
 msgid "[processes/processes_Edit.xml?PRO_DESCRIPTION] Description"
 msgstr "Description"
 
+# processes/processes_Edit.xml?PRO_DEBUG
+# processes/processes_Edit.xml
+#: dropdown - PRO_DEBUG
+msgid "[processes/processes_Edit.xml?PRO_DEBUG] Mode"
+msgstr "Mode"
+
+# processes/processes_Edit.xml?PRO_DEBUG-''
+# processes/processes_Edit.xml
+#: dropdown - PRO_DEBUG - ''
+msgid "[processes/processes_Edit.xml?PRO_DEBUG-'']"
+msgstr "Normal"
+
+# processes/processes_Edit.xml?PRO_DEBUG-1
+# processes/processes_Edit.xml
+#: dropdown - PRO_DEBUG - 1
+msgid "[processes/processes_Edit.xml?PRO_DEBUG-1]"
+msgstr "Debug"
+
 # processes/processes_Edit.xml?SUBMIT
 # processes/processes_Edit.xml
 #: button - SUBMIT
@@ -6235,6 +6217,30 @@ msgstr "Total Duration"
 msgid "Average"
 msgstr "Average"
 
+# reports/rpt4.xml?ORIGINE_TASK
+# reports/rpt4.xml
+#: text - ORIGINE_TASK
+msgid "Origine Task"
+msgstr "Origine Task"
+
+# reports/rpt4.xml?DESTINATION_TASK
+# reports/rpt4.xml
+#: text - DESTINATION_TASK
+msgid "Destination Task"
+msgstr "Destination Task"
+
+# reports/rpt4.xml?PORCENTAJE
+# reports/rpt4.xml
+#: text - PORCENTAJE
+msgid "Percentage (%)"
+msgstr "Percentage (%)"
+
+# reports/rpt4.xml?CASES
+# reports/rpt4.xml
+#: text - CASES
+msgid "[reports/rpt4.xml?CASES] Cases"
+msgstr "Cases"
+
 # reports/reportsList.xml?RPT_UID
 # reports/reportsList.xml
 #: text - RPT_UID
@@ -6379,6 +6385,108 @@ msgstr "Total Duration (Hours)"
 msgid "[reports/report3.xml?PROMEDIO] Average (Hours)"
 msgstr "Average (Hours)"
 
+# reports/rpt2.xml?PROPERTY_ADDRESS
+# reports/rpt2.xml
+#: text - PROPERTY_ADDRESS
+msgid "Property Address"
+msgstr "Property Address"
+
+# reports/rpt2.xml?PROGRAM
+# reports/rpt2.xml
+#: text - PROGRAM
+msgid "Program"
+msgstr "Program"
+
+# reports/rpt2.xml?CURRENT_STATUS
+# reports/rpt2.xml
+#: text - CURRENT_STATUS
+msgid "Current Status"
+msgstr "Current Status"
+
+# reports/rpt2.xml?DATE_STARTED
+# reports/rpt2.xml
+#: text - DATE_STARTED
+msgid "Date Started"
+msgstr "Date Started"
+
+# reports/rpt2.xml?POTENTIAL_PROFIT
+# reports/rpt2.xml
+#: text - POTENTIAL_PROFIT
+msgid "Potential Profit"
+msgstr "Potential Profit"
+
+# reports/rpt2.xml?LEAD_SOURCE
+# reports/rpt2.xml
+#: text - LEAD_SOURCE
+msgid "Lead Source"
+msgstr "Lead Source"
+
+# reports/rpt2.xml?FACT_FIND
+# reports/rpt2.xml
+#: text - FACT_FIND
+msgid "Fact Finding"
+msgstr "Fact Finding"
+
+# reports/rpt2.xml?OBSERVATION
+# reports/rpt2.xml
+#: text - OBSERVATION
+msgid "Observation"
+msgstr "Observation"
+
+# reports/rpt2.xml?EVALUATION1
+# reports/rpt2.xml
+#: text - EVALUATION1
+msgid "Evaluation1"
+msgstr "Evaluation1"
+
+# reports/rpt2.xml?EVALUATION2
+# reports/rpt2.xml
+#: text - EVALUATION2
+msgid "[reports/rpt2.xml?EVALUATION2] Evaluation1"
+msgstr "Evaluation1"
+
+# reports/rpt2.xml?NEGOTIATION
+# reports/rpt2.xml
+#: text - NEGOTIATION
+msgid "Negotiation"
+msgstr "Negotiation"
+
+# reports/rpt2.xml?OFFER
+# reports/rpt2.xml
+#: text - OFFER
+msgid "Offer"
+msgstr "Offer"
+
+# reports/rpt2.xml?MARKETING
+# reports/rpt2.xml
+#: text - MARKETING
+msgid "Marketing"
+msgstr "Marketing"
+
+# reports/rpt2.xml?CLOSING_NOTIFICATION
+# reports/rpt2.xml
+#: text - CLOSING_NOTIFICATION
+msgid "Closing Notification"
+msgstr "Closing Notification"
+
+# reports/rpt2.xml?CLOSING_SCHEDULED
+# reports/rpt2.xml
+#: text - CLOSING_SCHEDULED
+msgid "Closing Scheduled"
+msgstr "Closing Scheduled"
+
+# reports/rpt2.xml?CLOSING_COORDINATION
+# reports/rpt2.xml
+#: text - CLOSING_COORDINATION
+msgid "Closing Coordination"
+msgstr "Closing Coordination"
+
+# reports/rpt2.xml?CLOSING_DEALING
+# reports/rpt2.xml
+#: text - CLOSING_DEALING
+msgid "Closing Dealing"
+msgstr "Closing Dealing"
+
 # reports/report2.xml?PRO_TITLE
 # reports/report2.xml
 #: text - PRO_TITLE
@@ -6481,6 +6589,36 @@ msgstr "Total Duration"
 msgid "[reports/report3_dashboard.xml?PROMEDIO] Average"
 msgstr "Average"
 
+# reports/rpt_filter.xml?CASE_FROM
+# reports/rpt_filter.xml
+#: dropdown - CASE_FROM
+msgid "[reports/rpt_filter.xml?CASE_FROM] Tasks"
+msgstr "Tasks"
+
+# reports/rpt_filter.xml?CASE_FROM-''
+# reports/rpt_filter.xml
+#: dropdown - CASE_FROM - ''
+msgid "[reports/rpt_filter.xml?CASE_FROM-'']"
+msgstr "All"
+
+# reports/rpt_filter.xml?FROM
+# reports/rpt_filter.xml
+#: date - FROM
+msgid "Initial date"
+msgstr "Initial date"
+
+# reports/rpt_filter.xml?TO
+# reports/rpt_filter.xml
+#: date - TO
+msgid "End date"
+msgstr "End date"
+
+# reports/rpt_filter.xml?FILTER
+# reports/rpt_filter.xml
+#: submit - FILTER
+msgid "[reports/rpt_filter.xml?FILTER] Filter"
+msgstr "Filter"
+
 # reports/report4.xml?USER
 # reports/report4.xml
 #: text - USER
@@ -6576,6 +6714,72 @@ msgstr "Total Duration (Hours)"
 #: hours - PROMEDIO
 msgid "[reports/reports_Description.xml?PROMEDIO] Average (Hours)"
 msgstr "Average (Hours)"
+
+# reports/rpt1.xml?PROPERTY_ADDRESS
+# reports/rpt1.xml
+#: text - PROPERTY_ADDRESS
+msgid "[reports/rpt1.xml?PROPERTY_ADDRESS] Property Address"
+msgstr "Property Address"
+
+# reports/rpt1.xml?PROGRAM
+# reports/rpt1.xml
+#: text - PROGRAM
+msgid "[reports/rpt1.xml?PROGRAM] Program"
+msgstr "Program"
+
+# reports/rpt1.xml?CURRENT_STATUS
+# reports/rpt1.xml
+#: text - CURRENT_STATUS
+msgid "[reports/rpt1.xml?CURRENT_STATUS] Current Status"
+msgstr "Current Status"
+
+# reports/rpt1.xml?DATE_STARTED
+# reports/rpt1.xml
+#: text - DATE_STARTED
+msgid "[reports/rpt1.xml?DATE_STARTED] Date Started"
+msgstr "Date Started"
+
+# reports/rpt1.xml?POTENTIAL_PROFIT
+# reports/rpt1.xml
+#: text - POTENTIAL_PROFIT
+msgid "[reports/rpt1.xml?POTENTIAL_PROFIT] Potential Profit"
+msgstr "Potential Profit"
+
+# reports/rpt1.xml?LEAD_SOURCE
+# reports/rpt1.xml
+#: text - LEAD_SOURCE
+msgid "[reports/rpt1.xml?LEAD_SOURCE] Lead Source"
+msgstr "Lead Source"
+
+# reports/rpt1.xml?DO
+# reports/rpt1.xml
+#: text - DO
+msgid "DO"
+msgstr "DO"
+
+# reports/rpt1.xml?PO
+# reports/rpt1.xml
+#: text - PO
+msgid "PO"
+msgstr "PO"
+
+# reports/rpt1.xml?DF
+# reports/rpt1.xml
+#: text - DF
+msgid "DF"
+msgstr "DF"
+
+# reports/rpt1.xml?BMM
+# reports/rpt1.xml
+#: text - BMM
+msgid "BMM"
+msgstr "BMM"
+
+# reports/rpt1.xml?CC
+# reports/rpt1.xml
+#: text - CC
+msgid "CC"
+msgstr "CC"
 
 # reports/report1.xml?PRO_TITLE
 # reports/report1.xml
@@ -6678,6 +6882,30 @@ msgstr "Total Duration"
 #: hours - PROMEDIO
 msgid "[reports/report4_dashboard.xml?PROMEDIO] Average"
 msgstr "Average"
+
+# reports/rpt3.xml?ORIGINE_TASK
+# reports/rpt3.xml
+#: text - ORIGINE_TASK
+msgid "[reports/rpt3.xml?ORIGINE_TASK] Origine Task"
+msgstr "Origine Task"
+
+# reports/rpt3.xml?DESTINATION_TASK
+# reports/rpt3.xml
+#: text - DESTINATION_TASK
+msgid "[reports/rpt3.xml?DESTINATION_TASK] Destination Task"
+msgstr "Destination Task"
+
+# reports/rpt3.xml?PORCENTAJE
+# reports/rpt3.xml
+#: text - PORCENTAJE
+msgid "[reports/rpt3.xml?PORCENTAJE] Percentage (%)"
+msgstr "Percentage (%)"
+
+# reports/rpt3.xml?CASES
+# reports/rpt3.xml
+#: text - CASES
+msgid "[reports/rpt3.xml?CASES] Cases"
+msgstr "Cases"
 
 # setup/wsCaseList.xml?SESSION_ID
 # setup/wsCaseList.xml
@@ -8233,48 +8461,6 @@ msgstr "Send Email"
 msgid "[setup/plugin_ListOptions.xml?MNU_IMPORT] Import"
 msgstr "Import"
 
-# setup/webServicesSetup.xml?title
-# setup/webServicesSetup.xml
-#: title - title
-msgid "Server Setup"
-msgstr "Server Setup"
-
-# setup/webServicesSetup.xml?WS_ENABLE_PHP5
-# setup/webServicesSetup.xml
-#: yesno - WS_ENABLE_PHP5
-msgid "Enable PHP 5 SOAP services"
-msgstr "Enable PHP 5 SOAP services"
-
-# setup/webServicesSetup.xml?WS_ENABLE_WSO2
-# setup/webServicesSetup.xml
-#: yesno - WS_ENABLE_WSO2
-msgid "Enable WSO2 services"
-msgstr "Enable WSO2 services"
-
-# setup/webServicesSetup.xml?title2
-# setup/webServicesSetup.xml
-#: title - title2
-msgid "Client Setup"
-msgstr "Client Setup"
-
-# setup/webServicesSetup.xml?WS_HOST
-# setup/webServicesSetup.xml
-#: text - WS_HOST
-msgid "Server Host"
-msgstr "Server Host"
-
-# setup/webServicesSetup.xml?WS_WORKSPACE
-# setup/webServicesSetup.xml
-#: text - WS_WORKSPACE
-msgid "Workspace"
-msgstr "Workspace"
-
-# setup/webServicesSetup.xml?button
-# setup/webServicesSetup.xml
-#: button - button
-msgid "[setup/webServicesSetup.xml?button] Save"
-msgstr "Save"
-
 # setup/wsSendMessage.xml?SESSION_ID
 # setup/wsSendMessage.xml
 #: text - SESSION_ID
@@ -8394,30 +8580,6 @@ msgstr "Process ID"
 #: dropdown - TASK_ID
 msgid "Task ID"
 msgstr "Task ID"
-
-# setup/wsNewCase.xml?NAME1
-# setup/wsNewCase.xml
-#: text - NAME1
-msgid "Name 1"
-msgstr "Name 1"
-
-# setup/wsNewCase.xml?VALUE1
-# setup/wsNewCase.xml
-#: text - VALUE1
-msgid "Value 1"
-msgstr "Value 1"
-
-# setup/wsNewCase.xml?NAME2
-# setup/wsNewCase.xml
-#: text - NAME2
-msgid "Name 2"
-msgstr "Name 2"
-
-# setup/wsNewCase.xml?VALUE2
-# setup/wsNewCase.xml
-#: text - VALUE2
-msgid "Value 2"
-msgstr "Value 2"
 
 # setup/wsNewCase.xml?ACTION
 # setup/wsNewCase.xml
@@ -8572,25 +8734,25 @@ msgstr "User ID"
 # setup/wsNewCaseImpersonate.xml?NAME1
 # setup/wsNewCaseImpersonate.xml
 #: text - NAME1
-msgid "[setup/wsNewCaseImpersonate.xml?NAME1] Name 1"
+msgid "Name 1"
 msgstr "Name 1"
 
 # setup/wsNewCaseImpersonate.xml?VALUE1
 # setup/wsNewCaseImpersonate.xml
 #: text - VALUE1
-msgid "[setup/wsNewCaseImpersonate.xml?VALUE1] Value 1"
+msgid "Value 1"
 msgstr "Value 1"
 
 # setup/wsNewCaseImpersonate.xml?NAME2
 # setup/wsNewCaseImpersonate.xml
 #: text - NAME2
-msgid "[setup/wsNewCaseImpersonate.xml?NAME2] Name 2"
+msgid "Name 2"
 msgstr "Name 2"
 
 # setup/wsNewCaseImpersonate.xml?VALUE2
 # setup/wsNewCaseImpersonate.xml
 #: text - VALUE2
-msgid "[setup/wsNewCaseImpersonate.xml?VALUE2] Value 2"
+msgid "Value 2"
 msgstr "Value 2"
 
 # setup/wsNewCaseImpersonate.xml?ACTION
@@ -9355,12 +9517,6 @@ msgstr "Confirm Password"
 msgid "[users/myInfoView.xml?TITLEADD] Additional Information"
 msgstr "Additional Information"
 
-# users/myInfoView.xml?USR_PHOTO
-# users/myInfoView.xml
-#: image - USR_PHOTO
-msgid "[users/myInfoView.xml?USR_PHOTO] Photo"
-msgstr "Photo"
-
 # users/myInfoView.xml?USR_RESUME
 # users/myInfoView.xml
 #: link - USR_RESUME
@@ -9961,12 +10117,6 @@ msgstr "Confirm Password"
 msgid "[users/users_View.xml?TITLEADD] Additional Information"
 msgstr "Additional Information"
 
-# users/users_View.xml?USR_PHOTO
-# users/users_View.xml
-#: image - USR_PHOTO
-msgid "[users/users_View.xml?USR_PHOTO] Photo"
-msgstr "Photo"
-
 # users/users_View.xml?USR_RESUME
 # users/users_View.xml
 #: link - USR_RESUME
@@ -9991,12 +10141,6 @@ msgstr "Allow arbitrary transfer (Ad hoc)"
 msgid "After derivation notify to each next user"
 msgstr "After derivation notify to each next user"
 
-# tasks/tasks_Notifications.xml?TAS_DEF_MESSAGE
-# tasks/tasks_Notifications.xml
-#: textareapm - TAS_DEF_MESSAGE
-msgid "[tasks/tasks_Notifications.xml?TAS_DEF_MESSAGE] Message"
-msgstr "Message"
-
 # tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_TYPE
 # tasks/tasks_AssignmentRules.xml
 #: radiogroup - TAS_ASSIGN_TYPE
@@ -10020,30 +10164,6 @@ msgstr "Manual Assignment"
 #: radiogroup - TAS_ASSIGN_TYPE - EVALUATE
 msgid "[tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_TYPE-EVALUATE]"
 msgstr "Value Based Assignment"
-
-# tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_VARIABLE
-# tasks/tasks_AssignmentRules.xml
-#: textpm - TAS_ASSIGN_VARIABLE
-msgid "Variable for Value Based Assignment"
-msgstr "Variable for Value Based Assignment"
-
-# tasks/tasks_Labels.xml?TAS_DEF_TITLE
-# tasks/tasks_Labels.xml
-#: textareapm - TAS_DEF_TITLE
-msgid "Case Title"
-msgstr "Case Title"
-
-# tasks/tasks_Labels.xml?TAS_DEF_DESCRIPTION
-# tasks/tasks_Labels.xml
-#: textareapm - TAS_DEF_DESCRIPTION
-msgid "Case Description"
-msgstr "Case Description"
-
-# tasks/tasks_Labels.xml?TAS_DEF_PROC_CODE
-# tasks/tasks_Labels.xml
-#: textareapm - TAS_DEF_PROC_CODE
-msgid "Case Status"
-msgstr "Case Status"
 
 # tasks/tasks_Owner.xml?TAS_OWNER_APP
 # tasks/tasks_Owner.xml
@@ -11833,6 +11953,12 @@ msgstr "Task"
 msgid "[cases/cases_ListToRevise.xml?APP_PRO_TITLE] Process"
 msgstr "Process"
 
+# cases/cases_ListToRevise.xml?APP_CURRENT_USER
+# cases/cases_ListToRevise.xml
+#: text - APP_CURRENT_USER
+msgid "Current User"
+msgstr "Current User"
+
 # cases/cases_ListToRevise.xml?APP_DEL_PREVIOUS_USER
 # cases/cases_ListToRevise.xml
 #: text - APP_DEL_PREVIOUS_USER
@@ -11893,6 +12019,36 @@ msgstr "Very Low"
 msgid "[cases/cases_ListToRevise.xml?DEL_INIT_DATE] Start Date"
 msgstr "Start Date"
 
+# cases/cases_ListToRevise.xml?APP_STATUS
+# cases/cases_ListToRevise.xml
+#: dropdown - APP_STATUS
+msgid "[cases/cases_ListToRevise.xml?APP_STATUS] Status"
+msgstr "Status"
+
+# cases/cases_ListToRevise.xml?APP_STATUS-DRAFT
+# cases/cases_ListToRevise.xml
+#: dropdown - APP_STATUS - DRAFT
+msgid "[cases/cases_ListToRevise.xml?APP_STATUS-DRAFT]"
+msgstr "Draft"
+
+# cases/cases_ListToRevise.xml?APP_STATUS-TO_DO
+# cases/cases_ListToRevise.xml
+#: dropdown - APP_STATUS - TO_DO
+msgid "[cases/cases_ListToRevise.xml?APP_STATUS-TO_DO]"
+msgstr "To Do"
+
+# cases/cases_ListToRevise.xml?APP_STATUS-CANCELLED
+# cases/cases_ListToRevise.xml
+#: dropdown - APP_STATUS - CANCELLED
+msgid "[cases/cases_ListToRevise.xml?APP_STATUS-CANCELLED]"
+msgstr "Cancelled"
+
+# cases/cases_ListToRevise.xml?APP_STATUS-COMPLETED
+# cases/cases_ListToRevise.xml
+#: dropdown - APP_STATUS - COMPLETED
+msgid "[cases/cases_ListToRevise.xml?APP_STATUS-COMPLETED]"
+msgstr "Completed"
+
 # cases/cases_ListToRevise.xml?SEARCH
 # cases/cases_ListToRevise.xml
 #: button - SEARCH
@@ -11922,6 +12078,12 @@ msgstr "Task"
 #: text - APP_PRO_TITLE
 msgid "[cases/cases_ListAll.xml?APP_PRO_TITLE] Process"
 msgstr "Process"
+
+# cases/cases_ListAll.xml?APP_CURRENT_USER
+# cases/cases_ListAll.xml
+#: text - APP_CURRENT_USER
+msgid "[cases/cases_ListAll.xml?APP_CURRENT_USER] Current User"
+msgstr "Current User"
 
 # cases/cases_ListAll.xml?APP_DEL_PREVIOUS_USER
 # cases/cases_ListAll.xml
@@ -11998,7 +12160,7 @@ msgstr "Case Resume"
 # cases/cases_Resume.xml?TITLE
 # cases/cases_Resume.xml
 #: text - TITLE
-msgid "[cases/cases_Resume.xml?TITLE] Case Title"
+msgid "Case Title"
 msgstr "Case Title"
 
 # cases/cases_Resume.xml?CREATOR
@@ -12022,7 +12184,7 @@ msgstr "Last Update"
 # cases/cases_Resume.xml?STATUS
 # cases/cases_Resume.xml
 #: text - STATUS
-msgid "[cases/cases_Resume.xml?STATUS] Case Status"
+msgid "Case Status"
 msgstr "Case Status"
 
 # cases/cases_Resume.xml?DEL_THREAD_STATUS
@@ -12124,8 +12286,8 @@ msgstr "System Information"
 # login/dbInfo.xml?FLUID
 # login/dbInfo.xml
 #: caption - FLUID
-msgid "inventory"
-msgstr "inventory"
+msgid "ProcessMaker"
+msgstr "ProcessMaker"
 
 # login/dbInfo.xml?SYSTEM
 # login/dbInfo.xml
@@ -12214,7 +12376,7 @@ msgstr "Password"
 # login/sysLogin.xml?USER_ENV
 # login/sysLogin.xml
 #: text - USER_ENV
-msgid "[login/sysLogin.xml?USER_ENV] Workspace"
+msgid "Workspace"
 msgstr "Workspace"
 
 # login/sysLogin.xml?BSUBMIT
@@ -12306,12 +12468,6 @@ msgstr "Documentation"
 #: dropdown - STEP_TYPE_OBJ - EXTERNAL
 msgid "[steps/steps_availableBB.xml?STEP_TYPE_OBJ-EXTERNAL]"
 msgstr "External Step"
-
-# steps/conditions_Edit.xml?STEP_CONDITION
-# steps/conditions_Edit.xml
-#: textareapm - STEP_CONDITION
-msgid "[steps/conditions_Edit.xml?STEP_CONDITION] Condition"
-msgstr "Condition"
 
 # steps/conditions_Edit.xml?ACCEPT
 # steps/conditions_Edit.xml
@@ -12409,12 +12565,6 @@ msgstr "Available Triggers"
 msgid "[steps/triggers_Assign.xml?TRI_UID] Triggers"
 msgstr "Triggers"
 
-# steps/triggers_Assign.xml?ST_CONDITION
-# steps/triggers_Assign.xml
-#: textareapm - ST_CONDITION
-msgid "[steps/triggers_Assign.xml?ST_CONDITION] Condition"
-msgstr "Condition"
-
 # steps/triggers_Assign.xml?ASSIGN
 # steps/triggers_Assign.xml
 #: button - ASSIGN
@@ -12432,12 +12582,6 @@ msgstr "All the triggers available were assigned!"
 #: button - ClOSE
 msgid "[steps/triggers_NoAssign.xml?ClOSE] Close"
 msgstr "Close"
-
-# steps/triggersCondition_Edit.xml?ST_CONDITION
-# steps/triggersCondition_Edit.xml
-#: textareapm - ST_CONDITION
-msgid "[steps/triggersCondition_Edit.xml?ST_CONDITION] Condition"
-msgstr "Condition"
 
 # steps/triggersCondition_Edit.xml?SAVE
 # steps/triggersCondition_Edit.xml
@@ -12732,12 +12876,6 @@ msgstr "Title"
 #: textarea - TRI_DESCRIPTION
 msgid "[triggers/triggers_Edit.xml?TRI_DESCRIPTION] Description"
 msgstr "Description"
-
-# triggers/triggers_Edit.xml?TRI_WEBBOT
-# triggers/triggers_Edit.xml
-#: textareapm - TRI_WEBBOT
-msgid "Script"
-msgstr "Script"
 
 # triggers/triggers_Edit.xml?SAVE
 # triggers/triggers_Edit.xml

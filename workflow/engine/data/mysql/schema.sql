@@ -359,6 +359,7 @@ CREATE TABLE `PROCESS`
 	`PRO_WIDTH` INTEGER default 10000 NOT NULL,
 	`PRO_TITLE_X` INTEGER default 0 NOT NULL,
 	`PRO_TITLE_Y` INTEGER default 6 NOT NULL,
+	`PRO_DEBUG` INTEGER default 0 NOT NULL,
 	PRIMARY KEY (`PRO_UID`)
 )Type=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Store process Information';
 #-----------------------------------------------------------------------------
