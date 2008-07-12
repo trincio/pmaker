@@ -406,14 +406,13 @@ function run_new_plugin ( $task, $args)
   $pluginHome = PATH_OUTTRUNK . 'plugins' . PATH_SEP . $pluginName. PATH_SEP . $pluginName;
 
   //verify if plugin exists, and then ask for overwrite
-/*
   $pluginClassFilename = PATH_PLUGINS . $pluginName . PATH_SEP . 'class.' . $pluginName . '.php';
   if ( is_file ( $pluginClassFilename ) ) { 
     printf("The plugin %s exists in this file %s \n", pakeColor::colorize( $pluginName, 'ERROR'), pakeColor::colorize( $pluginClassFilename, 'INFO') );
     $overwrite = strtolower ( prompt ( 'Do you want to create a new plugin? [Y/n]' ));
     if ( $overwrite == 'n' ) die ;
   }
-*/
+
   printf("creating plugin directory %s \n", pakeColor::colorize( $pluginOutDirectory, 'INFO'));
   
   G::verifyPath ( $pluginOutDirectory, true );
@@ -421,12 +420,12 @@ function run_new_plugin ( $task, $args)
   G::verifyPath ( $pluginHome . PATH_SEP . 'config', true );
   G::verifyPath ( $pluginHome . PATH_SEP . 'data', true );
   
-  //main php file 
-  savePluginFile ( $pluginName . '.php', 'pluginMainFile', $pluginName, $pluginName, $fields );
-  savePluginFile ( $pluginName . PATH_SEP . 'class.' . $pluginName . '.php', 'pluginClass', $pluginName, $pluginName, $fields );
-
+  //config
+  savePluginFile ( $pluginName . PATH_SEP . 'config' .PATH_SEP . 'schema.xml', 'pluginSchema.xml', $pluginName, $pluginName );
+  savePluginFile ( $pluginName . PATH_SEP . 'config' .PATH_SEP . 'propel.ini', 'pluginPropel.ini', $pluginName, $pluginName );
+  savePluginFile ( $pluginName . PATH_SEP . 'config' .PATH_SEP . 'propel.mysql.ini', 'pluginPropel.mysql.ini', $pluginName, $pluginName );
+  
   //create a logo to use instead the Workspace logo
-/*  
   $changeLogo = strtolower ( prompt ( 'Change system logo [y/N]' ));
 
   $fields = array();
@@ -435,11 +434,11 @@ function run_new_plugin ( $task, $args)
     createPngLogo ( $filePng, $pluginName );
     $fields['changeLogo'][] = array( 'className' => $pluginName);
   }
-*/
 
   //menu  
   $menu = strtolower ( prompt ( 'Create an example Page [Y/n]' ));
   if ( $menu == 'y' ) {
+    $fields['menu'][] = array( 'className' => $pluginName );
     savePluginFile ( $pluginName . PATH_SEP . 'menu' . $pluginName . '.php', 'pluginMenu', $pluginName, $pluginName );
     savePluginFile ( $pluginName . PATH_SEP . $pluginName . 'List.php', 'pluginWelcome.php', $pluginName, $pluginName );
     savePluginFile ( $pluginName . PATH_SEP . 'welcome.xml', 'welcome.xml', $pluginName, $pluginName );
@@ -452,11 +451,23 @@ function run_new_plugin ( $task, $args)
   }
 
 
-  //config
-  savePluginFile ( $pluginName . PATH_SEP . 'config' .PATH_SEP . 'schema.xml', 'pluginSchema.xml', $pluginName, $pluginName );
-  savePluginFile ( $pluginName . PATH_SEP . 'config' .PATH_SEP . 'propel.ini', 'pluginPropel.ini', $pluginName, $pluginName );
-  savePluginFile ( $pluginName . PATH_SEP . 'config' .PATH_SEP . 'propel.mysql.ini', 'pluginPropel.mysql.ini', $pluginName, $pluginName );
-  
+  $dashboard = strtolower ( prompt ( 'Create an element for the Processmaker Dashboard [y/N]' ));
+  if ( $dashboard == 'y' ) {
+    $fields['dashboard'][] = array( 'className' => $pluginName);
+    savePluginFile ( $pluginName . PATH_SEP . 'drawChart.php', 'pluginDrawChart.php', $pluginName, $pluginName, $fields );
+  }
+
+  $report = strtolower ( prompt ( 'Create a Report for Processmaker [y/N]' ));
+  if ( $report == 'y' ) {
+    $fields['report'][] = array( 'className' => $pluginName);
+    savePluginFile ( $pluginName . PATH_SEP . 'report.xml', 'pluginReport.xml', $pluginName, $pluginName, $fields );
+  }
+
+
+  //main php file 
+  savePluginFile ( $pluginName . '.php', 'pluginMainFile', $pluginName, $pluginName, $fields );
+  savePluginFile ( $pluginName . PATH_SEP . 'class.' . $pluginName . '.php', 'pluginClass', $pluginName, $pluginName, $fields );
+
   printf("creating symlinks %s \n", pakeColor::colorize( $pluginDirectory, 'INFO'));
   symlink ($pluginOutDirectory. PATH_SEP . $pluginName. '.php', PATH_PLUGINS . $pluginName . '.php');
   symlink ($pluginOutDirectory. PATH_SEP . $pluginName,         $pluginDirectory);
