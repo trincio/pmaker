@@ -444,7 +444,6 @@
     var $result=array();
     var $cursor=0;
     function XMLResult( $result = array() ){
-      G::LoadSystem("debugger");
       $this->result = $result;
       $this->cursor = 0;
     }

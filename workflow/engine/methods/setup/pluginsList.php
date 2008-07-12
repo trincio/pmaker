@@ -48,8 +48,8 @@ $items[] = array ( 'id' => 'char', 'title' => 'char', 'type' => 'char', 'creator
   $oPluginRegistry =& PMPluginRegistry::getSingleton();
   if ($handle = opendir( PATH_PLUGINS  )) {
     while ( false !== ($file = readdir($handle))) {
-    	 if ( strpos($file, '.php',1) ) {
-         require_once ( PATH_PLUGINS . $file );
+    	 if ( strpos($file, '.php',1) && is_file(PATH_PLUGINS . $file) ) {
+         include_once ( PATH_PLUGINS . $file );
          $pluginDetail = $oPluginRegistry->getPluginDetails ( $file );
          $status = $pluginDetail->enabled ? 'Enabled' : 'Disabled';
          if ( isset ($pluginDetail->aWorkspaces ) ) {
