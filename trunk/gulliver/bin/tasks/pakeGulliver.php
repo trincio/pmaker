@@ -101,6 +101,12 @@ function createPngLogo (  $filePng, $text ) {
   imagefill($im, 0, 0, $transparent);
   imagesavealpha($im, true);  
   imagepng($im, $filePng);
+
+  $aux = explode (PATH_SEP, $filePng );
+  $auxName = $aux[ count($aux)-2 ] . PATH_SEP . $aux[ count($aux)-1 ];
+  $iSize = filesize ( $filePng );
+  printf("saved %s bytes in file %s [%s]\n", pakeColor::colorize( $iSize, 'INFO'), pakeColor::colorize( $auxName, 'INFO'), pakeColor::colorize( $aux[ count($aux)-1 ], 'INFO') );    
+  
 }
     
 function run_generate_unit_test_class ( $task, $args) 
@@ -399,12 +405,28 @@ function run_new_plugin ( $task, $args)
   $pluginOutDirectory = PATH_OUTTRUNK . 'plugins' . PATH_SEP . $pluginName;
   $pluginHome = PATH_OUTTRUNK . 'plugins' . PATH_SEP . $pluginName. PATH_SEP . $pluginName;
 
+  //verify if plugin exists, and then ask for overwrite
+/*
+  $pluginClassFilename = PATH_PLUGINS . $pluginName . PATH_SEP . 'class.' . $pluginName . '.php';
+  if ( is_file ( $pluginClassFilename ) ) { 
+    printf("The plugin %s exists in this file %s \n", pakeColor::colorize( $pluginName, 'ERROR'), pakeColor::colorize( $pluginClassFilename, 'INFO') );
+    $overwrite = strtolower ( prompt ( 'Do you want to create a new plugin? [Y/n]' ));
+    if ( $overwrite == 'n' ) die ;
+  }
+*/
   printf("creating plugin directory %s \n", pakeColor::colorize( $pluginOutDirectory, 'INFO'));
   
   G::verifyPath ( $pluginOutDirectory, true );
   G::verifyPath ( $pluginHome . PATH_SEP . 'public_html', true );
   G::verifyPath ( $pluginHome . PATH_SEP . 'config', true );
   G::verifyPath ( $pluginHome . PATH_SEP . 'data', true );
+  
+  //main php file 
+  savePluginFile ( $pluginName . '.php', 'pluginMainFile', $pluginName, $pluginName, $fields );
+  savePluginFile ( $pluginName . PATH_SEP . 'class.' . $pluginName . '.php', 'pluginClass', $pluginName, $pluginName, $fields );
+
+  //create a logo to use instead the Workspace logo
+/*  
   $changeLogo = strtolower ( prompt ( 'Change system logo [y/N]' ));
 
   $fields = array();
@@ -413,6 +435,15 @@ function run_new_plugin ( $task, $args)
     createPngLogo ( $filePng, $pluginName );
     $fields['changeLogo'][] = array( 'className' => $pluginName);
   }
+*/
+
+  //menu  
+  $menu = strtolower ( prompt ( 'Create an example Page [Y/n]' ));
+  if ( $menu == 'y' ) {
+    savePluginFile ( $pluginName . PATH_SEP . 'menu' . $pluginName . '.php', 'pluginMenu', $pluginName, $pluginName );
+    savePluginFile ( $pluginName . PATH_SEP . $pluginName . 'List.php', 'pluginWelcome.php', $pluginName, $pluginName );
+    savePluginFile ( $pluginName . PATH_SEP . 'welcome.xml', 'welcome.xml', $pluginName, $pluginName );
+  }
 
   $externalStep = strtolower ( prompt ( 'Create external step for Processmaker[y/N]' ));
   if ( $externalStep == 'y' ) {
@@ -420,12 +451,6 @@ function run_new_plugin ( $task, $args)
     savePluginFile ( $pluginName . PATH_SEP . 'step' . $pluginName . '.php', 'pluginStep', $pluginName, $pluginName );
   }
 
-  //main php file 
-  savePluginFile ( $pluginName . '.php', 'pluginMainFile', $pluginName, $pluginName, $fields );
-  savePluginFile ( $pluginName . PATH_SEP . 'class.' . $pluginName . '.php', 'pluginClass', $pluginName, $pluginName, $fields );
-
-  //menu  
-  savePluginFile ( $pluginName . PATH_SEP . 'menu' . $pluginName . '.php', 'pluginMenu', $pluginName, $pluginName );
 
   //config
   savePluginFile ( $pluginName . PATH_SEP . 'config' .PATH_SEP . 'schema.xml', 'pluginSchema.xml', $pluginName, $pluginName );
