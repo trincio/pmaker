@@ -312,6 +312,21 @@ class wsBase
 
 	public function createUser( $userId, $firstname, $lastname, $email, $role, $password) {
 		try {	
+			if($userId=='')
+			{  $result = new wsResponse (20, "User ID is required");
+				 return $result;
+			}
+			
+			if($password=='')
+			{  $result = new wsResponse (21, "Password is required");
+				 return $result;
+			}
+			
+			if($firstname=='')
+			{  $result = new wsResponse (22, "Firstname is required");
+				 return $result;
+			}
+						
 			global $RBAC;
 			$RBAC->initRBAC();
 			$user=$RBAC->verifyUser($userId);
