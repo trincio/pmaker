@@ -3,7 +3,6 @@
 
 <MNU_ADD type="link" value='' link="#" onclick="triggerNew(); return false;" colAlign="left" colWidth="35">
   <en>New</en>
-  <es>Nuevo</es>
 </MNU_ADD>
 
 <!--<PAGED_TABLE_FAST_SEARCH type="FastSearch" label="@G::LoadTranslation(ID_SEARCH)"/>-->
@@ -19,12 +18,12 @@
 <JS type="javascript" replaceTags="1">
 function triggerNew()
 {
-  popupWindow('@G::LoadTranslation(ID_NEW_TRIGGERS)', '@G::encryptlink(@#triggersEdit)?PRO_UID=@%PRO_UID' , 500, 310);
+  popupWindow('@G::LoadTranslation(ID_NEW_TRIGGERS)', '@G::encryptlink(@#triggersEdit)?PRO_UID=@%PRO_UID' , 500, 500);
 }
 
 function triggerEdit(sUID)
 {
-  popupWindow('@G::LoadTranslation(ID_EDIT_TRIGGERS)', '@G::encryptlink(@#triggersEdit)?TRI_UID=' + sUID , 500, 310);
+  popupWindow('@G::LoadTranslation(ID_EDIT_TRIGGERS)', '@G::encryptlink(@#triggersEdit)?TRI_UID=' + sUID , 500, 500);
 }
 
 function triggerSave(form)
@@ -50,7 +49,6 @@ function triggerDelete(sUID)
 <!-- Default Search option -->
 <!--<MNU_SEARCH type="link" value='' link="#" onclick="showHideSearch('@#SEARCH_FILTER_FORM',this);return false;" colAlign="right" colWidth="130">
   <en>Advanced Search</en>
-  <es>Buscar Avanzado</es>
 </MNU_SEARCH>-->
 
 <SEARCH_FILTER_FORM type="private"/>
