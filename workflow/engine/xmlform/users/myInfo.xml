@@ -23,7 +23,7 @@
   SELECT USR_UID, USR_USERNAME FROM USERS WHERE USR_USERNAME = @@USR_USERNAME
   <en>Exists</en>
 </VERIFY>-->
-<USR_EMAIL type="text" size="35" maxlength="35" validate="Email" defaultvalue="" required="0" group="1" dependentfields="" linkfield="" strto="" readonly="0" noshowingrid="0" readonlyingrid="0" totalizeable="0" sqlconnection="">
+<USR_EMAIL type="text" size="35" maxlength="50" validate="Email" defaultvalue="" required="0" group="1" dependentfields="" linkfield="" strto="" readonly="0" noshowingrid="0" readonlyingrid="0" totalizeable="0" sqlconnection="">
   <en>Email</en>
 </USR_EMAIL>
 
