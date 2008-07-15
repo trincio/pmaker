@@ -299,5 +299,27 @@ class Groups
             throw ($oError);
         }
 	  }
+	  
+	  function verifyGroup($GrpUid)
+    {		
+    	  try {
+            $aUsers = array();
+            $oCriteria = new Criteria();
+            $oCriteria->addJoin(UsersPeer::USR_UID, GroupUserPeer::USR_UID, Criteria::LEFT_JOIN);
+            $oCriteria->add(GroupUserPeer::GRP_UID, $sGroupUID);
+            $oCriteria->add(UsersPeer::USR_STATUS, 'ACTIVE');
+            $oDataset = UsersPeer::doSelectRS($oCriteria);
+            $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+            $oDataset->next();
+            $aRow = $oDataset->getRow();
+            if(is_array($aRow))            
+            	return 1;
+            else
+            	return 0;	
+        }
+        catch (exception $oError) {
+            throw ($oError);
+        }
+	  }
 }
 ?>

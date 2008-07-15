@@ -284,9 +284,9 @@ class RBAC_User extends DBTable
 	* @return variant
 	*/
   function verifyUser($sUsername)
-  {
+  { 
   	if ($sUsername !== '')
-  	{  		
+  	{  	
   	    $this->table_keys = array('USR_USERNAME');
   	    $this->oObject    = parent::load($sUsername);
   	    $this->table_keys = array('USR_UID');
