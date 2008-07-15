@@ -469,7 +469,7 @@ switch ($_GET['TYPE'])
     }
     $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['NEXT_STEP'] = $aNextStep['PAGE'];
 
-    /** Added Bye erik
+    /** Added By erik
      * date: 16-05-08
 	 * Description: this was added for the additional database connections */
     G::LoadClass ('dbConnections');
