@@ -155,6 +155,17 @@ class RBAC
     $res = $this->userObj->verifyUser($strUser);
     return $res;    
   }
+  
+  /**
+   * Verify if the user has a right for UID
+   *
+   * @author Everth S. Berrios
+   * @access public   
+   */
+  function verifyUserId($strUserId) {  	
+    $res = $this->userObj->verifyUserId($strUserId);
+    return $res;    
+  }
 
   /**
    * Verify if the user has a right

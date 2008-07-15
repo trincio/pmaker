@@ -310,7 +310,7 @@ class wsBase
 		}
 	}
 
-	public function createUser( $userId, $firstname, $lastname, $email, $role, $password) {
+	public function createUser( $userId, $firstname, $lastname, $email, $role, $password) {		
 		try {	
 			if($userId=='')
 			{  $result = new wsResponse (20, "User ID is required");
@@ -383,10 +383,38 @@ class wsBase
 		}
 	}
 
-	public function assignUserToGroup( $userId, $groupId) {
-		try {
+	public function assignUserToGroup( $userId, $groupId) {		
+		try {			
+			global $RBAC;
+			$RBAC->initRBAC();
+			$user=$RBAC->verifyUserId($userId);						
+			if($user==0){
+				$result = new wsResponse (3, "User not registered in the system");
+				return $result;
+			}
+			
 			G::LoadClass('groups');
 			$groups = new Groups;
+			$very_group=$groups->verifyGroup( $groupId );
+			if($very_group==0){
+				$result = new wsResponse (23, "Group not registered in the system");
+				return $result;
+			}
+			
+			$oRBAC = RBAC::getSingleton();     
+      $oRBAC->loadUserRolePermission($oRBAC->sSystem, $userId);
+      $aPermissions = $oRBAC->aUserInfo[$oRBAC->sSystem]['PERMISSIONS'];     
+      foreach ($aPermissions as $aPermission) {
+        if ($aPermission['PER_CODE'] == 'PM_FACTORY') 
+        {
+          exit;
+        }
+        else
+        {
+        	$result = new wsResponse (24, "You do not have privileges");
+					return $result;
+        }
+      }
 			
 			$very_user=$groups->verifyUsertoGroup( $groupId, $userId);
 			if($very_user==1){
