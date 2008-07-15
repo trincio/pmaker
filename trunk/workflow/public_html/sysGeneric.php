@@ -79,15 +79,15 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
 //  ************* creat headPublisher singleton *****************
   G::LoadSystem('headPublisher');
   $oHeadPublisher =& headPublisher::getSingleton();
-  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/maborak.js' );   
-  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'common/core/common.js' );     
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/maborak.js' );
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'common/core/common.js' );
   $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'common/core/webResource.js' );
-  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'dveditor/core/dveditor.js' ); 
-  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'common/tree/tree.js' );       
-  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'json/core/json.js' );         
-  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'form/core/form.js' );         
-  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'form/core/pagedTable.js' );   
-  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'grid/core/grid.js' );         
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'dveditor/core/dveditor.js' );
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'common/tree/tree.js' );
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'json/core/json.js' );
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'form/core/form.js' );
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'form/core/pagedTable.js' );
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'grid/core/grid.js' );
   $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.panel.js'    , true );
   $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.validator.js', true );
   $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.app.js'      , true );
@@ -102,7 +102,7 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
   $oHeadPublisher->addMaborakFile( PATH_CORE . 'js' . PATH_SEP . 'cases/core/cases_Step.js', true );
   $oHeadPublisher->addMaborakFile( PATH_CORE . 'js' . PATH_SEP . 'processmap/core/processmap.js', true );
   $oHeadPublisher->addMaborakFile( PATH_THIRDPARTY . 'htmlarea/editor.js', true );
-  
+
 
 //************ defining Virtual URLs ****************/
   $virtualURITable = array();
@@ -131,9 +131,41 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
 //************** verify if we need to redirect or stream the file **************
   if ( G::virtualURI($_SERVER['REQUEST_URI'], $virtualURITable , $realPath )) {
   	// review if the file requested belongs to public_html plugin
+
     if ( substr ( $realPath, 0,6) == 'plugin' ) {
+      /*
+       * By JHL Jul 14, 08
+       * Another way to get the path of Plugin public_html and stream the correspondent file
+       * TODO: $pathsQuery will be used?
+       */
+      $pathsQuery="";
+      //Get the query side
+      /*
+       * Did we use this variable $pathsQuery for something??
+       */
+      $forQuery=explode("?",$realPath);
+      if(isset($forQuery[1])){
+      	$pathsQuery=$forQuery[1];
+      }
+
+      //Get tha path in array
+      $paths = explode ( PATH_SEP, $forQuery[0] );
+      //remove the "plugin" word from
+      $paths[0] = substr ( $paths[0],6);
+      //Get the Plugin Folder, always the first element
+      $pluginFolder=array_shift($paths);
+      //The other parts are the realpath into public_html (no matter how many elements)
+      $filePath=implode(PATH_SEP,$paths);
+      $pluginFilename = PATH_PLUGINS . $pluginFolder . PATH_SEP . 'public_html'. PATH_SEP . $filePath;
+      if ( file_exists ( $pluginFilename ) ) {
+        	G::streamFile ( $pluginFilename );
+      }
+
+      /*
+       //Old way
       $paths = explode ( PATH_SEP, $realPath );
       $paths[0] = substr ( $paths[0],6);
+
       if ( count($paths) == 2 )  {
         $pathsQuery = explode('?', $paths[1]);
         $pluginFilename = PATH_PLUGINS . $paths[0] . PATH_SEP . 'public_html'. PATH_SEP . $pathsQuery[0];
@@ -141,6 +173,7 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
         	G::streamFile ( $pluginFilename );
         }
       }
+      */
       die;
 	  }
 
