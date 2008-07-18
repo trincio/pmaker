@@ -513,9 +513,9 @@ class wsBase
 						return $result;
 					}
 				}
-			} else 
-			{
-				
+			} 
+			else 
+			{				
 				G::LoadClass('tasks');
 				$oTask = new Tasks();								
 				$very = $oTask->verifyUsertoTask($userId, $taskId);
@@ -603,7 +603,28 @@ class wsBase
 			$tasks  = $oProcesses->getStartingTaskForUser($processId, $userId);
 			$numTasks=count($tasks);
 
-			if($numTasks==1) {
+			if($numTasks==1) 
+			{
+				
+				G::LoadClass('tasks');
+				$oTask = new Tasks();								
+				$very = $oTask->verifyUsertoTask($userId, $tasks[0]['TAS_UID']);
+				if(is_array($very))
+				{
+					if($very['TU_RELATION']==2)
+				   {	
+						 $group=$groups->getUsersOfGroup( $tasks[0]['TAS_UID'] );		
+						 if(!is_array($group))
+						 { $result = new wsResponse (16, "The user is not assigned to the task");
+			    		 return $result;
+						 }						 		
+				   }				   
+				}
+				else
+				{ $result = new wsResponse (16, "The user is not assigned to the task");
+			    return $result;
+				}	
+				
 				$case   = $oCase->startCase($tasks[0]['TAS_UID'], $userId);
 				$caseId = $case['APPLICATION'];
 
@@ -632,20 +653,57 @@ class wsBase
 		}
 	}
 
-	public function derivateCase($caseId, $delIndex) {
-		try { $sStatus = 'TO_DO';
-			/*
-			$result = new wsResponse (0, print_r($appFields['STATUS'],1));
-				return $result;
-			*/
+	public function derivateCase($sessionId, $caseId, $delIndex) {
+		try { $sStatus = 'TO_DO';											
 			require_once ("classes/model/AppDelegation.php");
 			require_once ("classes/model/Route.php");
+			require_once ("classes/model/AppDelay.php");
 			G::LoadClass('case');
 			G::LoadClass('derivation');
+			G::LoadClass('sessions');
 			
+			$oSession = new Sessions();
+			$user  = $oSession->getSessionUser($sessionId);			
+						
 			$oAppDel = new AppDelegation();
 			$appdel  = $oAppDel->Load($caseId, $delIndex);
 			
+			if($user['USR_UID']!=$appdel['USR_UID'])
+			{
+				$result = new wsResponse (0, print_r($appdel,1)); //asignar mensaje
+				return $result;	
+			}
+			//dfel finishdate distinto de null index incorrecto, 
+			if($appdel['DEL_FINISH_DATE']!=NULL)
+			{
+				$result = new wsResponse (0, print_r($appdel,1)); //asignar mensaje
+				return $result;
+			}
+
+			$oCriteria = new Criteria('workflow');			
+			$oCriteria->addSelectColumn(AppDelayPeer::APP_UID);
+			$oCriteria->addSelectColumn(AppDelayPeer::APP_DEL_INDEX);			
+			$oCriteria->add(AppDelayPeer::APP_TYPE, '');
+			$oCriteria->add($oCriteria->getNewCriterion(AppDelayPeer::APP_TYPE, 'PAUSE')->addOr($oCriteria->getNewCriterion(AppDelayPeer::APP_TYPE, 'CANCEL')));
+			$oCriteria->addAscendingOrderByColumn(AppDelayPeer::APP_ENABLE_ACTION_DATE);
+			$oDataset = AppDelayPeer::doSelectRS($oCriteria);
+			$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+			$oDataset->next();
+			$aRow = $oDataset->getRow();
+
+			if(is_array($aRow))
+			{
+					if($aRow['APP_DISABLE_ACTION_USER']!=0 && $aRow['APP_DISABLE_ACTION_DATE']!=NULL)
+					{
+							$result = new wsResponse (0, print_r($appdel,1)); //asignar mensaje
+							return $result;
+					}
+			}											
+			
+			//en appdelay buscar aplication y delegation si existe el row ve r si el typoe es pausa  o cancel 
+			//si es ver si el appdisableactionuser y date son nulos no se puede derivar 
+			//ordenar la consulta por enable y agarrar la mas reciente
+												
 			$aData['APP_UID']   = $caseId;
 			$aData['DEL_INDEX'] = $delIndex;
 			
@@ -679,7 +737,7 @@ class wsBase
 			$oCase->updateCase ( $caseId, $appFields );
 			//Save data - End
 						
-					$row  = array();
+			$row  = array();
 			$oCriteria = new Criteria('workflow');
 			$del = DBAdapter::getStringDelimiter();
 			$oCriteria->addSelectColumn(RoutePeer::ROU_TYPE);
