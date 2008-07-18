@@ -174,6 +174,7 @@ class headPublisher
   function printHeader()
   {
     if ($this->disableHeaderScripts) return '';
+	$this->addScriptFile("/js/jscalendar/lang/calendar-".SYS_LANG.".js");
     $head = '';
     $head .= '<TITLE>'.$this->title . "</TITLE>\n";
     foreach($this->scriptFiles as $file)
