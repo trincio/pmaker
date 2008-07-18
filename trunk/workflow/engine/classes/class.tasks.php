@@ -486,11 +486,36 @@ class Tasks {
         $oDataset->next();
         $aRow = $oDataset->getRow();       
         if(is_array($aRow))
-        			$x=1;
+        			 return 1;
         else        			
-        			$x=0;
-        
-        return $x;
+        			 return 0;                
+        }          
+  	catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
+  
+  /*
+	* Veryfy the user assig in task
+	* @param string $sUsrUid, $sTaskUID
+	* @return array
+	*/
+  public function verifyUsertoTask($sUsrUid, $sTaskUID) {
+  	try {  	     
+  	    $oCriteria = new Criteria('workflow');
+  	    $oCriteria->addSelectColumn(TaskUserPeer::USR_UID);  	      	    
+  	    $oCriteria->addSelectColumn(TaskUserPeer::TAS_UID);
+  	    $oCriteria->addSelectColumn(TaskUserPeer::TU_RELATION);
+        $oCriteria->add(TaskUserPeer::TAS_UID, $sTaskUID);        
+        $oCriteria->add(TaskUserPeer::USR_UID, $sUsrUid);        
+        $oDataset = TaskUserPeer::doSelectRS($oCriteria);
+        $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+        $oDataset->next();
+        $aRow = $oDataset->getRow();       
+        if(is_array($aRow))
+        			return $aRow;
+        else        			
+        			return $aRow;                
         }          
   	catch (Exception $oError) {
     	throw($oError);

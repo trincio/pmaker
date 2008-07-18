@@ -201,6 +201,11 @@ class Derivation
       }
     }
     else {
+      $oCriteria = new Criteria();
+      $oCriteria->add(UsersPeer::USR_UID, $aUsers);
+      if (UsersPeer::doCount($oCriteria) < 1) {
+        return null;
+      }
       $userFields = $oUser->load( $aUsers );
       $auxFields['USR_UID']        = $userFields['USR_UID'];
       $auxFields['USR_USERNAME']   = $userFields['USR_USERNAME'];
@@ -263,8 +268,16 @@ class Derivation
            $AppFields = $this->case->loadCase( $tasInfo['APP_UID'] );
            $variable  = str_replace ( '@@', '', $nextAssignedTask['TAS_ASSIGN_VARIABLE'] );
            if ( isset ( $AppFields['APP_DATA'][$variable] ) ) {
-             $value = $AppFields['APP_DATA'][$variable];
-             $userFields = $this->getUsersFullNameFromArray ($value);
+             if ($AppFields['APP_DATA'][$variable] != '') {
+               $value = $AppFields['APP_DATA'][$variable];
+               $userFields = $this->getUsersFullNameFromArray ($value);
+               if (is_null($userFields)) {
+                 throw ( new Exception("Task doesn't have a valid user in variable $variable.") ) ;
+               }
+             }
+             else {
+               throw ( new Exception("Task doesn't have a valid user in variable $variable.") ) ;
+             }
            }
            else
              throw ( new Exception("Task doesn't have a valid user in variable $variable or this variable doesn't exists.") ) ;
@@ -305,7 +318,7 @@ class Derivation
     foreach($nextDelegations as $nextDel)
     {
       switch ( $nextDel['TAS_UID'] ) {
-        case TASK_FINISH_PROCESS: 
+        case TASK_FINISH_PROCESS:
           /*Close all delegations of $currentDelegation['APP_UID'] */
           $this->case->closeAllDelegations ( $currentDelegation['APP_UID'] );
           $this->case->closeAllThreads ( $currentDelegation['APP_UID']);
@@ -329,7 +342,7 @@ class Derivation
 
             $iAppThreadIndex = $appFields['DEL_THREAD'];
             // the new delegation
-            $delType = 'NORMAL'; 
+            $delType = 'NORMAL';
             $iNewDelIndex = $this->case->newAppDelegation( $appFields['PRO_UID'],
               $currentDelegation['APP_UID'],
               $nextDel['TAS_UID'],
@@ -374,7 +387,7 @@ class Derivation
     $appFields['APP_STATUS'] = $currentDelegation['APP_STATUS'];
 
     /* Start Block : Count the open threads of $currentDelegation['APP_UID'] */
-    $openThreads = $this->case->GetOpenThreads( $currentDelegation['APP_UID'] ); 
+    $openThreads = $this->case->GetOpenThreads( $currentDelegation['APP_UID'] );
     if ( $openThreads == 0) {       //Close case
       $appFields['APP_STATUS']      = 'COMPLETED';
       $appFields['APP_FINISH_DATE'] = 'now';
@@ -382,8 +395,8 @@ class Derivation
 
     $appFields['DEL_INDEX']       = (isset($iNewDelIndex) ? $iNewDelIndex : 0);
     $appFields['TAS_UID']         = $nextDel['TAS_UID'];
-    /* Start Block : UPDATES APPLICATION */ 
-    $this->case->updateCase ( $currentDelegation['APP_UID'], $appFields ); 
+    /* Start Block : UPDATES APPLICATION */
+    $this->case->updateCase ( $currentDelegation['APP_UID'], $appFields );
     /* End Block : UPDATES APPLICATION */
     //krumo ($appFields);die;
   }

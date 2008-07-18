@@ -399,7 +399,7 @@ class wsBase
 			if($very_group==0){
 				$result = new wsResponse (23, "Group not registered in the system");
 				return $result;
-			}
+			}						
 			
 			$oRBAC = RBAC::getSingleton();     
       $oRBAC->loadUserRolePermission($oRBAC->sSystem, $userId);
@@ -460,7 +460,7 @@ class wsBase
 	}
 
 	public function newCase($processId, $userId, $taskId, $variables) {
-		try {
+		try {								  				
 			if(is_array($variables)) {
 				if(count($variables)>0){
 					$c=count($variables);
@@ -488,7 +488,7 @@ class wsBase
 			G::LoadClass('case');
 			$oCase = new Cases();
 
-			if($taskId=='')	{
+			if($taskId=='')	{								
 				$tasks  = $oProcesses->getStartingTaskForUser($processId, $userId);
 				$numTasks=count($tasks);
 
@@ -513,7 +513,28 @@ class wsBase
 						return $result;
 					}
 				}
-			} else {
+			} else 
+			{
+				
+				G::LoadClass('tasks');
+				$oTask = new Tasks();								
+				$very = $oTask->verifyUsertoTask($userId, $taskId);
+				if(is_array($very))
+				{
+					if($very['TU_RELATION']==2)
+				   {	
+						 $group=$groups->getUsersOfGroup( $taskId );		
+						 if(!is_array($group))
+						 { $result = new wsResponse (16, "The user is not assigned to the task");
+			    		 return $result;
+						 }						 		
+				   }				   
+				}
+				else
+				{ $result = new wsResponse (16, "The user is not assigned to the task");
+			    return $result;
+				}				   				  				
+			  
 				require_once 'classes/model/Task.php';
 				$oTask = new Task();
 				$task  = $oTask->taskExists( $taskId );
