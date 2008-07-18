@@ -72,7 +72,8 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
 
   /*** enable ERROR_SHOW_SOURCE_CODE to display the source code for any WARNING OR NOTICE ***/
   define ('ERROR_SHOW_SOURCE_CODE', true);
-
+ 
+  
  /*** enable ERROR_LOG_NOTICE_ERROR to log Notices messages in default apache log ***/
   //  define ( 'ERROR_LOG_NOTICE_ERROR', true );
 
@@ -98,6 +99,7 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
   $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.dom.js'      , true );
   $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.abbr.js'     , true );
   $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.dashboard.js', true );
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'jscalendar/calendar.js' );
   $oHeadPublisher->addMaborakFile( PATH_CORE . 'js' . PATH_SEP . 'cases/core/cases.js' , true );
   $oHeadPublisher->addMaborakFile( PATH_CORE . 'js' . PATH_SEP . 'cases/core/cases_Step.js', true );
   $oHeadPublisher->addMaborakFile( PATH_CORE . 'js' . PATH_SEP . 'processmap/core/processmap.js', true );
@@ -200,7 +202,7 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
 
 //************** verify if the URI is encrypted or not **************
   G::parseURI ( getenv( "REQUEST_URI" ) );
-
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . "jscalendar/lang/calendar-en.js");
   define( 'SYS_URI' , '/sys' .  SYS_TEMP . '/' . SYS_LANG . '/' . SYS_SKIN . '/' );
 
   require_once ( PATH_THIRDPARTY . 'krumo' . PATH_SEP . 'class.krumo.php' );
