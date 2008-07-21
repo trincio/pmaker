@@ -113,6 +113,7 @@ class uploadDocumentData {
  	var $sFilename;
  	var $sFileTitle;
  	var $sDocumentUid;
+ 	var $bUseOutputFolder;
  	
   function __construct( $sApplicationUid, $sUserUid, $sFilename, $sFileTitle, $sDocumentUid ) {
    	$this->sApplicationUid = $sApplicationUid;
@@ -120,6 +121,7 @@ class uploadDocumentData {
    	$this->sFilename       = $sFilename;
    	$this->sFileTitle      = $sFileTitle;
    	$this->sDocumentUid    = $sDocumentUid;
+   	$this->bUseOutputFolder = false;
 	 }
 }
 
