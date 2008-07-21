@@ -339,6 +339,7 @@ switch ($_GET['TYPE'])
     	  $oPluginRegistry =& PMPluginRegistry::getSingleton();
         if ( $oPluginRegistry->existsTrigger ( PM_UPLOAD_DOCUMENT ) && class_exists ('uploadDocumentData' ) ) {
           $oData['APP_UID']	  = $_SESSION['APPLICATION'];
+          $oData['ATTACHMENT_FOLDER'] = true;
           $documentData = new uploadDocumentData (
                             $_SESSION['APPLICATION'],
                             $_SESSION['USER_LOGGED'],
@@ -346,7 +347,7 @@ switch ($_GET['TYPE'])
                             $sFilename. '.pdf',
                             $sDocUID
                             );
-
+          $documentData->bUseOutputFolder = true;
   	      $oPluginRegistry->executeTriggers ( PM_UPLOAD_DOCUMENT , $documentData );
   	      unlink ( $sPathName . $sFileName );
         }
