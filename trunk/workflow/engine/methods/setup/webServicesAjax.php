@@ -168,7 +168,7 @@
           $c = new Criteria ('dbarray');
           $c->setDBArrayTable('group');
           $c->addAscendingOrderByColumn ('name');
-    	    $G_PUBLISH->AddContent('propeltable', 'paged-table', 'setup/wsrRoleList', $c );
+    	    $G_PUBLISH->AddContent('propeltable', 'paged-table', 'setup/wsrGroupList', $c );
           G::RenderPage('publish', 'raw');
      		break;
      		case "CaseList" :
@@ -202,7 +202,7 @@
           $c = new Criteria ('dbarray');
           $c->setDBArrayTable('case');
           $c->addAscendingOrderByColumn ('name');
-    	    $G_PUBLISH->AddContent('propeltable', 'paged-table', 'setup/wsrProcessList', $c );
+    	    $G_PUBLISH->AddContent('propeltable', 'paged-table', 'setup/wsrCaseList', $c );
           G::RenderPage('publish', 'raw');
      		break;
      		case "UserList" :
@@ -234,7 +234,7 @@
           $c = new Criteria ('dbarray');
           $c->setDBArrayTable('user');
           $c->addAscendingOrderByColumn ('name');
-    	    $G_PUBLISH->AddContent('propeltable', 'paged-table', 'setup/wsrRoleList', $c );
+    	    $G_PUBLISH->AddContent('propeltable', 'paged-table', 'setup/wsrUserList', $c );
           G::RenderPage('publish', 'raw');
      		break;
 
@@ -384,7 +384,7 @@
           $c = new Criteria ('dbarray');
           $c->setDBArrayTable('task');
           $c->addAscendingOrderByColumn ('name');
-    	    $G_PUBLISH->AddContent('propeltable', 'paged-table', 'setup/wsrProcessList', $c );
+    	    $G_PUBLISH->AddContent('propeltable', 'paged-table', 'setup/wsrTaskList', $c );
           G::RenderPage('publish', 'raw');
      		break;
 
@@ -422,7 +422,7 @@
           $c = new Criteria ('dbarray');
           $c->setDBArrayTable('taskCases');
           $c->addAscendingOrderByColumn ('name');
-    	    $G_PUBLISH->AddContent('propeltable', 'paged-table', 'setup/wsrProcessList', $c );
+    	    $G_PUBLISH->AddContent('propeltable', 'paged-table', 'setup/wsrTaskCase', $c );
           G::RenderPage('publish', 'raw');
      		break;
 
