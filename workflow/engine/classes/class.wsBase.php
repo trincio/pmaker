@@ -431,8 +431,29 @@ class wsBase
 		}
 	}
 
-	public function sendVariables($caseId, $variables) { 
+	public function sendVariables($sessionId, $caseId, $variables) { 
+		//delegation where app uid (caseId) y usruid(session) ordenar delindes descendente y agaarr el primero 
+		//delfinishdate != null error
 		try {
+			require_once ("classes/model/AppDelegation.php");
+			$oSession = new Sessions();
+			$user  = $oSession->getSessionUser($sessionId);
+			
+			$oCriteria = new Criteria('workflow');			
+			$oCriteria->addSelectColumn(AppDelegationPeer::DEL_FINISH_DATE);					
+			$oCriteria->add(AppDelegationPeer::APP_UID, $caseId);			
+			$oCriteria->add(AppDelegationPeer::USR_UID, $user['USR_UID']);		
+			$oCriteria->addDescendingOrderByColumn(AppDelegationPeer::DEL_INDEX);
+			$oDataset = AppDelegationPeer::doSelectRS($oCriteria);
+			$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+			$oDataset->next();
+			$aRow = $oDataset->getRow();
+			if($aRow['DEL_FINISH_DATE']!=NULL)
+			{
+				$result = new wsResponse (18, 'This delegation already closed'); 
+				return $result;
+			}
+			
 			if(is_array($variables)) {
 				$cant = count ( $variables );
 				if($cant > 0) {
@@ -670,13 +691,13 @@ class wsBase
 			
 			if($user['USR_UID']!=$appdel['USR_UID'])
 			{
-				$result = new wsResponse (0, print_r($appdel,1)); //asignar mensaje
+				$result = new wsResponse (17, "This case is assigned to another user"); 
 				return $result;	
 			}
-			//dfel finishdate distinto de null index incorrecto, 
+			
 			if($appdel['DEL_FINISH_DATE']!=NULL)
 			{
-				$result = new wsResponse (0, print_r($appdel,1)); //asignar mensaje
+				$result = new wsResponse (18, 'This delegation already closed'); 
 				return $result;
 			}
 
@@ -693,23 +714,23 @@ class wsBase
 
 			if(is_array($aRow))
 			{
-					if($aRow['APP_DISABLE_ACTION_USER']!=0 && $aRow['APP_DISABLE_ACTION_DATE']!=NULL)
+					if($aRow['APP_DISABLE_ACTION_USER']!=0 && $aRow['APP_DISABLE_ACTION_DATE']!='')
 					{
-							$result = new wsResponse (0, print_r($appdel,1)); //asignar mensaje
+							$result = new wsResponse (19, "This case is in status". $aRow['APP_TYPE']); 
 							return $result;
 					}
-			}											
-			
-			//en appdelay buscar aplication y delegation si existe el row ve r si el typoe es pausa  o cancel 
-			//si es ver si el appdisableactionuser y date son nulos no se puede derivar 
-			//ordenar la consulta por enable y agarrar la mas reciente
+			}													
 												
 			$aData['APP_UID']   = $caseId;
 			$aData['DEL_INDEX'] = $delIndex;
 			
 			$oDerivation = new Derivation();
 			$derive  = $oDerivation->prepareInformation($aData);
-		
+		  
+		  //$result = new wsResponse (15, print_r($derive,1));
+			//return $result;
+			
+			$var = '';
 			foreach ( $derive as $key=>$val ) {
 				if($val['NEXT_TASK']['TAS_ASSIGN_TYPE']=='MANUAL')
 				{
@@ -717,12 +738,13 @@ class wsBase
 					return $result;
 				}
 				$nextDelegations[] = array(
-					'TAS_UID' => $val['NEXT_TASK']['TAS_UID'],
-					'USR_UID' => $val['NEXT_TASK']['USER_ASSIGNED']['USR_UID'],
-					'TAS_ASSIGN_TYPE' =>	$val['NEXT_TASK']['TAS_ASSIGN_TYPE'],
-					'TAS_DEF_PROC_CODE' => $val['NEXT_TASK']['TAS_DEF_PROC_CODE'],
-					'DEL_PRIORITY'	=>	$appdel['DEL_PRIORITY']
-				);
+																		'TAS_UID' => $val['NEXT_TASK']['TAS_UID'],
+																		'USR_UID' => $val['NEXT_TASK']['USER_ASSIGNED']['USR_UID'],
+																		'TAS_ASSIGN_TYPE' =>	$val['NEXT_TASK']['TAS_ASSIGN_TYPE'],
+																		'TAS_DEF_PROC_CODE' => $val['NEXT_TASK']['TAS_DEF_PROC_CODE'],
+																		'DEL_PRIORITY'	=>	$appdel['DEL_PRIORITY']
+																	);	
+				$var = $var.', '.$val['NEXT_TASK']['TAS_TITLE'].'('.$val['NEXT_TASK']['USER_ASSIGNED']['USR_USERNAME'].')';																									
 			}
 		
 			//load data
@@ -750,8 +772,6 @@ class wsBase
 				$row[] = array ( 'ROU_TYPE' => $aRow['ROU_TYPE'], 'ROU_NEXT_TASK' => $aRow['ROU_NEXT_TASK'] );
 				$oDataset->next();
 			}
-		
-			//verificar cant row != cant derive
 				
 			//derivate case
 			$aCurrentDerivation = array(
@@ -764,7 +784,7 @@ class wsBase
 				
 			$oDerivation->derivate( $aCurrentDerivation, $nextDelegations );
 		
-			$result = new wsResponse (0, "Sucessful");
+			$result = new wsResponse (0, $var); //task and user
 			return $result;
 		}
 		catch ( Exception $e ) {
