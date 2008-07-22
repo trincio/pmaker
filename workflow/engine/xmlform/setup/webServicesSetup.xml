@@ -27,7 +27,7 @@
   <en>Workspace</en>
 </WS_WORKSPACE>
 
-<button type="button" onclick="saveGroup( this.form );" >
+<button type="submit" >
   <en>Save</en>
 </button> 
 
