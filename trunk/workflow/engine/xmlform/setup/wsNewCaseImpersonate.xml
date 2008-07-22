@@ -1,24 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dynaForm name="webservices" width="500" mode="edit" border="0" enableTemplate="0" height="255px">
+<dynaForm name="webservices" width="500" mode="edit" border="0" enableTemplate="0" height="260px">
 
 <SESSION_ID type="text" size="36" maxlength="32"  >
   <en>Session Id</en>
 </SESSION_ID>
 
-<PROCESS_ID type="text" size="32" maxlength="32"  >
+<PROCESS_ID type="dropdown" sqlConnection="dbarray"   >
+  SELECT * from process
   <en>Process ID</en>
 </PROCESS_ID>
 
-<USER_ID type="text" size="32" maxlength="32" >
+<USER_ID type="dropdown" sqlConnection="dbarray">
+   SELECT * from user
   <en>User ID</en>
 </USER_ID>
 
-<VARIABLES type="textarea" cols="42" rows="8"  >
-  <en>Variables</en>
-</VARIABLES>
+<!--<NAME1 type="text" size="20" maxlength="32" mode="edit" >
+  <en>Name 1</en>
+</NAME1>
 
+<VALUE1 type="text" size="20" maxlength="32"  mode="edit"  >
+  <en>Value 1</en>
+</VALUE1>
 
-<ACTION type="submit" >
+<NAME2 type="text" size="20" maxlength="32" mode="edit" >
+  <en>Name 2</en>
+</NAME2>
+
+<VALUE2 type="text" size="20" maxlength="32"  mode="edit"  >
+  <en>Value 2</en>
+</VALUE2>-->
+
+<VARIABLES type="grid" xmlgrid="setup/wsVariablesGrid" addrow="1" deleterow="1" />
+
+<ACTION type="button" onclick="submitThisForm(this.form);">
   <en>NewCaseImpersonate</en>
 </ACTION>
 
