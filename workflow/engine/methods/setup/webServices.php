@@ -56,9 +56,10 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
       args  : 'action=showForm&wsID=' + uid
     });
     oRPC.make();
-    var scs=oRPC.xmlhttp.responseText.extractScript();
-    scs.evalScript();
     document.getElementById('spanUsersList').innerHTML = oRPC.xmlhttp.responseText;
+    if ((uid == 'NewCase') || (uid == 'NewCaseImpersonate')) {
+      var scs=oRPC.xmlhttp.responseText.extractScript();scs.evalScript();
+    }
   }
   function execWebService( uid) {
     var oRPC = new leimnud.module.rpc.xmlhttp({
