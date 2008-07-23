@@ -48,20 +48,6 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
     $aFields['WS_WORKSPACE'] = substr($aAux[1], 3);
   }
 
-	//$aFields['WS_HOST']	= $_SERVER['HTTP_HOST'];
-	//$aFields['WS_WORKSPACE'] = SYS_SYS;
-/*
-  $group = new Groupwf();
-  $GrpUid = (isset($_GET['UID'])) ? urldecode($_GET['UID']):'';
-  if ($GrpUid)
-  {
-    $aFields=$group->Load( $GrpUid );
-
-  }
-  else
-  {
-    $aFields=array();
-  }*/
   $G_PUBLISH = new Publisher();
   $G_PUBLISH->AddContent('xmlform', 'xmlform', 'setup/webServicesSetup', '', $aFields , 'webServicesSetupSave');
 
