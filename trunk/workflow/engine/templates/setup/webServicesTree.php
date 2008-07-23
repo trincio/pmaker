@@ -32,22 +32,27 @@
 		$wsSessionId = $_SESSION['WS_SESSION_ID'];
 	};
 /*
-  $defaultEndpoint = 'http://' .$_SERVER['SERVER_NAME'] . ':' .$_SERVER['SERVER_PORT'] . 
+  $defaultEndpoint = 'http://' .$_SERVER['SERVER_NAME'] . ':' .$_SERVER['SERVER_PORT'] .
               '/sys' .SYS_SYS.'/en/green/services/wsdl';
 
       $endpoint = isset( $_SESSION['END_POINT'] ) ? $_SESSION['END_POINT'] : $defaultEndpoint;
-*/	
+*/
 	if(isset($_GET['x']))
-	{ 
+	{
 			if($_GET['x']==1)
 					$wsdl = $_SESSION['END_POINT'];
 			else
-					$wsdl = '<font color="red">'.G::LoadTranslation('ID_WSDL').'</font>';					
+					$wsdl = '<font color="red">'.G::LoadTranslation('ID_WSDL').'</font>';
 	}
 	else
 	{
-		$wsdl = 'http://'.$_SERVER['HTTP_HOST'].'/sys'.SYS_SYS.'/en/green/services/wsdl';
-	}				
+	  if (!isset($_SESSION['END_POINT'])) {
+		  $wsdl = 'http://'.$_SERVER['HTTP_HOST'].'/sys'.SYS_SYS.'/en/green/services/wsdl';
+		}
+		else {
+		  $wsdl = $_SESSION['END_POINT'];
+		}
+	}
 
   $tree = new Tree();
   $tree->name = 'WebServices';
@@ -65,28 +70,28 @@
 	</div>
 	<div class="boxBottomBlue"><div class="a"></div><div class="b"></div><div class="c"></div></div>
   	<div class="userGroupLink"><a href="#" onclick="webServicesSetup();return false;">'.G::LoadTranslation('ID_SETUP_WEBSERVICES').'</a></div>
-    <div class="boxContentBlue"><b>Session: </b><span id="spanWsSessionId">' . $wsSessionId .'</span></div><br>  	
-    <div class="boxContentBlue"><b>EndPoin: </b><span id="spanWsSessionId">' . $wsdl .'</span></div><br>  	
+    <div class="boxContentBlue"><b>Session: </b><span id="spanWsSessionId">' . $wsSessionId .'</span></div><br>
+    <div class="boxContentBlue"><b>EndPoin: </b><span id="spanWsSessionId">' . $wsdl .'</span></div><br>
 	';
-	
+
   $tree->showSign=false;
-  
+
   $allWebservices = array();
-  $allWebservices[] = 'Login'; 
-  $allWebservices[] = 'CreateUser'; 
-  $allWebservices[] = 'AssignUserToGroup'; 
-  $allWebservices[] = 'NewCase'; 
-  $allWebservices[] = 'NewCaseImpersonate'; 
-  $allWebservices[] = 'DerivateCase'; 
-  $allWebservices[] = 'SendVariables'; 
-  $allWebservices[] = 'SendMessage'; 
-  $allWebservices[] = 'ProcessList'; 
-  $allWebservices[] = 'CaseList'; 
-  $allWebservices[] = 'RoleList'; 
-  $allWebservices[] = 'GroupList'; 
-  $allWebservices[] = 'UserList'; 
-  $allWebservices[] = 'TaskList'; 
-  $allWebservices[] = 'TaskCase'; 
+  $allWebservices[] = 'Login';
+  $allWebservices[] = 'CreateUser';
+  $allWebservices[] = 'AssignUserToGroup';
+  $allWebservices[] = 'NewCase';
+  $allWebservices[] = 'NewCaseImpersonate';
+  $allWebservices[] = 'DerivateCase';
+  $allWebservices[] = 'SendVariables';
+  $allWebservices[] = 'SendMessage';
+  $allWebservices[] = 'ProcessList';
+  $allWebservices[] = 'CaseList';
+  $allWebservices[] = 'RoleList';
+  $allWebservices[] = 'GroupList';
+  $allWebservices[] = 'UserList';
+  $allWebservices[] = 'TaskList';
+  $allWebservices[] = 'TaskCase';
   foreach($allWebservices as $ws) {
     $ID_TEST     = G::LoadTranslation('ID_TEST');
     $UID         = htmlentities($ws);
@@ -97,7 +102,7 @@
     $htmlGroup .= "<tr>";
     $htmlGroup .= "<td width='200px' class='treeNode' style='border:0px;background-color:transparent;'>{$WS_TITLE}</td>";
     $htmlGroup .= "<td class='treeNode' style='border:0px;background-color:transparent;'>";
-    if ( $WS_TITLE == 'Login' || $wsSessionId != '' ) 
+    if ( $WS_TITLE == 'Login' || $wsSessionId != '' )
       $htmlGroup .= "[<a href='#' onclick=\"showFormWS('{$UID}');return false;\">{$ID_TEST}</a>]";
     $htmlGroup .= "</td></tr></table>";
 
