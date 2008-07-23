@@ -19,7 +19,7 @@
   <en>Client Setup</en>
 </title2>
 
-<WS_PROTOCOL type="text" default="http" size="10" maxlength="64">
+<WS_PROTOCOL type="text" defaultvalue="http" size="10" maxlength="64">
   <en>Protocol</en>
 </WS_PROTOCOL>
 
