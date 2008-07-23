@@ -55,7 +55,7 @@ $oCriteria->addSelectColumn(UsersPeer::USR_DUE_DATE);
 $oCriteria->addAsColumn('USR_VIEW', $sDelimiter . G::LoadTranslation('ID_VIEW') . $sDelimiter);
 $oCriteria->addAsColumn('USR_EDIT', $sDelimiter . G::LoadTranslation('ID_EDIT') . $sDelimiter);
 $oCriteria->addAsColumn('USR_DELETE', $sDelimiter . G::LoadTranslation('ID_DELETE') . $sDelimiter);
-$oCriteria->add(UsersPeer::USR_STATUS, array('CLOSE'), Criteria::NOT_IN);
+$oCriteria->add(UsersPeer::USR_STATUS, array('CLOSED'), Criteria::NOT_IN);
 
 $G_PUBLISH = new Publisher;
 $G_PUBLISH->AddContent('propeltable', 'paged-table', 'users/users_List', $oCriteria, array('CONFIRM' => G::LoadTranslation('ID_MSG_CONFIRM_DELETE_USER')));
