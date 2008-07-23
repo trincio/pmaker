@@ -180,14 +180,19 @@ function orderGrid($dataM, $field, $ord = 'ASC')
 
 function evaluateFunction($aGrid, $sExpresion)
 {
+	$sExpresion = str_replace('Array','$this->aFields', $sExpresion);
+	$sExpresion .= ';';
 	G::LoadClass('pmScript');
 	$pmScript = new PMScript();
 	$pmScript->setScript($sExpresion);
-	
+
 	for($i=1; $i<=count($aGrid); $i++){
 		$aFields = $aGrid[$i];
+
 		$pmScript->setFields($aFields);
+	
 		$pmScript->execute();
+		
 		$aGrid[$i] = $pmScript->aFields;
 	}
 	return $aGrid;
@@ -432,7 +437,7 @@ function WSProcessList()
 	return $rows;	
 }
 
-function WSsendMessage($caseId, $message)
+function WSSendMessage($caseId, $message)
 {
 	$client = WSOpen();
 	$sessionId = $_SESSION['WS_SESSION_ID'];
@@ -531,7 +536,7 @@ function WSAssignUserToGroup($userId, $groupId)
 	return $fields;
 }
 
-function WSCreateUser($sessionId, $userId, $password, $firstname, $lastname, $email, $role)
+function WSCreateUser($userId, $password, $firstname, $lastname, $email, $role)
 {	
 	$client = WSOpen();
 	$sessionId = $_SESSION['WS_SESSION_ID'];
@@ -663,7 +668,7 @@ function PMFProcessList() #its test was successfull
 	return $rows;
 }
 
-function PMFsendMessage($caseId, $message) 
+function PMFSendMessage($caseId, $message) 
 {
 	G::LoadClass('wsBase');
 	$ws = new wsBase ();
