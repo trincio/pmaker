@@ -31,16 +31,23 @@
 	if ( isset ( $_SESSION['WS_SESSION_ID'] ) ) {
 		$wsSessionId = $_SESSION['WS_SESSION_ID'];
 	};
-
-  global $G_HEADER;
-  $G_HEADER->addScriptFile('/js/common/tree/tree.js');
-
+/*
   $defaultEndpoint = 'http://' .$_SERVER['SERVER_NAME'] . ':' .$_SERVER['SERVER_PORT'] . 
               '/sys' .SYS_SYS.'/en/green/services/wsdl';
 
       $endpoint = isset( $_SESSION['END_POINT'] ) ? $_SESSION['END_POINT'] : $defaultEndpoint;
-
-  $wsdl = '';
+*/	
+	if(isset($_GET['x']))
+	{ 
+			if($_GET['x']==1)
+					$wsdl = $_SESSION['END_POINT'];
+			else
+					$wsdl = '<font color="red">The Server Host or Work Space is blank</font>';					
+	}
+	else
+	{
+		$wsdl = '';
+	}				
 
   $tree = new Tree();
   $tree->name = 'WebServices';
@@ -78,6 +85,8 @@
   $allWebservices[] = 'RoleList'; 
   $allWebservices[] = 'GroupList'; 
   $allWebservices[] = 'UserList'; 
+  $allWebservices[] = 'TaskList'; 
+  $allWebservices[] = 'TaskCase'; 
   foreach($allWebservices as $ws) {
     $ID_TEST     = G::LoadTranslation('ID_TEST');
     $UID         = htmlentities($ws);
