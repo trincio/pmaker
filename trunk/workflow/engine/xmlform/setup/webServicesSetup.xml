@@ -19,8 +19,10 @@
   <en>Client Setup</en>
 </title2>
 
-<WS_PROTOCOL type="text" defaultvalue="http" size="10" maxlength="64">
-  <en>Protocol</en>
+<WS_PROTOCOL type="dropdown" mode="edit" options="Array">
+  <en>Protocol<option name="http">http</option>
+  						<option name="https">https</option>
+  </en>
 </WS_PROTOCOL>
 
 <WS_HOST type="text" size="30" maxlength="64">

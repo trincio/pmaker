@@ -1,6 +1,14 @@
 <?
 unset($_SESSION['WS_SESSION_ID']);
-$_SESSION['END_POINT']=$_POST['form']['WS_PROTOCOL'].'://' .$_POST['form']['WS_HOST'] . ':' .$_POST['form']['WS_PORT'] .'/sys' .$_POST['form']['WS_WORKSPACE'].'/en/green/services/wsdl';
-G::header('location: webServices');
+
+if($_POST['form']['WS_PROTOCOL']!='' && $_POST['form']['WS_WORKSPACE']!='') //&& isset($_POST['form']['WS_PORT'])
+  {
+  	$_SESSION['END_POINT']=$_POST['form']['WS_PROTOCOL'].'://' .$_POST['form']['WS_HOST'] . ':' .$_POST['form']['WS_PORT'] .'/sys' .$_POST['form']['WS_WORKSPACE'].'/en/green/services/wsdl';
+  	G::header('location: webServices?x=1');
+  }
+else
+  {			
+		G::header('location: webServices?x=0');
+  }  
 
 ?>
