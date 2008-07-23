@@ -3,6 +3,7 @@
   menu="users/users_Options"
   searchBy="CONCAT(USR_LASTNAME, ' ', USR_FIRSTNAME) | USR_EMAIL"
 >
+<USR_UID type="private" />
 <USR_COMPLETENAME type="text" titlealign="left" align="left" colWidth="200">
   <en>Full Name</en>
 </USR_COMPLETENAME>
