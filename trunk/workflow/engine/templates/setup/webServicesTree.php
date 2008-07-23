@@ -42,11 +42,11 @@
 			if($_GET['x']==1)
 					$wsdl = $_SESSION['END_POINT'];
 			else
-					$wsdl = '<font color="red">The Server Host or Work Space is blank</font>';					
+					$wsdl = '<font color="red">'.G::LoadTranslation('ID_WSDL').'</font>';					
 	}
 	else
 	{
-		$wsdl = '';
+		$wsdl = 'http://'.$_SERVER['HTTP_HOST'].'/sys'.SYS_SYS.'/en/green/services/wsdl';
 	}				
 
   $tree = new Tree();
