@@ -42,16 +42,28 @@ if($action==="check")
 {
 	G::LoadClass('Installer');
 	$inst = new Installer();
+	$siteName="workflow";
+//	print_r($dataClient);
 	$s = $inst->create_site(Array(
 		'name'	  =>'workflow',
 		'path_data'=>$dataClient->path_data,
 		'path_compiled'=>$dataClient->path_compiled,
+		'admin'=>Array('username'=>(isset($dataClient->ao_admin))?$dataClient->ao_admin:'admin','password'=>(isset($dataClient->ao_admin_pass1))?$dataClient->ao_admin_pass1:'admin'),
+		'advanced'=>Array(
+			'ao_db'=>(isset($dataClient->ao_db) && $dataClient->ao_db===2)?false:true,
+			'ao_db_drop'=>(isset($dataClient->ao_db_drop) && $dataClient->ao_db_drop===true)?true:false,
+			'ao_db_wf'=>(isset($dataClient->ao_db_wf))?$dataClient->ao_db_wf:'wf_'.$siteName,
+			'ao_db_rb'=>(isset($dataClient->ao_db_rb))?$dataClient->ao_db_rb:'rb_'.$siteName,
+			'ao_db_rp'=>(isset($dataClient->ao_db_rp))?$dataClient->ao_db_rp:'rp'.$siteName
+		),
 		'database'=>Array(
 			'hostname'=>$dataClient->mysqlH,
 			'username'=>$dataClient->mysqlU,
 			'password'=>$dataClient->mysqlP
 		)
 	));
+	print_r($inst);
+	print_r($s);
 	$data=null;
 	$data->phpVersion	=(version_compare(PHP_VERSION,"5.1.0",">="))?true:false;
 	if(trim($dataClient->mysqlH)=='' || trim($dataClient->mysqlU)=='')
