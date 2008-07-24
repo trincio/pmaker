@@ -64,20 +64,20 @@ try {
   $trigger_debug_session = $_SESSION['TRIGGER_DEBUG']['ISSET']; #here we must verify if is a debugg session
 
   #trigger debug routines...
-  
+
   //cleaning debug variables
   $_SESSION['TRIGGER_DEBUG']['ERRORS'] = Array();
   $_SESSION['TRIGGER_DEBUG']['DATA'] = Array();
   $_SESSION['TRIGGER_DEBUG']['TRIGGERS_NAMES'] = '';
-  
+
   $triggers = $oCase->loadTriggers( $_SESSION['TASK'], 'ASSIGN_TASK', -2, 'BEFORE');
-  
+
   $_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] = count($triggers);
   $_SESSION['TRIGGER_DEBUG']['TIME'] = 'AFTER';
   if($_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] != 0){
 	$_SESSION['TRIGGER_DEBUG']['TRIGGERS_NAMES'] = $oCase->getTriggerNames($triggers);
   }
-  
+
   if( $_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] != 0 ) {
     //Execute triggers before derivation
   	$appFields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], 'ASSIGN_TASK', -2, 'BEFORE', $appFields['APP_DATA'] );
@@ -100,6 +100,7 @@ try {
     'TAS_UID'    => $_SESSION['TASK'],
     'ROU_TYPE'   => $_POST['form']['ROU_TYPE']
   );
+
   $oDerivation->derivate( $aCurrentDerivation, $_POST['form']['TASKS'] );
   //Execute triggers after derivation
   $appFields = $oCase->loadCase( $_SESSION['APPLICATION'] ); //refresh appFields, because in derivations should change some values
@@ -107,7 +108,7 @@ try {
   $triggers = $oCase->loadTriggers( $_SESSION['TASK'], 'ASSIGN_TASK', -2, 'AFTER');
   $cnt2 = count($triggers);
   $_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] = $_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] + $cnt2;
-  
+
   if( $cnt2 != 0 ) {
     //Execute triggers before derivation
   	$appFields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], 'ASSIGN_TASK', -2, 'AFTER', $appFields['APP_DATA'] );
@@ -119,38 +120,41 @@ try {
   $oCase->updateCase ( $_SESSION['APPLICATION'], $appFields);
   //Save data - End
   //Send notifications - Start
-  $oCase->sendNotifications($_SESSION['TASK'], $_POST['form']['TASKS'], $appFields['APP_DATA'], $_SESSION['APPLICATION'], $_SESSION['INDEX']);
+  $oUser     = new Users();
+  $aUser     = $oUser->load($_SESSION['USER_LOGGED']);
+  $sFromName = '"' . $aUser['USR_FIRSTNAME'] . ' ' . $aUser['USR_LASTNAME'] . '"';
+  $oCase->sendNotifications($_SESSION['TASK'], $_POST['form']['TASKS'], $appFields['APP_DATA'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $sFromName);
   //Send notifications - End
   /* Redirect */
-	
+
   #trigger debug routines...
-  
+
   //cleaning debug variables
   $_SESSION['TRIGGER_DEBUG']['ERRORS'] = Array();
   $_SESSION['TRIGGER_DEBUG']['DATA'] = Array();
   $_SESSION['TRIGGER_DEBUG']['TRIGGERS_NAMES'] = '';
-  
+
   $triggers = $oCase->loadTriggers( $_SESSION['TASK'], 'DYNAFORM', $_GET['UID'], 'AFTER');
-  
+
   $_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] = count($triggers);
   $_SESSION['TRIGGER_DEBUG']['TIME'] = 'AFTER';
   if($_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] != 0){
 	$_SESSION['TRIGGER_DEBUG']['TRIGGERS_NAMES'] = $oCase->getTriggerNames($triggers);
   }
-  
+
   if( $_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] != 0 ) {
 	//Execute after triggers - Start
 	$Fields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], 'DYNAFORM', $_GET['UID'], 'AFTER', $Fields['APP_DATA'] );
 	//Execute after triggers - End
   }
 
-  
+
   $aNextStep['PAGE'] = 'cases_List';
   if($trigger_debug_session){
   	$_SESSION['TRIGGER_DEBUG']['BREAKPAGE'] = $aNextStep['PAGE'];
 	G::header('location: ' . 'cases_Step?' .'breakpoint=triggerdebug');
   }
-  else {	
+  else {
     G::header('location: cases_List');
   }
 }
