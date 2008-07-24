@@ -79,12 +79,12 @@ leimnud.Package.Public({
 				}.extend(this);
 				this.input.passed=function()
 				{
-					this.input.className="module_app_inputPassed___gray "+(this.input.className.split(' ')[1] || '');
+					this.input.className="module_app_inputPassed___gray "+((this.input.className.split(' ')[1]) || '');
 					return this.input;
 				}.extend(this);
 				this.input.failed=function()
 				{
-					this.input.className="module_app_inputFailed___gray "+(this.input.className.split(' ')[1] || '');
+					this.input.className="module_app_inputFailed___gray "+((this.input.className.split(' ')[1]) || '');
 					return this.input;
 				}.extend(this);
 //				this.parent.event.add(this.input,"mouseover",this.mouseover);

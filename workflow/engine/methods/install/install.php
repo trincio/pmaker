@@ -50,14 +50,14 @@ echo '<?xml version="1.0" encoding="UTF-8" ?>';
 	var grid,winGrill, leimnud = new maborak();
 	var inWIN = <? echo (PHP_OS=="WINNT")?"true":"false";?>;
 	leimnud.make();
-	leimnud.Package.Load("validator,app,rpc,fx,drag,drop,panel,grid",{Instance:leimnud,Type:"module"});
+	leimnud.Package.Load("validator,app,rpc,fx,drag,drop,panel,grid,dom,abbr",{Instance:leimnud,Type:"module"});
 	leimnud.Package.Load("json",{Type:"file"});
 	leimnud.exec(leimnud.fix.memoryLeak);
 	var inst;
 	leimnud.event.add(window,'load',function(){
 		inst = new leimnud.module.panel();
 		inst.options={
-			size:{w:document.body.offsetWidth-50,h:700},
+			size:{w:document.body.offsetWidth-50,h:710},
 			title	:"",
 			position:{x:2,y:2,center:true},
 			statusBar:false,
@@ -124,13 +124,15 @@ border-collapse:collapse;
 }
 .inst_td1
 {
-
+	font-weight:bold;
 	width:40%;
 	padding:5px;
 	border:1px solid #CCC;
+	text-align:center;
 }
 .tdNormal, .tdOk, .tdFailed
 {
+	font-weight:bold;
 	border:1px solid #CCC;
 	text-align:center;
 }

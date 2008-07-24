@@ -3,7 +3,12 @@ var installer=function()
 	this.make=function(options)
 	{
 		this.options={
-			target:inst.elements.content
+			target:inst.elements.content,
+			vdef:{
+				wf:'wf_workflow',
+				rb:'rb_workflow',
+				rp:'rp_workflow'
+			}
 		}.concat(options || {});
 		this.html();
 		this.check();
@@ -54,179 +59,229 @@ var installer=function()
 
 
 		//this.phpVersion =
-		this.table = document.createElement("table");
+		this.table = $(document.createElement("table"));
+/*		this.table.setStyle({
+			cellpadding:23
+		});*/
 		this.table.className="inst_table";
+	
+		var tr = this.table.insertRow(-1);
+		$(tr).append(
+			new DOM('td',{innerHTML:"<b>Requeriments</b>",className:"app_grid_title___gray title",colSpan:4})
+		);
+		
+		var tr = this.table.insertRow(-1);
+		$(tr).append(
+			new DOM('td',{innerHTML:"PHP Version >= 5.1.x",className:"inst_td0",colSpan:2}),
+			this.phpVersion = new DOM('td',{innerHTML:'Loading...',className:"inst_td1",colSpan:2})
+		);
+		
+		var tr = this.table.insertRow(-1);
+		$(tr).append(
+			new DOM('td',{innerHTML:"MySQL",className:"inst_td0",colSpan:2}),
+			this.mysqlVersion = new DOM('td',{innerHTML:'Loading...',className:"inst_td1",colSpan:2})
+		);
+		
+		var tr = this.table.insertRow(-1);
+		$(tr).append(
+			new DOM('td',{innerHTML:"Maximum amount of memory a script may consume (memory_limit) >= 40M",className:"inst_td0",colSpan:2}),
+			this.checkMemory = new DOM('td',{innerHTML:'Loading...',className:"inst_td1",colSpan:2})
+		);
+		
+		var tr = this.table.insertRow(-1);
+		$(tr).append(
+			new DOM('td',{innerHTML:"Directory "+this.options.path_trunk+"content/languages/<br> permissions: <b>0777</b> <br>OR<br>Directory "+this.options.path_trunk+"config/<br> permissions: <b>0777</b>",className:"inst_td0",colSpan:2}),
+			this.checkPI = new DOM('td',{innerHTML:'Loading...',className:"inst_td1",colSpan:2})
+		);
 
 		var tr = this.table.insertRow(-1);
-		var tdtitle = tr.insertCell(0);
-		tdtitle.colSpan=2;
-		tdtitle.innerHTML="Requirements";
-		tdtitle.className="app_grid_title___gray title";
+		$(tr).append(
+			new DOM('td',{innerHTML:"Directory "+this.options.path_trunk+"content/languages/<br> permissions: <b>0777</b>",className:"inst_td0",colSpan:2}),
+			this.checkDL = new DOM('td',{innerHTML:'Loading...',className:"inst_td1",colSpan:2})
+		);
 
 		var tr = this.table.insertRow(-1);
-		var td0 = tr.insertCell(0);
-		td0.innerHTML="PHP Version >= 5.1.x";
-		td0.className="inst_td0";
-		this.phpVersion = tr.insertCell(1);		
-		this.phpVersion.className="inst_td1";
-
-		var tr = this.table.insertRow(-1);
-		var td0 = tr.insertCell(0);
-		td0.innerHTML="Mysql  >= 4.1.20.x ";
-		td0.className="inst_td0";
-		this.mysqlVersion = tr.insertCell(1);		
-		this.mysqlVersion.className="inst_td1";
-
-		var tr = this.table.insertRow(-1);
-		var td0 = tr.insertCell(0);
-		td0.innerHTML="Maximum amount of memory a script may consume (memory_limit) >= 40M ";
-		td0.className="inst_td0";
-		this.checkMemory = tr.insertCell(1);		
-		this.checkMemory.className="inst_td1";
-
-/*		var tr = this.table.insertRow(-1);
-		var td0 = tr.insertCell(0);
-		td0.innerHTML="Set magic quotes gpc to <b>false</b>";
-		td0.className="inst_td0";
-		this.checkmqgpc = tr.insertCell(1);		
-		this.checkmqgpc.className="inst_td1";*/
-
-
-		var tr = this.table.insertRow(-1);
-		var td0 = tr.insertCell(0);
-		td0.innerHTML="File "+this.options.path_trunk+"config/paths_installed.php<br> permissions: <b>0666</b>";
-		td0.innerHTML+="<br>OR<br>";
-		td0.innerHTML+="Directory "+this.options.path_trunk+"config/<br> permissions: <b>0777</b>";
-		td0.className="inst_td0";
-		this.checkPI = tr.insertCell(1);		
-		this.checkPI.className="inst_td1";
-
-		var tr = this.table.insertRow(-1);
-		var td0 = tr.insertCell(0);
-		td0.innerHTML="Directory "+this.options.path_trunk+"content/languages/<br> permissions: <b>0777</b>";
-		td0.className="inst_td0";
-		this.checkDL = tr.insertCell(1);		
-		this.checkDL.className="inst_td1";
-
-		var tr = this.table.insertRow(-1);
-		var td0 = tr.insertCell(0);
-		td0.innerHTML="File "+this.options.path_trunk+"js/labels/<br> permissions: <b>0777</b>";
-		td0.className="inst_td0";
-		this.checkDLJ = tr.insertCell(1);		
-		this.checkDLJ.className="inst_td1";
+		$(tr).append(
+			new DOM('td',{innerHTML:"File "+this.options.path_trunk+"js/labels/<br> permissions: <b>0777</b>",className:"inst_td0",colSpan:2}),
+			this.checkDLJ = new DOM('td',{innerHTML:'Loading...',className:"inst_td1",colSpan:2})
+		);
 
 		/* Database  */
 		var tr = this.table.insertRow(-1);
-		var tdtitle = tr.insertCell(0);
-		tdtitle.colSpan=2;
-		tdtitle.innerHTML="Database";
-		tdtitle.className="app_grid_title___gray title";
+		$(tr).append(
+			new DOM('td',{innerHTML:"<b>Database</b>",className:"app_grid_title___gray title",colSpan:2}),
+			new DOM('td',{className:"app_grid_title___gray title",colSpan:2}).append(
+				this.select_ao_db =	new select({data:[
+					{value:1,text:"Advanced options by default"},
+					{value:2,text:"Change Advanced options"}
+				],
+				style:{width:"100%",border:"1px solid #919B9C"},
+				properties:{onchange:function(){
+						if(this.select_ao_db.selected().value==1)
+						{
+							this.ed_advanced_options({
+								sta:"disabled",
+								act:'usr',
+								def:true
+							});
+							this.ao_db_wf.passed().value=this.options.vdef.wf;
+							this.ao_db_rb.passed().value=this.options.vdef.rb;
+							this.ao_db_rp.passed().value=this.options.vdef.rp;
+							this.ao_db_drop.checked=false;
+						}
+						else
+						{
+							this.ed_advanced_options({
+								act:'usr',
+								sta:"enabled"
+							});
+							this.ao_db_wf.focus();
+						}
+					}.extend(this)}
+				})
+			)
+		);
+
+		var tr = this.table.insertRow(-1);
+		$(tr).append(
+			new DOM('td',{innerHTML:"Database server Hostname",className:"inst_td0"},{width:"30%"}),
+			new DOM('td',{className:"inst_td1"},{width:"30%"}).append(
+//				this.databaseHostname =new DOM("input",{value:'localhost',type:"text",onkeyup:this.submit,className:"inputNormal"})
+				this.databaseHostname = new input({label:'localhost',properties:{onkeyup:this.submit},style:{width:"100%"}})
+			),
+			new DOM('td',{innerHTML:"Workflow Database:",className:"inst_td0"},{width:"20%"}),
+			new DOM('td',{className:"inst_td1"},{width:"20%"}).append(
+				this.ao_db_wf = new input({label:this.options.vdef.wf,properties:{onkeyup:this.submit},style:{width:"100%"}}).passed().disable()
+			)
+
+		);
+	
+		var tr = this.table.insertRow(-1);
+		$(tr).append(
+			new DOM('td',{innerHTML:"Username",className:"inst_td0"},{width:"30%"}),
+			new DOM('td',{className:"inst_td1"},{width:"30%"}).append(
+//				this.databaseUsername =new DOM("input",{value:'root',type:"text",onkeyup:this.submit,className:"inputNormal"})
+				this.databaseUsername = new input({label:'root',properties:{onkeyup:this.submit},style:{width:"100%"}})
+			),
+			new DOM('td',{innerHTML:"Rbac Database:",className:"inst_td0"},{width:"20%"}),
+			new DOM('td',{className:"inst_td1"},{width:"20%"}).append(
+				this.ao_db_rb = new input({label:this.options.vdef.rb,properties:{onkeyup:this.submit},style:{width:"100%"}}).passed().disable()
+			)
+
+		);
 		
 		var tr = this.table.insertRow(-1);
-		var td0 = tr.insertCell(0);
-		td0.innerHTML="Database server hostname: ";
-		td0.className="inst_td0";
-		var td1 = tr.insertCell(1);
-		td1.className="inst_td1";
-		this.databaseHostname = document.createElement("input");
-		this.databaseHostname.value="localhost";
-		this.databaseHostname.type="text";
-		this.databaseHostname.onkeyup=this.submit;
-		this.databaseHostname.className="inputNormal";
-		td1.appendChild(this.databaseHostname);
+		$(tr).append(
+			new DOM('td',{innerHTML:"Password",className:"inst_td0"},{width:"30%"}),
+			new DOM('td',{className:"inst_td1"},{width:"30%"}).append(
+//				this.databasePassword =new DOM("input",{type:"text",onkeyup:this.submit,className:"inputNormal"})
+				this.databasePassword = new input({properties:{onkeyup:this.submit},style:{width:"100%"}})
+			),
+			new DOM('td',{innerHTML:"Report Database:",className:"inst_td0"},{width:"20%"}),
+			new DOM('td',{className:"inst_td1"},{width:"20%"}).append(
+				this.ao_db_rp = new input({label:this.options.vdef.rp,properties:{onkeyup:this.submit},style:{width:"100%"}}).passed().disable()
+			)
 
-/*		var tr = this.table.insertRow(-1);
-		var td0 = tr.insertCell(0);
-		td0.innerHTML="Port: ";
-		td0.className="inst_td0";
-		var td1 = tr.insertCell(1);
-		td1.className="inst_td1";
-		this.port = document.createElement("input");
-		this.port.onkeyup=this.submit;
-		this.port.type="text";
-		this.port.value="3306";
-		this.port.className="inputNormal";
-		td1.appendChild(this.port);*/
-
+		);
 
 		var tr = this.table.insertRow(-1);
-		var td0 = tr.insertCell(0);
-		td0.innerHTML="Username: ";
-		td0.className="inst_td0";
-		var td1 = tr.insertCell(1);
-		td1.className="inst_td1";
-		this.databaseUsername = document.createElement("input");
-		this.databaseUsername.onkeyup=this.submit;
-		this.databaseUsername.type="text";
-		this.databaseUsername.value="root";
-		this.databaseUsername.className="inputNormal";
-		td1.appendChild(this.databaseUsername);
+		$(tr).append(
+			new DOM('td',{innerHTML:"Grant All Access",className:"inst_td0"},{width:"30%"}),
+			this.databaseGrant = new DOM('td',{className:"inst_td1"},{width:"30%"}),
+
+			new DOM('td',{innerHTML:"DROP DATABASE IF EXISTS",className:"inst_td0"},{width:"20%"}),
+			new DOM('td',{className:"inst_td0"},{width:"20%",textAlign:'left'}).append(
+				this.ao_db_drop = new input({
+					properties:{type:'checkbox',disabled:true,className:''},style:{border:"1px solid #666"}
+				})
+			)
+		);
 
 		var tr = this.table.insertRow(-1);
-		var td0 = tr.insertCell(0);
-		td0.innerHTML="Password: ";
-		td0.className="inst_td0";
-		var td1 = tr.insertCell(1);
-		td1.className="inst_td1";
-		this.databasePassword = document.createElement("input");
-		this.databasePassword.onkeyup=this.submit;
-		this.databasePassword.type="password";
-		this.databasePassword.className="inputNormal";
-		td1.appendChild(this.databasePassword);
-
-		var tr = this.table.insertRow(-1);
-		var td0 = tr.insertCell(0);
-		td0.innerHTML="Grant All Access";
-		td0.className="inst_td0";
-
-		this.databaseGrant = tr.insertCell(1);
-		this.databaseGrant.className="inst_td1";
-
-		var tr = this.table.insertRow(-1);
-		this.databaseStatus = tr.insertCell(0);
-		this.databaseStatus.colSpan = 2;
-		this.databaseStatus.innerHTML="";
-		this.databaseStatus.className="tdNormal";
+		$(tr).append(
+			this.databaseStatus = new DOM('td',{innerHTML:"<br>",className:"tdNormal",colSpan:4},{minHeight:"50px"})
+		);
 
 		/* Database End  */
 
+
+
 		/* Directories Begin  */
-		var tr = this.table.insertRow(-1);
-		var tdtitle = tr.insertCell(0);
-		tdtitle.colSpan=2;
-		tdtitle.innerHTML="Directories";
-		tdtitle.className="app_grid_title___gray title";
 
 		var tr = this.table.insertRow(-1);
-		var td0 = tr.insertCell(0);
-		td0.innerHTML="Workflow Data: ";
-		td0.className="inst_td0";
-		var td1 = tr.insertCell(1);
-		td1.className="inst_td1";
-		this.workflowData = document.createElement("input");
-		this.workflowData.onkeyup=this.submit;
-		this.workflowData.type="text";
-		this.workflowData.value=this.options.path_data;
-		this.workflowData.className="inputNormal";
-		td1.appendChild(this.workflowData);
+		$(tr).append(
+			new DOM('td',{innerHTML:"<b>Processmaker Configuration</b>",className:"app_grid_title___gray title",colSpan:2}),
+			new DOM('td',{className:"app_grid_title___gray title",colSpan:2}).append(
+
+				this.select_ao_pm =	new select({data:[
+					{value:1,text:"Advanced options by default"},
+					{value:2,text:"Change Advanced options"}
+				],
+				style:{width:"100%",border:"1px solid #919B9C"},
+				properties:{onchange:function(){
+						if(this.select_ao_pm.selected().value==1)
+						{
+							this.ed_advanced_options({
+								act:'pm',
+								sta:"disabled",
+								def:true
+							});
+							this.ao_admin.passed().value="admin";
+							this.ao_admin_pass1.passed().value="admin";
+							this.ao_admin_pass2.passed().value="admin";
+
+						}
+						else
+						{
+							this.ed_advanced_options({
+								act:'pm',
+								sta:"enabled"
+							});
+							this.ao_admin.focus();
+						}
+					}.extend(this)}
+				})
+			)
+		);
 
 		var tr = this.table.insertRow(-1);
-		var td0 = tr.insertCell(0);
-		td0.innerHTML="Compiled templates: ";
-		td0.className="inst_td0";
-		var td1 = tr.insertCell(1);
-		td1.className="inst_td1";
-		this.compiled = document.createElement("input");
-		this.compiled.onkeyup=this.submit;
-		this.compiled.type="text";
-		this.compiled.value=this.options.path_compiled;
-		this.compiled.className="inputNormal";
-		td1.appendChild(this.compiled);
+		$(tr).append(
+			new DOM('td',{innerHTML:"Workflow Data Directory: ",className:"inst_td0"},{width:"30%"}),
+			new DOM('td',{className:"inst_td1"},{width:"30%"}).append(
+				this.workflowData = new input({label:this.options.path_data,properties:{onkeyup:this.submit},style:{width:"100%"}})
+			),
+			new DOM('td',{innerHTML:"Username (Default: admin):",className:"inst_td0"},{width:"20%"}),
+			new DOM('td',{className:"inst_td1"},{width:"20%"}).append(
+				this.ao_admin = new input({label:'admin',properties:{onkeyup:this.submit},style:{width:"100%"}}).passed().disable()
+			)
+
+		);
+	
+		var tr = this.table.insertRow(-1);
+		$(tr).append(
+			new DOM('td',{innerHTML:"Compiled Templates Directory: ",className:"inst_td0"},{width:"30%"}),
+			new DOM('td',{className:"inst_td1"},{width:"30%"}).append(
+				this.compiled = new input({label:this.options.path_compiled,properties:{onkeyup:this.submit},style:{width:"100%"}})
+			),
+			new DOM('td',{innerHTML:"Username (Default: admin):",className:"inst_td0"},{width:"20%"}),
+			new DOM('td',{className:"inst_td1"},{width:"20%"}).append(
+				this.ao_admin_pass1 = new input({label:'admin',properties:{onkeyup:this.submit,type:'password'},style:{width:"100%"}}).passed().disable()
+			)
+		);
+
+		var tr = this.table.insertRow(-1);
+		$(tr).append(
+			new DOM('td',{className:"inst_td0",colSpan:2}),
+			new DOM('td',{innerHTML:"Re-type Password:",className:"inst_td0"},{width:"20%"}),
+			new DOM('td',{className:"inst_td1"},{width:"20%"}).append(
+				this.ao_admin_pass2 = new input({label:'admin',properties:{onkeyup:this.submit,type:'password'},style:{width:"100%"}}).passed().disable()
+			)
+		);
+
 
 		leimnud.dom.setStyle([this.workflowData,this.compiled],{
 			textAlign:"left"
 		});
-	
 		this.options.target.appendChild(this.table);
 	};
 	this.formData=function()
@@ -238,13 +293,23 @@ var installer=function()
 				mysqlP	:this.databasePassword.value,
 //				port	:this.port.value,
 				path_data:this.workflowData.value,
-				path_compiled:this.compiled.value
+				path_compiled:this.compiled.value,
+				ao_admin	:this.ao_admin.value,
+				ao_admin_pass1	:this.ao_admin_pass1.value,
+				ao_admin_pass2	:this.ao_admin_pass2.value,
+				ao_db_wf	:this.ao_db_wf.value,
+				ao_db_rb	:this.ao_db_rb.value,
+				ao_db_rp	:this.ao_db_rp.value,
+				ao_db	:parseInt(this.select_ao_db.selected().value),
+				ao_pm	:parseInt(this.select_ao_pm.selected().value),
+				ao_db_drop	:this.ao_db_drop.checked
 			};
 	};
 	this.check=function()
 	{
 		inst.loader.show();
-		this.disabled(true);	
+		this.disabled(true);
+		this.ed_advanced_options({sta:'disabled',act:'all'});
 		var r = new leimnud.module.rpc.xmlhttp({
 			url	:this.options.server,
 			method	:"POST",
@@ -281,30 +346,43 @@ var installer=function()
 			this.checkDLJ.className = (!this.cstatus.checkDLJ)?"inst_td1 tdFailed":"inst_td1 tdOk";
 			this.checkDLJ.innerHTML = (!this.cstatus.checkDLJ)?"FAILED":"PASSED";
 
-			this.databaseHostname.className = (!this.cstatus.mysqlConnection)?"inputFailed":"inputOk";
-			this.databaseUsername.className = (!this.cstatus.mysqlConnection)?"inputFailed":"inputOk";
-			this.databasePassword.className = (!this.cstatus.mysqlConnection)?"inputFailed":"inputOk";
+			this.databaseHostname[(!this.cstatus.mysqlConnection)?"failed":"passed"]();
+			this.databaseUsername[(!this.cstatus.mysqlConnection)?"failed":"passed"]();
+			this.databasePassword[(!this.cstatus.mysqlConnection)?"failed":"passed"]();
 			
-			this.databaseGrant.className = (!this.cstatus.grantPriv)?"inst_td1 tdFailed":"inst_td1 tdOk";
-			this.databaseGrant.innerHTML = (!this.cstatus.grantPriv)?"FAILED":"PASSED";
+			this.databaseGrant.className = (!this.cstatus.grantPriv && this.select_ao_db.selected().value==1)?"inst_td1 tdFailed":"inst_td1 tdOk";
+			this.databaseGrant.innerHTML = (!this.cstatus.grantPriv && this.select_ao_db.selected().value==1)?"FAILED":"PASSED";
 
 			this.databaseStatus.className = (!this.cstatus.grantPriv || !this.cstatus.mysqlConnection)?"tdFailed":"tdOk";
 			this.databaseStatus.innerHTML = this.cstatus.databaseMessage;
 
+			this.workflowData[(!this.cstatus.path_data)?"failed":"passed"]();
+			this.compiled[(!this.cstatus.path_compiled)?"failed":"passed"]();
+			
+			
+			this.ao_db_wf[(!this.cstatus.ao_db_wf && this.select_ao_db.selected().value==2)?"failed":"passed"]();
+			this.ao_db_rb[(!this.cstatus.ao_db_rb && this.select_ao_db.selected().value==2)?"failed":"passed"]();
+			this.ao_db_rp[(!this.cstatus.ao_db_rp && this.select_ao_db.selected().value==2)?"failed":"passed"]();
 
-			this.workflowData.className = (!this.cstatus.path_data)?"inputFailed":"inputOk";
-			this.compiled.className = (!this.cstatus.path_compiled)?"inputFailed":"inputOk";
+			this.ao_admin[(!this.cstatus.ao_admin && this.select_ao_pm.selected().value==2)?"failed":"passed"]();
+			this.ao_admin_pass1[(!this.cstatus.ao_admin_pass && this.select_ao_pm.selected().value==2)?"failed":"passed"]();
+			this.ao_admin_pass2[(!this.cstatus.ao_admin_pass && this.select_ao_pm.selected().value==2)?"failed":"passed"]();
 
 			if(this.cstatus.checkMemory && this.cstatus.checkPI && this.cstatus.checkDL && this.cstatus.checkDLJ && this.cstatus.phpVersion && this.cstatus.mysqlVersion && this.cstatus.mysqlConnection && this.cstatus.grantPriv && this.cstatus.path_data && this.cstatus.path_compiled)
 			{
 				this.options.button0.disabled=true;
 				this.options.button1.disabled=false;
+				this.disabled(true);
 			}
 			else
 			{
 				this.options.button0.disabled=false;
 				this.options.button1.disabled=true;
 				this.disabled(false);
+				this.compiled.focus();
+
+				this.ed_advanced_options({sta:((this.select_ao_db.selected().value==2)?'enabled':'disabled'),act:'usr'});
+				this.ed_advanced_options({sta:((this.select_ao_pm.selected().value==2)?'enabled':'disabled'),act:'pm'});
 			}
 			this.buttonFun(this.options.button0);
 			this.buttonFun(this.options.button1);
@@ -322,21 +400,39 @@ var installer=function()
 	};
 	this.disabled=function(dis)
 	{
-		this.databaseHostname.disabled=dis;
-		//this.databaseHostname.focus();
-		this.databaseUsername.disabled=dis;
-		//this.databaseUsername.focus();
-		this.databasePassword.disabled=dis;
-		//this.databasePassword.focus();
-		this.workflowData.disabled=dis;
-		//this.workflowData.focus();
-		this.compiled.disabled=dis;
+		this.databaseHostname[(dis===true)?'disable':'enable']();
+		this.databaseUsername[(dis===true)?'disable':'enable']();
+		this.databasePassword[(dis===true)?'disable':'enable']();
+		this.workflowData[(dis===true)?'disable':'enable']();
+		this.compiled[(dis===true)?'disable':'enable']();
 		if(this.compiled.disabled===false)
 		{
 			this.compiled.focus();
 		}
 		this.options.button0.disabled=dis;
 		this.buttonFun(this.options.button0);
+	};
+	this.ed_advanced_options=function(options)
+	{
+		options = {
+			sta:"disabled",
+			act:"all",
+			def:false
+		}.concat(options || {});
+
+		if(options.act=='pm' || options.act=="all")
+		{
+			this.ao_admin[(options.sta=="disabled")?'disable':'enable']();
+			this.ao_admin_pass1[(options.sta=="disabled")?'disable':'enable']();
+			this.ao_admin_pass2[(options.sta=="disabled")?'disable':'enable']();
+		}
+		if(options.act=='usr' || options.act=="all")
+		{
+			this.ao_db_wf[(options.sta=="disabled")?'disable':'enable']();
+			this.ao_db_rb[(options.sta=="disabled")?'disable':'enable']();
+			this.ao_db_rp[(options.sta=="disabled")?'disable':'enable']();
+			this.ao_db_drop.disabled=(options.sta=="disabled")?true:false;
+		}
 	};
 	this.submit=function(evt)
 	{

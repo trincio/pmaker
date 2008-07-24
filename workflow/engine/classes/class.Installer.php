@@ -54,7 +54,13 @@ class Installer
 			'path_data'	=>@PATH_DATA,
 			'path_compiled'	=>@PATH_C,
 			'database'=>Array(),
-			'admin'=>Array('username'=>'admin','password'=>'admin')
+			'admin'=>Array('username'=>'admin','password'=>'admin'),
+			'advanced'=>Array(
+				'ao_db_wf'=>'wf_'.$config['name'],
+				'ao_db_rb'=>'rb_'.$config['name'],
+				'ao_db_rp'=>'rp_'.$config['name'],
+				'ao_db_drop'=>false
+			)
 		),$config);
 		$a=@explode(SYSTEM_HASH,G::decrypt(HASH_INSTALLATION,SYSTEM_HASH));
 		$this->options['database']=G::array_concat(Array(
@@ -62,6 +68,8 @@ class Installer
 			'password'=>@$a[2],
 			'hostname'=>@$a[0]
 		),$this->options['database']);
+	
+
 		return ($confirmed===true)?$this->make_site():$this->create_site_test();
 	}
 	public function isset_site($name="workflow")
@@ -92,9 +100,16 @@ class Installer
 		{
 			$local=Array('localhost','127.0.0.1');
 
-			$this->wf_site_name = $wf = "wf_".$this->options['name'];
-			$this->rbac_site_name = $rb = "rbac_".$this->options['name'];
-			$rp = "rp_".$this->options['name'];
+			//			$this->wf_site_name = $wf = "wf_".$this->options['name'];
+			//
+
+			$this->wf_site_name = $wf = $this->options['advanced']['ao_db_wf'];
+
+//			$this->rbac_site_name = $rb = "rbac_".$this->options['name'];
+			
+			$this->rbac_site_name = $rb = $this->options['advanced']['ao_db_rb'];
+			$this->report_site_name = $rp = $this->options['advanced']['ao_db_rp'];
+
 			$schema	="schema.sql";
 			$values	="insert.sql";   //noe existe
 			/* Create databases & users  */
@@ -188,19 +203,6 @@ class Installer
 			$this->log($qws);
 			$qwv = $this->query_sql_file(PATH_WORKFLOW_MYSQL_DATA.$values,$this->connection_database);
 			$this->log($qwv);
-			/*$pws = (PHP_OS=="WINNT")?'"'.$pws.'"':$pws;
-
-		$sh_sc = $this->options['database']['cli']." ".$wf." < ".$pws." -h ".$this->options['database']['hostname']." --port=".$myPort." --user=".$wf." --password=".$this->options['password'];
-		$result_shell = exec($sh_sc);
-		$this->log($sh_sc."  => ".(($result_shell)?$result_shell:"OK")."\n");
-
-
-		$pws = PATH_WORKFLOW_MYSQL_DATA.$values;
-		$pws = (PHP_OS=="WINNT")?'"'.$pws.'"':$pws;
-		$sh_in = $this->options['database']['cli']." ".$wf." < ".$pws." -h ".$this->options['database']['hostname']." --port=".$myPort." --user=".$wf." --password=".$this->options['password'];
-			$result_shell = exec($sh_in);
-			$this->log($result_shell."\n");
-		$this->log($sh_in."  => ".(($result_shell)?$result_shell:"OK")."\n");*/
 
 
 		/* Dump schema rbac && data  */
@@ -210,20 +212,6 @@ class Installer
 		$this->log($qrs);
 		$qrv = $this->query_sql_file(PATH_RBAC_MYSQL_DATA.$values,$this->connection_database);
 		$this->log($qrv);
-		/*$pws = (PHP_OS=="WINNT")?'"'.$pws.'"':$pws;
-
-		$sh_rbsc = $this->options['database']['cli']." ".$rb." < ".$pws." -h ".$this->options['database']['hostname']." --port=".$myPort." --user=".$rb." --password=".$this->options['password'];
-		$result_shell = exec($sh_rbsc,$err_sh);
-		$this->log($result_shell."\n");
-		$this->log($sh_rbsc."  => ".(($result_shell)?$result_shell:"OK")."\n");
-
-
-		$pws = PATH_RBAC_MYSQL_DATA.$values;
-		$pws = (PHP_OS=="WINNT")?'"'.$pws.'"':$pws;
-
-		$sh_in = $this->options['database']['cli']." ".$rb." < ".$pws." -h ".$this->options['database']['hostname']." --port=".$myPort." --user=".$rb." --password=".$this->options['password'];
-		$result_shell = exec($sh_in);
-		$this->log($sh_in."  => ".(($result_shell)?$result_shell:"OK")."\n");*/
 
 		$path_site 	= $this->options['path_data']."/sites/".$this->options['name']."/";
 		$db_file	= $path_site."db.php";
@@ -341,25 +329,64 @@ class Installer
 	  		return (is_writable($dir) && ($this->file_permisions($dir)==777 || $this->file_permisions($dir)==755));
 		}
 	}
+	public function check_db_empty($dbName)
+	{
+		mysql_select_db($dbName,$this->connection_database);
+		$q = @mysql_query('SHOW TABLES',$this->connection_database);
+		return (mysql_num_rows($q)>0)?false:true;
+	}
+	public function check_db($dbName)
+	{
+		if(!$this->connection_database)
+		{
+			return Array('status'=>false,'message'=>'Error connection');
+		}
+		else
+		{
+			echo 'status '.$this->cc_status;
+			if(!mysql_select_db($dbName,$this->connection_database) && $this->cc_status!=1)
+			{
+				return Array('status'=>false,'message'=>mysql_error());
+			}
+			else
+			{
+				if($this->cc_status!=1 && (!$this->check_db_empty($dbName) && $this->options['advanced']['ao_db_drop']===false))
+				{
+					return Array('status'=>false,'message'=>'Database is not empty');
+				}
+				else
+				{
+					return Array('status'=>true,'message'=>'OK');
+				}
+			}
+		}
+	}
 	private function check_connection()
 	{
 		if(!function_exists("mysql_connect"))
 		{
+			$this->cc_status=0;
 			return Array(
 				'connection'=>false,
-				'grant'=>false,
+				'grant'=>0,
 				'version'=>false,
 				'message'=>"php-mysql is Not Installed"
 			);
 		}
 		$this->connection_database = @mysql_connect($this->options['database']['hostname'],$this->options['database']['username'],$this->options['database']['password']);
 		$rt = Array(
-				'version'=>false
+				'version'=>false,
+				'ao'=>Array(
+						'ao_db_wf'=>false,
+						'ao_db_rb'=>false,
+						'ao_db_rp'=>false
+					)			
 			);
 		if(!$this->connection_database)
 		{
+			$this->cc_status=0;
 			$rt['connection']	=false;
-			$rt['grant']		=false;
+			$rt['grant']		=0;
 			$rt['message']		="Mysql error: ".mysql_error();
 		}
 		else
@@ -367,32 +394,41 @@ class Installer
 			preg_match('@[0-9]+\.[0-9]+\.[0-9]+@',mysql_get_server_info($this->connection_database),$version);
 			$rt['version']=version_compare(@$version[0],"4.1.0",">=");
 			$rt['connection']=true;
+			
 			$dbNameTest = "PROCESSMAKERTESTDC";
 			$db = @mysql_query("CREATE DATABASE ".$dbNameTest,$this->connection_database);
 			if(!$db)
 			{
-				$rt['grant']=false;
+				$this->cc_status=2;
+				$rt['grant']=3;
 				$rt['message']="Db GRANTS error:  ".mysql_error();
 			}
 			else
 			{
+				$this->cc_status=1;
 				//@mysql_drop_db("processmaker_testGA");
 				$usrTest = "wfrbtest";
 				$chkG = "GRANT ALL PRIVILEGES ON `".$dbNameTest."`.* TO ".$usrTest."@'%' IDENTIFIED BY 'sample' WITH GRANT OPTION";
 				$ch   = @mysql_query($chkG,$this->connection_database);
 				if(!$ch)
 				{
-					$rt['grant']=false;
-					$rt['message']="USER PRIVILEGES ERROR";
+					$rt['grant']=1;
+					//$rt['message']="USER PRIVILEGES ERROR";
+					$rt['message']="Successful connection";
 				}
 				else
 				{
 					@mysql_query("DROP USER ".$usrTest."@'%'",$this->connection_database);
-					$rt['grant']=true;
+					$rt['grant']=2;
 					$rt['message']="Successful connection";
 				}
 				@mysql_query("DROP DATABASE ".$dbNameTest,$this->connection_database);
-			}
+				
+			}			
+			$rt['ao']['ao_db_wf']= $this->check_db($this->options['advanced']['ao_db_wf']);
+			$rt['ao']['ao_db_rb']= $this->check_db($this->options['advanced']['ao_db_rb']);
+			$rt['ao']['ao_db_rp']= $this->check_db($this->options['advanced']['ao_db_rp']);
+//			var_dump($wf,$rb,$rp);
 		}
 		return $rt;
 	}
