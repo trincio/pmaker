@@ -1597,7 +1597,7 @@ class Cases
 	function getTriggerNames($triggers)
 	{
 		for($i=0; $i<count($triggers); $i++) {
-			$c = new Criteria(); 
+			$c = new Criteria();
 			$c->clearSelectColumns();
 			$c->addSelectColumn(ContentPeer::CON_VALUE);
 			$c->add(ContentPeer::CON_ID, $triggers[$i]['TRI_UID']);
@@ -1607,9 +1607,9 @@ class Cases
 			$rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
 			$rs->next();
 			$row = $rs->getRow();
-			
+
 			$triggers_info[] = $row['CON_VALUE'];
-		}	
+		}
         return $triggers_info;
 	}
 
@@ -2071,7 +2071,7 @@ class Cases
       return $oCriteria;
     }
 
-    function sendNotifications($sCurrentTask, $aTasks, $aFields, $sApplicationUID, $iDelegation) {
+    function sendNotifications($sCurrentTask, $aTasks, $aFields, $sApplicationUID, $iDelegation, $sFrom = '') {
       try {
         require_once 'classes/model/Configuration.php';
         $oConfiguration = new Configuration();
@@ -2100,7 +2100,30 @@ class Cases
           $oTask     = new Task();
           $aTaskInfo = $oTask->load($sCurrentTask);
           if ($aTaskInfo['TAS_SEND_LAST_EMAIL'] == 'TRUE') {
-            $sFrom    = '"ProcessMaker" <info@processmaker.com>';
+            if ($sFrom == '') {
+              $sFrom = '"ProcessMaker"';
+            }
+            if (($aConfiguration['MESS_ENGINE'] != 'MAIL') && ($aConfiguration['MESS_ACCOUNT'] != '')) {
+              $sFrom .= ' <' . $aConfiguration['MESS_ACCOUNT'] . '>';
+            }
+            else {
+              if (($aConfiguration['MESS_ENGINE'] == 'MAIL')) {
+                $sFrom .= ' <info@' . gethostbyaddr('127.0.0.1') . '>';
+              }
+              else {
+                if ($aConfiguration['MESS_SERVER'] != '') {
+                  if (($sAux = @gethostbyaddr($aConfiguration['MESS_SERVER']))) {
+                    $sFrom .= ' <info@' . $sAux . '>';
+                  }
+                  else {
+                    $sFrom .= ' <info@' . $aConfiguration['MESS_SERVER'] . '>';
+                  }
+                }
+                else {
+                  $sFrom .= ' <info@processmaker.com>';
+                }
+              }
+            }
             $sSubject = G::LoadTranslation('ID_MESSAGE_SUBJECT_DERIVATION');
             $sBody    = G::replaceDataField($aTaskInfo['TAS_DEF_MESSAGE'], $aFields);
             G::LoadClass('spool');
