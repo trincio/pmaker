@@ -49,16 +49,30 @@
   <en>Try send mails inmediatly</en>
 </MESS_TRY_SEND_INMEDIATLY>
 
-<TEST type="button" onclick="testEmailConfiguration();">
+<TEST type="button" onclick="javascript:testConnection();">
   <en>Test</en>
 </TEST>
 
-<SAVE_CHANGES type="button" onclick="verifyData(this.form);">
+<SAVE_CHANGES type="button" onclick="javascript:verifyData(this.form);">
   <en>Save Changes</en>
 </SAVE_CHANGES>
 
 <JS type="javascript">
 <![CDATA[
+
+/***we disable the save button***/
+getField('SAVE_CHANGES').disabled = true;
+//verifyData(this.form);
+//testEmailConfiguration();
+
+
+function testConnection() {
+	alert ('hello');
+}
+
+
+
+		 
 leimnud.event.add(getField('MESS_ENABLED'), 'click', function() {
   if (this.checked) {
     showRowById('MESS_ENGINE');
