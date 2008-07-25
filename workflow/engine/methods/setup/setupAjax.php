@@ -28,16 +28,63 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_SETUP"))!=1) return $RBAC_Response;
 //$oData   = $oJSON->decode(stripslashes($_POST['data']));
 //$sOutput = '';
 
-	G::LoadClass('setup');
+	if(isset($_GET['action'])) {
+		G::LoadClass('setup');
+
+		$oSetup = new Setup(new DBConnection);
+
+		$action = strtolower ( $_GET['action'] );
+		$data   = $_GET;
+
+		$arr = get_class_methods( get_class($oSetup) );
+		foreach ($arr as $method) {
+		if ( $method == $action )
+			$oSetup->{$action} ( $_GET );
+		}
+	}
+
+	if(isset($_POST['request'])) {
+		$request = $_POST['request'];
+
+		switch($request) {
+			case 'testConnection':
+			
+			require_once("class.smtp.php");
 	
-	$oSetup = new Setup(new DBConnection);
+			define("SUCCESSFULL", 'SUCCESSFULL');
+			
+			$o = new SMTP;
+			
+			$host = 'smtp.bizmail.yahoo.com';
+			//$port = '';
+			$user = 'erik@colosa.com';
+			$passwd = 'sample';
 
-	$action = strtolower ( $_GET['action'] );
-	$data   = $_GET;
+			$step = 2;
+			
+			switch ($step) {
+			
+				#try to connect to host
+				case 1:
+				if( !$o->Connect($host) ) {
+						print($o->error['error']);
+					} else {
+						print(SUCCESSFULL);
+					}
+				break;
 
-  $arr = get_class_methods( get_class($oSetup) );
-  foreach ($arr as $method) {
-  	if ( $method == $action ) 
-  		$oSetup->{$action} ( $_GET );
-  }
+				#try login to host
+				case 2:
+					$o->Connect($host);
+					if( !$o->Authenticate($user, $passwd) ) {
+						print($o->error['error']);
+					} else {
+						print(SUCCESSFULL);
+					}
+				break;
+					
+			}
+		}
+	}
+  
 ?>
