@@ -39,25 +39,25 @@
   $trigger_debug_session = $_SESSION['TRIGGER_DEBUG']['ISSET']; #here we must verify if is a debugg session
 
   #trigger debug routines...
-  
+
   //cleaning debug variables
   $_SESSION['TRIGGER_DEBUG']['ERRORS'] = Array();
   $_SESSION['TRIGGER_DEBUG']['DATA'] = Array();
   $_SESSION['TRIGGER_DEBUG']['TRIGGERS_NAMES'] = '';
-  
+
   $triggers = $oCase->loadTriggers( $_SESSION['TASK'], 'DYNAFORM', $_GET['UID'], 'AFTER');
-  
+
   $_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] = count($triggers);
   $_SESSION['TRIGGER_DEBUG']['TIME'] = 'AFTER';
   if($_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] != 0){
 	$_SESSION['TRIGGER_DEBUG']['TRIGGERS_NAMES'] = $oCase->getTriggerNames($triggers);
   }
-  
+
   if( $_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] != 0 ) {
 	//Execute after triggers - Start
 	$Fields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], 'DYNAFORM', $_GET['UID'], 'AFTER', $Fields['APP_DATA'] );
 	//Execute after triggers - End
-  } 
+  }
   //save data
   $aData = array();
   $aData['APP_NUMBER']      = $Fields['APP_NUMBER'];
@@ -66,6 +66,42 @@
   $aData['DEL_INDEX']       = $_SESSION['INDEX'];
   $aData['TAS_UID']         = $_SESSION['TASK'];
   $oCase->updateCase( $_SESSION['APPLICATION'], $aData );
+  //save files
+  require_once 'classes/model/AppDocument.php';
+  foreach ($_FILES['form']['name'] as $sFieldName => $vValue) {
+    if ($_FILES['form']['error'][$sFieldName] == 0) {
+      $oAppDocument = new AppDocument();
+      $aFields = array('APP_UID'             => $_SESSION['APPLICATION'],
+                       'DEL_INDEX'           => $_SESSION['INDEX'],
+                       'USR_UID'             => $_SESSION['USER_LOGGED'],
+                       'DOC_UID'             => -1,
+                       'APP_DOC_TYPE'        => 'ATTACHED',
+                       'APP_DOC_CREATE_DATE' => date('Y-m-d H:i:s'),
+                       'APP_DOC_COMMENT'     => '',
+                       'APP_DOC_TITLE'       => '',
+                       'APP_DOC_FILENAME'    => $_FILES['form']['name'][$sFieldName]);
+      $oAppDocument->create($aFields);
+      $sAppDocUid = $oAppDocument->getAppDocUid();
+      $aInfo      = pathinfo($oAppDocument->getAppDocFilename());
+      $sExtension = (isset($aInfo['extension']) ? $aInfo['extension'] : '');
+      $sPathName  = PATH_DOCUMENT . $_SESSION['APPLICATION'] . PATH_SEP;
+      $sFileName  = $sAppDocUid . '.' . $sExtension;
+      G::uploadFile($_FILES['form']['tmp_name'][$sFieldName], $sPathName, $sFileName);
+      //Plugin Hook PM_UPLOAD_DOCUMENT for upload document
+    	$oPluginRegistry =& PMPluginRegistry::getSingleton();
+      if ($oPluginRegistry->existsTrigger(PM_UPLOAD_DOCUMENT) && class_exists('uploadDocumentData')) {
+        $documentData = new uploadDocumentData (
+                          $_SESSION['APPLICATION'],
+                          $_SESSION['USER_LOGGED'],
+                          $sPathName . $sFileName,
+                          $aFields['APP_DOC_FILENAME'],
+                          $sAppDocUid
+                          );
+  	    $oPluginRegistry->executeTriggers(PM_UPLOAD_DOCUMENT, $documentData);
+  	    unlink($sPathName . $sFileName);
+      }
+    }
+  }
 
   //go to the next step
   $aNextStep = $oCase->getNextStep($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['STEP_POSITION']);
@@ -75,7 +111,7 @@
   	$_SESSION['TRIGGER_DEBUG']['BREAKPAGE'] = $aNextStep['PAGE'];
 	G::header('location: ' . $aNextStep['PAGE'].'&breakpoint=triggerdebug');
   }
-  else {	
+  else {
     G::header('location: ' . $aNextStep['PAGE']);
   }
 

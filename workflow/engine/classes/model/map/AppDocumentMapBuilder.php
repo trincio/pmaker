@@ -100,7 +100,7 @@ class AppDocumentMapBuilder {
 
 		$tMap->addValidator('USR_UID', 'required', 'propel.validator.RequiredValidator', '', 'User UID is required.');
 
-		$tMap->addValidator('APP_DOC_TYPE', 'validValues', 'propel.validator.ValidValuesValidator', 'INPUT|OUTPUT', 'Please select a valid document type.');
+		$tMap->addValidator('APP_DOC_TYPE', 'validValues', 'propel.validator.ValidValuesValidator', 'INPUT|OUTPUT|ATTACHED', 'Please select a valid document type.');
 
 		$tMap->addValidator('APP_DOC_TYPE', 'required', 'propel.validator.RequiredValidator', '', 'Application Document Type is required.');
 

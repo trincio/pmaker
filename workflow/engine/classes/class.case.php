@@ -1967,7 +1967,7 @@ class Cases
       $oAppDocument = new AppDocument();
       $oCriteria = new Criteria('workflow');
       $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
-      $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, 'INPUT');
+      $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, array('INPUT', 'ATTACHED'), Criteria::IN);
       $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
       $oDataset = AppDocumentPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
