@@ -175,7 +175,7 @@ var installer=function()
 			new DOM('td',{innerHTML:"Password",className:"inst_td0"},{width:"30%"}),
 			new DOM('td',{className:"inst_td1"},{width:"30%"}).append(
 //				this.databasePassword =new DOM("input",{type:"text",onkeyup:this.submit,className:"inputNormal"})
-				this.databasePassword = new input({properties:{onkeyup:this.submit},style:{width:"100%"}})
+				this.databasePassword = new input({properties:{type:'password',onkeyup:this.submit},style:{width:"100%"}})
 			),
 			new DOM('td',{innerHTML:"Report Database:",className:"inst_td0"},{width:"20%"}),
 			new DOM('td',{className:"inst_td1"},{width:"20%"}).append(
@@ -186,7 +186,7 @@ var installer=function()
 
 		var tr = this.table.insertRow(-1);
 		$(tr).append(
-			new DOM('td',{innerHTML:"Grant All Access",className:"inst_td0"},{width:"30%"}),
+			new DOM('td',{innerHTML:"Database Access",className:"inst_td0"},{width:"30%"}),
 			this.databaseGrant = new DOM('td',{className:"inst_td1"},{width:"30%"}),
 
 			new DOM('td',{innerHTML:"DROP DATABASE IF EXISTS",className:"inst_td0"},{width:"20%"}),
@@ -199,7 +199,7 @@ var installer=function()
 
 		var tr = this.table.insertRow(-1);
 		$(tr).append(
-			this.databaseStatus = new DOM('td',{innerHTML:"<br>",className:"tdNormal",colSpan:4},{minHeight:"50px"})
+			this.databaseStatus = new DOM('td',{innerHTML:"<br>",className:"tdNormal",colSpan:4},{height:50})
 		);
 
 		/* Database End  */
@@ -288,15 +288,15 @@ var installer=function()
 	{
 		//alert(this.databaseExe.value.eplace("\\","/"))
 		return {
-				mysqlH	:this.databaseHostname.value,
-				mysqlU	:this.databaseUsername.value,
-				mysqlP	:this.databasePassword.value,
+				mysqlH	:escape(this.databaseHostname.value),
+				mysqlU	:escape(this.databaseUsername.value),
+				mysqlP	:escape(this.databasePassword.value),
 //				port	:this.port.value,
 				path_data:this.workflowData.value,
 				path_compiled:this.compiled.value,
-				ao_admin	:this.ao_admin.value,
-				ao_admin_pass1	:this.ao_admin_pass1.value,
-				ao_admin_pass2	:this.ao_admin_pass2.value,
+				ao_admin	:escape(this.ao_admin.value),
+				ao_admin_pass1	:escape(this.ao_admin_pass1.value),
+				ao_admin_pass2	:escape(this.ao_admin_pass2.value),
 				ao_db_wf	:this.ao_db_wf.value,
 				ao_db_rb	:this.ao_db_rb.value,
 				ao_db_rp	:this.ao_db_rp.value,
@@ -323,7 +323,11 @@ var installer=function()
 			}
 			catch(e)
 			{
-				this.cstatus={};
+				this.cstatus={
+					ao_db_wf:false,
+					ao_db_rb:false,
+					ao_db_rp:false
+				};
 			}
 			this.phpVersion.className = (!this.cstatus.phpVersion)?"inst_td1 tdFailed":"inst_td1 tdOk";
 			this.phpVersion.innerHTML = (!this.cstatus.phpVersion)?"FAILED":"PASSED";
@@ -351,7 +355,7 @@ var installer=function()
 			this.databasePassword[(!this.cstatus.mysqlConnection)?"failed":"passed"]();
 			
 			this.databaseGrant.className = (!this.cstatus.grantPriv && this.select_ao_db.selected().value==1)?"inst_td1 tdFailed":"inst_td1 tdOk";
-			this.databaseGrant.innerHTML = (!this.cstatus.grantPriv && this.select_ao_db.selected().value==1)?"FAILED":"PASSED";
+			this.databaseGrant.innerHTML = (!this.cstatus.grantPriv)?"FAILED":((this.cstatus.grantPriv==1)?'ALL PRIVILEGES':'USAGE');
 
 			this.databaseStatus.className = (!this.cstatus.grantPriv || !this.cstatus.mysqlConnection)?"tdFailed":"tdOk";
 			this.databaseStatus.innerHTML = this.cstatus.databaseMessage;
@@ -360,15 +364,15 @@ var installer=function()
 			this.compiled[(!this.cstatus.path_compiled)?"failed":"passed"]();
 			
 			
-			this.ao_db_wf[(!this.cstatus.ao_db_wf && this.select_ao_db.selected().value==2)?"failed":"passed"]();
-			this.ao_db_rb[(!this.cstatus.ao_db_rb && this.select_ao_db.selected().value==2)?"failed":"passed"]();
-			this.ao_db_rp[(!this.cstatus.ao_db_rp && this.select_ao_db.selected().value==2)?"failed":"passed"]();
+			this.ao_db_wf[((!this.cstatus.ao_db_wf['status'])?"failed":"passed")]();
+			this.ao_db_rb[((!this.cstatus.ao_db_rb['status'])?"failed":"passed")]();
+			this.ao_db_rp[((!this.cstatus.ao_db_rp['status'])?"failed":"passed")]();
 
 			this.ao_admin[(!this.cstatus.ao_admin && this.select_ao_pm.selected().value==2)?"failed":"passed"]();
 			this.ao_admin_pass1[(!this.cstatus.ao_admin_pass && this.select_ao_pm.selected().value==2)?"failed":"passed"]();
 			this.ao_admin_pass2[(!this.cstatus.ao_admin_pass && this.select_ao_pm.selected().value==2)?"failed":"passed"]();
 
-			if(this.cstatus.checkMemory && this.cstatus.checkPI && this.cstatus.checkDL && this.cstatus.checkDLJ && this.cstatus.phpVersion && this.cstatus.mysqlVersion && this.cstatus.mysqlConnection && this.cstatus.grantPriv && this.cstatus.path_data && this.cstatus.path_compiled)
+			if(this.cstatus.ao_db_wf['status'] && this.cstatus.ao_db_rb['status'] && this.cstatus.ao_db_rp['status'] && this.cstatus.ao_admin && this.cstatus.ao_admin_pass && this.cstatus.checkMemory && this.cstatus.checkPI && this.cstatus.checkDL && this.cstatus.checkDLJ && this.cstatus.phpVersion && this.cstatus.mysqlVersion && this.cstatus.mysqlConnection && this.cstatus.grantPriv && this.cstatus.path_data && this.cstatus.path_compiled)
 			{
 				this.options.button0.disabled=true;
 				this.options.button1.disabled=false;
@@ -386,6 +390,12 @@ var installer=function()
 			}
 			this.buttonFun(this.options.button0);
 			this.buttonFun(this.options.button1);
+			
+			this.ao_db_wf.title=this.cstatus.ao_db_wf.message;
+			this.ao_db_rb.title=this.cstatus.ao_db_rb.message;
+			this.ao_db_rp.title=this.cstatus.ao_db_rp.message;
+			
+			this.ao_admin.title=(this.cstatus.ao_admin)?'Username invalid':'PASSED';
 
 			inst.loader.hide();
 

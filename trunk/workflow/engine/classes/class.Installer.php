@@ -50,9 +50,11 @@ class Installer
 	public function create_site($config=Array(),$confirmed=false)
 	{
 		$this->options=G::array_concat(Array(
+			'isset'=>false,
 			'password'	=>G::generate_password(12),
 			'path_data'	=>@PATH_DATA,
 			'path_compiled'	=>@PATH_C,
+			'name'=>$config['name'],
 			'database'=>Array(),
 			'admin'=>Array('username'=>'admin','password'=>'admin'),
 			'advanced'=>Array(
@@ -68,8 +70,6 @@ class Installer
 			'password'=>@$a[2],
 			'hostname'=>@$a[0]
 		),$this->options['database']);
-	
-
 		return ($confirmed===true)?$this->make_site():$this->create_site_test();
 	}
 	public function isset_site($name="workflow")
@@ -78,18 +78,40 @@ class Installer
 	}
 	private function create_site_test()
 	{
+		$name = (preg_match('/^[\w]+$/i',trim($this->options['name'])))?true:false;
 		$result=Array(
 			'path_data'	=>$this->is_dir_writable($this->options['path_data']),
 			'path_compiled'	=>$this->is_dir_writable($this->options['path_compiled']),
-			'database'	=>$this->check_connection()
+			'database'	=>$this->check_connection(),
+			'access_level'=>$this->cc_status,
+			'isset'=>($this->options['isset']==true)?$this->isset_site($this->options['name']):false,
+			'microtime'=>microtime(),
+			'workspace'=>$this->options['name'],
+			'name'=>array(
+				'status'=>$name,
+				'message'=>($name)?'PASSED':'Workspace name invalid'
+			),
+			'admin'=>array(
+					'username'=>(preg_match('/^[\w@\.]+$/i',trim($this->options['admin']['username'])))?true:false,
+					'password'=>((trim($this->options['admin']['password'])=='')?false:true)
+				)
 		);
+		$result['name']['message']=($result['isset'])?'Workspace already exists':$result['name']['message'];
+		$result['name']['status']=($result['isset'])?false:$result['name']['status'];
+		//print_r($result);
 		return Array(
 			'created'=>G::var_compare(
 				true,
 				$result['path_data'],
 				$result['database']['connection'],
-				$result['database']['grant'],
-				$result['database']['version']),
+				$result['name']['status'],
+				$result['database']['version'],
+				$result['database']['ao']['ao_db_wf']['status'],
+				$result['database']['ao']['ao_db_rb']['status'],
+				$result['database']['ao']['ao_db_rp']['status'],
+				$result['admin']['username'],
+				(($result['isset'])?false:true),
+				$result['admin']['password']),
 			'result'=>$result
 		);
 	}
@@ -112,78 +134,84 @@ class Installer
 
 			$schema	="schema.sql";
 			$values	="insert.sql";   //noe existe
-			/* Create databases & users  */
-			$q = "DROP DATABASE IF EXISTS ".$wf;
+			
+			if($this->options['advanced']['ao_db_drop']===true)
+			{
+				/* Create databases & users  */
+				$q = "DROP DATABASE IF EXISTS ".$wf;
+				$ac = @mysql_query($q,$this->connection_database);
+				$this->log($q.": => ".((!$ac)?mysql_error():"OK")."\n");
+	
+				$q = "DROP DATABASE IF EXISTS ".$rb;
+				$ac = @mysql_query($q,$this->connection_database);
+				$this->log($q.": => ".((!$ac)?mysql_error():"OK")."\n");
+
+				$q = "DROP DATABASE IF EXISTS ".$rp;
+				$ac = @mysql_query($q,$this->connection_database);
+				$this->log($q.": => ".((!$ac)?mysql_error():"OK")."\n");
+			}
+			
+			$q	= "CREATE DATABASE IF NOT EXISTS ".$wf." DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci";
 			$ac = @mysql_query($q,$this->connection_database);
 			$this->log($q.": => ".((!$ac)?mysql_error():"OK")."\n");
 
-			$q = "DROP DATABASE IF EXISTS ".$rb;
-			$ac = @mysql_query("DROP DATABASE IF EXISTS ".$rb,$this->connection_database);
-			$this->log($q.": => ".((!$ac)?mysql_error():"OK")."\n");
-
-			$q = "DROP DATABASE IF EXISTS ".$rp;
-			$ac = @mysql_query("DROP DATABASE IF EXISTS ".$rp,$this->connection_database);
-			$this->log($q.": => ".((!$ac)?mysql_error():"OK")."\n");
-
-			$q	= "CREATE DATABASE ".$wf." DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci";
-			$ac = @mysql_query($q,$this->connection_database);
-			$this->log($q.": => ".((!$ac)?mysql_error():"OK")."\n");
-
-			$q	= "CREATE DATABASE ".$rb." DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci";
+			$q	= "CREATE DATABASE IF NOT EXISTS ".$rb." DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci";
 			$ac = @mysql_query($q,$this->connection_database);
 			$this->log($q.": => ".((!$ac)?mysql_error():"OK")."\n");
 
 			/* report DB begin */
 
-			$q	= "CREATE DATABASE ".$rp." DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci";
+			$q	= "CREATE DATABASE IF NOT EXISTS ".$rp." DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci";
 			$ac = @mysql_query($q,$this->connection_database);
 			$this->log($q.": => ".((!$ac)?mysql_error():"OK")."\n");
 
 			/* report DB end */
-
+			
 			//$priv_wf = "GRANT ALL PRIVILEGES ON `".$wf.".* TO ".$wf."@`".$this->options['database']['hostname']."` IDENTIFIED BY '".$this->options['password']."' WITH GRANT OPTION";
-			if(in_array($this->options['database']['hostname'],$local))
+			if($this->cc_status==1)
 			{
-				$priv_wf = "GRANT ALL PRIVILEGES ON `".$wf."`.* TO ".$wf."@'localhost' IDENTIFIED BY '".$this->options['password']."' WITH GRANT OPTION";
+				if(in_array($this->options['database']['hostname'],$local))
+				{
+					$priv_wf = "GRANT ALL PRIVILEGES ON `".$wf."`.* TO ".$wf."@'localhost' IDENTIFIED BY '".$this->options['password']."' WITH GRANT OPTION";
+				}
+				else
+				{
+					$priv_wf = "GRANT ALL PRIVILEGES ON `".$wf."`.* TO ".$wf."@'%' IDENTIFIED BY '".$this->options['password']."' WITH GRANT OPTION";
+				}
+				$ac = @mysql_query($priv_wf,$this->connection_database);
+				$this->log($priv_wf.": => ".((!$ac)?mysql_error():"OK")."\n");
+	
+	
+				if(in_array($this->options['database']['hostname'],$local))
+				{
+					$priv_rb = "GRANT ALL PRIVILEGES ON `".$rb."`.* TO ".$rb."@'localhost' IDENTIFIED BY '".$this->options['password']."' WITH GRANT OPTION";
+				}
+				else
+				{
+					$priv_rb = "GRANT ALL PRIVILEGES ON `".$rb."`.* TO ".$rb."@'%' IDENTIFIED BY '".$this->options['password']."' WITH GRANT OPTION";
+				}
+				$ac = @mysql_query($priv_rb,$this->connection_database);
+				$this->log($priv_rb.": => ".((!$ac)?mysql_error():"OK")."\n");
+				
+				/* report DB begin */
+	
+				if(in_array($this->options['database']['hostname'],$local))
+				{
+					$priv_rp = "GRANT ALL PRIVILEGES ON `".$rp."`.* TO ".$rp."@'localhost' IDENTIFIED BY '".$this->options['password']."' WITH GRANT OPTION";
+					//$priv_rp = "GRANT ALL PRIVILEGES ON `".$rp."`.* TO ".$wf."@'localhost' IDENTIFIED BY '".$this->options['password']."' WITH GRANT OPTION";
+				}
+				else
+				{
+					$priv_rp = "GRANT ALL PRIVILEGES ON `".$rp."`.* TO ".$rp."@'%' IDENTIFIED BY '".$this->options['password']."' WITH GRANT OPTION";
+					//$priv_rp = "GRANT ALL PRIVILEGES ON `".$rp."`.* TO ".$wf."@'%' IDENTIFIED BY '".$this->options['password']."' WITH GRANT OPTION";
+				}
+				$ac = @mysql_query($priv_rp,$this->connection_database);
+				$this->log($priv_rp.": => ".((!$ac)?mysql_error():"OK")."\n");
+	
+	
+				/* report DB end */
 			}
-			else
-			{
-				$priv_wf = "GRANT ALL PRIVILEGES ON `".$wf."`.* TO ".$wf."@'%' IDENTIFIED BY '".$this->options['password']."' WITH GRANT OPTION";
-			}
-			$ac = @mysql_query($priv_wf,$this->connection_database);
-			$this->log($priv_wf.": => ".((!$ac)?mysql_error():"OK")."\n");
-
-
-			if(in_array($this->options['database']['hostname'],$local))
-			{
-				$priv_rb = "GRANT ALL PRIVILEGES ON `".$rb."`.* TO ".$rb."@'localhost' IDENTIFIED BY '".$this->options['password']."' WITH GRANT OPTION";
-			}
-			else
-			{
-				$priv_rb = "GRANT ALL PRIVILEGES ON `".$rb."`.* TO ".$rb."@'%' IDENTIFIED BY '".$this->options['password']."' WITH GRANT OPTION";
-			}
-			$ac = @mysql_query($priv_rb,$this->connection_database);
-			$this->log($priv_rb.": => ".((!$ac)?mysql_error():"OK")."\n");
-
-
-			/* report DB begin */
-
-			if(in_array($this->options['database']['hostname'],$local))
-			{
-				$priv_rp = "GRANT ALL PRIVILEGES ON `".$rp."`.* TO ".$rp."@'localhost' IDENTIFIED BY '".$this->options['password']."' WITH GRANT OPTION";
-				//$priv_rp = "GRANT ALL PRIVILEGES ON `".$rp."`.* TO ".$wf."@'localhost' IDENTIFIED BY '".$this->options['password']."' WITH GRANT OPTION";
-			}
-			else
-			{
-				$priv_rp = "GRANT ALL PRIVILEGES ON `".$rp."`.* TO ".$rp."@'%' IDENTIFIED BY '".$this->options['password']."' WITH GRANT OPTION";
-				//$priv_rp = "GRANT ALL PRIVILEGES ON `".$rp."`.* TO ".$wf."@'%' IDENTIFIED BY '".$this->options['password']."' WITH GRANT OPTION";
-			}
-			$ac = @mysql_query($priv_rp,$this->connection_database);
-			$this->log($priv_rp.": => ".((!$ac)?mysql_error():"OK")."\n");
-
-
-			/* report DB end */
-
+			
 			/* Dump schema workflow && data  */
 
 			$this->log("Dump schema workflow/rbac && data\n====================================\n");
@@ -205,46 +233,46 @@ class Installer
 			$this->log($qwv);
 
 
-		/* Dump schema rbac && data  */
-		$pws = PATH_RBAC_MYSQL_DATA.$schema;
-		mysql_select_db($rb,$this->connection_database);
-		$qrs = $this->query_sql_file(PATH_RBAC_MYSQL_DATA.$schema,$this->connection_database);
-		$this->log($qrs);
-		$qrv = $this->query_sql_file(PATH_RBAC_MYSQL_DATA.$values,$this->connection_database);
-		$this->log($qrv);
-
-		$path_site 	= $this->options['path_data']."/sites/".$this->options['name']."/";
-		$db_file	= $path_site."db.php";
-		@mkdir($path_site,0777,true);
-		@mkdir($path_site."customFunctions",0777,true);
-		@mkdir($path_site."rtfs/",0777,true);
-		@mkdir($path_site."xmlForms",0777,true);
-		@mkdir($path_site."processesImages/",0777,true);
-		@mkdir($path_site."files/",0777,true);
-
-		$db_text = "<?php\n" .
-		"// Processmaker configuration\n" .
-		"define ('DB_ADAPTER', 'mysql' );\n" .
-		"define ('DB_HOST', '" . $this->options['database']['hostname'] . ":".$myPort."' );\n" .
-		"define ('DB_NAME', '" . $wf. "' );\n" .
-		"define ('DB_USER', '" . $wf . "' );\n" .
-		"define ('DB_PASS', '" . $this->options['password'] . "' );\n" .
-		"define ('DB_RBAC_HOST', '". $this->options['database']['hostname'] .":".$myPort."' );\n" .
-		"define ('DB_RBAC_NAME', '". $rb . "' );\n" .
-		"define ('DB_RBAC_USER', '".$rb . "' );\n" .
-		"define ('DB_RBAC_PASS', '". $this->options['password'] . "' );\n" .
-		"define ('DB_REPORT_HOST', '". $this->options['database']['hostname'] .":".$myPort."' );\n" .
-		"define ('DB_REPORT_NAME', '". $rp . "' );\n" .
-		"define ('DB_REPORT_USER', '".$rp . "' );\n" .
-		"define ('DB_REPORT_PASS', '". $this->options['password'] . "' );\n" .
-		"?>";
-		$fp =  @fopen($db_file, "w");
-		$this->log("Creating: ".$db_file."  => ".((!$fp)?$fp:"OK")."\n");
-		$ff =  @fputs( $fp, $db_text, strlen($db_text));
-		$this->log("Write: ".$db_file."  => ".((!$ff)?$ff:"OK")."\n");
-
-		fclose( $fp );
-		$this->set_admin();
+			/* Dump schema rbac && data  */
+			$pws = PATH_RBAC_MYSQL_DATA.$schema;
+			mysql_select_db($rb,$this->connection_database);
+			$qrs = $this->query_sql_file(PATH_RBAC_MYSQL_DATA.$schema,$this->connection_database);
+			$this->log($qrs);
+			$qrv = $this->query_sql_file(PATH_RBAC_MYSQL_DATA.$values,$this->connection_database);
+			$this->log($qrv);
+	
+			$path_site 	= $this->options['path_data']."/sites/".$this->options['name']."/";
+			$db_file	= $path_site."db.php";
+			@mkdir($path_site,0777,true);
+			@mkdir($path_site."customFunctions",0777,true);
+			@mkdir($path_site."rtfs/",0777,true);
+			@mkdir($path_site."xmlForms",0777,true);
+			@mkdir($path_site."processesImages/",0777,true);
+			@mkdir($path_site."files/",0777,true);
+	
+			$db_text = "<?php\n" .
+			"// Processmaker configuration\n" .
+			"define ('DB_ADAPTER', 'mysql' );\n" .
+			"define ('DB_HOST', '" . $this->options['database']['hostname'] . ":".$myPort."' );\n" .
+			"define ('DB_NAME', '" . $wf. "' );\n" .
+			"define ('DB_USER', '" . (($this->cc_status==1)?$wf:$this->options['database']['username']). "' );\n" .
+			"define ('DB_PASS', '" . (($this->cc_status==1)?$this->options['password']:$this->options['database']['password']). "' );\n" .
+			"define ('DB_RBAC_HOST', '". $this->options['database']['hostname'] .":".$myPort."' );\n" .
+			"define ('DB_RBAC_NAME', '". $rb . "' );\n" .
+			"define ('DB_RBAC_USER', '".(($this->cc_status==1)?$rb:$this->options['database']['username']) . "' );\n" .
+			"define ('DB_RBAC_PASS', '". (($this->cc_status==1)?$this->options['password']:$this->options['database']['password']) . "' );\n" .
+			"define ('DB_REPORT_HOST', '". $this->options['database']['hostname'] .":".$myPort."' );\n" .
+			"define ('DB_REPORT_NAME', '". $rp . "' );\n" .
+			"define ('DB_REPORT_USER', '".(($this->cc_status==1)?$rp:$this->options['database']['username']) . "' );\n" .
+			"define ('DB_REPORT_PASS', '". (($this->cc_status==1)?$this->options['password']:$this->options['database']['password']) . "' );\n" .
+			"?>";
+			$fp =  @fopen($db_file, "w");
+			$this->log("Creating: ".$db_file."  => ".((!$fp)?$fp:"OK")."\n");
+			$ff =  @fputs( $fp, $db_text, strlen($db_text));
+			$this->log("Write: ".$db_file."  => ".((!$ff)?$ff:"OK")."\n");
+	
+			fclose( $fp );
+			$this->set_admin();
 		}
 		return $test;
 	}
@@ -331,9 +359,9 @@ class Installer
 	}
 	public function check_db_empty($dbName)
 	{
-		mysql_select_db($dbName,$this->connection_database);
+		@mysql_select_db($dbName,$this->connection_database);
 		$q = @mysql_query('SHOW TABLES',$this->connection_database);
-		return (mysql_num_rows($q)>0)?false:true;
+		return (@mysql_num_rows($q)>0)?false:true;
 	}
 	public function check_db($dbName)
 	{
@@ -343,20 +371,28 @@ class Installer
 		}
 		else
 		{
-			echo 'status '.$this->cc_status;
 			if(!mysql_select_db($dbName,$this->connection_database) && $this->cc_status!=1)
 			{
 				return Array('status'=>false,'message'=>mysql_error());
 			}
 			else
 			{
-				if($this->cc_status!=1 && (!$this->check_db_empty($dbName) && $this->options['advanced']['ao_db_drop']===false))
+/*				var_dump($this->options['advanced']['ao_db_drop'],$this->cc_status,$this->check_db_empty($dbName));
+				if(($this->options['advanced']['ao_db_drop']===false && $this->cc_status!=1 && !$this->check_db_empty($dbName)) )
 				{
 					return Array('status'=>false,'message'=>'Database is not empty');
 				}
 				else
 				{
 					return Array('status'=>true,'message'=>'OK');
+				}*/
+				if($this->options['advanced']['ao_db_drop']===true || (($this->cc_status===1 || $this->cc_status===2) && $this->check_db_empty($dbName)))
+				{
+					return Array('status'=>true,'message'=>'PASSED');
+				}
+				else
+				{
+					return Array('status'=>false,'message'=>'Database is not empty');
 				}
 			}
 		}
@@ -366,70 +402,81 @@ class Installer
 		if(!function_exists("mysql_connect"))
 		{
 			$this->cc_status=0;
-			return Array(
+			$rt = Array(
 				'connection'=>false,
 				'grant'=>0,
 				'version'=>false,
-				'message'=>"php-mysql is Not Installed"
-			);
-		}
-		$this->connection_database = @mysql_connect($this->options['database']['hostname'],$this->options['database']['username'],$this->options['database']['password']);
-		$rt = Array(
-				'version'=>false,
+				'message'=>"php-mysql is Not Installed",
 				'ao'=>Array(
-						'ao_db_wf'=>false,
-						'ao_db_rb'=>false,
-						'ao_db_rp'=>false
-					)			
+					'ao_db_wf'=>false,
+					'ao_db_rb'=>false,
+					'ao_db_rp'=>false
+				)
 			);
-		if(!$this->connection_database)
-		{
-			$this->cc_status=0;
-			$rt['connection']	=false;
-			$rt['grant']		=0;
-			$rt['message']		="Mysql error: ".mysql_error();
 		}
 		else
 		{
-			preg_match('@[0-9]+\.[0-9]+\.[0-9]+@',mysql_get_server_info($this->connection_database),$version);
-			$rt['version']=version_compare(@$version[0],"4.1.0",">=");
-			$rt['connection']=true;
-			
-			$dbNameTest = "PROCESSMAKERTESTDC";
-			$db = @mysql_query("CREATE DATABASE ".$dbNameTest,$this->connection_database);
-			if(!$db)
+			$this->connection_database = @mysql_connect($this->options['database']['hostname'],$this->options['database']['username'],$this->options['database']['password']);
+			$rt = Array(
+					'version'=>false,
+					'ao'=>Array(
+							'ao_db_wf'=>false,
+							'ao_db_rb'=>false,
+							'ao_db_rp'=>false
+						)			
+				);
+			if(!$this->connection_database)
 			{
-				$this->cc_status=2;
-				$rt['grant']=3;
-				$rt['message']="Db GRANTS error:  ".mysql_error();
+				$this->cc_status=0;
+				$rt['connection']	=false;
+				$rt['grant']		=0;
+				$rt['message']		="Mysql error: ".mysql_error();
 			}
 			else
 			{
-				$this->cc_status=1;
-				//@mysql_drop_db("processmaker_testGA");
-				$usrTest = "wfrbtest";
-				$chkG = "GRANT ALL PRIVILEGES ON `".$dbNameTest."`.* TO ".$usrTest."@'%' IDENTIFIED BY 'sample' WITH GRANT OPTION";
-				$ch   = @mysql_query($chkG,$this->connection_database);
-				if(!$ch)
+				preg_match('@[0-9]+\.[0-9]+\.[0-9]+@',mysql_get_server_info($this->connection_database),$version);
+				$rt['version']=version_compare(@$version[0],"4.1.0",">=");
+				$rt['connection']=true;
+				
+				$dbNameTest = "PROCESSMAKERTESTDC";
+				$db = @mysql_query("CREATE DATABASE ".$dbNameTest,$this->connection_database);
+				if(!$db)
 				{
-					$rt['grant']=1;
-					//$rt['message']="USER PRIVILEGES ERROR";
+					$this->cc_status=3;
+					$rt['grant']=3;
+					//$rt['message']="Db GRANTS error:  ".mysql_error();
 					$rt['message']="Successful connection";
 				}
 				else
 				{
-					@mysql_query("DROP USER ".$usrTest."@'%'",$this->connection_database);
-					$rt['grant']=2;
-					$rt['message']="Successful connection";
-				}
-				@mysql_query("DROP DATABASE ".$dbNameTest,$this->connection_database);
-				
-			}			
-			$rt['ao']['ao_db_wf']= $this->check_db($this->options['advanced']['ao_db_wf']);
-			$rt['ao']['ao_db_rb']= $this->check_db($this->options['advanced']['ao_db_rb']);
-			$rt['ao']['ao_db_rp']= $this->check_db($this->options['advanced']['ao_db_rp']);
-//			var_dump($wf,$rb,$rp);
+					
+					//@mysql_drop_db("processmaker_testGA");
+					$usrTest = "wfrbtest";
+					$chkG = "GRANT ALL PRIVILEGES ON `".$dbNameTest."`.* TO ".$usrTest."@'%' IDENTIFIED BY 'sample' WITH GRANT OPTION";
+					$ch   = @mysql_query($chkG,$this->connection_database);
+					if(!$ch)
+					{
+						$this->cc_status=2;
+						$rt['grant']=2;
+						//$rt['message']="USER PRIVILEGES ERROR";
+						$rt['message']="Successful connection";
+					}
+					else
+					{
+						$this->cc_status=1;
+						@mysql_query("DROP USER ".$usrTest."@'%'",$this->connection_database);
+						$rt['grant']=1;
+						$rt['message']="Successful connection";
+					}
+					@mysql_query("DROP DATABASE ".$dbNameTest,$this->connection_database);
+					
+				}			
+//				var_dump($wf,$rb,$rp);
+			}
 		}
+		$rt['ao']['ao_db_wf']= $this->check_db($this->options['advanced']['ao_db_wf']);
+		$rt['ao']['ao_db_rb']= $this->check_db($this->options['advanced']['ao_db_rb']);
+		$rt['ao']['ao_db_rp']= $this->check_db($this->options['advanced']['ao_db_rp']);
 		return $rt;
 	}
 	public function log($text)

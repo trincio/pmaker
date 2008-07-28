@@ -11,11 +11,11 @@ leimnud.Package.Public({
 		{
 			this.make=function(label,go,style,prop)
 			{				
-				this.button = new this.parent.module.dom.create("input",{
+				this.button = (label && label.tagName)?$(label):(new this.parent.module.dom.create("input",{
 					className:"module_app_button___gray",
 					type	:"button",
 					value	:label || "Button"
-				}.concat(prop || {}),style || {});
+				}.concat(prop || {}),style || {}));
 /*				this.button = $dce("input");
 				this.button.className="module_app_button___gray";
 				this.button.type="button";
@@ -23,13 +23,13 @@ leimnud.Package.Public({
 				this.button.disable=function()
 				{
 					this.button.disabled=true;
-					this.button.className="module_app_button___gray module_app_buttonDisabled___gray";
+					this.button.className="module_app_buttonjs___gray module_app_buttonDisabled___gray";
 					return this.button;
 				}.extend(this);
 				this.button.enable=function()
 				{
 					this.button.disabled=false;
-					this.button.className="module_app_button___gray";
+					this.button.className="module_app_buttonjs___gray";
 					return this.button;
 				}.extend(this);
 				this.button.onmouseover	=this.mouseover;
@@ -44,12 +44,14 @@ leimnud.Package.Public({
 			};
 			this.mouseover=function()
 			{
-				this.button.className="module_app_button___gray module_app_buttonHover___gray";
+				if(this.button.disabled==true){return false;}
+				this.button.className="module_app_buttonjs___gray module_app_buttonHover___gray";
 				return false;
 			};
 			this.mouseout=function()
 			{
-				this.button.className="module_app_button___gray";
+				if(this.button.disabled==true){return false;}
+				this.button.className="module_app_buttonjs___gray";
 				return false;
 			};
 			this.expand();
@@ -59,11 +61,11 @@ leimnud.Package.Public({
 		{
 			this.make=function(options)
 			{
-				this.input = new this.parent.module.dom.create("input",{
+				this.input = (options && options.tagName)?$(options):(new this.parent.module.dom.create("input",{
 					className:"module_app_input___gray",
 					type	:"text",
 					value	:options.label || ""
-				}.concat(options.properties || {}),(options.style || {}));
+				}.concat(options.properties || {}),(options.style || {})));
 
 				this.input.disable=function()
 				{
@@ -116,7 +118,7 @@ leimnud.Package.Public({
 			this.make=function()
 			{
                 this.select = new this.parent.module.dom.create("select",this.options.properties,this.options.style);
-		this.select.className="module_app_select___gray";
+				this.select.className="module_app_select___gray";
                 this.makeData();
                 this.select.selected=function()
                 {
@@ -174,8 +176,10 @@ leimnud.Package.Public({
 		methods:function(dom)
 		{
 			if(!dom){return false;}
+			if(dom.domed==true){return dom;}
 			this.dom = dom;
 			this.dom.dom = this.dom;
+			this.dom.domed = true;
 			this.dom.append = function()
 			{
 				for(var i=0;i<arguments.length;i++)
@@ -194,6 +198,7 @@ leimnud.Package.Public({
 			this.dom.setStyle = function(style)
 			{
 				this.parent.dom.setStyle(this.dom,style || {});
+				return this.dom;
 			}.extend(this);
 
 			return this.dom;

@@ -44,11 +44,13 @@ if($action==="check")
 	$inst = new Installer();
 	$siteName="workflow";
 //	print_r($dataClient);
+	$p1 = (isset($dataClient->ao_admin_pass1))?$dataClient->ao_admin_pass1:'admin';
+	$p2 = (isset($dataClient->ao_admin_pass2))?$dataClient->ao_admin_pass2:'admin';
 	$s = $inst->create_site(Array(
 		'name'	  =>'workflow',
 		'path_data'=>$dataClient->path_data,
 		'path_compiled'=>$dataClient->path_compiled,
-		'admin'=>Array('username'=>(isset($dataClient->ao_admin))?$dataClient->ao_admin:'admin','password'=>(isset($dataClient->ao_admin_pass1))?$dataClient->ao_admin_pass1:'admin'),
+		'admin'=>Array('username'=>(isset($dataClient->ao_admin))?$dataClient->ao_admin:'admin','password'=>$p1),
 		'advanced'=>Array(
 			'ao_db'=>(isset($dataClient->ao_db) && $dataClient->ao_db===2)?false:true,
 			'ao_db_drop'=>(isset($dataClient->ao_db_drop) && $dataClient->ao_db_drop===true)?true:false,
@@ -62,8 +64,8 @@ if($action==="check")
 			'password'=>$dataClient->mysqlP
 		)
 	));
-	print_r($inst);
-	print_r($s);
+	//print_r($inst);
+	//print_r($s);
 	$data=null;
 	$data->phpVersion	=(version_compare(PHP_VERSION,"5.1.0",">="))?true:false;
 	if(trim($dataClient->mysqlH)=='' || trim($dataClient->mysqlU)=='')
@@ -81,6 +83,13 @@ if($action==="check")
 	$data->checkPI		=((int)$inst->file_permisions(PATH_CORE."config/paths_installed.php",666)==666 || (!file_exists(PATH_CORE."config/paths_installed.php") && (int)$inst->file_permisions(PATH_CORE."config/",777)==777))?true:false;
 	$data->checkDL		=((int)$inst->file_permisions(PATH_CORE."content/languages/",777)==777)?true:false;
 	$data->checkDLJ		=((int)$inst->file_permisions(PATH_CORE."js/labels/",777)==777)?true:false;
+	$data->ao_db_wf		=$s['result']['database']['ao']['ao_db_wf'];
+	$data->ao_db_rb		=$s['result']['database']['ao']['ao_db_rb'];
+	$data->ao_db_rp		=$s['result']['database']['ao']['ao_db_rp'];
+
+	$data->ao_admin		=$s['result']['admin']['username'];
+	$data->ao_admin_pass=($p1!==$p2)?false:true;
+	$data->microtime	=microtime(true);
 	echo $oJSON->encode($data);
 }
 else if($action==="install")
@@ -188,7 +197,7 @@ else if($action==="install")
 	$schema		="schema.sql";
 
 	G::LoadClass('Installer');
-	$inst = new Installer();
+	/*$inst = new Installer();
 	$s = $inst->create_site(Array(
 		'name'	  =>'workflow',
 		'path_data'=>$dataClient->path_data,
@@ -198,11 +207,37 @@ else if($action==="install")
 			'username'=>$dataClient->mysqlU,
 			'password'=>$dataClient->mysqlP
 		)
+	),true);*/
+
+	$inst = new Installer();
+	$siteName="workflow";
+	$p1 = (isset($dataClient->ao_admin_pass1))?$dataClient->ao_admin_pass1:'admin';
+	$p2 = (isset($dataClient->ao_admin_pass2))?$dataClient->ao_admin_pass2:'admin';
+	$s = $inst->create_site(Array(
+		'name'	  =>'workflow',
+		'path_data'=>$dataClient->path_data,
+		'path_compiled'=>$dataClient->path_compiled,
+		'admin'=>Array('username'=>(isset($dataClient->ao_admin))?$dataClient->ao_admin:'admin','password'=>$p1),
+		'advanced'=>Array(
+			'ao_db'=>(isset($dataClient->ao_db) && $dataClient->ao_db===2)?false:true,
+			'ao_db_drop'=>(isset($dataClient->ao_db_drop) && $dataClient->ao_db_drop===true)?true:false,
+			'ao_db_wf'=>(isset($dataClient->ao_db_wf))?$dataClient->ao_db_wf:'wf_'.$siteName,
+			'ao_db_rb'=>(isset($dataClient->ao_db_rb))?$dataClient->ao_db_rb:'rb_'.$siteName,
+			'ao_db_rp'=>(isset($dataClient->ao_db_rp))?$dataClient->ao_db_rp:'rp'.$siteName
+		),
+		'database'=>Array(
+			'hostname'=>$dataClient->mysqlH,
+			'username'=>$dataClient->mysqlU,
+			'password'=>$dataClient->mysqlP
+		)
 	),true);
+
+	//print_r($s);
 	print_r($inst->report);
+	//die();
 	
 	$sh=md5(filemtime(PATH_GULLIVER."/class.g.php"));
-	$h=G::encrypt($dataClient->mysqlH.$sh.$dataClient->mysqlU.$sh.$dataClient->mysqlP,$sh);
+	$h=G::encrypt($dataClient->mysqlH.$sh.$dataClient->mysqlU.$sh.$dataClient->mysqlP.$sh.$inst->cc_status,$sh);
 	$db_text = "<?php\n" .
 	"define( 'PATH_DATA', '".$dir_data."' );\n" .
 	"define( 'PATH_C',    '".$dir_compiled."' );\n" .
