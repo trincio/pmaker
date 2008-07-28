@@ -24,22 +24,22 @@
  */
 if (($RBAC_Response=$RBAC->userCanAccess("PM_SETUP"))!=1) return $RBAC_Response;
 
-//$oJSON   = new Services_JSON();
-//$oData   = $oJSON->decode(stripslashes($_POST['data']));
+//$oSMTPJSON   = new Services_JSON();
+//$oSMTPData   = $oSMTPJSON->decode(stripslashes($_POST['data']));
 //$sOutput = '';
 
 	if(isset($_GET['action'])) {
 		G::LoadClass('setup');
 
-		$oSetup = new Setup(new DBConnection);
+		$oSMTPSetup = new Setup(new DBConnection);
 
 		$action = strtolower ( $_GET['action'] );
 		$data   = $_GET;
 
-		$arr = get_class_methods( get_class($oSetup) );
+		$arr = get_class_methods( get_class($oSMTPSetup) );
 		foreach ($arr as $method) {
 		if ( $method == $action )
-			$oSetup->{$action} ( $_GET );
+			$oSMTPSetup->{$action} ( $_GET );
 		}
 	}
 
@@ -47,42 +47,90 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_SETUP"))!=1) return $RBAC_Response;
 		$request = $_POST['request'];
 
 		switch($request) {
+			case 'mailTest_Show':
+				$srv = $_POST['srv'];
+				$port =  $_POST['port'];
+				$account = $_POST['account'];
+				$passwd = $_POST['passwd'];
+				$G_PUBLISH = new Publisher;
+				$G_PUBLISH->AddContent('view', 'setup/mailConnectiontest');
+				G::RenderPage('publish', 'raw');
+			break;
+			
 			case 'testConnection':
-			
-			require_once("class.smtp.php");
-	
-			define("SUCCESSFULL", 'SUCCESSFULL');
-			
-			$o = new SMTP;
-			
-			$host = 'smtp.bizmail.yahoo.com';
-			//$port = '';
-			$user = 'erik@colosa.com';
-			$passwd = 'sample';
 
-			$step = 2;
+			G::LoadClass('net');
+			require_once('classes/class.smtp.rfc-821.php');
+
+			define("SUCCESSFULL", 'SUCCESSFULL');
+			define("FAILED", 'FAILED');
+			
+			
+			//$host = 'smtp.bizmail.yahoo.com';
+			$srv = $_POST['srv'];
+			$port = ($_POST['port'] == 'default')? 0: $_POST['port'];
+			$user = $_POST['account'];
+			$passwd = $_POST['passwd'];
+			$step = $_POST['step']; 
+
+			$Server = new NET($srv);
+			$oSMTP = new SMTP;
 			
 			switch ($step) {
-			
-				#try to connect to host
 				case 1:
-				if( !$o->Connect($host) ) {
-						print($o->error['error']);
+					if ($Server->getErrno() == 0) {	
+						print(SUCCESSFULL.',');
 					} else {
-						print(SUCCESSFULL);
+						print(FAILED.','.$Server->error);
+					}
+				break;
+
+				case 2:
+					if($port == 0){
+						$port = $oSMTP->SMTP_PORT;
+					}
+					$Server->scannPort($port);
+					if ($Server->getErrno() == 0) {
+						print(SUCCESSFULL.',');
+					} else {
+						print(FAILED.','.$Server->error);
+					}
+				break;
+					
+				#try to connect to host
+				case 3:
+					if($port == 0){
+						$resp = $oSMTP->Connect($srv);
+					} else {
+						$resp = $oSMTP->Connect($srv, $port);
+					}
+					if( !$resp) {
+						print(FAILED.','.$oSMTP->error['error']);
+					} else {
+						print(SUCCESSFULL.','.$oSMTP->status);
 					}
 				break;
 
 				#try login to host
-				case 2:
-					$o->Connect($host);
-					if( !$o->Authenticate($user, $passwd) ) {
-						print($o->error['error']);
+				case 4:
+					if($port == 0){
+						$resp = $oSMTP->Connect($srv);
 					} else {
-						print(SUCCESSFULL);
+						$resp = $oSMTP->Connect($srv, $port);
+					}
+					if($resp) {
+						if( !$oSMTP->Authenticate($user, $passwd) ) {
+							print(FAILED.','.$oSMTP->error['error']);
+						} else {
+							print(SUCCESSFULL.',');
+						}
+					} else {
+						print(FAILED.','.$oSMTP->error['error']);
 					}
 				break;
-					
+
+				default:
+					print('test finished!');
 			}
 		}
 	}
