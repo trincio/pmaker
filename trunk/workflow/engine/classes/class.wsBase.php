@@ -63,7 +63,7 @@ class wsBase
 	function __construct() {
 	}
 	
-	public function login( $userid, $password  ) {
+	public function login( $userid, $password ) {
 		global $RBAC;
 
 		try {
@@ -123,6 +123,7 @@ class wsBase
 
 	public function processList( ) {
 		try {
+		
 			$result  = array();
 			$oCriteria = new Criteria('workflow');
 			$oCriteria->add(ProcessPeer::PRO_STATUS ,  'ACTIVE' );
@@ -195,8 +196,7 @@ class wsBase
 	}
 	
 	public function caseList( $userId ) {
-		try {
-			
+		try {			
 			$result  = array();
 			$oCriteria = new Criteria('workflow');
 			$del = DBAdapter::getStringDelimiter();
@@ -435,6 +435,7 @@ class wsBase
 		//delegation where app uid (caseId) y usruid(session) ordenar delindes descendente y agaarr el primero 
 		//delfinishdate != null error
 		try {
+			G::LoadClass('sessions');
 			require_once ("classes/model/AppDelegation.php");
 			$oSession = new Sessions();
 			$user  = $oSession->getSessionUser($sessionId);
@@ -825,6 +826,41 @@ class wsBase
 			$result[] = array ( 'guid' => $e->getMessage(), 'name' => $e->getMessage() );
 			return $result;
 		}
+	}
+	
+	public function processListVerified( $userId ){
+		try {					
+			$result  = array();
+			$oCriteria = new Criteria('workflow');
+			$del = DBAdapter::getStringDelimiter();			
+			$oCriteria->addSelectColumn(TaskPeer::PRO_UID);												
+			$oCriteria->addAsColumn('PRO_TITLE', 'C1.CON_VALUE' );
+      $oCriteria->addAlias("C1",  'CONTENT');
+      $proTitleConds = array();
+      $proTitleConds[] = array( TaskPeer::PRO_UID , 'C1.CON_ID' );
+      $proTitleConds[] = array( 'C1.CON_CATEGORY' , $del . 'PRO_TITLE' . $del );
+      $proTitleConds[] = array( 'C1.CON_LANG' ,     $del . SYS_LANG . $del );
+      $oCriteria->addJoinMC($proTitleConds ,    Criteria::LEFT_JOIN);						
+			
+			$oCriteria->addJoin(TaskUserPeer:: TAS_UID, TaskPeer::TAS_UID, Criteria::LEFT_JOIN);
+			
+			$oCriteria->add(TaskPeer:: TAS_START,  'TRUE' );
+      $oCriteria->add(TaskUserPeer:: USR_UID,  $userId );					
+			
+			$oDataset = TaskUserPeer::doSelectRS($oCriteria);
+			$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+			$oDataset->next();
+			
+			while ($aRow = $oDataset->getRow()) {			
+				$result[] = array ( 'guid' => $aRow['PRO_UID'], 'name' => $aRow['PRO_TITLE'] );
+				$oDataset->next();
+			}
+			return $result;
+		}
+		catch ( Exception $e ) {
+			$result[] = array ( 'guid' => $e->getMessage(), 'name' => $e->getMessage() );
+			return $result;
+		}		
 	}
 	
 }
