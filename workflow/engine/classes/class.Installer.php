@@ -359,7 +359,11 @@ class Installer
 	}
 	public function check_db_empty($dbName)
 	{
-		@mysql_select_db($dbName,$this->connection_database);
+		$a = @mysql_select_db($dbName,$this->connection_database);
+		if(!$a)
+		{
+			return true;
+		}
 		$q = @mysql_query('SHOW TABLES',$this->connection_database);
 		return (@mysql_num_rows($q)>0)?false:true;
 	}
@@ -386,7 +390,7 @@ class Installer
 				{
 					return Array('status'=>true,'message'=>'OK');
 				}*/
-				if($this->options['advanced']['ao_db_drop']===true || (($this->cc_status===1 || $this->cc_status===2) && $this->check_db_empty($dbName)))
+				if($this->options['advanced']['ao_db_drop']===true || $this->check_db_empty($dbName))
 				{
 					return Array('status'=>true,'message'=>'PASSED');
 				}

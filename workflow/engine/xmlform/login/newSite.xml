@@ -3,19 +3,19 @@
 <NEW_WORKSPACE type="title">
   <en>New Workspace</en>
 </NEW_WORKSPACE>
-<NW_TITLE type="text" size="30" maxlength="32" validate="AlphaNum" defaultValue="sample" style='width:100%;'>
+<NW_TITLE type="text" size="30" maxlength="32" validate="Login" defaultValue="sample" style='width:100%;'>
   <en>Name</en>
 </NW_TITLE>
 <DB type="subtitle">
   <en>Database Options</en>
 </DB>
-<AO_DB_WF type="text" size="30" maxlength="32" validate="AlphaNum" defaultValue="wf_sample" style='width:100%;'>
+<AO_DB_WF type="text" size="30" maxlength="32" validate="Login" defaultValue="wf_sample" style='width:100%;'>
   <en>Workflow Database:</en>
 </AO_DB_WF>
-<AO_DB_RB type="text" size="30" maxlength="32" validate="AlphaNum" defaultValue="rb_sample" style='width:100%;'>
+<AO_DB_RB type="text" size="30" maxlength="32" validate="Login" defaultValue="rb_sample" style='width:100%;'>
   <en>Rbac Database:</en>
 </AO_DB_RB>
-<AO_DB_RP type="text" size="30" maxlength="32" validate="AlphaNum" defaultValue="rp_sample" style='width:100%;'>
+<AO_DB_RP type="text" size="30" maxlength="32" validate="Login" defaultValue="rp_sample" style='width:100%;'>
   <en>Report Database:</en>
 </AO_DB_RP>
 <AO_DB_DROP type="checkbox">
@@ -25,13 +25,13 @@
   <en>Workspace Administrator</en>
 </WS>
 
-<NW_USERNAME type="text" size="30" maxlength="32" validate="AlphaNum" defaultValue="admin"  style='width:100%;'>
+<NW_USERNAME type="text" size="30" maxlength="32" validate="Login" defaultValue="admin"  style='width:100%;'>
   <en>Username:</en>
 </NW_USERNAME>
-<NW_PASSWORD type="password" size="30" maxlength="32" validate="AlphaNum" defaultValue="admin" style='width:100%;'>
+<NW_PASSWORD type="password" size="30" maxlength="32" validate="Any" defaultValue="admin" style='width:100%;'>
   <en>Password (admin):</en>
 </NW_PASSWORD>
-<NW_PASSWORD2 type="password" size="30" maxlength="32" validate="AlphaNum" defaultValue="admin" style='width:100%;'>
+<NW_PASSWORD2 type="password" size="30" maxlength="32" validate="Any" defaultValue="admin" style='width:100%;'>
   <en>Re-type Password:</en>
 </NW_PASSWORD2>
 <ACTION type="hidden" defaultValue="test" />
@@ -91,7 +91,7 @@
 	var status_create=function(rpc)
 	{
 		data.loader.setStyle({visibility:'hidden'});
-		try{var rp=rpc.xmlhttp.responseText.parseJSON();}catch(e){var rp={};}
+		try{var rp=rpc.xmlhttp.responseText.parseJSON();}catch(e){var rp={result:{}};}
 		ed('enable');
 		data.name[(rp.result.name['status'])?'passed':'failed']().title=rp.result.name['message'];
 		data.ao_db_wf[(rp.result.database.ao.ao_db_wf['status'])?'passed':'failed']().title=rp.result.database.ao.ao_db_wf.message;
