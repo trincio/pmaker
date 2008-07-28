@@ -26,8 +26,9 @@ class NET
     private $db_port;
 
     /*errors handle*/
-    private $errno;
-    private $errstr;
+	public $error;
+	public $errno;
+	public $errstr;
 
     function __construct($pHost)
     {
@@ -54,11 +55,13 @@ class NET
             if (!$this->hostname = @gethostbyaddr($pHost)) {
                 $this->errno = 2000;
                 $this->errstr = "NET::Host down";
+				$this->error = "Destination Host Unreachable";
             }
         } else {
             if (!$this->ip = @gethostbyname($pHost)) {
                 $this->errno = 2000;
                 $this->errstr = "NET::Host down";
+				$this->error = "Destination Host Unreachable";
             }
             $this->hostname = $pHost;
         }
@@ -74,6 +77,9 @@ class NET
             return true;
             @fclose($x); //close connection (i dont know if this is needed or not).
         } else {
+			$this->errno = 9999;
+			$this->errstr = "NET::Port Host Unreachable";
+			$this->error = "Destination Port Unreachable";
             return false;
         }
 
