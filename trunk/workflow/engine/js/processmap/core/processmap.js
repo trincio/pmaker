@@ -335,7 +335,7 @@ var processmap=function(){
 						this.tmp.exportProcessPanel = panel =new leimnud.module.panel();
 						panel.options={
 							limit	:true,
-							size	:{w:420,h:200},
+							size	:{w:440,h:230},
 							position:{x:50,y:50,center:true},
 							title	:G_STRINGS.ID_PROCESSMAP_EXPORT_PROCESS+": "+this.data.db.title.label,
 							theme	:this.options.theme,

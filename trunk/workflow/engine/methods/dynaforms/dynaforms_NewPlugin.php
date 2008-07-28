@@ -24,11 +24,13 @@
  */
 
  //call plugin
-   $oPluginRegistry = &PMPluginRegistry::getSingleton();
-   $existsDynaforms = $oPluginRegistry->existsTrigger(PM_NEW_DYNAFORM_LIST );
+ //  $oPluginRegistry = &PMPluginRegistry::getSingleton();
+ //  $existsDynaforms = $oPluginRegistry->existsTrigger(PM_NEW_DYNAFORM_LIST );
 
 //for now, we are going with the default list, because the plugin is not complete
-include ('dynaforms_Edit.php');die;
+include ('dynaforms_Edit.php');
+die;
+
 //---*****************
 
  if ( !$existsDynaforms ) {
@@ -42,7 +44,7 @@ include ('dynaforms_Edit.php');die;
  //end plugin
 if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Response;
 
-  //G::genericForceLogin( 'WF_MYINFO' , 'login/noViewPage', $urlLogin = 'login/login' );
+  //G::genericForceLogin( 'WF_MYINFO' , 'login/noViewPage', $urlLogin =n 'login/login' );
 
   require_once('classes/model/Dynaform.php');
   
@@ -59,7 +61,6 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
   $aFields['PRO_UID'] = isset($dynaform->Fields['PRO_UID'])?$dynaform->Fields['PRO_UID']:$_GET['PRO_UID'];
 
   $G_PUBLISH = new Publisher();
-  $G_HEADER->clearScripts();
   $G_PUBLISH->AddContent('xmlform', 'xmlform', 'dynaforms/dynaforms_Edit', '', $aFields , SYS_URI.'dynaforms/dynaforms_Save');
   
   G::RenderPage( "publish-raw" , "raw" );
