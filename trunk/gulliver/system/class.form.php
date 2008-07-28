@@ -90,7 +90,7 @@ class Form extends XmlForm
 
     if ( substr($filename, -4) !== '.xml' ) $filename = $filename . '.xml';
 
-    $this->home=$home; 
+    $this->home=$home;
     $res = parent::parseFile( $filename , $language, $forceParse );
     if ($res==1) trigger_error('Faild to parse file ' . $filename . '.', E_USER_ERROR );
     if ($res==2) trigger_error('Faild to create cache file "' . $xmlform->parsedFile . '".', E_USER_ERROR );
@@ -170,7 +170,7 @@ class Form extends XmlForm
     } else {
       $o->template = $o->printTemplate( $this );
     }
-    $scriptContent = $o->printJavaScript( $this ); 
+    $scriptContent = $o->printJavaScript( $this );
     $content = $o->printObject($this);
     return $content;
   }
@@ -240,26 +240,33 @@ class Form extends XmlForm
     //$values = $this->values;
     foreach($this->fields as $k => $v){
       if (($v->type != 'submit')) {
-        if ( array_key_exists($k,$newValues) ) {
-          if ( is_array($newValues[$k]) ) {
-          	if (($v->type == 'checkgroup') || ($v->type == 'listbox')) {
-          		$values[$k] = implode('|', $newValues[$k]);
-          	}
-          	else {
-              $values[$k] = array();
-              foreach( $newValues[$k] as $j => $item ) {
-                if ($this->fields[$k]->validateValue($newValues[$k][$j], $this ))
-                  $values[$k][$j] = $this->fields[$k]->maskValue( $newValues[$k][$j], $this );
+        if ($v->type != 'file') {
+          if ( array_key_exists($k,$newValues) ) {
+            if ( is_array($newValues[$k]) ) {
+            	if (($v->type == 'checkgroup') || ($v->type == 'listbox')) {
+            		$values[$k] = implode('|', $newValues[$k]);
+            	}
+            	else {
+                $values[$k] = array();
+                foreach( $newValues[$k] as $j => $item ) {
+                  if ($this->fields[$k]->validateValue($newValues[$k][$j], $this ))
+                    $values[$k][$j] = $this->fields[$k]->maskValue( $newValues[$k][$j], $this );
+                }
+                if ((sizeof($values[$k])===1) && ($v->type!=='grid') && ($this->type!=='grid'))
+                {
+                  $values[$k] = $values[$k][0];
+                }
+                if (sizeof($values[$k])===0) $values[$k] = '';
               }
-              if ((sizeof($values[$k])===1) && ($v->type!=='grid') && ($this->type!=='grid'))
-              {
-                $values[$k] = $values[$k][0];
-              }
-              if (sizeof($values[$k])===0) $values[$k] = '';
+            } else {
+              if ($this->fields[$k]->validateValue($newValues[$k], $this ))
+                $values[$k] = $this->fields[$k]->maskValue( $newValues[$k], $this );
             }
-          } else {
-            if ($this->fields[$k]->validateValue($newValues[$k], $this ))
-              $values[$k] = $this->fields[$k]->maskValue( $newValues[$k], $this );
+          }
+        }
+        else {
+          if (isset($_FILES['form']['name'][$k])) {
+            $values[$k] = $_FILES['form']['name'][$k];
           }
         }
       }

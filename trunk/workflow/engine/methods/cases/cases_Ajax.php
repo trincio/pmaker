@@ -352,7 +352,12 @@ $oHeadPublisher->addScriptCode('
 		$oAppDocument = new AppDocument();
 		$oAppDocument->Fields = $oAppDocument->load($_POST['APP_DOC_UID']);
 		$oInputDocument = new InputDocument();
-		$Fields = $oInputDocument->load($oAppDocument->Fields['DOC_UID']);
+		if ($oAppDocument->Fields['DOC_UID'] != -1) {
+		  $Fields = $oInputDocument->load($oAppDocument->Fields['DOC_UID']);
+		}
+		else {
+		  $Fields = array('INP_DOC_FORM_NEEDED' => '', 'FILENAME' => $oAppDocument->Fields['APP_DOC_FILENAME']);
+		}
 		$oUser = new Users();
 		$aUser = $oUser->load($oAppDocument->Fields['USR_UID']);
 		$Fields['CREATOR'] = $aUser['USR_FIRSTNAME'] . ' ' . $aUser['USR_LASTNAME'];
@@ -366,6 +371,9 @@ $oHeadPublisher->addScriptCode('
 			break;
 			case 'VREAL':
 			$sXmlForm = 'cases/cases_ViewAnyInputDocument3';
+			break;
+			default:
+			$sXmlForm = 'cases/cases_ViewAnyInputDocument';
 			break;
 		}
 		$oAppDocument->Fields['VIEW'] = G::LoadTranslation('ID_OPEN');

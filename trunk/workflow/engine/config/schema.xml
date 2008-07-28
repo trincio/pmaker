@@ -493,7 +493,7 @@
       <rule name="required" message="User UID is required." />
     </validator>
     <validator column="APP_DOC_TYPE">
-      <rule name="validValues" value="INPUT|OUTPUT" message="Please select a valid document type." />
+      <rule name="validValues" value="INPUT|OUTPUT|ATTACHED" message="Please select a valid document type." />
       <rule name="required" message="Application Document Type is required." />
     </validator>
     <validator column="APP_DOC_CREATE_DATE">

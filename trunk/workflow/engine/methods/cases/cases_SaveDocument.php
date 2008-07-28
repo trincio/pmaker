@@ -30,25 +30,25 @@
     $Fields['APP_DATA'] = array_merge($Fields['APP_DATA'], G::getSystemConstants());
 
 	#trigger debug routines...
-  
+
   //cleaning debug variables
   $_SESSION['TRIGGER_DEBUG']['ERRORS'] = Array();
   $_SESSION['TRIGGER_DEBUG']['DATA'] = Array();
   $_SESSION['TRIGGER_DEBUG']['TRIGGERS_NAMES'] = '';
-  
+
   $triggers = $oCase->loadTriggers( $_SESSION['TASK'], 'INPUT_DOCUMENT', $_GET['UID'], 'AFTER');
-  
+
   $_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] = count($triggers);
   $_SESSION['TRIGGER_DEBUG']['TIME'] = 'AFTER';
   if($_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] != 0){
 	$_SESSION['TRIGGER_DEBUG']['TRIGGERS_NAMES'] = $oCase->getTriggerNames($triggers);
   }
-  
+
   if( $_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] != 0 ) {
 	//Execute after triggers - Start
     $Fields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], 'INPUT_DOCUMENT', $_GET['UID'], 'AFTER', $Fields['APP_DATA'] );
     //Execute after triggers - End
-  } 
+  }
 
 
     //save data
@@ -65,7 +65,6 @@
 
     $oAppDocument = new AppDocument();
     $aFields = array('APP_UID'             => $_SESSION['APPLICATION'],
-                     'DEL_INDEX'           => $_SESSION['INDEX'],
                      'DEL_INDEX'           => $_SESSION['INDEX'],
                      'USR_UID'             => $_SESSION['USER_LOGGED'],
                      'DOC_UID'             => $_GET['UID'],
@@ -106,12 +105,12 @@
       //end plugin
       }
     }
-	
+
 	//go to the next step
 	if (!isset($_POST['form']['MORE'])) {
 		$aNextStep = $oCase->getNextStep( $_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['STEP_POSITION']);
 		$_SESSION['STEP_POSITION'] = $aNextStep['POSITION'];
-		
+
 		if($_SESSION['TRIGGER_DEBUG']['ISSET']){
 			$_SESSION['TRIGGER_DEBUG']['BREAKPAGE'] = $aNextStep['PAGE'];
 			G::header('location: ' . $aNextStep['PAGE'].'&breakpoint=triggerdebug');
@@ -121,7 +120,7 @@
 		G::header('location: ' . $aNextStep['PAGE']);
 		die;
 	}
-	else { 
+	else {
 		if (isset($_SERVER['HTTP_REFERER'])) {
 			if ($_SERVER['HTTP_REFERER'] != '') {
 
@@ -157,7 +156,7 @@
 				G::header('location: ' . $aNextStep['PAGE'].'&breakpoint=triggerdebug');
 				die;
 			}
-				
+
 			G::header('location: ' . $aNextStep['PAGE']);
 			die;
 		}
