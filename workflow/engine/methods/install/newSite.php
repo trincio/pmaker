@@ -24,27 +24,45 @@
  */
 if(isset($_POST['form']['NW_TITLE']))
 {
+	$action = (isset($_POST['form']['ACTION']))?trim($_POST['form']['ACTION']):'test';
 	G::LoadClass('Installer');
 	G::LoadClass('json');
 	$name	= trim($_POST['form']['NW_TITLE']);
 	$inst	= new Installer();
+	
 	$isset	= $inst->isset_site($name);
-	$new	= ((!$isset) && ctype_alnum($name))?true:false;
+	
+	$new	= ((!$isset))?true:false;
 	$user	= (isset($_POST['form']['NW_USERNAME']))?trim($_POST['form']['NW_USERNAME']):'admin';
 	$pass	= (isset($_POST['form']['NW_PASSWORD']))?$_POST['form']['NW_PASSWORD']:'admin';
-	if($new)
-	{
-		$inst->create_site(Array(
-			'name'=>$name,
-			'admin'=>Array('username'=>$user,'password'=>$pass)
-		),true);
-	}
+	$pass1	= (isset($_POST['form']['NW_PASSWORD2']))?$_POST['form']['NW_PASSWORD2']:'admin';
+	
+	$ao_db_drop	= (isset($_POST['form']['AO_DB_DROP']))?true:false;
+	
+	$ao_db_wf	= (isset($_POST['form']['AO_DB_WF']))?$_POST['form']['AO_DB_WF']:false;
+	$ao_db_rb	= (isset($_POST['form']['AO_DB_RB']))?$_POST['form']['AO_DB_RB']:false;
+	$ao_db_rp	= (isset($_POST['form']['AO_DB_RP']))?$_POST['form']['AO_DB_RP']:false;
+	
+	$result = $inst->create_site(Array(
+		'isset'=>true,
+		'name' =>$name,
+		'admin'=>Array('username'=>$user,'password'=>$pass),
+		'advanced'=>Array(
+			'ao_db_drop'=>$ao_db_drop,
+			'ao_db_wf'=>$ao_db_wf,
+			'ao_db_rb'=>$ao_db_rb,
+			'ao_db_rp'=>$ao_db_rp
+		)
+	),($action==='create')?true:false);
+	$result['result']['admin']['password']=($pass===$pass1)?true:false;
+	$result['result']['action']=$action;
+	//print_r($inst);
 	$json	= new Services_JSON();
-	$ec;
+	/*$ec;
 	$ec->created=($new)?true:false;
 	$ec->name=$name;
-	$ec->message=($new)?"Workspace created":"Workspace already exists or Name invalid";
-	echo $json->encode($ec);
+	$ec->message=($new)?"Workspace created":"Workspace already exists or Name invalid";*/
+	echo $json->encode($result);
 }
 else
 {

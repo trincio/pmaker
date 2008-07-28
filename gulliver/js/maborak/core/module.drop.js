@@ -60,7 +60,7 @@ leimnud.Package.Public({
 				y:position.y+(this.drag.clientHeight/2)
 			};
 			this.selected = false;
-			console.info(position);
+			//console.info(position);
 			for(var i=0;i<this.elements.length;i++)
 			{
 				if(this.elements[i]!==null)
