@@ -220,13 +220,27 @@
       if ((keyCode===0) ) if (event.keyCode===46) return true; else return true;
       if ( (keyCode===8)) return true;
       if (me.mask ==='') {
-      	var k=new leimnud.module.validator({
-          valid	:[me.validate],
-          //add		:[8,9,32,46,[37,40]],
-          key		:event,
-          lang	:(typeof(me.language)!=='undefined')?me.language:"en"
+        if (me.validate == 'NodeName') {
+          if (me.getCursorPos() == 0) {
+            if ((keyCode >= 48) && (keyCode <= 57)) {
+              return false;
+            }
+          }
+          var k=new leimnud.module.validator({
+            valid	:['Field'],
+            key		:event,
+            lang	:(typeof(me.language)!=='undefined')?me.language:"en"
           });
-        return k.result();
+          return k.result();
+        }
+        else {
+      	  var k=new leimnud.module.validator({
+            valid	:[me.validate],
+            key		:event,
+            lang	:(typeof(me.language)!=='undefined')?me.language:"en"
+          });
+          return k.result();
+        }
       } else {
         //return true;
         if (doubleChange) {doubleChange=false;return false;}
@@ -418,6 +432,12 @@
 		    case 'LOWER':
 		      this.element.value = this.element.value.toLowerCase();
 		    break;
+		  }
+		}
+		if (this.validate == 'NodeName') {
+		  var pat = /^[a-z\_](.)[a-z\d\_]{1,255}$/i;
+		  if(!pat.test(this.element.value)) {
+		    this.element.value = '_' + this.element.value;
 		  }
 		}
 	}.extend(this);
