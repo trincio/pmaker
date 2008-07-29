@@ -371,7 +371,7 @@ class Installer
 	{
 		if(!$this->connection_database)
 		{
-			return Array('status'=>false,'message'=>'Error connection');
+			return Array('status'=>false,'message'=>mysql_error());
 		}
 		else
 		{

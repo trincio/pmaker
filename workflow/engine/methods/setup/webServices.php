@@ -29,13 +29,22 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
   $G_SUB_MENU             = 'setup';
   $G_ID_MENU_SELECTED     = 'SETUP';
   $G_ID_SUB_MENU_SELECTED = 'WEBSERVICES';
-
-  $G_PUBLISH = new Publisher;
-  $G_PUBLISH->AddContent('view', 'setup/webServicesTree' );
-  $G_PUBLISH->AddContent('smarty', 'groups/groups_usersList', '', '', array());
-
-  G::RenderPage( "publish-treeview" );
-
+  
+  if (extension_loaded('soap')) 
+   {	    	   			    		
+	    		$G_PUBLISH = new Publisher;
+	  	    $G_PUBLISH->AddContent('xmlform', 'xmlform', 'setup/wsMessage');
+	    		G::RenderPage( "publish" );	 
+	 }
+	else
+	 {	
+	  	$G_PUBLISH = new Publisher;
+	  	$G_PUBLISH->AddContent('view', 'setup/webServicesTree' );
+	  	$G_PUBLISH->AddContent('smarty', 'groups/groups_usersList', '', '', array());
+	
+	    G::RenderPage( "publish-treeview" );
+	 }	
+	
   $link_Edit = G::encryptlink('webServicesSetup');
   $link_List = G::encryptlink('webServicesList');
 ?>
