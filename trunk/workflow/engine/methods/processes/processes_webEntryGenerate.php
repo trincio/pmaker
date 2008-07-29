@@ -110,7 +110,7 @@
     $hTASKS    = '<input type="hidden" name="TASKS" value="'.$sTASKS.'">';
     $hDYNAFORM = '<input type="hidden" name="DYNAFORM" value="'.$sDYNAFORM.'">';
 
-    $nform = $link1."\n".$js1."\n".$js2."\n".$js2_."\n".$js2__."\n".$js3."\n".$js5."\n".$js4."\n".$js6."\n".$js7."\n".$form."\n".$hPRO_UID."\n".$hTASKS."\n".$hDYNAFORM.'</form>';
+    $nform = $link1."\n".$js1."\n".$js2."\n".$js2__."\n".$js3."\n".$js5."\n".$js4."\n".$js6."\n".$js7."\n".$form."\n".$hPRO_UID."\n".$hTASKS."\n".$hDYNAFORM.'</form>';
 
     print_r('<textarea cols="70" rows="20">'.htmlentities($nform).'</textarea>');
     //print_r($nform);
