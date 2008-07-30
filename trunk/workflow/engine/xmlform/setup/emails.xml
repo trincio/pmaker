@@ -91,7 +91,7 @@ function testConnection() {
 	oPanel.options = {
 		size	:{w:580,h:390},
 		position:{x:0,y:0,center:true},
-		title	: 'SMPT Server Connection',
+		title	: 'SMTP Server Connection',
 		theme	:"processmaker",
 		statusBar:false,
 		control	:{resize:false,roll:false,drag:true},
@@ -139,7 +139,7 @@ function testSMTPHost(step)
 					if(msg != '') {
 						$('status_'+step).innerHTML = '<img src="/images/row_down.png" width="15" height="11" align="left" border="0"/><b>Server Response: <font color=#000>'+msg+'</b></font><br/>';
 					}
-					$('status_'+step).innerHTML += '<img src="/images/ok.png" width="13" height="13" align="left" border="0"/><b>The test was <font color="#749AF9">Successfull!</b></font>';
+					$('status_'+step).innerHTML += '<img src="/images/ok.png" width="13" height="13" align="left" border="0"/><b>The test was <font color="#749AF9">Successful</b></font>';
 				}
 				else {
 					if( result == 'FAILED' ) {
