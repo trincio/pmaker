@@ -129,7 +129,7 @@ class Triggers extends BaseTriggers {
   	    return $aFields;
       }
       else {
-        throw( new Exception( "This row doesn't exists!" ));
+        throw( new Exception( "The row '$TriUid' in table TRIGGERS doesn't exists!" ));
       }
     }
     catch (Exception $oError) {

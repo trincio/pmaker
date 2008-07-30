@@ -362,7 +362,7 @@ class Task extends BaseTask {
         return $aFields;
       }
       else {
-        throw( new Exception( "This row doesn't exists!" ));
+        throw( new Exception( "The row '" . $TasUid . "' in table TASK doesn't exists!" ));
       }
     }
     catch (Exception $oError) {
@@ -422,7 +422,7 @@ class Task extends BaseTask {
         return $iResult;
       }
       else {
-        throw(new Exception('This row doesn\'t exists!'));
+        throw( new Exception( "The row '" . $TasUid . "' in table TASK doesn't exists!" ));
       }
     }
     catch (Exception $oError) {

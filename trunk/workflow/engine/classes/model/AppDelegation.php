@@ -123,7 +123,7 @@ class AppDelegation extends BaseAppDelegation {
   	    return $aFields;
   	  }
       else {
-        throw( new Exception( "This row doesn't exists!" ));
+        throw( new Exception( "The row '$AppUid, $sDelIndex' in table AppDelegation doesn't exists!" ));
       }
     }
     catch (Exception $oError) {

@@ -28,7 +28,7 @@ class StepSupervisor extends BaseStepSupervisor {
         return $aFields;
       }
       else {
-        throw( new Exception( "This row doesn't exists!" ));
+        throw( new Exception( "The row '$Uid' in table StepSupervisor doesn't exists!" ));
       }
     }
     catch (Exception $oError) {
