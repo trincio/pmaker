@@ -58,15 +58,18 @@ class NET
 				$this->error = "Destination Host Unreachable";
             }
         } else {
-            if (!$this->ip = @gethostbyname($pHost)) {
-                $this->errno = 2000;
-                $this->errstr = "NET::Host down";
+			$ip   = @gethostbyname($pHost);
+			$long = ip2long($ip);
+			if ( $long == -1 || $long === FALSE)  {
+				$this->errno = 2000;
+				$this->errstr = "NET::Host down";
 				$this->error = "Destination Host Unreachable";
-            }
-            $this->hostname = $pHost;
+			} else {
+				$this->ip = @gethostbyname($pHost);
+				$this->hostname = $pHost;
+			}
         }
     }
-
 
     function scannPort($pPort)
     {
@@ -129,17 +132,20 @@ class NET
 
     function tryConnectServer($pDbDriver)
     {
-        $stat = new Stat();
-
+		if($this->errno != 0) {
+			return 0;
+		}
+		$stat = new Stat();
+			
         if(isset($this->db_user) && (isset($this->db_passwd) || ('' == $this->db_passwd)) && isset($this->db_sourcename))
         {
             switch($pDbDriver)
             {
                 case 'mysql':
                     if ($this->db_passwd == '') {
-                        $link = @mysql_connect($this->ip, $this->db_user);
+						$link = @mysql_connect($this->ip.':'.$this->db_port, $this->db_user);
                     } else {
-                        $link = @mysql_connect($this->ip, $this->db_user, $this->db_passwd);
+						$link = @mysql_connect($this->ip.':'.$this->db_port, $this->db_user, $this->db_passwd);
                     }
                     if ($link) {
                         if (@mysql_ping($link)) {
@@ -147,10 +153,12 @@ class NET
                             $this->errstr = "";
                             $this->errno = 0;
                         } else {
+							$this->error = "Lost MySql Connection";
                             $this->errstr = "NET::MYSQL->Lost Connection";
                             $this->errno = 10010;
                         }
                     } else {
+						$this->error = "MySql connection refused!";
                         $this->errstr = "NET::MYSQL->The connection was refused";
                         $this->errno = 10001;
                     }
@@ -164,7 +172,8 @@ class NET
                         $this->errstr = "";
                         $this->errno = 0;
                     } else {
-                        $this->errstr = "NET::POSTGRES->The connection was refused";
+						$this->error = "PostgreSql connection refused!";
+						$this->errstr = "NET::POSTGRES->The connection was refused";
                         $this->errno = 20001;
                     }
                     break;
@@ -178,6 +187,7 @@ class NET
                         $this->errstr = "";
                         $this->errno = 0;
                     } else {
+						$this->error = "MS-SQL Server connection refused";
                         $this->errstr = "NET::MSSQL->The connection was refused";
                         $this->errno = 30001;
                     }
@@ -192,6 +202,7 @@ class NET
                             $this->errstr = "";
                             $this->errno = 0;
                         } else {
+							$this->error = "Oracle connection refused";
                             $this->errstr = "NET::ORACLE->The connection was refused";
                             $this->errno = 30001;
                         }
@@ -215,6 +226,10 @@ class NET
 
     function tryOpenDataBase($pDbDriver)
     {
+		if($this->errno != 0) {
+			return 0;
+		}
+		
         set_time_limit(0);
         $stat = new Stat();
 
@@ -223,7 +238,7 @@ class NET
             switch($pDbDriver)
             {
                 case 'mysql':
-                    $link = @mysql_connect($this->ip, $this->db_user, $this->db_passwd);
+					$link = @mysql_connect($this->ip.':'.$this->db_port, $this->db_user, $this->db_passwd);
                     $db = @mysql_select_db($this->db_sourcename);
                     if ($link) {
                         if ($db) {
@@ -234,14 +249,17 @@ class NET
                                 $this->errno = 0;
                                 @mysql_free_result($result);
                             } else {
+								$this->error = "the user $this->db_user don't has privileges to run queries!";
                                 $this->errstr = "NET::MYSQL->Test query failed";
                                 $this->errno = 10100;
                             }
                         } else {
+							$this->error = "The $this->db_sourcename data base does'n exist!";
                             $this->errstr = "NET::MYSQL->Select data base failed";
                             $this->errno = 10011;
                         }
                     } else {
+						$this->error = "MySql connection refused!";
                         $this->errstr = "NET::MYSQL->The connection was refused";
                         $this->errno = 10001;
                     }
@@ -256,10 +274,12 @@ class NET
                             $this->errstr = "";
                             $this->errno = 0;
                         } else {
+							$this->error = "PostgreSql Connection to $this->ip is  unreachable!";
                             $this->errstr = "NET::POSTGRES->Lost Connection";
                             $this->errno = 20010;
                         }
                     } else {
+						$this->error = "PostgrSql connection refused";
                         $this->errstr = "NET::POSTGRES->The connection was refused";
                         $this->errno = 20001;
                     }
@@ -275,10 +295,12 @@ class NET
                             $this->errstr = "";
                             $this->errno = 0;
                         } else {
+							$this->error = "The $this->db_sourcename data base does'n exist!";
                             $this->errstr = "NET::MSSQL->Select data base failed";
                             $this->errno = 30010;
                         }
                     } else {
+						$this->error = "MS-SQL Server connection refused!";
                         $this->errstr = "NET::MSSQL->The connection was refused";
                         $this->errno = 30001;
                     }
@@ -296,10 +318,12 @@ class NET
                             $this->errno = 0;
                             @oci_close($link);
                         } else {
+							$this->error = "the user $this->db_user don't has privileges to run queries!";
                             $this->errstr = "NET::ORACLE->Couldn't execute any query on this server!";
                             $this->errno = 40010;
                         }
                     } else {
+						$this->error = "Oracle connection refused!";
                         $this->errstr = "NET::ORACLE->The connection was refused";
                         $this->errno = 40001;
                     }
