@@ -1962,22 +1962,26 @@ class XmlForm_Field_JavaScript extends XmlForm_Field
 	}
 }
 
-/** *******************************************************************************************************************
-* code added by ERIK 
-*** ******************/
+/**
+* @Description		Calendar Widget with Javascript Routines
+* @Author			Erik amaru Ortiz <erik@colosa.com>
+* @creation date 	2008-07-25
+* @Last Modification 2008-07-29
+* @Modification 2008-07-29 Comment Working for after and before date attributes
+*/
 class XmlForm_Field_Date extends XmlForm_Field_SimpleText
 {
 	public $required = false;
 	public $readOnly = false;
 
-	//Instead of size --> startDate
 	public $startDate  = '';
-	//Instead of maxLength --> endDate
 	public $endDate    = '';
-	//for dinamically dates,   beforeDate << currentDate << afterDate
-	// beforeDate='1y' means one year before,  beforeDate='3m' means 3 months before
-	// afterDate='5y' means five year after,  afterDate='15d' means 15 days after
-	// startDate and endDate have priority over beforeDate and AfterDate.
+	/*
+	* for dinamically dates,   beforeDate << currentDate << afterDate
+	* beforeDate='1y' means one year before,  beforeDate='3m' means 3 months before
+	* afterDate='5y' means five year after,  afterDate='15d' means 15 days after
+	* startDate and endDate have priority over beforeDate and AfterDate
+	*/
 	public $afterDate    = '';
 	public $beforeDate   = '';
 	public $defaultValue = NULL;
@@ -2053,7 +2057,7 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText
 		
 		$beforeDate = G::replaceDataField( $this->beforeDate, $owner->values );
 		$afterDate = G::replaceDataField( $this->afterDate, $owner->values );
-		
+
 		if ( $startDate != ''  ) {
 			if ( ! $this->verifyDateFormat ( $startDate ) )
 				$startDate = '';

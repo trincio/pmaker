@@ -5,11 +5,11 @@
   <en>Mail Configuration Test Page</en>
 </THETITLE>
 
-<FROM_NAME type="text" size="25" defaultValue="Test Sender">
+<FROM_NAME type="text" size="25" defaultValue="Process Maker [Test mail]">
   <en>From Name:</en>
 </FROM_NAME>
 
-<FROM_EMAIL type="text" size="25" defaultValue="test@processmaker.com" validate="Email" required="true">
+<FROM_EMAIL type="text" size="25" defaultValue="" validate="Email" required="true" mode="view">
   <en>From Email:</en>
 </FROM_EMAIL>
 

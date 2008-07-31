@@ -62,13 +62,11 @@
 
 /***we disable the save button***/
 getField('SAVE_CHANGES').disabled = true;
-//verifyData(this.form);
-//testEmailConfiguration();
 
-/* @#init *************************************  test Connectio Events ***********************************
+/* @#init *************************************  test Connection Events ***********************************
 *  @author: Erik Amaru Ortiz <erik@colosa.com>
 **********************************************************************************************************/
-var PROCESS_REQUEST_FILE = '../setup/setupAjax';
+var PROCESS_REQUEST_FILE = '../setup/emails_Ajax';
 
 var oPanel;
 var srv;
@@ -137,13 +135,13 @@ function testSMTPHost(step)
 				if( result == 'SUCCESSFULL' ) {
 					$('status_'+step).innerHTML = '';
 					if(msg != '') {
-						$('status_'+step).innerHTML = '<img src="/images/row_down.png" width="15" height="11" align="left" border="0"/><b>Server Response: <font color=#000>'+msg+'</b></font><br/>';
+						$('status_'+step).innerHTML = '<img src="/images/row_down.png" width="15" height="11" align="left" border="0"/><b>Server response: <font color=#000>'+msg+'</b></font><br/>';
 					}
 					$('status_'+step).innerHTML += '<img src="/images/ok.png" width="13" height="13" align="left" border="0"/><b>The test was <font color="#749AF9">Successful</b></font>';
 				}
 				else {
 					if( result == 'FAILED' ) {
-						$('status_'+step).innerHTML = '<img src="/images/alert.gif" width="12" height="12" align="left" border="0"/><b>The Server response was <font color=red>'+msg+'</b></font><br/>';
+						$('status_'+step).innerHTML = '<img src="/images/alert.gif" width="12" height="12" align="left" border="0"/><b>The server response was <font color=red>'+msg+'</b></font><br/>';
 						$('status_'+step).innerHTML += '<img src="/images/cross.gif" width="12" height="12" align="left" border="0"/><b>The test was <font color=red> Failed!</b></font>';
 						resultset = false;
 					} else {
@@ -223,12 +221,15 @@ function initSet(){
     hideRowById('MESS_EXECUTE_EVERY');
     hideRowById('MESS_SEND_MAX');
     hideRowById('MESS_TRY_SEND_INMEDIATLY');
-    hideRowById('TEST');
+	
 	$('form[SAVE_CHANGES]').disabled = false;
-  }	
+  }	else {
+	if(getField('MESS_ENGINE').value == 'MAIL')
+		hideRowById('TEST');
+	}
 }
 
-/* @#end *************************************  test Connectio Events ************************************/
+/* @#end *************************************  test Connection Events ************************************/
 
 
 leimnud.event.add(getField('MESS_ENABLED'), 'click', function() {
@@ -240,6 +241,8 @@ leimnud.event.add(getField('MESS_ENABLED'), 'click', function() {
         hideRowById('MESS_PORT');
         hideRowById('MESS_ACCOUNT');
         hideRowById('MESS_PASSWORD');
+		hideRowById('TEST');
+	    $('form[SAVE_CHANGES]').disabled = false;
       break;
       case 'PHPMAILER':
       case 'OPENMAIL':
@@ -247,6 +250,8 @@ leimnud.event.add(getField('MESS_ENABLED'), 'click', function() {
         showRowById('MESS_PORT');
         showRowById('MESS_ACCOUNT');
         showRowById('MESS_PASSWORD');
+		showRowById('TEST');
+	    $('form[SAVE_CHANGES]').disabled = true;
       break;
     }
     //showRowById('MESS_BACKGROUND');////enable this line in the next release
@@ -260,8 +265,6 @@ leimnud.event.add(getField('MESS_ENABLED'), 'click', function() {
       hideRowById('MESS_SEND_MAX');
       hideRowById('MESS_TRY_SEND_INMEDIATLY');
     }
-    showRowById('TEST');
-	$('form[SAVE_CHANGES]').disabled = true;
   }
   else {
     hideRowById('MESS_ENGINE');
@@ -285,6 +288,8 @@ leimnud.event.add(getField('MESS_ENGINE'), 'change', function() {
       hideRowById('MESS_PORT');
       hideRowById('MESS_ACCOUNT');
       hideRowById('MESS_PASSWORD');
+	  hideRowById('TEST');
+	  $('form[SAVE_CHANGES]').disabled = false;
     break;
     case 'PHPMAILER':
     case 'OPENMAIL':
@@ -292,6 +297,8 @@ leimnud.event.add(getField('MESS_ENGINE'), 'change', function() {
       showRowById('MESS_PORT');
       showRowById('MESS_ACCOUNT');
       showRowById('MESS_PASSWORD');
+	  showRowById('TEST');
+	  $('form[SAVE_CHANGES]').disabled = true;
     break;
   }
 }.extend(getField('MESS_ENGINE')));
@@ -404,7 +411,7 @@ var testEmailConfiguration = function() {
   oPanel.loader.show();
   var oRPC = new leimnud.module.rpc.xmlhttp({
   	url : 'emails_Ajax',
-  	args: 'action=testEmailConfiguration'
+  	args: 'action=testEmailConfiguration&usermail='+account
   });
   oRPC.callback = function(rpc){
     oPanel.loader.hide();

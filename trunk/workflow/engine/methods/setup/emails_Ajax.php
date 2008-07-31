@@ -38,62 +38,187 @@ switch ($RBAC->userCanAccess('PM_FACTORY'))
 	break;
 }
 
-switch ($_POST['action']) {
-  case 'testEmailConfiguration':
-    global $G_PUBLISH;
-    global $G_HEADER;
-  	$G_PUBLISH = new Publisher();
-  	$G_HEADER->clearScripts();
-    $G_PUBLISH->AddContent('xmlform', 'xmlform', 'setup/emails_TestForm');
-    G::RenderPage('publish', 'raw');
-  break;
-  case 'sendTestMail':
-    $sFrom    = ($_POST['FROM_NAME'] != '' ? $_POST['FROM_NAME'] . ' ' : '') . '<' . $_POST['FROM_EMAIL'] . '>';
-    $sSubject = G::LoadTranslation('ID_MESS_TEST_SUBJECT');
-    $sBody    = G::LoadTranslation('ID_MESS_TEST_BODY') . ' "';
-    switch ($_POST['MESS_ENGINE']) {
-      case 'MAIL':
-        $sBody .= G::LoadTranslation('ID_MESS_ENGINE_TYPE_1');
-      break;
-      case 'PHPMAILER':
-        $sBody .= G::LoadTranslation('ID_MESS_ENGINE_TYPE_2');
-      break;
-      case 'OPENMAIL':
-        $sBody .= G::LoadTranslation('ID_MESS_ENGINE_TYPE_3');
-      break;
-    }
-    $sBody .= '" (' . date('H:i:s') . ').';
-    G::LoadClass('spool');
-    $oSpool = new spoolRun();
-    $oSpool->setConfig(array('MESS_ENGINE'   => $_POST['MESS_ENGINE'],
-                             'MESS_SERVER'   => $_POST['MESS_SERVER'],
-                             'MESS_PORT'     => $_POST['MESS_PORT'],
-                             'MESS_ACCOUNT'  => $_POST['MESS_ACCOUNT'],
-                             'MESS_PASSWORD' => $_POST['MESS_PASSWORD']));
-    $oSpool->create(array('msg_uid'          => '',
-                          'app_uid'          => '',
-                          'del_index'        => 0,
-                          'app_msg_type'     => 'TEST',
-                          'app_msg_subject'  => $sSubject,
-                          'app_msg_from'     => $sFrom,
-                          'app_msg_to'       => $_POST['TO'],
-                          'app_msg_body'     => $sBody,
-                          'app_msg_cc'       => '',
-                          'app_msg_bcc'      => '',
-                          'app_msg_attach'   => '',
-                          'app_msg_template' => '',
-                          'app_msg_status'   => 'pending'));
-    $oSpool->sendMail();
-    global $G_PUBLISH;
-    global $G_HEADER;
-  	$G_PUBLISH = new Publisher();
-  	$G_HEADER->clearScripts();
-    if ($oSpool->status == 'sent') {
-      $G_PUBLISH->AddContent('xmlform', 'xmlform', 'setup/emails_Sended', '', array('MESSAGE_VALUE' => G::LoadTranslation('ID_MESS_TEST_MESSAGE_SENDED')));
-    }
-    else {
-      $G_PUBLISH->AddContent('xmlform', 'xmlform', 'setup/emails_Sended', '', array('MESSAGE_VALUE' => G::LoadTranslation('ID_MESS_TEST_MESSAGE_ERROR_PHP_MAIL') . $oSpool->error));
-    }
-    G::RenderPage('publish', 'raw');
-  break;
+$request = (isset($_POST['action']))?$_POST['action']:$_POST['request'];
+
+switch ($request) {
+	case 'testEmailConfiguration':
+		global $G_PUBLISH;
+		$G_PUBLISH = new Publisher();
+		$aFields['FROM_EMAIL'] = $_POST['usermail'];
+		$G_PUBLISH->AddContent('xmlform', 'xmlform', 'setup/emails_TestForm','', $aFields);
+		G::RenderPage('publish', 'raw');
+	break;
+	case 'sendTestMail':
+		$sFrom    = ($_POST['FROM_NAME'] != '' ? $_POST['FROM_NAME'] . ' ' : '') . '<' . $_POST['FROM_EMAIL'] . '>';
+		$sSubject = G::LoadTranslation('ID_MESS_TEST_SUBJECT');
+		$msg = G::LoadTranslation('ID_MESS_TEST_BODY');
+		
+		switch ($_POST['MESS_ENGINE']) {
+			case 'MAIL':
+				$engine = G::LoadTranslation('ID_MESS_ENGINE_TYPE_1');
+			break;
+			case 'PHPMAILER':
+				$engine = G::LoadTranslation('ID_MESS_ENGINE_TYPE_2');
+			break;
+			case 'OPENMAIL':
+				$engine = G::LoadTranslation('ID_MESS_ENGINE_TYPE_3');
+			break;
+		}
+
+		$colosa_msg = "This Business Process is powered by <b>ProcessMaker</b>.";
+		$sBody = "
+		<table style=\"background-color: white; font-family: Arial,Helvetica,sans-serif; color: black; font-size: 11px; text-align: left;\" cellpadding='10' cellspacing='0' width='100%'>
+		<tbody><tr><td><img id='logo' src='http://".$_SERVER['SERVER_NAME']."/images/processmaker.logo.jpg' /></td></tr>
+		<tr><td style='font-size: 14px;'>$msg $engine - ".date('H:i:s')."</td></tr>
+		<tr><td style='vertical-align:middel;'>
+		<br /><hr><b>This Business Process is powered by ProcessMaker.<b><br />
+		<a href='http://www.processmaker.com' style='color:#c40000;'>www.processmaker.com</a><br /></td>
+		</tr></tbody></table>";
+
+		G::LoadClass('spool');
+		$oSpool = new spoolRun();
+		$oSpool->setConfig( array(
+			'MESS_ENGINE'   => $_POST['MESS_ENGINE'],
+			'MESS_SERVER'   => $_POST['MESS_SERVER'],
+			'MESS_PORT'     => $_POST['MESS_PORT'],
+			'MESS_ACCOUNT'  => $_POST['MESS_ACCOUNT'],
+			'MESS_PASSWORD' => $_POST['MESS_PASSWORD']
+		));
+		$oSpool->create(array(
+			'msg_uid'          => '',
+			'app_uid'          => '',
+			'del_index'        => 0,
+			'app_msg_type'     => 'TEST',
+			'app_msg_subject'  => $sSubject,
+			'app_msg_from'     => $sFrom,
+			'app_msg_to'       => $_POST['TO'],
+			'app_msg_body'     => $sBody,
+			'app_msg_cc'       => '',
+			'app_msg_bcc'      => '',
+			'app_msg_attach'   => '',
+			'app_msg_template' => '',
+			'app_msg_status'   => 'pending'
+		));
+		$oSpool->sendMail();
+		global $G_PUBLISH;
+		$G_PUBLISH = new Publisher();
+		if ($oSpool->status == 'sent') {
+			$G_PUBLISH->AddContent('xmlform', 'xmlform', 'setup/emails_Sended', '', array('MESSAGE_VALUE' => G::LoadTranslation('ID_MESS_TEST_MESSAGE_SENDED')));
+		}
+		else {
+			$G_PUBLISH->AddContent('xmlform', 'xmlform', 'setup/emails_Sended', '', array('MESSAGE_VALUE' => G::LoadTranslation('ID_MESS_TEST_MESSAGE_ERROR_PHP_MAIL') . $oSpool->error));
+		}
+		G::RenderPage('publish', 'raw');
+	break;
+
+	/**********************************************************************************/
+
+	case 'mailTest_Show':
+		$srv = $_POST['srv'];
+		$port =  $_POST['port'];
+		$account = $_POST['account'];
+		$passwd = $_POST['passwd'];
+		$G_PUBLISH = new Publisher;
+		$G_PUBLISH->AddContent('view', 'setup/mailConnectiontest');
+		G::RenderPage('publish', 'raw');
+	break;
+
+	case 'testConnection':
+
+		G::LoadClass('net');
+		require_once('classes/class.smtp.rfc-821.php');
+
+		define("SUCCESSFULL", 'SUCCESSFULL');
+		define("FAILED", 'FAILED');
+
+		//$host = 'smtp.bizmail.yahoo.com';
+		$srv = $_POST['srv'];
+		$port = ($_POST['port'] == 'default')? 0: $_POST['port'];
+		$user = $_POST['account'];
+		$passwd = $_POST['passwd'];
+		$step = $_POST['step'];
+
+		$Server = new NET($srv);
+		$oSMTP = new SMTP;
+
+		switch ($step) {
+			case 1:
+				if ($Server->getErrno() == 0) {
+					print(SUCCESSFULL.',');
+				} else {
+					print(FAILED.','.$Server->error);
+				}
+			break;
+
+			case 2:
+				if($port == 0){
+					$port = $oSMTP->SMTP_PORT;
+				}
+				$Server->scannPort($port);
+				if ($Server->getErrno() == 0) {
+					print(SUCCESSFULL.',');
+				} else {
+					print(FAILED.','.$Server->error);
+				}
+			break;
+
+			#try to connect to host
+			case 3:
+				if($port == 0){
+					$resp = $oSMTP->Connect($srv);
+				} else {
+					$resp = $oSMTP->Connect($srv, $port);
+				}
+				if( !$resp) {
+					print(FAILED.','.$oSMTP->error['error']);
+				} else {
+					print(SUCCESSFULL.','.$oSMTP->status);
+				}
+			break;
+
+			#try login to host
+			case 4:
+				if($port == 0){
+					$resp = $oSMTP->Connect($srv);
+				} else {
+					$resp = $oSMTP->Connect($srv, $port);
+				}
+				if($resp) {
+					if( !$oSMTP->Authenticate($user, $passwd) ) {
+						print(FAILED.','.$oSMTP->error['error']);
+					} else {
+						print(SUCCESSFULL.','.$oSMTP->status);
+					}
+				} else {
+					print(FAILED.','.$oSMTP->error['error']);
+				}
+			break;
+
+			default:
+				print('test finished!');
+		}
+	break;
+}
+
+
+function e_utf8_encode($input) {
+	$utftext = null;
+       
+	for ($n = 0; $n < strlen($input); $n++) {
+
+		$c = ord($input[$n]);
+           
+		if ($c < 128) {
+			$utftext .= chr($c);
+		} else if (($c > 128) && ($c < 2048)) {
+			$utftext .= chr(($c >> 6) | 192);
+			$utftext .= chr(($c & 63) | 128);
+		} else {
+			$utftext .= chr(($c >> 12) | 224);
+			$utftext .= chr((($c & 6) & 63) | 128);
+			$utftext .= chr(($c & 63) | 128);
+		}
+	}
+       
+	return $utftext;
 }
