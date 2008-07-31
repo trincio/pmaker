@@ -51,10 +51,10 @@
 	<div class="boxBottomBlue"><div class="a"></div><div class="b"></div><div class="c"></div></div>';
 
 	$tests = Array('',
-                'Resolve Host Name '.$_POST['srv'],
+                'Resolve host name '.$_POST['srv'],
                 'Checking port <b>'.$_POST['port'].'</b>',
-                'Stablishing connection to host '.$host->hostname,
-				'Account\'s auto login ['.$_POST['account'].'] in '.$host->hostname.' SMTP Server'
+                'Stablishing connection to host <b>'.$host->hostname.'</b>',
+				'Login as <b>'.$_POST['account'].'</b> on '.$host->hostname.' SMTP Server'
     );
 	$tree->showSign = false;
 	$n = Array('','uno','dos','tres','cuatro','cinco');

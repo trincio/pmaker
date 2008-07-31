@@ -189,7 +189,7 @@ class SMTP
             }
             return false;
         }
-
+		$this->status = $this->CRLF . $rply;
         return true;
     }
 
