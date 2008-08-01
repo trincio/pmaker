@@ -4199,4 +4199,177 @@
       </vendor>
     </index>
   </table>
+  <table name="OBJECT_PERMISSION">
+    <vendor type="mysql">
+      <parameter name="Name" value="OBJECT_PERMISSION"/>
+      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Version" value="10"/>
+      <parameter name="Row_format" value="Dynamic"/>
+      <parameter name="Rows" value="0"/>
+      <parameter name="Avg_row_length" value="0"/>
+      <parameter name="Data_length" value="0"/>
+      <parameter name="Max_data_length" value="281474976710655"/>
+      <parameter name="Index_length" value="1024"/>
+      <parameter name="Data_free" value="0"/>
+      <parameter name="Auto_increment" value=""/>
+      <parameter name="Create_time" value="2008-08-01 11:10:00"/>
+      <parameter name="Update_time" value="2008-08-01 11:10:00"/>
+      <parameter name="Check_time" value=""/>
+      <parameter name="Collation" value="utf8_general_ci"/>
+      <parameter name="Checksum" value=""/>
+      <parameter name="Create_options" value=""/>
+      <parameter name="Comment" value="OBJECT_PERMISSION"/>
+    </vendor>
+    <column name="PRO_UID" type="VARCHAR" size="32" required="true" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="PRO_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="TAS_UID" type="VARCHAR" size="32" required="true" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="TAS_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="USR_UID" type="VARCHAR" size="32" required="true" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="USR_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="OP_USER_RELATION" type="INTEGER" required="true" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="OP_USER_RELATION"/>
+        <parameter name="Type" value="int(1)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="1"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="OP_TASK_SOURCE" type="VARCHAR" size="32" required="" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="OP_TASK_SOURCE"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="OP_PARTICIPATE" type="INTEGER" required="true" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="OP_PARTICIPATE"/>
+        <parameter name="Type" value="int(1)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="1"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="OP_OBJ_TYPE" type="VARCHAR" size="15" required="true" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="OP_OBJ_TYPE"/>
+        <parameter name="Type" value="varchar(15)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="ALL"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="OP_OBJ_UID" type="VARCHAR" size="32" required="true" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="OP_OBJ_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="OP_ACTION" type="VARCHAR" size="10" required="true" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="OP_ACTION"/>
+        <parameter name="Type" value="varchar(10)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="VIEW"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <validator column="USR_UID">
+      <rule name="maxLength" value="32" message="User or Group UID can be no larger than ${value} in size" />
+      <rule name="required" message="User or Group UID is required." />
+    </validator>
+    <validator column="PRO_UID">
+      <rule name="maxLength" value="32" message="Process UID can be no larger than ${value} in size" />
+      <rule name="required" message="Process UID is required." />
+    </validator>
+    <validator column="TAS_UID">
+      <rule name="maxLength" value="32" message="Task UID can be no larger than ${value} in size" />
+      <rule name="required" message="Task UID is required." />
+    </validator>
+    <validator column="USR_UID">
+      <rule name="maxLength" value="32" message="User or Group UID can be no larger than ${value} in size" />
+      <rule name="required" message="User or Group UID is required." />
+    </validator>
+    <validator column="OP_USER_RELATION">
+      <rule name="validValues" value="1|2" message="Please select a valid relation." />
+      <rule name="required" message="Relation is required." />
+    </validator>
+    <validator column="OP_TASK_SOURCE">
+      <rule name="maxLength" value="32" message="Source task UID can be no larger than ${value} in size" />
+      <rule name="required" message="Source task is required." />
+    </validator>
+    <validator column="OP_PARTICIPATE">
+      <rule name="validValues" value="1|2" message="Please select a valid participation value." />
+      <rule name="required" message="Participation is required." />
+    </validator>
+    <validator column="OP_OBJ_TYPE">
+      <rule name="maxLength" value="15" message="Object type can be no larger than ${value} in size" />
+      <rule name="required" message="Object type is required." />
+    </validator>
+    <validator column="OP_OBJ_UID">
+      <rule name="maxLength" value="32" message="Object UID can be no larger than ${value} in size" />
+      <rule name="required" message="Object UID is required." />
+    </validator>
+    <validator column="OP_ACTION">
+      <rule name="maxLength" value="15" message="Action can be no larger than ${value} in size" />
+      <rule name="required" message="Action is required." />
+    </validator>
+    <index name="indexObjctPermission">
+      <index-column name="PRO_UID"/>
+      <index-column name="TAS_UID"/>
+      <index-column name="USR_UID"/>
+      <index-column name="OP_TASK_SOURCE"/>
+      <index-column name="OP_OBJ_UID"/>
+      <vendor type="mysql">
+        <parameter name="Table" value="OBJECT_PERMISSION"/>
+        <parameter name="Non_unique" value="1"/>
+        <parameter name="Key_name" value="indexObjctPermission"/>
+        <parameter name="Seq_in_index" value="1"/>
+        <parameter name="Column_name" value="PRO_UID"/>
+        <parameter name="Collation" value="A"/>
+        <parameter name="Cardinality" value=""/>
+        <parameter name="Sub_part" value=""/>
+        <parameter name="Packed" value=""/>
+        <parameter name="Null" value=""/>
+        <parameter name="Index_type" value="BTREE"/>
+        <parameter name="Comment" value=""/>
+      </vendor>
+    </index>
+  </table>
 </database>

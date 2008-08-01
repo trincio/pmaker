@@ -54,9 +54,23 @@ class DynaFormField extends DBTable
       $labels = array();
     }
     if ($Fields['XMLNODE_NAME_OLD'] == '') {
+      if (($Fields['XMLNODE_NAME'][0] == '1') || ($Fields['XMLNODE_NAME'][0] == '2') ||
+          ($Fields['XMLNODE_NAME'][0] == '3') || ($Fields['XMLNODE_NAME'][0] == '4') ||
+          ($Fields['XMLNODE_NAME'][0] == '5') || ($Fields['XMLNODE_NAME'][0] == '6') ||
+          ($Fields['XMLNODE_NAME'][0] == '7') || ($Fields['XMLNODE_NAME'][0] == '8') ||
+          ($Fields['XMLNODE_NAME'][0] == '9') || ($Fields['XMLNODE_NAME'][0] == '10')) {
+        $Fields['XMLNODE_NAME'] = '_' . $Fields['XMLNODE_NAME'];
+      }
       $res = $this->_dbses->Execute('SELECT * FROM dynaForm WHERE XMLNODE_NAME="'.$Fields['XMLNODE_NAME'].'"');
     }
     else {
+      if (($Fields['XMLNODE_NAME_OLD'][0] == '1') || ($Fields['XMLNODE_NAME_OLD'][0] == '2') ||
+          ($Fields['XMLNODE_NAME_OLD'][0] == '3') || ($Fields['XMLNODE_NAME_OLD'][0] == '4') ||
+          ($Fields['XMLNODE_NAME_OLD'][0] == '5') || ($Fields['XMLNODE_NAME_OLD'][0] == '6') ||
+          ($Fields['XMLNODE_NAME_OLD'][0] == '7') || ($Fields['XMLNODE_NAME_OLD'][0] == '8') ||
+          ($Fields['XMLNODE_NAME_OLD'][0] == '9') || ($Fields['XMLNODE_NAME_OLD'][0] == '10')) {
+        $Fields['XMLNODE_NAME_OLD'] = '_' . $Fields['XMLNODE_NAME_OLD'];
+      }
       $res = $this->_dbses->Execute('SELECT * FROM dynaForm WHERE XMLNODE_NAME="'.$Fields['XMLNODE_NAME_OLD'].'"');
     }
     $this->is_new = ($res->count()==0);
