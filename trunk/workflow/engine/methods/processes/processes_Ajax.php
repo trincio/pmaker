@@ -68,18 +68,18 @@ try {
   	case 'process_User':
   	  include(PATH_METHODS . 'processes/processes_User.php');
   	break;
-  	case 'availableProcessesUser':  	  	  	  
+  	case 'availableProcessesUser':
   	  include(PATH_METHODS . 'processes/processes_availableProcessesUser.php');
-  	break; 
-  	case 'webEntry_generate':   	 	  	  	  
-  	  include(PATH_METHODS . 'processes/processes_webEntryGenerate.php');  	  
-  	break;  	
-  	case 'assignProcessUser':  	  	  	    	  
+  	break;
+  	case 'webEntry_generate':
+  	  include(PATH_METHODS . 'processes/processes_webEntryGenerate.php');
+  	break;
+  	case 'assignProcessUser':
   	  $oProcessMap->assignProcessUser($oData->PRO_UID, $oData->USR_UID);
-  	break;  
-  	case 'removeProcessUser':  	  	  	    	  
+  	break;
+  	case 'removeProcessUser':
   	  $oProcessMap->removeProcessUser($oData->PU_UID);
-  	break;  	
+  	break;
   	case 'supervisorDynaforms':
   	  $oProcessMap->supervisorDynaforms($oData->pro_uid);
   	break;
@@ -106,11 +106,11 @@ try {
   	case 'users':
   	  $oProcessMap->users($oData->pro_uid, $oData->tas_uid);
   	break;
-  	
+
   	case 'users_adhoc':
   	  $oProcessMap->users_adhoc($oData->pro_uid, $oData->tas_uid);
   	break;
-  	
+
   	case 'addTask':
   	  $sOutput = $oProcessMap->addTask($oData->uid, $oData->position->x, $oData->position->y);
   	break;
@@ -232,6 +232,9 @@ try {
   	  G::LoadClass('tasks');
 	  	$oTasks = new Tasks();
 	    $oTasks->deleteAllRoutesOfTask($oData->pro_uid, $oData->tas_uid);
+  	break;
+  	case 'objectPermissions':
+  	  $oProcessMap->objectsPermissionsList($oData->pro_uid);
   	break;
   }
   die($sOutput);

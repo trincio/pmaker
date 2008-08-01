@@ -4286,7 +4286,7 @@
         <parameter name="Type" value="varchar(15)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
-        <parameter name="Default" value="ALL"/>
+        <parameter name="Default" value="ANY"/>
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
