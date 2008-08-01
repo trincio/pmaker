@@ -390,7 +390,7 @@ var processmap=function(){
 						this.tmp.editProcessPanel = panel =new leimnud.module.panel();
 						panel.options={
 							limit	:true,
-							size	:{w:500,h:380},
+							size	:{w:800,h:480},
 							position:{x:50,y:50,center:true},
 							title	:G_STRINGS.ID_OBJECT_PERMISSIONS,
 							theme	:this.options.theme,

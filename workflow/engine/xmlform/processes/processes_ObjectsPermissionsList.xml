@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<dynaForm type="pagetable"
+  menu="processes/processes_ObjectsPermissionsOptions"
+>
+<TASK_TARGET type="text" titleAlign="left" colWidth="150">
+  <en>Task Target</en>
+</TASK_TARGET>
+<USER_GROUP type="text" titleAlign="left" colWidth="150">
+  <en>User or Group</en>
+</USER_GROUP>
+<TASK_SOURCE type="text" titleAlign="left" colWidth="150">
+  <en>Task Source</en>
+</TASK_SOURCE>
+<OBJECT_TYPE type="text" titleAlign="left" colWidth="70">
+  <en>Type</en>
+</OBJECT_TYPE>
+<OBJECT type="text" titleAlign="left" colWidth="150">
+  <en>Object</en>
+</OBJECT>
+<PARTICIPATED type="text" titleAlign="left" colWidth="70">
+  <en>Participated</en>
+</PARTICIPATED>
+<ACTION type="text" titleAlign="left" colWidth="60">
+  <en>Permission</en>
+</ACTION>
+</dynaForm>

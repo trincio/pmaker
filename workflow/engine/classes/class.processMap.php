@@ -2137,7 +2137,7 @@ class processMap {
 
   	$oCriteria = new Criteria('workflow');
 	  $oCriteria->addSelectColumn(ProcessUserPeer::USR_UID);
-	  $oCriteria->add(ProcessUserPeer::PRO_UID, $sProcessUID);	  
+	  $oCriteria->add(ProcessUserPeer::PRO_UID, $sProcessUID);
 	  $oCriteria->add(ProcessUserPeer::PU_TYPE, 'SUPERVISOR');
 	  $oDataset = ProcessUserPeer::doSelectRS($oCriteria);
 	  $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
@@ -2193,10 +2193,119 @@ class processMap {
     $oProcessUser = new ProcessUser();
     $oProcessUser->remove($sPUUID);
   }
-  /*
-  function webEntryGenerate($sPRO_UID, $sTASKS, $sDYNAFORM){
-    echo "$sTASKS";
+
+  function getObjectsPermissionsCriteria($sProcessUID) {
+    $aObjectsPermissions   = array();
+  	$aObjectsPermissions[] = array('TASK_TARGET'  => 'char',
+    	                             'USER_GROUP'   => 'char',
+    	                             'TASK_SOURCE'  => 'char',
+    	                             'OBJECT_TYPE'  => 'char',
+    	                             'OBJECT'       => 'char',
+    	                             'PARTICIPATED' => 'char',
+    	                             'ACTION'       => 'char');
+
+    require_once 'classes/model/ObjectPermission.php';
+    $oCriteria  = new Criteria('workflow');
+  	$oCriteria->addSelectColumn(ObjectPermissionPeer::TAS_UID);
+  	$oCriteria->addSelectColumn(ObjectPermissionPeer::USR_UID);
+  	$oCriteria->addSelectColumn(ObjectPermissionPeer::OP_USER_RELATION);
+  	$oCriteria->addSelectColumn(ObjectPermissionPeer::OP_TASK_SOURCE);
+  	$oCriteria->addSelectColumn(ObjectPermissionPeer::OP_PARTICIPATE);
+  	$oCriteria->addSelectColumn(ObjectPermissionPeer::OP_OBJ_TYPE);
+  	$oCriteria->addSelectColumn(ObjectPermissionPeer::OP_OBJ_UID);
+  	$oCriteria->addSelectColumn(ObjectPermissionPeer::OP_ACTION);
+    $oCriteria->add(ObjectPermissionPeer::PRO_UID, $sProcessUID);
+    $oDataset = ObjectPermissionPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    while ($aRow = $oDataset->getRow()) {
+      //Obtain task target
+      if ($aRow['TAS_UID'] != '') {
+        $oTask       = new Task();
+        $aFields     = $oTask->load($aRow['TAS_UID']);
+        $sTaskTarget = $aFields['TAS_TITLE'];
+      }
+      else {
+        $sTaskTarget = G::LoadTranslation('ID_ANY_TASK');
+      }
+      //Obtain user or group
+      if ($aRow['OP_USER_RELATION'] == 1) {
+        $oUser      = new Users();
+        $aFields    = $oUser->load($aRow['USR_UID']);
+        $sUserGroup = $aFields['USR_FIRSTNAME'] . ' ' . $aFields['USR_LASTNAME'] . ' (' . $aFields['USR_USERNAME'] . ')';
+      }
+      else {
+        $oGroup     = new Groupwf();
+        $aFields    = $oGroup->load('615886891486d2713dafdb0099293122');
+        $sUserGroup = $aFields['GRP_TITLE'];
+      }
+      //Obtain task source
+      if ($aRow['OP_TASK_SOURCE'] != '') {
+        $oTask       = new Task();
+        $aFields     = $oTask->load($aRow['OP_TASK_SOURCE']);
+        $sTaskSource = $aFields['TAS_TITLE'];
+      }
+      else {
+        $sTaskSource = G::LoadTranslation('ID_ANY_TASK');
+      }
+      //Obtain object and type
+      switch ($aRow['OP_OBJ_TYPE']) {
+        case 'ANY':
+          $sObjectType = G::LoadTranslation('ID_ANY');
+          $sObject     = G::LoadTranslation('ID_ALL');
+        break;
+        case 'ANY_DYNAFORMS':
+          $sObjectType = G::LoadTranslation('ID_ANY_DYNAFORM');
+          $sObject     = G::LoadTranslation('ID_ALL');
+        break;
+        case 'ANY_INPUTS':
+          $sObjectType = G::LoadTranslation('ID_ANY_INPUT');
+          $sObject     = G::LoadTranslation('ID_ALL');
+        break;
+        case 'ANY_OUTPUTS':
+          $sObjectType = G::LoadTranslation('ID_ANY_OUTPUT');
+          $sObject     = G::LoadTranslation('ID_ALL');
+        break;
+        case 'DYNAFORM':
+          $sObjectType = G::LoadTranslation('ID_DYNAFORM');
+          //obtener el título del dynaform
+          $sObject     = '';
+        break;
+      }
+      //Participated
+      if ($aRow['OP_PARTICIPATE'] == 0) {
+        $sParticipated = G::LoadTranslation('ID_NO');
+      }
+      else {
+        $sParticipated = G::LoadTranslation('ID_YES');
+      }
+      //Obtain action (permission)
+      $sAction = G::LoadTranslation('ID_' . $aRow['OP_ACTION']);
+      //Add to array
+      $aObjectsPermissions[] = array('TASK_TARGET'  => $sTaskTarget,
+    	                               'USER_GROUP'   => $sUserGroup,
+    	                               'TASK_SOURCE'  => $sTaskSource,
+    	                               'OBJECT_TYPE'  => $sObjectType,
+    	                               'OBJECT'       => $sObject,
+    	                               'PARTICIPATED' => $sParticipated,
+    	                               'ACTION'       => $sAction);
+      $oDataset->next();
+    }
+    global $_DBArray;
+    $_DBArray['objectsPermissions'] = $aObjectsPermissions;
+    $_SESSION['_DBArray']           = $_DBArray;
+    G::LoadClass('ArrayPeer');
+    $oCriteria = new Criteria('dbarray');
+    $oCriteria->setDBArrayTable('objectsPermissions');
+    return $oCriteria;
   }
-  */
+
+  function objectsPermissionsList($sProcessUID) {
+    global $G_PUBLISH;
+    $G_PUBLISH = new Publisher();
+    $G_PUBLISH->AddContent('propeltable', 'paged-table', 'processes/processes_ObjectsPermissionsList', $this->getObjectsPermissionsCriteria($sProcessUID));
+    G::RenderPage('publish', 'raw');
+    return true;
+  }
 } // processMap
 ?>

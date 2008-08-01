@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<dynaForm type="xmlmenu">
+
+<MNU_ADD type="link" value="" link="#" onclick="return false;" colAlign="left" colWidth="45">
+  <en>New</en>
+</MNU_ADD>
+
+</dynaForm>
