@@ -51,7 +51,7 @@
 	$triggers_names = '';
 	
 	if($_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] != 0) {
-		$triggers_onfly = $_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS']." triggers was executed <font color='#641213'><b>".strtolower($_SESSION['TRIGGER_DEBUG']['TIME'])."</b></font>";
+		$triggers_onfly = $_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS']." trigger(s) was executed <font color='#641213'><b>".strtolower($_SESSION['TRIGGER_DEBUG']['TIME'])."</b></font><br/>";
 		if(isset($_SESSION['TRIGGER_DEBUG']['TRIGGERS_NAMES']))
 		foreach($_SESSION['TRIGGER_DEBUG']['TRIGGERS_NAMES'] as $name){
 			$triggers_names .= "<li>Trigger: <font color='#52603A'>$name</font>";
@@ -60,7 +60,7 @@
 		$triggers_onfly = " No triggers found <font color='#641213'><b>".strtolower($_SESSION['TRIGGER_DEBUG']['TIME'])."</b></font>";
 	}
 	
-	$html = "
+	$html = "[Triggers]<br><br>
 	<table width='100%' cellspacing='0' cellpadding='0' border='1' style='border:0px;'>
 		<tr>
 		<td width='410px' class='treeNode' style='border:0px;background-color:transparent;'>
@@ -122,29 +122,27 @@
 	}	
 
 	krumo::$show_details = 'disabled';
-	
+	$vars_acum = Array();
 	for($i=0; $i<count($_SESSION['TRIGGER_DEBUG']['DATA']); $i++) {
 		$tdebug_var = $_SESSION['TRIGGER_DEBUG']['DATA'][$i]['value'];
-		ob_start();
-		Krumo($tdebug_var);
-		$oo1 = ob_get_contents();
-		ob_end_clean();
-		
-		$html = "
-		<table width='100%' cellspacing='0' cellpadding='0' border='1' style='border:0px;'>
-			<tr>
-			  <td  width='12%' class='treeNode' style='border:0px;background-color:transparent;'>
-				<label class='userGroupTitle'><font color='#0B58B6'>[var: </font>".$_SESSION['TRIGGER_DEBUG']['DATA'][$i]['key']."<font color='#0B58B6'>] </font></label>
-			  </td>	
-			  <td width='*' class='treeNode' style='border:0px;background-color:transparent;'>
-				<div id='action'>".$oo1."</div>
-			  </td>
-			</tr>
-		</table>";
-		$ch = &$tree->addChild(0, $html, array('nodeType' => 'child'));
-		//$ch->point = '<img src="/images/btnGreen.gif" />';
-		
+
+		$vars_acum[$_SESSION['TRIGGER_DEBUG']['DATA'][$i]['key']] = $tdebug_var;
 	}
+	ob_start();
+	Krumo($vars_acum);
+	$oo1 = ob_get_contents();
+	ob_end_clean();
+	
+	$html = "
+	<table width='100%' cellspacing='0' cellpadding='0' border='1' style='border:0px;'>
+		<tr>
+			<td width='*' class='treeNode' style='border:0px;background-color:transparent;'>
+			<div id='action'><font color=black>[Variables involved in the triggers]</font><br>".$oo1."</div>
+			</td>
+		</tr>
+	</table>";
+	$ch = &$tree->addChild(0, $html, array('nodeType' => 'child'));
+	//$ch->point = '<img src="/images/btnGreen.gif" />';
 	
 	print ($tree->render());
 	
