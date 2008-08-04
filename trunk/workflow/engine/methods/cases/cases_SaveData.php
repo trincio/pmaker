@@ -107,13 +107,25 @@
   $aNextStep = $oCase->getNextStep($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['STEP_POSITION']);
   $_SESSION['STEP_POSITION'] = $aNextStep['POSITION'];
 
+
   if($trigger_debug_session){
-  	$_SESSION['TRIGGER_DEBUG']['BREAKPAGE'] = $aNextStep['PAGE'];
-	G::header('location: ' . $aNextStep['PAGE'].'&breakpoint=triggerdebug');
+	  $_SESSION['TRIGGER_DEBUG']['BREAKPAGE'] = $aNextStep['PAGE'];
+	  $aNextStep['PAGE'] = $aNextStep['PAGE'].'&breakpoint=triggerdebug';
   }
-  else {
-    G::header('location: ' . $aNextStep['PAGE']);
+  
+  $oForm->validatePost();
+  if( $missing_req_values = $oForm->validateRequiredFields($_POST['form']) ) {
+	  $_POST['next_step'] = $aNextStep;
+	  $_POST['previous_step'] = $oCase->getPreviousStep($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['STEP_POSITION']);
+	  $_POST['req_val'] = $missing_req_values;
+	  $G_PUBLISH = new Publisher;
+	  $G_PUBLISH->AddContent('view', 'cases/missRequiredFields');
+	  G::RenderPage('publish');
+	  exit(0);
   }
+  
+  G::header('location: ' . $aNextStep['PAGE']);
+
 
 
 

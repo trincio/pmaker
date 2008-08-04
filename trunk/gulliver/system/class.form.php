@@ -280,7 +280,7 @@ class Form extends XmlForm
   }
   /**
    * Function that return the valid fields to replace
-   * @author Julio Cesar Laura Avendaño <juliocesar@colosa.com>
+   * @author Julio Cesar Laura Avendaï¿½o <juliocesar@colosa.com>
    * @access public
    * @return array
    */
@@ -302,5 +302,42 @@ class Form extends XmlForm
   	}
   	return $aFields;
   }
+
+   /**
+   * Function that verify the required fields without a correct value
+   * @author Erik Amaru Ortiz <erik@colosa.com>
+   * @access public
+   * @return array/false
+   */
+	function validateRequiredFields($values)
+	{
+		$rFields = Array();
+		$missingFields = Array();
+		
+		foreach ($this->fields as $o) {
+			if(property_exists(get_class($o), 'required')) {
+				if( $o->required == 1) {
+					array_push($rFields, $o->name);
+				}
+			}
+		}
+		
+		foreach($rFields as $field){
+			#we verify if the requiered field is in array values,. t
+			if (array_key_exists($field, $values)) {
+			    if( $values[$field] == "") {	
+					array_push($missingFields, $field);
+				}
+			} else {
+				array_push($missingFields, $field);
+			}
+		}
+		
+		if(sizeof($missingFields) != 0) {
+			return $missingFields;
+		} else {
+			return false;
+		}
+	}
 }
 ?>
