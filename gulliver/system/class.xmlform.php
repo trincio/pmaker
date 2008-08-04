@@ -1264,18 +1264,20 @@ class XmlForm_Field_Link extends XmlForm_Field
  */
 class XmlForm_Field_File extends XmlForm_Field
 {
-  /**
-   * Function render
-   * @author David S. Callizaya S. <davidsantos@colosa.com>
-   * @access public
-   * @parameter string value
-   * @return string
-   */
-    function render( $value = NULL )
-    {
-        $mode = ($this->mode == 'view')?' disabled="disabled"':'';
-	    return '<input class="module_app_input___gray_file" '.$mode.'id="form['.$this->name.']" name="form['.$this->name.']" type=\'file\' value=\''. $value .'\'/>';
-    }
+	var $required = false;
+	
+	/**
+	* Function render
+	* @author David S. Callizaya S. <davidsantos@colosa.com>
+	* @access public
+	* @parameter string value
+	* @return string
+	*/
+	function render( $value = NULL )
+	{
+		$mode = ($this->mode == 'view')?' disabled="disabled"':'';
+		return '<input class="module_app_input___gray_file" '.$mode.'id="form['.$this->name.']" name="form['.$this->name.']" type=\'file\' value=\''. $value .'\'/>';
+	}
 }
 /*
 //DEPRECATED

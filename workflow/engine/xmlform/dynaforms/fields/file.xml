@@ -48,6 +48,12 @@ SELECT XMLNODE_NAME, TYPE FROM dynaForm WHERE XMLNODE_NAME = @@PME_XMLNODE_NAME
   <en>Style</en>
 </PME_STYLE>
 -->
+<PME_SUBTITLE3b type="title" enableHTML="1">
+	<en>Behaviour</en>
+</PME_SUBTITLE3b>
+<PME_REQUIRED type="checkbox" falseValue="0" value="1" defaultvalue="0" labelOnRight="0">
+	<en>Required</en>
+</PME_REQUIRED>
 
 <PME_ACCEPT type="button" onclick="fieldsSave( this.form );">
   <en>Save</en>
