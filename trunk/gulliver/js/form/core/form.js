@@ -946,15 +946,19 @@ function validateForm(aRequiredFields)
 {
 	//alert(oRequiredFields.junior['type']);
 	//alert(var_dump(aRequiredFields.toJSONString()));	
-	var sMessage = '';
+	var sMessage = '';	
 	for (var i = 0; i < aRequiredFields.length; i++) {				
 		 switch(aRequiredFields[i].type) {
 		 	  case 'text':		 	    
 		 	    var vtext = new input(getField(aRequiredFields[i].name));
 		 	    if(getField(aRequiredFields[i].name).value=='')		 	    		 	    
+		 	    	{ sMessage += aRequiredFields[i].label + "\n";	
 		 	    		vtext.failed();		 	    				 	    		
+		 	    	}	
 		 	    	else
+		 	    	{	
 		 	    	  vtext.passed();		 	    	
+		 	    	}  
 		 	  break;	
 		 	  
 		 	  case 'dropdown':		 	    
@@ -975,25 +979,37 @@ function validateForm(aRequiredFields)
 		 	  case 'password':
 		 	    var vpass = new input(getField(aRequiredFields[i].name));
 		 	    if(getField(aRequiredFields[i].name).value=='')		 	    		 	    
+		 	    	{ sMessage += aRequiredFields[i].label + "\n";
 		 	    		vpass.failed();		 	    				 	    		
+		 	    	}	
 		 	    	else
-		 	    	  vpass.passed();	
+		 	    	{	
+		 	    	  vpass.passed();		 	    	
+		 	    	}  
 		 	  break;	
 		 	  
 		 	  case 'currency':
 		 	    var vcurr = new input(getField(aRequiredFields[i].name));
 		 	    if(getField(aRequiredFields[i].name).value=='')		 	    		 	    
-		 	    			vcurr.failed();		 	    				 	    		
+		 	    	{ sMessage += aRequiredFields[i].label + "\n";	
+		 	    		vcurr.failed();		 	    				 	    		
+		 	    	}	
 		 	    	else
-		 	    	    vcurr.passed();	
+		 	    	{	
+		 	    	  vcurr.passed();		 	    	
+		 	    	}  
 		 	  break;	
 		 	  
 		 	  case 'percentage':
 		 	    var vper = new input(getField(aRequiredFields[i].name));
 		 	    if(getField(aRequiredFields[i].name).value=='')		 	    		 	    
+		 	    	{ sMessage += aRequiredFields[i].label + "\n";
 		 	    		vper.failed();		 	    				 	    		
+		 	    	}	
 		 	    	else
-		 	    	  vper.passed();	
+		 	    	{	
+		 	    	  vper.passed();		 	    	
+		 	    	}  	
 		 	  break;	
 		 	  
 		 	  case 'yesno':
@@ -1041,7 +1057,8 @@ function validateForm(aRequiredFields)
 		 	    			 	    
 		 	  break;
 		 	}		
-	}       
+	}       	
+		
 	if (sMessage != '') {
 		//alert("Los siguientes campos son req.: \n\n" + sMessage); 
 		alert(G_STRINGS.ID_REQUIRED_FIELDS + ": \n\n" + sMessage);
