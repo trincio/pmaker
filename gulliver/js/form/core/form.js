@@ -1031,7 +1031,8 @@ function validateForm(aRequiredFields)
 		 	}		
 	}       
 	if (sMessage != '') {
-		alert("Los siguientes campos son req.: \n\n" + sMessage); //G_STRINGS.ID_MESSAGE
+		//alert("Los siguientes campos son req.: \n\n" + sMessage); 
+		alert(G_STRINGS.ID_REQUIRED_FIELDS + ": \n\n" + sMessage);
 		return false;
 	}       
 	else    
