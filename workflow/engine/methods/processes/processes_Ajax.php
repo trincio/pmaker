@@ -236,6 +236,9 @@ try {
   	case 'objectPermissions':
   	  $oProcessMap->objectsPermissionsList($oData->pro_uid);
   	break;
+  	case 'newObjectPermission':
+  	  $oProcessMap->newObjectPermission($oData->pro_uid);
+  	break;
   }
   die($sOutput);
 }

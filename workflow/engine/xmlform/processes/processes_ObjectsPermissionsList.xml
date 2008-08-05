@@ -2,12 +2,13 @@
 <dynaForm type="pagetable"
   menu="processes/processes_ObjectsPermissionsOptions"
 >
+<OP_UID type="private" showInTable="0" />
 <TASK_TARGET type="text" titleAlign="left" colWidth="150">
   <en>Task Target</en>
 </TASK_TARGET>
-<USER_GROUP type="text" titleAlign="left" colWidth="150">
-  <en>User or Group</en>
-</USER_GROUP>
+<GROUP_USER type="text" titleAlign="left" colWidth="150">
+  <en>Group or User</en>
+</GROUP_USER>
 <TASK_SOURCE type="text" titleAlign="left" colWidth="150">
   <en>Task Source</en>
 </TASK_SOURCE>
@@ -23,4 +24,7 @@
 <ACTION type="text" titleAlign="left" colWidth="60">
   <en>Permission</en>
 </ACTION>
+<DELETE type="link" titleAlign="center" colWidth="50" link="processes_DeleteObjectPermission?OP_UID=@#OP_UID" onclick="deleteObjectPermission(this.href);return false;">
+  <en>Delete</en>
+</DELETE>
 </dynaForm>

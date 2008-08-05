@@ -156,7 +156,6 @@ class XmlForm_Field
   private function executePropel( &$owner )
   {
     $query = G::replaceDataField( $this->sql, $owner->values );
-
     $con = Propel::getConnection( $this->sqlConnection);
     $stmt = $con->createStatement( );
     if ( $this->sqlConnection == 'dbarray' ) {
@@ -714,7 +713,7 @@ class XmlForm_Field_Text extends XmlForm_Field_SimpleText
   	$result = $this->htmlentities( $values , ENT_COMPAT, 'utf-8');
   	return $result;
 	}
-	
+
 }
 
 /*DEPRECATED*/
@@ -1241,7 +1240,7 @@ class XmlForm_Field_Link extends XmlForm_Field
 		  (($this->target)? ' target="' . htmlentities($target , ENT_QUOTES, 'utf-8') . '"' : '') .
 		  '>'.$this->htmlentities($this->value===''? $label: $value, ENT_QUOTES, 'utf-8').'</a>';
 	}
-	
+
   function renderTable( $value = NULL , $owner = NULL )
   {
     $onclick = $this->htmlentities( G::replaceDataField( $this->onclick, $owner->values ), ENT_QUOTES, 'utf-8');
@@ -2057,7 +2056,7 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText
 	{
 		$startDate = G::replaceDataField( $this->startDate, $owner->values );
 		$endDate = G::replaceDataField( $this->endDate, $owner->values );
-		
+
 		$beforeDate = G::replaceDataField( $this->beforeDate, $owner->values );
 		$afterDate = G::replaceDataField( $this->afterDate, $owner->values );
 
@@ -2095,7 +2094,7 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText
 			//$this->endDate = mktime ( 0,0,0,date('m'),date('d'),date('y') );  // the default is the current date + 2 years
 			$endDate = date ( 'Y-m-d', mktime ( 0,0,0,date('m'), date('d'), date ('Y')+2 ) );  // the default is the current date + 2 years
 		}
-		
+
 		if ( trim($value) == '' or $value == NULL ) {
 			$value = date('Y-m-d');
 		}
@@ -2624,4 +2623,3 @@ class xmlformTemplate extends Smarty
     // not used for templates
   }
 }
-?>
