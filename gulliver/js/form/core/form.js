@@ -949,12 +949,15 @@ function validateForm(aRequiredFields)
 	var sMessage = '';
 	for (var i = 0; i < aRequiredFields.length; i++) {				
 		 switch(aRequiredFields[i].type) {
-		 	  case 'text':
+		 	  case 'text':		 	    
+		 	    var vtext = new input(getField(aRequiredFields[i].name));
 		 	    if(getField(aRequiredFields[i].name).value=='')		 	    		 	    
-		 	    		sMessage += aRequiredFields[i].label + "\n";
+		 	    		vtext.failed();		 	    				 	    		
+		 	    	else
+		 	    	  vtext.passed();		 	    	
 		 	  break;	
 		 	  
-		 	  case 'dropdown':
+		 	  case 'dropdown':		 	    
 		 	    if(getField(aRequiredFields[i].name).value=='')		 	    		 	    
 		 	    		sMessage += aRequiredFields[i].label + "\n";
 		 	  break;
@@ -970,18 +973,27 @@ function validateForm(aRequiredFields)
 		 	  break;
 		 	  	
 		 	  case 'password':
+		 	    var vpass = new input(getField(aRequiredFields[i].name));
 		 	    if(getField(aRequiredFields[i].name).value=='')		 	    		 	    
-		 	    		sMessage += aRequiredFields[i].label + "\n";
+		 	    		vpass.failed();		 	    				 	    		
+		 	    	else
+		 	    	  vpass.passed();	
 		 	  break;	
 		 	  
 		 	  case 'currency':
+		 	    var vcurr = new input(getField(aRequiredFields[i].name));
 		 	    if(getField(aRequiredFields[i].name).value=='')		 	    		 	    
-		 	    		sMessage += aRequiredFields[i].label + "\n";
+		 	    			vcurr.failed();		 	    				 	    		
+		 	    	else
+		 	    	    vcurr.passed();	
 		 	  break;	
 		 	  
 		 	  case 'percentage':
+		 	    var vper = new input(getField(aRequiredFields[i].name));
 		 	    if(getField(aRequiredFields[i].name).value=='')		 	    		 	    
-		 	    		sMessage += aRequiredFields[i].label + "\n";
+		 	    		vper.failed();		 	    				 	    		
+		 	    	else
+		 	    	  vper.passed();	
 		 	  break;	
 		 	  
 		 	  case 'yesno':
