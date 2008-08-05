@@ -875,9 +875,9 @@ function run_new_project ( $task, $args)
   G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'menus' );
   G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'methods' );
   G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'methods' . PATH_SEP . 'login');
+  G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'methods' . PATH_SEP . 'users');
   G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'skins' );
   G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'templates' );
-  G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'templates' . PATH_SEP . 'roles' );
   G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'test' );
   G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'test' . PATH_SEP . 'bootstrap');
   G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'test' . PATH_SEP . 'fixtures');
@@ -885,6 +885,7 @@ function run_new_project ( $task, $args)
   G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'xmlform' );
   G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'xmlform' . PATH_SEP . 'login');
   G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'xmlform' . PATH_SEP . 'gulliver');
+  G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'xmlform' . PATH_SEP . 'users');
   G::mk_dir (PATH_SHARED . 'sites' . PATH_SEP );
   G::mk_dir (PATH_SHARED . 'sites' . PATH_SEP . $projectName );
 
@@ -902,6 +903,9 @@ function run_new_project ( $task, $args)
   create_file_from_tpl ( 'authentication.php','engine'.PATH_SEP . 'methods' . PATH_SEP . 'login' . PATH_SEP . 'authentication.php' );
   create_file_from_tpl ( 'welcome.php',     'engine' . PATH_SEP . 'methods' . PATH_SEP . 'login' . PATH_SEP . 'welcome.php' );
   create_file_from_tpl ( 'dbInfo.php' ,     'engine' . PATH_SEP . 'methods' . PATH_SEP . 'login' . PATH_SEP . 'dbInfo.php' );
+  create_file_from_tpl ( 'usersList.php' ,  'engine' . PATH_SEP . 'methods' . PATH_SEP . 'users' . PATH_SEP . 'usersList.php' );
+  create_file_from_tpl ( 'rolesList.php' ,  'engine' . PATH_SEP . 'methods' . PATH_SEP . 'users' . PATH_SEP . 'rolesList.php' );
+  create_file_from_tpl ( 'permissionsList.php','engine'.PATH_SEP. 'methods' . PATH_SEP . 'users' . PATH_SEP . 'permissionsList.php' );
   create_file_from_tpl ( 'sysLogin.xml',    'engine' . PATH_SEP . 'xmlform' . PATH_SEP . 'login' . PATH_SEP . 'sysLogin.xml' );
   create_file_from_tpl ( 'login.xml',       'engine' . PATH_SEP . 'xmlform' . PATH_SEP . 'login' . PATH_SEP . 'login.xml' );
   create_file_from_tpl ( 'showMessage.xml', 'engine' . PATH_SEP . 'xmlform' . PATH_SEP . 'login' . PATH_SEP . 'showMessage.xml' );
@@ -910,6 +914,9 @@ function run_new_project ( $task, $args)
   copy_file_from_tpl   ( 'publish.php',     'engine' . PATH_SEP . 'templates' . PATH_SEP . 'publish.php' );
   copy_file_from_tpl   ( 'publish-treeview.php','engine'.PATH_SEP.'templates' . PATH_SEP . 'publish-treeview.php' );
   create_file_from_tpl ( 'dbInfo.xml',      'engine' . PATH_SEP . 'xmlform'. PATH_SEP . 'login' . PATH_SEP . 'dbInfo.xml' );
+  create_file_from_tpl ( 'usersList.xml',   'engine' . PATH_SEP . 'xmlform'. PATH_SEP . 'users' . PATH_SEP . 'usersList.xml' );
+  create_file_from_tpl ( 'rolesList.xml',   'engine' . PATH_SEP . 'xmlform'. PATH_SEP . 'users' . PATH_SEP . 'rolesList.xml' );
+  create_file_from_tpl ( 'permissionsList.xml','engine'.PATH_SEP. 'xmlform'. PATH_SEP . 'users' . PATH_SEP . 'permissionsList.xml' );
   create_file_from_tpl ( 'mainmenu.php',    'engine' . PATH_SEP . 'menus'. PATH_SEP . $projectName . '.php' );
   create_file_from_tpl ( 'users.menu.php',    'engine' . PATH_SEP . 'menus'. PATH_SEP . 'users.php' );
   create_file_from_tpl ( 'db.php',          PATH_SEP . PATH_SHARED . 'sites' . PATH_SEP . $projectName . PATH_SEP . 'db.php' );
@@ -961,7 +968,6 @@ function run_new_project ( $task, $args)
   copy_file ( 'engine' . PATH_SEP . 'templates' . PATH_SEP . 'filterform.html' );
   copy_file ( 'engine' . PATH_SEP . 'templates' . PATH_SEP . 'tree.html' );
   copy_file ( 'engine' . PATH_SEP . 'templates' . PATH_SEP . 'dummyTemplate.html' );
-  copy_file ( 'engine' . PATH_SEP . 'templates' . PATH_SEP . 'roles' . PATH_SEP . 'roles_permissionsTree.php' );
 
   $filePng = $pathHome . PATH_SEP . 'public_html' . PATH_SEP . 'images' . PATH_SEP . 'processmaker.logo.jpg';
   createPngLogo ( $filePng, $projectName );
