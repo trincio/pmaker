@@ -44,6 +44,8 @@ class Form extends XmlForm
   var $in_progress='function(){}';
   var $template;
   var $className="formDefault";
+  var $requiredFields = array();
+  var $objectRequiredFields = null;
   /**
    * Function setDefaultValues
    * @author David S. Callizaya S. <davidsantos@colosa.com>

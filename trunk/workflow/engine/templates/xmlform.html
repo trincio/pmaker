@@ -1,7 +1,6 @@
 {if $printTemplate}
 {* this is the xmlform template *}
-<form id="{$form->id}" name="{$form->name}" action="{$form->action}" class="{$form->className}" method="post" encType="multipart/form-data" style="margin:0px;" onsubmit="{$form->onsubmit}">
-  <div class="borderForm" style="width:{$form->width}; padding-left:0; padding-right:0; border-width:{$form->border};">
+<form id="{$form->id}" name="{$form->name}" action="{$form->action}" class="{$form->className}" method="post" encType="multipart/form-data" style="margin:0px;" onsubmit='return validateForm("{$form->objectRequiredFields}".parseJSON());'>  <div class="borderForm" style="width:{$form->width}; padding-left:0; padding-right:0; border-width:{$form->border};">
 		<div class="boxTop"><div class="a"></div><div class="b"></div><div class="c"></div></div>
 		<div class="content" style="height:{$form->height};" >
 	  <table width="99%">
