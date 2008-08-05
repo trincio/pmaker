@@ -61,6 +61,7 @@ class XmlForm_Field
 	var $dataCompareType = '=';
 	var $sql = '';
 	var $sqlConnection = '';
+	
   /**
    * Function XmlForm_Field
    * @author David S. Callizaya S. <davidsantos@colosa.com>
@@ -2277,7 +2278,7 @@ class XmlForm
       $this->name = preg_replace( '/\W/' , '_' , $this->name );
       //Create fields
 
-      foreach( $xmlNode as $k => $v){
+      foreach( $xmlNode as $k => $v){ 
         if (($xmlNode[$k]->type !== 'cdata' )&&
             isset($xmlNode[$k]->attributes['type'])) {
               if ( class_exists( 'XmlForm_Field_' . $xmlNode[$k]->attributes['type'] )) {
@@ -2286,11 +2287,21 @@ class XmlForm
                 eval($x);
              }
           else
-            $field=new XmlForm_Field( $xmlNode[$k], $language, $this->home, $this);
+            $field=new XmlForm_Field( $xmlNode[$k], $language, $this->home, $this);         
           $field->language = $this->language;
           $this->fields[$field->name]=$field;
         }
+        
+        if(isset($xmlNode[$k]->attributes['required']))
+        {
+        	if( $xmlNode[$k]->attributes['required'] == 1 )
+        		$this->requiredFields[] = array('name' => $field->name, 'type' => $xmlNode[$k]->attributes['type'], 'label' => $field->label);
+        }		
+       
       }
+      //var_dump($this->requiredFields);
+      $oJSON   = new Services_JSON();
+			$this->objectRequiredFields = addslashes($oJSON->encode( $this->requiredFields ));
 
       //Load the default values
       //$this->setDefaultValues();

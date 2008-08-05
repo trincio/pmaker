@@ -941,3 +941,100 @@ function contractExpandSubtitle(subTitle){
   if (contracted) expandSubtitle(subTitle);
   else contractSubtitle(subTitle);
 }
+
+function validateForm(aRequiredFields) 
+{
+	//alert(oRequiredFields.junior['type']);
+	//alert(var_dump(aRequiredFields.toJSONString()));	
+	var sMessage = '';
+	for (var i = 0; i < aRequiredFields.length; i++) {				
+		 switch(aRequiredFields[i].type) {
+		 	  case 'text':
+		 	    if(getField(aRequiredFields[i].name).value=='')		 	    		 	    
+		 	    		sMessage += aRequiredFields[i].label + "\n";
+		 	  break;	
+		 	  
+		 	  case 'dropdown':
+		 	    if(getField(aRequiredFields[i].name).value=='')		 	    		 	    
+		 	    		sMessage += aRequiredFields[i].label + "\n";
+		 	  break;
+		 	  
+		 	  case 'checkbox':
+		 	    if(getField(aRequiredFields[i].name).checked==false)		 	    		 	    
+		 	    		sMessage += aRequiredFields[i].label + "\n";
+		 	  break;		 			 		
+		 	  
+		 	  case 'textarea':
+		 	    if(getField(aRequiredFields[i].name).value=='')		 	    		 	    
+		 	    		sMessage += aRequiredFields[i].label + "\n";
+		 	  break;
+		 	  	
+		 	  case 'password':
+		 	    if(getField(aRequiredFields[i].name).value=='')		 	    		 	    
+		 	    		sMessage += aRequiredFields[i].label + "\n";
+		 	  break;	
+		 	  
+		 	  case 'currency':
+		 	    if(getField(aRequiredFields[i].name).value=='')		 	    		 	    
+		 	    		sMessage += aRequiredFields[i].label + "\n";
+		 	  break;	
+		 	  
+		 	  case 'percentage':
+		 	    if(getField(aRequiredFields[i].name).value=='')		 	    		 	    
+		 	    		sMessage += aRequiredFields[i].label + "\n";
+		 	  break;	
+		 	  
+		 	  case 'yesno':
+		 	    if(getField(aRequiredFields[i].name).value=='')		 	    		 	    
+		 	    		sMessage += aRequiredFields[i].label + "\n";
+		 	  break;		 	 
+		 	  
+		 	  case 'date':
+		 	    if(getField(aRequiredFields[i].name).value=='')		 	    		 	    
+		 	    		sMessage += aRequiredFields[i].label + "\n";
+		 	  break;
+		 	  
+		 	  case 'file':
+		 	    if(getField(aRequiredFields[i].name).value=='')		 	    		 	    
+		 	    		sMessage += aRequiredFields[i].label + "\n";
+		 	  break;
+		 	  
+		 	  case 'listbox':
+		 	    var oAux = getField(aRequiredFields[i].name);
+					var bOneSelected = false;
+					for (var j = 0; j < oAux.options.length; j++) {  
+					 if (oAux.options[j].selected) {
+					    bOneSelected = true;
+					    j = oAux.options.length;
+					  }
+					}					
+					if(bOneSelected == true)   						 	    		 	    		 	    
+		 	    		sMessage += aRequiredFields[i].label + "\n";
+		 	  break;
+		 	  
+		 	  case 'radiogroup':			 	    
+		 	  	var x=aRequiredFields[i].name;
+		 	  	var oAux = document.getElementsByName('form['+ x +']');		 	  			 	  	
+					var bOneChecked = false;
+					for (var k = 0; k < oAux.length; k++) {  
+					    var r = oAux[k];															 					    					   
+					    if (r.checked) {
+					      bOneChecked = true;					    	
+					    	k = oAux.length;
+					  	}					  	
+					}
+					
+					if(bOneChecked == false)   			 	    		 	   
+		 	    	sMessage += aRequiredFields[i].label + "\n";
+		 	    			 	    
+		 	  break;
+		 	}		
+	}       
+	if (sMessage != '') {
+		alert("Los siguientes campos son req.: \n\n" + sMessage); //G_STRINGS.ID_MESSAGE
+		return false;
+	}       
+	else    
+	{	return true;
+  }
+}

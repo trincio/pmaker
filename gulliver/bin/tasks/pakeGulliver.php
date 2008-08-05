@@ -751,7 +751,7 @@ function create_file_from_tpl ( $tplName, $newFilename )
   global $pathHome;
   global $projectName;
    
-  $httpdTpl = PATH_GULLIVER_HOME . 'bin' . PATH_SEP . 'tasks' . PATH_SEP . $tplName . '.tpl';
+  $httpdTpl = PATH_GULLIVER_HOME . 'bin' . PATH_SEP . 'tasks' . PATH_SEP . 'templates' . PATH_SEP . $tplName . '.tpl';
   if ( substr ( $newFilename, 0,1 ) == PATH_SEP ) 
     $httpFilename = $newFilename;
   else  
@@ -772,7 +772,7 @@ function copy_file_from_tpl ( $tplName, $newFilename )
 {
   global $pathHome;
   global $projectName;
-  $httpdTpl = PATH_GULLIVER_HOME . 'bin' . PATH_SEP . 'tasks' . PATH_SEP . $tplName . '.tpl';
+  $httpdTpl = PATH_GULLIVER_HOME . 'bin' . PATH_SEP . 'tasks' . PATH_SEP . 'templates' . PATH_SEP . $tplName . '.tpl';
   $httpFilename = $pathHome . PATH_SEP . $newFilename;
   $content = file_get_contents ( $httpdTpl );
   $iSize = file_put_contents ( $httpFilename, $content );
@@ -960,9 +960,10 @@ function run_new_project ( $task, $args)
   copy_file ( 'engine' . PATH_SEP . 'templates' . PATH_SEP . 'xmlmenu.html' );
   copy_file ( 'engine' . PATH_SEP . 'templates' . PATH_SEP . 'filterform.html' );
   copy_file ( 'engine' . PATH_SEP . 'templates' . PATH_SEP . 'tree.html' );
+  copy_file ( 'engine' . PATH_SEP . 'templates' . PATH_SEP . 'dummyTemplate.html' );
   copy_file ( 'engine' . PATH_SEP . 'templates' . PATH_SEP . 'roles' . PATH_SEP . 'roles_permissionsTree.php' );
 
-    $filePng = $pathHome . PATH_SEP . 'public_html' . PATH_SEP . 'images' . PATH_SEP . 'processmaker.logo.jpg';
+  $filePng = $pathHome . PATH_SEP . 'public_html' . PATH_SEP . 'images' . PATH_SEP . 'processmaker.logo.jpg';
   createPngLogo ( $filePng, $projectName );
 
   printf("creating symlinks %s \n", pakeColor::colorize( $pathHome . PATH_SEP . 'engine' . PATH_SEP . 'gulliver', 'INFO'));
