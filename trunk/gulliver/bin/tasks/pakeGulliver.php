@@ -42,6 +42,8 @@ pake_task('new-project',  'project_exists');
 pake_desc('build new plugin');
 pake_task('new-plugin',  'project_exists');
 
+pake_desc('generate basic CRUD files for an existing class');
+pake_task('propel-build-crud',  'project_exists');
 
 function run_version( $task, $args)
 {
@@ -762,6 +764,7 @@ function create_file_from_tpl ( $tplName, $newFilename )
   $template->assign ( 'projectName', $projectName);
   $template->assign ( 'rbacProjectName', strtoupper( $projectName)) ;
   $template->assign ( 'siglaProjectName', substr ( strtoupper( $projectName),0,3) ) ;
+  $template->assign ( 'propel.output.dir', '{propel.output.dir}' );
   
   $content = $template->getOutputContent();
   $iSize = file_put_contents ( $httpFilename, $content );
@@ -898,6 +901,21 @@ function run_new_project ( $task, $args)
   create_file_from_tpl ( 'paths.php',       'engine' . PATH_SEP . 'config' . PATH_SEP . 'paths.php' );
   create_file_from_tpl ( 'defines.php',     'engine' . PATH_SEP . 'config' . PATH_SEP . 'defines.php' );
   create_file_from_tpl ( 'databases.php',   'engine' . PATH_SEP . 'config' . PATH_SEP . 'databases.php' );
+  create_file_from_tpl ( 'propel.ini',      'engine' . PATH_SEP . 'config' . PATH_SEP . 'propel.ini' );
+  create_file_from_tpl ( 'propel.ini',      'engine' . PATH_SEP . 'config' . PATH_SEP . 'propel.mysql.ini' );
+
+  if ( file_exists( $pathHome .PATH_SEP. 'engine' . PATH_SEP . 'config' . PATH_SEP . 'schema.xml') ) {
+/*  	
+    $createSchema = strtolower ( prompt ( "schema.xml exists!. Do you want to overwrite the schema.xml file? [Y/n]" ));
+    if ( $createSchema == 'y' ) {
+      create_file_from_tpl ( 'schema.xml',      'engine' . PATH_SEP . 'config' . PATH_SEP . 'schema.xml' );
+    }
+    */
+  } 
+  else 
+    create_file_from_tpl ( 'schema.xml',      'engine' . PATH_SEP . 'config' . PATH_SEP . 'schema.xml' );
+  
+  
   create_file_from_tpl ( 'sysLogin.php',    'engine' . PATH_SEP . 'methods' . PATH_SEP . 'login' . PATH_SEP . 'sysLogin.php' );
   create_file_from_tpl ( 'login.php',       'engine' . PATH_SEP . 'methods' . PATH_SEP . 'login' . PATH_SEP . 'login.php' );
   create_file_from_tpl ( 'authentication.php','engine'.PATH_SEP . 'methods' . PATH_SEP . 'login' . PATH_SEP . 'authentication.php' );
@@ -979,3 +997,129 @@ function run_new_project ( $task, $args)
   
   exit(0);
 }
+
+function run_propel_build_crud ( $task, $args) 
+{
+  ini_set('display_errors','on');
+  ini_set('error_reporting', E_ERROR);
+
+  // the environment for poedit always is Development
+  define ( 'G_ENVIRONMENT', G_DEV_ENV );
+
+  //the class filename in the first argument
+  if ( !isset($args[0]) ) {
+    printf("Error: %s\n", pakeColor::colorize( 'you must specify a valid classname ', 'ERROR'));
+    exit (0);
+  }  
+  $class = $args[0];
+  //second parameter is the table name, by default is the same classname in uppercase.
+  $tableName = isset($args[1])? $args[1] : strtoupper ($class) ;
+
+  //try to find the class in classes directory
+  $classFilename = PATH_CORE . 'classes' . PATH_SEP . 'model' . PATH_SEP . $args[0] . '.php';
+  if ( file_exists ( $classFilename ) )  
+    printf("class found in %s \n", pakeColor::colorize( $classFilename, 'INFO'));
+  else {
+    printf("class %s not found \n", pakeColor::colorize( $class, 'ERROR'));
+    exit (0);
+  }  
+
+  require_once ( "propel/Propel.php" );
+  require_once ( $classFilename );
+  G::LoadSystem ('templatePower');
+
+  Propel::init(  PATH_CORE . "config/databases.php");  
+  $configuration = Propel::getConfiguration();
+  $connectionDSN = $configuration['datasources']['workflow']['connection'];
+  printf("using DSN Connection %s \n", pakeColor::colorize( $connectionDSN, 'INFO'));
+
+die;
+  
+  //main php file 
+  savePluginFile ( $class . '.php', 'pluginMainFile', $class, $tableName );
+
+  //menu  
+  savePluginFile ( $class . PATH_SEP . 'menu' . $class . '.php', 'pluginMenu', $class, $tableName );
+
+  //default list
+  savePluginFile ( $class . PATH_SEP . $class . 'List.php', 'pluginList', $class, $tableName );
+
+
+  //parse the schema file in order to get Table definition
+  $schemaFile = PATH_CORE . 'config' . PATH_SEP . 'schema.xml';
+  $xmlContent = file_get_contents ( $schemaFile );
+  $s = simplexml_load_file( $schemaFile );
+
+  //default xmlform 
+  //load the $fields array with fields data for an xmlform.
+  $fields= array();
+  foreach ($s->table as $key=>$table ) {
+    if ( $table['name'] == $tableName  )
+      foreach ( $table->column as $kc => $column ) {
+        //print $column['name'] . ' ' .$column['type'] . ' ' .$column['size'] . ' ' .$column['required'] . ' ' .$column['primaryKey'];
+        //print "\n";
+        $maxlength = $column['size'];
+        $size      = ( $maxlength > 60 ) ? 60 : $maxlength;
+        $type      = $column['type'];
+        $field = array ( 'name' => $column['name'], 'type' => $type, 'size' => $size, 'maxlength' => $maxlength );
+        $fields['fields'][] = $field;
+      }
+  }
+  savePluginFile ( $class . PATH_SEP . $class . '.xml', 'pluginXmlform', $class, $tableName, $fields );
+
+
+  //xmlform for list
+  //load the $fields array with fields data for PagedTable xml.
+  $fields= array();
+  $primaryKey ='';
+  foreach ($s->table as $key=>$table ) {
+    if ( $table['name'] == $tableName  )
+      foreach ( $table->column as $kc => $column ) {
+        //print $column['name'] . ' ' .$column['type'] . ' ' .$column['size'] . ' ' .$column['required'] . ' ' .$column['primaryKey'];
+        //print "\n";
+        $size      = ( $column['size'] > 30 ) ? 30 : $column['size'];
+        $type      = $column['type'];
+        if ( $column['primaryKey'] ) 
+          if ( $primaryKey == '' ) 
+            $primaryKey .= '@@' . $column['name'];
+          else
+            $primaryKey .= '|@@' . $column['name'];
+            
+        $field = array ( 'name' => $column['name'], 'type' => $type, 'size' => $size );
+        $fields['fields'][] = $field;
+      }
+  }
+  $fields['primaryKey'] = $primaryKey;
+  savePluginFile ( $class . PATH_SEP . $class . 'List.xml', 'pluginXmlformList', $class, $tableName, $fields );
+
+  //default edit
+  $fields= array();$index =0;
+  $keylist = '';
+  foreach ($s->table as $key=>$table ) {
+    if ( $table['name'] == $tableName  )
+      foreach ( $table->column as $kc => $column ) {
+        $name =  $column['name'];
+        $phpName = convertPhpName ($name);
+        $field = array ( 'name' => $name, 'phpName' => $phpName, 'index' => $index++ );
+        if ( $column['primaryKey'] ) {
+          if ( $keylist == '' ) 
+            $keylist .= '$' .$phpName;
+          else
+            $keylist .= ', $' . $phpName;
+          $fields['keys'][] = $field;
+        }
+        $fields['fields'][] = $field;
+        $fields['fields2'][] = $field;
+      }
+  }
+  $fields['keylist'] = $keylist;
+  savePluginFile ( $class . PATH_SEP . $class . 'Edit.php', 'pluginEdit', $class, $tableName, $fields );
+  savePluginFile ( $class . PATH_SEP . $class . 'Save.php', 'pluginSave', $class, $tableName, $fields );
+
+  printf("creting symlinks %s \n", pakeColor::colorize( $pluginDirectory, 'INFO'));
+  symlink ($pluginOutDirectory. PATH_SEP . $class. '.php', PATH_PLUGINS . $class . '.php');
+  symlink ($pluginOutDirectory. PATH_SEP . $class,         $pluginDirectory);
+
+  exit (0);
+}
+
