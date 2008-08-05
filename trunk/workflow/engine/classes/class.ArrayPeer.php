@@ -1,10 +1,10 @@
 <?php
 /**
  * class.ArrayPeer.php
- *  
+ *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -14,13 +14,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
 
 require_once 'propel/util/BasePeer.php';
@@ -31,7 +31,7 @@ include_once 'classes/model/Application.php';
 /**
  * Base static class for performing query and update operations on the 'APPLICATION' table.
  *
- * 
+ *
  *
  * @package    classes.model.om
  */
@@ -290,10 +290,10 @@ abstract class ArrayBasePeer {
 		}
 		return null;
 	}
-  
+
   private function createSelectSql($criteria, $tableName, &$params) {
 		$db = Propel::getDB($criteria->getDbName());
-  
+
   		// redundant definition $selectModifiers = array();
 		$selectClause = array();
 		$fromClause = array();
@@ -302,7 +302,7 @@ abstract class ArrayBasePeer {
 		$whereClause = array();
 		$orderByClause = array();
 		$groupByClause = array();
-    
+
 		$orderBy = $criteria->getOrderByColumns();
 		$groupBy = $criteria->getGroupByColumns();
 		$ignoreCase = $criteria->isIgnoreCase();
@@ -353,7 +353,7 @@ abstract class ArrayBasePeer {
 		foreach($aliases as $alias => $col) {
 			$selectClause[] = $col . " AS " . $alias;
 		}
-    
+
 		// add the criteria to WHERE clause
 		foreach($criteria->keys() as $key) {
 
@@ -384,15 +384,15 @@ abstract class ArrayBasePeer {
       $cri['table']      = $criterion->table;
       $cri['field']      = $criterion->column;
       $cri['comparison'] = $criterion->comparison == '=' ? '==' : $criterion->comparison;
-      $cri['value']      = $criterion->getValue(); 
+      $cri['value']      = $criterion->getValue();
 			$sb = "";
 			$sb .= "\$row['" . $cri['field'] . "'] " . $cri['comparison'] . "'" . $cri['value'] . "'";
       $params[] = $cri;
 			//$criterion->appendPsTo($sb, $params);
-      
+
 			$whereClause[] = $sb;
 
-		}    
+		}
 		// Unique from clause elements
 		$fromClause = array_unique( $fromClause );
 
@@ -432,7 +432,7 @@ abstract class ArrayBasePeer {
 		$sql =  "SELECT "
 				.($selectModifiers ? implode(" ", $selectModifiers) . " " : "")
 				.implode(", ", $selectClause)
-				." FROM ". $fromClause[0] 
+				." FROM ". $fromClause[0]
 				.($whereClause ? " WHERE ".implode(" AND ", $whereClause) : "")
 				.($groupByClause ? " GROUP BY ".implode(",", $groupByClause) : "");
 
@@ -444,7 +444,7 @@ abstract class ArrayBasePeer {
 
     return $dataSql;
   }
-  
+
 	/**
 	 * Method to do selects.
 	 *
@@ -502,13 +502,13 @@ abstract class ArrayBasePeer {
     if ( !isset ( $_DBArray[$tableName] ) ) {
       throw new Exception ( "Error: the table '$tableName' doesn't exists in DBArray " );
     }
-    
+
     $arrayTable = $_DBArray[$tableName];
-    
+
 		if ($con === null) {
 			$con = Propel::getConnection(self::DATABASE_NAME);
 		}
-    
+
 		if (!$criteria->getSelectColumns()) {
       foreach ( array_keys ( $_DBArray[$tableName][0] ) as $key => $val )
 			  $criteria->addSelectColumn( $tableName.'.'.$val );
@@ -521,7 +521,7 @@ abstract class ArrayBasePeer {
 		// rows indexed numerically.
 		return ArrayBasePeer::doSelect($criteria,$tableName, $con);
 	}
-  
+
 	/**
 	 * The returned array will contain objects of the default type or
 	 * objects that inherit from the default.
@@ -532,17 +532,17 @@ abstract class ArrayBasePeer {
 	public static function populateObjects(ResultSet $rs)
 	{
 		$results = array();
-	
+
 		// set the class once to avoid overhead in the loop
 		$cls = ApplicationPeer::getOMClass();
 		$cls = Propel::import($cls);
 		// populate the object(s)
 		while($rs->next()) {
-		
+
 			$obj = new $cls();
 			$obj->hydrate($rs);
 			$results[] = $obj;
-			
+
 		}
 		return $results;
 	}
@@ -706,7 +706,7 @@ abstract class ArrayBasePeer {
 			// use transaction because $criteria could contain info
 			// for more than one table or we could emulating ON DELETE CASCADE, etc.
 			$con->begin();
-			
+
 			$affectedRows += BasePeer::doDelete($criteria, $con);
 			$con->commit();
 			return $affectedRows;

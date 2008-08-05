@@ -2196,16 +2196,17 @@ class processMap {
 
   function getObjectsPermissionsCriteria($sProcessUID) {
     $aObjectsPermissions   = array();
-  	$aObjectsPermissions[] = array('TASK_TARGET'  => 'char',
-    	                             'USER_GROUP'   => 'char',
+  	$aObjectsPermissions[] = array('OP_UID'       => 'char',
+  	                               'TASK_TARGET'  => 'char',
+    	                             'GROUP_USER'   => 'char',
     	                             'TASK_SOURCE'  => 'char',
     	                             'OBJECT_TYPE'  => 'char',
     	                             'OBJECT'       => 'char',
     	                             'PARTICIPATED' => 'char',
     	                             'ACTION'       => 'char');
-
     require_once 'classes/model/ObjectPermission.php';
     $oCriteria  = new Criteria('workflow');
+    $oCriteria->addSelectColumn(ObjectPermissionPeer::OP_UID);
   	$oCriteria->addSelectColumn(ObjectPermissionPeer::TAS_UID);
   	$oCriteria->addSelectColumn(ObjectPermissionPeer::USR_UID);
   	$oCriteria->addSelectColumn(ObjectPermissionPeer::OP_USER_RELATION);
@@ -2236,7 +2237,7 @@ class processMap {
       }
       else {
         $oGroup     = new Groupwf();
-        $aFields    = $oGroup->load('615886891486d2713dafdb0099293122');
+        $aFields    = $oGroup->load($aRow['USR_UID']);
         $sUserGroup = $aFields['GRP_TITLE'];
       }
       //Obtain task source
@@ -2254,22 +2255,38 @@ class processMap {
           $sObjectType = G::LoadTranslation('ID_ANY');
           $sObject     = G::LoadTranslation('ID_ALL');
         break;
-        case 'ANY_DYNAFORMS':
+        case 'ANY_DYNAFORM':
           $sObjectType = G::LoadTranslation('ID_ANY_DYNAFORM');
           $sObject     = G::LoadTranslation('ID_ALL');
         break;
-        case 'ANY_INPUTS':
+        case 'ANY_INPUT':
           $sObjectType = G::LoadTranslation('ID_ANY_INPUT');
           $sObject     = G::LoadTranslation('ID_ALL');
         break;
-        case 'ANY_OUTPUTS':
+        case 'ANY_OUTPUT':
           $sObjectType = G::LoadTranslation('ID_ANY_OUTPUT');
           $sObject     = G::LoadTranslation('ID_ALL');
         break;
         case 'DYNAFORM':
           $sObjectType = G::LoadTranslation('ID_DYNAFORM');
-          //obtener el título del dynaform
-          $sObject     = '';
+          require_once 'classes/model/Dynaform.php';
+          $oDynaform = new Dynaform();
+          $aFields   = $oDynaform->load($aRow['OP_OBJ_UID']);
+          $sObject     = $aFields['DYN_TITLE'];
+        break;
+        case 'INPUT':
+          $sObjectType = G::LoadTranslation('ID_INPUT_DOCUMENT');
+          require_once 'classes/model/InputDocument.php';
+          $oInputDocument = new InputDocument();
+          $aFields        = $oInputDocument->load($aRow['OP_OBJ_UID']);
+          $sObject        = $aFields['INP_DOC_TITLE'];
+        break;
+        case 'OUTPUT':
+          $sObjectType = G::LoadTranslation('ID_OUTPUT_DOCUMENT');
+          require_once 'classes/model/OutputDocument.php';
+          $oOutputDocument = new OutputDocument();
+          $aFields         = $oOutputDocument->load($aRow['OP_OBJ_UID']);
+          $sObject         = $aFields['OUT_DOC_TITLE'];
         break;
       }
       //Participated
@@ -2282,8 +2299,9 @@ class processMap {
       //Obtain action (permission)
       $sAction = G::LoadTranslation('ID_' . $aRow['OP_ACTION']);
       //Add to array
-      $aObjectsPermissions[] = array('TASK_TARGET'  => $sTaskTarget,
-    	                               'USER_GROUP'   => $sUserGroup,
+      $aObjectsPermissions[] = array('OP_UID'       => $aRow['OP_UID'],
+                                     'TASK_TARGET'  => $sTaskTarget,
+    	                               'GROUP_USER'   => $sUserGroup,
     	                               'TASK_SOURCE'  => $sTaskSource,
     	                               'OBJECT_TYPE'  => $sObjectType,
     	                               'OBJECT'       => $sObject,
@@ -2303,7 +2321,101 @@ class processMap {
   function objectsPermissionsList($sProcessUID) {
     global $G_PUBLISH;
     $G_PUBLISH = new Publisher();
-    $G_PUBLISH->AddContent('propeltable', 'paged-table', 'processes/processes_ObjectsPermissionsList', $this->getObjectsPermissionsCriteria($sProcessUID));
+    $G_PUBLISH->AddContent('propeltable', 'paged-table', 'processes/processes_ObjectsPermissionsList', $this->getObjectsPermissionsCriteria($sProcessUID), array('PRO_UID' => $sProcessUID));
+    G::RenderPage('publish', 'raw');
+    return true;
+  }
+
+  function newObjectPermission($sProcessUID) {
+    $aUsersGroups   = array();
+  	$aUsersGroups[] = array('UID'   => 'char',
+    	                      'LABEL' => 'char');
+    $oCriteria  = new Criteria('workflow');
+  	$oCriteria->addSelectColumn(GroupwfPeer::GRP_UID);
+  	$oCriteria->addAsColumn('GRP_TITLE', ContentPeer::CON_VALUE);
+  	$aConditions   = array();
+    $aConditions[] = array(GroupwfPeer::GRP_UID,      ContentPeer::CON_ID);
+    $aConditions[] = array(ContentPeer::CON_CATEGORY, DBAdapter::getStringDelimiter() . 'GRP_TITLE' . DBAdapter::getStringDelimiter());
+    $aConditions[] = array(ContentPeer::CON_LANG,     DBAdapter::getStringDelimiter() . SYS_LANG . DBAdapter::getStringDelimiter());
+    $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
+    $oCriteria->add(GroupwfPeer::GRP_STATUS, 'ACTIVE');
+    $oDataset = GroupwfPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    while ($aRow = $oDataset->getRow()) {
+      $aUsersGroups[] = array('UID'   => '2|' . $aRow['GRP_UID'],
+    	                        'LABEL' => $aRow['GRP_TITLE'] . ' (' . G::LoadTranslation('ID_GROUP') . ')');
+      $oDataset->next();
+    }
+    $oCriteria  = new Criteria('workflow');
+    $oCriteria->addSelectColumn(UsersPeer::USR_UID);
+    $oCriteria->addSelectColumn(UsersPeer::USR_USERNAME);
+    $oCriteria->addSelectColumn(UsersPeer::USR_FIRSTNAME);
+    $oCriteria->addSelectColumn(UsersPeer::USR_LASTNAME);
+    $oCriteria->add(UsersPeer::USR_STATUS, 'ACTIVE');
+    $oDataset = UsersPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    while ($aRow = $oDataset->getRow()) {
+      $aUsersGroups[] = array('UID'   => '1|' . $aRow['USR_UID'],
+    	                        'LABEL' => $aRow['USR_FIRSTNAME'] . ' ' . $aRow['USR_LASTNAME'] . ' (' . $aRow['USR_USERNAME'] . ')');
+      $oDataset->next();
+    }
+    $aAllObjects   = array();
+  	$aAllObjects[] = array('UID'     => 'char',
+    	                     'LABEL'   => 'char');
+    $aAllDynaforms   = array();
+  	$aAllDynaforms[] = array('UID'     => 'char',
+    	                       'LABEL'   => 'char');
+    $aAllInputs   = array();
+  	$aAllInputs[] = array('UID'     => 'char',
+    	                    'LABEL'   => 'char');
+    $aAllOutputs   = array();
+  	$aAllOutputs[] = array('UID'     => 'char',
+    	                     'LABEL'   => 'char');
+    require_once 'classes/model/Dynaform.php';
+    $oDataset = DynaformPeer::doSelectRS($this->getDynaformsCriteria($sProcessUID));
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    while ($aRow = $oDataset->getRow()) {
+      $aAllObjects[] = array('UID'   => 'DYNAFORM|' . $aRow['DYN_UID'],
+    	                       'LABEL' => $aRow['DYN_TITLE'] . ' (' . G::LoadTranslation('ID_DYNAFORM') . ')');
+    	$aAllDynaforms[] = array('UID'   => $aRow['DYN_UID'],
+    	                         'LABEL' => $aRow['DYN_TITLE']);
+      $oDataset->next();
+    }
+    require_once 'classes/model/InputDocument.php';
+    $oDataset = InputDocumentPeer::doSelectRS($this->getInputDocumentsCriteria($sProcessUID));
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    while ($aRow = $oDataset->getRow()) {
+      $aAllObjects[] = array('UID'   => 'INPUT_DOCUMENT|' . $aRow['INP_DOC_UID'],
+    	                       'LABEL' => $aRow['INP_DOC_TITLE'] . ' (' . G::LoadTranslation('ID_INPUT_DOCUMENT') . ')');
+      $aAllInputs[] = array('UID'   => $aRow['INP_DOC_UID'],
+    	                      'LABEL' => $aRow['INP_DOC_TITLE']);
+      $oDataset->next();
+    }
+    require_once 'classes/model/OutputDocument.php';
+    $oDataset = OutputDocumentPeer::doSelectRS($this->getOutputDocumentsCriteria($sProcessUID));
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    while ($aRow = $oDataset->getRow()) {
+      $aAllObjects[] = array('UID'   => 'OUTPUT_DOCUMENT|' . $aRow['OUT_DOC_UID'],
+    	                       'LABEL' => $aRow['OUT_DOC_TITLE'] . ' (' . G::LoadTranslation('ID_OUTPUT_DOCUMENT') . ')');
+      $aAllOutputs[] = array('UID'   => $aRow['OUT_DOC_UID'],
+    	                       'LABEL' => $aRow['OUT_DOC_TITLE']);
+      $oDataset->next();
+    }
+    global $_DBArray;
+    $_DBArray['usersGroups']        = $aUsersGroups;
+    $_DBArray['allObjects']         = $aAllObjects;
+    $_DBArray['allDynaforms']       = $aAllDynaforms;
+    $_DBArray['allInputs']          = $aAllInputs;
+    $_DBArray['allOutputs']         = $aAllOutputs;
+    $_SESSION['_DBArray']           = $_DBArray;
+    global $G_PUBLISH;
+    $G_PUBLISH = new Publisher();
+    $G_PUBLISH->AddContent('xmlform', 'xmlform', 'processes/processes_NewObjectPermission', '', array('LANG' => SYS_LANG, 'PRO_UID' => $sProcessUID), 'processes_SaveObjectPermission');
     G::RenderPage('publish', 'raw');
     return true;
   }

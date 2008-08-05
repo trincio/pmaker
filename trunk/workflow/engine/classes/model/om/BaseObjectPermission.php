@@ -29,6 +29,13 @@ abstract class BaseObjectPermission extends BaseObject  implements Persistent {
 
 
 	/**
+	 * The value for the op_uid field.
+	 * @var        string
+	 */
+	protected $op_uid = '0';
+
+
+	/**
 	 * The value for the pro_uid field.
 	 * @var        string
 	 */
@@ -103,6 +110,17 @@ abstract class BaseObjectPermission extends BaseObject  implements Persistent {
 	 * @var        boolean
 	 */
 	protected $alreadyInValidation = false;
+
+	/**
+	 * Get the [op_uid] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getOpUid()
+	{
+
+		return $this->op_uid;
+	}
 
 	/**
 	 * Get the [pro_uid] column value.
@@ -202,6 +220,28 @@ abstract class BaseObjectPermission extends BaseObject  implements Persistent {
 
 		return $this->op_action;
 	}
+
+	/**
+	 * Set the value of [op_uid] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setOpUid($v)
+	{
+
+		// Since the native PHP type for this column is string,
+		// we will cast the input to a string (if it is not).
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->op_uid !== $v || $v === '0') {
+			$this->op_uid = $v;
+			$this->modifiedColumns[] = ObjectPermissionPeer::OP_UID;
+		}
+
+	} // setOpUid()
 
 	/**
 	 * Set the value of [pro_uid] column.
@@ -418,30 +458,32 @@ abstract class BaseObjectPermission extends BaseObject  implements Persistent {
 	{
 		try {
 
-			$this->pro_uid = $rs->getString($startcol + 0);
+			$this->op_uid = $rs->getString($startcol + 0);
 
-			$this->tas_uid = $rs->getString($startcol + 1);
+			$this->pro_uid = $rs->getString($startcol + 1);
 
-			$this->usr_uid = $rs->getString($startcol + 2);
+			$this->tas_uid = $rs->getString($startcol + 2);
 
-			$this->op_user_relation = $rs->getInt($startcol + 3);
+			$this->usr_uid = $rs->getString($startcol + 3);
 
-			$this->op_task_source = $rs->getString($startcol + 4);
+			$this->op_user_relation = $rs->getInt($startcol + 4);
 
-			$this->op_participate = $rs->getInt($startcol + 5);
+			$this->op_task_source = $rs->getString($startcol + 5);
 
-			$this->op_obj_type = $rs->getString($startcol + 6);
+			$this->op_participate = $rs->getInt($startcol + 6);
 
-			$this->op_obj_uid = $rs->getString($startcol + 7);
+			$this->op_obj_type = $rs->getString($startcol + 7);
 
-			$this->op_action = $rs->getString($startcol + 8);
+			$this->op_obj_uid = $rs->getString($startcol + 8);
+
+			$this->op_action = $rs->getString($startcol + 9);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 9; // 9 = ObjectPermissionPeer::NUM_COLUMNS - ObjectPermissionPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 10; // 10 = ObjectPermissionPeer::NUM_COLUMNS - ObjectPermissionPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating ObjectPermission object", $e);
@@ -645,30 +687,33 @@ abstract class BaseObjectPermission extends BaseObject  implements Persistent {
 	{
 		switch($pos) {
 			case 0:
-				return $this->getProUid();
+				return $this->getOpUid();
 				break;
 			case 1:
-				return $this->getTasUid();
+				return $this->getProUid();
 				break;
 			case 2:
-				return $this->getUsrUid();
+				return $this->getTasUid();
 				break;
 			case 3:
-				return $this->getOpUserRelation();
+				return $this->getUsrUid();
 				break;
 			case 4:
-				return $this->getOpTaskSource();
+				return $this->getOpUserRelation();
 				break;
 			case 5:
-				return $this->getOpParticipate();
+				return $this->getOpTaskSource();
 				break;
 			case 6:
-				return $this->getOpObjType();
+				return $this->getOpParticipate();
 				break;
 			case 7:
-				return $this->getOpObjUid();
+				return $this->getOpObjType();
 				break;
 			case 8:
+				return $this->getOpObjUid();
+				break;
+			case 9:
 				return $this->getOpAction();
 				break;
 			default:
@@ -691,15 +736,16 @@ abstract class BaseObjectPermission extends BaseObject  implements Persistent {
 	{
 		$keys = ObjectPermissionPeer::getFieldNames($keyType);
 		$result = array(
-			$keys[0] => $this->getProUid(),
-			$keys[1] => $this->getTasUid(),
-			$keys[2] => $this->getUsrUid(),
-			$keys[3] => $this->getOpUserRelation(),
-			$keys[4] => $this->getOpTaskSource(),
-			$keys[5] => $this->getOpParticipate(),
-			$keys[6] => $this->getOpObjType(),
-			$keys[7] => $this->getOpObjUid(),
-			$keys[8] => $this->getOpAction(),
+			$keys[0] => $this->getOpUid(),
+			$keys[1] => $this->getProUid(),
+			$keys[2] => $this->getTasUid(),
+			$keys[3] => $this->getUsrUid(),
+			$keys[4] => $this->getOpUserRelation(),
+			$keys[5] => $this->getOpTaskSource(),
+			$keys[6] => $this->getOpParticipate(),
+			$keys[7] => $this->getOpObjType(),
+			$keys[8] => $this->getOpObjUid(),
+			$keys[9] => $this->getOpAction(),
 		);
 		return $result;
 	}
@@ -732,30 +778,33 @@ abstract class BaseObjectPermission extends BaseObject  implements Persistent {
 	{
 		switch($pos) {
 			case 0:
-				$this->setProUid($value);
+				$this->setOpUid($value);
 				break;
 			case 1:
-				$this->setTasUid($value);
+				$this->setProUid($value);
 				break;
 			case 2:
-				$this->setUsrUid($value);
+				$this->setTasUid($value);
 				break;
 			case 3:
-				$this->setOpUserRelation($value);
+				$this->setUsrUid($value);
 				break;
 			case 4:
-				$this->setOpTaskSource($value);
+				$this->setOpUserRelation($value);
 				break;
 			case 5:
-				$this->setOpParticipate($value);
+				$this->setOpTaskSource($value);
 				break;
 			case 6:
-				$this->setOpObjType($value);
+				$this->setOpParticipate($value);
 				break;
 			case 7:
-				$this->setOpObjUid($value);
+				$this->setOpObjType($value);
 				break;
 			case 8:
+				$this->setOpObjUid($value);
+				break;
+			case 9:
 				$this->setOpAction($value);
 				break;
 		} // switch()
@@ -781,15 +830,16 @@ abstract class BaseObjectPermission extends BaseObject  implements Persistent {
 	{
 		$keys = ObjectPermissionPeer::getFieldNames($keyType);
 
-		if (array_key_exists($keys[0], $arr)) $this->setProUid($arr[$keys[0]]);
-		if (array_key_exists($keys[1], $arr)) $this->setTasUid($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setUsrUid($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setOpUserRelation($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setOpTaskSource($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setOpParticipate($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setOpObjType($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setOpObjUid($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setOpAction($arr[$keys[8]]);
+		if (array_key_exists($keys[0], $arr)) $this->setOpUid($arr[$keys[0]]);
+		if (array_key_exists($keys[1], $arr)) $this->setProUid($arr[$keys[1]]);
+		if (array_key_exists($keys[2], $arr)) $this->setTasUid($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setUsrUid($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setOpUserRelation($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setOpTaskSource($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setOpParticipate($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setOpObjType($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setOpObjUid($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setOpAction($arr[$keys[9]]);
 	}
 
 	/**
@@ -801,6 +851,7 @@ abstract class BaseObjectPermission extends BaseObject  implements Persistent {
 	{
 		$criteria = new Criteria(ObjectPermissionPeer::DATABASE_NAME);
 
+		if ($this->isColumnModified(ObjectPermissionPeer::OP_UID)) $criteria->add(ObjectPermissionPeer::OP_UID, $this->op_uid);
 		if ($this->isColumnModified(ObjectPermissionPeer::PRO_UID)) $criteria->add(ObjectPermissionPeer::PRO_UID, $this->pro_uid);
 		if ($this->isColumnModified(ObjectPermissionPeer::TAS_UID)) $criteria->add(ObjectPermissionPeer::TAS_UID, $this->tas_uid);
 		if ($this->isColumnModified(ObjectPermissionPeer::USR_UID)) $criteria->add(ObjectPermissionPeer::USR_UID, $this->usr_uid);
@@ -826,33 +877,30 @@ abstract class BaseObjectPermission extends BaseObject  implements Persistent {
 	{
 		$criteria = new Criteria(ObjectPermissionPeer::DATABASE_NAME);
 
+		$criteria->add(ObjectPermissionPeer::OP_UID, $this->op_uid);
 
 		return $criteria;
 	}
 
 	/**
-	 * Returns NULL since this table doesn't have a primary key.
-	 * This method exists only for BC and is deprecated!
-	 * @return     null
+	 * Returns the primary key for this object (row).
+	 * @return     string
 	 */
 	public function getPrimaryKey()
 	{
-		return null;
+		return $this->getOpUid();
 	}
 
 	/**
-	 * Dummy primary key setter.
+	 * Generic method to set the primary key (op_uid column).
 	 *
-	 * This function only exists to preserve backwards compatibility.  It is no longer
-	 * needed or required by the Persistent interface.  It will be removed in next BC-breaking
-	 * release of Propel.
-	 *
-	 * @deprecated
+	 * @param      string $key Primary key.
+	 * @return     void
 	 */
-	 public function setPrimaryKey($pk)
-	 {
-		 // do nothing, because this object doesn't have any primary keys
-	 }
+	public function setPrimaryKey($key)
+	{
+		$this->setOpUid($key);
+	}
 
 	/**
 	 * Sets contents of passed object to values from current object.
@@ -887,6 +935,8 @@ abstract class BaseObjectPermission extends BaseObject  implements Persistent {
 
 
 		$copyObj->setNew(true);
+
+		$copyObj->setOpUid('0'); // this is a pkey column, so set to default value
 
 	}
 

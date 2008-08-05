@@ -64,6 +64,8 @@ class ObjectPermissionMapBuilder {
 
 		$tMap->setUseIdGenerator(false);
 
+		$tMap->addPrimaryKey('OP_UID', 'OpUid', 'string', CreoleTypes::VARCHAR, true, 32);
+
 		$tMap->addColumn('PRO_UID', 'ProUid', 'string', CreoleTypes::VARCHAR, true, 32);
 
 		$tMap->addColumn('TAS_UID', 'TasUid', 'string', CreoleTypes::VARCHAR, true, 32);
@@ -82,9 +84,9 @@ class ObjectPermissionMapBuilder {
 
 		$tMap->addColumn('OP_ACTION', 'OpAction', 'string', CreoleTypes::VARCHAR, true, 10);
 
-		$tMap->addValidator('USR_UID', 'maxLength', 'propel.validator.MaxLengthValidator', '32', 'User or Group UID can be no larger than 32 in size');
+		$tMap->addValidator('OP_UID', 'maxLength', 'propel.validator.MaxLengthValidator', '32', 'Object permission UID can be no larger than 32 in size');
 
-		$tMap->addValidator('USR_UID', 'required', 'propel.validator.RequiredValidator', '', 'User or Group UID is required.');
+		$tMap->addValidator('OP_UID', 'required', 'propel.validator.RequiredValidator', '', 'Object permission UID is required.');
 
 		$tMap->addValidator('PRO_UID', 'maxLength', 'propel.validator.MaxLengthValidator', '32', 'Process UID can be no larger than 32 in size');
 

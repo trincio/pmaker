@@ -4220,6 +4220,16 @@
       <parameter name="Create_options" value=""/>
       <parameter name="Comment" value="OBJECT_PERMISSION"/>
     </vendor>
+    <column name="OP_UID" type="VARCHAR" size="32" required="true" primaryKey="true" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="OP_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value="PRI"/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
     <column name="PRO_UID" type="VARCHAR" size="32" required="true" default="0">
       <vendor type="mysql">
         <parameter name="Field" value="PRO_UID"/>
@@ -4310,9 +4320,9 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <validator column="USR_UID">
-      <rule name="maxLength" value="32" message="User or Group UID can be no larger than ${value} in size" />
-      <rule name="required" message="User or Group UID is required." />
+    <validator column="OP_UID">
+      <rule name="maxLength" value="32" message="Object permission UID can be no larger than ${value} in size" />
+      <rule name="required" message="Object permission UID is required." />
     </validator>
     <validator column="PRO_UID">
       <rule name="maxLength" value="32" message="Process UID can be no larger than ${value} in size" />

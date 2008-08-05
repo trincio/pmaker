@@ -234,11 +234,24 @@ krumo ( 'DBArrayConnection connect '); die;
 
 	private function parseSqlString ( $query ) {
 	 //we need a SQL parse, for now we only search for text 'select * from'
-	 $aux = str_ireplace ( 'select * from', '', trim($query) );
+	 /*$aux = str_ireplace ( 'select * from', '', trim($query) );
    $sql = array();
    $sql['fromClause'][0] = trim( $aux );
    $sql['limit'] = 0;
-   $sql['offset'] = 0;
+   $sql['offset'] = 0;*/
+   if (1===preg_match('/^\s*SELECT\s+(.+?)(?:\s+FROM\s+(.+?))(?:\s+WHERE\s+(.+?))?(?:\s+GROUP\s+BY\s+(.+?))?(?:\s+ORDER\s+BY\s+(.+?))?(?:\s+BETWEEN\s+(.+?)\s+AND\s+(.+?))?\s*$/im',$query,$matches))
+    {
+      //$sqlSelect='SELECT '.$matches[1].(($matches[2]!='')?' FROM '.$matches[2]:'');
+    }
+    else
+    {
+      return;
+    }
+    $sql = array();
+    $sql['fromClause'][0]  = isset($matches[2])?$matches[2]:'';
+    $sql['whereClause'][0] = isset($matches[3])?$matches[3]:'';
+    $sql['limit'] = 0;
+    $sql['offset'] = 0;
 	  return $sql;
 	}
 
@@ -267,9 +280,8 @@ krumo ( 'DBArrayConnection connect '); die;
       if ( isset ($sql['whereClause'] ) )
         foreach ( $sql['whereClause'] as $keyClause => $valClause ) {
           if ( isset ( $valClause)  && $flag == 1  ) {
-            $toEval =  "\$flag = ( " . $valClause . ') ?1 :0;' ;
-            eval ( $toEval );
-//            print " $toEval  ---- ". $row['balance'] . ' '. $row['age'] ." $flag <br>";
+            $toEval =  "\$flag = ( " . ($valClause != '' ? str_replace('=', '==', $valClause): '1') . ') ?1 :0;' ;
+            eval ( $toEval ).'<br />';
           }
         }
 
