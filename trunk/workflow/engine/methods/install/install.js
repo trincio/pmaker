@@ -90,7 +90,7 @@ var installer=function()
 		
 		var tr = this.table.insertRow(-1);
 		$(tr).append(
-			new DOM('td',{innerHTML:"Directory "+this.options.path_trunk+"content/languages/<br> permissions: <b>0777</b> <br>OR<br>Directory "+this.options.path_trunk+"config/<br> permissions: <b>0777</b>",className:"inst_td0",colSpan:2}),
+			new DOM('td',{innerHTML:"Directory "+this.options.path_trunk+"config/<br> permissions: <b>0777</b> <br />OR<br />File <i>"+this.options.path_trunk+"config/paths_installep.php</i><br> permissions: <b>0775</b>",className:"inst_td0",colSpan:2}),
 			this.checkPI = new DOM('td',{innerHTML:'Loading...',className:"inst_td1",colSpan:2})
 		);
 
@@ -398,7 +398,6 @@ var installer=function()
 			this.ao_admin.title=(this.cstatus.ao_admin)?'Username invalid':'PASSED';
 
 			inst.loader.hide();
-
 		}.extend(this);
 		r.make();
 	};
@@ -529,6 +528,9 @@ var installer=function()
 			var tr = this.table.insertRow(-1);
 			var td0 = tr.insertCell(0);
 			var pre = document.createElement('pre');
+			pre.style.overflow='scroll';
+			pre.style.width=(this.options.target.clientWidth-10)+"px";
+			pre.style.height=((this.options.target.clientHeight-this.table.clientHeight)-15)+'px';
 			pre.innerHTML=rpc.xmlhttp.responseText;
 			td0.appendChild(pre);
 //		}.extend(this);
