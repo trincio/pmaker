@@ -952,7 +952,7 @@ function validateForm(aRequiredFields)
 		 	  case 'text':		 	    
 		 	    var vtext = new input(getField(aRequiredFields[i].name));
 		 	    if(getField(aRequiredFields[i].name).value=='')		 	    		 	    
-		 	    	{ sMessage += aRequiredFields[i].label + "\n";	
+		 	    	{ sMessage += "- " + aRequiredFields[i].label + "\n";	
 		 	    		vtext.failed();		 	    				 	    		
 		 	    	}	
 		 	    	else
@@ -963,23 +963,18 @@ function validateForm(aRequiredFields)
 		 	  
 		 	  case 'dropdown':		 	    
 		 	    if(getField(aRequiredFields[i].name).value=='')		 	    		 	    
-		 	    		sMessage += aRequiredFields[i].label + "\n";
+		 	    		sMessage += "- " + aRequiredFields[i].label + "\n";
 		 	  break;
-		 	  
-		 	  case 'checkbox':
-		 	    if(getField(aRequiredFields[i].name).checked==false)		 	    		 	    
-		 	    		sMessage += aRequiredFields[i].label + "\n";
-		 	  break;		 			 		
-		 	  
+		 	  		 	 
 		 	  case 'textarea':
 		 	    if(getField(aRequiredFields[i].name).value=='')		 	    		 	    
-		 	    		sMessage += aRequiredFields[i].label + "\n";
+		 	    		sMessage += "- " + aRequiredFields[i].label + "\n";
 		 	  break;
 		 	  	
 		 	  case 'password':
 		 	    var vpass = new input(getField(aRequiredFields[i].name));
 		 	    if(getField(aRequiredFields[i].name).value=='')		 	    		 	    
-		 	    	{ sMessage += aRequiredFields[i].label + "\n";
+		 	    	{ sMessage += "- " + aRequiredFields[i].label + "\n";
 		 	    		vpass.failed();		 	    				 	    		
 		 	    	}	
 		 	    	else
@@ -991,7 +986,7 @@ function validateForm(aRequiredFields)
 		 	  case 'currency':
 		 	    var vcurr = new input(getField(aRequiredFields[i].name));
 		 	    if(getField(aRequiredFields[i].name).value=='')		 	    		 	    
-		 	    	{ sMessage += aRequiredFields[i].label + "\n";	
+		 	    	{ sMessage += "- " + aRequiredFields[i].label + "\n";	
 		 	    		vcurr.failed();		 	    				 	    		
 		 	    	}	
 		 	    	else
@@ -1003,7 +998,7 @@ function validateForm(aRequiredFields)
 		 	  case 'percentage':
 		 	    var vper = new input(getField(aRequiredFields[i].name));
 		 	    if(getField(aRequiredFields[i].name).value=='')		 	    		 	    
-		 	    	{ sMessage += aRequiredFields[i].label + "\n";
+		 	    	{ sMessage += "- " + aRequiredFields[i].label + "\n";
 		 	    		vper.failed();		 	    				 	    		
 		 	    	}	
 		 	    	else
@@ -1014,17 +1009,17 @@ function validateForm(aRequiredFields)
 		 	  
 		 	  case 'yesno':
 		 	    if(getField(aRequiredFields[i].name).value=='')		 	    		 	    
-		 	    		sMessage += aRequiredFields[i].label + "\n";
+		 	    		sMessage += "- " + aRequiredFields[i].label + "\n";
 		 	  break;		 	 
 		 	  
 		 	  case 'date':
 		 	    if(getField(aRequiredFields[i].name).value=='')		 	    		 	    
-		 	    		sMessage += aRequiredFields[i].label + "\n";
+		 	    		sMessage += "- " + aRequiredFields[i].label + "\n";
 		 	  break;
 		 	  
 		 	  case 'file':
 		 	    if(getField(aRequiredFields[i].name).value=='')		 	    		 	    
-		 	    		sMessage += aRequiredFields[i].label + "\n";
+		 	    		sMessage += "- " + aRequiredFields[i].label + "\n";
 		 	  break;
 		 	  
 		 	  case 'listbox':
@@ -1037,7 +1032,7 @@ function validateForm(aRequiredFields)
 					  }
 					}					
 					if(bOneSelected == true)   						 	    		 	    		 	    
-		 	    		sMessage += aRequiredFields[i].label + "\n";
+		 	    		sMessage += "- " + aRequiredFields[i].label + "\n";
 		 	  break;
 		 	  
 		 	  case 'radiogroup':			 	    
@@ -1053,16 +1048,20 @@ function validateForm(aRequiredFields)
 					}
 					
 					if(bOneChecked == false)   			 	    		 	   
-		 	    	sMessage += aRequiredFields[i].label + "\n";
+		 	    	sMessage += "- " + aRequiredFields[i].label + "\n";
 		 	    			 	    
 		 	  break;
 		 	}		
 	}       	
 		
-	if (sMessage != '') {
-		//alert("Los siguientes campos son req.: \n\n" + sMessage); 
+	if (sMessage != '') {		
 		alert(G_STRINGS.ID_REQUIRED_FIELDS + ": \n\n" + sMessage);
-		return false;
+		/*
+		new leimnud.module.app.alert().make({
+     label:G_STRINGS.ID_REQUIRED_FIELDS + ": <br />" + sMessage
+    });
+    */
+		return true;
 	}       
 	else    
 	{	return true;
