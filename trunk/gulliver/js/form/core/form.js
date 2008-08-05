@@ -1061,7 +1061,7 @@ function validateForm(aRequiredFields)
      label:G_STRINGS.ID_REQUIRED_FIELDS + ": <br />" + sMessage
     });
     */
-		return true;
+		return false;
 	}       
 	else    
 	{	return true;
