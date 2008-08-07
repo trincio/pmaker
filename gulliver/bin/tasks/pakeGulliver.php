@@ -96,15 +96,14 @@ function prompt ( $text ) {
 		$ret = array();
 		for ($i=0 ; $i < strlen($content)-1; $i++) {
 			if ( $content[$i] == ";" ) {
-         if ( $content[$i+1] == "\n" )
-            	{
+        if ( $content[$i+1] == "\n" ) {
 					$ret[] = substr($content, 0, $i);
 					$content = substr($content, $i + 1);
 					$i = 0;
-            	}
-        	}
-    	}
-    	$report['querys']=count($ret);
+        }
+      }
+    }
+    $report['querys']=count($ret);
 		foreach($ret as $qr)
 		{
 			$re = @mysql_query($qr,$connection);
@@ -867,9 +866,9 @@ function run_new_project ( $task, $args)
   //$dbFile = PATH_TRUNK . $projectName . PATH_SEP . 'shared' . PATH_SEP . 'sites'. PATH_SEP . 'dev'. PATH_SEP . 'db.php';
   $dbFile = PATH_SEP . PATH_SHARED . 'sites' . PATH_SEP . $projectName . PATH_SEP . 'db.php';
   $dbn = "db_" . $projectName;
-  $dbrn = "rb_" . $projectName;
+  $dbrn = "rb_" . $projectName; 
   $dbnpass = substr ( G::GenerateUniqueId(),0,8 );
-  if ( /*1 || */ !file_exists ( $dbFile ) ) {
+  if ( 1 || !file_exists ( $dbFile ) ) {
     if ( !defined ( 'HASH_INSTALLATION' ) ) {
       printf("%s\n", pakeColor::colorize( 'HASH INSTALLATION is invalid or not exists. Please check the paths_installed.php file', 'ERROR'));
       exit (0);
@@ -880,11 +879,13 @@ function run_new_project ( $task, $args)
       printf("%s\n", pakeColor::colorize( 'HASH INSTALLATION has invalid credentials. Please check the paths_installed.php file', 'ERROR'));
       exit (0);
     }
+    printf("creating database %s \n", pakeColor::colorize($dbn, 'INFO') );
     $q	= "CREATE DATABASE IF NOT EXISTS $dbn DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci";
     $ac = @mysql_query($q,$connectionDatabase);
     if ( !$ac ){
       printf("%s\n", pakeColor::colorize( mysql_error(), 'ERROR')); exit (0);
     }
+    printf("creating database %s \n", pakeColor::colorize($dbrn, 'INFO') );
     $q	= "CREATE DATABASE IF NOT EXISTS $dbrn DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci";
     $ac = @mysql_query($q,$connectionDatabase);
     if ( !$ac ){
@@ -901,6 +902,7 @@ function run_new_project ( $task, $args)
       printf("%s\n", pakeColor::colorize( mysql_error(), 'ERROR')); exit (0);
     }
     $rbSql = PATH_RBAC_MYSQL_DATA . 'schema.sql';
+    printf("executing %s \n", pakeColor::colorize($rbSql, 'INFO') );
     mysql_select_db($dbrn, $connectionDatabase);
     $qrs = query_sql_file( $rbSql, $connectionDatabase);
 
@@ -908,11 +910,13 @@ function run_new_project ( $task, $args)
     $ac = @mysql_query($q, $connectionDatabase);
     $q = "INSERT INTO `USERS` VALUES ('00000000000000000000000000000002','operator','21232f297a57a5a743894a0e4a801fc3','Operator','','operator@colosa.com','2020-01-01','2007-08-03 12:24:36','2008-02-13 07:24:07',1);";
     $ac = @mysql_query($q, $connectionDatabase);
-  
-    //G::mk_dir (PATH_TRUNK . $projectName );
-    //G::mk_dir (PATH_TRUNK . $projectName . PATH_SEP . 'shared' );
-    //G::mk_dir (PATH_TRUNK . $projectName . PATH_SEP . 'shared' . PATH_SEP . 'sites');
-    //G::mk_dir (PATH_TRUNK . $projectName . PATH_SEP . 'shared' . PATH_SEP . 'sites'. PATH_SEP . 'dev');
+
+    //database wf_  db_ 
+    $dbInsertSql = PATH_GULLIVER_HOME . 'bin' . PATH_SEP . 'tasks' . PATH_SEP . 'templates' . PATH_SEP . 'db_insert.sql';
+    printf("executing %s \n", pakeColor::colorize($dbInsertSql, 'INFO') );
+    mysql_select_db($dbn, $connectionDatabase);
+    $qrs = query_sql_file( $dbInsertSql, $connectionDatabase);
+
     G::mk_dir (PATH_SHARED . 'sites' . PATH_SEP );
     G::mk_dir (PATH_SHARED . 'sites' . PATH_SEP . $projectName );
     
@@ -1022,16 +1026,15 @@ function run_new_project ( $task, $args)
   create_file_from_tpl ( 'paths.php',       'engine' . PATH_SEP . 'config' . PATH_SEP . 'paths.php' );
   create_file_from_tpl ( 'defines.php',     'engine' . PATH_SEP . 'config' . PATH_SEP . 'defines.php' );
   create_file_from_tpl ( 'databases.php',   'engine' . PATH_SEP . 'config' . PATH_SEP . 'databases.php' );
-  create_file_from_tpl ( 'propel.ini',      'engine' . PATH_SEP . 'config' . PATH_SEP . 'propel.ini' );
-  create_file_from_tpl ( 'propel.ini',      'engine' . PATH_SEP . 'config' . PATH_SEP . 'propel.mysql.ini' );
+  $fields['dbName'] = 'mysql';
+  create_file_from_tpl ( 'propel.ini',      'engine' . PATH_SEP . 'config' . PATH_SEP . 'propel.ini',       $fields);
+  create_file_from_tpl ( 'propel.ini',      'engine' . PATH_SEP . 'config' . PATH_SEP . 'propel.mysql.ini', $fields );
 
   if ( file_exists( $pathHome .PATH_SEP. 'engine' . PATH_SEP . 'config' . PATH_SEP . 'schema.xml') ) {
-/*  	
-    $createSchema = strtolower ( prompt ( "schema.xml exists!. Do you want to overwrite the schema.xml file? [Y/n]" ));
+    $createSchema = strtolower ( prompt ( "schema.xml exists!. Do you want to overwrite the schema.xml file? [y/N]" ));
     if ( $createSchema == 'y' ) {
       create_file_from_tpl ( 'schema.xml',      'engine' . PATH_SEP . 'config' . PATH_SEP . 'schema.xml' );
     }
-    */
   } 
   else 
     create_file_from_tpl ( 'schema.xml',      'engine' . PATH_SEP . 'config' . PATH_SEP . 'schema.xml' );
@@ -1132,6 +1135,9 @@ function run_propel_build_crud ( $task, $args)
     exit (0);
   }  
   $class = $args[0];
+  $phpClass = $class;
+  $phpClass[0] = strtolower($phpClass[0]);
+   
   //second parameter is the table name, by default is the same classname in uppercase.
   $tableName = isset($args[1])? $args[1] : strtoupper ($class) ;
 
@@ -1148,21 +1154,47 @@ function run_propel_build_crud ( $task, $args)
   require_once ( $classFilename );
   G::LoadSystem ('templatePower');
 
+  global   $G_ENVIRONMENTS ;
+  $aux = explode ( PATH_SEP,  PATH_HOME );
+  $projectName = $aux[ count($aux) -2 ];
+	define ( 'PATH_SHARED', PATH_SEP . 'shared' . PATH_SEP . $projectName . '_data' . PATH_SEP );
+
+  $dbFile = PATH_SHARED . 'sites' . PATH_SEP . $projectName . PATH_SEP . 'db.php';
+  $G_ENVIRONMENTS['DEVELOPMENT']['dbfile'] = $dbFile;
   Propel::init(  PATH_CORE . "config/databases.php");  
+
   $configuration = Propel::getConfiguration();
   $connectionDSN = $configuration['datasources']['workflow']['connection'];
   printf("using DSN Connection %s \n", pakeColor::colorize( $connectionDSN, 'INFO'));
 
-die;
-  
-  //main php file 
-  savePluginFile ( $class . '.php', 'pluginMainFile', $class, $tableName );
+  G::mk_dir (PATH_CORE . 'xmlform' . PATH_SEP . $phpClass );
+  G::mk_dir (PATH_CORE . 'methods' . PATH_SEP . $phpClass );
 
+  $fields['className'] = $class;
+  $fields['phpClassName'] = $phpClass;
+  $fields['tableName'] = $tableName;
+  $fields['projectName'] = $projectName;
+  create_file_from_tpl ( 'pluginList',  PATH_CORE . 'methods'. PATH_SEP . $phpClass. PATH_SEP . $phpClass."List.php", $fields );
+  create_file_from_tpl ( 'pluginMenu',  PATH_CORE . 'menus'. PATH_SEP . $phpClass. ".php", $fields );
+
+  if ( !file_exists ( PATH_CORE . 'menus'. PATH_SEP . "welcome.php") ) {
+  	$fp = fopen ( PATH_CORE . 'menus'. PATH_SEP . "welcome.php", "w" );
+  	fwrite ( $fp, "<?php\n  " );
+  	fclose ( $fp );
+  }
+  $content = file_get_contents ( PATH_CORE . 'menus'. PATH_SEP . "welcome.php" );
+  var_dump ( strpos ( $content, $phpClass . ".php" ) ); 
+
+  if ( strpos ( $content, $phpClass . ".php" )  == false ) {
+	  $fp = fopen ( PATH_CORE . 'menus'. PATH_SEP . "welcome.php", "a" );
+	  fwrite ( $fp, "  require_once ( '" . $phpClass . ".php' );\n" );
+	  fclose ( $fp );
+	}
   //menu  
-  savePluginFile ( $class . PATH_SEP . 'menu' . $class . '.php', 'pluginMenu', $class, $tableName );
+  //savePluginFile ( $class . PATH_SEP . 'menu' . $class . '.php', 'pluginMenu', $class, $tableName );
 
   //default list
-  savePluginFile ( $class . PATH_SEP . $class . 'List.php', 'pluginList', $class, $tableName );
+  //savePluginFile ( $class . PATH_SEP . $class . 'List.php', 'pluginList', $class, $tableName );
 
 
   //parse the schema file in order to get Table definition
@@ -1185,8 +1217,8 @@ die;
         $fields['fields'][] = $field;
       }
   }
-  savePluginFile ( $class . PATH_SEP . $class . '.xml', 'pluginXmlform', $class, $tableName, $fields );
-
+  $fields['className'] = $class;
+  create_file_from_tpl ( 'pluginXmlform',  PATH_CORE . 'xmlform'. PATH_SEP . $phpClass. PATH_SEP . "$phpClass.xml", $fields );
 
   //xmlform for list
   //load the $fields array with fields data for PagedTable xml.
@@ -1210,7 +1242,11 @@ die;
       }
   }
   $fields['primaryKey'] = $primaryKey;
-  savePluginFile ( $class . PATH_SEP . $class . 'List.xml', 'pluginXmlformList', $class, $tableName, $fields );
+  $fields['className'] = $class;
+  $fields['phpClassName'] = $phpClass;
+  $fields['tableName'] = $tableName;
+  create_file_from_tpl ( 'pluginXmlformList',  PATH_CORE . 'xmlform'. PATH_SEP . $phpClass. PATH_SEP . $phpClass."List.xml", $fields );
+  create_file_from_tpl ( 'pluginXmlformOptions',PATH_CORE. 'xmlform'. PATH_SEP . $phpClass. PATH_SEP . $phpClass."Options.xml", $fields );
 
   //default edit
   $fields= array();$index =0;
@@ -1233,12 +1269,15 @@ die;
       }
   }
   $fields['keylist'] = $keylist;
-  savePluginFile ( $class . PATH_SEP . $class . 'Edit.php', 'pluginEdit', $class, $tableName, $fields );
-  savePluginFile ( $class . PATH_SEP . $class . 'Save.php', 'pluginSave', $class, $tableName, $fields );
-
-  printf("creting symlinks %s \n", pakeColor::colorize( $pluginDirectory, 'INFO'));
-  symlink ($pluginOutDirectory. PATH_SEP . $class. '.php', PATH_PLUGINS . $class . '.php');
-  symlink ($pluginOutDirectory. PATH_SEP . $class,         $pluginDirectory);
+  $fields['phpClassName'] = $phpClass;
+  $fields['className'] = $class;
+  $fields['tableName'] = $tableName;
+  $fields['projectName'] = $projectName;
+  //savePluginFile ( $class . PATH_SEP . $class . 'Edit.php', 'pluginEdit', $class, $tableName, $fields );
+  //savePluginFile ( $class . PATH_SEP . $class . 'Save.php', 'pluginSave', $class, $tableName, $fields );
+  create_file_from_tpl ( 'pluginEdit',  PATH_CORE . 'methods'. PATH_SEP . $phpClass. PATH_SEP . $phpClass."Edit.php", $fields );
+  create_file_from_tpl ( 'pluginSave',  PATH_CORE . 'methods'. PATH_SEP . $phpClass. PATH_SEP . $phpClass."Save.php", $fields );
+  create_file_from_tpl ( 'pluginNew',   PATH_CORE . 'methods'. PATH_SEP . $phpClass. PATH_SEP . $phpClass."New.php", $fields );
 
   exit (0);
 }

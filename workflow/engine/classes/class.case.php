@@ -2252,18 +2252,35 @@ class Cases
       }
     }
 
+
 	function getAllObjects($PRO_UID, $APP_UID, $TAS_UID = '', $USR_UID)
+	{
+		$ACTIONS = Array('VIEW', 'BLOCK'); //TO COMPLETE
+		$MAIN_OBJECTS = Array();
+		$RESULT_OBJECTS = Array();
+		
+		foreach($ACTIONS as $action) {
+			$MAIN_OBJECTS[$action] = $this->getAllObjectsFrom($PRO_UID, $APP_UID, $TAS_UID = '', $USR_UID, $action);
+		}
+		/* ADDITIONAL OPERATIONS*/
+		/*** BETWEN VIEW AND BLOCK***/
+		$RESULT_OBJECTS['DYNAFORMS']		= G::arrayDiff($MAIN_OBJECTS['VIEW']['DYNAFORMS'], $MAIN_OBJECTS['BLOCK']['DYNAFORMS']);
+		$RESULT_OBJECTS['INPUT_DOCUMENTS']	= G::arrayDiff($MAIN_OBJECTS['VIEW']['INPUT_DOCUMENTS'], $MAIN_OBJECTS['BLOCK']['INPUT_DOCUMENTS']);
+		$RESULT_OBJECTS['OUTPUT_DOCUMENTS']	= G::arrayDiff($MAIN_OBJECTS['VIEW']['OUTPUT_DOCUMENTS'], $MAIN_OBJECTS['BLOCK']['OUTPUT_DOCUMENTS']);
+
+		return $RESULT_OBJECTS;
+	}
+	
+	function getAllObjectsFrom($PRO_UID, $APP_UID, $TAS_UID = '', $USR_UID, $ACTION='')
 	{
 		$oCriteria = new Criteria('workflow');
 		
 		$oCriteria->add(ObjectPermissionPeer::USR_UID, $USR_UID);
 		$oCriteria->add(ObjectPermissionPeer::PRO_UID, $PRO_UID);
+		$oCriteria->add(ObjectPermissionPeer::OP_ACTION, $ACTION);
 		$oCriteria->add( $oCriteria->getNewCriterion(ObjectPermissionPeer::TAS_UID, $TAS_UID)->addOr($oCriteria->getNewCriterion(ObjectPermissionPeer::TAS_UID, '')) );
 		$rs = ObjectPermissionPeer::doSelectRS($oCriteria);
 		$rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-	
-		//$num = ObjectPermissionPeer::doCount($oCriteria);
-		//echo '<br>numero de registros en object permision: '.$num.' <------<br><br>';
 
 		$RESULT = Array();
 		$RESULT['DYNAFORM'] = Array();
@@ -2273,9 +2290,6 @@ class Cases
 		
 		while ($row = $rs->getRow() ) {
 			$rs->next();
-// 			echo '<pre>';
-// 			print_r($row);
-// 			echo '</pre>';
 			
 			$USER_RELATION 	= $row['OP_USER_RELATION'];
 			$TASK_SOURCE	= $row['OP_TASK_SOURCE'];
@@ -2285,7 +2299,16 @@ class Cases
 			$ACTION			= $row['OP_ACTION'];
 
 			// here!,. we should verify $PARTICIPATE
-					$sw_participate = false;
+			$sw_participate = false; // must be false for default
+			if($PARTICIPATE == 1){
+				$oCriteriax = new Criteria('workflow');
+				$oCriteriax->add(AppDelegationPeer::USR_UID, $USR_UID);
+				$oCriteriax->add(AppDelegationPeer::APP_UID, $APP_UID);
+			
+				if( AppDelegationPeer::doCount($oCriteriax) == 0 ) {
+					$sw_participate = true;
+				}
+			}
 			
 			if( !$sw_participate ) {
 			
@@ -2315,7 +2338,7 @@ class Cases
 						}
 						
 						//inputs
-								$oCriteria = new Criteria('workflow');
+						$oCriteria = new Criteria('workflow');
 						$oCriteria->addSelectColumn(AppDocumentPeer::DOC_UID);
 						$oCriteria->addSelectColumn(AppDocumentPeer::APP_DOC_TYPE);
 						$oCriteria->add(AppDelegationPeer::APP_UID, $APP_UID);
@@ -2404,20 +2427,18 @@ class Cases
 							}
 							$oDataset->next();
 						}
-						
 						break;
 				}
 			}
 		}
-
-		/***********************************/
-				return $RESULT;
+		
+		return Array("DYNAFORMS"=>$RESULT['DYNAFORM'], "INPUT_DOCUMENTS"=>$RESULT['INPUT'], "OUTPUT_DOCUMENTS"=>$RESULT['OUTPUT']);
 	}
 
 }
-/*
 
-$c = new Cases;
+
+/*$c = new Cases;
 $x = $c->getAllObjects($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['TASK'], $_SESSION['USER_LOGGED']); //erik
 echo '<pre>';
 print_r($x);

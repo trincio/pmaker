@@ -1278,6 +1278,26 @@ class G
     return $ret;
   }
 
+  /**
+  *  By <erik@colosa.com>
+  *  Here's a little wrapper for array_diff - I found myself needing
+  *  to iterate through the edited array, and I didn't need to original keys for anything.
+  */
+  function arrayDiff($array1, $array2) {
+	// This wrapper for array_diff rekeys the array returned
+	$valid_array = array_diff($array1,$array2);
+
+	// reinstantiate $array1 variable
+	$array1 = array();
+
+	// loop through the validated array and move elements to $array1
+	// this is necessary because the array_diff function returns arrays that retain their original keys
+	foreach ($valid_array as $valid){
+		$array1[] = $valid;
+	}
+	return $array1;
+  }
+
 	/**
 	* @author Erik Amaru Ortiz <erik@colosa.com>
 	* @name complete_field($string, $lenght, $type={1:number/2:string/3:float})
