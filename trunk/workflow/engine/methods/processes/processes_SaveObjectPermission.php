@@ -40,9 +40,9 @@ list($iRelation, $sUserGroup) = explode('|', $_POST['form']['GROUP_USER']);
 $sObjectUID = '';
 switch ($_POST['form']['OP_OBJ_TYPE']) {
   case 'ANY':
-  case 'ANY_DYNAFORM':
+  /*case 'ANY_DYNAFORM':
   case 'ANY_INPUT':
-  case 'ANY_OUTPUT':
+  case 'ANY_OUTPUT':*/
     $sObjectUID = '';
   break;
   case 'DYNAFORM':

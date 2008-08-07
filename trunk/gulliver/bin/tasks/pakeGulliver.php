@@ -81,6 +81,41 @@ function prompt ( $text ) {
     return $read;
 }
 
+	function query_sql_file($file,$connection)
+	{
+		$report = array(
+			'SQL_FILE'=>$file,
+			'errors'=>array(),
+			'querys'=>0
+		);
+		$content = @fread(@fopen($file,"rt"),@filesize($file));
+		if(!$content) {
+			$report['errors']="Error reading SQL";
+			return $report;
+		}
+		$ret = array();
+		for ($i=0 ; $i < strlen($content)-1; $i++) {
+			if ( $content[$i] == ";" ) {
+         if ( $content[$i+1] == "\n" )
+            	{
+					$ret[] = substr($content, 0, $i);
+					$content = substr($content, $i + 1);
+					$i = 0;
+            	}
+        	}
+    	}
+    	$report['querys']=count($ret);
+		foreach($ret as $qr)
+		{
+			$re = @mysql_query($qr,$connection);
+			if(!$re)
+			{
+				$report['errors'][]="Query error: ".mysql_error();
+			}
+		}
+		return $report;
+	}
+
 function createPngLogo (  $filePng, $text ) {
   $im = imagecreatetruecolor (162,50);
   $orange = imagecolorallocate($im, 140, 120, 0);
@@ -748,7 +783,7 @@ function run_create_poedit_file( $task, $args)
   //to do: leer los html templates
 }
 
-function create_file_from_tpl ( $tplName, $newFilename )
+function create_file_from_tpl ( $tplName, $newFilename, $fields = NULL )
 {
   global $pathHome;
   global $projectName;
@@ -765,7 +800,21 @@ function create_file_from_tpl ( $tplName, $newFilename )
   $template->assign ( 'rbacProjectName', strtoupper( $projectName)) ;
   $template->assign ( 'siglaProjectName', substr ( strtoupper( $projectName),0,3) ) ;
   $template->assign ( 'propel.output.dir', '{propel.output.dir}' );
-  
+
+  if ( is_array ($fields) ) {
+    foreach ( $fields as $block => $data ) {
+      $template->gotoBlock( "_ROOT" );
+      if ( is_array( $data) )
+        foreach ( $data as $rowId => $row ) {
+          $template->newBlock( $block );
+          foreach ( $row as $key => $val ) 
+            $template->assign( $key, $val );
+        }
+      else
+        $template->assign( $block, $data );
+    }
+  }
+        
   $content = $template->getOutputContent();
   $iSize = file_put_contents ( $httpFilename, $content );
   printf("saved %s bytes in file %s \n", pakeColor::colorize( $iSize, 'INFO'), pakeColor::colorize( $tplName, 'INFO') );    
@@ -813,6 +862,69 @@ function run_new_project ( $task, $args)
 
   define ( 'G_ENVIRONMENT', G_DEV_ENV );
   require_once ( "propel/Propel.php" );
+
+  //create project.conf for httpd conf
+  //$dbFile = PATH_TRUNK . $projectName . PATH_SEP . 'shared' . PATH_SEP . 'sites'. PATH_SEP . 'dev'. PATH_SEP . 'db.php';
+  $dbFile = PATH_SEP . PATH_SHARED . 'sites' . PATH_SEP . $projectName . PATH_SEP . 'db.php';
+  $dbn = "db_" . $projectName;
+  $dbrn = "rb_" . $projectName;
+  $dbnpass = substr ( G::GenerateUniqueId(),0,8 );
+  if ( /*1 || */ !file_exists ( $dbFile ) ) {
+    if ( !defined ( 'HASH_INSTALLATION' ) ) {
+      printf("%s\n", pakeColor::colorize( 'HASH INSTALLATION is invalid or not exists. Please check the paths_installed.php file', 'ERROR'));
+      exit (0);
+    }
+    $dbOpt=@explode(SYSTEM_HASH,G::decrypt(HASH_INSTALLATION,SYSTEM_HASH));
+    $connectionDatabase = mysql_connect($dbOpt[0],$dbOpt[1],$dbOpt[2] );
+    if( !$connectionDatabase) {
+      printf("%s\n", pakeColor::colorize( 'HASH INSTALLATION has invalid credentials. Please check the paths_installed.php file', 'ERROR'));
+      exit (0);
+    }
+    $q	= "CREATE DATABASE IF NOT EXISTS $dbn DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci";
+    $ac = @mysql_query($q,$connectionDatabase);
+    if ( !$ac ){
+      printf("%s\n", pakeColor::colorize( mysql_error(), 'ERROR')); exit (0);
+    }
+    $q	= "CREATE DATABASE IF NOT EXISTS $dbrn DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci";
+    $ac = @mysql_query($q,$connectionDatabase);
+    if ( !$ac ){
+      printf("%s\n", pakeColor::colorize( mysql_error(), 'ERROR')); exit (0);
+    }
+    $q = "GRANT ALL PRIVILEGES ON `$dbn`.* TO $dbn@'localhost' IDENTIFIED BY '$dbnpass' WITH GRANT OPTION";
+    $ac = @mysql_query($q,$connectionDatabase);
+    if ( !$ac ){
+      printf("%s\n", pakeColor::colorize( mysql_error(), 'ERROR')); exit (0);
+    }
+    $q = "GRANT ALL PRIVILEGES ON `$dbrn`.* TO $dbn@'localhost' IDENTIFIED BY '$dbnpass' WITH GRANT OPTION";
+    $ac = @mysql_query($q,$connectionDatabase);
+    if ( !$ac ){
+      printf("%s\n", pakeColor::colorize( mysql_error(), 'ERROR')); exit (0);
+    }
+    $rbSql = PATH_RBAC_MYSQL_DATA . 'schema.sql';
+    mysql_select_db($dbrn, $connectionDatabase);
+    $qrs = query_sql_file( $rbSql, $connectionDatabase);
+
+    $q = "INSERT INTO `USERS` VALUES ('00000000000000000000000000000001','admin','21232f297a57a5a743894a0e4a801fc3','Administrator','','admin@colosa.com','2020-01-01','2007-08-03 12:24:36','2008-02-13 07:24:07',1);";
+    $ac = @mysql_query($q, $connectionDatabase);
+    $q = "INSERT INTO `USERS` VALUES ('00000000000000000000000000000002','operator','21232f297a57a5a743894a0e4a801fc3','Operator','','operator@colosa.com','2020-01-01','2007-08-03 12:24:36','2008-02-13 07:24:07',1);";
+    $ac = @mysql_query($q, $connectionDatabase);
+  
+    //G::mk_dir (PATH_TRUNK . $projectName );
+    //G::mk_dir (PATH_TRUNK . $projectName . PATH_SEP . 'shared' );
+    //G::mk_dir (PATH_TRUNK . $projectName . PATH_SEP . 'shared' . PATH_SEP . 'sites');
+    //G::mk_dir (PATH_TRUNK . $projectName . PATH_SEP . 'shared' . PATH_SEP . 'sites'. PATH_SEP . 'dev');
+    G::mk_dir (PATH_SHARED . 'sites' . PATH_SEP );
+    G::mk_dir (PATH_SHARED . 'sites' . PATH_SEP . $projectName );
+    
+    $dbFields['rootUser'] = $dbn;
+    $dbFields['rootPass'] = $dbnpass;
+    create_file_from_tpl ( 'db.php',  $dbFile, $dbFields); 
+  }
+  
+  global $G_ENVIRONMENTS;
+  $G_ENVIRONMENTS['DEVELOPMENT']['dbfile'] = $dbFile;
+  //print_r ( $G_ENVIRONMENTS );
+ 
   Propel::init(  PATH_CORE . "config/databases.php");  
   $configuration = Propel::getConfiguration();
   $connectionDSN = $configuration['datasources']['workflow']['connection'];
@@ -828,8 +940,6 @@ function run_new_project ( $task, $args)
   $RBAC->createPermision ( substr( $rbacProjectName,0,3) . '_LOGIN' );
   $RBAC->createPermision ( substr( $rbacProjectName,0,3) . '_ADMIN' );
   $RBAC->createPermision ( substr( $rbacProjectName,0,3) . '_OPERATOR' );
-  $permData = $RBAC->permissionsObj->LoadByCode (substr( $rbacProjectName,0,3) . '_LOGIN') ;
-  $permissionId = $permData['PER_UID'];
   $systemData = $RBAC->systemObj->LoadByCode ($rbacProjectName) ;
   $roleData['ROL_UID'] = G::GenerateUniqueId();
   $roleData['ROL_PARENT'] = '';
@@ -848,13 +958,26 @@ function run_new_project ( $task, $args)
   $roleData['ROL_UPDATE_DATE'] = date('Y-m-d H:i:s');
   $roleData['ROL_STATUS'] = '1';
   $RBAC->createRole ( $roleData );
-  $roleData = $RBAC->rolesObj->LoadByCode ( $roleData['ROL_CODE'] ) ;
+  $roleData = $RBAC->rolesObj->LoadByCode ( substr( $rbacProjectName,0,3) . '_ADMIN' ) ;
+
+  //Assign permissions to ADMIN
+  $roleData = $RBAC->rolesObj->LoadByCode ( substr( $rbacProjectName,0,3) . '_ADMIN' ) ;
+  $permData = $RBAC->permissionsObj->LoadByCode (substr( $rbacProjectName,0,3) . '_LOGIN') ;
+  $RBAC->assignPermissionToRole($roleData['ROL_UID'], $permData['PER_UID']); 
+  $permData = $RBAC->permissionsObj->LoadByCode (substr( $rbacProjectName,0,3) . '_ADMIN') ;
+  $RBAC->assignPermissionToRole($roleData['ROL_UID'], $permData['PER_UID']); 
+  //Assign permissions to OPERATOR
+  $roleData = $RBAC->rolesObj->LoadByCode ( substr( $rbacProjectName,0,3) . '_OPERATOR' ) ;
+  $permData = $RBAC->permissionsObj->LoadByCode (substr( $rbacProjectName,0,3) . '_LOGIN') ;
+  $RBAC->assignPermissionToRole($roleData['ROL_UID'], $permData['PER_UID']); 
+  $permData = $RBAC->permissionsObj->LoadByCode (substr( $rbacProjectName,0,3) . '_OPERATOR') ;
+  $RBAC->assignPermissionToRole($roleData['ROL_UID'], $permData['PER_UID']); 
   
-  $RBAC->assignPermissionToRole($roleData['ROL_UID'], $permissionId); 
+
   $userRoleData['ROL_UID'] = $roleData['ROL_UID'];
   $userRoleData['USR_UID'] = '00000000000000000000000000000001';
   $RBAC->assignUserToRole( $userRoleData );
-               
+ 
   //create folder and structure
   G::mk_dir ($pathHome );
   G::mk_dir ($pathHome . PATH_SEP . 'public_html' );
@@ -889,8 +1012,6 @@ function run_new_project ( $task, $args)
   G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'xmlform' . PATH_SEP . 'login');
   G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'xmlform' . PATH_SEP . 'gulliver');
   G::mk_dir ($pathHome . PATH_SEP . 'engine' . PATH_SEP . 'xmlform' . PATH_SEP . 'users');
-  G::mk_dir (PATH_SHARED . 'sites' . PATH_SEP );
-  G::mk_dir (PATH_SHARED . 'sites' . PATH_SEP . $projectName );
 
   //create project.conf for httpd conf
   create_file_from_tpl ( 'httpd.conf',       $projectName . '.conf' );
@@ -937,7 +1058,6 @@ function run_new_project ( $task, $args)
   create_file_from_tpl ( 'permissionsList.xml','engine'.PATH_SEP. 'xmlform'. PATH_SEP . 'users' . PATH_SEP . 'permissionsList.xml' );
   create_file_from_tpl ( 'mainmenu.php',    'engine' . PATH_SEP . 'menus'. PATH_SEP . $projectName . '.php' );
   create_file_from_tpl ( 'users.menu.php',    'engine' . PATH_SEP . 'menus'. PATH_SEP . 'users.php' );
-  create_file_from_tpl ( 'db.php',          PATH_SEP . PATH_SHARED . 'sites' . PATH_SEP . $projectName . PATH_SEP . 'db.php' );
   copy_file ( 'public_html' . PATH_SEP . 'skins' . PATH_SEP . 'green' . PATH_SEP . 'style.css' );
   copy_file ( 'public_html' . PATH_SEP . 'skins' . PATH_SEP . 'green' . PATH_SEP . 'images' . PATH_SEP . 'bsms.jpg' );
   copy_file ( 'public_html' . PATH_SEP . 'skins' . PATH_SEP . 'green' . PATH_SEP . 'images' . PATH_SEP . 'ftl.png' );

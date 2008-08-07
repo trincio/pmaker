@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dynaForm name="processes_NewObjectPermission" width="100%">
 <TITLE type="title">
-  <en>New Permission for Object</en>
+  <en>New Specific Permission</en>
 </TITLE>
 <LANG type="private" />
 <PRO_UID type="hidden" />
 <TAS_UID type="dropdown" mode="edit">
 <![CDATA[SELECT TAS_UID, CON_VALUE AS TAS_TITLE FROM TASK LEFT JOIN CONTENT ON (TAS_UID = CON_ID AND CON_CATEGORY = 'TAS_TITLE' AND CON_LANG = @@LANG) WHERE PRO_UID = @@PRO_UID ORDER BY TAS_TITLE]]>
-  <en>Task Target
+  <en>Target Task
   <option name="">Any</option>
   </en>
 </TAS_UID>
@@ -17,18 +17,18 @@ SELECT * FROM usersGroups
 </GROUP_USER>
 <OP_TASK_SOURCE type="dropdown" mode="edit">
 <![CDATA[SELECT TAS_UID, CON_VALUE AS TAS_TITLE FROM TASK LEFT JOIN CONTENT ON (TAS_UID = CON_ID AND CON_CATEGORY = 'TAS_TITLE' AND CON_LANG = @@LANG) WHERE PRO_UID = @@PRO_UID ORDER BY TAS_TITLE]]>
-  <en>Task Source
+  <en>Origin Task
   <option name="">Any</option>
   </en>
 </OP_TASK_SOURCE>
 <OP_PARTICIPATE type="yesno" defaultvalue="1" mode="edit">
-  <en>Participated</en>
+  <en>Participation required?</en>
 </OP_PARTICIPATE>
 <OP_OBJ_TYPE type="dropdown" mode="edit" dependentfields="OP_OBJ_UID">
-  <en>Type  <option name="ANY">Any</option>
-    <option name="ANY_DYNAFORM">Any Dynaform</option>
+  <en>Type  <option name="ANY">All</option>
+    <!--<option name="ANY_DYNAFORM">Any Dynaform</option>
     <option name="ANY_INPUT">Any Input Document</option>
-    <option name="ANY_OUTPUT">Any Output Document</option>
+    <option name="ANY_OUTPUT">Any Output Document</option>-->
     <option name="DYNAFORM">Dynaform</option>
     <option name="INPUT">Input Document</option>
     <option name="OUTPUT">Output Document</option>
@@ -42,15 +42,21 @@ SELECT * FROM usersGroups
 </ALL>
 <DYNAFORMS type="dropdown" mode="edit" sqlConnection="dbarray">
 <![CDATA[SELECT * FROM allDynaforms]]>
-  <en>DynaForm</en>
+  <en>DynaForm
+    <option name="">All</option>
+  </en>
 </DYNAFORMS>
 <INPUTS type="dropdown" mode="edit" sqlConnection="dbarray">
 <![CDATA[SELECT * FROM allInputs]]>
-  <en>Input Document</en>
+  <en>Input Document
+    <option name="">All</option>
+  </en>
 </INPUTS>
 <OUTPUTS type="dropdown" mode="edit" sqlConnection="dbarray">
 <![CDATA[SELECT * FROM allOutputs]]>
-  <en>Output Document</en>
+  <en>Output Document
+    <option name="">All</option>
+  </en>
 </OUTPUTS>
 <OP_ACTION type="dropdown" mode="edit" >
   <en>Permission

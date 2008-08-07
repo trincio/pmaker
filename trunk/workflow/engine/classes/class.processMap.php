@@ -2255,7 +2255,7 @@ class processMap {
           $sObjectType = G::LoadTranslation('ID_ANY');
           $sObject     = G::LoadTranslation('ID_ALL');
         break;
-        case 'ANY_DYNAFORM':
+        /*case 'ANY_DYNAFORM':
           $sObjectType = G::LoadTranslation('ID_ANY_DYNAFORM');
           $sObject     = G::LoadTranslation('ID_ALL');
         break;
@@ -2266,27 +2266,42 @@ class processMap {
         case 'ANY_OUTPUT':
           $sObjectType = G::LoadTranslation('ID_ANY_OUTPUT');
           $sObject     = G::LoadTranslation('ID_ALL');
-        break;
+        break;*/
         case 'DYNAFORM':
           $sObjectType = G::LoadTranslation('ID_DYNAFORM');
-          require_once 'classes/model/Dynaform.php';
-          $oDynaform = new Dynaform();
-          $aFields   = $oDynaform->load($aRow['OP_OBJ_UID']);
-          $sObject     = $aFields['DYN_TITLE'];
+          if ($aRow['OP_OBJ_UID'] != '') {
+            require_once 'classes/model/Dynaform.php';
+            $oDynaform = new Dynaform();
+            $aFields   = $oDynaform->load($aRow['OP_OBJ_UID']);
+            $sObject     = $aFields['DYN_TITLE'];
+          }
+          else {
+            $sObject = G::LoadTranslation('ID_ALL');
+          }
         break;
         case 'INPUT':
           $sObjectType = G::LoadTranslation('ID_INPUT_DOCUMENT');
-          require_once 'classes/model/InputDocument.php';
-          $oInputDocument = new InputDocument();
-          $aFields        = $oInputDocument->load($aRow['OP_OBJ_UID']);
-          $sObject        = $aFields['INP_DOC_TITLE'];
+          if ($aRow['OP_OBJ_UID'] != '') {
+            require_once 'classes/model/InputDocument.php';
+            $oInputDocument = new InputDocument();
+            $aFields        = $oInputDocument->load($aRow['OP_OBJ_UID']);
+            $sObject        = $aFields['INP_DOC_TITLE'];
+          }
+          else {
+            $sObject = G::LoadTranslation('ID_ALL');
+          }
         break;
         case 'OUTPUT':
           $sObjectType = G::LoadTranslation('ID_OUTPUT_DOCUMENT');
-          require_once 'classes/model/OutputDocument.php';
-          $oOutputDocument = new OutputDocument();
-          $aFields         = $oOutputDocument->load($aRow['OP_OBJ_UID']);
-          $sObject         = $aFields['OUT_DOC_TITLE'];
+          if ($aRow['OP_OBJ_UID'] != '') {
+            require_once 'classes/model/OutputDocument.php';
+            $oOutputDocument = new OutputDocument();
+            $aFields         = $oOutputDocument->load($aRow['OP_OBJ_UID']);
+            $sObject         = $aFields['OUT_DOC_TITLE'];
+          }
+          else {
+            $sObject = G::LoadTranslation('ID_ALL');
+          }
         break;
       }
       //Participated
