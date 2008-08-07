@@ -2389,7 +2389,9 @@ class processMap {
   	$aAllOutputs[] = array('UID'     => 'char',
     	                     'LABEL'   => 'char');
     require_once 'classes/model/Dynaform.php';
-    $oDataset = DynaformPeer::doSelectRS($this->getDynaformsCriteria($sProcessUID));
+    $oCriteria = $this->getDynaformsCriteria($sProcessUID);
+    $oCriteria->add(DynaformPeer::DYN_TYPE, 'XMLFORM');
+    $oDataset = DynaformPeer::doSelectRS($oCriteria);
     $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
     $oDataset->next();
     while ($aRow = $oDataset->getRow()) {
