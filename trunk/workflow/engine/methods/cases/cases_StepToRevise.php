@@ -24,7 +24,7 @@
  */
 
 	/* Permissions */
-	switch ($RBAC->userCanAccess('PM_CASES')) {
+	switch ($RBAC->userCanAccess('PM_SUPERVISOR')) {
 	    case - 2:
 	        G::SendTemporalMessage('ID_USER_HAVENT_RIGHTS_SYSTEM', 'error', 'labels');
 	        G::header('location: ../login/login');
@@ -36,7 +36,7 @@
 	        die;
 	        break;
 	}
-	
+
 	if ((int)$_SESSION['INDEX'] < 1) {
 	    G::SendTemporalMessage('ID_USER_HAVENT_RIGHTS_PAGE', 'error', 'labels');
 	    G::header('location: ' . $_SERVER['HTTP_REFERER']);
@@ -45,22 +45,22 @@
 	/* Includes */
 	G::LoadClass('case');
 	G::LoadClass('derivation');
-	
+
 	/* GET , POST & $_SESSION Vars */
 	//$_SESSION['STEP_POSITION'] = (int)$_GET['POSITION'];
-	
+
 	/* Menues */
 	$G_MAIN_MENU            = 'processmaker';
 	$G_SUB_MENU             = 'cases';
 	$G_ID_MENU_SELECTED     = 'CASES';
 	$G_ID_SUB_MENU_SELECTED = 'CASES_TO_REVISE';
-	
-	
+
+
 	 /* Prepare page before to show */
 	  $oTemplatePower = new TemplatePower(PATH_TPL . 'cases/cases_Step.html');
 	  $oTemplatePower->prepare();
 	  $G_PUBLISH = new Publisher;
-	
+
 $oHeadPublisher =& headPublisher::getSingleton();
 $oHeadPublisher->addScriptCode('
 	  var Cse = {};
@@ -78,45 +78,45 @@ $oHeadPublisher->addScriptCode('
 	});
 	  ');
 	  $G_PUBLISH->AddContent('template', '', '', '', $oTemplatePower);
-	  
-	if(!isset($_GET['position'])) $_GET['position'] = 1;  
-	  
+
+	if(!isset($_GET['position'])) $_GET['position'] = 1;
+
 	$_SESSION['STEP_POSITION'] = (int)$_GET['position'];
 	$oCase = new Cases();
 	$Fields = $oCase->loadCase($_SESSION['APPLICATION']);
-	
+
 	//Obtain previous and next step - Start
 	try {
 	    $aNextStep = $oCase->getNextSupervisorStep($_SESSION['PROCESS'], $_SESSION['STEP_POSITION']);
 	    $aPreviousStep = $oCase->getPreviousSupervisorStep($_SESSION['PROCESS'], $_SESSION['STEP_POSITION']);
 	}
 	catch (exception $e) {
-	
+
 	}
-	
+
 	if (!$aPreviousStep) {
 	    $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['PREVIOUS_STEP_LABEL'] = '';
 	} else {
 	    $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['PREVIOUS_STEP'] = 'cases_StepToRevise?DYN_UID='.$aPreviousStep['UID'].'&position='.$aPreviousStep['POSITION'].'&APP_UID='.$_GET['APP_UID'].'&DEL_INDEX='.$_GET['DEL_INDEX'];
 	    $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['PREVIOUS_STEP_LABEL'] = G::loadTranslation("ID_PREVIOUS_STEP");
 	}
-	
+
 	$Fields['APP_DATA']['__DYNAFORM_OPTIONS']['NEXT_STEP'] = 'cases_StepToRevise?DYN_UID='.$aNextStep['UID'].'&position='.$aNextStep['POSITION'].'&APP_UID='.$_GET['APP_UID'].'&DEL_INDEX='.$_GET['DEL_INDEX'];
-	
-	
-	
-	
-	
+
+
+
+
+
 	/** Added By erik
 	 * date: 16-05-08
 	 * Description: this was added for the additional database connections */
 	G::LoadClass('dbConnections');
 	$oDbConnections = new dbConnections($_SESSION['PROCESS']);
 	$oDbConnections->loadAdditionalConnections();
-	
+
 	$G_PUBLISH = new Publisher;
 	$G_PUBLISH->AddContent('dynaform', 'xmlform', $_SESSION['PROCESS'] . '/' . $_GET['DYN_UID'], '', $Fields['APP_DATA'], 'cases_SaveDataSupervisor?UID='.$_GET['DYN_UID']);
-	
+
 	G::RenderPage('publish');
 
 	if(!isset($_GET['ex'])) $_GET['ex']=$_GET['position'];
@@ -134,9 +134,9 @@ function setSelect()
 			if(i == ex){
 				document.getElementById('focus'+i).innerHTML = '<img src="/images/bulletButton.gif" />';
 			}
-			else{			
+			else{
 				document.getElementById('focus'+i).innerHTML = '';
-			}	
+			}
 		}
 	} catch (e){
 		return 0;
@@ -145,7 +145,7 @@ function setSelect()
 
 function toRevisePanel(APP_UID,DEL_INDEX)
 {
-	
+
 	oPanel = new leimnud.module.panel();
 	oPanel.options = {
 	  	size	:{w:250,h:450},
@@ -161,7 +161,7 @@ function toRevisePanel(APP_UID,DEL_INDEX)
   	};
 	oPanel.make();
 	oPanel.loader.show();
-	
+
 	var oRPC = new leimnud.module.rpc.xmlhttp({
 	  	url : 'cases_Ajax',
 	  	method:'post',
@@ -171,7 +171,7 @@ function toRevisePanel(APP_UID,DEL_INDEX)
 	  	oPanel.loader.hide();
 	  	oPanel.addContent(rpc.xmlhttp.responseText);
 	  	setSelect();
-	  	
+
   	}.extend(this);
 	oRPC.make();
 }

@@ -1,5 +1,18 @@
 <?
-  
+
+switch ($RBAC->userCanAccess('PM_SUPERVISOR')) {
+    case - 2:
+        G::SendTemporalMessage('ID_USER_HAVENT_RIGHTS_SYSTEM', 'error', 'labels');
+        G::header('location: ../login/login');
+        die;
+        break;
+    case - 1:
+        G::SendTemporalMessage('ID_USER_HAVENT_RIGHTS_PAGE', 'error', 'labels');
+        G::header('location: ../login/login');
+        die;
+        break;
+}
+
 if (($RBAC_Response = $RBAC->userCanAccess("PM_USERS")) != 1)
             return $RBAC_Response;
 

@@ -81,35 +81,44 @@
     $oCriteria->add(AppDelayPeer::APP_DEL_INDEX, $iDelIndex);
     $oCriteria->add(AppDelayPeer::APP_TYPE, 'PAUSE');
     $oCriteria->add(AppDelayPeer::APP_DISABLE_ACTION_USER, null);
-    $oCriteria->add(AppDelayPeer::APP_DISABLE_ACTION_DATE, null);
+    $oCriteria->add($oCriteria->getNewCriterion(AppDelayPeer::APP_DISABLE_ACTION_USER, null, Criteria::ISNULL)->addOr($oCriteria->getNewCriterion(AppDelayPeer::APP_DISABLE_ACTION_USER, 0)));
     $oDataset = AppDelayPeer::doSelectRS($oCriteria);
     $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
     $oDataset->next();
     $aRow = $oDataset->getRow();
 
     if(!$aRow) {
-      $_SESSION['APPLICATION']   = $sAppUid;
-      $_SESSION['INDEX']         = $iDelIndex;
+      $oAppDelegation = new AppDelegation();
+      $aDelegation = $oAppDelegation->load($sAppUid, $iDelIndex);
+      if ($aDelegation['USR_UID'] == $_SESSION['USER_LOGGED']) {
+        $_SESSION['APPLICATION']   = $sAppUid;
+        $_SESSION['INDEX']         = $iDelIndex;
+        if ( is_null ( $aFields['DEL_INIT_DATE']) ) {
+          $oCase->setDelInitDate( $sAppUid, $iDelIndex );
+          $aFields = $oCase->loadCase( $sAppUid, $iDelIndex );
+        }
+        $_SESSION['PROCESS']       = $aFields['PRO_UID'];
+        $_SESSION['TASK']          = $aFields['TAS_UID'];
+        $_SESSION['STEP_POSITION'] = 0;
 
-      if ( is_null ( $aFields['DEL_INIT_DATE']) ) {
-        $oCase->setDelInitDate( $sAppUid, $iDelIndex );
-        $aFields = $oCase->loadCase( $sAppUid, $iDelIndex );
+        /* Redirect to next step */
+        unset($_SESSION['bNoShowSteps']);
+        $aNextStep = $oCase->getNextStep( $_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['STEP_POSITION'] );
+        $sPage     = $aNextStep['PAGE'];
+        G::header('location: ' . $sPage);
       }
-
-      $_SESSION['PROCESS']       = $aFields['PRO_UID'];
-      $_SESSION['TASK']          = $aFields['TAS_UID'];
-      $_SESSION['STEP_POSITION'] = 0;
-
-      /* Redirect to next step */
-      unset($_SESSION['bNoShowSteps']);
-      $aNextStep = $oCase->getNextStep( $_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['STEP_POSITION'] );
-      $sPage     = $aNextStep['PAGE'];
-      G::header('location: ' . $sPage);
+      else {
+        $_SESSION['APPLICATION']   = $_GET['APP_UID'];
+  	    $_SESSION['INDEX']         = $iDelIndex;
+        $_SESSION['PROCESS']       = $aFields['PRO_UID'];
+        $_SESSION['TASK']          = -1;
+        $_SESSION['STEP_POSITION'] = 0;
+        require_once( PATH_METHODS . 'cases' . PATH_SEP . 'cases_Resume.php');
+      }
     }
     else {
       $_SESSION['APPLICATION']   = $_GET['APP_UID'];
   	  $_SESSION['INDEX']         = $iDelIndex;
-      //$_SESSION['INDEX']         = -1;
       $_SESSION['PROCESS']       = $aFields['PRO_UID'];
       $_SESSION['TASK']          = -1;
       $_SESSION['STEP_POSITION'] = 0;

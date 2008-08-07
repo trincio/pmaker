@@ -1404,7 +1404,7 @@ class Cases
                 $appDelayConds[] = array(AppDelegationPeer::DEL_INDEX, AppDelayPeer::APP_DEL_INDEX);
                 $c->addJoinMC($appDelayConds, Criteria::LEFT_JOIN);
                 $c->add(AppDelayPeer::APP_DELAY_UID, null, Criteria::ISNOTNULL);
-                $c->add(AppDelayPeer::APP_DISABLE_ACTION_USER, null, Criteria::ISNULL);
+                $c->add($c->getNewCriterion(AppDelayPeer::APP_DISABLE_ACTION_USER, null, Criteria::ISNULL)->addOr($c->getNewCriterion(AppDelayPeer::APP_DISABLE_ACTION_USER, 0)));
                 $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
                 $xmlfile = $filesList[3];
                 break;
@@ -1480,7 +1480,7 @@ class Cases
 		$today = date('Y-m-d');
 		$c = new Criteria('workflow');
 		$c->clearSelectColumns();
-		$c->add(AppDelayPeer::APP_DISABLE_ACTION_USER, null, Criteria::ISNULL);
+		$c->add($c->getNewCriterion(AppDelayPeer::APP_DISABLE_ACTION_USER, null, Criteria::ISNULL)->addOr($c->getNewCriterion(AppDelayPeer::APP_DISABLE_ACTION_USER, 0)));
 		$c->add($c->getNewCriterion(AppDelayPeer::APP_DISABLE_ACTION_DATE, $today.' 23:59:59', Criteria::LESS_EQUAL)->addAnd($c->getNewCriterion(AppDelayPeer::APP_DISABLE_ACTION_DATE, null, Criteria::ISNOTNULL)));
 		$d = AppDelayPeer::doSelectRS($c);
 		$d->setFetchmode(ResultSet::FETCHMODE_ASSOC);
@@ -1810,8 +1810,7 @@ class Cases
         $oCriteria->add(AppDelayPeer::APP_UID, $sApplicationUID);
         $oCriteria->add(AppDelayPeer::APP_DEL_INDEX, $iDelegation);
         $oCriteria->add(AppDelayPeer::APP_TYPE, 'PAUSE');
-        $oCriteria->add(AppDelayPeer::APP_DISABLE_ACTION_USER, null);
-
+        $oCriteria->add($oCriteria->getNewCriterion(AppDelayPeer::APP_DISABLE_ACTION_USER, null, Criteria::ISNULL)->addOr($oCriteria->getNewCriterion(AppDelayPeer::APP_DISABLE_ACTION_USER, 0)));
         $oDataset = AppDelayPeer::doSelectRS($oCriteria);
         $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
         $oDataset->next();
@@ -1964,12 +1963,41 @@ class Cases
         return $oDataset;
     }
 
-    function getAllUploadedDocumentsCriteria($sApplicationUID) {
+    function getAllUploadedDocumentsCriteria($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID) {
+      $aObjectPermissions = $this->getAllObjects($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID);
+      if (!is_array($aObjectPermissions)) {
+        $aObjectPermissions = array('DYNAFORMS' => array(-1), 'INPUT_DOCUMENTS' => array(-1), 'OUTPUT_DOCUMENTS' => array(-1));
+      }
+      if (!isset($aObjectPermissions['DYNAFORMS'])) {
+        $aObjectPermissions['DYNAFORMS'] = array(-1);
+      }
+      else {
+        if (!is_array($aObjectPermissions['DYNAFORMS'])) {
+          $aObjectPermissions['DYNAFORMS'] = array(-1);
+        }
+      }
+      if (!isset($aObjectPermissions['INPUT_DOCUMENTS'])) {
+        $aObjectPermissions['INPUT_DOCUMENTS'] = array(-1);
+      }
+      else {
+        if (!is_array($aObjectPermissions['INPUT_DOCUMENTS'])) {
+          $aObjectPermissions['INPUT_DOCUMENTS'] = array(-1);
+        }
+      }
+      if (!isset($aObjectPermissions['OUTPUT_DOCUMENTS'])) {
+        $aObjectPermissions['OUTPUT_DOCUMENTS'] = array(-1);
+      }
+      else {
+        if (!is_array($aObjectPermissions['OUTPUT_DOCUMENTS'])) {
+          $aObjectPermissions['OUTPUT_DOCUMENTS'] = array(-1);
+        }
+      }
       require_once 'classes/model/AppDocument.php';
       $oAppDocument = new AppDocument();
       $oCriteria = new Criteria('workflow');
       $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
       $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, array('INPUT', 'ATTACHED'), Criteria::IN);
+      $oCriteria->add(AppDocumentPeer::DOC_UID, $aObjectPermissions['INPUT_DOCUMENTS'], Criteria::IN);
       $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
       $oDataset = AppDocumentPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
@@ -2000,12 +2028,41 @@ class Cases
       return $oCriteria;
     }
 
-    function getAllGeneratedDocumentsCriteria($sApplicationUID) {
+    function getAllGeneratedDocumentsCriteria($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID) {
+      $aObjectPermissions = $this->getAllObjects($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID);
+      if (!is_array($aObjectPermissions)) {
+        $aObjectPermissions = array('DYNAFORMS' => array(-1), 'INPUT_DOCUMENTS' => array(-1), 'OUTPUT_DOCUMENTS' => array(-1));
+      }
+      if (!isset($aObjectPermissions['DYNAFORMS'])) {
+        $aObjectPermissions['DYNAFORMS'] = array(-1);
+      }
+      else {
+        if (!is_array($aObjectPermissions['DYNAFORMS'])) {
+          $aObjectPermissions['DYNAFORMS'] = array(-1);
+        }
+      }
+      if (!isset($aObjectPermissions['INPUT_DOCUMENTS'])) {
+        $aObjectPermissions['INPUT_DOCUMENTS'] = array(-1);
+      }
+      else {
+        if (!is_array($aObjectPermissions['INPUT_DOCUMENTS'])) {
+          $aObjectPermissions['INPUT_DOCUMENTS'] = array(-1);
+        }
+      }
+      if (!isset($aObjectPermissions['OUTPUT_DOCUMENTS'])) {
+        $aObjectPermissions['OUTPUT_DOCUMENTS'] = array(-1);
+      }
+      else {
+        if (!is_array($aObjectPermissions['OUTPUT_DOCUMENTS'])) {
+          $aObjectPermissions['OUTPUT_DOCUMENTS'] = array(-1);
+        }
+      }
       require_once 'classes/model/AppDocument.php';
       $oAppDocument = new AppDocument();
       $oCriteria = new Criteria('workflow');
       $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
       $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, 'OUTPUT');
+      $oCriteria->add(AppDocumentPeer::DOC_UID, $aObjectPermissions['OUTPUT_DOCUMENTS'], Criteria::IN);
       $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
       $oDataset = AppDocumentPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
@@ -2036,16 +2093,44 @@ class Cases
       return $oCriteria;
     }
 
-    function getallDynaformsCriteria($sApplicationUID)
+    function getallDynaformsCriteria($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID)
     {
+      $aObjectPermissions = $this->getAllObjects($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID);
+      if (!is_array($aObjectPermissions)) {
+        $aObjectPermissions = array('DYNAFORMS' => array(-1), 'INPUT_DOCUMENTS' => array(-1), 'OUTPUT_DOCUMENTS' => array(-1));
+      }
+      if (!isset($aObjectPermissions['DYNAFORMS'])) {
+        $aObjectPermissions['DYNAFORMS'] = array(-1);
+      }
+      else {
+        if (!is_array($aObjectPermissions['DYNAFORMS'])) {
+          $aObjectPermissions['DYNAFORMS'] = array(-1);
+        }
+      }
+      if (!isset($aObjectPermissions['INPUT_DOCUMENTS'])) {
+        $aObjectPermissions['INPUT_DOCUMENTS'] = array(-1);
+      }
+      else {
+        if (!is_array($aObjectPermissions['INPUT_DOCUMENTS'])) {
+          $aObjectPermissions['INPUT_DOCUMENTS'] = array(-1);
+        }
+      }
+      if (!isset($aObjectPermissions['OUTPUT_DOCUMENTS'])) {
+        $aObjectPermissions['OUTPUT_DOCUMENTS'] = array(-1);
+      }
+      else {
+        if (!is_array($aObjectPermissions['OUTPUT_DOCUMENTS'])) {
+          $aObjectPermissions['OUTPUT_DOCUMENTS'] = array(-1);
+        }
+      }
       $oCriteria = new Criteria('workflow');
       $oCriteria->add(ApplicationPeer::APP_UID, $sApplicationUID);
       $oCriteria->addJoin(ApplicationPeer::PRO_UID, StepPeer::PRO_UID);
       $oCriteria->addJoin(StepPeer::STEP_UID_OBJ, DynaformPeer::DYN_UID);
       $oCriteria->add(StepPeer::STEP_TYPE_OBJ, 'DYNAFORM');
+      $oCriteria->add(StepPeer::STEP_UID_OBJ, $aObjectPermissions['DYNAFORMS'], Criteria::IN);
       $oCriteria->addAscendingOrderByColumn(StepPeer::STEP_POSITION);
       $oCriteria->setDistinct();
-
       $oDataset = DynaformPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
       $oDataset->next();
@@ -2170,33 +2255,33 @@ class Cases
 	function getAllObjects($PRO_UID, $APP_UID, $TAS_UID = '', $USR_UID)
 	{
 		$oCriteria = new Criteria('workflow');
-		
+
 		$oCriteria->add(ObjectPermissionPeer::USR_UID, $USR_UID);
 		$oCriteria->add(ObjectPermissionPeer::PRO_UID, $PRO_UID);
 		$oCriteria->add( $oCriteria->getNewCriterion(ObjectPermissionPeer::TAS_UID, $TAS_UID)->addOr($oCriteria->getNewCriterion(ObjectPermissionPeer::TAS_UID, '')) );
 		$oDataset = ObjectPermissionPeer::doSelectRS($oCriteria);
 		$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-	
+
 		$num = ObjectPermissionPeer::doCount($oCriteria);
 		//echo '<br>numero de registros en object permision: '.$num.' <------<br><br>';
 
 		$UIDS = array();
 		$oDataset->next();
-		
+
 		while ($row = $oDataset->getRow() ) {
 
 			$oDataset->next();
 			echo '<pre>';
 			print_r($row);
 			echo '</pre>';
-			
+
 			$USER_RELATION 	= $row['OP_USER_RELATION'];
 			$TASK_SOURCE	= $row['OP_TASK_SOURCE'];
 			$PARTICIPATE	= $row['OP_PARTICIPATE'];
 			$O_TYPE			= $row['OP_OBJ_TYPE'];
 			$O_UID			= $row['OP_OBJ_UID'];
 			$ACTION			= $row['OP_ACTION'];
-			
+
 			switch( $O_TYPE ) {
 				case 'ANY':
 					//for dynaforms
@@ -2211,12 +2296,12 @@ class Cases
 					$oDataset = DynaformPeer::doSelectRS($oCriteria);
 					$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
 					$oDataset->next();
-					
+
 					while ($aRow = $oDataset->getRow()) {
 						array_push($UIDS, $aRow['DYN_UID']);
 						$oDataset->next();
 					}
-					
+
 					//inputs
 					$oCriteria = new Criteria('workflow');
 					$oCriteria->addSelectColumn(AppDocumentPeer::DOC_UID);
@@ -2228,7 +2313,7 @@ class Cases
 					$aConditions[] = array(AppDelegationPeer::APP_UID, AppDocumentPeer::APP_UID);
 					$aConditions[] = array(AppDelegationPeer::DEL_INDEX, AppDocumentPeer::DEL_INDEX);
 					$oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
-					
+
 					$oDataset = DynaformPeer::doSelectRS($oCriteria);
 					$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
 					$oDataset->next();
@@ -2240,7 +2325,7 @@ class Cases
 					/*echo '<pre>';
 					print_r($UIDS);
 					echo '</pre>';*/
-					
+
 				break;
 
 				case 'DYNAFORM': break;
@@ -2258,14 +2343,14 @@ class Cases
 					$oDataset = DynaformPeer::doSelectRS($oCriteria);
 					$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
 					$oDataset->next();
-						
+
 					while ($aRow = $oDataset->getRow()) {
 						array_push($UIDS, $aRow['DYN_UID']);
 						$oDataset->next();
 					}
-					
+
 				break;
-				
+
 				case 'INPUT' :
 				case 'OUTPUT':
 
@@ -2283,12 +2368,12 @@ class Cases
 						$oCriteria->add(ApplicationPeer::DYN_UID, $O_UID);
 					}
 					$oCriteria->add(AppDocumentPeer::DOC_UID, $obj_type);
-					
+
 					$aConditions = Array();
 					$aConditions[] = array(AppDelegationPeer::APP_UID, AppDocumentPeer::APP_UID);
 					$aConditions[] = array(AppDelegationPeer::DEL_INDEX, AppDocumentPeer::DEL_INDEX);
 					$oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
-						
+
 					$oDataset = DynaformPeer::doSelectRS($oCriteria);
 					$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
 					$oDataset->next();
@@ -2296,14 +2381,14 @@ class Cases
 						array_push($UIDS, $aRow['DOC_UID']);
 						$oDataset->next();
 					}
-					
+
 				break;
 			}
 		}
 		$UIDS = Array();
 		return $UIDS;
 	}
-	
+
 }
 
 /*

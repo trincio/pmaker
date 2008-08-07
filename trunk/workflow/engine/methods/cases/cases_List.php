@@ -1,10 +1,10 @@
 <?php
 /**
  * cases_List.php
- *  
+ *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -14,13 +14,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
 
   /* Permissions */
@@ -34,10 +34,10 @@
 
   // $_GET['l'] has the type of cases list like todo,pause,cancel, all
 
-  $conf = new Configurations();  
+  $conf = new Configurations();
   if (!isset($_GET['l']))
   {
-    $confCasesList = $conf->loadObject('ProcessMaker','cases_List','',$_SESSION['USER_LOGGED'],'');    
+    $confCasesList = $conf->loadObject('ProcessMaker','cases_List','',$_SESSION['USER_LOGGED'],'');
     if (is_array($confCasesList))
     {
       $sTypeList = $confCasesList['sTypeList'];
@@ -68,11 +68,11 @@
   if( $sTypeList === 'to_do' or $sTypeList === 'draft' or $sTypeList === 'paused') {
 	$oCases->ThrowUnpauseDaemon();
   }
-  
+
   /* Prepare page before to show */
-  
+
   list($Criteria,$xmlfile) = $oCases->getConditionCasesList( $sTypeList, $sUIDUserLogged);
-  
+
   /* Render page */
   $G_PUBLISH = new Publisher;
   $G_PUBLISH->AddContent( 'propeltable', 'paged-table', $xmlfile, $Criteria );
