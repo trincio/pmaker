@@ -51,7 +51,8 @@ $items[] = array ( 'id' => 'char', 'title' => 'char', 'type' => 'char', 'creator
     	 if ( strpos($file, '.php',1) && is_file(PATH_PLUGINS . $file) ) {
          include_once ( PATH_PLUGINS . $file );
          $pluginDetail = $oPluginRegistry->getPluginDetails ( $file );
-         $status = $pluginDetail->enabled ? 'Enabled' : 'Disabled';
+         //$status = $pluginDetail->enabled ? 'Enabled' : 'Disabled';
+         $status = $pluginDetail->enabled ? G::LoadTranslation('ID_ENABLED') : G::LoadTranslation('ID_DISABLED');
          if ( isset ($pluginDetail->aWorkspaces ) ) {
            if ( ! in_array ( SYS_SYS, $pluginDetail->aWorkspaces) )
              continue;
