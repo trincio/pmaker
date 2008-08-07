@@ -24,7 +24,7 @@
  */
 
 /* Permissions */
-switch ($RBAC->userCanAccess('PM_CASES')) {
+switch ($RBAC->userCanAccess('PM_SUPERVISOR')) {
     case - 2:
         G::SendTemporalMessage('ID_USER_HAVENT_RIGHTS_SYSTEM', 'error', 'labels');
         G::header('location: ../login/login');
@@ -77,9 +77,9 @@ $oHeadPublisher->addScriptCode('
 });
   ');
   $G_PUBLISH->AddContent('template', '', '', '', $oTemplatePower);
-  
-if(!isset($_GET['position'])) $_GET['position'] = 1;  
-  
+
+if(!isset($_GET['position'])) $_GET['position'] = 1;
+
 $_SESSION['STEP_POSITION'] = (int)$_GET['position'];
 $oCase = new Cases();
 $Fields = $oCase->loadCase($_SESSION['APPLICATION']);
@@ -128,16 +128,16 @@ if(!isset($_GET['ex'])) $_GET['ex']=0;
 function setSelect()
 {
 	var ex=<?=$_GET['ex']?>;
-	
+
 	try{
 		for(i=1; i<50; i++)
 		{
 			if(i == ex){
 				document.getElementById('focus'+i).innerHTML = '<img src="/images/bulletButton.gif" />';
 			}
-			else{			
+			else{
 				document.getElementById('focus'+i).innerHTML = '';
-			}	
+			}
 		}
 	} catch (e){
 		return 0;
@@ -161,7 +161,7 @@ function toRevisePanel(APP_UID,DEL_INDEX)
   	};
 	oPanel.make();
 	oPanel.loader.show();
-	
+
 	var oRPC = new leimnud.module.rpc.xmlhttp({
 	  	url : 'cases_Ajax',
 	  	method:'post',
@@ -171,7 +171,7 @@ function toRevisePanel(APP_UID,DEL_INDEX)
 	  	oPanel.loader.hide();
 	  	oPanel.addContent(rpc.xmlhttp.responseText);
 	  	setSelect();
-	  	
+
   	}.extend(this);
 	oRPC.make();
 }

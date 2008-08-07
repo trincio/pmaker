@@ -342,7 +342,7 @@ $oHeadPublisher->addScriptCode('
 		$oCase = new Cases();
 		global $G_PUBLISH;
 		$G_PUBLISH = new Publisher();
-		$G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_AllInputdocsList', $oCase->getAllUploadedDocumentsCriteria($_SESSION['APPLICATION']));
+		$G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_AllInputdocsList', $oCase->getAllUploadedDocumentsCriteria($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['TASK'], $_SESSION['USER_LOGGED']));
 		G::RenderPage('publish', 'raw');
 		break;
 	case 'showUploadedDocument':
@@ -387,7 +387,7 @@ $oHeadPublisher->addScriptCode('
 		$oCase = new Cases();
 		global $G_PUBLISH;
 		$G_PUBLISH = new Publisher();
-		$G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_AllOutputdocsList', $oCase->getAllGeneratedDocumentsCriteria($_SESSION['APPLICATION']));
+		$G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_AllOutputdocsList', $oCase->getAllGeneratedDocumentsCriteria($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['TASK'], $_SESSION['USER_LOGGED']));
 		G::RenderPage('publish', 'raw');
 		break;
 	case 'showGeneratedDocument':
@@ -411,7 +411,7 @@ $oHeadPublisher->addScriptCode('
 		$oCase = new Cases();
 		global $G_PUBLISH;
 		$G_PUBLISH = new Publisher();
-		$G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_AllDynaformsList', $oCase->getallDynaformsCriteria($_SESSION['APPLICATION']));
+		$G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_AllDynaformsList', $oCase->getallDynaformsCriteria($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['TASK'], $_SESSION['USER_LOGGED']));
 		G::RenderPage('publish', 'raw');
 		break;
 

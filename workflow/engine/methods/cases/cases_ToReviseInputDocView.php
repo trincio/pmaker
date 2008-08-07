@@ -24,7 +24,7 @@
  */
 
 /* Permissions */
-switch ($RBAC->userCanAccess('PM_CASES')) {
+switch ($RBAC->userCanAccess('PM_SUPERVISOR')) {
     case - 2:
         G::SendTemporalMessage('ID_USER_HAVENT_RIGHTS_SYSTEM', 'error', 'labels');
         G::header('location: ../login/login');

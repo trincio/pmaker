@@ -52,6 +52,7 @@
  /* Prepare page before to show */
   $oCase = new Cases();
   $Fields = $oCase->loadCase( $_SESSION['APPLICATION'], $_SESSION['INDEX'] );
+  $Fields['CURRENT_TASK_STATUS'] = $aRow['APP_TYPE'];
 
   /* Render page */
   $oHeadPublisher =& headPublisher::getSingleton();
