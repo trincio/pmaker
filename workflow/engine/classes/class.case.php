@@ -26,15 +26,17 @@
 require_once ("classes/model/Application.php");
 require_once ("classes/model/AppDelay.php");
 require_once ("classes/model/AppDelegation.php");
+require_once ("classes/model/AppDocumentPeer.php");
 require_once ("classes/model/AppThread.php");
+require_once ("classes/model/Content.php");
 require_once ("classes/model/DbSource.php");
 require_once ("classes/model/Dynaform.php");
 require_once ("classes/model/InputDocument.php");
 require_once ("classes/model/Language.php");
+require_once ("classes/model/ObjectPermission.php");
 require_once ("classes/model/OutputDocument.php");
 require_once ("classes/model/Process.php");
 require_once ("classes/model/ProcessUser.php");
-require_once ("classes/model/ObjectPermission.php");
 require_once ("classes/model/ReportTable.php");
 require_once ("classes/model/ReportVar.php");
 require_once ("classes/model/Step.php");
@@ -44,7 +46,6 @@ require_once ("classes/model/Task.php");
 require_once ("classes/model/TaskUser.php");
 require_once ("classes/model/Triggers.php");
 require_once ("classes/model/Users.php");
-require_once ("classes/model/Content.php");
 
 G::LoadClass('pmScript');
 
@@ -2166,4 +2167,149 @@ class Cases
       }
     }
 
+	function getAllObjects($PRO_UID, $APP_UID, $TAS_UID = '', $USR_UID)
+	{
+		$oCriteria = new Criteria('workflow');
+		
+		$oCriteria->add(ObjectPermissionPeer::USR_UID, $USR_UID);
+		$oCriteria->add(ObjectPermissionPeer::PRO_UID, $PRO_UID);
+		$oCriteria->add( $oCriteria->getNewCriterion(ObjectPermissionPeer::TAS_UID, $TAS_UID)->addOr($oCriteria->getNewCriterion(ObjectPermissionPeer::TAS_UID, '')) );
+		$oDataset = ObjectPermissionPeer::doSelectRS($oCriteria);
+		$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+	
+		$num = ObjectPermissionPeer::doCount($oCriteria);
+		//echo '<br>numero de registros en object permision: '.$num.' <------<br><br>';
+
+		$UIDS = array();
+		$oDataset->next();
+		
+		while ($row = $oDataset->getRow() ) {
+
+			$oDataset->next();
+			echo '<pre>';
+			print_r($row);
+			echo '</pre>';
+			
+			$USER_RELATION 	= $row['OP_USER_RELATION'];
+			$TASK_SOURCE	= $row['OP_TASK_SOURCE'];
+			$PARTICIPATE	= $row['OP_PARTICIPATE'];
+			$O_TYPE			= $row['OP_OBJ_TYPE'];
+			$O_UID			= $row['OP_OBJ_UID'];
+			$ACTION			= $row['OP_ACTION'];
+			
+			switch( $O_TYPE ) {
+				case 'ANY':
+					//for dynaforms
+					$oCriteria = new Criteria('workflow');
+					$oCriteria->add(ApplicationPeer::APP_UID, $APP_UID);
+					$oCriteria->addJoin(ApplicationPeer::PRO_UID, StepPeer::PRO_UID);
+					$oCriteria->addJoin(StepPeer::STEP_UID_OBJ, DynaformPeer::DYN_UID);
+					$oCriteria->add(StepPeer::STEP_TYPE_OBJ, 'DYNAFORM');
+					$oCriteria->addAscendingOrderByColumn(StepPeer::STEP_POSITION);
+					$oCriteria->setDistinct();
+
+					$oDataset = DynaformPeer::doSelectRS($oCriteria);
+					$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+					$oDataset->next();
+					
+					while ($aRow = $oDataset->getRow()) {
+						array_push($UIDS, $aRow['DYN_UID']);
+						$oDataset->next();
+					}
+					
+					//inputs
+					$oCriteria = new Criteria('workflow');
+					$oCriteria->addSelectColumn(AppDocumentPeer::DOC_UID);
+					$oCriteria->addSelectColumn(AppDocumentPeer::APP_DOC_TYPE);
+					$oCriteria->add(AppDelegationPeer::APP_UID, $APP_UID);
+					$oCriteria->add(AppDelegationPeer::PRO_UID, $PRO_UID);
+					$oCriteria->add( $oCriteria->getNewCriterion(AppDocumentPeer::APP_DOC_TYPE, 'INPUT')->addOr($oCriteria->getNewCriterion(AppDocumentPeer::APP_DOC_TYPE, 'OUTPUT')) );
+					$aConditions = Array();
+					$aConditions[] = array(AppDelegationPeer::APP_UID, AppDocumentPeer::APP_UID);
+					$aConditions[] = array(AppDelegationPeer::DEL_INDEX, AppDocumentPeer::DEL_INDEX);
+					$oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
+					
+					$oDataset = DynaformPeer::doSelectRS($oCriteria);
+					$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+					$oDataset->next();
+					while ($aRow = $oDataset->getRow()) {
+						array_push($UIDS, $aRow['DOC_UID']);
+						echo '->'.$aRow['APP_DOC_TYPE'];
+						$oDataset->next();
+					}
+					/*echo '<pre>';
+					print_r($UIDS);
+					echo '</pre>';*/
+					
+				break;
+
+				case 'DYNAFORM': break;
+					$oCriteria = new Criteria('workflow');
+					$oCriteria->add(ApplicationPeer::APP_UID, $APP_UID);
+					if($O_UID != '') {
+						$oCriteria->add(ApplicationPeer::DYN_UID, $O_UID);
+					}
+					$oCriteria->addJoin(ApplicationPeer::PRO_UID, StepPeer::PRO_UID);
+					$oCriteria->addJoin(StepPeer::STEP_UID_OBJ, DynaformPeer::DYN_UID);
+					$oCriteria->add(StepPeer::STEP_TYPE_OBJ, 'DYNAFORM');
+					$oCriteria->addAscendingOrderByColumn(StepPeer::STEP_POSITION);
+					$oCriteria->setDistinct();
+
+					$oDataset = DynaformPeer::doSelectRS($oCriteria);
+					$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+					$oDataset->next();
+						
+					while ($aRow = $oDataset->getRow()) {
+						array_push($UIDS, $aRow['DYN_UID']);
+						$oDataset->next();
+					}
+					
+				break;
+				
+				case 'INPUT' :
+				case 'OUTPUT':
+
+					if($row['OP_OBJ_TYPE'] == 'INPUT') {
+						$obj_type = 'INPUT';
+					} else {
+						$obj_type = 'OUTPUT';
+					}
+					$oCriteria = new Criteria('workflow');
+					$oCriteria->addSelectColumn(AppDocumentPeer::DOC_UID);
+					$oCriteria->addSelectColumn(AppDocumentPeer::APP_DOC_TYPE);
+					$oCriteria->add(AppDelegationPeer::APP_UID, $APP_UID);
+					$oCriteria->add(AppDelegationPeer::PRO_UID, $PRO_UID);
+					if($O_UID != '') {
+						$oCriteria->add(ApplicationPeer::DYN_UID, $O_UID);
+					}
+					$oCriteria->add(AppDocumentPeer::DOC_UID, $obj_type);
+					
+					$aConditions = Array();
+					$aConditions[] = array(AppDelegationPeer::APP_UID, AppDocumentPeer::APP_UID);
+					$aConditions[] = array(AppDelegationPeer::DEL_INDEX, AppDocumentPeer::DEL_INDEX);
+					$oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
+						
+					$oDataset = DynaformPeer::doSelectRS($oCriteria);
+					$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+					$oDataset->next();
+					while ($aRow = $oDataset->getRow()) {
+						array_push($UIDS, $aRow['DOC_UID']);
+						$oDataset->next();
+					}
+					
+				break;
+			}
+		}
+		$UIDS = Array();
+		return $UIDS;
+	}
+	
 }
+
+/*
+$c = new Cases;
+$c->getAllObjects($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['TASK'], $_SESSION['USER_LOGGED']); //erik
+*/
+
+
+
