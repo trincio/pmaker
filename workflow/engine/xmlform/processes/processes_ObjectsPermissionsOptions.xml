@@ -48,7 +48,7 @@ var saveObjectPermission = function(form) {
     });
     return;
   }
-  switch (getField('OP_OBJ_TYPE').value) {
+  /*switch (getField('OP_OBJ_TYPE').value) {
     case 'DYNAFORM':
       if (getField('DYNAFORMS').value == '') {
         new leimnud.module.app.alert().make({
@@ -73,7 +73,7 @@ var saveObjectPermission = function(form) {
         return;
       }
     break;
-  }
+  }*/
   ajax_post(form.action, form, 'POST');
   oPanel.remove();
   @#PAGED_TABLE_ID.refresh();
