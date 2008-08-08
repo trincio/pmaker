@@ -806,8 +806,20 @@ function create_file_from_tpl ( $tplName, $newFilename, $fields = NULL )
       if ( is_array( $data) )
         foreach ( $data as $rowId => $row ) {
           $template->newBlock( $block );
-          foreach ( $row as $key => $val ) 
-            $template->assign( $key, $val );
+          foreach ( $row as $key => $val ) {
+            if ( is_array($val)) {
+//              $template->newBlock( $key );
+              foreach ( $val as $key2 => $val2 ) {
+                if ( is_array($val2) ) {
+                 $template->newBlock( $key );
+                  foreach ( $val2 as $key3 => $val3 ) 
+                    $template->assign( $key3, $val3 );
+                }
+              }    
+            }
+            else
+              $template->assign( $key, $val );
+          }
         }
       else
         $template->assign( $block, $data );
@@ -1121,6 +1133,31 @@ function run_new_project ( $task, $args)
   exit(0);
 }
 
+function fieldToLabel ($field ) {
+  $aux = substr ( $field, 4 );
+  $res = $aux[0];
+  for ($i=1; $i < strlen($aux); $i++ ) {
+    if (  $aux[$i] == '_' ) { 
+      $res .= " " . $aux[++$i];
+    }
+    else 
+      $res .= strtolower ( $aux[$i]);
+  }
+  return $res;
+}
+
+function fieldToLabelOption ($field ) {
+  $aux = $field;
+  $res = $aux[0];
+  for ($i=1; $i < strlen($aux); $i++ ) {
+    if (  $aux[$i] == '_' ) { 
+      $res .= " " . $aux[++$i];
+    }
+    else 
+      $res .= strtolower ( $aux[$i]);
+  }
+  return $res;
+}
 function run_propel_build_crud ( $task, $args) 
 {
   ini_set('display_errors','on');
@@ -1137,9 +1174,18 @@ function run_propel_build_crud ( $task, $args)
   $class = $args[0];
   $phpClass = $class;
   $phpClass[0] = strtolower($phpClass[0]);
+
+  $tableName = $class[0];
+  for ( $i =1; $i < strlen ($class) ; $i++ ) {
+    if ( $class[$i] >= 'a' ) 
+      $tableName .= strtoupper ( $class[$i] );
+    else 
+      $tableName .= "_" . $class[$i];
+  }  
+
    
   //second parameter is the table name, by default is the same classname in uppercase.
-  $tableName = isset($args[1])? $args[1] : strtoupper ($class) ;
+  if ( isset( $args[1] )) $tableName = $args[1] ;
 
   //try to find the class in classes directory
   $classFilename = PATH_CORE . 'classes' . PATH_SEP . 'model' . PATH_SEP . $args[0] . '.php';
@@ -1149,6 +1195,7 @@ function run_propel_build_crud ( $task, $args)
     printf("class %s not found \n", pakeColor::colorize( $class, 'ERROR'));
     exit (0);
   }  
+  printf ( "TableName : %s \n", pakeColor::colorize ( $tableName, 'INFO' ));
 
   require_once ( "propel/Propel.php" );
   require_once ( $classFilename );
@@ -1183,8 +1230,7 @@ function run_propel_build_crud ( $task, $args)
   	fclose ( $fp );
   }
   $content = file_get_contents ( PATH_CORE . 'menus'. PATH_SEP . "welcome.php" );
-  var_dump ( strpos ( $content, $phpClass . ".php" ) ); 
-
+  
   if ( strpos ( $content, $phpClass . ".php" )  == false ) {
 	  $fp = fopen ( PATH_CORE . 'menus'. PATH_SEP . "welcome.php", "a" );
 	  fwrite ( $fp, "  require_once ( '" . $phpClass . ".php' );\n" );
@@ -1208,12 +1254,38 @@ function run_propel_build_crud ( $task, $args)
   foreach ($s->table as $key=>$table ) {
     if ( $table['name'] == $tableName  )
       foreach ( $table->column as $kc => $column ) {
+        $valuesOpt = NULL;
+        if ( isset ( $table->validator ) ) {
+          foreach ( $table->validator as $kc => $validator ) {
+            if ( $validator['column'] ==  $column['name'] ) {
+              foreach ( $validator->rule as $kr => $rule ) {
+                if ( $rule['name'] == 'validValues' )
+                  $valuesOpt =  explode ( '|',  $rule['value'] );
+              }
+            }
+          }
+        }
+        //        print "\033[1;34m "; print_r ( $values); 
         //print $column['name'] . ' ' .$column['type'] . ' ' .$column['size'] . ' ' .$column['required'] . ' ' .$column['primaryKey'];
-        //print "\n";
+        //print_r ( $column); print "\n";
         $maxlength = $column['size'];
         $size      = ( $maxlength > 60 ) ? 60 : $maxlength;
-        $type      = $column['type'];
-        $field = array ( 'name' => $column['name'], 'type' => $type, 'size' => $size, 'maxlength' => $maxlength );
+        $values = NULL;
+        if ( isset ($valuesOpt)  )  {
+          $type      = 'dropdown';
+          foreach ( $valuesOpt as $key => $val ) {
+            $values[] = array ( 'value' => $val, 'label' => fieldToLabelOption ($val) );
+          }
+        }
+        else
+          $type      = 'text';
+        if ( isset ( $column['label'] ) ) {
+          $label =  $column['label'];
+        } 
+        else {
+          $label =  fieldToLabel($column['name']);
+        }
+        $field = array ( 'name' => $column['name'], 'type' => $type, 'size' => $size, 'maxlength' => $maxlength, 'label'=> $label , 'values'=> $values );
         $fields['fields'][] = $field;
       }
   }
@@ -1229,7 +1301,7 @@ function run_propel_build_crud ( $task, $args)
       foreach ( $table->column as $kc => $column ) {
         //print $column['name'] . ' ' .$column['type'] . ' ' .$column['size'] . ' ' .$column['required'] . ' ' .$column['primaryKey'];
         //print "\n";
-        $size      = ( $column['size'] > 30 ) ? 30 : $column['size'];
+        $size      = ( $column['size'] > 40 ) ? 40*3 : $column['size']*3;
         $type      = $column['type'];
         if ( $column['primaryKey'] ) 
           if ( $primaryKey == '' ) 
@@ -1237,7 +1309,13 @@ function run_propel_build_crud ( $task, $args)
           else
             $primaryKey .= '|@@' . $column['name'];
             
-        $field = array ( 'name' => $column['name'], 'type' => $type, 'size' => $size );
+          if ( isset ( $column['label'] ) ) {
+            $label =  $column['label'];
+          } 
+          else {
+            $label =  fieldToLabel($column['name']);
+          }
+        $field = array ( 'name' => $column['name'], 'type' => $type, 'size' => $size, 'label' => $label );
         $fields['fields'][] = $field;
       }
   }

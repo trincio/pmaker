@@ -52,7 +52,17 @@
  /* Prepare page before to show */
   $oCase = new Cases();
   $Fields = $oCase->loadCase( $_SESSION['APPLICATION'], $_SESSION['INDEX'] );
-  $Fields['CURRENT_TASK_STATUS'] = $aRow['APP_TYPE'];
+  if (isset($aRow['APP_TYPE'])) {
+    switch ($aRow['APP_TYPE']) {
+      case 'PAUSE':
+        $Fields['STATUS'] = ucfirst(strtolower(G::LoadTranslation('ID_PAUSED')));
+      break;
+      case 'CANCEL':
+        $Fields['STATUS'] = ucfirst(strtolower(G::LoadTranslation('ID_CANCELLED')));
+      break;
+    }
+    //$Fields['STATUS'] = $aRow['APP_TYPE'];
+  }
 
   /* Render page */
   $oHeadPublisher =& headPublisher::getSingleton();
