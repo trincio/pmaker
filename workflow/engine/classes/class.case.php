@@ -2297,10 +2297,7 @@ class Cases
 	{
 		$USER_PERMISSIONS = Array();
 		$GROUP_PERMISSIONS = Array();
-		//$RESULT = Array("DYNAFORM"=>Array(), "INPUT"=>Array(), "OUTPUT"=>Array());
-		$RESULT['DYNAFORM']	= Array();
-		$RESULT['INPUT']	= Array();
-		$RESULT['OUTPUT']	= Array();
+		$RESULT = Array("DYNAFORM"=>Array(), "INPUT"=>Array(), "OUTPUT"=>Array());
 
 		//permissions per user
 		$oCriteria = new Criteria('workflow');
@@ -2482,7 +2479,6 @@ class Cases
 	}
 
 }
-
 
 
 
