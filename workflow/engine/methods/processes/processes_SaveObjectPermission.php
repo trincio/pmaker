@@ -57,7 +57,8 @@ switch ($_POST['form']['OP_OBJ_TYPE']) {
 }
 require_once 'classes/model/ObjectPermission.php';
 $oOP = new ObjectPermission();
-$aData = array('PRO_UID'          => $_POST['form']['PRO_UID'],
+$aData = array('OP_UID'           => G::generateUniqueID(),
+               'PRO_UID'          => $_POST['form']['PRO_UID'],
                'TAS_UID'          => $_POST['form']['TAS_UID'],
                'USR_UID'          => $sUserGroup,
                'OP_USER_RELATION' => $iRelation,
