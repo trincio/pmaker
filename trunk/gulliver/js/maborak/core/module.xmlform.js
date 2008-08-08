@@ -10,160 +10,28 @@ leimnud.Package.Public({
 	{
 		this.make=function(options)
 		{
-			this.options = {}.concat(options || {});
-
-			this.options.target.append(new DOM('div').append(
-				this.domI = new DOM('input',{type:'text'}),
-				this.domB = new DOM('input',{type:'button',value:'drag me'})
-			));
-
-			this.table = new DOM('table',{border:1},{width:'100%',borderCollapse:'collapse'});
-
-
-			var tr = this.table.insertRow(-1);
-			$(tr).append(
-				this.T1 = new DOM('td',{innerHTML:'<br><br>'},{width:"50%",border:'1px solid black'}),
-				this.T2 = new DOM('td',{innerHTML:'<br><br>'},{width:"50%",border:'1px solid black'})
-			);
-			
-			var tr = this.table.insertRow(-1);
-			$(tr).append(
-				this.T3 = new DOM('td',{innerHTML:'<br><br>'},{width:"50%",border:'1px solid black'}),
-				this.T4 = new DOM('td',{innerHTML:'<br><br>'},{width:"50%",border:'1px solid black'})
-			);
-
-			var tr = this.table.insertRow(-1);
-			$(tr).append(
-				this.T5 = new DOM('td',{innerHTML:'<br><br>'},{width:"50%",border:'1px solid black'}),
-				this.T6 = new DOM('td',{innerHTML:'<br><br>'},{width:"50%",border:'1px solid black'})
-			);
-
-
-			this.options.target.append(this.table);
-
-			this.dragables = new this.parent.module.drag({
-				elements:[this.domI,this.domB],
-				fx:{
-					type	: "clone",
-					target	: this.options.target,
-					zIndex	: 11
-				}
-			})
-			this.dropables = new this.parent.module.drop();
-			this.dropables.make();
-
-			this.dropables.register({element:this.T5,value:1,events:{
-				over:function(e)
-				{
-					e.style.backgroundColor="red";
-				}.extend(this,this.T5),
-				out:function(e)
-				{
-					e.style.backgroundColor="transparent";
-				}.extend(this,this.T5)
-
-			}});
-			this.dropables.register({element:this.T1,value:1,events:{
-/*				over:function()
-				{
-					this.dropables.elements[this.dropables.selected].element.style.backgroundColor="red";
-				}.extend(this),
-				out:function()
-				{
-					this.dropables.elements[this.dropables.selID].element.style.backgroundColor="transparent";
-				}.extend(this)*/
-
-			}});
-			this.dropables.register({element:this.T2,value:1,events:{
-/*				over:function()
-				{
-					this.dropables.elements[this.dropables.selected].element.style.backgroundColor="red";
-				}.extend(this),
-				out:function()
-				{
-					this.dropables.elements[this.dropables.selID].element.style.backgroundColor="transparent";
-				}.extend(this)*/
-
-			}});
-			this.dropables.register({element:this.T3,value:1,events:{
-/*				over:function()
-				{
-					this.dropables.elements[this.dropables.selected].element.style.backgroundColor="red";
-				}.extend(this),
-				out:function()
-				{
-					this.dropables.elements[this.dropables.selID].element.style.backgroundColor="transparent";
-				}.extend(this)*/
-
-			}});
-			this.dropables.register({element:this.T4,value:1,events:{
-/*				over:function()
-				{
-					this.dropables.elements[this.dropables.selected].element.style.backgroundColor="red";
-				}.extend(this),
-				out:function()
-				{
-					this.dropables.elements[this.dropables.selID].element.style.backgroundColor="transparent";
-				}.extend(this)*/
-
-			}});
-
-			this.dragables.events={
-
-				move:this.dropables.capture.args(this.dragables),
-				finish	: function(){
-					if(this.dropables.selected!==false)
-					{
-//						this.dropables.derivation.launchEvents(this.dropables.derivation.elements[this.dropables.derivation.selected].events.out);
-//						vAux = this.dropables.derivation.launchEvents(this.dropables.derivation.elements[this.dropables.derivation.selected].events.click);
-						
-						var c,t = this.dropables.elements[this.dropables.selected].element,d = $(this.dragables.currentElementDrag);
-						d.setStyle({
-							position:'relative',
-							left:'auto',
-							top:'auto',
-							opacity:1
-						});
-
-						t.append(
-							c = new DOM('div')
-						);
-						t.replaceChild(d,c);
-//						this.parent.dom.remove(this.dragables.currentElementDrag);
-					}
-					else
-					{
-						this.parent.dom.remove(this.dragables.currentElementDrag);
-					}
-				}.extend(this)
-			};
-			this.dragables.make();
-
+			this.options = {
+				file:'myInfo.xml',
+				debug:false
+			}.concat(options || {});
+			this.db=[];
+			this.debug = new this.parent.module.debug(this.options.debug || false);
 			/*Samples load XML*/
-			this.loadXML('myInfo.xml');
+			this.loadXML(this.options.file);
 		};
 		this.loadXML=function(xml)
 		{
 			var r = new this.parent.module.rpc.xmlhttp({
 				url:xml
 			});
-			r.callback=function(rpc)
-			{
-				window.d = rpc.xmlhttp.responseXML;
-				if((typeof XMLSerializer)==='undefined')
-				{
-					window.XMLSerializer = function() {
-						this.toString=function()
-						{
-							return "[object XMLSerializer]";
-						};
-						this.serializeToString=function(xml){
-							return xml.xml || xml.outerHTML || "Error XMLSerializer";
-						};
-					};	
-				}
+			r.callback=this.parse;
+			r.make();
+		};
+		this.parse=function(rpc)
+		{
+				window.d = this.xml = rpc.xmlhttp.responseXML;
 				//alert(XMLSerializer)
-				var w = d.createElement('wilmer');
+				/*var w = d.createElement('wilmer');
 				//crear CDATA
 				var f = d.createCDATASection('Secci�n CDATA');
 				w.appendChild(f);
@@ -175,7 +43,6 @@ leimnud.Package.Public({
 				//d.documentElement.appendChild(w);
 				d.documentElement.insertBefore(w,d.documentElement.childNodes.item(0));
 				
-				/*asd*/
 				var s = new XMLSerializer();
 				var str = s.serializeToString(d);
 				$(document.body).append(
@@ -205,9 +72,117 @@ leimnud.Package.Public({
 						new DOM('td',{innerHTML:at},{width:"50%",border:'1px solid black'})
 					);
 				}
-				document.body.appendChild(table);
-			}.extend(this);
-			r.make();
+				document.body.appendChild(table);*/
+				for(var i=0;i<this.xml.documentElement.childNodes.length;i++)
+				{
+					var c = this.xml.documentElement.childNodes[i];
+					try{
+						var at = c.getAttribute('type');
+					}catch(e){
+						var at = '';
+					}
+					if(c.nodeName!=='#text' && c.nodeName!=='#comment')
+					{
+						this.add_to_db(c);
+					}
+					//console.info(c.nodeName+"="+c.nodeValue);
+					/*var tr = table.insertRow(-1);
+					$(tr).append(
+						new DOM('td',{innerHTML:c.nodeName},{width:"50%",border:'1px solid black'}),
+						new DOM('td',{innerHTML:at},{width:"50%",border:'1px solid black'})
+					);*/
+				}
+				return (this.options.onload || function(){})();
+		};
+		this.add_to_db=function(tag)
+		{
+//			this.debug.log(tag);
+			this.db.push(tag);
+		};
+		this.serialize=function()
+		{
+			var s = new XMLSerializer();
+			return s.serializeToString(this.xml);
+		};
+		this.show_dyna_elements=function(num)
+		{
+			return this.db[num];
+		};
+		this.show_dyna=function()
+		{
+			return this.xml.documentElement;
+		};
+		this.tag_attributes_to_object=function(tag)
+		{
+			var o = {
+				nodeName:tag.nodeName
+			};
+			//this.debug.log(tag.nodeName+":"+tag.attributes)
+			for(var i=0;i<tag.attributes.length;i++)
+			{
+				var atr = tag.attributes[i];
+				o[atr.nodeName]=atr.nodeValue;
+			}
+			return o;
+		};
+		this.tag_edit=function(tag,ce)
+		{
+			if(!this.options.target || this.current_edit===ce){return false;}
+			this.options.target.innerHTML='';
+			this.current_edit=ce;
+			//this.debug.log(tag);
+			//tag=tag.documentElement;
+			var data=[];
+			for(var i=0;i<tag.attributes.length;i++)
+			{
+				var atr = tag.attributes[i];
+				data.push({
+					data:[{value:atr.nodeName},{value:atr.nodeValue}]
+				});
+			}
+			new this.parent.module.grid().make({
+				target	:this.options.target,
+				paginator	:{
+					limit	:10
+				},
+				title	:"<b>"+tag.nodeName+"</b>",
+				data	:{
+					column:[
+					{
+						title:"Attribute",
+						type:"text",
+						edit:false,
+						paint:'bg1',
+						width:"40%",
+						onchange	:function(data)
+						{
+							//alert(data.index+":"+data.dom)
+						},
+						style:{
+							fontWeight:"bold"
+						},
+						styleValues:{
+							textAlign:"right"							
+						}
+					},
+					{
+						title	: "Value",
+						type	: "text",
+						edit	: true,
+						style:{
+							fontWeight:"bold"
+						},
+						onchange	:function(data)
+						{
+							//alert(data.index+":"+data.dom)
+						},
+						width	: "60%"
+					}
+				],
+				rows:data
+			}
+			});
+			return true;
 		};
 		this.expand(this);
 	}

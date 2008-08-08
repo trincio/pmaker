@@ -615,7 +615,7 @@ leimnud.Package.Public({
 				}
 				this.parent.dom.setStyle(input,{
 					font		:"normal 8pt Tahoma,sans-serif,Tahoma",
-					padding	:2,
+					padding	:3,
 					paddingLeft	:3,
 					border		:"1px solid buttonHighlight",
 					borderLeft	:"1px solid buttonShadow",
@@ -1140,7 +1140,7 @@ leimnud.Package.Public({
 				});
 				h+=a.cells[i].clientWidth+2;
 			}
-			alert(h)
+			//alert(h)
 		};
 		this.createPhantomRow=function(In)
 		{
