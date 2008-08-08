@@ -272,7 +272,6 @@ leimnud.Package.Public({
 		},
 		menuRight:function(options){
 			this.elements = {};
-			this.yy=33;
 			this.make=function(options)
 			{
 				this.options = {

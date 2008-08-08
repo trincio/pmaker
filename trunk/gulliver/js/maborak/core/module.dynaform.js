@@ -338,7 +338,10 @@ leimnud.Package.Public({
 					catch(e){
 					
 					}
-					this.xmlform.tag_edit(t,db_uid);
+
+					this.xmlform.tag_edit(t,db_uid,this.sync_xml_node.args(db_uid));
+
+
 				}.extend(this,d.db_uid);
 				pd.onmouseover=function(event,db_uid){
 					var d = this.db[db_uid];
@@ -357,6 +360,16 @@ leimnud.Package.Public({
 
 				//this.debug.log(e);
 			}
+		};
+		this.sync_xml_node=function(data,db_uid)
+		{
+			var cd = this.xmlform.current_xml_edit.save('object');
+			this.xmlform.sync_node(db_uid,cd);
+			this.sync_dom(db_uid,cd);
+		};
+		this.sync_dom=function(db_uid,obj)
+		{
+			
 		};
 		this.dynaform_dom={
 			text:function(options)

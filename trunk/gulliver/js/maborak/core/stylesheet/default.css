@@ -204,7 +204,6 @@ INPUT {
 	cursor:default;
 	border-top:1px solid #808080;
 	border-bottom:1px solid white;
-	height:0px;
 	overflow:hidden;
 }
 .app_menuRight_option___firefox, .app_menuRight_option_over___firefox
@@ -252,7 +251,6 @@ INPUT {
 {
 	height:0px;
 }
-.
 /* Theme processmaker */
 .app_menuRight_container___processmaker
 {
