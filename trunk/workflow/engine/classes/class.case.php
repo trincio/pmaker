@@ -1964,6 +1964,9 @@ class Cases
     }
 
     function getAllUploadedDocumentsCriteria($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID) {
+    	//verifica si la tabla OBJECT_PERMISSION    	    	 		  
+    	$this->verifyTable();
+    	
       $aObjectPermissions = $this->getAllObjects($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID);
       if (!is_array($aObjectPermissions)) {
         $aObjectPermissions = array('DYNAFORMS' => array(-1), 'INPUT_DOCUMENTS' => array(-1), 'OUTPUT_DOCUMENTS' => array(-1));
@@ -2029,6 +2032,9 @@ class Cases
     }
 
     function getAllGeneratedDocumentsCriteria($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID) {
+    	//verifica si la tabla OBJECT_PERMISSION    	    	 		  
+    	$this->verifyTable();
+    	
       $aObjectPermissions = $this->getAllObjects($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID);
       if (!is_array($aObjectPermissions)) {
         $aObjectPermissions = array('DYNAFORMS' => array(-1), 'INPUT_DOCUMENTS' => array(-1), 'OUTPUT_DOCUMENTS' => array(-1));
@@ -2095,6 +2101,9 @@ class Cases
 
     function getallDynaformsCriteria($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID)
     {
+    	//verifica si la tabla OBJECT_PERMISSION    	    	 		  
+    	$this->verifyTable();
+    	
       $aObjectPermissions = $this->getAllObjects($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID);
       if (!is_array($aObjectPermissions)) {
         $aObjectPermissions = array('DYNAFORMS' => array(-1), 'INPUT_DOCUMENTS' => array(-1), 'OUTPUT_DOCUMENTS' => array(-1));
@@ -2478,6 +2487,31 @@ class Cases
 		return Array("DYNAFORMS"=>$RESULT['DYNAFORM'], "INPUT_DOCUMENTS"=>$RESULT['INPUT'], "OUTPUT_DOCUMENTS"=>$RESULT['OUTPUT']);
 	}
 
+
+/*
+funcion momentanea by Everth The Answer
+*/
+ function verifyTable(){ 		
+ 	  $oCriteria = new Criteria('workflow');
+		$del = DBAdapter::getStringDelimiter();
+    $sql = "CREATE TABLE IF NOT EXISTS `OBJECT_PERMISSION` (
+ 									 `OP_UID` varchar(32) NOT NULL,
+ 									 `PRO_UID` varchar(32) NOT NULL,
+ 									 `TAS_UID` varchar(32) NOT NULL,
+ 									 `USR_UID` varchar(32) NOT NULL,
+ 									 `OP_USER_RELATION` int(1) NOT NULL default '1',
+ 									 `OP_TASK_SOURCE` varchar(32) NOT NULL,
+ 									 `OP_PARTICIPATE` int(1) NOT NULL default '1',
+ 									 `OP_OBJ_TYPE` varchar(15) NOT NULL default 'ANY',
+ 									 `OP_OBJ_UID` varchar(32) NOT NULL,
+ 									 `OP_ACTION` varchar(10) NOT NULL default 'VIEW',
+ 									 KEY `PRO_UID` (`PRO_UID`,`TAS_UID`,`USR_UID`,`OP_TASK_SOURCE`,`OP_OBJ_UID`)
+      						 )ENGINE=MyISAM DEFAULT CHARSET=latin1;";
+
+		$con = Propel::getConnection("workflow");
+		$stmt = $con->prepareStatement($sql);
+		$rs = $stmt->executeQuery();				    	  
+	}
 }
 
 
