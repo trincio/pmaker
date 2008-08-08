@@ -347,6 +347,7 @@ $oHeadPublisher->addScriptCode('
 		break;
 	case 'showUploadedDocument':
 		require_once 'classes/model/AppDocument.php';
+		require_once 'classes/model/AppDelegation.php';
 		require_once 'classes/model/InputDocument.php';
 		require_once 'classes/model/Users.php';
 		$oAppDocument = new AppDocument();
@@ -358,6 +359,15 @@ $oHeadPublisher->addScriptCode('
 		else {
 		  $Fields = array('INP_DOC_FORM_NEEDED' => '', 'FILENAME' => $oAppDocument->Fields['APP_DOC_FILENAME']);
 		}
+		$oCriteria = new Criteria('workflow');
+    $oCriteria->add(AppDelegationPeer::DEL_INDEX, $oAppDocument->Fields['DEL_INDEX']);
+    $oDataset = AppDelegationPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    $aRow = $oDataset->getRow();
+    $oTask = new Task();
+    $aTask = $oTask->load($aRow['TAS_UID']);
+    $Fields['ORIGIN'] = $aTask['TAS_TITLE'];
 		$oUser = new Users();
 		$aUser = $oUser->load($oAppDocument->Fields['USR_UID']);
 		$Fields['CREATOR'] = $aUser['USR_FIRSTNAME'] . ' ' . $aUser['USR_LASTNAME'];
@@ -392,11 +402,24 @@ $oHeadPublisher->addScriptCode('
 		break;
 	case 'showGeneratedDocument':
 		require_once 'classes/model/AppDocument.php';
+		require_once 'classes/model/AppDelegation.php';
 		$oAppDocument = new AppDocument();
 		$aFields = $oAppDocument->load($_POST['APP_DOC_UID']);
 		require_once 'classes/model/OutputDocument.php';
 		$oOutputDocument = new OutputDocument();
 		$aOD = $oOutputDocument->load($aFields['DOC_UID']);
+		$oCriteria = new Criteria('workflow');
+    $oCriteria->add(AppDelegationPeer::DEL_INDEX, $oAppDocument->Fields['DEL_INDEX']);
+    $oDataset = AppDelegationPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    $aRow = $oDataset->getRow();
+    $oTask = new Task();
+    $aTask = $oTask->load($aRow['TAS_UID']);
+    $aFields['ORIGIN'] = $aTask['TAS_TITLE'];
+		$oUser = new Users();
+		$aUser = $oUser->load($oAppDocument->Fields['USR_UID']);
+		$aFields['CREATOR'] = $aUser['USR_FIRSTNAME'] . ' ' . $aUser['USR_LASTNAME'];
 		$aFields['VIEW'] = G::LoadTranslation('ID_OPEN');
 		$aFields['FILE1'] = 'cases_ShowOutputDocument?a=' . $aFields['APP_DOC_UID'] . '&ext=doc&random=' . rand();
 		$aFields['FILE2'] = 'cases_ShowOutputDocument?a=' . $aFields['APP_DOC_UID'] . '&ext=pdf&random=' . rand();

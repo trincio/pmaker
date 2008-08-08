@@ -42,6 +42,9 @@ pake_task('new-project',  'project_exists');
 pake_desc('build new plugin');
 pake_task('new-plugin',  'project_exists');
 
+pake_desc('pack plugin in .tar file');
+pake_task('pack-plugin',  'project_exists');
+
 pake_desc('generate basic CRUD files for an existing class');
 pake_task('propel-build-crud',  'project_exists');
 
@@ -244,7 +247,7 @@ function run_generate_unit_test_class ( $task, $args)
     
     $pluginFilename = $pluginOutDirectory . $fName;
     
-    $pluginTpl      = PATH_GULLIVER_HOME . 'bin' . PATH_SEP . 'tasks' . PATH_SEP . $tplName . '.tpl';
+    $pluginTpl      = PATH_GULLIVER_HOME . 'bin' . PATH_SEP . 'tasks' .PATH_SEP . 'templates' . PATH_SEP . $tplName . '.tpl';
     $template = new TemplatePower( $pluginTpl );
     $template->prepare();
     $template->assign ( 'className', $class );
@@ -411,6 +414,72 @@ die;
   exit (0);
 }
 
+function addTarFolder ( $tar, $pathBase,$pluginHome ) {
+  if ($handle = opendir( $pathBase  )) {
+  	//print "base $pathBase\n";
+    while ( false !== ($file = readdir($handle))) {
+    	if ( is_file ( $pathBase . $file ) ) {
+     	//print "file $file \n";
+        $tar->addModify( $pathBase . $file,'', $pluginHome);
+      }
+    	if ( is_dir (  $pathBase . $file ) && $file != '..' && $file != '.' ) {
+     	//print "dir $pathBase$file \n";
+        addTarFolder ( $tar, $pathBase . $file . PATH_SEP ,$pluginHome);
+      }	
+    }
+    closedir($handle);
+  }
+}
+
+function run_pack_plugin ( $task, $args) 
+{
+  ini_set('display_errors','on');
+  ini_set('error_reporting', E_ERROR);
+
+  // the environment for poedit always is Development
+  define ( 'G_ENVIRONMENT', G_DEV_ENV );
+
+  //the plugin name in the first argument
+  if ( !isset($args[0]) ) {
+    printf("Error: %s\n", pakeColor::colorize( 'you must specify a valid name for the plugin', 'ERROR'));
+    exit (0);
+  }  
+  $pluginName = $args[0];
+  
+  require_once ( "propel/Propel.php" );
+  G::LoadSystem ('templatePower');
+
+  //Propel::init(  PATH_CORE . "config/databases.php");  
+  //$configuration = Propel::getConfiguration();
+  //$connectionDSN = $configuration['datasources']['workflow']['connection'];
+  //printf("using DSN Connection %s \n", pakeColor::colorize( $connectionDSN, 'INFO'));
+
+  $pluginDirectory = PATH_PLUGINS . $pluginName;
+  $pluginOutDirectory = PATH_OUTTRUNK . 'plugins' . PATH_SEP . $pluginName;
+  $pluginHome = PATH_OUTTRUNK . 'plugins' . PATH_SEP . $pluginName;
+
+  //verify if plugin exists, 
+  $pluginClassFilename = PATH_PLUGINS . $pluginName . PATH_SEP . 'class.' . $pluginName . '.php';
+  if ( !is_file ( $pluginClassFilename ) ) { 
+    printf("The plugin %s does not exists in this file %s \n", pakeColor::colorize( $pluginName, 'ERROR'), pakeColor::colorize( $pluginClassFilename, 'INFO') );
+    die ;
+  }
+  
+  $fileTar = $pluginHome . PATH_SEP . $pluginName . '-1.0.tar';
+  G::LoadThirdParty( 'pear/Archive','Tar');
+  $tar = new Archive_Tar ( $fileTar);
+  $tar->_compress=false;
+
+  $pathBase = $pluginHome . PATH_SEP . $pluginName . PATH_SEP;
+  $tar->createModify( $pluginHome . PATH_SEP . $pluginName . '.php' ,'', $pluginHome);
+  addTarFolder ( $tar, $pathBase, $pluginHome );
+  $aFiles = $tar->listContent();
+  foreach ( $aFiles as $key => $val ) {
+    printf( " %6d %s \n", $val['size'], pakeColor::colorize( $val['filename'], 'INFO') );
+  }
+  printf( "File created in  %s \n", pakeColor::colorize( $fileTar, 'INFO') );
+  
+}
 function run_new_plugin ( $task, $args) 
 {
   ini_set('display_errors','on');
@@ -465,6 +534,7 @@ function run_new_plugin ( $task, $args)
   $changeLogo = strtolower ( prompt ( 'Change system logo [y/N]' ));
 
   $fields = array();
+  $fields['phpClassName'] = $pluginName;
   if ( $changeLogo == 'y' ) {
     $filePng = $pluginHome . PATH_SEP . 'public_html' . PATH_SEP . $pluginName . '.png';
     createPngLogo ( $filePng, $pluginName );
@@ -475,7 +545,7 @@ function run_new_plugin ( $task, $args)
   $menu = strtolower ( prompt ( 'Create an example Page [Y/n]' ));
   if ( $menu == 'y' ) {
     $fields['menu'][] = array( 'className' => $pluginName );
-    savePluginFile ( $pluginName . PATH_SEP . 'menu' . $pluginName . '.php', 'pluginMenu', $pluginName, $pluginName );
+    savePluginFile ( $pluginName . PATH_SEP . 'menu' . $pluginName . '.php', 'pluginMenu', $pluginName, $pluginName, $fields );
     savePluginFile ( $pluginName . PATH_SEP . $pluginName . 'List.php', 'pluginWelcome.php', $pluginName, $pluginName );
     savePluginFile ( $pluginName . PATH_SEP . 'welcome.xml', 'welcome.xml', $pluginName, $pluginName );
   }

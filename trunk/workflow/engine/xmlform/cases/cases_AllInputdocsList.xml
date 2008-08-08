@@ -12,9 +12,20 @@
 
 <CONFIRM type="hidden" showInTable="0"/>
 
-<TITLE type="text" colWidth="275" titleAlign="left" align="left">
-  <en></en>
+<TITLE type="text" colWidth="300" titleAlign="left" align="left">
+  <en>Filename/Comments</en>
 </TITLE>
+
+<TYPE type="dropdown" colWidth="75" titleAlign="left" align="left">
+  <en>Type
+  <option name="INPUT">Input Document</option>
+  <option name="ATTACHED">Attached in form</option>
+  </en>
+</TYPE>
+
+<ORIGIN type="text" colWidth="300" titleAlign="left" align="left">
+  <en>Origin Task</en>
+</ORIGIN>
 
 <VIEW type="link" colWidth="25" value="@G::LoadTranslation(ID_VIEW)" link="#" onclick="showUploadedDocument(@QAPP_DOC_UID);"/>
 

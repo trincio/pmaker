@@ -42,6 +42,10 @@
   <en>Creator</en>
 </CREATOR>
 
+<ORIGIN type="text" mode="view">
+  <en>Origin Task</en>
+</ORIGIN>
+
 <!--<INP_DOC_PUBLISHED type="dropdown" colWidth="80" titleAlign="left" align="left" mode="view">
   <en>Access type
   <option name ='PRIVATE'>Private</option>

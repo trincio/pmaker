@@ -22,6 +22,10 @@
   <en>Creator</en>
 </CREATOR>
 
+<ORIGIN type="text" mode="view">
+  <en>Origin Task</en>
+</ORIGIN>
+
 <VIEW type="phpVariable"/>
 
 <FILE type="phpVariable"/>
