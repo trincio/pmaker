@@ -2252,7 +2252,7 @@ class processMap {
       //Obtain object and type
       switch ($aRow['OP_OBJ_TYPE']) {
         case 'ANY':
-          $sObjectType = G::LoadTranslation('ID_ANY');
+          $sObjectType = G::LoadTranslation('ID_ALL');
           $sObject     = G::LoadTranslation('ID_ALL');
         break;
         /*case 'ANY_DYNAFORM':

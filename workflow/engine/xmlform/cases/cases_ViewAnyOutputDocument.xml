@@ -32,4 +32,12 @@
   <en>File (.pdf)</en>
 </APP_DOC_FILENAME2>
 
+<CREATOR type="text" mode="view">
+  <en>Creator</en>
+</CREATOR>
+
+<ORIGIN type="text" mode="view">
+  <en>Origin Task</en>
+</ORIGIN>
+
 </dynaForm>

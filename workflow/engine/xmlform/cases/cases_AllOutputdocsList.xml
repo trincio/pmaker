@@ -12,9 +12,13 @@
 
 <CONFIRM type="hidden" showInTable="0"/>
 
-<TITLE type="text" colWidth="275" titleAlign="left" align="left">
-  <en></en>
+<TITLE type="text" colWidth="300" titleAlign="left" align="left">
+  <en>Title</en>
 </TITLE>
+
+<ORIGIN type="text" colWidth="300" titleAlign="left" align="left">
+  <en>Origin Task</en>
+</ORIGIN>
 
 <VIEW type="link" colWidth="25" value="@G::LoadTranslation(ID_VIEW)" link="#" onclick="showGeneratedDocument(@QAPP_DOC_UID);"/>
 

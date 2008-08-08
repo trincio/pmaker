@@ -4,23 +4,23 @@
 >
 <OP_UID type="private" showInTable="0" />
 <TASK_TARGET type="text" titleAlign="left" colWidth="150">
-  <en>Task Target</en>
+  <en>Target Task</en>
 </TASK_TARGET>
 <GROUP_USER type="text" titleAlign="left" colWidth="150">
   <en>Group or User</en>
 </GROUP_USER>
 <TASK_SOURCE type="text" titleAlign="left" colWidth="150">
-  <en>Task Source</en>
+  <en>Origin Task</en>
 </TASK_SOURCE>
+<PARTICIPATED type="text" titleAlign="left" colWidth="70">
+  <en>Participation</en>
+</PARTICIPATED>
 <OBJECT_TYPE type="text" titleAlign="left" colWidth="70">
   <en>Type</en>
 </OBJECT_TYPE>
 <OBJECT type="text" titleAlign="left" colWidth="150">
   <en>Object</en>
 </OBJECT>
-<PARTICIPATED type="text" titleAlign="left" colWidth="70">
-  <en>Participated</en>
-</PARTICIPATED>
 <ACTION type="text" titleAlign="left" colWidth="60">
   <en>Permission</en>
 </ACTION>
