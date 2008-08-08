@@ -2267,7 +2267,10 @@ class Cases
 		$RESULT_OBJECTS['DYNAFORMS']		= G::arrayDiff($MAIN_OBJECTS['VIEW']['DYNAFORMS'], $MAIN_OBJECTS['BLOCK']['DYNAFORMS']);
 		$RESULT_OBJECTS['INPUT_DOCUMENTS']	= G::arrayDiff($MAIN_OBJECTS['VIEW']['INPUT_DOCUMENTS'], $MAIN_OBJECTS['BLOCK']['INPUT_DOCUMENTS']);
 		$RESULT_OBJECTS['OUTPUT_DOCUMENTS']	= G::arrayDiff($MAIN_OBJECTS['VIEW']['OUTPUT_DOCUMENTS'], $MAIN_OBJECTS['BLOCK']['OUTPUT_DOCUMENTS']);
-
+		array_push($RESULT_OBJECTS['DYNAFORMS'], -1);
+		array_push($RESULT_OBJECTS['INPUT_DOCUMENTS'], -1);
+		array_push($RESULT_OBJECTS['OUTPUT_DOCUMENTS'], -1);
+		
 		return $RESULT_OBJECTS;
 	}
 
@@ -2284,16 +2287,15 @@ class Cases
 
 
 		$RESULT = Array();
-		$RESULT['DYNAFORM'] = Array(-1);
-		$RESULT['INPUT'] = Array(-1);
-		$RESULT['OUTPUT'] = Array(-1);
+		$RESULT['DYNAFORM']	= Array();
+		$RESULT['INPUT']	= Array();
+		$RESULT['OUTPUT']	= Array();
+		
 		$rs->next();
 
 		while ($row = $rs->getRow() ) {
 			$rs->next();
-			echo '<pre>';
-			print_r($row);
-			echo '</pre>';
+			
 			$USER_RELATION 	= $row['OP_USER_RELATION'];
 			$TASK_SOURCE	= $row['OP_TASK_SOURCE'];
 			$PARTICIPATE	= $row['OP_PARTICIPATE'];
@@ -2342,7 +2344,7 @@ class Cases
 
 						//inputs
 						$oCriteria = new Criteria('workflow');
-						$oCriteria->addSelectColumn(AppDocumentPeer::DOC_UID);
+						$oCriteria->addSelectColumn(AppDocumentPeer::APP_DOC_UID);
 						$oCriteria->addSelectColumn(AppDocumentPeer::APP_DOC_TYPE);
 						$oCriteria->add(AppDelegationPeer::APP_UID, $APP_UID);
 						$oCriteria->add(AppDelegationPeer::PRO_UID, $PRO_UID);
@@ -2404,7 +2406,7 @@ class Cases
 							$obj_type = 'OUTPUT';
 						}
 						$oCriteria = new Criteria('workflow');
-						$oCriteria->addSelectColumn(AppDocumentPeer::DOC_UID);
+						$oCriteria->addSelectColumn(AppDocumentPeer::APP_DOC_UID);
 						$oCriteria->addSelectColumn(AppDocumentPeer::APP_DOC_TYPE);
 						$oCriteria->add(AppDelegationPeer::APP_UID, $APP_UID);
 						$oCriteria->add(AppDelegationPeer::PRO_UID, $PRO_UID);
@@ -2439,13 +2441,6 @@ class Cases
 	}
 
 }
-
-
-/*$c = new Cases;
-$x = $c->getAllObjects($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['TASK'], $_SESSION['USER_LOGGED']); //erik
-echo '<pre>';
-print_r($x);
-echo '</pre>';*/
 
 
 
