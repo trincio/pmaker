@@ -28,6 +28,7 @@ leimnud.Package.Public({
 			{
 				this.paginator();
 			}
+			return this;
 		};
 		this.render=function()
 		{
@@ -634,13 +635,14 @@ leimnud.Package.Public({
 					this.parent.dom.setStyle(dom,{
 						padding	:5
 					});
+					//alert(this.options.data.column[indexCell].onchange);
+					//dom.innerHTML=dataRow.value = input.value.escapeHTML();
+					dom.innerHTML=dataRow.value = input.value;
 					if(this.options.data.column[indexCell].onchange)
 					{
 						this.options.data.column[indexCell].onchange({index:this.options.data.rows[indexRow],dom:input});
 					}
-					//alert(this.options.data.column[indexCell].onchange);
-					//dom.innerHTML=dataRow.value = input.value.escapeHTML();
-					dom.innerHTML=dataRow.value = input.value;
+
 				}.extend(this);
 				dom.appendChild(input);
 				input.focus();
@@ -1170,12 +1172,13 @@ leimnud.Package.Public({
 				{
 					if(row.data[j]!=null)
 					{
-						ro.data.push(row.data[j]);
+						var v = this.options.data.rows[i].data[j];
+						ro.data.push(v);
 					}
 				}
 				data.rows.push(ro);
 			}
-			return data.toJSONString();
+			return (type=='json')?data.toJSONString():data;
 		};
 		this.add=function()
 		{

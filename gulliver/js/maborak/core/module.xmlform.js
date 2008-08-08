@@ -125,7 +125,7 @@ leimnud.Package.Public({
 			}
 			return o;
 		};
-		this.tag_edit=function(tag,ce)
+		this.tag_edit=function(tag,ce,onchange)
 		{
 			if(!this.options.target || this.current_edit===ce){return false;}
 			this.options.target.innerHTML='';
@@ -140,7 +140,8 @@ leimnud.Package.Public({
 					data:[{value:atr.nodeName},{value:atr.nodeValue}]
 				});
 			}
-			new this.parent.module.grid().make({
+			this.current_xml_edit = new this.parent.module.grid();
+			this.current_xml_edit.make({
 				target	:this.options.target,
 				paginator	:{
 					limit	:10
@@ -154,10 +155,6 @@ leimnud.Package.Public({
 						edit:false,
 						paint:'bg1',
 						width:"40%",
-						onchange	:function(data)
-						{
-							//alert(data.index+":"+data.dom)
-						},
 						style:{
 							fontWeight:"bold"
 						},
@@ -172,10 +169,12 @@ leimnud.Package.Public({
 						style:{
 							fontWeight:"bold"
 						},
-						onchange	:function(data)
+						onchange:onchange || function(){},
+						/*onchange:function(data,db_uid)
 						{
-							//alert(data.index+":"+data.dom)
-						},
+							var cd = this.current_xml_edit.save('object');
+							this.sync_node(db_uid,cd);
+						}.extend(this,ce),*/
 						width	: "60%"
 					}
 				],
@@ -183,6 +182,21 @@ leimnud.Package.Public({
 			}
 			});
 			return true;
+		};
+		this.sync_node=function(db_uid,obj)
+		{
+			var node = this.db[db_uid];
+			obj = this.current_xml_edit.save('object');
+			for(var i=0;i<obj.rows.length;i++)
+			{
+				var an = obj.rows[i].data[0].value;
+				var av = obj.rows[i].data[1].value;
+				var af = document.createAttribute(an);
+				af.nodeValue=av;
+				node.setAttributeNode(af);
+				this.debug.log(node);
+
+			}
 		};
 		this.expand(this);
 	}
