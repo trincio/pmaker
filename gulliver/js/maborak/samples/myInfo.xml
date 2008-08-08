@@ -1,24 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dynaForm name="myInfo" width="500px" labelWidth="200px"  mode="edit" enableTemplate="0">
-
-
-
-
-
-
-<section  name='a' type='float'>
-    <USR_UID type="hidden" section='a' />
-    <include file='other.xml' />
-</section>
-
-
-
 <section  name='b' type='static' />
-
-
-
-
-<Pagos type="section" mode="float" />
 <Pagos type="section_float" top="" left="" width="" height="" section='parent' />
 
 <USR_UID type="hidden" section='a' />
@@ -227,4 +209,7 @@ var existsElements = function () {
     hideRow(this);
   }
 };
-</JS><wilmer>Valor de texto</wilmer></dynaForm>
+</JS>
+<wilmer group='wilmer' type='text'>Valor de Campo Wilmer</wilmer>
+<other_wilmer group='wilmer' type='text'>Valor de Campo Otro</other_wilmer>
+</dynaForm>

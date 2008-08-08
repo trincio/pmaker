@@ -275,9 +275,13 @@ leimnud.Package.Public({
 			this.yy=33;
 			this.make=function(options)
 			{
-				this.options = {bubble:true,theme:"firefox"}.concat(options) || {};
+				this.options = {
+						bubble:true,
+						theme :"firefox"
+					}.concat(options || {});
 				if(!this.validate()){return false;}
-				this.parent.event.add(this.options.target,"click",this.parent.closure({instance:this,method:this.updateObservers,event:true}));
+				this.parent.event.add(this.options.targetRemove || this.options.target,"click",this.updateObservers);
+				//this.parent.event.add(this.options.target,"click",this.parent.closure({instance:this,method:this.updateObservers,event:true}));
 				//this.parent.event.add(document.body,"click",this.parent.closure({instance:this,method:this.remove}));
 				//this.parent.event.add(this.options.target,"contextmenu",function(){return false;});
 				//this.options.target.oncontextmenu=this.parent.closure({instance:this,method:this.menu,event:true});
@@ -374,7 +378,7 @@ leimnud.Package.Public({
 						sep.className = "app_menuRight_separator___"+this.options.theme;
 						dv.appendChild(sep);
 						this.parent.dom.setStyle([dv,sep],{
-							height:(this.parent.browser.isIE?2:1)
+							height:(this.parent.browser.isIE?2:0)
 						});
 					}
 					ii++;

@@ -28,6 +28,19 @@ var maborak = function(){
 	this.make=function(options)
 	{
 		this.protoCore();
+		this.module={
+			debug:function(flag){
+				this.flag = flag || false;
+				this.log=function(v)
+				{
+					if(typeof console!='undefined' && this.flag===true)
+					{
+						console.log(v || '');
+					}
+				};
+				return this;
+			}
+		}.expand(this);
 		this.options={
             thisIsNotPM:false
         }.concat(options || {});
@@ -110,8 +123,10 @@ var maborak = function(){
 			this.write=function()
 			{
 				var cap = {
-					update:this.parent.closure({instance:this,method:this.update}),
-					unregister:this.parent.closure({instance:this,method:this.unregister,args:this.db.length})
+					//update:this.parent.closure({instance:this,method:this.update}),
+					//unregister:this.parent.closure({instance:this,method:this.unregister,args:this.db.length})
+					update:this.update,
+					unregister:this.unregister.args(this.db.length)
 				};
 				this.db.push(this.launch);
 				if(this.Class)
@@ -473,18 +488,34 @@ var maborak = function(){
 		* @param {Int} id Key of object (1,2,3,4,5)
 		* @return Key value
 		*/
-		/*Object.prototype.get	= function(id)
+		Object.prototype.get_by_key= function(id,key)
 		{
 			var j=0;
 			for (var i in this) {
 				if(this.propertyIsEnumerable(i))
 				{
-					if(id===j){return this[i];}
+					if(id===j){return (key)?i:this[i];}
 					j+=1;
 				}
 			}
 			return false;
-		};*/
+		};
+		/**
+		* es| Verificar si existe un key
+		* @param {String} key Key
+		* @return Boolean
+		*/
+		Object.prototype.isset_key= function(key)
+		{
+			for (var i in this) {
+				if(this.propertyIsEnumerable(i))
+				{
+					if(key===i){return true;}
+				}
+			}
+			return false;
+		};
+
 		/**
 		* es| Asignarle prototype.parent a todas las funciones
 		* @param {Object} obj
@@ -696,6 +727,21 @@ var maborak = function(){
 		{
 			return this.replace(new RegExp(tagScript, 'img'), '');
 		};
+		/**
+		*	XMLSerializer Crossbrowser
+		*/
+		if((typeof XMLSerializer)==='undefined')
+		{
+			window.XMLSerializer = function() {
+				this.toString=function()
+				{
+					return "[object XMLSerializer]";
+				};
+				this.serializeToString=function(xml){
+					return xml.xml || xml.outerHTML || "Error XMLSerializer";
+				};
+			};	
+		}
 	};
 	/**
 	* Load methods
