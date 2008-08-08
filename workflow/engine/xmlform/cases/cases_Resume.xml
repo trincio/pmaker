@@ -30,12 +30,12 @@
   <en>Case Status</en>
 </STATUS>
 
-<CURRENT_TASK_STATUS type="dropdown" mode="view">
+<!--<CURRENT_TASK_STATUS type="dropdown" mode="view">
   <en>Current Task Status
     <option name="">In Progress</option>
     <option name="PAUSE">Paused</option>
     <option name="CANCEL">Finished</option>
   </en>
-</CURRENT_TASK_STATUS>
+</CURRENT_TASK_STATUS>-->
 
 </dynaForm>
