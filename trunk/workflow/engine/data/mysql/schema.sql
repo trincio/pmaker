@@ -722,5 +722,27 @@ CREATE TABLE `STEP_SUPERVISOR`
 	PRIMARY KEY (`STEP_UID`),
 	KEY `indexStepSupervisor`(`PRO_UID`, `STEP_TYPE_OBJ`, `STEP_UID_OBJ`)
 )Type=MyISAM  DEFAULT CHARSET='utf8' COMMENT='STEP_SUPERVISOR';
+#-----------------------------------------------------------------------------
+#-- OBJECT_PERMISSION
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `OBJECT_PERMISSION`;
+
+
+CREATE TABLE `OBJECT_PERMISSION`
+(
+	`OP_UID` VARCHAR(32) default '0' NOT NULL,
+	`PRO_UID` VARCHAR(32) default '0' NOT NULL,
+	`TAS_UID` VARCHAR(32) default '0' NOT NULL,
+	`USR_UID` VARCHAR(32) default '0' NOT NULL,
+	`OP_USER_RELATION` INTEGER default 0 NOT NULL,
+	`OP_TASK_SOURCE` VARCHAR(32) default '0',
+	`OP_PARTICIPATE` INTEGER default 0 NOT NULL,
+	`OP_OBJ_TYPE` VARCHAR(15) default '0' NOT NULL,
+	`OP_OBJ_UID` VARCHAR(32) default '0' NOT NULL,
+	`OP_ACTION` VARCHAR(10) default '0' NOT NULL,
+	PRIMARY KEY (`OP_UID`),
+	KEY `indexObjctPermission`(`PRO_UID`, `TAS_UID`, `USR_UID`, `OP_TASK_SOURCE`, `OP_OBJ_UID`)
+)Type=MyISAM  DEFAULT CHARSET='utf8' COMMENT='OBJECT_PERMISSION';
 # This restores the fkey checks, after having unset them earlier
 SET FOREIGN_KEY_CHECKS = 1;
