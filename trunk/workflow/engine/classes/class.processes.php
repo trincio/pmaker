@@ -30,6 +30,7 @@ require_once 'classes/model/Route.php';
 require_once 'classes/model/Route.php';
 require_once 'classes/model/SwimlanesElements.php';
 require_once 'classes/model/InputDocument.php';
+require_once ("classes/model/ObjectPermission.php");
 require_once 'classes/model/OutputDocument.php';
 require_once 'classes/model/Step.php';
 require_once 'classes/model/StepTrigger.php';
@@ -260,6 +261,10 @@ class Processes {
   	foreach ($oData->dbconnections as $key => $val ) {
   		$oData->dbconnections[$key]['PRO_UID'] = $sNewProUid;
   	}
+	foreach ($oData->objectPermissions as $key => $val ) {
+		$oData->objectPermissions[$key]['PRO_UID'] = $sNewProUid;
+	}
+	
   	return true;
   }
 
@@ -619,6 +624,26 @@ class Processes {
     }
   }
 
+  function getObjectPermissionRows ($sProUid ){ // by erik
+	  try {
+		  $oPermissions   = array();
+		  $oCriteria = new Criteria('workflow');
+		  $oCriteria->add(ObjectPermissionPeer::PRO_UID,  $sProUid);
+		  $oDataset = ObjectPermissionPeer::doSelectRS($oCriteria);
+		  $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+		  $oDataset->next();
+		  while ($aRow = $oDataset->getRow()) {
+			  $o = new ObjectPermission();
+			  $oPermissions[] = $o->Load( $aRow['OP_UID'] );
+			  $oDataset->next();
+		  }
+		  return $oPermissions;
+	  }
+	  catch (Exception $oError) {
+		  throw($oError);
+	  }
+  }#@!neyek
+
   function createDynaformRows ($aDynaform ){
   	foreach ( $aDynaform as $key => $row ) {
       $oDynaform = new Dynaform();
@@ -628,6 +653,17 @@ class Processes {
   	return;
   }
 
+  function createObjectPermissions ($objectPermissions){ //by erik
+	  foreach ( $objectPermissions as $key => $row ) {
+		  $o = new ObjectPermission();
+		  if( $o->Exists($aRow['OP_UID']) ) {
+			  $o->remove($aRow['OP_UID']);
+		  }
+		  $oConnection->create($aRow);
+		  $res = $o->create($row);
+	  }
+	  return;
+  }#@!neyek
 
   function createStepTriggerRows ($aStepTrigger ){
   	foreach ( $aStepTrigger as $key => $row ) {
@@ -856,9 +892,6 @@ class Processes {
   function createDBConnectionsRows ($aConnections ) {
   	foreach ( $aConnections as $sKey => $aRow ) {
       $oConnection = new DbSource();
-      /*echo '<pre>';
-      print_r($aConnections); exit;
-      echo '</pre>';*/
 	  if( $oConnection->Exists($aRow['DBS_UID']) ) {
 		$oConnection->remove($aRow['DBS_UID']);
 	  }
@@ -927,6 +960,7 @@ class Processes {
     $oData->reportTables  = $this->getReportTablesRows($sProUid);
     $oData->reportTablesVars  = $this->getReportTablesVarsRows($sProUid);
     $oData->stepSupervisor    = $this->getStepSupervisorRows($sProUid);
+	$oData->objectPermissions = $this->getObjectPermissionRows ($sProUid);
     //krumo ($oData);die;
     //$oJSON = new Services_JSON();
     //krumo ( $oJSON->encode($oData) );
@@ -1272,6 +1306,7 @@ class Processes {
     $this->createDBConnectionsRows($oData->dbconnections);
     $this->createReportTables($oData->reportTables, $oData->reportTablesVars);
     $this->createDynamformFiles ( $oData, $pmFilename  );
+	$this->createObjectPermissions( $oData->objectPermissions );
  }
 
   /*
