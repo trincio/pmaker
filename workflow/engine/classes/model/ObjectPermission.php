@@ -15,5 +15,82 @@ require_once 'classes/model/om/BaseObjectPermission.php';
  * @package    classes.model
  */
 class ObjectPermission extends BaseObjectPermission {
+	
+	public function load($UID)
+	{
+		try {
+			$oRow = ObjectPermissionPeer::retrieveByPK( $UID );
+			if (!is_null($oRow))
+			{
+				$aFields = $oRow->toArray(BasePeer::TYPE_FIELDNAME);
+				$this->fromArray($aFields,BasePeer::TYPE_FIELDNAME);
+				$this->setNew(false);
+				return $aFields;
+			}
+			else {
+				throw(new Exception( "The row '" . $UsrUid . "' in table USER doesn't exists!" ));
+			}
+		}
+		catch (Exception $oError) {
+			throw($oError);
+		}
+	}
+	
+	function create ($aData)
+	{
+		$con = Propel::getConnection(UsersPeer::DATABASE_NAME);
+		try
+		{
+			$this->fromArray($aData, BasePeer::TYPE_FIELDNAME);
+			if($this->validate())
+			{
+				$result=$this->save();
+			}
+			else
+			{
+				$e=new Exception("Failed Validation in class ".get_class($this).".");
+				$e->aValidationFailures=$this->getValidationFailures();
+				throw($e);
+			}
+			$con->commit();
+			return $result;
+		}
+		catch(Exception $e)
+		{
+			$con->rollback();
+			throw($e);
+		}
+	}
+
+	function Exists ( $Uid ) {
+		try {
+			$oPro = ObjectPermissionPeer::retrieveByPk( $Uid );
+			if ( get_class ($oPro) == 'ObjectPermission' ) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		catch (Exception $oError) {
+			throw($oError);
+		}
+	}
+
+	function remove($Uid)
+	{
+		$con = Propel::getConnection(DbSourcePeer::DATABASE_NAME);
+		try {
+			$con->begin();
+			$this->setOpUid($Uid);
+			$result = $this->delete();
+			$con->commit();
+			return $result;
+		}
+		catch (exception $e) {
+			$con->rollback();
+			throw ($e);
+		}
+	}
 
 } // ObjectPermission
