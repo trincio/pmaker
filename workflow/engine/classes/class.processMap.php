@@ -2195,6 +2195,8 @@ class processMap {
   }
 
   function getObjectsPermissionsCriteria($sProcessUID) {
+    G::LoadClass('case');
+    Cases::verifyTable();
     $aObjectsPermissions   = array();
   	$aObjectsPermissions[] = array('OP_UID'       => 'char',
   	                               'TASK_TARGET'  => 'char',

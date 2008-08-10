@@ -1964,9 +1964,9 @@ class Cases
     }
 
     function getAllUploadedDocumentsCriteria($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID) {
-    	//verifica si la tabla OBJECT_PERMISSION    	    	 		  
+    	//verifica si la tabla OBJECT_PERMISSION
     	$this->verifyTable();
-    	
+
       $aObjectPermissions = $this->getAllObjects($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID);
       if (!is_array($aObjectPermissions)) {
         $aObjectPermissions = array('DYNAFORMS' => array(-1), 'INPUT_DOCUMENTS' => array(-1), 'OUTPUT_DOCUMENTS' => array(-1));
@@ -2068,9 +2068,9 @@ class Cases
     }
 
     function getAllGeneratedDocumentsCriteria($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID) {
-    	//verifica si la tabla OBJECT_PERMISSION    	    	 		  
+    	//verifica si la tabla OBJECT_PERMISSION
     	$this->verifyTable();
-    	
+
       $aObjectPermissions = $this->getAllObjects($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID);
       if (!is_array($aObjectPermissions)) {
         $aObjectPermissions = array('DYNAFORMS' => array(-1), 'INPUT_DOCUMENTS' => array(-1), 'OUTPUT_DOCUMENTS' => array(-1));
@@ -2144,9 +2144,9 @@ class Cases
 
     function getallDynaformsCriteria($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID)
     {
-    	//verifica si la tabla OBJECT_PERMISSION    	    	 		  
+    	//verifica si la tabla OBJECT_PERMISSION
     	$this->verifyTable();
-    	
+
       $aObjectPermissions = $this->getAllObjects($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID);
       if (!is_array($aObjectPermissions)) {
         $aObjectPermissions = array('DYNAFORMS' => array(-1), 'INPUT_DOCUMENTS' => array(-1), 'OUTPUT_DOCUMENTS' => array(-1));
@@ -2313,13 +2313,13 @@ class Cases
 	* @param  Process ID, Application ID, Task ID and User ID
 	* @return Array within all user permitions all objects' types
 	*/
-	
+
 	function getAllObjects($PRO_UID, $APP_UID, $TAS_UID = '', $USR_UID)
 	{
 		$ACTIONS = Array('VIEW', 'BLOCK'); //TO COMPLETE
 		$MAIN_OBJECTS = Array();
 		$RESULT_OBJECTS = Array();
-		
+
 		foreach($ACTIONS as $action) {
 			$MAIN_OBJECTS[$action] = $this->getAllObjectsFrom($PRO_UID, $APP_UID, $TAS_UID, $USR_UID, $action);
 		}
@@ -2331,7 +2331,7 @@ class Cases
 		array_push($RESULT_OBJECTS['DYNAFORMS'], -1);
 		array_push($RESULT_OBJECTS['INPUT_DOCUMENTS'], -1);
 		array_push($RESULT_OBJECTS['OUTPUT_DOCUMENTS'], -1);
-		
+
 		return $RESULT_OBJECTS;
 	}
 
@@ -2344,7 +2344,7 @@ class Cases
 	* @param  Process ID, Application ID, Task ID, User ID, Action
 	* @return Array within all user permitions all objects' types
 	*/
-	
+
 	function getAllObjectsFrom($PRO_UID, $APP_UID, $TAS_UID = '', $USR_UID, $ACTION='')
 	{
 		$USER_PERMISSIONS = Array();
@@ -2379,12 +2379,12 @@ class Cases
 			while ($rs->next()) {
 				array_push($GROUP_PERMISSIONS, $rs->getRow());
 			}
-		}	
-		
+		}
+
 		$PERMISSIONS = array_merge($USER_PERMISSIONS, $GROUP_PERMISSIONS);
-		
+
 		foreach ($PERMISSIONS as $row) {
-			
+
 			$USER 			= $row['USR_UID'];
 			$USER_RELATION 	= $row['OP_USER_RELATION'];
 			$TASK_SOURCE	= $row['OP_TASK_SOURCE'];
@@ -2392,7 +2392,7 @@ class Cases
 			$O_TYPE			= $row['OP_OBJ_TYPE'];
 			$O_UID			= $row['OP_OBJ_UID'];
 			$ACTION			= $row['OP_ACTION'];
- 
+
 			// here!,. we should verify $PARTICIPATE
 			$sw_participate = false; // must be false for default
 			if($PARTICIPATE == 1){
@@ -2406,7 +2406,7 @@ class Cases
 			}
 
 			if( !$sw_participate ) {
-			
+
 				switch( $O_TYPE ) {
 					case 'ANY':
 						//for dynaforms
@@ -2424,14 +2424,14 @@ class Cases
 						$oDataset = DynaformPeer::doSelectRS($oCriteria);
 						$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
 						$oDataset->next();
-						
+
 						while ($aRow = $oDataset->getRow()) {
 							if( !in_array($aRow['DYN_UID'], $RESULT['DYNAFORM']) ) {
 								array_push($RESULT['DYNAFORM'], $aRow['DYN_UID']);
 							}
 							$oDataset->next();
 						}
-						
+
 						//inputs
 						$oCriteria = new Criteria('workflow');
 						$oCriteria->addSelectColumn(AppDocumentPeer::APP_DOC_UID);
@@ -2446,7 +2446,7 @@ class Cases
 						$aConditions[] = array(AppDelegationPeer::APP_UID, AppDocumentPeer::APP_UID);
 						$aConditions[] = array(AppDelegationPeer::DEL_INDEX, AppDocumentPeer::DEL_INDEX);
 						$oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
-						
+
 						$oDataset = DynaformPeer::doSelectRS($oCriteria);
 						$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
 						$oDataset->next();
@@ -2456,7 +2456,7 @@ class Cases
 							}
 							$oDataset->next();
 						}
-						
+
 						break;
 
 					case 'DYNAFORM':
@@ -2477,16 +2477,16 @@ class Cases
 						$oDataset = DynaformPeer::doSelectRS($oCriteria);
 						$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
 						$oDataset->next();
-							
+
 						while ($aRow = $oDataset->getRow()) {
 							if( !in_array($aRow['DYN_UID'], $RESULT['DYNAFORM']) ) {
 								array_push($RESULT['DYNAFORM'], $aRow['DYN_UID']);
 							}
 							$oDataset->next();
 						}
-						
+
 					break;
-					
+
 					case 'INPUT' :
 					case 'OUTPUT':
 
@@ -2507,12 +2507,12 @@ class Cases
 							$oCriteria->add(AppDocumentPeer::DOC_UID, $O_UID);
 						}
 						$oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, $obj_type);
-						
+
 						$aConditions = Array();
 						$aConditions[] = array(AppDelegationPeer::APP_UID, AppDocumentPeer::APP_UID);
 						$aConditions[] = array(AppDelegationPeer::DEL_INDEX, AppDocumentPeer::DEL_INDEX);
 						$oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
-							
+
 						$oDataset = DynaformPeer::doSelectRS($oCriteria);
 						$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
 						$oDataset->next();
@@ -2526,7 +2526,7 @@ class Cases
 				}
 			}
 		}
-		
+
 		return Array("DYNAFORMS"=>$RESULT['DYNAFORM'], "INPUT_DOCUMENTS"=>$RESULT['INPUT'], "OUTPUT_DOCUMENTS"=>$RESULT['OUTPUT']);
 	}
 
@@ -2534,7 +2534,7 @@ class Cases
 /*
 funcion momentanea by Everth The Answer
 */
- function verifyTable(){ 		
+ function verifyTable(){
  	  $oCriteria = new Criteria('workflow');
 		$del = DBAdapter::getStringDelimiter();
     $sql = "CREATE TABLE IF NOT EXISTS `OBJECT_PERMISSION` (
@@ -2553,10 +2553,6 @@ funcion momentanea by Everth The Answer
 
 		$con = Propel::getConnection("workflow");
 		$stmt = $con->prepareStatement($sql);
-		$rs = $stmt->executeQuery();				    	  
+		$rs = $stmt->executeQuery();
 	}
 }
-
-
-
-
