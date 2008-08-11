@@ -10,9 +10,9 @@
   <en>Output document</en>
 </OUT_DOC_TITLE>
 
-<OUT_DOC_DESCRIPTION type="caption">
+<!--<OUT_DOC_DESCRIPTION type="caption">
   <en>Description</en>
-</OUT_DOC_DESCRIPTION>
+</OUT_DOC_DESCRIPTION>-->
 
 <APP_DOC_CREATE_DATE type="caption">
   <en>Create Date</en>

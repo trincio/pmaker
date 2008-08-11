@@ -25,9 +25,6 @@
  GLOBAL $RBAC;
   global $G_TMP_MENU;
 
-  if($RBAC->userCanAccess('PM_SUPERVISOR') == 1) {
-    $G_TMP_MENU->AddIdRawOption('CASES_TO_REVISE', 'cases/cases_List?l=to_revise', G::LoadTranslation('ID_TO_REVISE'));
-  }
   $G_TMP_MENU->AddIdRawOption('CASES_TO_DO', 'cases/cases_List?l=to_do', G::LoadTranslation('ID_TO_DO'));
   $G_TMP_MENU->AddIdRawOption('CASES_DRAFT', 'cases/cases_List?l=draft', G::LoadTranslation('ID_DRAFT'));
   $G_TMP_MENU->AddIdRawOption('CASES_PAUSED', 'cases/cases_List?l=paused', G::LoadTranslation('ID_PAUSED'));
@@ -36,5 +33,8 @@
   $G_TMP_MENU->AddIdRawOption('CASES_ALL', 'cases/cases_List?l=all', G::LoadTranslation('ID_ALL'));
   if($RBAC->userCanAccess('PM_ALLCASES') == 1) {
     $G_TMP_MENU->AddIdRawOption('CASES_GRAL', 'cases/cases_List?l=gral', G::LoadTranslation('ID_GENERAL'));
+  }
+  if($RBAC->userCanAccess('PM_SUPERVISOR') == 1) {
+    $G_TMP_MENU->AddIdRawOption('CASES_TO_REVISE', 'cases/cases_List?l=to_revise', G::LoadTranslation('ID_TO_REVISE'));
   }
 ?>

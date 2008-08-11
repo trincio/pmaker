@@ -70,10 +70,10 @@ class Report {
       	$aProcess[] = array('PRO_UID'   => $aRow['PRO_UID'],
       	                    'PRO_TITLE' => $aRow['PRO_TITLE'],
       	                    'CANTCASES' => ApplicationPeer::doCount($oCriteria),
-      	                    'MIN'       => $aRow['MIN'],
-      	                    'MAX'       => $aRow['MAX'],
-      	                    'TOTALDUR'  => $aRow['TOTALDUR'],
-      	                    'PROMEDIO'  => $aRow['PROMEDIO']);
+      	                    'MIN'       => number_format($aRow['MIN'], 2),
+      	                    'MAX'       => number_format($aRow['MAX'], 2),
+      	                    'TOTALDUR'  => number_format($aRow['TOTALDUR'], 2),
+      	                    'PROMEDIO'  => number_format($aRow['PROMEDIO'], 2));
       	$oDataset->next();
      }
 
@@ -136,10 +136,10 @@ class Report {
       	$aProcess[] = array('PRO_UID'   => $aRow['PRO_UID'],
       	                    'PRO_TITLE' => $aRow['PRO_TITLE'],
       	                    'CANTCASES' => ApplicationPeer::doCount($oCriteria),
-      	                    'MIN'       => $aRow['MIN'],
-      	                    'MAX'       => $aRow['MAX'],
-      	                    'TOTALDUR'  => $aRow['TOTALDUR'],
-      	                    'PROMEDIO'  => $aRow['PROMEDIO']);
+      	                    'MIN'       => number_format($aRow['MIN'],2),
+      	                    'MAX'       => number_format($aRow['MAX'],2),
+      	                    'TOTALDUR'  => number_format($aRow['TOTALDUR'],2),
+      	                    'PROMEDIO'  => number_format($aRow['PROMEDIO'],2));
       	$oDataset->next();
      }
 
@@ -262,10 +262,10 @@ class Report {
       	$aProcess[] = array('PRO_UID'   => $aRow['PRO_UID'],
       	                    'PRO_TITLE' => $aRow['PRO_TITLE'],
       	                    'CANTCASES' => $cant,
-      	                    'MIN'       => $aRow['MIN'],
-      	                    'MAX'       => $aRow['MAX'],
-      	                    'CASELASTMONTH' => $cant1,
-      	                    'CASELASTDAY' => $cant2
+      	                    'MIN'       => number_format($aRow['MIN'],2),
+      	                    'MAX'       => number_format($aRow['MAX'],2),
+      	                    'CASELASTMONTH' => number_format($cant1,2),
+      	                    'CASELASTDAY' => number_format($cant2,2)
       	                   );
       	$oDataset->next();
      }
@@ -443,10 +443,10 @@ class Report {
 			{
 				$ROW[] = array('FECHA'    => $rs->getString('FECHA'),
 				               'CANTCASES'=> $rs->getString('CANTCASES'),
-				               'MIN'      => $rs->getString('MIN'),
-	      							 'MAX'      => $rs->getString('MAX'),
-	      							 'TOTALDUR' => $rs->getString('TOTALDUR'),
-	      							 'PROMEDIO' => $rs->getString('PROMEDIO')
+				               'MIN'      => number_format($rs->getString('MIN'),2),
+	      							 'MAX'      => number_format($rs->getString('MAX'),2),
+	      							 'TOTALDUR' => number_format($rs->getString('TOTALDUR'),2),
+	      							 'PROMEDIO' => number_format($rs->getString('PROMEDIO'),2)
       	                );
 			}
 
@@ -509,10 +509,10 @@ class Report {
 			{
 				$ROW[] = array('FECHA'    => $rs->getString('FECHA'),
 				               'CANTCASES'=> $rs->getString('CANTCASES'),
-				               'MIN'      => $rs->getString('MIN'),
-	      							 'MAX'      => $rs->getString('MAX'),
-	      							 'TOTALDUR' => $rs->getString('TOTALDUR'),
-	      							 'PROMEDIO' => $rs->getString('PROMEDIO')
+				               'MIN'      => number_format($rs->getString('MIN'),2),
+	      							 'MAX'      => number_format($rs->getString('MAX'),2),
+	      							 'TOTALDUR' => number_format($rs->getString('TOTALDUR'),2),
+	      							 'PROMEDIO' => number_format($rs->getString('PROMEDIO'),2)
       	                );
 			}
 
@@ -563,10 +563,10 @@ class Report {
 			{
 				$ROW[] = array('USER'     => $rs->getString('USER'),
 				               'CANTCASES'=> $rs->getString('CANTCASES'),
-				               'MIN'      => $rs->getString('MIN'),
-	      							 'MAX'      => $rs->getString('MAX'),
-	      							 'TOTALDUR' => $rs->getString('TOTALDUR'),
-	      							 'PROMEDIO' => $rs->getString('PROMEDIO')
+				               'MIN'      => number_format($rs->getString('MIN'),2),
+	      							 'MAX'      => number_format($rs->getString('MAX'),2),
+	      							 'TOTALDUR' => number_format($rs->getString('TOTALDUR'),2),
+	      							 'PROMEDIO' => number_format($rs->getString('PROMEDIO'),2)
       	                );
 			}
 
@@ -633,10 +633,10 @@ class Report {
 			{
 				$ROW[] = array('USER'     => $rs->getString('USER'),
 				               'CANTCASES'=> $rs->getString('CANTCASES'),
-				               'MIN'      => $rs->getString('MIN'),
-	      							 'MAX'      => $rs->getString('MAX'),
-	      							 'TOTALDUR' => $rs->getString('TOTALDUR'),
-	      							 'PROMEDIO' => $rs->getString('PROMEDIO')
+				               'MIN'      => number_format($rs->getString('MIN'),2),
+	      							 'MAX'      => number_format($rs->getString('MAX'),2),
+	      							 'TOTALDUR' => number_format($rs->getString('TOTALDUR'),2),
+	      							 'PROMEDIO' => number_format($rs->getString('PROMEDIO'),2)
       	                );
 			}
 
@@ -686,10 +686,10 @@ class Report {
 			{
 				$ROW[] = array('USER'     => $rs->getString('USER'),
 				               'CANTCASES'=> $rs->getString('CANTCASES'),
-				               'MIN'      => $rs->getString('MIN'),
-	      							 'MAX'      => $rs->getString('MAX'),
-	      							 'TOTALDUR' => $rs->getString('TOTALDUR'),
-	      							 'PROMEDIO' => $rs->getString('PROMEDIO')
+				               'MIN'      => number_format($rs->getString('MIN'),2),
+	      							 'MAX'      => number_format($rs->getString('MAX'),2),
+	      							 'TOTALDUR' => number_format($rs->getString('TOTALDUR'),2),
+	      							 'PROMEDIO' => number_format($rs->getString('PROMEDIO'),2)
       	                );
 			}
 
@@ -755,10 +755,10 @@ class Report {
 			{
 				$ROW[] = array('USER'     => $rs->getString('USER'),
 				               'CANTCASES'=> $rs->getString('CANTCASES'),
-				               'MIN'      => $rs->getString('MIN'),
-	      							 'MAX'      => $rs->getString('MAX'),
-	      							 'TOTALDUR' => $rs->getString('TOTALDUR'),
-	      							 'PROMEDIO' => $rs->getString('PROMEDIO')
+				               'MIN'      => number_format($rs->getString('MIN'),2),
+	      							 'MAX'      => number_format($rs->getString('MAX'),2),
+	      							 'TOTALDUR' => number_format($rs->getString('TOTALDUR'),2),
+	      							 'PROMEDIO' => number_format($rs->getString('PROMEDIO'),2)
       	                );
 			}
 

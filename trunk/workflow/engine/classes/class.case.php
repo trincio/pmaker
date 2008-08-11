@@ -2000,7 +2000,7 @@ class Cases
       $oCriteria = new Criteria('workflow');
       $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
       $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, array('INPUT'), Criteria::IN);
-      $oCriteria->add(AppDocumentPeer::DOC_UID, $aObjectPermissions['INPUT_DOCUMENTS'], Criteria::IN);
+      $oCriteria->add(AppDocumentPeer::APP_DOC_UID, $aObjectPermissions['INPUT_DOCUMENTS'], Criteria::IN);
       $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
       $oDataset = AppDocumentPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
@@ -2009,6 +2009,7 @@ class Cases
       $aInputDocuments[] = array('APP_DOC_UID' => 'char', 'DOC_UID' => 'char', 'APP_DOC_COMMENT' => 'char', 'APP_DOC_FILENAME' => 'char', 'APP_DOC_INDEX' => 'integer');
       while ($aRow = $oDataset->getRow()) {
           $oCriteria2 = new Criteria('workflow');
+          $oCriteria2->add(AppDelegationPeer::APP_UID, $sApplicationUID);
           $oCriteria2->add(AppDelegationPeer::DEL_INDEX, $aRow['DEL_INDEX']);
           $oDataset2 = AppDelegationPeer::doSelectRS($oCriteria2);
           $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
@@ -2104,15 +2105,16 @@ class Cases
       $oCriteria = new Criteria('workflow');
       $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
       $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, 'OUTPUT');
-      $oCriteria->add(AppDocumentPeer::DOC_UID, $aObjectPermissions['OUTPUT_DOCUMENTS'], Criteria::IN);
+      $oCriteria->add(AppDocumentPeer::APP_DOC_UID, $aObjectPermissions['OUTPUT_DOCUMENTS'], Criteria::IN);
       $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
       $oDataset = AppDocumentPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
       $oDataset->next();
-      $aInputDocuments = array();
-      $aInputDocuments[] = array('APP_DOC_UID' => 'char', 'DOC_UID' => 'char', 'APP_DOC_COMMENT' => 'char', 'APP_DOC_FILENAME' => 'char', 'APP_DOC_INDEX' => 'integer');
+      $aOutputDocuments = array();
+      $aOutputDocuments[] = array('APP_DOC_UID' => 'char', 'DOC_UID' => 'char', 'APP_DOC_COMMENT' => 'char', 'APP_DOC_FILENAME' => 'char', 'APP_DOC_INDEX' => 'integer');
       while ($aRow = $oDataset->getRow()) {
           $oCriteria2 = new Criteria('workflow');
+          $oCriteria2->add(AppDelegationPeer::APP_UID, $sApplicationUID);
           $oCriteria2->add(AppDelegationPeer::DEL_INDEX, $aRow['DEL_INDEX']);
           $oDataset2 = AppDelegationPeer::doSelectRS($oCriteria2);
           $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
@@ -2129,15 +2131,15 @@ class Cases
           }
           $aFields['POSITION'] = $_SESSION['STEP_POSITION'];
           $aFields['CONFIRM'] = G::LoadTranslation('ID_CONFIRM_DELETE_ELEMENT');
-          $aInputDocuments[] = $aFields;
+          $aOutputDocuments[] = $aFields;
           $oDataset->next();
       }
       global $_DBArray;
-      $_DBArray['inputDocuments'] = $aInputDocuments;
+      $_DBArray['outputDocuments'] = $aOutputDocuments;
       $_SESSION['_DBArray'] = $_DBArray;
       G::LoadClass('ArrayPeer');
       $oCriteria = new Criteria('dbarray');
-      $oCriteria->setDBArrayTable('inputDocuments');
+      $oCriteria->setDBArrayTable('outputDocuments');
       $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_CREATE_DATE);
       return $oCriteria;
     }
