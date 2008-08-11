@@ -342,6 +342,9 @@ class NET
 
     function getDbServerVersion($driver)
     {
+    		if(!isset($this->ip))          
+          $this->ip = getenv('HTTP_CLIENT_IP');
+          
         if(isset($this->ip) && isset($this->db_user) && isset($this->db_passwd)) {
             try{
                 switch($driver)
