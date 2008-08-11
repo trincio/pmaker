@@ -537,14 +537,7 @@ var maborak = function(){
 		*/
 		Object.prototype.isObjectStrict	= function()
 		{
-			if(this.appendChild)
-			{
-				return false
-			}
-			else
-			{
-				return true;
-			}
+			return (this.appendChild)?false:true;
 		};
 		/**
 		* es| Expandir una Clase dentro de sus objetos literales
