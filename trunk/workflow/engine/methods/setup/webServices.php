@@ -30,7 +30,7 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
   $G_ID_MENU_SELECTED     = 'SETUP';
   $G_ID_SUB_MENU_SELECTED = 'WEBSERVICES';
   
-  if (extension_loaded('soap')) 
+  if (!extension_loaded('soap')) 
    {	    	   			    		
 	    		$G_PUBLISH = new Publisher;
 	  	    $G_PUBLISH->AddContent('xmlform', 'xmlform', 'setup/wsMessage');
