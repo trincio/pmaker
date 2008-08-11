@@ -565,7 +565,7 @@ var showGeneratedDocuments = function()
 var showGeneratedDocument = function(APP_DOC_UID) {
   oPanel2 = new leimnud.module.panel();
   oPanel2.options = {
-  	size	:{w:300,h:200},
+  	size	:{w:300,h:250},
   	position:{x:0,y:0,center:true},
   	title	:'',
   	theme	:'processmaker',

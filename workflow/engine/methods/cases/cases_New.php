@@ -1,10 +1,10 @@
 <?php
 /**
  * cases_New.php
- *  
+ *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -14,13 +14,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
 
   /* Permissions */
@@ -31,7 +31,7 @@
       G::header('location: ../login/login');
       die;
       break;
-    
+
     case -1:
       G::SendTemporalMessage('ID_USER_HAVENT_RIGHTS_PAGE', 'error', 'labels');
       G::header('location: ../login/login');
@@ -48,6 +48,7 @@
   $G_MAIN_MENU        = 'processmaker';
   $G_SUB_MENU         = 'cases';
   $G_ID_MENU_SELECTED = 'CASES';
+  $G_ID_SUB_MENU_SELECTED = 'CASES_DRAFT';
 
   /* Prepare page before to show */
   $aFields = array();
@@ -59,7 +60,7 @@
     $aFields['USER'] = $_SESSION['USER_LOGGED'];
     $sXmlForm        = 'cases/cases_New.xml';
     $_DBArray['NewCase'] = $oCase->getStartCases( $_SESSION['USER_LOGGED'] );
-    
+
   }
   else  {
     $sXmlForm = 'cases/cases_CannotInitiateCase.xml';
@@ -72,7 +73,7 @@
     unset($_SESSION['G_MESSAGE']);
     unset($_SESSION['G_MESSAGE_TYPE']);
   }
-  
+
   /* Render page */
   $G_PUBLISH          = new Publisher;
   if ( isset ( $aMessage ) ) {

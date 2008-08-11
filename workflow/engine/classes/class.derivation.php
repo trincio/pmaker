@@ -190,7 +190,7 @@ class Derivation
         $auxFields['USR_USERNAME']   = $userFields['USR_USERNAME'];
         $auxFields['USR_FIRSTNAME']  = $userFields['USR_FIRSTNAME'];
         $auxFields['USR_LASTNAME']   = $userFields['USR_LASTNAME'];
-        $auxFields['USR_FULLNAME']   = $userFields['USR_LASTNAME'] . ' ' . $userFields['USR_FIRSTNAME'];
+        $auxFields['USR_FULLNAME']   = $userFields['USR_LASTNAME'] . ($userFields['USR_LASTNAME'] != '' ? ', ' : '') . $userFields['USR_FIRSTNAME'];
         $auxFields['USR_EMAIL']      = $userFields['USR_EMAIL'];
         $auxFields['USR_STATUS']     = $userFields['USR_STATUS'];
         $auxFields['USR_COUNTRY']    = $userFields['USR_COUNTRY'];
@@ -211,7 +211,7 @@ class Derivation
       $auxFields['USR_USERNAME']   = $userFields['USR_USERNAME'];
       $auxFields['USR_FIRSTNAME']  = $userFields['USR_FIRSTNAME'];
       $auxFields['USR_LASTNAME']   = $userFields['USR_LASTNAME'];
-      $auxFields['USR_FULLNAME']   = $userFields['USR_LASTNAME'] . ' ' . $userFields['USR_FIRSTNAME'];
+      $auxFields['USR_FULLNAME']   = $userFields['USR_LASTNAME'] . ($userFields['USR_LASTNAME'] != '' ? ', ' : '') . $userFields['USR_FIRSTNAME'];
       $auxFields['USR_EMAIL']      = $userFields['USR_EMAIL'];
       $auxFields['USR_STATUS']     = $userFields['USR_STATUS'];
       $auxFields['USR_COUNTRY']    = $userFields['USR_COUNTRY'];

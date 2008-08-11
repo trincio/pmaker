@@ -409,7 +409,7 @@ $oHeadPublisher->addScriptCode('
 		$oOutputDocument = new OutputDocument();
 		$aOD = $oOutputDocument->load($aFields['DOC_UID']);
 		$oCriteria = new Criteria('workflow');
-    $oCriteria->add(AppDelegationPeer::DEL_INDEX, $oAppDocument->Fields['DEL_INDEX']);
+    $oCriteria->add(AppDelegationPeer::DEL_INDEX, $aFields['DEL_INDEX']);
     $oDataset = AppDelegationPeer::doSelectRS($oCriteria);
     $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
     $oDataset->next();
@@ -417,8 +417,9 @@ $oHeadPublisher->addScriptCode('
     $oTask = new Task();
     $aTask = $oTask->load($aRow['TAS_UID']);
     $aFields['ORIGIN'] = $aTask['TAS_TITLE'];
+    require_once 'classes/model/Users.php';
 		$oUser = new Users();
-		$aUser = $oUser->load($oAppDocument->Fields['USR_UID']);
+		$aUser = $oUser->load($aFields['USR_UID']);
 		$aFields['CREATOR'] = $aUser['USR_FIRSTNAME'] . ' ' . $aUser['USR_LASTNAME'];
 		$aFields['VIEW'] = G::LoadTranslation('ID_OPEN');
 		$aFields['FILE1'] = 'cases_ShowOutputDocument?a=' . $aFields['APP_DOC_UID'] . '&ext=doc&random=' . rand();
