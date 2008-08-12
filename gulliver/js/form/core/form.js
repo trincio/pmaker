@@ -1026,7 +1026,7 @@ function validateForm(aRequiredFields)
 		 	    var oAux = getField(aRequiredFields[i].name);
 					var bOneSelected = false;
 					for (var j = 0; j < oAux.options.length; j++) {  					 			 	
-					 	if (oAux.options[j].selected == true) {
+					 	if (oAux.options[j].selected) {
 					    bOneSelected = true;
 					    j = oAux.options.length;
 					  }
