@@ -474,8 +474,16 @@ class propelTable
 
     $this->prepareQuery( true );
 
+    // verify if there are templates folders registered, template and method folders are the same
+    $folderTemplate = explode ( '/',$this->template );
+    $oPluginRegistry =& PMPluginRegistry::getSingleton();
+    if ( $oPluginRegistry->isRegisteredFolder( $folderTemplate[0] ) )
+      $templateFile = PATH_PLUGINS . $this->template. '.html';
+    else
+      $templateFile = PATH_TPL . $this->template. '.html';
+
     // Prepare the template
-    $this->tpl = new TemplatePower( PATH_CORE . $this->template );
+    $this->tpl = new TemplatePower( $templateFile );
     $this->tpl->prepare();
 
     /********** HEAD BLOCK ***************/

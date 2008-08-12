@@ -351,7 +351,7 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
       G::LoadClass('propelTable');
 
       $oTable                           = new propelTable();
-  		$oTable->template                 = 'templates/'.$Part['Template'] . '.html';
+  		$oTable->template                 = $Part['Template'] ;
   		$oTable->criteria                 = $Part['Content'];
   		if ( isset($Part['ajaxServer'] ) && ( $Part['ajaxServer']!=='' ))
   		  $oTable->ajaxServer  = $Part['ajaxServer'];
@@ -578,11 +578,14 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
       case 'graphLayout': //Added by JHL to render GraphLayout component
     	$G_OBJGRAPH = $Part['Data'];
     	$G_TMP_TARGET = $Part['Target'];   	
-		$G_TMP_FILE = $Part['File'];   	
+   		$G_TMP_FILE = $Part['File'];   	
       break;
     }
-
-    G::LoadTemplate( $Part['Template'] );
+    
+    
+     //krumo( $Part['Template'] );
+     //check if this LoadTemplate is used, byOnti 12th Aug 2008
+     //G::LoadTemplate( $Part['Template'] );
     $G_TABLE = NULL;
   }
 }
