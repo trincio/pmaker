@@ -2294,7 +2294,7 @@ class XmlForm
         if(isset($xmlNode[$k]->attributes['required']))
         {
         	if( $xmlNode[$k]->attributes['required'] == 1 )
-        		$this->requiredFields[] = array('name' => $field->name, 'type' => $xmlNode[$k]->attributes['type'], 'label' => $field->label);
+        		$this->requiredFields[] = array('name' => $field->name, 'type' => $xmlNode[$k]->attributes['type'], 'label' => trim($field->label));
         }		
        
       }
