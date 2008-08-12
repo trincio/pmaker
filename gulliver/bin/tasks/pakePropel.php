@@ -1,10 +1,10 @@
 <?php
 /**
  * pakePropel.php
- *  
+ *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -14,19 +14,19 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
 
 /*
  * This file is part of the symfony package.
  * (c) 2004-2006 Fabien Potencier <fabien.potencier@symfony-project.com>
- * 
+ *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
@@ -107,7 +107,7 @@ function _propel_convert_yml_schema($check_schema = true, $prefix = '')
     $xml_file_name = str_replace('.yml', '.xml', basename($schema));
 
     $file = str_replace(basename($schema), $localprefix.$xml_file_name,  $schema);
-    pake_echo_action('schema', 'putting '.$file);    
+    pake_echo_action('schema', 'putting '.$file);
     file_put_contents($file, $db_schema->asXML());
   }
 }
@@ -137,9 +137,9 @@ function _propel_convert_xml_schema($check_schema = true, $prefix = '')
 
     // save converted xml files in original directories
     $yml_file_name = str_replace('.xml', '.yml', basename($schema));
-    
+
     $file = str_replace(basename($schema), $prefix.$yml_file_name,  $schema);
-    pake_echo_action('schema', 'putting '.$file);    
+    pake_echo_action('schema', 'putting '.$file);
     file_put_contents($file, $db_schema->asYAML());
   }
 }
@@ -198,16 +198,16 @@ function run_propel_build_model($task, $args)
       $path = explode ( '/', $args[0] );
       if ( count($path) > 2 )
         throw new Exception('the propel.ini must be in your config directory.');
-      if ( count($path) == 1 ) 
+      if ( count($path) == 1 )
         $path[1] = 'propel';
-        
+
       $propelIniFile = 'plugins' .PATH_SEP . $path[0] . PATH_SEP . 'config' . PATH_SEP . $path[1] . '.ini';
 
       pake_echo_action('propel.ini', "using the file : $propelIniFile ");
       _call_phing($task, 'om', false, $path[1] . '.ini' , PATH_PLUGINS . $path[0] . PATH_SEP );
       return;
     }
-    
+
   }
   _call_phing($task, 'om');
 }
@@ -221,9 +221,9 @@ function run_propel_build_sql($task, $args)
       $path = explode ( '/', $args[1] );
       if ( count($path) > 2 )
         throw new Exception('the propel.ini must be in your config directory.');
-      if ( count($path) == 1 ) 
+      if ( count($path) == 1 )
         $path[1] = 'propel';
-        
+
       $propelIniFile = 'plugins' .PATH_SEP . $path[0] . PATH_SEP . 'config' . PATH_SEP . $path[1] . '.ini';
       if ( ! file_exists($propelIniFile) )
         throw new Exception("the propel.ini must be in your config directory. ($propelIniFile)");
@@ -233,7 +233,7 @@ function run_propel_build_sql($task, $args)
       //_call_phing($task, 'om', false, $path[1] . '.ini' , PATH_PLUGINS . $path[0] . PATH_SEP );
       //return;
     }
-    
+
   }
   switch ( $args [0]) {
     case 'mysql' : if ( $alternateDir != '' )
@@ -249,8 +249,8 @@ function run_propel_build_sql($task, $args)
                    break;
     default :
       throw new Exception('specify database Adapter, valid values are: mysql, mssql, oracle, pgsql.');
-  }     
-  
+  }
+
 }
 
 function run_propel_build_db($task, $args)
@@ -266,8 +266,8 @@ function run_propel_build_db($task, $args)
                    break;
     default :
       throw new Exception('specify database Adapter, valid values are: mysql, mssql, oracle, pgsql.');
-  }     
-  
+  }
+
 }
 
 function run_propel_insert_sql($task, $args)
@@ -276,19 +276,19 @@ function run_propel_insert_sql($task, $args)
     case 'mysql' : //_call_phing($task, 'insert-sql', true, 'propel.mysql.ini' );
                    $filename = 'config/propel.mysql.ini';
                    $fd = fopen ($filename, "r");
-                   $contents = fread ($fd,filesize ($filename));                   
+                   $contents = fread ($fd,filesize ($filename));
                    fclose ($fd);
                    $delimiter = "\n";
                    $splitcontents = explode($delimiter, $contents);
-                   foreach ($splitcontents as $key => $line) 
+                   foreach ($splitcontents as $key => $line)
                      if ( strpos ( $line, 'database.url' ) > 0 ) {
                        $param = explode ( '/', $line );
                        $database = $param [ count( $param) -1 ];
                        pake_echo_action('propel-insert-sql', "using the database : $database  ");
                      }
-                   
+
                    //exec ( 'mysqldump --add-drop-table --compatible=mysql40 --compact --default-character-set=utf8 --no-create-info  --complete-insert --extended-insert=false > data/mysql/insert.sql ' . $database );
-                   exec ( 'mysqldump --password=freedomfirst --compatible=mysql40 --compact --default-character-set=utf8 --no-create-info  --complete-insert=false --extended-insert=true > data/mysql/insert.sql ' . $database );
+                   exec ( 'mysqldump --password= --compatible=mysql40 --compact --default-character-set=utf8 --no-create-info  --complete-insert=false --extended-insert=true > data/mysql/insert.sql ' . $database );
                    break;
     case 'mssql' : _call_phing($task, 'insert-sql', true, 'propel.mssql.ini' );
                    break;
@@ -298,22 +298,22 @@ function run_propel_insert_sql($task, $args)
                    break;
     default :
       throw new Exception('specify database Adapter, valid values are: mysql, mssql, oracle, pgsql.');
-  }     
+  }
 }
 
 function run_propel_build_schema($task, $args)
 {
   $propelIniFile = 'propel.ini';
   if ( isset ( $args[0] ) )  {
-    
+
     $propelIniFile = $args[0] . '.ini';
     if ( ! file_exists ( 'config' . PATH_SEP . $propelIniFile ) ) {
       $path = explode ( '/', $args[0] );
       if ( count($path) > 2 )
         throw new Exception('the propel.ini must be in your config directory.');
-      if ( count($path) == 1 ) 
+      if ( count($path) == 1 )
         $path[1] = 'propel';
-        
+
       $propelIniFile = 'plugins' .PATH_SEP . $path[0] . PATH_SEP . 'config' . PATH_SEP . $path[1] . '.ini';
 
       pake_echo_action('propel.ini', "using the file : $propelIniFile ");
@@ -328,7 +328,7 @@ function run_propel_build_schema($task, $args)
       }
       return;
     }
-    
+
   }
   pake_echo_action('propel.ini', "using the file : $propelIniFile ");
 
@@ -484,8 +484,8 @@ function _call_phing($task, $task_name, $check_schema = true, $propelIni = 'prop
       'build.properties'  => $propelIni,
       'propel.output.dir' => $propelDirectory ,
     );
-  
-  pakePhingTask::call_phing($task, array($task_name), 
+
+  pakePhingTask::call_phing($task, array($task_name),
        PATH_THIRDPARTY . 'propel-generator/build.xml', $options);
 
   chdir( PATH_CORE );
