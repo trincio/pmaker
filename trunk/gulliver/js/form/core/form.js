@@ -1025,13 +1025,13 @@ function validateForm(aRequiredFields)
 		 	  case 'listbox':
 		 	    var oAux = getField(aRequiredFields[i].name);
 					var bOneSelected = false;
-					for (var j = 0; j < oAux.options.length; j++) {  
-					 if (oAux.options[j].selected) {
+					for (var j = 0; j < oAux.options.length; j++) {  					 			 	
+					 	if (oAux.options[j].selected == true) {
 					    bOneSelected = true;
 					    j = oAux.options.length;
 					  }
 					}					
-					if(bOneSelected == true)   						 	    		 	    		 	    
+					if(bOneSelected == false)   						 	    		 	    		 	    
 		 	    		sMessage += "- " + aRequiredFields[i].label + "\n";
 		 	  break;
 		 	  
@@ -1039,12 +1039,12 @@ function validateForm(aRequiredFields)
 		 	  	var x=aRequiredFields[i].name;
 		 	  	var oAux = document.getElementsByName('form['+ x +']');		 	  			 	  	
 					var bOneChecked = false;
-					for (var k = 0; k < oAux.length; k++) {  
+					for (var k = 0; k < oAux.length; k++) {  					    					   
 					    var r = oAux[k];															 					    					   
 					    if (r.checked) {
 					      bOneChecked = true;					    	
 					    	k = oAux.length;
-					  	}					  	
+					  	}		  	
 					}
 					
 					if(bOneChecked == false)   			 	    		 	   
