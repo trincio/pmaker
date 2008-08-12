@@ -83,11 +83,14 @@ leimnud.Package.Public({
 		};
 		this.panel=function(options)
 		{
+			options = {
+				style:{}
+			}.concat(options || {});
 			var _panel = new this.parent.module.panel();
 			_panel.options={
 				target:options.target,
 				title	:options.title || "",
-				size:{w:this.widthColumn,h:options.height || 300},
+				size:{w:(options.width || this.widthColumn),h:options.height || 300},
 				position:{x:0,y:0},
 				/*statusBarButtons:[
 				  {value:G_STRINGS.ID_REMOVE}
@@ -104,13 +107,13 @@ leimnud.Package.Public({
 					border:"1px solid #afafaf",
 					margin:3
 				},
-				content:{
+				content:(options.style.content || {}).concat({
 					overflow:"hidden",
 					margin:0,
 					borderLeftWidth:0,
 					borderRightWidth:0,
 					borderBottomWidth:0
-				},
+				}),
 				titleBar:{
 					backgroundImage:"url("+this.parent.info.images+"grid.title.gray.gif)",
 					height:16,
@@ -129,7 +132,6 @@ leimnud.Package.Public({
 				setup:{
 					top:1
 				}
-
 			};
 			if(options.noBg)
 			{
