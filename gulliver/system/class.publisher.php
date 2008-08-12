@@ -585,7 +585,7 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
     
      //krumo( $Part['Template'] );
      //check if this LoadTemplate is used, byOnti 12th Aug 2008
-     //G::LoadTemplate( $Part['Template'] );
+     G::LoadTemplate( $Part['Template'] );
     $G_TABLE = NULL;
   }
 }
