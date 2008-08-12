@@ -1,16 +1,8 @@
-<br />
-<b>Notice</b>:  Undefined property:  XmlForm::$requiredFields in <b>/home/juliocesar/processmaker/trunk/gulliver/system/class.xmlform.php</b> on line <b>2303</b><br />
-<br />
-<b>Notice</b>:  Undefined property:  XmlForm::$requiredFields in <b>/home/juliocesar/processmaker/trunk/gulliver/system/class.xmlform.php</b> on line <b>2303</b><br />
-<br />
-<b>Notice</b>:  Undefined property:  XmlForm::$requiredFields in <b>/home/juliocesar/processmaker/trunk/gulliver/system/class.xmlform.php</b> on line <b>2303</b><br />
-<br />
-<b>Notice</b>:  Undefined property:  XmlForm::$requiredFields in <b>/home/juliocesar/processmaker/trunk/gulliver/system/class.xmlform.php</b> on line <b>2303</b><br />
 msgid "" 
 msgstr "" 
 "Project-Id-Version: PM 4.0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-08-09 13:48+0100 \n"
+"PO-Revision-Date: 2008-08-12 10:19+0100 \n"
 "Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
 "Language-Team: Colosa Developers Team <developers@colosa.com>\n"
 "MIME-Version: 1.0\n"
@@ -1650,8 +1642,8 @@ msgstr "Notifications"
 # TRANSLATION
 # JAVASCRIPT/ID_PROCESSMAP_SUPERVISORS_DYNAFORMS
 #: JAVASCRIPT/ID_PROCESSMAP_SUPERVISORS_DYNAFORMS
-msgid "Dynaforms for the supervisor"
-msgstr "Dynaforms for the supervisor"
+msgid "Supervisor's Dynaforms"
+msgstr "Supervisor's Dynaforms"
 
 # TRANSLATION
 # JAVASCRIPT/ID_ASSIGN_DYNAFORM
@@ -2394,8 +2386,8 @@ msgstr "The Server Host or Work Space is blank"
 # TRANSLATION
 # JAVASCRIPT/ID_OBJECT_PERMISSIONS
 #: JAVASCRIPT/ID_OBJECT_PERMISSIONS
-msgid "Specific Permissions"
-msgstr "Specific Permissions"
+msgid "Process Permissions"
+msgstr "Process Permissions"
 
 # TRANSLATION
 # LABEL/ID_YES
@@ -2466,8 +2458,8 @@ msgstr "Please select other object type"
 # TRANSLATION
 # JAVASCRIPT/ID_REQUIRED_FIELDS
 #: JAVASCRIPT/ID_REQUIRED_FIELDS
-msgid "The following fields is a blank"
-msgstr "The following fields is a blank"
+msgid "The following fields are required"
+msgstr "The following fields are required"
 
 # TRANSLATION
 # JAVASCRIPT/ID_MSG_CONFIRM_DELETE_OBJECT_PERMISSION
@@ -6929,7 +6921,7 @@ msgstr "Total Duration (Hours)"
 
 # reports/report1.xml?PROMEDIO
 # reports/report1.xml
-#: hours - PROMEDIO
+#: text - PROMEDIO
 msgid "[reports/report1.xml?PROMEDIO] Average (Hours)"
 msgstr "Average (Hours)"
 
@@ -12026,12 +12018,6 @@ msgstr "File"
 #: caption - OUT_DOC_TITLE
 msgid "[cases/cases_ViewAnyOutputDocument.xml?OUT_DOC_TITLE] Output document"
 msgstr "Output document"
-
-# cases/cases_ViewAnyOutputDocument.xml?OUT_DOC_DESCRIPTION
-# cases/cases_ViewAnyOutputDocument.xml
-#: caption - OUT_DOC_DESCRIPTION
-msgid "[cases/cases_ViewAnyOutputDocument.xml?OUT_DOC_DESCRIPTION] Description"
-msgstr "Description"
 
 # cases/cases_ViewAnyOutputDocument.xml?APP_DOC_CREATE_DATE
 # cases/cases_ViewAnyOutputDocument.xml
