@@ -84,7 +84,8 @@ leimnud.Package.Public({
 		this.panel=function(options)
 		{
 			options = {
-				style:{}
+				style:{},
+				titleBar:true
 			}.concat(options || {});
 			var _panel = new this.parent.module.panel();
 			_panel.options={
@@ -97,16 +98,16 @@ leimnud.Package.Public({
 				],
 				statusbar:true,*/
 				//setup:function(){alert('Setup under construction!')},
+				titleBar:(options.titleBar || false),
 				control:{resize:false,roll:false,setup:false,drag:this.options.drag,close:true},
 				fx:{shadow:false,opacity:false}
 			};
 			_panel.setStyle={
-				title	:{fontWeight:'normal'},
-				containerWindow:{
+				containerWindow:(options.style.containerWindow || {}).concat({
 					position:'relative',
 					border:"1px solid #afafaf",
 					margin:3
-				},
+				}),
 				content:(options.style.content || {}).concat({
 					overflow:"hidden",
 					margin:0,
@@ -114,24 +115,24 @@ leimnud.Package.Public({
 					borderRightWidth:0,
 					borderBottomWidth:0
 				}),
-				titleBar:{
+				titleBar:(options.style.titleBar || {}).concat({
 					backgroundImage:"url("+this.parent.info.images+"grid.title.gray.gif)",
 					height:16,
 					backgroundPosition:"0pt -5px"
-				},
-				title:{
+				}),
+				title:(options.style.title || {}).concat({
 					padding:1,
 					fontWeight:"normal"
-				},
-				roll:{
+				}),
+				roll:(options.style.roll || {}).concat({
 					top:1
-				},
-				close:{
+				}),
+				close:(options.style.close || {}).concat({
 					top:1
-				},
-				setup:{
+				}),
+				setup:(options.style.setup || {}).concat({
 					top:1
-				}
+				})
 			};
 			if(options.noBg)
 			{

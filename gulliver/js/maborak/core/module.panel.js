@@ -1531,6 +1531,7 @@ leimnud.Package.Public({
 					//textAlign:"justify",
 					//border:"1px solid #A3A2BC",
 					//overflow:"scroll",
+					borderTopWidth:(!this.options.titleBar)?0:'auto',
 					margin:4,
 					marginLeft:((this.tab.display==="vertical")?mgLeft:4),
 					marginTop:((this.tab.display==="vertical")?4:mgTop)
