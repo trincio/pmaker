@@ -34,6 +34,8 @@
  * PMScript - PMScript class
  * @package ProcessMaker
  * @author Julio Cesar Laura Avendaño
+ * @last modify 2008.08.13 by Erik Amaru Ortiz <erik@colosa.com>
+ * @last modify comment was added and adapted the catch errors
  * @copyright 2007 COLOSA
  */
 
@@ -63,81 +65,51 @@ class PMScript
 
   var $affected_fields;
 
+  function PMScript(){
+	$this->aFields['__ERROR__'] = 'none';
+  }
 	/*
-   * Set the fields to use
-   * @param string $sScript
-	 * @return void
-	 */
-  function setFields($aFields = array())
-  {
-  	if (!is_array($aFields))
-  	{
-  		$aFields = array();
-  	}
-  	$this->aOriginalFields = $this->aFields = $aFields;
+	* Set the fields to use
+	* @param string $sScript
+	* @return void
+	*/
+	function setFields($aFields = array())
+	{
+		if (!is_array($aFields)) {
+			$aFields = array();
+		}
+		$this->aOriginalFields = $this->aFields = $aFields;
 	}
 
 	/*
-   * Set the current script
-   * @param string $sScript
-	 * @return void
-	 */
-  function setScript($sScript = '')
-  {
-  	//validate?
-  	$this->sScript = $sScript;
+	* Set the current script
+	* @param string $sScript
+	* @return void
+	*/
+	function setScript($sScript = '')
+	{
+		//validate?
+		$this->sScript = $sScript;
 	}
 
 	/*
-   * Verify the syntax
-   * @param string $sScript
-	 * @return boolean
-
+	* Verify the syntax
+	* @param string $sScript
+	* @return boolean
 	*/
 	function validSyntax($sScript)
 	{
-		//
 		return true;
 	}
 
 
 	function executeAndCatchErrors($code) {
 		global $Err;
-		
+// 		echo '<pre>';
+// 		print_r($code);
+// 		echo '</pre>';
 		$originalHandler = set_error_handler('minimalErrorCheck',E_USER_ERROR);
-		$r = $this->FatalErrorCheck($code);
-		
-		if($r->errEval) {
-			$this->bError = false;
-			return true;
-		} else { 
-			if($Err != "") { //Syntax error
-				//extracting prat of code for show
-				$ii = strpos($code,'{');
-				$jj = strpos($code,'}');
-				$xcode = substr($code, $ii, $ii+10);
-				$_SESSION['TRIGGER_DEBUG']['ERRORS'][]['SINTAX'] = $Err .'<br/>From: '.$xcode;
-				$this->bError = false;
-				return false;
-			}
-			if($r->errMsg) { //Fatal error
-				//echo $r->errMsg;
-				$ii = strpos($code,'{');
-				$jj = strpos($code,'}');
-				$jj = $jj-$ii;
-				$xcode = substr($code, $ii+1, $jj-1);
-				$xcode = str_replace('$this->aFields', '', $xcode);
-				$r->errMsg = str_replace("unexpected '}'", "expected ';'", $r->errMsg);
-				$_SESSION['TRIGGER_DEBUG']['ERRORS'][]['FATAL'] = $r->errMsg.'<br/>From: '.$xcode;
-				$this->bError = false;
-				return false;
-			}
-		}
-		restore_error_handler();
-	}
 
-	function FatalErrorCheck($code)
-	{
 		// Send any output to buffer
 		ob_start();
 		// Do eval()
@@ -156,9 +128,35 @@ class PMScript
 		} else {
 			$response->errEval = true;
 		}
-		return $response;
+		
+		if($response->errEval) {
+			$this->bError = false;
+			return true;
+		} else { 
+			if($Err != "") { //Syntax error
+				//extracting prat of code for show
+				$ii = strpos($code,'{');
+				$jj = strpos($code,'}');
+				$xcode = substr($code, $ii, $ii+10);
+				$_SESSION['TRIGGER_DEBUG']['ERRORS'][]['SINTAX'] = $Err .'<br/>From: '.$xcode;
+				$this->bError = false;
+				return false;
+			}
+			if($response->errMsg) { //Fatal error
+				//echo $r->errMsg;
+				$ii = strpos($code,'{');
+				$jj = strpos($code,'}');
+				$jj = $jj-$ii;
+				$xcode = substr($code, $ii+1, $jj-1);
+				$xcode = str_replace('$this->aFields', '', $xcode);
+				$response->errMsg = str_replace("unexpected '}'", "expected ';'", $response->errMsg);
+				$_SESSION['TRIGGER_DEBUG']['ERRORS'][]['FATAL'] = $response->errMsg.'<br/>From: '.$xcode;
+				$this->bError = false;
+				return false;
+			}
+		}
+		restore_error_handler();
 	}
-
 
 	/*
    * Execute the current script
@@ -323,25 +321,17 @@ class PMScript
 					break;
 				}
 				$this->affected_fields[] = $aMatch[2][$i][0];
-				/*$current_field_from_trigger = $aMatch[2][$i][0];
-				$_SESSION['TRIGGER_DEBUG']['DATA'][]['key'] = $current_field_from_trigger;
-				end($_SESSION['TRIGGER_DEBUG']['DATA']);
-				current($_SESSION['TRIGGER_DEBUG']['DATA']);
-				$fkey = key($_SESSION['TRIGGER_DEBUG']['DATA']);
-				$_SESSION['TRIGGER_DEBUG']['DATA'][$fkey]['value'] = $this->aFields[$current_field_from_trigger];
-							*/
 			}
 		}
 		$sScript .= substr($this->sScript, $iAux);
 		$sScript .= "\n} catch (Exception \$oException) {\n  \$this->aFields['__ERROR__'] = \$oException->getMessage();\n}";
-
+		echo '<pre>-->'; print_r($this->aFields); echo '<---</pre>';
 		$this->executeAndCatchErrors($sScript);
 		for($i=0; $i<count($this->affected_fields); $i++){
 			$_SESSION['TRIGGER_DEBUG']['DATA'][$i]['key']   = $this->affected_fields[$i];
 			$_SESSION['TRIGGER_DEBUG']['DATA'][$i]['value'] = $this->aFields[$this->affected_fields[$i]];
 		}
 		//echo '<pre>-->'; print_r($_SESSION['TRIGGER_DEBUG']['DATA']); echo '<---</pre>';
-		
 	}
 
 	/*
@@ -508,7 +498,7 @@ class PMScript
   	$sScript .= substr($this->sScript, $iAux);
   	$sScript  = '$bResult = ' . $sScript . ';';
   	if ($this->validSyntax($sScript))
-  	{
+   {
   		$this->bError = false;
 		  eval($sScript);
 	
