@@ -675,7 +675,7 @@ class wsBase
 		}
 	}
 
-	public function derivateCase($sessionId, $caseId, $delIndex) {
+	public function derivateCase($userId, $caseId, $delIndex) {
 		try { $sStatus = 'TO_DO';											
 			require_once ("classes/model/AppDelegation.php");
 			require_once ("classes/model/Route.php");
@@ -683,14 +683,11 @@ class wsBase
 			G::LoadClass('case');
 			G::LoadClass('derivation');
 			G::LoadClass('sessions');
-			
-			$oSession = new Sessions();
-			$user  = $oSession->getSessionUser($sessionId);			
 						
 			$oAppDel = new AppDelegation();
 			$appdel  = $oAppDel->Load($caseId, $delIndex);
 			
-			if($user['USR_UID']!=$appdel['USR_UID'])
+			if($userId!=$appdel['USR_UID'])
 			{
 				$result = new wsResponse (17, "This case is assigned to another user"); 
 				return $result;	
