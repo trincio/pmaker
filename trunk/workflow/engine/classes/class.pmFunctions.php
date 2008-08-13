@@ -124,10 +124,9 @@ function executeQuery($SqlStatement, $DBConnectionUID = 'workflow')
 	try {
 		$con = Propel::getConnection($DBConnectionUID);
 		$con->begin();
-		$stmt = $con->prepareStatement($SqlStatement);
-		$rs = $stmt->executeQuery(ResultSet::FETCHMODE_ASSOC);
- 		$lastId = $con->getIdGenerator();
- 		$con->commit();
+		$rs = $con->executeQuery($SqlStatement);
+		$con->commit();
+		
 		switch(true) {
 			case eregi("SELECT", $SqlStatement):
 				$result = Array();
