@@ -105,9 +105,6 @@ class PMScript
 
 	function executeAndCatchErrors($code) {
 		global $Err;
-// 		echo '<pre>';
-// 		print_r($code);
-// 		echo '</pre>';
 		$originalHandler = set_error_handler('minimalErrorCheck',E_USER_ERROR);
 
 		// Send any output to buffer
@@ -325,7 +322,7 @@ class PMScript
 		}
 		$sScript .= substr($this->sScript, $iAux);
 		$sScript .= "\n} catch (Exception \$oException) {\n  \$this->aFields['__ERROR__'] = \$oException->getMessage();\n}";
-		echo '<pre>-->'; print_r($this->aFields); echo '<---</pre>';
+		//echo '<pre>-->'; print_r($this->aFields); echo '<---</pre>';
 		$this->executeAndCatchErrors($sScript);
 		for($i=0; $i<count($this->affected_fields); $i++){
 			$_SESSION['TRIGGER_DEBUG']['DATA'][$i]['key']   = $this->affected_fields[$i];
