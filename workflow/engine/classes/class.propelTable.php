@@ -466,8 +466,9 @@ class propelTable
    * @access public
    * @return string
    */
-  function renderTable( $block = '' )
+  function renderTable( $block = '', $fields = '' )
   {
+  	
     $t1 = G::microtime_float();
     $oHeadPublisher =& headPublisher::getSingleton();
     $oHeadPublisher->addInstanceModule('leimnud', 'panel');
@@ -486,6 +487,15 @@ class propelTable
     $this->tpl = new TemplatePower( $templateFile );
     $this->tpl->prepare();
 
+    $block = '' ;
+    if(is_array($fields))
+    {
+    	foreach ( $fields as $key =>$val ) {
+      	$this->tpl->assign( $key , $val );
+    	}
+    }	
+    $this->tpl->newBlock('headerBlock');
+	  
     /********** HEAD BLOCK ***************/
     if (($block ==='') || ($block==='head')) {
       $this->tpl->newBlock('headBlock');
