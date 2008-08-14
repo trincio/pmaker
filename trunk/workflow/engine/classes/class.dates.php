@@ -57,7 +57,7 @@ class dates
 	function calculateDuration($sInitDate, $sEndDate = '', $UsrUid = NULL, $ProUid = NULL, $TasUid = NULL)
 	{
 	  list( $this->holidays, $this->weekends ) = $this->prepareInformation($UsrUid, $ProUid, $TasUid);
-	  if ($sEndDate == '') {
+	  if ((string)$sEndDate == '') {
 	    $sEndDate = date('Y-m-d H:i:s');
 	  }
 	  if (strtotime($sInitDate) > strtotime($sEndDate)) {
@@ -82,12 +82,7 @@ class dates
 	  }
 	  if ($aInitDate !== $aEndDate) {
 	    while (!$bFinished && ($i < 10000)) {
-	      if (($aInitDate[2] + $i) < 10) {
-	        $sAux = implode('-', array($aInitDate[0], $aInitDate[1], '0' . ($aInitDate[2] + $i)));
-	      }
-	      else {
-	        $sAux = implode('-', array($aInitDate[0], $aInitDate[1], $aInitDate[2] + $i));
-	      }
+	      $sAux = date('Y-m-d', mktime(0, 0, 0, $aInitDate[1], $aInitDate[2] + $i, $aInitDate[0]));
 	      if ($sAux != implode('-', $aEndDate)) {
           if (!in_array($sAux, $this->holidays)) {
             if (!in_array(date('w', mktime(0, 0, 0, $aInitDate[1], $aInitDate[2] + $i, $aInitDate[0])), $this->weekends)) {
