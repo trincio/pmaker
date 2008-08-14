@@ -697,8 +697,8 @@ function PMFDerivateCase($caseId, $delIndex)
 {
 	G::LoadClass('wsBase');
 	$ws = new wsBase ();
-	$result = $ws->derivateCase($caseId, $delIndex);
-	
+	$result = $ws->derivateCase($_SESSION['USER_LOGGED'], $caseId, $delIndex);
+	return $result->status_code;
 	if($result->status_code == 0){
 		return 1;
 	} else {
