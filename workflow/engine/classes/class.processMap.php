@@ -2438,5 +2438,13 @@ class processMap {
     G::RenderPage('publish', 'raw');
     return true;
   }
+
+  function caseTracker($sProcessUID) {
+    var_dump($sProcessUID);
+  }
+
+  function caseTrackerObjects($sProcessUID) {
+    var_dump($sProcessUID);
+  }
 } // processMap
 ?>

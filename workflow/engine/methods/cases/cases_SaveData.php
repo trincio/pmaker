@@ -43,7 +43,8 @@
   //cleaning debug variables
   $_SESSION['TRIGGER_DEBUG']['ERRORS'] = Array();
   $_SESSION['TRIGGER_DEBUG']['DATA'] = Array();
-  $_SESSION['TRIGGER_DEBUG']['TRIGGERS_NAMES'] = '';
+  $_SESSION['TRIGGER_DEBUG']['TRIGGERS_NAMES'] = Array();
+  $_SESSION['TRIGGER_DEBUG']['TRIGGERS_VALUES'] = Array();
 
   $triggers = $oCase->loadTriggers( $_SESSION['TASK'], 'DYNAFORM', $_GET['UID'], 'AFTER');
 
@@ -51,6 +52,7 @@
   $_SESSION['TRIGGER_DEBUG']['TIME'] = 'AFTER';
   if($_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] != 0){
 	$_SESSION['TRIGGER_DEBUG']['TRIGGERS_NAMES'] = $oCase->getTriggerNames($triggers);
+	$_SESSION['TRIGGER_DEBUG']['TRIGGERS_VALUES'] = $triggers;
   }
 
   if( $_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] != 0 ) {

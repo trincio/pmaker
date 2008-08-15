@@ -239,6 +239,12 @@ try {
   	case 'newObjectPermission':
   	  $oProcessMap->newObjectPermission($oData->pro_uid);
   	break;
+  	case 'caseTracker':
+  	  $oProcessMap->caseTracker($oData->pro_uid);
+  	break;
+  	case 'caseTrackerObjects':
+  	  $oProcessMap->caseTrackerObjects($oData->pro_uid);
+  	break;
   }
   die($sOutput);
 }

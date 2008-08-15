@@ -171,6 +171,16 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
+    <column name="APP_PIN" type="VARCHAR" size="32" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="APP_PIN"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
     <validator column="APP_STATUS">
       <rule name="validValues" value="DRAFT|TO_DO|PAUSED|COMPLETED|CANCELLED" message="Please select a valid status." />
     </validator>
@@ -4370,6 +4380,187 @@
         <parameter name="Table" value="OBJECT_PERMISSION"/>
         <parameter name="Non_unique" value="1"/>
         <parameter name="Key_name" value="indexObjctPermission"/>
+        <parameter name="Seq_in_index" value="1"/>
+        <parameter name="Column_name" value="PRO_UID"/>
+        <parameter name="Collation" value="A"/>
+        <parameter name="Cardinality" value=""/>
+        <parameter name="Sub_part" value=""/>
+        <parameter name="Packed" value=""/>
+        <parameter name="Null" value=""/>
+        <parameter name="Index_type" value="BTREE"/>
+        <parameter name="Comment" value=""/>
+      </vendor>
+    </index>
+  </table>
+  <table name="CASE_TRACKER">
+    <vendor type="mysql">
+      <parameter name="Name" value="CASE_TRACKER"/>
+      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Version" value="10"/>
+      <parameter name="Row_format" value="Dynamic"/>
+      <parameter name="Rows" value="0"/>
+      <parameter name="Avg_row_length" value="0"/>
+      <parameter name="Data_length" value="0"/>
+      <parameter name="Max_data_length" value="281474976710655"/>
+      <parameter name="Index_length" value="1024"/>
+      <parameter name="Data_free" value="0"/>
+      <parameter name="Auto_increment" value=""/>
+      <parameter name="Create_time" value="2008-08-15 12:15:00"/>
+      <parameter name="Update_time" value="2008-08-15 12:15:00"/>
+      <parameter name="Check_time" value=""/>
+      <parameter name="Collation" value="utf8_general_ci"/>
+      <parameter name="Checksum" value=""/>
+      <parameter name="Create_options" value=""/>
+      <parameter name="Comment" value="CASE_TRACKER"/>
+    </vendor>
+    <column name="PRO_UID" type="VARCHAR" size="32" required="true" primaryKey="true" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="PRO_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value="PRI"/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="CT_MAP_TYPE" type="VARCHAR" size="10" required="true" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="CT_MAP_TYPE"/>
+        <parameter name="Type" value="varchar(10)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="PROCESSMAP"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="CT_DERIVATION_HISTORY" type="INTEGER" required="true" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="CT_DERIVATION_HISTORY"/>
+        <parameter name="Type" value="int(1)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="0"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="CT_MESSAGE_HISTORY" type="INTEGER" required="true" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="CT_MESSAGE_HISTORY"/>
+        <parameter name="Type" value="int(1)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="0"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <validator column="PRO_UID">
+      <rule name="maxLength" value="32" message="Process UID can be no larger than ${value} in size" />
+      <rule name="required" message="Process UID is required." />
+    </validator>
+    <validator column="CT_MAP_TYPE">
+      <rule name="validValues" value="NONE|PROCESSMAP|STAGES" message="Please select a valid map type." />
+      <rule name="required" message="Map type is required." />
+    </validator>
+    <validator column="CT_DERIVATION_HISTORY">
+      <rule name="validValues" value="0|1" message="Please select a valid derivation history status." />
+      <rule name="required" message="Derivation history status is required." />
+    </validator>
+    <validator column="CT_MESSAGE_HISTORY">
+      <rule name="validValues" value="0|1" message="Please select a valid message history status." />
+      <rule name="required" message="Message history status is required." />
+    </validator>
+  </table>
+  <table name="CASE_TRACKER_OBJECT">
+    <vendor type="mysql">
+      <parameter name="Name" value="CASE_TRACKER_OBJECT"/>
+      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Version" value="10"/>
+      <parameter name="Row_format" value="Dynamic"/>
+      <parameter name="Rows" value="18"/>
+      <parameter name="Avg_row_length" value="106"/>
+      <parameter name="Data_length" value="1956"/>
+      <parameter name="Max_data_length" value="281474976710655"/>
+      <parameter name="Index_length" value="2048"/>
+      <parameter name="Data_free" value="40"/>
+      <parameter name="Auto_increment" value=""/>
+      <parameter name="Create_time" value="2008-15-04 12:50:00"/>
+      <parameter name="Update_time" value="2008-15-06 12:50:00"/>
+      <parameter name="Check_time" value=""/>
+      <parameter name="Collation" value="utf8_general_ci"/>
+      <parameter name="Checksum" value=""/>
+      <parameter name="Create_options" value=""/>
+      <parameter name="Comment" value=""/>
+    </vendor>
+    <column name="CTO_UID" type="VARCHAR" size="32" required="true" primaryKey="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="CTO_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value="PRI"/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="PRO_UID" type="VARCHAR" size="32" required="true" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="PRO_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="0"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="CTO_TYPE_OBJ" type="VARCHAR" size="20" required="true" default="DYNAFORM">
+      <vendor type="mysql">
+        <parameter name="Field" value="CTO_TYPE_OBJ"/>
+        <parameter name="Type" value="varchar(20)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="DYNAFORM"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="CTO_UID_OBJ" type="VARCHAR" size="32" required="true" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="CTO_UID_OBJ"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="0"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="CTO_CONDITION" type="LONGVARCHAR" required="true">
+      <vendor type="mysql">
+        <parameter name="Field" value="CTO_CONDITION"/>
+        <parameter name="Type" value="text"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="CTO_POSITION" type="INTEGER" required="true" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="CTO_POSITION"/>
+        <parameter name="Type" value="int(11)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="0"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <validator column="CTO_TYPE_OBJ">
+      <rule name="validValues" value="DYNAFORM|INPUT_DOCUMENT|OUTPUT_DOCUMENT|MESSAGE|EXTERNAL" message="Please select a valid value for CTO_TYPE_OBJ." />
+    </validator>
+    <index name="indexCaseTrackerObject">
+      <index-column name="PRO_UID"/>
+      <index-column name="CTO_UID_OBJ"/>
+      <vendor type="mysql">
+        <parameter name="Table" value="CASE_TRACKER_OBJECT"/>
+        <parameter name="Non_unique" value="1"/>
+        <parameter name="Key_name" value="indexCaseTrackerObject"/>
         <parameter name="Seq_in_index" value="1"/>
         <parameter name="Column_name" value="PRO_UID"/>
         <parameter name="Collation" value="A"/>

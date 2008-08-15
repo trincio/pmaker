@@ -132,6 +132,13 @@ abstract class BaseApplication extends BaseObject  implements Persistent {
 	 */
 	protected $app_data;
 
+
+	/**
+	 * The value for the app_pin field.
+	 * @var        string
+	 */
+	protected $app_pin = '';
+
 	/**
 	 * Flag to prevent endless save loop, if this object is referenced
 	 * by another object which falls in this transaction.
@@ -389,6 +396,17 @@ abstract class BaseApplication extends BaseObject  implements Persistent {
 	{
 
 		return $this->app_data;
+	}
+
+	/**
+	 * Get the [app_pin] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getAppPin()
+	{
+
+		return $this->app_pin;
 	}
 
 	/**
@@ -730,6 +748,28 @@ abstract class BaseApplication extends BaseObject  implements Persistent {
 	} // setAppData()
 
 	/**
+	 * Set the value of [app_pin] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setAppPin($v)
+	{
+
+		// Since the native PHP type for this column is string,
+		// we will cast the input to a string (if it is not).
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->app_pin !== $v || $v === '') {
+			$this->app_pin = $v;
+			$this->modifiedColumns[] = ApplicationPeer::APP_PIN;
+		}
+
+	} // setAppPin()
+
+	/**
 	 * Hydrates (populates) the object variables with values from the database resultset.
 	 *
 	 * An offset (1-based "start column") is specified so that objects can be hydrated
@@ -776,12 +816,14 @@ abstract class BaseApplication extends BaseObject  implements Persistent {
 
 			$this->app_data = $rs->getString($startcol + 14);
 
+			$this->app_pin = $rs->getString($startcol + 15);
+
 			$this->resetModified();
 
 			$this->setNew(false);
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 15; // 15 = ApplicationPeer::NUM_COLUMNS - ApplicationPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 16; // 16 = ApplicationPeer::NUM_COLUMNS - ApplicationPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Application object", $e);
@@ -1029,6 +1071,9 @@ abstract class BaseApplication extends BaseObject  implements Persistent {
 			case 14:
 				return $this->getAppData();
 				break;
+			case 15:
+				return $this->getAppPin();
+				break;
 			default:
 				return null;
 				break;
@@ -1064,6 +1109,7 @@ abstract class BaseApplication extends BaseObject  implements Persistent {
 			$keys[12] => $this->getAppFinishDate(),
 			$keys[13] => $this->getAppUpdateDate(),
 			$keys[14] => $this->getAppData(),
+			$keys[15] => $this->getAppPin(),
 		);
 		return $result;
 	}
@@ -1140,6 +1186,9 @@ abstract class BaseApplication extends BaseObject  implements Persistent {
 			case 14:
 				$this->setAppData($value);
 				break;
+			case 15:
+				$this->setAppPin($value);
+				break;
 		} // switch()
 	}
 
@@ -1178,6 +1227,7 @@ abstract class BaseApplication extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[12], $arr)) $this->setAppFinishDate($arr[$keys[12]]);
 		if (array_key_exists($keys[13], $arr)) $this->setAppUpdateDate($arr[$keys[13]]);
 		if (array_key_exists($keys[14], $arr)) $this->setAppData($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setAppPin($arr[$keys[15]]);
 	}
 
 	/**
@@ -1204,6 +1254,7 @@ abstract class BaseApplication extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(ApplicationPeer::APP_FINISH_DATE)) $criteria->add(ApplicationPeer::APP_FINISH_DATE, $this->app_finish_date);
 		if ($this->isColumnModified(ApplicationPeer::APP_UPDATE_DATE)) $criteria->add(ApplicationPeer::APP_UPDATE_DATE, $this->app_update_date);
 		if ($this->isColumnModified(ApplicationPeer::APP_DATA)) $criteria->add(ApplicationPeer::APP_DATA, $this->app_data);
+		if ($this->isColumnModified(ApplicationPeer::APP_PIN)) $criteria->add(ApplicationPeer::APP_PIN, $this->app_pin);
 
 		return $criteria;
 	}
@@ -1285,6 +1336,8 @@ abstract class BaseApplication extends BaseObject  implements Persistent {
 		$copyObj->setAppUpdateDate($this->app_update_date);
 
 		$copyObj->setAppData($this->app_data);
+
+		$copyObj->setAppPin($this->app_pin);
 
 
 		$copyObj->setNew(true);
