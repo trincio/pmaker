@@ -377,8 +377,12 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
       $pm = new popupMenu( 'gulliver/pagedTable_PopupMenu' );
       $sc = $pm->renderPopup ( $oTable->id, $oTable->fields );
       /* End Block */
+      //krumo ( $Part );
       try {
-    		$oTable->renderTable();
+      	if ( is_array ( $Part['Data'] ))
+    		  $oTable->renderTable('', $Part['Data']);
+    		else
+    		  $oTable->renderTable();
         print($sc);
       }
       catch ( Exception $e ) {

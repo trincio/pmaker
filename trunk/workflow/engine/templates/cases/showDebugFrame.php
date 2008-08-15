@@ -52,9 +52,16 @@
 	
 	if($_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] != 0) {
 		$triggers_onfly = $_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS']." trigger(s) was executed <font color='#641213'><b>".strtolower($_SESSION['TRIGGER_DEBUG']['TIME'])."</b></font><br/>";
+		$cnt = -1;
 		if(isset($_SESSION['TRIGGER_DEBUG']['TRIGGERS_NAMES']))
 		foreach($_SESSION['TRIGGER_DEBUG']['TRIGGERS_NAMES'] as $name){
-			$triggers_names .= "<li>Trigger: <font color='#52603A'>$name</font>";
+			$t_code = $_SESSION['TRIGGER_DEBUG']['TRIGGERS_VALUES'][++$cnt]['TRI_WEBBOT'];
+			$t_code = str_replace('"', '\'',$t_code);
+			$t_code = addslashes($t_code);
+			//Krumo($t_code);
+			$t_code = Only1br($t_code);
+			
+			$triggers_names .= "<li><a href='#' onmouseout='hideTooltip()' onmouseover=\"showTooltip(event,'<b>Trigger code</b><br/><br/>".$t_code."<br/><br/>');return false\">Trigger: $name</a>";
 		}
 	} else {
 		$triggers_onfly = " No triggers found <font color='#641213'><b>".strtolower($_SESSION['TRIGGER_DEBUG']['TIME'])."</b></font>";
@@ -149,3 +156,121 @@
 	if(isset($_POST['NextStep'])){
 		print('<input type="button" value="Continue" class="module_app_button___gray" onclick="javascript:location.href=\''.$_POST['NextStep'].'\'">');
 	}
+
+	function Only1br($string)
+	{
+		return preg_replace("/(\r\n)+|(\n|\r)+/", "<br />", $string);
+	}
+
+?>
+<style type="text/css">
+	#nyk_tooltip{
+		background-color:#EEE;
+		border:1px solid #000;
+		position:absolute;
+		display:none;
+		z-index:20000;
+		padding:2px;
+		font-size:0.9em;
+		-moz-border-radius:6px;	/* Rounded edges in Firefox */
+		font-family: "Trebuchet MS", "Lucida Sans Unicode", Arial, sans-serif;
+		
+	}
+	#nyk_tooltipShadow{
+		position:absolute;
+		background-color:#555;
+		display:none;
+		z-index:10000;
+		opacity:0.7;
+		filter:alpha(opacity=70);
+		-khtml-opacity: 0.7;
+		-moz-opacity: 0.7;
+		-moz-border-radius:6px;	/* Rounded edges in Firefox */
+	}
+</style>
+<SCRIPT type="text/javascript">
+	var nyk_tooltip = false;
+	var nyk_tooltipShadow = false;
+	var nyk_shadowSize = 4;
+	var nyk_tooltipMaxWidth = 400;
+	var nyk_tooltipMinWidth = 100;
+	var nyk_iframe = false;
+	var tooltip_is_msie = (navigator.userAgent.indexOf('MSIE')>=0 && navigator.userAgent.indexOf('opera')==-1 && document.all)?true:false;
+	function showTooltip(e,tooltipTxt)
+	{
+		
+		var bodyWidth = Math.max(document.body.clientWidth,document.documentElement.clientWidth) - 20;
+	
+		if(!nyk_tooltip){
+			nyk_tooltip = document.createElement('DIV');
+			nyk_tooltip.id = 'nyk_tooltip';
+			nyk_tooltipShadow = document.createElement('DIV');
+			nyk_tooltipShadow.id = 'nyk_tooltipShadow';
+			
+			document.body.appendChild(nyk_tooltip);
+			document.body.appendChild(nyk_tooltipShadow);
+			
+			if(tooltip_is_msie){
+				nyk_iframe = document.createElement('IFRAME');
+				nyk_iframe.frameborder='5';
+				nyk_iframe.style.backgroundColor='#FFFFFF';
+				nyk_iframe.src = '#';
+				nyk_iframe.style.zIndex = 100;
+				nyk_iframe.style.position = 'absolute';
+				document.body.appendChild(nyk_iframe);
+			}
+			
+		}
+		
+		nyk_tooltip.style.display='block';
+		nyk_tooltipShadow.style.display='block';
+		if(tooltip_is_msie)nyk_iframe.style.display='block';
+		
+		var st = Math.max(document.body.scrollTop,document.documentElement.scrollTop);
+		if(navigator.userAgent.toLowerCase().indexOf('safari')>=0)st=0; 
+		var leftPos = e.clientX + 10;
+		
+		nyk_tooltip.style.width = null;	// Reset style width if it's set
+		nyk_tooltip.innerHTML = tooltipTxt;
+		nyk_tooltip.style.left = leftPos + 'px';
+		nyk_tooltip.style.top = e.clientY + 10 + st + 'px';
+
+		
+		nyk_tooltipShadow.style.left =  leftPos + nyk_shadowSize + 'px';
+		nyk_tooltipShadow.style.top = e.clientY + 10 + st + nyk_shadowSize + 'px';
+		
+		if(nyk_tooltip.offsetWidth>nyk_tooltipMaxWidth){	/* Exceeding max width of tooltip ? */
+			nyk_tooltip.style.width = nyk_tooltipMaxWidth + 'px';
+		}
+		
+		var tooltipWidth = nyk_tooltip.offsetWidth;
+		if(tooltipWidth<nyk_tooltipMinWidth)tooltipWidth = nyk_tooltipMinWidth;
+		
+		
+		nyk_tooltip.style.width = tooltipWidth + 'px';
+		nyk_tooltipShadow.style.width = nyk_tooltip.offsetWidth + 'px';
+		nyk_tooltipShadow.style.height = nyk_tooltip.offsetHeight + 'px';
+		
+		if((leftPos + tooltipWidth)>bodyWidth){
+			nyk_tooltip.style.left = (nyk_tooltipShadow.style.left.replace('px','') - ((leftPos + tooltipWidth)-bodyWidth)) + 'px';
+			nyk_tooltipShadow.style.left = (nyk_tooltipShadow.style.left.replace('px','') - ((leftPos + tooltipWidth)-bodyWidth) + nyk_shadowSize) + 'px';
+		}
+		
+		if(tooltip_is_msie){
+			nyk_iframe.style.left = nyk_tooltip.style.left;
+			nyk_iframe.style.top = nyk_tooltip.style.top;
+			nyk_iframe.style.width = nyk_tooltip.offsetWidth + 'px';
+			nyk_iframe.style.height = nyk_tooltip.offsetHeight + 'px';
+		
+		}
+				
+	}
+	
+	function hideTooltip()
+	{
+		nyk_tooltip.style.display='none';
+		nyk_tooltipShadow.style.display='none';
+		if(tooltip_is_msie)nyk_iframe.style.display='none';
+	}
+	
+	</SCRIPT>	

@@ -2,81 +2,51 @@
 
 require_once 'propel/util/BasePeer.php';
 // The object class -- needed for instanceof checks in this class.
-// actual class may be a subclass -- as returned by ApplicationPeer::getOMClass()
-include_once 'classes/model/Application.php';
+// actual class may be a subclass -- as returned by CaseTrackerObjectPeer::getOMClass()
+include_once 'classes/model/CaseTrackerObject.php';
 
 /**
- * Base static class for performing query and update operations on the 'APPLICATION' table.
+ * Base static class for performing query and update operations on the 'CASE_TRACKER_OBJECT' table.
  *
  * 
  *
  * @package    classes.model.om
  */
-abstract class BaseApplicationPeer {
+abstract class BaseCaseTrackerObjectPeer {
 
 	/** the default database name for this class */
 	const DATABASE_NAME = 'workflow';
 
 	/** the table name for this class */
-	const TABLE_NAME = 'APPLICATION';
+	const TABLE_NAME = 'CASE_TRACKER_OBJECT';
 
 	/** A class that can be returned by this peer. */
-	const CLASS_DEFAULT = 'classes.model.Application';
+	const CLASS_DEFAULT = 'classes.model.CaseTrackerObject';
 
 	/** The total number of columns. */
-	const NUM_COLUMNS = 16;
+	const NUM_COLUMNS = 6;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
 
 
-	/** the column name for the APP_UID field */
-	const APP_UID = 'APPLICATION.APP_UID';
-
-	/** the column name for the APP_NUMBER field */
-	const APP_NUMBER = 'APPLICATION.APP_NUMBER';
-
-	/** the column name for the APP_PARENT field */
-	const APP_PARENT = 'APPLICATION.APP_PARENT';
-
-	/** the column name for the APP_STATUS field */
-	const APP_STATUS = 'APPLICATION.APP_STATUS';
+	/** the column name for the CTO_UID field */
+	const CTO_UID = 'CASE_TRACKER_OBJECT.CTO_UID';
 
 	/** the column name for the PRO_UID field */
-	const PRO_UID = 'APPLICATION.PRO_UID';
+	const PRO_UID = 'CASE_TRACKER_OBJECT.PRO_UID';
 
-	/** the column name for the APP_PROC_STATUS field */
-	const APP_PROC_STATUS = 'APPLICATION.APP_PROC_STATUS';
+	/** the column name for the CTO_TYPE_OBJ field */
+	const CTO_TYPE_OBJ = 'CASE_TRACKER_OBJECT.CTO_TYPE_OBJ';
 
-	/** the column name for the APP_PROC_CODE field */
-	const APP_PROC_CODE = 'APPLICATION.APP_PROC_CODE';
+	/** the column name for the CTO_UID_OBJ field */
+	const CTO_UID_OBJ = 'CASE_TRACKER_OBJECT.CTO_UID_OBJ';
 
-	/** the column name for the APP_PARALLEL field */
-	const APP_PARALLEL = 'APPLICATION.APP_PARALLEL';
+	/** the column name for the CTO_CONDITION field */
+	const CTO_CONDITION = 'CASE_TRACKER_OBJECT.CTO_CONDITION';
 
-	/** the column name for the APP_INIT_USER field */
-	const APP_INIT_USER = 'APPLICATION.APP_INIT_USER';
-
-	/** the column name for the APP_CUR_USER field */
-	const APP_CUR_USER = 'APPLICATION.APP_CUR_USER';
-
-	/** the column name for the APP_CREATE_DATE field */
-	const APP_CREATE_DATE = 'APPLICATION.APP_CREATE_DATE';
-
-	/** the column name for the APP_INIT_DATE field */
-	const APP_INIT_DATE = 'APPLICATION.APP_INIT_DATE';
-
-	/** the column name for the APP_FINISH_DATE field */
-	const APP_FINISH_DATE = 'APPLICATION.APP_FINISH_DATE';
-
-	/** the column name for the APP_UPDATE_DATE field */
-	const APP_UPDATE_DATE = 'APPLICATION.APP_UPDATE_DATE';
-
-	/** the column name for the APP_DATA field */
-	const APP_DATA = 'APPLICATION.APP_DATA';
-
-	/** the column name for the APP_PIN field */
-	const APP_PIN = 'APPLICATION.APP_PIN';
+	/** the column name for the CTO_POSITION field */
+	const CTO_POSITION = 'CASE_TRACKER_OBJECT.CTO_POSITION';
 
 	/** The PHP to DB Name Mapping */
 	private static $phpNameMap = null;
@@ -89,10 +59,10 @@ abstract class BaseApplicationPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('AppUid', 'AppNumber', 'AppParent', 'AppStatus', 'ProUid', 'AppProcStatus', 'AppProcCode', 'AppParallel', 'AppInitUser', 'AppCurUser', 'AppCreateDate', 'AppInitDate', 'AppFinishDate', 'AppUpdateDate', 'AppData', 'AppPin', ),
-		BasePeer::TYPE_COLNAME => array (ApplicationPeer::APP_UID, ApplicationPeer::APP_NUMBER, ApplicationPeer::APP_PARENT, ApplicationPeer::APP_STATUS, ApplicationPeer::PRO_UID, ApplicationPeer::APP_PROC_STATUS, ApplicationPeer::APP_PROC_CODE, ApplicationPeer::APP_PARALLEL, ApplicationPeer::APP_INIT_USER, ApplicationPeer::APP_CUR_USER, ApplicationPeer::APP_CREATE_DATE, ApplicationPeer::APP_INIT_DATE, ApplicationPeer::APP_FINISH_DATE, ApplicationPeer::APP_UPDATE_DATE, ApplicationPeer::APP_DATA, ApplicationPeer::APP_PIN, ),
-		BasePeer::TYPE_FIELDNAME => array ('APP_UID', 'APP_NUMBER', 'APP_PARENT', 'APP_STATUS', 'PRO_UID', 'APP_PROC_STATUS', 'APP_PROC_CODE', 'APP_PARALLEL', 'APP_INIT_USER', 'APP_CUR_USER', 'APP_CREATE_DATE', 'APP_INIT_DATE', 'APP_FINISH_DATE', 'APP_UPDATE_DATE', 'APP_DATA', 'APP_PIN', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, )
+		BasePeer::TYPE_PHPNAME => array ('CtoUid', 'ProUid', 'CtoTypeObj', 'CtoUidObj', 'CtoCondition', 'CtoPosition', ),
+		BasePeer::TYPE_COLNAME => array (CaseTrackerObjectPeer::CTO_UID, CaseTrackerObjectPeer::PRO_UID, CaseTrackerObjectPeer::CTO_TYPE_OBJ, CaseTrackerObjectPeer::CTO_UID_OBJ, CaseTrackerObjectPeer::CTO_CONDITION, CaseTrackerObjectPeer::CTO_POSITION, ),
+		BasePeer::TYPE_FIELDNAME => array ('CTO_UID', 'PRO_UID', 'CTO_TYPE_OBJ', 'CTO_UID_OBJ', 'CTO_CONDITION', 'CTO_POSITION', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
 	);
 
 	/**
@@ -102,10 +72,10 @@ abstract class BaseApplicationPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('AppUid' => 0, 'AppNumber' => 1, 'AppParent' => 2, 'AppStatus' => 3, 'ProUid' => 4, 'AppProcStatus' => 5, 'AppProcCode' => 6, 'AppParallel' => 7, 'AppInitUser' => 8, 'AppCurUser' => 9, 'AppCreateDate' => 10, 'AppInitDate' => 11, 'AppFinishDate' => 12, 'AppUpdateDate' => 13, 'AppData' => 14, 'AppPin' => 15, ),
-		BasePeer::TYPE_COLNAME => array (ApplicationPeer::APP_UID => 0, ApplicationPeer::APP_NUMBER => 1, ApplicationPeer::APP_PARENT => 2, ApplicationPeer::APP_STATUS => 3, ApplicationPeer::PRO_UID => 4, ApplicationPeer::APP_PROC_STATUS => 5, ApplicationPeer::APP_PROC_CODE => 6, ApplicationPeer::APP_PARALLEL => 7, ApplicationPeer::APP_INIT_USER => 8, ApplicationPeer::APP_CUR_USER => 9, ApplicationPeer::APP_CREATE_DATE => 10, ApplicationPeer::APP_INIT_DATE => 11, ApplicationPeer::APP_FINISH_DATE => 12, ApplicationPeer::APP_UPDATE_DATE => 13, ApplicationPeer::APP_DATA => 14, ApplicationPeer::APP_PIN => 15, ),
-		BasePeer::TYPE_FIELDNAME => array ('APP_UID' => 0, 'APP_NUMBER' => 1, 'APP_PARENT' => 2, 'APP_STATUS' => 3, 'PRO_UID' => 4, 'APP_PROC_STATUS' => 5, 'APP_PROC_CODE' => 6, 'APP_PARALLEL' => 7, 'APP_INIT_USER' => 8, 'APP_CUR_USER' => 9, 'APP_CREATE_DATE' => 10, 'APP_INIT_DATE' => 11, 'APP_FINISH_DATE' => 12, 'APP_UPDATE_DATE' => 13, 'APP_DATA' => 14, 'APP_PIN' => 15, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, )
+		BasePeer::TYPE_PHPNAME => array ('CtoUid' => 0, 'ProUid' => 1, 'CtoTypeObj' => 2, 'CtoUidObj' => 3, 'CtoCondition' => 4, 'CtoPosition' => 5, ),
+		BasePeer::TYPE_COLNAME => array (CaseTrackerObjectPeer::CTO_UID => 0, CaseTrackerObjectPeer::PRO_UID => 1, CaseTrackerObjectPeer::CTO_TYPE_OBJ => 2, CaseTrackerObjectPeer::CTO_UID_OBJ => 3, CaseTrackerObjectPeer::CTO_CONDITION => 4, CaseTrackerObjectPeer::CTO_POSITION => 5, ),
+		BasePeer::TYPE_FIELDNAME => array ('CTO_UID' => 0, 'PRO_UID' => 1, 'CTO_TYPE_OBJ' => 2, 'CTO_UID_OBJ' => 3, 'CTO_CONDITION' => 4, 'CTO_POSITION' => 5, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
 	);
 
 	/**
@@ -115,8 +85,8 @@ abstract class BaseApplicationPeer {
 	 */
 	public static function getMapBuilder()
 	{
-		include_once 'classes/model/map/ApplicationMapBuilder.php';
-		return BasePeer::getMapBuilder('classes.model.map.ApplicationMapBuilder');
+		include_once 'classes/model/map/CaseTrackerObjectMapBuilder.php';
+		return BasePeer::getMapBuilder('classes.model.map.CaseTrackerObjectMapBuilder');
 	}
 	/**
 	 * Gets a map (hash) of PHP names to DB column names.
@@ -129,7 +99,7 @@ abstract class BaseApplicationPeer {
 	public static function getPhpNameMap()
 	{
 		if (self::$phpNameMap === null) {
-			$map = ApplicationPeer::getTableMap();
+			$map = CaseTrackerObjectPeer::getTableMap();
 			$columns = $map->getColumns();
 			$nameMap = array();
 			foreach ($columns as $column) {
@@ -184,12 +154,12 @@ abstract class BaseApplicationPeer {
 	 *		$c->addJoin(TablePeer::alias("alias1", TablePeer::PRIMARY_KEY_COLUMN), TablePeer::PRIMARY_KEY_COLUMN);
 	 * </code>
 	 * @param      string $alias The alias for the current table.
-	 * @param      string $column The column name for current table. (i.e. ApplicationPeer::COLUMN_NAME).
+	 * @param      string $column The column name for current table. (i.e. CaseTrackerObjectPeer::COLUMN_NAME).
 	 * @return     string
 	 */
 	public static function alias($alias, $column)
 	{
-		return str_replace(ApplicationPeer::TABLE_NAME.'.', $alias.'.', $column);
+		return str_replace(CaseTrackerObjectPeer::TABLE_NAME.'.', $alias.'.', $column);
 	}
 
 	/**
@@ -206,42 +176,22 @@ abstract class BaseApplicationPeer {
 	public static function addSelectColumns(Criteria $criteria)
 	{
 
-		$criteria->addSelectColumn(ApplicationPeer::APP_UID);
+		$criteria->addSelectColumn(CaseTrackerObjectPeer::CTO_UID);
 
-		$criteria->addSelectColumn(ApplicationPeer::APP_NUMBER);
+		$criteria->addSelectColumn(CaseTrackerObjectPeer::PRO_UID);
 
-		$criteria->addSelectColumn(ApplicationPeer::APP_PARENT);
+		$criteria->addSelectColumn(CaseTrackerObjectPeer::CTO_TYPE_OBJ);
 
-		$criteria->addSelectColumn(ApplicationPeer::APP_STATUS);
+		$criteria->addSelectColumn(CaseTrackerObjectPeer::CTO_UID_OBJ);
 
-		$criteria->addSelectColumn(ApplicationPeer::PRO_UID);
+		$criteria->addSelectColumn(CaseTrackerObjectPeer::CTO_CONDITION);
 
-		$criteria->addSelectColumn(ApplicationPeer::APP_PROC_STATUS);
-
-		$criteria->addSelectColumn(ApplicationPeer::APP_PROC_CODE);
-
-		$criteria->addSelectColumn(ApplicationPeer::APP_PARALLEL);
-
-		$criteria->addSelectColumn(ApplicationPeer::APP_INIT_USER);
-
-		$criteria->addSelectColumn(ApplicationPeer::APP_CUR_USER);
-
-		$criteria->addSelectColumn(ApplicationPeer::APP_CREATE_DATE);
-
-		$criteria->addSelectColumn(ApplicationPeer::APP_INIT_DATE);
-
-		$criteria->addSelectColumn(ApplicationPeer::APP_FINISH_DATE);
-
-		$criteria->addSelectColumn(ApplicationPeer::APP_UPDATE_DATE);
-
-		$criteria->addSelectColumn(ApplicationPeer::APP_DATA);
-
-		$criteria->addSelectColumn(ApplicationPeer::APP_PIN);
+		$criteria->addSelectColumn(CaseTrackerObjectPeer::CTO_POSITION);
 
 	}
 
-	const COUNT = 'COUNT(APPLICATION.APP_UID)';
-	const COUNT_DISTINCT = 'COUNT(DISTINCT APPLICATION.APP_UID)';
+	const COUNT = 'COUNT(CASE_TRACKER_OBJECT.CTO_UID)';
+	const COUNT_DISTINCT = 'COUNT(DISTINCT CASE_TRACKER_OBJECT.CTO_UID)';
 
 	/**
 	 * Returns the number of rows matching criteria.
@@ -259,9 +209,9 @@ abstract class BaseApplicationPeer {
 		// clear out anything that might confuse the ORDER BY clause
 		$criteria->clearSelectColumns()->clearOrderByColumns();
 		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(ApplicationPeer::COUNT_DISTINCT);
+			$criteria->addSelectColumn(CaseTrackerObjectPeer::COUNT_DISTINCT);
 		} else {
-			$criteria->addSelectColumn(ApplicationPeer::COUNT);
+			$criteria->addSelectColumn(CaseTrackerObjectPeer::COUNT);
 		}
 
 		// just in case we're grouping: add those columns to the select statement
@@ -270,7 +220,7 @@ abstract class BaseApplicationPeer {
 			$criteria->addSelectColumn($column);
 		}
 
-		$rs = ApplicationPeer::doSelectRS($criteria, $con);
+		$rs = CaseTrackerObjectPeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
 			return $rs->getInt(1);
 		} else {
@@ -283,7 +233,7 @@ abstract class BaseApplicationPeer {
 	 *
 	 * @param      Criteria $criteria object used to create the SELECT statement.
 	 * @param      Connection $con
-	 * @return     Application
+	 * @return     CaseTrackerObject
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -291,7 +241,7 @@ abstract class BaseApplicationPeer {
 	{
 		$critcopy = clone $criteria;
 		$critcopy->setLimit(1);
-		$objects = ApplicationPeer::doSelect($critcopy, $con);
+		$objects = CaseTrackerObjectPeer::doSelect($critcopy, $con);
 		if ($objects) {
 			return $objects[0];
 		}
@@ -308,7 +258,7 @@ abstract class BaseApplicationPeer {
 	 */
 	public static function doSelect(Criteria $criteria, $con = null)
 	{
-		return ApplicationPeer::populateObjects(ApplicationPeer::doSelectRS($criteria, $con));
+		return CaseTrackerObjectPeer::populateObjects(CaseTrackerObjectPeer::doSelectRS($criteria, $con));
 	}
 	/**
 	 * Prepares the Criteria object and uses the parent doSelect()
@@ -332,7 +282,7 @@ abstract class BaseApplicationPeer {
 
 		if (!$criteria->getSelectColumns()) {
 			$criteria = clone $criteria;
-			ApplicationPeer::addSelectColumns($criteria);
+			CaseTrackerObjectPeer::addSelectColumns($criteria);
 		}
 
 		// Set the correct dbName
@@ -354,7 +304,7 @@ abstract class BaseApplicationPeer {
 		$results = array();
 	
 		// set the class once to avoid overhead in the loop
-		$cls = ApplicationPeer::getOMClass();
+		$cls = CaseTrackerObjectPeer::getOMClass();
 		$cls = Propel::import($cls);
 		// populate the object(s)
 		while($rs->next()) {
@@ -389,13 +339,13 @@ abstract class BaseApplicationPeer {
 	 */
 	public static function getOMClass()
 	{
-		return ApplicationPeer::CLASS_DEFAULT;
+		return CaseTrackerObjectPeer::CLASS_DEFAULT;
 	}
 
 	/**
-	 * Method perform an INSERT on the database, given a Application or Criteria object.
+	 * Method perform an INSERT on the database, given a CaseTrackerObject or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or Application object containing data that is used to create the INSERT statement.
+	 * @param      mixed $values Criteria or CaseTrackerObject object containing data that is used to create the INSERT statement.
 	 * @param      Connection $con the connection to use
 	 * @return     mixed The new primary key.
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -410,7 +360,7 @@ abstract class BaseApplicationPeer {
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 		} else {
-			$criteria = $values->buildCriteria(); // build Criteria from Application object
+			$criteria = $values->buildCriteria(); // build Criteria from CaseTrackerObject object
 		}
 
 
@@ -432,9 +382,9 @@ abstract class BaseApplicationPeer {
 	}
 
 	/**
-	 * Method perform an UPDATE on the database, given a Application or Criteria object.
+	 * Method perform an UPDATE on the database, given a CaseTrackerObject or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or Application object containing data that is used to create the UPDATE statement.
+	 * @param      mixed $values Criteria or CaseTrackerObject object containing data that is used to create the UPDATE statement.
 	 * @param      Connection $con The connection to use (specify Connection object to exert more control over transactions).
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -451,10 +401,10 @@ abstract class BaseApplicationPeer {
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 
-			$comparison = $criteria->getComparison(ApplicationPeer::APP_UID);
-			$selectCriteria->add(ApplicationPeer::APP_UID, $criteria->remove(ApplicationPeer::APP_UID), $comparison);
+			$comparison = $criteria->getComparison(CaseTrackerObjectPeer::CTO_UID);
+			$selectCriteria->add(CaseTrackerObjectPeer::CTO_UID, $criteria->remove(CaseTrackerObjectPeer::CTO_UID), $comparison);
 
-		} else { // $values is Application object
+		} else { // $values is CaseTrackerObject object
 			$criteria = $values->buildCriteria(); // gets full criteria
 			$selectCriteria = $values->buildPkeyCriteria(); // gets criteria w/ primary key(s)
 		}
@@ -466,7 +416,7 @@ abstract class BaseApplicationPeer {
 	}
 
 	/**
-	 * Method to DELETE all rows from the APPLICATION table.
+	 * Method to DELETE all rows from the CASE_TRACKER_OBJECT table.
 	 *
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 */
@@ -480,7 +430,7 @@ abstract class BaseApplicationPeer {
 			// use transaction because $criteria could contain info
 			// for more than one table or we could emulating ON DELETE CASCADE, etc.
 			$con->begin();
-			$affectedRows += BasePeer::doDeleteAll(ApplicationPeer::TABLE_NAME, $con);
+			$affectedRows += BasePeer::doDeleteAll(CaseTrackerObjectPeer::TABLE_NAME, $con);
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {
@@ -490,9 +440,9 @@ abstract class BaseApplicationPeer {
 	}
 
 	/**
-	 * Method perform a DELETE on the database, given a Application or Criteria object OR a primary key value.
+	 * Method perform a DELETE on the database, given a CaseTrackerObject or Criteria object OR a primary key value.
 	 *
-	 * @param      mixed $values Criteria or Application object or primary key or array of primary keys
+	 * @param      mixed $values Criteria or CaseTrackerObject object or primary key or array of primary keys
 	 *              which is used to create the DELETE statement
 	 * @param      Connection $con the connection to use
 	 * @return     int 	The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -503,18 +453,18 @@ abstract class BaseApplicationPeer {
 	 public static function doDelete($values, $con = null)
 	 {
 		if ($con === null) {
-			$con = Propel::getConnection(ApplicationPeer::DATABASE_NAME);
+			$con = Propel::getConnection(CaseTrackerObjectPeer::DATABASE_NAME);
 		}
 
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
-		} elseif ($values instanceof Application) {
+		} elseif ($values instanceof CaseTrackerObject) {
 
 			$criteria = $values->buildPkeyCriteria();
 		} else {
 			// it must be the primary key
 			$criteria = new Criteria(self::DATABASE_NAME);
-			$criteria->add(ApplicationPeer::APP_UID, (array) $values, Criteria::IN);
+			$criteria->add(CaseTrackerObjectPeer::CTO_UID, (array) $values, Criteria::IN);
 		}
 
 		// Set the correct dbName
@@ -537,24 +487,24 @@ abstract class BaseApplicationPeer {
 	}
 
 	/**
-	 * Validates all modified columns of given Application object.
+	 * Validates all modified columns of given CaseTrackerObject object.
 	 * If parameter $columns is either a single column name or an array of column names
 	 * than only those columns are validated.
 	 *
 	 * NOTICE: This does not apply to primary or foreign keys for now.
 	 *
-	 * @param      Application $obj The object to validate.
+	 * @param      CaseTrackerObject $obj The object to validate.
 	 * @param      mixed $cols Column name or array of column names.
 	 *
 	 * @return     mixed TRUE if all columns are valid or the error message of the first invalid column.
 	 */
-	public static function doValidate(Application $obj, $cols = null)
+	public static function doValidate(CaseTrackerObject $obj, $cols = null)
 	{
 		$columns = array();
 
 		if ($cols) {
-			$dbMap = Propel::getDatabaseMap(ApplicationPeer::DATABASE_NAME);
-			$tableMap = $dbMap->getTable(ApplicationPeer::TABLE_NAME);
+			$dbMap = Propel::getDatabaseMap(CaseTrackerObjectPeer::DATABASE_NAME);
+			$tableMap = $dbMap->getTable(CaseTrackerObjectPeer::TABLE_NAME);
 
 			if (! is_array($cols)) {
 				$cols = array($cols);
@@ -568,12 +518,12 @@ abstract class BaseApplicationPeer {
 			}
 		} else {
 
-		if ($obj->isNew() || $obj->isColumnModified(ApplicationPeer::APP_STATUS))
-			$columns[ApplicationPeer::APP_STATUS] = $obj->getAppStatus();
+		if ($obj->isNew() || $obj->isColumnModified(CaseTrackerObjectPeer::CTO_TYPE_OBJ))
+			$columns[CaseTrackerObjectPeer::CTO_TYPE_OBJ] = $obj->getCtoTypeObj();
 
 		}
 
-		return BasePeer::doValidate(ApplicationPeer::DATABASE_NAME, ApplicationPeer::TABLE_NAME, $columns);
+		return BasePeer::doValidate(CaseTrackerObjectPeer::DATABASE_NAME, CaseTrackerObjectPeer::TABLE_NAME, $columns);
 	}
 
 	/**
@@ -581,7 +531,7 @@ abstract class BaseApplicationPeer {
 	 *
 	 * @param      mixed $pk the primary key.
 	 * @param      Connection $con the connection to use
-	 * @return     Application
+	 * @return     CaseTrackerObject
 	 */
 	public static function retrieveByPK($pk, $con = null)
 	{
@@ -589,12 +539,12 @@ abstract class BaseApplicationPeer {
 			$con = Propel::getConnection(self::DATABASE_NAME);
 		}
 
-		$criteria = new Criteria(ApplicationPeer::DATABASE_NAME);
+		$criteria = new Criteria(CaseTrackerObjectPeer::DATABASE_NAME);
 
-		$criteria->add(ApplicationPeer::APP_UID, $pk);
+		$criteria->add(CaseTrackerObjectPeer::CTO_UID, $pk);
 
 
-		$v = ApplicationPeer::doSelect($criteria, $con);
+		$v = CaseTrackerObjectPeer::doSelect($criteria, $con);
 
 		return !empty($v) > 0 ? $v[0] : null;
 	}
@@ -618,26 +568,26 @@ abstract class BaseApplicationPeer {
 			$objs = array();
 		} else {
 			$criteria = new Criteria();
-			$criteria->add(ApplicationPeer::APP_UID, $pks, Criteria::IN);
-			$objs = ApplicationPeer::doSelect($criteria, $con);
+			$criteria->add(CaseTrackerObjectPeer::CTO_UID, $pks, Criteria::IN);
+			$objs = CaseTrackerObjectPeer::doSelect($criteria, $con);
 		}
 		return $objs;
 	}
 
-} // BaseApplicationPeer
+} // BaseCaseTrackerObjectPeer
 
 // static code to register the map builder for this Peer with the main Propel class
 if (Propel::isInit()) {
 	// the MapBuilder classes register themselves with Propel during initialization
 	// so we need to load them here.
 	try {
-		BaseApplicationPeer::getMapBuilder();
+		BaseCaseTrackerObjectPeer::getMapBuilder();
 	} catch (Exception $e) {
 		Propel::log('Could not initialize Peer: ' . $e->getMessage(), Propel::LOG_ERR);
 	}
 } else {
 	// even if Propel is not yet initialized, the map builder class can be registered
 	// now and then it will be loaded when Propel initializes.
-	require_once 'classes/model/map/ApplicationMapBuilder.php';
-	Propel::registerMapBuilder('classes.model.map.ApplicationMapBuilder');
+	require_once 'classes/model/map/CaseTrackerObjectMapBuilder.php';
+	Propel::registerMapBuilder('classes.model.map.CaseTrackerObjectMapBuilder');
 }
