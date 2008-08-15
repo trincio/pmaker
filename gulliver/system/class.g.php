@@ -2041,6 +2041,19 @@ class G
     //return strtoupper(substr(uniqid(rand(0, 9), false),0,14));
   }
 
+
+	/**
+   * Generate random number
+   *
+   * @author Fernando Ontiveros Lira <fernando@colosa.com>
+   * @access public
+   * @return int
+   */
+  function generateUniqueNumber() {        
+    return rand(1000, 9999);
+  }
+  
+  
 /**
    * Verify if the input string is a valid UID
    *

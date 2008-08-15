@@ -42,7 +42,7 @@ class headPublisher
     {
 		zip:true,
 		inGulliver:true,
-		modules	:"dom,abbr,rpc,drag,drop,app,panel,fx,grid,xmlform,validator",
+		modules	:"dom,abbr,rpc,drag,drop,app,panel,fx,grid,xmlform,validator,dashboard",
 		files	:"json"
 	}
   );';

@@ -233,8 +233,10 @@ class Application extends BaseApplication {
       //to do: what is the empty date for propel???/     
       $this->setAppFinishDate( '19020101' );
       $this->setAppUpdateDate( 'now' );
-      $this->setAppData      ( serialize ( array() ) );
-
+      
+      $pin = G::generateUniqueNumber();
+      $this->setAppData      ( serialize ( array('PIN'=>$pin) ) );     
+      $this->setAppPin 			 ( md5($pin) );
       if ( $this->validate() ) {
         $con->begin(); 
         $res = $this->save();
