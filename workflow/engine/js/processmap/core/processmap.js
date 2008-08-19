@@ -508,10 +508,10 @@ var processmap=function(){
 						r.make();
 					}.extend(this)},
 					{image:"/images/tracker.gif",text:G_STRINGS.ID_CASE_TRACKER,launch:function(event){
-						this.tmp.editProcessPanel = panel =new leimnud.module.panel();
+						this.tmp.caseTrackerPanel = panel =new leimnud.module.panel();
 						panel.options={
 							limit	:true,
-							size	:{w:500,h:380},
+							size	:{w:300,h:180},
 							position:{x:50,y:50,center:true},
 							title	:G_STRINGS.ID_CASE_TRACKER,
 							theme	:this.options.theme,
@@ -538,7 +538,7 @@ var processmap=function(){
 						r.make();
 					}.extend(this)},
 					{image:"/images/tracker.gif",text:G_STRINGS.ID_CASE_TRACKER_OBJECTS,launch:function(event){
-						this.tmp.editProcessPanel = panel =new leimnud.module.panel();
+						this.tmp.caseTrackerPanel = panel =new leimnud.module.panel();
 						panel.options={
 							limit	:true,
 							size	:{w:500,h:380},

@@ -342,18 +342,18 @@ class propelTable
   function renderField( $row, $r, $result)
   {
     global $G_DATE_FORMAT;
-//to do: special content??    
+//to do: special content??
     //$result['row__']            = $row;   //Special content:
 
     $styleData = $this->style[$r];
-    $fielDataName = $styleData['data'];    
+    $fielDataName = $styleData['data'];
     $fieldClassName = isset( $styleData['colClassName']) && ($styleData['colClassName']) ? $styleData['colClassName'] : $this->tdClass;
-            
-    if ( $fielDataName != '' ) 
+
+    if ( $fielDataName != '' )
       $value = ((isset($result[ $fielDataName ])) ? $result[ $fielDataName ] : '' );
     else
       $value = $this->fields[$r]['Label'];
-    
+
     $this->tpl->newBlock( "field" );
 
     $this->tpl->assign('width', $this->style[$r]['colWidth']);
@@ -383,12 +383,12 @@ class propelTable
     $this->xmlForm->setDefaultValues();
     $this->xmlForm->setValues( $result );
     //var_dump($fieldName, $fieldClass );echo '<br /><br />';
-    
+
     if ( array_search( 'renderTable', get_class_methods( $fieldClass ) )!== FALSE ) {
       $htmlField = $this->xmlForm->fields[ $fieldName ]->renderTable( $value, $this->xmlForm, true );
       $this->tpl->assign( "value" , $htmlField );
     }
-  
+
     return $this->fields[$r]['Type'];
   }
 
@@ -468,7 +468,7 @@ class propelTable
    */
   function renderTable( $block = '', $fields = '' )
   {
-  	
+
     $t1 = G::microtime_float();
     $oHeadPublisher =& headPublisher::getSingleton();
     $oHeadPublisher->addInstanceModule('leimnud', 'panel');
@@ -487,15 +487,15 @@ class propelTable
     $this->tpl = new TemplatePower( $templateFile );
     $this->tpl->prepare();
 
-    $block = '' ;
+    //$block = '' ;
     if(is_array($fields))
     {
     	foreach ( $fields as $key =>$val ) {
       	$this->tpl->assign( $key , $val );
     	}
-    }	
-    $this->tpl->newBlock('headerBlock');
-	  
+    }
+    //$this->tpl->newBlock('headerBlock');
+
     /********** HEAD BLOCK ***************/
     if (($block ==='') || ($block==='head')) {
       $this->tpl->newBlock('headBlock');
@@ -609,7 +609,7 @@ class propelTable
             if ($this->style[$r]['showInTable'] != '0' )
             $this->renderField($j+1,$r,$result);
           }
-        }        
+        }
       }
       $this->tpl->assign('_ROOT.gridRows','='. $gridRows);  //number of rows in the current page
       $this->tpl->newBlock('rowTag');
