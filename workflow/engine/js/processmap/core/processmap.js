@@ -1236,51 +1236,53 @@ var processmap=function(){
 				this.observers.menu.register(menu.remove,menu);
 				}
 				else {
-					this.parent.dom.setStyle(a,{
-					  cursor:('pointer')
-				  });
-					a.title = G_STRINGS.ID_CLICK_VIEW_MORE_INFO;
-					this.parent.dom.setStyle(b,{
-					  cursor:('pointer')
-				  });
-					b.title = G_STRINGS.ID_CLICK_VIEW_MORE_INFO;
-					this.parent.dom.setStyle(c,{
-					  cursor:('pointer')
-				  });
-					c.title = G_STRINGS.ID_CLICK_VIEW_MORE_INFO;
-					this.parent.event.add(a, 'click', {instance:this,method:function(evt, index)
-				  {
-				  	var data = this.data.db.task[index];
-						this.oTaskDetailsPanel = new leimnud.module.panel();
-            this.oTaskDetailsPanel.options = {
-              limit    : true,
-              size     : {w:300,h:227},
-              position : {x:0,y:0,center:true},
-              title    : '',
-              theme    : 'processmaker',
-              statusBar: false,
-              control  : {drag:false,resize:false,close:true},
-              fx       : {opacity:true,rolled:false,modal:true}
-            };
-            this.oTaskDetailsPanel.make();
-            this.oTaskDetailsPanel.events = {
-              remove:function() {
-                delete this.oTaskDetailsPanel;
-              }.extend(this)
-            };
-            this.oTaskDetailsPanel.loader.show();
-            var r = new this.parent.module.rpc.xmlhttp({
-              url :'cases_Ajax',
-              args:'action=showTaskDetails&sTaskUID=' + data.uid
-            });
-            r.callback=function(rpc){
-              this.oTaskDetailsPanel.loader.hide();
-              var scs = rpc.xmlhttp.responseText.extractScript();
-              this.oTaskDetailsPanel.addContent(rpc.xmlhttp.responseText);
-              scs.evalScript();
-            }.extend(this);
-            r.make();
-				  }.extend(this,index)});
+				  if (this.options.mi) {
+					  this.parent.dom.setStyle(a,{
+					    cursor:('pointer')
+				    });
+					  a.title = G_STRINGS.ID_CLICK_VIEW_MORE_INFO;
+					  this.parent.dom.setStyle(b,{
+					    cursor:('pointer')
+				    });
+					  b.title = G_STRINGS.ID_CLICK_VIEW_MORE_INFO;
+					  this.parent.dom.setStyle(c,{
+					    cursor:('pointer')
+				    });
+					  c.title = G_STRINGS.ID_CLICK_VIEW_MORE_INFO;
+					  this.parent.event.add(a, 'click', {instance:this,method:function(evt, index)
+				    {
+				    	var data = this.data.db.task[index];
+					  	this.oTaskDetailsPanel = new leimnud.module.panel();
+              this.oTaskDetailsPanel.options = {
+                limit    : true,
+                size     : {w:300,h:227},
+                position : {x:0,y:0,center:true},
+                title    : '',
+                theme    : 'processmaker',
+                statusBar: false,
+                control  : {drag:false,resize:false,close:true},
+                fx       : {opacity:true,rolled:false,modal:true}
+              };
+              this.oTaskDetailsPanel.make();
+              this.oTaskDetailsPanel.events = {
+                remove:function() {
+                  delete this.oTaskDetailsPanel;
+                }.extend(this)
+              };
+              this.oTaskDetailsPanel.loader.show();
+              var r = new this.parent.module.rpc.xmlhttp({
+                url :'cases_Ajax',
+                args:'action=showTaskDetails&sTaskUID=' + data.uid
+              });
+              r.callback=function(rpc){
+                this.oTaskDetailsPanel.loader.hide();
+                var scs = rpc.xmlhttp.responseText.extractScript();
+                this.oTaskDetailsPanel.addContent(rpc.xmlhttp.responseText);
+                scs.evalScript();
+              }.extend(this);
+              r.make();
+				    }.extend(this,index)});
+				  }
 				}
 				this.panels.editor.elements.content.appendChild(a);
 				a.appendChild(b);
@@ -1844,6 +1846,7 @@ processmap.prototype={
 		this.options = {
 			theme	:"firefox",
 			rw	:true,
+			mi  :true,
 			hideMenu:true
 		}.concat(this.options || {});
 		this.options.target = this.parent.dom.element(this.options.target);

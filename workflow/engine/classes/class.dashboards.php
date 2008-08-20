@@ -82,13 +82,13 @@ class Dashboards {
       if ($aDashboard['class'] == 'PM_Reports') {
         foreach ($aReports as $sReport) {
           $bFree = false;
-          if (($aDashboard['class'] == 'PM_Reports') && ($aDashboard['type'] == $sReport)) {
+          if (($aDashboard['class'] == 'PM_Reports') && ($aDashboard['element'] == $sReport)) {
             $bFree = true;
           }
           if ($bFree) {
             $oChart        = $aDashboard['object'];
             $oChart->class = $aDashboard['class'];
-            $oChart->chart = $aDashboard['type'];
+            $oChart->chart = $aDashboard['element'];
             if ($iColumn === 0) {
               $aLeftColumn[] = $oChart;
             }
@@ -107,7 +107,7 @@ class Dashboards {
         foreach ($aCharts as $sChart) {
           $bFree = false;
           foreach ($aAvailableDashboards as $sDashboardClass) {
-            if (($aDashboard['class'] == $sDashboardClass) && ($aDashboard['type'] == $sChart)) {
+            if (($aDashboard['class'] == $sDashboardClass) && ($aDashboard['element'] == $sChart)) {
               $bFree = true;
             }
           }
@@ -120,6 +120,27 @@ class Dashboards {
             }
             else {
               $aRightColumn[] = $oChart;
+            }
+            $iColumn = 1 - $iColumn;
+          }
+        }
+        $aPages = $oInstance->getAvailablePages();
+        foreach ($aPages as $sPage) {
+          $bFree = false;
+          foreach ($aAvailableDashboards as $sDashboardClass) {
+            if (($aDashboard['class'] == $sDashboardClass) && ($aDashboard['element'] == $sPage)) {
+              $bFree = true;
+            }
+          }
+          if ($bFree) {
+            $oPage = $oInstance->getPage($sPage);
+            $oPage->class = $sDashboardClass;
+            //$oPage->chart = $sPage;
+            if ($iColumn === 0) {
+              $aLeftColumn[] = $oPage;
+            }
+            else {
+              $aRightColumn[] = $oPage;
             }
             $iColumn = 1 - $iColumn;
           }
