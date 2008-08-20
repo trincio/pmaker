@@ -2532,6 +2532,70 @@ class Cases
 		return Array("DYNAFORMS"=>$RESULT['DYNAFORM'], "INPUT_DOCUMENTS"=>$RESULT['INPUT'], "OUTPUT_DOCUMENTS"=>$RESULT['OUTPUT']);
 	}
 
+/*
+funcion de verificacion para la autenticacion del External User by Everth The Answer
+*/
+ function verifyCaseTracker($case, $pin){ 	
+ 	  $pin=md5($pin); 
+ 	  
+ 	  $oCriteria = new Criteria('workflow');
+		$oCriteria->addSelectColumn(ApplicationPeer::APP_UID);
+		$oCriteria->addSelectColumn(ApplicationPeer::APP_PIN);	
+		$oCriteria->addSelectColumn(ApplicationPeer::PRO_UID);			
+		$oCriteria->add(ApplicationPeer::APP_NUMBER, $case);			
+ 	  
+ 	  $oDataset = DynaformPeer::doSelectRS($oCriteria);
+		$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+		$oDataset->next();
+		$aRow = $oDataset->getRow();
+							  	  	  							  	  	  
+ 	  //$aCase=$this->loadCase($case);
+ 	  $s=0; 	  
+ 	  if(!is_array($aRow)) //no existe el caso
+ 	  		return -1;
+		else
+			{  //$_SESSION['PROCESS']=$aRow['PRO_UID']; 
+		  	 $s++;
+		  }	
+		 	   	 		
+ 	  if($aRow['APP_PIN']!=$pin) //el pin no es valido
+ 	  		return -2;
+ 	  else
+ 	  		$s++;
+ 	  		
+ 	  if($s==2)
+ 	  	return $aRow['PRO_UID'];				
+ 	  		 	  
+	}
+
+/*
+funcion permisos, by Everth The Answer
+*/
+ function Permisos($PRO_UID){ 	
+ 	  require_once ("classes/model/CaseTracker.php");		
+		require_once ("classes/model/CaseTrackerObject.php");		
+		$a=0;
+		$b=0;
+		$c=0;
+		$oCaseTracker = new CaseTracker();
+		$aCaseTracker = $oCaseTracker->load($PRO_UID);
+		//print_r($aCaseTracker); die;
+		if(is_array($aCaseTracker))
+		{	if($aCaseTracker['CT_MAP_TYPE']!='NONE')
+			 	 $a=1;			 		 
+		   					  
+			$oCriteria = new Criteria();
+      $oCriteria->add(CaseTrackerObjectPeer::PRO_UID, $PRO_UID);
+      if (CaseTrackerObjectPeer::doCount($oCriteria) > 0) 
+     	  	$b=1;     	 	         	
+      			
+				if($aCaseTracker['CT_DERIVATION_HISTORY']==1)
+				 	$c=1;				 	  				 	
+			
+	  }
+  return $a.'-'.$b.'-'.$c; 	  		 	  
+}	  
+
 
 /*
 funcion momentanea by Everth The Answer

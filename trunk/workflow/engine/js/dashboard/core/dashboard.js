@@ -33,7 +33,7 @@ var addDashboard = function(aDashboard) {
   oPanel.loader.show();
   var oRPC = new leimnud.module.rpc.xmlhttp({
   	url : 'dashboardAjax',
-  	args: 'action=addDashboard&sDashboardClass=' + aDashboard[0] + '&sChart=' + aDashboard[1]
+  	args: 'action=addDashboard&sDashboardClass=' + aDashboard[0] + '&sElement=' + aDashboard[1] + '&sType=' + aDashboard[2]
   });
   oRPC.callback = function(rpc){
   	oPanel.loader.hide();
