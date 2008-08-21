@@ -36,7 +36,7 @@ leimnud.Package.Public({
 				var a = [];
 				for(x;x<=y;x++)
 				{
-					a.push({value:x,label:''});
+					a.push({value:((this.options.fill_values)?this.options.fill_values*x:x),label:x});
 				}
 				return a;
 			};
@@ -117,6 +117,17 @@ leimnud.Package.Public({
 				if(t!=this.current || manual)
 				{
 					this.current=t;
+					if(this.options.out_label)
+					{
+						var ol = this.options.out_label;
+						ol[(ol.tagName=='input')?'value':'innerHTML']=this.get().label;
+					}
+					if(this.options.out_value)
+					{
+						var ol = this.options.out_value;
+						ol[(ol.tagName=='input')?'value':'innerHTML']=this.get().value;
+					}
+
 					return this.options.onchange();
 				}
 			};
@@ -141,10 +152,10 @@ leimnud.Package.Public({
 				{
 					var s = this.options.slides[i];
 					var o = s.options.onchange;
-					s.options.onchange=function(o,op){
-						op();
+					s.options.onchange=function(o,t){
+						t.operation();
 						return o();
-					}.extend(s,o,this.operation)
+					}.extend(s,o,this)
 				}
 				return this.operation();
 			};
@@ -170,6 +181,11 @@ leimnud.Package.Public({
 					{
 						t=t+s.get().value;
 					}
+				}
+				if(this.options.out_value)
+				{
+					var ol = this.options.out_value;
+					ol[(ol.tagName=='input')?'value':'innerHTML']=t;
 				}
 				return this.options.result(t);
 			};

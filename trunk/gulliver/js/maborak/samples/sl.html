@@ -1,15 +1,49 @@
 <html>
 	<head>
-	<title>maborak</title>
+	<title>Dynaform builder</title>
 <script type="text/javascript" src="../core/maborak.js"></script>
 <script type="text/javascript">
     var leimnud = new maborak().make({
-        //zip:true,
-		modules	:"dom,abbr,drag,panel,fx,slider"
+		modules	:"dom,abbr,drag,fx,slider"
 	});
 </script>
 <script type="text/javascript">
 	leimnud.event.add(window,"load",function(){
+
+		var size = new leimnud.module.slider.create();
+		size.make({
+				name	: "size",	// Name for your slider, this is important but .. this is the input containing the value of size to send.
+				selected:2,	    // Value selected by default... 2 is Big (0=Small,1=Medium,2=Big)
+				points:[
+					{value:100,label:"Small"},
+					{value:200,label:"Medium"},
+					{value:300,label:"Big"}
+				],
+				target:$('size'),	// Target to Slider, an DIV with id "size" (for example) 
+				out_label:$('size_label'),	// Target to render current Label , an DIV or SPAN with id "size_label" (for example) 
+				out_value:$('size_price')	// Target to render current Price , an DIV or SPAN with id "size_price" (for example)
+				});
+
+		var days = new leimnud.module.slider.create();
+		days.make({
+				name	: "days",	// Name for your slider, this is important but .. this is the input containing the value of size to send.
+				selected:1,	    	// Value Day 1 selected
+				points:"1-31",		// change to "1-365" ... if neeeded.
+				fill_values:5,
+				target:$('days'),			// Target to Slider, an DIV with id "size" (for example) 
+				out_label:$('days_label'),	// Target to render current Label , an DIV or SPAN with id "size_label" (for example) 
+				out_value:$('days_price')	// Target to render current Price , an DIV or SPAN with id "size_price" (for example)
+			});
+
+		var total = new leimnud.module.slider.eventor();
+		total.make({
+			name:"total_cart",                //Name
+			slides:[days,size],               //Sliders to sume
+			operation:"+",
+			out_value:$('total')
+		});
+
+
 		window['sa'] = new leimnud.module.slider.create();
 		sa.make({
 			selected:2,
@@ -78,6 +112,136 @@
 			<div style='padding:2px;' id="c"></div>
 
 			TOTAL COST: $ <span id='l_d'></span>
+
+------------------------------------------------------------------------------------
+
+
+This is important. A common page to load sliders
+
+
+
+
+&lt;html&gt;
+	&lt;head&gt;
+	&lt;title&gt;Dynaform builder&lt;/title&gt;
+&lt;script type="text/javascript" src="../core/maborak.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript"&gt;
+    var leimnud = new maborak().make({
+		modules	:"dom,abbr,drag,fx,slider"
+	});
+&lt;/script&gt;
+&lt;script type="text/javascript"&gt;
+	leimnud.event.add(window,"load",function(){
+
+			//SLIDER CODE
+
+	});
+&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+
+
+------------------------------------------------------------------------------------
+
+Slider to Size:    
+
+		Small : 100 $
+		Medium: 200 $
+		Big   : 300 $
+		--------------
+		label | price
+
+In slider code add.
+
+
+
+		var size = new leimnud.module.slider.create();
+		size.make({
+				name	: "size",	// Name for your slider, this is important but .. this is the input containing the value of size to send.
+				selected:2,	    // Value selected by default... 2 is Big (0=Small,1=Medium,2=Big)
+				points:[
+					{value:100,label:"Small"},
+					{value:200,label:"Medium"},
+					{value:300,label:"Big"}
+				],
+				target:$('size'),			// Target to Slider, an DIV with id "size" (for example) 
+				out_label:$('size_label'),	// Target to render current Label , an DIV or SPAN with id "size_label" (for example) 
+				out_value:$('size_price')	// Target to render current Price , an DIV or SPAN with id "size_price" (for example)
+			});
+			
+
+		The html:
+
+				Size : &lt;span id="size_label"&gt;&lt;/span&gt;
+				Price: $ &lt;span id="size_price"&gt;&lt;/span&gt;
+				&lt;div id="size"&gt;	&lt;/div&gt;
+
+
+				Size : <span id="size_label"></span>
+				Price: $ <span id="size_price"></span>
+				<div id="size">	</div>
+
+-------------------------------------------------------------------------------------
+
+
+Days:    
+		1 to 31 days (for example)
+
+In slider code add.
+
+		var days = new leimnud.module.slider.create();
+		days.make({
+				name	: "days",	// Name for your slider, this is important but .. this is the input containing the value of size to send.
+				selected:1,	    	// Value Day 2 selected... why?... in the system  [1=0,2=1,etc]  if the days are... "0-31" [0=0,1=1,etc]
+				points:"1-31",		// change to "1-365" ... if neeeded.
+				fill_value:5,		//By default "value === label"   2 days == 2 $ ,  but if U need apply a price to days. Set value per day HERE!. (example 1 day == 5 $)
+				target:$('days'),			// Target to Slider, an DIV with id "size" (for example) 
+				out_label:$('days_label'),	// Target to render current Label , an DIV or SPAN with id "size_label" (for example) 
+				out_value:$('days_price')	// Target to render current Price , an DIV or SPAN with id "size_price" (for example)
+			});
+			
+
+		The html:
+
+				Days : &lt;span id="days_label"&gt;&lt;/span&gt;
+				Price: $ &lt;span id="days_price"&gt;&lt;/span&gt;
+				&lt;div id="days"&gt;	&lt;/div&gt;
+
+
+				Days : <span id="days_label"></span>
+				Price: $ <span id="days_price"></span>
+				<div id="days">	</div>
+
+If you need only ... mmm.. 4 days and 
+
+-----------------------------------------------------------------------------------------
+
+
+TOTAL PRICES:
+
+
+			After you maked Sliders... is easy calculate the total prices.
+
+		var total = new leimnud.module.slider.eventor();
+		total.make({
+			name:"total_cart",                //Name
+			slides:[days,size],               //Sliders to sume
+			operation:"+",
+			out_value:$('total')
+		});
+
+		The html:
+
+			Total Price: $ &lt;span id="total"&gt;&lt;/span&gt;
+
+------------------------------------------------------------------------------------------			
+		
+			Total Price: $ <span id="total"></span>
+
+
 		</pre>
+
 </body>
 </html>
