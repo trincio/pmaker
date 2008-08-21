@@ -98,7 +98,7 @@ class Cases
     /*
     * get user starting tasks
     * @param string $sUIDUser
-    * @return boolean
+    * @return $rows
     */
     function getStartCases($sUIDUser = '')
     {
@@ -156,7 +156,7 @@ class Cases
             $tasTitle = Content::load('TAS_TITLE', '', $val['TAS_UID'], SYS_LANG);
             $proTitle = Content::load('PRO_TITLE', '', $val['PRO_UID'], SYS_LANG);
             $title = " $proTitle ($tasTitle)";
-            $rows[] = array('uid' => $val['TAS_UID'], 'value' => $title);
+            $rows[] = array('uid' => $val['TAS_UID'], 'value' => $title, 'pro_uid' => $val['PRO_UID']);
         }
         return $rows;
     }
@@ -985,6 +985,7 @@ class Cases
                 $Fields['APP_TITLE'] = self::refreshCaseTitle($sAppUid, G::array_merges(G::getSystemConstants(), unserialize($Fields['APP_DATA'])));
                 $Fields['APP_DESCRIPTION'] = self::refreshCaseDescription($sAppUid, G::array_merges(G::getSystemConstants(), unserialize($Fields['APP_DATA'])));
                 $Fields['APP_PROC_CODE'] = self::refreshCaseStatusCode($sAppUid, G::array_merges(G::getSystemConstants(), unserialize($Fields['APP_DATA'])));
+                $caseNumber = $Fields['APP_NUMBER'];
                 $Application->update($Fields);
                 //Update the task last assigned (for web entry an web services)
                 G::LoadClass('derivation');
@@ -1007,7 +1008,7 @@ class Cases
         }
         //end plugin
 
-        return array('APPLICATION' => $sAppUid, 'INDEX' => $iDelIndex, 'PROCESS' => $sProUid);
+        return array('APPLICATION' => $sAppUid, 'INDEX' => $iDelIndex, 'PROCESS' => $sProUid, 'CASE_NUMBER' => $caseNumber);
     }
 
     /*
@@ -2563,8 +2564,12 @@ funcion de verificacion para la autenticacion del External User by Everth The An
  	  else
  	  		$s++;
  	  		
+ 	  $res=array();
+ 	  $res['PRO_UID']=$aRow['PRO_UID'];
+ 	  $res['APP_UID']=$aRow['APP_UID'];		
+ 	  
  	  if($s==2)
- 	  	return $aRow['PRO_UID'];				
+ 	  	return $res;				
  	  		 	  
 	}
 

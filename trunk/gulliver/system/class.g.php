@@ -2043,17 +2043,44 @@ class G
 
 
 	/**
-   * Generate random number
+   * Generate a numeric or alphanumeric code
    *
-   * @author Fernando Ontiveros Lira <fernando@colosa.com>
+   * @author Julio Cesar Laura Avendaño <juliocesar@colosa.com>
    * @access public
-   * @return int
+   * @return string
    */
-  function generateUniqueNumber() {        
-    return rand(1000, 9999);
+  function generateCode($iDigits = 4, $sType = 'NUMERIC') {
+    if (($iDigits < 4) || ($iDigits > 50)) {
+      $iDigits = 4;
+    }
+    if (($sType != 'NUMERIC') && ($sType != 'ALPHA') && ($sType != 'ALPHANUMERIC')) {
+      $sType = 'NUMERIC';
+    }
+    $aValidCharacters = array('0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                              'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J',
+                              'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T',
+                              'U', 'V', 'W', 'X', 'Y', 'Z');
+    switch ($sType) {
+      case 'NUMERIC':
+        $iMin = 0;
+        $iMax = 9;
+      break;
+      case 'ALPHA':
+        $iMin = 10;
+        $iMax = 35;
+      break;
+      case 'ALPHANUMERIC':
+        $iMin = 0;
+        $iMax = 35;
+      break;
+    }
+    $sCode = '';
+    for ($i = 0; $i < $iDigits; $i++) {
+      $sCode .= $aValidCharacters[rand($iMin, $iMax)];
+    }
+    return $sCode;
   }
-  
-  
+
 /**
    * Verify if the input string is a valid UID
    *

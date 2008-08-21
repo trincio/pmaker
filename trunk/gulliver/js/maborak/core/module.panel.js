@@ -1045,7 +1045,7 @@ leimnud.Package.Public({
 					var rpc = new this.parent.module.rpc.xmlhttp({
 						url	: options.url,
 						method	: "GET"
-//						args	: 
+//						args	:
 					});
 					this.loader.show();
 					rpc.callback = function(rpc)
@@ -1081,7 +1081,7 @@ leimnud.Package.Public({
 			else
 			{
 				this.addContent(new DOM('iframe',{
-					src:url
+					src:options.url
 				},{
 					border:"0px solid red",
 					height:"100%",
@@ -1110,7 +1110,7 @@ leimnud.Package.Public({
 			return false;
 		},
 		this.addContentStatus=function(content)
-		{			
+		{
 			if(typeof content=="string")
 			{
 				this.elements.status.innerHTML+=content;
@@ -1547,7 +1547,7 @@ leimnud.Package.Public({
 				//var hC = (heightContent-((this.options.statusBarButtons || this.tab.options)?space.y:2));
 				//var hC = heightContent;
 				var hC = (heightContent-space.y);
-				//var wC = (this.options.size.w-space.x);				
+				//var wC = (this.options.size.w-space.x);
 				var wC = (this.options.size.w-space.x);
 				//alert(this.options.size.h+"::"+tamH+":"+(tamH+space.y)+"="+hC+"???"+space.y+"***"+this.elements.titleBar.clientHeight+":"+this.elements.statusBar.offsetHeight+":"+this.elements.headerBar.clientHeight);
 				this.parent.dom.setStyle(this.elements.content,{
@@ -1721,7 +1721,7 @@ leimnud.Package.Public({
 			show:function()
 			{
 				//var hS=parseInt(this.parent.dom.getStyle(this.elements.statusBar,"height"),10);
-				
+
 				//alert(hS)
 				var hhS = this.elements.status.offsetHeight;
 				var hC=parseInt(this.parent.dom.getStyle(this.elements.content,"height"),10);

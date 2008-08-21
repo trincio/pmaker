@@ -46,10 +46,10 @@ var addDashboard = function(aDashboard) {
   oRPC.make();
 };
 
-var removeDashboard = function(sClass, sChart) {
+var removeDashboard = function(sClass, sType, sElement) {
   var oRPC = new leimnud.module.rpc.xmlhttp({
   	url : 'dashboardAjax',
-  	args: 'action=removeDashboard&sDashboardClass=' + sClass + '&sChart=' + sChart
+  	args: 'action=removeDashboard&sDashboardClass=' + sClass + '&sType=' + sType + '&sElement=' + sElement
   });
   oRPC.callback = function(rpc){
     eval(rpc.xmlhttp.responseText);

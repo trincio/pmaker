@@ -251,7 +251,7 @@ leimnud.Package.Public({
 			  new leimnud.module.app.confirm().make({
           label : G_STRINGS.ID_CONFIRM_REMOVE_DASHBOARD,
           action: function() {
-            removeDashboard(options['class'],options.chart);
+            removeDashboard(options['class'],options['type'],options['element']);
             return true;
           }.extend(this),
           cancel: function() {
@@ -262,9 +262,13 @@ leimnud.Package.Public({
         });
       };
 	    _panel.make();
-			if(options.open)
+			if(options.url)
 			{
-				_panel.open(options.open);
+				_panel.open({url:options.url,proxy:false});
+			}
+			if(options.image)
+			{
+				_panel.open({image:options.image,proxy:false});
 			}
 			this.options.panel.push({
 				panel	:_panel,
