@@ -26,7 +26,9 @@ leimnud.Package.Public({
 		Version	:"0.1"
 	},
 	content	:function(options){
-		this.options	= options || {};
+		this.options	= {
+			limitbox:false
+		}.concat(options || {});
 		this.loaded		= false;
 		this.eventHandlers=[];
 		this.cursor 	= "move";
@@ -231,10 +233,12 @@ leimnud.Package.Public({
 					l:true,
 					t:true
 				};
-				tL=parseInt(this.elementStart.x+(cursor.x-this.cursorStart.x),10);
-				tT=parseInt(this.elementStart.y+(cursor.y-this.cursorStart.y),10);
-				if(tL<0 || this.options.limit==="x"){rG.l=false;}
-				if(tT<0 || this.options.limit==="y"){rG.t=false;}
+				tL = parseInt(this.elementStart.x+(cursor.x-this.cursorStart.x),10);
+				tT = parseInt(this.elementStart.y+(cursor.y-this.cursorStart.y),10);
+				if((tL<0 || this.options.limit==="x") || (this.options.limitbox && (tL+element.clientWidth)>this.options.limitbox.clientWidth)){rG.l=false;}
+				if((tT<0 || this.options.limit==="y") || (this.options.limitbox && (tT+element.clientHeight)>this.options.limitbox.clientHeight)){rG.t=false;}
+				this.currentX = tL;
+				this.currentY = tT;
 				//var tL=parseInt(this.elementStart.x+(cursor.x-this.cursorStart.x),10);
 				//var tT=parseInt(this.elementStart.y+(cursor.y-this.cursorStart.y),10);
 				if(rG.l || !this.options.limit)
