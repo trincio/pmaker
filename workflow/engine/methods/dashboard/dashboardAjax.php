@@ -41,7 +41,7 @@ switch ($_POST['action']) {
     foreach ($aReports as $sReport) {
       $bFree = true;
       foreach ($aConfiguration as $aDashboard) {
-        if (($aDashboard['class'] == 'PM_Reports') && ($aDashboard['type'] == $sReport)) {
+        if (($aDashboard['class'] == 'PM_Reports') && ($aDashboard['element'] == $sReport)) {
           $bFree = false;
         }
       }
@@ -61,7 +61,7 @@ switch ($_POST['action']) {
       foreach ($aCharts as $sChart) {
         $bFree = true;
         foreach ($aConfiguration as $aDashboard) {
-          if (($aDashboard['class'] == $sDashboardClass) && ($aDashboard['type'] == $sChart)) {
+          if (($aDashboard['class'] == $sDashboardClass) && ($aDashboard['element'] == $sChart)) {
             $bFree = false;
           }
         }
@@ -76,7 +76,7 @@ switch ($_POST['action']) {
         foreach ($aPages as $sPage) {
           $bFree = true;
           foreach ($aConfiguration as $aDashboard) {
-            if (($aDashboard['class'] == $sDashboardClass) && ($aDashboard['type'] == $sPage)) {
+            if (($aDashboard['class'] == $sDashboardClass) && ($aDashboard['element'] == $sPage)) {
               $bFree = false;
             }
           }
@@ -107,12 +107,11 @@ switch ($_POST['action']) {
 	break;
 	case 'addDashboard':
 	  if ($_POST['sDashboardClass'] == 'PM_Reports') {
-	    $oObject            = new StdClass();
-	    $oObject->title     = G::LoadTranslation($_POST['sElement']);
-	    $oObject->height    = 220;
-	    $oObject->open      = new StdClass();
-	    $oObject->open->url = '/sys' . SYS_SYS . '/' . SYS_LANG . '/blank/reports/reports_Dashboard?sType=' . $_POST['sElement'];
-	    $aConfiguration = $oDashboards->getConfiguration($_SESSION['USER_LOGGED']);
+	    $oObject         = new StdClass();
+	    $oObject->title  = G::LoadTranslation($_POST['sElement']);
+	    $oObject->height = 220;
+	    $oObject->url    = '/sys' . SYS_SYS . '/' . SYS_LANG . '/blank/reports/reports_Dashboard?sType=' . $_POST['sElement'];
+	    $aConfiguration  = $oDashboards->getConfiguration($_SESSION['USER_LOGGED']);
 	    $aConfiguration[] = array('class'   => $_POST['sDashboardClass'],
 	                              'type'    => $_POST['sType'],
 	                              'element' => $_POST['sElement'],
@@ -155,7 +154,7 @@ switch ($_POST['action']) {
 	  $aConfiguration    = $oDashboards->getConfiguration($_SESSION['USER_LOGGED']);
 	  $aNewConfiguration = array();
 	  foreach ($aConfiguration as $aDashboard) {
-	    if (($aDashboard['class'] == $_POST['sDashboardClass']) && ($aDashboard['type'] == $_POST['sChart'])) {
+	    if (($aDashboard['class'] == $_POST['sDashboardClass']) && ($aDashboard['element'] == $_POST['sElement'])) {
         //Nothing
       }
       else {

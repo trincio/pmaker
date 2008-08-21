@@ -57,6 +57,7 @@ require_once ( "classes/model/Session.php" );
 require_once ( "classes/model/Content.php" );
 G::LoadClass('pmScript');
 G::LoadClass('wsResponse');
+G::LoadClass('case');
 
 class wsBase
 {
@@ -494,7 +495,7 @@ class wsBase
 					}
 				}
 			} else {
-				$result = new wsResponse (100, "The variables param is not a array!");
+				$result = new wsResponse (100, "The variables param is not an array!");
 				return $result;
 			}
 
@@ -517,17 +518,19 @@ class wsBase
 				if($numTasks==1){
 					$case   = $oCase->startCase($tasks[0]['TAS_UID'], $userId);
 					$caseId = $case['APPLICATION'];
+					$caseNr = $case['CASE_NUMBER'];
 
 					$oldFields = $oCase->loadCase( $caseId );
 
 					$oldFields['APP_DATA'] = array_merge( $oldFields['APP_DATA'], $Fields);
 
 					$up_case = $oCase->updateCase($caseId, $oldFields);
-					$result = new wsResponse (0, "Sucessful");
+					$result = new wsResponse (0, "Sucessful\ncase uid = $caseId \ncase number = $caseNr ");
 					return $result;
-				} else {
+				} 
+				else {
 					if($numTasks==0){
-						$result = new wsResponse (12, "No staring task defined");
+						$result = new wsResponse (12, "No starting task defined");
 						return $result;
 					}
 					if($numTasks > 1){
@@ -574,11 +577,11 @@ class wsBase
 
 					$oldFields['APP_DATA'] = array_merge( $oldFields['APP_DATA'], $Fields);
 						$up_case = $oCase->updateCase($caseId, $oldFields);
-					$result = new wsResponse (0, "Sucessful");
+					$result = new wsResponse (0, "Sucessful [ case uid = $caseId ] ");
 					return $result;
 				} else {
 					if($numTasks==0) {
-						$result = new wsResponse (12, "No staring task defined");
+						$result = new wsResponse (12, "No starting task defined");
 						return $result;
 					}
 					if($numTasks > 1) {
@@ -827,30 +830,13 @@ class wsBase
 	
 	public function processListVerified( $userId ){
 		try {					
+			$oCase = new Cases();
+			$rows = $oCase->getStartCases($userId);
 			$result  = array();
-			$oCriteria = new Criteria('workflow');
-			$del = DBAdapter::getStringDelimiter();			
-			$oCriteria->addSelectColumn(TaskPeer::PRO_UID);												
-			$oCriteria->addAsColumn('PRO_TITLE', 'C1.CON_VALUE' );
-      $oCriteria->addAlias("C1",  'CONTENT');
-      $proTitleConds = array();
-      $proTitleConds[] = array( TaskPeer::PRO_UID , 'C1.CON_ID' );
-      $proTitleConds[] = array( 'C1.CON_CATEGORY' , $del . 'PRO_TITLE' . $del );
-      $proTitleConds[] = array( 'C1.CON_LANG' ,     $del . SYS_LANG . $del );
-      $oCriteria->addJoinMC($proTitleConds ,    Criteria::LEFT_JOIN);						
-			
-			$oCriteria->addJoin(TaskUserPeer:: TAS_UID, TaskPeer::TAS_UID, Criteria::LEFT_JOIN);
-			
-			$oCriteria->add(TaskPeer:: TAS_START,  'TRUE' );
-      $oCriteria->add(TaskUserPeer:: USR_UID,  $userId );					
-			
-			$oDataset = TaskUserPeer::doSelectRS($oCriteria);
-			$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-			$oDataset->next();
-			
-			while ($aRow = $oDataset->getRow()) {			
-				$result[] = array ( 'guid' => $aRow['PRO_UID'], 'name' => $aRow['PRO_TITLE'] );
-				$oDataset->next();
+
+			foreach ( $rows as $key=>$val ) {
+				if ( $key != 0 ) 
+				  $result[] = array ( 'guid' => $val['pro_uid'], 'name' => $val['value'] );
 			}
 			return $result;
 		}

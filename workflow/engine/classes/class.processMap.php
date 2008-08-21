@@ -2478,6 +2478,7 @@ class processMap {
 		$aObjects[]  = array('CTO_TITLE'     => 'char',
       	                 'CTO_UID'       => 'char',
       	                 'CTO_TYPE_OBJ'  => 'char',
+      	                 'CTO_UID_OBJ'   => 'char',
       	                 'CTO_CONDITION' => 'char',
       	                 'CTO_POSITION'  => 'integer');
 	  $oCriteria = new Criteria('workflow');
@@ -2507,6 +2508,7 @@ class processMap {
     	$aObjects[] = array('CTO_TITLE'     => $sTitle,
     	                    'CTO_UID'       => $aRow['CTO_UID'],
     	                    'CTO_TYPE_OBJ'  => $aRow['CTO_TYPE_OBJ'],
+    	                    'CTO_UID_OBJ'   => $aRow['CTO_UID_OBJ'],
     	                    'CTO_CONDITION' => $aRow['CTO_CONDITION'],
     	                    'CTO_POSITION'  => $aRow['CTO_POSITION']);
     	$oDataset->next();

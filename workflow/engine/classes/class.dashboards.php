@@ -86,14 +86,15 @@ class Dashboards {
             $bFree = true;
           }
           if ($bFree) {
-            $oChart        = $aDashboard['object'];
-            $oChart->class = $aDashboard['class'];
-            $oChart->chart = $aDashboard['element'];
+            $oElement          = $aDashboard['object'];
+            $oElement->class   = $aDashboard['class'];
+            $oElement->type    = $aDashboard['type'];
+            $oElement->element = $aDashboard['element'];
             if ($iColumn === 0) {
-              $aLeftColumn[] = $oChart;
+              $aLeftColumn[] = $oElement;
             }
             else {
-              $aRightColumn[] = $oChart;
+              $aRightColumn[] = $oElement;
             }
             $iColumn = 1 - $iColumn;
           }
@@ -112,37 +113,41 @@ class Dashboards {
             }
           }
           if ($bFree) {
-            $oChart = $oInstance->getChart($sChart);
-            $oChart->class = $sDashboardClass;
-            $oChart->chart = $sChart;
+            $oElement          = $oInstance->getChart($sChart);
+            $oElement->class   = $aDashboard['class'];
+            $oElement->type    = $aDashboard['type'];
+            $oElement->element = $aDashboard['element'];
             if ($iColumn === 0) {
-              $aLeftColumn[] = $oChart;
+              $aLeftColumn[] = $oElement;
             }
             else {
-              $aRightColumn[] = $oChart;
+              $aRightColumn[] = $oElement;
             }
             $iColumn = 1 - $iColumn;
           }
         }
-        $aPages = $oInstance->getAvailablePages();
-        foreach ($aPages as $sPage) {
-          $bFree = false;
-          foreach ($aAvailableDashboards as $sDashboardClass) {
-            if (($aDashboard['class'] == $sDashboardClass) && ($aDashboard['element'] == $sPage)) {
-              $bFree = true;
+        if (method_exists($oInstance, 'getAvailablePages')) {
+          $aPages = $oInstance->getAvailablePages();
+          foreach ($aPages as $sPage) {
+            $bFree = false;
+            foreach ($aAvailableDashboards as $sDashboardClass) {
+              if (($aDashboard['class'] == $sDashboardClass) && ($aDashboard['element'] == $sPage)) {
+                $bFree = true;
+              }
             }
-          }
-          if ($bFree) {
-            $oPage = $oInstance->getPage($sPage);
-            $oPage->class = $sDashboardClass;
-            //$oPage->chart = $sPage;
-            if ($iColumn === 0) {
-              $aLeftColumn[] = $oPage;
+            if ($bFree) {
+              $oElement          = $oInstance->getPage($sPage);
+              $oElement->class   = $aDashboard['class'];
+              $oElement->type    = $aDashboard['type'];
+              $oElement->element = $aDashboard['element'];
+              if ($iColumn === 0) {
+                $aLeftColumn[] = $oElement;
+              }
+              else {
+                $aRightColumn[] = $oElement;
+              }
+              $iColumn = 1 - $iColumn;
             }
-            else {
-              $aRightColumn[] = $oPage;
-            }
-            $iColumn = 1 - $iColumn;
           }
         }
       }
