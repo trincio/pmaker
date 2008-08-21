@@ -1,0 +1,83 @@
+<html>
+	<head>
+	<title>maborak</title>
+<script type="text/javascript" src="../core/maborak.js"></script>
+<script type="text/javascript">
+    var leimnud = new maborak().make({
+        //zip:true,
+		modules	:"dom,abbr,drag,panel,fx,slider"
+	});
+</script>
+<script type="text/javascript">
+	leimnud.event.add(window,"load",function(){
+		window['sa'] = new leimnud.module.slider.create();
+		sa.make({
+			selected:2,
+			points:[
+				{value:100,label:"Mini"},
+				{value:400,label:"Normal"},
+				{value:700,label:"Big"}
+			],
+			target:$('a'),
+			onchange:function()
+			{
+				$('l_a').innerHTML=window['sa'].get().label;
+				$('p_a').innerHTML=window['sa'].get().value;
+			}
+			});
+
+		window['sb'] = new leimnud.module.slider.create();
+		sb.make({
+			selected:0,
+			points:[
+				{value:0,label:"Linux"},
+				{value:300,label:"Window$"},
+				{value:100,label:"Mac"}
+			],
+			target:$('b'),
+			onchange:function()
+			{
+				$('l_b').innerHTML=window['sb'].get().label;
+				$('p_b').innerHTML=window['sb'].get().value;
+			}
+			});
+
+		window['sc'] = new leimnud.module.slider.create();
+		sc.make({
+			selected:3,
+			points:"0-30",
+			target:$('c'),
+			onchange:function()
+			{
+				$('l_c').innerHTML=window['sc'].get().value;
+			}
+		});
+		window['ev'] = new leimnud.module.slider.eventor();
+		ev.make({
+			slides:[sa,sb,sc],
+			operation:"+",
+			result:function(result)
+			{
+				$('l_d').innerHTML=result;
+			}
+		});
+
+});
+</script>
+	
+	</head>
+	<body>
+		<pre>
+			Size: <span id='l_a'></span>
+			Price: $ <span id='p_a'></span>
+			<div style='padding:2px;' id="a"></div>
+			OS: <span id='l_b'></span>
+			Price: $ <span id='p_b'></span>
+			<div style='padding:2px;' id="b"></div>
+			Days: <span id='l_c'></span> 
+			<div style='padding:2px;' id="c"></div>
+
+			TOTAL COST: $ <span id='l_d'></span>
+		</pre>
+</body>
+</html>
