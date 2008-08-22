@@ -50,12 +50,22 @@
 	</div>
 	<div class="boxBottomBlue"><div class="a"></div><div class="b"></div><div class="c"></div></div>';
 
-	$tests = Array('',
-                'Resolve host name '.$_POST['srv'],
-                'Checking port <b>'.$_POST['port'].'</b>',
-                'Stablishing connection to host <b>'.$host->hostname.'</b>',
-				'Login as <b>'.$_POST['account'].'</b> on '.$host->hostname.' SMTP Server'
+	$tests = Array(
+		'',
+		'Resolve host name '.$_POST['srv'],
+		'Checking port <b>'.$_POST['port'].'</b>',
+		'Stablishing connection to host <b>'.$host->hostname.'</b>'
     );
+	$tests[] = 'Login as <b>'.$_POST['account'].'</b> on '.$host->hostname.' SMTP Server';
+// 	if($_POST['auth_required'] == 'yes'){
+// 		$tests[] = 'Login as <b>'.$_POST['account'].'</b> on '.$host->hostname.' SMTP Server';
+// 	} else {
+// 		$tests[] = '<b><font color="black">Without autentification!<font></b>';
+// 	}
+	
+	if($_POST['send_test_mail'] == 'yes'){
+		$tests[] = 'Sending a test mail from <b>'.$_POST['account'].'</b> to '.$_POST['mail_to'].'...';
+	}	
 	$tree->showSign = false;
 	$n = Array('','uno','dos','tres','cuatro','cinco');
 	for($i=1; $i<count($tests);$i++)
@@ -64,17 +74,17 @@
 		<div id='test_$i' style='display:none'>
 		<table width='100%' cellspacing='0' cellpadding='0' border='1' style='border:0px;'>
 			<tr>
-				<td width='10px' class='treeNode' style='border:0px;background-color:transparent;'>
+				<td width='10' class='treeNode' style='border:0px;background-color:transparent;'>
 					<IMG src=\"/images/".$n[$i].".gif\" width=\"25\" height=\"25\" align=\"left\" border=\"0\">
 				</td>
-				<td width='410px' class='treeNode' style='border:0px;background-color:transparent;'>
+				<td width='*' class='treeNode' style='border:0px;background-color:transparent;'>
 				<div id='action_$i'>$tests[$i]</div>
 				</td>
 			</tr>
 			<tr>
-				<td width='10px' class='treeNode' style='border:0px;background-color:transparent;'>
+				<td width='10' class='treeNode' style='border:0px;background-color:transparent;'>
 				</td>
-				<td width='60px' class='treeNode' style='border:0px;background-color:transparent;'>
+				<td  class='treeNode' style='border:0px;background-color:transparent;'>
 					<div id='status_$i'></div>
 				</td>
 			</tr>

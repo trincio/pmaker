@@ -54,7 +54,7 @@ $oCriteria->add(ConfigurationPeer::USR_UID, '');
 $oCriteria->add(ConfigurationPeer::APP_UID, '');
 
 if (ConfigurationPeer::doCount($oCriteria) == 0) {
-  $oConfiguration->create(array('CFG_UID' => 'Emails', 'OBJ_UID' => '', 'CFG_VALUE' => '', 'PRO_UID' => '', 'USR_UID' => '', 'APP_UID' => ''));
+  $oConfiguration->create(array('CFG_UID' => 'Emails', 'OBJ_UID' => '', 'CFG_VALUE' => '', 'PRO_UID' => '', 'USR_UID' => '', 'APP_UID' => '', 'MESS_RAUTH' => ''));
   $aFields = array();
 }
 else {

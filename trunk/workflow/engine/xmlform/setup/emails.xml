@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dynaForm name="processes_New" width="400px" labelWidth="40%" menu="setup/mailConnectionTest_Events">
+<dynaForm name="processes_New" width="600px" labelWidth="40%">
 	
 <THETITLE type="title" group="1">
   <en>Configuration</en>
@@ -17,7 +17,7 @@
   </en>
 </MESS_ENGINE>
 
-<MESS_SERVER type="text" size="25" maxlength="100" required="true">
+<MESS_SERVER type="text" size="35" maxlength="100" required="true">
   <en>Server</en>
 </MESS_SERVER>
 
@@ -25,13 +25,25 @@
   <en>Port</en>
 </MESS_PORT>
 
-<MESS_ACCOUNT type="text" size="25" maxlength="25" validate="Email">
-  <en>Account</en>
+<MESS_RAUTH type="checkbox" value="1">
+	<en>Require authentification</en>
+</MESS_RAUTH>
+
+<MESS_ACCOUNT type="text" size="35" maxlength="25" validate="Email">
+  <en>Account From</en>
 </MESS_ACCOUNT>
 
-<MESS_PASSWORD type="password" size="25" maxlength="25">
+<MESS_PASSWORD type="password" size="35" maxlength="25">
   <en>Password</en>
 </MESS_PASSWORD>
+
+<MESS_TEST_MAIL type="checkbox" value="1">
+	<en>Send a test mail</en>
+</MESS_TEST_MAIL>
+
+<MESS_TEST_MAIL_TO type="text" size="35" maxlength="100" required="true">
+	<en>Mail to</en>
+</MESS_TEST_MAIL_TO>
 
 <MESS_BACKGROUND type="checkbox" value="1">
   <en>Run in the background</en>
@@ -73,6 +85,9 @@ var srv;
 var port;
 var account;
 var passwd;
+var auth_required;
+var send_test_mail;
+var mail_to;
 	
 function testConnection() {
 	/***get in the connection parameters***/
@@ -83,11 +98,26 @@ function testConnection() {
 	account = $('form[MESS_ACCOUNT]').value;
 	passwd	= $('form[MESS_PASSWORD]').value;
 
-	var uri = 'srv='+srv+'&port='+port+'&account='+account+'&passwd='+passwd;
+
+	if ($('form[MESS_RAUTH]').checked) {
+		auth_required = 'yes';
+	} else {
+		auth_required = 'no';
+  	}
+	
+	if ($('form[MESS_TEST_MAIL]').checked) {
+		send_test_mail = 'yes';
+	} else {
+		send_test_mail = 'no';
+  	}
+
+	mail_to	 = $('form[MESS_TEST_MAIL_TO]').value;
+
+	var uri = 'srv='+srv+'&port='+port+'&account='+account+'&passwd='+passwd+'&auth_required='+auth_required+'&send_test_mail='+send_test_mail+'&mail_to='+mail_to;
 	
 	oPanel = new leimnud.module.panel();
 	oPanel.options = {
-		size	:{w:580,h:390},
+		size	:{w:590,h:480},
 		position:{x:0,y:0,center:true},
 		title	: 'SMTP Server Connection',
 		theme	:"processmaker",
@@ -120,7 +150,7 @@ function testSMTPHost(step)
 	$("test_"+step).style.display = "block";
 	
 	var requestfile = PROCESS_REQUEST_FILE;
-	var uri = 'request=testConnection&step='+step+'&srv='+srv+'&port='+port+'&account='+account+'&passwd='+passwd;
+	var uri = 'request=testConnection&step='+step+'&srv='+srv+'&port='+port+'&account='+account+'&passwd='+passwd+'&auth_required='+auth_required+'&send_test_mail='+send_test_mail+'&mail_to='+mail_to;
 	
 	var ajax = AJAX();
 	ajax.open("POST", requestfile, true);
@@ -132,7 +162,7 @@ function testSMTPHost(step)
 				oresp = response.split(',');
 				result = oresp[0].trim();
 				msg = oresp[1].trim();
-				if( result == 'SUCCESSFULL' ) {
+				if( result == 'SUCCESSFUL' ) {
 					$('status_'+step).innerHTML = '';
 					if(msg != '') {
 						$('status_'+step).innerHTML = '<img src="/images/row_down.png" width="15" height="11" align="left" border="0"/><b>Server response: <font color=#000>'+msg+'</b></font><br/>';
@@ -145,7 +175,7 @@ function testSMTPHost(step)
 						$('status_'+step).innerHTML += '<img src="/images/cross.gif" width="12" height="12" align="left" border="0"/><b>The test was <font color=red> Failed!</b></font>';
 						resultset = false;
 					} else {
-						alert(response);
+						setTimeout(response);
 					}
 				}
 				step += 1;
@@ -171,14 +201,14 @@ function testSMTPHost(step)
 function cancelTestConnection()
 {
 	oPanel.remove();
-	if(resultset) {
+	/**if(resultset) {
 		new leimnud.module.app.confirm().make({
 			label:'Do you send a test mail with this configuration?',
 			action:function(){
 				testEmailConfiguration();
 			}.extend(this)
 		});
-	}
+	}**/
 	resultset = true;
 }
 
@@ -210,24 +240,51 @@ function AJAX()
 
 
 function initSet(){
-
-  if(!($('form[MESS_ENABLED]').checked)) {
-	hideRowById('MESS_ENGINE');
-    hideRowById('MESS_SERVER');
-    hideRowById('MESS_PORT');
-    hideRowById('MESS_ACCOUNT');
-    hideRowById('MESS_PASSWORD');
-    hideRowById('MESS_BACKGROUND');
-    hideRowById('MESS_EXECUTE_EVERY');
-    hideRowById('MESS_SEND_MAX');
-    hideRowById('MESS_TRY_SEND_INMEDIATLY');
-	
-	$('form[SAVE_CHANGES]').disabled = false;
-  }	else {
-	if(getField('MESS_ENGINE').value == 'MAIL')
-		hideRowById('TEST');
+	//$('form[MESS_RAUTH]').checked = true;
+	hideRowById('MESS_TEST_MAIL_TO');
+	if(!($('form[MESS_ENABLED]').checked)) {
+		
+		hideRowById('MESS_ENGINE');
+		hideRowById('MESS_SERVER');
+		hideRowById('MESS_PORT');
+		hideRowById('MESS_ACCOUNT');
+		hideRowById('MESS_PASSWORD');
+		hideRowById('MESS_BACKGROUND');
+		hideRowById('MESS_EXECUTE_EVERY');
+		hideRowById('MESS_SEND_MAX');
+		hideRowById('MESS_TRY_SEND_INMEDIATLY');
+		hideRowById('MESS_RAUTH');
+		hideRowById('MESS_TEST_MAIL');
+		hideRowById('MESS_TEST_MAIL_TO');
+		
+		$('form[SAVE_CHANGES]').disabled = false;
+	} else {
+		if(getField('MESS_ENGINE').value == 'MAIL'){
+			hideRowById('MESS_RAUTH');
+			hideRowById('MESS_TEST_MAIL');
+			hideRowById('MESS_TEST_MAIL_TO');
+			hideRowById('TEST');
+		}
+			
 	}
 }
+
+leimnud.event.add(getField('MESS_RAUTH'), 'click', function() {
+	if (this.checked) {
+		showRowById('MESS_PASSWORD');
+	} else {
+		hideRowById('MESS_PASSWORD');
+  	}
+}.extend(getField('MESS_RAUTH')));
+
+leimnud.event.add(getField('MESS_TEST_MAIL'), 'click', function() {
+	if (this.checked) {
+		showRowById('MESS_TEST_MAIL_TO');
+	} else {
+		hideRowById('MESS_TEST_MAIL_TO');
+  	}
+}.extend(getField('MESS_TEST_MAIL')));
+
 
 /* @#end *************************************  test Connection Events ************************************/
 
@@ -251,6 +308,13 @@ leimnud.event.add(getField('MESS_ENABLED'), 'click', function() {
         showRowById('MESS_ACCOUNT');
         showRowById('MESS_PASSWORD');
 		showRowById('TEST');
+		showRowById('MESS_RAUTH');
+		showRowById('MESS_TEST_MAIL');
+		if ($('form[MESS_TEST_MAIL]').checked) {
+			showRowById('MESS_TEST_MAIL_TO');
+		} else {
+			hideRowById('MESS_TEST_MAIL_TO');
+  		}
 	    $('form[SAVE_CHANGES]').disabled = true;
       break;
     }
@@ -277,6 +341,9 @@ leimnud.event.add(getField('MESS_ENABLED'), 'click', function() {
     hideRowById('MESS_SEND_MAX');
     hideRowById('MESS_TRY_SEND_INMEDIATLY');
     hideRowById('TEST');
+	hideRowById('MESS_RAUTH');
+	hideRowById('MESS_TEST_MAIL');
+	hideRowById('MESS_TEST_MAIL_TO');
 	$('form[SAVE_CHANGES]').disabled = false;
   }
 }.extend(getField('MESS_ENABLED')));
@@ -289,6 +356,9 @@ leimnud.event.add(getField('MESS_ENGINE'), 'change', function() {
       hideRowById('MESS_ACCOUNT');
       hideRowById('MESS_PASSWORD');
 	  hideRowById('TEST');
+	  hideRowById('MESS_RAUTH');
+	  hideRowById('MESS_TEST_MAIL');
+	  hideRowById('MESS_TEST_MAIL_TO');
 	  $('form[SAVE_CHANGES]').disabled = false;
     break;
     case 'PHPMAILER':
@@ -298,6 +368,13 @@ leimnud.event.add(getField('MESS_ENGINE'), 'change', function() {
       showRowById('MESS_ACCOUNT');
       showRowById('MESS_PASSWORD');
 	  showRowById('TEST');
+	  showRowById('MESS_RAUTH');
+	  showRowById('MESS_TEST_MAIL');
+		if ($('form[MESS_TEST_MAIL]').checked) {
+			showRowById('MESS_TEST_MAIL_TO');
+		} else {
+			hideRowById('MESS_TEST_MAIL_TO');
+  		}
 	  $('form[SAVE_CHANGES]').disabled = true;
     break;
   }

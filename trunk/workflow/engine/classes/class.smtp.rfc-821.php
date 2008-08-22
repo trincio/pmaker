@@ -13,7 +13,7 @@
 // License: LGPL, see LICENSE
 ////////////////////////////////////////////////////
 
-class SMTP
+class ESMTP
 {
     /**
      *  SMTP server port
