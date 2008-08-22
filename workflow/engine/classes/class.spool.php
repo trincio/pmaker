@@ -207,7 +207,7 @@
             G::LoadThirdParty('phpmailer', 'class.phpmailer');
             $oPHPMailer = new PHPMailer();
             $oPHPMailer->Mailer   = 'smtp';
-            $oPHPMailer->SMTPAuth = true;
+			$oPHPMailer->SMTPAuth = $this->config['SMTPAuth'];
             $oPHPMailer->Host     = $this->config['MESS_SERVER'];
             $oPHPMailer->Port     = $this->config['MESS_PORT'];
             $oPHPMailer->Username = $this->config['MESS_ACCOUNT'];

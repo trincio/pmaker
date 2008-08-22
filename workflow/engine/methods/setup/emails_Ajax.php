@@ -118,6 +118,9 @@ switch ($request) {
 		$port =  $_POST['port'];
 		$account = $_POST['account'];
 		$passwd = $_POST['passwd'];
+		$auth_required	= $_POST['auth_required'];
+		$send_test_mail = $_POST['send_test_mail'];
+		$mail_to		= $_POST['mail_to'];
 		$G_PUBLISH = new Publisher;
 		$G_PUBLISH->AddContent('view', 'setup/mailConnectiontest');
 		G::RenderPage('publish', 'raw');
@@ -128,23 +131,26 @@ switch ($request) {
 		G::LoadClass('net');
 		require_once('classes/class.smtp.rfc-821.php');
 
-		define("SUCCESSFULL", 'SUCCESSFULL');
+		define("SUCCESSFUL", 'SUCCESSFUL');
 		define("FAILED", 'FAILED');
 
 		//$host = 'smtp.bizmail.yahoo.com';
-		$srv = $_POST['srv'];
-		$port = ($_POST['port'] == 'default')? 0: $_POST['port'];
-		$user = $_POST['account'];
+		$srv	= $_POST['srv'];
+		$port	= ($_POST['port'] == 'default')? 25: $_POST['port'];
+		$user	= $_POST['account'];
 		$passwd = $_POST['passwd'];
-		$step = $_POST['step'];
+		$step	= $_POST['step'];
+		$auth_required	= $_POST['auth_required'];
+		$send_test_mail = $_POST['send_test_mail'];
+		$mail_to		= $_POST['mail_to'];
 
 		$Server = new NET($srv);
-		$oSMTP = new SMTP;
+		$oSMTP = new ESMTP;
 
 		switch ($step) {
 			case 1:
 				if ($Server->getErrno() == 0) {
-					print(SUCCESSFULL.',');
+					print(SUCCESSFUL.',');
 				} else {
 					print(FAILED.','.$Server->error);
 				}
@@ -156,7 +162,7 @@ switch ($request) {
 				}
 				$Server->scannPort($port);
 				if ($Server->getErrno() == 0) {
-					print(SUCCESSFULL.',');
+					print(SUCCESSFUL.',');
 				} else {
 					print(FAILED.','.$Server->error);
 				}
@@ -172,32 +178,138 @@ switch ($request) {
 				if( !$resp) {
 					print(FAILED.','.$oSMTP->error['error']);
 				} else {
-					print(SUCCESSFULL.','.$oSMTP->status);
+					print(SUCCESSFUL.','.$oSMTP->status);
 				}
 			break;
 
 			#try login to host
+
 			case 4:
-				if($port == 0){
-					$resp = $oSMTP->Connect($srv);
-				} else {
-					$resp = $oSMTP->Connect($srv, $port);
-				}
-				if($resp) {
-					if( !$oSMTP->Authenticate($user, $passwd) ) {
-						print(FAILED.','.$oSMTP->error['error']);
+				if($auth_required == 'yes'){
+					if($port == 0){
+						$resp = $oSMTP->Connect($srv);
 					} else {
-						print(SUCCESSFULL.','.$oSMTP->status);
+						$resp = $oSMTP->Connect($srv, $port);
+					}
+					if($resp) {
+						if( !$oSMTP->Authenticate($user, $passwd) ) {
+							print(FAILED.','.$oSMTP->error['error']);
+						} else {
+							print(SUCCESSFUL.','.$oSMTP->status);
+						}
+					} else {
+						print(FAILED.','.$oSMTP->error['error']);
 					}
 				} else {
-					print(FAILED.','.$oSMTP->error['error']);
-				}
+					print(SUCCESSFUL.', No authentication required!');
+				}	
 			break;
 
+			case 5:
+				if($send_test_mail == 'yes'){
+					//print(SUCCESSFUL.',ok');
+					$_POST['FROM_NAME'] = 'Process Maker O.S. [Test mail]';
+					$_POST['FROM_EMAIL'] = $user;
+							
+					$_POST['MESS_ENGINE'] = 'PHPMAILER';
+					$_POST['MESS_SERVER'] = $srv;
+					$_POST['MESS_PORT']   = $port;
+					$_POST['MESS_ACCOUNT'] = $user;
+					$_POST['MESS_PASSWORD'] = $passwd;
+					$_POST['TO'] = $mail_to;
+					if($auth_required == 'yes'){
+						$_POST['SMTPAuth'] = true;
+					} else {
+						$_POST['SMTPAuth'] = false;
+					}	
+					$resp = sendTestMail();
+					
+					if($resp->status){
+						print(SUCCESSFUL.','.$resp->msg);
+					} else {
+						print(FAILED.','.$resp->msg);
+					}
+				} else {
+					print('jump this step');
+				}
+			break;
+			
 			default:
 				print('test finished!');
 		}
 	break;
+}
+
+function sendTestMail() {
+	
+	$sFrom    = ($_POST['FROM_NAME'] != '' ? $_POST['FROM_NAME'] . ' ' : '') . '<' . $_POST['FROM_EMAIL'] . '>';
+	$sSubject = G::LoadTranslation('ID_MESS_TEST_SUBJECT');
+	$msg = G::LoadTranslation('ID_MESS_TEST_BODY');
+	
+	switch ($_POST['MESS_ENGINE']) {
+		case 'MAIL':
+			$engine = G::LoadTranslation('ID_MESS_ENGINE_TYPE_1');
+		break;
+		case 'PHPMAILER':
+			$engine = G::LoadTranslation('ID_MESS_ENGINE_TYPE_2');
+		break;
+		case 'OPENMAIL':
+			$engine = G::LoadTranslation('ID_MESS_ENGINE_TYPE_3');
+		break;
+	}
+
+	$colosa_msg = "This Business Process is powered by <b>ProcessMaker</b>.";
+	$sBody = "
+	<table style=\"background-color: white; font-family: Arial,Helvetica,sans-serif; color: black; font-size: 11px; text-align: left;\" cellpadding='10' cellspacing='0' width='100%'>
+	<tbody><tr><td><img id='logo' src='http://".$_SERVER['SERVER_NAME']."/images/processmaker.logo.jpg' /></td></tr>
+	<tr><td style='font-size: 14px;'>$msg $engine - ".date('H:i:s')."</td></tr>
+	<tr><td style='vertical-align:middel;'>
+	<br /><hr><b>This Business Process is powered by ProcessMaker.<b><br />
+	<a href='http://www.processmaker.com' style='color:#c40000;'>www.processmaker.com</a><br /></td>
+	</tr></tbody></table>";
+	
+	G::LoadClass('spool');
+	$oSpool = new spoolRun();
+	
+	
+	$oSpool->setConfig( array(
+		'MESS_ENGINE'   => $_POST['MESS_ENGINE'],
+		'MESS_SERVER'   => $_POST['MESS_SERVER'],
+		'MESS_PORT'     => $_POST['MESS_PORT'],
+		'MESS_ACCOUNT'  => $_POST['MESS_ACCOUNT'],
+		'MESS_PASSWORD' => $_POST['MESS_PASSWORD'],
+		'SMTPAuth'		=> $_POST['SMTPAuth']
+	));
+
+	$oSpool->create(array(
+		'msg_uid'          => '',
+		'app_uid'          => '',
+		'del_index'        => 0,
+		'app_msg_type'     => 'TEST',
+		'app_msg_subject'  => $sSubject,
+		'app_msg_from'     => $sFrom,
+		'app_msg_to'       => $_POST['TO'],
+		'app_msg_body'     => $sBody,
+		'app_msg_cc'       => '',
+		'app_msg_bcc'      => '',
+		'app_msg_attach'   => '',
+		'app_msg_template' => '',
+		'app_msg_status'   => 'pending'
+	));
+	
+	$oSpool->sendMail();
+	
+	global $G_PUBLISH;
+	$G_PUBLISH = new Publisher();
+	if ($oSpool->status == 'sent') {
+		$o->status = true;
+		$o->msg = G::LoadTranslation('ID_MESS_TEST_MESSAGE_SENDED');
+	}
+	else {
+		$o->status = false;
+		$o->msg = $oSpool->error;
+	}
+	return $o;
 }
 
 
