@@ -10,6 +10,7 @@
 <script type="text/javascript">
 	leimnud.event.add(window,"load",function(){
 
+/*	Begin explain	 */
 		var size = new leimnud.module.slider.create();
 		size.make({
 				name	: "size",	// Name for your slider, this is important but .. this is the input containing the value of size to send.
@@ -40,8 +41,15 @@
 			name:"total_cart",                //Name
 			slides:[days,size],               //Sliders to sume
 			operation:"+",
-			out_value:$('total')
+			target:$('total'),
+			out_value:$('total_price')
 		});
+
+
+
+/*		End explain		*/
+
+
 
 
 		window['sa'] = new leimnud.module.slider.create();
@@ -179,11 +187,7 @@ In slider code add.
 				&lt;div id="size"&gt;	&lt;/div&gt;
 
 
-				Size : <span id="size_label"></span>
-				Price: $ <span id="size_price"></span>
-				<div id="size">	</div>
-
--------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
 
 
 Days:    
@@ -210,10 +214,6 @@ In slider code add.
 				&lt;div id="days"&gt;	&lt;/div&gt;
 
 
-				Days : <span id="days_label"></span>
-				Price: $ <span id="days_price"></span>
-				<div id="days">	</div>
-
 if you only need 5 days you can use the last metod and add it one value everyday
 
 
@@ -232,18 +232,33 @@ TOTAL PRICES:
 			name:"total_cart",                //Name
 			slides:[days,size],               //Sliders to sume
 			operation:"+",
-			out_value:$('total')
+			target:$('total'),
+			out_value:$('total_price')
 		});
 
 		The html:
 
+			&lt;div id="total"&gt;	&lt;/div&gt;
 			Total Price: $ &lt;span id="total"&gt;&lt;/span&gt;
 
 ------------------------------------------------------------------------------------------			
 		
-			Total Price: $ <span id="total"></span>
 
+ALL IN ONE:
 
+<form method="POST" action="sl.php">
+				Size : <span id="size_label"></span>
+				Price: $ <span id="size_price"></span>
+				<div id="size">	</div>
+
+				Days : <span id="days_label"></span>
+				Price: $ <span id="days_price"></span>
+				<div id="days">	</div>
+				<div id="total">	</div>
+				Total Price: $ <span id="total_price"></span>
+
+<input type="submit" value="Send prices">
+</form>
 		</pre>
 
 </body>

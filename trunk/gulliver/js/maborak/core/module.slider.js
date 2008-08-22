@@ -15,6 +15,7 @@ leimnud.Package.Public({
 					points:[],
 					width:564,
 					selected:0,
+					name:"val_"+Math.floor(Math.random(5)*100),
 					onchange:function(){}
 				}.concat(options || {});
 				if(typeof this.options.points=='string'){
@@ -51,7 +52,8 @@ leimnud.Package.Public({
 								this.dom.drag = new DOM('div',false,{position:'absolute',width:30,height:30,left:0,top:0,background:'black',cursor:'move'})
 						),
 						new DOM('div',false,{position:'absolute',width:30,height:30,right:0,top:0,border:'1px solid green',backgroundColor:'green'})
-					)
+					),
+					this.input_hidden=new DOM('input',{type:'hidden',name:this.options.name})
 				);
 				this.drag = new this.parent.module.drag({
 					elements:this.dom.drag,
@@ -128,6 +130,8 @@ leimnud.Package.Public({
 						ol[(ol.tagName=='input')?'value':'innerHTML']=this.get().value;
 					}
 
+					this.input_hidden.value=this.get().value;
+
 					return this.options.onchange();
 				}
 			};
@@ -146,8 +150,13 @@ leimnud.Package.Public({
 				this.options = {
 					slides:[],
 					operation:"+",
+					target:$(document.body),
+					name:"val_"+Math.floor(Math.random(5)*100),
 					result:function(){}
 				}.concat(options || {});
+				this.options.target.append(
+					this.input_hidden=new DOM('input',{type:'hidden',name:this.options.name})
+				);
 				for(var i=0;i<this.options.slides.length;i++)
 				{
 					var s = this.options.slides[i];
@@ -187,6 +196,7 @@ leimnud.Package.Public({
 					var ol = this.options.out_value;
 					ol[(ol.tagName=='input')?'value':'innerHTML']=t;
 				}
+				this.input_hidden.value=t;
 				return this.options.result(t);
 			};
 			this.expand(this);
