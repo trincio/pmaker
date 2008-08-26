@@ -650,3 +650,63 @@ var showDynaforms = function() {
     }.extend(this);
     oRPC.make();
   }
+  
+var showHistoryMessages = function()
+ {
+  oPanel = new leimnud.module.panel();
+  oPanel.options = {
+  	size	:{w:700,h:400},
+  	position:{x:0,y:0,center:true},
+  	title	:G_STRINGS.ID_HISTORY_MESSAGE_CASE,
+  	theme	:'processmaker',
+  	statusBar:true,
+  	control	:{resize:false,roll:false},
+  	fx	:{modal:true,opacity:true,blinkToFront:true,fadeIn:false}
+  };
+  oPanel.events = {
+  	remove: function() { delete(oPanel); }.extend(this)
+  };
+  oPanel.make();
+  oPanel.loader.show();
+  var oRPC = new leimnud.module.rpc.xmlhttp({
+  	url : 'cases_Ajax',
+  	args: 'action=showHistoryMessages'
+  });
+  oRPC.callback = function(rpc){
+  	oPanel.loader.hide();
+  	var scs=rpc.xmlhttp.responseText.extractScript();
+  	oPanel.addContent(rpc.xmlhttp.responseText);
+  	scs.evalScript();
+  }.extend(this);
+  oRPC.make();
+};
+
+function showHistoryMessage(APP_UID, APP_MSG_UID)
+  { 
+    oPanel2 = new leimnud.module.panel();
+    oPanel2.options = {
+        size    :{w:600,h:400},
+        position:{x:0,y:0,center:true},
+        title   :'',
+        theme   :'processmaker',
+        statusBar:true,
+        control :{resize:false,roll:false},
+        fx  :{modal:true,opacity:true,blinkToFront:true,fadeIn:false}
+    };
+    oPanel2.events = {
+        remove: function() { delete(oPanel2); }.extend(this)
+    };
+    oPanel2.make();
+    oPanel2.loader.show();
+    var oRPC = new leimnud.module.rpc.xmlhttp({
+        url : 'cases_Ajax',
+        args: 'action=showHistoryMessage&APP_UID='+APP_UID+'&APP_MSG_UID='+APP_MSG_UID
+    });
+    oRPC.callback = function(rpc){
+        oPanel2.loader.hide();
+        var scs=rpc.xmlhttp.responseText.extractScript();
+        oPanel2.addContent(rpc.xmlhttp.responseText);
+        scs.evalScript();
+    }.extend(this);
+    oRPC.make();
+  }
