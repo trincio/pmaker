@@ -287,7 +287,7 @@ class wsBase
 		}
 	}
 
-	public function sendMessage($caseId, $sFrom, $sTo, $sCc, $sBcc, $sSubject, $sBody) {
+	public function sendMessage($caseId, $sFrom, $sTo, $sCc, $sBcc, $sSubject, $sTemplate) {
 		try {	
 			G::LoadClass('case');
       G::LoadClass('spool');
@@ -299,7 +299,6 @@ class wsBase
 			if ( $sFrom == '' ) 
 			  $sFrom = $aSetup['MESS_ACCOUNT'];
 			
-
       $oSpool = new spoolRun();
       $oSpool->setConfig(array('MESS_ENGINE'   => $aSetup['MESS_ENGINE'],
                                'MESS_SERVER'   => $aSetup['MESS_SERVER'],
@@ -307,6 +306,22 @@ class wsBase
                                'MESS_ACCOUNT'  => $aSetup['MESS_ACCOUNT'],
                                'MESS_PASSWORD' => $aSetup['MESS_PASSWORD'],
                                'SMTPAuth'      => $aSetup['MESS_RAUTH'] ));
+
+			@mkdir( PATH_DATA_SITE . "public/", 0777,true);
+			$fileTemplate = PATH_DATA_SITE . "public" . PATH_SEP . $sTemplate;
+
+			if ( ! file_exists ( $fileTemplate ) ) {
+			  $result = new wsResponse (100, "template file: '$fileTemplate' doesn't exists."  );
+			  return $result;
+			}
+						
+			$oCase = new Cases();
+
+			$oldFields = $oCase->loadCase( $caseId );
+			$Fields = $oldFields['APP_DATA'];
+      $templateContents = file_get_contents ( $fileTemplate );
+      $sBody = G::replaceDataField( $templateContents, $Fields);
+
       $messageArray = array('msg_uid'          => '',
                             'app_uid'          => $caseId,
                             'del_index'        => 0,
@@ -315,8 +330,8 @@ class wsBase
                             'app_msg_from'     => $sFrom,
                             'app_msg_to'       => $sTo,
                             'app_msg_body'     => $sBody,
-                            'app_msg_cc'       => '', //$sCc,
-                            'app_msg_bcc'      => '', //$sBcc,
+                            'app_msg_cc'       => $sCc,
+                            'app_msg_bcc'      => $sBcc,
                             'app_msg_attach'   => '',
                             'app_msg_template' => '',
                             'app_msg_status'   => 'pending');
@@ -328,7 +343,7 @@ class wsBase
       if ( $oSpool->status == 'sent' )
 			  $result = new wsResponse (0, "message sent : $sTo" );
 			else
-			  $result = new wsResponse (0, $oSpool->status . ' ' . $oSpool->error . print_r ($aSetup ,1 ) );
+			  $result = new wsResponse (100, $oSpool->status . ' ' . $oSpool->error . print_r ($aSetup ,1 ) );
 			return $result;
 		}
 		catch ( Exception $e ) {
@@ -952,7 +967,9 @@ class wsBase
 	  		return $result;
       }
 						
+		  
 			$result = new wsResponse (0, 'executed: '. trim( $row['TRI_WEBBOT']) );
+			//$result = new wsResponse (0, 'executed: '. print_r( $oPMScript ,1 ) );
 			return $result;
 		}
 		catch ( Exception $e ) {

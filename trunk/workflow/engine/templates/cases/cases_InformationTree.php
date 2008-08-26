@@ -65,5 +65,10 @@ $oNode->plus  = '';
 $oNode->minus = '';
 $oNode->point = '';
 
+$oNode        =& $oTree->addChild('6', '<a class="linkInBlue" href="#" onclick="showHistoryMessages();return false;">' . G::LoadTranslation('ID_HISTORY_MESSAGE_CASE') . '</a>', array('nodeType'=>'parentBlue'));
+$oNode->plus  = '';
+$oNode->minus = '';
+$oNode->point = '';
+
 echo $oTree->render();
 ?>
