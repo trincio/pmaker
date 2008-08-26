@@ -143,7 +143,7 @@ class Stage extends BaseStage {
 
   public function remove($StgUid)
   {
-    $con = Propel::getConnection(ReportTablePeer::DATABASE_NAME);
+    $con = Propel::getConnection(StagePeer::DATABASE_NAME);
     try
     {
       $con->begin();
@@ -160,5 +160,27 @@ class Stage extends BaseStage {
       $con->rollback();
       throw($e);
     }
+  }
+
+  function reorderPositions($sProcessUID, $iIndex) {
+  	try {
+      $oCriteria = new Criteria('workflow');
+      $oCriteria->add(StagePeer::PRO_UID,   $sProcessUID);
+  	  $oCriteria->add(StagePeer::STG_INDEX, $iIndex, '>');
+      $oDataset = StagePeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      while ($aRow = $oDataset->getRow()) {
+        $this->update(array('STG_UID'   => $aRow['STG_UID'],
+                            'PRO_UID'   => $aRow['PRO_UID'],
+                            'STG_POSX'  => $aRow['STG_POSX'],
+                            'STG_POSY'  => $aRow['STG_POSY'],
+                            'STG_INDEX' => $aRow['STG_INDEX'] - 1));
+      	$oDataset->next();
+      }
+  	}
+  	catch (Exception $oException) {
+  		throw $Exception;
+  	}
   }
 } // Stage

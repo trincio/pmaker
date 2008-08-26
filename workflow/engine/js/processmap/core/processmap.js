@@ -5,7 +5,7 @@ var processmap=function(){
 			//setTimeout(this.parent.closure({instance:this,method:this.data.render.base}),1000);
 			var r = new leimnud.module.rpc.xmlhttp({
 				url:this.options.dataServer,
-				args:"action=load&data="+{uid:this.options.uid,mode:this.options.rw}.toJSONString()
+				args:"action=load&data="+{uid:this.options.uid,mode:this.options.rw,ct:this.options.ct}.toJSONString()
 			});
 			r.callback=this.data.render.base
 			r.make();
@@ -926,10 +926,12 @@ var processmap=function(){
 					//backgroundColor:"black",
 					border:"0px solid black",
 					overflow:"hidden",
-                    cursor:"pointer",
+          cursor:(this.options.rw===true ? "pointer" : 'default'),
 					zIndex:9
 				});
-				c.onclick=this.patternPanel.args(index);
+				if (this.options.rw===true) {
+				  c.onclick=this.patternPanel.args(index);
+			  }
 				var d = document.createElement("div");
 				this.parent.dom.setStyle(d,{
 					position:"absolute",
@@ -1244,11 +1246,11 @@ var processmap=function(){
 					  this.parent.dom.setStyle(b,{
 					    cursor:('pointer')
 				    });
-					  b.title = G_STRINGS.ID_CLICK_VIEW_MORE_INFO;
+					  /*b.title = G_STRINGS.ID_CLICK_VIEW_MORE_INFO;
 					  this.parent.dom.setStyle(c,{
 					    cursor:('pointer')
 				    });
-					  c.title = G_STRINGS.ID_CLICK_VIEW_MORE_INFO;
+					  c.title = G_STRINGS.ID_CLICK_VIEW_MORE_INFO;*/
 					  this.parent.event.add(a, 'click', {instance:this,method:function(evt, index)
 				    {
 				    	var data = this.data.db.task[index];
@@ -1847,6 +1849,7 @@ processmap.prototype={
 			theme	:"firefox",
 			rw	:true,
 			mi  :true,
+			ct  :false,
 			hideMenu:true
 		}.concat(this.options || {});
 		this.options.target = this.parent.dom.element(this.options.target);
