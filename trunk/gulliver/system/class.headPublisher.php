@@ -63,16 +63,6 @@ class headPublisher
    */
 
   private function __construct() {
-    $jslabel = 'labels/en.js';
-    if ( defined( 'SYS_LANG' ) )  {
-      $jslabel = 'labels' . PATH_SEP . SYS_LANG . '.js';
-      if ( ! file_exists( PATH_CORE . 'js' . PATH_SEP . $jslabel ) )
-        $jslabel = 'labels/en.js';
-    }
-    if ( file_exists( PATH_CORE . 'js' . PATH_SEP . $jslabel ) ) {
-      $this->addScriptFile( '/jscore/' . $jslabel , 1 );
-    }
-
     $this->addScriptFile("/js/maborak/core/maborak.js");
   }
 
@@ -173,6 +163,15 @@ class headPublisher
    */
   function printHeader()
   {
+    $jslabel = 'labels/en.js';
+    if ( defined( 'SYS_LANG' ) )  {
+      $jslabel = 'labels' . PATH_SEP . SYS_LANG . '.js';
+      if ( ! file_exists( PATH_CORE . 'js' . PATH_SEP . $jslabel ) )
+        $jslabel = 'labels/en.js';
+    }
+    if ( file_exists( PATH_CORE . 'js' . PATH_SEP . $jslabel ) ) {
+      $this->addScriptFile( '/jscore/' . $jslabel , 1 );
+    }
     if ($this->disableHeaderScripts) return '';
 	$this->addScriptFile("/js/jscalendar/lang/calendar-".SYS_LANG.".js");
     $head = '';

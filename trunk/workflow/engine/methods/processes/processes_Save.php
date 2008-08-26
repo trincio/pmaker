@@ -22,6 +22,7 @@
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
  * 
  */
+ 
 global $RBAC;
 switch ($RBAC->userCanAccess('PM_FACTORY')) {
 	case -2:

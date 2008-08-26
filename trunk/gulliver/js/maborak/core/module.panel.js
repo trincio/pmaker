@@ -46,7 +46,7 @@ leimnud.Package.Public({
 				close:true,
 				drag:true
 			}.concat(this.options.control || {});
-			this.options.statusBar = (this.options.statusBarButtons || this.options.control.resize)?true:false;
+			this.options.statusBar = (this.options.statusBarButtons || this.options.control.resize)?true:this.options.statusBar;
 
 			this.options.size	= {
 				w:200,h:200
@@ -1725,10 +1725,10 @@ leimnud.Package.Public({
 				//alert(hS)
 				var hhS = this.elements.status.offsetHeight;
 				var hC=parseInt(this.parent.dom.getStyle(this.elements.content,"height"),10);
-				this.parent.dom.setStyle(this.elements.status,{
+				this.parent.dom.setStyle([this.elements['status'],this.elements.statusBar],{
 					display:""
 				});
-				var hS=this.elements.status.offsetHeight;
+				var hS=this.elements.statusBar.offsetHeight;
 				this.parent.dom.setStyle(this.elements.content,{
 					height:hC-(hS-hhS)
 				});

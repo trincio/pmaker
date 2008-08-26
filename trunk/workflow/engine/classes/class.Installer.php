@@ -128,20 +128,20 @@ class Installer
 			$this->wf_site_name = $wf = $this->options['advanced']['ao_db_wf'];
 
 //			$this->rbac_site_name = $rb = "rbac_".$this->options['name'];
-			
+
 			$this->rbac_site_name = $rb = $this->options['advanced']['ao_db_rb'];
 			$this->report_site_name = $rp = $this->options['advanced']['ao_db_rp'];
 
 			$schema	="schema.sql";
 			$values	="insert.sql";   //noe existe
-			
+
 			if($this->options['advanced']['ao_db_drop']===true)
 			{
 				/* Create databases & users  */
 				$q = "DROP DATABASE IF EXISTS ".$wf;
 				$ac = @mysql_query($q,$this->connection_database);
 				$this->log($q.": => ".((!$ac)?mysql_error():"OK")."\n");
-	
+
 				$q = "DROP DATABASE IF EXISTS ".$rb;
 				$ac = @mysql_query($q,$this->connection_database);
 				$this->log($q.": => ".((!$ac)?mysql_error():"OK")."\n");
@@ -150,7 +150,7 @@ class Installer
 				$ac = @mysql_query($q,$this->connection_database);
 				$this->log($q.": => ".((!$ac)?mysql_error():"OK")."\n");
 			}
-			
+
 			$q	= "CREATE DATABASE IF NOT EXISTS ".$wf." DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci";
 			$ac = @mysql_query($q,$this->connection_database);
 			$this->log($q.": => ".((!$ac)?mysql_error():"OK")."\n");
@@ -166,7 +166,7 @@ class Installer
 			$this->log($q.": => ".((!$ac)?mysql_error():"OK")."\n");
 
 			/* report DB end */
-			
+
 			//$priv_wf = "GRANT ALL PRIVILEGES ON `".$wf.".* TO ".$wf."@`".$this->options['database']['hostname']."` IDENTIFIED BY '".$this->options['password']."' WITH GRANT OPTION";
 			if($this->cc_status==1)
 			{
@@ -180,8 +180,8 @@ class Installer
 				}
 				$ac = @mysql_query($priv_wf,$this->connection_database);
 				$this->log($priv_wf.": => ".((!$ac)?mysql_error():"OK")."\n");
-	
-	
+
+
 				if(in_array($this->options['database']['hostname'],$local))
 				{
 					$priv_rb = "GRANT ALL PRIVILEGES ON `".$rb."`.* TO ".$rb."@'localhost' IDENTIFIED BY '".$this->options['password']."' WITH GRANT OPTION";
@@ -192,9 +192,9 @@ class Installer
 				}
 				$ac = @mysql_query($priv_rb,$this->connection_database);
 				$this->log($priv_rb.": => ".((!$ac)?mysql_error():"OK")."\n");
-				
+
 				/* report DB begin */
-	
+
 				if(in_array($this->options['database']['hostname'],$local))
 				{
 					$priv_rp = "GRANT ALL PRIVILEGES ON `".$rp."`.* TO ".$rp."@'localhost' IDENTIFIED BY '".$this->options['password']."' WITH GRANT OPTION";
@@ -207,11 +207,11 @@ class Installer
 				}
 				$ac = @mysql_query($priv_rp,$this->connection_database);
 				$this->log($priv_rp.": => ".((!$ac)?mysql_error():"OK")."\n");
-	
-	
+
+
 				/* report DB end */
 			}
-			
+
 			/* Dump schema workflow && data  */
 
 			$this->log("Dump schema workflow/rbac && data\n====================================\n");
@@ -240,7 +240,7 @@ class Installer
 			$this->log($qrs);
 			$qrv = $this->query_sql_file(PATH_RBAC_MYSQL_DATA.$values,$this->connection_database);
 			$this->log($qrv);
-	
+
 			$path_site 	= $this->options['path_data']."/sites/".$this->options['name']."/";
 			$db_file	= $path_site."db.php";
 			@mkdir($path_site,0777,true);
@@ -249,7 +249,10 @@ class Installer
 			@mkdir($path_site."xmlForms",0777,true);
 			@mkdir($path_site."processesImages/",0777,true);
 			@mkdir($path_site."files/",0777,true);
-	
+			@mkdir($path_site."public/",0777,true);
+			@mkdir($path_site."mailTemplates/",0777,true);
+			@mkdir($path_site."reports/",0777,true);
+
 			$db_text = "<?php\n" .
 			"// Processmaker configuration\n" .
 			"define ('DB_ADAPTER', 'mysql' );\n" .
@@ -270,7 +273,7 @@ class Installer
 			$this->log("Creating: ".$db_file."  => ".((!$fp)?$fp:"OK")."\n");
 			$ff =  @fputs( $fp, $db_text, strlen($db_text));
 			$this->log("Write: ".$db_file."  => ".((!$ff)?$ff:"OK")."\n");
-	
+
 			fclose( $fp );
 			$this->set_admin();
 		}
@@ -427,7 +430,7 @@ class Installer
 							'ao_db_wf'=>false,
 							'ao_db_rb'=>false,
 							'ao_db_rp'=>false
-						)			
+						)
 				);
 			if(!$this->connection_database)
 			{
@@ -441,7 +444,7 @@ class Installer
 				preg_match('@[0-9]+\.[0-9]+\.[0-9]+@',mysql_get_server_info($this->connection_database),$version);
 				$rt['version']=version_compare(@$version[0],"4.1.0",">=");
 				$rt['connection']=true;
-				
+
 				$dbNameTest = "PROCESSMAKERTESTDC";
 				$db = @mysql_query("CREATE DATABASE ".$dbNameTest,$this->connection_database);
 				if(!$db)
@@ -453,7 +456,7 @@ class Installer
 				}
 				else
 				{
-					
+
 					//@mysql_drop_db("processmaker_testGA");
 					$usrTest = "wfrbtest";
 					$chkG = "GRANT ALL PRIVILEGES ON `".$dbNameTest."`.* TO ".$usrTest."@'%' IDENTIFIED BY 'sample' WITH GRANT OPTION";
@@ -473,8 +476,8 @@ class Installer
 						$rt['message']="Successful connection";
 					}
 					@mysql_query("DROP DATABASE ".$dbNameTest,$this->connection_database);
-					
-				}			
+
+				}
 //				var_dump($wf,$rb,$rp);
 			}
 		}

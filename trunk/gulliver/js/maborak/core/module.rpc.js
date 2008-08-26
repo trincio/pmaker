@@ -100,7 +100,7 @@ leimnud.Package.Public({
 			this.open=function()
 			{
 				this.url = ((this.url.substr(this.url.length-1,1)!=="?" && this.method==="GET")?this.url+"?":this.url);
-				this.url = ((this.method=="GET")?this.url+this.args:this.url);
+				this.url = ((this.method=="GET")?(this.url+this.args):this.url);
 				this.xmlhttp.open(this.method,this.url+((this.options.nocache)?"&rand_rpc="+Math.random():""),this.async);
 				this.applyHeaders();
 				this.xmlhttp.send((this.method=="GET")?null:this.args);

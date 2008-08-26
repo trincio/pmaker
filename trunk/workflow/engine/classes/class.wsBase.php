@@ -287,22 +287,48 @@ class wsBase
 		}
 	}
 
-	public function sendMessage($caseId, $message) {
+	public function sendMessage($caseId, $sFrom, $sTo, $sCc, $sBcc, $sSubject, $sBody) {
 		try {	
 			G::LoadClass('case');
+      G::LoadClass('spool');
 			$oCase = new Cases();
 
-			$Fields['1']='xUNO';
-			$Fields['2']='xDOS';
-			$Fields['3']='xTRES';
-			$Fields['4']='xCUATRO';
-			$Fields['5']='xCINCO';
-
-			$oldFields = $oCase->loadCase( $caseId );
-			$oldFields['APP_DATA'] = array_merge( $oldFields['APP_DATA'], $Fields);
+    	$aSetup = getEmailConfiguration();
+    	
+		
+			if ( $sFrom == '' ) 
+			  $sFrom = $aSetup['MESS_ACCOUNT'];
 			
-			$up_case = $oCase->updateCase($caseId, $oldFields);
-			$result = new wsResponse (0, "Sucessful");
+
+      $oSpool = new spoolRun();
+      $oSpool->setConfig(array('MESS_ENGINE'   => $aSetup['MESS_ENGINE'],
+                               'MESS_SERVER'   => $aSetup['MESS_SERVER'],
+                               'MESS_PORT'     => $aSetup['MESS_PORT'],
+                               'MESS_ACCOUNT'  => $aSetup['MESS_ACCOUNT'],
+                               'MESS_PASSWORD' => $aSetup['MESS_PASSWORD'],
+                               'SMTPAuth'      => $aSetup['MESS_RAUTH'] ));
+      $messageArray = array('msg_uid'          => '',
+                            'app_uid'          => $caseId,
+                            'del_index'        => 0,
+                            'app_msg_type'     => 'TRIGGER',
+                            'app_msg_subject'  => $sSubject,
+                            'app_msg_from'     => $sFrom,
+                            'app_msg_to'       => $sTo,
+                            'app_msg_body'     => $sBody,
+                            'app_msg_cc'       => '', //$sCc,
+                            'app_msg_bcc'      => '', //$sBcc,
+                            'app_msg_attach'   => '',
+                            'app_msg_template' => '',
+                            'app_msg_status'   => 'pending');
+                                                      
+      $oSpool->create( $messageArray );
+      
+      $oSpool->sendMail();
+      
+      if ( $oSpool->status == 'sent' )
+			  $result = new wsResponse (0, "message sent : $sTo" );
+			else
+			  $result = new wsResponse (0, $oSpool->status . ' ' . $oSpool->error . print_r ($aSetup ,1 ) );
 			return $result;
 		}
 		catch ( Exception $e ) {
@@ -468,10 +494,68 @@ class wsBase
 					$result = new wsResponse (0, "$cant variables received.");
 					return $result;
 				} else {
-					$result = new wsResponse (100, "The variables param lenght is zero");
+					$result = new wsResponse (100, "The variables param length is zero");
 					return $result;
 				}
 			} else {
+				$result = new wsResponse (100, "The variables param is not a array!");
+				return $result;
+			}
+		}
+		catch ( Exception $e ) {
+			$result = new wsResponse (100, $e->getMessage());
+			return $result;
+		}
+	}
+
+	public function getVariables($sessionId, $caseId, $variables) { 
+		//delegation where app uid (caseId) y usruid(session) ordenar delindes descendente y agaarr el primero 
+		//delfinishdate != null error
+		try {
+			G::LoadClass('sessions');
+			require_once ("classes/model/AppDelegation.php");
+			$oSession = new Sessions();
+			$user  = $oSession->getSessionUser($sessionId);
+			
+			$oCriteria = new Criteria('workflow');			
+			$oCriteria->addSelectColumn(AppDelegationPeer::DEL_FINISH_DATE);					
+			$oCriteria->add(AppDelegationPeer::APP_UID, $caseId);			
+			$oCriteria->add(AppDelegationPeer::USR_UID, $user['USR_UID']);		
+			$oCriteria->addDescendingOrderByColumn(AppDelegationPeer::DEL_INDEX);
+			$oDataset = AppDelegationPeer::doSelectRS($oCriteria);
+			$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+			$oDataset->next();
+			$aRow = $oDataset->getRow();
+			if($aRow['DEL_FINISH_DATE']!=NULL)
+			{
+				$result = new wsResponse (18, 'This delegation already closed'); 
+				return $result;
+			}
+			
+			if(is_array($variables)) {
+				$cant = count ( $variables );
+				if($cant > 0) {
+					G::LoadClass('case');
+					$oCase = new Cases();
+
+					$caseFields = $oCase->loadCase( $caseId );
+					$oldFields = $caseFields['APP_DATA'];
+					$resFields = array();
+					foreach ( $variables as $key => $val ) {
+  				  $resFields[ $val ] =  $oldFields[ $val ] ;
+						if ( isset ( $oldFields[ $val ] ) ) 
+						  $resFields[ $val ] =  $oldFields[ $val ] ;
+					}
+					//$cant = count ( $resFields );
+					//$result = new wsResponse (0, "$cant variables received." . print_r ($resFields, 1) );
+					return $resFields;
+				} 
+				else {
+					$result = new wsResponse (100, "The variables param length is zero");
+					return $result;
+				}
+			} 
+			else {
 				$result = new wsResponse (100, "The variables param is not a array!");
 				return $result;
 			}
@@ -735,7 +819,7 @@ class wsBase
 			foreach ( $derive as $key=>$val ) {
 				if($val['NEXT_TASK']['TAS_ASSIGN_TYPE']=='MANUAL')
 				{
-					$result = new wsResponse (15, "The task is a Manual assined");
+					$result = new wsResponse (15, "The task is defined for Manual assignment");
 					return $result;
 				}
 				$nextDelegations[] = array(
@@ -785,7 +869,90 @@ class wsBase
 				
 			$oDerivation->derivate( $aCurrentDerivation, $nextDelegations );
 		
-			$result = new wsResponse (0, $var); //task and user
+			$result = new wsResponse (0, $var); 
+			return $result;
+		}
+		catch ( Exception $e ) {
+			$result = new wsResponse (100, $e->getMessage());
+			return $result;
+		}
+	}
+
+	public function executeTrigger($userId, $caseId, $triggerIndex) {
+		try { 
+			require_once ("classes/model/AppDelegation.php");
+			require_once ("classes/model/Route.php");
+			require_once ("classes/model/AppDelay.php");
+			G::LoadClass('case');
+			G::LoadClass('sessions');
+						
+			$oAppDel = new AppDelegation();
+			$delIndex = 1;  //default to first derivation
+			$appdel  = $oAppDel->Load($caseId, $delIndex);
+			
+			if($userId!=$appdel['USR_UID'])
+			{
+				$result = new wsResponse (17, "This case is assigned to another user"); 
+				return $result;	
+			}
+			
+			if($appdel['DEL_FINISH_DATE']!=NULL)
+			{
+				$result = new wsResponse (18, 'This delegation already closed'); 
+				return $result;
+			}
+
+			$oCriteria = new Criteria('workflow');			
+			$oCriteria->addSelectColumn(AppDelayPeer::APP_UID);
+			$oCriteria->addSelectColumn(AppDelayPeer::APP_DEL_INDEX);			
+			$oCriteria->add(AppDelayPeer::APP_TYPE, '');
+			$oCriteria->add($oCriteria->getNewCriterion(AppDelayPeer::APP_TYPE, 'PAUSE')->addOr($oCriteria->getNewCriterion(AppDelayPeer::APP_TYPE, 'CANCEL')));
+			$oCriteria->addAscendingOrderByColumn(AppDelayPeer::APP_ENABLE_ACTION_DATE);
+			$oDataset = AppDelayPeer::doSelectRS($oCriteria);
+			$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+			$oDataset->next();
+			$aRow = $oDataset->getRow();
+
+			if(is_array($aRow))
+			{
+					if($aRow['APP_DISABLE_ACTION_USER']!=0 && $aRow['APP_DISABLE_ACTION_DATE']!='')
+					{
+							$result = new wsResponse (19, "This case is in status". $aRow['APP_TYPE']); 
+							return $result;
+					}
+			}													
+												
+			//load data
+			$oCase     = new Cases ();
+			$appFields = $oCase->loadCase( $caseId );
+			$appFields['APP_DATA']['APPLICATION'] = $caseId;
+
+      //executeTrigger
+      $aTriggers = array();
+      $c = new Criteria();
+      $c->add(TriggersPeer::TRI_UID, $triggerIndex );
+      $rs = TriggersPeer::doSelectRS($c);
+      $rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $rs->next();
+      $row = $rs->getRow();
+      if (is_array($row) && $row['TRI_TYPE'] == 'SCRIPT' ) {
+        $aTriggers[] = $row;
+        $oPMScript = new PMScript();
+        $oPMScript->setFields($appFields['APP_DATA']);
+        $oPMScript->setScript($row['TRI_WEBBOT']);
+        $oPMScript->execute();
+  
+  			//Save data - Start
+    		$appFields['APP_DATA']  = $oPMScript->aFields;
+	  		$oCase->updateCase ( $caseId, $appFields);
+		  	//Save data - End
+      }
+      else {
+  			$result = new wsResponse (100, "Invalid trigger '$triggerIndex'" ); 
+	  		return $result;
+      }
+						
+			$result = new wsResponse (0, 'executed: '. trim( $row['TRI_WEBBOT']) );
 			return $result;
 		}
 		catch ( Exception $e ) {

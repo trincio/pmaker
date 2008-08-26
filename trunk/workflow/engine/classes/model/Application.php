@@ -234,7 +234,7 @@ class Application extends BaseApplication {
       $this->setAppFinishDate( '19020101' );
       $this->setAppUpdateDate( 'now' );
       
-      $pin = G::generateUniqueNumber();
+      $pin = G::generateCode(4, 'ALPHANUMERIC');
       $this->setAppData      ( serialize ( array('PIN'=>$pin) ) );     
       $this->setAppPin 			 ( md5($pin) );
       if ( $this->validate() ) {
