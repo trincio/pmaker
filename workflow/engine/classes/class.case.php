@@ -1968,7 +1968,7 @@ class Cases
     	//verifica si la tabla OBJECT_PERMISSION
     	$this->verifyTable();
 
-      $aObjectPermissions = $this->getAllObjects($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID);
+      $aObjectPermissions = $this->getAllObjects($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID);      
       if (!is_array($aObjectPermissions)) {
         $aObjectPermissions = array('DYNAFORMS' => array(-1), 'INPUT_DOCUMENTS' => array(-1), 'OUTPUT_DOCUMENTS' => array(-1));
       }
@@ -2582,6 +2582,7 @@ funcion permisos, by Everth The Answer
 		$a=0;
 		$b=0;
 		$c=0;
+		$d=0;
 		$oCaseTracker = new CaseTracker();
 		$aCaseTracker = $oCaseTracker->load($PRO_UID);
 		//print_r($aCaseTracker); die;
@@ -2594,11 +2595,14 @@ funcion permisos, by Everth The Answer
       if (CaseTrackerObjectPeer::doCount($oCriteria) > 0) 
      	  	$b=1;     	 	         	
       			
-				if($aCaseTracker['CT_DERIVATION_HISTORY']==1)
-				 	$c=1;				 	  				 	
-			
+			if($aCaseTracker['CT_DERIVATION_HISTORY']==1)
+				 	$c=1;		
+				 	
+			if($aCaseTracker['CT_MESSAGE_HISTORY']==1)
+				 	$d=1;			 	
+				 			 	  				 				
 	  }
-  return $a.'-'.$b.'-'.$c; 	  		 	  
+  return $a.'-'.$b.'-'.$c.'-'.$d; 	  		 	  
 }	  
 
 
@@ -2626,4 +2630,210 @@ funcion momentanea by Everth The Answer
 		$stmt = $con->prepareStatement($sql);
 		$rs = $stmt->executeQuery();
 	}
+	
+/*
+funcion input documents for case tracker by Everth The Answer
+*/	
+function getAllUploadedDocumentsCriteriaTracker($sProcessUID, $sApplicationUID) {
+    
+      require_once 'classes/model/AppDocument.php';
+      $oAppDocument = new AppDocument();
+      $oCriteria = new Criteria('workflow');
+      $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
+      //$oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, array('INPUT'), Criteria::IN);
+      $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, 'INPUT');
+      $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
+      $oDataset = AppDocumentPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      $aInputDocuments = array();
+      $aInputDocuments[] = array('APP_DOC_UID' => 'char', 'DOC_UID' => 'char', 'APP_DOC_COMMENT' => 'char', 'APP_DOC_FILENAME' => 'char', 'APP_DOC_INDEX' => 'integer');
+      while ($aRow = $oDataset->getRow()) {
+          $oCriteria2 = new Criteria('workflow');
+          $oCriteria2->add(AppDelegationPeer::APP_UID, $sApplicationUID);
+          $oCriteria2->add(AppDelegationPeer::DEL_INDEX, $aRow['DEL_INDEX']);
+          $oDataset2 = AppDelegationPeer::doSelectRS($oCriteria2);
+          $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+          $oDataset2->next();
+          $aRow2 = $oDataset2->getRow();
+          $oTask = new Task();
+          $aTask = $oTask->load($aRow2['TAS_UID']);
+          $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
+          $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' => $aAux['APP_DOC_INDEX'], 'TYPE' => $aAux['APP_DOC_TYPE'], 'ORIGIN' => $aTask['TAS_TITLE']);
+          if ($aFields['APP_DOC_FILENAME'] != '') {
+              $aFields['TITLE'] = $aFields['APP_DOC_FILENAME'];
+          } else {
+              $aFields['TITLE'] = $aFields['APP_DOC_COMMENT'];
+          }
+          //$aFields['POSITION'] = $_SESSION['STEP_POSITION'];
+          $aFields['CONFIRM'] = G::LoadTranslation('ID_CONFIRM_DELETE_ELEMENT');
+          $aInputDocuments[] = $aFields;
+          $oDataset->next();
+      }
+      $oAppDocument = new AppDocument();
+      $oCriteria = new Criteria('workflow');
+      $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
+      //$oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, array('ATTACHED'), Criteria::IN);
+      $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, 'ATTACHED');
+      $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
+      $oDataset = AppDocumentPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      while ($aRow = $oDataset->getRow()) {
+          $oCriteria2 = new Criteria('workflow');
+          $oCriteria2->add(AppDelegationPeer::DEL_INDEX, $aRow['DEL_INDEX']);
+          $oDataset2 = AppDelegationPeer::doSelectRS($oCriteria2);
+          $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+          $oDataset2->next();
+          $aRow2 = $oDataset2->getRow();
+          $oTask = new Task();
+          $aTask = $oTask->load($aRow2['TAS_UID']);
+          $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
+          $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' => $aAux['APP_DOC_INDEX'], 'TYPE' => $aAux['APP_DOC_TYPE'], 'ORIGIN' => $aTask['TAS_TITLE']);
+          if ($aFields['APP_DOC_FILENAME'] != '') {
+              $aFields['TITLE'] = $aFields['APP_DOC_FILENAME'];
+          } else {
+              $aFields['TITLE'] = $aFields['APP_DOC_COMMENT'];
+          }
+          //$aFields['POSITION'] = $_SESSION['STEP_POSITION'];
+          $aFields['CONFIRM'] = G::LoadTranslation('ID_CONFIRM_DELETE_ELEMENT');
+          $aInputDocuments[] = $aFields;
+          $oDataset->next();
+      }
+      global $_DBArray;
+      $_DBArray['inputDocuments'] = $aInputDocuments;
+      $_SESSION['_DBArray'] = $_DBArray;
+      G::LoadClass('ArrayPeer');
+      $oCriteria = new Criteria('dbarray');
+      $oCriteria->setDBArrayTable('inputDocuments');
+      $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_CREATE_DATE);
+      return $oCriteria;
+    }
+    
+/*
+funcion output documents for case tracker by Everth The Answer
+*/    
+function getAllGeneratedDocumentsCriteriaTracker($sProcessUID, $sApplicationUID) {
+    	
+      require_once 'classes/model/AppDocument.php';
+      $oAppDocument = new AppDocument();
+      $oCriteria = new Criteria('workflow');
+      $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
+      $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, 'OUTPUT');      
+      $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
+      $oDataset = AppDocumentPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      $aOutputDocuments = array();
+      $aOutputDocuments[] = array('APP_DOC_UID' => 'char', 'DOC_UID' => 'char', 'APP_DOC_COMMENT' => 'char', 'APP_DOC_FILENAME' => 'char', 'APP_DOC_INDEX' => 'integer');
+      while ($aRow = $oDataset->getRow()) {
+          $oCriteria2 = new Criteria('workflow');
+          $oCriteria2->add(AppDelegationPeer::APP_UID, $sApplicationUID);
+          $oCriteria2->add(AppDelegationPeer::DEL_INDEX, $aRow['DEL_INDEX']);
+          $oDataset2 = AppDelegationPeer::doSelectRS($oCriteria2);
+          $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+          $oDataset2->next();
+          $aRow2 = $oDataset2->getRow();
+          $oTask = new Task();
+          $aTask = $oTask->load($aRow2['TAS_UID']);
+          $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
+          $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' => $aAux['APP_DOC_INDEX'], 'ORIGIN' => $aTask['TAS_TITLE']);
+          if ($aFields['APP_DOC_FILENAME'] != '') {
+              $aFields['TITLE'] = $aFields['APP_DOC_FILENAME'];
+          } else {
+              $aFields['TITLE'] = $aFields['APP_DOC_COMMENT'];
+          }
+          //$aFields['POSITION'] = $_SESSION['STEP_POSITION'];
+          $aFields['CONFIRM'] = G::LoadTranslation('ID_CONFIRM_DELETE_ELEMENT');
+          $aOutputDocuments[] = $aFields;
+          $oDataset->next();
+      }
+      global $_DBArray;
+      $_DBArray['outputDocuments'] = $aOutputDocuments;
+      $_SESSION['_DBArray'] = $_DBArray;
+      G::LoadClass('ArrayPeer');
+      $oCriteria = new Criteria('dbarray');
+      $oCriteria->setDBArrayTable('outputDocuments');
+      $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_CREATE_DATE);
+      return $oCriteria;
+    }
+ 
+/*
+funcion History messages for case tracker by Everth The Answer
+*/    
+  function getHistoryMessagesTracker($sApplicationUID) {
+	 	//die ($sApplicationUID);
+	  require_once 'classes/model/AppMessage.php';
+    $oAppDocument = new AppDocument();
+    $oCriteria = new Criteria('workflow');
+    $oCriteria->add(AppMessagePeer::APP_UID, $sApplicationUID);   
+    $oCriteria->addAscendingOrderByColumn(AppMessagePeer::APP_MSG_DATE);
+    $oDataset = AppMessagePeer::doSelectRS($oCriteria);        
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next(); 
+   
+    $aMessages = array();    
+    $aMessages[] = array('APP_MSG_UID' => 'char', 
+    								 'APP_UID' => 'char', 
+    								 'DEL_INDEX' => 'char', 
+    								 'APP_MSG_TYPE' => 'char', 
+    								 'APP_MSG_SUBJECT' => 'char', 
+    								 'APP_MSG_FROM' => 'char', 
+    								 'APP_MSG_TO' => 'char',
+    								 'APP_MSG_BODY' => 'char',
+    								 'APP_MSG_DATE' => 'char',
+    								 'APP_MSG_CC' => 'char',
+    								 'APP_MSG_BCC' => 'char',
+    								 'APP_MSG_TEMPLATE' => 'char',
+    								 'APP_MSG_STATUS' => 'char',
+    								 'APP_MSG_ATTACH' => 'char'
+    								 );
+    while ($aRow = $oDataset->getRow()) {     	
+    	 $aMessages[] = array('APP_MSG_UID' => $aRow['APP_MSG_UID'], 
+    								 'APP_UID' => $aRow['APP_UID'], 
+    								 'DEL_INDEX' => $aRow['DEL_INDEX'], 
+    								 'APP_MSG_TYPE' => $aRow['APP_MSG_TYPE'], 
+    								 'APP_MSG_SUBJECT' => $aRow['APP_MSG_SUBJECT'], 
+    								 'APP_MSG_FROM' => $aRow['APP_MSG_FROM'], 
+    								 'APP_MSG_TO' => $aRow['APP_MSG_TO'],
+    								 'APP_MSG_BODY' => $aRow['APP_MSG_BODY'],
+    								 'APP_MSG_DATE' => $aRow['APP_MSG_DATE'],
+    								 'APP_MSG_CC' => $aRow['APP_MSG_CC'],
+    								 'APP_MSG_BCC' => $aRow['APP_MSG_BCC'],
+    								 'APP_MSG_TEMPLATE' => $aRow['APP_MSG_TEMPLATE'],
+    								 'APP_MSG_STATUS' => $aRow['APP_MSG_STATUS'],
+    								 'APP_MSG_ATTACH' => $aRow['APP_MSG_ATTACH']
+    								 );
+    	 $oDataset->next();
+    }
+    
+    global $_DBArray;
+    $_DBArray['messages']  = $aMessages;
+    $_SESSION['_DBArray'] = $_DBArray;
+    G::LoadClass('ArrayPeer');
+    $oCriteria = new Criteria('dbarray');
+    $oCriteria->setDBArrayTable('messages');
+
+    return $oCriteria;    
+  }	    	    	
+  
+  /*
+funcion History messages for case tracker by Everth The Answer
+*/    
+  function getHistoryMessagesTrackerView($sApplicationUID, $Msg_UID) {	 
+	  require_once 'classes/model/AppMessage.php';
+    $oAppDocument = new AppDocument();
+    $oCriteria = new Criteria('workflow');
+    $oCriteria->add(AppMessagePeer::APP_UID, $sApplicationUID);   
+    $oCriteria->add(AppMessagePeer::APP_MSG_UID, $Msg_UID);   
+    $oCriteria->addAscendingOrderByColumn(AppMessagePeer::APP_MSG_DATE);
+    $oDataset = AppMessagePeer::doSelectRS($oCriteria);        
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next(); 
+       
+    $aRow = $oDataset->getRow();
+
+    return $aRow;    
+  }	    	    	
+    	
 }

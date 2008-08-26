@@ -109,8 +109,10 @@ class PMScript
 
 		// Send any output to buffer
 		ob_start();
+
 		// Do eval()
 		$check = eval($code);
+		
 		$output = ob_get_contents();
 		ob_end_clean();
 		// Send output or report errors

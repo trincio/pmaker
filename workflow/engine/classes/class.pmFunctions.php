@@ -436,20 +436,47 @@ function WSProcessList()
 	return $rows;	
 }
 
-function WSSendMessage($caseId, $message)
-{
-	$client = WSOpen();
-	$sessionId = $_SESSION['WS_SESSION_ID'];
-	
-	$params = array('sessionId'=>$sessionId, 'caseId'=>$caseId, 'message'=>$message);
-	$result = $client->__SoapCall('sendMessage', array($params));
-
-	$fields['status_code'] = $result->status_code;
-	$fields['message']     = $result->message;
-	$fields['time_stamp']  = $result->timestamp;
-
-	return $fields;
+//private function to get current email configuration
+function getEmailConfiguration () {
+  require_once 'classes/model/Configuration.php';
+  $oConfiguration = new Configuration();
+  $sDelimiter     = DBAdapter::getStringDelimiter();
+  $oCriteria      = new Criteria('workflow');
+  $oCriteria->add(ConfigurationPeer::CFG_UID, 'Emails');
+  $oCriteria->add(ConfigurationPeer::OBJ_UID, '');
+  $oCriteria->add(ConfigurationPeer::PRO_UID, '');
+  $oCriteria->add(ConfigurationPeer::USR_UID, '');
+  $oCriteria->add(ConfigurationPeer::APP_UID, '');
+  
+  if (ConfigurationPeer::doCount($oCriteria) == 0) {
+    $oConfiguration->create(array('CFG_UID' => 'Emails', 'OBJ_UID' => '', 'CFG_VALUE' => '', 'PRO_UID' => '', 'USR_UID' => '', 'APP_UID' => ''));
+    $aFields = array();
+  }
+  else {
+    $aFields = $oConfiguration->load('Emails', '', '', '', '');
+    if ($aFields['CFG_VALUE'] != '') {
+      $aFields = unserialize($aFields['CFG_VALUE']);
+    }
+    else {
+      $aFields = array();
+    }
+  }
+  
+  return $aFields;
 }
+
+function PMFSendMessage($caseId, $sFrom, $sTo, $sCc, $sBcc, $sSubject, $sBody) {
+	G::LoadClass('wsBase');
+	$ws = new wsBase ();
+	$result = $ws->sendMessage($caseId, $sFrom, $sTo, $sCc, $sBcc, $sSubject, $sBody);
+	
+	if ( $result->status_code == 0){
+		return 1;
+	} else {
+		return 0;
+	}
+}
+
 
 function WSSendVariables($caseId, $name1, $value1, $name2, $value2)
 {
@@ -667,18 +694,6 @@ function PMFProcessList() #its test was successfull
 	return $rows;
 }
 
-function PMFSendMessage($caseId, $message) 
-{
-	G::LoadClass('wsBase');
-	$ws = new wsBase ();
-    $result = $ws->sendMessage($caseId, $message);
-
-	if($result->status_code == 0){
-		return 1;
-	} else {
-		return 0;
-	}
-}
 
 function PMFSendVariables($caseId, $variables)
 {
@@ -759,4 +774,7 @@ function PMFCreateUser($userId, $password, $firstname, $lastname, $email, $role)
 	}
 }
 
+function generateCode ( $iDigits = 4, $sType = 'NUMERIC' ) {
+	return G::generateCode ($iDigits, $sType );
+}
 ?>
