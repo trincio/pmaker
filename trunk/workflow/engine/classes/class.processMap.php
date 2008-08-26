@@ -46,9 +46,10 @@ class processMap {
 	* @param boolean $bView
 	* @param string $sApplicationUID
 	* @param integer $iDelegation
+	* @param string $sTask
 	* @return string
 	*/
-  function load($sProcessUID, $bView = false, $sApplicationUID = '', $iDelegation = 0, $sTask = '') {
+  function load($sProcessUID, $bView = false, $sApplicationUID = '', $iDelegation = 0, $sTask = '', $bCT = false) {
   	try {
   		$oProcess = new Process();
   		if (!is_null($oProcess)) {
@@ -118,44 +119,88 @@ class processMap {
       		  $oTask->derivation->to[] = $oTo;
           	$oDataset2->next();
           }
-          if ($bView && ($sApplicationUID != '') && ($iDelegation > 0) && ($sTask != '')) {
-          	require_once 'classes/model/AppDelegation.php';
-          	$oCriteria = new Criteria('workflow');
-          	$oCriteria->addSelectColumn('COUNT(*) AS CANT');
-          	$oCriteria->addSelectColumn('MIN(DEL_FINISH_DATE) AS FINISH');
-      	    $oCriteria->add(AppDelegationPeer::APP_UID, $sApplicationUID);
-      	    $oCriteria->add(AppDelegationPeer::TAS_UID, $aRow1['TAS_UID']);
-      	    $oDataset2 = AppDelegationPeer::doSelectRS($oCriteria);
-            $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-            $oDataset2->next();
-            $aRow2 = $oDataset2->getRow();
-            $oCriteria = new Criteria('workflow');
-          	$oCriteria->addSelectColumn('DEL_FINISH_DATE');
-      	    $oCriteria->add(AppDelegationPeer::APP_UID, $sApplicationUID);
-      	    $oCriteria->add(AppDelegationPeer::TAS_UID, $aRow1['TAS_UID']);
-      	    $oCriteria->add(AppDelegationPeer::DEL_FINISH_DATE, null);
-      	    $oDataset2 = AppDelegationPeer::doSelectRS($oCriteria);
-            $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-            $oDataset2->next();
-            $aRow3 = $oDataset2->getRow();
-            if ($aRow3) {
-              $aRow2['FINISH'] = '';
-            }
-  	        if (($aRow2['FINISH'] == null) && ($aRow1['TAS_UID'] == $sTask)) {
-              $oTask->color = '#FF0000';
-            }
-            else {
-            	if ($aRow2['CANT'] != 0) {
-            		if ($aRow2['FINISH'] == null) {
-            		  $oTask->color = '#FF9900';
-            		}
-            		else {
-            		  $oTask->color = '#006633';
-            		}
-            	}
-            	else {
-            		$oTask->color = '#939598';
-            	}
+          if ($bCT) {
+            require_once 'classes/model/AppDelegation.php';
+            require_once 'classes/model/AppDelegation.php';
+            	$oCriteria = new Criteria('workflow');
+            	$oCriteria->addSelectColumn('COUNT(*) AS CANT');
+            	$oCriteria->addSelectColumn('MIN(DEL_FINISH_DATE) AS FINISH');
+      	      $oCriteria->add(AppDelegationPeer::APP_UID, $sApplicationUID);
+      	      $oCriteria->add(AppDelegationPeer::TAS_UID, $aRow1['TAS_UID']);
+      	      $oDataset2 = AppDelegationPeer::doSelectRS($oCriteria);
+              $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+              $oDataset2->next();
+              $aRow2 = $oDataset2->getRow();
+              $oCriteria = new Criteria('workflow');
+            	$oCriteria->addSelectColumn('DEL_FINISH_DATE');
+      	      $oCriteria->add(AppDelegationPeer::APP_UID, $sApplicationUID);
+      	      $oCriteria->add(AppDelegationPeer::TAS_UID, $aRow1['TAS_UID']);
+      	      $oCriteria->add(AppDelegationPeer::DEL_FINISH_DATE, null);
+      	      $oDataset2 = AppDelegationPeer::doSelectRS($oCriteria);
+              $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+              $oDataset2->next();
+              $aRow3 = $oDataset2->getRow();
+              if ($aRow3) {
+                $aRow2['FINISH'] = '';
+              }
+  	          if (($aRow2['FINISH'] == null) && ($aRow1['TAS_UID'] == $sTask)) {
+                $oTask->color = '#FF0000';
+              }
+              else {
+              	if ($aRow2['CANT'] != 0) {
+              		if ($aRow2['FINISH'] == null) {
+              		  //$oTask->color = '#FF9900';
+              		  $oTask->color = '#FF0000';
+              		}
+              		else {
+              		  $oTask->color = '#006633';
+              		}
+              	}
+              	else {
+              		//$oTask->color = '#939598';
+              	}
+              }
+          }
+          else {
+            if ($bView && ($sApplicationUID != '') && ($iDelegation > 0) && ($sTask != '')) {
+            	require_once 'classes/model/AppDelegation.php';
+            	$oCriteria = new Criteria('workflow');
+            	$oCriteria->addSelectColumn('COUNT(*) AS CANT');
+            	$oCriteria->addSelectColumn('MIN(DEL_FINISH_DATE) AS FINISH');
+      	      $oCriteria->add(AppDelegationPeer::APP_UID, $sApplicationUID);
+      	      $oCriteria->add(AppDelegationPeer::TAS_UID, $aRow1['TAS_UID']);
+      	      $oDataset2 = AppDelegationPeer::doSelectRS($oCriteria);
+              $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+              $oDataset2->next();
+              $aRow2 = $oDataset2->getRow();
+              $oCriteria = new Criteria('workflow');
+            	$oCriteria->addSelectColumn('DEL_FINISH_DATE');
+      	      $oCriteria->add(AppDelegationPeer::APP_UID, $sApplicationUID);
+      	      $oCriteria->add(AppDelegationPeer::TAS_UID, $aRow1['TAS_UID']);
+      	      $oCriteria->add(AppDelegationPeer::DEL_FINISH_DATE, null);
+      	      $oDataset2 = AppDelegationPeer::doSelectRS($oCriteria);
+              $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+              $oDataset2->next();
+              $aRow3 = $oDataset2->getRow();
+              if ($aRow3) {
+                $aRow2['FINISH'] = '';
+              }
+  	          if (($aRow2['FINISH'] == null) && ($aRow1['TAS_UID'] == $sTask)) {
+                $oTask->color = '#FF0000';
+              }
+              else {
+              	if ($aRow2['CANT'] != 0) {
+              		if ($aRow2['FINISH'] == null) {
+              		  $oTask->color = '#FF9900';
+              		}
+              		else {
+              		  $oTask->color = '#006633';
+              		}
+              	}
+              	else {
+              		$oTask->color = '#939598';
+              	}
+              }
             }
           }
       	  $oPM->task[] = $oTask;

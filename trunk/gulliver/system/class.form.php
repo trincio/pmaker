@@ -44,7 +44,6 @@ class Form extends XmlForm
   var $in_progress='function(){}';
   var $template;
   var $className="formDefault";
-  var $requiredFields = array();
   var $objectRequiredFields = null;
   /**
    * Function setDefaultValues
@@ -315,7 +314,7 @@ class Form extends XmlForm
 	{
 		$rFields = Array();
 		$missingFields = Array();
-		
+
 		foreach ($this->fields as $o) {
 			if(property_exists(get_class($o), 'required')) {
 				if( $o->required == 1) {
@@ -323,18 +322,18 @@ class Form extends XmlForm
 				}
 			}
 		}
-		
+
 		foreach($rFields as $field){
 			#we verify if the requiered field is in array values,. t
 			if (array_key_exists($field, $values)) {
-			    if( $values[$field] == "") {	
+			    if( $values[$field] == "") {
 					array_push($missingFields, $field);
 				}
 			} else {
 				array_push($missingFields, $field);
 			}
 		}
-		
+
 		if(sizeof($missingFields) != 0) {
 			return $missingFields;
 		} else {

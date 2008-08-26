@@ -1268,6 +1268,7 @@ class Cases
         $c->addSelectColumn(UsersPeer::USR_FIRSTNAME);
         $c->addSelectColumn(UsersPeer::USR_LASTNAME);
         $c->addSelectColumn(AppDelegationPeer::DEL_DELEGATE_DATE);
+        $c->addAsColumn('USR_NAME', "CONCAT(USR_LASTNAME, ' ', USR_FIRSTNAME)");
         $c->addSelectColumn(AppDelegationPeer::DEL_INIT_DATE);
         $c->addSelectColumn(AppDelegationPeer::DEL_FINISH_DATE);
 
@@ -2537,6 +2538,7 @@ class Cases
 funcion de verificacion para la autenticacion del External User by Everth The Answer
 */
  function verifyCaseTracker($case, $pin){ 	
+ 	  
  	  $pin=md5($pin); 
  	  
  	  $oCriteria = new Criteria('workflow');
@@ -2549,13 +2551,12 @@ funcion de verificacion para la autenticacion del External User by Everth The An
 		$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
 		$oDataset->next();
 		$aRow = $oDataset->getRow();
-							  	  	  							  	  	  
- 	  //$aCase=$this->loadCase($case);
+							  	  	  							  	  	   	  
  	  $s=0; 	  
  	  if(!is_array($aRow)) //no existe el caso
  	  		return -1;
 		else
-			{  //$_SESSION['PROCESS']=$aRow['PRO_UID']; 
+			{  
 		  	 $s++;
 		  }	
 		 	   	 		

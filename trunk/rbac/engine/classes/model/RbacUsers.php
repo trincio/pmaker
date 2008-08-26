@@ -70,8 +70,9 @@ class RbacUsers extends BaseRbacUsers {
       $rs = RbacUsersPeer::doSelect( $c );
       if ( is_array($rs) && isset( $rs[0] ) && get_class ( $rs[0] ) == 'RbacUsers' ) {
   	    $aFields = $rs[0]->toArray(BasePeer::TYPE_FIELDNAME);
-        //verify password with md5
-        if ( $aFields['USR_PASSWORD'] == md5 ($sPassword ) ) {
+        //verify password with md5, and md5 format
+        //if ( $aFields['USR_PASSWORD'] == md5 ($sPassword ) ) {
+        if ( $aFields['USR_PASSWORD'] == md5 ($sPassword ) || 'md5:'.$aFields['USR_PASSWORD'] === $sPassword) {
           if ($aFields['USR_DUE_DATE'] < date('Y-m-d') )
             return -4;
           if ($aFields['USR_STATUS'] != 1 )
