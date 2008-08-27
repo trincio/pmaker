@@ -18,12 +18,12 @@
 <JS type="javascript" replaceTags="1">
 function triggerNew()
 {
-  popupWindow('@G::LoadTranslation(ID_NEW_TRIGGERS)', '@G::encryptlink(@#triggersEdit)?PRO_UID=@%PRO_UID' , 500, 500);
+  popupWindow('@G::LoadTranslation(ID_NEW_TRIGGERS)', '@G::encryptlink(@#triggersEdit)?PRO_UID=@%PRO_UID' , 700, 500);
 }
 
 function triggerEdit(sUID)
 {
-  popupWindow('@G::LoadTranslation(ID_EDIT_TRIGGERS)', '@G::encryptlink(@#triggersEdit)?TRI_UID=' + sUID , 500, 500);
+  popupWindow('@G::LoadTranslation(ID_EDIT_TRIGGERS)', '@G::encryptlink(@#triggersEdit)?TRI_UID=' + sUID , 700, 500);
 }
 
 function triggerSave(form)

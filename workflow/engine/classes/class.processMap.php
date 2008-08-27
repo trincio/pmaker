@@ -2004,7 +2004,8 @@ class processMap {
 
     $c->clearSelectColumns();
     $c->addSelectColumn ( ProcessPeer::PRO_UID );
-    $c->addSelectColumn ( ProcessPeer::PRO_STATUS );
+    //$c->addSelectColumn ( ProcessPeer::PRO_STATUS );
+    $c->addAsColumn ( 'PRO_STATUS', "IF (PRO_STATUS = 'ACTIVE', '" . G::LoadTranslation('ID_ACTIVE') . "', '" . G::LoadTranslation('ID_INACTIVE') . "')" );
     $c->addAsColumn ( 'PRO_TITLE', 'C1.CON_VALUE' );
     $c->addAsColumn ( 'PRO_DESCRIPTION', 'C2.CON_VALUE' );
 

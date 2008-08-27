@@ -1013,7 +1013,7 @@ var processmap=function(){
 								modal:true
 						}};
 						panel.tab={
-							width	:130,
+							width	:300,
 							optWidth:120,
 							step	:(this.parent.browser.isIE?3:4),
 							options:[{

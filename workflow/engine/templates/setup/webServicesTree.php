@@ -47,7 +47,9 @@
 	else
 	{
 	  if (!isset($_SESSION['END_POINT'])) {
-		  $wsdl = 'http://'.$_SERVER['HTTP_HOST'].'/sys'.SYS_SYS.'/en/green/services/wsdl';
+		  //$wsdl = 'http://'.$_SERVER['HTTP_HOST'].'/sys'.SYS_SYS.'/en/green/services/wsdl';
+		  $wsdl = 'http://'.$_SERVER['HTTP_HOST'];
+		  $workspace = SYS_SYS;
 		}
 		else {
 		  $wsdl = $_SESSION['END_POINT'];
@@ -57,7 +59,7 @@
   $tree = new Tree();
   $tree->name = 'WebServices';
   $tree->nodeType="base";
-  $tree->width="280px";
+  $tree->width="270px";
   $tree->value = '
 	 <div class="boxTopBlue"><div class="a"></div><div class="b"></div><div class="c"></div></div>
 	 <div class="boxContentBlue">
@@ -70,8 +72,11 @@
 	</div>
 	<div class="boxBottomBlue"><div class="a"></div><div class="b"></div><div class="c"></div></div>
   	<div class="userGroupLink"><a href="#" onclick="webServicesSetup();return false;">'.G::LoadTranslation('ID_SETUP_WEBSERVICES').'</a></div>
-    <div class="boxContentBlue"><b>Session: </b><span id="spanWsSessionId">' . $wsSessionId .'</span></div><br>
-    <div class="boxContentBlue"><b>EndPoin: </b><span id="spanWsSessionId">' . $wsdl .'</span></div><br>
+    <div class="boxContentBlue"><b>' . G::LoadTranslation('IS_SESSION') . ': </b><span id="spanWsSessionId">' . $wsSessionId .'</span></div><br>
+    <div class="boxContentBlue">
+    	<b>' . G::LoadTranslation('ID_SITE') . ': </b><span id="spanWsSessionId">' . $wsdl .'</span>
+    	<b>' . G::LoadTranslation('ID_WORKSPACE') . ': </b><span id="spanWsSessionId">' . $workspace .'</span>
+    </div><br>
 	';
 
   $tree->showSign=false;
@@ -100,7 +105,7 @@
     $htmlGroup = '';
     $htmlGroup .= "<table cellspacing='0' cellpadding='0' border='1' style='border:0px;'>";
     $htmlGroup .= "<tr>";
-    $htmlGroup .= "<td width='200px' class='treeNode' style='border:0px;background-color:transparent;'>{$WS_TITLE}</td>";
+    $htmlGroup .= "<td width='250px' class='treeNode' style='border:0px;background-color:transparent;'>{$WS_TITLE}</td>";
     $htmlGroup .= "<td class='treeNode' style='border:0px;background-color:transparent;'>";
     if ( $WS_TITLE == 'Login' || $wsSessionId != '' )
       $htmlGroup .= "[<a href='#' onclick=\"showFormWS('{$UID}');return false;\">{$ID_TEST}</a>]";
