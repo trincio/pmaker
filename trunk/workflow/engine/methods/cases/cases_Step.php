@@ -84,7 +84,7 @@
 
   $APP_NUMBER = $Fields['APP_NUMBER'];
   $APP_TITLE = $Fields['TITLE'];
-  
+
   $oProcess = new Process();
   $oProcessFieds = $oProcess->Load($_SESSION['PROCESS']);
   #trigger debug routines...
@@ -103,7 +103,7 @@
 	$_SESSION['TRIGGER_DEBUG']['TRIGGERS_VALUES'] = Array();
 
 	$triggers = $oCase->loadTriggers( $_SESSION['TASK'], $_GET['TYPE'], $_GET['UID'], 'BEFORE');
-  
+
 	$_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] = count($triggers);
 	$_SESSION['TRIGGER_DEBUG']['TIME'] = 'BEFORE';
 	if($_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] != 0){
@@ -117,13 +117,13 @@
 	$Fields['TAS_UID']  = $_SESSION['TASK'];
 	//Execute before triggers - End
   }
-  
+
   if( isset($_GET['breakpoint']) ) {
     $_POST['NextStep'] = $_SESSION['TRIGGER_DEBUG']['BREAKPAGE'];
   }
-  
+
   if( $_SESSION['TRIGGER_DEBUG']['ISSET'] ){
-	$G_PUBLISH->AddContent('view', 'cases/showDebugFrame');	
+	$G_PUBLISH->AddContent('view', 'cases/showDebugFrame');
   }
 
   if( isset($_GET['breakpoint']) ) {
@@ -131,7 +131,7 @@
 	exit();
   }
   #end trigger debug session.......
-  
+
   //Save data - Start
   $oCase->updateCase ( $_SESSION['APPLICATION'], $Fields );
   //Save data - End
@@ -153,6 +153,8 @@ try {
 //Add content content step - Start
 $array['APP_NUMBER'] = $APP_NUMBER;
 $array['APP_TITLE'] = $APP_TITLE;
+$array['CASE'] = G::LoadTranslation('ID_CASE');
+$array['TITLE'] = G::LoadTranslation('ID_TITLE');
 $G_PUBLISH->AddContent('smarty', 'cases/cases_title', '', '', $array);
 
 switch ($_GET['TYPE'])
@@ -270,7 +272,7 @@ switch ($_GET['TYPE'])
     }
 
     $aOD['__DYNAFORM_OPTIONS']['NEXT_STEP'] = $aNextStep['PAGE'];
-	
+
     switch ($_GET['ACTION'])
     {
       case 'GENERATE':
@@ -353,11 +355,11 @@ switch ($_GET['TYPE'])
   	      $oPluginRegistry->executeTriggers ( PM_UPLOAD_DOCUMENT , $documentData );
   	      unlink ( $sPathName . $sFileName );
         }
-		
+
 		$outputNextStep = 'cases_Step?TYPE=OUTPUT_DOCUMENT&UID=' . $_GET['UID'] . '&POSITION=' . $_SESSION['STEP_POSITION'] . '&ACTION=VIEW&DOC=' . $sDocUID;
 
         G::header('location: '.$outputNextStep);
-		
+
         break;
       case 'VIEW':
         require_once 'classes/model/AppDocument.php';
@@ -383,8 +385,18 @@ switch ($_GET['TYPE'])
   case 'ASSIGN_TASK':
     $oDerivation = new Derivation();
     $oProcess    = new Process();
-    $aFields['PROCESS']        = $oProcess->load($_SESSION['PROCESS']);
-    $aFields['PREVIOUS_PAGE'] = $aPreviousStep['PAGE'];
+    $aFields['PROCESS']              = $oProcess->load($_SESSION['PROCESS']);
+    $aFields['PREVIOUS_PAGE']        = $aPreviousStep['PAGE'];
+    $aFields['PREVIOUS_PAGE_LABEL']  = G::LoadTranslation('ID_PREVIOUS_STEP');
+    $aFields['ASSIGN_TASK']          = G::LoadTranslation('ID_ASSIGN_TASK');
+    $aFields['END_OF_PROCESS']       = G::LoadTranslation('ID_END_OF_PROCESS');
+    $aFields['NEXT_TASK_LABEL']      = G::LoadTranslation('ID_NEXT_TASK');
+    $aFields['EMPLOYEE']             = G::LoadTranslation('ID_EMPLOYEE');
+    $aFields['LAST_EMPLOYEE']        = G::LoadTranslation('ID_LAST_EMPLOYEE');
+    $aFields['OPTION_LABEL']         = G::LoadTranslation('ID_OPTION');
+    $aFields['CONTINUE']             = G::LoadTranslation('ID_CONTINUE');
+    $aFields['CONTINUE_WITH_OPTION'] = G::LoadTranslation('ID_CONTINUE_WITH_OPTION');
+    $aFields['FINISH_WITH_OPTION']   = G::LoadTranslation('ID_FINISH_WITH_OPTION');
     $aFields['TASK'] = $oDerivation->prepareInformation(
                        array( 'USER_UID'  => $_SESSION['USER_LOGGED'],
                               'APP_UID'   => $_SESSION['APPLICATION'],
