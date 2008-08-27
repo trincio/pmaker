@@ -1579,6 +1579,7 @@ class Cases
     function executeTriggers($sTasUid, $sStepType, $sStepUidObj, $sTriggerType, $aFields = array())
     {
         $aTriggers = $this->loadTriggers($sTasUid, $sStepType, $sStepUidObj, $sTriggerType);
+
         if (count($aTriggers) > 0) {
             $oPMScript = new PMScript();
             $oPMScript->setFields($aFields);
