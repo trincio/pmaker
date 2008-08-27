@@ -287,15 +287,13 @@ class wsBase
 		}
 	}
 
-	public function sendMessage($caseId, $sFrom, $sTo, $sCc, $sBcc, $sSubject, $sTemplate) {
+	public function sendMessage($caseId, $sFrom, $sTo, $sCc, $sBcc, $sSubject, $sTemplate, $appFields = null ) {
 		try {	
 			G::LoadClass('case');
       G::LoadClass('spool');
 			$oCase = new Cases();
 
     	$aSetup = getEmailConfiguration();
-    	
-		
 			if ( $sFrom == '' ) 
 			  $sFrom = $aSetup['MESS_ACCOUNT'];
 			
@@ -307,18 +305,25 @@ class wsBase
                                'MESS_PASSWORD' => $aSetup['MESS_PASSWORD'],
                                'SMTPAuth'      => $aSetup['MESS_RAUTH'] ));
 
-			@mkdir( PATH_DATA_SITE . "public/", 0777,true);
-			$fileTemplate = PATH_DATA_SITE . "public" . PATH_SEP . $sTemplate;
+    	
+			$oCase = new Cases();
+  	  $oldFields = $oCase->loadCase( $caseId );
+      			  
+      $pathEmail = PATH_DATA_SITE . 'mailTemplates' . PATH_SEP . $oldFields['PRO_UID'] . PATH_SEP;
+			$fileTemplate = $pathEmail . $sTemplate;
+			@mkdir( $pathEmail, 0777,true);
 
 			if ( ! file_exists ( $fileTemplate ) ) {
 			  $result = new wsResponse (100, "template file: '$fileTemplate' doesn't exists."  );
 			  return $result;
 			}
 						
-			$oCase = new Cases();
-
-			$oldFields = $oCase->loadCase( $caseId );
-			$Fields = $oldFields['APP_DATA'];
+      if ( $appFields == null ) {
+  			$Fields = $oldFields['APP_DATA'];
+      }
+      else 
+        $Fields = $appFields;
+        
       $templateContents = file_get_contents ( $fileTemplate );
       $sBody = G::replaceDataField( $templateContents, $Fields);
 
@@ -827,9 +832,6 @@ class wsBase
 			$oDerivation = new Derivation();
 			$derive  = $oDerivation->prepareInformation($aData);
 		  
-		  //$result = new wsResponse (15, print_r($derive,1));
-			//return $result;
-			
 			$var = '';
 			foreach ( $derive as $key=>$val ) {
 				if($val['NEXT_TASK']['TAS_ASSIGN_TYPE']=='MANUAL')
@@ -852,7 +854,28 @@ class wsBase
 			$appFields = $oCase->loadCase( $caseId );
 					
 			//Execute triggers before derivation
-			$appFields['APP_DATA']  = $oCase->ExecuteTriggers ( $derive['TAS_UID'], 'ASSIGN_TASK', -2, 'BEFORE', $appFields['APP_DATA'] );
+      $currentTask = $derive[1]['TAS_UID'];  //currentTask??? if this doesn't exists???
+ 			$appFields['APP_DATA']['APPLICATION'] = $caseId;
+			
+      $aTriggers = $oCase->loadTriggers($currentTask, 'ASSIGN_TASK', -2, 'BEFORE' );
+      if (count($aTriggers) > 0) {
+        $oPMScript = new PMScript();
+        $oPMScript->setFields( $appFields['APP_DATA'] );
+        foreach ($aTriggers as $aTrigger) {
+          $bExecute = true;
+          if ($aTrigger['ST_CONDITION'] !== '') {
+            $oPMScript->setScript($aTrigger['ST_CONDITION']);
+            $bExecute = $oPMScript->evaluate();
+          }
+          if ($bExecute) {
+            $oPMScript->setScript($aTrigger['TRI_WEBBOT']);
+            $oPMScript->execute();
+            $appFields['APP_DATA'] = $oPMScript->aFields;
+      			$oCase->updateCase ( $caseId, $appFields );
+          }
+        }
+      }
+			
 			$appFields['DEL_INDEX'] = $delIndex;
 			$appFields['TAS_UID']   = $derive['TAS_UID'];
 			//Save data - Start
