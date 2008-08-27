@@ -111,7 +111,7 @@ class Cases
         $c->addSelectColumn(TaskPeer::PRO_UID);
         $c->addJoin(TaskPeer::PRO_UID, ProcessPeer::PRO_UID, Criteria::LEFT_JOIN);
         $c->addJoin(TaskPeer::TAS_UID, TaskUserPeer::TAS_UID, Criteria::LEFT_JOIN);
-        $c->add(ProcessPeer::PRO_STATUS, 'DISABLED', Criteria::NOT_EQUAL);
+        $c->add(ProcessPeer::PRO_STATUS, 'ACTIVE');
         $c->add(TaskPeer::TAS_START, 'TRUE');
         $c->add(TaskUserPeer::USR_UID, $sUIDUser);
 
@@ -135,8 +135,9 @@ class Cases
         $c->clearSelectColumns();
         $c->addSelectColumn(TaskPeer::TAS_UID);
         $c->addSelectColumn(TaskPeer::PRO_UID);
-
+        $c->addJoin(TaskPeer::PRO_UID, ProcessPeer::PRO_UID, Criteria::LEFT_JOIN);
         $c->addJoin(TaskPeer::TAS_UID, TaskUserPeer::TAS_UID, Criteria::LEFT_JOIN);
+        $c->add(ProcessPeer::PRO_STATUS, 'ACTIVE');
         $c->add(TaskPeer::TAS_START, 'TRUE');
         $c->add(TaskUserPeer::USR_UID, $aGroups, Criteria::IN);
 
@@ -2544,30 +2545,69 @@ funcion de verificacion para la autenticacion del External User by Everth The An
  	  $oCriteria = new Criteria('workflow');
 		$oCriteria->addSelectColumn(ApplicationPeer::APP_UID);
 		$oCriteria->addSelectColumn(ApplicationPeer::APP_PIN);	
-		$oCriteria->addSelectColumn(ApplicationPeer::PRO_UID);			
-		$oCriteria->add(ApplicationPeer::APP_NUMBER, $case);			
+		$oCriteria->addSelectColumn(ApplicationPeer::PRO_UID);
+		$oCriteria->addSelectColumn(ApplicationPeer::APP_NUMBER);
+		$oCriteria->addSelectColumn(ApplicationPeer::APP_PROC_CODE);					
+		//$oCriteria->add(ApplicationPeer::APP_NUMBER, $case);			
+		$oCriteria->add(ApplicationPeer::APP_PROC_CODE, $case);			
  	  
  	  $oDataset = DynaformPeer::doSelectRS($oCriteria);
 		$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
 		$oDataset->next();
 		$aRow = $oDataset->getRow();
-							  	  	  							  	  	   	  
+		
+		$sw=0;
+	if(is_array($aRow))
+	{
+	  $PRO_UID=$aRow['PRO_UID'];
+	  $APP_UID=$aRow['APP_UID'];
+	  $PIN    =$aRow['APP_PIN'];
+	}
+	else
+	{
+		$oCriteria = new Criteria('workflow');
+		$oCriteria->addSelectColumn(ApplicationPeer::APP_UID);
+		$oCriteria->addSelectColumn(ApplicationPeer::APP_PIN);	
+		$oCriteria->addSelectColumn(ApplicationPeer::PRO_UID);
+		$oCriteria->addSelectColumn(ApplicationPeer::APP_NUMBER);
+		$oCriteria->addSelectColumn(ApplicationPeer::APP_PROC_CODE);					
+		$oCriteria->add(ApplicationPeer::APP_NUMBER, $case);			
+		 	  
+ 	  $oDataseti = DynaformPeer::doSelectRS($oCriteria);
+		$oDataseti->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+		$oDataseti->next();
+		$aRowi = $oDataseti->getRow();
+		
+		if(is_array($aRowi))
+		{	$PRO_UID=$aRowi['PRO_UID'];
+	  	$APP_UID=$aRowi['APP_UID'];
+	  	$PIN    =$aRowi['APP_PIN'];
+	  }
+	  else
+	  {
+	  		$sw=1;
+	  }	
+	}
+					
+														  	  	  							  	  	   	  
  	  $s=0; 	  
- 	  if(!is_array($aRow)) //no existe el caso
- 	  		return -1;
+ 	  if($sw==1) //no existe el caso
+ 	  	{	 	  		
+ 	  		return -1; 	    
+ 	    }	
 		else
 			{  
 		  	 $s++;
 		  }	
 		 	   	 		
- 	  if($aRow['APP_PIN']!=$pin) //el pin no es valido
+ 	  if($PIN!=$pin) //el pin no es valido
  	  		return -2;
  	  else
  	  		$s++;
  	  		
  	  $res=array();
- 	  $res['PRO_UID']=$aRow['PRO_UID'];
- 	  $res['APP_UID']=$aRow['APP_UID'];		
+ 	  $res['PRO_UID']=$PRO_UID;
+ 	  $res['APP_UID']=$APP_UID;		
  	  
  	  if($s==2)
  	  	return $res;				

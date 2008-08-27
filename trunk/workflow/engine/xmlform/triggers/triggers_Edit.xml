@@ -13,17 +13,17 @@
   <en>Trigger Information</en>
 </TITLE>
 
-<TRI_TITLE type="text" size="60" maxlength="100">
+<TRI_TITLE type="text" size="80" maxlength="100">
   <en>Title</en>
 </TRI_TITLE>
 
 <TRI_TYPE type="hidden"/>
 
-<TRI_DESCRIPTION type="textarea" rows="4" cols="60">
+<TRI_DESCRIPTION type="textarea" rows="4" cols="80">
   <en>Description</en>
 </TRI_DESCRIPTION>
 
-<TRI_WEBBOT type="textareapm" rows="16" cols="60" showVars="1" process="@#PRO_UID">
+<TRI_WEBBOT type="textareapm" rows="16" cols="80" showVars="1" process="@#PRO_UID">
   <en>Script</en>
 </TRI_WEBBOT>
 

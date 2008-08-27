@@ -219,7 +219,7 @@ class G
     return true;
   }
 
-  /*public static*/ function &setErrorHandler( $newCustomErrorHandler = null )
+  /*public static*/ function setErrorHandler( $newCustomErrorHandler = null )
   {
     if ( isset ( $newCustomErrorHandler ) ) {
       set_error_handler( $newCustomErrorHandler );
