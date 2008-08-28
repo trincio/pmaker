@@ -452,5 +452,46 @@ class Task extends BaseTask {
     	throw($oError);
     }
   }
+  
+   /**
+   * create a new Task
+   *
+   * @param      array $aData with new values
+   * @return     void
+   */
+  function createRow($aData)
+  {
+    $con = Propel::getConnection(TaskPeer::DATABASE_NAME);
+    try
+    {    	
+      $con->begin();
+      
+      $this->fromArray($aData,BasePeer::TYPE_FIELDNAME);
+      if($this->validate())
+      {
+        $this->setTasTitle((isset($aData['TAS_TITLE']) ? $aData['TAS_TITLE']: ''));
+        $this->setTasDescription((isset($aData['TAS_DESCRIPTION']) ? $aData['TAS_DESCRIPTION']: ''));
+        $this->setTasDefTitle((isset($aData['TAS_DEF_TITLE']) ? $aData['TAS_DEF_TITLE']: ''));
+        $this->setTasDefDescription((isset($aData['TAS_DEF_DESCRIPTION']) ? $aData['TAS_DEF_DESCRIPTION']: ''));
+        $this->setTasDefProcCode((isset($aData['TAS_DEF_DESCRIPTION']) ? $aData['TAS_DEF_DESCRIPTION']: ''));
+        $this->setTasDefMessage((isset($aData['TAS_DEF_MESSAGE']) ? $aData['TAS_DEF_MESSAGE']: ''));
+        $this->save();
+        $con->commit();
+        return;
+      }
+      else
+      {
+        $con->rollback();
+        $e=new Exception("Failed Validation in class ".get_class($this).".");
+        $e->aValidationFailures=$this->getValidationFailures();
+        throw($e);
+      }
+    }
+    catch(Exception $e)
+    {
+      $con->rollback();
+      throw($e);
+    }
+  }
 
 } // Task
