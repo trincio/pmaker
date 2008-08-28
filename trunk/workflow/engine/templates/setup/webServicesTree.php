@@ -72,7 +72,7 @@
 	</div>
 	<div class="boxBottomBlue"><div class="a"></div><div class="b"></div><div class="c"></div></div>
   	<div class="userGroupLink"><a href="#" onclick="webServicesSetup();return false;">'.G::LoadTranslation('ID_SETUP_WEBSERVICES').'</a></div>
-    <div class="boxContentBlue"><b>' . G::LoadTranslation('IS_SESSION') . ': </b><span id="spanWsSessionId">' . $wsSessionId .'</span></div><br>
+    <div class="boxContentBlue"><b>' . G::LoadTranslation('ID_SESSION') . ': </b><span id="spanWsSessionId">' . $wsSessionId .'</span></div><br>
     <div class="boxContentBlue">
     	<b>' . G::LoadTranslation('ID_SITE') . ': </b><span id="spanWsSessionId">' . $wsdl .'</span>
     	<b>' . G::LoadTranslation('ID_WORKSPACE') . ': </b><span id="spanWsSessionId">' . $workspace .'</span>

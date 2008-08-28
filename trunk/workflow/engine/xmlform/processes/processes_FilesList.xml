@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<dynaForm type="pagetable" menu="processes/processes_FilesOptions">
+<PATH type="text" titleAlign="left" colWidth="250" enableHtml="1">
+  <en></en>
+</PATH>
+</dynaForm>

@@ -244,14 +244,11 @@ class Installer
 			$path_site 	= $this->options['path_data']."/sites/".$this->options['name']."/";
 			$db_file	= $path_site."db.php";
 			@mkdir($path_site,0777,true);
-			@mkdir($path_site."customFunctions",0777,true);
-			@mkdir($path_site."rtfs/",0777,true);
-			@mkdir($path_site."xmlForms",0777,true);
-			@mkdir($path_site."processesImages/",0777,true);
 			@mkdir($path_site."files/",0777,true);
-			@mkdir($path_site."public/",0777,true);
 			@mkdir($path_site."mailTemplates/",0777,true);
+			@mkdir($path_site."public/",0777,true);
 			@mkdir($path_site."reports/",0777,true);
+			@mkdir($path_site."xmlForms",0777,true);
 
 			$db_text = "<?php\n" .
 			"// Processmaker configuration\n" .

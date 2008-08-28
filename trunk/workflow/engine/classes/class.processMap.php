@@ -2737,5 +2737,95 @@ class processMap {
   		BasePeer::doUpdate($oCriteria2, $oCriteria1, Propel::getConnection('workflow'));
     }
   }
+
+  function processFilesManager($sProcessUID) {
+    $aDirectories   = array();
+ 		$aDirectories[] = array('DIRECTORY' => 'char');
+ 		$aDirectories[] = array('DIRECTORY' => '<a href="#" onclick="goToDirectory(\'' . $sProcessUID . '\', \'mailTemplates\', \'\');" class="pagedTableHeader">mailTemplates</a>');
+ 		$aDirectories[] = array('DIRECTORY' => '<a href="#" onclick="goToDirectory(\'' . $sProcessUID . '\', \'public\', \'\');" class="pagedTableHeader">public</a>');
+    global $_DBArray;
+    $_DBArray['directories'] = $aDirectories;
+    $_SESSION['_DBArray']    = $_DBArray;
+    G::LoadClass('ArrayPeer');
+    $oCriteria = new Criteria('dbarray');
+    $oCriteria->setDBArrayTable('directories');
+    global $G_PUBLISH;
+  	$G_PUBLISH = new Publisher();
+  	$G_PUBLISH->AddContent('propeltable', 'paged-table', 'processes/processes_DirectoriesList', $oCriteria);
+    G::RenderPage('publish', 'raw');
+  }
+
+  function exploreDirectory($sProcessUID, $sMainDirectory, $sCurrentDirectory) {
+    switch ($sMainDirectory) {
+      case 'mailTemplates':
+        $sDirectory = PATH_DATA_MAILTEMPLATES . $sProcessUID . PATH_SEP;
+      break;
+      case 'public':
+        $sDirectory = PATH_DATA_PUBLIC . $sProcessUID . PATH_SEP;
+      break;
+      default:
+        die;
+      break;
+    }
+    G::verifyPath($sDirectory, true);
+    $sDirectory  .= $sCurrentDirectory . PATH_SEP;
+    $aTheFiles    = array();
+    $aTheFiles[]  = array('PATH'     => 'char',
+                          'EDIT'     => 'char',
+                          'DOWNLOAD' => 'char',
+                          'DELETE'   => 'char');
+    $aDirectories = array();
+    $aFiles       = array();
+    $oDirectory   = dir($sDirectory);
+    while ($sObject = $oDirectory->read()) {
+      if (($sObject !== '.') && ($sObject !== '..')) {
+        $sPath = $sDirectory . $sObject;
+        if (is_dir($sPath)) {
+          $aDirectories[] = array('PATH' => ($sCurrentDirectory != '' ? $sCurrentDirectory . PATH_SEP : '') . $sObject, 'DIRECTORY' => $sObject);
+        }
+        else {
+          $aAux     = pathinfo($sPath);
+          $aFiles[] = array('FILE' => $sObject, 'EXT' => $aAux['extension']);
+        }
+      }
+    }
+    $oDirectory->close();
+    if ($sCurrentDirectory == '') {
+      $aTheFiles[] = array('PATH'     => '<a href="#" onclick="goToHome(\'' . $sProcessUID . '\');" class="pagedTableHeader">..</a>',
+                           'EDIT'     => '',
+                           'DOWNLOAD' => '',
+                           'DELETE'   => '');
+    }
+    else {
+      $aAux = explode(PATH_SEP, $sCurrentDirectory);
+      array_pop($aAux);
+      $aTheFiles[] = array('PATH'     => '<a href="#" onclick="goToDirectory(\'' . $sProcessUID . '\', \'' . $sMainDirectory . '\', \'' . implode(PATH_SEP, $aAux) . '\');" class="pagedTableHeader">..</a>',
+                           'EDIT'     => '',
+                           'DOWNLOAD' => '',
+                           'DELETE'   => '');
+    }
+    foreach ($aDirectories as $aDirectories) {
+      $aTheFiles[] = array('PATH'     => '<a href="#" onclick="goToDirectory(\'' . $sProcessUID . '\', \'' . $sMainDirectory . '\', \'' . $aDirectories['PATH'] . '\');" class="pagedTableHeader">' . $aDirectories['DIRECTORY'] . '</a>',
+                        'EDIT'     => '',
+                        'DOWNLOAD' => '',
+                        'DELETE'   => '');
+    }
+    foreach ($aFiles as $aFile) {
+      $aTheFiles[] = array('PATH'     => $aFile['FILE'],
+                        'EDIT'     => '',
+                        'DOWNLOAD' => '',
+                        'DELETE'   => '');
+    }
+    global $_DBArray;
+    $_DBArray['objects']  = $aTheFiles;
+    $_SESSION['_DBArray'] = $_DBArray;
+    G::LoadClass('ArrayPeer');
+    $oCriteria = new Criteria('dbarray');
+    $oCriteria->setDBArrayTable('objects');
+    global $G_PUBLISH;
+  	$G_PUBLISH = new Publisher();
+  	$G_PUBLISH->AddContent('propeltable', 'paged-table', 'processes/processes_FilesList', $oCriteria);
+    G::RenderPage('publish', 'raw');
+  }
 } // processMap
 ?>

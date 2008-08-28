@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<dynaForm type="xmlmenu">
+
+<MNU_UPLOAD type="link" value="" link="#" onclick="return false;" colAlign="left" colWidth="100">
+  <en>Upload Files</en>
+</MNU_UPLOAD>
+
+<JS type="javascript">
+<![CDATA[
+
+]]>
+</JS>
+
+</dynaForm>

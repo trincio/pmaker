@@ -52,11 +52,16 @@ try {
   switch($_POST['action'])
   {
   	case 'load':
-  	  if ($oData->mode) {
-  	    $sOutput = $oProcessMap->load($oData->uid);
+  	  if ($oData->ct) {
+  	    $sOutput = $oProcessMap->load($oData->uid, true, $_SESSION['APPLICATION'], -1, $_SESSION['TASK'], $oData->ct);
   	  }
   	  else {
-  	  	$sOutput = $oProcessMap->load($oData->uid, true, $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['TASK']);
+  	    if ($oData->mode) {
+  	      $sOutput = $oProcessMap->load($oData->uid);
+  	    }
+  	    else {
+  	    	$sOutput = $oProcessMap->load($oData->uid, true, $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['TASK']);
+  	    }
   	  }
   	break;
   	case 'process_Edit':
@@ -244,6 +249,12 @@ try {
   	break;
   	case 'caseTrackerObjects':
   	  $oProcessMap->caseTrackerObjects($oData->pro_uid);
+  	break;
+  	case 'processFilesManager':
+  	  $oProcessMap->processFilesManager($oData->pro_uid);
+  	break;
+  	case 'exploreDirectory':
+  	  $oProcessMap->exploreDirectory($oData->pro_uid, $oData->main_directory, $oData->directory);
   	break;
   }
   die($sOutput);
