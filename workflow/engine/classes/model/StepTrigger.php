@@ -268,4 +268,39 @@ class StepTrigger extends BaseStepTrigger {
   		throw $oException;
   	}
   }
+  
+  function createRow($aData)
+  { 
+    $con = Propel::getConnection(StepTriggerPeer::DATABASE_NAME);
+    try
+    {              	
+      $con->begin();
+      $this->fromArray($aData,BasePeer::TYPE_FIELDNAME);
+      if($this->validate())
+      {
+      	$this->setStepUid($aData['STEP_UID']);
+      	$this->setTasUid($aData['TAS_UID']);
+      	$this->setTriUid($aData['TRI_UID']);
+      	$this->setStType($aData['ST_TYPE']);
+      	$this->setStCondition($aData['ST_CONDITION']);
+      	$this->setStPosition($aData['ST_POSITION']);
+      	
+        $result=$this->save();
+        $con->commit();
+        return $result;
+      }
+      else
+      {
+        $con->rollback();
+        throw( new Exception("Failed Validation in class ".get_class($this)."."));
+        $e->aValidationFailures=$this->getValidationFailures();
+        throw($e);
+      }
+    }
+    catch(Exception $e)
+    {
+      $con->rollback();
+      throw($e);
+    }
+  }
 } // StepTrigger
