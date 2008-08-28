@@ -614,86 +614,46 @@ class wsBase
 
 			G::LoadClass('case');
 			$oCase = new Cases();
-
-			if($taskId=='')	{								
-				$tasks  = $oProcesses->getStartingTaskForUser($processId, $userId);
-				$numTasks=count($tasks);
-
-				if($numTasks==1){
-					$case   = $oCase->startCase($tasks[0]['TAS_UID'], $userId);
-					$caseId = $case['APPLICATION'];
-					$caseNr = $case['CASE_NUMBER'];
-
-					$oldFields = $oCase->loadCase( $caseId );
-
-					$oldFields['APP_DATA'] = array_merge( $oldFields['APP_DATA'], $Fields);
-
-					$up_case = $oCase->updateCase($caseId, $oldFields);
-					$result = new wsResponse (0, "Sucessful\ncase uid = $caseId \ncase number = $caseNr ");
-					return $result;
-				} 
-				else {
-					if($numTasks==0){
-						$result = new wsResponse (12, "No starting task defined");
-						return $result;
-					}
-					if($numTasks > 1){
-						$result = new wsResponse (13, "Multiple starting task");
-						return $result;
-					}
-				}
-			} 
-			else 
-			{				
 				G::LoadClass('tasks');
 				$oTask = new Tasks();								
 				$startingTasks = $oCase->getStartCases($userId);
 				array_shift ($startingTasks); //remove the first row, the header row
 				$founded = '';
+				$tasksInThisProcess = 0;  
+				$validTaskId = taskId;
 				foreach ( $startingTasks as $key=> $val ) {
+					if ( $val['pro_uid'] == $processId ) { $tasksInThisProcess ++; $validTaskId = $val['uid']; }
 					if ( $val['uid'] == $taskId ) $founded = $val['value'];
 				}
 				
+				if ( $taskId == '' ) {
+				  if ( $tasksInThisProcess == 1 ) {
+					  $founded = $validTaskId;
+  					$taskId = $validTaskId;
+	  			}
+				  if ( $tasksInThisProcess > 1 ) {
+						$result = new wsResponse (13, "Multiple starting task ");
+						return $result;
+				  }
+	  		}
+
 				if( $founded == '')
 				{
-				  $result = new wsResponse (16, "The user $userId is not assigned to the task");
+				  $result = new wsResponse (16, "Task invalid or the user is not assigned to the task");
 			    return $result;
 				}
-			  
-				require_once 'classes/model/Task.php';
-				$oTask = new Task();
-				$task  = $oTask->taskExists( $taskId );
-				if(!$task){
-					$result = new wsResponse (14, "Task invalid");
-					return $result;
-				}
 
-				$tasks  = $oProcesses->getStartingTaskForUser($processId,$userId);
-				$numTasks=count($tasks);
-				if($numTasks==1) {
-					$case   = $oCase->startCase($taskId, $userId);
-					$caseId = $case['APPLICATION'];
-					$caseNr = $case['CASE_NUMBER'];
+				$case   = $oCase->startCase($taskId, $userId);
+				$caseId = $case['APPLICATION'];
+				$caseNr = $case['CASE_NUMBER'];
 
-					$oldFields = $oCase->loadCase( $caseId );
+				$oldFields = $oCase->loadCase( $caseId );
 
-					$oldFields['APP_DATA'] = array_merge( $oldFields['APP_DATA'], $Fields);
+				$oldFields['APP_DATA'] = array_merge( $oldFields['APP_DATA'], $Fields);
 
-					$up_case = $oCase->updateCase($caseId, $oldFields);
-					$result = new wsResponse (0, "Sucessful\ncase uid = $caseId \ncase number = $caseNr ");
-					return $result;
-				} 
-				else {
-					if($numTasks==0) {
-						$result = new wsResponse (12, "No starting task defined");
-						return $result;
-					}
-					if($numTasks > 1) {
-						$result = new wsResponse (13, "Multiple starting task");
-						return $result;
-					}
-				}
-			}
+				$up_case = $oCase->updateCase($caseId, $oldFields);
+				$result = new wsResponse (0, "Sucessful\ncase uid = $caseId \ncase number = $caseNr ");
+				return $result;
 		}
 		catch ( Exception $e ) {
 			$result = new wsResponse (100, $e->getMessage());
