@@ -262,6 +262,9 @@ try {
   	case 'deleteDirectory':
   	  $oProcessMap->deleteDirectory($oData->pro_uid, $oData->main_directory, $oData->directory, $oData->dir_to_delete);
   	break;
+  	case 'downloadFile':
+  	  $oProcessMap->downloadFile($oData->pro_uid, $oData->main_directory, $oData->directory, $oData->file);
+  	break;
   }
   die($sOutput);
 }

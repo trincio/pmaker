@@ -1,5 +1,4 @@
 <?php
-//var_dump($_POST['form']);
 switch ($_POST['form']['MAIN_DIRECTORY']) {
   case 'mailTemplates':
     $sDirectory = PATH_DATA_MAILTEMPLATES . $_POST['form']['PRO_UID'] . PATH_SEP . ($_POST['form']['CURRENT_DIRECTORY'] != '' ? $_POST['form']['CURRENT_DIRECTORY'] . PATH_SEP : '');
