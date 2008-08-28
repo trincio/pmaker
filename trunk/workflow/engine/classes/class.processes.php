@@ -669,7 +669,7 @@ class Processes {
   	foreach ( $aStepTrigger as $key => $row ) {
       $oStepTrigger = new StepTrigger();
       //unset ($row['TAS_UID']);
-      $res = $oStepTrigger->create($row);
+      $res = $oStepTrigger->createRow($row);
   	}
   	return;
   }
@@ -968,12 +968,16 @@ class Processes {
     return serialize($oData);
   }
 
-  function saveSerializedProcess ( $oData ) {  	        
+  function saveSerializedProcess ( $oData ) {  	   	      
     //$oJSON = new Services_JSON();
     //$data = $oJSON->decode($oData);
     //$sProUid = $data->process->PRO_UID;
     $data = unserialize ($oData);
-
+    /*
+    echo"<textarea>";
+    print_r($data); die; 
+    echo"</textarea>";
+    */
     $sProUid = $data->process['PRO_UID'];
     $path = PATH_DOCUMENT . 'output' . PATH_SEP;
 
