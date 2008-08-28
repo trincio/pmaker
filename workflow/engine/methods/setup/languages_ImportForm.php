@@ -39,6 +39,4 @@ switch ($RBAC->userCanAccess('PM_FACTORY'))
 $oForm = new Form('setup/languages_ImportForm', '', SYS_LANG);
 $oForm->action = 'languages_Import';
 echo '<link rel="stylesheet" type="text/css" href="/skins/' . SYS_SKIN . '/style.css"/>' .
-     /*'<script type="text/javascript" src="/js/maborak/core/maborak.js"></script>' .
-     '<script type="text/javascript">var leimnud = new maborak();leimnud.make();leimnud.Package.Load("panel,validator,app,rpc,fx,drag,drop,dom,abbr",{Instance:leimnud,Type:"module"});leimnud.exec(leimnud.fix.memoryLeak);if(leimnud.browser.isIphone){leimnud.iphone.make();}leimnud.Package.Load("panel",{Instance:leimnud,Type:"module"});</script>' .*/
      $oForm->render(PATH_CORE . 'templates/xmlform.html', $scriptCode = '');

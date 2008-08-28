@@ -3,4 +3,7 @@
 <PATH type="text" titleAlign="left" colWidth="250" enableHtml="1">
   <en></en>
 </PATH>
+<DELETE_TEXT type="private" showInTable="0" />
+<DELETE_JS type="private" showInTable="0" />
+<DELETE type="link" value="@#DELETE_TEXT" link="#" onclick="@#DELETE_JS" colWidth="50" />
 </dynaForm>

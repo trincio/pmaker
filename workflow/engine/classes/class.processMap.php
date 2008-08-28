@@ -2770,10 +2770,11 @@ class processMap {
     G::verifyPath($sDirectory, true);
     $sDirectory  .= $sCurrentDirectory . PATH_SEP;
     $aTheFiles    = array();
-    $aTheFiles[]  = array('PATH'     => 'char',
-                          'EDIT'     => 'char',
-                          'DOWNLOAD' => 'char',
-                          'DELETE'   => 'char');
+    $aTheFiles[]  = array('PATH'        => 'char',
+                          'EDIT'        => 'char',
+                          'DOWNLOAD'    => 'char',
+                          'DELETE_TEXT' => 'char',
+                          'DELETE_JS'   => 'char');
     $aDirectories = array();
     $aFiles       = array();
     $oDirectory   = dir($sDirectory);
@@ -2791,30 +2792,34 @@ class processMap {
     }
     $oDirectory->close();
     if ($sCurrentDirectory == '') {
-      $aTheFiles[] = array('PATH'     => '<a href="#" onclick="goToHome(\'' . $sProcessUID . '\');" class="pagedTableHeader">..</a>',
-                           'EDIT'     => '',
-                           'DOWNLOAD' => '',
-                           'DELETE'   => '');
+      $aTheFiles[] = array('PATH'        => '<a href="#" onclick="goToHome(\'' . $sProcessUID . '\');" class="pagedTableHeader">..</a>',
+                           'EDIT'        => '',
+                           'DOWNLOAD'    => '',
+                           'DELETE_TEXT' => '',
+                           'DELETE_JS'   => '');
     }
     else {
       $aAux = explode(PATH_SEP, $sCurrentDirectory);
       array_pop($aAux);
-      $aTheFiles[] = array('PATH'     => '<a href="#" onclick="goToDirectory(\'' . $sProcessUID . '\', \'' . $sMainDirectory . '\', \'' . implode(PATH_SEP, $aAux) . '\');" class="pagedTableHeader">..</a>',
-                           'EDIT'     => '',
-                           'DOWNLOAD' => '',
-                           'DELETE'   => '');
+      $aTheFiles[] = array('PATH'        => '<a href="#" onclick="goToDirectory(\'' . $sProcessUID . '\', \'' . $sMainDirectory . '\', \'' . implode(PATH_SEP, $aAux) . '\');" class="pagedTableHeader">..</a>',
+                           'EDIT'        => '',
+                           'DOWNLOAD'    => '',
+                           'DELETE_TEXT' => '',
+                           'DELETE_JS'   => '');
     }
     foreach ($aDirectories as $aDirectories) {
       $aTheFiles[] = array('PATH'     => '<a href="#" onclick="goToDirectory(\'' . $sProcessUID . '\', \'' . $sMainDirectory . '\', \'' . $aDirectories['PATH'] . '\');" class="pagedTableHeader">' . $aDirectories['DIRECTORY'] . '</a>',
-                        'EDIT'     => '',
-                        'DOWNLOAD' => '',
-                        'DELETE'   => '');
+                        'EDIT'        => '',
+                        'DOWNLOAD'    => '',
+                        'DELETE_TEXT' => G::LoadTranslation('ID_DELETE'),
+                        'DELETE_JS'   => 'deleteDirectory(\'' . $sProcessUID . '\', \'' . $sMainDirectory . '\', \'' . $sCurrentDirectory . '\', \'' . $aDirectories['DIRECTORY'] . '\');');
     }
     foreach ($aFiles as $aFile) {
       $aTheFiles[] = array('PATH'     => $aFile['FILE'],
-                        'EDIT'     => '',
-                        'DOWNLOAD' => '',
-                        'DELETE'   => '');
+                        'EDIT'        => '',
+                        'DOWNLOAD'    => '',
+                        'DELETE_TEXT' => G::LoadTranslation('ID_DELETE'),
+                        'DELETE_JS'   => 'deleteFile(\'' . $sProcessUID . '\', \'' . $sMainDirectory . '\', \'' . $sCurrentDirectory . '\', \'' . $aFile['FILE'] . '\');');
     }
     global $_DBArray;
     $_DBArray['objects']  = $aTheFiles;
@@ -2824,8 +2829,42 @@ class processMap {
     $oCriteria->setDBArrayTable('objects');
     global $G_PUBLISH;
   	$G_PUBLISH = new Publisher();
-  	$G_PUBLISH->AddContent('propeltable', 'paged-table', 'processes/processes_FilesList', $oCriteria);
+  	$G_PUBLISH->AddContent('propeltable', 'paged-table', 'processes/processes_FilesList', $oCriteria, array('PRO_UID' => $sProcessUID, 'MAIN_DIRECTORY' => $sMainDirectory, 'CURRENT_DIRECTORY' => $sCurrentDirectory));
     G::RenderPage('publish', 'raw');
+  }
+
+  function deleteFile($sProcessUID, $sMainDirectory, $sCurrentDirectory, $sFile) {
+    switch ($sMainDirectory) {
+      case 'mailTemplates':
+        $sDirectory = PATH_DATA_MAILTEMPLATES . $sProcessUID . PATH_SEP . ($sCurrentDirectory != '' ? $sCurrentDirectory . PATH_SEP : '');
+      break;
+      case 'public':
+        $sDirectory = PATH_DATA_PUBLIC . $sProcessUID . PATH_SEP . ($sCurrentDirectory != '' ? $sCurrentDirectory . PATH_SEP : '');
+      break;
+      default:
+        die;
+      break;
+    }
+    if (file_exists($sDirectory . $sFile)) {
+      unlink($sDirectory . $sFile);
+    }
+  }
+
+  function deleteDirectory($sProcessUID, $sMainDirectory, $sCurrentDirectory, $sDirToDelete) {
+    switch ($sMainDirectory) {
+      case 'mailTemplates':
+        $sDirectory = PATH_DATA_MAILTEMPLATES . $sProcessUID . PATH_SEP . ($sCurrentDirectory != '' ? $sCurrentDirectory . PATH_SEP : '');
+      break;
+      case 'public':
+        $sDirectory = PATH_DATA_PUBLIC . $sProcessUID . PATH_SEP . ($sCurrentDirectory != '' ? $sCurrentDirectory . PATH_SEP : '');
+      break;
+      default:
+        die;
+      break;
+    }
+    if (file_exists($sDirectory . $sDirToDelete)) {
+      G::rm_dir($sDirectory . $sDirToDelete);
+    }
   }
 } // processMap
 ?>
