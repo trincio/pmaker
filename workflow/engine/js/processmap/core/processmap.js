@@ -566,6 +566,36 @@ var processmap=function(){
 							//Pm.objeto.innerHTML="asdasd";
 						}.extend(this,panel);
 						r.make();
+					}.extend(this)},
+					{image:"/images/folder.gif",text:G_STRINGS.ID_PROCESS_FILES_MANAGER,launch:function(event){
+						this.tmp.processFilesManagerPanel = panel =new leimnud.module.panel();
+						panel.options={
+							limit	:true,
+							size	:{w:500,h:380},
+							position:{x:50,y:50,center:true},
+							title	:G_STRINGS.ID_PROCESS_FILES_MANAGER,
+							theme	:this.options.theme,
+							control	:{close:true,resize:false},fx:{modal:true},
+							statusBar:false,
+							fx	:{shadow:true,modal:true}
+						};
+						panel.make();
+						panel.loader.show();
+						var r = new leimnud.module.rpc.xmlhttp({
+							url:this.options.dataServer,
+							args:"action=processFilesManager&data="+{
+								pro_uid	:this.options.uid
+							}.toJSONString()
+						});
+						r.callback=function(rpc,panel)
+						{
+							panel.loader.hide();
+							var scs = rpc.xmlhttp.responseText.extractScript();
+							panel.addContent(rpc.xmlhttp.responseText);
+							scs.evalScript();
+							//Pm.objeto.innerHTML="asdasd";
+						}.extend(this,panel);
+						r.make();
 					}.extend(this)}
 					]
 				});

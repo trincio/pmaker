@@ -72,8 +72,8 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
 
   /*** enable ERROR_SHOW_SOURCE_CODE to display the source code for any WARNING OR NOTICE ***/
   define ('ERROR_SHOW_SOURCE_CODE', true);
- 
-  
+
+
  /*** enable ERROR_LOG_NOTICE_ERROR to log Notices messages in default apache log ***/
   //  define ( 'ERROR_LOG_NOTICE_ERROR', true );
 
@@ -150,7 +150,7 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
       	$pathsQuery=$forQuery[1];
       }
 
-      //Get tha path in array
+      //Get that path in array
       $paths = explode ( PATH_SEP, $forQuery[0] );
       //remove the "plugin" word from
       $paths[0] = substr ( $paths[0],6);
@@ -163,19 +163,6 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
         	G::streamFile ( $pluginFilename );
       }
 
-      /*
-       //Old way
-      $paths = explode ( PATH_SEP, $realPath );
-      $paths[0] = substr ( $paths[0],6);
-
-      if ( count($paths) == 2 )  {
-        $pathsQuery = explode('?', $paths[1]);
-        $pluginFilename = PATH_PLUGINS . $paths[0] . PATH_SEP . 'public_html'. PATH_SEP . $pathsQuery[0];
-        if ( file_exists ( $pluginFilename ) ) {
-        	G::streamFile ( $pluginFilename );
-        }
-      }
-      */
       die;
 	  }
 
@@ -202,7 +189,7 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
 
 //************** verify if the URI is encrypted or not **************
   G::parseURI ( getenv( "REQUEST_URI" ) );
-  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . "jscalendar/lang/calendar-en.js");
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . "jscalendar/lang/calendar-" . SYS_LANG . ".js");
   define( 'SYS_URI' , '/sys' .  SYS_TEMP . '/' . SYS_LANG . '/' . SYS_SKIN . '/' );
 
   require_once ( PATH_THIRDPARTY . 'krumo' . PATH_SEP . 'class.krumo.php' );
@@ -314,12 +301,16 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
     }
   }
 
+
 //***************** PM Paths DATA **************************
-  define( 'PATH_DATA_SITE',   PATH_DATA . 'sites/' . SYS_SYS . '/');
-  define( 'PATH_DOCUMENT',    PATH_DATA_SITE . 'files/' );
-  define( 'PATH_DYNAFORM',    PATH_DATA_SITE . 'xmlForms/' );
-  define( 'PATH_IMAGES_ENVIRONMENT_FILES',  PATH_DATA_SITE.'usersFiles'.PATH_SEP);
-  define( 'PATH_IMAGES_ENVIRONMENT_USERS',  PATH_DATA_SITE.'usersPhotographies'.PATH_SEP);
+  define( 'PATH_DATA_SITE',                 PATH_DATA      . 'sites/' . SYS_SYS . '/');
+  define( 'PATH_DOCUMENT',                  PATH_DATA_SITE . 'files/' );
+  define( 'PATH_DATA_MAILTEMPLATES',        PATH_DATA_SITE . 'mailTemplates/' );
+  define( 'PATH_DATA_PUBLIC',               PATH_DATA_SITE . 'public/' );
+  define( 'PATH_DATA_REPORTS',              PATH_DATA_SITE . 'reports/' );
+  define( 'PATH_DYNAFORM',                  PATH_DATA_SITE . 'xmlForms/' );
+  define( 'PATH_IMAGES_ENVIRONMENT_FILES',  PATH_DATA_SITE . 'usersFiles'.PATH_SEP);
+  define( 'PATH_IMAGES_ENVIRONMENT_USERS',  PATH_DATA_SITE . 'usersPhotographies'.PATH_SEP);
 
 
 //***************** Plugins **************************
@@ -347,7 +338,7 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
       'dbfile' => PATH_DB . SYS_SYS . PATH_SEP . 'db.php',
       'datasource' => 'workflow',
       'cache' => 0,
-      'debug' => 0,
+      'debug' => 0,  //<--- change this value to 1, to have a detailed sql log in PATH_DATA . 'log' . PATH_SEP . 'workflow.log'
     ) ,
     G_TEST_ENV => array (
       'dbfile' => PATH_DB . 'test' . PATH_SEP . 'db.php' ,
@@ -413,6 +404,18 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
       $phpFile = PATH_GULLIVER_HOME . 'methods/' . substr( SYS_COLLECTION , 8) . SYS_TARGET.'.php';
     }
     else {
+    	//when the file is part of the public directory of any PROCESS
+      if ( strlen (SYS_COLLECTION) == 32 ) { //the pattern is /sysSYS/LANG/SKIN/PRO_UID/file
+        $auxPart = explode ( '/' ,  $_SERVER['REQUEST_URI']);
+        $extPart = explode ( '.' , $auxPart[ count($auxPart)-1] );
+        $extension = $extPart[ count($extPart)-1 ];
+        $phpFile = PATH_DATA_SITE . 'public' . PATH_SEP .  SYS_COLLECTION . PATH_SEP . $auxPart[ count($auxPart)-1];
+        if ( $extension != 'php' ) {
+          G::streamFile ( $phpFile );
+          die;
+        }
+        //  $phpFile = PATH_DATA_SITE . 'public' . PATH_SEP .  SYS_COLLECTION . PATH_SEP . $auxPart[ count($auxPart)-1];
+      }
       if ( ! file_exists( $phpFile ) ) {
           $_SESSION['phpFileNotFound'] = $phpFile;
           header ("location: /errors/error404.php");
@@ -439,8 +442,8 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
       else {
         //This sentence is used when you lost the Session
         if ( SYS_TARGET != 'authentication' and  SYS_TARGET != 'login'
-        and  SYS_TARGET != 'dbInfo'         and  SYS_TARGET != 'sysLoginVerify'
-        and  SYS_TARGET != 'updateTranslation'  and  SYS_COLLECTION != 'services' ){
+        and  SYS_TARGET != 'dbInfo'         and  SYS_TARGET != 'sysLoginVerify' and SYS_TARGET != 'processes_Ajax'
+        and  SYS_TARGET != 'updateTranslation'  and  SYS_COLLECTION != 'services' and SYS_COLLECTION != 'tracker'){
           header ("location: ".SYS_URI."login/login.php");
           die();
         }
