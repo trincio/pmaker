@@ -1,13 +1,37 @@
 <?xml version="1.0"?>
 <dynaForm type="xmlmenu">
 
-<MNU_UPLOAD type="link" value="" link="#" onclick="return false;" colAlign="left" colWidth="100">
+<PRO_UID type="private" />
+
+<MAIN_DIRECTORY type="private" />
+
+<CURRENT_DIRECTORY type="private" />
+
+<MNU_UPLOAD type="link" value="" link="#" onclick="uploadFilesScreen(@QPRO_UID, @QMAIN_DIRECTORY, @QCURRENT_DIRECTORY);return false;" colAlign="left" colWidth="100">
   <en>Upload Files</en>
 </MNU_UPLOAD>
 
 <JS type="javascript">
 <![CDATA[
-
+var oUploadFilesPanel;
+var uploadFilesScreen = function(PRO_UID, MAIN_DIRECTORY, CURRENT_DIRECTORY) {
+  oUploadFilesPanel = new leimnud.module.panel();
+	oUploadFilesPanel.options={
+		limit	   : true,
+		size	   : {w:350,h:260},
+		position : {x:50,y:50,center:true},
+		title	   : '',
+		control	 : {close:true,resize:false},fx:{modal:true},
+		fx	     : {shadow:true,modal:true}
+	};
+	oUploadFilesPanel.make();
+	oIFrame = window.document.createElement('iframe');
+	oIFrame.style.border = '0';
+	oIFrame.style.width  = '100%';
+	oIFrame.style.height = '100%';
+	oIFrame.src          = 'processes_UploadFilesForm?PRO_UID=' + PRO_UID + '&MAIN_DIRECTORY=' + MAIN_DIRECTORY + '&CURRENT_DIRECTORY=' + CURRENT_DIRECTORY;
+	oUploadFilesPanel.addContent(oIFrame);
+};
 ]]>
 </JS>
 

@@ -31,8 +31,47 @@ var goToDirectory = function(PRO_UID, sMainDirectory, sDirectory) {
   	var scs = rpc.xmlhttp.responseText.extractScript();
   	Pm.tmp.processFilesManagerPanel.addContent(rpc.xmlhttp.responseText);
   	scs.evalScript();
+  	if (typeof(oUploadFilesPanel) !== 'undefined') {
+  	  oUploadFilesPanel.remove();
+  	}
   }.extend(this);
   oRPC.make();
+};
+
+var deleteFile = function(PRO_UID, sMainDirectory, sDirectory, sFile) {
+  new leimnud.module.app.confirm().make({
+    label:G_STRINGS.ID_MSG_CONFIRM_DELETE_FILE,
+    action:function() {
+      Pm.tmp.processFilesManagerPanel.clearContent();
+      Pm.tmp.processFilesManagerPanel.loader.show();
+      var oRPC = new leimnud.module.rpc.xmlhttp({
+      	url : 'processes_Ajax',
+      	args: 'action=deleteFile&data=' + {pro_uid:PRO_UID,main_directory:sMainDirectory,directory:sDirectory,file:sFile}.toJSONString()
+      });
+      oRPC.callback = function(rpc){
+      	goToDirectory(PRO_UID, sMainDirectory, sDirectory);
+      }.extend(this);
+      oRPC.make();
+    }.extend(this)
+  });
+};
+
+var deleteDirectory = function(PRO_UID, sMainDirectory, sDirectory, sDirToDelete) {
+  new leimnud.module.app.confirm().make({
+    label:G_STRINGS.ID_MSG_CONFIRM_DELETE_DIRECTORY,
+    action:function() {
+      Pm.tmp.processFilesManagerPanel.clearContent();
+      Pm.tmp.processFilesManagerPanel.loader.show();
+      var oRPC = new leimnud.module.rpc.xmlhttp({
+      	url : 'processes_Ajax',
+      	args: 'action=deleteDirectory&data=' + {pro_uid:PRO_UID,main_directory:sMainDirectory,directory:sDirectory,dir_to_delete:sDirToDelete}.toJSONString()
+      });
+      oRPC.callback = function(rpc){
+      	goToDirectory(PRO_UID, sMainDirectory, sDirectory);
+      }.extend(this);
+      oRPC.make();
+    }.extend(this)
+  });
 };
 ]]>
 </JS>

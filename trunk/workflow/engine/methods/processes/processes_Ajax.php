@@ -256,6 +256,12 @@ try {
   	case 'exploreDirectory':
   	  $oProcessMap->exploreDirectory($oData->pro_uid, $oData->main_directory, $oData->directory);
   	break;
+  	case 'deleteFile':
+  	  $oProcessMap->deleteFile($oData->pro_uid, $oData->main_directory, $oData->directory, $oData->file);
+  	break;
+  	case 'deleteDirectory':
+  	  $oProcessMap->deleteDirectory($oData->pro_uid, $oData->main_directory, $oData->directory, $oData->dir_to_delete);
+  	break;
   }
   die($sOutput);
 }
