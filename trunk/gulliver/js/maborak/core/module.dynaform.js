@@ -59,7 +59,7 @@ leimnud.Package.Public({
 						new DOM('div',{className:'b'}),
 							new DOM('div',{className:'c'})
 						),
-						this.options.dom.body = new DOM('div',{className:'boxContentNormal'},{minHeight:this.options.target.clientHeight-30,paddingBottom:20}),
+						this.options.dom.body = new DOM('div',{className:'boxContentNormal'},{minHeight:this.options.target.clientHeight-50,paddingBottom:20}),
 						new DOM('div',{className:'boxBottom'}).append(
 							new DOM('div',{className:'a'}),
 							new DOM('div',{className:'b'}),
@@ -231,7 +231,9 @@ leimnud.Package.Public({
                 var e = $(t.childNodes[i]);
                 if(e.id)
                 {
-
+					e.setStyle({
+						position:'relative'
+					});
                     this.options.points[e.id]=e;
                 }
                 if(e.childNodes && e.childNodes.length >0)
@@ -319,42 +321,95 @@ leimnud.Package.Public({
 				pd = d.dom;
 				pd.setStyle({
 					margin:1,
-					border:'1px dashed transparent'
+					border:'1px solid #EEE',
+					font:'normal 8pt Tahoma,MiscFixed',
+					padding:5
 				});
-				pd.onclick=function(event,db_uid)
+				pd.onmousedown=function(evt,db_uid)
 				{
+					var event = window.event || evt;
 					var t = this.xmlform.db[db_uid];
 					var d = this.db[db_uid];
+					if(event.ctrlKey)
+					{
+						if(this.inDragProcess===true)
+						{
+							return false;
+						}
+						if(this.phantom_static)
+						{
+							this.phantom_static.remove();
+						}
+						this.inDragProcess=true;
+						var j = this.parent.dom.position(d,false,true);
+						this.options.points[d.group].append(
+							this.phantom_static = new DOM('div',{},{
+								position:"absolute",
+								width	:d.clientWidth,
+								height	:d.clientHeight,
+								border	:"1px solid orange",
+								backgroundColor	:"orange",
+								top		:j.y,
+								left	:j.x
+							}).opacity(40),
+							this.imageAddRow = new DOM('img',{
+								src:this.parent.info.images+"nr.gif"
+							})
+						);
+			
+						this.options.drop.elements = new this.parent.module.drop();
+						this.options.drop.elements.make();
+						this.register_elements_drop(d.group);
+						this.setImageAddRow(this.key_in_group(db_uid));
+
+						this.options.drag.phantom = new this.parent.module.drag({
+							elements:this.phantom_static,
+							limit:"x",
+							limitbox:this.options.points[d.group]
+						});
+						this.options.drag.phantom.events={
+							move	:this.options.drop.elements.captureFromArray.args(this.options.drag.phantom,false,true),
+							finish  :this.drag_elements_onfinish.args(db_uid)
+						};
+						this.options.drag.phantom.make();
+						this.options.drag.phantom.onInit(event,0);
+
+						//return false;
+					}
+					
 					d.setStyle({
-						border:'1px solid red'
+						border:'1px solid orange'
 					});
 					try{
 						if(this.xmlform.current_edit!==db_uid){
 							this.db[this.xmlform.current_edit].setStyle({
-								border:'1px solid transparent'
+								border:'1px solid #EEE'
 							});
 						}
 					}
 					catch(e){
 					
 					}
-
-					this.xmlform.tag_edit(t,db_uid,this.sync_xml_node.args(db_uid));
-
-
-				}.extend(this,d.db_uid);
+						this.xmlform.tag_edit(t,db_uid,this.sync_xml_node.args(db_uid));
+					return false;
+				}.extend(this,d.db_uid,e.group);
 				pd.onmouseover=function(event,db_uid){
 					var d = this.db[db_uid];
 					if(this.xmlform.current_edit!==db_uid)
 					{
-						d.setStyle({border:'1px dashed #C0C0C0'});
+						d.setStyle({border:'1px solid orange'});
+						var event = window.event || event;
+						if(event.ctrlKey)
+						{
+							d.setStyle({cursor:'move'});
+						}
 					}
 				}.extend(this,d.db_uid);
 				pd.onmouseout=function(event,db_uid){
 					var d = this.db[db_uid];
 					if(this.xmlform.current_edit!==db_uid)
 					{
-						d.setStyle({border:'1px dashed transparent'});
+						d.setStyle({border:'1px solid #EEE',cursor:'default'});
 					}
 				}.extend(this,d.db_uid);
 
@@ -371,6 +426,133 @@ leimnud.Package.Public({
 		{
 			
 		};
+		this.register_elements_drop=function(group)
+		{
+			for(var i=0;i<this.db.length;i++)
+			{
+				if(this.db[i].group==group)
+				{
+					var c = this.db[i].db_uid;
+					this.options.drop.elements.register({
+						element	: this.db[i],
+						value	: i,
+						events	: {
+							over:function(i)
+							{
+								//this.setImageAddRow(this.drop.lastSelected);
+								if(this.options.drop.elements.selected!==false)
+								{
+									this.setImageAddRow(this.options.drop.elements.selected);
+								}
+							}.extend(this,c),
+							out		:function(i)
+							{
+								/*if(this.drop.selected===false)
+								{
+									var uid=this.drop.arrayPositions.length-1;
+									if(this.drop.position.y > this.drop.arrayPositions[uid].y2)
+									{
+										this.setImageAddRow(uid,true);
+									}
+								}*/
+							}.extend(this,c)
+						}
+					});
+				}
+			}
+			this.options.drop.elements.setArrayPositions(true);
+		};
+		this.setImageAddRow=function(drop_uid,last)
+		{
+			this.imageAddRow.setStyle({
+				position:"absolute",
+				zIndex	:100,
+				top:((last)?this.options.drop.elements.arrayPositions[drop_uid].y2:this.options.drop.elements.arrayPositions[drop_uid].y1)-7,
+				left:this.options.drop.elements.arrayPositions[drop_uid].x1-3
+			});
+		};
+		this.drag_elements_onfinish=function(db_uid)
+		{
+			this.imageAddRow.remove();
+			delete this.imageAddRow;
+
+			var insertRowIn,begin;
+
+			var drag = this.options.drag.phantom;
+			var drop = this.options.drop.elements;
+
+			if(drag.moved)
+			{
+				if(drop.selected===false)
+				{
+					var uid=drop.arrayPositions.length-1;
+					if((drop.position.y > drop.arrayPositions[uid].y2)/* && this.lastSelected===uid*/)
+					{
+						insertRowIn	= uid;
+						begin		= false;
+					}
+					else
+					{
+						insertRowIn	= 0;
+						begin		= true;
+					}
+				}
+				else
+				{
+					insertRowIn	= drop.selected;
+					begin		= true;				
+				}
+				var t = this.db[drop.elements[insertRowIn].value];
+//				t.parentNode.insertBefore(new DOM('input').replace(this.db[db_uid]));	
+				var n = t.before(new DOM('div')).replace(this.db[db_uid]);
+				drag.flush();
+				new this.parent.module.fx.move().make({
+					duration:((drag.moved)?500:0),
+					//end		:{x:this.drop.arrayPositions[insertRowIn].x1,y:this.drop.arrayPositions[insertRowIn].y1},
+					end		:this.parent.dom.position(n,false,true),
+					dom		:this.phantom_static,
+					onFinish	:function()
+					{
+						new this.parent.module.fx.fade().make({
+							duration:500,
+							end		:0,
+							dom		:this.phantom_static,
+							onFinish	:function(){
+								this.inDragProcess=false;
+								this.phantom_static.remove();
+								delete this.phantom_static;
+							}.extend(this)
+						});
+					}.extend(this)
+				});
+
+
+				//var newRow=this.db[insertRowIn];
+				//newRow.parentNode.replaceChild(domRow,newRow);
+				//alert(movedUID+":"+this.options.data.rows[movedUID].info.rowIndex+":"+domRow.rowIndex)
+				//alert(domRow.rowIndex)
+			}
+			else
+			{
+				/*insertRowIn	= drag.currentElementDrag.db_uid-1;
+				begin		= true;*/
+			}
+			
+		};
+		/*	Devuelve el Key actual de un objeto dentro del grupo	*/
+		this.key_in_group=function(db_uid)
+		{
+			var a = this.db[db_uid];
+			var j=0;
+			for(var i=0;i<db_uid;i++)
+			{
+				if(this.db[i].group==a.group)
+				{
+					j+=1;
+				}
+			}
+			return j;
+		};
 		this.dynaform_dom={
 			text:function(options)
 			{
@@ -379,7 +561,7 @@ leimnud.Package.Public({
 				}.concat(options || {});
 				var pd;
 				this.options.points[options.group].append(
-					pd = new DOM('div',{innerHTML:options.nodeName,db_uid:this.db.length})
+					pd = new DOM('div',{innerHTML:options.nodeName,db_uid:this.db.length,group:options.group})
 				);
 				this.db.push(pd);
 				return {
@@ -394,7 +576,7 @@ leimnud.Package.Public({
 				}.concat(options || {});
 				var pd;
 				this.options.points[options.group].append(
-					pd = new DOM('div',{innerHTML:options.nodeName,db_uid:this.db.length})
+					pd = new DOM('div',{innerHTML:options.nodeName,group:options.group,db_uid:this.db.length})
 				);
 				this.db.push(pd);
 				return {
@@ -409,7 +591,7 @@ leimnud.Package.Public({
 				}.concat(options || {});
 				var pd;
 				this.options.points[options.group].append(
-					pd = new DOM('div',{innerHTML:options.nodeName,db_uid:this.db.length})
+					pd = new DOM('div',{innerHTML:options.nodeName,db_uid:this.db.length,group:options.group})
 				);
 				this.db.push(pd);
 				return {
