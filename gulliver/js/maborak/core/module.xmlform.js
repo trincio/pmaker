@@ -170,10 +170,10 @@ leimnud.Package.Public({
 							fontWeight:"bold"
 						},
 						onchange:onchange || function(){},
-						/*onchange:function(data,db_uid)
+/*						onchange:function(data,db_uid)
 						{
-							var cd = this.current_xml_edit.save('object');
-							this.sync_node(db_uid,cd);
+							//var cd = this.current_xml_edit.save('object');
+							//this.sync_node(db_uid,cd);
 						}.extend(this,ce),*/
 						width	: "60%"
 					}

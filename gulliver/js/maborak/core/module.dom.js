@@ -185,6 +185,30 @@ leimnud.Package.Public({
 			this.dom = dom;
 			this.dom.dom = this.dom;
 			this.dom.domed = true;
+			this.dom.replace = function(dom)
+			{
+				if(!dom)
+				{
+					return this.dom;
+				}
+				else
+				{
+					this.dom.parentNode.replaceChild(dom,this.dom);
+					return dom;
+				}
+			}.extend(this);
+			this.dom.before = function(dom)
+			{
+				if(!dom)
+				{
+					return this.dom;
+				}
+				else
+				{
+					this.dom.parentNode.insertBefore(dom,this.dom);
+					return dom;
+				}
+			}.extend(this);
 			this.dom.append = function()
 			{
 				for(var i=0;i<arguments.length;i++)
@@ -199,6 +223,11 @@ leimnud.Package.Public({
 			this.dom.remove = function()
 			{
 				this.dom.parentNode.removeChild(this.dom);
+			}.extend(this);
+			this.dom.opacity = function(o)
+			{
+				this.parent.dom.opacity(this.dom,o);
+				return this.dom;
 			}.extend(this);
 			this.dom.setStyle = function(style)
 			{

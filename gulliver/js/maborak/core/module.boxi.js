@@ -86,7 +86,7 @@ leimnud.Package.Public({
 			p.options={
 				size:{w:options.w,h:options.h},
 				position:{center:true},
-				titleBar:false,
+		//		titleBar:false,
 				fx:{modal:true,fadeIn:true,fadeOut:true}
 			};
 			p.styles.fx.opacityModal.Static=options.opacity;
