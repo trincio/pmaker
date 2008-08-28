@@ -383,7 +383,7 @@ class Processes {
   function getTaskRows ($sProUid ){
     $oTask = new Tasks( );
     return $oTask->getAllTasks( $sProUid );
-  }
+  }    
 
   function createTaskRows ($aTasks ){
     $oTask = new Tasks( );
@@ -393,7 +393,7 @@ class Processes {
   function updateTaskRows ($aTasks ){
     $oTask = new Tasks( );
     return $oTask->updateTaskRows( $aTasks );
-  }
+  }  
 
   function getRouteRows ($sProUid ){
     $oTask = new Tasks( );
@@ -656,10 +656,10 @@ class Processes {
   function createObjectPermissions ($objectPermissions){ //by erik
 	  foreach ( $objectPermissions as $key => $row ) {
 		  $o = new ObjectPermission();
-		  if( $o->Exists($aRow['OP_UID']) ) {
-			  $o->remove($aRow['OP_UID']);
+		  if( $o->Exists($row['OP_UID']) ) {
+			  $o->remove($row['OP_UID']);
 		  }
-		  $oConnection->create($aRow);
+		 
 		  $res = $o->create($row);
 	  }
 	  return;
@@ -945,7 +945,7 @@ class Processes {
     $oProcess = new Process( );
 
     $oData->process  = $this->getProcessRow( $sProUid );
-    $oData->tasks    = $this->getTaskRows( $sProUid );
+    $oData->tasks    = $this->getTaskRows( $sProUid );    
     $oData->routes   = $this->getRouteRows( $sProUid );
     $oData->lanes    = $this->getLaneRows( $sProUid );
     $oData->inputs   = $this->getInputRows( $sProUid );
@@ -968,7 +968,7 @@ class Processes {
     return serialize($oData);
   }
 
-  function saveSerializedProcess ( $oData ) {
+  function saveSerializedProcess ( $oData ) {  	        
     //$oJSON = new Services_JSON();
     //$data = $oJSON->decode($oData);
     //$sProUid = $data->process->PRO_UID;
@@ -1291,7 +1291,7 @@ class Processes {
   function createProcessFromData ($oData, $pmFilename ) {
 
     $this->createProcessRow ($oData->process );
-    $this->createTaskRows ($oData->tasks );
+    $this->createTaskRows ($oData->tasks );        
     $this->createRouteRows ($oData->routes );
     $this->createLaneRows ($oData->lanes );
     $this->createDynaformRows ($oData->dynaforms );
@@ -1306,7 +1306,7 @@ class Processes {
     $this->createDBConnectionsRows($oData->dbconnections);
     $this->createReportTables($oData->reportTables, $oData->reportTablesVars);
     $this->createDynamformFiles ( $oData, $pmFilename  );
-	$this->createObjectPermissions( $oData->objectPermissions );
+	  $this->createObjectPermissions( $oData->objectPermissions );
  }
 
   /*
@@ -1316,8 +1316,7 @@ class Processes {
   */
   function updateProcessFromData ($oData, $pmFilename ) {
     $this->updateProcessRow ($oData->process );
-    $this->removeProcessRows ($oData->process['PRO_UID'] );
-    $this->createTaskRows ($oData->tasks );
+    $this->removeProcessRows ($oData->process['PRO_UID'] );    
     $this->createRouteRows ($oData->routes );
     $this->createLaneRows ($oData->lanes );
     $this->createDynaformRows ($oData->dynaforms );
@@ -1331,6 +1330,7 @@ class Processes {
     $this->updateReportTables($oData->reportTables, $oData->reportTablesVars);
     $this->createDynamformFiles ( $oData, $pmFilename  );
     $this->createStepSupervisorRows($oData->stepSupervisor);
+    $this->createObjectPermissions( $oData->objectPermissions );
  }
 
  function getStartingTaskForUser ($sProUid, $sUsrUid ){

@@ -41,23 +41,12 @@ class ObjectPermission extends BaseObjectPermission {
 		$con = Propel::getConnection(UsersPeer::DATABASE_NAME);
 		try
 		{
-			$this->fromArray($aData, BasePeer::TYPE_FIELDNAME);
-			if($this->validate())
-			{
-				$result=$this->save();
-			}
-			else
-			{
-				$e=new Exception("Failed Validation in class ".get_class($this).".");
-				$e->aValidationFailures=$this->getValidationFailures();
-				throw($e);
-			}
-			$con->commit();
+			$result=$this->save();
 			return $result;
 		}
 		catch(Exception $e)
 		{
-			$con->rollback();
+			//$con->rollback();
 			throw($e);
 		}
 	}

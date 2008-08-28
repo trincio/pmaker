@@ -93,6 +93,7 @@ class Tasks {
     	throw($oError);
     }
   }
+  
 
 /*
 	* creates row tasks from an Task Array
@@ -102,7 +103,7 @@ class Tasks {
   public function createTaskRows( $aTask ) {
   	foreach ( $aTask as $key => $row ) {
       $oTask = new Task();
-      $res = $oTask->create($row);
+      $res = $oTask->createRow($row);
   	}
   	return;
   }
@@ -119,6 +120,7 @@ class Tasks {
   	}
   	return;
   }
+
 
 /*
 	* Get all Routes for any Process
