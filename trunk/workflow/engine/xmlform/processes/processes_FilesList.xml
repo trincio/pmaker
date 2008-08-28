@@ -1,8 +1,11 @@
 <?xml version="1.0"?>
 <dynaForm type="pagetable" menu="processes/processes_FilesOptions">
-<PATH type="text" titleAlign="left" colWidth="250" enableHtml="1">
+<PATH type="text" titleAlign="left" colWidth="280" enableHtml="1">
   <en></en>
 </PATH>
+<DOWNLOAD_TEXT type="private" showInTable="0" />
+<DOWNLOAD_JS type="private" showInTable="0" />
+<DOWNLOAD type="link" value="@#DOWNLOAD_TEXT" link="#" onclick="@#DOWNLOAD_JS" colWidth="50" />
 <DELETE_TEXT type="private" showInTable="0" />
 <DELETE_JS type="private" showInTable="0" />
 <DELETE type="link" value="@#DELETE_TEXT" link="#" onclick="@#DELETE_JS" colWidth="50" />

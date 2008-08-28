@@ -917,8 +917,13 @@ class G
         case 'po'  :
           G::sendHeaders ( $filename , 'application/octet-stream', $download, $downloadFileName ); break;
         case 'php' :
-          require_once( $filename  );
-          return;
+          if ($download) {
+            G::sendHeaders ( $filename , 'text/plain', $download, $downloadFileName );
+          }
+          else {
+            require_once( $filename  );
+            return;
+          }
           break;
         default :
           //throw new Exception ( "Unknown type of file '$file'. " );
