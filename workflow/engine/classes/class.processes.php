@@ -1157,6 +1157,7 @@ class Processes {
   	  $oInputDocument   = new InputDocument();
   	  $oOutputDocument  = new OutputDocument();
   	  $oTrigger         = new Triggers();
+  	  $oStepTrigger     = new StepTrigger();
   	  $oRoute           = new Route();
   	  $oStep            = new Step();
   	  $oSwimlaneElement = new SwimlanesElements();
@@ -1222,10 +1223,22 @@ class Processes {
     $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
     $oDataset->next();
     while ($aRow = $oDataset->getRow()) {
+    	//Delete the steptrigger of process
+    	$oCriteria = new Criteria('workflow');
+	  	$oCriteria->add(StepTriggerPeer::STEP_UID, $aRow['STEP_UID']);
+	  	$oDataseti = StepTriggerPeer::doSelectRS($oCriteria);
+    	$oDataseti->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    	$oDataseti->next();
+    	while ($aRowi = $oDataseti->getRow()) {
+    		$oStepTrigger->remove($aRowi['STEP_UID'], $aRowi['TAS_UID'], $aRowi['TRI_UID'], $aRowi['ST_TYPE']);
+    		$oDataseti->next();
+    	}
+    	
     	$oStep->remove($aRow['STEP_UID']);
     	$oDataset->next();
     }
 
+		//Delete the StepSupervisor
     $oCriteria = new Criteria('workflow');
     $oCriteria->add(StepSupervisorPeer::PRO_UID, $sProUid);
     $oDataset = StepSupervisorPeer::doSelectRS($oCriteria);
@@ -1279,7 +1292,7 @@ class Processes {
     	$oConnection->remove($aRow['DBS_UID']);
     	$oDataset->next();
     }
-
+       
  		return true;
   	}
   	catch ( Exception $oError) {
@@ -1293,7 +1306,6 @@ class Processes {
   * @return boolean
   */
   function createProcessFromData ($oData, $pmFilename ) {
-
     $this->createProcessRow ($oData->process );
     $this->createTaskRows ($oData->tasks );        
     $this->createRouteRows ($oData->routes );
@@ -1318,22 +1330,24 @@ class Processes {
   * @param string $sProUid
   * @return boolean
   */
-  function updateProcessFromData ($oData, $pmFilename ) {
+  function updateProcessFromData ($oData, $pmFilename ) {  	
     $this->updateProcessRow ($oData->process );
     $this->removeProcessRows ($oData->process['PRO_UID'] );    
+    $this->createTaskRows ($oData->tasks );        
     $this->createRouteRows ($oData->routes );
     $this->createLaneRows ($oData->lanes );
     $this->createDynaformRows ($oData->dynaforms );
     $this->createInputRows ($oData->inputs );
     $this->createOutputRows ($oData->outputs );
     $this->createStepRows ($oData->steps );
+    $this->createStepSupervisorRows($oData->stepSupervisor);
     $this->createTriggerRows ($oData->triggers);
     $this->createStepTriggerRows ($oData->steptriggers);
     $this->createTaskUserRows ($oData->taskusers);
+    $this->createGroupRow ($oData->groupwfs );
     $this->createDBConnectionsRows($oData->dbconnections);
     $this->updateReportTables($oData->reportTables, $oData->reportTablesVars);
-    $this->createDynamformFiles ( $oData, $pmFilename  );
-    $this->createStepSupervisorRows($oData->stepSupervisor);
+    $this->createDynamformFiles ( $oData, $pmFilename  );    
     $this->createObjectPermissions( $oData->objectPermissions );
  }
 
