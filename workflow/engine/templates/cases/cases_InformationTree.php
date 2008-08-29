@@ -50,6 +50,11 @@ $oNode->plus  = '';
 $oNode->minus = '';
 $oNode->point = '';
 
+$oNode        =& $oTree->addChild('6', '<a class="linkInBlue" href="#" onclick="showHistoryMessages();return false;">' . G::LoadTranslation('ID_HISTORY_MESSAGE_CASE') . '</a>', array('nodeType'=>'parentBlue'));
+$oNode->plus  = '';
+$oNode->minus = '';
+$oNode->point = '';
+
 $oNode        =& $oTree->addChild('6', '<a class="linkInBlue" href="#" onclick="showDynaforms();return false;">' . G::LoadTranslation('ID_DYNAFORMS') . '</a>', array('nodeType'=>'parentBlue'));
 $oNode->plus  = '';
 $oNode->minus = '';
@@ -61,11 +66,6 @@ $oNode->minus = '';
 $oNode->point = '';
 
 $oNode        =& $oTree->addChild('6', '<a class="linkInBlue" href="#" onclick="showGeneratedDocuments();return false;">' . G::LoadTranslation('ID_GENERATED_DOCUMENTS') . '</a>', array('nodeType'=>'parentBlue'));
-$oNode->plus  = '';
-$oNode->minus = '';
-$oNode->point = '';
-
-$oNode        =& $oTree->addChild('6', '<a class="linkInBlue" href="#" onclick="showHistoryMessages();return false;">' . G::LoadTranslation('ID_HISTORY_MESSAGE_CASE') . '</a>', array('nodeType'=>'parentBlue'));
 $oNode->plus  = '';
 $oNode->minus = '';
 $oNode->point = '';

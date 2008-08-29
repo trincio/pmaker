@@ -1271,9 +1271,11 @@ class Cases
         $c->addSelectColumn(AppDelegationPeer::DEL_DELEGATE_DATE);
         $c->addAsColumn('USR_NAME', "CONCAT(USR_LASTNAME, ' ', USR_FIRSTNAME)");
         $c->addSelectColumn(AppDelegationPeer::DEL_INIT_DATE);
-        $c->addSelectColumn(AppDelegationPeer::DEL_FINISH_DATE);
+        //$c->addSelectColumn(AppDelegationPeer::DEL_FINISH_DATE);
+        $c->addAsColumn('DEL_FINISH_DATE', "IF (DEL_FINISH_DATE IS NULL, '-', " . AppDelegationPeer::DEL_INIT_DATE . ") ");
 
-        $c->addSelectColumn(AppDelayPeer::APP_TYPE);
+        //$c->addSelectColumn(AppDelayPeer::APP_TYPE);
+        $c->addAsColumn('APP_TYPE', "IF (DEL_FINISH_DATE IS NULL, 'IN_PROGRESS', " . AppDelayPeer::APP_TYPE . ") ");
         $c->addSelectColumn(AppDelayPeer::APP_ENABLE_ACTION_DATE);
         $c->addSelectColumn(AppDelayPeer::APP_DISABLE_ACTION_DATE);
         //APP_DELEGATION LEFT JOIN USERS
@@ -1971,7 +1973,7 @@ class Cases
     	//verifica si la tabla OBJECT_PERMISSION
     	$this->verifyTable();
 
-      $aObjectPermissions = $this->getAllObjects($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID);      
+      $aObjectPermissions = $this->getAllObjects($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID);
       if (!is_array($aObjectPermissions)) {
         $aObjectPermissions = array('DYNAFORMS' => array(-1), 'INPUT_DOCUMENTS' => array(-1), 'OUTPUT_DOCUMENTS' => array(-1));
       }
@@ -2539,24 +2541,24 @@ class Cases
 /*
 funcion de verificacion para la autenticacion del External User by Everth The Answer
 */
- function verifyCaseTracker($case, $pin){ 	
- 	  
- 	  $pin=md5($pin); 
- 	  
+ function verifyCaseTracker($case, $pin){
+
+ 	  $pin=md5($pin);
+
  	  $oCriteria = new Criteria('workflow');
 		$oCriteria->addSelectColumn(ApplicationPeer::APP_UID);
-		$oCriteria->addSelectColumn(ApplicationPeer::APP_PIN);	
+		$oCriteria->addSelectColumn(ApplicationPeer::APP_PIN);
 		$oCriteria->addSelectColumn(ApplicationPeer::PRO_UID);
 		$oCriteria->addSelectColumn(ApplicationPeer::APP_NUMBER);
-		$oCriteria->addSelectColumn(ApplicationPeer::APP_PROC_CODE);					
-		//$oCriteria->add(ApplicationPeer::APP_NUMBER, $case);			
-		$oCriteria->add(ApplicationPeer::APP_PROC_CODE, $case);			
- 	  
+		$oCriteria->addSelectColumn(ApplicationPeer::APP_PROC_CODE);
+		//$oCriteria->add(ApplicationPeer::APP_NUMBER, $case);
+		$oCriteria->add(ApplicationPeer::APP_PROC_CODE, $case);
+
  	  $oDataset = DynaformPeer::doSelectRS($oCriteria);
 		$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
 		$oDataset->next();
 		$aRow = $oDataset->getRow();
-		
+
 		$sw=0;
 	if(is_array($aRow))
 	{
@@ -2568,17 +2570,17 @@ funcion de verificacion para la autenticacion del External User by Everth The An
 	{
 		$oCriteria = new Criteria('workflow');
 		$oCriteria->addSelectColumn(ApplicationPeer::APP_UID);
-		$oCriteria->addSelectColumn(ApplicationPeer::APP_PIN);	
+		$oCriteria->addSelectColumn(ApplicationPeer::APP_PIN);
 		$oCriteria->addSelectColumn(ApplicationPeer::PRO_UID);
 		$oCriteria->addSelectColumn(ApplicationPeer::APP_NUMBER);
-		$oCriteria->addSelectColumn(ApplicationPeer::APP_PROC_CODE);					
-		$oCriteria->add(ApplicationPeer::APP_NUMBER, $case);			
-		 	  
+		$oCriteria->addSelectColumn(ApplicationPeer::APP_PROC_CODE);
+		$oCriteria->add(ApplicationPeer::APP_NUMBER, $case);
+
  	  $oDataseti = DynaformPeer::doSelectRS($oCriteria);
 		$oDataseti->setFetchmode(ResultSet::FETCHMODE_ASSOC);
 		$oDataseti->next();
 		$aRowi = $oDataseti->getRow();
-		
+
 		if(is_array($aRowi))
 		{	$PRO_UID=$aRowi['PRO_UID'];
 	  	$APP_UID=$aRowi['APP_UID'];
@@ -2587,40 +2589,40 @@ funcion de verificacion para la autenticacion del External User by Everth The An
 	  else
 	  {
 	  		$sw=1;
-	  }	
+	  }
 	}
-					
-														  	  	  							  	  	   	  
- 	  $s=0; 	  
+
+
+ 	  $s=0;
  	  if($sw==1) //no existe el caso
- 	  	{	 	  		
- 	  		return -1; 	    
- 	    }	
+ 	  	{
+ 	  		return -1;
+ 	    }
 		else
-			{  
+			{
 		  	 $s++;
-		  }	
-		 	   	 		
+		  }
+
  	  if($PIN!=$pin) //el pin no es valido
  	  		return -2;
  	  else
  	  		$s++;
- 	  		
+
  	  $res=array();
  	  $res['PRO_UID']=$PRO_UID;
- 	  $res['APP_UID']=$APP_UID;		
- 	  
+ 	  $res['APP_UID']=$APP_UID;
+
  	  if($s==2)
- 	  	return $res;				
- 	  		 	  
+ 	  	return $res;
+
 	}
 
 /*
 funcion permisos, by Everth The Answer
 */
- function Permisos($PRO_UID){ 	
- 	  require_once ("classes/model/CaseTracker.php");		
-		require_once ("classes/model/CaseTrackerObject.php");		
+ function Permisos($PRO_UID){
+ 	  require_once ("classes/model/CaseTracker.php");
+		require_once ("classes/model/CaseTrackerObject.php");
 		$a=0;
 		$b=0;
 		$c=0;
@@ -2630,22 +2632,22 @@ funcion permisos, by Everth The Answer
 		//print_r($aCaseTracker); die;
 		if(is_array($aCaseTracker))
 		{	if($aCaseTracker['CT_MAP_TYPE']!='NONE')
-			 	 $a=1;			 		 
-		   					  
+			 	 $a=1;
+
 			$oCriteria = new Criteria();
       $oCriteria->add(CaseTrackerObjectPeer::PRO_UID, $PRO_UID);
-      if (CaseTrackerObjectPeer::doCount($oCriteria) > 0) 
-     	  	$b=1;     	 	         	
-      			
+      if (CaseTrackerObjectPeer::doCount($oCriteria) > 0)
+     	  	$b=1;
+
 			if($aCaseTracker['CT_DERIVATION_HISTORY']==1)
-				 	$c=1;		
-				 	
+				 	$c=1;
+
 			if($aCaseTracker['CT_MESSAGE_HISTORY']==1)
-				 	$d=1;			 	
-				 			 	  				 				
+				 	$d=1;
+
 	  }
-  return $a.'-'.$b.'-'.$c.'-'.$d; 	  		 	  
-}	  
+  return $a.'-'.$b.'-'.$c.'-'.$d;
+}
 
 
 /*
@@ -2672,12 +2674,12 @@ funcion momentanea by Everth The Answer
 		$stmt = $con->prepareStatement($sql);
 		$rs = $stmt->executeQuery();
 	}
-	
+
 /*
 funcion input documents for case tracker by Everth The Answer
-*/	
+*/
 function getAllUploadedDocumentsCriteriaTracker($sProcessUID, $sApplicationUID) {
-    
+
       require_once 'classes/model/AppDocument.php';
       $oAppDocument = new AppDocument();
       $oCriteria = new Criteria('workflow');
@@ -2751,17 +2753,17 @@ function getAllUploadedDocumentsCriteriaTracker($sProcessUID, $sApplicationUID) 
       $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_CREATE_DATE);
       return $oCriteria;
     }
-    
+
 /*
 funcion output documents for case tracker by Everth The Answer
-*/    
+*/
 function getAllGeneratedDocumentsCriteriaTracker($sProcessUID, $sApplicationUID) {
-    	
+
       require_once 'classes/model/AppDocument.php';
       $oAppDocument = new AppDocument();
       $oCriteria = new Criteria('workflow');
       $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
-      $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, 'OUTPUT');      
+      $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, 'OUTPUT');
       $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
       $oDataset = AppDocumentPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
@@ -2799,28 +2801,28 @@ function getAllGeneratedDocumentsCriteriaTracker($sProcessUID, $sApplicationUID)
       $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_CREATE_DATE);
       return $oCriteria;
     }
- 
+
 /*
 funcion History messages for case tracker by Everth The Answer
-*/    
+*/
   function getHistoryMessagesTracker($sApplicationUID) {
 	 	//die ($sApplicationUID);
 	  require_once 'classes/model/AppMessage.php';
     $oAppDocument = new AppDocument();
     $oCriteria = new Criteria('workflow');
-    $oCriteria->add(AppMessagePeer::APP_UID, $sApplicationUID);   
+    $oCriteria->add(AppMessagePeer::APP_UID, $sApplicationUID);
     $oCriteria->addAscendingOrderByColumn(AppMessagePeer::APP_MSG_DATE);
-    $oDataset = AppMessagePeer::doSelectRS($oCriteria);        
+    $oDataset = AppMessagePeer::doSelectRS($oCriteria);
     $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-    $oDataset->next(); 
-   
-    $aMessages = array();    
-    $aMessages[] = array('APP_MSG_UID' => 'char', 
-    								 'APP_UID' => 'char', 
-    								 'DEL_INDEX' => 'char', 
-    								 'APP_MSG_TYPE' => 'char', 
-    								 'APP_MSG_SUBJECT' => 'char', 
-    								 'APP_MSG_FROM' => 'char', 
+    $oDataset->next();
+
+    $aMessages = array();
+    $aMessages[] = array('APP_MSG_UID' => 'char',
+    								 'APP_UID' => 'char',
+    								 'DEL_INDEX' => 'char',
+    								 'APP_MSG_TYPE' => 'char',
+    								 'APP_MSG_SUBJECT' => 'char',
+    								 'APP_MSG_FROM' => 'char',
     								 'APP_MSG_TO' => 'char',
     								 'APP_MSG_BODY' => 'char',
     								 'APP_MSG_DATE' => 'char',
@@ -2830,13 +2832,13 @@ funcion History messages for case tracker by Everth The Answer
     								 'APP_MSG_STATUS' => 'char',
     								 'APP_MSG_ATTACH' => 'char'
     								 );
-    while ($aRow = $oDataset->getRow()) {     	
-    	 $aMessages[] = array('APP_MSG_UID' => $aRow['APP_MSG_UID'], 
-    								 'APP_UID' => $aRow['APP_UID'], 
-    								 'DEL_INDEX' => $aRow['DEL_INDEX'], 
-    								 'APP_MSG_TYPE' => $aRow['APP_MSG_TYPE'], 
-    								 'APP_MSG_SUBJECT' => $aRow['APP_MSG_SUBJECT'], 
-    								 'APP_MSG_FROM' => $aRow['APP_MSG_FROM'], 
+    while ($aRow = $oDataset->getRow()) {
+    	 $aMessages[] = array('APP_MSG_UID' => $aRow['APP_MSG_UID'],
+    								 'APP_UID' => $aRow['APP_UID'],
+    								 'DEL_INDEX' => $aRow['DEL_INDEX'],
+    								 'APP_MSG_TYPE' => $aRow['APP_MSG_TYPE'],
+    								 'APP_MSG_SUBJECT' => $aRow['APP_MSG_SUBJECT'],
+    								 'APP_MSG_FROM' => $aRow['APP_MSG_FROM'],
     								 'APP_MSG_TO' => $aRow['APP_MSG_TO'],
     								 'APP_MSG_BODY' => $aRow['APP_MSG_BODY'],
     								 'APP_MSG_DATE' => $aRow['APP_MSG_DATE'],
@@ -2848,7 +2850,7 @@ funcion History messages for case tracker by Everth The Answer
     								 );
     	 $oDataset->next();
     }
-    
+
     global $_DBArray;
     $_DBArray['messages']  = $aMessages;
     $_SESSION['_DBArray'] = $_DBArray;
@@ -2856,26 +2858,26 @@ funcion History messages for case tracker by Everth The Answer
     $oCriteria = new Criteria('dbarray');
     $oCriteria->setDBArrayTable('messages');
 
-    return $oCriteria;    
-  }	    	    	
-  
+    return $oCriteria;
+  }
+
   /*
 funcion History messages for case tracker by Everth The Answer
-*/    
-  function getHistoryMessagesTrackerView($sApplicationUID, $Msg_UID) {	 
+*/
+  function getHistoryMessagesTrackerView($sApplicationUID, $Msg_UID) {
 	  require_once 'classes/model/AppMessage.php';
     $oAppDocument = new AppDocument();
     $oCriteria = new Criteria('workflow');
-    $oCriteria->add(AppMessagePeer::APP_UID, $sApplicationUID);   
-    $oCriteria->add(AppMessagePeer::APP_MSG_UID, $Msg_UID);   
+    $oCriteria->add(AppMessagePeer::APP_UID, $sApplicationUID);
+    $oCriteria->add(AppMessagePeer::APP_MSG_UID, $Msg_UID);
     $oCriteria->addAscendingOrderByColumn(AppMessagePeer::APP_MSG_DATE);
-    $oDataset = AppMessagePeer::doSelectRS($oCriteria);        
+    $oDataset = AppMessagePeer::doSelectRS($oCriteria);
     $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-    $oDataset->next(); 
-       
+    $oDataset->next();
+
     $aRow = $oDataset->getRow();
 
-    return $aRow;    
-  }	    	    	
-    	
+    return $aRow;
+  }
+
 }
