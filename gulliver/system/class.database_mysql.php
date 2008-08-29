@@ -194,7 +194,7 @@ class database extends database_base {
 	  }
 	}
 	public function generateTableIndexSQL($sTable) {
-	  return 'SHOW INDEX FROM ' . $this->sQuoteCharacter . $sTable . $this->sQuoteCharacter . $this->sEndLine;
+	  return 'SHOW INDEX FROM ' . $this->sQuoteCharacter . $sTable . $this->sQuoteCharacter . " WHERE Key_name <> 'PRIMARY'" . $this->sEndLine;
 	}
 	public function executeQuery($sQuery) {
 		try {

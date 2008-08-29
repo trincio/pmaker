@@ -126,7 +126,7 @@
       <vendor type="mysql">
         <parameter name="Field" value="APP_CREATE_DATE"/>
         <parameter name="Type" value="datetime"/>
-        <parameter name="Null" value="YES"/>
+        <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
         <parameter name="Extra" value=""/>
       </vendor>
@@ -287,7 +287,7 @@
     <column name="DEL_TYPE" type="VARCHAR" size="32" required="true" default="NORMAL">
       <vendor type="mysql">
         <parameter name="Field" value="DEL_TYPE"/>
-        <parameter name="Type" value="varchar(30)"/>
+        <parameter name="Type" value="varchar(32)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value="NORMAL"/>
@@ -314,10 +314,10 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="DEL_PRIORITY" type="VARCHAR" size="32" required="true" default="0">
+    <column name="DEL_PRIORITY" type="VARCHAR" size="32" required="true" default="3">
       <vendor type="mysql">
         <parameter name="Field" value="DEL_PRIORITY"/>
-        <parameter name="Type" value="varchar(100)"/>
+        <parameter name="Type" value="varchar(32)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value="3"/>
@@ -365,7 +365,7 @@
       <vendor type="mysql">
         <parameter name="Field" value="DEL_DURATION"/>
         <parameter name="Type" value="double"/>
-        <parameter name="Null" value="NO"/>
+        <parameter name="Null" value="YES"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value="0"/>
         <parameter name="Extra" value=""/>
@@ -544,7 +544,7 @@
     <column name="MSG_UID" type="VARCHAR" size="32">
       <vendor type="mysql">
         <parameter name="Field" value="MSG_UID"/>
-        <parameter name="Type" value="varchar(64)"/>
+        <parameter name="Type" value="varchar(32)"/>
         <parameter name="Null" value="YES"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
@@ -554,8 +554,8 @@
     <column name="APP_UID" type="VARCHAR" size="32" required="true" default="">
       <vendor type="mysql">
         <parameter name="Field" value="APP_UID"/>
-        <parameter name="Type" value="varchar(64)"/>
-        <parameter name="Null" value="YES"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
         <parameter name="Extra" value=""/>
@@ -564,8 +564,8 @@
     <column name="DEL_INDEX" type="INTEGER" required="true" default="0">
       <vendor type="mysql">
         <parameter name="Field" value="DEL_INDEX"/>
-        <parameter name="Type" value="int(32)"/>
-        <parameter name="Null" value="YES"/>
+        <parameter name="Type" value="int(11)"/>
+        <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value="0"/>
         <parameter name="Extra" value=""/>
@@ -574,8 +574,8 @@
     <column name="APP_MSG_TYPE" type="VARCHAR" size="100" required="true" default="">
       <vendor type="mysql">
         <parameter name="Field" value="APP_MSG_TYPE"/>
-        <parameter name="Type" value="varchar(64)"/>
-        <parameter name="Null" value="YES"/>
+        <parameter name="Type" value="varchar(100)"/>
+        <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
         <parameter name="Extra" value=""/>
@@ -584,8 +584,8 @@
     <column name="APP_MSG_SUBJECT" type="VARCHAR" size="150" required="true" default="">
       <vendor type="mysql">
         <parameter name="Field" value="APP_MSG_SUBJECT"/>
-        <parameter name="Type" value="varchar(256)"/>
-        <parameter name="Null" value="YES"/>
+        <parameter name="Type" value="varchar(150)"/>
+        <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
         <parameter name="Extra" value=""/>
@@ -594,8 +594,8 @@
     <column name="APP_MSG_FROM" type="VARCHAR" size="100" required="true" default="">
       <vendor type="mysql">
         <parameter name="Field" value="APP_MSG_FROM"/>
-        <parameter name="Type" value="varchar(256)"/>
-        <parameter name="Null" value="YES"/>
+        <parameter name="Type" value="varchar(100)"/>
+        <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
         <parameter name="Extra" value=""/>
@@ -604,8 +604,8 @@
     <column name="APP_MSG_TO" type="LONGVARCHAR" required="true">
       <vendor type="mysql">
         <parameter name="Field" value="APP_MSG_TO"/>
-        <parameter name="Type" value="varchar(256)"/>
-        <parameter name="Null" value="YES"/>
+        <parameter name="Type" value="text"/>
+        <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
         <parameter name="Extra" value=""/>
@@ -615,7 +615,7 @@
       <vendor type="mysql">
         <parameter name="Field" value="APP_MSG_BODY"/>
         <parameter name="Type" value="text"/>
-        <parameter name="Null" value="YES"/>
+        <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
         <parameter name="Extra" value=""/>
@@ -634,7 +634,7 @@
     <column name="APP_MSG_CC" type="LONGVARCHAR">
       <vendor type="mysql">
         <parameter name="Field" value="APP_MSG_CC"/>
-        <parameter name="Type" value="varchar(256)"/>
+        <parameter name="Type" value="text"/>
         <parameter name="Null" value="YES"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
@@ -644,7 +644,7 @@
     <column name="APP_MSG_BCC" type="LONGVARCHAR">
       <vendor type="mysql">
         <parameter name="Field" value="APP_MSG_BCC"/>
-        <parameter name="Type" value="varchar(256)"/>
+        <parameter name="Type" value="text"/>
         <parameter name="Null" value="YES"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
@@ -654,27 +654,27 @@
     <column name="APP_MSG_TEMPLATE" type="LONGVARCHAR">
       <vendor type="mysql">
         <parameter name="Field" value="APP_MSG_TEMPLATE"/>
-        <parameter name="Type" value="varchar(128)"/>
+        <parameter name="Type" value="text"/>
         <parameter name="Null" value="YES"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="APP_MSG_STATUS" type="LONGVARCHAR">
+    <column name="APP_MSG_STATUS" type="VARCHAR">
       <vendor type="mysql">
         <parameter name="Field" value="APP_MSG_STATUS"/>
-        <parameter name="Type" value="varchar(16)"/>
-        <parameter name="Null" value="NO"/>
+        <parameter name="Type" value="varchar(20)"/>
+        <parameter name="Null" value="YES"/>
         <parameter name="Key" value=""/>
-        <parameter name="Default" value="pending"/>
+        <parameter name="Default" value=""/>
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
     <column name="APP_MSG_ATTACH" type="LONGVARCHAR">
       <vendor type="mysql">
         <parameter name="Field" value="APP_MSG_ATTACH"/>
-        <parameter name="Type" value="varchar(256)"/>
+        <parameter name="Type" value="text"/>
         <parameter name="Null" value="YES"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
@@ -1068,7 +1068,7 @@
         <parameter name="Type" value="varchar(20)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
-        <parameter name="Default" value="NORMAL"/>
+        <parameter name="Default" value="xmlform"/>
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
@@ -1899,7 +1899,7 @@
       <vendor type="mysql">
         <parameter name="Field" value="PRO_CREATE_DATE"/>
         <parameter name="Type" value="datetime"/>
-        <parameter name="Null" value="YES"/>
+        <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
         <!-- <parameter name="Default" value="0000-00-00 00:00:00"/> -->
         <parameter name="Extra" value=""/>
@@ -2077,7 +2077,7 @@
         <parameter name="Type" value="varchar(6)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
-        <parameter name="Default" value="NORMAL"/>
+        <parameter name="Default" value=""/>
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
@@ -2094,10 +2094,10 @@
     <column name="REP_TAB_CONNECTION" type="VARCHAR" size="32" required="true" default="">
       <vendor type="mysql">
         <parameter name="Field" value="REP_TAB_CONNECTION"/>
-        <parameter name="Type" value="varchar(10)"/>
+        <parameter name="Type" value="varchar(32)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
-        <parameter name="Default" value="REPORT"/>
+        <parameter name="Default" value=""/>
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
@@ -2738,7 +2738,7 @@
         <parameter name="Type" value="double"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
-        <parameter name="Default" value="1"/>
+        <parameter name="Default" value="0"/>
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
@@ -3225,7 +3225,7 @@
         <parameter name="Type" value="varchar(10)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value="PRI"/>
-        <parameter name="Default" value=""/>
+        <parameter name="Default" value="en"/>
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
@@ -3356,7 +3356,7 @@
     <column name="USR_USERNAME" type="VARCHAR" size="100" required="true" default="">
       <vendor type="mysql">
         <parameter name="Field" value="USR_USERNAME"/>
-        <parameter name="Type" value="varchar(50)"/>
+        <parameter name="Type" value="varchar(100)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
@@ -3396,7 +3396,7 @@
     <column name="USR_EMAIL" type="VARCHAR" size="100" required="true" default="">
       <vendor type="mysql">
         <parameter name="Field" value="USR_EMAIL"/>
-        <parameter name="Type" value="varchar(50)"/>
+        <parameter name="Type" value="varchar(100)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
@@ -3436,7 +3436,7 @@
     <column name="USR_STATUS" type="VARCHAR" size="32" required="true" default="ACTIVE">
       <vendor type="mysql">
         <parameter name="Field" value="USR_STATUS"/>
-        <parameter name="Type" value="varchar(8)"/>
+        <parameter name="Type" value="varchar(32)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value="ACTIVE"/>
@@ -3760,7 +3760,7 @@
       <vendor type="mysql">
         <parameter name="Field" value="APP_DELEGATION_USER"/>
         <parameter name="Type" value="varchar(32)"/>
-        <parameter name="Null" value="NO"/>
+        <parameter name="Null" value="YES"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
         <parameter name="Extra" value=""/>
@@ -3876,7 +3876,7 @@
         <parameter name="Field" value="PRO_UID"/>
         <parameter name="Type" value="varchar(32)"/>
         <parameter name="Null" value="NO"/>
-        <parameter name="Key" value="PRI"/>
+        <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
         <parameter name="Extra" value=""/>
       </vendor>
@@ -3886,7 +3886,7 @@
         <parameter name="Field" value="USR_UID"/>
         <parameter name="Type" value="varchar(32)"/>
         <parameter name="Null" value="NO"/>
-        <parameter name="Key" value="PRI"/>
+        <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
         <parameter name="Extra" value=""/>
       </vendor>
@@ -3896,7 +3896,7 @@
         <parameter name="Field" value="PU_TYPE"/>
         <parameter name="Type" value="varchar(20)"/>
         <parameter name="Null" value="NO"/>
-        <parameter name="Key" value="PRI"/>
+        <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
         <parameter name="Extra" value=""/>
       </vendor>
@@ -3985,7 +3985,7 @@
         <parameter name="Type" value="varchar(19)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
-        <parameter name="Default" value="0"/>
+        <parameter name="Default" value=""/>
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
@@ -3995,7 +3995,7 @@
         <parameter name="Type" value="varchar(19)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
-        <parameter name="Default" value="0"/>
+        <parameter name="Default" value=""/>
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
@@ -4005,7 +4005,7 @@
         <parameter name="Type" value="varchar(19)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
-        <parameter name="Default" value="0"/>
+        <parameter name="Default" value=""/>
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
@@ -4094,11 +4094,11 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="DBS_PASSWORD" type="VARCHAR" size="32" default="0">
+    <column name="DBS_PASSWORD" type="VARCHAR" size="32" default="">
       <vendor type="mysql">
         <parameter name="Field" value="DBS_PASSWORD"/>
         <parameter name="Type" value="varchar(32)"/>
-        <parameter name="Null" value="NO"/>
+        <parameter name="Null" value="YES"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
         <parameter name="Extra" value=""/>
@@ -4108,9 +4108,9 @@
       <vendor type="mysql">
         <parameter name="Field" value="DBS_PORT"/>
         <parameter name="Type" value="int(11)"/>
-        <parameter name="Null" value="NO"/>
+        <parameter name="Null" value="YES"/>
         <parameter name="Key" value=""/>
-        <parameter name="Default" value="0"/>
+        <parameter name="Default" value=""/>
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
@@ -4189,7 +4189,7 @@
         <parameter name="Type" value="varchar(32)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
-        <parameter name="Default" value="0"/>
+        <parameter name="Default" value=""/>
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
@@ -4524,7 +4524,7 @@
         <parameter name="Type" value="varchar(32)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
-        <parameter name="Default" value="0"/>
+        <parameter name="Default" value=""/>
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
@@ -4544,7 +4544,7 @@
         <parameter name="Type" value="varchar(32)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
-        <parameter name="Default" value="0"/>
+        <parameter name="Default" value=""/>
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
