@@ -176,7 +176,6 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
           }
         }
       }
-
       if (!class_exists($Part['Template']) || $Part['Template']==='xmlform')
         $G_FORM = new Form ( $Part['File'] , $sPath , SYS_LANG, false );
       else
@@ -257,7 +256,6 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
           }
         }
       }
-
       $G_FORM = new Form ( $Part['File'] , $sPath, SYS_LANG, true );
 
       if ( defined ( 'ENABLE_ENCRYPT' ) && ENABLE_ENCRYPT == 'yes' )
@@ -340,10 +338,13 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
           }
         }
       }
+      if ( !file_exists ($sPath .PATH_SEP. $Part['File'] . '.xml') && defined ( 'PATH_DATA_PUBLIC') ) {
+      	$sPath = PATH_DATA_PUBLIC ;
+      }
 
       $G_FORM = new Form ( $Part['File'] , $sPath, SYS_LANG, true );
 
-    	$G_FORM->ajaxServer  = urlencode( G::encrypt( $Part['ajaxServer'] ,URL_KEY ) );
+      $G_FORM->ajaxServer  = urlencode( G::encrypt( $Part['ajaxServer'] ,URL_KEY ) );
 
       //$G_FORM->setValues ($Part['Data']);
       if (isset($_SESSION)) $_SESSION[$G_FORM->id] = $G_FORM->values;

@@ -2,7 +2,7 @@ msgid ""
 msgstr "" 
 "Project-Id-Version: PM 4.0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-08-12 10:19+0100 \n"
+"PO-Revision-Date: 2008-08-29 19:14+0100 \n"
 "Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
 "Language-Team: Colosa Developers Team <developers@colosa.com>\n"
 "MIME-Version: 1.0\n"
@@ -2467,6 +2467,258 @@ msgstr "The following fields are required"
 msgid "Do you want to delete this permission ?"
 msgstr "Do you want to delete this permission ?"
 
+# TRANSLATION
+# JAVASCRIPT/ID_WEB_ENTRY
+#: JAVASCRIPT/ID_WEB_ENTRY
+msgid "Web Entry"
+msgstr "Web Entry"
+
+# TRANSLATION
+# JAVASCRIPT/ID_CASE_TRACKER
+#: JAVASCRIPT/ID_CASE_TRACKER
+msgid "Case Tracker"
+msgstr "Case Tracker"
+
+# TRANSLATION
+# JAVASCRIPT/ID_CASE_TRACKER_OBJECTS
+#: JAVASCRIPT/ID_CASE_TRACKER_OBJECTS
+msgid "Case Tracker Objects"
+msgstr "Case Tracker Objects"
+
+# TRANSLATION
+# LABEL/ID_MSG_CONFIRM_DELETE_CASE_TRACKER_OBJECT
+#: LABEL/ID_MSG_CONFIRM_DELETE_CASE_TRACKER_OBJECT
+msgid "Do you want to delete this object ?"
+msgstr "Do you want to delete this object ?"
+
+# TRANSLATION
+# LABEL/ID_CASE_NOT_EXISTS
+#: LABEL/ID_CASE_NOT_EXISTS
+msgid "The case not exists"
+msgstr "The case not exists"
+
+# TRANSLATION
+# LABEL/ID_PIN_INVALID
+#: LABEL/ID_PIN_INVALID
+msgid "The PIN is invalid"
+msgstr "The PIN is invalid"
+
+# TRANSLATION
+# LABEL/ID_MAP
+#: LABEL/ID_MAP
+msgid "Where is my Case?"
+msgstr "Where is my Case?"
+
+# TRANSLATION
+# LABEL/ID_DYNADOC
+#: LABEL/ID_DYNADOC
+msgid "My Case Forms and Documents"
+msgstr "My Case Forms and Documents"
+
+# TRANSLATION
+# LABEL/ID_HISTORY
+#: LABEL/ID_HISTORY
+msgid "My Case History"
+msgstr "My Case History"
+
+# TRANSLATION
+# LABEL/ID_DOWNLOAD
+#: LABEL/ID_DOWNLOAD
+msgid "Download"
+msgstr "Download"
+
+# TRANSLATION
+# JAVASCRIPT/ID_MSG_CONFIRM_DELETE_DIRECTORY
+#: JAVASCRIPT/ID_MSG_CONFIRM_DELETE_DIRECTORY
+msgid "Do you want to delete this directory and delete all its contents?"
+msgstr "Do you want to delete this directory and delete all its contents?"
+
+# TRANSLATION
+# JAVASCRIPT/ID_MSG_CONFIRM_DELETE_FILE
+#: JAVASCRIPT/ID_MSG_CONFIRM_DELETE_FILE
+msgid "Do you want to delete this file ?"
+msgstr "Do you want to delete this file ?"
+
+# TRANSLATION
+# LABEL/ID_PLEASE_SELECT_FILES_TO_UPLOAD
+#: LABEL/ID_PLEASE_SELECT_FILES_TO_UPLOAD
+msgid "Please select the files to upload"
+msgstr "Please select the files to upload"
+
+# TRANSLATION
+# JAVASCRIPT/ID_PROCESS_FILES_MANAGER
+#: JAVASCRIPT/ID_PROCESS_FILES_MANAGER
+msgid "Process Files Manager"
+msgstr "Process Files Manager"
+
+# TRANSLATION
+# LABEL/ID_WORKSPACE
+#: LABEL/ID_WORKSPACE
+msgid "Workspace"
+msgstr "Workspace"
+
+# TRANSLATION
+# LABEL/ID_SITE
+#: LABEL/ID_SITE
+msgid "Site"
+msgstr "Site"
+
+# TRANSLATION
+# LABEL/ID_CASE
+#: LABEL/ID_CASE
+msgid "Case"
+msgstr "Case"
+
+# TRANSLATION
+# LABEL/ID_TITLE
+#: LABEL/ID_TITLE
+msgid "Title"
+msgstr "Title"
+
+# TRANSLATION
+# LABEL/ID_FINISH_WITH_OPTION
+#: LABEL/ID_FINISH_WITH_OPTION
+msgid "Finish with option"
+msgstr "Finish with option"
+
+# TRANSLATION
+# LABEL/ID_CONTINUE_WITH_OPTION
+#: LABEL/ID_CONTINUE_WITH_OPTION
+msgid "Continue with option"
+msgstr "Continue with option"
+
+# TRANSLATION
+# LABEL/ID_CONTINUE
+#: LABEL/ID_CONTINUE
+msgid "Continue"
+msgstr "Continue"
+
+# TRANSLATION
+# LABEL/ID_OPTION
+#: LABEL/ID_OPTION
+msgid "Option"
+msgstr "Option"
+
+# TRANSLATION
+# LABEL/ID_LAST_EMPLOYEE
+#: LABEL/ID_LAST_EMPLOYEE
+msgid "Last Employee"
+msgstr "Last Employee"
+
+# TRANSLATION
+# LABEL/ID_EMPLOYEE
+#: LABEL/ID_EMPLOYEE
+msgid "Employee"
+msgstr "Employee"
+
+# TRANSLATION
+# LABEL/ID_SESSION
+#: LABEL/ID_SESSION
+msgid "Session"
+msgstr "Session"
+
+# TRANSLATION
+# LABEL/ID_NEXT_TASK
+#: LABEL/ID_NEXT_TASK
+msgid "Next Task"
+msgstr "Next Task"
+
+# TRANSLATION
+# LABEL/ID_PERMISSIONS_FOR_THE_ROL
+#: LABEL/ID_PERMISSIONS_FOR_THE_ROL
+msgid "Permissions for the rol"
+msgstr "Permissions for the rol"
+
+# TRANSLATION
+# LABEL/ID_BACK_TO_USERS_LIST
+#: LABEL/ID_BACK_TO_USERS_LIST
+msgid "Back to Users List"
+msgstr "Back to Users List"
+
+# TRANSLATION
+# LABEL/ID_ASSIGN_THE_ROLE
+#: LABEL/ID_ASSIGN_THE_ROLE
+msgid "Assign the role"
+msgstr "Assign the role"
+
+# TRANSLATION
+# LABEL/ID_USER_WITH_ROLE
+#: LABEL/ID_USER_WITH_ROLE
+msgid "Users with role"
+msgstr "Users with role"
+
+# TRANSLATION
+# JAVASCRIPT/ID_EDIT_STAGES_MAP
+#: JAVASCRIPT/ID_EDIT_STAGES_MAP
+msgid "Edit Stages Map"
+msgstr "Edit Stages Map"
+
+# TRANSLATION
+# JAVASCRIPT/ID_PROCESSMAP_ADD_STAGE
+#: JAVASCRIPT/ID_PROCESSMAP_ADD_STAGE
+msgid "Add Stage"
+msgstr "Add Stage"
+
+# TRANSLATION
+# JAVASCRIPT/ID_PROCESSMAP_DELETE_STAGE
+#: JAVASCRIPT/ID_PROCESSMAP_DELETE_STAGE
+msgid "Delete Stage"
+msgstr "Delete Stage"
+
+# TRANSLATION
+# LABEL/ID_HISTORY_MESSAGES
+#: LABEL/ID_HISTORY_MESSAGES
+msgid "My History Messages"
+msgstr "My History Messages"
+
+# TRANSLATION
+# LABEL/ID_STAGE
+#: LABEL/ID_STAGE
+msgid "Stage"
+msgstr "Stage"
+
+# TRANSLATION
+# JAVASCRIPT/ID_PROCESSMAP_CONFIRM_DELETE_STAGE
+#: JAVASCRIPT/ID_PROCESSMAP_CONFIRM_DELETE_STAGE
+msgid "Do you want to delete the stage: "
+msgstr "Do you want to delete the stage: "
+
+# TRANSLATION
+# JAVASCRIPT/ID_PROCESSMAP_EDIT
+#: JAVASCRIPT/ID_PROCESSMAP_EDIT
+msgid "[JAVASCRIPT/ID_PROCESSMAP_EDIT] Edit"
+msgstr "Edit"
+
+# TRANSLATION
+# LABEL/ID_HISTORY_MESSAGE_CASE
+#: LABEL/ID_HISTORY_MESSAGE_CASE
+msgid "Messages History"
+msgstr "Messages History"
+
+# TRANSLATION
+# JAVASCRIPT/ID_HISTORY_MESSAGE_CASE
+#: JAVASCRIPT/ID_HISTORY_MESSAGE_CASE
+msgid "[JAVASCRIPT/ID_HISTORY_MESSAGE_CASE] Messages History"
+msgstr "Messages History"
+
+# TRANSLATION
+# JAVASCRIPT/ID_PROCESSMAP_TASKS_ASSIGNED
+#: JAVASCRIPT/ID_PROCESSMAP_TASKS_ASSIGNED
+msgid "Tasks Assigned"
+msgstr "Tasks Assigned"
+
+# TRANSLATION
+# JAVASCRIPT/ID_PROCESSMAP_TASKS_ASSIGNED_FOR
+#: JAVASCRIPT/ID_PROCESSMAP_TASKS_ASSIGNED_FOR
+msgid "Tasks Assigned For"
+msgstr "Tasks Assigned For"
+
+# TRANSLATION
+# JAVASCRIPT/ID_MSG_CONFIRM_REMOVE_TASK
+#: JAVASCRIPT/ID_MSG_CONFIRM_REMOVE_TASK
+msgid "Do you want to remove this task ?"
+msgstr "Do you want to remove this task ?"
+
 # messages/messages_Edit.xml?MESS_TITLE
 # messages/messages_Edit.xml
 #: text - MESS_TITLE
@@ -2676,6 +2928,600 @@ msgstr "file"
 #: text - rowsJS
 msgid "[tools/updateTranslation.xml?rowsJS] rows"
 msgstr "rows"
+
+# tracker/tracker_Messages.xml?APP_MSG_DATE
+# tracker/tracker_Messages.xml
+#: text - APP_MSG_DATE
+msgid "DATE"
+msgstr "DATE"
+
+# tracker/tracker_Messages.xml?APP_MSG_SUBJECT
+# tracker/tracker_Messages.xml
+#: text - APP_MSG_SUBJECT
+msgid "SUBJECT"
+msgstr "SUBJECT"
+
+# tracker/tracker_Messages.xml?APP_MSG_FROM
+# tracker/tracker_Messages.xml
+#: text - APP_MSG_FROM
+msgid "FROM"
+msgstr "FROM"
+
+# tracker/tracker_Messages.xml?APP_MSG_TO
+# tracker/tracker_Messages.xml
+#: text - APP_MSG_TO
+msgid "TO"
+msgstr "TO"
+
+# tracker/tracker_ViewAnyInputDocument.xml?FILENAME
+# tracker/tracker_ViewAnyInputDocument.xml
+#: caption - FILENAME
+msgid "Filename"
+msgstr "Filename"
+
+# tracker/tracker_ViewAnyInputDocument.xml?APP_DOC_CREATE_DATE
+# tracker/tracker_ViewAnyInputDocument.xml
+#: date - APP_DOC_CREATE_DATE
+msgid "Created Date"
+msgstr "Created Date"
+
+# tracker/tracker_ViewAnyInputDocument.xml?APP_DOC_FILENAME
+# tracker/tracker_ViewAnyInputDocument.xml
+#: link - APP_DOC_FILENAME
+msgid "File"
+msgstr "File"
+
+# tracker/tracker_back.xml?backs
+# tracker/tracker_back.xml
+#: link - backs
+msgid "Back"
+msgstr "Back"
+
+# tracker/tracker_DynaDocs.xml?CTO_TITLE
+# tracker/tracker_DynaDocs.xml
+#: text - CTO_TITLE
+msgid "[tracker/tracker_DynaDocs.xml?CTO_TITLE] Title"
+msgstr "Title"
+
+# tracker/tracker_DynaDocs.xml?CTO_TYPE_OBJ
+# tracker/tracker_DynaDocs.xml
+#: dropdown - CTO_TYPE_OBJ
+msgid "[tracker/tracker_DynaDocs.xml?CTO_TYPE_OBJ] Type"
+msgstr "Type"
+
+# tracker/tracker_DynaDocs.xml?CTO_TYPE_OBJ-DYNAFORM
+# tracker/tracker_DynaDocs.xml
+#: dropdown - CTO_TYPE_OBJ - DYNAFORM
+msgid "[tracker/tracker_DynaDocs.xml?CTO_TYPE_OBJ-DYNAFORM]"
+msgstr "Form"
+
+# tracker/tracker_DynaDocs.xml?CTO_TYPE_OBJ-INPUT_DOCUMENT
+# tracker/tracker_DynaDocs.xml
+#: dropdown - CTO_TYPE_OBJ - INPUT_DOCUMENT
+msgid "[tracker/tracker_DynaDocs.xml?CTO_TYPE_OBJ-INPUT_DOCUMENT]"
+msgstr "Document"
+
+# tracker/tracker_DynaDocs.xml?CTO_TYPE_OBJ-OUTPUT_DOCUMENT
+# tracker/tracker_DynaDocs.xml
+#: dropdown - CTO_TYPE_OBJ - OUTPUT_DOCUMENT
+msgid "[tracker/tracker_DynaDocs.xml?CTO_TYPE_OBJ-OUTPUT_DOCUMENT]"
+msgstr "Document"
+
+# tracker/tracker_StageTasks.xml?TAS_TITLE
+# tracker/tracker_StageTasks.xml
+#: text - TAS_TITLE
+msgid "[tracker/tracker_StageTasks.xml?TAS_TITLE] Title"
+msgstr "Title"
+
+# tracker/tracker_ViewAnyOutputDocument.xml?OUT_DOC_TITLE
+# tracker/tracker_ViewAnyOutputDocument.xml
+#: caption - OUT_DOC_TITLE
+msgid "[tracker/tracker_ViewAnyOutputDocument.xml?OUT_DOC_TITLE] Output document"
+msgstr "Output document"
+
+# tracker/tracker_ViewAnyOutputDocument.xml?APP_DOC_CREATE_DATE
+# tracker/tracker_ViewAnyOutputDocument.xml
+#: caption - APP_DOC_CREATE_DATE
+msgid "Create Date"
+msgstr "Create Date"
+
+# tracker/tracker_ViewAnyOutputDocument.xml?APP_DOC_FILENAME1
+# tracker/tracker_ViewAnyOutputDocument.xml
+#: link - APP_DOC_FILENAME1
+msgid "File (.doc)"
+msgstr "File (.doc)"
+
+# tracker/tracker_ViewAnyOutputDocument.xml?APP_DOC_FILENAME2
+# tracker/tracker_ViewAnyOutputDocument.xml
+#: link - APP_DOC_FILENAME2
+msgid "File (.pdf)"
+msgstr "File (.pdf)"
+
+# tracker/tracker_Configuration.xml?CT_MAP_TYPE
+# tracker/tracker_Configuration.xml
+#: dropdown - CT_MAP_TYPE
+msgid "Map Type"
+msgstr "Map Type"
+
+# tracker/tracker_Configuration.xml?CT_MAP_TYPE-NONE
+# tracker/tracker_Configuration.xml
+#: dropdown - CT_MAP_TYPE - NONE
+msgid "[tracker/tracker_Configuration.xml?CT_MAP_TYPE-NONE]"
+msgstr "None"
+
+# tracker/tracker_Configuration.xml?CT_MAP_TYPE-PROCESSMAP
+# tracker/tracker_Configuration.xml
+#: dropdown - CT_MAP_TYPE - PROCESSMAP
+msgid "[tracker/tracker_Configuration.xml?CT_MAP_TYPE-PROCESSMAP]"
+msgstr "Process Map"
+
+# tracker/tracker_Configuration.xml?CT_MAP_TYPE-STAGES
+# tracker/tracker_Configuration.xml
+#: dropdown - CT_MAP_TYPE - STAGES
+msgid "[tracker/tracker_Configuration.xml?CT_MAP_TYPE-STAGES]"
+msgstr "Stages Map"
+
+# tracker/tracker_Configuration.xml?CT_STAGES_MAP_EDIT
+# tracker/tracker_Configuration.xml
+#: link - CT_STAGES_MAP_EDIT
+msgid "[tracker/tracker_Configuration.xml?CT_STAGES_MAP_EDIT] Edit"
+msgstr "Edit"
+
+# tracker/tracker_Configuration.xml?CT_DERIVATION_HISTORY
+# tracker/tracker_Configuration.xml
+#: checkbox - CT_DERIVATION_HISTORY
+msgid "Derivation History"
+msgstr "Derivation History"
+
+# tracker/tracker_Configuration.xml?CT_MESSAGE_HISTORY
+# tracker/tracker_Configuration.xml
+#: checkbox - CT_MESSAGE_HISTORY
+msgid "[tracker/tracker_Configuration.xml?CT_MESSAGE_HISTORY] Messages History"
+msgstr "Messages History"
+
+# tracker/tracker_Configuration.xml?SAVE
+# tracker/tracker_Configuration.xml
+#: button - SAVE
+msgid "[tracker/tracker_Configuration.xml?SAVE] Save"
+msgstr "Save"
+
+# tracker/tracker_ConditionsEdit.xml?CTO_CONDITION
+# tracker/tracker_ConditionsEdit.xml
+#: textareapm - CTO_CONDITION
+msgid "[tracker/tracker_ConditionsEdit.xml?CTO_CONDITION] Condition"
+msgstr "Condition"
+
+# tracker/tracker_ConditionsEdit.xml?SAVE
+# tracker/tracker_ConditionsEdit.xml
+#: button - SAVE
+msgid "[tracker/tracker_ConditionsEdit.xml?SAVE] Save"
+msgstr "Save"
+
+# tracker/tracker_objectsList.xml?CTO_TITLE
+# tracker/tracker_objectsList.xml
+#: text - CTO_TITLE
+msgid "[tracker/tracker_objectsList.xml?CTO_TITLE] Title"
+msgstr "Title"
+
+# tracker/tracker_objectsList.xml?CTO_TYPE_OBJ
+# tracker/tracker_objectsList.xml
+#: text - CTO_TYPE_OBJ
+msgid "[tracker/tracker_objectsList.xml?CTO_TYPE_OBJ] Type"
+msgstr "Type"
+
+# tracker/tracker_AvailableCaseTrackerObjects.xml?OBJECT_TITLE
+# tracker/tracker_AvailableCaseTrackerObjects.xml
+#: text - OBJECT_TITLE
+msgid "[tracker/tracker_AvailableCaseTrackerObjects.xml?OBJECT_TITLE] Title"
+msgstr "Title"
+
+# tracker/tracker_AvailableCaseTrackerObjects.xml?OBJECT_TYPE
+# tracker/tracker_AvailableCaseTrackerObjects.xml
+#: dropdown - OBJECT_TYPE
+msgid "[tracker/tracker_AvailableCaseTrackerObjects.xml?OBJECT_TYPE] Type"
+msgstr "Type"
+
+# tracker/tracker_AvailableCaseTrackerObjects.xml?OBJECT_TYPE-DYNAFORM
+# tracker/tracker_AvailableCaseTrackerObjects.xml
+#: dropdown - OBJECT_TYPE - DYNAFORM
+msgid "[tracker/tracker_AvailableCaseTrackerObjects.xml?OBJECT_TYPE-DYNAFORM]"
+msgstr "Dynaform"
+
+# tracker/tracker_AvailableCaseTrackerObjects.xml?OBJECT_TYPE-INPUT_DOCUMENT
+# tracker/tracker_AvailableCaseTrackerObjects.xml
+#: dropdown - OBJECT_TYPE - INPUT_DOCUMENT
+msgid "[tracker/tracker_AvailableCaseTrackerObjects.xml?OBJECT_TYPE-INPUT_DOCUMENT]"
+msgstr "Input Document"
+
+# tracker/tracker_AvailableCaseTrackerObjects.xml?OBJECT_TYPE-OUTPUT_DOCUMENT
+# tracker/tracker_AvailableCaseTrackerObjects.xml
+#: dropdown - OBJECT_TYPE - OUTPUT_DOCUMENT
+msgid "[tracker/tracker_AvailableCaseTrackerObjects.xml?OBJECT_TYPE-OUTPUT_DOCUMENT]"
+msgstr "Output Document"
+
+# tracker/login.xml?TITLE
+# tracker/login.xml
+#: title - TITLE
+msgid "CASE TRACKER"
+msgstr "CASE TRACKER"
+
+# tracker/login.xml?CASE
+# tracker/login.xml
+#: text - CASE
+msgid "Case Code"
+msgstr "Case Code"
+
+# tracker/login.xml?PIN
+# tracker/login.xml
+#: password - PIN
+msgid "Pin"
+msgstr "Pin"
+
+# tracker/login.xml?BSUBMIT
+# tracker/login.xml
+#: submit - BSUBMIT
+msgid "Enter"
+msgstr "Enter"
+
+# tracker/tracker_ViewAnyInputDocument2.xml?INP_DOC_TITLE
+# tracker/tracker_ViewAnyInputDocument2.xml
+#: caption - INP_DOC_TITLE
+msgid "[tracker/tracker_ViewAnyInputDocument2.xml?INP_DOC_TITLE] Title"
+msgstr "Title"
+
+# tracker/tracker_ViewAnyInputDocument2.xml?INP_DOC_DESCRIPTION
+# tracker/tracker_ViewAnyInputDocument2.xml
+#: caption - INP_DOC_DESCRIPTION
+msgid "Description"
+msgstr "Description"
+
+# tracker/tracker_ViewAnyInputDocument2.xml?INP_DOC_FORM_NEEDED
+# tracker/tracker_ViewAnyInputDocument2.xml
+#: dropdown - INP_DOC_FORM_NEEDED
+msgid "Document Type"
+msgstr "Document Type"
+
+# tracker/tracker_ViewAnyInputDocument2.xml?INP_DOC_FORM_NEEDED-VIRTUAL
+# tracker/tracker_ViewAnyInputDocument2.xml
+#: dropdown - INP_DOC_FORM_NEEDED - VIRTUAL
+msgid "[tracker/tracker_ViewAnyInputDocument2.xml?INP_DOC_FORM_NEEDED-VIRTUAL]"
+msgstr "Digital"
+
+# tracker/tracker_ViewAnyInputDocument2.xml?INP_DOC_FORM_NEEDED-REAL
+# tracker/tracker_ViewAnyInputDocument2.xml
+#: dropdown - INP_DOC_FORM_NEEDED - REAL
+msgid "[tracker/tracker_ViewAnyInputDocument2.xml?INP_DOC_FORM_NEEDED-REAL]"
+msgstr "Printed"
+
+# tracker/tracker_ViewAnyInputDocument2.xml?INP_DOC_FORM_NEEDED-VREAL
+# tracker/tracker_ViewAnyInputDocument2.xml
+#: dropdown - INP_DOC_FORM_NEEDED - VREAL
+msgid "[tracker/tracker_ViewAnyInputDocument2.xml?INP_DOC_FORM_NEEDED-VREAL]"
+msgstr "Digital/Printed"
+
+# tracker/tracker_ViewAnyInputDocument2.xml?INP_DOC_ORIGINAL
+# tracker/tracker_ViewAnyInputDocument2.xml
+#: dropdown - INP_DOC_ORIGINAL
+msgid "Format"
+msgstr "Format"
+
+# tracker/tracker_ViewAnyInputDocument2.xml?INP_DOC_ORIGINAL-ORIGINAL
+# tracker/tracker_ViewAnyInputDocument2.xml
+#: dropdown - INP_DOC_ORIGINAL - ORIGINAL
+msgid "[tracker/tracker_ViewAnyInputDocument2.xml?INP_DOC_ORIGINAL-ORIGINAL]"
+msgstr "Original"
+
+# tracker/tracker_ViewAnyInputDocument2.xml?INP_DOC_ORIGINAL-COPYLEGAL
+# tracker/tracker_ViewAnyInputDocument2.xml
+#: dropdown - INP_DOC_ORIGINAL - COPYLEGAL
+msgid "[tracker/tracker_ViewAnyInputDocument2.xml?INP_DOC_ORIGINAL-COPYLEGAL]"
+msgstr "Legal Copy"
+
+# tracker/tracker_ViewAnyInputDocument2.xml?INP_DOC_ORIGINAL-COPY
+# tracker/tracker_ViewAnyInputDocument2.xml
+#: dropdown - INP_DOC_ORIGINAL - COPY
+msgid "[tracker/tracker_ViewAnyInputDocument2.xml?INP_DOC_ORIGINAL-COPY]"
+msgstr "Copy"
+
+# tracker/tracker_ViewAnyInputDocument2.xml?APP_DOC_CREATE_DATE
+# tracker/tracker_ViewAnyInputDocument2.xml
+#: date - APP_DOC_CREATE_DATE
+msgid "[tracker/tracker_ViewAnyInputDocument2.xml?APP_DOC_CREATE_DATE] Created Date"
+msgstr "Created Date"
+
+# tracker/tracker_ViewAnyInputDocument2.xml?APP_DOC_COMMENT
+# tracker/tracker_ViewAnyInputDocument2.xml
+#: caption - APP_DOC_COMMENT
+msgid "Comments"
+msgstr "Comments"
+
+# tracker/tracker_ViewAnyInputDocument1.xml?INP_DOC_TITLE
+# tracker/tracker_ViewAnyInputDocument1.xml
+#: caption - INP_DOC_TITLE
+msgid "[tracker/tracker_ViewAnyInputDocument1.xml?INP_DOC_TITLE] Title"
+msgstr "Title"
+
+# tracker/tracker_ViewAnyInputDocument1.xml?INP_DOC_DESCRIPTION
+# tracker/tracker_ViewAnyInputDocument1.xml
+#: caption - INP_DOC_DESCRIPTION
+msgid "[tracker/tracker_ViewAnyInputDocument1.xml?INP_DOC_DESCRIPTION] Description"
+msgstr "Description"
+
+# tracker/tracker_ViewAnyInputDocument1.xml?INP_DOC_FORM_NEEDED
+# tracker/tracker_ViewAnyInputDocument1.xml
+#: dropdown - INP_DOC_FORM_NEEDED
+msgid "[tracker/tracker_ViewAnyInputDocument1.xml?INP_DOC_FORM_NEEDED] Document Type"
+msgstr "Document Type"
+
+# tracker/tracker_ViewAnyInputDocument1.xml?INP_DOC_FORM_NEEDED-VIRTUAL
+# tracker/tracker_ViewAnyInputDocument1.xml
+#: dropdown - INP_DOC_FORM_NEEDED - VIRTUAL
+msgid "[tracker/tracker_ViewAnyInputDocument1.xml?INP_DOC_FORM_NEEDED-VIRTUAL]"
+msgstr "Digital"
+
+# tracker/tracker_ViewAnyInputDocument1.xml?INP_DOC_FORM_NEEDED-REAL
+# tracker/tracker_ViewAnyInputDocument1.xml
+#: dropdown - INP_DOC_FORM_NEEDED - REAL
+msgid "[tracker/tracker_ViewAnyInputDocument1.xml?INP_DOC_FORM_NEEDED-REAL]"
+msgstr "Printed"
+
+# tracker/tracker_ViewAnyInputDocument1.xml?INP_DOC_FORM_NEEDED-VREAL
+# tracker/tracker_ViewAnyInputDocument1.xml
+#: dropdown - INP_DOC_FORM_NEEDED - VREAL
+msgid "[tracker/tracker_ViewAnyInputDocument1.xml?INP_DOC_FORM_NEEDED-VREAL]"
+msgstr "Digital/Printed"
+
+# tracker/tracker_ViewAnyInputDocument1.xml?INP_DOC_ORIGINAL
+# tracker/tracker_ViewAnyInputDocument1.xml
+#: dropdown - INP_DOC_ORIGINAL
+msgid "[tracker/tracker_ViewAnyInputDocument1.xml?INP_DOC_ORIGINAL] Format"
+msgstr "Format"
+
+# tracker/tracker_ViewAnyInputDocument1.xml?INP_DOC_ORIGINAL-ORIGINAL
+# tracker/tracker_ViewAnyInputDocument1.xml
+#: dropdown - INP_DOC_ORIGINAL - ORIGINAL
+msgid "[tracker/tracker_ViewAnyInputDocument1.xml?INP_DOC_ORIGINAL-ORIGINAL]"
+msgstr "Original"
+
+# tracker/tracker_ViewAnyInputDocument1.xml?INP_DOC_ORIGINAL-COPYLEGAL
+# tracker/tracker_ViewAnyInputDocument1.xml
+#: dropdown - INP_DOC_ORIGINAL - COPYLEGAL
+msgid "[tracker/tracker_ViewAnyInputDocument1.xml?INP_DOC_ORIGINAL-COPYLEGAL]"
+msgstr "Legal Copy"
+
+# tracker/tracker_ViewAnyInputDocument1.xml?INP_DOC_ORIGINAL-COPY
+# tracker/tracker_ViewAnyInputDocument1.xml
+#: dropdown - INP_DOC_ORIGINAL - COPY
+msgid "[tracker/tracker_ViewAnyInputDocument1.xml?INP_DOC_ORIGINAL-COPY]"
+msgstr "Copy"
+
+# tracker/tracker_ViewAnyInputDocument1.xml?APP_DOC_CREATE_DATE
+# tracker/tracker_ViewAnyInputDocument1.xml
+#: date - APP_DOC_CREATE_DATE
+msgid "[tracker/tracker_ViewAnyInputDocument1.xml?APP_DOC_CREATE_DATE] Created Date"
+msgstr "Created Date"
+
+# tracker/tracker_ViewAnyInputDocument1.xml?APP_DOC_FILENAME
+# tracker/tracker_ViewAnyInputDocument1.xml
+#: link - APP_DOC_FILENAME
+msgid "[tracker/tracker_ViewAnyInputDocument1.xml?APP_DOC_FILENAME] File"
+msgstr "File"
+
+# tracker/tracker_TasksOptions.xml?MNU_ASSIGN
+# tracker/tracker_TasksOptions.xml
+#: link - MNU_ASSIGN
+msgid "[tracker/tracker_TasksOptions.xml?MNU_ASSIGN] Assign"
+msgstr "Assign"
+
+# tracker/tracker_No.xml?MESSAGE
+# tracker/tracker_No.xml
+#: title - MESSAGE
+msgid "It is not possible to see information related to this case.  Please contact the System Administrator."
+msgstr "It is not possible to see information related to this case.  Please contact the System Administrator."
+
+# tracker/tracker_ViewAnyInputDocument3.xml?INP_DOC_TITLE
+# tracker/tracker_ViewAnyInputDocument3.xml
+#: caption - INP_DOC_TITLE
+msgid "[tracker/tracker_ViewAnyInputDocument3.xml?INP_DOC_TITLE] Title"
+msgstr "Title"
+
+# tracker/tracker_ViewAnyInputDocument3.xml?INP_DOC_DESCRIPTION
+# tracker/tracker_ViewAnyInputDocument3.xml
+#: caption - INP_DOC_DESCRIPTION
+msgid "[tracker/tracker_ViewAnyInputDocument3.xml?INP_DOC_DESCRIPTION] Description"
+msgstr "Description"
+
+# tracker/tracker_ViewAnyInputDocument3.xml?INP_DOC_FORM_NEEDED
+# tracker/tracker_ViewAnyInputDocument3.xml
+#: dropdown - INP_DOC_FORM_NEEDED
+msgid "[tracker/tracker_ViewAnyInputDocument3.xml?INP_DOC_FORM_NEEDED] Document Type"
+msgstr "Document Type"
+
+# tracker/tracker_ViewAnyInputDocument3.xml?INP_DOC_FORM_NEEDED-VIRTUAL
+# tracker/tracker_ViewAnyInputDocument3.xml
+#: dropdown - INP_DOC_FORM_NEEDED - VIRTUAL
+msgid "[tracker/tracker_ViewAnyInputDocument3.xml?INP_DOC_FORM_NEEDED-VIRTUAL]"
+msgstr "Digital"
+
+# tracker/tracker_ViewAnyInputDocument3.xml?INP_DOC_FORM_NEEDED-REAL
+# tracker/tracker_ViewAnyInputDocument3.xml
+#: dropdown - INP_DOC_FORM_NEEDED - REAL
+msgid "[tracker/tracker_ViewAnyInputDocument3.xml?INP_DOC_FORM_NEEDED-REAL]"
+msgstr "Printed"
+
+# tracker/tracker_ViewAnyInputDocument3.xml?INP_DOC_FORM_NEEDED-VREAL
+# tracker/tracker_ViewAnyInputDocument3.xml
+#: dropdown - INP_DOC_FORM_NEEDED - VREAL
+msgid "[tracker/tracker_ViewAnyInputDocument3.xml?INP_DOC_FORM_NEEDED-VREAL]"
+msgstr "Digital/Printed"
+
+# tracker/tracker_ViewAnyInputDocument3.xml?INP_DOC_ORIGINAL
+# tracker/tracker_ViewAnyInputDocument3.xml
+#: dropdown - INP_DOC_ORIGINAL
+msgid "[tracker/tracker_ViewAnyInputDocument3.xml?INP_DOC_ORIGINAL] Format"
+msgstr "Format"
+
+# tracker/tracker_ViewAnyInputDocument3.xml?INP_DOC_ORIGINAL-ORIGINAL
+# tracker/tracker_ViewAnyInputDocument3.xml
+#: dropdown - INP_DOC_ORIGINAL - ORIGINAL
+msgid "[tracker/tracker_ViewAnyInputDocument3.xml?INP_DOC_ORIGINAL-ORIGINAL]"
+msgstr "Original"
+
+# tracker/tracker_ViewAnyInputDocument3.xml?INP_DOC_ORIGINAL-COPYLEGAL
+# tracker/tracker_ViewAnyInputDocument3.xml
+#: dropdown - INP_DOC_ORIGINAL - COPYLEGAL
+msgid "[tracker/tracker_ViewAnyInputDocument3.xml?INP_DOC_ORIGINAL-COPYLEGAL]"
+msgstr "Legal Copy"
+
+# tracker/tracker_ViewAnyInputDocument3.xml?INP_DOC_ORIGINAL-COPY
+# tracker/tracker_ViewAnyInputDocument3.xml
+#: dropdown - INP_DOC_ORIGINAL - COPY
+msgid "[tracker/tracker_ViewAnyInputDocument3.xml?INP_DOC_ORIGINAL-COPY]"
+msgstr "Copy"
+
+# tracker/tracker_ViewAnyInputDocument3.xml?APP_DOC_CREATE_DATE
+# tracker/tracker_ViewAnyInputDocument3.xml
+#: date - APP_DOC_CREATE_DATE
+msgid "[tracker/tracker_ViewAnyInputDocument3.xml?APP_DOC_CREATE_DATE] Created Date"
+msgstr "Created Date"
+
+# tracker/tracker_ViewAnyInputDocument3.xml?APP_DOC_COMMENT
+# tracker/tracker_ViewAnyInputDocument3.xml
+#: caption - APP_DOC_COMMENT
+msgid "[tracker/tracker_ViewAnyInputDocument3.xml?APP_DOC_COMMENT] Comments"
+msgstr "Comments"
+
+# tracker/tracker_ViewAnyInputDocument3.xml?APP_DOC_FILENAME
+# tracker/tracker_ViewAnyInputDocument3.xml
+#: link - APP_DOC_FILENAME
+msgid "[tracker/tracker_ViewAnyInputDocument3.xml?APP_DOC_FILENAME] File"
+msgstr "File"
+
+# tracker/tracker_AvailableStageTasks.xml?TAS_TITLE
+# tracker/tracker_AvailableStageTasks.xml
+#: text - TAS_TITLE
+msgid "[tracker/tracker_AvailableStageTasks.xml?TAS_TITLE] Title"
+msgstr "Title"
+
+# tracker/tracker_Inputdocs.xml?TITLE
+# tracker/tracker_Inputdocs.xml
+#: text - TITLE
+msgid "Filename/Comments"
+msgstr "Filename/Comments"
+
+# tracker/tracker_objectsOptions.xml?MNU_ASSIGN
+# tracker/tracker_objectsOptions.xml
+#: link - MNU_ASSIGN
+msgid "[tracker/tracker_objectsOptions.xml?MNU_ASSIGN] Assign"
+msgstr "Assign"
+
+# tracker/tracker_MessagesView.xml?title
+# tracker/tracker_MessagesView.xml
+#: title - title
+msgid "MESSAGE"
+msgstr "MESSAGE"
+
+# tracker/tracker_MessagesView.xml?APP_MSG_SUBJECT
+# tracker/tracker_MessagesView.xml
+#: text - APP_MSG_SUBJECT
+msgid "[tracker/tracker_MessagesView.xml?APP_MSG_SUBJECT] SUBJECT"
+msgstr "SUBJECT"
+
+# tracker/tracker_MessagesView.xml?APP_MSG_FROM
+# tracker/tracker_MessagesView.xml
+#: text - APP_MSG_FROM
+msgid "[tracker/tracker_MessagesView.xml?APP_MSG_FROM] FROM"
+msgstr "FROM"
+
+# tracker/tracker_MessagesView.xml?APP_MSG_TO
+# tracker/tracker_MessagesView.xml
+#: text - APP_MSG_TO
+msgid "[tracker/tracker_MessagesView.xml?APP_MSG_TO] TO"
+msgstr "TO"
+
+# tracker/tracker_MessagesView.xml?APP_MSG_DATE
+# tracker/tracker_MessagesView.xml
+#: text - APP_MSG_DATE
+msgid "[tracker/tracker_MessagesView.xml?APP_MSG_DATE] DATE"
+msgstr "DATE"
+
+# tracker/tracker_TransferHistory.xml?TAS_TITLE
+# tracker/tracker_TransferHistory.xml
+#: text - TAS_TITLE
+msgid "[tracker/tracker_TransferHistory.xml?TAS_TITLE] Task"
+msgstr "Task"
+
+# tracker/tracker_TransferHistory.xml?USR_NAME
+# tracker/tracker_TransferHistory.xml
+#: text - USR_NAME
+msgid "Delegated User"
+msgstr "Delegated User"
+
+# tracker/tracker_TransferHistory.xml?DEL_DELEGATE_DATE
+# tracker/tracker_TransferHistory.xml
+#: date - DEL_DELEGATE_DATE
+msgid "Task Transfer Date"
+msgstr "Task Transfer Date"
+
+# tracker/tracker_TransferHistory.xml?DEL_INIT_DATE
+# tracker/tracker_TransferHistory.xml
+#: date - DEL_INIT_DATE
+msgid "Start Date"
+msgstr "Start Date"
+
+# tracker/tracker_TransferHistory.xml?DEL_FINISH_DATE
+# tracker/tracker_TransferHistory.xml
+#: date - DEL_FINISH_DATE
+msgid "End Date"
+msgstr "End Date"
+
+# tracker/tracker_TransferHistory.xml?APP_TYPE
+# tracker/tracker_TransferHistory.xml
+#: dropdown - APP_TYPE
+msgid "Action"
+msgstr "Action"
+
+# tracker/tracker_TransferHistory.xml?APP_TYPE-PAUSE
+# tracker/tracker_TransferHistory.xml
+#: dropdown - APP_TYPE - PAUSE
+msgid "[tracker/tracker_TransferHistory.xml?APP_TYPE-PAUSE]"
+msgstr "Paused"
+
+# tracker/tracker_TransferHistory.xml?APP_TYPE-CANCEL
+# tracker/tracker_TransferHistory.xml
+#: dropdown - APP_TYPE - CANCEL
+msgid "[tracker/tracker_TransferHistory.xml?APP_TYPE-CANCEL]"
+msgstr "Cancelled"
+
+# tracker/tracker_TransferHistory.xml?APP_TYPE-''
+# tracker/tracker_TransferHistory.xml
+#: dropdown - APP_TYPE - ''
+msgid "[tracker/tracker_TransferHistory.xml?APP_TYPE-'']"
+msgstr "Derivated"
+
+# tracker/tracker_StageEdit.xml?TITLE1
+# tracker/tracker_StageEdit.xml
+#: title - TITLE1
+msgid "Stage Information"
+msgstr "Stage Information"
+
+# tracker/tracker_StageEdit.xml?STG_TITLE
+# tracker/tracker_StageEdit.xml
+#: text - STG_TITLE
+msgid "[tracker/tracker_StageEdit.xml?STG_TITLE] Title"
+msgstr "Title"
+
+# tracker/tracker_StageEdit.xml?SAVE
+# tracker/tracker_StageEdit.xml
+#: button - SAVE
+msgid "[tracker/tracker_StageEdit.xml?SAVE] Save"
+msgstr "Save"
+
+# tracker/tracker_Outputdocs.xml?TITLE
+# tracker/tracker_Outputdocs.xml
+#: text - TITLE
+msgid "[tracker/tracker_Outputdocs.xml?TITLE] Title"
+msgstr "Title"
 
 # groups/groups_Options.xml?MNU_ADD_EMPLOYE
 # groups/groups_Options.xml
@@ -2968,7 +3814,7 @@ msgstr "Port"
 # dbConnections/dbConnections_Edit.xml?DBS_DESCRIPTION
 # dbConnections/dbConnections_Edit.xml
 #: textarea - DBS_DESCRIPTION
-msgid "Description"
+msgid "[dbConnections/dbConnections_Edit.xml?DBS_DESCRIPTION] Description"
 msgstr "Description"
 
 # dbConnections/dbConnections_Edit.xml?TEST
@@ -3178,7 +4024,7 @@ msgstr "Dynaform Information"
 # dynaforms/dynaforms_Edit.xml?DYN_TITLE
 # dynaforms/dynaforms_Edit.xml
 #: text - DYN_TITLE
-msgid "Title"
+msgid "[dynaforms/dynaforms_Edit.xml?DYN_TITLE] Title"
 msgstr "Title"
 
 # dynaforms/dynaforms_Edit.xml?DYN_TYPE
@@ -3247,17 +4093,11 @@ msgstr "Grid"
 msgid "[dynaforms/dynaforms_ShortList.xml?SEARCH] Apply Filter"
 msgstr "Apply Filter"
 
-# dynaforms/dynaforms_WebEntry.xml?WEB_ENTRY
+# dynaforms/dynaforms_WebEntry.xml?subtitle1
 # dynaforms/dynaforms_WebEntry.xml
-#: dropdown - WEB_ENTRY
-msgid "Web Entry"
+#: subtitle - subtitle1
+msgid "[dynaforms/dynaforms_WebEntry.xml?subtitle1] Web Entry"
 msgstr "Web Entry"
-
-# dynaforms/dynaforms_WebEntry.xml?WEB_ENTRY-1
-# dynaforms/dynaforms_WebEntry.xml
-#: dropdown - WEB_ENTRY - 1
-msgid "[dynaforms/dynaforms_WebEntry.xml?WEB_ENTRY-1]"
-msgstr "Simple form"
 
 # dynaforms/dynaforms_WebEntry.xml?TASKS
 # dynaforms/dynaforms_WebEntry.xml
@@ -3271,11 +4111,53 @@ msgstr "Select the initial task"
 msgid "Select the initial Dynaform"
 msgstr "Select the initial Dynaform"
 
+# dynaforms/dynaforms_WebEntry.xml?WE_TYPE
+# dynaforms/dynaforms_WebEntry.xml
+#: dropdown - WE_TYPE
+msgid "Method"
+msgstr "Method"
+
+# dynaforms/dynaforms_WebEntry.xml?WE_TYPE-SINGLE
+# dynaforms/dynaforms_WebEntry.xml
+#: dropdown - WE_TYPE - SINGLE
+msgid "[dynaforms/dynaforms_WebEntry.xml?WE_TYPE-SINGLE]"
+msgstr "Single HTML "
+
+# dynaforms/dynaforms_WebEntry.xml?WE_TYPE-WS
+# dynaforms/dynaforms_WebEntry.xml
+#: dropdown - WE_TYPE - WS
+msgid "[dynaforms/dynaforms_WebEntry.xml?WE_TYPE-WS]"
+msgstr "PHP pages with Web Services"
+
+# dynaforms/dynaforms_WebEntry.xml?subtitle2
+# dynaforms/dynaforms_WebEntry.xml
+#: subtitle - subtitle2
+msgid "PHP & Web Service options"
+msgstr "PHP & Web Service options"
+
+# dynaforms/dynaforms_WebEntry.xml?WS_USER
+# dynaforms/dynaforms_WebEntry.xml
+#: text - WS_USER
+msgid "Web Service User"
+msgstr "Web Service User"
+
+# dynaforms/dynaforms_WebEntry.xml?WS_PASS
+# dynaforms/dynaforms_WebEntry.xml
+#: password - WS_PASS
+msgid "Web Service Passsword"
+msgstr "Web Service Passsword"
+
+# dynaforms/dynaforms_WebEntry.xml?WS_ROUNDROBIN
+# dynaforms/dynaforms_WebEntry.xml
+#: yesno - WS_ROUNDROBIN
+msgid "Cyclical Assignment"
+msgstr "Cyclical Assignment"
+
 # dynaforms/dynaforms_WebEntry.xml?SEARCH
 # dynaforms/dynaforms_WebEntry.xml
 #: button - SEARCH
-msgid "Generate html"
-msgstr "Generate html"
+msgid "Generate Web Entry Page"
+msgstr "Generate Web Entry Page"
 
 # dynaforms/dynaforms_List.xml?DYN_TITLE
 # dynaforms/dynaforms_List.xml
@@ -5020,13 +5902,13 @@ msgstr "Start and End Dates"
 # dynaforms/fields/date.xml?PME_STARTDATE
 # dynaforms/fields/date.xml
 #: date - PME_STARTDATE
-msgid "Start Date"
+msgid "[dynaforms/fields/date.xml?PME_STARTDATE] Start Date"
 msgstr "Start Date"
 
 # dynaforms/fields/date.xml?PME_ENDDATE
 # dynaforms/fields/date.xml
 #: date - PME_ENDDATE
-msgid "End Date"
+msgid "[dynaforms/fields/date.xml?PME_ENDDATE] End Date"
 msgstr "End Date"
 
 # dynaforms/fields/date.xml?PME_SUBTITLE3a
@@ -5728,7 +6610,7 @@ msgstr "Title"
 # inputdocs/inputdocs_Edit.xml?INP_DOC_FORM_NEEDED
 # inputdocs/inputdocs_Edit.xml
 #: dropdown - INP_DOC_FORM_NEEDED
-msgid "Document Type"
+msgid "[inputdocs/inputdocs_Edit.xml?INP_DOC_FORM_NEEDED] Document Type"
 msgstr "Document Type"
 
 # inputdocs/inputdocs_Edit.xml?INP_DOC_FORM_NEEDED-VIRTUAL
@@ -5752,7 +6634,7 @@ msgstr "Digital/Printed"
 # inputdocs/inputdocs_Edit.xml?INP_DOC_ORIGINAL
 # inputdocs/inputdocs_Edit.xml
 #: dropdown - INP_DOC_ORIGINAL
-msgid "Format"
+msgid "[inputdocs/inputdocs_Edit.xml?INP_DOC_ORIGINAL] Format"
 msgstr "Format"
 
 # inputdocs/inputdocs_Edit.xml?INP_DOC_ORIGINAL-ORIGINAL
@@ -5917,12 +6799,6 @@ msgstr "Output Document Information"
 msgid "[outputdocs/outputdocs_Edit.xml?OUT_DOC_TITLE] Title"
 msgstr "Title"
 
-# outputdocs/outputdocs_Edit.xml?OUT_DOC_FILENAME
-# outputdocs/outputdocs_Edit.xml
-#: textpm - OUT_DOC_FILENAME
-msgid "Filename generated"
-msgstr "Filename generated"
-
 # outputdocs/outputdocs_Edit.xml?OUT_DOC_DESCRIPTION
 # outputdocs/outputdocs_Edit.xml
 #: textarea - OUT_DOC_DESCRIPTION
@@ -5950,7 +6826,7 @@ msgstr "Output document"
 # outputdocs/outputdocs_List.xml?OUT_DOC_FILENAME
 # outputdocs/outputdocs_List.xml
 #: text - OUT_DOC_FILENAME
-msgid "Filename"
+msgid "[outputdocs/outputdocs_List.xml?OUT_DOC_FILENAME] Filename"
 msgstr "Filename"
 
 # outputdocs/outputdocs_List.xml?OUT_DOC_DESCRIPTION
@@ -5995,6 +6871,12 @@ msgstr "Description"
 msgid "[processes/processes_Search.xml?search] Apply Filter"
 msgstr "Apply Filter"
 
+# processes/processes_FilesOptions.xml?MNU_UPLOAD
+# processes/processes_FilesOptions.xml
+#: link - MNU_UPLOAD
+msgid "Upload Files"
+msgstr "Upload Files"
+
 # processes/processes_Edit.xml?TITLE1
 # processes/processes_Edit.xml
 #: title - TITLE1
@@ -6036,6 +6918,48 @@ msgstr "Debug"
 #: button - SUBMIT
 msgid "[processes/processes_Edit.xml?SUBMIT] Save"
 msgstr "Save"
+
+# processes/processes_UploadFilesForm.xml?TITLE1
+# processes/processes_UploadFilesForm.xml
+#: title - TITLE1
+msgid "[processes/processes_UploadFilesForm.xml?TITLE1] Upload Files"
+msgstr "Upload Files"
+
+# processes/processes_UploadFilesForm.xml?FILENAME1
+# processes/processes_UploadFilesForm.xml
+#: file - FILENAME1
+msgid "File 1"
+msgstr "File 1"
+
+# processes/processes_UploadFilesForm.xml?FILENAME2
+# processes/processes_UploadFilesForm.xml
+#: file - FILENAME2
+msgid "File 2"
+msgstr "File 2"
+
+# processes/processes_UploadFilesForm.xml?FILENAME3
+# processes/processes_UploadFilesForm.xml
+#: file - FILENAME3
+msgid "File 3"
+msgstr "File 3"
+
+# processes/processes_UploadFilesForm.xml?FILENAME4
+# processes/processes_UploadFilesForm.xml
+#: file - FILENAME4
+msgid "File 4"
+msgstr "File 4"
+
+# processes/processes_UploadFilesForm.xml?FILENAME5
+# processes/processes_UploadFilesForm.xml
+#: file - FILENAME5
+msgid "File 5"
+msgstr "File 5"
+
+# processes/processes_UploadFilesForm.xml?UPLOAD
+# processes/processes_UploadFilesForm.xml
+#: button - UPLOAD
+msgid "[processes/processes_UploadFilesForm.xml?UPLOAD] Upload"
+msgstr "Upload"
 
 # processes/processes_Options.xml?MNU_ADD
 # processes/processes_Options.xml
@@ -6424,7 +7348,7 @@ msgstr "Size in bytes"
 # processes/processes_Export.xml?FILENAME_LABEL
 # processes/processes_Export.xml
 #: link - FILENAME_LABEL
-msgid "File"
+msgid "[processes/processes_Export.xml?FILENAME_LABEL] File"
 msgstr "File"
 
 # processes/processes_New.xml?TITLE1
@@ -6499,6 +7423,12 @@ msgstr "First name"
 msgid "[processes/processes_User.xml?USR_LASTNAME] Last name"
 msgstr "Last name"
 
+# processes/processes_FilesList.xml?DELETE
+# processes/processes_FilesList.xml
+#: link - DELETE
+msgid "[processes/processes_FilesList.xml?DELETE] Delete"
+msgstr ""
+
 # reports/report5_dashboard.xml?USER
 # reports/report5_dashboard.xml
 #: text - USER
@@ -6544,13 +7474,13 @@ msgstr "Reports"
 # reports/reports_Description_search.xml?FROM_DES
 # reports/reports_Description_search.xml
 #: date - FROM_DES
-msgid "FROM"
+msgid "[reports/reports_Description_search.xml?FROM_DES] FROM"
 msgstr "FROM"
 
 # reports/reports_Description_search.xml?TO_DES
 # reports/reports_Description_search.xml
 #: date - TO_DES
-msgid "TO"
+msgid "[reports/reports_Description_search.xml?TO_DES] TO"
 msgstr "TO"
 
 # reports/reports_Description_search.xml?STARTEDBY_DES
@@ -6742,7 +7672,7 @@ msgstr "Average"
 # reports/report1_back.xml?backs
 # reports/report1_back.xml
 #: link - backs
-msgid "Back"
+msgid "[reports/report1_back.xml?backs] Back"
 msgstr "Back"
 
 # reports/report3_dashboard.xml?FECHA
@@ -8353,17 +9283,35 @@ msgstr "Server"
 msgid "[setup/emails.xml?MESS_PORT] Port"
 msgstr "Port"
 
+# setup/emails.xml?MESS_RAUTH
+# setup/emails.xml
+#: checkbox - MESS_RAUTH
+msgid "Require authentification"
+msgstr "Require authentification"
+
 # setup/emails.xml?MESS_ACCOUNT
 # setup/emails.xml
 #: text - MESS_ACCOUNT
-msgid "Account"
-msgstr "Account"
+msgid "Account From"
+msgstr "Account From"
 
 # setup/emails.xml?MESS_PASSWORD
 # setup/emails.xml
 #: password - MESS_PASSWORD
 msgid "[setup/emails.xml?MESS_PASSWORD] Password"
 msgstr "Password"
+
+# setup/emails.xml?MESS_TEST_MAIL
+# setup/emails.xml
+#: checkbox - MESS_TEST_MAIL
+msgid "Send a test mail"
+msgstr "Send a test mail"
+
+# setup/emails.xml?MESS_TEST_MAIL_TO
+# setup/emails.xml
+#: text - MESS_TEST_MAIL_TO
+msgid "Mail to"
+msgstr "Mail to"
 
 # setup/emails.xml?MESS_BACKGROUND
 # setup/emails.xml
@@ -8590,7 +9538,7 @@ msgstr "Server Host"
 # setup/webServicesSetup.xml?WS_WORKSPACE
 # setup/webServicesSetup.xml
 #: text - WS_WORKSPACE
-msgid "Workspace"
+msgid "[setup/webServicesSetup.xml?WS_WORKSPACE] Workspace"
 msgstr "Workspace"
 
 # setup/webServicesSetup.xml?WS_PORT
@@ -9106,7 +10054,7 @@ msgstr "Email Settings"
 # setup/mail.xml?MAILER
 # setup/mail.xml
 #: dropdown - MAILER
-msgid "Method"
+msgid "[setup/mail.xml?MAILER] Method"
 msgstr "Method"
 
 # setup/mail.xml?MAILER-mail
@@ -10369,12 +11317,6 @@ msgstr "Manual Assignment"
 msgid "[tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_TYPE-EVALUATE]"
 msgstr "Value Based Assignment"
 
-# tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_VARIABLE
-# tasks/tasks_AssignmentRules.xml
-#: textpm - TAS_ASSIGN_VARIABLE
-msgid "Variable for Value Based Assignment"
-msgstr "Variable for Value Based Assignment"
-
 # tasks/tasks_Labels.xml?TAS_DEF_TITLE
 # tasks/tasks_Labels.xml
 #: textareapm - TAS_DEF_TITLE
@@ -10525,12 +11467,6 @@ msgstr "Title"
 msgid "[tasks/tasks_Definition.xml?TAS_DESCRIPTION] Description"
 msgstr "Description"
 
-# tasks/tasks_Definition.xml?TAS_PRIORITY_VARIABLE
-# tasks/tasks_Definition.xml
-#: textpm - TAS_PRIORITY_VARIABLE
-msgid "Variable for Case priority"
-msgstr "Variable for Case priority"
-
 # tasks/tasks_Definition.xml?TAS_START
 # tasks/tasks_Definition.xml
 #: checkbox - TAS_START
@@ -10558,7 +11494,7 @@ msgstr "#"
 # cases/cases_ListTodo.xml?APP_TITLE
 # cases/cases_ListTodo.xml
 #: text - APP_TITLE
-msgid "Case"
+msgid "[cases/cases_ListTodo.xml?APP_TITLE] Case"
 msgstr "Case"
 
 # cases/cases_ListTodo.xml?APP_TAS_TITLE
@@ -10642,7 +11578,7 @@ msgstr "Apply Filter"
 # cases/cases_AllInputdocsList.xml?TITLE
 # cases/cases_AllInputdocsList.xml
 #: text - TITLE
-msgid "Filename/Comments"
+msgid "[cases/cases_AllInputdocsList.xml?TITLE] Filename/Comments"
 msgstr "Filename/Comments"
 
 # cases/cases_AllInputdocsList.xml?TYPE
@@ -10774,7 +11710,7 @@ msgstr "Copy"
 # cases/cases_ViewInputDocumentToRevise.xml?APP_DOC_CREATE_DATE
 # cases/cases_ViewInputDocumentToRevise.xml
 #: date - APP_DOC_CREATE_DATE
-msgid "Created Date"
+msgid "[cases/cases_ViewInputDocumentToRevise.xml?APP_DOC_CREATE_DATE] Created Date"
 msgstr "Created Date"
 
 # cases/cases_ViewInputDocumentToRevise.xml?CREATOR
@@ -10804,7 +11740,7 @@ msgstr "Title"
 # cases/cases_OutputdocsListToRevise.xml?APP_DOC_CREATE_DATE
 # cases/cases_OutputdocsListToRevise.xml
 #: date - APP_DOC_CREATE_DATE
-msgid "Create Date"
+msgid "[cases/cases_OutputdocsListToRevise.xml?APP_DOC_CREATE_DATE] Create Date"
 msgstr "Create Date"
 
 # cases/cases_AttachInputDocument3.xml?TITLE1
@@ -10882,7 +11818,7 @@ msgstr "File"
 # cases/cases_AttachInputDocument3.xml?APP_DOC_COMMENT
 # cases/cases_AttachInputDocument3.xml
 #: textarea - APP_DOC_COMMENT
-msgid "Comments"
+msgid "[cases/cases_AttachInputDocument3.xml?APP_DOC_COMMENT] Comments"
 msgstr "Comments"
 
 # cases/cases_AttachInputDocument3.xml?MORE
@@ -10906,13 +11842,13 @@ msgstr "Task"
 # cases/cases_TransferHistory.xml?USR_NAME
 # cases/cases_TransferHistory.xml
 #: text - USR_NAME
-msgid "Delegated User"
+msgid "[cases/cases_TransferHistory.xml?USR_NAME] Delegated User"
 msgstr "Delegated User"
 
 # cases/cases_TransferHistory.xml?DEL_DELEGATE_DATE
 # cases/cases_TransferHistory.xml
 #: date - DEL_DELEGATE_DATE
-msgid "Task Transfer Date"
+msgid "[cases/cases_TransferHistory.xml?DEL_DELEGATE_DATE] Task Transfer Date"
 msgstr "Task Transfer Date"
 
 # cases/cases_TransferHistory.xml?DEL_INIT_DATE
@@ -10930,7 +11866,7 @@ msgstr "End Date"
 # cases/cases_TransferHistory.xml?APP_TYPE
 # cases/cases_TransferHistory.xml
 #: dropdown - APP_TYPE
-msgid "Action"
+msgid "[cases/cases_TransferHistory.xml?APP_TYPE] Action"
 msgstr "Action"
 
 # cases/cases_TransferHistory.xml?APP_TYPE-PAUSE
@@ -10944,6 +11880,12 @@ msgstr "Paused"
 #: dropdown - APP_TYPE - CANCEL
 msgid "[cases/cases_TransferHistory.xml?APP_TYPE-CANCEL]"
 msgstr "Cancelled"
+
+# cases/cases_TransferHistory.xml?APP_TYPE-IN_PROGRESS
+# cases/cases_TransferHistory.xml
+#: dropdown - APP_TYPE - IN_PROGRESS
+msgid "[cases/cases_TransferHistory.xml?APP_TYPE-IN_PROGRESS]"
+msgstr "In Progress"
 
 # cases/cases_TransferHistory.xml?APP_TYPE-''
 # cases/cases_TransferHistory.xml
@@ -11314,13 +12256,13 @@ msgstr "Create Date"
 # cases/cases_ViewOutputDocument1.xml?APP_DOC_FILENAME1
 # cases/cases_ViewOutputDocument1.xml
 #: link - APP_DOC_FILENAME1
-msgid "File (.doc)"
+msgid "[cases/cases_ViewOutputDocument1.xml?APP_DOC_FILENAME1] File (.doc)"
 msgstr "File (.doc)"
 
 # cases/cases_ViewOutputDocument1.xml?APP_DOC_FILENAME2
 # cases/cases_ViewOutputDocument1.xml
 #: link - APP_DOC_FILENAME2
-msgid "File (.pdf)"
+msgid "[cases/cases_ViewOutputDocument1.xml?APP_DOC_FILENAME2] File (.pdf)"
 msgstr "File (.pdf)"
 
 # cases/cases_ViewOutputDocument1.xml?NEXT_STEP
@@ -11892,6 +12834,30 @@ msgstr "File (.pdf)"
 #: button - BACK
 msgid "[cases/cases_ViewOutputDocumentToRevise.xml?BACK] Back"
 msgstr "Back"
+
+# cases/cases_Messages.xml?APP_MSG_DATE
+# cases/cases_Messages.xml
+#: text - APP_MSG_DATE
+msgid "[cases/cases_Messages.xml?APP_MSG_DATE] DATE"
+msgstr "DATE"
+
+# cases/cases_Messages.xml?APP_MSG_SUBJECT
+# cases/cases_Messages.xml
+#: text - APP_MSG_SUBJECT
+msgid "[cases/cases_Messages.xml?APP_MSG_SUBJECT] SUBJECT"
+msgstr "SUBJECT"
+
+# cases/cases_Messages.xml?APP_MSG_FROM
+# cases/cases_Messages.xml
+#: text - APP_MSG_FROM
+msgid "[cases/cases_Messages.xml?APP_MSG_FROM] FROM"
+msgstr "FROM"
+
+# cases/cases_Messages.xml?APP_MSG_TO
+# cases/cases_Messages.xml
+#: text - APP_MSG_TO
+msgid "[cases/cases_Messages.xml?APP_MSG_TO] TO"
+msgstr "TO"
 
 # cases/cases_ViewAnyInputDocument3.xml?INP_DOC_TITLE
 # cases/cases_ViewAnyInputDocument3.xml
@@ -12505,6 +13471,36 @@ msgstr "Last Update"
 msgid "[cases/cases_Resume.xml?STATUS] Case Status"
 msgstr "Case Status"
 
+# cases/cases_MessagesView.xml?title
+# cases/cases_MessagesView.xml
+#: title - title
+msgid "[cases/cases_MessagesView.xml?title] MESSAGE"
+msgstr "MESSAGE"
+
+# cases/cases_MessagesView.xml?APP_MSG_SUBJECT
+# cases/cases_MessagesView.xml
+#: text - APP_MSG_SUBJECT
+msgid "[cases/cases_MessagesView.xml?APP_MSG_SUBJECT] SUBJECT"
+msgstr "SUBJECT"
+
+# cases/cases_MessagesView.xml?APP_MSG_FROM
+# cases/cases_MessagesView.xml
+#: text - APP_MSG_FROM
+msgid "[cases/cases_MessagesView.xml?APP_MSG_FROM] FROM"
+msgstr "FROM"
+
+# cases/cases_MessagesView.xml?APP_MSG_TO
+# cases/cases_MessagesView.xml
+#: text - APP_MSG_TO
+msgid "[cases/cases_MessagesView.xml?APP_MSG_TO] TO"
+msgstr "TO"
+
+# cases/cases_MessagesView.xml?APP_MSG_DATE
+# cases/cases_MessagesView.xml
+#: text - APP_MSG_DATE
+msgid "[cases/cases_MessagesView.xml?APP_MSG_DATE] DATE"
+msgstr "DATE"
+
 # login/newSite.xml?NEW_WORKSPACE
 # login/newSite.xml
 #: title - NEW_WORKSPACE
@@ -12582,6 +13578,18 @@ msgstr "Test"
 #: submit - BSUBMIT
 msgid "[login/nologin.xml?BSUBMIT] Login"
 msgstr "Login"
+
+# login/showInfo.xml?TITLE
+# login/showInfo.xml
+#: title - TITLE
+msgid "[login/showInfo.xml?TITLE] Information"
+msgstr "Information"
+
+# login/showInfo.xml?MESSAGE
+# login/showInfo.xml
+#: text - MESSAGE
+msgid "[login/showInfo.xml?MESSAGE] You do not have enabled the SOAP extension"
+msgstr ""
 
 # login/login.xml?TITLE
 # login/login.xml
@@ -12919,12 +13927,6 @@ msgstr "Available Triggers"
 msgid "[steps/triggers_Assign.xml?TRI_UID] Triggers"
 msgstr "Triggers"
 
-# steps/triggers_Assign.xml?ST_CONDITION
-# steps/triggers_Assign.xml
-#: textareapm - ST_CONDITION
-msgid "[steps/triggers_Assign.xml?ST_CONDITION] Condition"
-msgstr "Condition"
-
 # steps/triggers_Assign.xml?ASSIGN
 # steps/triggers_Assign.xml
 #: button - ASSIGN
@@ -12958,7 +13960,7 @@ msgstr "Save"
 # patterns/patterns_GridEvaluateType.xml?ROU_NEXT_TASK
 # patterns/patterns_GridEvaluateType.xml
 #: dropdown - ROU_NEXT_TASK
-msgid "Next Task"
+msgid "[patterns/patterns_GridEvaluateType.xml?ROU_NEXT_TASK] Next Task"
 msgstr "Next Task"
 
 # patterns/patterns_GridEvaluateType.xml?ROU_NEXT_TASK--1
@@ -13242,12 +14244,6 @@ msgstr "Title"
 #: textarea - TRI_DESCRIPTION
 msgid "[triggers/triggers_Edit.xml?TRI_DESCRIPTION] Description"
 msgstr "Description"
-
-# triggers/triggers_Edit.xml?TRI_WEBBOT
-# triggers/triggers_Edit.xml
-#: textareapm - TRI_WEBBOT
-msgid "Script"
-msgstr "Script"
 
 # triggers/triggers_Edit.xml?SAVE
 # triggers/triggers_Edit.xml

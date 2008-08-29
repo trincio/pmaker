@@ -27,6 +27,7 @@ CREATE TABLE `APPLICATION`
 	`APP_FINISH_DATE` DATETIME  NOT NULL,
 	`APP_UPDATE_DATE` DATETIME  NOT NULL,
 	`APP_DATA` TEXT  NOT NULL,
+	`APP_PIN` VARCHAR(32) default '',
 	PRIMARY KEY (`APP_UID`),
 	KEY `indexApp`(`PRO_UID`, `APP_UID`)
 )Type=MyISAM  DEFAULT CHARSET='utf8' COMMENT='The application';
@@ -48,7 +49,7 @@ CREATE TABLE `APP_DELEGATION`
 	`DEL_TYPE` VARCHAR(32) default 'NORMAL' NOT NULL,
 	`DEL_THREAD` INTEGER default 0 NOT NULL,
 	`DEL_THREAD_STATUS` VARCHAR(32) default 'OPEN' NOT NULL,
-	`DEL_PRIORITY` VARCHAR(32) default '0' NOT NULL,
+	`DEL_PRIORITY` VARCHAR(32) default '3' NOT NULL,
 	`DEL_DELEGATE_DATE` DATETIME  NOT NULL,
 	`DEL_INIT_DATE` DATETIME,
 	`DEL_TASK_DUE_DATE` DATETIME,
@@ -97,7 +98,7 @@ CREATE TABLE `APP_MESSAGE`
 	`APP_MSG_CC` TEXT,
 	`APP_MSG_BCC` TEXT,
 	`APP_MSG_TEMPLATE` TEXT,
-	`APP_MSG_STATUS` TEXT,
+	`APP_MSG_STATUS` VARCHAR,
 	`APP_MSG_ATTACH` TEXT,
 	PRIMARY KEY (`APP_MSG_UID`)
 )Type=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Messages in an Application';
@@ -146,7 +147,8 @@ CREATE TABLE `CONTENT`
 	`CON_ID` VARCHAR(100) default '' NOT NULL,
 	`CON_LANG` VARCHAR(10) default '' NOT NULL,
 	`CON_VALUE` TEXT  NOT NULL,
-	PRIMARY KEY (`CON_CATEGORY`,`CON_PARENT`,`CON_ID`,`CON_LANG`)
+	PRIMARY KEY (`CON_CATEGORY`,`CON_PARENT`,`CON_ID`,`CON_LANG`),
+	KEY `indexUid`(`CON_ID`)
 )Type=MyISAM  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
 #-- DEPARTMENT
@@ -700,7 +702,7 @@ CREATE TABLE `DB_SOURCE`
 	`DBS_SERVER` VARCHAR(100) default '0' NOT NULL,
 	`DBS_DATABASE_NAME` VARCHAR(100) default '0' NOT NULL,
 	`DBS_USERNAME` VARCHAR(32) default '0' NOT NULL,
-	`DBS_PASSWORD` VARCHAR(32) default '0',
+	`DBS_PASSWORD` VARCHAR(32) default '',
 	`DBS_PORT` INTEGER default 0,
 	PRIMARY KEY (`DBS_UID`),
 	KEY `indexDBSource`(`PRO_UID`)
@@ -744,5 +746,54 @@ CREATE TABLE `OBJECT_PERMISSION`
 	PRIMARY KEY (`OP_UID`),
 	KEY `indexObjctPermission`(`PRO_UID`, `TAS_UID`, `USR_UID`, `OP_TASK_SOURCE`, `OP_OBJ_UID`)
 )Type=MyISAM  DEFAULT CHARSET='utf8' COMMENT='OBJECT_PERMISSION';
+#-----------------------------------------------------------------------------
+#-- CASE_TRACKER
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `CASE_TRACKER`;
+
+
+CREATE TABLE `CASE_TRACKER`
+(
+	`PRO_UID` VARCHAR(32) default '0' NOT NULL,
+	`CT_MAP_TYPE` VARCHAR(10) default '0' NOT NULL,
+	`CT_DERIVATION_HISTORY` INTEGER default 0 NOT NULL,
+	`CT_MESSAGE_HISTORY` INTEGER default 0 NOT NULL,
+	PRIMARY KEY (`PRO_UID`)
+)Type=MyISAM  DEFAULT CHARSET='utf8' COMMENT='CASE_TRACKER';
+#-----------------------------------------------------------------------------
+#-- CASE_TRACKER_OBJECT
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `CASE_TRACKER_OBJECT`;
+
+
+CREATE TABLE `CASE_TRACKER_OBJECT`
+(
+	`CTO_UID` VARCHAR(32) default '' NOT NULL,
+	`PRO_UID` VARCHAR(32) default '0' NOT NULL,
+	`CTO_TYPE_OBJ` VARCHAR(20) default 'DYNAFORM' NOT NULL,
+	`CTO_UID_OBJ` VARCHAR(32) default '0' NOT NULL,
+	`CTO_CONDITION` TEXT  NOT NULL,
+	`CTO_POSITION` INTEGER default 0 NOT NULL,
+	PRIMARY KEY (`CTO_UID`),
+	KEY `indexCaseTrackerObject`(`PRO_UID`, `CTO_UID_OBJ`)
+)Type=MyISAM  DEFAULT CHARSET='utf8';
+#-----------------------------------------------------------------------------
+#-- STAGE
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `STAGE`;
+
+
+CREATE TABLE `STAGE`
+(
+	`STG_UID` VARCHAR(32) default '' NOT NULL,
+	`PRO_UID` VARCHAR(32) default '' NOT NULL,
+	`STG_POSX` INTEGER default 0 NOT NULL,
+	`STG_POSY` INTEGER default 0 NOT NULL,
+	`STG_INDEX` INTEGER default 0 NOT NULL,
+	PRIMARY KEY (`STG_UID`)
+)Type=MyISAM  DEFAULT CHARSET='utf8';
 # This restores the fkey checks, after having unset them earlier
 SET FOREIGN_KEY_CHECKS = 1;
