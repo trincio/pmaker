@@ -415,8 +415,11 @@ die;
 }
 
 function addTarFolder ( $tar, $pathBase,$pluginHome ) {
+  $aux = explode( PATH_SEP, $pathBase);
+  print $aux[count($aux) -2 ] . "\n";
+  if ( $aux[count($aux) -2 ] == '.svn' ) return;
+
   if ($handle = opendir( $pathBase  )) {
-  	//print "base $pathBase\n";
     while ( false !== ($file = readdir($handle))) {
     	if ( is_file ( $pathBase . $file ) ) {
      	//print "file $file \n";
@@ -471,9 +474,11 @@ function run_pack_plugin ( $task, $args)
   $tar->_compress=false;
 
   $pathBase = $pluginHome . PATH_SEP . $pluginName . PATH_SEP;
+  
   $tar->createModify( $pluginHome . PATH_SEP . $pluginName . '.php' ,'', $pluginHome);
   addTarFolder ( $tar, $pathBase, $pluginHome );
   $aFiles = $tar->listContent();
+  
   foreach ( $aFiles as $key => $val ) {
     printf( " %6d %s \n", $val['size'], pakeColor::colorize( $val['filename'], 'INFO') );
   }
