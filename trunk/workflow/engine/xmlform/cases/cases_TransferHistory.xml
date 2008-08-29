@@ -15,7 +15,7 @@
   <en>Delegated User</en>
 </USR_FIRSTNAME>
 
-<USR_NAME type="text" defaultValue="@#USR_LASTNAME, @#USR_FIRSTNAME" colWidth="184" replaceTags="1">
+<USR_NAME type="text">
   <en>Delegated User</en>
 </USR_NAME>
 
@@ -35,6 +35,7 @@
   <en>Action
   <option name="PAUSE">Paused</option>
   <option name="CANCEL">Cancelled</option>
+  <option name="IN_PROGRESS">In Progress</option>
   <option name="">Derivated</option>
   </en>
 </APP_TYPE>

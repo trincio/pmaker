@@ -59,7 +59,7 @@ function upperCase($sText)
 {
 	return G::toUpper($sText);
 }
-           
+
 function lowerCase($sText)
 {
 	return G::toLower($sText);
@@ -98,7 +98,7 @@ function literalDate($date, $lang = 'en')
     	throw $oException;
   	}
 }
- 
+
 function pauseCase($sApplicationUID = '', $iDelegation = 0, $sUserUID = '', $sUnpauseDate = null) {//var_dump($sApplicationUID, $iDelegation, $sUserUID, $sUnpauseDate);die(':|');
   try {
     if ($sApplicationUID == '') {
@@ -120,13 +120,13 @@ function pauseCase($sApplicationUID = '', $iDelegation = 0, $sUserUID = '', $sUn
 }
 
 function executeQuery($SqlStatement, $DBConnectionUID = 'workflow')
-{	
+{
 	try {
 		$con = Propel::getConnection($DBConnectionUID);
 		$con->begin();
 		$rs = $con->executeQuery($SqlStatement);
 		$con->commit();
-		
+
 		switch(true) {
 			case eregi("SELECT", $SqlStatement):
 				$result = Array();
@@ -171,7 +171,7 @@ function orderGrid($dataM, $field, $ord = 'ASC')
 					$dataM[$i] = $dataM[$j];
 					$dataM[$j] = $swap;
 				}
-			}	
+			}
 		}
 	}
 	return $dataM;
@@ -189,9 +189,9 @@ function evaluateFunction($aGrid, $sExpresion)
 		$aFields = $aGrid[$i];
 
 		$pmScript->setFields($aFields);
-	
+
 		$pmScript->execute();
-		
+
 		$aGrid[$i] = $pmScript->aFields;
 	}
 	return $aGrid;
@@ -204,7 +204,7 @@ function WSLogin($user, $pass, $endpoint='')
 	$client = wSOpen(true);
 	$params = array('userid'=>$user, 'password'=>$pass);
 	$result = $client->__SoapCall('login', array($params));
-	
+
 	if($result->status_code == 0){
 		if($endpoint != ''){
 			$_SESSION['WS_END_POINT'] = $endpoint;
@@ -239,7 +239,7 @@ function WSTaskCase($caseId)
 
 	$params = array('sessionId'=>$sessionId, 'caseId'=>$caseId);
 	$result = $client->__soapCall('taskCase', array($params));
-	
+
 	$i = 1;
 	if(isset ($result->taskCases)){
 		foreach ( $result->taskCases as $key=> $item) {
@@ -258,7 +258,7 @@ function WSTaskCase($caseId)
 			$rows[$i++] = array ( 'guid' => $guid, 'name' => $name );
 		}
 	}
-	return $rows;	
+	return $rows;
 }
 
 function WSTaskList()
@@ -287,7 +287,7 @@ function WSTaskList()
 			$rows[$i++] = array ( 'guid' => $guid, 'name' => $name );
 		}
 	}
-	return $rows;	
+	return $rows;
 }
 
 function WSUserList()
@@ -316,7 +316,7 @@ function WSUserList()
 			$rows[$i++] = array ( 'guid' => $guid, 'name' => $name );
 		}
 	}
-	return $rows;	
+	return $rows;
 }
 
 function WSGroupList()
@@ -345,14 +345,14 @@ function WSGroupList()
 			$rows[$i++] = array ( 'guid' => $guid, 'name' => $name );
 		}
 	}
-	return $rows;		
+	return $rows;
 }
 
 
 function WSRoleList()
 {
 	$client = WSOpen();
-	
+
 	$sessionId = $_SESSION['WS_SESSION_ID'];
 	$params = array('sessionId'=>$sessionId );
 	$result = $client->__SoapCall('RoleList', array($params));
@@ -374,7 +374,7 @@ function WSRoleList()
 			$rows[$i++] = array ( 'guid' => $guid, 'name' => $name );
 		}
 	}
-	return $rows;	
+	return $rows;
 }
 
 function WSCaseList()
@@ -403,8 +403,8 @@ function WSCaseList()
 			$rows[$i++] = array ( 'guid' => $guid, 'name' => $name );
 		}
 	}
-	
-	return $rows;	
+
+	return $rows;
 }
 
 function WSProcessList()
@@ -433,7 +433,7 @@ function WSProcessList()
 			$rows[$i++] = array ( 'guid' => $guid, 'name' => $name );
 		}
 	}
-	return $rows;	
+	return $rows;
 }
 
 //private function to get current email configuration
@@ -447,7 +447,7 @@ function getEmailConfiguration () {
   $oCriteria->add(ConfigurationPeer::PRO_UID, '');
   $oCriteria->add(ConfigurationPeer::USR_UID, '');
   $oCriteria->add(ConfigurationPeer::APP_UID, '');
-  
+
   if (ConfigurationPeer::doCount($oCriteria) == 0) {
     $oConfiguration->create(array('CFG_UID' => 'Emails', 'OBJ_UID' => '', 'CFG_VALUE' => '', 'PRO_UID' => '', 'USR_UID' => '', 'APP_UID' => ''));
     $aFields = array();
@@ -461,7 +461,7 @@ function getEmailConfiguration () {
       $aFields = array();
     }
   }
-  
+
   return $aFields;
 }
 
@@ -469,7 +469,7 @@ function PMFSendMessage($caseId, $sFrom, $sTo, $sCc, $sBcc, $sSubject, $sBody) {
 	G::LoadClass('wsBase');
 	$ws = new wsBase ();
 	$result = $ws->sendMessage($caseId, $sFrom, $sTo, $sCc, $sBcc, $sSubject, $sBody);
-	
+
 	if ( $result->status_code == 0){
 		return 1;
 	} else {
@@ -503,7 +503,7 @@ function WSDerivateCase($caseId, $delIndex)
 
 	$params = array('sessionId'=>$sessionId, 'caseId'=>$caseId, 'delIndex'=>$delIndex );
 	$result = $client->__SoapCall('DerivateCase', array($params));
-		  
+
 	$fields['status_code'] = $result->status_code;
 	$fields['message']     = $result->message;
 	$fields['time_stamp']  = $result->timestamp;
@@ -522,7 +522,7 @@ function WSNewCaseImpersonate($processId, $userId, $name1, $value1, $name2, $val
 
 	$params = array('sessionId'=>$sessionId, 'processId'=>$processId, 'userId'=>$userId, 'variables'=>$variables );
 	$result = $client->__SoapCall('NewCaseImpersonate', array($params));
-		  
+
 	$fields['status_code'] = $result->status_code;
 	$fields['message']     = $result->message;
 	$fields['time_stamp']  = $result->timestamp;
@@ -541,7 +541,7 @@ function WSNewCase($processId, $taskId, $name1, $value1, $name2, $value2)
 
 	$params = array('sessionId'=>$sessionId, 'processId'=>$processId, 'taskId'=>$taskId, 'variables'=>$variables );
 	$result = $client->__SoapCall('NewCase', array($params));
-  		  
+
 	$fields['status_code'] = $result->status_code;
 	$fields['message']     = $result->message;
 	$fields['time_stamp']  = $result->timestamp;
@@ -555,7 +555,7 @@ function WSAssignUserToGroup($userId, $groupId)
 
 	$params = array('sessionId'=>$sessionId, 'userId'=>$userId, 'groupId'=>$groupId);
 	$result = $client->__SoapCall('AssignUserToGroup', array($params));
-  		  
+
 	$fields['status_code'] = $result->status_code;
 	$fields['message']     = $result->message;
 	$fields['time_stamp']  = $result->timestamp;
@@ -563,7 +563,7 @@ function WSAssignUserToGroup($userId, $groupId)
 }
 
 function WSCreateUser($userId, $password, $firstname, $lastname, $email, $role)
-{	
+{
 	$client = WSOpen();
 	$sessionId = $_SESSION['WS_SESSION_ID'];
 	$params = array('sessionId'=>$sessionId, 'userId'=>$userId, 'firstname'=>$firstname, 'lastname'=>$lastname, 'email'=>$email, 'role'=>$role, 'password'=>$password);
@@ -600,7 +600,7 @@ function PMFTaskCase($caseId) #its test was successfull
 			$rows[$i++] = $item;
 		}
 	}
-	return $rows;	
+	return $rows;
 }
 
 function PMFTaskList($userId) #its test was successfull
@@ -615,7 +615,7 @@ function PMFTaskList($userId) #its test was successfull
 			$rows[$i++] = $item;
 		}
 	}
-	return $rows;	
+	return $rows;
 }
 
 function PMFUserList() #its test was successfull
@@ -630,7 +630,7 @@ function PMFUserList() #its test was successfull
 			$rows[$i++] = $item;
 		}
 	}
-	return $rows;	
+	return $rows;
 }
 
 function PMFGroupList() #its test was successfull
@@ -645,7 +645,7 @@ function PMFGroupList() #its test was successfull
 			$rows[$i++] = $item;
 		}
 	}
-	return $rows;	
+	return $rows;
 }
 
 
@@ -661,7 +661,7 @@ function PMFRoleList() #its test was successfull
 			$rows[$i++] = $item;
 		}
 	}
-	return $rows;	
+	return $rows;
 }
 
 function PMFCaseList($userId) #its test was successfull
@@ -676,7 +676,7 @@ function PMFCaseList($userId) #its test was successfull
 			$rows[$i++] = $item;
 		}
 	}
-	return $rows;	
+	return $rows;
 }
 
 function PMFProcessList() #its test was successfull
@@ -699,7 +699,7 @@ function PMFSendVariables($caseId, $variables)
 {
 	G::LoadClass('wsBase');
 	$ws = new wsBase ();
-	
+
     $result = $ws->sendVariables($caseId, $variables);
 	if($result->status_code == 0){
 		return 1;
@@ -712,7 +712,7 @@ function PMFDerivateCase($caseId, $delIndex)
 {
 	G::LoadClass('wsBase');
 	$ws = new wsBase ();
-	$result = $ws->derivateCase($_SESSION['USER_LOGGED'], $caseId, $delIndex);
+	$result = $ws->derivateCase($_SESSION['USER_LOGGED'], $caseId, $delIndex);//var_dump($result);die;
 	return $result->status_code;
 	if($result->status_code == 0){
 		return 1;
@@ -740,7 +740,7 @@ function PMFNewCase($processId, $userId, $taskId, $variables)
 	$ws = new wsBase ();
 
 	$result = $ws->newCase($processId, $userId,$taskId, $variables);
-	
+
 	if($result->status_code == 0){
 		return 1;
 	} else {
@@ -753,7 +753,7 @@ function PMFAssignUserToGroup($userId, $groupId)
 	G::LoadClass('wsBase');
 	$ws = new wsBase ();
 	$result = $ws->assignUserToGroup($userId, $groupId);
-	
+
 	if($result->status_code == 0){
 		return 1;
 	} else {
@@ -762,11 +762,11 @@ function PMFAssignUserToGroup($userId, $groupId)
 }
 
 function PMFCreateUser($userId, $password, $firstname, $lastname, $email, $role)
-{	
+{
 	G::LoadClass('wsBase');
 	$ws = new wsBase ();
 	$result = $ws->createUser($userId, $firstname, $lastname, $email, $role, $password);
-	
+
 	if($result->status_code == 0){
 		return 1;
 	} else {

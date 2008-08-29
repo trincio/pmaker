@@ -63,7 +63,7 @@ class wsBase
 {
 	function __construct() {
 	}
-	
+
 	public function login( $userid, $password ) {
 		global $RBAC;
 
@@ -73,7 +73,7 @@ class wsBase
 				case -1: //The user not exists
 				$wsResponse = new wsResponse (3, G::loadTranslation ('ID_USER_NOT_REGISTERED'));
 				break;
-		
+
 				case -2://The password is incorrect
 				$wsResponse = new wsResponse (4, G::loadTranslation ('ID_WRONG_PASS'));
 				break;
@@ -112,7 +112,7 @@ class wsBase
 			$session->setSesDueDate  ( date ('Y-m-d H:i:s', mktime(date('H'),date('i')+5, date('s'), date('m'),date('d'),date('Y') ) ) );
 			$session->setSesEndDate ( '' );
 			$session->Save();
-			
+
 			//save the session in DataBase
 			return $wsResponse;
 		}
@@ -124,14 +124,14 @@ class wsBase
 
 	public function processList( ) {
 		try {
-		
+
 			$result  = array();
 			$oCriteria = new Criteria('workflow');
 			$oCriteria->add(ProcessPeer::PRO_STATUS ,  'ACTIVE' );
 			$oDataset = ProcessPeer::doSelectRS($oCriteria);
 			$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
 			$oDataset->next();
-			
+
 			while ($aRow = $oDataset->getRow()) {
 				$oProcess = new Process();
 				$arrayProcess = $oProcess->Load( $aRow['PRO_UID'] );
@@ -158,18 +158,18 @@ class wsBase
 			$oDataset = GulliverBasePeer::doSelectRs ( $oCriteria);;
 			$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
 			$oDataset->next();
-			
+
 			while ($aRow = $oDataset->getRow()) {
 				$result[] = array ( 'guid' => $aRow['ROL_UID'], 'name' => $aRow['ROL_CODE'] );
 				$oDataset->next();
 			}
-			
+
 			return $result;
 		}
 		catch ( Exception $e ) {
 			$result[] = array ( 'guid' => $e->getMessage(), 'name' => $e->getMessage() );
 			return $result;
-		}		
+		}
 	}
 
 	public function groupList( ) {
@@ -180,7 +180,7 @@ class wsBase
 			$oDataset = GroupwfPeer::doSelectRS($oCriteria);
 			$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
 			$oDataset->next();
-			
+
 			while ($aRow = $oDataset->getRow()) {
 				$oGroupwf = new Groupwf();
 				$arrayGroupwf = $oGroupwf->Load( $aRow['GRP_UID'] );
@@ -195,9 +195,9 @@ class wsBase
 			return $result;
 		}
 	}
-	
+
 	public function caseList( $userId ) {
-		try {			
+		try {
 			$result  = array();
 			$oCriteria = new Criteria('workflow');
 			$del = DBAdapter::getStringDelimiter();
@@ -224,11 +224,11 @@ class wsBase
 				$oDataset->next();
 			}
 			return $result;
-		}    
+		}
 		catch ( Exception $e ) {
 			$result[] = array ( 'guid' => $e->getMessage(), 'name' => $e->getMessage() );
 			return $result;
-		}		
+		}
 	}
 
 	public function userList( ) {
@@ -239,7 +239,7 @@ class wsBase
 			$oDataset = UsersPeer::doSelectRS($oCriteria);
 			$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
 			$oDataset->next();
-			
+
 			while ($aRow = $oDataset->getRow()) {
 				//$oProcess = new User();
 				//$arrayProcess = $oUser->Load( $aRow['PRO_UID'] );
@@ -255,7 +255,7 @@ class wsBase
 	}
 
 	public function taskList( $userId ) {
-		try {			
+		try {
 			$result  = array();
 			$oCriteria = new Criteria('workflow');
 			$del = DBAdapter::getStringDelimiter();
@@ -267,14 +267,14 @@ class wsBase
 			$tasTitleConds[] = array( 'C1.CON_CATEGORY' , $del . 'TAS_TITLE' . $del );
 			$tasTitleConds[] = array( 'C1.CON_LANG' ,    $del . SYS_LANG . $del );
 			$oCriteria->addJoinMC($tasTitleConds ,    Criteria::LEFT_JOIN);
-			
+
 			$oCriteria->addJoin(TaskPeer::TAS_UID, TaskUserPeer::TAS_UID, Criteria::LEFT_JOIN);
-			
+
 			$oCriteria->add(TaskUserPeer::USR_UID, $userId );
 			$oDataset = TaskPeer::doSelectRS($oCriteria);
 			$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
 			$oDataset->next();
-			
+
 			while ($aRow = $oDataset->getRow()) {
 				$result[] = array ( 'guid' => $aRow['TAS_UID'], 'name' => $aRow['TAS_TITLE'] );
 				$oDataset->next();
@@ -288,15 +288,15 @@ class wsBase
 	}
 
 	public function sendMessage($caseId, $sFrom, $sTo, $sCc, $sBcc, $sSubject, $sTemplate, $appFields = null ) {
-		try {	
+		try {
 			G::LoadClass('case');
       G::LoadClass('spool');
 			$oCase = new Cases();
 
     	$aSetup = getEmailConfiguration();
-			if ( $sFrom == '' ) 
+			if ( $sFrom == '' )
 			  $sFrom = $aSetup['MESS_ACCOUNT'];
-			
+
       $oSpool = new spoolRun();
       $oSpool->setConfig(array('MESS_ENGINE'   => $aSetup['MESS_ENGINE'],
                                'MESS_SERVER'   => $aSetup['MESS_SERVER'],
@@ -305,10 +305,10 @@ class wsBase
                                'MESS_PASSWORD' => $aSetup['MESS_PASSWORD'],
                                'SMTPAuth'      => $aSetup['MESS_RAUTH'] ));
 
-    	
+
 			$oCase = new Cases();
   	  $oldFields = $oCase->loadCase( $caseId );
-      			  
+
       $pathEmail = PATH_DATA_SITE . 'mailTemplates' . PATH_SEP . $oldFields['PRO_UID'] . PATH_SEP;
 			$fileTemplate = $pathEmail . $sTemplate;
 			@mkdir( $pathEmail, 0777,true);
@@ -317,13 +317,13 @@ class wsBase
 			  $result = new wsResponse (100, "template file: '$fileTemplate' doesn't exists."  );
 			  return $result;
 			}
-						
+
       if ( $appFields == null ) {
   			$Fields = $oldFields['APP_DATA'];
       }
-      else 
+      else
         $Fields = $appFields;
-        
+
       $templateContents = file_get_contents ( $fileTemplate );
       $sBody = G::replaceDataField( $templateContents, $Fields);
 
@@ -340,11 +340,11 @@ class wsBase
                             'app_msg_attach'   => '',
                             'app_msg_template' => '',
                             'app_msg_status'   => 'pending');
-                                                      
+
       $oSpool->create( $messageArray );
-      
+
       $oSpool->sendMail();
-      
+
       if ( $oSpool->status == 'sent' )
 			  $result = new wsResponse (0, "message sent : $sTo" );
 			else
@@ -357,23 +357,23 @@ class wsBase
 		}
 	}
 
-	public function createUser( $userId, $firstname, $lastname, $email, $role, $password) {		
-		try {	
+	public function createUser( $userId, $firstname, $lastname, $email, $role, $password) {
+		try {
 			if($userId=='')
 			{  $result = new wsResponse (20, "User ID is required");
 				 return $result;
 			}
-			
+
 			if($password=='')
 			{  $result = new wsResponse (21, "Password is required");
 				 return $result;
 			}
-			
+
 			if($firstname=='')
 			{  $result = new wsResponse (22, "Firstname is required");
 				 return $result;
 			}
-						
+
 			global $RBAC;
 			$RBAC->initRBAC();
 			$user=$RBAC->verifyUser($userId);
@@ -381,7 +381,7 @@ class wsBase
 				$result = new wsResponse (7, "User ID: $userId already exist!!!");
 				return $result;
 			}
-															
+
 			$rol=$RBAC->loadById($role);
 			if(!is_array($rol)){
 				$very_rol=$RBAC->verifyByCode($role);
@@ -390,7 +390,7 @@ class wsBase
 					return $result;
 				}
 			}
-			
+
 			$aData['USR_USERNAME']    = $userId;
 			$aData['USR_PASSWORD']    = md5($password);
 			$aData['USR_FIRSTNAME']   = $firstname;
@@ -416,12 +416,12 @@ class wsBase
 			$aData['USR_RESUME']      = '';
 			$aData['USR_BIRTHDAY']    = date('Y-m-d');
 			$aData['USR_ROLE']        = $rol['ROL_CODE'];
-				
+
 			$oUser = new Users();
 			$oUser->create($aData);
 
 			$result = new wsResponse (0, "User $firstname $lastname [$userId] created sucessful.");
-			
+
 			return $result;
 		}
 		catch ( Exception $e ) {
@@ -430,29 +430,29 @@ class wsBase
 		}
 	}
 
-	public function assignUserToGroup( $userId, $groupId) {		
-		try {			
+	public function assignUserToGroup( $userId, $groupId) {
+		try {
 			global $RBAC;
 			$RBAC->initRBAC();
-			$user=$RBAC->verifyUserId($userId);						
+			$user=$RBAC->verifyUserId($userId);
 			if($user==0){
 				$result = new wsResponse (3, "User not registered in the system");
 				return $result;
 			}
-			
+
 			G::LoadClass('groups');
 			$groups = new Groups;
 			$very_group=$groups->verifyGroup( $groupId );
 			if($very_group==0){
 				$result = new wsResponse (23, "Group not registered in the system");
 				return $result;
-			}						
-			
-			$oRBAC = RBAC::getSingleton();     
+			}
+
+			$oRBAC = RBAC::getSingleton();
       $oRBAC->loadUserRolePermission($oRBAC->sSystem, $userId);
-      $aPermissions = $oRBAC->aUserInfo[$oRBAC->sSystem]['PERMISSIONS'];     
+      $aPermissions = $oRBAC->aUserInfo[$oRBAC->sSystem]['PERMISSIONS'];
       foreach ($aPermissions as $aPermission) {
-        if ($aPermission['PER_CODE'] == 'PM_FACTORY') 
+        if ($aPermission['PER_CODE'] == 'PM_FACTORY')
         {
           exit;
         }
@@ -462,13 +462,13 @@ class wsBase
 					return $result;
         }
       }
-			
+
 			$very_user=$groups->verifyUsertoGroup( $groupId, $userId);
 			if($very_user==1){
 				$result = new wsResponse (8, "User exist in the group");
 				return $result;
 			}
-			$groups->addUserToGroup( $groupId, $userId);		
+			$groups->addUserToGroup( $groupId, $userId);
 			$result = new wsResponse (0, "User assigned to group sucessful");
 			return $result;
 		}
@@ -478,19 +478,19 @@ class wsBase
 		}
 	}
 
-	public function sendVariables($sessionId, $caseId, $variables) { 
-		//delegation where app uid (caseId) y usruid(session) ordenar delindes descendente y agaarr el primero 
+	public function sendVariables($sessionId, $caseId, $variables) {
+		//delegation where app uid (caseId) y usruid(session) ordenar delindes descendente y agaarr el primero
 		//delfinishdate != null error
 		try {
 			G::LoadClass('sessions');
 			require_once ("classes/model/AppDelegation.php");
 			$oSession = new Sessions();
 			$user  = $oSession->getSessionUser($sessionId);
-			
-			$oCriteria = new Criteria('workflow');			
-			$oCriteria->addSelectColumn(AppDelegationPeer::DEL_FINISH_DATE);					
-			$oCriteria->add(AppDelegationPeer::APP_UID, $caseId);			
-			$oCriteria->add(AppDelegationPeer::USR_UID, $user['USR_UID']);		
+
+			$oCriteria = new Criteria('workflow');
+			$oCriteria->addSelectColumn(AppDelegationPeer::DEL_FINISH_DATE);
+			$oCriteria->add(AppDelegationPeer::APP_UID, $caseId);
+			$oCriteria->add(AppDelegationPeer::USR_UID, $user['USR_UID']);
 			$oCriteria->addDescendingOrderByColumn(AppDelegationPeer::DEL_INDEX);
 			$oDataset = AppDelegationPeer::doSelectRS($oCriteria);
 			$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
@@ -498,10 +498,10 @@ class wsBase
 			$aRow = $oDataset->getRow();
 			if($aRow['DEL_FINISH_DATE']!=NULL)
 			{
-				$result = new wsResponse (18, 'This delegation already closed'); 
+				$result = new wsResponse (18, 'This delegation already closed');
 				return $result;
 			}
-			
+
 			if(is_array($variables)) {
 				$cant = count ( $variables );
 				if($cant > 0) {
@@ -528,19 +528,19 @@ class wsBase
 		}
 	}
 
-	public function getVariables($sessionId, $caseId, $variables) { 
-		//delegation where app uid (caseId) y usruid(session) ordenar delindes descendente y agaarr el primero 
+	public function getVariables($sessionId, $caseId, $variables) {
+		//delegation where app uid (caseId) y usruid(session) ordenar delindes descendente y agaarr el primero
 		//delfinishdate != null error
 		try {
 			G::LoadClass('sessions');
 			require_once ("classes/model/AppDelegation.php");
 			$oSession = new Sessions();
 			$user  = $oSession->getSessionUser($sessionId);
-			
-			$oCriteria = new Criteria('workflow');			
-			$oCriteria->addSelectColumn(AppDelegationPeer::DEL_FINISH_DATE);					
-			$oCriteria->add(AppDelegationPeer::APP_UID, $caseId);			
-			$oCriteria->add(AppDelegationPeer::USR_UID, $user['USR_UID']);		
+
+			$oCriteria = new Criteria('workflow');
+			$oCriteria->addSelectColumn(AppDelegationPeer::DEL_FINISH_DATE);
+			$oCriteria->add(AppDelegationPeer::APP_UID, $caseId);
+			$oCriteria->add(AppDelegationPeer::USR_UID, $user['USR_UID']);
 			$oCriteria->addDescendingOrderByColumn(AppDelegationPeer::DEL_INDEX);
 			$oDataset = AppDelegationPeer::doSelectRS($oCriteria);
 			$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
@@ -548,10 +548,10 @@ class wsBase
 			$aRow = $oDataset->getRow();
 			if($aRow['DEL_FINISH_DATE']!=NULL)
 			{
-				$result = new wsResponse (18, 'This delegation already closed'); 
+				$result = new wsResponse (18, 'This delegation already closed');
 				return $result;
 			}
-			
+
 			if(is_array($variables)) {
 				$cant = count ( $variables );
 				if($cant > 0) {
@@ -563,18 +563,18 @@ class wsBase
 					$resFields = array();
 					foreach ( $variables as $key => $val ) {
   				  $resFields[ $val ] =  $oldFields[ $val ] ;
-						if ( isset ( $oldFields[ $val ] ) ) 
+						if ( isset ( $oldFields[ $val ] ) )
 						  $resFields[ $val ] =  $oldFields[ $val ] ;
 					}
 					//$cant = count ( $resFields );
 					//$result = new wsResponse (0, "$cant variables received." . print_r ($resFields, 1) );
 					return $resFields;
-				} 
+				}
 				else {
 					$result = new wsResponse (100, "The variables param length is zero");
 					return $result;
 				}
-			} 
+			}
 			else {
 				$result = new wsResponse (100, "The variables param is not a array!");
 				return $result;
@@ -587,11 +587,11 @@ class wsBase
 	}
 
 	public function newCase($processId, $userId, $taskId, $variables) {
-		try {								  				
+		try {
 			if(is_array($variables)) {
 				if(count($variables)>0){
 					$c=count($variables);
-					
+
 					$Fields = $variables;
 					if($c == 0) { //Si no tenenmos ninguna variables en el array variables.
 						$result = new wsResponse (10, "Array of variables is empty");
@@ -615,17 +615,17 @@ class wsBase
 			G::LoadClass('case');
 			$oCase = new Cases();
 				G::LoadClass('tasks');
-				$oTask = new Tasks();								
+				$oTask = new Tasks();
 				$startingTasks = $oCase->getStartCases($userId);
 				array_shift ($startingTasks); //remove the first row, the header row
 				$founded = '';
-				$tasksInThisProcess = 0;  
+				$tasksInThisProcess = 0;
 				$validTaskId = taskId;
 				foreach ( $startingTasks as $key=> $val ) {
 					if ( $val['pro_uid'] == $processId ) { $tasksInThisProcess ++; $validTaskId = $val['uid']; }
 					if ( $val['uid'] == $taskId ) $founded = $val['value'];
 				}
-				
+
 				if ( $taskId == '' ) {
 				  if ( $tasksInThisProcess == 1 ) {
 					  $founded = $validTaskId;
@@ -676,7 +676,7 @@ class wsBase
 				$result = new wsResponse (100, "The variables param is not a array!");
 				return $result;
 			}
-			
+
 			G::LoadClass('processes');
 			$oProcesses = new Processes();
 			$pro = $oProcesses->processExists($processId);
@@ -692,35 +692,35 @@ class wsBase
 			$tasks  = $oProcesses->getStartingTaskForUser($processId, $userId);
 			$numTasks=count($tasks);
 
-			if($numTasks==1) 
+			if($numTasks==1)
 			{
-				
+
 				G::LoadClass('tasks');
-				$oTask = new Tasks();								
+				$oTask = new Tasks();
 				$very = $oTask->verifyUsertoTask($userId, $tasks[0]['TAS_UID']);
 				if(is_array($very))
 				{
 					if($very['TU_RELATION']==2)
-				   {	
-						 $group=$groups->getUsersOfGroup( $tasks[0]['TAS_UID'] );		
+				   {
+						 $group=$groups->getUsersOfGroup( $tasks[0]['TAS_UID'] );
 						 if(!is_array($group))
 						 { $result = new wsResponse (16, "The user is not assigned to the task");
 			    		 return $result;
-						 }						 		
-				   }				   
+						 }
+				   }
 				}
 				else
 				{ $result = new wsResponse (16, "The user is not assigned to the task");
 			    return $result;
-				}	
-				
+				}
+
 				$case   = $oCase->startCase($tasks[0]['TAS_UID'], $userId);
 				$caseId = $case['APPLICATION'];
 
 				$oldFields = $oCase->loadCase( $caseId );
-				
+
 				$oldFields['APP_DATA'] = array_merge( $oldFields['APP_DATA'], $Fields);
-			
+
 				$up_case = $oCase->updateCase($caseId, $oldFields);
 				$result = new wsResponse (0, "Sucessful");
 				return $result;
@@ -743,32 +743,32 @@ class wsBase
 	}
 
 	public function derivateCase($userId, $caseId, $delIndex) {
-		try { $sStatus = 'TO_DO';											
+		try { $sStatus = 'TO_DO';
 			require_once ("classes/model/AppDelegation.php");
 			require_once ("classes/model/Route.php");
 			require_once ("classes/model/AppDelay.php");
 			G::LoadClass('case');
 			G::LoadClass('derivation');
 			G::LoadClass('sessions');
-						
+
 			$oAppDel = new AppDelegation();
 			$appdel  = $oAppDel->Load($caseId, $delIndex);
-			
+
 			if($userId!=$appdel['USR_UID'])
 			{
-				$result = new wsResponse (17, "This case is assigned to another user"); 
-				return $result;	
-			}
-			
-			if($appdel['DEL_FINISH_DATE']!=NULL)
-			{
-				$result = new wsResponse (18, 'This delegation already closed'); 
+				$result = new wsResponse (17, "This case is assigned to another user");
 				return $result;
 			}
 
-			$oCriteria = new Criteria('workflow');			
+			if($appdel['DEL_FINISH_DATE']!=NULL)
+			{
+				$result = new wsResponse (18, 'This delegation already closed');
+				return $result;
+			}
+
+			$oCriteria = new Criteria('workflow');
 			$oCriteria->addSelectColumn(AppDelayPeer::APP_UID);
-			$oCriteria->addSelectColumn(AppDelayPeer::APP_DEL_INDEX);			
+			$oCriteria->addSelectColumn(AppDelayPeer::APP_DEL_INDEX);
 			$oCriteria->add(AppDelayPeer::APP_TYPE, '');
 			$oCriteria->add($oCriteria->getNewCriterion(AppDelayPeer::APP_TYPE, 'PAUSE')->addOr($oCriteria->getNewCriterion(AppDelayPeer::APP_TYPE, 'CANCEL')));
 			$oCriteria->addAscendingOrderByColumn(AppDelayPeer::APP_ENABLE_ACTION_DATE);
@@ -781,17 +781,17 @@ class wsBase
 			{
 					if($aRow['APP_DISABLE_ACTION_USER']!=0 && $aRow['APP_DISABLE_ACTION_DATE']!='')
 					{
-							$result = new wsResponse (19, "This case is in status". $aRow['APP_TYPE']); 
+							$result = new wsResponse (19, "This case is in status". $aRow['APP_TYPE']);
 							return $result;
 					}
-			}													
-												
+			}
+
 			$aData['APP_UID']   = $caseId;
 			$aData['DEL_INDEX'] = $delIndex;
-			
+
 			$oDerivation = new Derivation();
 			$derive  = $oDerivation->prepareInformation($aData);
-		  
+
 			$var = '';
 			foreach ( $derive as $key=>$val ) {
 				if($val['NEXT_TASK']['TAS_ASSIGN_TYPE']=='MANUAL')
@@ -805,18 +805,18 @@ class wsBase
 																		'TAS_ASSIGN_TYPE' =>	$val['NEXT_TASK']['TAS_ASSIGN_TYPE'],
 																		'TAS_DEF_PROC_CODE' => $val['NEXT_TASK']['TAS_DEF_PROC_CODE'],
 																		'DEL_PRIORITY'	=>	$appdel['DEL_PRIORITY']
-																	);	
-				$var = $var . ($var!=''?',':'') . $val['NEXT_TASK']['TAS_TITLE'].'('.$val['NEXT_TASK']['USER_ASSIGNED']['USR_USERNAME'].')';																									
+																	);
+				$var = $var . ($var!=''?',':'') . $val['NEXT_TASK']['TAS_TITLE'].'('.$val['NEXT_TASK']['USER_ASSIGNED']['USR_USERNAME'].')';
 			}
-		
+
 			//load data
 			$oCase     = new Cases ();
 			$appFields = $oCase->loadCase( $caseId );
-					
+
 			//Execute triggers before derivation
       $currentTask = $derive[1]['TAS_UID'];  //currentTask??? if this doesn't exists???
  			$appFields['APP_DATA']['APPLICATION'] = $caseId;
-			
+
       $aTriggers = $oCase->loadTriggers($currentTask, 'ASSIGN_TASK', -2, 'BEFORE' );
       if (count($aTriggers) > 0) {
         $oPMScript = new PMScript();
@@ -835,13 +835,13 @@ class wsBase
           }
         }
       }
-			
+
 			$appFields['DEL_INDEX'] = $delIndex;
 			$appFields['TAS_UID']   = $derive['TAS_UID'];
 			//Save data - Start
 			$oCase->updateCase ( $caseId, $appFields );
 			//Save data - End
-						
+
 			$row  = array();
 			$oCriteria = new Criteria('workflow');
 			$del = DBAdapter::getStringDelimiter();
@@ -855,7 +855,7 @@ class wsBase
 				$row[] = array ( 'ROU_TYPE' => $aRow['ROU_TYPE'], 'ROU_NEXT_TASK' => $aRow['ROU_NEXT_TASK'] );
 				$oDataset->next();
 			}
-				
+
 			//derivate case
 			$aCurrentDerivation = array(
 				'APP_UID'    => $caseId,
@@ -864,10 +864,34 @@ class wsBase
 				'TAS_UID'    => $appdel['TAS_UID'],
 				'ROU_TYPE'   => $row[0]['ROU_TYPE']
 			);
-				
+
 			$oDerivation->derivate( $aCurrentDerivation, $nextDelegations );
-		
-			$result = new wsResponse (0, $var); 
+			$appFields['APP_STATUS'] = $sStatus;
+
+			$aTriggers = $oCase->loadTriggers($currentTask, 'ASSIGN_TASK', -2, 'AFTER' );
+      if (count($aTriggers) > 0) {
+        $oPMScript = new PMScript();
+        $oPMScript->setFields( $appFields['APP_DATA'] );
+        foreach ($aTriggers as $aTrigger) {
+          $bExecute = true;
+          if ($aTrigger['ST_CONDITION'] !== '') {
+            $oPMScript->setScript($aTrigger['ST_CONDITION']);
+            $bExecute = $oPMScript->evaluate();
+          }
+          if ($bExecute) {
+            $oPMScript->setScript($aTrigger['TRI_WEBBOT']);
+            $oPMScript->execute();
+            $appFields['APP_DATA'] = $oPMScript->aFields;
+      			$oCase->updateCase ( $caseId, $appFields );
+          }
+        }
+      }
+
+			//Save data - Start
+			$oCase->updateCase ( $caseId, $appFields );
+			//Save data - End
+
+			$result = new wsResponse (0, $var);
 			return $result;
 		}
 		catch ( Exception $e ) {
@@ -877,32 +901,32 @@ class wsBase
 	}
 
 	public function executeTrigger($userId, $caseId, $triggerIndex) {
-		try { 
+		try {
 			require_once ("classes/model/AppDelegation.php");
 			require_once ("classes/model/Route.php");
 			require_once ("classes/model/AppDelay.php");
 			G::LoadClass('case');
 			G::LoadClass('sessions');
-						
+
 			$oAppDel = new AppDelegation();
 			$delIndex = 1;  //default to first derivation
 			$appdel  = $oAppDel->Load($caseId, $delIndex);
-			
+
 			if($userId!=$appdel['USR_UID'])
 			{
-				$result = new wsResponse (17, "This case is assigned to another user"); 
-				return $result;	
-			}
-			
-			if($appdel['DEL_FINISH_DATE']!=NULL)
-			{
-				$result = new wsResponse (18, 'This delegation already closed'); 
+				$result = new wsResponse (17, "This case is assigned to another user");
 				return $result;
 			}
 
-			$oCriteria = new Criteria('workflow');			
+			if($appdel['DEL_FINISH_DATE']!=NULL)
+			{
+				$result = new wsResponse (18, 'This delegation already closed');
+				return $result;
+			}
+
+			$oCriteria = new Criteria('workflow');
 			$oCriteria->addSelectColumn(AppDelayPeer::APP_UID);
-			$oCriteria->addSelectColumn(AppDelayPeer::APP_DEL_INDEX);			
+			$oCriteria->addSelectColumn(AppDelayPeer::APP_DEL_INDEX);
 			$oCriteria->add(AppDelayPeer::APP_TYPE, '');
 			$oCriteria->add($oCriteria->getNewCriterion(AppDelayPeer::APP_TYPE, 'PAUSE')->addOr($oCriteria->getNewCriterion(AppDelayPeer::APP_TYPE, 'CANCEL')));
 			$oCriteria->addAscendingOrderByColumn(AppDelayPeer::APP_ENABLE_ACTION_DATE);
@@ -915,11 +939,11 @@ class wsBase
 			{
 					if($aRow['APP_DISABLE_ACTION_USER']!=0 && $aRow['APP_DISABLE_ACTION_DATE']!='')
 					{
-							$result = new wsResponse (19, "This case is in status". $aRow['APP_TYPE']); 
+							$result = new wsResponse (19, "This case is in status". $aRow['APP_TYPE']);
 							return $result;
 					}
-			}													
-												
+			}
+
 			//load data
 			$oCase     = new Cases ();
 			$appFields = $oCase->loadCase( $caseId );
@@ -939,18 +963,18 @@ class wsBase
         $oPMScript->setFields($appFields['APP_DATA']);
         $oPMScript->setScript($row['TRI_WEBBOT']);
         $oPMScript->execute();
-  
+
   			//Save data - Start
     		$appFields['APP_DATA']  = $oPMScript->aFields;
 	  		$oCase->updateCase ( $caseId, $appFields);
 		  	//Save data - End
       }
       else {
-  			$result = new wsResponse (100, "Invalid trigger '$triggerIndex'" ); 
+  			$result = new wsResponse (100, "Invalid trigger '$triggerIndex'" );
 	  		return $result;
       }
-						
-		  
+
+
 			$result = new wsResponse (0, 'executed: '. trim( $row['TRI_WEBBOT']) );
 			//$result = new wsResponse (0, 'executed: '. print_r( $oPMScript ,1 ) );
 			return $result;
@@ -967,7 +991,7 @@ class wsBase
 			$oCriteria = new Criteria('workflow');
 			$del = DBAdapter::getStringDelimiter();
 			$oCriteria->addSelectColumn(AppDelegationPeer::DEL_INDEX);
-			
+
 			$oCriteria->addAsColumn('TAS_TITLE', 'C1.CON_VALUE' );
 			$oCriteria->addAlias("C1",  'CONTENT');
 			$tasTitleConds = array();
@@ -982,7 +1006,7 @@ class wsBase
 			$oDataset = AppDelegationPeer::doSelectRS($oCriteria);
 			$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
 			$oDataset->next();
-			
+
 			while ($aRow = $oDataset->getRow()) {
 				$result[] = array ( 'guid' => $aRow['DEL_INDEX'], 'name' => $aRow['TAS_TITLE'] );
 				$oDataset->next();
@@ -994,15 +1018,15 @@ class wsBase
 			return $result;
 		}
 	}
-	
+
 	public function processListVerified( $userId ){
-		try {					
+		try {
 			$oCase = new Cases();
 			$rows = $oCase->getStartCases($userId);
 			$result  = array();
 
 			foreach ( $rows as $key=>$val ) {
-				if ( $key != 0 ) 
+				if ( $key != 0 )
 				  $result[] = array ( 'guid' => $val['pro_uid'], 'name' => $val['value'] );
 			}
 			return $result;
@@ -1010,7 +1034,7 @@ class wsBase
 		catch ( Exception $e ) {
 			$result[] = array ( 'guid' => $e->getMessage(), 'name' => $e->getMessage() );
 			return $result;
-		}		
+		}
 	}
-	
+
 }
