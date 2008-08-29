@@ -891,6 +891,23 @@
       <rule name="maxLength" value="5" message="Language can be no larger than ${value} in size" />
       <rule name="required" message="Language is required." />
     </validator>
+    <index name="indexUid">
+      <index-column name="CON_ID"/>
+      <vendor type="mysql">
+        <parameter name="Table" value="CONTENT"/>
+        <parameter name="Non_unique" value="1"/>
+        <parameter name="Key_name" value="indexUid"/>
+        <parameter name="Seq_in_index" value="1"/>
+        <parameter name="Column_name" value="CONTENT"/>
+        <parameter name="Collation" value="A"/>
+        <parameter name="Cardinality" value=""/>
+        <parameter name="Sub_part" value=""/>
+        <parameter name="Packed" value=""/>
+        <parameter name="Null" value=""/>
+        <parameter name="Index_type" value="BTREE"/>
+        <parameter name="Comment" value=""/>
+      </vendor>
+    </index>
   </table>
   <table name="DEPARTMENT">
     <vendor type="mysql">
