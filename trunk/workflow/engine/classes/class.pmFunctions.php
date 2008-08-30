@@ -777,4 +777,22 @@ function PMFCreateUser($userId, $password, $firstname, $lastname, $email, $role)
 function generateCode ( $iDigits = 4, $sType = 'NUMERIC' ) {
 	return G::generateCode ($iDigits, $sType );
 }
+
+function setCaseTrackerCode($sApplicationUID, $sCode, $sPIN = '') {
+  if ($sCode != '') {
+    G::LoadClass('case');
+    $oCase   = new Cases();
+    $aFields = $oCase->loadCase($sApplicationUID);
+    $aFields['APP_PROC_CODE'] = $sCode;
+    if ($sPIN != '') {
+      $aFields['APP_DATA']['PIN'] = $sPIN;
+      $aFields['APP_PIN']         = md5($sPIN);
+    }
+    $oCase->updateCase($sApplicationUID, $aFields);
+    return 1;
+  }
+  else {
+    return 0;
+  }
+}
 ?>
