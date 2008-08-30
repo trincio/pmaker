@@ -289,7 +289,7 @@ class Cases
             $Fields['APP_DATA'] = serialize($Fields['APP_DATA']);
             $Fields['APP_TITLE'] = self::refreshCaseTitle($sAppUid, $aApplicationFields);
             $Fields['APP_DESCRIPTION'] = self::refreshCaseDescription($sAppUid, $aApplicationFields);
-            $Fields['APP_PROC_CODE'] = self::refreshCaseStatusCode($sAppUid, $aApplicationFields);
+            //$Fields['APP_PROC_CODE'] = self::refreshCaseStatusCode($sAppUid, $aApplicationFields);
             $oApp->update($Fields);
 
             $DEL_INDEX = isset($Fields['DEL_INDEX']) ? $Fields['DEL_INDEX'] : '';
@@ -985,7 +985,7 @@ class Cases
                 $Fields = $Application->toArray(BasePeer::TYPE_FIELDNAME);
                 $Fields['APP_TITLE'] = self::refreshCaseTitle($sAppUid, G::array_merges(G::getSystemConstants(), unserialize($Fields['APP_DATA'])));
                 $Fields['APP_DESCRIPTION'] = self::refreshCaseDescription($sAppUid, G::array_merges(G::getSystemConstants(), unserialize($Fields['APP_DATA'])));
-                $Fields['APP_PROC_CODE'] = self::refreshCaseStatusCode($sAppUid, G::array_merges(G::getSystemConstants(), unserialize($Fields['APP_DATA'])));
+                //$Fields['APP_PROC_CODE'] = self::refreshCaseStatusCode($sAppUid, G::array_merges(G::getSystemConstants(), unserialize($Fields['APP_DATA'])));
                 $caseNumber = $Fields['APP_NUMBER'];
                 $Application->update($Fields);
                 //Update the task last assigned (for web entry an web services)

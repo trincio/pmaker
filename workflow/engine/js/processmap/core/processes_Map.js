@@ -58,7 +58,7 @@ var saveDataTaskTemporal = function(iForm)
       case '6':
         oTaskData.TAS_DEF_TITLE       = getField('TAS_DEF_TITLE').value;
         oTaskData.TAS_DEF_DESCRIPTION = getField('TAS_DEF_DESCRIPTION').value;
-        oTaskData.TAS_DEF_PROC_CODE   = getField('TAS_DEF_PROC_CODE').value;
+        //oTaskData.TAS_DEF_PROC_CODE   = getField('TAS_DEF_PROC_CODE').value;
         //oTaskData.SEND_EMAIL          = (getField('SEND_EMAIL').checked ? 'TRUE' : 'FALSE');
         //oTaskData.TAS_DEF_MESSAGE     = getField('TAS_DEF_MESSAGE').value;
       break;

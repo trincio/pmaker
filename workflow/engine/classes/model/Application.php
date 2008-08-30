@@ -1,10 +1,10 @@
 <?php
 /**
  * Application.php
- *  
+ *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -14,13 +14,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
 
 require_once 'classes/model/om/BaseApplication.php';
@@ -30,7 +30,7 @@ require_once 'classes/model/Content.php';
 /**
  * Skeleton subclass for representing a row from the 'APPLICATION' table.
  *
- * 
+ *
  *
  * You should add additional methods to this class to meet the
  * application requirements.  This class will only be generated as
@@ -46,7 +46,7 @@ class Application extends BaseApplication {
 	 */
 	protected $app_title = '';
 	protected $app_description = '';
-	protected $app_proc_code = '';
+	//protected $app_proc_code = '';
 
 	/**
 	 * Get the [app_title] column value.
@@ -64,7 +64,7 @@ class Application extends BaseApplication {
 
 	/**
 	 * Set the [app_title] column value.
-	 * 
+	 *
 	 * @param      string $v new value
 	 * @return     void
 	 */
@@ -76,7 +76,7 @@ class Application extends BaseApplication {
 		// Since the native PHP type for this column is string,
 		// we will cast the input to a string (if it is not).
 		if ($v !== null && !is_string($v)) {
-			$v = (string) $v; 
+			$v = (string) $v;
 		}
 
 		if ($this->app_title !== $v || $v === '') {
@@ -103,7 +103,7 @@ class Application extends BaseApplication {
 
 	/**
 	 * Set the [app_description] column value.
-	 * 
+	 *
 	 * @param      string $v new value
 	 * @return     void
 	 */
@@ -115,7 +115,7 @@ class Application extends BaseApplication {
 		// Since the native PHP type for this column is string,
 		// we will cast the input to a string (if it is not).
 		if ($v !== null && !is_string($v)) {
-			$v = (string) $v; 
+			$v = (string) $v;
 		}
 
 		if ($this->app_description !== $v || $v === '') {
@@ -130,7 +130,7 @@ class Application extends BaseApplication {
 	 * Get the [app_proc_code] column value.
 	 * @return     string
 	 */
-	public function getAppProcCode  ()
+	/*public function getAppProcCode  ()
 	{
 	  if ( $this->getAppUid() == '' ) {
       throw ( new Exception( "Error in getAppProcCode, the APP_UID can't be blank") );
@@ -138,15 +138,15 @@ class Application extends BaseApplication {
 	  $lang = defined ( 'SYS_LANG') ? SYS_LANG : 'en';
 	  $this->app_proc_code = Content::load ( 'APP_PROC_CODE', '', $this->getAppUid(), $lang );
 	  return $this->app_proc_code;
-	}
+	}*/
 
 	/**
 	 * Set the [app_proc_code] column value.
-	 * 
+	 *
 	 * @param      string $v new value
 	 * @return     void
 	 */
-	public function setAppProcCode  ($v)
+	/*public function setAppProcCode  ($v)
 	{
 	  if ( $this->getAppUid() == '' ) {
       throw ( new Exception( "Error in setAppProcCode  , the APP_UID can't be blank") );
@@ -154,7 +154,7 @@ class Application extends BaseApplication {
 		// Since the native PHP type for this column is string,
 		// we will cast the input to a string (if it is not).
 		if ($v !== null && !is_string($v)) {
-			$v = (string) $v; 
+			$v = (string) $v;
 		}
 
 		if ($this->app_proc_code !== $v || $v === '') {
@@ -162,29 +162,29 @@ class Application extends BaseApplication {
   	      $lang = defined ( 'SYS_LANG') ? SYS_LANG : 'en';
           $res = Content::addContent( 'APP_PROC_CODE', '', $this->getAppUid(), $lang, $this->app_proc_code );
 		}
-	} // set()
+	}*/ // set()
 
 
 	/**
 	 * Load the Application row specified in [app_id] column value.
-	 * 
-	 * @param      string $AppUid   the uid of the application 
-	 * @return     array  $Fields   the fields 
+	 *
+	 * @param      string $AppUid   the uid of the application
+	 * @return     array  $Fields   the fields
 	 */
-  
+
   function Load ( $AppUid ) {
   	$con = Propel::getConnection(ApplicationPeer::DATABASE_NAME);
     try {
       $oApplication = ApplicationPeer::retrieveByPk( $AppUid );
-  	  if ( get_class ($oApplication) == 'Application' ) { 
+  	  if ( get_class ($oApplication) == 'Application' ) {
   	    $aFields = $oApplication->toArray(BasePeer::TYPE_FIELDNAME);
   	    $this->fromArray ($aFields, BasePeer::TYPE_FIELDNAME );
   	    $aFields['APP_TITLE']    = $oApplication->getAppTitle();
   	    $this->setAppTitle (  $oApplication->getAppTitle() );
   	    $aFields['APP_DESCRIPTION']    = $oApplication->getAppDescription();
   	    $this->setAppDescription (  $oApplication->getAppDescription() );
-  	    $aFields['APP_PROC_CODE']    = $oApplication->getAppProcCode();
-  	    $this->setAppProcCode (  $oApplication->getAppProcCode() );
+  	    //$aFields['APP_PROC_CODE']    = $oApplication->getAppProcCode();
+  	    //$this->setAppProcCode (  $oApplication->getAppProcCode() );
   	    return $aFields;
   	  }
       else {
@@ -197,14 +197,14 @@ class Application extends BaseApplication {
   }
 
 	/**
-	 * Creates the Application 
-	 *  
-	 * @param      
+	 * Creates the Application
+	 *
+	 * @param
 	 *   $sProUid the process id
 	 *   $sUsrUid the userid
 	 * @return     void
 	 */
-  
+
   function create ($sProUid, $sUsrUid ) {
   	$con = Propel::getConnection( ApplicationPeer::DATABASE_NAME );
     try {
@@ -218,7 +218,7 @@ class Application extends BaseApplication {
       $row = $result->getRow();
       $maxNumber = $row[0] + 1;
   	  $this->setAppUid ( G::generateUniqueID() );
-  
+
       $this->setAppNumber    ( $maxNumber );
       $this->setAppParent    ( '' );
       $this->setAppStatus    ( 'DRAFT' );
@@ -230,35 +230,35 @@ class Application extends BaseApplication {
       $this->setAppCurUser   ( $sUsrUid );
       $this->setAppCreateDate('now' );
       $res = $this->setAppInitDate  ('now' );
-      //to do: what is the empty date for propel???/     
+      //to do: what is the empty date for propel???/
       $this->setAppFinishDate( '19020101' );
       $this->setAppUpdateDate( 'now' );
-      
+
       $pin = G::generateCode(4, 'ALPHANUMERIC');
-      $this->setAppData      ( serialize ( array('PIN'=>$pin) ) );     
+      $this->setAppData      ( serialize ( array('PIN'=>$pin) ) );
       $this->setAppPin 			 ( md5($pin) );
       if ( $this->validate() ) {
-        $con->begin(); 
+        $con->begin();
         $res = $this->save();
-       
+
         //to do: ID_CASE in translation       $this->setAppTitle ( G::LoadTranslation ( 'ID_CASE') . $maxNumber );
         $this->setAppTitle (  '#' . $maxNumber );
         $this->setAppDescription ( '' );
         $this->setAppProcCode ( '' );
-        $con->commit(); 
+        $con->commit();
         return $this->getAppUid();
       }
       else {
        $msg = '';
-       foreach($this->getValidationFailures() as $objValidationFailure) 
+       foreach($this->getValidationFailures() as $objValidationFailure)
          $msg .= $objValidationFailure->getMessage() . "<br/>";
-         
-       throw ( new PropelException ( 'The row cannot be created!', new PropelException ( $msg ) ) );      
+
+       throw ( new PropelException ( 'The row cannot be created!', new PropelException ( $msg ) ) );
       }
 
     }
     catch (Exception $e) {
-      $con->rollback(); 
+      $con->rollback();
       throw ($e);
     }
   }
@@ -268,36 +268,36 @@ class Application extends BaseApplication {
    * @param     array $aData
    * @return    variant
   **/
-  
+
   public function update($aData)
   {
   	$con = Propel::getConnection( ApplicationPeer::DATABASE_NAME );
   	try {
-      $con->begin(); 
+      $con->begin();
   	  $oApp = ApplicationPeer::retrieveByPK( $aData['APP_UID'] );
-  	  if ( get_class ($oApp) == 'Application' ) { 
+  	  if ( get_class ($oApp) == 'Application' ) {
   	  	$oApp->fromArray( $aData, BasePeer::TYPE_FIELDNAME );
   	    if ($oApp->validate()) {
-          if ( isset ( $aData['APP_TITLE'] ) ) 
+          if ( isset ( $aData['APP_TITLE'] ) )
             $oApp->setAppTitle( $aData['APP_TITLE'] );
-          if ( isset ( $aData['APP_DESCRIPTION'] ) ) 
+          if ( isset ( $aData['APP_DESCRIPTION'] ) )
             $oApp->setAppDescription( $aData['APP_DESCRIPTION'] );
-          if ( isset ( $aData['APP_PROC_CODE'] ) ) 
-            $oApp->setAppProcCode( $aData['APP_PROC_CODE'] );
+          //if ( isset ( $aData['APP_PROC_CODE'] ) )
+            //$oApp->setAppProcCode( $aData['APP_PROC_CODE'] );
           $res = $oApp->save();
-          $con->commit(); 
+          $con->commit();
           return $res;
   	    }
   	    else {
          $msg = '';
-         foreach($this->getValidationFailures() as $objValidationFailure) 
+         foreach($this->getValidationFailures() as $objValidationFailure)
            $msg .= $objValidationFailure->getMessage() . "<br/>";
-         
+
          throw ( new PropelException ( 'The row cannot be updated!', new PropelException ( $msg ) ) );
   	    }
       }
       else {
-        $con->rollback(); 
+        $con->rollback();
         throw(new Exception( "The row '" . $aData['APP_UID'] . "' in table APPLICATION doesn't exists!" ));
       }
     }
@@ -308,7 +308,7 @@ class Application extends BaseApplication {
 
   /**
 	 * Remove the application document registry
-   * @param     array $aData or string $appUid 
+   * @param     array $aData or string $appUid
    * @return    string
   **/
   public function remove($appUid)
@@ -322,7 +322,7 @@ class Application extends BaseApplication {
   	  {
         Content::removeContent('APP_TITLE', '', $oApp->getAppUid());
         Content::removeContent('APP_DESCRIPTION', '', $oApp->getAppUid());
-        Content::removeContent('APP_PROC_CODE', '', $oApp->getAppUid());
+        //Content::removeContent('APP_PROC_CODE', '', $oApp->getAppUid());
         return $oApp->delete();
       }
       else {
@@ -365,7 +365,7 @@ class Application extends BaseApplication {
     $this->setAppUpdateDate(isset($aData['APP_UPDATE_DATE'])? $aData['APP_UPDATE_DATE'] : 'now' );
     //$this->setAppData      ( serialize ( array() ) );
 
-    /** Start Comment : Sets the $this->Fields['APP_DATA'] 
+    /** Start Comment : Sets the $this->Fields['APP_DATA']
           Merge between stored APP_DATA with new APP_DATA. **/
       if (!$this->getAppData())
       {
@@ -384,7 +384,7 @@ class Application extends BaseApplication {
       }
     /** End Comment **/
 
-    /** Begin Comment : Replace APP_DATA in APP_TITLE (before to serialize) 
+    /** Begin Comment : Replace APP_DATA in APP_TITLE (before to serialize)
   		$pro = new process( $this->_dbc );
   		$pro->load((isset($fields['PRO_UID']) ? $fields['PRO_UID'] : $this->Fields['PRO_UID']));
   		$fields['APP_TITLE'] = G::replaceDataField( $pro->Fields['PRO_TITLE'], $this->Fields['APP_DATA']);

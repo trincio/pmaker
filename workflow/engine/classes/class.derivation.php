@@ -377,8 +377,8 @@ class Derivation
       }
 
       //SETS THE APP_PROC_CODE
-      if (isset($nextDel['TAS_DEF_PROC_CODE']))
-        $appFields['APP_PROC_CODE'] = $nextDel['TAS_DEF_PROC_CODE'];
+      //if (isset($nextDel['TAS_DEF_PROC_CODE']))
+        //$appFields['APP_PROC_CODE'] = $nextDel['TAS_DEF_PROC_CODE'];
     }
 
     /* Start Block : UPDATES APPLICATION */
