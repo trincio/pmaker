@@ -67,6 +67,7 @@
   $aData['APP_DATA']        = $Fields['APP_DATA'];
   $aData['DEL_INDEX']       = $_SESSION['INDEX'];
   $aData['TAS_UID']         = $_SESSION['TASK'];
+  $Fields = $oCase->loadCase( $_SESSION['APPLICATION'] );
   $oCase->updateCase( $_SESSION['APPLICATION'], $aData );
   //save files
   require_once 'classes/model/AppDocument.php';
