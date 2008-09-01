@@ -290,7 +290,6 @@ leimnud.Package.Public({
 			this.menu=function(evt)
 			{
 				this.evt = evt || this.options.auto_event || false;
-
 				this.updateObservers();
 				this.parent.dom.bubble(false,this.evt);
 				//this.remove();
@@ -391,7 +390,8 @@ leimnud.Package.Public({
 								this.submenu = new this.parent.module.app.menuRight();
 								this.submenu.make({
 									//target:spT,
-									target:this.options.target,
+									//target:this.options.target,
+									target:dv.a,
 									width:201,
 									auto_event:this.evt,
 									//auto_position:{x:(m.x+n.x),y:(m.y+n.y)},
