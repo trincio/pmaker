@@ -279,6 +279,7 @@ leimnud.Package.Public({
 						theme :"firefox"
 					}.concat(options || {});
 				if(!this.validate()){return false;}
+				if(this.options.auto_event){return false;}
 				this.parent.event.add(this.options.targetRemove || this.options.target,"click",this.updateObservers);
 				//this.parent.event.add(this.options.target,"click",this.parent.closure({instance:this,method:this.updateObservers,event:true}));
 				//this.parent.event.add(document.body,"click",this.parent.closure({instance:this,method:this.remove}));
@@ -288,11 +289,13 @@ leimnud.Package.Public({
 			};
 			this.menu=function(evt)
 			{
+				this.evt = evt || this.options.auto_event || false;
+
 				this.updateObservers();
-				this.parent.dom.bubble(false,evt);
+				this.parent.dom.bubble(false,this.evt);
 				//this.remove();
 				this.maked=true;
-				this.cursor	= this.parent.dom.mouse(evt);
+				this.cursor	= (this.options.auto_event)?this.options.auto_position:this.parent.dom.mouse(this.evt);
 				this.positionTarget =	this.parent.dom.position(this.options.target);
 				this.elements.shadow = $dce("div");
 				this.elements.shadow.className = "app_menuRight_shadow___"+this.options.theme;
@@ -320,7 +323,7 @@ leimnud.Package.Public({
 				var ii=0;
 				for(var i=0;i<this.options.menu.length;i++)
 				{
-					if(this.options.menu[i].separator!==true)
+					if(typeof this.options.menu[i].separator=="undefined")
 					{
 						var dv=$dce("div");
 						dv.className = "app_menuRight_option___"+this.options.theme;
@@ -349,17 +352,69 @@ leimnud.Package.Public({
 						this.parent.dom.setStyle(dv,{
 							//height:(this.parent.browser.isIE?20:18)
 						});
+						if(this.options.menu[i].submenu)
+						{							
+						}
+						else
+						{
+							dv.onclick=this.launch.args(i);
+						}
+
 						dv.onmouseover=function(evt,el){
-							var dv=(this.parent.browser.isIE?evt:el);
+							//evt = window.event || evt;
+							//var dv=(this.parent.browser.isIE?evt:el);
+							//alert(evt.a)
+							dv=(this.parent.browser.isIE?evt:el);
+							var i=dv.i;
 							dv.a.className="app_menuRight_option_over___"+this.options.theme;
 							dv.b.className="app_menuRight_option_image_over___"+this.options.theme;
-						}.extend(this,{a:dv,b:spI});
+							if(this.submenu && this.submenu_current_i!=i)
+							{
+								this.submenu.remove();
+								delete this.submenu;
+								this.submenu_current_d.a.className="app_menuRight_option___"+this.options.theme;
+								this.submenu_current_d.b.className="app_menuRight_option_image___"+this.options.theme;
+							}
+							if(this.submenu && this.submenu_current_i==i)
+							{
+								return false;
+							}
+
+							if(this.options.menu[i].submenu)
+							{
+								var m = this.parent.dom.mouse(this.evt);
+								var m = this.cursor;
+								var n = this.parent.dom.position(dv.a,true);
+								
+								this.submenu_current_i = i;
+								this.submenu_current_d = dv;
+								this.submenu = new this.parent.module.app.menuRight();
+								this.submenu.make({
+									//target:spT,
+									target:this.options.target,
+									width:201,
+									auto_event:this.evt,
+									//auto_position:{x:(m.x+n.x),y:(m.y+n.y)},
+									auto_position:{x:n.x-5,y:n.y-15},
+									parent_menu:this,
+									theme:this.options.theme,
+									menu:this.options.menu[i].submenu
+								});
+								this.submenu.menu();
+								this.parent.event.add(this.options.targetRemove || this.options.target,"click",this.submenu.updateObservers);
+							}
+
+						}.extend(this,{a:dv,b:spI,i:i});
+
 						dv.onmouseout=function(evt,el){
 							var dv=(this.parent.browser.isIE?evt:el);
+							if(this.submenu)
+							{
+								return false;
+							}
 							dv.a.className="app_menuRight_option___"+this.options.theme;
 							dv.b.className="app_menuRight_option_image___"+this.options.theme;
 						}.extend(this,{a:dv,b:spI});
-						dv.onclick=this.launch.args(i);
 						this.parent.dom.nullContextMenu([spI,spT,dv]);
 					}
 					else
@@ -385,6 +440,12 @@ leimnud.Package.Public({
 			};
 			this.launch=function(evt,opt)
 			{
+				if(this.options.parent_menu)
+				{
+					this.options.parent_menu.updateObservers();
+					//this.submenu.options.parent_menu.remove();
+					//alert(this.submenu.options.parent_menu)
+				}
 				this.remove();
 				opt=this.parent.browser.isIE?evt:opt;
 				var lch = this.options.menu[opt];

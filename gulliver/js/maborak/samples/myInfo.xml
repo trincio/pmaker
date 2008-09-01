@@ -64,7 +64,7 @@ SELECT IS_UID, IS_NAME FROM ISO_SUBDIVISION WHERE IC_UID = "@#USR_COUNTRY" ORDER
 
 <ca1 group='columna_a' type='text'>Texto 1</ca1>
 <ca2 group='columna_a' type='text'>Texto 2</ca2>
-<ca3 group='columna_a' type='text'>Texto 3</ca3>
+<ca3 group='columna_b' type='text'>Texto 3</ca3>
 <ca4 group='columna_a' type='text'>Texto 4</ca4>
 <cb1 group='columna_b' type='text'>Proceso1</cb1>
 <cb2 group='columna_b' type='text'>Proceso2</cb2>
