@@ -30,7 +30,7 @@ require_once 'classes/model/Route.php';
 require_once 'classes/model/Route.php';
 require_once 'classes/model/SwimlanesElements.php';
 require_once 'classes/model/InputDocument.php';
-require_once ("classes/model/ObjectPermission.php");
+require_once 'classes/model/ObjectPermission.php';
 require_once 'classes/model/OutputDocument.php';
 require_once 'classes/model/Step.php';
 require_once 'classes/model/StepTrigger.php';
@@ -960,12 +960,12 @@ class Processes {
     $oData->reportTables  = $this->getReportTablesRows($sProUid);
     $oData->reportTablesVars  = $this->getReportTablesVarsRows($sProUid);
     $oData->stepSupervisor    = $this->getStepSupervisorRows($sProUid);
-	$oData->objectPermissions = $this->getObjectPermissionRows ($sProUid);
-    //krumo ($oData);die;
+    $oData->objectPermissions = $this->getObjectPermissionRows ($sProUid);
+    //krumo ($oData);die;			
     //$oJSON = new Services_JSON();
     //krumo ( $oJSON->encode($oData) );
     //return $oJSON->encode($oData);
-    return serialize($oData);
+	return serialize($oData);
   }
 
   function saveSerializedProcess ( $oData ) {  	   	      
@@ -1009,6 +1009,7 @@ class Processes {
     $fsData = sprintf ( "%09d", strlen ( $oData) );
     $bytesSaved = fwrite( $fp, $fsData );  //writing the size of $oData
     $bytesSaved += fwrite( $fp, $oData ); //writing the $oData
+	
     foreach ($data->dynaforms as $key => $val ) {
     	$sFileName = PATH_DYNAFORM .  $val['DYN_FILENAME'] . '.xml';
     	if ( file_exists ( $sFileName ) ) {
@@ -1034,8 +1035,123 @@ class Processes {
             $fsHtmlContent = sprintf ( "%09d", strlen ( $htmlContent ) );
             $bytesSaved += fwrite( $fp, $fsHtmlContent );  //writing the size of xml file
             $bytesSaved += fwrite( $fp, $htmlContent );    //writing the htmlfile
-        }
+        }		
     }
+	/**
+     * By <erik@colosa.com> 
+     * here we should work for the new functionalities 
+	 * we have a many files for attach into this file
+     * 
+     * here we go with the anothers files ;)
+     */
+	//before to do something we write a header into pm file for to do a differentiation between document types
+	
+	
+	//create the store object
+	//$file_objects = new ObjectCellection();
+		  
+	// for mailtemplates files	
+	$MAILS_ROOT_PATH = PATH_DATA.'sites'.PATH_SEP.SYS_SYS.PATH_SEP.'mailTemplates'.PATH_SEP.$_SESSION['PROCESS'];
+
+  $isMailTempSent = false;
+  $isPublicSent = false;	  
+	//if this process have any mailfile
+	if ( is_dir( $MAILS_ROOT_PATH ) ) {
+	  
+		//get mail files list from this directory
+		$file_list = scandir($MAILS_ROOT_PATH);
+		
+		foreach ($file_list as $filename) {
+			// verify if this filename is a valid file, because it could be . or .. on *nix systems
+			if($filename != '.' && $filename != '..'){
+				if (@is_readable($MAILS_ROOT_PATH.PATH_SEP.$filename)) {
+          $sFileName = $MAILS_ROOT_PATH . PATH_SEP . $filename;
+          if ( file_exists ( $sFileName ) ) {
+            if ( ! $isMailTempSent ) {
+            	$bytesSaved += fwrite( $fp, 'MAILTEMPL');  
+              $isMailTempSent = true; 
+            }
+            $htmlGuid    = $val['DYN_UID'];
+            $fsFileName  = sprintf ( "%09d", strlen ( $filename ) );
+            $bytesSaved += fwrite( $fp, $fsFileName );  //writing the fileName size
+            $bytesSaved += fwrite( $fp, $filename );    //writing the fileName size
+
+            $fileContent = file_get_contents ( $sFileName );
+            $fsFileContent = sprintf ( "%09d", strlen ( $fileContent ) );
+            $bytesSaved += fwrite( $fp, $fsFileContent );  //writing the size of xml file
+            $bytesSaved += fwrite( $fp, $fileContent );    //writing the htmlfile
+          }		
+
+				} 
+			}	
+		}
+	}
+
+	// for public files	
+	$PUBLIC_ROOT_PATH = PATH_DATA.'sites'.PATH_SEP.SYS_SYS.PATH_SEP.'public'.PATH_SEP.$_SESSION['PROCESS'];
+
+	//if this process have any mailfile
+	if ( is_dir( $PUBLIC_ROOT_PATH ) ) {
+	  
+		//get mail files list from this directory
+		$file_list = scandir($PUBLIC_ROOT_PATH);
+		
+		foreach ($file_list as $filename) {
+			// verify if this filename is a valid file, because it could be . or .. on *nix systems
+			if($filename != '.' && $filename != '..'){
+				if (@is_readable($PUBLIC_ROOT_PATH.PATH_SEP.$filename)) {
+          $sFileName = $PUBLIC_ROOT_PATH . PATH_SEP . $filename;
+          if ( file_exists ( $sFileName ) ) {
+            if ( ! $isPublicSent ) {
+            	$bytesSaved += fwrite( $fp, 'PUBLIC   ');  
+              $isPublicSent = true; 
+            }
+            $htmlGuid    = $val['DYN_UID'];
+            $fsFileName  = sprintf ( "%09d", strlen ( $filename ) );
+            $bytesSaved += fwrite( $fp, $fsFileName );  //writing the fileName size
+            $bytesSaved += fwrite( $fp, $filename );    //writing the fileName size
+
+            $fileContent = file_get_contents ( $sFileName );
+            $fsFileContent = sprintf ( "%09d", strlen ( $fileContent ) );
+            $bytesSaved += fwrite( $fp, $fsFileContent );  //writing the size of xml file
+            $bytesSaved += fwrite( $fp, $fileContent );    //writing the htmlfile
+          }		
+
+				} 
+			}	
+		}
+	}
+
+/*	
+	// for public files	
+	$PUBLIC_ROOT_PATH = PATH_DATA.'sites'.PATH_SEP.SYS_SYS.PATH_SEP.'public'.PATH_SEP.$_SESSION['PROCESS'];
+	  
+	//if this process have any mailfile
+	if ( is_dir( $PUBLIC_ROOT_PATH ) ) {
+	  
+		//get mail files list from this directory
+		$files_list = scandir($PUBLIC_ROOT_PATH);
+		foreach ($file_list as $filename) {
+			// verify if this filename is a valid file, beacuse it could be . or .. on *nix systems
+			if($filename != '.' && $filename != '..'){
+				if (@is_readable($PUBLIC_ROOT_PATH.PATH_SEP.$nombre_archivo)) {
+					$tmp = explode('.', $filename);
+					$ext = $tmp[1];
+					$ext_fp = fopen($PUBLIC_ROOT_PATH.PATH_SEP.$nombre_archivo, 'r');
+					$file_data = fread($ext_fp, filesize($PUBLIC_ROOT_PATH.PATH_SEP.$nombre_archivo));
+					fclose($ext_fp);
+					$file_objects->add($filename, $ext, $file_data,'public');
+				} 
+			}	
+		}
+	}
+	
+	//So,. we write the store object into pm export file
+	$extended_data = serialize($file_objects);
+	$bytesSaved += fwrite( $fp, $extended_data ); 
+	*/
+	/* under here, I've not modified those lines */
+	  
     fclose ($fp);
 
     //$bytesSaved = file_put_contents  ( $filename  , $oData  );
@@ -1063,22 +1179,25 @@ class Processes {
     $oData = unserialize ($contents);
 
     $oData->dynaformFiles = array();
-    while ( !feof ( $fp ) ) {
-      $fsXmlGuid    = intval( fread ( $fp, 9));      //reading the size of $filename
-      if ( $fsXmlGuid > 0 )
-        $XmlGuid    = fread( $fp, $fsXmlGuid );    //reading string $XmlGuid
-
-      $fsXmlContent = intval( fread ( $fp, 9));      //reading the size of $XmlContent
-      if ( $fsXmlContent > 0 ) {
-      	$oData->dynaformFiles[$XmlGuid ] = $XmlGuid;
-        $XmlContent   = fread( $fp, $fsXmlContent );    //reading string $XmlContent
-        unset($XmlContent);
+    $sIdentifier = 0;
+    while ( !feof ( $fp ) && is_numeric ( $sIdentifier ) ) {
+      $sIdentifier  = fread ( $fp, 9);      //reading the block identifier
+      if ( is_numeric ( $sIdentifier ) ) {
+      $fsXmlGuid    = intval( $sIdentifier );      //reading the size of $filename
+        if ( $fsXmlGuid > 0 )
+          $XmlGuid    = fread( $fp, $fsXmlGuid );    //reading string $XmlGuid
+  
+        $fsXmlContent = intval( fread ( $fp, 9));      //reading the size of $XmlContent
+        if ( $fsXmlContent > 0 ) {
+        	$oData->dynaformFiles[$XmlGuid ] = $XmlGuid;
+          $XmlContent   = fread( $fp, $fsXmlContent );    //reading string $XmlContent
+          unset($XmlContent);
+        }
       }
     }
     fclose ( $fp);
 
     return $oData;
-
   }
 
   /* disable all previous process with the parent $sProUid
@@ -1100,7 +1219,7 @@ class Processes {
 
   }
 
-    function createDynamformFiles ( $oData, $pmFilename  ) {
+  function createFiles ( $oData, $pmFilename  ) {
         if (! file_exists($pmFilename))
             throw ( new Exception ( 'Unable to read uploaded .pm file, please check permissions. ') );
 
@@ -1115,28 +1234,78 @@ class Processes {
         if ( !is_dir($path) ) {
             G::verifyPath($path, true);
         }
-
-        while ( !feof ( $fp ) ) {
-            $fsXmlGuid    = intval( fread ( $fp, 9));      //reading the size of $filename
+        
+        $sIdentifier = 1;
+        while ( !feof ( $fp ) && is_numeric( $sIdentifier )  ) {
+          $sIdentifier = fread ( $fp, 9);      //reading the size of $filename
+          if ( is_numeric( $sIdentifier ) ) {
+            $fsXmlGuid    = intval( $sIdentifier );      //reading the size of $filename
             if ( $fsXmlGuid > 0 )
                 $XmlGuid    = fread( $fp, $fsXmlGuid );    //reading string $XmlGuid
             $fsXmlContent = intval( fread ( $fp, 9));      //reading the size of $XmlContent
             if ( $fsXmlContent > 0 ) {
-                $newXmlGuid = $oData->dynaformFiles[ $XmlGuid ];
-
-                //print "$sFileName <br>";
-                $XmlContent   = fread( $fp, $fsXmlContent );    //reading string $XmlContent
-
-                #here we verify if is adynaform or a html
-                $ext = (substr(trim($XmlContent),0,5) == '<?xml')?'.xml':'.html';
-
-                $sFileName = $path . $newXmlGuid . $ext;
-                $bytesSaved = @file_put_contents ( $sFileName, $XmlContent );
-                if ( $bytesSaved != $fsXmlContent )
-                throw ( new Exception ('Error writing dynaform file in directory : ' . $path ) );
-
+              $newXmlGuid = $oData->dynaformFiles[ $XmlGuid ];
+              
+              //print "$sFileName <br>";
+              $XmlContent   = fread( $fp, $fsXmlContent );    //reading string $XmlContent
+              
+              #here we verify if is adynaform or a html
+              $ext = (substr(trim($XmlContent),0,5) == '<?xml')?'.xml':'.html';
+              
+              $sFileName = $path . $newXmlGuid . $ext;
+              $bytesSaved = @file_put_contents ( $sFileName, $XmlContent );
+              if ( $bytesSaved != $fsXmlContent )
+              throw ( new Exception ('Error writing dynaform file in directory : ' . $path ) );  
             }
+          }
         }
+ 
+        //now mailTemplates and public files       
+        $pathPublic  = PATH_DATA_SITE . 'public' . PATH_SEP . $oData->process['PRO_UID'] . PATH_SEP;
+        $pathMailTem = PATH_DATA_SITE . 'mailTemplates' . PATH_SEP . $oData->process['PRO_UID'] . PATH_SEP;
+        G::mk_dir ( $pathPublic );
+        G::mk_dir ( $pathMailTem );
+
+        if ( $sIdentifier == 'MAILTEMPL' ) {
+          $sIdentifier = 1;
+          while ( !feof ( $fp ) && is_numeric( $sIdentifier )  ) {
+            $sIdentifier = fread ( $fp, 9);      //reading the size of $filename
+            if ( is_numeric( $sIdentifier ) ) {
+              $fsFileName    = intval( $sIdentifier );      //reading the size of $filename
+              if ( $fsFileName > 0 )
+                  $sFileName    = fread( $fp, $fsFileName );    //reading filename string 
+              $fsContent = intval( fread ( $fp, 9));      //reading the size of $Content
+              if ( $fsContent > 0 ) {
+                $fileContent   = fread( $fp, $fsContent );    //reading string $XmlContent
+                $newFileName = $pathMailTem . $sFileName;
+                $bytesSaved = @file_put_contents ( $newFileName, $fileContent );
+                if ( $bytesSaved != $fsContent )
+                throw ( new Exception ('Error writing MailTemplate file in directory : ' . $pathMailTem ) );  
+              }
+            }
+          }
+        }
+
+        if ( $sIdentifier == 'PUBLIC   ' ) {
+          $sIdentifier = 1;
+          while ( !feof ( $fp ) && is_numeric( $sIdentifier )  ) {
+            $sIdentifier = fread ( $fp, 9);      //reading the size of $filename
+            if ( is_numeric( $sIdentifier ) ) {
+              $fsFileName    = intval( $sIdentifier );      //reading the size of $filename
+              if ( $fsFileName > 0 )
+                  $sFileName    = fread( $fp, $fsFileName );    //reading filename string 
+              $fsContent = intval( fread ( $fp, 9));      //reading the size of $Content
+              if ( $fsContent > 0 ) {
+                $fileContent   = fread( $fp, $fsContent );    //reading string $XmlContent
+                $newFileName = $pathPublic . $sFileName;
+                $bytesSaved = @file_put_contents ( $newFileName, $fileContent );
+                if ( $bytesSaved != $fsContent )
+                throw ( new Exception ('Error writing Public file in directory : ' . $pathPublic ) );  
+              }
+            }
+          }
+        }
+        
         fclose ( $fp);
 
         return true;
@@ -1321,8 +1490,10 @@ class Processes {
     $this->createGroupRow ($oData->groupwfs );
     $this->createDBConnectionsRows($oData->dbconnections);
     $this->createReportTables($oData->reportTables, $oData->reportTablesVars);
-    $this->createDynamformFiles ( $oData, $pmFilename  );
-	  $this->createObjectPermissions( $oData->objectPermissions );
+    $this->createObjectPermissions( $oData->objectPermissions );
+
+    //and finally create the files, dynaforms (xml and html), emailTemplates and Public files    
+    $this->createFiles ( $oData, $pmFilename  );
  }
 
   /*
@@ -1347,7 +1518,7 @@ class Processes {
     $this->createGroupRow ($oData->groupwfs );
     $this->createDBConnectionsRows($oData->dbconnections);
     $this->updateReportTables($oData->reportTables, $oData->reportTablesVars);
-    $this->createDynamformFiles ( $oData, $pmFilename  );    
+    $this->createFiles ( $oData, $pmFilename  );    
     $this->createObjectPermissions( $oData->objectPermissions );
  }
 
@@ -1356,4 +1527,55 @@ class Processes {
 
     return $oTask->getStartingTaskForUser( $sProUid, $sUsrUid );
   }
+}
+
+
+class ObjectDocument{
+	public $type;
+	public $name;
+	public $data;
+	public $origin;
+	
+	function __construct(){
+		$this->type = '';
+		$this->name = '';
+		$this->data = '';
+		$this->origin = '';
+    }
+}
+
+class ObjectCellection{
+	public $num;
+	public $swapc;
+	public $objects;
+	
+	function __construct (){
+		$this->objects = Array();
+		$this->num = 0;
+		$this->swapc = $this->num;
+		array_push($this->objects, 'void');
+    }
+	
+	function add($name, $type, $data, $origin){
+		$o = new ObjectDocument();
+		$o->name = $name;
+		$o->type = $type;
+		$o->data = $data;
+		$o->origin = $origin;
+		
+		$this->num++;
+		array_push($this->objects, $o);
+		$this->swapc = $this->num;
+    }
+	
+	function get(){
+		if($this->swapc > 0) {
+			$e = $this->objects[$this->swapc];
+			$this->swapc--;
+			return $e;
+        } else {
+			$this->swapc = $this->num;
+			return false;
+		}
+	}
 }
