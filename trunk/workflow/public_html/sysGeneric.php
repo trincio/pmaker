@@ -405,11 +405,11 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
     }
     else {
     	//when the file is part of the public directory of any PROCESS
-      if ( strlen (SYS_COLLECTION) == 32 ) { //the pattern is /sysSYS/LANG/SKIN/PRO_UID/file
+      if ( strlen (SYS_COLLECTION) == 32 || strlen (SYS_COLLECTION) == 14 ) { //the pattern is /sysSYS/LANG/SKIN/PRO_UID/file
         $auxPart = explode ( '/' ,  $_SERVER['REQUEST_URI']);
         $extPart = explode ( '.' , $auxPart[ count($auxPart)-1] );
         $extension = $extPart[ count($extPart)-1 ];
-        $phpFile = PATH_DATA_SITE . 'public' . PATH_SEP .  SYS_COLLECTION . PATH_SEP . $auxPart[ count($auxPart)-1];
+        $phpFile = PATH_DATA_SITE . 'public' . PATH_SEP .  SYS_COLLECTION . PATH_SEP . urldecode ($auxPart[ count($auxPart)-1]);
         if ( $extension != 'php' ) {
           G::streamFile ( $phpFile );
           die;

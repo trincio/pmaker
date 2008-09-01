@@ -41,21 +41,13 @@ $_DBArray['user'] = $rows;
 $_SESSION['_DBArray'] = $_DBArray;
 //krumo ( $_DBArray );
 
-  G::LoadClass( 'ArrayPeer');
+    G::LoadClass( 'ArrayPeer');
     $c = new Criteria ('dbarray');
     $c->setDBArrayTable('user');
     $c->add ( 'user.age', 122 , Criteria::GREATER_EQUAL );
     $c->add ( 'user.balance', 3456 , Criteria::GREATER_EQUAL );
     $c->addAscendingOrderByColumn ('name');
-
-      /*$rs = ArrayBasePeer::doSelectRs ( $c );
-      $rs->next();
-      $row = $rs->getRow();
-      while ( is_array ( $row ) ) {
-        $rs->next();
-        $row = $rs->getRow();
-      }*/
-
+          
 /* Includes */
 G::LoadClass('pmScript');
 G::LoadClass('case');
@@ -93,6 +85,7 @@ foreach ( $delegations as $key => $val ) {
 }
 $Fields['CANT_DELEGATIONS']  = count($delegations);
 $Fields['DELEGATIONS']  = $delegations;
+
 require_once 'classes/model/AppDelay.php';
 $oCriteria = new Criteria('workflow');
 $oCriteria->addSelectColumn(AppDelayPeer::APP_THREAD_INDEX);
@@ -116,6 +109,7 @@ while ($aRow = $oDataset->getRow()) {
 }
 $Fields['DELAYS'] = $aDelays;
 $Fields['CANT_DELAYS'] = count($aDelays);
+
   /* Render page */
   $G_PUBLISH = new Publisher;
   //$G_PUBLISH->AddContent( 'propeltable', 'paged-table', 'cases/casesDemo', $c );

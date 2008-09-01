@@ -831,6 +831,7 @@ class wsBase
             $oPMScript->setScript($aTrigger['TRI_WEBBOT']);
             $oPMScript->execute();
             $appFields['APP_DATA'] = $oPMScript->aFields;
+            $appFields = $oCase->loadCase( $caseId );
       			$oCase->updateCase ( $caseId, $appFields );
           }
         }
@@ -838,7 +839,9 @@ class wsBase
 
 			$appFields['DEL_INDEX'] = $delIndex;
 			$appFields['TAS_UID']   = $derive['TAS_UID'];
+			
 			//Save data - Start
+			$appFields = $oCase->loadCase( $caseId );
 			$oCase->updateCase ( $caseId, $appFields );
 			//Save data - End
 
@@ -882,12 +885,14 @@ class wsBase
             $oPMScript->setScript($aTrigger['TRI_WEBBOT']);
             $oPMScript->execute();
             $appFields['APP_DATA'] = $oPMScript->aFields;
+            $appFields = $oCase->loadCase( $caseId );
       			$oCase->updateCase ( $caseId, $appFields );
           }
         }
       }
 
 			//Save data - Start
+			$appFields = $oCase->loadCase( $caseId );
 			$oCase->updateCase ( $caseId, $appFields );
 			//Save data - End
 
@@ -966,6 +971,7 @@ class wsBase
 
   			//Save data - Start
     		$appFields['APP_DATA']  = $oPMScript->aFields;
+    		$appFields = $oCase->loadCase( $caseId );
 	  		$oCase->updateCase ( $caseId, $appFields);
 		  	//Save data - End
       }

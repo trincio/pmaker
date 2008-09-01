@@ -1071,7 +1071,7 @@ class Processes {
             	$bytesSaved += fwrite( $fp, 'MAILTEMPL');  
               $isMailTempSent = true; 
             }
-            $htmlGuid    = $val['DYN_UID'];
+            //$htmlGuid    = $val['DYN_UID'];
             $fsFileName  = sprintf ( "%09d", strlen ( $filename ) );
             $bytesSaved += fwrite( $fp, $fsFileName );  //writing the fileName size
             $bytesSaved += fwrite( $fp, $filename );    //writing the fileName size
@@ -1106,7 +1106,7 @@ class Processes {
             	$bytesSaved += fwrite( $fp, 'PUBLIC   ');  
               $isPublicSent = true; 
             }
-            $htmlGuid    = $val['DYN_UID'];
+            //$htmlGuid    = $val['DYN_UID'];
             $fsFileName  = sprintf ( "%09d", strlen ( $filename ) );
             $bytesSaved += fwrite( $fp, $fsFileName );  //writing the fileName size
             $bytesSaved += fwrite( $fp, $filename );    //writing the fileName size

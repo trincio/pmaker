@@ -280,7 +280,7 @@ class Cases
     * @return Fields
     */
     function updateCase($sAppUid, $Fields = array())
-    {
+    { 
         try {
             $aApplicationFields = $Fields['APP_DATA'];
             $oApp = new Application;
@@ -317,7 +317,7 @@ class Cases
                     $oDel->update($array);
                   }
                 }
-            }
+            } 
             return $Fields;
         }
         catch (exception $e) {

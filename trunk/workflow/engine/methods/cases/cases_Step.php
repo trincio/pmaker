@@ -131,8 +131,9 @@
 	exit();
   }
   #end trigger debug session.......
-
+  
   //Save data - Start
+  $Fields = $oCase->loadCase( $_SESSION['APPLICATION'] );
   $oCase->updateCase ( $_SESSION['APPLICATION'], $Fields );
   //Save data - End
 
@@ -313,7 +314,9 @@ switch ($_GET['TYPE'])
           $Fields['DEL_INDEX']= $_SESSION['INDEX'];
           $Fields['TAS_UID']  = $_SESSION['TASK'];
           //Execute after triggers - End
+          
           //Save data - Start
+          $Fields = $oCase->loadCase( $_SESSION['APPLICATION'] );
           $oCase->updateCase ( $_SESSION['APPLICATION'], $Fields );
           //Save data - End
           $oAppDocument = new AppDocument();
@@ -333,7 +336,9 @@ switch ($_GET['TYPE'])
           $Fields['DEL_INDEX']= $_SESSION['INDEX'];
           $Fields['TAS_UID']  = $_SESSION['TASK'];
           //Execute after triggers - End
+          
           //Save data - Start
+          $Fields = $oCase->loadCase( $_SESSION['APPLICATION'] );
           $oCase->updateCase ( $_SESSION['APPLICATION'], $Fields );
           //Save data - End
           $oAppDocument = new AppDocument();
