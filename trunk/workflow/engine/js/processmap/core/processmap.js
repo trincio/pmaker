@@ -416,7 +416,8 @@ var processmap=function(){
 						}.extend(this,panel);
 						r.make();
 					}.extend(this)},
-					{image:"/images/users.png",text:G_STRINGS.ID_PROCESSMAP_PROCESS_SUPERVISORS,launch:function(event){
+					{image:"/images/users.png",text:G_STRINGS.ID_PROCESSMAP_PROCESS_SUPERVISORS,submenu:[
+						{image:"/images/users.png",text:G_STRINGS.ID_PROCESSMAP_PROCESS_SUPERVISORS,launch:function(event){
 						this.tmp.editProcessPanel = panel =new leimnud.module.panel();
 						panel.options={
 							limit	:true,
@@ -475,7 +476,8 @@ var processmap=function(){
 							//Pm.objeto.innerHTML="asdasd";
 						}.extend(this,panel);
 						r.make();
-					}.extend(this)},
+					}.extend(this)}
+					]},
 				  {separator:true},
 				  {image:"/images/dynaforms.gif",text:G_STRINGS.ID_WEB_ENTRY,launch:function(event){
 						this.tmp.editProcessPanel = panel =new leimnud.module.panel();
@@ -507,7 +509,8 @@ var processmap=function(){
 						}.extend(this,panel);
 						r.make();
 					}.extend(this)},
-					{image:"/images/tracker.gif",text:G_STRINGS.ID_CASE_TRACKER,launch:function(event){
+					{image:"/images/tracker.gif",text:G_STRINGS.ID_CASE_TRACKER,submenu:[
+						{image:"/images/tracker.gif",text:G_STRINGS.ID_CASE_TRACKER,launch:function(event){
 						this.tmp.caseTrackerPanel = panel =new leimnud.module.panel();
 						panel.options={
 							limit	:true,
@@ -566,7 +569,8 @@ var processmap=function(){
 							//Pm.objeto.innerHTML="asdasd";
 						}.extend(this,panel);
 						r.make();
-					}.extend(this)},
+					}.extend(this)}
+					]},
 					{image:"/images/folder.gif",text:G_STRINGS.ID_PROCESS_FILES_MANAGER,launch:function(event){
 						this.tmp.processFilesManagerPanel = panel =new leimnud.module.panel();
 						panel.options={
@@ -1188,7 +1192,6 @@ var processmap=function(){
 							r.make();
 						}
 					},args:index})},
-					{separator:true},
 					{simage:"/images/properties.png",text:G_STRINGS.ID_PROCESSMAP_PROPERTIES,launch:this.parent.closure({instance:this,method:function(index){
 						var panel;
 						var iForm=function(panel,index,ifo){
