@@ -426,7 +426,6 @@ class tar_file extends archive
 					$checksum += ord(substr($block, $i, 1));
 				if ($file['checksum'] != $checksum)
 					$this->error[] = "Could not extract from {$this->options['name']}, it is corrupt.";
-
 				if ($this->options['inmemory'] == 1)
 				{
 					$file['data'] = fread($fp, $file['stat'][7]);
@@ -437,7 +436,8 @@ class tar_file extends archive
 				else if ($file['type'] == 5)
 				{
 					if (!is_dir($file['name']))
-						mkdir($file['name'], $file['stat'][2]);
+						//mkdir($file['name'], $file['stat'][2]);
+						mkdir($file['name'], 0775);
 				}
 				else if ($this->options['overwrite'] == 0 && file_exists($file['name']))
 				{
