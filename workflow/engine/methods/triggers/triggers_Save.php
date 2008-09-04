@@ -22,6 +22,7 @@
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
  * 
  */
+ 
 if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Response;
 require_once('classes/model/Triggers.php');
 $oTrigger = new Triggers();
