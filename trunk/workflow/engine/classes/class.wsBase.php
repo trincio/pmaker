@@ -291,7 +291,6 @@ class wsBase
 		try {
 			G::LoadClass('case');
       G::LoadClass('spool');
-			$oCase = new Cases();
 
     	$aSetup = getEmailConfiguration();
 			if ( $sFrom == '' )
@@ -349,6 +348,34 @@ class wsBase
 			  $result = new wsResponse (0, "message sent : $sTo" );
 			else
 			  $result = new wsResponse (100, $oSpool->status . ' ' . $oSpool->error . print_r ($aSetup ,1 ) );
+			return $result;
+		}
+		catch ( Exception $e ) {
+			$result = new wsResponse (100, $e->getMessage());
+			return $result;
+		}
+	}
+
+	public function getCaseInfo($caseNumber ) {
+		try {
+			G::LoadClass('case');
+			$oCase = new Cases();
+  	  $aRows = $oCase->loadCaseByNumber( $caseNumber);
+  	  if ( count($aRows) == 0 ) { 
+    	  $result = new wsResponse (27, "Case $caseNumber doesn't exists." );
+  	    return $result;
+  	  }
+  	  if ( count($aRows) > 1 ) { 
+    	  $result = new wsResponse (27, "There are more than one case with the same CaseNumber $caseNumber." );
+  	    return $result;
+  	  }
+
+  	  $result = new wsResponse (0, "case found" );
+  	  $result->caseId = $aRows[0]['APP_UID'];
+  	  $result->caseNumber = $aRows[0]['APP_NUMBER'];
+  	  $result->caseStatus = $aRows[0]['APP_STATUS'];
+  	  $result->caseParalell = $aRows[0]['APP_PARALLEL'];
+  	  $result->caseCurrentUser = $aRows[0]['APP_CUR_USER'];
 			return $result;
 		}
 		catch ( Exception $e ) {
