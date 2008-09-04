@@ -396,7 +396,7 @@ class Derivation
     $appFields['DEL_INDEX']       = (isset($iNewDelIndex) ? $iNewDelIndex : 0);
     $appFields['TAS_UID']         = $nextDel['TAS_UID'];
     /* Start Block : UPDATES APPLICATION */
-    $appFields = $this->case->LoadCase($currentDelegation['APP_UID'], $currentDelegation['DEL_INDEX'] );
+    //$appFields = $this->case->LoadCase($currentDelegation['APP_UID'], $currentDelegation['DEL_INDEX'] );
     $this->case->updateCase ( $currentDelegation['APP_UID'], $appFields );
     /* End Block : UPDATES APPLICATION */
     //krumo ($appFields);die;

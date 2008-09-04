@@ -91,7 +91,7 @@ try {
   $appFields['TAS_UID']         = $_SESSION['TASK'];
   
   //Save data - Start
-  $appFields = $oCase->loadCase( $_SESSION['APPLICATION'] );
+  //$appFields = $oCase->loadCase( $_SESSION['APPLICATION'] );
   $oCase->updateCase ( $_SESSION['APPLICATION'], $appFields);
   //Save data - End
 
@@ -122,7 +122,7 @@ try {
   //$appFields['TAS_UID']   = $_SESSION['TASK'];
   
   //Save data - Start
-  $appFields = $oCase->loadCase( $_SESSION['APPLICATION'] );
+  //$appFields = $oCase->loadCase( $_SESSION['APPLICATION'] );
   $oCase->updateCase ( $_SESSION['APPLICATION'], $appFields);
   //Save data - End
   //Send notifications - Start
