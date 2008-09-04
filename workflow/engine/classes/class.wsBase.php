@@ -625,11 +625,13 @@ class wsBase
 						return $result;
 					}
 				}
-			} else {
+			} 
+/*
+			else {
 				$result = new wsResponse (100, "The variables param is not an array!");
 				return $result;
 			}
-
+*/
 			G::LoadClass('processes');
 			$oProcesses = new Processes();
 			$pro = $oProcesses->processExists($processId);
@@ -679,7 +681,11 @@ class wsBase
 				$oldFields['APP_DATA'] = array_merge( $oldFields['APP_DATA'], $Fields);
 
 				$up_case = $oCase->updateCase($caseId, $oldFields);
-				$result = new wsResponse (0, "Sucessful\ncase uid = $caseId \ncase number = $caseNr ");
+				//$result = new wsResponse (0, "Sucessful\ncase uid = $caseId \ncase number = $caseNr ");
+				$result = new wsResponse (0, "Sucessful");
+				$result->caseId = $caseId;
+				$result->caseNumber = $caseNr;
+				
 				return $result;
 		}
 		catch ( Exception $e ) {
@@ -1006,7 +1012,7 @@ class wsBase
 
   			//Save data - Start
     		$appFields['APP_DATA']  = $oPMScript->aFields;
-    		$appFields = $oCase->loadCase( $caseId );
+    		//$appFields = $oCase->loadCase( $caseId );
 	  		$oCase->updateCase ( $caseId, $appFields);
 		  	//Save data - End
       }

@@ -133,7 +133,6 @@
   #end trigger debug session.......
   
   //Save data - Start
-  $Fields = $oCase->loadCase( $_SESSION['APPLICATION'] );
   $oCase->updateCase ( $_SESSION['APPLICATION'], $Fields );
   //Save data - End
 
@@ -316,7 +315,7 @@ switch ($_GET['TYPE'])
           //Execute after triggers - End
           
           //Save data - Start
-          $Fields = $oCase->loadCase( $_SESSION['APPLICATION'] );
+          //$Fields = $oCase->loadCase( $_SESSION['APPLICATION'] );
           $oCase->updateCase ( $_SESSION['APPLICATION'], $Fields );
           //Save data - End
           $oAppDocument = new AppDocument();
@@ -338,7 +337,7 @@ switch ($_GET['TYPE'])
           //Execute after triggers - End
           
           //Save data - Start
-          $Fields = $oCase->loadCase( $_SESSION['APPLICATION'] );
+          //$Fields = $oCase->loadCase( $_SESSION['APPLICATION'] );
           $oCase->updateCase ( $_SESSION['APPLICATION'], $Fields );
           //Save data - End
           $oAppDocument = new AppDocument();
