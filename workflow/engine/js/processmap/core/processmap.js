@@ -27,7 +27,7 @@ var processmap=function(){
 						this.panels.buildingBlocks=new leimnud.module.panel();
 						this.panels.buildingBlocks.options={
 							limit	:true,
-							size	:{w:420,h:420},
+							size	:{w:430,h:460},
 							position:{x:0,y:10,center:true},
 							title	:"",
 							theme	:"processmaker",
@@ -509,7 +509,6 @@ var processmap=function(){
 						}.extend(this,panel);
 						r.make();
 					}.extend(this)},
-/*					
 					{image:"/images/tracker.gif",text:G_STRINGS.ID_CASE_TRACKER,submenu:[
 						{image:"/images/tracker.gif",text:G_STRINGS.ID_CASE_TRACKER,launch:function(event){
 						this.tmp.caseTrackerPanel = panel =new leimnud.module.panel();
@@ -573,7 +572,6 @@ var processmap=function(){
 						r.make();
 					}.extend(this)}
 					]},
-*/
 					{image:"/images/folder.gif",text:G_STRINGS.ID_PROCESS_FILES_MANAGER,launch:function(event){
 						this.tmp.processFilesManagerPanel = panel =new leimnud.module.panel();
 						panel.options={
