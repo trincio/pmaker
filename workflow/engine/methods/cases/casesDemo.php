@@ -55,6 +55,7 @@ G::LoadClass('derivation');
 $oCase     = new Cases ();
 $appUid = isset ($_SESSION['APPLICATION']) ? $_SESSION['APPLICATION'] : '';
 $appFields = $oCase->loadCase( $appUid );
+
 $Fields['APP_UID']       = $appFields['APP_UID'];
 $Fields['APP_NUMBER']    = $appFields['APP_NUMBER'];
 $Fields['APP_STATUS']    = $appFields['APP_STATUS'];
@@ -66,6 +67,8 @@ $Fields['APP_INIT_USER'] = $appFields['APP_INIT_USER'];
 $Fields['APP_CUR_USER']  = $appFields['APP_CUR_USER'];
 $Fields['APP_DATA']      = $appFields['APP_DATA'];
 $Fields['CREATOR']       = $appFields['CREATOR'];
+$Fields['APP_PIN']       = $appFields['APP_PIN'];
+$Fields['APP_PROC_CODE'] = $appFields['APP_PROC_CODE'];
 
 $Fields['PRO_TITLE'] = Content::load ( 'PRO_TITLE', '', $appFields['PRO_UID'], SYS_LANG );
 $oUser = new Users();
@@ -111,6 +114,8 @@ $Fields['DELAYS'] = $aDelays;
 $Fields['CANT_DELAYS'] = count($aDelays);
 
   /* Render page */
+  $G_MAIN_MENU            = 'processmaker';
+  $G_ID_MENU_SELECTED     = 'CASES';
   $G_PUBLISH = new Publisher;
   //$G_PUBLISH->AddContent( 'propeltable', 'paged-table', 'cases/casesDemo', $c );
 	$G_PUBLISH->AddContent('smarty', 'cases/casesDemo', '', '', $Fields);
