@@ -223,6 +223,41 @@ class Cases
             throw ($e);
         }
     }
+    
+   /*
+    * LoadCaseByNumber
+    * @param string $caseNumber
+    * @return
+    */
+    function loadCaseByNumber($sCaseNumber)
+    {
+        //('SELECT * FROM APP_DELEGATION WHERE APP_PROC_CODE="'.$sCaseNumber.'" ');
+        try {
+        	  $aCases = array();
+            $c = new Criteria();
+            $c->add(ApplicationPeer::APP_PROC_CODE, $sCaseNumber);
+            $rs = ApplicationPeer::doSelectRs($c);
+            $rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+            $rs->next();
+            $row = $rs->getRow();
+            while (is_array($row)) {
+            	  $case['APP_UID'] = $row['APP_UID'];
+            	  $case['APP_NUMBER'] = $row['APP_NUMBER'];
+            	  $case['APP_STATUS'] = $row['APP_STATUS'];
+            	  $case['PRO_UID'] = $row['PRO_UID'];
+            	  $case['APP_PARALLEL'] = $row['APP_PARALLEL'];
+            	  $case['APP_CUR_USER'] = $row['APP_CUR_USER'];
+                $aCases[] = $case;
+                $rs->next();
+                $row = $rs->getRow();
+            }
+            return $aCases;
+        }
+        catch (exception $e) {
+            throw ($e);
+        }
+    }
+    
 
     /*
     * Actualiza el case label
