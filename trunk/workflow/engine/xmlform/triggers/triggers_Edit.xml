@@ -7,11 +7,11 @@
 >
 <PRO_UID type="hidden"/>
 
-<TRI_UID type="hidden"/>
 
 <TITLE type="title" group="1">
   <en>Trigger Information</en>
 </TITLE>
+<TRI_UID type="hidden"/>
 
 <TRI_TITLE type="text" size="80" maxlength="100">
   <en>Title</en>

@@ -751,6 +751,9 @@ class wsBase
 			G::LoadClass('derivation');
 			G::LoadClass('sessions');
 
+			$varResponse = '';
+			$varTriggers = "\n";
+
 			$oAppDel = new AppDelegation();
 			$appdel  = $oAppDel->Load($caseId, $delIndex);
 
@@ -792,7 +795,6 @@ class wsBase
 			$oDerivation = new Derivation();
 			$derive  = $oDerivation->prepareInformation($aData);
 
-			$var = '';
 			foreach ( $derive as $key=>$val ) {
 				if($val['NEXT_TASK']['TAS_ASSIGN_TYPE']=='MANUAL')
 				{
@@ -806,7 +808,7 @@ class wsBase
 																		'TAS_DEF_PROC_CODE' => $val['NEXT_TASK']['TAS_DEF_PROC_CODE'],
 																		'DEL_PRIORITY'	=>	$appdel['DEL_PRIORITY']
 																	);
-				$var = $var . ($var!=''?',':'') . $val['NEXT_TASK']['TAS_TITLE'].'('.$val['NEXT_TASK']['USER_ASSIGNED']['USR_USERNAME'].')';
+				$varResponse = $varResponse . ($varResponse!=''?',':'') . $val['NEXT_TASK']['TAS_TITLE'].'('.$val['NEXT_TASK']['USER_ASSIGNED']['USR_USERNAME'].')';
 			}
 
 			//load data
@@ -815,13 +817,14 @@ class wsBase
 
 			//Execute triggers before derivation
       $currentTask = $derive[1]['TAS_UID'];  //currentTask??? if this doesn't exists???
- 			$appFields['APP_DATA']['APPLICATION'] = $caseId;
 
       $aTriggers = $oCase->loadTriggers($currentTask, 'ASSIGN_TASK', -2, 'BEFORE' );
       if (count($aTriggers) > 0) {
         $oPMScript = new PMScript();
-        $oPMScript->setFields( $appFields['APP_DATA'] );
         foreach ($aTriggers as $aTrigger) {
+          $appFields = $oCase->loadCase( $caseId );
+     			$appFields['APP_DATA']['APPLICATION'] = $caseId;
+          $oPMScript->setFields( $appFields['APP_DATA'] );
           $bExecute = true;
           if ($aTrigger['ST_CONDITION'] !== '') {
             $oPMScript->setScript($aTrigger['ST_CONDITION']);
@@ -830,8 +833,11 @@ class wsBase
           if ($bExecute) {
             $oPMScript->setScript($aTrigger['TRI_WEBBOT']);
             $oPMScript->execute();
-            $appFields['APP_DATA'] = $oPMScript->aFields;
+            $varTriggers .= "Before ----------\n" . $aTrigger['TRI_WEBBOT'] . "\n";
             $appFields = $oCase->loadCase( $caseId );
+            $appFields['APP_DATA'] = $oPMScript->aFields;
+//$varTriggers .= "proccode " . $appFields['APP_PROC_CODE'] . "\n";
+//$varTriggers .= "pin " . $appFields['APP_DATA']['PIN'] . "\n";
       			$oCase->updateCase ( $caseId, $appFields );
           }
         }
@@ -841,8 +847,8 @@ class wsBase
 			$appFields['TAS_UID']   = $derive['TAS_UID'];
 			
 			//Save data - Start
-			$appFields = $oCase->loadCase( $caseId );
-			$oCase->updateCase ( $caseId, $appFields );
+			//$appFields = $oCase->loadCase( $caseId );
+			//$oCase->updateCase ( $caseId, $appFields );
 			//Save data - End
 
 			$row  = array();
@@ -870,6 +876,7 @@ class wsBase
 
 			$oDerivation->derivate( $aCurrentDerivation, $nextDelegations );
 			$appFields['APP_STATUS'] = $sStatus;
+      $oCase->updateCase ( $caseId, $appFields );
 
 			$aTriggers = $oCase->loadTriggers($currentTask, 'ASSIGN_TASK', -2, 'AFTER' );
       if (count($aTriggers) > 0) {
@@ -884,6 +891,7 @@ class wsBase
           if ($bExecute) {
             $oPMScript->setScript($aTrigger['TRI_WEBBOT']);
             $oPMScript->execute();
+            $varTriggers .= "After ----------\n" . $aTrigger['TRI_WEBBOT'] . "\n";
             $appFields['APP_DATA'] = $oPMScript->aFields;
             $appFields = $oCase->loadCase( $caseId );
       			$oCase->updateCase ( $caseId, $appFields );
@@ -892,11 +900,11 @@ class wsBase
       }
 
 			//Save data - Start
-			$appFields = $oCase->loadCase( $caseId );
-			$oCase->updateCase ( $caseId, $appFields );
+			//$appFields = $oCase->loadCase( $caseId );
+			//$oCase->updateCase ( $caseId, $appFields );
 			//Save data - End
 
-			$result = new wsResponse (0, $var);
+			$result = new wsResponse (0, $varResponse . $varTriggers );
 			return $result;
 		}
 		catch ( Exception $e ) {

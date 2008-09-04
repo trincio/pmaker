@@ -1129,7 +1129,7 @@ class processMap {
   	  global $G_PUBLISH;
   	  $G_PUBLISH = new Publisher();
   	  $G_PUBLISH->AddContent('view', 'steps/triggers_Tree');
-      G::RenderPage('publish', 'raw');
+      G::RenderPage('publish', 'raw');      
       return true;
     }
   	catch (Exception $oError) {
@@ -1596,10 +1596,10 @@ class processMap {
 	function triggersList($sProcessUID = '') {
 		try {
 			$oProcess = new Process();
-  	  $aFields  = $oProcess->load($sProcessUID);
+  	  //$aFields  = $oProcess->load($sProcessUID);
       global $G_PUBLISH;
       $G_PUBLISH = new Publisher;
-      $G_PUBLISH->AddContent('propeltable', 'paged-table', 'triggers/triggers_ShortList', $this->getTriggersCriteria($sProcessUID), $aFields);
+      $G_PUBLISH->AddContent('propeltable', 'paged-table', 'triggers/triggers_ShortList', $this->getTriggersCriteria($sProcessUID) /*, $aFields*/);
       G::RenderPage('publish', 'raw');
       return true;
     }
@@ -1634,6 +1634,7 @@ class processMap {
     $aConditions[] = array('C2.CON_LANG'    , $sDelimiter . SYS_LANG    . $sDelimiter);
     $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
     $oCriteria->add(TriggersPeer::PRO_UID, $sProcessUID);
+    $oCriteria->addAscendingOrderByColumn( 'TRI_TITLE' );
     return $oCriteria;
   }
 
