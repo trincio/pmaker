@@ -3,7 +3,7 @@
   sqlConnection=""
   menu="triggers/triggers_Options"
   width="100%"
-  rowsPerPage="11"
+  rowsPerPage="12"
 >
 
 <TRI_UID type="hidden" showInTable="0"/>
