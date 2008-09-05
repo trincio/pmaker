@@ -505,30 +505,32 @@ class wsBase
 		}
 	}
 
-	public function sendVariables($sessionId, $caseId, $variables) {
+	public function sendVariables($caseId, $variables) {
 		//delegation where app uid (caseId) y usruid(session) ordenar delindes descendente y agaarr el primero
 		//delfinishdate != null error
 		try {
-			G::LoadClass('sessions');
 			require_once ("classes/model/AppDelegation.php");
-			$oSession = new Sessions();
-			$user  = $oSession->getSessionUser($sessionId);
-
 			$oCriteria = new Criteria('workflow');
 			$oCriteria->addSelectColumn(AppDelegationPeer::DEL_FINISH_DATE);
 			$oCriteria->add(AppDelegationPeer::APP_UID, $caseId);
-			$oCriteria->add(AppDelegationPeer::USR_UID, $user['USR_UID']);
+			
 			$oCriteria->addDescendingOrderByColumn(AppDelegationPeer::DEL_INDEX);
 			$oDataset = AppDelegationPeer::doSelectRS($oCriteria);
 			$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-			$oDataset->next();
-			$aRow = $oDataset->getRow();
-			if($aRow['DEL_FINISH_DATE']!=NULL)
-			{
-				$result = new wsResponse (18, 'This delegation already closed');
-				return $result;
-			}
-
+			
+                        $cnt = 0;
+                        while($oDataset->next()) {
+                          $aRow = $oDataset->getRow();
+                            if($aRow['DEL_FINISH_DATE']==NULL)
+                            {
+                                $cnt++;    
+                            }
+                        }
+                        
+                        if($cnt == 0){
+                            $result = new wsResponse (18, 'This case is already closed');
+                            return $result;
+                        }
 			if(is_array($variables)) {
 				$cant = count ( $variables );
 				if($cant > 0) {
@@ -555,30 +557,33 @@ class wsBase
 		}
 	}
 
-	public function getVariables($sessionId, $caseId, $variables) {
+	public function getVariables($caseId, $variables) {
 		//delegation where app uid (caseId) y usruid(session) ordenar delindes descendente y agaarr el primero
 		//delfinishdate != null error
 		try {
-			G::LoadClass('sessions');
 			require_once ("classes/model/AppDelegation.php");
-			$oSession = new Sessions();
-			$user  = $oSession->getSessionUser($sessionId);
-
 			$oCriteria = new Criteria('workflow');
 			$oCriteria->addSelectColumn(AppDelegationPeer::DEL_FINISH_DATE);
 			$oCriteria->add(AppDelegationPeer::APP_UID, $caseId);
-			$oCriteria->add(AppDelegationPeer::USR_UID, $user['USR_UID']);
+			
 			$oCriteria->addDescendingOrderByColumn(AppDelegationPeer::DEL_INDEX);
 			$oDataset = AppDelegationPeer::doSelectRS($oCriteria);
 			$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-			$oDataset->next();
-			$aRow = $oDataset->getRow();
-			if($aRow['DEL_FINISH_DATE']!=NULL)
-			{
-				$result = new wsResponse (18, 'This delegation already closed');
-				return $result;
-			}
-
+			
+                        $cnt = 0;
+                        while($oDataset->next()) {
+                          $aRow = $oDataset->getRow();
+                            if($aRow['DEL_FINISH_DATE']==NULL)
+                            {
+                                $cnt++;    
+                            }
+                        }
+                        
+                        if($cnt == 0){
+                            $result = new wsResponse (18, 'This case is already closed');
+                            return $result;
+                        }
+                        
 			if(is_array($variables)) {
 				$cant = count ( $variables );
 				if($cant > 0) {
