@@ -2103,7 +2103,7 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText
 			$html = "<input size=15  class='module_app_input___gray' readonly=true type='text' id='".$pID."' name='".$pID."' value='".$value."'>";
 			$html.= "<a href='#' onclick=\"return showCalendar('$pID', '%Y-%m-%d', '24', true, '$startDate', '$endDate');\" ><img src='/controls/cal.gif' border='0'></a>";
 		} else {
-			$html = "<span style='border:1;border-color:#000;width:100px;' id='" . $pID . "' name='" . $pID . "'>$value</span>";
+			$html = "<span style='border:1;border-color:#000;width:100px;' name='" . $pID . "'>$value</span>";
 		}
 		return $html;
 	}
