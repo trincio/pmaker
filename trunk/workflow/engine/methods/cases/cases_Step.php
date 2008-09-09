@@ -287,6 +287,8 @@ switch ($_GET['TYPE'])
         }
         $sFilename = G::replaceDataField($aOD['OUT_DOC_FILENAME'], $aApplication['APP_DATA']);*/
         $sFilename = ereg_replace('[^A-Za-z0-9_]', '_', G::replaceDataField($aOD['OUT_DOC_FILENAME'], $Fields['APP_DATA']));
+        if($sFilename=='')
+        		$sFilename='_';
         $pathOutput = PATH_DOCUMENT . $_SESSION['APPLICATION'] . PATH_SEP . 'outdocs'. PATH_SEP ;
         //$oOutputDocument->generate($_GET['UID'], $aApplication['APP_DATA'], PATH_DOCUMENT . $_SESSION['APPLICATION'] . '/outdocs/', $sFilename, $aOD['OUT_DOC_TEMPLATE']);
         $oOutputDocument->generate($_GET['UID'], $Fields['APP_DATA'], $pathOutput, $sFilename, $aOD['OUT_DOC_TEMPLATE']);

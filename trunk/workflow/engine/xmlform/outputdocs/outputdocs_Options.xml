@@ -18,9 +18,15 @@ var currentPagedTable = @#PAGED_TABLE_ID;
 		popupWindow('@G::LoadTranslation(ID_OUTPUT_DOCUMENTS)', '@G::encryptlink(@#outputdocs_Edit)?OUT_DOC_UID='+ uid , 600, 510);
   }
   function outputdocsSave( form ) {
-    ajax_post( form.action, form, 'POST' );
-    currentPopupWindow.remove();
-    @#PAGED_TABLE_ID.refresh();
+    var doc = getField("OUT_DOC_FILENAME");    
+    if(doc.value=='')
+     { alert(G_STRINGS.ID_FILEGENERATED);
+     }
+    else  
+     { ajax_post( form.action, form, 'POST' );
+       currentPopupWindow.remove();
+       @#PAGED_TABLE_ID.refresh();
+     }  
   }
   function outputdocsDelete( uid ) {
     new leimnud.module.app.confirm().make({
