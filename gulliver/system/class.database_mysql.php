@@ -51,8 +51,10 @@ class database extends database_base {
 			  if ($aParameters['Key'] == 'PRI') {
 			  	$sKeys .= $this->sQuoteCharacter . $sColumnName . $this->sQuoteCharacter . ',';
 			  }
-			  if ($aParameters['Default'] != '') {
-			  	$sSQL .= " DEFAULT '" . $aParameters['Default'] . "'";
+			  if (isset($aParameters['Default'])) {
+			    if ($aParameters['Default'] != '') {
+			    	$sSQL .= " DEFAULT '" . $aParameters['Default'] . "'";
+			    }
 			  }
 			  $sSQL .= ',';
 			}

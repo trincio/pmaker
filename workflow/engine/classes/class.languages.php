@@ -41,7 +41,7 @@ class languages {
 	* @param string $sLanguageFile
 	* @return void
 	*/
-  public function importLanguage($sLanguageFile) {
+  public function importLanguage($sLanguageFile, $bXml = true) {
   	try {
   		$oFile = fopen($sLanguageFile, 'r');
       $bFind = false;
@@ -102,7 +102,7 @@ class languages {
       		if (!($sLine = fgets($oFile))) {
       			throw new Exception('The .po file have a bad format!');
       		}
-      		if (file_exists(PATH_XMLFORM . $sXmlForm)) {
+      		if (file_exists(PATH_XMLFORM . $sXmlForm) && $bXml) {
             if ($sAux == '') {
       		  	$sAux = $sXmlForm;
       		  	$oConnection = new DBConnection(PATH_XMLFORM . $sXmlForm, '', '', '', 'myxml');
@@ -195,7 +195,9 @@ class languages {
       fclose($oFile);
       $oLanguage = new Language();
       $oLanguage->update(array('LAN_ID' => $sLanguageID, 'LAN_ENABLED' => '1'));
-      Translation::generateFileTranslation($sLanguageID);
+      if ($bXml) {
+        Translation::generateFileTranslation($sLanguageID);
+      }
       $oCriteria = new Criteria('workflow');
       $oCriteria->addSelectColumn(ContentPeer::CON_CATEGORY);
       $oCriteria->addSelectColumn(ContentPeer::CON_ID);

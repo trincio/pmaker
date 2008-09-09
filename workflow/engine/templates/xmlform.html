@@ -132,6 +132,7 @@ if (typeof(G_Form)==='undefined') return alert('form.js was not loaded');
     {elseif ($field->type==='grid')}
       myForm.aElements[i] = new G_Grid(myForm, '{$name}');
       grid_{$field->id}(myForm.aElements[i]);
+      grid_{$name} = myForm.aElements[i];
       {$field->attachEvents("myForm.aElements[i].element")}
     {else}
       var element = getField("{$name}");
@@ -156,5 +157,5 @@ if (typeof(G_Form)==='undefined') return alert('form.js was not loaded');
 {literal}}{/literal}
 {/if}
 {if $printJavaScript}
-leimnud.event.add(window,'load',function(){literal}{{/literal}loadForm_{$form->id}('{$form->ajaxServer}');{literal}}{/literal});
+leimnud.event.add(window,'load',function(){literal}{{/literal}loadForm_{$form->id}('{$form->ajaxServer}');if (typeof(dynaformOnload) !== 'undefined') {literal}{dynaformOnload();}}{/literal});
 {/if}
