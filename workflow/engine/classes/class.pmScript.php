@@ -112,7 +112,7 @@ class PMScript
 
 		// Do eval()
 		$check = eval($code);
-		
+
 		$output = ob_get_contents();
 		ob_end_clean();
 		// Send output or report errors
@@ -127,11 +127,11 @@ class PMScript
 		} else {
 			$response->errEval = true;
 		}
-		
+
 		if($response->errEval) {
 			$this->bError = false;
 			return true;
-		} else { 
+		} else {
 			if($Err != "") { //Syntax error
 				//extracting prat of code for show
 				$ii = strpos($code,'{');
@@ -162,16 +162,16 @@ class PMScript
 	 * @return void
 	 */
 	function execute()
-	{	
+	{
 		$sScript = "try {\n";
 		$iAux    = 0;
 		$bEqual  = false;
 		$iOcurrences = preg_match_all('/\@(?:([\@\%\#\?\$\=])([a-zA-Z\_]\w*)|([a-zA-Z\_][\w\-\>\:]*)\(((?:[^\\\\\)]*(?:[\\\\][\w\W])?)*)\))((?:\s*\[[\'"]?\w+[\'"]?\])+)?/', $this->sScript, $aMatch, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE);
 		if ($iOcurrences)
-		{	
+		{
 			for($i = 0; $i < $iOcurrences; $i++)
-			{	
-				$sAux = substr($this->sScript, $iAux, $aMatch[0][$i][1] - $iAux); 
+			{
+				$sAux = substr($this->sScript, $iAux, $aMatch[0][$i][1] - $iAux);
 				if (!$bEqual)
 				{
 					if (strpos($sAux, '=') !== false)
@@ -328,7 +328,7 @@ class PMScript
 		$this->executeAndCatchErrors($sScript);
 		for($i=0; $i<count($this->affected_fields); $i++){
 			$_SESSION['TRIGGER_DEBUG']['DATA'][$i]['key']   = $this->affected_fields[$i];
-			$_SESSION['TRIGGER_DEBUG']['DATA'][$i]['value'] = $this->aFields[$this->affected_fields[$i]];
+			$_SESSION['TRIGGER_DEBUG']['DATA'][$i]['value'] = isset($this->aFields[$this->affected_fields[$i]]) ? $this->aFields[$this->affected_fields[$i]] : '';
 		}
 		//echo '<pre>-->'; print_r($_SESSION['TRIGGER_DEBUG']['DATA']); echo '<---</pre>';
 	}
@@ -500,7 +500,7 @@ class PMScript
    {
   		$this->bError = false;
 		  eval($sScript);
-	
+
 	}
 	  else
 	  {
@@ -572,7 +572,7 @@ G::LoadClass('pmFunctions');
 /***************************************************************************
 * @Check Sintax error handler
 * @author: Erik Amaru Ortiz <erik@colosa.com>
-* @datetime: 01.07.2008 17:29:37 
+* @datetime: 01.07.2008 17:29:37
 ***************************************************************************/
 
 

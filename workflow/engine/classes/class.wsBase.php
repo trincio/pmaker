@@ -361,11 +361,11 @@ class wsBase
 			G::LoadClass('case');
 			$oCase = new Cases();
   	  $aRows = $oCase->loadCaseByNumber( $caseNumber);
-  	  if ( count($aRows) == 0 ) { 
+  	  if ( count($aRows) == 0 ) {
     	  $result = new wsResponse (27, "Case $caseNumber doesn't exists." );
   	    return $result;
   	  }
-  	  if ( count($aRows) > 1 ) { 
+  	  if ( count($aRows) > 1 ) {
     	  $result = new wsResponse (27, "There are more than one case with the same CaseNumber $caseNumber." );
   	    return $result;
   	  }
@@ -513,20 +513,20 @@ class wsBase
 			$oCriteria = new Criteria('workflow');
 			$oCriteria->addSelectColumn(AppDelegationPeer::DEL_FINISH_DATE);
 			$oCriteria->add(AppDelegationPeer::APP_UID, $caseId);
-			
+
 			$oCriteria->addDescendingOrderByColumn(AppDelegationPeer::DEL_INDEX);
 			$oDataset = AppDelegationPeer::doSelectRS($oCriteria);
 			$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-			
+
                         $cnt = 0;
                         while($oDataset->next()) {
                           $aRow = $oDataset->getRow();
                             if($aRow['DEL_FINISH_DATE']==NULL)
                             {
-                                $cnt++;    
+                                $cnt++;
                             }
                         }
-                        
+
                         if($cnt == 0){
                             $result = new wsResponse (18, 'This case is already closed');
                             return $result;
@@ -565,25 +565,25 @@ class wsBase
 			$oCriteria = new Criteria('workflow');
 			$oCriteria->addSelectColumn(AppDelegationPeer::DEL_FINISH_DATE);
 			$oCriteria->add(AppDelegationPeer::APP_UID, $caseId);
-			
+
 			$oCriteria->addDescendingOrderByColumn(AppDelegationPeer::DEL_INDEX);
 			$oDataset = AppDelegationPeer::doSelectRS($oCriteria);
 			$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-			
+
                         $cnt = 0;
                         while($oDataset->next()) {
                           $aRow = $oDataset->getRow();
                             if($aRow['DEL_FINISH_DATE']==NULL)
                             {
-                                $cnt++;    
+                                $cnt++;
                             }
                         }
-                        
+
                         if($cnt == 0){
                             $result = new wsResponse (18, 'This case is already closed');
                             return $result;
                         }
-                        
+
 			if(is_array($variables)) {
 				$cant = count ( $variables );
 				if($cant > 0) {
@@ -630,7 +630,7 @@ class wsBase
 						return $result;
 					}
 				}
-			} 
+			}
 /*
 			else {
 				$result = new wsResponse (100, "The variables param is not an array!");
@@ -690,7 +690,7 @@ class wsBase
 				$result = new wsResponse (0, "Sucessful");
 				$result->caseId = $caseId;
 				$result->caseNumber = $caseNr;
-				
+
 				return $result;
 		}
 		catch ( Exception $e ) {
@@ -792,6 +792,12 @@ class wsBase
 			$varResponse = '';
 			$varTriggers = "\n";
 
+			if ($delIndex == '') {
+			  $oCriteria = new Criteria('workflow');
+			  $oCriteria->addSelectColumn(AppDelegationPeer::DEL_INDEX);
+			  //
+			}
+
 			$oAppDel = new AppDelegation();
 			$appdel  = $oAppDel->Load($caseId, $delIndex);
 
@@ -883,7 +889,7 @@ class wsBase
 
 			$appFields['DEL_INDEX'] = $delIndex;
 			$appFields['TAS_UID']   = $derive['TAS_UID'];
-			
+
 			//Save data - Start
 			//$appFields = $oCase->loadCase( $caseId );
 			//$oCase->updateCase ( $caseId, $appFields );
