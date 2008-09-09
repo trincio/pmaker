@@ -4,6 +4,7 @@
   deleteRow="0"
   menu="groups/groups_Options"
   width="95%"
+  rowsPerPage="20"
 >
 
 <title type="title" colWidth="300" showInTable="0">
