@@ -24,6 +24,7 @@
 <ROU_TYPE type="hidden" />
 
 <GRID_SELECT_TYPE type="grid" xmlgrid="patterns/patterns_GridSelectType" addRow="1" deleteRow="1" editRow="" />
+ 
 
 <SAVE type="button" onclick="savePattern(this.form);">
   <en>Save</en>
