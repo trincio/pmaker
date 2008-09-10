@@ -847,8 +847,13 @@ class wsBase
 			$aData['DEL_INDEX'] = $delIndex;
 
 			$oDerivation = new Derivation();
-			$derive  = $oDerivation->prepareInformation($aData);
-
+			$derive  = $oDerivation->prepareInformation($aData);//$result = new wsResponse (666, print_r($derive,1));return $result;
+			if (isset($derive[1])) {
+			  if ($derive[1]['ROU_TYPE'] == 'SELECT') {
+			    $result = new wsResponse (21, 'Cannot derivate a "Manual" derivation using webservices.');
+					return $result;
+			  }
+			}
 			foreach ( $derive as $key=>$val ) {
 				if($val['NEXT_TASK']['TAS_ASSIGN_TYPE']=='MANUAL')
 				{
