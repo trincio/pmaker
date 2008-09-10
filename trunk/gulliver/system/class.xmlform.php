@@ -716,6 +716,123 @@ class XmlForm_Field_Text extends XmlForm_Field_SimpleText
 
 }
 
+/**
+ * Class XmlForm_Field_Suggest
+ * @author Erik Amaru Ortiz <erik@colosa.com>
+ * @package gulliver.system.xmlform
+ * @access public
+ * @dependencies XmlForm_Field_SimpleText
+ */
+class XmlForm_Field_Suggest extends XmlForm_Field_SimpleText  //by neyek
+{
+	var $size=15;
+	var $maxLength=64;
+	var $validate='Any';
+	var $mask = '';
+	var $defaultValue='';
+	var $required=false;
+	var $dependentFields='';
+	var $linkField='';
+        //Possible values:(-|UPPER|LOWER|CAPITALIZE)
+	var $strTo='';
+	var $readOnly=false;
+	var $sqlConnection=0;
+	var $sql='';
+	var $sqlOption=array();
+	//Atributes only for grids
+	var $formula	   = '';
+	var $function    = '';
+	var $replaceTags = 0;
+
+        /**
+        * Function render
+        * @author David S. Callizaya S. <davidsantos@colosa.com>
+        * @access public
+        * @parameter string value
+        * @parameter string owner
+        * @return string
+        */
+        function render( $value = NULL , $owner = NULL )
+        {
+
+            //NOTE: string functions must be in G class
+            if ($this->strTo==='UPPER') $value = strtoupper($value);
+            if ($this->strTo==='LOWER') $value = strtolower($value);
+            //if ($this->strTo==='CAPITALIZE') $value = strtocapitalize($value);
+            $onkeypress = G::replaceDataField( $this->onkeypress, $owner->values );
+            if ($this->replaceTags == 1) {
+              $value = G::replaceDataField( $value, $owner->values );
+            }
+            if ($this->mode==='edit') {
+                if ($this->readOnly){
+                        return '<input class="module_app_input___gray" id="form['.$this->name.']" name="form['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $value , ENT_COMPAT, 'utf-8').'\' readOnly="readOnly" style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'" onkeypress="'.htmlentities( $onkeypress , ENT_COMPAT, 'utf-8').'"/>';
+                } else {
+                        $str = '
+                        <input class="module_app_input___gray" type="hidden" id="form['.$this->name.']" value="" disabled size=2 />
+                        <input class="module_app_input___gray" type="text" id="form['.$this->name.'_suggest]" value="" />
+                        <script type="text/javascript">
+                            var options = {
+                                    script:"suggest.php?json=true&limit=6&",
+                                    varname:"input",
+                                    json:true,
+                                    shownoresults:false,
+                                    maxresults:6,
+                                    callback: function (obj) { 
+                                      document.getElementById(\'form['.$this->name.']\').value = obj.id; 
+                                    }
+                            };
+                            var as_json = new bsn.AutoSuggest(\'form['.$this->name.'_suggest]\', options);
+                        </script>';
+                    
+                        return $str;  
+                        //return '<input class="module_app_input___gray" id="form['.$this->name.']" name="form['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $value , ENT_COMPAT, 'utf-8').'\' style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'" onkeypress="'.htmlentities( $onkeypress , ENT_COMPAT, 'utf-8').'"/>';
+                }    
+            } elseif ($this->mode==='view') {
+                    return '<input class="module_app_input___gray" id="form['.$this->name.']" name="form['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $value , ENT_COMPAT, 'utf-8').'\' style="display:none;'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'" onkeypress="'.htmlentities( $onkeypress , ENT_COMPAT, 'utf-8').'"/>' .
+                    $this->htmlentities( $value , ENT_COMPAT, 'utf-8');
+            } else {
+                  return $this->htmlentities( $value , ENT_COMPAT, 'utf-8');
+            }
+        }
+        /**
+        * Function renderGrid
+        * @author David S. Callizaya S. <davidsantos@colosa.com>
+        * @access public
+        * @parameter string values
+        * @parameter string owner
+        * @return string
+        */
+        function renderGrid( $values=array() , $owner )
+        {
+        $result=array();$r=1;
+        foreach($values as $v)  {
+            if ($this->replaceTags == 1) {
+            $v = G::replaceDataField( $v, $owner->values );
+          }
+              if ($this->mode==='edit') {
+                if ($this->readOnly)
+                        $result[] = '<input class="module_app_input___gray" id="form['. $owner->name .']['.$r.']['.$this->name.']" name="form['. $owner->name .']['.$r.']['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value="'.$this->htmlentities( $v , ENT_COMPAT, 'utf-8').'" readOnly="readOnly" style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'"/>';
+                      else
+                        $result[] = '<input class="module_app_input___gray" id="form['. $owner->name .']['.$r.']['.$this->name.']" name="form['. $owner->name .']['.$r.']['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value="'.$this->htmlentities( $v , ENT_COMPAT, 'utf-8').'" style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'"/>';
+                    } elseif ($this->mode==='view') {
+                        $result[] = $this->htmlentities( $v , ENT_COMPAT, 'utf-8');
+                    } else {
+                        $result[] = $this->htmlentities( $v , ENT_COMPAT, 'utf-8');
+                    }
+          $r++;
+        }
+        return $result;
+
+        }
+
+        function renderTable( $values='' , $owner )
+        {
+            $result = $this->htmlentities( $values , ENT_COMPAT, 'utf-8');
+            return $result;
+        }
+
+}
+
 /*DEPRECATED*/
 class XmlForm_Field_Caption extends XmlForm_Field
 {
@@ -2066,7 +2183,7 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText
 		}
 		if ( isset ( $beforeDate ) && $beforeDate  != '' ) {
 			if ( $this->isvalidBeforeFormat ( $beforeDate ) )
-				$startDate = $this->calculateBeforeFormat( $beforeDate , -1 );
+				$startDate = $this->calculateBeforeFormat( $beforeDate , 1 );
 		}
 
 		if ( $startDate == '' && isset ( $this->size ) && is_numeric ($this->size) && $this->size >= 1900 && $this->size <= 2100  ) {
@@ -2526,8 +2643,18 @@ class xmlformTemplate extends Smarty
       if (isset($form->fields[$k]->sql)) $form->fields[$k]->executeSQL( $form );
       $value = ( isset ( $form->values[$k ] ) ) ? $form->values[$k ] : NULL;
       $result[$k]         = G::replaceDataField ( $form->fields[$k]->label , $form->values );
-      if (!is_array($value))
-        $result['form'][$k] = $form->fields[$k]->render( $value, $form );
+
+      if (!is_array($value)) {
+        if ($form->type == 'grid') {
+          $aAux = array();
+          for ($i = 0; $i < count($form->owner->values[$form->name]); $i++) {
+            $aAux[] = '';
+          }
+          $result['form'][$k] = $form->fields[$k]->renderGrid( $aAux, $form );
+        }
+        else
+          $result['form'][$k] = $form->fields[$k]->render( $value, $form );
+      }
       else
         $result['form'][$k] = $form->fields[$k]->renderGrid( $value, $form );
     }
