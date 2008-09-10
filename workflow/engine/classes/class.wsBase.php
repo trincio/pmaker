@@ -795,7 +795,17 @@ class wsBase
 			if ($delIndex == '') {
 			  $oCriteria = new Criteria('workflow');
 			  $oCriteria->addSelectColumn(AppDelegationPeer::DEL_INDEX);
-			  //
+			  $oCriteria->add(AppDelegationPeer::APP_UID, $caseId);
+			  $oCriteria->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
+			  if (AppDelegationPeer::doCount($oCriteria) > 1) {
+			    $result = new wsResponse (20, 'Please specify the delegation index!');
+				  return $result;
+			  }
+			  $oDataset = AppDelegationPeer::doSelectRS($oCriteria);
+			  $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+			  $oDataset->next();
+			  $aRow     = $oDataset->getRow();
+			  $delIndex = $aRow['DEL_INDEX'];
 			}
 
 			$oAppDel = new AppDelegation();
