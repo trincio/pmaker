@@ -7,6 +7,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 #-- APPLICATION
 #-----------------------------------------------------------------------------
 
+
 DROP TABLE IF EXISTS `APPLICATION`;
 
 

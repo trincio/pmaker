@@ -2,7 +2,7 @@ msgid ""
 msgstr "" 
 "Project-Id-Version: PM 4.0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-08-29 19:14+0100 \n"
+"PO-Revision-Date: 2008-09-10 16:00+0100 \n"
 "Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
 "Language-Team: Colosa Developers Team <developers@colosa.com>\n"
 "MIME-Version: 1.0\n"
@@ -2520,6 +2520,12 @@ msgstr "My Case Forms and Documents"
 #: LABEL/ID_HISTORY
 msgid "My Case History"
 msgstr "My Case History"
+
+# TRANSLATION
+# JAVASCRIPT/ID_FILEGENERATED
+#: JAVASCRIPT/ID_FILEGENERATED
+msgid "Filename generated, is required!!!"
+msgstr "Filename generated, is required!!!"
 
 # TRANSLATION
 # LABEL/ID_DOWNLOAD
@@ -5920,20 +5926,20 @@ msgstr "Relative Start and End Dates"
 # dynaforms/fields/date.xml?PMED_AFTERBEFORE_DESC
 # dynaforms/fields/date.xml
 #: subtitle - PMED_AFTERBEFORE_DESC
-msgid "Sufixes: d=day m=month y=year; <br />Or leave empty to use <b>Start and End dates</b>."
-msgstr "Sufixes: d=day m=month y=year; <br />Or leave empty to use <b>Start and End dates</b>."
-
-# dynaforms/fields/date.xml?PME_AFTERDATE
-# dynaforms/fields/date.xml
-#: text - PME_AFTERDATE
-msgid "After Date"
-msgstr "After Date"
+msgid "Sufixes: d=day m=month y=year; <br />Or leave empty to use <b>Start and End dates</b>.<br/>Use negative numbers for past dates and positive numbers for future dates"
+msgstr "Sufixes: d=day m=month y=year; <br />Or leave empty to use <b>Start and End dates</b>.<br/>Use negative numbers for past dates and positive numbers for future dates"
 
 # dynaforms/fields/date.xml?PME_BEFOREDATE
 # dynaforms/fields/date.xml
 #: text - PME_BEFOREDATE
-msgid "Before Date"
-msgstr "Before Date"
+msgid "Start Relative Date"
+msgstr "Start Relative Date"
+
+# dynaforms/fields/date.xml?PME_AFTERDATE
+# dynaforms/fields/date.xml
+#: text - PME_AFTERDATE
+msgid "End Relative Date"
+msgstr "End Relative Date"
 
 # dynaforms/fields/date.xml?PME_SUBTITLE3b
 # dynaforms/fields/date.xml
@@ -6798,6 +6804,12 @@ msgstr "Output Document Information"
 #: text - OUT_DOC_TITLE
 msgid "[outputdocs/outputdocs_Edit.xml?OUT_DOC_TITLE] Title"
 msgstr "Title"
+
+# outputdocs/outputdocs_Edit.xml?OUT_DOC_FILENAME
+# outputdocs/outputdocs_Edit.xml
+#: textpm - OUT_DOC_FILENAME
+msgid "Filename generated"
+msgstr "Filename generated"
 
 # outputdocs/outputdocs_Edit.xml?OUT_DOC_DESCRIPTION
 # outputdocs/outputdocs_Edit.xml
@@ -11329,12 +11341,6 @@ msgstr "Case Title"
 msgid "Case Description"
 msgstr "Case Description"
 
-# tasks/tasks_Labels.xml?TAS_DEF_PROC_CODE
-# tasks/tasks_Labels.xml
-#: textareapm - TAS_DEF_PROC_CODE
-msgid "Case Status"
-msgstr "Case Status"
-
 # tasks/tasks_Owner.xml?TAS_OWNER_APP
 # tasks/tasks_Owner.xml
 #: dropdown - TAS_OWNER_APP
@@ -13468,7 +13474,7 @@ msgstr "Last Update"
 # cases/cases_Resume.xml?STATUS
 # cases/cases_Resume.xml
 #: text - STATUS
-msgid "[cases/cases_Resume.xml?STATUS] Case Status"
+msgid "Case Status"
 msgstr "Case Status"
 
 # cases/cases_MessagesView.xml?title
@@ -13572,6 +13578,12 @@ msgstr "Re-type Password:"
 #: submit - NW_SUB
 msgid "[login/newSite.xml?NW_SUB] Test"
 msgstr "Test"
+
+# login/nologin.xml?subtitle
+# login/nologin.xml
+#: subtitle - subtitle
+msgid "subtitle"
+msgstr ""
 
 # login/nologin.xml?BSUBMIT
 # login/nologin.xml
@@ -13927,6 +13939,12 @@ msgstr "Available Triggers"
 msgid "[steps/triggers_Assign.xml?TRI_UID] Triggers"
 msgstr "Triggers"
 
+# steps/triggers_Assign.xml?ST_CONDITION
+# steps/triggers_Assign.xml
+#: textareapm - ST_CONDITION
+msgid "[steps/triggers_Assign.xml?ST_CONDITION] Condition"
+msgstr "Condition"
+
 # steps/triggers_Assign.xml?ASSIGN
 # steps/triggers_Assign.xml
 #: button - ASSIGN
@@ -14244,6 +14262,12 @@ msgstr "Title"
 #: textarea - TRI_DESCRIPTION
 msgid "[triggers/triggers_Edit.xml?TRI_DESCRIPTION] Description"
 msgstr "Description"
+
+# triggers/triggers_Edit.xml?TRI_WEBBOT
+# triggers/triggers_Edit.xml
+#: textareapm - TRI_WEBBOT
+msgid "Script"
+msgstr "Script"
 
 # triggers/triggers_Edit.xml?SAVE
 # triggers/triggers_Edit.xml
