@@ -2914,5 +2914,41 @@ funcion History messages for case tracker by Everth The Answer
 
     return $aRow;
   }
+  
+  
+  function getAllObjectsFromProcess($PRO_UID, $OBJ_TYPE='%'){
+           
+            $RESULT = Array();
+            $oCriteria = new Criteria('workflow');
+            $oCriteria->addSelectColumn(AppDocumentPeer::APP_DOC_UID);
+            $oCriteria->addSelectColumn(AppDocumentPeer::APP_UID);
+            $oCriteria->addSelectColumn(AppDocumentPeer::DEL_INDEX);
+            $oCriteria->addSelectColumn(AppDocumentPeer::DOC_UID);
+            $oCriteria->addSelectColumn(AppDocumentPeer::USR_UID);
+            $oCriteria->addSelectColumn(AppDocumentPeer::APP_DOC_TYPE);
+            $oCriteria->addSelectColumn(AppDocumentPeer::APP_DOC_CREATE_DATE);
+            $oCriteria->addSelectColumn(AppDocumentPeer::APP_DOC_INDEX);
+            
+            
+            $oCriteria->add(ApplicationPeer::PRO_UID, $PRO_UID);
+            $oCriteria->addJoin(ApplicationPeer::APP_UID, AppDocumentPeer::APP_UID);
+            
+            $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, $OBJ_TYPE, Criteria::LIKE);
+
+            $oDataset = DynaformPeer::doSelectRS($oCriteria);
+            $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+            ;
+            while ($oDataset->next()) {
+                 $row = $oDataset->getRow();
+                 $oAppDocument = new AppDocument();
+                 $oAppDocument->Fields = $oAppDocument->load($row['APP_DOC_UID']);
+  
+                 $row['APP_DOC_FILENAME'] = $oAppDocument->Fields['APP_DOC_FILENAME'];
+                 array_push($RESULT, $row);
+            }
+            return $RESULT;
+        }
 
 }
+
+
