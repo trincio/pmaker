@@ -336,6 +336,25 @@ function compareDates(datea, dateB,porDias)
 	return ((x - y) <= 0) ? false : true;
 }
 
+/****THE ANSWER*****/
+/*diferencia entre 2 fechas*/
+function diff_date(fecha1, fecha2)
+{ var f1 = fecha1.split('-');	
+	fecha1 = new Date();
+	fecha1.setDate(f1[2]);
+	fecha1.setMonth(f1[1]);
+	fecha1.setYear(f1[0]);
+
+  var f2 = fecha2.split('-');
+	fecha2 = new Date();
+	fecha2.setDate(f2[2]);
+	fecha2.setMonth(f2[1]);
+	fecha2.setYear(f2[0]);
+	
+	var dias = Math.floor((fecha1.getTime()-fecha2.getTime())/(3600000*24));
+	return dias;
+}
+
 /*
  * author <calidavidx21@hotmail.com>
  */
