@@ -976,12 +976,13 @@ class G
 //no optimizing code
     if ($handle) {
       while (!feof($handle)) {
-        $line = trim( fgets($handle, 16096) ) . "\n" ;
+        //$line = trim( fgets($handle, 16096) ) . "\n" ;
+        $line = fgets($handle, 16096);
         $content .= $line;
       }
       fclose($handle);
     }
-
+    return $content;
 //end NO optimizing code
 //begin optimizing code
 /*
