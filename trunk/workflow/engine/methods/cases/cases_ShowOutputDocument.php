@@ -47,7 +47,7 @@
   	}
   }
 
-  $realPath = PATH_DOCUMENT . $_SESSION['APPLICATION'] . '/outdocs/' . $info['basename'] . '.' . $ext ;
+  $realPath = PATH_DOCUMENT . $oAppDocument->Fields['APP_UID'] . '/outdocs/' . $info['basename'] . '.' . $ext ;
   G::streamFile ( $realPath, true );
 
 ?>

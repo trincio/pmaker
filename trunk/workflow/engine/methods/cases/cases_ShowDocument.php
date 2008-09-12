@@ -37,7 +37,7 @@
   $info = pathinfo( $oAppDocument->getAppDocFilename() );
   $ext = $info['extension'];
 
-  $realPath = PATH_DOCUMENT . $_SESSION['APPLICATION'] . '/' . $sAppDocUid . '.' . $ext ;
+  $realPath = PATH_DOCUMENT . $oAppDocument->Fields['APP_UID'] . '/' . $sAppDocUid . '.' . $ext ;
   G::streamFile ( $realPath, true, $oAppDocument->Fields['APP_DOC_FILENAME'] );
 
 ?>
