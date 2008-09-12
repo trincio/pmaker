@@ -2212,9 +2212,14 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText
 			$endDate = date ( 'Y-m-d', mktime ( 0,0,0,date('m'), date('d'), date ('Y')+2 ) );  // the default is the current date + 2 years
 		}
 
-		if ( trim($value) == '' or $value == NULL ) {
+		if ( trim($value) == '' or $value == NULL) {
 			$value = date('Y-m-d');
 		}
+		
+		if(isset($this->defaultValue))
+		{ $value = $this->defaultValue;
+		}
+		
 		#the validations field was moved to javascript routines ;)
 		if($this->mode == 'edit') {
 			$html = "<input size=15  class='module_app_input___gray' readonly=true type='text' id='".$pID."' name='".$pID."' value='".$value."'>";
