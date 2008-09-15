@@ -223,7 +223,7 @@ class Cases
             throw ($e);
         }
     }
-    
+
    /*
     * LoadCaseByNumber
     * @param string $caseNumber
@@ -257,7 +257,7 @@ class Cases
             throw ($e);
         }
     }
-    
+
 
     /*
     * Actualiza el case label
@@ -315,7 +315,7 @@ class Cases
     * @return Fields
     */
     function updateCase($sAppUid, $Fields = array())
-    { 
+    {
         try {
             $aApplicationFields = $Fields['APP_DATA'];
             $oApp = new Application;
@@ -352,7 +352,7 @@ class Cases
                     $oDel->update($array);
                   }
                 }
-            } 
+            }
             return $Fields;
         }
         catch (exception $e) {
@@ -2914,10 +2914,10 @@ funcion History messages for case tracker by Everth The Answer
 
     return $aRow;
   }
-  
-  
+
+
   function getAllObjectsFromProcess($PRO_UID, $OBJ_TYPE='%'){
-           
+
             $RESULT = Array();
             $oCriteria = new Criteria('workflow');
             $oCriteria->addSelectColumn(AppDocumentPeer::APP_DOC_UID);
@@ -2928,11 +2928,11 @@ funcion History messages for case tracker by Everth The Answer
             $oCriteria->addSelectColumn(AppDocumentPeer::APP_DOC_TYPE);
             $oCriteria->addSelectColumn(AppDocumentPeer::APP_DOC_CREATE_DATE);
             $oCriteria->addSelectColumn(AppDocumentPeer::APP_DOC_INDEX);
-            
-            
+
+
             $oCriteria->add(ApplicationPeer::PRO_UID, $PRO_UID);
             $oCriteria->addJoin(ApplicationPeer::APP_UID, AppDocumentPeer::APP_UID);
-            
+
             $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, $OBJ_TYPE, Criteria::LIKE);
 
             $oDataset = DynaformPeer::doSelectRS($oCriteria);
@@ -2942,12 +2942,31 @@ funcion History messages for case tracker by Everth The Answer
                  $row = $oDataset->getRow();
                  $oAppDocument = new AppDocument();
                  $oAppDocument->Fields = $oAppDocument->load($row['APP_DOC_UID']);
-  
+
                  $row['APP_DOC_FILENAME'] = $oAppDocument->Fields['APP_DOC_FILENAME'];
                  array_push($RESULT, $row);
             }
             return $RESULT;
         }
+
+  function executeTriggersAfterExternal($sProcess, $sTask, $sApplication, $iIndex, $iStepPosition, $aNewData = array()) {
+    //load the variables
+    $Fields = $this->loadCase($sApplication);
+    $Fields['APP_DATA'] = array_merge($Fields['APP_DATA'], G::getSystemConstants());
+    $Fields['APP_DATA'] = array_merge( $Fields['APP_DATA'], $aNewData);
+    //execute triggers
+    $oCase = new Cases();
+    $aNextStep = $this->getNextStep($sProcess, $sApplication, $iIndex, $iStepPosition - 1);
+    $Fields['APP_DATA'] = $this->ExecuteTriggers($sTask, 'EXTERNAL', $aNextStep['UID'], 'AFTER', $Fields['APP_DATA']);
+    //save data
+    $aData = array();
+    $aData['APP_NUMBER']      = $Fields['APP_NUMBER'];
+    $aData['APP_PROC_STATUS'] = $Fields['APP_PROC_STATUS'];
+    $aData['APP_DATA']        = $Fields['APP_DATA'];
+    $aData['DEL_INDEX']       = $iIndex;
+    $aData['TAS_UID']         = $sTask;
+    $this->updateCase($sApplication, $aData);
+  }
 
 }
 

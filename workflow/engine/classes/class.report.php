@@ -154,7 +154,7 @@ class Report {
 	}
 
 	function descriptionReport1($PRO_UID)
-	{
+	{ 
 		require_once 'classes/model/AppDelegation.php';
 		require_once 'classes/model/Task.php';
 		require_once 'classes/model/Content.php';
@@ -182,6 +182,32 @@ class Report {
 
 		$oCriteria->addGroupByColumn(AppDelegationPeer::PRO_UID);
 		$oCriteria->addGroupByColumn('C.CON_VALUE');
+
+
+		$oDataset = AppDelegationPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+
+    $aProcess[] = array('TAS_TITLE'   => 'char',      	                
+      	                'MIN'       => 'float',
+      	                'MAX'       => 'float',
+      	                'TOTALDUR'  => 'float',
+      	                'PROMEDIO'  => 'float');
+    while ($aRow = $oDataset->getRow()) {      	
+      	$aProcess[] = array('TAS_TITLE'   => $aRow['TAS_TITLE'],      	                    
+      	                    'MIN'       => number_format($aRow['MIN'],2),
+      	                    'MAX'       => number_format($aRow['MAX'],2),
+      	                    'TOTALDUR'  => number_format($aRow['TOTALDUR'],2),
+      	                    'PROMEDIO'  => number_format($aRow['PROMEDIO'],2));
+      	$oDataset->next();
+     }
+
+    global $_DBArray;
+    $_DBArray['reports']  = $aProcess;
+    $_SESSION['_DBArray'] = $_DBArray;
+    G::LoadClass('ArrayPeer');
+    $oCriteria = new Criteria('dbarray');
+    $oCriteria->setDBArrayTable('reports');
 
 		return $oCriteria;
 	}
