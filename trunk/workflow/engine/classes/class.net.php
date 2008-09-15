@@ -2,7 +2,7 @@
 /*--------------------------------------------------
 | net.class.php
 | By Erik Amaru Ortiz
-| CopyLeft (f) 2008 
+| CopyLeft (f) 2008
 | Email: erik@colosa.com
 +--------------------------------------------------
 | Email bugs/suggestions to erik@colosa.com erik.260mb.com
@@ -136,7 +136,7 @@ class NET
 			return 0;
 		}
 		$stat = new Stat();
-			
+
         if(isset($this->db_user) && (isset($this->db_passwd) || ('' == $this->db_passwd)) && isset($this->db_sourcename))
         {
             switch($pDbDriver)
@@ -229,7 +229,7 @@ class NET
 		if($this->errno != 0) {
 			return 0;
 		}
-		
+
         set_time_limit(0);
         $stat = new Stat();
 
@@ -342,9 +342,9 @@ class NET
 
     function getDbServerVersion($driver)
     {
-    		if(!isset($this->ip))          
+    		if(!isset($this->ip))
           $this->ip = getenv('HTTP_CLIENT_IP');
-          
+
         if(isset($this->ip) && isset($this->db_user) && isset($this->db_passwd)) {
             try{
                 switch($driver)
@@ -376,7 +376,7 @@ class NET
             throw new Exception('NET::Error->No params for Data Base Server!');
         }
     }
-    
+
     function dbName($pAdapter)
     {
 		switch($pAdapter)
@@ -396,12 +396,12 @@ class NET
             $msg = "
 			<center>
 			<fieldset style='width:90%'><legend>Class NET</legend>
-			  <div align=left>	
+			  <div align=left>
 				<font color='red'>
 					<b>NET::ERROR NO -> $this->errno<br/>
 					NET::ERROR MSG -> $this->errstr</b>
 				</font>
-			  </div>	
+			  </div>
 			</fieldset>
 			<center>";
             print ($msg);
