@@ -141,7 +141,7 @@
 			else {
 			  $this->fileData['from']       = '<' . $this->fileData['from'] . '>';
 			  $this->fileData['from_name']  = '';
-				$this->fileData['from_email'] = $this->fileData['from'];
+				$this->fileData['from_email'] = str_replace('<', '', str_replace('>', '', $this->fileData['from']));
 			}
 
 		}
@@ -207,7 +207,7 @@
             G::LoadThirdParty('phpmailer', 'class.phpmailer');
             $oPHPMailer = new PHPMailer();
             $oPHPMailer->Mailer   = 'smtp';
-			$oPHPMailer->SMTPAuth = $this->config['SMTPAuth'];
+            $oPHPMailer->SMTPAuth = (isset($this->config['SMTPAuth']) ? $this->config['SMTPAuth'] : '');
             $oPHPMailer->Host     = $this->config['MESS_SERVER'];
             $oPHPMailer->Port     = $this->config['MESS_PORT'];
             $oPHPMailer->Username = $this->config['MESS_ACCOUNT'];

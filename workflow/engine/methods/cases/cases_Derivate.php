@@ -89,7 +89,7 @@ try {
 
   $appFields['DEL_INDEX']       = $_SESSION['INDEX'];
   $appFields['TAS_UID']         = $_SESSION['TASK'];
-  
+
   //Save data - Start
   //$appFields = $oCase->loadCase( $_SESSION['APPLICATION'] );
   $oCase->updateCase ( $_SESSION['APPLICATION'], $appFields);
@@ -120,7 +120,7 @@ try {
   }
   //$appFields['DEL_INDEX'] = $_SESSION['INDEX'];
   //$appFields['TAS_UID']   = $_SESSION['TASK'];
-  
+
   //Save data - Start
   //$appFields = $oCase->loadCase( $_SESSION['APPLICATION'] );
   $oCase->updateCase ( $_SESSION['APPLICATION'], $appFields);
