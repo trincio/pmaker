@@ -293,8 +293,6 @@ class wsBase
       G::LoadClass('spool');
 
     	$aSetup = getEmailConfiguration();
-			if ( $sFrom == '' )
-			  $sFrom = $aSetup['MESS_ACCOUNT'];
 
       $oSpool = new spoolRun();
       $oSpool->setConfig(array('MESS_ENGINE'   => $aSetup['MESS_ENGINE'],
@@ -325,6 +323,13 @@ class wsBase
 
       $templateContents = file_get_contents ( $fileTemplate );
       $sBody = G::replaceDataField( $templateContents, $Fields);
+
+      if ($sFrom != '') {
+        $sFrom = $sFrom . ' <' . $aSetup['MESS_ACCOUNT'] . '>';
+      }
+      else {
+        $sFrom = $aSetup['MESS_ACCOUNT'];
+      }
 
       $messageArray = array('msg_uid'          => '',
                             'app_uid'          => $caseId,

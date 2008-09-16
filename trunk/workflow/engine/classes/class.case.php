@@ -2319,7 +2319,8 @@ class Cases
                                          'MESS_SERVER'   => $aConfiguration['MESS_SERVER'],
                                          'MESS_PORT'     => $aConfiguration['MESS_PORT'],
                                          'MESS_ACCOUNT'  => $aConfiguration['MESS_ACCOUNT'],
-                                         'MESS_PASSWORD' => $aConfiguration['MESS_PASSWORD']));
+                                         'MESS_PASSWORD' => $aConfiguration['MESS_PASSWORD'],
+                                         'SMTPAuth'      => $aConfiguration['MESS_RAUTH'] == '1' ? true : false));
                 $oSpool->create(array('msg_uid'          => '',
                                       'app_uid'          => $sApplicationUID,
                                       'del_index'        => $iDelegation,
