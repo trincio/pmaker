@@ -157,6 +157,11 @@ class PMPlugin {
     $oPluginRegistry->registerReport ( $this->sNamespace);
   }
 
+  function registerPmFunction( ) {
+    $oPluginRegistry =& PMPluginRegistry::getSingleton();
+    $oPluginRegistry->registerPmFunction ( $this->sNamespace);
+  }
+
   function setCompanyLogo( $filename ) {
     $oPluginRegistry =& PMPluginRegistry::getSingleton();
     $oPluginRegistry->setCompanyLogo( $this->sNamespace, $filename);

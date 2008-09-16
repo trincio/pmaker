@@ -41,6 +41,24 @@
 
 $Err=""; //global var
 
+
+//Start - Custom functions
+G::LoadClass('pmFunctions');
+//End - Custom functions
+//call plugin
+if (class_exists('folderData')) {
+  //$folderData = new folderData($sProUid, $proFields['PRO_TITLE'], $sAppUid, $Fields['APP_TITLE'], $sUsrUid);
+  $oPluginRegistry = &PMPluginRegistry::getSingleton();
+  $aAvailablePmFunctions = $oPluginRegistry->getPmFunctions();
+  foreach ($aAvailablePmFunctions as $key => $class ) {
+  	$filePlugin = PATH_PLUGINS . $class . PATH_SEP . 'classes' . PATH_SEP . 'class.pmFunctions.php';
+  	if ( file_exists ( $filePlugin ) ) 
+  	  include_once( $filePlugin);
+  }
+
+}
+//end plugin
+
 class PMScript
 {
 	/**
@@ -564,9 +582,6 @@ function pmSqlEscape($vValue)
 
 //End - Private functions
 
-//Start - Custom functions
-G::LoadClass('pmFunctions');
-//End - Custom functions
 
 
 /***************************************************************************
