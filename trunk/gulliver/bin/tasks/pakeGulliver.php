@@ -242,6 +242,17 @@ function run_generate_unit_test_class ( $task, $args)
     }
     return $res;
   }
+  
+function copyPluginFile ( $tplName, $fName, $class )
+{
+  $pluginOutDirectory = PATH_OUTTRUNK . 'plugins' . PATH_SEP . $class . PATH_SEP . $class . PATH_SEP;
+  $pluginFilename = $pluginOutDirectory . $fName;
+  $fileTpl = PATH_GULLIVER_HOME . 'bin' . PATH_SEP . 'tasks' . PATH_SEP . 'templates' . PATH_SEP . $tplName . '.tpl';
+  $content = file_get_contents ( $fileTpl );
+  $iSize = file_put_contents ( $pluginFilename, $content );
+  printf("saved %s bytes in file %s \n", pakeColor::colorize( $iSize, 'INFO'), pakeColor::colorize( $tplName, 'INFO') );    
+}
+
   function savePluginFile ( $fName, $tplName, $class, $tableName, $fields = null ) {
     $pluginOutDirectory = PATH_OUTTRUNK . 'plugins' . PATH_SEP . $class . PATH_SEP;
     
@@ -526,6 +537,7 @@ function run_new_plugin ( $task, $args)
   printf("creating plugin directory %s \n", pakeColor::colorize( $pluginOutDirectory, 'INFO'));
   
   G::verifyPath ( $pluginOutDirectory, true );
+  G::verifyPath ( $pluginHome . PATH_SEP . 'classes', true );
   G::verifyPath ( $pluginHome . PATH_SEP . 'public_html', true );
   G::verifyPath ( $pluginHome . PATH_SEP . 'config', true );
   G::verifyPath ( $pluginHome . PATH_SEP . 'data', true );
@@ -549,6 +561,7 @@ function run_new_plugin ( $task, $args)
   //menu  
   $menu = strtolower ( prompt ( 'Create an example Page [Y/n]' ));
   if ( $menu == 'y' ) {
+
     $fields['menu'][] = array( 'className' => $pluginName );
     savePluginFile ( $pluginName . PATH_SEP . 'menu' . $pluginName . '.php', 'pluginMenu', $pluginName, $pluginName, $fields );
     savePluginFile ( $pluginName . PATH_SEP . $pluginName . 'List.php', 'pluginWelcome.php', $pluginName, $pluginName );
@@ -561,6 +574,14 @@ function run_new_plugin ( $task, $args)
     savePluginFile ( $pluginName . PATH_SEP . 'step' . $pluginName . '.php', 'pluginStep', $pluginName, $pluginName );
   }
 
+  $onTransit = strtolower ( prompt ( 'Create an "On transit Page" [y/N]' ));
+  if ( $onTransit == 'y' ) {
+    $fields['ontransit'][] = array( 'className' => $pluginName);
+    savePluginFile ( $pluginName . PATH_SEP . 'menu' . $pluginName . 'OnTransit.php', 'pluginMenuOnTransit', $pluginName, $pluginName, $fields );
+    savePluginFile ( $pluginName . PATH_SEP . $pluginName . 'OnTransitList.php', 'pluginOnTransitList.php', $pluginName, $pluginName );
+    savePluginFile ( $pluginName . PATH_SEP . $pluginName . 'OnTransitList.xml', 'pluginOnTransitList.xml', $pluginName, $pluginName );
+    copyPluginFile ( 'pluginPaged-table.html', 'paged-table.html', $pluginName );
+  }
 
   $dashboard = strtolower ( prompt ( 'Create an element for the Processmaker Dashboard [y/N]' ));
   if ( $dashboard == 'y' ) {
@@ -572,6 +593,12 @@ function run_new_plugin ( $task, $args)
   if ( $report == 'y' ) {
     $fields['report'][] = array( 'className' => $pluginName);
     savePluginFile ( $pluginName . PATH_SEP . 'report.xml', 'pluginReport.xml', $pluginName, $pluginName, $fields );
+  }
+
+  $report = strtolower ( prompt ( 'Create a PmFunction Class for extend Processmaker [y/N]' ));
+  if ( $report == 'y' ) {
+    $fields['PmFunction'][] = array( 'className' => $pluginName);
+    savePluginFile ( $pluginName . PATH_SEP . 'classes' . PATH_SEP . 'class.pmFunctions.php', 'class.pmFunctions.php', $pluginName, $pluginName, $fields );
   }
 
 

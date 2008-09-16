@@ -59,6 +59,7 @@ class PMPluginRegistry {
   private $_aTriggers = array();
   private $_aDashboards = array();
   private $_aReports = array();
+  private $_aPmFunctions = array();
   private $_aSteps = array();
 
   static private $instance = NULL;
@@ -94,6 +95,7 @@ class PMPluginRegistry {
   krumo ( $this->_aTriggers);
   krumo ( $this->_aDashboards);
   krumo ( $this->_aReports);
+  krumo ( $this->_aPmFunctions);
   krumo ( $this->_aSteps);
   }
 
@@ -184,6 +186,11 @@ class PMPluginRegistry {
  	 foreach ( $this->_aReports as $key=>$detail ) {
   	   if ( $detail == $sNamespace )
   	     unset ( $this->_aReports[ $key ] );
+    }
+
+ 	 foreach ( $this->_aPmFunctions as $key=>$detail ) {
+  	   if ( $detail == $sNamespace )
+  	     unset ( $this->_aPmFunctions[ $key ] );
     }
 
  	 foreach ( $this->_aSteps as $key=>$detail ) {
@@ -281,6 +288,24 @@ class PMPluginRegistry {
   }
 
   /**
+   * Register a PmFunction class in the singleton
+   *
+   * @param unknown_type $sNamespace
+   * @param unknown_type $sMenuId
+   * @param unknown_type $sFilename
+   */
+  function registerPmFunction($sNamespace ) {
+    $found = false;
+  	foreach ( $this->_aPmFunctions as $row=>$detail ) {
+  		if ( $sNamespace == $detail )
+  		  $found = true;
+  	}
+    if ( !$found ) {
+      $this->_aPmFunctions[] = $sNamespace;
+    }
+  }
+
+  /**
    * Register a folder for methods
    *
    * @param unknown_type $sFolderName
@@ -365,6 +390,20 @@ class PMPluginRegistry {
   		$report[] = $sClassName;
   	}
   	return $report;
+  }
+
+  /**
+   * return all dashboards registered
+   *
+   */
+  function getPmFunctions( ) {
+    return $this->_aPmFunctions;
+  	$dash = array ();
+  	foreach ( $this->_aPmFunctions as $row=>$detail ) {
+  		$sClassName = str_replace ( 'plugin', 'class', $this->_aPluginDetails[ $detail ]->sClassName);
+  		$dash[] = $sClassName;
+  	}
+  	return $dash;
   }
 
   /**
