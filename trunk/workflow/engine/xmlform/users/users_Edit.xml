@@ -84,11 +84,11 @@ SELECT ROL_CODE AS USR_ROLE, ROL_CODE AS CODE FROM ROLES WHERE ROL_SYSTEM = '000
   <en>Change Password</en>
 </TITLE2>
 
-<USR_NEW_PASS type="password" size="20" maxlength="20" validate="5" mask="" required="1">
+<USR_NEW_PASS type="password" size="30" maxlength="20" validate="5" mask="" required="1">
   <en>New Password </en>
 </USR_NEW_PASS>
 
-<USR_CNF_PASS type="password" size="20" maxlength="20" validate="5" mask="" required="1">
+<USR_CNF_PASS type="password" size="30" maxlength="20" validate="5" mask="" required="1">
   <en>Confirm Password </en>
 </USR_CNF_PASS>
 
