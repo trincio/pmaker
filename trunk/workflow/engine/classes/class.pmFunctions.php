@@ -136,7 +136,8 @@ function executeQuery($SqlStatement, $DBConnectionUID = 'workflow')
 				}
 			break;
 			case eregi("INSERT*", $SqlStatement):
-				$result = $lastId->getId();
+				//$result = $lastId->getId();
+				$result = 1;
 			break;
 			case eregi("UPDATE*", $SqlStatement):
 				 $result =  $con->getUpdateCount();
