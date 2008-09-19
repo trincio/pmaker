@@ -3043,7 +3043,7 @@
       </vendor>
     </column>
     <validator column="TAS_TYPE">
-      <rule name="validValues" value="NORMAL|ADHOC" message="Please select a valid value for TAS_TYPE." />
+      <rule name="validValues" value="NORMAL|ADHOC|SUBPROCESS" message="Please select a valid value for TAS_TYPE." />
     </validator>
     <validator column="TAS_TIMEUNIT">
       <rule name="validValues" value="MINUTES|HOURS|DAYS|WEEKS|MONTHS" message="Please select a valid value for TAS_TIMEUNIT." />
