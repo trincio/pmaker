@@ -4662,4 +4662,287 @@
       </vendor>
     </column>
   </table>
+  <table name="SUB_PROCESS">
+    <vendor type="mysql">
+      <parameter name="Name" value="SUB_PROCESS"/>
+      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Version" value="10"/>
+      <parameter name="Row_format" value="Dynamic"/>
+      <parameter name="Rows" value="88"/>
+      <parameter name="Avg_row_length" value="311"/>
+      <parameter name="Data_length" value="27984"/>
+      <parameter name="Max_data_length" value="281474976710655"/>
+      <parameter name="Index_length" value="7168"/>
+      <parameter name="Data_free" value="564"/>
+      <parameter name="Auto_increment" value=""/>
+      <parameter name="Create_time" value="2008-09-18 19:18:00"/>
+      <parameter name="Update_time" value="2008-09-18 19:18:00"/>
+      <parameter name="Check_time" value=""/>
+      <parameter name="Collation" value="utf8_general_ci"/>
+      <parameter name="Checksum" value=""/>
+      <parameter name="Create_options" value=""/>
+      <parameter name="Comment" value=""/>
+    </vendor>
+    <column name="SP_UID" type="VARCHAR" size="32" required="true" primaryKey="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="SP_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value="PRI"/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="PRO_UID" type="VARCHAR" size="32" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="PRO_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="PRO_PARENT" type="VARCHAR" size="32" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="PRO_PARENT"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="SP_TYPE" type="VARCHAR" size="20" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="SP_TYPE"/>
+        <parameter name="Type" value="varchar(20)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="SP_SYNCHRONOUS" type="INTEGER" required="true" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="SP_SYNCHRONOUS"/>
+        <parameter name="Type" value="int(1)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="0"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="SP_SYNCHRONOUS_TYPE" type="VARCHAR" size="20" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="SP_SYNCHRONOUS_TYPE"/>
+        <parameter name="Type" value="varchar(10)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="ALL"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="SP_SYNCHRONOUS_WAIT" type="INTEGER" required="true" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="SP_SYNCHRONOUS_WAIT"/>
+        <parameter name="Type" value="int(11)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="0"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="SP_VARIABLES_OUT" type="LONGVARCHAR" required="true">
+      <vendor type="mysql">
+        <parameter name="Field" value="SP_VARIABLES_OUT"/>
+        <parameter name="Type" value="text"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="SP_VARIABLES_IN" type="LONGVARCHAR" required="true">
+      <vendor type="mysql">
+        <parameter name="Field" value="SP_VARIABLES_IN"/>
+        <parameter name="Type" value="text"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="SP_GRID_IN" type="VARCHAR" size="50" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="SP_GRID_IN"/>
+        <parameter name="Type" value="varchar(50)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <validator column="SP_TYPE">
+      <rule name="validValues" value="SIMPLE|MULTIPLE" message="Please select a valid value for SP_TYPE." />
+    </validator>
+    <validator column="SP_SYNCHRONOUS">
+      <rule name="validValues" value="1|0" message="Please select a valid value for SP_SYNCHRONOUS." />
+    </validator>
+    <validator column="SP_SYNCHRONOUS_TYPE">
+      <rule name="validValues" value="ALL|INSTANCES|TIME" message="Please select a valid value for SP_SYNCHRONOUS_TYPE." />
+    </validator>
+    <index name="indexSubProcess">
+      <index-column name="PRO_UID"/>
+      <index-column name="PRO_PARENT"/>
+      <vendor type="mysql">
+        <parameter name="Table" value="SUB_PROCESS"/>
+        <parameter name="Non_unique" value="1"/>
+        <parameter name="Key_name" value="indexSubProcess"/>
+        <parameter name="Seq_in_index" value="1"/>
+        <parameter name="Column_name" value="PRO_UID"/>
+        <parameter name="Collation" value="A"/>
+        <parameter name="Cardinality" value=""/>
+        <parameter name="Sub_part" value=""/>
+        <parameter name="Packed" value=""/>
+        <parameter name="Null" value=""/>
+        <parameter name="Index_type" value="BTREE"/>
+        <parameter name="Comment" value=""/>
+      </vendor>
+    </index>
+  </table>
+
+<table name="SUB_APPLICATION">
+    <vendor type="mysql">
+      <parameter name="Name" value="SUB_APPLICATION"/>
+      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Version" value="10"/>
+      <parameter name="Row_format" value="Dynamic"/>
+      <parameter name="Rows" value="88"/>
+      <parameter name="Avg_row_length" value="311"/>
+      <parameter name="Data_length" value="27984"/>
+      <parameter name="Max_data_length" value="281474976710655"/>
+      <parameter name="Index_length" value="7168"/>
+      <parameter name="Data_free" value="564"/>
+      <parameter name="Auto_increment" value=""/>
+      <parameter name="Create_time" value="2008-09-18 19:18:00"/>
+      <parameter name="Update_time" value="2008-09-18 19:18:00"/>
+      <parameter name="Check_time" value=""/>
+      <parameter name="Collation" value="utf8_general_ci"/>
+      <parameter name="Checksum" value=""/>
+      <parameter name="Create_options" value=""/>
+      <parameter name="Comment" value=""/>
+    </vendor>
+    <column name="APP_UID" type="VARCHAR" size="32" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="APP_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="APP_PARENT" type="VARCHAR" size="32" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="APP_PARENT"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="DEL_INDEX_PARENT" type="INTEGER" required="true" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="DEL_INDEX_PARENT"/>
+        <parameter name="Type" value="int(11)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="0"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="DEL_THREAD_PARENT" type="INTEGER" required="true" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="DEL_THREAD_PARENT"/>
+        <parameter name="Type" value="int(11)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="0"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="SA_STATUS" type="VARCHAR" size="32" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="SA_STATUS"/>
+        <parameter name="Type" value="varchar(10)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="SA_VALUES_OUT" type="LONGVARCHAR" required="true">
+      <vendor type="mysql">
+        <parameter name="Field" value="SA_VALUES_OUT"/>
+        <parameter name="Type" value="text"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="SA_VALUES_IN" type="LONGVARCHAR" required="true">
+      <vendor type="mysql">
+        <parameter name="Field" value="SA_VALUES_IN"/>
+        <parameter name="Type" value="text"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="SA_INIT_DATE" type="TIMESTAMP" required="true">
+      <vendor type="mysql">
+        <parameter name="Field" value="SA_INIT_DATE"/>
+        <parameter name="Type" value="datetime"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="SA_FINISH_DATE" type="TIMESTAMP" required="true">
+      <vendor type="mysql">
+        <parameter name="Field" value="SA_FINISH_DATE"/>
+        <parameter name="Type" value="datetime"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <validator column="SA_STATUS">
+      <rule name="validValues" value="ACTIVE|FINISHED|CANCELLED" message="Please select a valid value for SA_STATUS." />
+    </validator>
+    <index name="indexSubApplication">
+      <index-column name="APP_UID"/>
+      <index-column name="APP_PARENT"/>
+      <index-column name="DEL_INDEX_PARENT"/>
+      <index-column name="DEL_THREAD_PARENT"/>
+      <vendor type="mysql">
+        <parameter name="Table" value="SUB_APPLICATION"/>
+        <parameter name="Non_unique" value="1"/>
+        <parameter name="Key_name" value="indexSubApplication"/>
+        <parameter name="Seq_in_index" value="1"/>
+        <parameter name="Column_name" value="APP_UID"/>
+        <parameter name="Collation" value="A"/>
+        <parameter name="Cardinality" value=""/>
+        <parameter name="Sub_part" value=""/>
+        <parameter name="Packed" value=""/>
+        <parameter name="Null" value=""/>
+        <parameter name="Index_type" value="BTREE"/>
+        <parameter name="Comment" value=""/>
+      </vendor>
+    </index>
+  </table>
 </database>

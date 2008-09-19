@@ -7,81 +7,88 @@ require_once 'propel/om/Persistent.php';
 
 include_once 'propel/util/Criteria.php';
 
-include_once 'classes/model/DbSourcePeer.php';
+include_once 'classes/model/SubApplicationPeer.php';
 
 /**
- * Base class that represents a row from the 'DB_SOURCE' table.
+ * Base class that represents a row from the 'SUB_APPLICATION' table.
  *
  * 
  *
  * @package    classes.model.om
  */
-abstract class BaseDbSource extends BaseObject  implements Persistent {
+abstract class BaseSubApplication extends BaseObject  implements Persistent {
 
 
 	/**
 	 * The Peer class.
 	 * Instance provides a convenient way of calling static methods on a class
 	 * that calling code may not be able to identify.
-	 * @var        DbSourcePeer
+	 * @var        SubApplicationPeer
 	 */
 	protected static $peer;
 
 
 	/**
-	 * The value for the dbs_uid field.
+	 * The value for the app_uid field.
 	 * @var        string
 	 */
-	protected $dbs_uid = '';
+	protected $app_uid = '';
 
 
 	/**
-	 * The value for the pro_uid field.
+	 * The value for the app_parent field.
 	 * @var        string
 	 */
-	protected $pro_uid = '0';
+	protected $app_parent = '';
 
 
 	/**
-	 * The value for the dbs_type field.
-	 * @var        string
-	 */
-	protected $dbs_type = '0';
-
-
-	/**
-	 * The value for the dbs_server field.
-	 * @var        string
-	 */
-	protected $dbs_server = '0';
-
-
-	/**
-	 * The value for the dbs_database_name field.
-	 * @var        string
-	 */
-	protected $dbs_database_name = '0';
-
-
-	/**
-	 * The value for the dbs_username field.
-	 * @var        string
-	 */
-	protected $dbs_username = '0';
-
-
-	/**
-	 * The value for the dbs_password field.
-	 * @var        string
-	 */
-	protected $dbs_password = '';
-
-
-	/**
-	 * The value for the dbs_port field.
+	 * The value for the del_index_parent field.
 	 * @var        int
 	 */
-	protected $dbs_port = 0;
+	protected $del_index_parent = 0;
+
+
+	/**
+	 * The value for the del_thread_parent field.
+	 * @var        int
+	 */
+	protected $del_thread_parent = 0;
+
+
+	/**
+	 * The value for the sa_status field.
+	 * @var        string
+	 */
+	protected $sa_status = '';
+
+
+	/**
+	 * The value for the sa_values_out field.
+	 * @var        string
+	 */
+	protected $sa_values_out;
+
+
+	/**
+	 * The value for the sa_values_in field.
+	 * @var        string
+	 */
+	protected $sa_values_in;
+
+
+	/**
+	 * The value for the sa_init_date field.
+	 * @var        int
+	 */
+	protected $sa_init_date;
+
+
+	/**
+	 * The value for the sa_finish_date field.
+	 * @var        int
+	 */
+	protected $sa_finish_date;
 
 	/**
 	 * Flag to prevent endless save loop, if this object is referenced
@@ -98,100 +105,151 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 	protected $alreadyInValidation = false;
 
 	/**
-	 * Get the [dbs_uid] column value.
+	 * Get the [app_uid] column value.
 	 * 
 	 * @return     string
 	 */
-	public function getDbsUid()
+	public function getAppUid()
 	{
 
-		return $this->dbs_uid;
+		return $this->app_uid;
 	}
 
 	/**
-	 * Get the [pro_uid] column value.
+	 * Get the [app_parent] column value.
 	 * 
 	 * @return     string
 	 */
-	public function getProUid()
+	public function getAppParent()
 	{
 
-		return $this->pro_uid;
+		return $this->app_parent;
 	}
 
 	/**
-	 * Get the [dbs_type] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getDbsType()
-	{
-
-		return $this->dbs_type;
-	}
-
-	/**
-	 * Get the [dbs_server] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getDbsServer()
-	{
-
-		return $this->dbs_server;
-	}
-
-	/**
-	 * Get the [dbs_database_name] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getDbsDatabaseName()
-	{
-
-		return $this->dbs_database_name;
-	}
-
-	/**
-	 * Get the [dbs_username] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getDbsUsername()
-	{
-
-		return $this->dbs_username;
-	}
-
-	/**
-	 * Get the [dbs_password] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getDbsPassword()
-	{
-
-		return $this->dbs_password;
-	}
-
-	/**
-	 * Get the [dbs_port] column value.
+	 * Get the [del_index_parent] column value.
 	 * 
 	 * @return     int
 	 */
-	public function getDbsPort()
+	public function getDelIndexParent()
 	{
 
-		return $this->dbs_port;
+		return $this->del_index_parent;
 	}
 
 	/**
-	 * Set the value of [dbs_uid] column.
+	 * Get the [del_thread_parent] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getDelThreadParent()
+	{
+
+		return $this->del_thread_parent;
+	}
+
+	/**
+	 * Get the [sa_status] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getSaStatus()
+	{
+
+		return $this->sa_status;
+	}
+
+	/**
+	 * Get the [sa_values_out] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getSaValuesOut()
+	{
+
+		return $this->sa_values_out;
+	}
+
+	/**
+	 * Get the [sa_values_in] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getSaValuesIn()
+	{
+
+		return $this->sa_values_in;
+	}
+
+	/**
+	 * Get the [optionally formatted] [sa_init_date] column value.
+	 * 
+	 * @param      string $format The date/time format string (either date()-style or strftime()-style).
+	 *							If format is NULL, then the integer unix timestamp will be returned.
+	 * @return     mixed Formatted date/time value as string or integer unix timestamp (if format is NULL).
+	 * @throws     PropelException - if unable to convert the date/time to timestamp.
+	 */
+	public function getSaInitDate($format = 'Y-m-d H:i:s')
+	{
+
+		if ($this->sa_init_date === null || $this->sa_init_date === '') {
+			return null;
+		} elseif (!is_int($this->sa_init_date)) {
+			// a non-timestamp value was set externally, so we convert it
+			$ts = strtotime($this->sa_init_date);
+			if ($ts === -1 || $ts === false) { // in PHP 5.1 return value changes to FALSE
+				throw new PropelException("Unable to parse value of [sa_init_date] as date/time value: " . var_export($this->sa_init_date, true));
+			}
+		} else {
+			$ts = $this->sa_init_date;
+		}
+		if ($format === null) {
+			return $ts;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $ts);
+		} else {
+			return date($format, $ts);
+		}
+	}
+
+	/**
+	 * Get the [optionally formatted] [sa_finish_date] column value.
+	 * 
+	 * @param      string $format The date/time format string (either date()-style or strftime()-style).
+	 *							If format is NULL, then the integer unix timestamp will be returned.
+	 * @return     mixed Formatted date/time value as string or integer unix timestamp (if format is NULL).
+	 * @throws     PropelException - if unable to convert the date/time to timestamp.
+	 */
+	public function getSaFinishDate($format = 'Y-m-d H:i:s')
+	{
+
+		if ($this->sa_finish_date === null || $this->sa_finish_date === '') {
+			return null;
+		} elseif (!is_int($this->sa_finish_date)) {
+			// a non-timestamp value was set externally, so we convert it
+			$ts = strtotime($this->sa_finish_date);
+			if ($ts === -1 || $ts === false) { // in PHP 5.1 return value changes to FALSE
+				throw new PropelException("Unable to parse value of [sa_finish_date] as date/time value: " . var_export($this->sa_finish_date, true));
+			}
+		} else {
+			$ts = $this->sa_finish_date;
+		}
+		if ($format === null) {
+			return $ts;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $ts);
+		} else {
+			return date($format, $ts);
+		}
+	}
+
+	/**
+	 * Set the value of [app_uid] column.
 	 * 
 	 * @param      string $v new value
 	 * @return     void
 	 */
-	public function setDbsUid($v)
+	public function setAppUid($v)
 	{
 
 		// Since the native PHP type for this column is string,
@@ -200,20 +258,20 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 			$v = (string) $v; 
 		}
 
-		if ($this->dbs_uid !== $v || $v === '') {
-			$this->dbs_uid = $v;
-			$this->modifiedColumns[] = DbSourcePeer::DBS_UID;
+		if ($this->app_uid !== $v || $v === '') {
+			$this->app_uid = $v;
+			$this->modifiedColumns[] = SubApplicationPeer::APP_UID;
 		}
 
-	} // setDbsUid()
+	} // setAppUid()
 
 	/**
-	 * Set the value of [pro_uid] column.
+	 * Set the value of [app_parent] column.
 	 * 
 	 * @param      string $v new value
 	 * @return     void
 	 */
-	public function setProUid($v)
+	public function setAppParent($v)
 	{
 
 		// Since the native PHP type for this column is string,
@@ -222,130 +280,20 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 			$v = (string) $v; 
 		}
 
-		if ($this->pro_uid !== $v || $v === '0') {
-			$this->pro_uid = $v;
-			$this->modifiedColumns[] = DbSourcePeer::PRO_UID;
+		if ($this->app_parent !== $v || $v === '') {
+			$this->app_parent = $v;
+			$this->modifiedColumns[] = SubApplicationPeer::APP_PARENT;
 		}
 
-	} // setProUid()
+	} // setAppParent()
 
 	/**
-	 * Set the value of [dbs_type] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     void
-	 */
-	public function setDbsType($v)
-	{
-
-		// Since the native PHP type for this column is string,
-		// we will cast the input to a string (if it is not).
-		if ($v !== null && !is_string($v)) {
-			$v = (string) $v; 
-		}
-
-		if ($this->dbs_type !== $v || $v === '0') {
-			$this->dbs_type = $v;
-			$this->modifiedColumns[] = DbSourcePeer::DBS_TYPE;
-		}
-
-	} // setDbsType()
-
-	/**
-	 * Set the value of [dbs_server] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     void
-	 */
-	public function setDbsServer($v)
-	{
-
-		// Since the native PHP type for this column is string,
-		// we will cast the input to a string (if it is not).
-		if ($v !== null && !is_string($v)) {
-			$v = (string) $v; 
-		}
-
-		if ($this->dbs_server !== $v || $v === '0') {
-			$this->dbs_server = $v;
-			$this->modifiedColumns[] = DbSourcePeer::DBS_SERVER;
-		}
-
-	} // setDbsServer()
-
-	/**
-	 * Set the value of [dbs_database_name] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     void
-	 */
-	public function setDbsDatabaseName($v)
-	{
-
-		// Since the native PHP type for this column is string,
-		// we will cast the input to a string (if it is not).
-		if ($v !== null && !is_string($v)) {
-			$v = (string) $v; 
-		}
-
-		if ($this->dbs_database_name !== $v || $v === '0') {
-			$this->dbs_database_name = $v;
-			$this->modifiedColumns[] = DbSourcePeer::DBS_DATABASE_NAME;
-		}
-
-	} // setDbsDatabaseName()
-
-	/**
-	 * Set the value of [dbs_username] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     void
-	 */
-	public function setDbsUsername($v)
-	{
-
-		// Since the native PHP type for this column is string,
-		// we will cast the input to a string (if it is not).
-		if ($v !== null && !is_string($v)) {
-			$v = (string) $v; 
-		}
-
-		if ($this->dbs_username !== $v || $v === '0') {
-			$this->dbs_username = $v;
-			$this->modifiedColumns[] = DbSourcePeer::DBS_USERNAME;
-		}
-
-	} // setDbsUsername()
-
-	/**
-	 * Set the value of [dbs_password] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     void
-	 */
-	public function setDbsPassword($v)
-	{
-
-		// Since the native PHP type for this column is string,
-		// we will cast the input to a string (if it is not).
-		if ($v !== null && !is_string($v)) {
-			$v = (string) $v; 
-		}
-
-		if ($this->dbs_password !== $v || $v === '') {
-			$this->dbs_password = $v;
-			$this->modifiedColumns[] = DbSourcePeer::DBS_PASSWORD;
-		}
-
-	} // setDbsPassword()
-
-	/**
-	 * Set the value of [dbs_port] column.
+	 * Set the value of [del_index_parent] column.
 	 * 
 	 * @param      int $v new value
 	 * @return     void
 	 */
-	public function setDbsPort($v)
+	public function setDelIndexParent($v)
 	{
 
 		// Since the native PHP type for this column is integer,
@@ -354,12 +302,148 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 			$v = (int) $v;
 		}
 
-		if ($this->dbs_port !== $v || $v === 0) {
-			$this->dbs_port = $v;
-			$this->modifiedColumns[] = DbSourcePeer::DBS_PORT;
+		if ($this->del_index_parent !== $v || $v === 0) {
+			$this->del_index_parent = $v;
+			$this->modifiedColumns[] = SubApplicationPeer::DEL_INDEX_PARENT;
 		}
 
-	} // setDbsPort()
+	} // setDelIndexParent()
+
+	/**
+	 * Set the value of [del_thread_parent] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     void
+	 */
+	public function setDelThreadParent($v)
+	{
+
+		// Since the native PHP type for this column is integer,
+		// we will cast the input value to an int (if it is not).
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->del_thread_parent !== $v || $v === 0) {
+			$this->del_thread_parent = $v;
+			$this->modifiedColumns[] = SubApplicationPeer::DEL_THREAD_PARENT;
+		}
+
+	} // setDelThreadParent()
+
+	/**
+	 * Set the value of [sa_status] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setSaStatus($v)
+	{
+
+		// Since the native PHP type for this column is string,
+		// we will cast the input to a string (if it is not).
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->sa_status !== $v || $v === '') {
+			$this->sa_status = $v;
+			$this->modifiedColumns[] = SubApplicationPeer::SA_STATUS;
+		}
+
+	} // setSaStatus()
+
+	/**
+	 * Set the value of [sa_values_out] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setSaValuesOut($v)
+	{
+
+		// Since the native PHP type for this column is string,
+		// we will cast the input to a string (if it is not).
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->sa_values_out !== $v) {
+			$this->sa_values_out = $v;
+			$this->modifiedColumns[] = SubApplicationPeer::SA_VALUES_OUT;
+		}
+
+	} // setSaValuesOut()
+
+	/**
+	 * Set the value of [sa_values_in] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setSaValuesIn($v)
+	{
+
+		// Since the native PHP type for this column is string,
+		// we will cast the input to a string (if it is not).
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->sa_values_in !== $v) {
+			$this->sa_values_in = $v;
+			$this->modifiedColumns[] = SubApplicationPeer::SA_VALUES_IN;
+		}
+
+	} // setSaValuesIn()
+
+	/**
+	 * Set the value of [sa_init_date] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     void
+	 */
+	public function setSaInitDate($v)
+	{
+
+		if ($v !== null && !is_int($v)) {
+			$ts = strtotime($v);
+			if ($ts === -1 || $ts === false) { // in PHP 5.1 return value changes to FALSE
+				throw new PropelException("Unable to parse date/time value for [sa_init_date] from input: " . var_export($v, true));
+			}
+		} else {
+			$ts = $v;
+		}
+		if ($this->sa_init_date !== $ts) {
+			$this->sa_init_date = $ts;
+			$this->modifiedColumns[] = SubApplicationPeer::SA_INIT_DATE;
+		}
+
+	} // setSaInitDate()
+
+	/**
+	 * Set the value of [sa_finish_date] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     void
+	 */
+	public function setSaFinishDate($v)
+	{
+
+		if ($v !== null && !is_int($v)) {
+			$ts = strtotime($v);
+			if ($ts === -1 || $ts === false) { // in PHP 5.1 return value changes to FALSE
+				throw new PropelException("Unable to parse date/time value for [sa_finish_date] from input: " . var_export($v, true));
+			}
+		} else {
+			$ts = $v;
+		}
+		if ($this->sa_finish_date !== $ts) {
+			$this->sa_finish_date = $ts;
+			$this->modifiedColumns[] = SubApplicationPeer::SA_FINISH_DATE;
+		}
+
+	} // setSaFinishDate()
 
 	/**
 	 * Hydrates (populates) the object variables with values from the database resultset.
@@ -378,31 +462,33 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 	{
 		try {
 
-			$this->dbs_uid = $rs->getString($startcol + 0);
+			$this->app_uid = $rs->getString($startcol + 0);
 
-			$this->pro_uid = $rs->getString($startcol + 1);
+			$this->app_parent = $rs->getString($startcol + 1);
 
-			$this->dbs_type = $rs->getString($startcol + 2);
+			$this->del_index_parent = $rs->getInt($startcol + 2);
 
-			$this->dbs_server = $rs->getString($startcol + 3);
+			$this->del_thread_parent = $rs->getInt($startcol + 3);
 
-			$this->dbs_database_name = $rs->getString($startcol + 4);
+			$this->sa_status = $rs->getString($startcol + 4);
 
-			$this->dbs_username = $rs->getString($startcol + 5);
+			$this->sa_values_out = $rs->getString($startcol + 5);
 
-			$this->dbs_password = $rs->getString($startcol + 6);
+			$this->sa_values_in = $rs->getString($startcol + 6);
 
-			$this->dbs_port = $rs->getInt($startcol + 7);
+			$this->sa_init_date = $rs->getTimestamp($startcol + 7, null);
+
+			$this->sa_finish_date = $rs->getTimestamp($startcol + 8, null);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 8; // 8 = DbSourcePeer::NUM_COLUMNS - DbSourcePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 9; // 9 = SubApplicationPeer::NUM_COLUMNS - SubApplicationPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
-			throw new PropelException("Error populating DbSource object", $e);
+			throw new PropelException("Error populating SubApplication object", $e);
 		}
 	}
 
@@ -422,12 +508,12 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(DbSourcePeer::DATABASE_NAME);
+			$con = Propel::getConnection(SubApplicationPeer::DATABASE_NAME);
 		}
 
 		try {
 			$con->begin();
-			DbSourcePeer::doDelete($this, $con);
+			SubApplicationPeer::doDelete($this, $con);
 			$this->setDeleted(true);
 			$con->commit();
 		} catch (PropelException $e) {
@@ -453,7 +539,7 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(DbSourcePeer::DATABASE_NAME);
+			$con = Propel::getConnection(SubApplicationPeer::DATABASE_NAME);
 		}
 
 		try {
@@ -488,14 +574,14 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 			// If this object has been modified, then save it to the database.
 			if ($this->isModified()) {
 				if ($this->isNew()) {
-					$pk = DbSourcePeer::doInsert($this, $con);
+					$pk = SubApplicationPeer::doInsert($this, $con);
 					$affectedRows += 1; // we are assuming that there is only 1 row per doInsert() which
 										 // should always be true here (even though technically
 										 // BasePeer::doInsert() can insert multiple rows).
 
 					$this->setNew(false);
 				} else {
-					$affectedRows += DbSourcePeer::doUpdate($this, $con);
+					$affectedRows += SubApplicationPeer::doUpdate($this, $con);
 				}
 				$this->resetModified(); // [HL] After being saved an object is no longer 'modified'
 			}
@@ -565,7 +651,7 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 			$failureMap = array();
 
 
-			if (($retval = DbSourcePeer::doValidate($this, $columns)) !== true) {
+			if (($retval = SubApplicationPeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
@@ -588,7 +674,7 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 	 */
 	public function getByName($name, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = DbSourcePeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = SubApplicationPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		return $this->getByPosition($pos);
 	}
 
@@ -603,28 +689,31 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 	{
 		switch($pos) {
 			case 0:
-				return $this->getDbsUid();
+				return $this->getAppUid();
 				break;
 			case 1:
-				return $this->getProUid();
+				return $this->getAppParent();
 				break;
 			case 2:
-				return $this->getDbsType();
+				return $this->getDelIndexParent();
 				break;
 			case 3:
-				return $this->getDbsServer();
+				return $this->getDelThreadParent();
 				break;
 			case 4:
-				return $this->getDbsDatabaseName();
+				return $this->getSaStatus();
 				break;
 			case 5:
-				return $this->getDbsUsername();
+				return $this->getSaValuesOut();
 				break;
 			case 6:
-				return $this->getDbsPassword();
+				return $this->getSaValuesIn();
 				break;
 			case 7:
-				return $this->getDbsPort();
+				return $this->getSaInitDate();
+				break;
+			case 8:
+				return $this->getSaFinishDate();
 				break;
 			default:
 				return null;
@@ -644,16 +733,17 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 	 */
 	public function toArray($keyType = BasePeer::TYPE_PHPNAME)
 	{
-		$keys = DbSourcePeer::getFieldNames($keyType);
+		$keys = SubApplicationPeer::getFieldNames($keyType);
 		$result = array(
-			$keys[0] => $this->getDbsUid(),
-			$keys[1] => $this->getProUid(),
-			$keys[2] => $this->getDbsType(),
-			$keys[3] => $this->getDbsServer(),
-			$keys[4] => $this->getDbsDatabaseName(),
-			$keys[5] => $this->getDbsUsername(),
-			$keys[6] => $this->getDbsPassword(),
-			$keys[7] => $this->getDbsPort(),
+			$keys[0] => $this->getAppUid(),
+			$keys[1] => $this->getAppParent(),
+			$keys[2] => $this->getDelIndexParent(),
+			$keys[3] => $this->getDelThreadParent(),
+			$keys[4] => $this->getSaStatus(),
+			$keys[5] => $this->getSaValuesOut(),
+			$keys[6] => $this->getSaValuesIn(),
+			$keys[7] => $this->getSaInitDate(),
+			$keys[8] => $this->getSaFinishDate(),
 		);
 		return $result;
 	}
@@ -670,7 +760,7 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 	 */
 	public function setByName($name, $value, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = DbSourcePeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = SubApplicationPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		return $this->setByPosition($pos, $value);
 	}
 
@@ -686,28 +776,31 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 	{
 		switch($pos) {
 			case 0:
-				$this->setDbsUid($value);
+				$this->setAppUid($value);
 				break;
 			case 1:
-				$this->setProUid($value);
+				$this->setAppParent($value);
 				break;
 			case 2:
-				$this->setDbsType($value);
+				$this->setDelIndexParent($value);
 				break;
 			case 3:
-				$this->setDbsServer($value);
+				$this->setDelThreadParent($value);
 				break;
 			case 4:
-				$this->setDbsDatabaseName($value);
+				$this->setSaStatus($value);
 				break;
 			case 5:
-				$this->setDbsUsername($value);
+				$this->setSaValuesOut($value);
 				break;
 			case 6:
-				$this->setDbsPassword($value);
+				$this->setSaValuesIn($value);
 				break;
 			case 7:
-				$this->setDbsPort($value);
+				$this->setSaInitDate($value);
+				break;
+			case 8:
+				$this->setSaFinishDate($value);
 				break;
 		} // switch()
 	}
@@ -730,16 +823,17 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 	 */
 	public function fromArray($arr, $keyType = BasePeer::TYPE_PHPNAME)
 	{
-		$keys = DbSourcePeer::getFieldNames($keyType);
+		$keys = SubApplicationPeer::getFieldNames($keyType);
 
-		if (array_key_exists($keys[0], $arr)) $this->setDbsUid($arr[$keys[0]]);
-		if (array_key_exists($keys[1], $arr)) $this->setProUid($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setDbsType($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setDbsServer($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setDbsDatabaseName($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setDbsUsername($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setDbsPassword($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setDbsPort($arr[$keys[7]]);
+		if (array_key_exists($keys[0], $arr)) $this->setAppUid($arr[$keys[0]]);
+		if (array_key_exists($keys[1], $arr)) $this->setAppParent($arr[$keys[1]]);
+		if (array_key_exists($keys[2], $arr)) $this->setDelIndexParent($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setDelThreadParent($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setSaStatus($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setSaValuesOut($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setSaValuesIn($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setSaInitDate($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setSaFinishDate($arr[$keys[8]]);
 	}
 
 	/**
@@ -749,16 +843,17 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 	 */
 	public function buildCriteria()
 	{
-		$criteria = new Criteria(DbSourcePeer::DATABASE_NAME);
+		$criteria = new Criteria(SubApplicationPeer::DATABASE_NAME);
 
-		if ($this->isColumnModified(DbSourcePeer::DBS_UID)) $criteria->add(DbSourcePeer::DBS_UID, $this->dbs_uid);
-		if ($this->isColumnModified(DbSourcePeer::PRO_UID)) $criteria->add(DbSourcePeer::PRO_UID, $this->pro_uid);
-		if ($this->isColumnModified(DbSourcePeer::DBS_TYPE)) $criteria->add(DbSourcePeer::DBS_TYPE, $this->dbs_type);
-		if ($this->isColumnModified(DbSourcePeer::DBS_SERVER)) $criteria->add(DbSourcePeer::DBS_SERVER, $this->dbs_server);
-		if ($this->isColumnModified(DbSourcePeer::DBS_DATABASE_NAME)) $criteria->add(DbSourcePeer::DBS_DATABASE_NAME, $this->dbs_database_name);
-		if ($this->isColumnModified(DbSourcePeer::DBS_USERNAME)) $criteria->add(DbSourcePeer::DBS_USERNAME, $this->dbs_username);
-		if ($this->isColumnModified(DbSourcePeer::DBS_PASSWORD)) $criteria->add(DbSourcePeer::DBS_PASSWORD, $this->dbs_password);
-		if ($this->isColumnModified(DbSourcePeer::DBS_PORT)) $criteria->add(DbSourcePeer::DBS_PORT, $this->dbs_port);
+		if ($this->isColumnModified(SubApplicationPeer::APP_UID)) $criteria->add(SubApplicationPeer::APP_UID, $this->app_uid);
+		if ($this->isColumnModified(SubApplicationPeer::APP_PARENT)) $criteria->add(SubApplicationPeer::APP_PARENT, $this->app_parent);
+		if ($this->isColumnModified(SubApplicationPeer::DEL_INDEX_PARENT)) $criteria->add(SubApplicationPeer::DEL_INDEX_PARENT, $this->del_index_parent);
+		if ($this->isColumnModified(SubApplicationPeer::DEL_THREAD_PARENT)) $criteria->add(SubApplicationPeer::DEL_THREAD_PARENT, $this->del_thread_parent);
+		if ($this->isColumnModified(SubApplicationPeer::SA_STATUS)) $criteria->add(SubApplicationPeer::SA_STATUS, $this->sa_status);
+		if ($this->isColumnModified(SubApplicationPeer::SA_VALUES_OUT)) $criteria->add(SubApplicationPeer::SA_VALUES_OUT, $this->sa_values_out);
+		if ($this->isColumnModified(SubApplicationPeer::SA_VALUES_IN)) $criteria->add(SubApplicationPeer::SA_VALUES_IN, $this->sa_values_in);
+		if ($this->isColumnModified(SubApplicationPeer::SA_INIT_DATE)) $criteria->add(SubApplicationPeer::SA_INIT_DATE, $this->sa_init_date);
+		if ($this->isColumnModified(SubApplicationPeer::SA_FINISH_DATE)) $criteria->add(SubApplicationPeer::SA_FINISH_DATE, $this->sa_finish_date);
 
 		return $criteria;
 	}
@@ -773,32 +868,35 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 	 */
 	public function buildPkeyCriteria()
 	{
-		$criteria = new Criteria(DbSourcePeer::DATABASE_NAME);
+		$criteria = new Criteria(SubApplicationPeer::DATABASE_NAME);
 
-		$criteria->add(DbSourcePeer::DBS_UID, $this->dbs_uid);
 
 		return $criteria;
 	}
 
 	/**
-	 * Returns the primary key for this object (row).
-	 * @return     string
+	 * Returns NULL since this table doesn't have a primary key.
+	 * This method exists only for BC and is deprecated!
+	 * @return     null
 	 */
 	public function getPrimaryKey()
 	{
-		return $this->getDbsUid();
+		return null;
 	}
 
 	/**
-	 * Generic method to set the primary key (dbs_uid column).
+	 * Dummy primary key setter.
 	 *
-	 * @param      string $key Primary key.
-	 * @return     void
+	 * This function only exists to preserve backwards compatibility.  It is no longer
+	 * needed or required by the Persistent interface.  It will be removed in next BC-breaking
+	 * release of Propel.
+	 *
+	 * @deprecated
 	 */
-	public function setPrimaryKey($key)
-	{
-		$this->setDbsUid($key);
-	}
+	 public function setPrimaryKey($pk)
+	 {
+		 // do nothing, because this object doesn't have any primary keys
+	 }
 
 	/**
 	 * Sets contents of passed object to values from current object.
@@ -806,31 +904,33 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 	 * If desired, this method can also make copies of all associated (fkey referrers)
 	 * objects.
 	 *
-	 * @param      object $copyObj An object of DbSource (or compatible) type.
+	 * @param      object $copyObj An object of SubApplication (or compatible) type.
 	 * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
 	 * @throws     PropelException
 	 */
 	public function copyInto($copyObj, $deepCopy = false)
 	{
 
-		$copyObj->setProUid($this->pro_uid);
+		$copyObj->setAppUid($this->app_uid);
 
-		$copyObj->setDbsType($this->dbs_type);
+		$copyObj->setAppParent($this->app_parent);
 
-		$copyObj->setDbsServer($this->dbs_server);
+		$copyObj->setDelIndexParent($this->del_index_parent);
 
-		$copyObj->setDbsDatabaseName($this->dbs_database_name);
+		$copyObj->setDelThreadParent($this->del_thread_parent);
 
-		$copyObj->setDbsUsername($this->dbs_username);
+		$copyObj->setSaStatus($this->sa_status);
 
-		$copyObj->setDbsPassword($this->dbs_password);
+		$copyObj->setSaValuesOut($this->sa_values_out);
 
-		$copyObj->setDbsPort($this->dbs_port);
+		$copyObj->setSaValuesIn($this->sa_values_in);
+
+		$copyObj->setSaInitDate($this->sa_init_date);
+
+		$copyObj->setSaFinishDate($this->sa_finish_date);
 
 
 		$copyObj->setNew(true);
-
-		$copyObj->setDbsUid(''); // this is a pkey column, so set to default value
 
 	}
 
@@ -843,7 +943,7 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 	 * objects.
 	 *
 	 * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-	 * @return     DbSource Clone of current object.
+	 * @return     SubApplication Clone of current object.
 	 * @throws     PropelException
 	 */
 	public function copy($deepCopy = false)
@@ -862,14 +962,14 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 	 * same instance for all member of this class. The method could therefore
 	 * be static, but this would prevent one from overriding the behavior.
 	 *
-	 * @return     DbSourcePeer
+	 * @return     SubApplicationPeer
 	 */
 	public function getPeer()
 	{
 		if (self::$peer === null) {
-			self::$peer = new DbSourcePeer();
+			self::$peer = new SubApplicationPeer();
 		}
 		return self::$peer;
 	}
 
-} // BaseDbSource
+} // BaseSubApplication

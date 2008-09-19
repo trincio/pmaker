@@ -7,81 +7,95 @@ require_once 'propel/om/Persistent.php';
 
 include_once 'propel/util/Criteria.php';
 
-include_once 'classes/model/DbSourcePeer.php';
+include_once 'classes/model/SubProcessPeer.php';
 
 /**
- * Base class that represents a row from the 'DB_SOURCE' table.
+ * Base class that represents a row from the 'SUB_PROCESS' table.
  *
  * 
  *
  * @package    classes.model.om
  */
-abstract class BaseDbSource extends BaseObject  implements Persistent {
+abstract class BaseSubProcess extends BaseObject  implements Persistent {
 
 
 	/**
 	 * The Peer class.
 	 * Instance provides a convenient way of calling static methods on a class
 	 * that calling code may not be able to identify.
-	 * @var        DbSourcePeer
+	 * @var        SubProcessPeer
 	 */
 	protected static $peer;
 
 
 	/**
-	 * The value for the dbs_uid field.
+	 * The value for the sp_uid field.
 	 * @var        string
 	 */
-	protected $dbs_uid = '';
+	protected $sp_uid = '';
 
 
 	/**
 	 * The value for the pro_uid field.
 	 * @var        string
 	 */
-	protected $pro_uid = '0';
+	protected $pro_uid = '';
 
 
 	/**
-	 * The value for the dbs_type field.
+	 * The value for the pro_parent field.
 	 * @var        string
 	 */
-	protected $dbs_type = '0';
+	protected $pro_parent = '';
 
 
 	/**
-	 * The value for the dbs_server field.
+	 * The value for the sp_type field.
 	 * @var        string
 	 */
-	protected $dbs_server = '0';
+	protected $sp_type = '';
 
 
 	/**
-	 * The value for the dbs_database_name field.
-	 * @var        string
-	 */
-	protected $dbs_database_name = '0';
-
-
-	/**
-	 * The value for the dbs_username field.
-	 * @var        string
-	 */
-	protected $dbs_username = '0';
-
-
-	/**
-	 * The value for the dbs_password field.
-	 * @var        string
-	 */
-	protected $dbs_password = '';
-
-
-	/**
-	 * The value for the dbs_port field.
+	 * The value for the sp_synchronous field.
 	 * @var        int
 	 */
-	protected $dbs_port = 0;
+	protected $sp_synchronous = 0;
+
+
+	/**
+	 * The value for the sp_synchronous_type field.
+	 * @var        string
+	 */
+	protected $sp_synchronous_type = '';
+
+
+	/**
+	 * The value for the sp_synchronous_wait field.
+	 * @var        int
+	 */
+	protected $sp_synchronous_wait = 0;
+
+
+	/**
+	 * The value for the sp_variables_out field.
+	 * @var        string
+	 */
+	protected $sp_variables_out;
+
+
+	/**
+	 * The value for the sp_variables_in field.
+	 * @var        string
+	 */
+	protected $sp_variables_in;
+
+
+	/**
+	 * The value for the sp_grid_in field.
+	 * @var        string
+	 */
+	protected $sp_grid_in = '';
 
 	/**
 	 * Flag to prevent endless save loop, if this object is referenced
@@ -98,14 +112,14 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 	protected $alreadyInValidation = false;
 
 	/**
-	 * Get the [dbs_uid] column value.
+	 * Get the [sp_uid] column value.
 	 * 
 	 * @return     string
 	 */
-	public function getDbsUid()
+	public function getSpUid()
 	{
 
-		return $this->dbs_uid;
+		return $this->sp_uid;
 	}
 
 	/**
@@ -120,78 +134,100 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Get the [dbs_type] column value.
+	 * Get the [pro_parent] column value.
 	 * 
 	 * @return     string
 	 */
-	public function getDbsType()
+	public function getProParent()
 	{
 
-		return $this->dbs_type;
+		return $this->pro_parent;
 	}
 
 	/**
-	 * Get the [dbs_server] column value.
+	 * Get the [sp_type] column value.
 	 * 
 	 * @return     string
 	 */
-	public function getDbsServer()
+	public function getSpType()
 	{
 
-		return $this->dbs_server;
+		return $this->sp_type;
 	}
 
 	/**
-	 * Get the [dbs_database_name] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getDbsDatabaseName()
-	{
-
-		return $this->dbs_database_name;
-	}
-
-	/**
-	 * Get the [dbs_username] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getDbsUsername()
-	{
-
-		return $this->dbs_username;
-	}
-
-	/**
-	 * Get the [dbs_password] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getDbsPassword()
-	{
-
-		return $this->dbs_password;
-	}
-
-	/**
-	 * Get the [dbs_port] column value.
+	 * Get the [sp_synchronous] column value.
 	 * 
 	 * @return     int
 	 */
-	public function getDbsPort()
+	public function getSpSynchronous()
 	{
 
-		return $this->dbs_port;
+		return $this->sp_synchronous;
 	}
 
 	/**
-	 * Set the value of [dbs_uid] column.
+	 * Get the [sp_synchronous_type] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getSpSynchronousType()
+	{
+
+		return $this->sp_synchronous_type;
+	}
+
+	/**
+	 * Get the [sp_synchronous_wait] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getSpSynchronousWait()
+	{
+
+		return $this->sp_synchronous_wait;
+	}
+
+	/**
+	 * Get the [sp_variables_out] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getSpVariablesOut()
+	{
+
+		return $this->sp_variables_out;
+	}
+
+	/**
+	 * Get the [sp_variables_in] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getSpVariablesIn()
+	{
+
+		return $this->sp_variables_in;
+	}
+
+	/**
+	 * Get the [sp_grid_in] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getSpGridIn()
+	{
+
+		return $this->sp_grid_in;
+	}
+
+	/**
+	 * Set the value of [sp_uid] column.
 	 * 
 	 * @param      string $v new value
 	 * @return     void
 	 */
-	public function setDbsUid($v)
+	public function setSpUid($v)
 	{
 
 		// Since the native PHP type for this column is string,
@@ -200,12 +236,12 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 			$v = (string) $v; 
 		}
 
-		if ($this->dbs_uid !== $v || $v === '') {
-			$this->dbs_uid = $v;
-			$this->modifiedColumns[] = DbSourcePeer::DBS_UID;
+		if ($this->sp_uid !== $v || $v === '') {
+			$this->sp_uid = $v;
+			$this->modifiedColumns[] = SubProcessPeer::SP_UID;
 		}
 
-	} // setDbsUid()
+	} // setSpUid()
 
 	/**
 	 * Set the value of [pro_uid] column.
@@ -222,20 +258,20 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 			$v = (string) $v; 
 		}
 
-		if ($this->pro_uid !== $v || $v === '0') {
+		if ($this->pro_uid !== $v || $v === '') {
 			$this->pro_uid = $v;
-			$this->modifiedColumns[] = DbSourcePeer::PRO_UID;
+			$this->modifiedColumns[] = SubProcessPeer::PRO_UID;
 		}
 
 	} // setProUid()
 
 	/**
-	 * Set the value of [dbs_type] column.
+	 * Set the value of [pro_parent] column.
 	 * 
 	 * @param      string $v new value
 	 * @return     void
 	 */
-	public function setDbsType($v)
+	public function setProParent($v)
 	{
 
 		// Since the native PHP type for this column is string,
@@ -244,20 +280,20 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 			$v = (string) $v; 
 		}
 
-		if ($this->dbs_type !== $v || $v === '0') {
-			$this->dbs_type = $v;
-			$this->modifiedColumns[] = DbSourcePeer::DBS_TYPE;
+		if ($this->pro_parent !== $v || $v === '') {
+			$this->pro_parent = $v;
+			$this->modifiedColumns[] = SubProcessPeer::PRO_PARENT;
 		}
 
-	} // setDbsType()
+	} // setProParent()
 
 	/**
-	 * Set the value of [dbs_server] column.
+	 * Set the value of [sp_type] column.
 	 * 
 	 * @param      string $v new value
 	 * @return     void
 	 */
-	public function setDbsServer($v)
+	public function setSpType($v)
 	{
 
 		// Since the native PHP type for this column is string,
@@ -266,86 +302,20 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 			$v = (string) $v; 
 		}
 
-		if ($this->dbs_server !== $v || $v === '0') {
-			$this->dbs_server = $v;
-			$this->modifiedColumns[] = DbSourcePeer::DBS_SERVER;
+		if ($this->sp_type !== $v || $v === '') {
+			$this->sp_type = $v;
+			$this->modifiedColumns[] = SubProcessPeer::SP_TYPE;
 		}
 
-	} // setDbsServer()
+	} // setSpType()
 
 	/**
-	 * Set the value of [dbs_database_name] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     void
-	 */
-	public function setDbsDatabaseName($v)
-	{
-
-		// Since the native PHP type for this column is string,
-		// we will cast the input to a string (if it is not).
-		if ($v !== null && !is_string($v)) {
-			$v = (string) $v; 
-		}
-
-		if ($this->dbs_database_name !== $v || $v === '0') {
-			$this->dbs_database_name = $v;
-			$this->modifiedColumns[] = DbSourcePeer::DBS_DATABASE_NAME;
-		}
-
-	} // setDbsDatabaseName()
-
-	/**
-	 * Set the value of [dbs_username] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     void
-	 */
-	public function setDbsUsername($v)
-	{
-
-		// Since the native PHP type for this column is string,
-		// we will cast the input to a string (if it is not).
-		if ($v !== null && !is_string($v)) {
-			$v = (string) $v; 
-		}
-
-		if ($this->dbs_username !== $v || $v === '0') {
-			$this->dbs_username = $v;
-			$this->modifiedColumns[] = DbSourcePeer::DBS_USERNAME;
-		}
-
-	} // setDbsUsername()
-
-	/**
-	 * Set the value of [dbs_password] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     void
-	 */
-	public function setDbsPassword($v)
-	{
-
-		// Since the native PHP type for this column is string,
-		// we will cast the input to a string (if it is not).
-		if ($v !== null && !is_string($v)) {
-			$v = (string) $v; 
-		}
-
-		if ($this->dbs_password !== $v || $v === '') {
-			$this->dbs_password = $v;
-			$this->modifiedColumns[] = DbSourcePeer::DBS_PASSWORD;
-		}
-
-	} // setDbsPassword()
-
-	/**
-	 * Set the value of [dbs_port] column.
+	 * Set the value of [sp_synchronous] column.
 	 * 
 	 * @param      int $v new value
 	 * @return     void
 	 */
-	public function setDbsPort($v)
+	public function setSpSynchronous($v)
 	{
 
 		// Since the native PHP type for this column is integer,
@@ -354,12 +324,122 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 			$v = (int) $v;
 		}
 
-		if ($this->dbs_port !== $v || $v === 0) {
-			$this->dbs_port = $v;
-			$this->modifiedColumns[] = DbSourcePeer::DBS_PORT;
+		if ($this->sp_synchronous !== $v || $v === 0) {
+			$this->sp_synchronous = $v;
+			$this->modifiedColumns[] = SubProcessPeer::SP_SYNCHRONOUS;
 		}
 
-	} // setDbsPort()
+	} // setSpSynchronous()
+
+	/**
+	 * Set the value of [sp_synchronous_type] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setSpSynchronousType($v)
+	{
+
+		// Since the native PHP type for this column is string,
+		// we will cast the input to a string (if it is not).
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->sp_synchronous_type !== $v || $v === '') {
+			$this->sp_synchronous_type = $v;
+			$this->modifiedColumns[] = SubProcessPeer::SP_SYNCHRONOUS_TYPE;
+		}
+
+	} // setSpSynchronousType()
+
+	/**
+	 * Set the value of [sp_synchronous_wait] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     void
+	 */
+	public function setSpSynchronousWait($v)
+	{
+
+		// Since the native PHP type for this column is integer,
+		// we will cast the input value to an int (if it is not).
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->sp_synchronous_wait !== $v || $v === 0) {
+			$this->sp_synchronous_wait = $v;
+			$this->modifiedColumns[] = SubProcessPeer::SP_SYNCHRONOUS_WAIT;
+		}
+
+	} // setSpSynchronousWait()
+
+	/**
+	 * Set the value of [sp_variables_out] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setSpVariablesOut($v)
+	{
+
+		// Since the native PHP type for this column is string,
+		// we will cast the input to a string (if it is not).
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->sp_variables_out !== $v) {
+			$this->sp_variables_out = $v;
+			$this->modifiedColumns[] = SubProcessPeer::SP_VARIABLES_OUT;
+		}
+
+	} // setSpVariablesOut()
+
+	/**
+	 * Set the value of [sp_variables_in] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setSpVariablesIn($v)
+	{
+
+		// Since the native PHP type for this column is string,
+		// we will cast the input to a string (if it is not).
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->sp_variables_in !== $v) {
+			$this->sp_variables_in = $v;
+			$this->modifiedColumns[] = SubProcessPeer::SP_VARIABLES_IN;
+		}
+
+	} // setSpVariablesIn()
+
+	/**
+	 * Set the value of [sp_grid_in] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setSpGridIn($v)
+	{
+
+		// Since the native PHP type for this column is string,
+		// we will cast the input to a string (if it is not).
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->sp_grid_in !== $v || $v === '') {
+			$this->sp_grid_in = $v;
+			$this->modifiedColumns[] = SubProcessPeer::SP_GRID_IN;
+		}
+
+	} // setSpGridIn()
 
 	/**
 	 * Hydrates (populates) the object variables with values from the database resultset.
@@ -378,31 +458,35 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 	{
 		try {
 
-			$this->dbs_uid = $rs->getString($startcol + 0);
+			$this->sp_uid = $rs->getString($startcol + 0);
 
 			$this->pro_uid = $rs->getString($startcol + 1);
 
-			$this->dbs_type = $rs->getString($startcol + 2);
+			$this->pro_parent = $rs->getString($startcol + 2);
 
-			$this->dbs_server = $rs->getString($startcol + 3);
+			$this->sp_type = $rs->getString($startcol + 3);
 
-			$this->dbs_database_name = $rs->getString($startcol + 4);
+			$this->sp_synchronous = $rs->getInt($startcol + 4);
 
-			$this->dbs_username = $rs->getString($startcol + 5);
+			$this->sp_synchronous_type = $rs->getString($startcol + 5);
 
-			$this->dbs_password = $rs->getString($startcol + 6);
+			$this->sp_synchronous_wait = $rs->getInt($startcol + 6);
 
-			$this->dbs_port = $rs->getInt($startcol + 7);
+			$this->sp_variables_out = $rs->getString($startcol + 7);
+
+			$this->sp_variables_in = $rs->getString($startcol + 8);
+
+			$this->sp_grid_in = $rs->getString($startcol + 9);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 8; // 8 = DbSourcePeer::NUM_COLUMNS - DbSourcePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 10; // 10 = SubProcessPeer::NUM_COLUMNS - SubProcessPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
-			throw new PropelException("Error populating DbSource object", $e);
+			throw new PropelException("Error populating SubProcess object", $e);
 		}
 	}
 
@@ -422,12 +506,12 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(DbSourcePeer::DATABASE_NAME);
+			$con = Propel::getConnection(SubProcessPeer::DATABASE_NAME);
 		}
 
 		try {
 			$con->begin();
-			DbSourcePeer::doDelete($this, $con);
+			SubProcessPeer::doDelete($this, $con);
 			$this->setDeleted(true);
 			$con->commit();
 		} catch (PropelException $e) {
@@ -453,7 +537,7 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(DbSourcePeer::DATABASE_NAME);
+			$con = Propel::getConnection(SubProcessPeer::DATABASE_NAME);
 		}
 
 		try {
@@ -488,14 +572,14 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 			// If this object has been modified, then save it to the database.
 			if ($this->isModified()) {
 				if ($this->isNew()) {
-					$pk = DbSourcePeer::doInsert($this, $con);
+					$pk = SubProcessPeer::doInsert($this, $con);
 					$affectedRows += 1; // we are assuming that there is only 1 row per doInsert() which
 										 // should always be true here (even though technically
 										 // BasePeer::doInsert() can insert multiple rows).
 
 					$this->setNew(false);
 				} else {
-					$affectedRows += DbSourcePeer::doUpdate($this, $con);
+					$affectedRows += SubProcessPeer::doUpdate($this, $con);
 				}
 				$this->resetModified(); // [HL] After being saved an object is no longer 'modified'
 			}
@@ -565,7 +649,7 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 			$failureMap = array();
 
 
-			if (($retval = DbSourcePeer::doValidate($this, $columns)) !== true) {
+			if (($retval = SubProcessPeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
@@ -588,7 +672,7 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 	 */
 	public function getByName($name, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = DbSourcePeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = SubProcessPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		return $this->getByPosition($pos);
 	}
 
@@ -603,28 +687,34 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 	{
 		switch($pos) {
 			case 0:
-				return $this->getDbsUid();
+				return $this->getSpUid();
 				break;
 			case 1:
 				return $this->getProUid();
 				break;
 			case 2:
-				return $this->getDbsType();
+				return $this->getProParent();
 				break;
 			case 3:
-				return $this->getDbsServer();
+				return $this->getSpType();
 				break;
 			case 4:
-				return $this->getDbsDatabaseName();
+				return $this->getSpSynchronous();
 				break;
 			case 5:
-				return $this->getDbsUsername();
+				return $this->getSpSynchronousType();
 				break;
 			case 6:
-				return $this->getDbsPassword();
+				return $this->getSpSynchronousWait();
 				break;
 			case 7:
-				return $this->getDbsPort();
+				return $this->getSpVariablesOut();
+				break;
+			case 8:
+				return $this->getSpVariablesIn();
+				break;
+			case 9:
+				return $this->getSpGridIn();
 				break;
 			default:
 				return null;
@@ -644,16 +734,18 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 	 */
 	public function toArray($keyType = BasePeer::TYPE_PHPNAME)
 	{
-		$keys = DbSourcePeer::getFieldNames($keyType);
+		$keys = SubProcessPeer::getFieldNames($keyType);
 		$result = array(
-			$keys[0] => $this->getDbsUid(),
+			$keys[0] => $this->getSpUid(),
 			$keys[1] => $this->getProUid(),
-			$keys[2] => $this->getDbsType(),
-			$keys[3] => $this->getDbsServer(),
-			$keys[4] => $this->getDbsDatabaseName(),
-			$keys[5] => $this->getDbsUsername(),
-			$keys[6] => $this->getDbsPassword(),
-			$keys[7] => $this->getDbsPort(),
+			$keys[2] => $this->getProParent(),
+			$keys[3] => $this->getSpType(),
+			$keys[4] => $this->getSpSynchronous(),
+			$keys[5] => $this->getSpSynchronousType(),
+			$keys[6] => $this->getSpSynchronousWait(),
+			$keys[7] => $this->getSpVariablesOut(),
+			$keys[8] => $this->getSpVariablesIn(),
+			$keys[9] => $this->getSpGridIn(),
 		);
 		return $result;
 	}
@@ -670,7 +762,7 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 	 */
 	public function setByName($name, $value, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = DbSourcePeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = SubProcessPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		return $this->setByPosition($pos, $value);
 	}
 
@@ -686,28 +778,34 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 	{
 		switch($pos) {
 			case 0:
-				$this->setDbsUid($value);
+				$this->setSpUid($value);
 				break;
 			case 1:
 				$this->setProUid($value);
 				break;
 			case 2:
-				$this->setDbsType($value);
+				$this->setProParent($value);
 				break;
 			case 3:
-				$this->setDbsServer($value);
+				$this->setSpType($value);
 				break;
 			case 4:
-				$this->setDbsDatabaseName($value);
+				$this->setSpSynchronous($value);
 				break;
 			case 5:
-				$this->setDbsUsername($value);
+				$this->setSpSynchronousType($value);
 				break;
 			case 6:
-				$this->setDbsPassword($value);
+				$this->setSpSynchronousWait($value);
 				break;
 			case 7:
-				$this->setDbsPort($value);
+				$this->setSpVariablesOut($value);
+				break;
+			case 8:
+				$this->setSpVariablesIn($value);
+				break;
+			case 9:
+				$this->setSpGridIn($value);
 				break;
 		} // switch()
 	}
@@ -730,16 +828,18 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 	 */
 	public function fromArray($arr, $keyType = BasePeer::TYPE_PHPNAME)
 	{
-		$keys = DbSourcePeer::getFieldNames($keyType);
+		$keys = SubProcessPeer::getFieldNames($keyType);
 
-		if (array_key_exists($keys[0], $arr)) $this->setDbsUid($arr[$keys[0]]);
+		if (array_key_exists($keys[0], $arr)) $this->setSpUid($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setProUid($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setDbsType($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setDbsServer($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setDbsDatabaseName($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setDbsUsername($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setDbsPassword($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setDbsPort($arr[$keys[7]]);
+		if (array_key_exists($keys[2], $arr)) $this->setProParent($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setSpType($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setSpSynchronous($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setSpSynchronousType($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setSpSynchronousWait($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setSpVariablesOut($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setSpVariablesIn($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setSpGridIn($arr[$keys[9]]);
 	}
 
 	/**
@@ -749,16 +849,18 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 	 */
 	public function buildCriteria()
 	{
-		$criteria = new Criteria(DbSourcePeer::DATABASE_NAME);
+		$criteria = new Criteria(SubProcessPeer::DATABASE_NAME);
 
-		if ($this->isColumnModified(DbSourcePeer::DBS_UID)) $criteria->add(DbSourcePeer::DBS_UID, $this->dbs_uid);
-		if ($this->isColumnModified(DbSourcePeer::PRO_UID)) $criteria->add(DbSourcePeer::PRO_UID, $this->pro_uid);
-		if ($this->isColumnModified(DbSourcePeer::DBS_TYPE)) $criteria->add(DbSourcePeer::DBS_TYPE, $this->dbs_type);
-		if ($this->isColumnModified(DbSourcePeer::DBS_SERVER)) $criteria->add(DbSourcePeer::DBS_SERVER, $this->dbs_server);
-		if ($this->isColumnModified(DbSourcePeer::DBS_DATABASE_NAME)) $criteria->add(DbSourcePeer::DBS_DATABASE_NAME, $this->dbs_database_name);
-		if ($this->isColumnModified(DbSourcePeer::DBS_USERNAME)) $criteria->add(DbSourcePeer::DBS_USERNAME, $this->dbs_username);
-		if ($this->isColumnModified(DbSourcePeer::DBS_PASSWORD)) $criteria->add(DbSourcePeer::DBS_PASSWORD, $this->dbs_password);
-		if ($this->isColumnModified(DbSourcePeer::DBS_PORT)) $criteria->add(DbSourcePeer::DBS_PORT, $this->dbs_port);
+		if ($this->isColumnModified(SubProcessPeer::SP_UID)) $criteria->add(SubProcessPeer::SP_UID, $this->sp_uid);
+		if ($this->isColumnModified(SubProcessPeer::PRO_UID)) $criteria->add(SubProcessPeer::PRO_UID, $this->pro_uid);
+		if ($this->isColumnModified(SubProcessPeer::PRO_PARENT)) $criteria->add(SubProcessPeer::PRO_PARENT, $this->pro_parent);
+		if ($this->isColumnModified(SubProcessPeer::SP_TYPE)) $criteria->add(SubProcessPeer::SP_TYPE, $this->sp_type);
+		if ($this->isColumnModified(SubProcessPeer::SP_SYNCHRONOUS)) $criteria->add(SubProcessPeer::SP_SYNCHRONOUS, $this->sp_synchronous);
+		if ($this->isColumnModified(SubProcessPeer::SP_SYNCHRONOUS_TYPE)) $criteria->add(SubProcessPeer::SP_SYNCHRONOUS_TYPE, $this->sp_synchronous_type);
+		if ($this->isColumnModified(SubProcessPeer::SP_SYNCHRONOUS_WAIT)) $criteria->add(SubProcessPeer::SP_SYNCHRONOUS_WAIT, $this->sp_synchronous_wait);
+		if ($this->isColumnModified(SubProcessPeer::SP_VARIABLES_OUT)) $criteria->add(SubProcessPeer::SP_VARIABLES_OUT, $this->sp_variables_out);
+		if ($this->isColumnModified(SubProcessPeer::SP_VARIABLES_IN)) $criteria->add(SubProcessPeer::SP_VARIABLES_IN, $this->sp_variables_in);
+		if ($this->isColumnModified(SubProcessPeer::SP_GRID_IN)) $criteria->add(SubProcessPeer::SP_GRID_IN, $this->sp_grid_in);
 
 		return $criteria;
 	}
@@ -773,9 +875,9 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 	 */
 	public function buildPkeyCriteria()
 	{
-		$criteria = new Criteria(DbSourcePeer::DATABASE_NAME);
+		$criteria = new Criteria(SubProcessPeer::DATABASE_NAME);
 
-		$criteria->add(DbSourcePeer::DBS_UID, $this->dbs_uid);
+		$criteria->add(SubProcessPeer::SP_UID, $this->sp_uid);
 
 		return $criteria;
 	}
@@ -786,18 +888,18 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 	 */
 	public function getPrimaryKey()
 	{
-		return $this->getDbsUid();
+		return $this->getSpUid();
 	}
 
 	/**
-	 * Generic method to set the primary key (dbs_uid column).
+	 * Generic method to set the primary key (sp_uid column).
 	 *
 	 * @param      string $key Primary key.
 	 * @return     void
 	 */
 	public function setPrimaryKey($key)
 	{
-		$this->setDbsUid($key);
+		$this->setSpUid($key);
 	}
 
 	/**
@@ -806,7 +908,7 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 	 * If desired, this method can also make copies of all associated (fkey referrers)
 	 * objects.
 	 *
-	 * @param      object $copyObj An object of DbSource (or compatible) type.
+	 * @param      object $copyObj An object of SubProcess (or compatible) type.
 	 * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
 	 * @throws     PropelException
 	 */
@@ -815,22 +917,26 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 
 		$copyObj->setProUid($this->pro_uid);
 
-		$copyObj->setDbsType($this->dbs_type);
+		$copyObj->setProParent($this->pro_parent);
 
-		$copyObj->setDbsServer($this->dbs_server);
+		$copyObj->setSpType($this->sp_type);
 
-		$copyObj->setDbsDatabaseName($this->dbs_database_name);
+		$copyObj->setSpSynchronous($this->sp_synchronous);
 
-		$copyObj->setDbsUsername($this->dbs_username);
+		$copyObj->setSpSynchronousType($this->sp_synchronous_type);
 
-		$copyObj->setDbsPassword($this->dbs_password);
+		$copyObj->setSpSynchronousWait($this->sp_synchronous_wait);
 
-		$copyObj->setDbsPort($this->dbs_port);
+		$copyObj->setSpVariablesOut($this->sp_variables_out);
+
+		$copyObj->setSpVariablesIn($this->sp_variables_in);
+
+		$copyObj->setSpGridIn($this->sp_grid_in);
 
 
 		$copyObj->setNew(true);
 
-		$copyObj->setDbsUid(''); // this is a pkey column, so set to default value
+		$copyObj->setSpUid(''); // this is a pkey column, so set to default value
 
 	}
 
@@ -843,7 +949,7 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 	 * objects.
 	 *
 	 * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-	 * @return     DbSource Clone of current object.
+	 * @return     SubProcess Clone of current object.
 	 * @throws     PropelException
 	 */
 	public function copy($deepCopy = false)
@@ -862,14 +968,14 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 	 * same instance for all member of this class. The method could therefore
 	 * be static, but this would prevent one from overriding the behavior.
 	 *
-	 * @return     DbSourcePeer
+	 * @return     SubProcessPeer
 	 */
 	public function getPeer()
 	{
 		if (self::$peer === null) {
-			self::$peer = new DbSourcePeer();
+			self::$peer = new SubProcessPeer();
 		}
 		return self::$peer;
 	}
 
-} // BaseDbSource
+} // BaseSubProcess
