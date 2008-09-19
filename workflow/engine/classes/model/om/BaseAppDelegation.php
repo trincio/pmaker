@@ -95,7 +95,7 @@ abstract class BaseAppDelegation extends BaseObject  implements Persistent {
 	 * The value for the del_priority field.
 	 * @var        string
 	 */
-	protected $del_priority = '0';
+	protected $del_priority = '3';
 
 
 	/**
@@ -604,7 +604,7 @@ abstract class BaseAppDelegation extends BaseObject  implements Persistent {
 			$v = (string) $v; 
 		}
 
-		if ($this->del_priority !== $v || $v === '0') {
+		if ($this->del_priority !== $v || $v === '3') {
 			$this->del_priority = $v;
 			$this->modifiedColumns[] = AppDelegationPeer::DEL_PRIORITY;
 		}

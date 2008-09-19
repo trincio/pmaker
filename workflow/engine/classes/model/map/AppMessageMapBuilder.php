@@ -90,7 +90,7 @@ class AppMessageMapBuilder {
 
 		$tMap->addColumn('APP_MSG_TEMPLATE', 'AppMsgTemplate', 'string', CreoleTypes::LONGVARCHAR, false, null);
 
-		$tMap->addColumn('APP_MSG_STATUS', 'AppMsgStatus', 'string', CreoleTypes::LONGVARCHAR, false, null);
+		$tMap->addColumn('APP_MSG_STATUS', 'AppMsgStatus', 'string', CreoleTypes::VARCHAR, false, null);
 
 		$tMap->addColumn('APP_MSG_ATTACH', 'AppMsgAttach', 'string', CreoleTypes::LONGVARCHAR, false, null);
 
