@@ -4713,6 +4713,16 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
+    <column name="TAS_PARENT" type="VARCHAR" size="32" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="TAS_PARENT"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
     <column name="SP_TYPE" type="VARCHAR" size="20" required="true" default="">
       <vendor type="mysql">
         <parameter name="Field" value="SP_TYPE"/>

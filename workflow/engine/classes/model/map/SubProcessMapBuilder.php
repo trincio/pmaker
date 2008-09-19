@@ -70,6 +70,8 @@ class SubProcessMapBuilder {
 
 		$tMap->addColumn('PRO_PARENT', 'ProParent', 'string', CreoleTypes::VARCHAR, true, 32);
 
+		$tMap->addColumn('TAS_PARENT', 'TasParent', 'string', CreoleTypes::VARCHAR, true, 32);
+
 		$tMap->addColumn('SP_TYPE', 'SpType', 'string', CreoleTypes::VARCHAR, true, 20);
 
 		$tMap->addColumn('SP_SYNCHRONOUS', 'SpSynchronous', 'int', CreoleTypes::INTEGER, true, null);

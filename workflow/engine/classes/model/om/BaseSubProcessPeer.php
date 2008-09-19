@@ -24,7 +24,7 @@ abstract class BaseSubProcessPeer {
 	const CLASS_DEFAULT = 'classes.model.SubProcess';
 
 	/** The total number of columns. */
-	const NUM_COLUMNS = 10;
+	const NUM_COLUMNS = 11;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -38,6 +38,9 @@ abstract class BaseSubProcessPeer {
 
 	/** the column name for the PRO_PARENT field */
 	const PRO_PARENT = 'SUB_PROCESS.PRO_PARENT';
+
+	/** the column name for the TAS_PARENT field */
+	const TAS_PARENT = 'SUB_PROCESS.TAS_PARENT';
 
 	/** the column name for the SP_TYPE field */
 	const SP_TYPE = 'SUB_PROCESS.SP_TYPE';
@@ -71,10 +74,10 @@ abstract class BaseSubProcessPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('SpUid', 'ProUid', 'ProParent', 'SpType', 'SpSynchronous', 'SpSynchronousType', 'SpSynchronousWait', 'SpVariablesOut', 'SpVariablesIn', 'SpGridIn', ),
-		BasePeer::TYPE_COLNAME => array (SubProcessPeer::SP_UID, SubProcessPeer::PRO_UID, SubProcessPeer::PRO_PARENT, SubProcessPeer::SP_TYPE, SubProcessPeer::SP_SYNCHRONOUS, SubProcessPeer::SP_SYNCHRONOUS_TYPE, SubProcessPeer::SP_SYNCHRONOUS_WAIT, SubProcessPeer::SP_VARIABLES_OUT, SubProcessPeer::SP_VARIABLES_IN, SubProcessPeer::SP_GRID_IN, ),
-		BasePeer::TYPE_FIELDNAME => array ('SP_UID', 'PRO_UID', 'PRO_PARENT', 'SP_TYPE', 'SP_SYNCHRONOUS', 'SP_SYNCHRONOUS_TYPE', 'SP_SYNCHRONOUS_WAIT', 'SP_VARIABLES_OUT', 'SP_VARIABLES_IN', 'SP_GRID_IN', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+		BasePeer::TYPE_PHPNAME => array ('SpUid', 'ProUid', 'ProParent', 'TasParent', 'SpType', 'SpSynchronous', 'SpSynchronousType', 'SpSynchronousWait', 'SpVariablesOut', 'SpVariablesIn', 'SpGridIn', ),
+		BasePeer::TYPE_COLNAME => array (SubProcessPeer::SP_UID, SubProcessPeer::PRO_UID, SubProcessPeer::PRO_PARENT, SubProcessPeer::TAS_PARENT, SubProcessPeer::SP_TYPE, SubProcessPeer::SP_SYNCHRONOUS, SubProcessPeer::SP_SYNCHRONOUS_TYPE, SubProcessPeer::SP_SYNCHRONOUS_WAIT, SubProcessPeer::SP_VARIABLES_OUT, SubProcessPeer::SP_VARIABLES_IN, SubProcessPeer::SP_GRID_IN, ),
+		BasePeer::TYPE_FIELDNAME => array ('SP_UID', 'PRO_UID', 'PRO_PARENT', 'TAS_PARENT', 'SP_TYPE', 'SP_SYNCHRONOUS', 'SP_SYNCHRONOUS_TYPE', 'SP_SYNCHRONOUS_WAIT', 'SP_VARIABLES_OUT', 'SP_VARIABLES_IN', 'SP_GRID_IN', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
 	);
 
 	/**
@@ -84,10 +87,10 @@ abstract class BaseSubProcessPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('SpUid' => 0, 'ProUid' => 1, 'ProParent' => 2, 'SpType' => 3, 'SpSynchronous' => 4, 'SpSynchronousType' => 5, 'SpSynchronousWait' => 6, 'SpVariablesOut' => 7, 'SpVariablesIn' => 8, 'SpGridIn' => 9, ),
-		BasePeer::TYPE_COLNAME => array (SubProcessPeer::SP_UID => 0, SubProcessPeer::PRO_UID => 1, SubProcessPeer::PRO_PARENT => 2, SubProcessPeer::SP_TYPE => 3, SubProcessPeer::SP_SYNCHRONOUS => 4, SubProcessPeer::SP_SYNCHRONOUS_TYPE => 5, SubProcessPeer::SP_SYNCHRONOUS_WAIT => 6, SubProcessPeer::SP_VARIABLES_OUT => 7, SubProcessPeer::SP_VARIABLES_IN => 8, SubProcessPeer::SP_GRID_IN => 9, ),
-		BasePeer::TYPE_FIELDNAME => array ('SP_UID' => 0, 'PRO_UID' => 1, 'PRO_PARENT' => 2, 'SP_TYPE' => 3, 'SP_SYNCHRONOUS' => 4, 'SP_SYNCHRONOUS_TYPE' => 5, 'SP_SYNCHRONOUS_WAIT' => 6, 'SP_VARIABLES_OUT' => 7, 'SP_VARIABLES_IN' => 8, 'SP_GRID_IN' => 9, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+		BasePeer::TYPE_PHPNAME => array ('SpUid' => 0, 'ProUid' => 1, 'ProParent' => 2, 'TasParent' => 3, 'SpType' => 4, 'SpSynchronous' => 5, 'SpSynchronousType' => 6, 'SpSynchronousWait' => 7, 'SpVariablesOut' => 8, 'SpVariablesIn' => 9, 'SpGridIn' => 10, ),
+		BasePeer::TYPE_COLNAME => array (SubProcessPeer::SP_UID => 0, SubProcessPeer::PRO_UID => 1, SubProcessPeer::PRO_PARENT => 2, SubProcessPeer::TAS_PARENT => 3, SubProcessPeer::SP_TYPE => 4, SubProcessPeer::SP_SYNCHRONOUS => 5, SubProcessPeer::SP_SYNCHRONOUS_TYPE => 6, SubProcessPeer::SP_SYNCHRONOUS_WAIT => 7, SubProcessPeer::SP_VARIABLES_OUT => 8, SubProcessPeer::SP_VARIABLES_IN => 9, SubProcessPeer::SP_GRID_IN => 10, ),
+		BasePeer::TYPE_FIELDNAME => array ('SP_UID' => 0, 'PRO_UID' => 1, 'PRO_PARENT' => 2, 'TAS_PARENT' => 3, 'SP_TYPE' => 4, 'SP_SYNCHRONOUS' => 5, 'SP_SYNCHRONOUS_TYPE' => 6, 'SP_SYNCHRONOUS_WAIT' => 7, 'SP_VARIABLES_OUT' => 8, 'SP_VARIABLES_IN' => 9, 'SP_GRID_IN' => 10, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
 	);
 
 	/**
@@ -193,6 +196,8 @@ abstract class BaseSubProcessPeer {
 		$criteria->addSelectColumn(SubProcessPeer::PRO_UID);
 
 		$criteria->addSelectColumn(SubProcessPeer::PRO_PARENT);
+
+		$criteria->addSelectColumn(SubProcessPeer::TAS_PARENT);
 
 		$criteria->addSelectColumn(SubProcessPeer::SP_TYPE);
 
