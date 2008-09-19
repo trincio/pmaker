@@ -50,10 +50,10 @@ class processMap {
 	* @return string
 	*/
   function load($sProcessUID, $bView = false, $sApplicationUID = '', $iDelegation = 0, $sTask = '', $bCT = false) {
-  	try {
+  	try {  
   		$oProcess = new Process();
   		if (!is_null($oProcess)) {
-  			$aRow = $oProcess->load($sProcessUID);
+  			$aRow = $oProcess->load($sProcessUID);  			
   			$oPM->title->label       = strip_tags($aRow['PRO_TITLE']);
         $oPM->title->position->x = $aRow['PRO_TITLE_X'];
         $oPM->title->position->y = $aRow['PRO_TITLE_Y'];
@@ -65,6 +65,7 @@ class processMap {
         $oCriteria->addSelectColumn(TaskPeer::TAS_POSX);
         $oCriteria->addSelectColumn(TaskPeer::TAS_POSY);
         $oCriteria->addSelectColumn(TaskPeer::TAS_COLOR);
+        $oCriteria->addSelectColumn(TaskPeer::TAS_TYPE);
         $aConditions   = array();
         $aConditions[] = array(0 => TaskPeer::TAS_UID,         1 => ContentPeer::CON_ID);
         $aConditions[] = array(0 => ContentPeer::CON_CATEGORY, 1 => DBAdapter::getStringDelimiter() . 'TAS_TITLE' . DBAdapter::getStringDelimiter());
@@ -74,7 +75,7 @@ class processMap {
         $oDataset = TaskPeer::doSelectRS($oCriteria);
         $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
         $oDataset->next();
-        while ($aRow1 = $oDataset->getRow()) {
+        while ($aRow1 = $oDataset->getRow()) { 
           $oTask                 = null;
       	  $oTask->uid            = $aRow1['TAS_UID'];
       	  $oTask->label          = strip_tags($aRow1['CON_VALUE']);
