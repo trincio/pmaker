@@ -36,15 +36,38 @@
 	$sContent = '';
 	
 	if ($withWS) {
+	  //creating the first file
 	  require_once 'classes/model/Dynaform.php';
 	  $oDynaform = new Dynaform();
 	  $aDynaform = $oDynaform->load($sDYNAFORM);
 	  $dynTitle  = str_replace(' ', '_', $aDynaform['DYN_TITLE']);
 	  $sContent  = "<?\n";
 	  $sContent .= "\$G_PUBLISH = new Publisher;\n";
-	  $sContent .= "\$G_PUBLISH->AddContent('dynaform', 'xmlform', '" . $sPRO_UID . '/' . $sDYNAFORM . "', '', array(), '');\n";
+	  $sContent .= "\$G_PUBLISH->AddContent('dynaform', 'xmlform', '" . $sPRO_UID . '/' . $sDYNAFORM . "', '', array(), '" . $dynTitle . 'Post.php' . "');\n";
 	  $sContent .= "G::RenderPage('publish', 'blank');";
 	  file_put_contents ($pathProcess . $dynTitle . '.php', $sContent);
+	  //creating the second file, the  post file who receive the post form.
+      $pluginTpl = PATH_CORE . 'templates' . PATH_SEP . 'processes' .PATH_SEP . 'webentryPost.tpl';
+      $template  = new TemplatePower( $pluginTpl );
+      $template->prepare();
+      $template->assign ( 'wsdlUrl', $http . $_SERVER['HTTP_HOST']. '/sys' . SYS_SYS .'/en/green/services/wsdl');
+      $template->assign ( 'processUid',   $sPRO_UID );
+      $template->assign ( 'dynaformUid',  $sDYNAFORM );
+      $template->assign ( 'taskUid',      $sTASKS );
+      $template->assign ( 'wsUser',       $sWS_USER );
+      $template->assign ( 'wsPass',       'md5:'.md5( $sWS_PASS ) );
+      $template->assign ( 'wsRoundRobin', $sWS_ROUNDROBIN );
+      $fileName = $pathProcess . $dynTitle . 'Post.php';
+      file_put_contents ( $fileName, $template->getOutputContent() );
+      //creating the third file, only if this wsClient.php file doesn't exists.
+      $fileName = $pathProcess . 'wsClient.php';
+      if ( ! file_exists ($fileName) ) {
+        $pluginTpl = PATH_CORE . 'templates' . PATH_SEP . 'processes' .PATH_SEP . 'wsClient.tpl';
+        $template  = new TemplatePower( $pluginTpl );
+        $template->prepare();
+        file_put_contents ( $fileName, $template->getOutputContent() );
+      }
+	  //Show link
 	  $link = $http . $_SERVER['HTTP_HOST']. '/sys' . SYS_SYS .'/' . SYS_LANG . '/' . SYS_SKIN . '/' . $sPRO_UID . '/' . $dynTitle .'.php';
       print "<br><a href='$link' target='_new' > $link </a>";
 	}
