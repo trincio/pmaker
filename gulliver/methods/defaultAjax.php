@@ -33,7 +33,7 @@ if (isset($_SESSION['_DBArray'])) {
 }
 $G_FORM=new form(G::getUIDName(urlDecode($_POST['form'])),XMLFORM_AJAX_PATH);
 $G_FORM->id=urlDecode($_POST['form']);
-$G_FORM->values=$_SESSION[$G_FORM->id];
+$G_FORM->values=isset($_SESSION[$G_FORM->id]) ? $_SESSION[$G_FORM->id] : array();
 
 $newValues=($json->decode(urlDecode(stripslashes($_POST['fields']))));
 //Resolve dependencies
@@ -70,7 +70,7 @@ foreach($dependentFields as $d) {
 	    $sendContent[$r]->content->{$attribute}=toJSArray($value); break;
 	  }
 	}
-	$sendContent[$r]->value=$G_FORM->values[$d];
+	$sendContent[$r]->value=isset($G_FORM->values[$d]) ? $G_FORM->values[$d] : '';
 	$r++;
 }
 echo($json->encode($sendContent));
