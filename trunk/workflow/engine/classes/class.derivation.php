@@ -227,7 +227,14 @@ class Derivation
     $oUser    = new Users();
     $nextAssignedTask = $tasInfo['NEXT_TASK'];
     $lastAssigned     = $tasInfo['NEXT_TASK']['TAS_LAST_ASSIGNED'];
-    $sTasUid          = $tasInfo['NEXT_TASK']['TAS_UID'];
+    if ($tasInfo['NEXT_TASK']['TAS_TYPE'] != 'SUBPROCESS') {
+      $sTasUid = $tasInfo['NEXT_TASK']['TAS_UID'];
+    }
+    else {
+      $oCriteria = new Criteria('workflow');
+      header('Content-Type: text/plain;');var_dump($tasInfo['NEXT_TASK']['TAS_UID']);die;
+      //$sTasUid = $tasInfo['NEXT_TASK']['TAS_UID'];
+    }
     // to do: we can increase the LOCATION by COUNTRY, STATE and LOCATION
     /* Verify if the next Task is set with the option "TAS_ASSIGN_LOCATION == TRUE" */
     $assignLocation = '';

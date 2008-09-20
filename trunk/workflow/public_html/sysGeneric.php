@@ -99,7 +99,8 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
   $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.dom.js'      , true );
   $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.abbr.js'     , true );
   $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.dashboard.js', true );
-  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'jscalendar/calendar.js' );
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'widgets/jscalendar/calendar.js' );
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'widgets/suggest/bsn.AutoSuggest_2.1.3.js' );
   $oHeadPublisher->addMaborakFile( PATH_CORE . 'js' . PATH_SEP . 'cases/core/cases.js' , true );
   $oHeadPublisher->addMaborakFile( PATH_CORE . 'js' . PATH_SEP . 'cases/core/cases_Step.js', true );
   $oHeadPublisher->addMaborakFile( PATH_CORE . 'js' . PATH_SEP . 'processmap/core/processmap.js', true );
@@ -189,7 +190,7 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
 
 //************** verify if the URI is encrypted or not **************
   G::parseURI ( getenv( "REQUEST_URI" ) );
-  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . "jscalendar/lang/calendar-" . SYS_LANG . ".js");
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . "widgets/jscalendar/lang/calendar-" . SYS_LANG . ".js");
   define( 'SYS_URI' , '/sys' .  SYS_TEMP . '/' . SYS_LANG . '/' . SYS_SKIN . '/' );
 
   require_once ( PATH_THIRDPARTY . 'krumo' . PATH_SEP . 'class.krumo.php' );
@@ -405,7 +406,7 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
     }
     else {
     	//when the file is part of the public directory of any PROCESS
-      if ( strlen (SYS_COLLECTION) == 32 || strlen (SYS_COLLECTION) == 14 ) { //the pattern is /sysSYS/LANG/SKIN/PRO_UID/file
+      if ( strlen (SYS_COLLECTION) == 32 || strlen (SYS_COLLECTION) == 31 || strlen (SYS_COLLECTION) == 14 ) { //the pattern is /sysSYS/LANG/SKIN/PRO_UID/file
         $auxPart = explode ( '/' ,  $_SERVER['REQUEST_URI']);
         $extPart = explode ( '.' , $auxPart[ count($auxPart)-1] );
         $extension = $extPart[ count($extPart)-1 ];
