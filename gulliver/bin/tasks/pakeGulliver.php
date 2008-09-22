@@ -33,8 +33,8 @@ pake_task('create-poedit-file',  'project_exists');
 pake_desc('generate a unit test php file for an existing class');
 pake_task('generate-unit-test-class',  'project_exists');
 
-pake_desc('generate basic CRUD files for an existing class');
-pake_task('generate-crud',  'project_exists');
+//pake_desc('generate basic CRUD files for an existing class');
+//pake_task('generate-crud',  'project_exists');
 
 pake_desc('build new project');
 pake_task('new-project',  'project_exists');
@@ -45,7 +45,7 @@ pake_task('new-plugin',  'project_exists');
 pake_desc('pack plugin in .tar file');
 pake_task('pack-plugin',  'project_exists');
 
-pake_desc('generate basic CRUD files for an existing class');
+pake_desc('generate basic CRUD files for an existing class inside a project');
 pake_task('propel-build-crud',  'project_exists');
 
 function run_version( $task, $args)
@@ -309,36 +309,38 @@ function run_generate_crud ( $task, $args)
     printf("class %s not found \n", pakeColor::colorize( $class, 'ERROR'));
     exit (0);
   }  
-
   require_once ( "propel/Propel.php" );
   require_once ( $classFilename );
   G::LoadSystem ('templatePower');
 
   Propel::init(  PATH_CORE . "config/databases.php");  
+
   $configuration = Propel::getConfiguration();
   $connectionDSN = $configuration['datasources']['workflow']['connection'];
   printf("using DSN Connection %s \n", pakeColor::colorize( $connectionDSN, 'INFO'));
 
   $dirs = explode ( PATH_SEP, PATH_HOME);
+  print_r ( $dirs);
   $projectName = $dirs[ count($dirs) -1 ];
 
-  if ( strlen ( trim( $projectName) ) == 0 )  {
-    printf("Project name not found \n", pakeColor::colorize( $class, 'ERROR'));
-    exit (0);
-  }  
-  
-  printf("using Project Name %s \n", pakeColor::colorize( $projectName, 'INFO'));
-die;
-  $pluginDirectory = PATH_PLUGINS . $class;
-  $pluginOutDirectory = PATH_OUTTRUNK . 'plugins' . PATH_SEP . $class;
 
-  G::verifyPath ( $pluginOutDirectory, true );
-  G::verifyPath ( $pluginOutDirectory. PATH_SEP . $class, $pluginDirectory );
+//  if ( strlen ( trim( $projectName) ) == 0 )  {
+//    printf("Project name not found \n", pakeColor::colorize( $class, 'ERROR'));
+//    exit (0);
+//  }  
+  
+//  printf("using Project Name %s \n", pakeColor::colorize( $projectName, 'INFO'));
+
+//  $pluginDirectory = PATH_PLUGINS . $class;
+//  $pluginOutDirectory = PATH_OUTTRUNK . 'plugins' . PATH_SEP . $class;
+//
+//  G::verifyPath ( $pluginOutDirectory, true );
+//  G::verifyPath ( $pluginOutDirectory. PATH_SEP . $class, $pluginDirectory );
   
   //G::verifyPath ( $pluginDirectory, true );
   
-  //main php file 
-  savePluginFile ( $class . '.php', 'pluginMainFile', $class, $tableName );
+//  //main php file 
+//  savePluginFile ( $class . '.php', 'pluginMainFile', $class, $tableName );
 
   //menu  
   savePluginFile ( $class . PATH_SEP . 'menu' . $class . '.php', 'pluginMenu', $class, $tableName );
@@ -369,7 +371,7 @@ die;
   }
   savePluginFile ( $class . PATH_SEP . $class . '.xml', 'pluginXmlform', $class, $tableName, $fields );
 
-
+die;
   //xmlform for list
   //load the $fields array with fields data for PagedTable xml.
   $fields= array();
@@ -1020,9 +1022,9 @@ function run_new_project ( $task, $args)
     mysql_select_db($dbrn, $connectionDatabase);
     $qrs = query_sql_file( $rbSql, $connectionDatabase);
 
-    $q = "INSERT INTO `USERS` VALUES ('00000000000000000000000000000001','admin','21232f297a57a5a743894a0e4a801fc3','Administrator','','admin@colosa.com','2020-01-01','2007-08-03 12:24:36','2008-02-13 07:24:07',1);";
+    $q = "INSERT INTO `USERS` VALUES ('00000000000000000000000000000001','admin',md5('admin'),'Administrator','','admin@colosa.com','2020-01-01','2007-08-03 12:24:36','2008-02-13 07:24:07',1);";
     $ac = @mysql_query($q, $connectionDatabase);
-    $q = "INSERT INTO `USERS` VALUES ('00000000000000000000000000000002','operator','21232f297a57a5a743894a0e4a801fc3','Operator','','operator@colosa.com','2020-01-01','2007-08-03 12:24:36','2008-02-13 07:24:07',1);";
+    $q = "INSERT INTO `USERS` VALUES ('00000000000000000000000000000002','operator',md5('operator'),'Operator','','operator@colosa.com','2020-01-01','2007-08-03 12:24:36','2008-02-13 07:24:07',1);";
     $ac = @mysql_query($q, $connectionDatabase);
 
     //database wf_  db_ 
@@ -1084,6 +1086,10 @@ function run_new_project ( $task, $args)
   $RBAC->assignPermissionToRole($roleData['ROL_UID'], $permData['PER_UID']); 
   $permData = $RBAC->permissionsObj->LoadByCode (substr( $rbacProjectName,0,3) . '_ADMIN') ;
   $RBAC->assignPermissionToRole($roleData['ROL_UID'], $permData['PER_UID']); 
+  $userRoleData['ROL_UID'] = $roleData['ROL_UID'];
+  $userRoleData['USR_UID'] = '00000000000000000000000000000001';
+  $RBAC->assignUserToRole( $userRoleData );
+
   //Assign permissions to OPERATOR
   $roleData = $RBAC->rolesObj->LoadByCode ( substr( $rbacProjectName,0,3) . '_OPERATOR' ) ;
   $permData = $RBAC->permissionsObj->LoadByCode (substr( $rbacProjectName,0,3) . '_LOGIN') ;
@@ -1093,7 +1099,7 @@ function run_new_project ( $task, $args)
   
 
   $userRoleData['ROL_UID'] = $roleData['ROL_UID'];
-  $userRoleData['USR_UID'] = '00000000000000000000000000000001';
+  $userRoleData['USR_UID'] = '00000000000000000000000000000002';
   $RBAC->assignUserToRole( $userRoleData );
  
   //create folder and structure
@@ -1190,6 +1196,8 @@ function run_new_project ( $task, $args)
 
   copy_file ( 'engine' . PATH_SEP . 'skins' . PATH_SEP . 'green.html' );
   copy_file ( 'engine' . PATH_SEP . 'skins' . PATH_SEP . 'green.php' );
+  copy_file ( 'engine' . PATH_SEP . 'skins' . PATH_SEP . 'blank.html' );
+  copy_file ( 'engine' . PATH_SEP . 'skins' . PATH_SEP . 'blank.php' );
   copy_file ( 'engine' . PATH_SEP . 'skins' . PATH_SEP . 'raw.html' );
   copy_file ( 'engine' . PATH_SEP . 'skins' . PATH_SEP . 'raw.php' );
   copy_file ( 'engine' . PATH_SEP . 'classes' . PATH_SEP . 'class.ArrayPeer.php' );
@@ -1323,7 +1331,6 @@ function run_propel_build_crud ( $task, $args)
   $fields['phpClassName'] = $phpClass;
   $fields['tableName'] = $tableName;
   $fields['projectName'] = $projectName;
-  create_file_from_tpl ( 'pluginList',  PATH_CORE . 'methods'. PATH_SEP . $phpClass. PATH_SEP . $phpClass."List.php", $fields );
   create_file_from_tpl ( 'pluginMenu',  PATH_CORE . 'menus'. PATH_SEP . $phpClass. ".php", $fields );
 
   if ( !file_exists ( PATH_CORE . 'menus'. PATH_SEP . "welcome.php") ) {
@@ -1379,24 +1386,43 @@ function run_propel_build_crud ( $task, $args)
             $values[] = array ( 'value' => $val, 'label' => fieldToLabelOption ($val) );
           }
         }
-        else
-          $type      = 'text';
+        else {
+          switch ( $column['type'] ) {
+            case 'TIMESTAMP'     : $type = 'date'; break;
+            case 'LONGVARCHAR'   : $type = 'textarea'; break;
+          default : 
+            $type      = 'text';
+          }
+        }  
         if ( isset ( $column['label'] ) ) {
           $label =  $column['label'];
         } 
         else {
           $label =  fieldToLabel($column['name']);
         }
-        $field = array ( 'name' => $column['name'], 'type' => $type, 'size' => $size, 'maxlength' => $maxlength, 'label'=> $label , 'values'=> $values );
+        $field = array ( 'name' => $column['name'], 'className' => $class, 'type' => $type, 'size' => $size, 'maxlength' => $maxlength, 'label'=> $label , 'values'=> $values);
         $fields['fields'][] = $field;
+        if ( !$column['primaryKey'] ) {
+          $fields['onlyFields'][] = $field;
+        }
+        else {
+          $fields['keys'][] = $field;
+        }
       }
   }
   $fields['className'] = $class;
+  $fields['phpClassName'] = $phpClass;
+  $fields['projectName'] = $projectName;
+  $fields['firstKey'] = $fields['keys'][0]['name'];
   create_file_from_tpl ( 'pluginXmlform',  PATH_CORE . 'xmlform'. PATH_SEP . $phpClass. PATH_SEP . "$phpClass.xml", $fields );
+  create_file_from_tpl ( 'pluginXmlformEdit',   PATH_CORE . 'xmlform'. PATH_SEP . $phpClass. PATH_SEP . $phpClass."Edit.xml", $fields );
+  create_file_from_tpl ( 'pluginXmlformDelete', PATH_CORE . 'xmlform'. PATH_SEP . $phpClass. PATH_SEP . $phpClass."Delete.xml", $fields );
+  create_file_from_tpl ( 'pluginList',  PATH_CORE . 'methods'. PATH_SEP . $phpClass. PATH_SEP . $phpClass."List.php", $fields );
 
   //xmlform for list
   //load the $fields array with fields data for PagedTable xml.
   $fields= array();
+  $onlyFields = array();
   $primaryKey ='';
   foreach ($s->table as $key=>$table ) {
     if ( $table['name'] == $tableName  )
@@ -1405,7 +1431,8 @@ function run_propel_build_crud ( $task, $args)
         //print "\n";
         $size      = ( $column['size'] > 40 ) ? 40*3 : $column['size']*3;
         $type      = $column['type'];
-        if ( $column['primaryKey'] ) 
+        $label =  fieldToLabel($column['name']);
+        if ( $column['primaryKey'] ) {
           if ( $primaryKey == '' ) 
             $primaryKey .= '@@' . $column['name'];
           else
@@ -1417,13 +1444,23 @@ function run_propel_build_crud ( $task, $args)
           else {
             $label =  fieldToLabel($column['name']);
           }
+        }
+        
         $field = array ( 'name' => $column['name'], 'type' => $type, 'size' => $size, 'label' => $label );
         $fields['fields'][] = $field;
+        if ( !$column['primaryKey'] ) {
+        	if ( $column['type'] != 'LONGVARCHAR' ) 
+            $fields['onlyFields'][] = $field;
+        }
+        else {
+          $fields['keys'][] = $field;
+        }
       }
   }
   $fields['primaryKey'] = $primaryKey;
   $fields['className'] = $class;
   $fields['phpClassName'] = $phpClass;
+  $fields['projectName'] = $projectName;
   $fields['tableName'] = $tableName;
   create_file_from_tpl ( 'pluginXmlformList',  PATH_CORE . 'xmlform'. PATH_SEP . $phpClass. PATH_SEP . $phpClass."List.xml", $fields );
   create_file_from_tpl ( 'pluginXmlformOptions',PATH_CORE. 'xmlform'. PATH_SEP . $phpClass. PATH_SEP . $phpClass."Options.xml", $fields );
@@ -1445,6 +1482,9 @@ function run_propel_build_crud ( $task, $args)
           $fields['keys'][] = $field;
         }
         $fields['fields'][] = $field;
+        if ( !$column['primaryKey'] ) {
+          $fields['onlyFields'][] = $field;
+        }
         $fields['fields2'][] = $field;
       }
   }
@@ -1455,9 +1495,11 @@ function run_propel_build_crud ( $task, $args)
   $fields['projectName'] = $projectName;
   //savePluginFile ( $class . PATH_SEP . $class . 'Edit.php', 'pluginEdit', $class, $tableName, $fields );
   //savePluginFile ( $class . PATH_SEP . $class . 'Save.php', 'pluginSave', $class, $tableName, $fields );
-  create_file_from_tpl ( 'pluginEdit',  PATH_CORE . 'methods'. PATH_SEP . $phpClass. PATH_SEP . $phpClass."Edit.php", $fields );
-  create_file_from_tpl ( 'pluginSave',  PATH_CORE . 'methods'. PATH_SEP . $phpClass. PATH_SEP . $phpClass."Save.php", $fields );
-  create_file_from_tpl ( 'pluginNew',   PATH_CORE . 'methods'. PATH_SEP . $phpClass. PATH_SEP . $phpClass."New.php", $fields );
+  create_file_from_tpl ( 'pluginEdit',      PATH_CORE . 'methods'. PATH_SEP . $phpClass. PATH_SEP . $phpClass."Edit.php", $fields );
+  create_file_from_tpl ( 'pluginSave',      PATH_CORE . 'methods'. PATH_SEP . $phpClass. PATH_SEP . $phpClass."Save.php", $fields );
+  create_file_from_tpl ( 'pluginNew',       PATH_CORE . 'methods'. PATH_SEP . $phpClass. PATH_SEP . $phpClass."New.php", $fields );
+  create_file_from_tpl ( 'pluginDelete',    PATH_CORE . 'methods'. PATH_SEP . $phpClass. PATH_SEP . $phpClass."Delete.php", $fields );
+  create_file_from_tpl ( 'pluginDeleteExec',PATH_CORE . 'methods'. PATH_SEP . $phpClass. PATH_SEP . $phpClass."DeleteExec.php", $fields );
 
   exit (0);
 }

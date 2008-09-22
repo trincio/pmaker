@@ -78,6 +78,7 @@ class processMap {
         while ($aRow1 = $oDataset->getRow()) { 
           $oTask                 = null;
       	  $oTask->uid            = $aRow1['TAS_UID'];
+      	  $oTask->task_type      = $aRow1['TAS_TYPE'];
       	  $oTask->label          = strip_tags($aRow1['CON_VALUE']);
       	  $oTask->taskINI        = (strtolower($aRow1['TAS_START']) == 'true' ? true : false);
       	  $oTask->position->x    = (int)$aRow1['TAS_POSX'];
@@ -1185,6 +1186,27 @@ class processMap {
   	  $oTask           = new Task();
   	  $oNewTask->label = G::LoadTranslation('ID_TASK') . ' ' . $iTaskNumber;
   	  $oNewTask->uid   = $oTask->create(array('PRO_UID' => $sProcessUID, 'TAS_TITLE' => $oNewTask->label, 'TAS_POSX' => $iX, 'TAS_POSY' => $iY));
+  	  $oJSON           = new Services_JSON();
+  	  return $oJSON->encode($oNewTask);
+  	}
+  	catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
+
+/*
+	* Add a new subproces
+	* @param string $sProcessUID
+	* @param integer $iX
+	* @param integer $iY
+	* @return string
+	*/
+	function addSubProcess($sProcessUID = '', $iX = 0, $iY = 0) {
+		try {
+		  
+  	  $oTask           = new Task();
+  	  $oNewTask->label = 'Sub-Process';//G::LoadTranslation('ID_TASK');
+  	  $oNewTask->uid   = $oTask->create(array('PRO_UID' => $sProcessUID, 'TAS_TITLE' => $oNewTask->label, 'TAS_POSX' => $iX, 'TAS_POSY' => $iY, 'TAS_TYPE' => 'SUBPROCESS'));
   	  $oJSON           = new Services_JSON();
   	  return $oJSON->encode($oNewTask);
   	}
