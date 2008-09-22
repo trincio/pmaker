@@ -874,7 +874,8 @@ class wsBase
 																		'USR_UID' => $val['NEXT_TASK']['USER_ASSIGNED']['USR_UID'],
 																		'TAS_ASSIGN_TYPE' =>	$val['NEXT_TASK']['TAS_ASSIGN_TYPE'],
 																		'TAS_DEF_PROC_CODE' => $val['NEXT_TASK']['TAS_DEF_PROC_CODE'],
-																		'DEL_PRIORITY'	=>	$appdel['DEL_PRIORITY']
+																		'DEL_PRIORITY'	=>	$appdel['DEL_PRIORITY'],
+																		'TAS_PARENT' => $val['NEXT_TASK']['TAS_PARENT']
 																	);
 				$varResponse = $varResponse . ($varResponse!=''?',':'') . $val['NEXT_TASK']['TAS_TITLE'].'('.$val['NEXT_TASK']['USER_ASSIGNED']['USR_USERNAME'].')';
 			}
