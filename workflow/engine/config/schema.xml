@@ -4703,6 +4703,16 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
+    <column name="TAS_UID" type="VARCHAR" size="32" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="TAS_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
     <column name="PRO_PARENT" type="VARCHAR" size="32" required="true" default="">
       <vendor type="mysql">
         <parameter name="Field" value="PRO_PARENT"/>
