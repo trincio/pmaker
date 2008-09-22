@@ -43,6 +43,13 @@ abstract class BaseSubProcess extends BaseObject  implements Persistent {
 
 
 	/**
+	 * The value for the tas_uid field.
+	 * @var        string
+	 */
+	protected $tas_uid = '';
+
+
+	/**
 	 * The value for the pro_parent field.
 	 * @var        string
 	 */
@@ -138,6 +145,17 @@ abstract class BaseSubProcess extends BaseObject  implements Persistent {
 	{
 
 		return $this->pro_uid;
+	}
+
+	/**
+	 * Get the [tas_uid] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getTasUid()
+	{
+
+		return $this->tas_uid;
 	}
 
 	/**
@@ -282,6 +300,28 @@ abstract class BaseSubProcess extends BaseObject  implements Persistent {
 		}
 
 	} // setProUid()
+
+	/**
+	 * Set the value of [tas_uid] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setTasUid($v)
+	{
+
+		// Since the native PHP type for this column is string,
+		// we will cast the input to a string (if it is not).
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->tas_uid !== $v || $v === '') {
+			$this->tas_uid = $v;
+			$this->modifiedColumns[] = SubProcessPeer::TAS_UID;
+		}
+
+	} // setTasUid()
 
 	/**
 	 * Set the value of [pro_parent] column.
@@ -502,30 +542,32 @@ abstract class BaseSubProcess extends BaseObject  implements Persistent {
 
 			$this->pro_uid = $rs->getString($startcol + 1);
 
-			$this->pro_parent = $rs->getString($startcol + 2);
+			$this->tas_uid = $rs->getString($startcol + 2);
 
-			$this->tas_parent = $rs->getString($startcol + 3);
+			$this->pro_parent = $rs->getString($startcol + 3);
 
-			$this->sp_type = $rs->getString($startcol + 4);
+			$this->tas_parent = $rs->getString($startcol + 4);
 
-			$this->sp_synchronous = $rs->getInt($startcol + 5);
+			$this->sp_type = $rs->getString($startcol + 5);
 
-			$this->sp_synchronous_type = $rs->getString($startcol + 6);
+			$this->sp_synchronous = $rs->getInt($startcol + 6);
 
-			$this->sp_synchronous_wait = $rs->getInt($startcol + 7);
+			$this->sp_synchronous_type = $rs->getString($startcol + 7);
 
-			$this->sp_variables_out = $rs->getString($startcol + 8);
+			$this->sp_synchronous_wait = $rs->getInt($startcol + 8);
 
-			$this->sp_variables_in = $rs->getString($startcol + 9);
+			$this->sp_variables_out = $rs->getString($startcol + 9);
 
-			$this->sp_grid_in = $rs->getString($startcol + 10);
+			$this->sp_variables_in = $rs->getString($startcol + 10);
+
+			$this->sp_grid_in = $rs->getString($startcol + 11);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 11; // 11 = SubProcessPeer::NUM_COLUMNS - SubProcessPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 12; // 12 = SubProcessPeer::NUM_COLUMNS - SubProcessPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating SubProcess object", $e);
@@ -735,30 +777,33 @@ abstract class BaseSubProcess extends BaseObject  implements Persistent {
 				return $this->getProUid();
 				break;
 			case 2:
-				return $this->getProParent();
+				return $this->getTasUid();
 				break;
 			case 3:
-				return $this->getTasParent();
+				return $this->getProParent();
 				break;
 			case 4:
-				return $this->getSpType();
+				return $this->getTasParent();
 				break;
 			case 5:
-				return $this->getSpSynchronous();
+				return $this->getSpType();
 				break;
 			case 6:
-				return $this->getSpSynchronousType();
+				return $this->getSpSynchronous();
 				break;
 			case 7:
-				return $this->getSpSynchronousWait();
+				return $this->getSpSynchronousType();
 				break;
 			case 8:
-				return $this->getSpVariablesOut();
+				return $this->getSpSynchronousWait();
 				break;
 			case 9:
-				return $this->getSpVariablesIn();
+				return $this->getSpVariablesOut();
 				break;
 			case 10:
+				return $this->getSpVariablesIn();
+				break;
+			case 11:
 				return $this->getSpGridIn();
 				break;
 			default:
@@ -783,15 +828,16 @@ abstract class BaseSubProcess extends BaseObject  implements Persistent {
 		$result = array(
 			$keys[0] => $this->getSpUid(),
 			$keys[1] => $this->getProUid(),
-			$keys[2] => $this->getProParent(),
-			$keys[3] => $this->getTasParent(),
-			$keys[4] => $this->getSpType(),
-			$keys[5] => $this->getSpSynchronous(),
-			$keys[6] => $this->getSpSynchronousType(),
-			$keys[7] => $this->getSpSynchronousWait(),
-			$keys[8] => $this->getSpVariablesOut(),
-			$keys[9] => $this->getSpVariablesIn(),
-			$keys[10] => $this->getSpGridIn(),
+			$keys[2] => $this->getTasUid(),
+			$keys[3] => $this->getProParent(),
+			$keys[4] => $this->getTasParent(),
+			$keys[5] => $this->getSpType(),
+			$keys[6] => $this->getSpSynchronous(),
+			$keys[7] => $this->getSpSynchronousType(),
+			$keys[8] => $this->getSpSynchronousWait(),
+			$keys[9] => $this->getSpVariablesOut(),
+			$keys[10] => $this->getSpVariablesIn(),
+			$keys[11] => $this->getSpGridIn(),
 		);
 		return $result;
 	}
@@ -830,30 +876,33 @@ abstract class BaseSubProcess extends BaseObject  implements Persistent {
 				$this->setProUid($value);
 				break;
 			case 2:
-				$this->setProParent($value);
+				$this->setTasUid($value);
 				break;
 			case 3:
-				$this->setTasParent($value);
+				$this->setProParent($value);
 				break;
 			case 4:
-				$this->setSpType($value);
+				$this->setTasParent($value);
 				break;
 			case 5:
-				$this->setSpSynchronous($value);
+				$this->setSpType($value);
 				break;
 			case 6:
-				$this->setSpSynchronousType($value);
+				$this->setSpSynchronous($value);
 				break;
 			case 7:
-				$this->setSpSynchronousWait($value);
+				$this->setSpSynchronousType($value);
 				break;
 			case 8:
-				$this->setSpVariablesOut($value);
+				$this->setSpSynchronousWait($value);
 				break;
 			case 9:
-				$this->setSpVariablesIn($value);
+				$this->setSpVariablesOut($value);
 				break;
 			case 10:
+				$this->setSpVariablesIn($value);
+				break;
+			case 11:
 				$this->setSpGridIn($value);
 				break;
 		} // switch()
@@ -881,15 +930,16 @@ abstract class BaseSubProcess extends BaseObject  implements Persistent {
 
 		if (array_key_exists($keys[0], $arr)) $this->setSpUid($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setProUid($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setProParent($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setTasParent($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setSpType($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setSpSynchronous($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setSpSynchronousType($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setSpSynchronousWait($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setSpVariablesOut($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setSpVariablesIn($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setSpGridIn($arr[$keys[10]]);
+		if (array_key_exists($keys[2], $arr)) $this->setTasUid($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setProParent($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setTasParent($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setSpType($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setSpSynchronous($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setSpSynchronousType($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setSpSynchronousWait($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setSpVariablesOut($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setSpVariablesIn($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setSpGridIn($arr[$keys[11]]);
 	}
 
 	/**
@@ -903,6 +953,7 @@ abstract class BaseSubProcess extends BaseObject  implements Persistent {
 
 		if ($this->isColumnModified(SubProcessPeer::SP_UID)) $criteria->add(SubProcessPeer::SP_UID, $this->sp_uid);
 		if ($this->isColumnModified(SubProcessPeer::PRO_UID)) $criteria->add(SubProcessPeer::PRO_UID, $this->pro_uid);
+		if ($this->isColumnModified(SubProcessPeer::TAS_UID)) $criteria->add(SubProcessPeer::TAS_UID, $this->tas_uid);
 		if ($this->isColumnModified(SubProcessPeer::PRO_PARENT)) $criteria->add(SubProcessPeer::PRO_PARENT, $this->pro_parent);
 		if ($this->isColumnModified(SubProcessPeer::TAS_PARENT)) $criteria->add(SubProcessPeer::TAS_PARENT, $this->tas_parent);
 		if ($this->isColumnModified(SubProcessPeer::SP_TYPE)) $criteria->add(SubProcessPeer::SP_TYPE, $this->sp_type);
@@ -967,6 +1018,8 @@ abstract class BaseSubProcess extends BaseObject  implements Persistent {
 	{
 
 		$copyObj->setProUid($this->pro_uid);
+
+		$copyObj->setTasUid($this->tas_uid);
 
 		$copyObj->setProParent($this->pro_parent);
 

@@ -68,6 +68,8 @@ class SubProcessMapBuilder {
 
 		$tMap->addColumn('PRO_UID', 'ProUid', 'string', CreoleTypes::VARCHAR, true, 32);
 
+		$tMap->addColumn('TAS_UID', 'TasUid', 'string', CreoleTypes::VARCHAR, true, 32);
+
 		$tMap->addColumn('PRO_PARENT', 'ProParent', 'string', CreoleTypes::VARCHAR, true, 32);
 
 		$tMap->addColumn('TAS_PARENT', 'TasParent', 'string', CreoleTypes::VARCHAR, true, 32);
