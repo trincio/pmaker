@@ -119,6 +119,11 @@ try {
   	case 'addTask':
   	  $sOutput = $oProcessMap->addTask($oData->uid, $oData->position->x, $oData->position->y);
   	break;
+  	
+  	case 'addSubProcess':
+  	  $sOutput = $oProcessMap->addSubProcess($oData->uid, $oData->position->x, $oData->position->y);
+  	break;
+  	
   	case 'editTaskProperties':
   	  $oProcessMap->editTaskProperties($oData->uid, (isset($oData->iForm) ? $oData->iForm : 1), $oData->index);
   	break;

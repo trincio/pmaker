@@ -292,6 +292,8 @@ var processmap=function(){
 				this.data.db=xml.xmlhttp.responseText.parseJSON().concat({
 					//derivations	:["Sequential","Evaluate (manual)","Evaluate (auto)","Parallel (fork)","Parallel by evaluation (fork)","Parallel (join)"],
 				});
+				this.data.db.subprocess=[];
+				
 				this.panels.editor.addContentStatus(G_STRINGS.ID_PROCESSMAP_LOADING);
 				if(this.options.rw===true)
 				{
@@ -361,7 +363,8 @@ var processmap=function(){
 						r.make();
 					}.extend(this)},
 					{separator:true},
-					{image:"/images/add.png",text:G_STRINGS.ID_PROCESSMAP_ADD_TASK,launch:this.addTask.extend(this)},
+					{image:"/images/add.png",text:G_STRINGS.ID_PROCESSMAP_ADD_TASK,launch:this.addTask.extend(this,{tp:'task'})},
+					{image:"/images/add.png",text:G_STRINGS.ID_PROCESSMAP_ADD_SUBPROCESS,launch:this.addTask.extend(this,{tp:'subprocess'})},  //add subprocess whith blabla
 					{image:"/images/addtext.png",text:G_STRINGS.ID_PROCESSMAP_ADD_TEXT,launch:this.addText.extend(this)},
 					{image:"/images/linhori.png",text:G_STRINGS.ID_PROCESSMAP_HORIZONTAL_LINE,launch:this.addGuide.extend(this,"horizontal")},
 					{image:"/images/linver.png",text:G_STRINGS.ID_PROCESSMAP_VERTICAL_LINE,launch:this.addGuide.extend(this,"vertical")},
@@ -613,8 +616,10 @@ var processmap=function(){
 				var lngt = this.data.db.task.length;
 				for(var i =0;i<lngt;i++)
 				{
+					//console.log(this.data.db.task[i]);
+					var tt = (this.data.db.task[i].task_type==='NORMAL')?'task':'subprocess';
 					//this.parent.exec(this.data.build.task,[this.data.db.task[i],i],false,this);
-					this.data.build.task(i);
+					this.data.build.task(i,{tp:tt});
 				}
 				this.data.render.taskINI();
 				this.data.render.guide();
@@ -920,12 +925,22 @@ var processmap=function(){
 			}
 		},
 		build:{
-			task:function(index)
+			task:function(index,options_task)
 			{
-				var options 	= this.data.db.task[index];
+				console.log(index);
+				options_task = {
+						tp:'task'	
+				}.concat(options_task || {});
+				/*var options 	= {
+					color:((options_task.tp==='task')?"auto":"green")
+				}.concat(this.data.db[(options_task.tp=='task')?'task':'subprocess'][index] || {});*/
+				//var options = this.data.db[(options_task.tp=='task')?'task':'subprocess'][index];
+				var options = this.data.db['task'][index];
+				
+				options.color = ((options_task.tp==='task')?"auto":"green");
+				
 				var db		= this.data.db, task=db.task[index];
 				var derivation 	= task.derivation.to;
-				//alert(task.derivation.type)
 				var a = document.createElement("div");
 				a.className="processmap_task___"+this.options.theme;
 				this.parent.dom.setStyle(a,{
@@ -1016,7 +1031,8 @@ var processmap=function(){
 					target:a,
 					width:201,
 					theme:this.options.theme,
-					menu:[
+					menu:((options_task.tp=='task')?
+					[
 					{image:"/images/steps.png",text:G_STRINGS.ID_PROCESSMAP_STEPS,launch:function(event,index){
 						this.tmp.stepsPanel = panel =new leimnud.module.panel();
 						var data = this.data.db.task[index];
@@ -1267,7 +1283,144 @@ var processmap=function(){
 							};
 						panel.make();
 					},args:index})}
-					]
+					]:
+					[
+					{image:"/images/rules.png",text:G_STRINGS.ID_PROCESSMAP_WORKFLOW_PATTERNS,launch:this.patternPanel.args(index)},
+					{image:"/images/delete_rules.png",text:G_STRINGS.ID_PROCESSMAP_WORKFLOW_DELETE_PATTERNS,launch:this.parent.closure({instance:this,method:function() {
+						var data = this.data.db.task[index];
+						if (typeof(data.derivation.type) != 'undefined') {
+						  new this.parent.module.app.confirm().make({
+						  	label : G_STRINGS.ID_PROCESSMAP_WORKFLOW_CONFIRM_DELETE_PATTERNS + '"' + data.label + '"?',
+						  	action: function() {
+						  		var db		= this.data.db, task=db.task[index];
+		              var vars	= {
+		              	tas_uid:task.uid,
+		              	pro_uid:this.options.uid
+		              };
+						  		var aData = {};
+			            aData.tas_uid = vars.tas_uid;
+			            aData.data    = [];
+			            this.data.build.derivation(aData);
+			            var r = new leimnud.module.rpc.xmlhttp({
+                 		url:this.options.dataServer,
+	                 	args:'action=deleteAllRoutes&data='+vars.toJSONString()
+			            });
+			            r.make();
+						  	}.extend(this)
+						  });
+					  }
+					  else {
+					  	new leimnud.module.app.alert().make({
+						    label:G_STRINGS.ID_NO_DERIVATIONS_DEFINED
+						  });
+					  }
+					},args:index})},
+					{image:"/images/delete.png",text:G_STRINGS.ID_PROCESSMAP_DELETE_SUBPROCESS,launch:this.parent.closure({instance:this,method:function(index){
+						var data = this.data.db.task[index];
+						new this.parent.module.app.confirm().make({
+							label:G_STRINGS.ID_PROCESSMAP_CONFIRM_DELETE_SUBPROCESS+data.label,
+							action:function()
+							{
+								data.object.drag.flush();
+								this.dropables.derivation.unregister(data.object.dropIndex);
+								this.data.render.deleteDerivation(data.uid,true);
+								this.parent.dom.remove(data.object.elements);
+								var r = new leimnud.module.rpc.xmlhttp({
+									url:this.options.dataServer,
+									args:"action=deleteTask&data="+{pro_uid:this.options.uid,tas_uid:data.uid}.toJSONString()
+								});
+								r.make();
+							}.extend(this)
+						});
+						return;
+						if(confirm(G_STRINGS.ID_PROCESSMAP_CONFIRM_DELETE_TASK+data.label))
+						{
+							data.object.drag.flush();
+							this.dropables.derivation.unregister(data.object.dropIndex);
+							this.data.render.deleteDerivation(data.uid);
+							this.parent.dom.remove(data.object.elements);
+							var r = new leimnud.module.rpc.xmlhttp({
+								url:this.options.dataServer,
+								args:"action=deleteTask&data="+{pro_uid:this.options.uid,tas_uid:data.uid}.toJSONString()
+							});
+							r.make();
+						}
+					},args:index})},
+					{simage:"/images/properties.png",text:G_STRINGS.ID_PROCESSMAP_PROPERTIES,launch:this.parent.closure({instance:this,method:function(index){
+						var panel;
+						var iForm=function(panel,index,ifo){
+							saveDataTaskTemporal(ifo);
+							panel.command(panel.loader.show);
+							var r = new this.parent.module.rpc.xmlhttp({
+								url:this.options.dataServer,
+								args:"action=editTaskProperties&data="+{uid:data.uid,iForm:ifo,index:index}.toJSONString()
+							});
+							r.callback=this.parent.closure({instance:this,method:function(index,rpc,panel){
+								panel.command(panel.loader.hide);
+								panel.clearContent();
+								var scs=rpc.xmlhttp.responseText.extractScript();	//capturamos los scripts
+								panel.addContent(rpc.xmlhttp.responseText.stripScript());//Eliminamos porque ya no los necesitamos
+								scs.evalScript();	//interpretamos los scripts
+							},args:[index,r,panel]});
+							r.make();
+						}
+
+						this.tmp.propertiesPanel = panel =new leimnud.module.panel();
+						var data = this.data.db.task[index];
+						panel.options={
+							limit:true,
+							size:{w:600,h:430},
+							position:{x:50,y:50,center:true},
+							title:G_STRINGS.ID_PROCESSMAP_TASK+": "+data.label,
+							theme:this.options.theme,
+							statusBar:true,
+							statusBarButtons:[
+							{type:"button",value:G_STRINGS.ID_PROCESSMAP_SUBMIT},
+							{type:"button",value:G_STRINGS.ID_PROCESSMAP_CANCEL}
+							],
+							control:{
+								close:true,
+								resize:false
+							},
+							fx:{
+								modal:true
+							}
+						};
+						panel.tab={
+							width	:170,
+							optWidth:160,
+							widthFixed:false,
+							step	:(this.parent.browser.isIE?3:4),
+							options:[{
+									title	: G_STRINGS.ID_PROCESSMAP_TASK_PROPERTIES_DEFINITION,
+									content	: this.parent.closure({instance:this,method:iForm,args:[panel,index,1]}),
+									noClear : true,
+									selected: true
+								},{
+									title	: G_STRINGS.ID_PROCESSMAP_TASK_PROPERTIES_ASSIGNMENTS,
+									content	: this.parent.closure({instance:this,method:iForm,args:[panel,index,2]}),
+									noClear : true
+								},{
+									title	: G_STRINGS.ID_PROCESSMAP_TASK_PROPERTIES_TIMING,
+									content	: this.parent.closure({instance:this,method:iForm,args:[panel,index,3]}),
+									noClear : true
+								},{
+									title	: G_STRINGS.ID_PROCESSMAP_TASK_PROPERTIES_PERMISSIONS,
+									content	: this.parent.closure({instance:this,method:iForm,args:[panel,index,5]}),
+									noClear : true
+								},{
+									title	: G_STRINGS.ID_PROCESSMAP_TASK_PROPERTIES_LABELS,
+									content	: this.parent.closure({instance:this,method:iForm,args:[panel,index,6]}),
+									noClear : true
+								},{
+									title	: G_STRINGS.ID_PROCESSMAP_TASK_PROPERTIES_NOTIFICATIONS,
+									content	: this.parent.closure({instance:this,method:iForm,args:[panel,index,7]}),
+									noClear : true
+								}]
+							};
+						panel.make();
+					},args:index})}
+					])
 				});
 				this.observers.menu.register(menu.remove,menu);
 				}
@@ -1325,8 +1478,8 @@ var processmap=function(){
 				this.panels.editor.elements.content.appendChild(c);
 				this.panels.editor.elements.content.appendChild(d);
 				this.panels.editor.elements.content.appendChild(t);
-
-				options.object={
+ 
+				options['object']={
 					elements:{
 						task	: a,
 						label	: b,
@@ -1335,6 +1488,7 @@ var processmap=function(){
 						init	: t
 					}
 				};
+				console.info(index)
 				options.object.dropIndex=this.dropables.derivation.register({
 					element	: a,
 					value	: index,
@@ -1386,6 +1540,7 @@ var processmap=function(){
 					};
 					options.object.drag.make();
 				}
+				//alert(options.object);
 			},
 			guide:function(index)
 			{
@@ -1473,8 +1628,7 @@ var processmap=function(){
 
 					},args:[index,Gdrag]})
 				};
-				Gdrag.make();
-				var guideObserver = this.observers.guideLines.register(this.parent.closure({instance:this,method:function(obj,direction){
+				Gdrag.make();				var guideObserver = this.observers.guideLines.register(this.parent.closure({instance:this,method:function(obj,direction){
 					if(direction=="horizontal")
 					{
 						obj.style.left=parseInt(this.panels.editor.elements.content.scrollLeft,10);
@@ -1523,7 +1677,8 @@ var processmap=function(){
 						elements:{
 							label:t
 						}
-					}
+					};
+
 					if(this.options.rw===true)
 					{
 						title.object.drag = new this.parent.module.drag({
@@ -2022,14 +2177,16 @@ processmap.prototype={
 	{
 		return (!this.options.target || !this.options.dataServer || !this.options.lang)?false:true;
 	},
-	addTask:function(evt)
+	addTask:function(evt,tp)
 	{
 		//alert(this.parent.dom.mouse(evt).y)
 		//alert(this.menu.cursor.x)
 		//var m = this.parent.dom.mouse(evt);
+		var options = (window.event)?evt:tp;
 		var m = this.menu.cursor;
 		var cpos = this.parent.dom.position(this.panels.editor.elements.content);
-		var index = this.data.db.task.length;
+		
+		var index = this.data.db[(options.tp=='task')?'task':'subprocess'].length;
 		var scl = {
 			x:this.panels.editor.elements.content.scrollLeft,
 			y:this.panels.editor.elements.content.scrollTop
@@ -2039,24 +2196,47 @@ processmap.prototype={
 			position:pos,
 			label	:G_STRINGS.ID_PROCESSMAP_NEW_TASK,
 			uid		:false,
-			color	:"#006699",
+			color	:((options.tp=='task')?"#006699":"green"),
 			derivation:{to:[]}
 		}
 		var data = this.data.db.task[index];
 
 		//this.parent.exec(this.data.build.task,[index],false,this);
-		this.data.build.task(index);
-		var r = new leimnud.module.rpc.xmlhttp({
-			url:this.options.dataServer,
-			args:"action=addTask&data="+{uid:this.options.uid,position:pos}.toJSONString()
-		});
-		r.callback=this.parent.closure({instance:this,method:function(index,rpc){
-			var rs = rpc.xmlhttp.responseText.parseJSON();
-			var data = this.data.db.task[index];
-			data.label=data.object.elements.label.innerHTML=rs.label || "";
-			data.uid=rs.uid || false;
-		},args:[index,r]});
-		r.make();
+		
+		if(options.tp=='task')
+		{
+				this.data.build.task(index,{tp:'task'});
+				//console.log(index);
+				console.log(this.data.db.task[index]);
+				var r = new leimnud.module.rpc.xmlhttp({
+					url:this.options.dataServer,
+					args:"action=addTask&data="+{uid:this.options.uid,position:pos}.toJSONString()
+				});
+				r.callback=this.parent.closure({instance:this,method:function(index,rpc){
+					var rs = rpc.xmlhttp.responseText.parseJSON();
+					var data = this.data.db.task[index];
+					console.log(data);
+					data.label=data.object.elements.label.innerHTML=rs.label || "";
+					data.uid=rs.uid || false;
+				},args:[index,r]});
+				r.make();
+		}
+		else
+	  {
+	     this.data.build.task(index,{tp:'subprocess'});
+				var r = new leimnud.module.rpc.xmlhttp({
+					url:this.options.dataServer,
+					args:"action=addSubProcess&data="+{uid:this.options.uid,position:pos}.toJSONString()
+				});
+				r.callback=this.parent.closure({instance:this,method:function(index,rpc){
+					var rs = rpc.xmlhttp.responseText.parseJSON();
+					var data = this.data.db.task[index];
+					data.label=data.object.elements.label.innerHTML=rs.label || "";
+					data.uid=rs.uid || false;
+				},args:[index,r]});
+				r.make();
+	  }	
+						
 	},
 	addText:function(evt)
 	{
