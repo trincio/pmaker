@@ -120,8 +120,28 @@ class Derivation
         }
         else {
           //3. load the task information of normal NEXT_TASK
-          $TaskFields = $oTask->load( $aDerivation['ROU_NEXT_TASK'] );
-          $aDerivation['NEXT_TASK'] = $TaskFields;
+          $aDerivation['NEXT_TASK'] = $oTask->load( $aDerivation['ROU_NEXT_TASK'] );
+          if ($aDerivation['NEXT_TASK']['TAS_TYPE'] === 'SUBPROCESS') {
+            require_once 'classes/model/SubProcess.php';
+            $oCriteria = new Criteria('workflow');
+            $oCriteria->add(SubProcessPeer::PRO_PARENT, $aDerivation['PRO_UID']);
+            $oCriteria->add(SubProcessPeer::TAS_PARENT, $aDerivation['NEXT_TASK']['TAS_UID']);
+            $oDataset = SubProcessPeer::doSelectRS($oCriteria);
+            $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+            $oDataset->next();
+            $aRow = $oDataset->getRow();
+            $sTaskParent = $aDerivation['NEXT_TASK']['TAS_UID'];
+            $aDerivation['ROU_NEXT_TASK'] = $aRow['TAS_UID'];
+            $aDerivation['NEXT_TASK'] = $oTask->load( $aDerivation['ROU_NEXT_TASK'] );
+            $oProcess = new Process();
+            $aRow = $oProcess->load($aRow['PRO_UID']);
+            $aDerivation['NEXT_TASK']['TAS_TITLE']     .= ' (' . $aRow['PRO_TITLE'] . ')';
+            $aDerivation['NEXT_TASK']['TAS_PARENT']     = $sTaskParent;
+            unset($oTask, $oProcess, $aRow, $sTaskParent);
+          }
+          else {
+            $aDerivation['NEXT_TASK']['TAS_PARENT']    = '';
+          }
           $aDerivation['NEXT_TASK']['USER_ASSIGNED'] = $this->getNextAssignedUser($aDerivation);
         }
 
@@ -224,17 +244,10 @@ class Derivation
   }
 
   function getNextAssignedUser( $tasInfo ){
-    $oUser    = new Users();
+    $oUser            = new Users();
     $nextAssignedTask = $tasInfo['NEXT_TASK'];
     $lastAssigned     = $tasInfo['NEXT_TASK']['TAS_LAST_ASSIGNED'];
-    if ($tasInfo['NEXT_TASK']['TAS_TYPE'] != 'SUBPROCESS') {
-      $sTasUid = $tasInfo['NEXT_TASK']['TAS_UID'];
-    }
-    else {
-      $oCriteria = new Criteria('workflow');
-      header('Content-Type: text/plain;');var_dump($tasInfo['NEXT_TASK']['TAS_UID']);die;
-      //$sTasUid = $tasInfo['NEXT_TASK']['TAS_UID'];
-    }
+    $sTasUid          = $tasInfo['NEXT_TASK']['TAS_UID'];
     // to do: we can increase the LOCATION by COUNTRY, STATE and LOCATION
     /* Verify if the next Task is set with the option "TAS_ASSIGN_LOCATION == TRUE" */
     $assignLocation = '';
@@ -324,11 +337,31 @@ class Derivation
     $countNextTask = count($nextDelegations);
     foreach($nextDelegations as $nextDel)
     {
+      if ($nextDel['TAS_PARENT'] != '') {
+        require_once 'classes/model/SubProcess.php';
+        $oCriteria = new Criteria('workflow');
+        $oCriteria->add(SubProcessPeer::PRO_PARENT, $appFields['PRO_UID']);
+        $oCriteria->add(SubProcessPeer::TAS_PARENT, $nextDel['TAS_PARENT']);
+        $oDataset = SubProcessPeer::doSelectRS($oCriteria);
+        $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+        $oDataset->next();
+        $aSP            = $oDataset->getRow();
+        $aSP['USR_UID'] = $nextDel['USR_UID'];
+        $oTask = new Task();
+        $aTask = $oTask->load($nextDel['TAS_PARENT']);
+        $nextDel = array('TAS_UID'           => $aTask['TAS_UID'],
+                         'USR_UID'           => -1,
+                         'TAS_ASSIGN_TYPE'   => $aTask['TAS_ASSIGN_TYPE'],
+                         'TAS_DEF_PROC_CODE' => $aTask['TAS_DEF_PROC_CODE'],
+                         'DEL_PRIORITY'      => '',
+                         'TAS_PARENT'        => '');
+      }
       switch ( $nextDel['TAS_UID'] ) {
         case TASK_FINISH_PROCESS:
           /*Close all delegations of $currentDelegation['APP_UID'] */
           $this->case->closeAllDelegations ( $currentDelegation['APP_UID'] );
           $this->case->closeAllThreads ( $currentDelegation['APP_UID']);
+          //////Adicionar el code para cuando se finalize un caso de un subproceso
           break;
 
         default:
@@ -370,7 +403,30 @@ class Derivation
               default :
               $this->case->updateAppThread ( $currentDelegation['APP_UID'], $iAppThreadIndex, $iNewDelIndex );
             }//switch
-
+            if (isset($aSP)) {
+              //Create the new case in the sub-process
+              $aNewCase   = $this->case->startCase($aSP['TAS_UID'], $aSP['USR_UID']);
+              //Copy case variables to sub-process case
+              $aFields    = unserialize($aSP['SP_VARIABLES_OUT']);
+              $aNewFields = array();
+              $aOldFields = $this->case->loadCase($aNewCase['APPLICATION']);
+              foreach ($aFields as $sOriginField => $sTargetField) {
+                $aNewFields[$sTargetField] = isset($aOldFields[$sOriginField]) ? $aOldFields[$sOriginField] : '';
+              }
+				      $aOldFields['APP_DATA'] = array_merge($aOldFields['APP_DATA'], $aNewFields);
+				      $this->case->updateCase($aNewCase['APPLICATION'], $aOldFields);
+              //If not is SYNCHRONOUS derivate one more time
+              if ($aSP['SP_SYNCHRONOUS'] == 0) {
+                /*$currentDelegation2 = array(
+                    'APP_UID'    => $currentDelegation['APP_UID'],
+                    'DEL_INDEX'  => $iNewDelIndex,
+                    'APP_STATUS' => $sStatus,
+                    'TAS_UID'    => $currentDelegation['APP_UID'],
+                    'ROU_TYPE'   => ?????
+                  );*/
+                //$this->derivate($currentDelegation2, $nextDelegations2)
+              }
+            }
           }
           else {  //when the task doesnt generate a new AppDelegation
             $iAppThreadIndex = $appFields['DEL_THREAD'];
@@ -386,6 +442,7 @@ class Derivation
       //SETS THE APP_PROC_CODE
       //if (isset($nextDel['TAS_DEF_PROC_CODE']))
         //$appFields['APP_PROC_CODE'] = $nextDel['TAS_DEF_PROC_CODE'];
+      unset($aSP);
     }
 
     /* Start Block : UPDATES APPLICATION */
@@ -398,6 +455,7 @@ class Derivation
     if ( $openThreads == 0) {       //Close case
       $appFields['APP_STATUS']      = 'COMPLETED';
       $appFields['APP_FINISH_DATE'] = 'now';
+      //////Adicionar el code para cuando se finalize un caso de un subproceso
     }
 
     $appFields['DEL_INDEX']       = (isset($iNewDelIndex) ? $iNewDelIndex : 0);
