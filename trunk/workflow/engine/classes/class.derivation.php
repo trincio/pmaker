@@ -110,6 +110,7 @@ class Derivation
           $aDerivation['NEXT_TASK']['TAS_ASSIGN_TYPE']       = '';
           $aDerivation['NEXT_TASK']['TAS_PRIORITY_VARIABLE'] = '';
           $aDerivation['NEXT_TASK']['TAS_DEF_PROC_CODE']     = '';
+          $aDerivation['NEXT_TASK']['TAS_PARENT'] = '';
           switch ($aDerivation['ROU_NEXT_TASK']) {
             case -1: $aDerivation['NEXT_TASK']['TAS_TITLE'] = G::LoadTranslation('ID_END_OF_PROCESS');
                      break;
@@ -140,7 +141,7 @@ class Derivation
             unset($oTask, $oProcess, $aRow, $sTaskParent);
           }
           else {
-            $aDerivation['NEXT_TASK']['TAS_PARENT']    = '';
+            $aDerivation['NEXT_TASK']['TAS_PARENT'] = '';
           }
           $aDerivation['NEXT_TASK']['USER_ASSIGNED'] = $this->getNextAssignedUser($aDerivation);
         }
@@ -353,7 +354,7 @@ class Derivation
                          'USR_UID'           => -1,
                          'TAS_ASSIGN_TYPE'   => $aTask['TAS_ASSIGN_TYPE'],
                          'TAS_DEF_PROC_CODE' => $aTask['TAS_DEF_PROC_CODE'],
-                         'DEL_PRIORITY'      => '',
+                         'DEL_PRIORITY'      => 3,
                          'TAS_PARENT'        => '');
       }
       switch ( $nextDel['TAS_UID'] ) {
@@ -415,16 +416,47 @@ class Derivation
               }
 				      $aOldFields['APP_DATA'] = array_merge($aOldFields['APP_DATA'], $aNewFields);
 				      $this->case->updateCase($aNewCase['APPLICATION'], $aOldFields);
+				      //Create a registry in SUB_APPLICATION table
+              require_once 'classes/model/SubApplication.php';
+              $oSubApplication = new SubApplication();
+              $oSubApplication->create(array('APP_UID'           => $aNewCase['APPLICATION'],
+                                             'APP_PARENT'        => $currentDelegation['APP_UID'],
+                                             'DEL_INDEX_PARENT'  => $currentDelegation['DEL_INDEX'],
+                                             'DEL_THREAD_PARENT' => $iAppThreadIndex,
+                                             'SA_STATUS'         => 'ACTIVE',
+                                             'SA_VALUES_OUT'     => serialize($aNewFields),
+                                             'SA_INIT_DATE'      => date('Y-m-d H:i:s')));
               //If not is SYNCHRONOUS derivate one more time
               if ($aSP['SP_SYNCHRONOUS'] == 0) {
-                /*$currentDelegation2 = array(
-                    'APP_UID'    => $currentDelegation['APP_UID'],
-                    'DEL_INDEX'  => $iNewDelIndex,
-                    'APP_STATUS' => $sStatus,
-                    'TAS_UID'    => $currentDelegation['APP_UID'],
-                    'ROU_TYPE'   => ?????
-                  );*/
-                //$this->derivate($currentDelegation2, $nextDelegations2)
+                $this->case->setDelInitDate($currentDelegation['APP_UID'], $iNewDelIndex);
+                $aDeriveTasks = $this->prepareInformation(
+                  array( 'USER_UID'  => -1,
+                         'APP_UID'   => $currentDelegation['APP_UID'],
+                         'DEL_INDEX' => $iNewDelIndex)
+                );
+                if (isset($aDeriveTasks[1])) {
+			            if ($aDeriveTasks[1]['ROU_TYPE'] != 'SELECT') {
+			              $nextDelegations2 = array();
+			              foreach ($aDeriveTasks as $aDeriveTask) {
+			                $nextDelegations2[] = array(
+                        'TAS_UID'           => $aDeriveTask['NEXT_TASK']['TAS_UID'],
+                        'USR_UID'           => $aDeriveTask['NEXT_TASK']['USER_ASSIGNED']['USR_UID'],
+                        'TAS_ASSIGN_TYPE'   => $aDeriveTask['NEXT_TASK']['TAS_ASSIGN_TYPE'],
+                        'TAS_DEF_PROC_CODE' => $aDeriveTask['NEXT_TASK']['TAS_DEF_PROC_CODE'],
+                        'DEL_PRIORITY'	    => 3,
+                        'TAS_PARENT'        => $aDeriveTask['NEXT_TASK']['TAS_PARENT']
+                      );
+			              }
+			              $currentDelegation2 = array(
+                        'APP_UID'    => $currentDelegation['APP_UID'],
+                        'DEL_INDEX'  => $iNewDelIndex,
+                        'APP_STATUS' => 'TO_DO',//////
+                        'TAS_UID'    => $currentDelegation['TAS_UID'],
+                        'ROU_TYPE'   => $aDeriveTask[1]['ROU_TYPE']
+                    );
+                    $this->derivate($currentDelegation2, $nextDelegations2);
+			            }
+			          }
               }
             }
           }
