@@ -270,6 +270,10 @@ try {
   	case 'downloadFile':
   	  $oProcessMap->downloadFile($oData->pro_uid, $oData->main_directory, $oData->directory, $oData->file);
   	break;
+  	case 'subProcess_Properties':
+  	  $oProcessMap->subProcess_Properties($oData->pro_uid, $oData->tas_uid);
+  	break;
+  	
   }
   die($sOutput);
 }
