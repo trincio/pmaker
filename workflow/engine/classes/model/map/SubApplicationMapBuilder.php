@@ -64,13 +64,13 @@ class SubApplicationMapBuilder {
 
 		$tMap->setUseIdGenerator(false);
 
-		$tMap->addColumn('APP_UID', 'AppUid', 'string', CreoleTypes::VARCHAR, true, 32);
+		$tMap->addPrimaryKey('APP_UID', 'AppUid', 'string', CreoleTypes::VARCHAR, true, 32);
 
-		$tMap->addColumn('APP_PARENT', 'AppParent', 'string', CreoleTypes::VARCHAR, true, 32);
+		$tMap->addPrimaryKey('APP_PARENT', 'AppParent', 'string', CreoleTypes::VARCHAR, true, 32);
 
-		$tMap->addColumn('DEL_INDEX_PARENT', 'DelIndexParent', 'int', CreoleTypes::INTEGER, true, null);
+		$tMap->addPrimaryKey('DEL_INDEX_PARENT', 'DelIndexParent', 'int', CreoleTypes::INTEGER, true, null);
 
-		$tMap->addColumn('DEL_THREAD_PARENT', 'DelThreadParent', 'int', CreoleTypes::INTEGER, true, null);
+		$tMap->addPrimaryKey('DEL_THREAD_PARENT', 'DelThreadParent', 'int', CreoleTypes::INTEGER, true, null);
 
 		$tMap->addColumn('SA_STATUS', 'SaStatus', 'string', CreoleTypes::VARCHAR, true, 32);
 

@@ -777,16 +777,16 @@ class XmlForm_Field_Suggest extends XmlForm_Field_SimpleText  //by neyek
                                     json:true,
                                     shownoresults:false,
                                     maxresults:6,
-                                    callback: function (obj) { 
-                                      document.getElementById(\'form['.$this->name.']\').value = obj.id; 
+                                    callback: function (obj) {
+                                      document.getElementById(\'form['.$this->name.']\').value = obj.id;
                                     }
                             };
                             var as_json = new bsn.AutoSuggest(\'form['.$this->name.'_suggest]\', options);
                         </script>';
-                    
-                        return $str;  
+
+                        return $str;
                         //return '<input class="module_app_input___gray" id="form['.$this->name.']" name="form['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $value , ENT_COMPAT, 'utf-8').'\' style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'" onkeypress="'.htmlentities( $onkeypress , ENT_COMPAT, 'utf-8').'"/>';
-                }    
+                }
             } elseif ($this->mode==='view') {
                     return '<input class="module_app_input___gray" id="form['.$this->name.']" name="form['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $value , ENT_COMPAT, 'utf-8').'\' style="display:none;'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'" onkeypress="'.htmlentities( $onkeypress , ENT_COMPAT, 'utf-8').'"/>' .
                     $this->htmlentities( $value , ENT_COMPAT, 'utf-8');
@@ -2146,6 +2146,7 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText
 	function render( $value = NULL, $owner = NULL )
 	{
 		$value = G::replaceDataField( $value, $owner->values);
+		$this->defaultValue = G::replaceDataField( $this->defaultValue, $owner->values);
 		$id = "form[$this->name]";
 		return $this->__draw_widget($id, $value, $owner);
 	}
@@ -2215,11 +2216,11 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText
 		if ( trim($value) == '' or $value == NULL) {
 			$value = date('Y-m-d');
 		}
-		
+
 		if(isset($this->defaultValue))
 		{ $value = $this->defaultValue;
 		}
-		
+
 		#the validations field was moved to javascript routines ;)
 		if($this->mode == 'edit') {
 			$html = "<input size=15  class='module_app_input___gray' readonly=true type='text' id='".$pID."' name='".$pID."' value='".$value."'>";

@@ -205,8 +205,8 @@ abstract class BaseSubApplicationPeer {
 
 	}
 
-	const COUNT = 'COUNT(*)';
-	const COUNT_DISTINCT = 'COUNT(DISTINCT *)';
+	const COUNT = 'COUNT(SUB_APPLICATION.APP_UID)';
+	const COUNT_DISTINCT = 'COUNT(DISTINCT SUB_APPLICATION.APP_UID)';
 
 	/**
 	 * Returns the number of rows matching criteria.
@@ -416,6 +416,18 @@ abstract class BaseSubApplicationPeer {
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 
+			$comparison = $criteria->getComparison(SubApplicationPeer::APP_UID);
+			$selectCriteria->add(SubApplicationPeer::APP_UID, $criteria->remove(SubApplicationPeer::APP_UID), $comparison);
+
+			$comparison = $criteria->getComparison(SubApplicationPeer::APP_PARENT);
+			$selectCriteria->add(SubApplicationPeer::APP_PARENT, $criteria->remove(SubApplicationPeer::APP_PARENT), $comparison);
+
+			$comparison = $criteria->getComparison(SubApplicationPeer::DEL_INDEX_PARENT);
+			$selectCriteria->add(SubApplicationPeer::DEL_INDEX_PARENT, $criteria->remove(SubApplicationPeer::DEL_INDEX_PARENT), $comparison);
+
+			$comparison = $criteria->getComparison(SubApplicationPeer::DEL_THREAD_PARENT);
+			$selectCriteria->add(SubApplicationPeer::DEL_THREAD_PARENT, $criteria->remove(SubApplicationPeer::DEL_THREAD_PARENT), $comparison);
+
 		} else { // $values is SubApplication object
 			$criteria = $values->buildCriteria(); // gets full criteria
 			$selectCriteria = $values->buildPkeyCriteria(); // gets criteria w/ primary key(s)
@@ -472,7 +484,7 @@ abstract class BaseSubApplicationPeer {
 			$criteria = clone $values; // rename for clarity
 		} elseif ($values instanceof SubApplication) {
 
-			$criteria = $values->buildCriteria();
+			$criteria = $values->buildPkeyCriteria();
 		} else {
 			// it must be the primary key
 			$criteria = new Criteria(self::DATABASE_NAME);
@@ -488,8 +500,16 @@ abstract class BaseSubApplicationPeer {
 			foreach($values as $value)
 			{
 
+				$vals[0][] = $value[0];
+				$vals[1][] = $value[1];
+				$vals[2][] = $value[2];
+				$vals[3][] = $value[3];
 			}
 
+			$criteria->add(SubApplicationPeer::APP_UID, $vals[0], Criteria::IN);
+			$criteria->add(SubApplicationPeer::APP_PARENT, $vals[1], Criteria::IN);
+			$criteria->add(SubApplicationPeer::DEL_INDEX_PARENT, $vals[2], Criteria::IN);
+			$criteria->add(SubApplicationPeer::DEL_THREAD_PARENT, $vals[3], Criteria::IN);
 		}
 
 		// Set the correct dbName
@@ -551,6 +571,29 @@ abstract class BaseSubApplicationPeer {
 		return BasePeer::doValidate(SubApplicationPeer::DATABASE_NAME, SubApplicationPeer::TABLE_NAME, $columns);
 	}
 
+	/**
+	 * Retrieve object using using composite pkey values.
+	 * @param string $app_uid
+	   @param string $app_parent
+	   @param int $del_index_parent
+	   @param int $del_thread_parent
+	   
+	 * @param      Connection $con
+	 * @return     SubApplication
+	 */
+	public static function retrieveByPK( $app_uid, $app_parent, $del_index_parent, $del_thread_parent, $con = null) {
+		if ($con === null) {
+			$con = Propel::getConnection(self::DATABASE_NAME);
+		}
+		$criteria = new Criteria();
+		$criteria->add(SubApplicationPeer::APP_UID, $app_uid);
+		$criteria->add(SubApplicationPeer::APP_PARENT, $app_parent);
+		$criteria->add(SubApplicationPeer::DEL_INDEX_PARENT, $del_index_parent);
+		$criteria->add(SubApplicationPeer::DEL_THREAD_PARENT, $del_thread_parent);
+		$v = SubApplicationPeer::doSelect($criteria, $con);
+
+		return !empty($v) ? $v[0] : null;
+	}
 } // BaseSubApplicationPeer
 
 // static code to register the map builder for this Peer with the main Propel class

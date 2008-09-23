@@ -870,33 +870,52 @@ abstract class BaseSubApplication extends BaseObject  implements Persistent {
 	{
 		$criteria = new Criteria(SubApplicationPeer::DATABASE_NAME);
 
+		$criteria->add(SubApplicationPeer::APP_UID, $this->app_uid);
+		$criteria->add(SubApplicationPeer::APP_PARENT, $this->app_parent);
+		$criteria->add(SubApplicationPeer::DEL_INDEX_PARENT, $this->del_index_parent);
+		$criteria->add(SubApplicationPeer::DEL_THREAD_PARENT, $this->del_thread_parent);
 
 		return $criteria;
 	}
 
 	/**
-	 * Returns NULL since this table doesn't have a primary key.
-	 * This method exists only for BC and is deprecated!
-	 * @return     null
+	 * Returns the composite primary key for this object.
+	 * The array elements will be in same order as specified in XML.
+	 * @return     array
 	 */
 	public function getPrimaryKey()
 	{
-		return null;
+		$pks = array();
+
+		$pks[0] = $this->getAppUid();
+
+		$pks[1] = $this->getAppParent();
+
+		$pks[2] = $this->getDelIndexParent();
+
+		$pks[3] = $this->getDelThreadParent();
+
+		return $pks;
 	}
 
 	/**
-	 * Dummy primary key setter.
+	 * Set the [composite] primary key.
 	 *
-	 * This function only exists to preserve backwards compatibility.  It is no longer
-	 * needed or required by the Persistent interface.  It will be removed in next BC-breaking
-	 * release of Propel.
-	 *
-	 * @deprecated
+	 * @param      array $keys The elements of the composite key (order must match the order in XML file).
+	 * @return     void
 	 */
-	 public function setPrimaryKey($pk)
-	 {
-		 // do nothing, because this object doesn't have any primary keys
-	 }
+	public function setPrimaryKey($keys)
+	{
+
+		$this->setAppUid($keys[0]);
+
+		$this->setAppParent($keys[1]);
+
+		$this->setDelIndexParent($keys[2]);
+
+		$this->setDelThreadParent($keys[3]);
+
+	}
 
 	/**
 	 * Sets contents of passed object to values from current object.
@@ -911,14 +930,6 @@ abstract class BaseSubApplication extends BaseObject  implements Persistent {
 	public function copyInto($copyObj, $deepCopy = false)
 	{
 
-		$copyObj->setAppUid($this->app_uid);
-
-		$copyObj->setAppParent($this->app_parent);
-
-		$copyObj->setDelIndexParent($this->del_index_parent);
-
-		$copyObj->setDelThreadParent($this->del_thread_parent);
-
 		$copyObj->setSaStatus($this->sa_status);
 
 		$copyObj->setSaValuesOut($this->sa_values_out);
@@ -931,6 +942,14 @@ abstract class BaseSubApplication extends BaseObject  implements Persistent {
 
 
 		$copyObj->setNew(true);
+
+		$copyObj->setAppUid(''); // this is a pkey column, so set to default value
+
+		$copyObj->setAppParent(''); // this is a pkey column, so set to default value
+
+		$copyObj->setDelIndexParent('0'); // this is a pkey column, so set to default value
+
+		$copyObj->setDelThreadParent('0'); // this is a pkey column, so set to default value
 
 	}
 
