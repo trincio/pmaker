@@ -1345,81 +1345,39 @@ var processmap=function(){
 							});
 							r.make();
 						}
-					},args:index})},
-					{simage:"/images/properties.png",text:G_STRINGS.ID_PROCESSMAP_PROPERTIES,launch:this.parent.closure({instance:this,method:function(index){
+					},args:index})},					
+					{image:"/images/properties.png",text:G_STRINGS.ID_PROCESSMAP_PROPERTIES,launch:function(event,index){
 						var panel;
-						var iForm=function(panel,index,ifo){
-							saveDataTaskTemporal(ifo);
-							panel.command(panel.loader.show);
-							var r = new this.parent.module.rpc.xmlhttp({
-								url:this.options.dataServer,
-								args:"action=editTaskProperties&data="+{uid:data.uid,iForm:ifo,index:index}.toJSONString()
-							});
-							r.callback=this.parent.closure({instance:this,method:function(index,rpc,panel){
-								panel.command(panel.loader.hide);
-								panel.clearContent();
-								var scs=rpc.xmlhttp.responseText.extractScript();	//capturamos los scripts
-								panel.addContent(rpc.xmlhttp.responseText.stripScript());//Eliminamos porque ya no los necesitamos
-								scs.evalScript();	//interpretamos los scripts
-							},args:[index,r,panel]});
-							r.make();
-						}
-
-						this.tmp.propertiesPanel = panel =new leimnud.module.panel();
-						var data = this.data.db.task[index];
+						this.tmp.usersPanel = panel =new leimnud.module.panel();
 						panel.options={
-							limit:true,
-							size:{w:600,h:430},
+							limit	:true,
+							size	:{w:600,h:400},
 							position:{x:50,y:50,center:true},
-							title:G_STRINGS.ID_PROCESSMAP_TASK+": "+data.label,
-							theme:this.options.theme,
-							statusBar:true,
-							statusBarButtons:[
-							{type:"button",value:G_STRINGS.ID_PROCESSMAP_SUBMIT},
-							{type:"button",value:G_STRINGS.ID_PROCESSMAP_CANCEL}
-							],
-							control:{
-								close:true,
-								resize:false
-							},
-							fx:{
-								modal:true
-							}
+							title	:G_STRINGS.ID_PROCESSMAP_PROPERTIES+": "+task.label,
+							theme	:this.options.theme,
+							control	:{close:true,resize:false},fx:{modal:true},
+							statusBar:false,
+							fx	:{modal:true}
 						};
-						panel.tab={
-							width	:170,
-							optWidth:160,
-							widthFixed:false,
-							step	:(this.parent.browser.isIE?3:4),
-							options:[{
-									title	: G_STRINGS.ID_PROCESSMAP_TASK_PROPERTIES_DEFINITION,
-									content	: this.parent.closure({instance:this,method:iForm,args:[panel,index,1]}),
-									noClear : true,
-									selected: true
-								},{
-									title	: G_STRINGS.ID_PROCESSMAP_TASK_PROPERTIES_ASSIGNMENTS,
-									content	: this.parent.closure({instance:this,method:iForm,args:[panel,index,2]}),
-									noClear : true
-								},{
-									title	: G_STRINGS.ID_PROCESSMAP_TASK_PROPERTIES_TIMING,
-									content	: this.parent.closure({instance:this,method:iForm,args:[panel,index,3]}),
-									noClear : true
-								},{
-									title	: G_STRINGS.ID_PROCESSMAP_TASK_PROPERTIES_PERMISSIONS,
-									content	: this.parent.closure({instance:this,method:iForm,args:[panel,index,5]}),
-									noClear : true
-								},{
-									title	: G_STRINGS.ID_PROCESSMAP_TASK_PROPERTIES_LABELS,
-									content	: this.parent.closure({instance:this,method:iForm,args:[panel,index,6]}),
-									noClear : true
-								},{
-									title	: G_STRINGS.ID_PROCESSMAP_TASK_PROPERTIES_NOTIFICATIONS,
-									content	: this.parent.closure({instance:this,method:iForm,args:[panel,index,7]}),
-									noClear : true
-								}]
-							};
 						panel.make();
-					},args:index})}
+						panel.loader.show();
+						var r;
+						panel.currentRPC = r = new leimnud.module.rpc.xmlhttp({
+							url:this.options.dataServer,
+							args:"action=subProcess_Properties&data="+{
+								tas_uid	:task.uid,
+								pro_uid	:this.options.uid
+							}.toJSONString()
+						});
+						r.callback=function(rpc,panel)
+						{
+							panel.loader.hide();
+							var scs = rpc.xmlhttp.responseText.extractScript();
+							panel.addContent(rpc.xmlhttp.responseText);
+							scs.evalScript();
+						}.extend(this,panel);
+						r.make();
+					}.extend(this,index)}
 					])
 				});
 				this.observers.menu.register(menu.remove,menu);

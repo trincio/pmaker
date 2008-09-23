@@ -779,7 +779,8 @@ function generateCode ( $iDigits = 4, $sType = 'NUMERIC' ) {
 	return G::generateCode ($iDigits, $sType );
 }
 
-function setCaseTrackerCode($sApplicationUID, $sCode, $sPIN = '') {
+
+function setCaseTrackerCode($sApplicationUID, $sCode, $sPIN = '') {    
   if ($sCode != '') {
     G::LoadClass('case');
     $oCase   = new Cases();
@@ -788,7 +789,7 @@ function setCaseTrackerCode($sApplicationUID, $sCode, $sPIN = '') {
     if ($sPIN != '') {
       $aFields['APP_DATA']['PIN'] = $sPIN;
       $aFields['APP_PIN']         = md5($sPIN);
-    }
+    }        
     $oCase->updateCase($sApplicationUID, $aFields);
     return 1;
   }
@@ -796,4 +797,5 @@ function setCaseTrackerCode($sApplicationUID, $sCode, $sPIN = '') {
     return 0;
   }
 }
+
 ?>

@@ -2912,5 +2912,19 @@ class processMap {
       G::streamFile($sDirectory . $sFile, true);
     }
   }
+  
+  function subProcess_Properties($sProcessUID = '', $sTaskUID= '') {
+    try {
+    	  //print_r($sProcessUID.'***'.$sTaskUID);
+    	  global $G_PUBLISH;
+  	    $G_PUBLISH = new Publisher();
+        $G_PUBLISH->AddContent('xmlform', 'xmlform', 'processes/processes_subProcess', '', $aFields, 'processes_subProcessSave');
+        G::RenderPage('publish', 'raw');    	      
+    }
+  	catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
+
 } // processMap
 ?>

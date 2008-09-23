@@ -29,7 +29,7 @@
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value="PRI"/>
         <parameter name="Default" value=""/>
-        <parameter name="Extra" value=""/>
+        <parameter name="Extra" value="UID to Application"/>
       </vendor>
     </column>
     <column name="APP_NUMBER" type="INTEGER" required="true" default="0">
