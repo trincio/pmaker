@@ -40,7 +40,7 @@ class Sessions {
   	  $oCriteria->addSelectColumn(SessionPeer::SES_DUE_DATE); 
       $oCriteria->add(SessionPeer::SES_UID,  $sSessionId);                     
       
-      $oDataset = GroupwfPeer::doSelectRS($oCriteria);
+      $oDataset = SessionPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
       $oDataset->next();
       $aRow = $oDataset->getRow();
@@ -63,7 +63,7 @@ class Sessions {
       $oCriteria->add(SessionPeer::SES_STATUS, 'ACTIVE');                     
       $oCriteria->add(SessionPeer::SES_DUE_DATE,  $date, Criteria::GREATER_EQUAL);                     
       
-      $oDataset = GroupwfPeer::doSelectRS($oCriteria);
+      $oDataset = SessionPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
       $oDataset->next();
       $aRow = $oDataset->getRow();

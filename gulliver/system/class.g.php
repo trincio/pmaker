@@ -1037,25 +1037,28 @@ class G
       header('Content-Disposition: attachment; filename="' . $downloadFileName . '"');
     }
     header('Content-Type: ' . $contentType);
-    header('Pragma: cache');
-
-    $mtime = filemtime($filename);
-    $gmt_mtime = gmdate("D, d M Y H:i:s", $mtime ) . " GMT";
-    header('ETag: "' . md5 ($mtime . $filename ) . '"' );
-    header("Last-Modified: " . $gmt_mtime );
-    header('Cache-Control: public');
-    header("Expires: " . gmdate("D, d M Y H:i:s", time () + 90*60*60*24 ) . " GMT");
-    if( isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) ) {
-      if ($_SERVER['HTTP_IF_MODIFIED_SINCE'] == $gmt_mtime) {
-         header('HTTP/1.1 304 Not Modified');
-         exit();
+  	if (!$download) {
+  
+      header('Pragma: cache');
+  
+      $mtime = filemtime($filename);
+      $gmt_mtime = gmdate("D, d M Y H:i:s", $mtime ) . " GMT";
+      header('ETag: "' . md5 ($mtime . $filename ) . '"' );
+      header("Last-Modified: " . $gmt_mtime );
+      header('Cache-Control: public');
+      header("Expires: " . gmdate("D, d M Y H:i:s", time () + 90*60*60*24 ) . " GMT");
+      if( isset($_SERVER['HTTP_IF_MODIFIED_SINCE']) ) {
+        if ($_SERVER['HTTP_IF_MODIFIED_SINCE'] == $gmt_mtime) {
+           header('HTTP/1.1 304 Not Modified');
+           exit();
+        }
       }
-    }
-
-    if (isset($_SERVER['HTTP_IF_NONE_MATCH'])) {
-      if ( str_replace('"', '', stripslashes($_SERVER['HTTP_IF_NONE_MATCH'])) == md5( $mtime . $filename))  {
-        header("HTTP/1.1 304 Not Modified");
-        exit();
+  
+      if (isset($_SERVER['HTTP_IF_NONE_MATCH'])) {
+        if ( str_replace('"', '', stripslashes($_SERVER['HTTP_IF_NONE_MATCH'])) == md5( $mtime . $filename))  {
+          header("HTTP/1.1 304 Not Modified");
+          exit();
+        }
       }
     }
   }
