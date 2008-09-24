@@ -2963,10 +2963,45 @@ class processMap {
     		 $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
     		 $oDataset->next();
     		 $aRow = $oDataset->getRow();
-    		 	   	  
+    		
+         $SP_VARIABLES_OUT = unserialize($aRow['SP_VARIABLES_OUT']);   		
+         $SP_VARIABLES_IN  = unserialize($aRow['SP_VARIABLES_IN']);
+     		 //var_dump($SP_VARIABLES_OUT);
+     		 $i=1;
+     		 foreach($SP_VARIABLES_OUT as $indice => $valor) {
+           $Fields['grid1'][$i]['VAR_OUT1'] = $SP_VARIABLES_OUT[$indice];
+           $Fields['grid1'][$i]['VAR_OUT2'] = $valor; 
+           $i++;
+         }
+         
+         $j=1;
+     		 foreach($SP_VARIABLES_OUT as $indice => $valor) {
+           $Fields['grid2'][$j]['VAR_IN1'] = $SP_VARIABLES_IN[$indice];
+           $Fields['grid2'][$j]['VAR_IN2'] = $valor; 
+           $j++;
+         }
+         $Fields['SP_UID'] = $aRow['SP_UID'];
+         $Fields['PRO_UID']= $sProcessUID;
+         $Fields['TAS_UID']= $sTaskUID;
+         
+          /*
+    		 $Fields=array('SP_UID'              => $aRow['SP_UID'],
+               			 	 'PRO_UID'         		 => $aRow['PRO_UID'],
+               			 	 'TAS_UID'         		 => $aRow['TAS_UID'],
+               			 	 'PRO_PARENT'      		 => $sProcessUID,
+               			 	 'TAS_PARENT'					 => $sTaskUID,
+               			 	 'SP_TYPE'   					 => $aRow['SP_TYPE'],
+               			 	 'SP_SYNCHRONOUS'   	 => $aRow['SP_SYNCHRONOUS'],
+               			 	 'SP_SYNCHRONOUS_TYPE' => $aRow['SP_SYNCHRONOUS_TYPE'],
+               			 	 'SP_SYNCHRONOUS_WAIT' => $aRow['SP_SYNCHRONOUS_WAIT'],
+               			 	 'SP_VARIABLES_OUT'    => $aRow['SP_VARIABLES_OUT'],
+               			 	 'SP_VARIABLES_IN'     => $aRow['SP_VARIABLES_IN'],
+               			 	 'SP_GRID_IN'          => $aRow['SP_GRID_IN']
+               			 );			
+    		 	  */
     	  global $G_PUBLISH;
   	    $G_PUBLISH = new Publisher();
-        $G_PUBLISH->AddContent('xmlform', 'xmlform', 'processes/processes_subProcess', '',array('SP_UID' => $aRow['SP_UID'], 'PRO_UID' => $sProcessUID, 'TAS_UID' => $sTaskUID), 'processes_subProcessSave');
+        $G_PUBLISH->AddContent('xmlform', 'xmlform', 'processes/processes_subProcess', '', $Fields, 'processes_subProcessSave');
         G::RenderPage('publish', 'raw');    	      
     }
   	catch (Exception $oError) {
