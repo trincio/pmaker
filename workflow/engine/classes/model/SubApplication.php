@@ -63,7 +63,7 @@ class SubApplication extends BaseSubApplication {
   public function update($aData) {
     $oConnection = Propel::getConnection(SubApplicationPeer::DATABASE_NAME);
   	try {
-  	  $oSubApplication = SubApplicationPeer::retrieveByPK($aData['APP_UID'], $aData['APP_PARENT'], $aData['DEL_INDEX_PARENT'], $aData['  	DEL_THREAD_PARENT']);
+  	  $oSubApplication = SubApplicationPeer::retrieveByPK($aData['APP_UID'], $aData['APP_PARENT'], $aData['DEL_INDEX_PARENT'], $aData['DEL_THREAD_PARENT']);
   	  if (!is_null($oSubApplication)) {
   	  	$oSubApplication->fromArray($aData, BasePeer::TYPE_FIELDNAME);
   	    if ($oSubApplication->validate()) {
