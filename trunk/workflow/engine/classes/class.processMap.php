@@ -1194,26 +1194,7 @@ class processMap {
     }
   }
 
-/*
-	* Add a new subproces
-	* @param string $sProcessUID
-	* @param integer $iX
-	* @param integer $iY
-	* @return string
-	*/
-	function addSubProcess($sProcessUID = '', $iX = 0, $iY = 0) {
-		try {
-		  
-  	  $oTask           = new Task();
-  	  $oNewTask->label = 'Sub-Process';//G::LoadTranslation('ID_TASK');
-  	  $oNewTask->uid   = $oTask->create(array('PRO_UID' => $sProcessUID, 'TAS_TITLE' => $oNewTask->label, 'TAS_POSX' => $iX, 'TAS_POSY' => $iY, 'TAS_TYPE' => 'SUBPROCESS'));
-  	  $oJSON           = new Services_JSON();
-  	  return $oJSON->encode($oNewTask);
-  	}
-  	catch (Exception $oError) {
-    	throw($oError);
-    }
-  }
+
 
   /*
 	* Edit the task properties
@@ -2913,12 +2894,79 @@ class processMap {
     }
   }
   
+  /*For sub-process*/
+
+	function addSubProcess($sProcessUID = '', $iX = 0, $iY = 0) {
+		try {		  		 		  
+  	  $oTask           = new Task();
+  	  $oNewTask->label = 'Sub-Process';//G::LoadTranslation('ID_TASK');
+  	  $oNewTask->uid   = $oTask->create(array('PRO_UID' => $sProcessUID, 'TAS_TITLE' => $oNewTask->label, 'TAS_POSX' => $iX, 'TAS_POSY' => $iY, 'TAS_TYPE' => 'SUBPROCESS'));
+  	  $oJSON           = new Services_JSON();  	  
+  	  
+  	  require_once 'classes/model/SubProcess.php';
+      $oOP = new SubProcess();
+      $aData = array('SP_UID'              => G::generateUniqueID(),
+               			 'PRO_UID'         		 => 0,
+               			 'TAS_UID'         		 => 0,
+               			 'PRO_PARENT'      		 => $sProcessUID,
+               			 'TAS_PARENT'					 => $oNewTask->uid,
+               			 'SP_TYPE'   					 => 'SIMPLE',
+               			 'SP_SYNCHRONOUS'   	 => 0,
+               			 'SP_SYNCHRONOUS_TYPE' => 'ALL',
+               			 'SP_SYNCHRONOUS_WAIT' => 0,
+               			 'SP_VARIABLES_OUT'    => '',
+               			 'SP_VARIABLES_IN'     => '',
+               			 'SP_GRID_IN'          => '');
+      $oOP->create($aData);
+      
+      return $oJSON->encode($oNewTask);
+  	  
+  	}
+  	catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
+  
+  function deleteSubProcess($sProcessUID = '', $sTaskUID= '') {
+		try {
+  	  $oTasks = new Tasks();
+  	  $oTasks->deleteTask($sTaskUID);
+  	 
+  	  require_once 'classes/model/SubProcess.php';
+    	$oCriteria = new Criteria('workflow');
+    	$oCriteria->addSelectColumn('SP_UID');
+    	$oCriteria->add(SubProcessPeer::PRO_PARENT, $sProcessUID);
+    	$oCriteria->add(SubProcessPeer::TAS_PARENT, $sTaskUID);
+    	$oDataset = SubProcessPeer::doSelectRS($oCriteria);
+    	$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    	$oDataset->next();
+    	$aRow = $oDataset->getRow();
+  	 
+  	  $oSubProcess = new SubProcess();
+      $oSubProcess->remove($aRow['SP_UID']);  
+	  
+  	  return true;
+  	}
+  	catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
+  
   function subProcess_Properties($sProcessUID = '', $sTaskUID= '') {
     try {
-    	  //print_r($sProcessUID.'***'.$sTaskUID);
+    	   require_once 'classes/model/SubProcess.php';
+    		 $oCriteria = new Criteria('workflow');
+    		 //$oCriteria->addSelectColumn('SP_UID');
+    		 $oCriteria->add(SubProcessPeer::PRO_PARENT, $sProcessUID);
+    	   $oCriteria->add(SubProcessPeer::TAS_PARENT, $sTaskUID);
+    		 $oDataset = SubProcessPeer::doSelectRS($oCriteria);
+    		 $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    		 $oDataset->next();
+    		 $aRow = $oDataset->getRow();
+    		 	   	  
     	  global $G_PUBLISH;
   	    $G_PUBLISH = new Publisher();
-        $G_PUBLISH->AddContent('xmlform', 'xmlform', 'processes/processes_subProcess', '', $aFields, 'processes_subProcessSave');
+        $G_PUBLISH->AddContent('xmlform', 'xmlform', 'processes/processes_subProcess', '',array('SP_UID' => $aRow['SP_UID'], 'PRO_UID' => $sProcessUID, 'TAS_UID' => $sTaskUID), 'processes_subProcessSave');
         G::RenderPage('publish', 'raw');    	      
     }
   	catch (Exception $oError) {

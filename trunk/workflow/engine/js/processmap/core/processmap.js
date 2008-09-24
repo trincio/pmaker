@@ -1327,7 +1327,7 @@ var processmap=function(){
 								this.parent.dom.remove(data.object.elements);
 								var r = new leimnud.module.rpc.xmlhttp({
 									url:this.options.dataServer,
-									args:"action=deleteTask&data="+{pro_uid:this.options.uid,tas_uid:data.uid}.toJSONString()
+									args:"action=deleteSubProcess&data="+{pro_uid:this.options.uid,tas_uid:data.uid}.toJSONString()
 								});
 								r.make();
 							}.extend(this)
@@ -1341,14 +1341,14 @@ var processmap=function(){
 							this.parent.dom.remove(data.object.elements);
 							var r = new leimnud.module.rpc.xmlhttp({
 								url:this.options.dataServer,
-								args:"action=deleteTask&data="+{pro_uid:this.options.uid,tas_uid:data.uid}.toJSONString()
+								args:"action=deleteSubProcess="+{pro_uid:this.options.uid,tas_uid:data.uid}.toJSONString()
 							});
 							r.make();
 						}
 					},args:index})},
 					{image:"/images/properties.png",text:G_STRINGS.ID_PROCESSMAP_PROPERTIES,launch:function(event,index){
 						var panel;
-						this.tmp.usersPanel = panel =new leimnud.module.panel();
+						this.tmp.subProcessPanel = panel =new leimnud.module.panel();
 						panel.options={
 							limit	:true,
 							size	:{w:600,h:400},
