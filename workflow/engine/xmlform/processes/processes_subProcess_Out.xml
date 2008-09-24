@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dynaForm type="grid" name="processes_subProcess_Out" width="500px" mode="edit">
 
-<VAR1 type="text" mode="edit">
-<es>var 1</en>
-</VAR1>
-<VAR2 type="text" mode="edit">
-<es>var 2</en>
-</VAR2>
+<VAR_OUT1 type="text" mode="edit">
+<en>var 1</en>
+</VAR_OUT1>
+
+<VAR_OUT2 type="text" mode="edit">
+<en>var 2</en>
+</VAR_OUT2>
 
 </dynaForm>
