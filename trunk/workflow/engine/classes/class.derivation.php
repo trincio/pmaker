@@ -330,7 +330,7 @@ class Derivation
 
     $this->case = new cases();
     //first, we close the current derivation, then we'll try to derivate to each defined route
-    $appFields = $this->case->LoadCase($currentDelegation['APP_UID'], $currentDelegation['DEL_INDEX'] );
+    $appFields = $this->case->loadCase($currentDelegation['APP_UID'], $currentDelegation['DEL_INDEX'] );
 //krumo ($currentDelegation);
 //krumo ( $nextDelegations ); //*////*/*/*/*/quitar comentario
     $this->case->CloseCurrentDelegation ( $currentDelegation['APP_UID'], $currentDelegation['DEL_INDEX'] );
@@ -343,26 +343,30 @@ class Derivation
         $oCriteria = new Criteria('workflow');
         $oCriteria->add(SubProcessPeer::PRO_PARENT, $appFields['PRO_UID']);
         $oCriteria->add(SubProcessPeer::TAS_PARENT, $nextDel['TAS_PARENT']);
-        $oDataset = SubProcessPeer::doSelectRS($oCriteria);
-        $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-        $oDataset->next();
-        $aSP            = $oDataset->getRow();
-        $aSP['USR_UID'] = $nextDel['USR_UID'];
-        $oTask = new Task();
-        $aTask = $oTask->load($nextDel['TAS_PARENT']);
-        $nextDel = array('TAS_UID'           => $aTask['TAS_UID'],
-                         'USR_UID'           => -1,
-                         'TAS_ASSIGN_TYPE'   => $aTask['TAS_ASSIGN_TYPE'],
-                         'TAS_DEF_PROC_CODE' => $aTask['TAS_DEF_PROC_CODE'],
-                         'DEL_PRIORITY'      => 3,
-                         'TAS_PARENT'        => '');
+        if (SubProcessPeer::doCount($oCriteria) > 0) {
+          $oDataset = SubProcessPeer::doSelectRS($oCriteria);
+          $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+          $oDataset->next();
+          $aSP            = $oDataset->getRow();
+          $aSP['USR_UID'] = $nextDel['USR_UID'];
+          $oTask = new Task();
+          $aTask = $oTask->load($nextDel['TAS_PARENT']);
+          $nextDel = array('TAS_UID'           => $aTask['TAS_UID'],
+                           'USR_UID'           => -1,
+                           'TAS_ASSIGN_TYPE'   => $aTask['TAS_ASSIGN_TYPE'],
+                           'TAS_DEF_PROC_CODE' => $aTask['TAS_DEF_PROC_CODE'],
+                           'DEL_PRIORITY'      => 3,
+                           'TAS_PARENT'        => '');
+        }
+        else {
+          continue;
+        }
       }
       switch ( $nextDel['TAS_UID'] ) {
         case TASK_FINISH_PROCESS:
           /*Close all delegations of $currentDelegation['APP_UID'] */
           $this->case->closeAllDelegations ( $currentDelegation['APP_UID'] );
           $this->case->closeAllThreads ( $currentDelegation['APP_UID']);
-          //////Adicionar el code para cuando se finalize un caso de un subproceso
           break;
 
         default:
@@ -412,7 +416,7 @@ class Derivation
               $aNewFields = array();
               $aOldFields = $this->case->loadCase($aNewCase['APPLICATION']);
               foreach ($aFields as $sOriginField => $sTargetField) {
-                $aNewFields[$sTargetField] = isset($aOldFields[$sOriginField]) ? $aOldFields[$sOriginField] : '';
+                $aNewFields[$sTargetField] = isset($appFields['APP_DATA'][$sOriginField]) ? $appFields['APP_DATA'][$sOriginField] : '';
               }
 				      $aOldFields['APP_DATA'] = array_merge($aOldFields['APP_DATA'], $aNewFields);
 				      $this->case->updateCase($aNewCase['APPLICATION'], $aOldFields);
@@ -421,7 +425,7 @@ class Derivation
               $oSubApplication = new SubApplication();
               $oSubApplication->create(array('APP_UID'           => $aNewCase['APPLICATION'],
                                              'APP_PARENT'        => $currentDelegation['APP_UID'],
-                                             'DEL_INDEX_PARENT'  => $currentDelegation['DEL_INDEX'],
+                                             'DEL_INDEX_PARENT'  => $iNewDelIndex,
                                              'DEL_THREAD_PARENT' => $iAppThreadIndex,
                                              'SA_STATUS'         => 'ACTIVE',
                                              'SA_VALUES_OUT'     => serialize($aNewFields),
@@ -450,9 +454,9 @@ class Derivation
 			              $currentDelegation2 = array(
                         'APP_UID'    => $currentDelegation['APP_UID'],
                         'DEL_INDEX'  => $iNewDelIndex,
-                        'APP_STATUS' => 'TO_DO',//////
+                        'APP_STATUS' => 'TO_DO',
                         'TAS_UID'    => $currentDelegation['TAS_UID'],
-                        'ROU_TYPE'   => $aDeriveTask[1]['ROU_TYPE']
+                        'ROU_TYPE'   => $aDeriveTasks[1]['ROU_TYPE']
                     );
                     $this->derivate($currentDelegation2, $nextDelegations2);
 			            }
@@ -484,16 +488,80 @@ class Derivation
 
     /* Start Block : Count the open threads of $currentDelegation['APP_UID'] */
     $openThreads = $this->case->GetOpenThreads( $currentDelegation['APP_UID'] );
-    if ( $openThreads == 0) {       //Close case
+    if ($openThreads == 0) {//Close case
       $appFields['APP_STATUS']      = 'COMPLETED';
       $appFields['APP_FINISH_DATE'] = 'now';
-      //////Adicionar el code para cuando se finalize un caso de un subproceso
+      //Obtain the related row in the table SUB_APPLICATION
+      require_once 'classes/model/SubApplication.php';
+      $oCriteria = new Criteria('workflow');
+      $oCriteria->add(SubApplicationPeer::APP_UID, $currentDelegation['APP_UID']);
+      $oDataset = SubApplicationPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      $aSA = $oDataset->getRow();
+      //Obtain the related row in the table SUB_PROCESS
+      $aParentCase = $this->case->loadCase($aSA['APP_PARENT'], $aSA['DEL_INDEX_PARENT']);
+      require_once 'classes/model/SubProcess.php';
+      $oCriteria = new Criteria('workflow');
+      $oCriteria->add(SubProcessPeer::PRO_PARENT, $aParentCase['PRO_UID']);
+      $oCriteria->add(SubProcessPeer::TAS_PARENT, $aParentCase['TAS_UID']);
+      $oDataset = SubProcessPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      $aSP = $oDataset->getRow();
+      if ($aSP['SP_SYNCHRONOUS'] == 1) {
+        //Copy case variables to parent case
+        $aFields    = unserialize($aSP['SP_VARIABLES_IN']);
+        $aNewFields = array();
+        foreach ($aFields as $sOriginField => $sTargetField) {
+          $aNewFields[$sTargetField] = isset($appFields['APP_DATA'][$sOriginField]) ? $appFields['APP_DATA'][$sOriginField] : '';
+        }
+			  $aParentCase['APP_DATA'] = array_merge($aParentCase['APP_DATA'], $aNewFields);
+			  $this->case->updateCase($aSA['APP_PARENT'], $aParentCase);
+        //Update table SUB_APPLICATION
+        $oSubApplication = new SubApplication();
+        $oSubApplication->update(array('APP_UID'           => $currentDelegation['APP_UID'],
+                                       'APP_PARENT'        => $aSA['APP_PARENT'],
+                                       'DEL_INDEX_PARENT'  => $aSA['DEL_INDEX_PARENT'],
+                                       'DEL_THREAD_PARENT' => $aSA['DEL_THREAD_PARENT'],
+                                       'SA_STATUS'         => 'FINISHED',
+                                       'SA_VALUES_IN'      => serialize($aNewFields),
+                                       'SA_FINISH_DATE'    => date('Y-m-d H:i:s')));
+        //Derive the parent case
+        $aDeriveTasks = $this->prepareInformation(
+          array( 'USER_UID'  => -1,
+                 'APP_UID'   => $aSA['APP_PARENT'],
+                 'DEL_INDEX' => $aSA['DEL_INDEX_PARENT'])
+        );
+        if (isset($aDeriveTasks[1])) {
+			    if ($aDeriveTasks[1]['ROU_TYPE'] != 'SELECT') {
+			      $nextDelegations2 = array();
+			      foreach ($aDeriveTasks as $aDeriveTask) {
+			        $nextDelegations2[] = array(
+                'TAS_UID'           => $aDeriveTask['NEXT_TASK']['TAS_UID'],
+                'USR_UID'           => $aDeriveTask['NEXT_TASK']['USER_ASSIGNED']['USR_UID'],
+                'TAS_ASSIGN_TYPE'   => $aDeriveTask['NEXT_TASK']['TAS_ASSIGN_TYPE'],
+                'TAS_DEF_PROC_CODE' => $aDeriveTask['NEXT_TASK']['TAS_DEF_PROC_CODE'],
+                'DEL_PRIORITY'	    => 3,
+                'TAS_PARENT'        => $aDeriveTask['NEXT_TASK']['TAS_PARENT']
+              );
+			      }
+			      $currentDelegation2 = array(
+                'APP_UID'    => $aSA['APP_PARENT'],
+                'DEL_INDEX'  => $aSA['DEL_INDEX_PARENT'],
+                'APP_STATUS' => 'TO_DO',
+                'TAS_UID'    => $aParentCase['TAS_UID'],
+                'ROU_TYPE'   => $aDeriveTasks[1]['ROU_TYPE']
+            );
+            $this->derivate($currentDelegation2, $nextDelegations2);
+			    }
+			  }
+      }
     }
-
-    $appFields['DEL_INDEX']       = (isset($iNewDelIndex) ? $iNewDelIndex : 0);
-    $appFields['TAS_UID']         = $nextDel['TAS_UID'];
+    $appFields['DEL_INDEX'] = (isset($iNewDelIndex) ? $iNewDelIndex : 0);
+    $appFields['TAS_UID']   = $nextDel['TAS_UID'];
     /* Start Block : UPDATES APPLICATION */
-    //$appFields = $this->case->LoadCase($currentDelegation['APP_UID'], $currentDelegation['DEL_INDEX'] );
+    //$appFields = $this->case->loadCase($currentDelegation['APP_UID'], $currentDelegation['DEL_INDEX'] );
     $this->case->updateCase ( $currentDelegation['APP_UID'], $appFields );
     /* End Block : UPDATES APPLICATION */
     //krumo ($appFields);die;

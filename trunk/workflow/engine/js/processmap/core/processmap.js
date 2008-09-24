@@ -293,7 +293,7 @@ var processmap=function(){
 					//derivations	:["Sequential","Evaluate (manual)","Evaluate (auto)","Parallel (fork)","Parallel by evaluation (fork)","Parallel (join)"],
 				});
 				this.data.db.subprocess=[];
-				
+
 				this.panels.editor.addContentStatus(G_STRINGS.ID_PROCESSMAP_LOADING);
 				if(this.options.rw===true)
 				{
@@ -543,7 +543,7 @@ var processmap=function(){
 						}.extend(this,panel);
 						r.make();
 					}.extend(this)},
-					
+
 					{image:"/images/tracker.gif",text:G_STRINGS.ID_CASE_TRACKER_OBJECTS,launch:function(event){
 						this.tmp.caseTrackerPanel = panel =new leimnud.module.panel();
 						panel.options={
@@ -929,16 +929,16 @@ var processmap=function(){
 			{
 				console.log(index);
 				options_task = {
-						tp:'task'	
+						tp:'task'
 				}.concat(options_task || {});
 				/*var options 	= {
 					color:((options_task.tp==='task')?"auto":"green")
 				}.concat(this.data.db[(options_task.tp=='task')?'task':'subprocess'][index] || {});*/
 				//var options = this.data.db[(options_task.tp=='task')?'task':'subprocess'][index];
 				var options = this.data.db['task'][index];
-				
-				options.color = ((options_task.tp==='task')?"auto":"green");
-				
+
+				options.color = ((options_task.tp==='task')?"auto":"#9B88CA");
+
 				var db		= this.data.db, task=db.task[index];
 				var derivation 	= task.derivation.to;
 				var a = document.createElement("div");
@@ -1345,7 +1345,7 @@ var processmap=function(){
 							});
 							r.make();
 						}
-					},args:index})},					
+					},args:index})},
 					{image:"/images/properties.png",text:G_STRINGS.ID_PROCESSMAP_PROPERTIES,launch:function(event,index){
 						var panel;
 						this.tmp.usersPanel = panel =new leimnud.module.panel();
@@ -1436,7 +1436,7 @@ var processmap=function(){
 				this.panels.editor.elements.content.appendChild(c);
 				this.panels.editor.elements.content.appendChild(d);
 				this.panels.editor.elements.content.appendChild(t);
- 
+
 				options['object']={
 					elements:{
 						task	: a,
@@ -2143,7 +2143,7 @@ processmap.prototype={
 		var options = (window.event)?evt:tp;
 		var m = this.menu.cursor;
 		var cpos = this.parent.dom.position(this.panels.editor.elements.content);
-		
+
 		var index = this.data.db[(options.tp=='task')?'task':'subprocess'].length;
 		var scl = {
 			x:this.panels.editor.elements.content.scrollLeft,
@@ -2160,7 +2160,7 @@ processmap.prototype={
 		var data = this.data.db.task[index];
 
 		//this.parent.exec(this.data.build.task,[index],false,this);
-		
+
 		if(options.tp=='task')
 		{
 				this.data.build.task(index,{tp:'task'});
@@ -2193,8 +2193,8 @@ processmap.prototype={
 					data.uid=rs.uid || false;
 				},args:[index,r]});
 				r.make();
-	  }	
-						
+	  }
+
 	},
 	addText:function(evt)
 	{
