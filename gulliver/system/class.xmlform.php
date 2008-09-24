@@ -2146,7 +2146,7 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText
 	function render( $value = NULL, $owner = NULL )
 	{
 		$value = G::replaceDataField( $value, $owner->values);
-		$this->defaultValue = G::replaceDataField( $this->defaultValue, $owner->values);
+		//$this->defaultValue = G::replaceDataField( $this->defaultValue, $owner->values);
 		$id = "form[$this->name]";
 		return $this->__draw_widget($id, $value, $owner);
 	}
