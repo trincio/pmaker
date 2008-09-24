@@ -2144,7 +2144,8 @@ processmap.prototype={
 		var m = this.menu.cursor;
 		var cpos = this.parent.dom.position(this.panels.editor.elements.content);
 
-		var index = this.data.db[(options.tp=='task')?'task':'subprocess'].length;
+		//var index = this.data.db[(options.tp=='task')?'task':'subprocess'].length;
+		var index = this.data.db['task'].length;
 		var scl = {
 			x:this.panels.editor.elements.content.scrollLeft,
 			y:this.panels.editor.elements.content.scrollTop
