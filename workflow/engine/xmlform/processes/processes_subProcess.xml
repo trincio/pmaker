@@ -15,7 +15,7 @@
 <TASKS type="dropdown" style="width:350px" sqlConnection="dbarray" >
   SELECT * FROM NewCase
   <en>Process
-  			<option name="">Selection</option>
+  			<option name="">Select a process</option>
   </en>
 </TASKS>
 
@@ -48,26 +48,38 @@ var processes_subProcessSave = function(oForm) {
 var dynaformOnload = function()
 { var grid1 = getField('grid1');
   var grid2 = getField('grid2');
+  var SUBTITLE1 = getField('SUBTITLE1');
+  var SUBTITLE2 = getField('SUBTITLE2');
   if(getField('SP_SYNCHRONOUS').value==1)		
   	{ showRowById(grid1);
   	  showRowById(grid2);
+  	  showRowById(SUBTITLE1);
+  	  showRowById(SUBTITLE2);
   	}
   else
   	{ hideRowById(grid1);
   	  hideRowById(grid2);	
+  	  hideRowById(SUBTITLE1);
+  	  hideRowById(SUBTITLE2);
   	}
 };
 
 leimnud.event.add(getField('SP_SYNCHRONOUS'), 'change', function() {
   var grid1 = getField('grid1');
   var grid2 = getField('grid2');
+  var SUBTITLE1 = getField('SUBTITLE1');
+  var SUBTITLE2 = getField('SUBTITLE2');
   if (getField('SP_SYNCHRONOUS').value==1)  
 	  { showRowById(grid1);
 	    showRowById(grid2);
+	    showRowById(SUBTITLE1);
+  	  showRowById(SUBTITLE2);
 	  }
   else
   	{ hideRowById(grid1);
   	  hideRowById(grid2);
+  	  hideRowById(SUBTITLE1);
+  	  hideRowById(SUBTITLE2);
   	}
   	});
   	
