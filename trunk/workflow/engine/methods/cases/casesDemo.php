@@ -47,7 +47,7 @@ $_SESSION['_DBArray'] = $_DBArray;
     $c->add ( 'user.age', 122 , Criteria::GREATER_EQUAL );
     $c->add ( 'user.balance', 3456 , Criteria::GREATER_EQUAL );
     $c->addAscendingOrderByColumn ('name');
-          
+
 /* Includes */
 G::LoadClass('pmScript');
 G::LoadClass('case');
@@ -83,8 +83,13 @@ $Fields['CANT_APP_DATA'] = count($Fields['APP_DATA']);
 $delegations = $oCase->GetAllDelegations ($appFields['APP_UID']);
 foreach ( $delegations as $key => $val ) {
   $delegations[$key]['TAS_TITLE'] = Content::load ( 'TAS_TITLE', '', $val['TAS_UID'], SYS_LANG );
-  $oUser->load( $val['USR_UID'] );
-  $delegations[$key]['USR_NAME'] = $oUser->getUsrFirstname() . ' ' . $oUser->getUsrLastname();
+  if ($val['USR_UID'] != -1) {
+    $oUser->load( $val['USR_UID'] );
+    $delegations[$key]['USR_NAME'] = $oUser->getUsrFirstname() . ' ' . $oUser->getUsrLastname();
+  }
+  else {
+    $delegations[$key]['USR_NAME'] = 'Unknow user (Sub-Process User)';
+  }
 }
 $Fields['CANT_DELEGATIONS']  = count($delegations);
 $Fields['DELEGATIONS']  = $delegations;
