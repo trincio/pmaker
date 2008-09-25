@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dynaForm name="processes_subProcess" width="500px" labelWidth="200px"  mode="edit" enableTemplate="0" ajaxSubmit="1">
+<dynaForm name="processes_subProcess" width="650px" labelWidth="200px"  mode="edit" enableTemplate="0" ajaxSubmit="1">
 
 <TITLE1 type="title">
   <en>Sub-Process</en>
@@ -45,6 +45,32 @@ var processes_subProcessSave = function(oForm) {
   Pm.tmp.subProcessPanel.remove();
 };
 
+var dynaformOnload = function()
+{ var grid1 = getField('grid1');
+  var grid2 = getField('grid2');
+  if(getField('SP_SYNCHRONOUS').value==1)		
+  	{ showRowById(grid1);
+  	  showRowById(grid2);
+  	}
+  else
+  	{ hideRowById(grid1);
+  	  hideRowById(grid2);	
+  	}
+};
+
+leimnud.event.add(getField('SP_SYNCHRONOUS'), 'change', function() {
+  var grid1 = getField('grid1');
+  var grid2 = getField('grid2');
+  if (getField('SP_SYNCHRONOUS').value==1)  
+	  { showRowById(grid1);
+	    showRowById(grid2);
+	  }
+  else
+  	{ hideRowById(grid1);
+  	  hideRowById(grid2);
+  	}
+  	});
+  	
 
 ]]>
 </JS>

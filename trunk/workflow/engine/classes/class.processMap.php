@@ -2972,10 +2972,10 @@ class processMap {
     		 $aRow['TASKS'] = $aRow['TAS_UID']; 		 
 		     $SP_VARIABLES_OUT = unserialize($aRow['SP_VARIABLES_OUT']);   		              		 
 		     if(is_array($SP_VARIABLES_OUT))
-         {		 
+         {	 	 
 		     		 $i=1;
-		     		 foreach($SP_VARIABLES_OUT as $indice => $valor) {
-		           $aRow['grid1'][$i]['VAR_OUT1'] = $SP_VARIABLES_OUT[$indice];
+		     		 foreach($SP_VARIABLES_OUT as $indice => $valor) {		     		  		          
+		           $aRow['grid1'][$i]['VAR_OUT1'] = $indice;
 		           $aRow['grid1'][$i]['VAR_OUT2'] = $valor; 
 		           $i++;
 		         }
@@ -2986,7 +2986,7 @@ class processMap {
 		     {		         		        
 		         $j=1;
 		     		 foreach($SP_VARIABLES_IN as $indice => $valor) {
-		           $aRow['grid2'][$j]['VAR_IN1'] = $SP_VARIABLES_IN[$indice];
+		           $aRow['grid2'][$j]['VAR_IN1'] = $indice;
 		           $aRow['grid2'][$j]['VAR_IN2'] = $valor; 
 		           $j++;
 		         }

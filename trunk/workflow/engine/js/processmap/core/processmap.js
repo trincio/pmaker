@@ -1346,7 +1346,7 @@ var processmap=function(){
 							r.make();
 						}
 					},args:index})},
-					{image:"/images/properties.png",text:G_STRINGS.ID_PROCESSMAP_PROPERTIES,launch:function(event,index){
+					{simage:"/images/properties.png",text:G_STRINGS.ID_PROCESSMAP_PROPERTIES,launch:function(event,index){
 						var panel;
 						this.tmp.subProcessPanel = panel =new leimnud.module.panel();
 						panel.options={
