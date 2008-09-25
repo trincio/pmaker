@@ -37,7 +37,7 @@ switch ($RBAC->userCanAccess('PM_FACTORY')) {
 	break;
 }
 
-//print_r($_POST['form']['grid1']['1']); die;
+
 $out = array();
 for($i=1; $i<=count($_POST['form']['grid1']); $i++)
 {  
@@ -59,8 +59,8 @@ $oOP = new SubProcess();
 $aData = array('SP_UID'          		 => $_POST['form']['SP_UID'],//G::generateUniqueID(),
                'PRO_UID'         		 => $aTask['PRO_UID'],
                'TAS_UID'         		 => $_POST['form']['TASKS'],
-               'PRO_PARENT'      		 => $_POST['form']['PRO_UID'],
-               'TAS_PARENT'					 => $_POST['form']['TAS_UID'],
+               'PRO_PARENT'      		 => $_POST['form']['PRO_PARENT'],
+               'TAS_PARENT'					 => $_POST['form']['TAS_PARENT'],
                'SP_TYPE'   					 => 'SIMPLE',
                'SP_SYNCHRONOUS'   	 => $_POST['form']['SP_SYNCHRONOUS'],
                'SP_SYNCHRONOUS_TYPE' => 'ALL',
@@ -68,6 +68,7 @@ $aData = array('SP_UID'          		 => $_POST['form']['SP_UID'],//G::generateUni
                'SP_VARIABLES_OUT'    => serialize($out),
                'SP_VARIABLES_IN'     => serialize($in),
                'SP_GRID_IN'          => '');
+                    		
 $oOP->update($aData);
     
 //G::header('location: processes_Map?PRO_UID='. $_POST['form']['PRO_UID']);    

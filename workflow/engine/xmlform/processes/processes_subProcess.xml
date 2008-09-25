@@ -7,24 +7,30 @@
 
 <SP_UID type="hidden" />
 
-<PRO_UID type="hidden" />
+<PRO_PARENT type="hidden" />
 
-<TAS_UID type="hidden" />
+<TAS_PARENT type="hidden" />
 
-<TASKS type="dropdown" defaultvalue="" mode="edit" options="Array">
-	SELECT TASK.TAS_UID AS TUID, CONTENT.CON_VALUE AS TVALUE FROM TASK 
-  LEFT JOIN PROCESS ON (PROCESS.PRO_UID=TASK.PRO_UID)
-  LEFT JOIN CONTENT ON (TASK.TAS_UID=CONTENT.CON_ID AND CONTENT.CON_CATEGORY='TAS_TITLE' AND CONTENT.CON_LANG='en')
-  WHERE TASK.PRO_UID=@@PRO_UID AND TASK.TAS_UID!=@@TAS_UID ORDER BY CONTENT.CON_VALUE
-  <en>Tasks <option name=""> </option></en>
+
+<TASKS type="dropdown" style="width:350px" sqlConnection="dbarray" >
+  SELECT * FROM NewCase
+  <en>Process
+  			<option name="">Selection</option>
+  </en>
 </TASKS>
 
 <SP_SYNCHRONOUS type="yesno" defaultvalue="0">
-<en>SP_SYNCHRONOUS</en>
+<en>Synchronous</en>
 </SP_SYNCHRONOUS>
 
+<SUBTITLE1 type="subtitle">
+  <en>Variables Out</en>
+</SUBTITLE1>
 <grid1 type="grid" xmlgrid="processes/processes_subProcess_Out" addrow="1" deleterow="1" mode="edit"/>
 
+<SUBTITLE2 type="subtitle">
+  <en>Variables In</en>
+</SUBTITLE2>
 <grid2 type="grid" xmlgrid="processes/processes_subProcess_In" addrow="1" deleterow="1" mode="edit"/>
 
 <SAVE type="button" onclick="processes_subProcessSave(this.form);">

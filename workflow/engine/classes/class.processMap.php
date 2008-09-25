@@ -2954,54 +2954,49 @@ class processMap {
   
   function subProcess_Properties($sProcessUID = '', $sTaskUID= '') {
     try {
+    	   $SP_VARIABLES_OUT = array();
+    	   $SP_VARIABLES_IN  = array();
+    	   /* Prepare page before to show */  
+    	   global $_DBArray;    	   
+  			 $_DBArray['NewCase'] = $this->subProcess_TaskIni();  			 
+   	   
     	   require_once 'classes/model/SubProcess.php';
-    		 $oCriteria = new Criteria('workflow');
-    		 //$oCriteria->addSelectColumn('SP_UID');
+    		 $oCriteria = new Criteria('workflow');    		 
     		 $oCriteria->add(SubProcessPeer::PRO_PARENT, $sProcessUID);
     	   $oCriteria->add(SubProcessPeer::TAS_PARENT, $sTaskUID);
     		 $oDataset = SubProcessPeer::doSelectRS($oCriteria);
     		 $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
     		 $oDataset->next();
     		 $aRow = $oDataset->getRow();
-    		
-         $SP_VARIABLES_OUT = unserialize($aRow['SP_VARIABLES_OUT']);   		
-         $SP_VARIABLES_IN  = unserialize($aRow['SP_VARIABLES_IN']);
-     		 //var_dump($SP_VARIABLES_OUT);
-     		 $i=1;
-     		 foreach($SP_VARIABLES_OUT as $indice => $valor) {
-           $Fields['grid1'][$i]['VAR_OUT1'] = $SP_VARIABLES_OUT[$indice];
-           $Fields['grid1'][$i]['VAR_OUT2'] = $valor; 
-           $i++;
+    		 
+    		 $aRow['TASKS'] = $aRow['TAS_UID']; 		 
+		     $SP_VARIABLES_OUT = unserialize($aRow['SP_VARIABLES_OUT']);   		              		 
+		     if(is_array($SP_VARIABLES_OUT))
+         {		 
+		     		 $i=1;
+		     		 foreach($SP_VARIABLES_OUT as $indice => $valor) {
+		           $aRow['grid1'][$i]['VAR_OUT1'] = $SP_VARIABLES_OUT[$indice];
+		           $aRow['grid1'][$i]['VAR_OUT2'] = $valor; 
+		           $i++;
+		         }
+		     }
+		     
+		     $SP_VARIABLES_IN = unserialize($aRow['SP_VARIABLES_IN']);
+		     if(is_array($SP_VARIABLES_IN))
+		     {		         		        
+		         $j=1;
+		     		 foreach($SP_VARIABLES_IN as $indice => $valor) {
+		           $aRow['grid2'][$j]['VAR_IN1'] = $SP_VARIABLES_IN[$indice];
+		           $aRow['grid2'][$j]['VAR_IN2'] = $valor; 
+		           $j++;
+		         }
          }
+          
          
-         $j=1;
-     		 foreach($SP_VARIABLES_OUT as $indice => $valor) {
-           $Fields['grid2'][$j]['VAR_IN1'] = $SP_VARIABLES_IN[$indice];
-           $Fields['grid2'][$j]['VAR_IN2'] = $valor; 
-           $j++;
-         }
-         $Fields['SP_UID'] = $aRow['SP_UID'];
-         $Fields['PRO_UID']= $sProcessUID;
-         $Fields['TAS_UID']= $sTaskUID;
          
-          /*
-    		 $Fields=array('SP_UID'              => $aRow['SP_UID'],
-               			 	 'PRO_UID'         		 => $aRow['PRO_UID'],
-               			 	 'TAS_UID'         		 => $aRow['TAS_UID'],
-               			 	 'PRO_PARENT'      		 => $sProcessUID,
-               			 	 'TAS_PARENT'					 => $sTaskUID,
-               			 	 'SP_TYPE'   					 => $aRow['SP_TYPE'],
-               			 	 'SP_SYNCHRONOUS'   	 => $aRow['SP_SYNCHRONOUS'],
-               			 	 'SP_SYNCHRONOUS_TYPE' => $aRow['SP_SYNCHRONOUS_TYPE'],
-               			 	 'SP_SYNCHRONOUS_WAIT' => $aRow['SP_SYNCHRONOUS_WAIT'],
-               			 	 'SP_VARIABLES_OUT'    => $aRow['SP_VARIABLES_OUT'],
-               			 	 'SP_VARIABLES_IN'     => $aRow['SP_VARIABLES_IN'],
-               			 	 'SP_GRID_IN'          => $aRow['SP_GRID_IN']
-               			 );			
-    		 	  */
     	  global $G_PUBLISH;
   	    $G_PUBLISH = new Publisher();
-        $G_PUBLISH->AddContent('xmlform', 'xmlform', 'processes/processes_subProcess', '', $Fields, 'processes_subProcessSave');
+        $G_PUBLISH->AddContent('xmlform', 'xmlform', 'processes/processes_subProcess', '', $aRow, 'processes_subProcessSave');
         G::RenderPage('publish', 'raw');    	      
     }
   	catch (Exception $oError) {
@@ -3009,5 +3004,33 @@ class processMap {
     }
   }
 
+
+  function subProcess_TaskIni() {
+  	    $c = new Criteria();
+        $c->clearSelectColumns();
+        $c->addSelectColumn(TaskPeer::TAS_UID);
+        $c->addSelectColumn(TaskPeer::PRO_UID);
+        $c->addJoin(TaskPeer::PRO_UID, ProcessPeer::PRO_UID, Criteria::LEFT_JOIN);
+        $c->addJoin(TaskPeer::TAS_UID, TaskUserPeer::TAS_UID, Criteria::LEFT_JOIN);
+        $c->add(ProcessPeer::PRO_STATUS, 'ACTIVE');
+        $c->add(TaskPeer::TAS_START, 'TRUE');
+
+        $rs = TaskPeer::doSelectRS($c);
+        $rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+        $rs->next();
+        $row = $rs->getRow();
+        while (is_array($row)) {
+            $tasks[] = array('TAS_UID' => $row['TAS_UID'], 'PRO_UID' => $row['PRO_UID']);
+            $rs->next();
+            $row = $rs->getRow();
+        }
+        foreach ($tasks as $key => $val) {
+            $tasTitle = Content::load('TAS_TITLE', '', $val['TAS_UID'], SYS_LANG);
+            $proTitle = Content::load('PRO_TITLE', '', $val['PRO_UID'], SYS_LANG);
+            $title = " $proTitle ($tasTitle)";
+            $rows[] = array('uid' => $val['TAS_UID'], 'value' => $title, 'pro_uid' => $val['PRO_UID']);
+        }
+        return $rows;
+  }
 } // processMap
 ?>
