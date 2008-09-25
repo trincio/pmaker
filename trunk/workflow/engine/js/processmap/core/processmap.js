@@ -1354,7 +1354,7 @@ var processmap=function(){
 						this.tmp.subProcessPanel = panel =new leimnud.module.panel();
 						panel.options={
 							limit	:true,
-							size	:{w:700,h:600},
+							size	:{w:700,h:550},
 							position:{x:50,y:50,center:true},
 							title	:G_STRINGS.ID_PROCESSMAP_PROPERTIES+": "+task.label,
 							theme	:this.options.theme,
