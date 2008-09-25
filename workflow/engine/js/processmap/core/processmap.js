@@ -746,24 +746,27 @@ var processmap=function(){
 					this.dragables.derivation.noDrag=false;
 					return false;
 				}
-                else if(typeDerivation===7)
-                {
-					var vars=this.data.db.task[uid];
-                    this.data.render.setTaskINI({task:vars.uid,value:true});
-                    this.inDerivationDrag=false;
-					this.dragables.derivation.noDrag=false;
-                    var r = new leimnud.module.rpc.xmlhttp({
-			             		url:"../tasks/tasks_Ajax",
-				             	args:"function=saveTaskData&oData="+{
-                                    TAS_START:"TRUE",
-                                    TAS_UID:vars.uid
-                                }.toJSONString()
-			        });
-			        r.make();
-
-
-                    return false;
-                }
+        else if(typeDerivation===7) {
+          var vars=this.data.db.task[uid];
+          if (vars.task_type != 'SUBPROCESS') {
+            this.data.render.setTaskINI({task:vars.uid,value:true});
+            this.inDerivationDrag=false;
+            this.dragables.derivation.noDrag=false;
+            var r = new leimnud.module.rpc.xmlhttp({
+              url:"../tasks/tasks_Ajax",
+              args:"function=saveTaskData&oData="+{
+                TAS_START:"TRUE",
+                TAS_UID:vars.uid
+              }.toJSONString()
+            });
+            r.make();
+          }
+          else {
+            this.inDerivationDrag=false;
+            this.dragables.derivation.noDrag=false;
+          }
+          return false;
+        }
 				this.observers.menu.update();
 				tmS = this.derivationArrowToDrop = document.createElement("div");
 				this.parent.dom.setStyle(tmS,{
