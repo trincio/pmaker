@@ -446,7 +446,8 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
         //This sentence is used when you lost the Session
         if ( SYS_TARGET != 'authentication' and  SYS_TARGET != 'login'
         and  SYS_TARGET != 'dbInfo'         and  SYS_TARGET != 'sysLoginVerify' and SYS_TARGET != 'processes_Ajax'
-        and  SYS_TARGET != 'updateTranslation'  and  SYS_COLLECTION != 'services' and SYS_COLLECTION != 'tracker' and $bWE != true and SYS_TARGET != 'defaultAjaxDynaform'){
+        and  SYS_TARGET != 'updateTranslation'  and  SYS_COLLECTION != 'services' and SYS_COLLECTION != 'tracker'
+        and $bWE != true and SYS_TARGET != 'defaultAjaxDynaform' and SYS_TARGET != 'cases_ShowDocument'){
           header ("location: ".SYS_URI."login/login.php");
           die();
         }

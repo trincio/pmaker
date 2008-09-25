@@ -50,10 +50,10 @@ class processMap {
 	* @return string
 	*/
   function load($sProcessUID, $bView = false, $sApplicationUID = '', $iDelegation = 0, $sTask = '', $bCT = false) {
-  	try {  
+  	try {
   		$oProcess = new Process();
   		if (!is_null($oProcess)) {
-  			$aRow = $oProcess->load($sProcessUID);  			
+  			$aRow = $oProcess->load($sProcessUID);
   			$oPM->title->label       = strip_tags($aRow['PRO_TITLE']);
         $oPM->title->position->x = $aRow['PRO_TITLE_X'];
         $oPM->title->position->y = $aRow['PRO_TITLE_Y'];
@@ -75,7 +75,7 @@ class processMap {
         $oDataset = TaskPeer::doSelectRS($oCriteria);
         $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
         $oDataset->next();
-        while ($aRow1 = $oDataset->getRow()) { 
+        while ($aRow1 = $oDataset->getRow()) {
           $oTask                 = null;
       	  $oTask->uid            = $aRow1['TAS_UID'];
       	  $oTask->task_type      = $aRow1['TAS_TYPE'];
@@ -343,17 +343,11 @@ class processMap {
   		require_once 'classes/model/TaskUser.php';
   		require_once 'classes/model/Step.php';
   		require_once 'classes/model/StepTrigger.php';
-  		require_once 'classes/model/Application.php';
-  		require_once 'classes/model/AppDelegation.php';
-  		require_once 'classes/model/AppDocument.php';
-  		require_once 'classes/model/AppMessage.php';
-  		require_once 'classes/model/AppOwner.php';
-  		require_once 'classes/model/AppDelay.php';
-  		require_once 'classes/model/AppThread.php';
   		require_once 'classes/model/DbSource.php';
   		require_once 'classes/model/ProcessUser.php';
   		require_once 'classes/model/StepSupervisor.php';
   		require_once 'classes/model/ReportTable.php';
+  		G::LoadClass('case');
   		G::LoadClass('reportTables');
   		//Instance all classes necesaries
   		$oProcess         = new Process();
@@ -364,15 +358,7 @@ class processMap {
   		$oRoute           = new Route();
   		$oSwimlaneElement = new SwimlanesElements();
   		$oConfiguration   = new Configuration();
-  		$oApplication     = new Application();
-  		$oAppDelegation   = new AppDelegation();
-  		$oAppDocument     = new AppDocument();
-  		//$oAppDelay        = new AppDelay();
-  		//$oAppMessage      = new AppMessage();
-  		//$oAppThread       = new AppThread();
   		$oDbSource        = new DbSource();
-  		//$oProcessUser     = new ProcessUser();
-  		//$oStepSupervisor  = new StepSupervisor();
   		$oReportTable     = new ReportTables();
       //Delete the applications of process
   		$oCriteria = new Criteria('workflow');
@@ -380,41 +366,9 @@ class processMap {
   	  $oDataset = ApplicationPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
       $oDataset->next();
+      $oCase = new Cases();
       while ($aRow = $oDataset->getRow()) {
-      	//Delete the delegations of a application
-      	$oCriteria2 = new Criteria('workflow');
-  	    $oCriteria2->add(AppDelegationPeer::APP_UID, $aRow['APP_UID']);
-  	    $oDataset2 = AppDelegationPeer::doSelectRS($oCriteria2);
-        $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-        $oDataset2->next();
-        while ($aRow2 = $oDataset2->getRow()) {
-        	$oAppDelegation->remove($aRow2['APP_UID'], $aRow2['DEL_INDEX']);
-        	$oDataset2->next();
-        }
-      	//Delete the documents assigned to a application
-      	$oCriteria2 = new Criteria('workflow');
-  	    $oCriteria2->add(AppDocumentPeer::APP_UID, $aRow['APP_UID']);
-  	    $oDataset2 = AppDocumentPeer::doSelectRS($oCriteria2);
-        $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-        $oDataset2->next();
-        while ($aRow2 = $oDataset2->getRow()) {
-        	$oAppDocument->remove($aRow2['APP_DOC_UID']);
-        	$oDataset2->next();
-        }
-        //Delete the actions from a application
-      	$oCriteria2 = new Criteria('workflow');
-  	    $oCriteria2->add(AppDelayPeer::APP_UID, $aRow['APP_UID']);
-        AppDelayPeer::doDelete($oCriteria2);
-        //Delete the messages from a application
-      	$oCriteria2 = new Criteria('workflow');
-  	    $oCriteria2->add(AppMessagePeer::APP_UID, $aRow['APP_UID']);
-        AppMessagePeer::doDelete($oCriteria2);
-        //Delete the threads from a application
-      	$oCriteria2 = new Criteria('workflow');
-  	    $oCriteria2->add(AppThreadPeer::APP_UID, $aRow['APP_UID']);
-        AppThreadPeer::doDelete($oCriteria2);
-        //Delete the application
-        $oApplication->remove($aRow['APP_UID']);
+        $oCase->removeCase($aRow['APP_UID']);
       	$oDataset->next();
       }
       //Delete the tasks of process
@@ -1131,7 +1085,7 @@ class processMap {
   	  global $G_PUBLISH;
   	  $G_PUBLISH = new Publisher();
   	  $G_PUBLISH->AddContent('view', 'steps/triggers_Tree');
-      G::RenderPage('publish', 'raw');      
+      G::RenderPage('publish', 'raw');
       return true;
     }
   	catch (Exception $oError) {
@@ -2893,16 +2847,16 @@ class processMap {
       G::streamFile($sDirectory . $sFile, true);
     }
   }
-  
+
   /*For sub-process*/
 
 	function addSubProcess($sProcessUID = '', $iX = 0, $iY = 0) {
-		try {		  		 		  
+		try {
   	  $oTask           = new Task();
   	  $oNewTask->label = 'Sub-Process';//G::LoadTranslation('ID_TASK');
   	  $oNewTask->uid   = $oTask->create(array('PRO_UID' => $sProcessUID, 'TAS_TITLE' => $oNewTask->label, 'TAS_POSX' => $iX, 'TAS_POSY' => $iY, 'TAS_TYPE' => 'SUBPROCESS'));
-  	  $oJSON           = new Services_JSON();  	  
-  	  
+  	  $oJSON           = new Services_JSON();
+
   	  require_once 'classes/model/SubProcess.php';
       $oOP = new SubProcess();
       $aData = array('SP_UID'              => G::generateUniqueID(),
@@ -2918,20 +2872,20 @@ class processMap {
                			 'SP_VARIABLES_IN'     => '',
                			 'SP_GRID_IN'          => '');
       $oOP->create($aData);
-      
+
       return $oJSON->encode($oNewTask);
-  	  
+
   	}
   	catch (Exception $oError) {
     	throw($oError);
     }
   }
-  
+
   function deleteSubProcess($sProcessUID = '', $sTaskUID= '') {
 		try {
   	  $oTasks = new Tasks();
   	  $oTasks->deleteTask($sTaskUID);
-  	 
+
   	  require_once 'classes/model/SubProcess.php';
     	$oCriteria = new Criteria('workflow');
     	$oCriteria->addSelectColumn('SP_UID');
@@ -2941,63 +2895,63 @@ class processMap {
     	$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
     	$oDataset->next();
     	$aRow = $oDataset->getRow();
-  	 
+
   	  $oSubProcess = new SubProcess();
-      $oSubProcess->remove($aRow['SP_UID']);  
-	  
+      $oSubProcess->remove($aRow['SP_UID']);
+
   	  return true;
   	}
   	catch (Exception $oError) {
     	throw($oError);
     }
   }
-  
+
   function subProcess_Properties($sProcessUID = '', $sTaskUID= '') {
     try {
     	   $SP_VARIABLES_OUT = array();
     	   $SP_VARIABLES_IN  = array();
-    	   /* Prepare page before to show */  
-    	   global $_DBArray;    	   
-  			 $_DBArray['NewCase'] = $this->subProcess_TaskIni();  			 
-   	   
+    	   /* Prepare page before to show */
+    	   global $_DBArray;
+  			 $_DBArray['NewCase'] = $this->subProcess_TaskIni();
+
     	   require_once 'classes/model/SubProcess.php';
-    		 $oCriteria = new Criteria('workflow');    		 
+    		 $oCriteria = new Criteria('workflow');
     		 $oCriteria->add(SubProcessPeer::PRO_PARENT, $sProcessUID);
     	   $oCriteria->add(SubProcessPeer::TAS_PARENT, $sTaskUID);
     		 $oDataset = SubProcessPeer::doSelectRS($oCriteria);
     		 $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
     		 $oDataset->next();
     		 $aRow = $oDataset->getRow();
-    		 
-    		 $aRow['TASKS'] = $aRow['TAS_UID']; 		 
-		     $SP_VARIABLES_OUT = unserialize($aRow['SP_VARIABLES_OUT']);   		              		 
+
+    		 $aRow['TASKS'] = $aRow['TAS_UID'];
+		     $SP_VARIABLES_OUT = unserialize($aRow['SP_VARIABLES_OUT']);
 		     if(is_array($SP_VARIABLES_OUT))
-         {	 	 
+         {
 		     		 $i=1;
-		     		 foreach($SP_VARIABLES_OUT as $indice => $valor) {		     		  		          
+		     		 foreach($SP_VARIABLES_OUT as $indice => $valor) {
 		           $aRow['grid1'][$i]['VAR_OUT1'] = $indice;
-		           $aRow['grid1'][$i]['VAR_OUT2'] = $valor; 
+		           $aRow['grid1'][$i]['VAR_OUT2'] = $valor;
 		           $i++;
 		         }
 		     }
-		     
+
 		     $SP_VARIABLES_IN = unserialize($aRow['SP_VARIABLES_IN']);
 		     if(is_array($SP_VARIABLES_IN))
-		     {		         		        
+		     {
 		         $j=1;
 		     		 foreach($SP_VARIABLES_IN as $indice => $valor) {
 		           $aRow['grid2'][$j]['VAR_IN1'] = $indice;
-		           $aRow['grid2'][$j]['VAR_IN2'] = $valor; 
+		           $aRow['grid2'][$j]['VAR_IN2'] = $valor;
 		           $j++;
 		         }
          }
-          
-         
-         
+
+
+
     	  global $G_PUBLISH;
   	    $G_PUBLISH = new Publisher();
         $G_PUBLISH->AddContent('xmlform', 'xmlform', 'processes/processes_subProcess', '', $aRow, 'processes_subProcessSave');
-        G::RenderPage('publish', 'raw');    	      
+        G::RenderPage('publish', 'raw');
     }
   	catch (Exception $oError) {
     	throw($oError);

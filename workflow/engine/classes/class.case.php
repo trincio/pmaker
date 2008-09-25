@@ -26,7 +26,8 @@
 require_once ("classes/model/Application.php");
 require_once ("classes/model/AppDelay.php");
 require_once ("classes/model/AppDelegation.php");
-require_once ("classes/model/AppDocumentPeer.php");
+require_once ("classes/model/AppDocument.php");
+require_once ("classes/model/AppMessage.php");
 require_once ("classes/model/AppThread.php");
 require_once ("classes/model/Content.php");
 require_once ("classes/model/DbSource.php");
@@ -42,6 +43,7 @@ require_once ("classes/model/ReportVar.php");
 require_once ("classes/model/Step.php");
 require_once ("classes/model/StepSupervisor.php");
 require_once ("classes/model/StepTrigger.php");
+require_once ("classes/model/SubApplication.php");
 require_once ("classes/model/Task.php");
 require_once ("classes/model/TaskUser.php");
 require_once ("classes/model/Triggers.php");
@@ -368,6 +370,57 @@ class Cases
     function removeCase($sAppUid)
     {
         try {
+            $oApplication     = new Application();
+  		      $oAppDelegation   = new AppDelegation();
+  		      $oAppDocument     = new AppDocument();
+            //Delete the delegations of a application
+      	    $oCriteria2 = new Criteria('workflow');
+  	        $oCriteria2->add(AppDelegationPeer::APP_UID, $sAppUid);
+  	        $oDataset2 = AppDelegationPeer::doSelectRS($oCriteria2);
+            $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+            $oDataset2->next();
+            while ($aRow2 = $oDataset2->getRow()) {
+            	$oAppDelegation->remove($sAppUid, $aRow2['DEL_INDEX']);
+            	$oDataset2->next();
+            }
+      	    //Delete the documents assigned to a application
+      	    $oCriteria2 = new Criteria('workflow');
+  	        $oCriteria2->add(AppDocumentPeer::APP_UID, $sAppUid);
+  	        $oDataset2 = AppDocumentPeer::doSelectRS($oCriteria2);
+            $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+            $oDataset2->next();
+            while ($aRow2 = $oDataset2->getRow()) {
+            	$oAppDocument->remove($aRow2['APP_DOC_UID']);
+            	$oDataset2->next();
+            }
+            //Delete the actions from a application
+      	    $oCriteria2 = new Criteria('workflow');
+  	        $oCriteria2->add(AppDelayPeer::APP_UID, $sAppUid);
+            AppDelayPeer::doDelete($oCriteria2);
+            //Delete the messages from a application
+      	    $oCriteria2 = new Criteria('workflow');
+  	        $oCriteria2->add(AppMessagePeer::APP_UID, $sAppUid);
+            AppMessagePeer::doDelete($oCriteria2);
+            //Delete the threads from a application
+      	    $oCriteria2 = new Criteria('workflow');
+  	        $oCriteria2->add(AppThreadPeer::APP_UID, $sAppUid);
+            AppThreadPeer::doDelete($oCriteria2);
+            //Before delete verify if is a child case
+            $oCriteria2 = new Criteria('workflow');
+  	        $oCriteria2->add(SubApplicationPeer::APP_UID, $sAppUid);
+  	        $oCriteria2->add(SubApplicationPeer::SA_STATUS, 'ACTIVE');
+  	        if (SubApplicationPeer::doCount($oCriteria2) > 0) {
+  	          G::LoadClass('derivation');
+  	          $oDerivation = new Derivation();
+  	          $oDerivation->verifyIsCaseChild($sAppUid);
+  	        }
+            //Delete the registries in the table SUB_APPLICATION
+            $oCriteria2 = new Criteria('workflow');
+  	        $oCriteria2->add(SubApplicationPeer::APP_UID, $sAppUid);
+            SubApplicationPeer::doDelete($oCriteria2);
+            $oCriteria2 = new Criteria('workflow');
+  	        $oCriteria2->add(SubApplicationPeer::APP_PARENT, $sAppUid);
+            SubApplicationPeer::doDelete($oCriteria2);
             $oApp = new Application;
             return $oApp->remove($sAppUid);
         }
@@ -1908,6 +1961,15 @@ class Cases
         $array['APP_ENABLE_ACTION_DATE'] = date('Y-m-d H:i:s');
         $delay->create($array);
 
+        //Before cancel a case verify if is a child case
+        $oCriteria2 = new Criteria('workflow');
+  	    $oCriteria2->add(SubApplicationPeer::APP_UID, $sApplicationUID);
+  	    $oCriteria2->add(SubApplicationPeer::SA_STATUS, 'ACTIVE');
+  	    if (SubApplicationPeer::doCount($oCriteria2) > 0) {
+  	      G::LoadClass('derivation');
+  	      $oDerivation = new Derivation();
+  	      $oDerivation->verifyIsCaseChild($sApplicationUID);
+  	    }
     }
 
     function reactivateCase($sApplicationUID, $iIndex, $user_logged)

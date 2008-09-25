@@ -491,16 +491,29 @@ class Derivation
     if ($openThreads == 0) {//Close case
       $appFields['APP_STATUS']      = 'COMPLETED';
       $appFields['APP_FINISH_DATE'] = 'now';
-      //Obtain the related row in the table SUB_APPLICATION
-      require_once 'classes/model/SubApplication.php';
-      $oCriteria = new Criteria('workflow');
-      $oCriteria->add(SubApplicationPeer::APP_UID, $currentDelegation['APP_UID']);
-      $oDataset = SubApplicationPeer::doSelectRS($oCriteria);
-      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-      $oDataset->next();
-      $aSA = $oDataset->getRow();
+      $this->verifyIsCaseChild($currentDelegation['APP_UID']);
+    }
+    $appFields['DEL_INDEX'] = (isset($iNewDelIndex) ? $iNewDelIndex : 0);
+    $appFields['TAS_UID']   = $nextDel['TAS_UID'];
+    /* Start Block : UPDATES APPLICATION */
+    $this->case->updateCase ( $currentDelegation['APP_UID'], $appFields );
+    /* End Block : UPDATES APPLICATION */
+    //krumo ($appFields);die;
+  }
+
+  function verifyIsCaseChild($sApplicationUID) {
+    //Obtain the related row in the table SUB_APPLICATION
+    require_once 'classes/model/SubApplication.php';
+    $oCriteria = new Criteria('workflow');
+    $oCriteria->add(SubApplicationPeer::APP_UID, $sApplicationUID);
+    $oDataset = SubApplicationPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    $aSA = $oDataset->getRow();
+    if ($aSA) {
       //Obtain the related row in the table SUB_PROCESS
-      $aParentCase = $this->case->loadCase($aSA['APP_PARENT'], $aSA['DEL_INDEX_PARENT']);
+      $oCase = new Cases();
+      $aParentCase = $oCase->loadCase($aSA['APP_PARENT'], $aSA['DEL_INDEX_PARENT']);
       require_once 'classes/model/SubProcess.php';
       $oCriteria = new Criteria('workflow');
       $oCriteria->add(SubProcessPeer::PRO_PARENT, $aParentCase['PRO_UID']);
@@ -510,17 +523,18 @@ class Derivation
       $oDataset->next();
       $aSP = $oDataset->getRow();
       if ($aSP['SP_SYNCHRONOUS'] == 1) {
+        $appFields = $oCase->loadCase($sApplicationUID);
         //Copy case variables to parent case
         $aFields    = unserialize($aSP['SP_VARIABLES_IN']);
         $aNewFields = array();
         foreach ($aFields as $sOriginField => $sTargetField) {
           $aNewFields[$sTargetField] = isset($appFields['APP_DATA'][$sOriginField]) ? $appFields['APP_DATA'][$sOriginField] : '';
         }
-			  $aParentCase['APP_DATA'] = array_merge($aParentCase['APP_DATA'], $aNewFields);
-			  $this->case->updateCase($aSA['APP_PARENT'], $aParentCase);
+		    $aParentCase['APP_DATA'] = array_merge($aParentCase['APP_DATA'], $aNewFields);
+		    $oCase->updateCase($aSA['APP_PARENT'], $aParentCase);
         //Update table SUB_APPLICATION
         $oSubApplication = new SubApplication();
-        $oSubApplication->update(array('APP_UID'           => $currentDelegation['APP_UID'],
+        $oSubApplication->update(array('APP_UID'           => $sApplicationUID,
                                        'APP_PARENT'        => $aSA['APP_PARENT'],
                                        'DEL_INDEX_PARENT'  => $aSA['DEL_INDEX_PARENT'],
                                        'DEL_THREAD_PARENT' => $aSA['DEL_THREAD_PARENT'],
@@ -534,10 +548,10 @@ class Derivation
                  'DEL_INDEX' => $aSA['DEL_INDEX_PARENT'])
         );
         if (isset($aDeriveTasks[1])) {
-			    if ($aDeriveTasks[1]['ROU_TYPE'] != 'SELECT') {
-			      $nextDelegations2 = array();
-			      foreach ($aDeriveTasks as $aDeriveTask) {
-			        $nextDelegations2[] = array(
+		      if ($aDeriveTasks[1]['ROU_TYPE'] != 'SELECT') {
+		        $nextDelegations2 = array();
+		        foreach ($aDeriveTasks as $aDeriveTask) {
+		          $nextDelegations2[] = array(
                 'TAS_UID'           => $aDeriveTask['NEXT_TASK']['TAS_UID'],
                 'USR_UID'           => $aDeriveTask['NEXT_TASK']['USER_ASSIGNED']['USR_UID'],
                 'TAS_ASSIGN_TYPE'   => $aDeriveTask['NEXT_TASK']['TAS_ASSIGN_TYPE'],
@@ -545,8 +559,8 @@ class Derivation
                 'DEL_PRIORITY'	    => 3,
                 'TAS_PARENT'        => $aDeriveTask['NEXT_TASK']['TAS_PARENT']
               );
-			      }
-			      $currentDelegation2 = array(
+		        }
+		        $currentDelegation2 = array(
                 'APP_UID'    => $aSA['APP_PARENT'],
                 'DEL_INDEX'  => $aSA['DEL_INDEX_PARENT'],
                 'APP_STATUS' => 'TO_DO',
@@ -554,17 +568,10 @@ class Derivation
                 'ROU_TYPE'   => $aDeriveTasks[1]['ROU_TYPE']
             );
             $this->derivate($currentDelegation2, $nextDelegations2);
-			    }
-			  }
+		      }
+		    }
       }
     }
-    $appFields['DEL_INDEX'] = (isset($iNewDelIndex) ? $iNewDelIndex : 0);
-    $appFields['TAS_UID']   = $nextDel['TAS_UID'];
-    /* Start Block : UPDATES APPLICATION */
-    //$appFields = $this->case->loadCase($currentDelegation['APP_UID'], $currentDelegation['DEL_INDEX'] );
-    $this->case->updateCase ( $currentDelegation['APP_UID'], $appFields );
-    /* End Block : UPDATES APPLICATION */
-    //krumo ($appFields);die;
   }
 
 }
