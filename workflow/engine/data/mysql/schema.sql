@@ -7,7 +7,6 @@ SET FOREIGN_KEY_CHECKS = 0;
 #-- APPLICATION
 #-----------------------------------------------------------------------------
 
-
 DROP TABLE IF EXISTS `APPLICATION`;
 
 
@@ -99,7 +98,7 @@ CREATE TABLE `APP_MESSAGE`
 	`APP_MSG_CC` TEXT,
 	`APP_MSG_BCC` TEXT,
 	`APP_MSG_TEMPLATE` TEXT,
-	`APP_MSG_STATUS` VARCHAR,
+	`APP_MSG_STATUS` VARCHAR(20),
 	`APP_MSG_ATTACH` TEXT,
 	PRIMARY KEY (`APP_MSG_UID`)
 )Type=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Messages in an Application';
@@ -795,6 +794,50 @@ CREATE TABLE `STAGE`
 	`STG_POSY` INTEGER default 0 NOT NULL,
 	`STG_INDEX` INTEGER default 0 NOT NULL,
 	PRIMARY KEY (`STG_UID`)
+)Type=MyISAM  DEFAULT CHARSET='utf8';
+#-----------------------------------------------------------------------------
+#-- SUB_PROCESS
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `SUB_PROCESS`;
+
+
+CREATE TABLE `SUB_PROCESS`
+(
+	`SP_UID` VARCHAR(32) default '' NOT NULL,
+	`PRO_UID` VARCHAR(32) default '' NOT NULL,
+	`TAS_UID` VARCHAR(32) default '' NOT NULL,
+	`PRO_PARENT` VARCHAR(32) default '' NOT NULL,
+	`TAS_PARENT` VARCHAR(32) default '' NOT NULL,
+	`SP_TYPE` VARCHAR(20) default '' NOT NULL,
+	`SP_SYNCHRONOUS` INTEGER default 0 NOT NULL,
+	`SP_SYNCHRONOUS_TYPE` VARCHAR(20) default '' NOT NULL,
+	`SP_SYNCHRONOUS_WAIT` INTEGER default 0 NOT NULL,
+	`SP_VARIABLES_OUT` TEXT  NOT NULL,
+	`SP_VARIABLES_IN` TEXT  NOT NULL,
+	`SP_GRID_IN` VARCHAR(50) default '' NOT NULL,
+	PRIMARY KEY (`SP_UID`),
+	KEY `indexSubProcess`(`PRO_UID`, `PRO_PARENT`)
+)Type=MyISAM  DEFAULT CHARSET='utf8';
+#-----------------------------------------------------------------------------
+#-- SUB_APPLICATION
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `SUB_APPLICATION`;
+
+
+CREATE TABLE `SUB_APPLICATION`
+(
+	`APP_UID` VARCHAR(32) default '' NOT NULL,
+	`APP_PARENT` VARCHAR(32) default '' NOT NULL,
+	`DEL_INDEX_PARENT` INTEGER default 0 NOT NULL,
+	`DEL_THREAD_PARENT` INTEGER default 0 NOT NULL,
+	`SA_STATUS` VARCHAR(32) default '' NOT NULL,
+	`SA_VALUES_OUT` TEXT  NOT NULL,
+	`SA_VALUES_IN` TEXT  NOT NULL,
+	`SA_INIT_DATE` DATETIME  NOT NULL,
+	`SA_FINISH_DATE` DATETIME  NOT NULL,
+	PRIMARY KEY (`APP_UID`,`APP_PARENT`,`DEL_INDEX_PARENT`,`DEL_THREAD_PARENT`)
 )Type=MyISAM  DEFAULT CHARSET='utf8';
 # This restores the fkey checks, after having unset them earlier
 SET FOREIGN_KEY_CHECKS = 1;
