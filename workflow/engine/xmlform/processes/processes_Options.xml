@@ -5,9 +5,13 @@
   <en>New</en>
 </MNU_ADD>
 
-<MNU_IMPORT type="link" value='' link="#" onclick="window.location = 'processes_Import';return false;" colAlign="left" colWidth="45">
+<MNU_IMPORT type="link" value='' link="#" onclick="window.location = 'processes_Import';return false;" colAlign="left" colWidth="50">
   <en>Import</en>
 </MNU_IMPORT>
+
+<MNU_LIBRARY type="link" value='' link="#" onclick="window.location = 'processes_Library';return false;" colAlign="left" colWidth="95">
+  <en>Browse Library</en>
+</MNU_LIBRARY>
 
 <PAGED_TABLE_ID type="private"/>
 <PAGED_TABLE_FAST_SEARCH type="FastSearch" label="@G::LoadTranslation(ID_SEARCH)"/>

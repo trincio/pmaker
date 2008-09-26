@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm name="Objectpm" width="100%" type="pagedtable"
+  menu = ""
+>
+
+<title type="text" colWidth='120'  >
+  <en>Title</en>
+</title>
+
+<CAT_TITLE type="text" colWidth='60'  >
+  <en>Category</en>
+</CAT_TITLE>
+
+<version type="text" colWidth='0'  >
+  <en>Version</en>
+</version>
+
+<downloads type="text" colWidth='0'  >
+  <en>Downloads</en>
+</downloads>
+
+<rating type="text" colWidth='0'  >
+  <en>Rating</en>
+</rating>
+
+<subscriptions type="text" colWidth='0'  >
+  <en>Subscriptions</en>
+</subscriptions>
+
+
+<update_date type="text" colWidth='0'  >
+  <en>Update Date</en>
+</update_date>
+
+
+<LINK type="link" colWidth="60" titleAlign="left" align="left" link='objectpmView?id=@#OBJ_UID' >
+  <en>View</en>
+</LINK >
+
+<LINK2 type="link" colWidth="60" titleAlign="left" align="left" link='../services/download?id=@#OBJ_UID' >
+  <en>Download</en>
+</LINK2 >
+
+</dynaForm>
