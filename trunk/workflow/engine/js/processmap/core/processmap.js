@@ -930,7 +930,7 @@ var processmap=function(){
 		build:{
 			task:function(index,options_task)
 			{
-				console.log(index);
+				//console.log(index);
 				options_task = {
 						tp:'task'
 				}.concat(options_task || {});
@@ -1449,7 +1449,7 @@ var processmap=function(){
 						init	: t
 					}
 				};
-				console.info(index)
+				//console.info(index)
 				options.object.dropIndex=this.dropables.derivation.register({
 					element	: a,
 					value	: index,
@@ -2170,7 +2170,7 @@ processmap.prototype={
 		{
 				this.data.build.task(index,{tp:'task'});
 				//console.log(index);
-				console.log(this.data.db.task[index]);
+				//console.log(this.data.db.task[index]);
 				var r = new leimnud.module.rpc.xmlhttp({
 					url:this.options.dataServer,
 					args:"action=addTask&data="+{uid:this.options.uid,position:pos}.toJSONString()
@@ -2178,7 +2178,7 @@ processmap.prototype={
 				r.callback=this.parent.closure({instance:this,method:function(index,rpc){
 					var rs = rpc.xmlhttp.responseText.parseJSON();
 					var data = this.data.db.task[index];
-					console.log(data);
+					//console.log(data);
 					data.label=data.object.elements.label.innerHTML=rs.label || "";
 					data.uid=rs.uid || false;
 				},args:[index,r]});
