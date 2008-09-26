@@ -2,7 +2,7 @@ msgid ""
 msgstr "" 
 "Project-Id-Version: PM 4.0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-09-10 16:00+0100 \n"
+"PO-Revision-Date: 2008-09-26 18:00+0100 \n"
 "Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
 "Language-Team: Colosa Developers Team <developers@colosa.com>\n"
 "MIME-Version: 1.0\n"
@@ -2528,6 +2528,12 @@ msgid "Filename generated, is required!!!"
 msgstr "Filename generated, is required!!!"
 
 # TRANSLATION
+# JAVASCRIPT/ID_WEBENTRY
+#: JAVASCRIPT/ID_WEBENTRY
+msgid "In order to use the Web Entry Feature, you must first create a S"
+msgstr "In order to use the Web Entry Feature, you must first create a S"
+
+# TRANSLATION
 # LABEL/ID_DOWNLOAD
 #: LABEL/ID_DOWNLOAD
 msgid "Download"
@@ -2724,6 +2730,24 @@ msgstr "Tasks Assigned For"
 #: JAVASCRIPT/ID_MSG_CONFIRM_REMOVE_TASK
 msgid "Do you want to remove this task ?"
 msgstr "Do you want to remove this task ?"
+
+# TRANSLATION
+# JAVASCRIPT/ID_PROCESSMAP_ADD_SUBPROCESS
+#: JAVASCRIPT/ID_PROCESSMAP_ADD_SUBPROCESS
+msgid "Add Sub-Process"
+msgstr "Add Sub-Process"
+
+# TRANSLATION
+# JAVASCRIPT/ID_PROCESSMAP_DELETE_SUBPROCESS
+#: JAVASCRIPT/ID_PROCESSMAP_DELETE_SUBPROCESS
+msgid "Delete Sub-Process"
+msgstr "Delete Sub-Process"
+
+# TRANSLATION
+# JAVASCRIPT/ID_PROCESSMAP_CONFIRM_DELETE_SUBPROCESS
+#: JAVASCRIPT/ID_PROCESSMAP_CONFIRM_DELETE_SUBPROCESS
+msgid "Do you want to delete the Sub-Process: "
+msgstr "Do you want to delete the Sub-Process: "
 
 # messages/messages_Edit.xml?MESS_TITLE
 # messages/messages_Edit.xml
@@ -6853,6 +6877,60 @@ msgstr "Description"
 msgid "[outputdocs/outputdocs_List.xml?SEARCH] Apply Filter"
 msgstr "Apply Filter"
 
+# processes/processes_subProcess.xml?TITLE1
+# processes/processes_subProcess.xml
+#: title - TITLE1
+msgid "Sub-Process"
+msgstr "Sub-Process"
+
+# processes/processes_subProcess.xml?TASKS
+# processes/processes_subProcess.xml
+#: dropdown - TASKS
+msgid "Process"
+msgstr "Process"
+
+# processes/processes_subProcess.xml?TASKS-''
+# processes/processes_subProcess.xml
+#: dropdown - TASKS - ''
+msgid "[processes/processes_subProcess.xml?TASKS-'']"
+msgstr "Select a process"
+
+# processes/processes_subProcess.xml?SP_SYNCHRONOUS
+# processes/processes_subProcess.xml
+#: yesno - SP_SYNCHRONOUS
+msgid "Synchronous"
+msgstr "Synchronous"
+
+# processes/processes_subProcess.xml?SUBTITLE1
+# processes/processes_subProcess.xml
+#: subtitle - SUBTITLE1
+msgid "Variables Out"
+msgstr "Variables Out"
+
+# processes/processes_subProcess.xml?SUBTITLE2
+# processes/processes_subProcess.xml
+#: subtitle - SUBTITLE2
+msgid "Variables In"
+msgstr "Variables In"
+
+# processes/processes_subProcess.xml?SAVE
+# processes/processes_subProcess.xml
+#: button - SAVE
+msgid "[processes/processes_subProcess.xml?SAVE] Save"
+msgstr "Save"
+
+# processes/processes_subProcess_Out.xml?VAR_OUT1
+# processes/processes_subProcess_Out.xml
+#: text - VAR_OUT1
+msgid "Origin"
+msgstr "Origin"
+
+# processes/processes_subProcess_Out.xml?VAR_OUT2
+# processes/processes_subProcess_Out.xml
+#: text - VAR_OUT2
+msgid "Target"
+msgstr "Target"
+
 # processes/processes_ObjectsPermissionsOptions.xml?MNU_ADD
 # processes/processes_ObjectsPermissionsOptions.xml
 #: link - MNU_ADD
@@ -7423,6 +7501,18 @@ msgstr "File"
 msgid "[processes/processes_Import.xml?SAVE] Import"
 msgstr "Import"
 
+# processes/processes_subProcess_In.xml?VAR_IN1
+# processes/processes_subProcess_In.xml
+#: text - VAR_IN1
+msgid "[processes/processes_subProcess_In.xml?VAR_IN1] Origin"
+msgstr "Origin"
+
+# processes/processes_subProcess_In.xml?VAR_IN2
+# processes/processes_subProcess_In.xml
+#: text - VAR_IN2
+msgid "[processes/processes_subProcess_In.xml?VAR_IN2] Target"
+msgstr "Target"
+
 # processes/processes_User.xml?USR_FIRSTNAME
 # processes/processes_User.xml
 #: text - USR_FIRSTNAME
@@ -7552,7 +7642,7 @@ msgstr "Average (Hours)"
 # reports/report_filter.xml?PROCESS
 # reports/report_filter.xml
 #: dropdown - PROCESS
-msgid "Process"
+msgid "[reports/report_filter.xml?PROCESS] Process"
 msgstr "Process"
 
 # reports/report_filter.xml?PROCESS-''
@@ -10401,7 +10491,7 @@ msgstr "Email"
 
 # users/users_New.xml?USR_ADDRESS
 # users/users_New.xml
-#: text - USR_ADDRESS
+#: textarea - USR_ADDRESS
 msgid "Address"
 msgstr "Address"
 
@@ -10821,7 +10911,7 @@ msgstr "Email"
 
 # users/users_Edit.xml?USR_ADDRESS
 # users/users_Edit.xml
-#: text - USR_ADDRESS
+#: textarea - USR_ADDRESS
 msgid "[users/users_Edit.xml?USR_ADDRESS] Address"
 msgstr "Address"
 
@@ -11007,7 +11097,7 @@ msgstr "Email"
 
 # users/myInfo.xml?USR_ADDRESS
 # users/myInfo.xml
-#: text - USR_ADDRESS
+#: textarea - USR_ADDRESS
 msgid "[users/myInfo.xml?USR_ADDRESS] Address"
 msgstr "Address"
 
@@ -11329,6 +11419,12 @@ msgstr "Manual Assignment"
 msgid "[tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_TYPE-EVALUATE]"
 msgstr "Value Based Assignment"
 
+# tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_VARIABLE
+# tasks/tasks_AssignmentRules.xml
+#: textpm - TAS_ASSIGN_VARIABLE
+msgid "Variable for Value Based Assignment"
+msgstr "Variable for Value Based Assignment"
+
 # tasks/tasks_Labels.xml?TAS_DEF_TITLE
 # tasks/tasks_Labels.xml
 #: textareapm - TAS_DEF_TITLE
@@ -11472,6 +11568,12 @@ msgstr "Title"
 #: textarea - TAS_DESCRIPTION
 msgid "[tasks/tasks_Definition.xml?TAS_DESCRIPTION] Description"
 msgstr "Description"
+
+# tasks/tasks_Definition.xml?TAS_PRIORITY_VARIABLE
+# tasks/tasks_Definition.xml
+#: textpm - TAS_PRIORITY_VARIABLE
+msgid "Variable for Case priority"
+msgstr "Variable for Case priority"
 
 # tasks/tasks_Definition.xml?TAS_START
 # tasks/tasks_Definition.xml
