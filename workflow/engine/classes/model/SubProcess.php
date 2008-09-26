@@ -58,6 +58,8 @@ class SubProcess extends BaseSubProcess {
       $this->setTasParent($aData['TAS_PARENT']);
 
       $this->setSpType($aData['SP_TYPE']);
+      
+      $this->setSpSynchronous($aData['SP_SYNCHRONOUS']);
 
       $this->setSpSynchronousType($aData['SP_SYNCHRONOUS_TYPE']);
 
@@ -134,5 +136,27 @@ class SubProcess extends BaseSubProcess {
       throw($e);
     }
   }
+  
+  /**
+	 * verify if Trigger row specified in [sUid] exists.
+	 *
+	 * @param      string $sUid   the uid of the Prolication
+	 */
+
+  function subProcessExists ( $sUid ) {
+  	$con = Propel::getConnection(SubProcessPeer::DATABASE_NAME);
+    try {
+      $oObj = SubProcessPeer::retrieveByPk( $sUid );
+  	  if ( get_class ($oObj) == 'SubProcess' ) {
+  	    return true;
+  	  }
+      else {
+        return false;
+      }
+    }
+    catch (Exception $oError) {
+    	throw($oError);
+    }
+  }  
 
 } // SubProcess

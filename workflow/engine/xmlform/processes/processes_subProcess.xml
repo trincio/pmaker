@@ -19,8 +19,11 @@
   </en>
 </TASKS>
 
-<SP_SYNCHRONOUS type="yesno" defaultvalue="0">
-<en>Synchronous</en>
+<SP_SYNCHRONOUS type="dropdown" defaultvalue="0">
+  <en>Type
+  								<option name="0">Asynchronous</option>
+  								<option name="1">Synchronous</option>
+  </en>
 </SP_SYNCHRONOUS>
 
 <SUBTITLE1 type="subtitle">
@@ -57,9 +60,9 @@ var dynaformOnload = function()
   	  showRowById(SUBTITLE2);
   	}
   else
-  	{ hideRowById(grid1);
+  	{ //hideRowById(grid1);
   	  hideRowById(grid2);	
-  	  hideRowById(SUBTITLE1);
+  	  //hideRowById(SUBTITLE1);
   	  hideRowById(SUBTITLE2);
   	}
 };
@@ -76,9 +79,9 @@ leimnud.event.add(getField('SP_SYNCHRONOUS'), 'change', function() {
   	  showRowById(SUBTITLE2);
 	  }
   else
-  	{ hideRowById(grid1);
+  	{ //hideRowById(grid1);
   	  hideRowById(grid2);
-  	  hideRowById(SUBTITLE1);
+  	  //hideRowById(SUBTITLE1);
   	  hideRowById(SUBTITLE2);
   	}
   	});
