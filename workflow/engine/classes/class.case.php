@@ -1431,6 +1431,7 @@ class Cases
         $c->addAlias("APP_LAST_USER", 'USERS');
 
         $c->addJoin(ApplicationPeer::APP_UID, AppDelegationPeer::APP_UID, Criteria::LEFT_JOIN);
+        $c->addJoin(AppDelegationPeer::TAS_UID, TaskPeer::TAS_UID, Criteria::LEFT_JOIN);
         $appThreadConds[] = array(ApplicationPeer::APP_UID, AppThreadPeer::APP_UID);
         $appThreadConds[] = array(AppDelegationPeer::DEL_INDEX, AppThreadPeer::DEL_INDEX);
         $c->addJoinMC($appThreadConds, Criteria::LEFT_JOIN);
@@ -1463,6 +1464,8 @@ class Cases
         $usrConds = array();
         $usrConds[] = array('APP_PREV_DEL.USR_UID', 'APP_LAST_USER.USR_UID');
         $c->addJoinMC($usrConds, Criteria::LEFT_JOIN);
+
+        $c->add(TaskPeer::TAS_TYPE, 'SUBPROCESS', Criteria::NOT_EQUAL);
 
         if ($sTypeList != 'gral' && $sTypeList != 'to_revise') {
             $c->add(UsersPeer::USR_UID, $sUIDUserLogged);
