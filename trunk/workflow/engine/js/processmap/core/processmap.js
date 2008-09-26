@@ -724,7 +724,7 @@ var processmap=function(){
 			preDerivation:function(uid)
 			{
 				var tmS;
-				var typeDerivation = this.dragables.derivation.currentElementInArray;
+				var typeDerivation = this.dragables.derivation.currentElementInArray;				
 				if(typeDerivation===6){
 
 					var vars=this.data.db.task[uid];
@@ -2158,7 +2158,8 @@ processmap.prototype={
 			position:pos,
 			label	:G_STRINGS.ID_PROCESSMAP_NEW_TASK,
 			uid		:false,
-			color	:((options.tp=='task')?"#006699":"green"),
+			//color	:((options.tp=='task')?"#006699":"green"),
+			task_type:((options.tp=='task')?'NORMAL':'SUBPROCESS'),
 			derivation:{to:[]}
 		}
 		var data = this.data.db.task[index];
