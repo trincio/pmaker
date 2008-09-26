@@ -67,6 +67,7 @@
     $oProcess->renewAllOutputGuid ( $oData );
     $oProcess->renewAllStepGuid ( $oData );
     $oProcess->renewAllTriggerGuid ( $oData );
+    $oProcess->renewAllSubProcessGuid ( $oData );
     $oProcess->createProcessFromData ($oData, $path . $filename );
   }
 
@@ -82,6 +83,7 @@
     $oProcess->renewAllOutputGuid ( $oData );
     $oProcess->renewAllStepGuid ( $oData );
     $oProcess->renewAllTriggerGuid ( $oData );
+    $oProcess->renewAllSubProcessGuid ( $oData );
     $oProcess->createProcessFromData ($oData, $path . $filename );
   }
 

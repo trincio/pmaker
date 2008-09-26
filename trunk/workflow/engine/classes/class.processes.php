@@ -41,6 +41,7 @@ require_once 'classes/model/ReportTable.php';
 require_once 'classes/model/ReportVar.php';
 require_once 'classes/model/DbSource.php';
 require_once 'classes/model/StepSupervisor.php';
+require_once 'classes/model/SubProcess.php';
 
 G::LoadClass('tasks');
 G::LoadClass('reportTables');
@@ -161,6 +162,16 @@ class Processes {
   }
 
   /*
+  * verify if the object exists
+  * @param string $sUid
+  * @return boolean
+  */
+  function SubProcessExists ( $sUid = '') {
+    $oSubProcess = new SubProcess();
+    return $oSubProcess->subProcessExists( $sUid );
+  }
+  
+  /*
   * get an unused input GUID
   * @return $sProUid
   */
@@ -193,6 +204,17 @@ class Processes {
     return $sNewUid;
   }
 
+   /*
+  * get an unused trigger GUID
+  * @return $sProUid
+  */
+  function getUnusedSubProcessGUID( ) {
+    do {
+     $sNewUid = G::generateUniqueID() ;
+    } while ( $this->subProcessExists ( $sNewUid ) );
+    return $sNewUid;
+  }
+  
   /*
   * verify if the object exists
   * @param string $sUid
@@ -261,9 +283,12 @@ class Processes {
   	foreach ($oData->dbconnections as $key => $val ) {
   		$oData->dbconnections[$key]['PRO_UID'] = $sNewProUid;
   	}
-	foreach ($oData->objectPermissions as $key => $val ) {
+	  foreach ($oData->objectPermissions as $key => $val ) {
 		$oData->objectPermissions[$key]['PRO_UID'] = $sNewProUid;
-	}
+	  }
+	  foreach ($oData->subProcess as $key => $val ) {
+		$oData->subProcess[$key]['PRO_PARENT'] = $sNewProUid;
+	 }
 	
   	return true;
   }
@@ -313,6 +338,10 @@ class Processes {
   	  $newGuid = $map[ $val['TAS_UID'] ];
   	  $oData->taskusers[$key]['TAS_UID'] = $newGuid;
   	}
+  	foreach ( $oData->subProcess as $key => $val ) {
+  	  $newGuid = $map[ $val['TAS_PARENT'] ];
+  	  $oData->subProcess[$key]['TAS_PARENT'] = $newGuid;
+  	}
   }
 
   /*
@@ -352,6 +381,26 @@ class Processes {
   function updateProcessRow ($row ){
     $oProcess = new Process( );
     return $oProcess->update($row);
+  }
+  
+  //sub Process
+  function getSubProcessRow ($sProUid){
+    try {
+  	  $aSubProcess   = array();
+  	  $oCriteria = new Criteria('workflow');
+      $oCriteria->add(SubProcessPeer::PRO_PARENT, $sProUid);
+      $oDataset = SubProcessPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      while ($aRow = $oDataset->getRow()) {
+       $aSubProcess[] = $aRow;
+       $oDataset->next();
+      }
+      return $aSubProcess;
+    }
+  	catch (Exception $oError) {
+    	throw($oError);
+    }
   }
 
 
@@ -423,6 +472,14 @@ class Processes {
   	return;
   }
 
+function createSubProcessRows ($SubProcess ){  //SwimlanesElements
+  	foreach ( $SubProcess as $key => $row ) {
+      $oSubProcess = new SubProcess();      
+      $res = $oSubProcess->create($row);
+  	}
+  	return;
+  }
+  
   function getInputRows ($sProUid ){  //SwimlanesElements
   	try {
   	  $aInput   = array();
@@ -539,6 +596,15 @@ class Processes {
   	}
   }
 
+  function renewAllSubProcessGuid ( &$oData ) {
+  	$map = array ();
+  	foreach ( $oData->subProcess as $key => $val ) {
+  	  $newGuid = $this->getUnusedSubProcessGUID();
+  	  $map[ $val['SP_UID'] ] = $newGuid;
+  	  $oData->subProcess[$key]['SP_UID'] = $newGuid;
+  	}  	
+  }
+  
   function getStepRows ($sProUid ){  //SwimlanesElements
   	try {
   	  $aStep   = array();
@@ -961,6 +1027,7 @@ class Processes {
     $oData->reportTablesVars  = $this->getReportTablesVarsRows($sProUid);
     $oData->stepSupervisor    = $this->getStepSupervisorRows($sProUid);
     $oData->objectPermissions = $this->getObjectPermissionRows ($sProUid);
+    $oData->subProcess = $this->getSubProcessRow ($sProUid);
     //krumo ($oData);die;			
     //$oJSON = new Services_JSON();
     //krumo ( $oJSON->encode($oData) );
@@ -1491,7 +1558,7 @@ class Processes {
     $this->createDBConnectionsRows($oData->dbconnections);
     $this->createReportTables($oData->reportTables, $oData->reportTablesVars);
     $this->createObjectPermissions( $oData->objectPermissions );
-
+    $this->createSubProcessRows( $oData->subProcess );
     //and finally create the files, dynaforms (xml and html), emailTemplates and Public files    
     $this->createFiles ( $oData, $pmFilename  );
  }
@@ -1520,6 +1587,7 @@ class Processes {
     $this->updateReportTables($oData->reportTables, $oData->reportTablesVars);
     $this->createFiles ( $oData, $pmFilename  );    
     $this->createObjectPermissions( $oData->objectPermissions );
+    $this->createSubProcessRows( $oData->subProcess );
  }
 
  function getStartingTaskForUser ($sProUid, $sUsrUid ){
