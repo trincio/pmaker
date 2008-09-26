@@ -352,7 +352,7 @@ class Derivation
           $oTask = new Task();
           $aTask = $oTask->load($nextDel['TAS_PARENT']);
           $nextDel = array('TAS_UID'           => $aTask['TAS_UID'],
-                           'USR_UID'           => -1,
+                           'USR_UID'           => $aSP['USR_UID'],
                            'TAS_ASSIGN_TYPE'   => $aTask['TAS_ASSIGN_TYPE'],
                            'TAS_DEF_PROC_CODE' => $aTask['TAS_DEF_PROC_CODE'],
                            'DEL_PRIORITY'      => 3,
@@ -418,18 +418,24 @@ class Derivation
               foreach ($aFields as $sOriginField => $sTargetField) {
                 $aNewFields[$sTargetField] = isset($appFields['APP_DATA'][$sOriginField]) ? $appFields['APP_DATA'][$sOriginField] : '';
               }
-				      $aOldFields['APP_DATA'] = array_merge($aOldFields['APP_DATA'], $aNewFields);
+				      $aOldFields['APP_DATA']   = array_merge($aOldFields['APP_DATA'], $aNewFields);
+				      $aOldFields['APP_STATUS'] = 'TO_DO';
 				      $this->case->updateCase($aNewCase['APPLICATION'], $aOldFields);
 				      //Create a registry in SUB_APPLICATION table
+				      $aSubApplication = array('APP_UID'           => $aNewCase['APPLICATION'],
+                                       'APP_PARENT'        => $currentDelegation['APP_UID'],
+                                       'DEL_INDEX_PARENT'  => $iNewDelIndex,
+                                       'DEL_THREAD_PARENT' => $iAppThreadIndex,
+                                       'SA_STATUS'         => 'ACTIVE',
+                                       'SA_VALUES_OUT'     => serialize($aNewFields),
+                                       'SA_INIT_DATE'      => date('Y-m-d H:i:s'));
+              if ($aSP['SP_SYNCHRONOUS'] == 0) {
+                $aSubApplication['SA_STATUS']      = 'FINISHED';
+                $aSubApplication['SA_FINISH_DATE'] = $aSubApplication['SA_INIT_DATE'];
+              }
               require_once 'classes/model/SubApplication.php';
               $oSubApplication = new SubApplication();
-              $oSubApplication->create(array('APP_UID'           => $aNewCase['APPLICATION'],
-                                             'APP_PARENT'        => $currentDelegation['APP_UID'],
-                                             'DEL_INDEX_PARENT'  => $iNewDelIndex,
-                                             'DEL_THREAD_PARENT' => $iAppThreadIndex,
-                                             'SA_STATUS'         => 'ACTIVE',
-                                             'SA_VALUES_OUT'     => serialize($aNewFields),
-                                             'SA_INIT_DATE'      => date('Y-m-d H:i:s')));
+              $oSubApplication->create($aSubApplication);
               //If not is SYNCHRONOUS derivate one more time
               if ($aSP['SP_SYNCHRONOUS'] == 0) {
                 $this->case->setDelInitDate($currentDelegation['APP_UID'], $iNewDelIndex);
