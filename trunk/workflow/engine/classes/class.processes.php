@@ -1396,6 +1396,7 @@ function createSubProcessRows ($SubProcess ){  //SwimlanesElements
   	  $oStepTrigger     = new StepTrigger();
   	  $oRoute           = new Route();
   	  $oStep            = new Step();
+  	  $oSubProcess      = new SubProcess();
   	  $oSwimlaneElement = new SwimlanesElements();
   	  $oConnection      = new DbSource();
 
@@ -1526,6 +1527,17 @@ function createSubProcessRows ($SubProcess ){  //SwimlanesElements
     $oDataset->next();
     while ($aRow = $oDataset->getRow()) {
     	$oConnection->remove($aRow['DBS_UID']);
+    	$oDataset->next();
+    }
+    
+    //Delete the sub process of process
+		$oCriteria = new Criteria('workflow');
+	  $oCriteria->add(SubProcessPeer::PRO_PARENT, $sProUid);
+	  $oDataset = SubProcessPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    while ($aRow = $oDataset->getRow()) {
+    	$oSubProcess->remove($aRow['SP_UID']);
     	$oDataset->next();
     }
        
