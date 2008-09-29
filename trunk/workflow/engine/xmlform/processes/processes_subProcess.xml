@@ -48,8 +48,8 @@ var processes_subProcessSave = function(oForm) {
   Pm.tmp.subProcessPanel.remove();
 };
 
-var dynaformOnload = function()
-{ var grid1 = getField('grid1');
+//var dynaformOnload = function(){ 
+  var grid1 = getField('grid1');
   var grid2 = getField('grid2');
   var SUBTITLE1 = getField('SUBTITLE1');
   var SUBTITLE2 = getField('SUBTITLE2');
@@ -65,7 +65,7 @@ var dynaformOnload = function()
   	  //hideRowById(SUBTITLE1);
   	  hideRowById(SUBTITLE2);
   	}
-};
+//};
 
 leimnud.event.add(getField('SP_SYNCHRONOUS'), 'change', function() {
   var grid1 = getField('grid1');
