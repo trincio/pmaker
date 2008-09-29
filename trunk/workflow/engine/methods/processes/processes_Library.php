@@ -45,9 +45,16 @@ switch ($RBAC->userCanAccess('PM_FACTORY'))
 		}
 
 		$result = array();
-		foreach ($array->item as $key => $value) {			
-			$result[$value->key] = $value->value;
-		}
+		if ( isset ( $array->item ) ) {
+		  foreach ($array->item as $key => $value) {			
+  			$result[$value->key] = $value->value;
+	  	}
+	  }
+	  else {
+		  foreach ($array as $key => $value) {			
+  			$result[$value->key] = $value->value;
+	  	}
+	  }
 		return $result;
 	}  
 
@@ -60,7 +67,7 @@ try {
   $result = $oProcess->ws_ProcessList ( );
    	$processes[] = array ( 'uid' => 'char', 'name' => 'char', 'age' => 'integer', 'balance' => 'float' );
 
-    if ( $result->status_code == 0 ) {
+    if ( $result->status_code == 0 && isset($result->processes) ) {
     	foreach ( $result->processes as $key => $val ) {
     		$process = parseItemArray($val); 
     		$processes[] = $process;
