@@ -28,7 +28,7 @@ var assignGroupOrUser = function(sTask, sUser, iType, iRelation) {
   Pm.tmp.usersPanel.currentRPC.make();
 };
 
-var ofToAssignGroupOrUser = function(TAS_UID, USR_UID, TU_TYPE, TU_RELATION) {
+var ofToAssignGroupOrUser = function(TAS_UID, USR_UID, TU_TYPE, TU_RELATION) {  
   new leimnud.module.app.confirm().make({
   	label:'@#CONFIRM',
   	action:function() {
