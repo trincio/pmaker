@@ -724,7 +724,7 @@ var processmap=function(){
 			preDerivation:function(uid)
 			{
 				var tmS;
-				var typeDerivation = this.dragables.derivation.currentElementInArray;				
+				var typeDerivation = this.dragables.derivation.currentElementInArray;
 				if(typeDerivation===6){
 
 					var vars=this.data.db.task[uid];
@@ -940,7 +940,12 @@ var processmap=function(){
 				//var options = this.data.db[(options_task.tp=='task')?'task':'subprocess'][index];
 				var options = this.data.db['task'][index];
 
-				options.color = ((options_task.tp==='task')?"auto":"#9B88CA");
+				//options.color = ((options_task.tp==='task')?"auto":"#9B88CA");
+				//options.color = "auto";
+				//alert(this.options.rw);
+				if (this.options.rw) {
+				  options.color = ((options_task.tp==='task')?"auto":"#9B88CA");
+				}
 
 				var db		= this.data.db, task=db.task[index];
 				var derivation 	= task.derivation.to;
