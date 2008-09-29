@@ -2912,12 +2912,12 @@ class processMap {
     	   $SP_VARIABLES_IN  = array();
     	   /* Prepare page before to show */
     	   global $_DBArray;
-  			 $_DBArray['NewCase'] = $this->subProcess_TaskIni();
+  			 $_DBArray['NewCase'] = $this->subProcess_TaskIni($sProcessUID);
 
     	   require_once 'classes/model/SubProcess.php';
     		 $oCriteria = new Criteria('workflow');
     		 $oCriteria->add(SubProcessPeer::PRO_PARENT, $sProcessUID);
-    	   $oCriteria->add(SubProcessPeer::TAS_PARENT, $sTaskUID);
+    	   $oCriteria->add(SubProcessPeer::TAS_PARENT, $sTaskUID);    	  
     		 $oDataset = SubProcessPeer::doSelectRS($oCriteria);
     		 $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
     		 $oDataset->next();
@@ -2946,8 +2946,6 @@ class processMap {
 		         }
          }
 
-
-
     	  global $G_PUBLISH;
   	    $G_PUBLISH = new Publisher();
         $G_PUBLISH->AddContent('xmlform', 'xmlform', 'processes/processes_subProcess', '', $aRow, 'processes_subProcessSave');
@@ -2959,7 +2957,7 @@ class processMap {
   }
 
 
-  function subProcess_TaskIni() {
+  function subProcess_TaskIni($sProcessUID) {
   	    $c = new Criteria();
         $c->clearSelectColumns();
         $c->addSelectColumn(TaskPeer::TAS_UID);
@@ -2968,7 +2966,7 @@ class processMap {
         $c->addJoin(TaskPeer::TAS_UID, TaskUserPeer::TAS_UID, Criteria::LEFT_JOIN);
         $c->add(ProcessPeer::PRO_STATUS, 'ACTIVE');
         $c->add(TaskPeer::TAS_START, 'TRUE');
-
+        $c->add(ProcessPeer::PRO_UID, $sProcessUID, Criteria::NOT_IN);
         $rs = TaskPeer::doSelectRS($c);
         $rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
         $rs->next();
