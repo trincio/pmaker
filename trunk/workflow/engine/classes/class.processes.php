@@ -1607,7 +1607,75 @@ function createSubProcessRows ($SubProcess ){  //SwimlanesElements
 
     return $oTask->getStartingTaskForUser( $sProUid, $sUsrUid );
   }
-}
+  
+  /*************************************************
+  functions to enable open ProcessMaker Library
+  *************************************************/  
+  function ws_open ( $user, $pass ) {
+    global $sessionId;
+    global $client;
+    $endpoint = PML_WSDL_URL;
+    $sessionId = '';
+    $client = new SoapClient( $endpoint );
+  
+    $params = array('userid'=>$user, 'password'=>$pass );
+    $result = $client->__SoapCall('login', array($params));
+    if ( $result->status_code == 0 ) {
+      $sessionId = $result->message;
+      return 1;
+    }
+    throw ( new Exception ( $result->message ) );
+    return 1;
+  }
+
+  function ws_open_public ( ) {
+    global $sessionId;
+    global $client;
+    $endpoint = PML_WSDL_URL;
+    $sessionId = '';
+    $client = new SoapClient( $endpoint );
+  
+    return 1;
+  }
+
+  function ws_processList (  ){
+  	global $sessionId;
+  	global $client;
+  	
+    $endpoint = PML_WSDL_URL;
+    $client = new SoapClient( $endpoint );  	
+
+  	$sessionId = '';
+    $params = array('sessionId'=>$sessionId );
+    $result = $client->__SoapCall('processList', array($params));
+    if ( $result->status_code == 0 ) {
+      return $result;
+    }
+    throw ( new Exception ( $result->message ) );
+  }
+
+  function downloadFile ($file, $local_path, $newfilename) {
+    $err_msg = '';
+    $out = fopen($local_path . $newfilename, 'wb');
+    if ($out == FALSE){
+      throw ( new Exception ("File $newfilename not opened") );
+    }
+   
+    $ch = curl_init();
+           
+    curl_setopt($ch, CURLOPT_FILE, $out);
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+    curl_setopt($ch, CURLOPT_URL, $file);
+               
+    curl_exec($ch);
+    $errorMsg = curl_error ( $ch);
+   
+    curl_close($ch);
+    return $errorMsg;
+
+  }//end function   
+  
+}//end class processes
 
 
 class ObjectDocument{

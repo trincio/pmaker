@@ -64,3 +64,17 @@
  * Number of files per folder at PATH_UPLOAD (cases documents)  
  */
  define( 'APPLICATION_DOCUMENTS_PER_FOLDER', 1000 );
+ 
+/*
+ * Server of ProcessMaker Library
+ */
+  define ( 'PML_SERVER' ,  'http://pmLibrary.opensource.colosa.net' );
+  define ( 'PML_WSDL_URL' ,    PML_SERVER . '/syspmLibrary/en/green/services/wsdl');
+  define ( 'PML_UPLOAD_URL',   PML_SERVER . "/syspmLibrary/en/green/services/uploadProcess");
+  define ( 'PML_DOWNLOAD_URL', PML_SERVER . '/syspmLibrary/en/green/services/download');
+ 
+ 
+ 
+ 
+ 
+ 
