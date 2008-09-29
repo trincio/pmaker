@@ -165,6 +165,7 @@ class Derivation
     $c->addSelectColumn( TaskUserPeer::USR_UID);
     $c->addSelectColumn( TaskUserPeer::TU_RELATION);
     $c->add ( TaskUserPeer::TAS_UID, $sTasUid);
+    $c->add ( TaskUserPeer::TU_TYPE, 1);	
     $rs = TaskUserPeer::DoSelectRs ($c);
     $rs->setFetchmode (ResultSet::FETCHMODE_ASSOC);
     $rs->next();
