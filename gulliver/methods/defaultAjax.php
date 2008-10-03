@@ -36,6 +36,22 @@ $G_FORM->id=urlDecode($_POST['form']);
 $G_FORM->values=isset($_SESSION[$G_FORM->id]) ? $_SESSION[$G_FORM->id] : array();
 
 $newValues=($json->decode(urlDecode(stripslashes($_POST['fields']))));
+if (isset($_POST['grid'])) {
+  $_POST['row'] = (int)$_POST['row'];
+  $aAux = array();
+  foreach ($newValues as $sKey => $newValue) {
+    $newValue = (array)$newValue;
+    $aKeys    = array_keys($newValue);
+    $aValues  = array();
+    for ($i = 1; $i <= ($_POST['row'] - 1); $i++) {
+      $aValues[$i] = array($aKeys[0] => '');
+    }
+    $aValues[$_POST['row']] = array($aKeys[0] => $newValue[$aKeys[0]]);
+    //$newValues[$sKey]->$_POST['grid'] = array($_POST['row'] => array($aKeys[0] => $newValue[$aKeys[0]]));
+    $newValues[$sKey]->$_POST['grid'] = $aValues;
+    unset($newValues[$sKey]->$aKeys[0]);
+  }
+}//var_dump($aValues);die;
 //Resolve dependencies
 //Returns an array ($dependentFields) with the names of the fields
 //that depends of fields passed through AJAX ($_GET/$_POST)
@@ -45,33 +61,54 @@ for($r=0;$r<sizeof($newValues);$r++) {
 	$G_FORM->setValues($newValues[$r]);
 	//Search dependent fields
 	foreach($newValues[$r] as $k => $v) {
-		$myDependentFields = subDependencies( $k , $G_FORM , $aux );
+	  if (!is_array($v)) {
+		  $myDependentFields = subDependencies( $k , $G_FORM , $aux );
+	  }
+	  else {
+	    foreach($v[$_POST['row']] as $k1 => $v1) {
+	      $myDependentFields = subDependencies( $k1 , $G_FORM , $aux, $_POST['grid'] );
+	    }
+	  }
 		$dependentFields=array_merge($dependentFields, $myDependentFields);
 		$_SESSION[$G_FORM->id][$k] = $v;
 	}
 }
+
 $dependentFields=array_unique($dependentFields);
 
 //Parse and update the new content
 $template = PATH_CORE . 'templates/xmlform.html';
 $newContent=$G_FORM->getFields($template);
-
+//die;
 //Returns the dependentFields's content
 $sendContent=array();
 $r=0;
 foreach($dependentFields as $d) {
-	$sendContent[$r]->name=$d;
+  $sendContent[$r]->name=$d;
 	$sendContent[$r]->content=NULL;
-	foreach($G_FORM->fields[$d] as $attribute => $value) {
-	  switch($attribute) {
-	    case 'type':
-	    $sendContent[$r]->content->{$attribute}=$value; break;
-	    case 'options':
-	    $sendContent[$r]->content->{$attribute}=toJSArray($value); break;
+  if (!isset($_POST['grid'])) {
+	  foreach($G_FORM->fields[$d] as $attribute => $value) {
+	    switch($attribute) {
+	      case 'type':
+	      $sendContent[$r]->content->{$attribute}=$value; break;
+	      case 'options':
+	      $sendContent[$r]->content->{$attribute}=toJSArray($value); break;
+	    }
 	  }
+	  $sendContent[$r]->value=isset($G_FORM->values[$d]) ? $G_FORM->values[$d] : '';
 	}
-	$sendContent[$r]->value=isset($G_FORM->values[$d]) ? $G_FORM->values[$d] : '';
-	$r++;
+  else {
+    foreach($G_FORM->fields[$_POST['grid']]->fields[$d] as $attribute => $value) {
+	    switch($attribute) {
+	      case 'type':
+	      $sendContent[$r]->content->{$attribute}=$value; break;
+	      case 'options':
+	      $sendContent[$r]->content->{$attribute}=toJSArray($value); break;
+	    }
+	  }
+	  $sendContent[$r]->value=isset($G_FORM->values[$_POST['grid']][$_POST['row']][$d]) ? $G_FORM->values[$_POST['grid']][$_POST['row']][$d] : '';
+  }
+  $r++;
 }
 echo($json->encode($sendContent));
 
@@ -87,19 +124,33 @@ function toJSArray($array)
   return $result;
 }
 
-
-function subDependencies( $k , &$G_FORM , &$aux ) {
+function subDependencies( $k , &$G_FORM , &$aux, $grid = '') {
   if (array_search( $k, $aux )!==FALSE) return array();
-  if (!array_key_exists( $k , $G_FORM->fields )) return array();
-  if (!isset($G_FORM->fields[$k]->dependentFields)) return array();
-  $aux[] = $k;
-  $myDependentFields = explode( ',', $G_FORM->fields[$k]->dependentFields);
-  for( $r=0 ; $r < sizeof($myDependentFields) ; $r++ ) {
-    if ($myDependentFields[$r]=="") unset($myDependentFields[$r]);
+  if ($grid == '') {
+    if (!array_key_exists( $k , $G_FORM->fields )) return array();
+    if (!isset($G_FORM->fields[$k]->dependentFields)) return array();
+    $aux[] = $k;
+    $myDependentFields = explode( ',', $G_FORM->fields[$k]->dependentFields);
+    for( $r=0 ; $r < sizeof($myDependentFields) ; $r++ ) {
+      if ($myDependentFields[$r]=="") unset($myDependentFields[$r]);
+    }
+    $mD = $myDependentFields;
+    foreach( $mD as $ki) {
+      $myDependentFields = array_merge( $myDependentFields , subDependencies( $ki , $G_FORM , $aux ) );
+    }
   }
-  $mD = $myDependentFields;
-  foreach( $mD as $ki) {
-    $myDependentFields = array_merge( $myDependentFields , subDependencies( $ki , $G_FORM , $aux ) );
+  else {
+    if (!array_key_exists( $k , $G_FORM->fields[$grid]->fields )) return array();
+    if (!isset($G_FORM->fields[$grid]->fields[$k]->dependentFields)) return array();
+    $aux[] = $k;
+    $myDependentFields = explode( ',', $G_FORM->fields[$grid]->fields[$k]->dependentFields);
+    for( $r=0 ; $r < sizeof($myDependentFields) ; $r++ ) {
+      if ($myDependentFields[$r]=="") unset($myDependentFields[$r]);
+    }
+    $mD = $myDependentFields;
+    foreach( $mD as $ki) {
+      $myDependentFields = array_merge( $myDependentFields , subDependencies( $ki , $G_FORM , $aux, $grid) );
+    }
   }
   return $myDependentFields;
 }
