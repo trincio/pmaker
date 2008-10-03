@@ -89,16 +89,28 @@
     }
     this.updateDepententFields=function(event) {
       if (me.dependentFields.length===0) return true;
-      var fields=[],i;
+      var fields=[],i,grid='',row=0;
       for(i in me.dependentFields) {
-        fields=fields.concat(me.dependentFields[i].dependentOf);
+        if (me.dependentFields[i].dependentOf) {
+          var oAux = me.dependentFields[i].dependentOf[0];
+          if (oAux.name.indexOf('][') > -1) {
+            var aAux  = oAux.name.split('][');
+            grid      = aAux[0];
+            row       = aAux[1];
+            eval("var oAux2 = {" + aAux[2] + ":'" + oAux.value() + "'}");
+            fields = fields.concat(oAux2);
+          }
+          else {
+            fields = fields.concat(me.dependentFields[i].dependentOf);
+          }
+        }
       }
       var callServer;
       callServer = new leimnud.module.rpc.xmlhttp({
       		url			: me.form.ajaxServer,
       		async   : false,
       		method	: "POST",
-      		args    : "function=reloadField&" + 'form='+encodeURIComponent(me.form.id)+'&fields='+encodeURIComponent(fields.toJSONString())
+      		args    : "function=reloadField&" + 'form='+encodeURIComponent(me.form.id)+'&fields='+encodeURIComponent(fields.toJSONString())+(grid!=''?'&grid='+grid:'')+(row>0?'&row='+row:'')
       	});
     	callServer.make();
     	var response = callServer.xmlhttp.responseText;
@@ -107,17 +119,38 @@
       if (response.substr(0,1)==='[') {
         var newcont;
         eval('newcont=' + response + ';');
-        for(var i=0;i<newcont.length;i++) {
-          var j=me.form.getElementIdByName(newcont[i].name);
-          me.form.aElements[j].setValue(newcont[i].value);
-          me.form.aElements[j].setContent(newcont[i].content);
-          if (me.form.aElements[j].element.fireEvent) {
-  		      me.form.aElements[j].element.fireEvent("onchange");
-  		    } else {
-            var evObj = document.createEvent('HTMLEvents');
-            evObj.initEvent( 'change', true, true );
-    		    me.form.aElements[j].element.dispatchEvent(evObj);
-  		    }
+        if (grid == '') {
+          for(var i=0;i<newcont.length;i++) {
+            var j=me.form.getElementIdByName(newcont[i].name);
+            me.form.aElements[j].setValue(newcont[i].value);
+            me.form.aElements[j].setContent(newcont[i].content);
+            if (me.form.aElements[j].element.fireEvent) {
+  		        me.form.aElements[j].element.fireEvent("onchange");
+  		      } else {
+              var evObj = document.createEvent('HTMLEvents');
+              evObj.initEvent( 'change', true, true );
+    		      me.form.aElements[j].element.dispatchEvent(evObj);
+  		      }
+          }
+        }
+        else {
+          for(var i=0;i<newcont.length;i++) {
+            var oAux = me.form.getElementByName(grid);
+            if (oAux) {
+              var oAux2 = oAux.getElementByName(row, newcont[i].name);
+              if (oAux2) {
+                oAux2.setValue(newcont[i].value);
+                oAux2.setContent(newcont[i].content);
+                if (oAux2.element.fireEvent) {
+  		            oAux2.element.fireEvent("onchange");
+  		          } else {
+                  var evObj = document.createEvent('HTMLEvents');
+                  evObj.initEvent( 'change', true, true );
+    		          oAux2.element.dispatchEvent(evObj);
+  		          }
+              }
+            }
+          }
         }
       } else {
         alert('Invalid response: '+response);
@@ -942,119 +975,119 @@ function contractExpandSubtitle(subTitle){
   else contractSubtitle(subTitle);
 }
 
-function validateForm(aRequiredFields) 
+function validateForm(aRequiredFields)
 {
 	//alert(oRequiredFields.junior['type']);
-	//alert(var_dump(aRequiredFields.toJSONString()));	
-	var sMessage = '';	
-	for (var i = 0; i < aRequiredFields.length; i++) {				
+	//alert(var_dump(aRequiredFields.toJSONString()));
+	var sMessage = '';
+	for (var i = 0; i < aRequiredFields.length; i++) {
 		 switch(aRequiredFields[i].type) {
-		 	  case 'text':		 	    
+		 	  case 'text':
 		 	    var vtext = new input(getField(aRequiredFields[i].name));
-		 	    if(getField(aRequiredFields[i].name).value=='')		 	    		 	    
-		 	    	{ sMessage += "- " + aRequiredFields[i].label + "\n";	
-		 	    		vtext.failed();		 	    				 	    		
-		 	    	}	
+		 	    if(getField(aRequiredFields[i].name).value=='')
+		 	    	{ sMessage += "- " + aRequiredFields[i].label + "\n";
+		 	    		vtext.failed();
+		 	    	}
 		 	    	else
-		 	    	{	
-		 	    	  vtext.passed();		 	    	
-		 	    	}  
-		 	  break;	
-		 	  
-		 	  case 'dropdown':		 	    
-		 	    if(getField(aRequiredFields[i].name).value=='')		 	    		 	    
+		 	    	{
+		 	    	  vtext.passed();
+		 	    	}
+		 	  break;
+
+		 	  case 'dropdown':
+		 	    if(getField(aRequiredFields[i].name).value=='')
 		 	    		sMessage += "- " + aRequiredFields[i].label + "\n";
 		 	  break;
-		 	  		 	 
+
 		 	  case 'textarea':
-		 	    if(getField(aRequiredFields[i].name).value=='')		 	    		 	    
+		 	    if(getField(aRequiredFields[i].name).value=='')
 		 	    		sMessage += "- " + aRequiredFields[i].label + "\n";
 		 	  break;
-		 	  	
+
 		 	  case 'password':
 		 	    var vpass = new input(getField(aRequiredFields[i].name));
-		 	    if(getField(aRequiredFields[i].name).value=='')		 	    		 	    
+		 	    if(getField(aRequiredFields[i].name).value=='')
 		 	    	{ sMessage += "- " + aRequiredFields[i].label + "\n";
-		 	    		vpass.failed();		 	    				 	    		
-		 	    	}	
+		 	    		vpass.failed();
+		 	    	}
 		 	    	else
-		 	    	{	
-		 	    	  vpass.passed();		 	    	
-		 	    	}  
-		 	  break;	
-		 	  
+		 	    	{
+		 	    	  vpass.passed();
+		 	    	}
+		 	  break;
+
 		 	  case 'currency':
 		 	    var vcurr = new input(getField(aRequiredFields[i].name));
-		 	    if(getField(aRequiredFields[i].name).value=='')		 	    		 	    
-		 	    	{ sMessage += "- " + aRequiredFields[i].label + "\n";	
-		 	    		vcurr.failed();		 	    				 	    		
-		 	    	}	
+		 	    if(getField(aRequiredFields[i].name).value=='')
+		 	    	{ sMessage += "- " + aRequiredFields[i].label + "\n";
+		 	    		vcurr.failed();
+		 	    	}
 		 	    	else
-		 	    	{	
-		 	    	  vcurr.passed();		 	    	
-		 	    	}  
-		 	  break;	
-		 	  
+		 	    	{
+		 	    	  vcurr.passed();
+		 	    	}
+		 	  break;
+
 		 	  case 'percentage':
 		 	    var vper = new input(getField(aRequiredFields[i].name));
-		 	    if(getField(aRequiredFields[i].name).value=='')		 	    		 	    
+		 	    if(getField(aRequiredFields[i].name).value=='')
 		 	    	{ sMessage += "- " + aRequiredFields[i].label + "\n";
-		 	    		vper.failed();		 	    				 	    		
-		 	    	}	
+		 	    		vper.failed();
+		 	    	}
 		 	    	else
-		 	    	{	
-		 	    	  vper.passed();		 	    	
-		 	    	}  	
-		 	  break;	
-		 	  
+		 	    	{
+		 	    	  vper.passed();
+		 	    	}
+		 	  break;
+
 		 	  case 'yesno':
-		 	    if(getField(aRequiredFields[i].name).value=='')		 	    		 	    
+		 	    if(getField(aRequiredFields[i].name).value=='')
 		 	    		sMessage += "- " + aRequiredFields[i].label + "\n";
-		 	  break;		 	 
-		 	  
+		 	  break;
+
 		 	  case 'date':
-		 	    if(getField(aRequiredFields[i].name).value=='')		 	    		 	    
+		 	    if(getField(aRequiredFields[i].name).value=='')
 		 	    		sMessage += "- " + aRequiredFields[i].label + "\n";
 		 	  break;
-		 	  
+
 		 	  case 'file':
-		 	    if(getField(aRequiredFields[i].name).value=='')		 	    		 	    
+		 	    if(getField(aRequiredFields[i].name).value=='')
 		 	    		sMessage += "- " + aRequiredFields[i].label + "\n";
 		 	  break;
-		 	  
+
 		 	  case 'listbox':
 		 	    var oAux = getField(aRequiredFields[i].name);
 					var bOneSelected = false;
-					for (var j = 0; j < oAux.options.length; j++) {  					 			 	
+					for (var j = 0; j < oAux.options.length; j++) {
 					 	if (oAux.options[j].selected) {
 					    bOneSelected = true;
 					    j = oAux.options.length;
 					  }
-					}					
-					if(bOneSelected == false)   						 	    		 	    		 	    
+					}
+					if(bOneSelected == false)
 		 	    		sMessage += "- " + aRequiredFields[i].label + "\n";
 		 	  break;
-		 	  
-		 	  case 'radiogroup':			 	    
+
+		 	  case 'radiogroup':
 		 	  	var x=aRequiredFields[i].name;
-		 	  	var oAux = document.getElementsByName('form['+ x +']');		 	  			 	  	
+		 	  	var oAux = document.getElementsByName('form['+ x +']');
 					var bOneChecked = false;
-					for (var k = 0; k < oAux.length; k++) {  					    					   
-					    var r = oAux[k];															 					    					   
+					for (var k = 0; k < oAux.length; k++) {
+					    var r = oAux[k];
 					    if (r.checked) {
-					      bOneChecked = true;					    	
+					      bOneChecked = true;
 					    	k = oAux.length;
-					  	}		  	
+					  	}
 					}
-					
-					if(bOneChecked == false)   			 	    		 	   
+
+					if(bOneChecked == false)
 		 	    	sMessage += "- " + aRequiredFields[i].label + "\n";
-		 	    			 	    
+
 		 	  break;
-		 	}		
-	}       	
-		
-	if (sMessage != '') {		
+		 	}
+	}
+
+	if (sMessage != '') {
 		alert(G_STRINGS.ID_REQUIRED_FIELDS + ": \n\n" + sMessage);
 		/*
 		new leimnud.module.app.alert().make({
@@ -1062,8 +1095,8 @@ function validateForm(aRequiredFields)
     });
     */
 		return false;
-	}       
-	else    
+	}
+	else
 	{	return true;
   }
 }

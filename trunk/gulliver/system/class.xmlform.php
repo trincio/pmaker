@@ -108,7 +108,7 @@ class XmlForm_Field
 	{
 	  return isset($value);
 	}
-  private function executeXmlDB( &$owner )
+  private function executeXmlDB( &$owner, $row = -1 )
   {
     if(!$this->sqlConnection)
     	$dbc=new DBConnection();
@@ -153,9 +153,26 @@ class XmlForm_Field
     }
     return $result;
   }
-  private function executePropel( &$owner )
+  private function executePropel( &$owner, $row = -1 )
   {
-    $query = G::replaceDataField( $this->sql, $owner->values );
+    if (!isset($owner->values[$this->name])) {
+      if ($row > -1) {
+        $owner->values[$this->name] = array();
+      }
+      else {
+        $owner->values[$this->name] = '';
+      }
+    }
+    if (!is_array($owner->values[$this->name])) {
+      $query = G::replaceDataField( $this->sql, $owner->values );
+    }
+    else {
+      $aAux = array();
+      foreach($owner->values as $key => $data) {
+        $aAux[$key] = isset($data[$row]) ? $data[$row] : '';
+      }
+      $query = G::replaceDataField( $this->sql, $aAux );
+    }
     $con = Propel::getConnection( $this->sqlConnection);
     $stmt = $con->createStatement( );
     if ( $this->sqlConnection == 'dbarray' ) {
@@ -181,7 +198,7 @@ class XmlForm_Field
    * @parameter string owner
    * @return string
    */
-  function executeSQL( &$owner )
+  function executeSQL( &$owner, $row = -1 )
   {
     if ( !isset($this->sql) ) return 1;
     if ($this->sql === '') return 1;
@@ -192,11 +209,11 @@ class XmlForm_Field
     //Read the result of the query
 	if ($this->sqlConnection==="XMLDB")
 	{
-      $result=$this->executeXmlDB( $owner );
+      $result=$this->executeXmlDB( $owner, $row );
 	}
 	else
 	{
-      $result=$this->executePropel( $owner );
+      $result=$this->executePropel( $owner, $row );
 	}
     $this->sqlOption = array();
     $this->options = array();
@@ -253,7 +270,7 @@ class XmlForm_Field
   {
     $result=array();$r=1;
     foreach($values as $v) {
-      $result[] = $this->render($v, $owner, '['. $owner->name .']['.$r.']', $onlyValue);
+      $result[] = $this->render($v, $owner, '['. $owner->name .']['.$r.']', $onlyValue, $r);
       $r++;
     }
     return $result;
@@ -1639,9 +1656,9 @@ class XmlForm_Field_Dropdown extends XmlForm_Field
    * @parameter string owner
    * @return string
    */
-  function render( $value = NULL , $owner = NULL , $rowId = '', $onlyValue = false )
+  function render( $value = NULL , $owner = NULL , $rowId = '', $onlyValue = false, $row = -1 )
   {
-    $this->executeSQL( $owner );
+    $this->executeSQL( $owner, $row );
     $html = '';
     if (!$onlyValue) {
       if ($this->mode === 'edit') {
@@ -2646,7 +2663,7 @@ class xmlformTemplate extends Smarty
       if($form->mode != ''){      #@ last modification: erik
           $v->mode = $form->mode; #@
       }                           #@
-      if (isset($form->fields[$k]->sql)) $form->fields[$k]->executeSQL( $form );
+      //if (isset($form->fields[$k]->sql)) $form->fields[$k]->executeSQL( $form );//julichu
       $value = ( isset ( $form->values[$k ] ) ) ? $form->values[$k ] : NULL;
       $result[$k]         = G::replaceDataField ( $form->fields[$k]->label , $form->values );
 

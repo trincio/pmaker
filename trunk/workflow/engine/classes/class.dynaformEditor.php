@@ -320,7 +320,7 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 		      $aFields = $aAux;
 		    }
 		  	if (is_array($aFields)) {
-		  	  foreach($aFields as $key => $val) $aFields[$key]=array("","","","","");
+		  	  foreach($aFields as $key => $val) $aFields[$key]=array(1=>"",2=>"",3=>"",4=>"",5=>"");
 		    }
 		  break;
 		  default: $template='xmlform';

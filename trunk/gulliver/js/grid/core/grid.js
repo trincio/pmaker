@@ -24,18 +24,7 @@ var G_Grid = function(oForm, sGridName)
 				case 'text':
 				  while (oAux = document.getElementById('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'))
    		    {
-   		    	this.aElements.push(new G_Text(oForm, document.getElementById('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'), 'form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'));
-   		    	if (aFields[i].sDependentFields)
-			      {
-			      	aAux = aFields[i].sDependentFields.split(',');
-			      	sDependentFields = '';
-			      	for (k = 0; k < aAux.length; k++)
-			      	{
-			      		sDependentFields += 'form[' + this.sGridName + '][' + j + '][' + aAux[k] + '],';
-			      	}
-			      	sDependentFields = sDependentFields.substr(0, sDependentFields.length - 1);
-			      	this.aElements[this.aElements.length - 1].setDependentFields(sDependentFields);
-			      }
+   		    	this.aElements.push(new G_Text(oForm, document.getElementById('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'), this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName));
 			      if (aFields[i].oProperties)
 			      {
 			      	this.aElements[this.aElements.length - 1].mask = aFields[i].oProperties.mask;
@@ -46,18 +35,7 @@ var G_Grid = function(oForm, sGridName)
 				case 'currency':
 				  while (oAux = document.getElementById('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'))
    		    {
-   		    	this.aElements.push(new G_Currency(oForm, document.getElementById('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'), 'form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'));
-   		    	if (aFields[i].sDependentFields)
-			      {
-			      	aAux = aFields[i].sDependentFields.split(',');
-			      	sDependentFields = '';
-			      	for (k = 0; k < aAux.length; k++)
-			      	{
-			      		sDependentFields += 'form[' + this.sGridName + '][' + j + '][' + aAux[k] + '],';
-			      	}
-			      	sDependentFields = sDependentFields.substr(0, sDependentFields.length - 1);
-			      	this.aElements[this.aElements.length - 1].setDependentFields(sDependentFields);
-			      }
+   		    	this.aElements.push(new G_Currency(oForm, document.getElementById('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'), this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName));
 			      if (aFields[i].oProperties)
 			      {
 			      	this.aElements[this.aElements.length - 1].mask = aFields[i].oProperties.mask;
@@ -68,18 +46,7 @@ var G_Grid = function(oForm, sGridName)
 				case 'percentage':
 				  while (oAux = document.getElementById('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'))
    		    {
-   		    	this.aElements.push(new G_Percentage(oForm, document.getElementById('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'), 'form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'));
-   		    	if (aFields[i].sDependentFields)
-			      {
-			      	aAux = aFields[i].sDependentFields.split(',');
-			      	sDependentFields = '';
-			      	for (k = 0; k < aAux.length; k++)
-			      	{
-			      		sDependentFields += 'form[' + this.sGridName + '][' + j + '][' + aAux[k] + '],';
-			      	}
-			      	sDependentFields = sDependentFields.substr(0, sDependentFields.length - 1);
-			      	this.aElements[this.aElements.length - 1].setDependentFields(sDependentFields);
-			      }
+   		    	this.aElements.push(new G_Percentage(oForm, document.getElementById('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'), this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName));
 			      if (aFields[i].oProperties)
 			      {
 			      	this.aElements[this.aElements.length - 1].mask = aFields[i].oProperties.mask;
@@ -90,18 +57,7 @@ var G_Grid = function(oForm, sGridName)
 				case 'dropdown':
 				  while (oAux = document.getElementById('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'))
    		    {
-   		    	this.aElements.push(new G_DropDown(oForm, document.getElementById('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'), 'form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'));
-   		    	if (aFields[i].sDependentFields)
-			      {
-			      	aAux = aFields[i].sDependentFields.split(',');
-			      	sDependentFields = '';
-			      	for (k = 0; k < aAux.length; k++)
-			      	{
-			      		sDependentFields += 'form[' + this.sGridName + '][' + j + '][' + aAux[k] + '],';
-			      	}
-			      	sDependentFields = sDependentFields.substr(0, sDependentFields.length - 1);
-			      	this.aElements[this.aElements.length - 1].setDependentFields(sDependentFields);
-			      }
+   		    	this.aElements.push(new G_DropDown(oForm, document.getElementById('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'), this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName));
 			      if (aFields[i].oProperties)
 			      {
 			      	this.aElements[this.aElements.length - 1].mask = aFields[i].oProperties.sMask;
@@ -111,17 +67,49 @@ var G_Grid = function(oForm, sGridName)
 				break;
 			}
 		}
+		//Set dependent fields
+		for (i = 0; i < this.aFields.length; i++) {
+		  j = iRow || 1;
+		  while (oAux = document.getElementById('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']')) {
+		    if (aFields[i].oProperties.dependentFields != '') {
+			    this.setDependents(j, this.getElementByName(j, this.aFields[i].sFieldName), aFields[i].oProperties.dependentFields);
+			  }
+		    j++;
+		  }
+		}
 	};
+	this.setDependents = function(iRow, me, dependentFields)
+	{
+    var i;
+    dependentFields = dependentFields.split(',');
+    for (i=0; i<dependentFields.length; i++) {
+      var oField = this.getElementByName(iRow, dependentFields[i]);
+      if (oField) {
+        me.dependentFields[i] = oField;
+        me.dependentFields[i].addDependencie(me);
+      }
+    }
+  };
 	this.unsetFields = function()
 	{
-    this.aElements.splice(this.aElements.length - this.aFields.length, this.aFields.length);
+	  var i, j = 0, k, l = 0;
+	  k = this.aElements.length / this.aFields.length;
+    for (i = 0; i < this.aFields.length; i++)
+    {
+      j += k;
+      l++;
+      this.aElements.splice(j - l, 1);
+    }
+    /*for (i = 0; i < this.aElements.length ;i++) {
+      alert(this.aElements[i].name);
+    }*/
 	};
 	this.getElementByName = function(iRow, sName)
   {
     var i;
     for (i = 0; i < this.aElements.length ;i++)
     {
-      if (this.aElements[i].name === 'form[' + this.sGridName + '][' + iRow + '][' + sName + ']')
+      if (this.aElements[i].name === this.sGridName + '][' + iRow + '][' + sName)
       {
       	return this.aElements[i];
       }
@@ -293,7 +281,18 @@ var G_Grid = function(oForm, sGridName)
   	    	  	  aObjects2 = oCell2.getElementsByTagName('select');
   	    	  	  if (aObjects1 && aObjects2)
   	    	  	  {
-  	    	  	  	aObjects1[0].selectedIndex = aObjects2[0].selectedIndex;
+  	    	  	    var vValue = aObjects2[0].value;
+  	    	  	  	/*for (var j = (aObjects1[0].options.length-1); j >= 0; j--) {
+                    aObjects1[0].options[j] = null;
+                  }*/
+                  aObjects1[0].options.length = 0;
+                  for (var j = 0; j < aObjects2[0].options.length; j++) {
+                    var optn = $dce("OPTION");
+                    optn.text = aObjects2[0].options[j].text;
+                    optn.value = aObjects2[0].options[j].value;
+                    aObjects1[0].options[j]=optn;
+                  }
+                  aObjects1[0].value = vValue;
   	    	  	  }
   	    	  	break;
   	    	  	case '<texta':
