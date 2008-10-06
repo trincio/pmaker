@@ -154,7 +154,7 @@ class XmlForm_Field
     return $result;
   }
   private function executePropel( &$owner, $row = -1 )
-  {
+  {//var_dump($this->name, isset($owner->values[$this->name]), $row);echo "\n";
     if (!isset($owner->values[$this->name])) {
       if ($row > -1) {
         $owner->values[$this->name] = array();
@@ -162,7 +162,7 @@ class XmlForm_Field
       else {
         $owner->values[$this->name] = '';
       }
-    }
+    }//var_dump($this->name, is_array($owner->values[$this->name]));echo "\n<br />";
     if (!is_array($owner->values[$this->name])) {
       $query = G::replaceDataField( $this->sql, $owner->values );
     }
@@ -170,9 +170,9 @@ class XmlForm_Field
       $aAux = array();
       foreach($owner->values as $key => $data) {
         $aAux[$key] = isset($data[$row]) ? $data[$row] : '';
-      }
+      }//var_dump($this->sql, $row);echo '<br />';
       $query = G::replaceDataField( $this->sql, $aAux );
-    }
+    }//var_dump($query);echo "\n";
     $con = Propel::getConnection( $this->sqlConnection);
     $stmt = $con->createStatement( );
     if ( $this->sqlConnection == 'dbarray' ) {
@@ -188,7 +188,7 @@ class XmlForm_Field
       $result[] = $row;
       $rs->next();
       $row = $rs->getRow();
-    }
+    }//if($this->name == 'USR_EMAIL'){var_dump($result);echo "\n";}
     return $result;
   }
   /**
@@ -703,13 +703,17 @@ class XmlForm_Field_Text extends XmlForm_Field_SimpleText
    * @parameter string owner
    * @return string
    */
-  function renderGrid( $values=array() , $owner )
+  function renderGrid( $values=array() , $owner)
   {
-    $result=array();$r=1;
+    $result=$aux=array();$r=1;
     foreach($values as $v)  {
+      $this->executeSQL( $owner, $r );
+      $firstElement=key($this->sqlOption);
+	    if (isset($firstElement)) $v = $firstElement;
     	if ($this->replaceTags == 1) {
         $v = G::replaceDataField( $v, $owner->values );
       }
+      $aux[$r] = $v;
   	  if ($this->mode==='edit') {
   	    if ($this->readOnly)
   		    $result[] = '<input class="module_app_input___gray" id="form['. $owner->name .']['.$r.']['.$this->name.']" name="form['. $owner->name .']['.$r.']['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value="'.$this->htmlentities( $v , ENT_COMPAT, 'utf-8').'" readOnly="readOnly" style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'"/>';
@@ -722,6 +726,7 @@ class XmlForm_Field_Text extends XmlForm_Field_SimpleText
   		}
       $r++;
     }
+    $this->options = $aux;
     return $result;
 	}
 
@@ -2656,7 +2661,7 @@ class xmlformTemplate extends Smarty
    * @return string
    */
   function getFields(&$form)
-  {
+  {//echo $form->name.' => '.$form->type."\n<br />";
 
     $result=array();
     foreach( $form->fields as $k => $v)  {
@@ -2666,7 +2671,6 @@ class xmlformTemplate extends Smarty
       //if (isset($form->fields[$k]->sql)) $form->fields[$k]->executeSQL( $form );//julichu
       $value = ( isset ( $form->values[$k ] ) ) ? $form->values[$k ] : NULL;
       $result[$k]         = G::replaceDataField ( $form->fields[$k]->label , $form->values );
-
       if (!is_array($value)) {
         if ($form->type == 'grid') {
           $aAux = array();
@@ -2675,11 +2679,22 @@ class xmlformTemplate extends Smarty
           }
           $result['form'][$k] = $form->fields[$k]->renderGrid( $aAux, $form );
         }
-        else
+        else {
           $result['form'][$k] = $form->fields[$k]->render( $value, $form );
+        }
       }
-      else
+      else {
+        if (isset($form->owner)) {
+          if (count($value) < count($form->owner->values[$form->name])) {
+            $i = count($value);
+            $j = count($form->owner->values[$form->name]);
+            for ($i; $i < $j;$i++) {
+              $value[] = '';
+            }
+          }
+        }
         $result['form'][$k] = $form->fields[$k]->renderGrid( $value, $form );
+      }
     }
     foreach($form as $name => $value) {
       if ($name!=='fields')

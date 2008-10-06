@@ -33,8 +33,7 @@ if (isset($_SESSION['_DBArray'])) {
 }
 $G_FORM=new form(G::getUIDName(urlDecode($_POST['form'])),XMLFORM_AJAX_PATH);
 $G_FORM->id=urlDecode($_POST['form']);
-$G_FORM->values=isset($_SESSION[$G_FORM->id]) ? $_SESSION[$G_FORM->id] : array();
-
+//$G_FORM->values=isset($_SESSION[$G_FORM->id]) ? $_SESSION[$G_FORM->id] : array();
 $newValues=($json->decode(urlDecode(stripslashes($_POST['fields']))));
 if (isset($_POST['grid'])) {
   $_POST['row'] = (int)$_POST['row'];
@@ -47,11 +46,10 @@ if (isset($_POST['grid'])) {
       $aValues[$i] = array($aKeys[0] => '');
     }
     $aValues[$_POST['row']] = array($aKeys[0] => $newValue[$aKeys[0]]);
-    //$newValues[$sKey]->$_POST['grid'] = array($_POST['row'] => array($aKeys[0] => $newValue[$aKeys[0]]));
     $newValues[$sKey]->$_POST['grid'] = $aValues;
     unset($newValues[$sKey]->$aKeys[0]);
   }
-}//var_dump($aValues);die;
+}
 //Resolve dependencies
 //Returns an array ($dependentFields) with the names of the fields
 //that depends of fields passed through AJAX ($_GET/$_POST)
@@ -63,23 +61,26 @@ for($r=0;$r<sizeof($newValues);$r++) {
 	foreach($newValues[$r] as $k => $v) {
 	  if (!is_array($v)) {
 		  $myDependentFields = subDependencies( $k , $G_FORM , $aux );
+		  $_SESSION[$G_FORM->id][$k] = $v;
 	  }
 	  else {
 	    foreach($v[$_POST['row']] as $k1 => $v1) {
 	      $myDependentFields = subDependencies( $k1 , $G_FORM , $aux, $_POST['grid'] );
+	      $_SESSION[$G_FORM->id][$_POST['grid']][$_POST['row']][$k1] = $v1;
 	    }
 	  }
 		$dependentFields=array_merge($dependentFields, $myDependentFields);
-		$_SESSION[$G_FORM->id][$k] = $v;
+		//$_SESSION[$G_FORM->id][$k] = $v;
 	}
-}
-
+}//var_dump($_SESSION[$G_FORM->id][$_POST['grid']]);die;
+$G_FORM->values=isset($_SESSION[$G_FORM->id]) ? $_SESSION[$G_FORM->id] : array();
+//var_dump($_SESSION[$G_FORM->id]);die;
 $dependentFields=array_unique($dependentFields);
 
 //Parse and update the new content
 $template = PATH_CORE . 'templates/xmlform.html';
 $newContent=$G_FORM->getFields($template);
-//die;
+
 //Returns the dependentFields's content
 $sendContent=array();
 $r=0;
@@ -103,7 +104,12 @@ foreach($dependentFields as $d) {
 	      case 'type':
 	      $sendContent[$r]->content->{$attribute}=$value; break;
 	      case 'options':
-	      $sendContent[$r]->content->{$attribute}=toJSArray($value); break;
+	      if ($sendContent[$r]->content->type != 'text') {
+	        $sendContent[$r]->content->{$attribute}=toJSArray($value); break;
+	      }
+	      else {
+	        $sendContent[$r]->content->{$attribute}=toJSArray(array($value[$_POST['row']])); break;
+	      }
 	    }
 	  }
 	  $sendContent[$r]->value=isset($G_FORM->values[$_POST['grid']][$_POST['row']][$d]) ? $G_FORM->values[$_POST['grid']][$_POST['row']][$d] : '';
