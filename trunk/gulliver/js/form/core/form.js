@@ -139,7 +139,9 @@
             if (oAux) {
               var oAux2 = oAux.getElementByName(row, newcont[i].name);
               if (oAux2) {
-                oAux2.setValue(newcont[i].value);
+                if (newcont[i].content.type == 'dropdown') {
+                  oAux2.setValue(newcont[i].value);
+                }
                 oAux2.setContent(newcont[i].content);
                 if (oAux2.element.fireEvent) {
   		            oAux2.element.fireEvent("onchange");
@@ -238,6 +240,15 @@
     this.mask='';
     this.required=false;
     var doubleChange=false;
+
+    this.setContent=function(content) {
+      me.element.value = '';
+      if (content.options) {
+        if (content.options[0]) {
+          me.element.value = content.options[0].value;
+        }
+      }
+    }
 
     this.validateKey=function(event) {
       if(me.element.readOnly)  return true;
