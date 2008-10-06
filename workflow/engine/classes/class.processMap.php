@@ -2911,7 +2911,10 @@ class processMap {
     	   $SP_VARIABLES_OUT = array();
     	   $SP_VARIABLES_IN  = array();
     	  
-
+ 			 	 /* Prepare page before to show */
+    	   global $_DBArray;
+  			 $_DBArray['NewCase'] = $this->subProcess_TaskIni($sProcessUID);
+	
     	   require_once 'classes/model/SubProcess.php';
     		 $oCriteria = new Criteria('workflow');
     		 $oCriteria->add(SubProcessPeer::PRO_PARENT, $sProcessUID);
@@ -2920,11 +2923,7 @@ class processMap {
     		 $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
     		 $oDataset->next();
     		 $aRow = $oDataset->getRow();
-
-				 /* Prepare page before to show */
-    	   global $_DBArray;
-  			 $_DBArray['NewCase'] = $this->subProcess_TaskIni($sProcessUID);
-
+			
     		 $aRow['TASKS'] = $aRow['TAS_UID'];
 		     $SP_VARIABLES_OUT = unserialize($aRow['SP_VARIABLES_OUT']);
 		     if(is_array($SP_VARIABLES_OUT))
@@ -2968,6 +2967,7 @@ class processMap {
  				$c->addSelectColumn(TaskPeer::PRO_UID);        
         $c->add(TaskPeer::TAS_START, 'TRUE');
         $c->add(TaskPeer::PRO_UID, $aUIDS, Criteria::NOT_IN);
+        //$c->add(TaskPeer::PRO_UID, $sProcessUID, Criteria::NOT_EQUAL);
         $rs = TaskPeer::doSelectRS($c);
         $rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
         $rs->next();

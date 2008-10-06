@@ -288,7 +288,7 @@ class wsBase
 	}
 
 	public function sendMessage($caseId, $sFrom, $sTo, $sCc, $sBcc, $sSubject, $sTemplate, $appFields = null ) {
-		try {
+		try { 
 			G::LoadClass('case');
       G::LoadClass('spool');
 
@@ -322,6 +322,29 @@ class wsBase
         $Fields = $appFields;
 
       $templateContents = file_get_contents ( $fileTemplate );
+    
+      //desde aki      
+      //$sContent    = G::unhtmlentities($sContent);
+  		$iAux        = 0;
+  	  $iOcurrences = preg_match_all('/\@(?:([\>])([a-zA-Z\_]\w*)|([a-zA-Z\_][\w\-\>\:]*)\(((?:[^\\\\\)]*(?:[\\\\][\w\W])?)*)\))((?:\s*\[[\'"]?\w+[\'"]?\])+)?/',  $templateContents, $aMatch, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE);
+  	   
+  	  if ($iOcurrences) {
+  	    for($i = 0; $i < $iOcurrences; $i++) {
+  	      preg_match_all('/@>' . $aMatch[2][$i][0] . '([\w\W]*)' . '@<' . $aMatch[2][$i][0] . '/', $templateContents, $aMatch2, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE);
+  	      $sGridName       = $aMatch[2][$i][0];
+  	      $sStringToRepeat = $aMatch2[1][0][0];
+  	      if (isset($Fields[$sGridName])) {
+  	        if (is_array($Fields[$sGridName])) {
+  	          $sAux = '';
+  	          foreach ($Fields[$sGridName] as $aRow) {
+  	            $sAux .= G::replaceDataField($sStringToRepeat, $aRow);
+  	          }
+  	        }
+  	      }
+  	      $templateContents = str_replace('@>' . $sGridName . $sStringToRepeat . '@<' . $sGridName, $sAux, $templateContents);
+  	    }
+  	  }  	   
+      //hata aki
       $sBody = G::replaceDataField( $templateContents, $Fields);
 
       if ($sFrom != '') {
