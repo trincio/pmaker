@@ -561,7 +561,8 @@ class PMPluginRegistry {
     $classFile = PATH_PLUGINS . $pluginFolder . PATH_SEP . 'class.' . $pluginFolder .'.php';
   	if ( file_exists ( $classFile ) ) {
     	require_once ( $classFile );
-    	$sClassName = str_replace ( 'plugin', 'class', $className );
+    	$sClassName=substr_replace($className,"class",-6,6);
+	//$sClassName = str_replace ( 'plugin', 'class', $className );
       $obj = new $sClassName( );
       if ( !in_array ( $methodName, get_class_methods ($obj) ) ) {
       	throw ( new Exception ( "The method '$methodName' doesn't exists in class '$sClassName' ") );
