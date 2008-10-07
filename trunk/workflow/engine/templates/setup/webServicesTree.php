@@ -39,10 +39,14 @@
 */
 	if(isset($_GET['x']))
 	{
-			if($_GET['x']==1)
+			if($_GET['x']==1) {
 					$wsdl = $_SESSION['END_POINT'];
-			else
+					$workspace = $_SESSION['WS_WORKSPACE'];
+				}
+			else {
 					$wsdl = '<font color="red">'.G::LoadTranslation('ID_WSDL').'</font>';
+					$workspace = '';
+				}
 	}
 	else
 	{
@@ -53,6 +57,7 @@
 		}
 		else {
 		  $wsdl = $_SESSION['END_POINT'];
+		  $workspace = $_SESSION['WS_WORKSPACE'];
 		}
 	}
 

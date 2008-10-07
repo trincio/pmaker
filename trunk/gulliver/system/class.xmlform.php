@@ -169,9 +169,13 @@ class XmlForm_Field
     else {
       $aAux = array();
       foreach($owner->values as $key => $data) {
-        $aAux[$key] = isset($data[$row]) ? $data[$row] : '';
+        if (is_array($data)) {
+          $aAux[$key] = isset($data[$row]) ? $data[$row] : '';
+        }
+        else {
+          $aAux[$key] = $data;
+        }
       }
-      $aAux = array_merge($aAux, $owner->values);
       $query = G::replaceDataField( $this->sql, $aAux );
     }
     $con = Propel::getConnection( $this->sqlConnection);
@@ -189,7 +193,7 @@ class XmlForm_Field
       $result[] = $row;
       $rs->next();
       $row = $rs->getRow();
-    }//if($this->name == 'USR_EMAIL'){var_dump($result);echo "\n";}
+    }
     return $result;
   }
   /**
