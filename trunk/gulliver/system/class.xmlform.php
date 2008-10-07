@@ -154,7 +154,7 @@ class XmlForm_Field
     return $result;
   }
   private function executePropel( &$owner, $row = -1 )
-  {//var_dump($this->name, isset($owner->values[$this->name]), $row);echo "\n";
+  {
     if (!isset($owner->values[$this->name])) {
       if ($row > -1) {
         $owner->values[$this->name] = array();
@@ -162,7 +162,7 @@ class XmlForm_Field
       else {
         $owner->values[$this->name] = '';
       }
-    }//var_dump($this->name, is_array($owner->values[$this->name]));echo "\n<br />";
+    }
     if (!is_array($owner->values[$this->name])) {
       $query = G::replaceDataField( $this->sql, $owner->values );
     }
@@ -170,9 +170,10 @@ class XmlForm_Field
       $aAux = array();
       foreach($owner->values as $key => $data) {
         $aAux[$key] = isset($data[$row]) ? $data[$row] : '';
-      }//var_dump($this->sql, $row);echo '<br />';
+      }
+      $aAux = array_merge($aAux, $owner->values);
       $query = G::replaceDataField( $this->sql, $aAux );
-    }//var_dump($query);echo "\n";
+    }
     $con = Propel::getConnection( $this->sqlConnection);
     $stmt = $con->createStatement( );
     if ( $this->sqlConnection == 'dbarray' ) {

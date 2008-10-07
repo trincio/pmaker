@@ -96,6 +96,12 @@ var insertFormVar = function(sFieldName, sValue) {
     var tempStr2   = oAux.value.substring(rangeEnd);
     oAux.value     = tempStr1 + sValue + tempStr2;
 	}
+	else {
+	  if (document.selection) {
+	    oAux.focus();
+      document.selection.createRange().text = sValue;
+	  }
+	}
 	_oVarsPanel_.remove();
 };
 ]]>

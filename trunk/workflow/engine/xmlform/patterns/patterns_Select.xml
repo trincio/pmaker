@@ -24,7 +24,7 @@
 <ROU_TYPE type="hidden" />
 
 <GRID_SELECT_TYPE type="grid" xmlgrid="patterns/patterns_GridSelectType" addRow="1" deleteRow="1" editRow="" />
- 
+
 
 <SAVE type="button" onclick="savePattern(this.form);">
   <en>Save</en>
@@ -46,7 +46,7 @@ Pm.tmp.derivationsPanel.events.remove = function() {
     Pm.tmp.derivationsPanel.cancelClose=true;
     new leimnud.module.app.confirm().make({
       label:  G_STRINGS.ID_SAVE_DERIVATION_RULES_BEFORE_CLOSING,
-      action: function() { 
+      action: function() {
         Pm.tmp.derivationsPanel.cancelClose=false;
         bModified = false;
         getField('SAVE').onclick();
@@ -54,7 +54,7 @@ Pm.tmp.derivationsPanel.events.remove = function() {
       cancel: function() {
         bModified = false;
         Pm.tmp.derivationsPanel.cancelClose=false;
-        Pm.tmp.derivationsPanel.remove();        
+        Pm.tmp.derivationsPanel.remove();
       }
     });
     return false;
