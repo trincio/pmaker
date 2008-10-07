@@ -3,7 +3,7 @@
 
 <PRO_UID type="hidden" showInTable="0"/>
 <subtitle1 type="subtitle">
-  <en>Web Entry</en>
+  <en>Properties</en>
 </subtitle1>
 
 <TASKS type="dropdown" defaultvalue="" mode="edit" options="Array">
