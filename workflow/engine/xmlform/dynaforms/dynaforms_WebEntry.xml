@@ -7,22 +7,22 @@
 </subtitle1>
 
 <TASKS type="dropdown" defaultvalue="" mode="edit" options="Array">
-	SELECT TASK.TAS_UID AS TUID, CONTENT.CON_VALUE AS TVALUE FROM TASK 
+	SELECT TASK.TAS_UID AS TUID, CONTENT.CON_VALUE AS TVALUE FROM TASK
   LEFT JOIN PROCESS ON (PROCESS.PRO_UID=TASK.PRO_UID)
   LEFT JOIN CONTENT ON (TASK.TAS_UID=CONTENT.CON_ID AND CONTENT.CON_CATEGORY='TAS_TITLE' AND CONTENT.CON_LANG='en')
   WHERE TASK.PRO_UID=@@PRO_UID AND TASK.TAS_START='TRUE' ORDER BY CONTENT.CON_VALUE
-  <en>Select the initial task </en>
+  <en>Initial Task </en>
 </TASKS>
 
-<DYNAFORM type="dropdown" defaultvalue="" mode="edit" options="Array">	
+<DYNAFORM type="dropdown" defaultvalue="" mode="edit" options="Array">
   SELECT DYNAFORM.DYN_UID, CONTENT.CON_VALUE FROM DYNAFORM
   LEFT JOIN PROCESS ON (PROCESS.PRO_UID=DYNAFORM.PRO_UID)
   LEFT JOIN CONTENT ON (DYNAFORM.DYN_UID=CONTENT.CON_ID AND CONTENT.CON_CATEGORY='DYN_TITLE' AND CONTENT.CON_LANG='en')
   WHERE DYNAFORM.PRO_UID=@@PRO_UID AND DYNAFORM.DYN_TYPE!='grid' ORDER BY CONTENT.CON_VALUE
-  <en>Select the initial Dynaform </en>
+  <en>Initial Dynaform </en>
 </DYNAFORM>
 
-<WE_TYPE type="dropdown" defaultvalue="" mode="edit" >	
+<WE_TYPE type="dropdown" defaultvalue="" mode="edit" >
   <en>Method
     <option name='SINGLE'>Single HTML </option>
     <option name='WS'>PHP pages with Web Services</option>
@@ -70,21 +70,21 @@ leimnud.event.add(getField('WE_TYPE'), 'change', function() {
     hideRowById('WS_PASS');
     hideRowById('WS_ROUNDROBIN');
     hideRowById('subtitle2');
-  }  
+  }
 }.extend(getField('WE_TYPE')));
 
-var webEntry_generate = function(PRO_UID, TASKS, DYNAFORM) {  
+var webEntry_generate = function(PRO_UID, TASKS, DYNAFORM) {
   otask = getField('TASKS');
-  odynaform = getField('DYNAFORM');  
+  odynaform = getField('DYNAFORM');
   sw=0;
   if(otask.value=='')
   {  if(odynaform.value=='')
-  		{  alert(G_STRINGS.ID_WEBENTRY);  
-  		}  		
+  		{  alert(G_STRINGS.ID_WEBENTRY);
+  		}
   }
   else
   {  if(odynaform.value=='')
-  		{  alert('This process has any assigned dynaform');  
+  		{  alert('This process has any assigned dynaform');
   		}
   		else
   		{  sw=1;
@@ -96,7 +96,7 @@ var webEntry_generate = function(PRO_UID, TASKS, DYNAFORM) {
        oPanel1.options = {
        	size	:{w:600,h:400},
        	position:{x:0,y:0,center:true},
-       	title	:"Web Entry",  	
+       	title	:"Web Entry",
        	statusBar:true,
        	control	:{resize:false,roll:false},
        	fx	:{modal:true,opacity:true,blinkToFront:true,fadeIn:false}
@@ -106,10 +106,10 @@ var webEntry_generate = function(PRO_UID, TASKS, DYNAFORM) {
        };
        oPanel1.make();
        oPanel1.loader.show();
-       var oRPC = new leimnud.module.rpc.xmlhttp({  	    	    
+       var oRPC = new leimnud.module.rpc.xmlhttp({
        	    url   : '../processes/processes_Ajax',
              async : true,
-             method: 'POST',        
+             method: 'POST',
              args  : "action=webEntry_generate&amp;data="+{PRO_UID:PRO_UID, TASKS:getField('TASKS').value, DYNAFORM:getField('DYNAFORM').value, WE_TYPE:getField('WE_TYPE').value, WS_USER:getField('WS_USER').value, WS_PASS:getField('WS_PASS').value, WS_ROUNDROBIN:getField('WS_ROUNDROBIN').value }.toJSONString()
        });
        oRPC.callback = function(rpc){
@@ -119,7 +119,7 @@ var webEntry_generate = function(PRO_UID, TASKS, DYNAFORM) {
        	scs.evalScript();
        }.extend(this);
        oRPC.make();
-   } 
+   }
 };
 
 </js>
