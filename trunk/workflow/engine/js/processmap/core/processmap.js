@@ -419,7 +419,7 @@ var processmap=function(){
 						}.extend(this,panel);
 						r.make();
 					}.extend(this)},
-					{image:"/images/users.png",text:G_STRINGS.ID_PROCESSMAP_PROCESS_SUPERVISORS,submenu:[
+					{image:"/images/users.png",text:G_STRINGS.ID_PROCESSMAP_PSUPERVISORS,submenu:[
 						{image:"/images/users.png",text:G_STRINGS.ID_PROCESSMAP_PROCESS_SUPERVISORS,launch:function(event){
 						this.tmp.editProcessPanel = panel =new leimnud.module.panel();
 						panel.options={
@@ -513,7 +513,7 @@ var processmap=function(){
 						r.make();
 					}.extend(this)},
 					{image:"/images/tracker.gif",text:G_STRINGS.ID_CASE_TRACKER,submenu:[
-						{image:"/images/tracker.gif",text:G_STRINGS.ID_CASE_TRACKER,launch:function(event){
+						{image:"/images/tracker.gif",text:G_STRINGS.ID_CASE_TRACKER_PROPERTIES,launch:function(event){
 						this.tmp.caseTrackerPanel = panel =new leimnud.module.panel();
 						panel.options={
 							limit	:true,
