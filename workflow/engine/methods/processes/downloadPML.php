@@ -10,6 +10,7 @@
 
     //downloading the file    
     $localPath     = PATH_DOCUMENT . 'input' . PATH_SEP ; 
+    G::mk_dir($localPath);
     $newfilename = G::GenerateUniqueId() . '.pm';
    
     $downloadUrl = PML_DOWNLOAD_URL . '?id=' . $ObjUid;
