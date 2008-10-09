@@ -101,8 +101,11 @@ class Tasks {
 	* @return array
 	*/
   public function createTaskRows( $aTask ) {
-  	foreach ( $aTask as $key => $row ) {
+  	foreach ( $aTask as $key => $row ) {  		
       $oTask = new Task();
+      if($oTask->taskExists ($row['TAS_UID']))
+      		$oTask->remove($row['TAS_UID']);
+      
       $res = $oTask->createRow($row);
   	}
   	return;
@@ -116,7 +119,10 @@ class Tasks {
   public function updateTaskRows( $aTask ) {
   	foreach ( $aTask as $key => $row ) {
       $oTask = new Task();
-      $res = $oTask->update($row);
+      if($oTask->taskExists ($row['TAS_UID']))
+      	   $oTask->remove($row['TAS_UID']);	
+      else
+      	   $res = $oTask->update($row);
   	}
   	return;
   }
@@ -154,8 +160,11 @@ class Tasks {
   public function createRouteRows( $aRoutes ) {
   	foreach ( $aRoutes as $key => $row ) {
       $oRoute = new Route();
-      unset ($row['ROU_UID']);
-      $res = $oRoute->create($row);
+      //unset ($row['ROU_UID']);
+      if($oRoute->routeExists($row['ROU_UID']))
+      	  $oRoute->remove($row['ROU_UID']);      						   		
+      
+      $res = $oRoute->create($row);   
   	}
   	return;
   }
@@ -168,8 +177,11 @@ class Tasks {
   public function updateRouteRows( $aRoutes ) {
   	foreach ( $aRoutes as $key => $row ) {
       $oRoute = new Route();
-      krumo ($row);
-      $res = $oRoute->update($row);
+      //krumo ($row);
+      if(is_array($oRoute->load($row['ROU_UID'])))
+      		$oRoute->remove($row['ROU_UID']);      					
+      else
+      		$res = $oRoute->update($row);
   	}
   	return;
   }

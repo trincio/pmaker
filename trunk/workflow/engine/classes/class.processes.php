@@ -288,7 +288,13 @@ class Processes {
 	  }
 	  foreach ($oData->subProcess as $key => $val ) {
 		$oData->subProcess[$key]['PRO_PARENT'] = $sNewProUid;
-	 }
+	  }	  
+	  foreach ($oData->reportTables as $key => $val ) {
+		$oData->reportTables[$key]['PRO_UID'] = $sNewProUid;
+	  }
+	  foreach ($oData->reportTablesVars as $key => $val ) {
+		$oData->reportTablesVars[$key]['PRO_UID'] = $sNewProUid;
+	  }
 	
   	return true;
   }
@@ -375,12 +381,22 @@ class Processes {
 
   function createProcessRow ($row ){
     $oProcess = new Process( );
-    return $oProcess->createRow($row);
+    if($oProcess->processExists ($row['PRO_UID']))    		
+    	{	$oProcess->remove($row['PRO_UID']);		      	
+      } 	
+    
+    return $oProcess->createRow($row);    
   }
 
   function updateProcessRow ($row ){
     $oProcess = new Process( );
-    return $oProcess->update($row);
+    if($oProcess->processExists ($row['PRO_UID']))    		
+    	{	$oProcess->remove($row['PRO_UID']);		
+      	return;
+      }
+    else   			
+    	return $oProcess->update($row);
+      
   }
   
   //sub Process
@@ -466,16 +482,21 @@ class Processes {
   function createLaneRows ($aLanes ){  //SwimlanesElements
   	foreach ( $aLanes as $key => $row ) {
       $oLane = new SwimlanesElements();
-      //unset ($row['TAS_UID']);
-      $res = $oLane->create($row);
+      if($oLane->swimlanesElementsExists($row['SWI_UID']))
+      		$oLane->remove($row['SWI_UID']); 
+      
+      $res = $oLane->create($row);			
   	}
   	return;
   }
 
 function createSubProcessRows ($SubProcess ){  //SwimlanesElements
   	foreach ( $SubProcess as $key => $row ) {
-      $oSubProcess = new SubProcess();      
-      $res = $oSubProcess->create($row);
+      $oSubProcess = new SubProcess();
+      if($oSubProcess->subProcessExists ($row['SP_UID']))     
+       		$oSubProcess->remove($row['SP_UID']);
+   		
+   		$res = $oSubProcess->create($row);
   	}
   	return;
   }
@@ -504,6 +525,9 @@ function createSubProcessRows ($SubProcess ){  //SwimlanesElements
   	foreach ( $aInput as $key => $row ) {
       $oInput = new Inputdocument();
       //unset ($row['TAS_UID']);
+      if($oInput->InputExists ($row['INP_DOC_UID']))
+      		$oInput->remove($row['INP_DOC_UID']);		
+      
       $res = $oInput->create($row);
   	}
   	return;
@@ -553,6 +577,9 @@ function createSubProcessRows ($SubProcess ){  //SwimlanesElements
   	foreach ( $aOutput as $key => $row ) {
       $oOutput = new Outputdocument();
       //unset ($row['TAS_UID']);
+      if($oOutput->OutputExists ($row['OUT_DOC_UID']))
+      		$oOutput->remove($row['OUT_DOC_UID']);		
+      
       $res = $oOutput->create($row);
   	}
   	return;
@@ -629,6 +656,9 @@ function createSubProcessRows ($SubProcess ){  //SwimlanesElements
   	foreach ( $aStep as $key => $row ) {
       $oStep = new Step();
       //unset ($row['TAS_UID']);
+      if($oStep->StepExists ($row['STEP_UID']))
+      		$oStep->remove($row['STEP_UID']);		
+      
       $res = $oStep->create($row);
   	}
   	return;
@@ -638,7 +668,7 @@ function createSubProcessRows ($SubProcess ){  //SwimlanesElements
     foreach ($aStepSupervisor as $key => $row ) {
       $oStepSupervisor = new StepSupervisor();
 	  if( $oStepSupervisor->Exists($row['STEP_UID']) ) {
-		$oStepSupervisor->remove($row['STEP_UID']);
+			$oStepSupervisor->remove($row['STEP_UID']);
 	  }
 	  $oStepSupervisor->create($row);
     }
@@ -714,7 +744,10 @@ function createSubProcessRows ($SubProcess ){  //SwimlanesElements
   	foreach ( $aDynaform as $key => $row ) {
       $oDynaform = new Dynaform();
       //unset ($row['TAS_UID']);
-      $res = $oDynaform->create($row);
+      if($oDynaform->exists($row['DYN_UID']))
+      		$oDynaform->remove($row['DYN_UID']);
+      
+      $res = $oDynaform->create($row);            
   	}
   	return;
   }
@@ -735,6 +768,9 @@ function createSubProcessRows ($SubProcess ){  //SwimlanesElements
   	foreach ( $aStepTrigger as $key => $row ) {
       $oStepTrigger = new StepTrigger();
       //unset ($row['TAS_UID']);
+      if($oStepTrigger->stepTriggerExists ($row['STEP_UID'], $row['TAS_UID'], $row['TRI_UID'], $row['ST_TYPE']))
+      		$oStepTrigger->remove($row['STEP_UID'], $row['TAS_UID'], $row['TRI_UID'], $row['ST_TYPE']);
+      		
       $res = $oStepTrigger->createRow($row);
   	}
   	return;
@@ -789,7 +825,10 @@ function createSubProcessRows ($SubProcess ){  //SwimlanesElements
   	foreach ( $aTrigger as $key => $row ) {
       $oTrigger = new Triggers();
       //unset ($row['TAS_UID']);
-      $res = $oTrigger->create($row);
+      if($oTrigger->TriggerExists($row['TRI_UID']))      
+      		$oTrigger->remove($row['TRI_UID']);
+      
+      $res = $oTrigger->create($row);		
   	}
   	return;
   }
@@ -941,6 +980,9 @@ function createSubProcessRows ($SubProcess ){  //SwimlanesElements
   function createTaskUserRows ($aTaskUser ){
   	foreach ( $aTaskUser as $key => $row ) {
       $oTaskUser = new TaskUser();
+      if($oTaskUser->TaskUserExists ($row['TAS_UID'], $row['USR_UID'], $row['TU_TYPE'], $row['TU_RELATION']))
+          $oTaskUser->remove($row['TAS_UID'], $row['USR_UID'], $row['TU_TYPE'], $row['TU_RELATION']);
+      
       $res = $oTaskUser->create($row);
   	}
   	return;
@@ -949,18 +991,19 @@ function createSubProcessRows ($SubProcess ){  //SwimlanesElements
   function createGroupRow ($aGroupwf ) {
   	foreach ( $aGroupwf as $key => $row ) {
       $oGroupwf = new Groupwf();
-      if ( ! $oGroupwf->GroupwfExists ( $row['GRP_UID'] ) ) {
-        $res = $oGroupwf->create($row);
-  		}
+      if ( $oGroupwf->GroupwfExists ( $row['GRP_UID'] ) ) {
+         $oGroupwf->remove($row['GRP_UID']); 
+  		}  	  
+  	  $res = $oGroupwf->create($row);
     }
   }
 
   function createDBConnectionsRows ($aConnections ) {
   	foreach ( $aConnections as $sKey => $aRow ) {
       $oConnection = new DbSource();
-	  if( $oConnection->Exists($aRow['DBS_UID']) ) {
-		$oConnection->remove($aRow['DBS_UID']);
-	  }
+	  	if( $oConnection->Exists($aRow['DBS_UID']) ) {
+		   $oConnection->remove($aRow['DBS_UID']);
+	  	}
       $oConnection->create($aRow);
     }
   } #@!neyek
@@ -971,7 +1014,11 @@ function createSubProcessRows ($SubProcess ){  //SwimlanesElements
     $oReportTables = new ReportTables();
     foreach ( $aReportTables as $sKey => $aRow ) {
       $oRep = new ReportTable();
+      if($oRep->reportTableExists ($aRow['REP_TAB_UID']))
+      		$oRep->remove($aRow['REP_TAB_UID']);
+      		
       $oRep->create($aRow);
+      //print_r($oRep); die;
       $aFields = $oReportTables->getTableVars($aRow['REP_TAB_UID'], true);
       $oReportTables->createTable($aRow['REP_TAB_NAME'], $aRow['REP_TAB_CONNECTION'], $aRow['REP_TAB_TYPE'], $aFields);
       $oReportTables->populateTable($aRow['REP_TAB_NAME'], $aRow['REP_TAB_CONNECTION'], $aRow['REP_TAB_TYPE'], $aFields, $aRow['PRO_UID'], $aRow['REP_TAB_GRID']);
@@ -988,6 +1035,9 @@ function createSubProcessRows ($SubProcess ){  //SwimlanesElements
   {
     foreach ( $aReportTablesVars as $sKey => $aRow ) {
       $oRep = new ReportVar();
+      if($oRep->reportVarExists ($aRow['REP_VAR_UID']))
+      		$oRep->remove($aRow['REP_VAR_UID']);
+      
       $oRep->create($aRow);
     }
   } #@!neyek
@@ -1582,7 +1632,7 @@ function createSubProcessRows ($SubProcess ){  //SwimlanesElements
   */
   function updateProcessFromData ($oData, $pmFilename ) {  	
     $this->updateProcessRow ($oData->process );
-    $this->removeProcessRows ($oData->process['PRO_UID'] );    
+    //$this->removeProcessRows ($oData->process['PRO_UID'] );    
     $this->createTaskRows ($oData->tasks );        
     $this->createRouteRows ($oData->routes );
     $this->createLaneRows ($oData->lanes );

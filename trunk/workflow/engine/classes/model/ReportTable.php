@@ -201,4 +201,19 @@ class ReportTable extends BaseReportTable {
     }
   }
 
+	function reportTableExists ( $RepTabUid ) {
+  	$con = Propel::getConnection(ReportTablePeer::DATABASE_NAME);
+    try {
+      $oRepTabUid = ReportTablePeer::retrieveByPk( $RepTabUid );
+  	  if ( get_class ($oRepTabUid) == 'ReportTable' ) {
+  	    return true;
+  	  }
+      else {
+        return false;
+      }
+    }
+    catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
 } // ReportTable

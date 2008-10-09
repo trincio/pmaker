@@ -176,6 +176,22 @@ class SwimlanesElements extends BaseSwimlanesElements {
     }
   }
 
+function swimlanesElementsExists ( $sSwiEleUid ) {
+  	$con = Propel::getConnection(SwimlanesElementsPeer::DATABASE_NAME);
+    try {
+      $oSwiEleUid = SwimlanesElementsPeer::retrieveByPk( $sSwiEleUid );
+  	  if ( get_class ($oSwiEleUid) == 'SwimlanesElements' ) {
+  	    return true;
+  	  }
+      else {
+        return false;
+      }
+    }
+    catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
+
 	/**
 	 * Get the [swi_text] column value.
 	 * @return string

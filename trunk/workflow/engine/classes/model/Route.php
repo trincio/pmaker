@@ -161,5 +161,21 @@ class Route extends BaseRoute {
       throw($oError);
     }
   }
+  
+  function routeExists ( $sRouUid ) {
+  	$con = Propel::getConnection(RoutePeer::DATABASE_NAME);
+    try {
+      $oRouUid = RoutePeer::retrieveByPk( $sRouUid );
+  	  if ( get_class ($oRouUid) == 'Route' ) {
+  	    return true;
+  	  }
+      else {
+        return false;
+      }
+    }
+    catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
 
 } // Route
