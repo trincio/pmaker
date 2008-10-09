@@ -33,7 +33,8 @@
   }
   $option = $_POST['form']['IMPORT_OPTION'];
   $filename = $_POST['form']['PRO_FILENAME'];
-
+  $ObjUid   = $_POST['form']['OBJ_UID'];
+  
   $path     = PATH_DOCUMENT . 'input' . PATH_SEP ;
   $oData = $oProcess->getProcessData ( $path . $filename  );
 
@@ -52,6 +53,7 @@
       }
       $oDirectory->close();
     }
+    $sNewProUid = $sProUid;
   }
 
   //Disable current Process and create a new version of the Process
@@ -87,7 +89,23 @@
     $oProcess->createProcessFromData ($oData, $path . $filename );
   }
 
-  G::header ( 'Location: processes_List');
+    //show the info after the imported process
+    G::LoadClass('processes');  
+    $oProcess = new Processes();
+    $oProcess->ws_open_public ();   
+    $processData = $oProcess->ws_processGetData ( $ObjUid  );
+    $Fields['pro_title']    = $processData->title;
+    $Fields['installSteps'] = nl2br($processData->installSteps);
+    $Fields['category']     = $processData->category;
+    $Fields['version']      = $processData->version;
+    $G_MAIN_MENU            = 'processmaker';
+    $G_ID_MENU_SELECTED     = 'PROCESSES';
+    $G_PUBLISH = new Publisher;
+    $Fields['PRO_UID'] =     $sNewProUid;
+    $processmapLink = "processes_Map?PRO_UID=$sNewProUid";
+    $G_PUBLISH->AddContent('xmlform', 'xmlform', 'processes/processes_ImportSucessful', '', $Fields, $processmapLink );
+    G::RenderPage('publish');
+    die;
 
 }
 catch ( Exception $e ){

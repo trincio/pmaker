@@ -22,11 +22,11 @@
 <PRO_FILENAME type="hidden">
 </PRO_FILENAME>
 
+<OBJ_UID type="hidden">
+</OBJ_UID>
+
 <SUBMIT type="submit" >
   <en>Save</en>
 </SUBMIT>
-
-<MESSAGE1 type="phpvariable" />
-
 
 </dynaForm>
