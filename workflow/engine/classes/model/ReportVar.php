@@ -139,4 +139,20 @@ class ReportVar extends BaseReportVar {
       throw($oError);
     }
   }
+  
+   function reportVarExists ( $sRepVarUid ) {
+  	$con = Propel::getConnection(ReportVarPeer::DATABASE_NAME);
+    try {
+      $oRepVarUid = ReportVarPeer::retrieveByPk( $sRepVarUid );
+  	  if ( get_class ($oRepVarUid) == 'ReportVar' ) {
+  	    return true;
+  	  }
+      else {
+        return false;
+      }
+    }
+    catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
 } // ReportVar

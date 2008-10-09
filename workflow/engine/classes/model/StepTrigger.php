@@ -146,6 +146,23 @@ class StepTrigger extends BaseStepTrigger {
       throw($oError);
     }
   }
+  
+  function stepTriggerExists ($StepUid, $TasUid, $TriUid, $StType) {
+  	$con = Propel::getConnection(StepTriggerPeer::DATABASE_NAME);
+    try {
+      $oObj = StepTriggerPeer::retrieveByPk($StepUid, $TasUid, $TriUid, $StType);
+  	  if ( get_class ($oObj) == 'StepTrigger' ) {
+  	    return true;
+  	  }
+      else {
+        return false;
+      }
+    }
+    catch (Exception $oError) {
+    	throw($oError);
+    }
+  }  
+  
   function removeTrigger($TriUid)
   {
     $con = Propel::getConnection(StepTriggerPeer::DATABASE_NAME);

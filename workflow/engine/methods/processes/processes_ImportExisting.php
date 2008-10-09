@@ -31,6 +31,7 @@
   if ( !isset ($_POST['form']['IMPORT_OPTION'] ) ) {
   	throw ( new Exception ('Please select an option before to continue')) ;
   }
+  
   $option = $_POST['form']['IMPORT_OPTION'];
   $filename = $_POST['form']['PRO_FILENAME'];
   $ObjUid   = $_POST['form']['OBJ_UID'];

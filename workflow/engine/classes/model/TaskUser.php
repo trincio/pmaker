@@ -112,5 +112,21 @@ class TaskUser extends BaseTaskUser {
       throw($oError);
     }
   }
+  
+  function TaskUserExists ($sTasUid, $sUserUid, $iType, $iRelation) {
+  	$con = Propel::getConnection(TaskUserPeer::DATABASE_NAME);
+    try {
+      $oTaskUser = TaskUserPeer::retrieveByPk($sTasUid, $sUserUid, $iType, $iRelation);
+  	  if ( get_class ($oTaskUser) == 'TaskUser' ) {
+  	    return true;
+  	  }
+      else {
+        return false;
+      }
+    }
+    catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
 
 } // TaskUser
