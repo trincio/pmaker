@@ -674,12 +674,9 @@ class XmlForm_Field_Text extends XmlForm_Field_SimpleText
    */
   function render( $value = NULL , $owner = NULL )
   {
-		//$this->executeSQL();
-		//if (isset($this->sqlOption)) {
-		//  reset($this->sqlOption);
-		//  $firstElement=key($this->sqlOption);
-	  //	if (isset($firstElement)) $value = $firstElement;
-	  //}
+	  $this->executeSQL( $owner );
+    $firstElement=key($this->sqlOption);
+	  if (isset($firstElement)) $value = $firstElement;
 	  //NOTE: string functions must be in G class
 	  if ($this->strTo==='UPPER') $value = strtoupper($value);
 	  if ($this->strTo==='LOWER') $value = strtolower($value);

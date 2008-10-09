@@ -165,7 +165,7 @@ class Derivation
     $c->addSelectColumn( TaskUserPeer::USR_UID);
     $c->addSelectColumn( TaskUserPeer::TU_RELATION);
     $c->add ( TaskUserPeer::TAS_UID, $sTasUid);
-    $c->add ( TaskUserPeer::TU_TYPE, 1);	
+    $c->add ( TaskUserPeer::TU_TYPE, 1);
     $rs = TaskUserPeer::DoSelectRs ($c);
     $rs->setFetchmode (ResultSet::FETCHMODE_ASSOC);
     $rs->next();
@@ -324,7 +324,7 @@ class Derivation
   /*
    */
   function derivate($currentDelegation=array(), $nextDelegations =array())
-  {
+  {//var_dump($currentDelegation['APP_UID'], $currentDelegation['DEL_INDEX']);die;
     //define this...
     if ( !defined('TASK_FINISH_PROCESS')) define('TASK_FINISH_PROCESS',-1);
     if ( !defined('TASK_FINISH_TASK'))    define('TASK_FINISH_TASK',   -2);
@@ -336,7 +336,7 @@ class Derivation
 //krumo ( $nextDelegations ); //*////*/*/*/*/quitar comentario
     $this->case->CloseCurrentDelegation ( $currentDelegation['APP_UID'], $currentDelegation['DEL_INDEX'] );
     //Count how many tasks should be derivated.
-    $countNextTask = count($nextDelegations);
+    //$countNextTask = count($nextDelegations);
     foreach($nextDelegations as $nextDel)
     {
       if ($nextDel['TAS_PARENT'] != '') {
@@ -363,23 +363,29 @@ class Derivation
           continue;
         }
       }
+      $openThreads = $this->case->GetOpenThreads( $currentDelegation['APP_UID'] );
+      if (($nextDel['TAS_UID'] == TASK_FINISH_PROCESS) && (($openThreads + 1) > 1)) {
+        $nextDel['TAS_UID'] = TASK_FINISH_TASK;
+      }
       switch ( $nextDel['TAS_UID'] ) {
         case TASK_FINISH_PROCESS:
           /*Close all delegations of $currentDelegation['APP_UID'] */
           $this->case->closeAllDelegations ( $currentDelegation['APP_UID'] );
           $this->case->closeAllThreads ( $currentDelegation['APP_UID']);
           break;
-
+        case TASK_FINISH_TASK:
+          $iAppThreadIndex = $appFields['DEL_THREAD'];
+          $this->case->closeAppThread ( $currentDelegation['APP_UID'], $iAppThreadIndex);
+          break;
         default:
           // get all siblingThreads
           if ( $currentDelegation['ROU_TYPE'] == 'SEC-JOIN' ) {
-            $siblingThreads = $this->case->getOpenSiblingThreads( $currentDelegation['APP_UID'], $currentDelegation['DEL_INDEX'] );
+            $siblingThreads = $this->case->getOpenSiblingThreads($nextDel['TAS_UID'], $currentDelegation['APP_UID'], $currentDelegation['DEL_INDEX']);
             $canDerivate = count($siblingThreads) == 0;
-
-          //krumo ($siblingThreads);  die;
           }
-          else
+          else {
             $canDerivate = true;
+          }
 
           if ( $canDerivate ) {
             if ( $nextDel['TAS_ASSIGN_TYPE'] == 'BALANCED') {
