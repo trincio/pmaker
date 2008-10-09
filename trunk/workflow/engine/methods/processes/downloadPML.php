@@ -20,14 +20,15 @@
     $oProcess = new Processes();
     $oProcess->downloadFile( $downloadUrl, $localPath, $newfilename);
 
-    //getting the ProUid the file recent downloaded
+    //getting the ProUid from the file recently downloaded
     $oData = $oProcess->getProcessData ( $localPath . $newfilename  );
 
-    $Fields['PRO_FILENAME']  = $newfilename;
     $Fields['IMPORT_OPTION'] = 2;
-
+    $Fields['PRO_FILENAME']  = $newfilename;
+    $Fields['OBJ_UID']       = $ObjUid ;
     $sProUid = $oData->process['PRO_UID'];     
 
+    //if the process exists, we need to ask what kind of re-import the user wants,
     if ( $oProcess->processExists ( $sProUid ) ) {
       $G_MAIN_MENU            = 'processmaker';
       $G_ID_MENU_SELECTED     = 'PROCESSES';
@@ -37,9 +38,26 @@
       die;
     }
 
+    //creating the process
     $oProcess->createProcessFromData ($oData, $localPath . $newfilename );
-    G::header ( 'Location: processes_List');
-
+    
+    //show the info after the imported process
+    G::LoadClass('processes');  
+    $oProcess = new Processes();
+    $oProcess->ws_open_public ();   
+    $processData = $oProcess->ws_processGetData ( $ObjUid  );
+    $Fields['pro_title']    = $processData->title;
+    $Fields['installSteps'] = nl2br($processData->installSteps);
+    $Fields['category']     = $processData->category;
+    $Fields['version']      = $processData->version;
+    $G_MAIN_MENU            = 'processmaker';
+    $G_ID_MENU_SELECTED     = 'PROCESSES';
+    $G_PUBLISH = new Publisher;
+    $Fields['PRO_UID'] = $sProUid;
+    $processmapLink = "processes_Map?PRO_UID=$sProUid";
+    $G_PUBLISH->AddContent('xmlform', 'xmlform', 'processes/processes_ImportSucessful', '', $Fields, $processmapLink );
+    G::RenderPage('publish');
+    die;
   }
   catch ( Exception $e ) {
     $G_PUBLISH = new Publisher;

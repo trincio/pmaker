@@ -1633,6 +1633,7 @@ function createSubProcessRows ($SubProcess ){  //SwimlanesElements
     global $client;
     $endpoint = PML_WSDL_URL;
     $sessionId = '';
+    ini_set("soap.wsdl_cache_enabled", "0"); // enabling WSDL cache
     $client = new SoapClient( $endpoint );
   
     return 1;
@@ -1675,7 +1676,23 @@ function createSubProcessRows ($SubProcess ){  //SwimlanesElements
 
   }//end function   
   
-}//end class processes
+  function ws_processGetData ( $proId ){
+  	global $sessionId;
+  	global $client;
+  	
+    $endpoint = PML_WSDL_URL;
+    $client = new SoapClient( $endpoint );  	
+
+  	$sessionId = '';
+    $params = array('sessionId'=>$sessionId , 'processId'=>  $proId);
+    $result = $client->__SoapCall('processGetData', array($params));
+    if ( $result->status_code == 0 ) {
+      return $result;
+    }
+    throw ( new Exception ( $result->message ) );
+  }
+
+ }//end class processes
 
 
 class ObjectDocument{
