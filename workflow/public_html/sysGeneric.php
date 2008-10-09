@@ -2,8 +2,17 @@
 /*** enable display_error On to caught even fatal errors ***/
 ini_set('display_errors','On');
 ini_set('error_reporting', E_ALL  );
-ini_set('memory_limit', '80M');
+ini_set('memory_limit', '30M');
 
+$memAcum = 0;
+function logMemory ($text=''){
+	global $memAcum;
+	$dif = memory_get_usage() - $memAcum;
+	$memAcum = memory_get_usage();
+	$b =  debug_backtrace();
+  $aux = sprintf ( "[ usage:%8.1fK acum:%8.3fM] <b>$text</b> in line <b>%s</b> %s </br>",$dif/1024, memory_get_usage() / 1024 / 1024 , $b[0]["line"], $b[0]["file"]) ;
+  return $aux;
+}
 function strip_slashes(&$vVar) {
   if (is_array($vVar)) {
     foreach($vVar as $sKey => $vValue) {
@@ -23,10 +32,8 @@ function strip_slashes(&$vVar) {
 if (ini_get('magic_quotes_gpc') == '1') {
   strip_slashes($_POST);
 }
-
 $path = Array();
 $sf = $_SERVER['SCRIPT_FILENAME'];
-
 //sysGeneric, this file is used to redirect to workspace, the url should by encrypted or not
 
 //***************** In the PATH_SEP we know if the the path separator symbol will be '\\' or '/' **************************
@@ -58,11 +65,8 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
 
 //***************** In this file we cant to get the PM paths , RBAC Paths and Gulliver Paths  ******************************
   require_once ( $pathhome . PATH_SEP . 'engine' . PATH_SEP . 'config' . PATH_SEP . 'paths.php' );
-
 //***************** In this file we cant to get the PM definitions  ******************************
   require_once ( $pathhome . PATH_SEP . 'engine' . PATH_SEP . 'config' . PATH_SEP . 'defines.php' );
-
-
 
 
 //******************* Error handler and log error *******************
@@ -199,7 +203,6 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
 
   G::LoadThirdParty('pear/json','class.json');
   G::LoadThirdParty('smarty/libs','Smarty.class');
-
   G::LoadSystem('error');
   G::LoadSystem('dbconnection');
   G::LoadSystem('dbsession');
@@ -301,7 +304,6 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
       die();
     }
   }
-
 
 //***************** PM Paths DATA **************************
   define( 'PATH_DATA_SITE',                 PATH_DATA      . 'sites/' . SYS_SYS . '/');
@@ -460,7 +462,7 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
         header('Pragma: ');
       }
       ob_end_flush();
-    }
+    } 
 /*
   }
   catch ( Exception $e ) {
@@ -471,3 +473,7 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
     die;
   }
 */
+
+//$auxMem = sprintf ( "memory_limit:%s  usage:%4.2fM \$_SESSION: %4.2fKb=%d", 
+//  ini_get("memory_limit"), memory_get_usage() / 1024 / 1024,strlen( serialize($_SESSION)) / 1024 , count($_SESSION) );
+//error_log($auxMem);
