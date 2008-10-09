@@ -31,11 +31,11 @@
   if ( !isset ($_POST['form']['IMPORT_OPTION'] ) ) {
   	throw ( new Exception ('Please select an option before to continue')) ;
   }
-  
+
   $option = $_POST['form']['IMPORT_OPTION'];
   $filename = $_POST['form']['PRO_FILENAME'];
   $ObjUid   = $_POST['form']['OBJ_UID'];
-  
+
   $path     = PATH_DOCUMENT . 'input' . PATH_SEP ;
   $oData = $oProcess->getProcessData ( $path . $filename  );
 
@@ -91,14 +91,22 @@
   }
 
     //show the info after the imported process
-    G::LoadClass('processes');  
+    G::LoadClass('processes');
     $oProcess = new Processes();
-    $oProcess->ws_open_public ();   
-    $processData = $oProcess->ws_processGetData ( $ObjUid  );
-    $Fields['pro_title']    = $processData->title;
-    $Fields['installSteps'] = nl2br($processData->installSteps);
-    $Fields['category']     = $processData->category;
-    $Fields['version']      = $processData->version;
+    try {
+      $oProcess->ws_open_public ();
+      $processData = $oProcess->ws_processGetData ( $ObjUid  );
+      $Fields['pro_title']    = $processData->title;
+      $Fields['installSteps'] = nl2br($processData->installSteps);
+      $Fields['category']     = $processData->category;
+      $Fields['version']      = $processData->version;
+    }
+    catch (Exception $e) {
+      $Fields['pro_title']    = $oData->process['PRO_TITLE'];
+      $Fields['installSteps'] = '';
+      $Fields['category']     = '';
+      $Fields['version']      = '';
+    }
     $G_MAIN_MENU            = 'processmaker';
     $G_ID_MENU_SELECTED     = 'PROCESSES';
     $G_PUBLISH = new Publisher;

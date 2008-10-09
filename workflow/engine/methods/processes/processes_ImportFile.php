@@ -56,7 +56,7 @@
   }
 
   $oProcess->createProcessFromData ($oData, $path . $filename );
-  G::header ( 'Location: processes_List');
+  G::header('Location: processes_Map?PRO_UID=' . $sProUid);
 
 }
 catch ( Exception $e ){

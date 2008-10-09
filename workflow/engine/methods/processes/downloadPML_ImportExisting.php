@@ -89,25 +89,7 @@
     $oProcess->renewAllSubProcessGuid ( $oData );
     $oProcess->createProcessFromData ($oData, $path . $filename );
   }
-
-    //show the info after the imported process
-    G::LoadClass('processes');
-    $oProcess = new Processes();
-    $oProcess->ws_open_public ();
-    $processData = $oProcess->ws_processGetData ( $ObjUid  );
-    $Fields['pro_title']    = $processData->title;
-    $Fields['installSteps'] = nl2br($processData->installSteps);
-    $Fields['category']     = $processData->category;
-    $Fields['version']      = $processData->version;
-    $G_MAIN_MENU            = 'processmaker';
-    $G_ID_MENU_SELECTED     = 'PROCESSES';
-    $G_PUBLISH = new Publisher;
-    $Fields['PRO_UID'] =     $sNewProUid;
-    $processmapLink = "processes_Map?PRO_UID=$sNewProUid";
-    $G_PUBLISH->AddContent('xmlform', 'xmlform', 'processes/processes_ImportSucessful', '', $Fields, $processmapLink );
-    G::RenderPage('publish');
-    die;
-
+  G::header('Location: processes_Map?PRO_UID=' . $sNewProUid);
 }
 catch ( Exception $e ){
   $G_PUBLISH = new Publisher;
