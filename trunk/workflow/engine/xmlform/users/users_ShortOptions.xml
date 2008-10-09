@@ -9,12 +9,10 @@
 
 <MNU_ASSIGN type="link" value='' link="#" onclick="popupWindow('Assign users group or user', '../users/users_Ajax?function=availableUsers&amp;sProcess=@#PROCESS&amp;sTask=@#TASK&amp;iType=@#TYPE', 500, 420);return false;" colAlign="left" colWidth="50">
   <en>Assign</en>
-  <es>Asignar</es>
 </MNU_ASSIGN>
 
 <MNU_CHANGE type="link" value='' link="#" onclick="changeView(@#TYPE);return false;" colAlign="right" colWidth="200">
   <en>View Users for "Adhoc"</en>
-  <es>Ver Usuarios para "Adhoc"</es>
 </MNU_CHANGE>
 
 <js type="javascript">
@@ -33,9 +31,9 @@ var assignGroupOrUser = function(sTask, sUser, iType, iRelation) {
 };
 
 var ofToAssignGroupOrUser = function(TAS_UID, USR_UID, TU_TYPE, TU_RELATION) {
-  new leimnud.module.app.confirm().make({
-  	label:'@#CONFIRM',
-  	action:function() {
+//  new leimnud.module.app.confirm().make({
+//  	label:'@#CONFIRM',
+//  	action:function() {
   		var oRPC = new leimnud.module.rpc.xmlhttp({
         url   : '../users/users_Ajax',
         async : false,
@@ -46,8 +44,8 @@ var ofToAssignGroupOrUser = function(TAS_UID, USR_UID, TU_TYPE, TU_RELATION) {
       Pm.tmp.usersPanel.clearContent();
       Pm.tmp.usersPanel.loader.show();
       Pm.tmp.usersPanel.currentRPC.make();
-  	}.extend(this)
-  });
+//  	}.extend(this)
+//  });
   return false;
 };
 

@@ -29,9 +29,9 @@ var assignGroupOrUser = function(sTask, sUser, iType, iRelation) {
 };
 
 var ofToAssignGroupOrUser = function(TAS_UID, USR_UID, TU_TYPE, TU_RELATION) {  
-  new leimnud.module.app.confirm().make({
-  	label:'@#CONFIRM',
-  	action:function() {
+//  new leimnud.module.app.confirm().make({
+//  	label:'@#CONFIRM',
+//  	action:function() {
   		var oRPC = new leimnud.module.rpc.xmlhttp({
         url   : '../users/users_Ajax',
         async : false,
@@ -42,8 +42,8 @@ var ofToAssignGroupOrUser = function(TAS_UID, USR_UID, TU_TYPE, TU_RELATION) {
       Pm.tmp.usersPanel.clearContent();
       Pm.tmp.usersPanel.loader.show();
       Pm.tmp.usersPanel.currentRPC.make();
-  	}.extend(this)
-  });
+//  	}.extend(this)
+//  });
   return false;
 };
 
