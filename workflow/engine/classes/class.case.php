@@ -516,40 +516,51 @@ class Cases
     * @param string $sAppUid
     * @return
     */
-    function getOpenSiblingThreads($sAppUid, $iDelIndex)
-    {
-        try {
-            //get the parent thread
-            $c = new Criteria();
-            $c->add(AppThreadPeer::APP_UID, $sAppUid);
-            $c->add(AppThreadPeer::DEL_INDEX, $iDelIndex);
-            $rs = AppThreadPeer::doSelectRs($c);
-            $rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-            $rs->next();
-            $row = $rs->getRow();
-            $iParent = $row['APP_THREAD_PARENT'];
-
-            //get the sibling
-            $aThreads = array();
-            $c = new Criteria();
-            $c->add(AppThreadPeer::APP_UID, $sAppUid);
-            $c->add(AppThreadPeer::APP_THREAD_PARENT, $iParent);
-            $c->add(AppThreadPeer::APP_THREAD_STATUS, 'OPEN');
-            $c->add(AppThreadPeer::DEL_INDEX, $iDelIndex, Criteria::NOT_EQUAL);
-            $rs = AppThreadPeer::doSelectRs($c);
-            $rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-            $rs->next();
-            $row = $rs->getRow();
-            while (is_array($row)) {
-                $aThreads[] = $row;
-                $rs->next();
-                $row = $rs->getRow();
-            }
-            return $aThreads;
+    function getOpenSiblingThreads($sNextTask, $sAppUid, $iDelIndex) {
+      try {
+        require_once 'classes/model/Route.php';
+        $aPreviousTask = array();
+        $oCriteria = new Criteria();
+        $oCriteria->add(RoutePeer::ROU_NEXT_TASK, $sNextTask);
+        $oDataset = RoutePeer::doSelectRs($oCriteria);
+        $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+        $oDataset->next();
+        while ($aRow = $oDataset->getRow()) {
+          $aPreviousTask[] = $aRow['TAS_UID'];
+          $oDataset->next();
         }
-        catch (exception $e) {
-            throw ($e);
+        $oCriteria = new Criteria();
+        $oCriteria->add(AppThreadPeer::APP_UID, $sAppUid);
+        $oCriteria->add(AppThreadPeer::DEL_INDEX, $iDelIndex);
+        $oDataset = AppThreadPeer::doSelectRs($oCriteria);
+        $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+        $oDataset->next();
+        $aRow          = $oDataset->getRow();
+        $iParent       = $aRow['APP_THREAD_PARENT'];
+        $aThreads      = array();
+        $oCriteria     = new Criteria();
+        $aConditions   = array();
+        $aConditions[] = array(AppThreadPeer::APP_UID, AppDelegationPeer::APP_UID);
+        $aConditions[] = array(AppThreadPeer::DEL_INDEX, AppDelegationPeer::DEL_INDEX);
+        $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
+        $oCriteria->add(AppThreadPeer::APP_UID, $sAppUid);
+        $oCriteria->add(AppThreadPeer::APP_THREAD_PARENT, $iParent);
+        $oCriteria->add(AppThreadPeer::APP_THREAD_STATUS, 'OPEN');
+        $oCriteria->add(AppThreadPeer::DEL_INDEX, $iDelIndex, Criteria::NOT_EQUAL);
+        $oCriteria->add(AppDelegationPeer::TAS_UID, $aPreviousTask, Criteria::IN);
+        $oDataset = AppThreadPeer::doSelectRs($oCriteria);
+        $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+        $oDataset->next();
+        $aRow = $oDataset->getRow();
+        while ($aRow = $oDataset->getRow()) {
+            $aThreads[] = $aRow;
+            $oDataset->next();
         }
+        return $aThreads;
+      }
+      catch (exception $e) {
+        throw ($e);
+      }
     }
 
     /*
