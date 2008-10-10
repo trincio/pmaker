@@ -27,9 +27,9 @@
   <en>Start Date</en>
 </DEL_INIT_DATE>
 
-<DEL_FINISH_DATE type="date" colWidth="100" colAlign="center" titleAlign="center">
+<APP_FINISH_DATE type="date" colWidth="100" colAlign="center" titleAlign="center">
   <en>End Date</en>
-</DEL_FINISH_DATE>
+</APP_FINISH_DATE>
 
 <APP_TYPE type="dropdown" colWidth="100" colAlign="center" titleAlign="center">
   <en>Action
