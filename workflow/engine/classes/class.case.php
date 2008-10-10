@@ -1366,12 +1366,13 @@ class Cases
         $c = new Criteria('workflow');
         $c->addAsColumn('TAS_TITLE', 'TAS_TITLE.CON_VALUE');
         $c->addSelectColumn(UsersPeer::USR_FIRSTNAME);
-        $c->addSelectColumn(UsersPeer::USR_LASTNAME);
+        $c->addSelectColumn(UsersPeer::USR_LASTNAME);        
         $c->addSelectColumn(AppDelegationPeer::DEL_DELEGATE_DATE);
         $c->addAsColumn('USR_NAME', "CONCAT(USR_LASTNAME, ' ', USR_FIRSTNAME)");
-        $c->addSelectColumn(AppDelegationPeer::DEL_INIT_DATE);
+        $c->addSelectColumn(ApplicationPeer::DEL_INIT_DATE);        
+        $c->addAsColumn('APP_FINISH_DATE', ApplicationPeer::APP_FINISH_DATE);
         //$c->addSelectColumn(AppDelegationPeer::DEL_FINISH_DATE);
-        $c->addAsColumn('DEL_FINISH_DATE', "IF (DEL_FINISH_DATE IS NULL, '-', " . AppDelegationPeer::DEL_INIT_DATE . ") ");
+        // $c->addAsColumn('DEL_FINISH_DATE', "IF (DEL_FINISH_DATE IS NULL, '-', " . AppDelegationPeer::DEL_INIT_DATE . ") ");
 
         //$c->addSelectColumn(AppDelayPeer::APP_TYPE);
         $c->addAsColumn('APP_TYPE', "IF (DEL_FINISH_DATE IS NULL, 'IN_PROGRESS', " . AppDelayPeer::APP_TYPE . ") ");
@@ -1379,7 +1380,8 @@ class Cases
         $c->addSelectColumn(AppDelayPeer::APP_DISABLE_ACTION_DATE);
         //APP_DELEGATION LEFT JOIN USERS
         $c->addJoin(AppDelegationPeer::USR_UID, UsersPeer::USR_UID, Criteria::LEFT_JOIN);
-
+        $c->addJoin(ApplicationPeer::APP_UID, AppDelegationPeer::APP_UID, Criteria::LEFT_JOIN);
+                    
         //APP_DELAY FOR MORE DESCRIPTION
         //$c->addJoin(AppDelegationPeer::DEL_INDEX, AppDelayPeer::APP_DEL_INDEX, Criteria::LEFT_JOIN);
         //$c->addJoin(AppDelegationPeer::APP_UID, AppDelayPeer::APP_UID, Criteria::LEFT_JOIN);
