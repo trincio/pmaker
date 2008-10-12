@@ -1705,6 +1705,16 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
+    <column name="OUT_DOC_LANDSCAPE" type="TINYINT" required="true" default="1">
+      <vendor type="mysql">
+        <parameter name="Field" value="OUT_DOC_LANDSCAPE"/>
+        <parameter name="Type" value="tinyint(1)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="0"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
     <validator column="OUT_DOC_UID">
       <rule name="maxLength" value="32" message="Output Document UID can be no larger than ${value} in size" />
       <rule name="required" message="Output Document UID is required." />

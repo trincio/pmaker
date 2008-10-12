@@ -1167,34 +1167,36 @@ class Cases
                     //step
                     $oStep = new Step;
                     $oStep = $oStep->loadByProcessTaskPosition($sProUid, $sTaskUid, $iPosition);
-                    if ($oStep->getStepCondition() !== '') {
-                        $oPMScript->setScript($oStep->getStepCondition());
-                        $bAccessStep = $oPMScript->evaluate();
-                    } else {
-                        $bAccessStep = true;
-                    }
+                    if ($oStep) {
+                      if ($oStep->getStepCondition() !== '') {
+                          $oPMScript->setScript($oStep->getStepCondition());
+                          $bAccessStep = $oPMScript->evaluate();
+                      } else {
+                          $bAccessStep = true;
+                      }
 
-                    if ($bAccessStep) {
-                        switch ($oStep->getStepTypeObj()) {
-                            case 'DYNAFORM':
-                                $sAction = 'EDIT';
-                                break;
-                            case 'OUTPUT_DOCUMENT':
-                                $sAction = 'GENERATE';
-                                break;
-                            case 'INPUT_DOCUMENT':
-                                $sAction = 'ATTACH';
-                                break;
-                            case 'EXTERNAL':
-                                $sAction = 'EDIT';
-                                break;
-                            case 'MESSAGE':
-                                $sAction = '';
-                                break;
-                        }
-                        $aNextStep = array('TYPE' => $oStep->getStepTypeObj(), 'UID' => $oStep->getStepUidObj(), 'POSITION' => $oStep->getStepPosition(), 'PAGE' => 'cases_Step?TYPE=' . $oStep->getStepTypeObj() . '&UID=' . $oStep->
-                            getStepUidObj() . '&POSITION=' . $oStep->getStepPosition() . '&ACTION=' . $sAction);
-                        $iPosition = $iLastStep;
+                      if ($bAccessStep) {
+                          switch ($oStep->getStepTypeObj()) {
+                              case 'DYNAFORM':
+                                  $sAction = 'EDIT';
+                                  break;
+                              case 'OUTPUT_DOCUMENT':
+                                  $sAction = 'GENERATE';
+                                  break;
+                              case 'INPUT_DOCUMENT':
+                                  $sAction = 'ATTACH';
+                                  break;
+                              case 'EXTERNAL':
+                                  $sAction = 'EDIT';
+                                  break;
+                              case 'MESSAGE':
+                                  $sAction = '';
+                                  break;
+                          }
+                          $aNextStep = array('TYPE' => $oStep->getStepTypeObj(), 'UID' => $oStep->getStepUidObj(), 'POSITION' => $oStep->getStepPosition(), 'PAGE' => 'cases_Step?TYPE=' . $oStep->getStepTypeObj() . '&UID=' . $oStep->
+                              getStepUidObj() . '&POSITION=' . $oStep->getStepPosition() . '&ACTION=' . $sAction);
+                          $iPosition = $iLastStep;
+                      }
                     }
                     $iPosition += 1;
                 }
@@ -1263,33 +1265,35 @@ class Cases
                     //step
                     $oStep = new Step;
                     $oStep = $oStep->loadByProcessTaskPosition($sProUid, $sTaskUid, $iPosition);
-                    if ($oStep->getStepCondition() !== '') {
-                        $oPMScript->setScript($oStep->getStepCondition());
-                        $bAccessStep = $oPMScript->evaluate();
-                    } else {
-                        $bAccessStep = true;
-                    }
-                    if ($bAccessStep) {
-                        switch ($oStep->getStepTypeObj()) {
-                            case 'DYNAFORM':
-                                $sAction = 'EDIT';
-                                break;
-                            case 'OUTPUT_DOCUMENT':
-                                $sAction = 'GENERATE';
-                                break;
-                            case 'INPUT_DOCUMENT':
-                                $sAction = 'ATTACH';
-                                break;
-                            case 'EXTERNAL':
-                                $sAction = 'EDIT';
-                                break;
-                            case 'MESSAGE':
-                                $sAction = '';
-                                break;
-                        }
-                        $aPreviousStep = array('TYPE' => $oStep->getStepTypeObj(), 'UID' => $oStep->getStepUidObj(), 'POSITION' => $oStep->getStepPosition(), 'PAGE' => 'cases_Step?TYPE=' . $oStep->getStepTypeObj() . '&UID=' .
-                            $oStep->getStepUidObj() . '&POSITION=' . $oStep->getStepPosition() . '&ACTION=' . $sAction);
-                        $iPosition = $iFirstStep;
+                    if ($oStep) {
+                      if ($oStep->getStepCondition() !== '') {
+                          $oPMScript->setScript($oStep->getStepCondition());
+                          $bAccessStep = $oPMScript->evaluate();
+                      } else {
+                          $bAccessStep = true;
+                      }
+                      if ($bAccessStep) {
+                          switch ($oStep->getStepTypeObj()) {
+                              case 'DYNAFORM':
+                                  $sAction = 'EDIT';
+                                  break;
+                              case 'OUTPUT_DOCUMENT':
+                                  $sAction = 'GENERATE';
+                                  break;
+                              case 'INPUT_DOCUMENT':
+                                  $sAction = 'ATTACH';
+                                  break;
+                              case 'EXTERNAL':
+                                  $sAction = 'EDIT';
+                                  break;
+                              case 'MESSAGE':
+                                  $sAction = '';
+                                  break;
+                          }
+                          $aPreviousStep = array('TYPE' => $oStep->getStepTypeObj(), 'UID' => $oStep->getStepUidObj(), 'POSITION' => $oStep->getStepPosition(), 'PAGE' => 'cases_Step?TYPE=' . $oStep->getStepTypeObj() . '&UID=' .
+                              $oStep->getStepUidObj() . '&POSITION=' . $oStep->getStepPosition() . '&ACTION=' . $sAction);
+                          $iPosition = $iFirstStep;
+                      }
                     }
                     $iPosition -= 1;
                 }
@@ -1366,13 +1370,12 @@ class Cases
         $c = new Criteria('workflow');
         $c->addAsColumn('TAS_TITLE', 'TAS_TITLE.CON_VALUE');
         $c->addSelectColumn(UsersPeer::USR_FIRSTNAME);
-        $c->addSelectColumn(UsersPeer::USR_LASTNAME);        
+        $c->addSelectColumn(UsersPeer::USR_LASTNAME);
         $c->addSelectColumn(AppDelegationPeer::DEL_DELEGATE_DATE);
         $c->addAsColumn('USR_NAME', "CONCAT(USR_LASTNAME, ' ', USR_FIRSTNAME)");
-        $c->addSelectColumn(ApplicationPeer::DEL_INIT_DATE);        
-        $c->addAsColumn('APP_FINISH_DATE', ApplicationPeer::APP_FINISH_DATE);
+        $c->addSelectColumn(AppDelegationPeer::DEL_INIT_DATE);
         //$c->addSelectColumn(AppDelegationPeer::DEL_FINISH_DATE);
-        // $c->addAsColumn('DEL_FINISH_DATE', "IF (DEL_FINISH_DATE IS NULL, '-', " . AppDelegationPeer::DEL_INIT_DATE . ") ");
+        $c->addAsColumn('DEL_FINISH_DATE', "IF (DEL_FINISH_DATE IS NULL, '-', " . AppDelegationPeer::DEL_FINISH_DATE . ") ");
 
         //$c->addSelectColumn(AppDelayPeer::APP_TYPE);
         $c->addAsColumn('APP_TYPE', "IF (DEL_FINISH_DATE IS NULL, 'IN_PROGRESS', " . AppDelayPeer::APP_TYPE . ") ");
@@ -1380,8 +1383,7 @@ class Cases
         $c->addSelectColumn(AppDelayPeer::APP_DISABLE_ACTION_DATE);
         //APP_DELEGATION LEFT JOIN USERS
         $c->addJoin(AppDelegationPeer::USR_UID, UsersPeer::USR_UID, Criteria::LEFT_JOIN);
-        $c->addJoin(ApplicationPeer::APP_UID, AppDelegationPeer::APP_UID, Criteria::LEFT_JOIN);
-                    
+
         //APP_DELAY FOR MORE DESCRIPTION
         //$c->addJoin(AppDelegationPeer::DEL_INDEX, AppDelayPeer::APP_DEL_INDEX, Criteria::LEFT_JOIN);
         //$c->addJoin(AppDelegationPeer::APP_UID, AppDelayPeer::APP_UID, Criteria::LEFT_JOIN);
@@ -2135,7 +2137,12 @@ class Cases
           $oDataset2->next();
           $aRow2 = $oDataset2->getRow();
           $oTask = new Task();
-          $aTask = $oTask->load($aRow2['TAS_UID']);
+          if ($oTask->taskExists($aRow2['TAS_UID'])) {
+            $aTask = $oTask->load($aRow2['TAS_UID']);
+          }
+          else {
+            $aTask = array('TAS_TITLE' => '(TASK DELETED)');
+          }
           $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
           $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' => $aAux['APP_DOC_INDEX'], 'TYPE' => $aAux['APP_DOC_TYPE'], 'ORIGIN' => $aTask['TAS_TITLE']);
           if ($aFields['APP_DOC_FILENAME'] != '') {
@@ -2164,7 +2171,12 @@ class Cases
           $oDataset2->next();
           $aRow2 = $oDataset2->getRow();
           $oTask = new Task();
-          $aTask = $oTask->load($aRow2['TAS_UID']);
+          if ($oTask->taskExists($aRow2['TAS_UID'])) {
+            $aTask = $oTask->load($aRow2['TAS_UID']);
+          }
+          else {
+            $aTask = array('TAS_TITLE' => '(TASK DELETED)');
+          }
           $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
           $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' => $aAux['APP_DOC_INDEX'], 'TYPE' => $aAux['APP_DOC_TYPE'], 'ORIGIN' => $aTask['TAS_TITLE']);
           if ($aFields['APP_DOC_FILENAME'] != '') {
@@ -2240,7 +2252,12 @@ class Cases
           $oDataset2->next();
           $aRow2 = $oDataset2->getRow();
           $oTask = new Task();
-          $aTask = $oTask->load($aRow2['TAS_UID']);
+          if ($oTask->taskExists($aRow2['TAS_UID'])) {
+            $aTask = $oTask->load($aRow2['TAS_UID']);
+          }
+          else {
+            $aTask = array('TAS_TITLE' => '(TASK DELETED)');
+          }
           $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
           $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' => $aAux['APP_DOC_INDEX'], 'ORIGIN' => $aTask['TAS_TITLE']);
           if ($aFields['APP_DOC_FILENAME'] != '') {
@@ -2815,7 +2832,12 @@ function getAllUploadedDocumentsCriteriaTracker($sProcessUID, $sApplicationUID) 
           $oDataset2->next();
           $aRow2 = $oDataset2->getRow();
           $oTask = new Task();
-          $aTask = $oTask->load($aRow2['TAS_UID']);
+          if ($oTask->taskExists($aRow2['TAS_UID'])) {
+            $aTask = $oTask->load($aRow2['TAS_UID']);
+          }
+          else {
+            $aTask = array('TAS_TITLE' => '(TASK DELETED)');
+          }
           $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
           $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' => $aAux['APP_DOC_INDEX'], 'TYPE' => $aAux['APP_DOC_TYPE'], 'ORIGIN' => $aTask['TAS_TITLE']);
           if ($aFields['APP_DOC_FILENAME'] != '') {
@@ -2845,7 +2867,12 @@ function getAllUploadedDocumentsCriteriaTracker($sProcessUID, $sApplicationUID) 
           $oDataset2->next();
           $aRow2 = $oDataset2->getRow();
           $oTask = new Task();
-          $aTask = $oTask->load($aRow2['TAS_UID']);
+          if ($oTask->taskExists($aRow2['TAS_UID'])) {
+            $aTask = $oTask->load($aRow2['TAS_UID']);
+          }
+          else {
+            $aTask = array('TAS_TITLE' => '(TASK DELETED)');
+          }
           $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
           $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' => $aAux['APP_DOC_INDEX'], 'TYPE' => $aAux['APP_DOC_TYPE'], 'ORIGIN' => $aTask['TAS_TITLE']);
           if ($aFields['APP_DOC_FILENAME'] != '') {
@@ -2893,7 +2920,12 @@ function getAllGeneratedDocumentsCriteriaTracker($sProcessUID, $sApplicationUID)
           $oDataset2->next();
           $aRow2 = $oDataset2->getRow();
           $oTask = new Task();
-          $aTask = $oTask->load($aRow2['TAS_UID']);
+          if ($oTask->taskExists($aRow2['TAS_UID'])) {
+            $aTask = $oTask->load($aRow2['TAS_UID']);
+          }
+          else {
+            $aTask = array('TAS_TITLE' => '(TASK DELETED)');
+          }
           $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
           $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' => $aAux['APP_DOC_INDEX'], 'ORIGIN' => $aTask['TAS_TITLE']);
           if ($aFields['APP_DOC_FILENAME'] != '') {

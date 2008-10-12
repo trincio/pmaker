@@ -24,7 +24,7 @@ abstract class BaseOutputDocumentPeer {
 	const CLASS_DEFAULT = 'classes.model.OutputDocument';
 
 	/** The total number of columns. */
-	const NUM_COLUMNS = 2;
+	const NUM_COLUMNS = 3;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -35,6 +35,9 @@ abstract class BaseOutputDocumentPeer {
 
 	/** the column name for the PRO_UID field */
 	const PRO_UID = 'OUTPUT_DOCUMENT.PRO_UID';
+
+	/** the column name for the OUT_DOC_LANDSCAPE field */
+	const OUT_DOC_LANDSCAPE = 'OUTPUT_DOCUMENT.OUT_DOC_LANDSCAPE';
 
 	/** The PHP to DB Name Mapping */
 	private static $phpNameMap = null;
@@ -47,10 +50,10 @@ abstract class BaseOutputDocumentPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('OutDocUid', 'ProUid', ),
-		BasePeer::TYPE_COLNAME => array (OutputDocumentPeer::OUT_DOC_UID, OutputDocumentPeer::PRO_UID, ),
-		BasePeer::TYPE_FIELDNAME => array ('OUT_DOC_UID', 'PRO_UID', ),
-		BasePeer::TYPE_NUM => array (0, 1, )
+		BasePeer::TYPE_PHPNAME => array ('OutDocUid', 'ProUid', 'OutDocLandscape', ),
+		BasePeer::TYPE_COLNAME => array (OutputDocumentPeer::OUT_DOC_UID, OutputDocumentPeer::PRO_UID, OutputDocumentPeer::OUT_DOC_LANDSCAPE, ),
+		BasePeer::TYPE_FIELDNAME => array ('OUT_DOC_UID', 'PRO_UID', 'OUT_DOC_LANDSCAPE', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, )
 	);
 
 	/**
@@ -60,10 +63,10 @@ abstract class BaseOutputDocumentPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('OutDocUid' => 0, 'ProUid' => 1, ),
-		BasePeer::TYPE_COLNAME => array (OutputDocumentPeer::OUT_DOC_UID => 0, OutputDocumentPeer::PRO_UID => 1, ),
-		BasePeer::TYPE_FIELDNAME => array ('OUT_DOC_UID' => 0, 'PRO_UID' => 1, ),
-		BasePeer::TYPE_NUM => array (0, 1, )
+		BasePeer::TYPE_PHPNAME => array ('OutDocUid' => 0, 'ProUid' => 1, 'OutDocLandscape' => 2, ),
+		BasePeer::TYPE_COLNAME => array (OutputDocumentPeer::OUT_DOC_UID => 0, OutputDocumentPeer::PRO_UID => 1, OutputDocumentPeer::OUT_DOC_LANDSCAPE => 2, ),
+		BasePeer::TYPE_FIELDNAME => array ('OUT_DOC_UID' => 0, 'PRO_UID' => 1, 'OUT_DOC_LANDSCAPE' => 2, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, )
 	);
 
 	/**
@@ -167,6 +170,8 @@ abstract class BaseOutputDocumentPeer {
 		$criteria->addSelectColumn(OutputDocumentPeer::OUT_DOC_UID);
 
 		$criteria->addSelectColumn(OutputDocumentPeer::PRO_UID);
+
+		$criteria->addSelectColumn(OutputDocumentPeer::OUT_DOC_LANDSCAPE);
 
 	}
 
