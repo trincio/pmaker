@@ -880,7 +880,7 @@
     <column name="CON_VALUE" type="LONGVARCHAR" required="true">
       <vendor type="mysql">
         <parameter name="Field" value="CON_VALUE"/>
-        <parameter name="Type" value="text"/>
+        <parameter name="Type" value="mediumtext"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
