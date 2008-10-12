@@ -2,7 +2,7 @@
 /*** enable display_error On to caught even fatal errors ***/
 ini_set('display_errors','On');
 ini_set('error_reporting', E_ALL  );
-ini_set('memory_limit', '30M');
+//ini_set('memory_limit', '30M');
 
 $memAcum = 0;
 function logMemory ($text=''){
@@ -462,7 +462,7 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
         header('Pragma: ');
       }
       ob_end_flush();
-    } 
+    }
 /*
   }
   catch ( Exception $e ) {
@@ -474,6 +474,6 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
   }
 */
 
-//$auxMem = sprintf ( "memory_limit:%s  usage:%4.2fM \$_SESSION: %4.2fKb=%d", 
+//$auxMem = sprintf ( "memory_limit:%s  usage:%4.2fM \$_SESSION: %4.2fKb=%d",
 //  ini_get("memory_limit"), memory_get_usage() / 1024 / 1024,strlen( serialize($_SESSION)) / 1024 , count($_SESSION) );
 //error_log($auxMem);
