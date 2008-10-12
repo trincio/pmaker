@@ -68,6 +68,8 @@ class OutputDocumentMapBuilder {
 
 		$tMap->addColumn('PRO_UID', 'ProUid', 'string', CreoleTypes::VARCHAR, true, 32);
 
+		$tMap->addColumn('OUT_DOC_LANDSCAPE', 'OutDocLandscape', 'int', CreoleTypes::TINYINT, true, null);
+
 		$tMap->addValidator('OUT_DOC_UID', 'maxLength', 'propel.validator.MaxLengthValidator', '32', 'Output Document UID can be no larger than 32 in size');
 
 		$tMap->addValidator('OUT_DOC_UID', 'required', 'propel.validator.RequiredValidator', '', 'Output Document UID is required.');

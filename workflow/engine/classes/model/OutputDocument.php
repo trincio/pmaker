@@ -387,7 +387,7 @@ class OutputDocument extends BaseOutputDocument {
 	* @param string $sPath
 	* @return variant
 	*/
-	public function generate($sUID, $aFields, $sPath, $sFilename, $sContent)
+	public function generate($sUID, $aFields, $sPath, $sFilename, $sContent, $sLandscape = false)
   {
   	if (($sUID != '') && is_array($aFields) && ($sPath != ''))
   	{
@@ -441,7 +441,7 @@ class OutputDocument extends BaseOutputDocument {
                                    'pslevel'                 => 3,
                                    'renderlinks'             => true,
                                    'pagewidth'               => 800,
-                                   'landscape'               => false,
+                                   'landscape'               => $sLandscape,
                                    'method'                  => 'fpdf',
                                    'margins'                 => array('left' => 15, 'right' => 15, 'top' => 15, 'bottom' => 15,),
                                    'encoding'                => '',

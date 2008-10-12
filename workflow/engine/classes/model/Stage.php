@@ -183,4 +183,14 @@ class Stage extends BaseStage {
   		throw $Exception;
   	}
   }
+
+  function Exists ( $sUid ) {
+    try {
+      $oObj = StagePeer::retrieveByPk($sUid);
+      return (get_class($oObj) == 'Stage');
+    }
+    catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
 } // Stage

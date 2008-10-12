@@ -41,6 +41,13 @@ abstract class BaseOutputDocument extends BaseObject  implements Persistent {
 	 */
 	protected $pro_uid = '';
 
+
+	/**
+	 * The value for the out_doc_landscape field.
+	 * @var        int
+	 */
+	protected $out_doc_landscape = 1;
+
 	/**
 	 * Flag to prevent endless save loop, if this object is referenced
 	 * by another object which falls in this transaction.
@@ -75,6 +82,17 @@ abstract class BaseOutputDocument extends BaseObject  implements Persistent {
 	{
 
 		return $this->pro_uid;
+	}
+
+	/**
+	 * Get the [out_doc_landscape] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getOutDocLandscape()
+	{
+
+		return $this->out_doc_landscape;
 	}
 
 	/**
@@ -122,6 +140,28 @@ abstract class BaseOutputDocument extends BaseObject  implements Persistent {
 	} // setProUid()
 
 	/**
+	 * Set the value of [out_doc_landscape] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     void
+	 */
+	public function setOutDocLandscape($v)
+	{
+
+		// Since the native PHP type for this column is integer,
+		// we will cast the input value to an int (if it is not).
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->out_doc_landscape !== $v || $v === 1) {
+			$this->out_doc_landscape = $v;
+			$this->modifiedColumns[] = OutputDocumentPeer::OUT_DOC_LANDSCAPE;
+		}
+
+	} // setOutDocLandscape()
+
+	/**
 	 * Hydrates (populates) the object variables with values from the database resultset.
 	 *
 	 * An offset (1-based "start column") is specified so that objects can be hydrated
@@ -142,12 +182,14 @@ abstract class BaseOutputDocument extends BaseObject  implements Persistent {
 
 			$this->pro_uid = $rs->getString($startcol + 1);
 
+			$this->out_doc_landscape = $rs->getInt($startcol + 2);
+
 			$this->resetModified();
 
 			$this->setNew(false);
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 2; // 2 = OutputDocumentPeer::NUM_COLUMNS - OutputDocumentPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 3; // 3 = OutputDocumentPeer::NUM_COLUMNS - OutputDocumentPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating OutputDocument object", $e);
@@ -356,6 +398,9 @@ abstract class BaseOutputDocument extends BaseObject  implements Persistent {
 			case 1:
 				return $this->getProUid();
 				break;
+			case 2:
+				return $this->getOutDocLandscape();
+				break;
 			default:
 				return null;
 				break;
@@ -378,6 +423,7 @@ abstract class BaseOutputDocument extends BaseObject  implements Persistent {
 		$result = array(
 			$keys[0] => $this->getOutDocUid(),
 			$keys[1] => $this->getProUid(),
+			$keys[2] => $this->getOutDocLandscape(),
 		);
 		return $result;
 	}
@@ -415,6 +461,9 @@ abstract class BaseOutputDocument extends BaseObject  implements Persistent {
 			case 1:
 				$this->setProUid($value);
 				break;
+			case 2:
+				$this->setOutDocLandscape($value);
+				break;
 		} // switch()
 	}
 
@@ -440,6 +489,7 @@ abstract class BaseOutputDocument extends BaseObject  implements Persistent {
 
 		if (array_key_exists($keys[0], $arr)) $this->setOutDocUid($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setProUid($arr[$keys[1]]);
+		if (array_key_exists($keys[2], $arr)) $this->setOutDocLandscape($arr[$keys[2]]);
 	}
 
 	/**
@@ -453,6 +503,7 @@ abstract class BaseOutputDocument extends BaseObject  implements Persistent {
 
 		if ($this->isColumnModified(OutputDocumentPeer::OUT_DOC_UID)) $criteria->add(OutputDocumentPeer::OUT_DOC_UID, $this->out_doc_uid);
 		if ($this->isColumnModified(OutputDocumentPeer::PRO_UID)) $criteria->add(OutputDocumentPeer::PRO_UID, $this->pro_uid);
+		if ($this->isColumnModified(OutputDocumentPeer::OUT_DOC_LANDSCAPE)) $criteria->add(OutputDocumentPeer::OUT_DOC_LANDSCAPE, $this->out_doc_landscape);
 
 		return $criteria;
 	}
@@ -508,6 +559,8 @@ abstract class BaseOutputDocument extends BaseObject  implements Persistent {
 	{
 
 		$copyObj->setProUid($this->pro_uid);
+
+		$copyObj->setOutDocLandscape($this->out_doc_landscape);
 
 
 		$copyObj->setNew(true);

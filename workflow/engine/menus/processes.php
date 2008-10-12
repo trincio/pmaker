@@ -34,5 +34,5 @@ G::LoadClass('reportTables');
 if (ReportTables::tableExist()) {
   $G_TMP_MENU->AddIdRawOption('REPORT_TABLES', '', G::LoadTranslation('ID_REPORT_TABLES'),"/images/report_tables.gif",'Pm.data.render.buildingBlocks.injector(\'reportTables\'); return false;');
 }
-$G_TMP_MENU->AddIdRawOption('DB_CONNECTIONS', '', G::LoadTranslation('ID_DB_CONNECTIONS'),"/images/iconoenlace.png",'showDbConnectionsList(); return false;');
+$G_TMP_MENU->AddIdRawOption('DB_CONNECTIONS', '', G::LoadTranslation('ID_DB_CONNECTIONS'),"/images/iconoenlace.png",'showDbConnectionsList(Pm.options.uid); return false;');
 ?>

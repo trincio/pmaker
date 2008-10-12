@@ -1,10 +1,10 @@
 <?php
 /**
  * Step.php
- *  
+ *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -14,13 +14,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
 
 require_once 'classes/model/om/BaseStep.php';
@@ -43,28 +43,28 @@ class Step extends BaseStep {
     $con = Propel::getConnection(StepPeer::DATABASE_NAME);
     try
     {
-      if ( isset ( $aData['STEP_UID'] ) && $aData['STEP_UID']== '' ) 
+      if ( isset ( $aData['STEP_UID'] ) && $aData['STEP_UID']== '' )
         unset ( $aData['STEP_UID'] );
-      if ( isset ( $aData['STEP_UID'] ) ) 
+      if ( isset ( $aData['STEP_UID'] ) )
         $sStepUID = $aData['STEP_UID'];
       else
     	  $sStepUID = G::generateUniqueID();
-    	  
+
       $con->begin();
       $this->setStepUid($sStepUID);
       $this->setProUid($aData['PRO_UID']);
       $this->setTasUid($aData['TAS_UID']);
-      
+
       if (isset ( $aData['STEP_TYPE_OBJ'] ))
         $this->setStepTypeObj( $aData['STEP_TYPE_OBJ'] );
       else
         $this->setStepTypeObj("DYNAFORM");
-        
+
       if (isset ( $aData['STEP_UID_OBJ'] ))
         $this->setStepUidObj( $aData['STEP_UID_OBJ'] );
       else
         $this->setStepUidObj("");
-        
+
       if (isset ( $aData['STEP_CONDITION'] ))
         $this->setStepCondition( $aData['STEP_CONDITION'] );
       else
@@ -126,7 +126,7 @@ class Step extends BaseStep {
         return $rs[0];
       }
       else {
-        throw( new Exception( "This STEP row doesn't exists!" ));
+        return null;
       }
     }
     catch (Exception $oError) {
@@ -341,11 +341,11 @@ class Step extends BaseStep {
   		throw $oException;
   	}
   }
-  
+
 	/**
 	 * verify if Step row specified in [sUid] exists.
 	 *
-	 * @param      string $sUid   the uid of the 
+	 * @param      string $sUid   the uid of the
 	 */
 
   function StepExists ( $sUid ) {
@@ -362,6 +362,6 @@ class Step extends BaseStep {
     catch (Exception $oError) {
     	throw($oError);
     }
-  }  
-  
+  }
+
 } // Step

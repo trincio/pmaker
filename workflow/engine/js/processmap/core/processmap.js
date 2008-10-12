@@ -2288,7 +2288,7 @@ processmap.prototype={
 */
 var mainPanel;
 
-function showDbConnectionsList()
+function showDbConnectionsList(PRO_UID)
 {
 	mainPanel = new leimnud.module.panel();
 	mainPanel.options = {
@@ -2307,7 +2307,7 @@ function showDbConnectionsList()
 	mainPanel.loader.show();
 	var oRPC = new leimnud.module.rpc.xmlhttp({
 	  	url : '../dbConnections/dbConnectionsAjax',
-	  	args: 'action=showDbConnectionsList'
+	  	args: 'action=showDbConnectionsList&PRO_UID='+PRO_UID
   	});
   	oRPC.callback = function(rpc) {
 	  	mainPanel.loader.hide();
@@ -2317,13 +2317,3 @@ function showDbConnectionsList()
   	}.extend(this);
 	oRPC.make();
 }
-
-
-
-
-
-
-
-
-
-

@@ -78,9 +78,10 @@ var G_Grid = function(oForm, sGridName)
 		  }
 		}
 	};
-	this.setDependents = function(iRow, me, dependentFields)
+	this.setDependents = function(iRow, me, theDependentFields)
 	{
     var i;
+    var dependentFields = theDependentFields || '';
     dependentFields = dependentFields.split(',');
     for (i=0; i<dependentFields.length; i++) {
       var oField = this.getElementByName(iRow, dependentFields[i]);

@@ -6,7 +6,7 @@ require_once 'classes/model/om/BaseProcessUser.php';
 /**
  * Skeleton subclass for representing a row from the 'PROCESS_USER' table.
  *
- * 
+ *
  *
  * You should add additional methods to this class to meet the
  * application requirements.  This class will only be generated as
@@ -18,7 +18,7 @@ class ProcessUser extends BaseProcessUser {
 	public function create($aData)
   {
   	$oConnection = Propel::getConnection(ProcessUserPeer::DATABASE_NAME);
-  	try {    	
+  	try {
       $criteria = new Criteria('workflow');
       $criteria->add(ProcessUserPeer::PU_UID,  $aData['PU_UID'] );
       $criteria->add(ProcessUserPeer::PRO_UID,  $aData['PRO_UID']  );
@@ -30,8 +30,8 @@ class ProcessUser extends BaseProcessUser {
         $this->remove($row->getTasUid(), $row->getUsrUid(), $row->getTuType(), $row->getTuRelation() );
       }
       $oConnection->commit();
-          	
-  		
+
+
   	  $oProcessUser = new ProcessUser();
   	  $oProcessUser->fromArray($aData, BasePeer::TYPE_FIELDNAME);
   	  if ($oProcessUser->validate()) {
@@ -54,7 +54,7 @@ class ProcessUser extends BaseProcessUser {
     	throw($oError);
     }
   }
-  
+
   /**
 	 * Remove the application document registry
    * @param string $sPuUid
@@ -81,6 +81,16 @@ class ProcessUser extends BaseProcessUser {
     catch (Exception $oError) {
     	$oConnection->rollback();
       throw($oError);
+    }
+  }
+
+  function Exists ( $sUid ) {
+    try {
+      $oObj = ProcessUserPeer::retrieveByPk($sUid);
+      return (get_class($oObj) == 'ProcessUser');
+    }
+    catch (Exception $oError) {
+    	throw($oError);
     }
   }
 } // ProcessUser

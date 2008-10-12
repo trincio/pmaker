@@ -133,4 +133,14 @@ class CaseTrackerObject extends BaseCaseTrackerObject {
   		throw $Exception;
   	}
   }
+
+  function caseTrackerObjectExists ( $sUid ) {
+    try {
+      $oObj = CaseTrackerObjectPeer::retrieveByPk($sUid);
+      return (get_class($oObj) == 'CaseTrackerObject');
+    }
+    catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
 } // CaseTrackerObject
