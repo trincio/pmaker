@@ -2523,6 +2523,7 @@ class XmlForm
   {
     foreach($this->fields as $k => $v){
       if (array_key_exists($k,$newValues)) $this->values[$k] = $newValues[$k];
+      if (strpos($k,'SYS_GRID_AGGREGATE_') !== false) $this->values[$k] = $newValues[$k];
     }
     foreach($this->fields as $k => $v){
       $this->fields[$k]->owner =& $this;

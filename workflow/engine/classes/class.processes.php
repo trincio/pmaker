@@ -885,8 +885,13 @@ class Processes {
   	  $oData->triggers[$key]['TRI_UID'] = $newGuid;
   	}
   	foreach ( $oData->steptriggers as $key => $val ) {
-  	  $newGuid = $map[ $val['TRI_UID'] ];
-	    $oData->steptriggers[$key]['TRI_UID'] = $newGuid;
+  	  if (isset($map[ $val['TRI_UID'] ])) {
+  	    $newGuid = $map[ $val['TRI_UID'] ];
+	      $oData->steptriggers[$key]['TRI_UID'] = $newGuid;
+	    }
+	    else {
+	      $oData->steptriggers[$key]['TRI_UID'] = $this->getUnusedTriggerGUID();
+	    }
   	}
   }
 
