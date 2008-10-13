@@ -6,7 +6,7 @@ require_once 'classes/model/om/BaseObjectPermission.php';
 /**
  * Skeleton subclass for representing a row from the 'OBJECT_PERMISSION' table.
  *
- * 
+ *
  *
  * You should add additional methods to this class to meet the
  * application requirements.  This class will only be generated as
@@ -15,7 +15,7 @@ require_once 'classes/model/om/BaseObjectPermission.php';
  * @package    classes.model
  */
 class ObjectPermission extends BaseObjectPermission {
-	
+
 	public function load($UID)
 	{
 		try {
@@ -35,18 +35,17 @@ class ObjectPermission extends BaseObjectPermission {
 			throw($oError);
 		}
 	}
-	
+
 	function create ($aData)
 	{
-		$con = Propel::getConnection(UsersPeer::DATABASE_NAME);
 		try
 		{
+		  $this->fromArray($aData,BasePeer::TYPE_FIELDNAME);
 			$result=$this->save();
 			return $result;
 		}
 		catch(Exception $e)
 		{
-			//$con->rollback();
 			throw($e);
 		}
 	}

@@ -387,6 +387,9 @@ class Processes {
 	  foreach ($oData->dbconnections as $key => $val ) {
   		$oData->dbconnections[$key]['PRO_UID'] = $sNewProUid;
   	}
+  	foreach ($oData->stepSupervisor as $key => $val ) {
+		$oData->stepSupervisor[$key]['PRO_UID'] = $sNewProUid;
+	  }
 	  foreach ($oData->objectPermissions as $key => $val ) {
 		$oData->objectPermissions[$key]['PRO_UID'] = $sNewProUid;
 	  }
@@ -496,6 +499,12 @@ class Processes {
   	    $oData->objectPermissions[$key]['OP_OBJ_UID'] = $newGuid;
   	  }
   	}
+  	foreach ( $oData->stepSupervisor as $key => $val ) {
+  	  if ( $val['STEP_TYPE_OBJ'] == 'DYNAFORM' ) {
+    	  $newGuid = $map[ $val['STEP_UID_OBJ'] ];
+  	    $oData->stepSupervisor[$key]['STEP_UID_OBJ'] = $newGuid;
+  	  }
+  	}
   	foreach ( $oData->dynaformFiles as $key => $val ) {
   	  $newGuid = $map[ $key ];
 	    $oData->dynaformFiles[$key] = $newGuid;
@@ -591,8 +600,9 @@ class Processes {
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
       $oDataset->next();
       while ($aRow = $oDataset->getRow()) {
-       $aStage[] = $aRow;
-       $oDataset->next();
+        $oStage = new Stage();
+      	$aStage[] = $oStage->load($aRow['STG_UID']);
+      	$oDataset->next();
       }
       return $aStage;
     }
@@ -784,6 +794,12 @@ class Processes {
   	    $oData->objectPermissions[$key]['OP_OBJ_UID'] = $newGuid;
   	  }
   	}
+  	foreach ( $oData->stepSupervisor as $key => $val ) {
+  	  if ( $val['STEP_TYPE_OBJ'] == 'INPUT_DOCUMENT' ) {
+    	  $newGuid = $map[ $val['STEP_UID_OBJ'] ];
+  	    $oData->stepSupervisor[$key]['STEP_UID_OBJ'] = $newGuid;
+  	  }
+  	}
   }
 
   function getOutputRows ($sProUid ){
@@ -846,6 +862,12 @@ class Processes {
   	  if ( $val['OP_OBJ_TYPE'] == 'OUTPUT_DOCUMENT' ) {
     	  $newGuid = $map[ $val['OP_OBJ_UID'] ];
   	    $oData->objectPermissions[$key]['OP_OBJ_UID'] = $newGuid;
+  	  }
+  	}
+  	foreach ( $oData->stepSupervisor as $key => $val ) {
+  	  if ( $val['STEP_TYPE_OBJ'] == 'OUTPUT_DOCUMENT' ) {
+    	  $newGuid = $map[ $val['STEP_UID_OBJ'] ];
+  	    $oData->stepSupervisor[$key]['STEP_UID_OBJ'] = $newGuid;
   	  }
   	}
   }
@@ -1024,6 +1046,17 @@ class Processes {
 	      }
 	    }
   	}
+  	foreach ( $oData->stepSupervisor as $key => $val ) {
+  		if ( $val['STEP_UID'] > 0 ) {
+  		  if (isset($map[ $val['STEP_UID'] ])) {
+  	      $newGuid = $map[ $val['STEP_UID'] ];
+	        $oData->stepSupervisor[$key]['STEP_UID'] = $newGuid;
+	      }
+	      else {
+	        $oData->stepSupervisor[$key]['STEP_UID'] = $this->getUnusedStepGUID();
+	      }
+	    }
+	  }
   }
 
 
@@ -1052,6 +1085,7 @@ class Processes {
 		  $oPermissions   = array();
 		  $oCriteria = new Criteria('workflow');
 		  $oCriteria->add(ObjectPermissionPeer::PRO_UID,  $sProUid);
+		  $oCriteria->add(ObjectPermissionPeer::OP_USER_RELATION,  2);
 		  $oDataset = ObjectPermissionPeer::doSelectRS($oCriteria);
 		  $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
 		  $oDataset->next();

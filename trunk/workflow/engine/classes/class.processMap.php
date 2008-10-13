@@ -467,6 +467,10 @@ class processMap {
       $oCriteria = new Criteria('workflow');
   	  $oCriteria->add(ProcessUserPeer::PRO_UID, $sProcessUID);
       ProcessUserPeer::doDelete($oCriteria);
+      //Delete the object permissions
+      $oCriteria = new Criteria('workflow');
+  	  $oCriteria->add(ObjectPermissionPeer::PRO_UID, $sProcessUID);
+      ObjectPermissionPeer::doDelete($oCriteria);
       //Delete the step supervisors
       $oCriteria = new Criteria('workflow');
   	  $oCriteria->add(StepSupervisorPeer::PRO_UID, $sProcessUID);
@@ -2910,20 +2914,20 @@ class processMap {
     try {
     	   $SP_VARIABLES_OUT = array();
     	   $SP_VARIABLES_IN  = array();
-    	  
+
  			 	 /* Prepare page before to show */
     	   global $_DBArray;
   			 $_DBArray['NewCase'] = $this->subProcess_TaskIni($sProcessUID);
-	
+
     	   require_once 'classes/model/SubProcess.php';
     		 $oCriteria = new Criteria('workflow');
     		 $oCriteria->add(SubProcessPeer::PRO_PARENT, $sProcessUID);
-    	   $oCriteria->add(SubProcessPeer::TAS_PARENT, $sTaskUID);    	  
+    	   $oCriteria->add(SubProcessPeer::TAS_PARENT, $sTaskUID);
     		 $oDataset = SubProcessPeer::doSelectRS($oCriteria);
     		 $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
     		 $oDataset->next();
     		 $aRow = $oDataset->getRow();
-			
+
     		 $aRow['TASKS'] = $aRow['TAS_UID'];
 		     $SP_VARIABLES_OUT = unserialize($aRow['SP_VARIABLES_OUT']);
 		     if(is_array($SP_VARIABLES_OUT))
@@ -2959,12 +2963,12 @@ class processMap {
 
 
   function subProcess_TaskIni($sProcessUID) {
-  	    $aUIDS = array(); 
+  	    $aUIDS = array();
   		  $aUIDS[] = $sProcessUID;
   	    $c = new Criteria();
         $c->clearSelectColumns();
         $c->addSelectColumn(TaskPeer::TAS_UID);
- 				$c->addSelectColumn(TaskPeer::PRO_UID);        
+ 				$c->addSelectColumn(TaskPeer::PRO_UID);
         $c->add(TaskPeer::TAS_START, 'TRUE');
         $c->add(TaskPeer::PRO_UID, $aUIDS, Criteria::NOT_IN);
         //$c->add(TaskPeer::PRO_UID, $sProcessUID, Criteria::NOT_EQUAL);
@@ -2982,7 +2986,7 @@ class processMap {
             $proTitle = Content::load('PRO_TITLE', '', $val['PRO_UID'], SYS_LANG);
             $title = " $proTitle ($tasTitle)";
             $rows[] = array('uid' => $val['TAS_UID'], 'value' => $title, 'pro_uid' => $val['PRO_UID']);
-        } 
+        }
   return $rows;
   }
 } // processMap
