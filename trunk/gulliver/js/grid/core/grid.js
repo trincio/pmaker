@@ -25,6 +25,7 @@ var G_Grid = function(oForm, sGridName)
 				  while (oAux = document.getElementById('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'))
    		    {
    		    	this.aElements.push(new G_Text(oForm, document.getElementById('form[' + this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName + ']'), this.sGridName + '][' + j + '][' + this.aFields[i].sFieldName));
+   		    	this.aElements[this.aElements.length - 1].validate = this.aFields[i].oProperties.validate;
 			      if (aFields[i].oProperties)
 			      {
 			      	this.aElements[this.aElements.length - 1].mask = aFields[i].oProperties.mask;
@@ -347,12 +348,6 @@ var G_Grid = function(oForm, sGridName)
   	    }
       }.extend(this)
     });
-    /*if (confirm('Are you sure you want to delete this row?')) {
-
-    }
-    else {
-      return false;
-    }*/
   };
   this.assignFunctions = function(aFields, sEvent, iRow)
   {
@@ -394,7 +389,7 @@ var G_Grid = function(oForm, sGridName)
   	aAux[2] = aAux[2].replace(']', '');
   	while (oAux = this.getElementByName(i, aAux[2]))
   	{
-  		fTotal += parseFloat(G.cleanMask(oAux.value() || 0, oAux.mask).result);
+  		fTotal += parseFloat(G.cleanMask(oAux.value() || 0, oAux.mask).result.replace(/,/g, ''));
   		sMask   = oAux.mask;
   		i++;
   	}
@@ -414,7 +409,7 @@ var G_Grid = function(oForm, sGridName)
   	aAux[2] = aAux[2].replace(']', '');
   	while (oAux = this.getElementByName(i, aAux[2]))
   	{
-  		fTotal += parseFloat(G.cleanMask(oAux.value() || 0, oAux.mask).result);
+  		fTotal += parseFloat(G.cleanMask(oAux.value() || 0, oAux.mask).result.replace(/,/g, ''));
   		sMask   = oAux.mask;
   		i++;
   	}
@@ -480,7 +475,7 @@ var G_Grid = function(oForm, sGridName)
   		if (!isNumber(aFields[i]))
   		{
   		  oAux = this.getElementByName(aAux[1], aFields[i]);
-  		  sAux = sAux.replace(aFields[i], "parseFloat(G.cleanMask(this.getElementByName(" + aAux[1] + ", '" + aFields[i] + "').value() || 0, '" + (oAux.sMask ? oAux.sMask : '') + "').result)");
+  		  sAux = sAux.replace(aFields[i], "parseFloat(G.cleanMask(this.getElementByName(" + aAux[1] + ", '" + aFields[i] + "').value() || 0, '" + (oAux.sMask ? oAux.sMask : '') + "').result.replace(/,/g, ''))");
   		  eval("if (!document.getElementById('" + aAux[0] + '][' + aAux[1] + '][' + aFields[i] + "]')) { oContinue = false; }");
   	  }
   	}
@@ -488,12 +483,11 @@ var G_Grid = function(oForm, sGridName)
   	if (oContinue)
   	{
   		eval("document.getElementById('" + aAux[0] + '][' + aAux[1] + '][' + oField.sFieldName + "]').value = " + sAux + ';');
-  		//eval("document.getElementById('" + aAux[0] + '][' + aAux[1] + '][' + oField.sFieldName + "]').value");
   		if (this.aFunctions.length > 0)
       {
       	for (i = 0; i < this.aFunctions.length; i++)
       	{
-      		oAux = document.getElementById('form[' + this.sGridName + '][1][' + this.aFunctions[i].sFieldName + ']');
+      		oAux = document.getElementById('form[' + this.sGridName + '][' + aAux[1] + '][' + this.aFunctions[i].sFieldName + ']');
       		if (oAux)
       		{
       			if (oAux.name == aAux[0] + '][' + aAux[1] + '][' + oField.sFieldName + ']')
