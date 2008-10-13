@@ -1705,7 +1705,7 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="OUT_DOC_LANDSCAPE" type="TINYINT" required="true" default="1">
+    <column name="OUT_DOC_LANDSCAPE" type="TINYINT" required="true" default="0">
       <vendor type="mysql">
         <parameter name="Field" value="OUT_DOC_LANDSCAPE"/>
         <parameter name="Type" value="tinyint(1)"/>
