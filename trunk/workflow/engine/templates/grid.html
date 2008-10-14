@@ -54,9 +54,9 @@
       <td>
         {if isset($field->function) && $field->function!=='' }
         {if $field->function=='sum'}
-      		Σ = <span id="form[SYS_GRID_AGGREGATE_{$form->name}__{$field->name}]">0</span><input type="hidden" name="form[SYS_GRID_AGGREGATE_{$form->name}_{$field->name}]" id="form[SYS_GRID_AGGREGATE_{$form->name}_{$field->name}]" value="0" />
+      		Σ = <span id="form[SYS_GRID_AGGREGATE_{$form->name}__{$field->name}]">{$field->aggregate}</span><input type="hidden" name="form[SYS_GRID_AGGREGATE_{$form->name}_{$field->name}]" id="form[SYS_GRID_AGGREGATE_{$form->name}_{$field->name}]" value="{$field->aggregate}" />
         {elseif $field->function=='avg'}
-          <span style="position:absolute">¯</span>X = <span id="form[SYS_GRID_AGGREGATE_{$form->name}__{$field->name}]">0</span><input type="hidden" name="form[SYS_GRID_AGGREGATE_{$form->name}_{$field->name}]" id="form[SYS_GRID_AGGREGATE_{$form->name}_{$field->name}]" value="0" />
+          <span style="position:absolute">¯</span>X = <span id="form[SYS_GRID_AGGREGATE_{$form->name}__{$field->name}]">{$field->aggregate}</span><input type="hidden" name="form[SYS_GRID_AGGREGATE_{$form->name}_{$field->name}]" id="form[SYS_GRID_AGGREGATE_{$form->name}_{$field->name}]" value="{$field->aggregate}" />
         {/if}
         {/if}
       </td>

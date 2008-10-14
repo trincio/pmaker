@@ -203,6 +203,11 @@ class Form extends XmlForm
         }
       }
     }
+    foreach ($newValues as $k => $v) {
+      if (strpos($k,'SYS_GRID_AGGREGATE_') !== false) {
+        $this->values[$k] = $newValues[$k];
+      }
+    }
     foreach($this->fields as $k => $v){
       $this->fields[$k]->owner =& $this;
     }

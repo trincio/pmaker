@@ -132,7 +132,7 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
     $Part = $this->Parts[ $intPos ];
     switch( $Part['Type'] )
     {
-    /*//disabled because it is deprecated, Fatal error: Call to undefined method G::loadcontent() 	
+    /*//disabled because it is deprecated, Fatal error: Call to undefined method G::loadcontent()
     case 'showcontent':
       $G_CONTENT = new Content;
       $G_CONTENT = G::LoadContent( $Part['File'] );
@@ -234,7 +234,7 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
         if($this->localMode != '') { @# las modification by erik in 09/06/2008
             $G_FORM->mode = $this->localMode;
         }
-      
+
         print $G_FORM->render( $template , $scriptCode );
         if ($Part['Template'] == 'grid') print ('</form>');
         $oHeadPublisher =& headPublisher::getSingleton();
@@ -562,7 +562,7 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
         return;
       break;
     case 'view':
-    case 'content' : 
+    case 'content' :
       //check if G_PLUGIN_CLASS is defined, because publisher can be called without an environment
       $aux = explode ( PATH_SEP, $Part['Template'] );
       if ( count($aux) == 2 && defined ( 'G_PLUGIN_CLASS' ) ) {
@@ -578,16 +578,16 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
           }
         }
       }
-    
+
       break;
       case 'graphLayout': //Added by JHL to render GraphLayout component
     	$G_OBJGRAPH = $Part['Data'];
-    	$G_TMP_TARGET = $Part['Target'];   	
-   		$G_TMP_FILE = $Part['File'];   	
+    	$G_TMP_TARGET = $Part['Target'];
+   		$G_TMP_FILE = $Part['File'];
       break;
     }
-    
-    
+
+
      //krumo( $Part['Template'] );
      //check if this LoadTemplate is used, byOnti 12th Aug 2008
      G::LoadTemplate( $Part['Template'] );
