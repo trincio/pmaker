@@ -1361,8 +1361,8 @@ class Cases
         }
         else
         {
-			return false;
-		}
+					return false;
+		    }
     }
 
     function getTransferHistoryCriteria($sAppUid)
