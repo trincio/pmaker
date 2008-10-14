@@ -393,6 +393,7 @@ var G_Grid = function(oForm, sGridName)
   		sMask   = oAux.mask;
   		i++;
   	}
+  	fTotal         = fTotal.toFixed(2);
   	oAux           = document.getElementById('form[SYS_GRID_AGGREGATE_' + oGrid.sGridName + '_' + aAux[2] + ']');
   	oAux.value     = fTotal;
   	oAux           = document.getElementById('form[SYS_GRID_AGGREGATE_' + oGrid.sGridName + '__' + aAux[2] + ']');
@@ -416,6 +417,7 @@ var G_Grid = function(oForm, sGridName)
   	i--;
   	if (fTotal > 0)
   	{
+  	  fTotal         = fTotal.toFixed(2);
   	  oAux           = document.getElementById('form[SYS_GRID_AGGREGATE_' + oGrid.sGridName + '_' + aAux[2] + ']');
   	  oAux.value     = (fTotal / i);
   	  oAux           = document.getElementById('form[SYS_GRID_AGGREGATE_' + oGrid.sGridName + '__' + aAux[2] + ']');
@@ -482,7 +484,7 @@ var G_Grid = function(oForm, sGridName)
   	eval("if (!document.getElementById('" + aAux[0] + '][' + aAux[1] + '][' + oField.sFieldName + "]')) { oContinue = false; }");
   	if (oContinue)
   	{
-  		eval("document.getElementById('" + aAux[0] + '][' + aAux[1] + '][' + oField.sFieldName + "]').value = " + sAux + ';');
+  		eval("document.getElementById('" + aAux[0] + '][' + aAux[1] + '][' + oField.sFieldName + "]').value = (" + sAux + ').toFixed(2);');
   		if (this.aFunctions.length > 0)
       {
       	for (i = 0; i < this.aFunctions.length; i++)
@@ -501,6 +503,13 @@ var G_Grid = function(oForm, sGridName)
       			  	  this.avg(false, oAux);
       			  	break;
       			  }
+      			  if (oAux.fireEvent) {
+  		          oAux.fireEvent('onchange');
+  		        } else {
+                var evObj = document.createEvent('HTMLEvents');
+                evObj.initEvent( 'change', true, true );
+    		        oAux.dispatchEvent(evObj);
+  		        }
       		  }
       		}
       	}
