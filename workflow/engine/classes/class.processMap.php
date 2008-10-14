@@ -2916,9 +2916,9 @@ class processMap {
     	   $SP_VARIABLES_IN  = array();
 
  			 	 /* Prepare page before to show */
-    	   global $_DBArray;
+    	   global $_DBArray;    	  
   			 $_DBArray['NewCase'] = $this->subProcess_TaskIni($sProcessUID);
-
+         //print_r($_DBArray['NewCase']); die;
     	   require_once 'classes/model/SubProcess.php';
     		 $oCriteria = new Criteria('workflow');
     		 $oCriteria->add(SubProcessPeer::PRO_PARENT, $sProcessUID);
@@ -2974,13 +2974,16 @@ class processMap {
         //$c->add(TaskPeer::PRO_UID, $sProcessUID, Criteria::NOT_EQUAL);
         $rs = TaskPeer::doSelectRS($c);
         $rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-        $rs->next();
+        $rs->next();        
         $row = $rs->getRow();
         while (is_array($row)) {
             $tasks[] = array('TAS_UID' => $row['TAS_UID'], 'PRO_UID' => $row['PRO_UID']);
  						$rs->next();
             $row = $rs->getRow();
         }
+         $rows[] = array('uid'   => 'char',
+      	                'value' => 'char',
+      	                'pro_uid' => 'char');
         foreach ($tasks as $key => $val) {
             $tasTitle = Content::load('TAS_TITLE', '', $val['TAS_UID'], SYS_LANG);
             $proTitle = Content::load('PRO_TITLE', '', $val['PRO_UID'], SYS_LANG);
