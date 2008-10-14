@@ -1993,7 +1993,7 @@ class XmlForm_Field_Grid extends XmlForm_Field
    * @return string
    */
   function renderGrid( $values , $owner=NULL )
-  {
+  {//julichu
     $this->id=$this->owner->id . $this->name;
     $tpl=new xmlformTemplate($this, PATH_CORE . 'templates/grid.html');
     if (!isset($values) || !is_array($values) || sizeof($values)==0)
@@ -2011,6 +2011,14 @@ class XmlForm_Field_Grid extends XmlForm_Field
             $values[$key]=$value;
           //}
         }
+      }
+    }
+    foreach($this->fields as $k => $v) {
+      if (isset($values['SYS_GRID_AGGREGATE_' . $this->name . '_' . $k])) {
+        $this->fields[$k]->aggregate = $values['SYS_GRID_AGGREGATE_' . $this->name . '_' . $k];
+      }
+      else {
+        $this->fields[$k]->aggregate = '0';
       }
     }
     $this->values=$values;
@@ -2523,7 +2531,6 @@ class XmlForm
   {
     foreach($this->fields as $k => $v){
       if (array_key_exists($k,$newValues)) $this->values[$k] = $newValues[$k];
-      if (strpos($k,'SYS_GRID_AGGREGATE_') !== false) $this->values[$k] = $newValues[$k];
     }
     foreach($this->fields as $k => $v){
       $this->fields[$k]->owner =& $this;
@@ -2664,14 +2671,14 @@ class xmlformTemplate extends Smarty
    * @return string
    */
   function getFields(&$form)
-  {//echo $form->name.' => '.$form->type."\n<br />";
+  {
 
     $result=array();
     foreach( $form->fields as $k => $v)  {
       if($form->mode != ''){      #@ last modification: erik
           $v->mode = $form->mode; #@
       }                           #@
-      //if (isset($form->fields[$k]->sql)) $form->fields[$k]->executeSQL( $form );//julichu
+      //if (isset($form->fields[$k]->sql)) $form->fields[$k]->executeSQL( $form );
       $value = ( isset ( $form->values[$k ] ) ) ? $form->values[$k ] : NULL;
       $result[$k]         = G::replaceDataField ( $form->fields[$k]->label , $form->values );
       if (!is_array($value)) {
