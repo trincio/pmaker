@@ -60,12 +60,12 @@ SELECT IL_UID, IL_NAME FROM ISO_LOCATION WHERE IC_UID = "@#USR_COUNTRY" AND IS_U
 <USR_POSITION type="text" size="35" maxlength="35"  defaultvalue="" required="0" group="1" dependentfields="" linkfield="" strto="" readonly="0" noshowingrid="0" readonlyingrid="0" totalizeable="0" sqlconnection="">
   <en>Position</en>
 </USR_POSITION>
-<!--
-<USR_DUE_DATE type="date" mask="yyyy-mm-dd" defaultvalue="" required="0" group="1" readonly="0" noshowingrid="0" readonlyingrid="0">
+
+<USR_DUE_DATE type="date" mask="yyyy-mm-dd" defaultvalue="" required="0" group="1" readonly="0" noshowingrid="0" readonlyingrid="0" mode="view">
   <en>Expiration Date</en>
 </USR_DUE_DATE>
 
-<USR_STATUS type="dropdown" style="width:86pt" group="1" required="0">
+<USR_STATUS type="dropdown" style="width:86pt" group="1" required="0" mode="view">
   <en>Status
   <option name="ACTIVE">ACTIVE</option>
 	<option name="INACTIVE">INACTIVE</option>
@@ -73,11 +73,11 @@ SELECT IL_UID, IL_NAME FROM ISO_LOCATION WHERE IC_UID = "@#USR_COUNTRY" AND IS_U
   </en>
 </USR_STATUS>
 
-<USR_ROLE type="dropdown" defaultvalue="" style="width:86pt" required="0" group="1" dependentfields="" readonly="0" sqlconnection="rbac" noshowingrid="0" readonlyingrid="0">
+<USR_ROLE type="dropdown" defaultvalue="" style="width:86pt" required="0" group="1" dependentfields="" readonly="0" sqlconnection="rbac" noshowingrid="0" readonlyingrid="0" mode="view">
 SELECT ROL_CODE AS USR_ROLE, ROL_CODE AS CODE FROM ROLES WHERE ROL_SYSTEM = '00000000000000000000000000000002' ORDER BY ROL_CODE
   <en>Role</en>
 </USR_ROLE>
--->
+
 <TITLECHP type="title" group="1">
   <en>Change Password</en>
 </TITLECHP>
