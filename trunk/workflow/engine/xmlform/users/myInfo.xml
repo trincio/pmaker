@@ -53,6 +53,7 @@ SELECT IL_UID, IL_NAME FROM ISO_LOCATION WHERE IC_UID = "@#USR_COUNTRY" AND IS_U
 <USR_POSITION type="text" size="35" maxlength="35"  defaultvalue="" required="0" group="1" dependentfields="" linkfield="" strto="" readonly="0" noshowingrid="0" readonlyingrid="0" totalizeable="0" sqlconnection="">
   <en>Position</en>
 </USR_POSITION>
+<!--
 <USR_DUE_DATE type="text" mode="view" defaultvalue="" required="0" group="1" readonly="0" noshowingrid="0" readonlyingrid="0">
   <en>Expiration Date</en>
 </USR_DUE_DATE>
@@ -67,7 +68,7 @@ SELECT IL_UID, IL_NAME FROM ISO_LOCATION WHERE IC_UID = "@#USR_COUNTRY" AND IS_U
 SELECT ROL_CODE AS USR_ROLE, ROL_CODE AS CODE FROM ROLES WHERE ROL_SYSTEM = '00000000000000000000000000000002' ORDER BY ROL_CODE
   <en>Role</en>
 </USR_ROLE>
-
+-->
 <TITLECHP type="title" group="1">
   <en>Change Password</en>
 </TITLECHP>
