@@ -1374,7 +1374,8 @@ var processmap=function(){
 							url:this.options.dataServer,
 							args:"action=subProcess_Properties&data="+{
 								tas_uid	:task.uid,
-								pro_uid	:this.options.uid
+								pro_uid	:this.options.uid,
+								index: index
 							}.toJSONString()
 						});
 						r.callback=function(rpc,panel)

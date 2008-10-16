@@ -11,6 +11,7 @@
 
 <TAS_PARENT type="hidden" />
 
+<INDEX type="hidden" />
 
 <TASKS type="dropdown" style="width:350px" sqlConnection="dbarray" >
   SELECT * FROM NewCase
@@ -44,8 +45,10 @@
 <![CDATA[
 
 var processes_subProcessSave = function(oForm) {
+ var a = getField('TASKS'); 
   ajax_post(oForm.action, oForm, 'POST');
-  Pm.tmp.subProcessPanel.remove();
+  Pm.data.db.task[getField('INDEX').value].object.elements.label.innerHTML = a.options[a.selectedIndex].text;
+  Pm.tmp.subProcessPanel.remove();  
 };
 
 //var dynaformOnload = function(){ 

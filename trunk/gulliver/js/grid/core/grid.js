@@ -417,9 +417,9 @@ var G_Grid = function(oForm, sGridName)
   	i--;
   	if (fTotal > 0)
   	{
-  	  fTotal         = fTotal.toFixed(2);
+  	  fTotal         = (fTotal / i).toFixed(2);
   	  oAux           = document.getElementById('form[SYS_GRID_AGGREGATE_' + oGrid.sGridName + '_' + aAux[2] + ']');
-  	  oAux.value     = (fTotal / i);
+  	  oAux.value     = fTotal;
   	  oAux           = document.getElementById('form[SYS_GRID_AGGREGATE_' + oGrid.sGridName + '__' + aAux[2] + ']');
   	  //oAux.innerHTML = G.toMask((fTotal / i), sMask).result;
   	  oAux.innerHTML = fTotal;

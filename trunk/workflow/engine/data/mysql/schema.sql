@@ -146,7 +146,7 @@ CREATE TABLE `CONTENT`
 	`CON_PARENT` VARCHAR(32) default '' NOT NULL,
 	`CON_ID` VARCHAR(100) default '' NOT NULL,
 	`CON_LANG` VARCHAR(10) default '' NOT NULL,
-	`CON_VALUE` TEXT  NOT NULL,
+	`CON_VALUE` MEDIUMTEXT  NOT NULL,
 	PRIMARY KEY (`CON_CATEGORY`,`CON_PARENT`,`CON_ID`,`CON_LANG`),
 	KEY `indexUid`(`CON_ID`)
 )Type=MyISAM  DEFAULT CHARSET='utf8';
@@ -328,6 +328,7 @@ CREATE TABLE `OUTPUT_DOCUMENT`
 (
 	`OUT_DOC_UID` VARCHAR(32) default '' NOT NULL,
 	`PRO_UID` VARCHAR(32) default '' NOT NULL,
+	`OUT_DOC_LANDSCAPE` TINYINT default 0 NOT NULL,
 	PRIMARY KEY (`OUT_DOC_UID`)
 )Type=MyISAM  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------

@@ -36,7 +36,7 @@ switch ($RBAC->userCanAccess('PM_FACTORY')) {
 	  die;
 	break;
 }
-
+//print_r($_POST); die;
 
 $out = array();
 for($i=1; $i<=count($_POST['form']['grid1']); $i++)

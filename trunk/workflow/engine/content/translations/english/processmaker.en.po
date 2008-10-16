@@ -2,7 +2,7 @@ msgid ""
 msgstr "" 
 "Project-Id-Version: PM 4.0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-09-26 18:00+0100 \n"
+"PO-Revision-Date: 2008-10-15 11:09+0100 \n"
 "Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
 "Language-Team: Colosa Developers Team <developers@colosa.com>\n"
 "MIME-Version: 1.0\n"
@@ -1642,8 +1642,8 @@ msgstr "Notifications"
 # TRANSLATION
 # JAVASCRIPT/ID_PROCESSMAP_SUPERVISORS_DYNAFORMS
 #: JAVASCRIPT/ID_PROCESSMAP_SUPERVISORS_DYNAFORMS
-msgid "Supervisor's Dynaforms"
-msgstr "Supervisor's Dynaforms"
+msgid "[JAVASCRIPT/ID_PROCESSMAP_SUPERVISORS_DYNAFORMS] Dynaforms"
+msgstr "Dynaforms"
 
 # TRANSLATION
 # JAVASCRIPT/ID_ASSIGN_DYNAFORM
@@ -1738,8 +1738,8 @@ msgstr "Edit the current Data Base Source"
 # TRANSLATION
 # JAVASCRIPT/ID_PROCESSMAP_PROCESS_SUPERVISORS
 #: JAVASCRIPT/ID_PROCESSMAP_PROCESS_SUPERVISORS
-msgid "Process Supervisor"
-msgstr "Process Supervisor"
+msgid "Supervisors"
+msgstr "Supervisors"
 
 # TRANSLATION
 # JAVASCRIPT/ID_MESS_SERVER_REQUIRED
@@ -2482,8 +2482,8 @@ msgstr "Case Tracker"
 # TRANSLATION
 # JAVASCRIPT/ID_CASE_TRACKER_OBJECTS
 #: JAVASCRIPT/ID_CASE_TRACKER_OBJECTS
-msgid "Case Tracker Objects"
-msgstr "Case Tracker Objects"
+msgid "Objects"
+msgstr "Objects"
 
 # TRANSLATION
 # LABEL/ID_MSG_CONFIRM_DELETE_CASE_TRACKER_OBJECT
@@ -2748,6 +2748,18 @@ msgstr "Delete Sub-Process"
 #: JAVASCRIPT/ID_PROCESSMAP_CONFIRM_DELETE_SUBPROCESS
 msgid "Do you want to delete the Sub-Process: "
 msgstr "Do you want to delete the Sub-Process: "
+
+# TRANSLATION
+# JAVASCRIPT/ID_CASE_TRACKER_PROPERTIES
+#: JAVASCRIPT/ID_CASE_TRACKER_PROPERTIES
+msgid "[JAVASCRIPT/ID_CASE_TRACKER_PROPERTIES] Properties"
+msgstr "Properties"
+
+# TRANSLATION
+# JAVASCRIPT/ID_PROCESSMAP_PSUPERVISORS
+#: JAVASCRIPT/ID_PROCESSMAP_PSUPERVISORS
+msgid "Process Supervisors"
+msgstr "Process Supervisors"
 
 # messages/messages_Edit.xml?MESS_TITLE
 # messages/messages_Edit.xml
@@ -4126,20 +4138,20 @@ msgstr "Apply Filter"
 # dynaforms/dynaforms_WebEntry.xml?subtitle1
 # dynaforms/dynaforms_WebEntry.xml
 #: subtitle - subtitle1
-msgid "[dynaforms/dynaforms_WebEntry.xml?subtitle1] Web Entry"
-msgstr "Web Entry"
+msgid "[dynaforms/dynaforms_WebEntry.xml?subtitle1] Properties"
+msgstr "Properties"
 
 # dynaforms/dynaforms_WebEntry.xml?TASKS
 # dynaforms/dynaforms_WebEntry.xml
 #: dropdown - TASKS
-msgid "Select the initial task"
-msgstr "Select the initial task"
+msgid "Initial Task"
+msgstr "Initial Task"
 
 # dynaforms/dynaforms_WebEntry.xml?DYNAFORM
 # dynaforms/dynaforms_WebEntry.xml
 #: dropdown - DYNAFORM
-msgid "Select the initial Dynaform"
-msgstr "Select the initial Dynaform"
+msgid "Initial Dynaform"
+msgstr "Initial Dynaform"
 
 # dynaforms/dynaforms_WebEntry.xml?WE_TYPE
 # dynaforms/dynaforms_WebEntry.xml
@@ -6841,6 +6853,24 @@ msgstr "Filename generated"
 msgid "[outputdocs/outputdocs_Edit.xml?OUT_DOC_DESCRIPTION] Description"
 msgstr "Description"
 
+# outputdocs/outputdocs_Edit.xml?OUT_DOC_LANDSCAPE
+# outputdocs/outputdocs_Edit.xml
+#: dropdown - OUT_DOC_LANDSCAPE
+msgid "Orientation"
+msgstr "Orientation"
+
+# outputdocs/outputdocs_Edit.xml?OUT_DOC_LANDSCAPE-''
+# outputdocs/outputdocs_Edit.xml
+#: dropdown - OUT_DOC_LANDSCAPE - ''
+msgid "[outputdocs/outputdocs_Edit.xml?OUT_DOC_LANDSCAPE-'']"
+msgstr "Vertical"
+
+# outputdocs/outputdocs_Edit.xml?OUT_DOC_LANDSCAPE-1
+# outputdocs/outputdocs_Edit.xml
+#: dropdown - OUT_DOC_LANDSCAPE - 1
+msgid "[outputdocs/outputdocs_Edit.xml?OUT_DOC_LANDSCAPE-1]"
+msgstr "Horizontal"
+
 # outputdocs/outputdocs_Edit.xml?OUT_DOC_TEMPLATE
 # outputdocs/outputdocs_Edit.xml
 #: html - OUT_DOC_TEMPLATE
@@ -6897,8 +6927,20 @@ msgstr "Select a process"
 
 # processes/processes_subProcess.xml?SP_SYNCHRONOUS
 # processes/processes_subProcess.xml
-#: yesno - SP_SYNCHRONOUS
-msgid "Synchronous"
+#: dropdown - SP_SYNCHRONOUS
+msgid "[processes/processes_subProcess.xml?SP_SYNCHRONOUS] Type"
+msgstr "Type"
+
+# processes/processes_subProcess.xml?SP_SYNCHRONOUS-''
+# processes/processes_subProcess.xml
+#: dropdown - SP_SYNCHRONOUS - ''
+msgid "[processes/processes_subProcess.xml?SP_SYNCHRONOUS-'']"
+msgstr "Asynchronous"
+
+# processes/processes_subProcess.xml?SP_SYNCHRONOUS-1
+# processes/processes_subProcess.xml
+#: dropdown - SP_SYNCHRONOUS - 1
+msgid "[processes/processes_subProcess.xml?SP_SYNCHRONOUS-1]"
 msgstr "Synchronous"
 
 # processes/processes_subProcess.xml?SUBTITLE1
@@ -6918,6 +6960,60 @@ msgstr "Variables In"
 #: button - SAVE
 msgid "[processes/processes_subProcess.xml?SAVE] Save"
 msgstr "Save"
+
+# processes/processes_ListPublic.xml?title
+# processes/processes_ListPublic.xml
+#: text - title
+msgid "[processes/processes_ListPublic.xml?title] Title"
+msgstr "Title"
+
+# processes/processes_ListPublic.xml?category
+# processes/processes_ListPublic.xml
+#: text - category
+msgid "[processes/processes_ListPublic.xml?category] Category"
+msgstr "Category"
+
+# processes/processes_ListPublic.xml?version
+# processes/processes_ListPublic.xml
+#: text - version
+msgid "Version"
+msgstr "Version"
+
+# processes/processes_ListPublic.xml?downloads
+# processes/processes_ListPublic.xml
+#: text - downloads
+msgid "Downloads"
+msgstr "Downloads"
+
+# processes/processes_ListPublic.xml?rating
+# processes/processes_ListPublic.xml
+#: text - rating
+msgid "Rating"
+msgstr "Rating"
+
+# processes/processes_ListPublic.xml?subscriptions
+# processes/processes_ListPublic.xml
+#: text - subscriptions
+msgid "Subscriptions"
+msgstr "Subscriptions"
+
+# processes/processes_ListPublic.xml?user
+# processes/processes_ListPublic.xml
+#: text - user
+msgid "[processes/processes_ListPublic.xml?user] User"
+msgstr "User"
+
+# processes/processes_ListPublic.xml?updateDate
+# processes/processes_ListPublic.xml
+#: text - updateDate
+msgid "Update Date"
+msgstr "Update Date"
+
+# processes/processes_ListPublic.xml?LINK2
+# processes/processes_ListPublic.xml
+#: link - LINK2
+msgid "[processes/processes_ListPublic.xml?LINK2] Download"
+msgstr "Download"
 
 # processes/processes_subProcess_Out.xml?VAR_OUT1
 # processes/processes_subProcess_Out.xml
@@ -7062,6 +7158,12 @@ msgstr "New"
 #: link - MNU_IMPORT
 msgid "Import"
 msgstr "Import"
+
+# processes/processes_Options.xml?MNU_LIBRARY
+# processes/processes_Options.xml
+#: link - MNU_LIBRARY
+msgid "Browse Library"
+msgstr "Browse Library"
 
 # processes/processes_ViewOptions.xml?MNU
 # processes/processes_ViewOptions.xml
@@ -7414,8 +7516,8 @@ msgstr "Cancelled"
 # processes/processes_Export.xml?TITLE
 # processes/processes_Export.xml
 #: title - TITLE
-msgid "[processes/processes_Export.xml?TITLE] Export Process"
-msgstr "Export Process"
+msgid "processes Info"
+msgstr "processes Info"
 
 # processes/processes_Export.xml?PRO_TITLE
 # processes/processes_Export.xml
@@ -7524,6 +7626,48 @@ msgstr "First name"
 #: text - USR_LASTNAME
 msgid "[processes/processes_User.xml?USR_LASTNAME] Last name"
 msgstr "Last name"
+
+# processes/processes_ImportSucessful.xml?title
+# processes/processes_ImportSucessful.xml
+#: title - title
+msgid "Process sucessfully imported"
+msgstr "Process sucessfully imported"
+
+# processes/processes_ImportSucessful.xml?pro_title
+# processes/processes_ImportSucessful.xml
+#: caption - pro_title
+msgid "[processes/processes_ImportSucessful.xml?pro_title] Process Title"
+msgstr "Process Title"
+
+# processes/processes_ImportSucessful.xml?version
+# processes/processes_ImportSucessful.xml
+#: caption - version
+msgid "[processes/processes_ImportSucessful.xml?version] Version"
+msgstr "Version"
+
+# processes/processes_ImportSucessful.xml?category
+# processes/processes_ImportSucessful.xml
+#: caption - category
+msgid "[processes/processes_ImportSucessful.xml?category] Category"
+msgstr "Category"
+
+# processes/processes_ImportSucessful.xml?PRO_UID
+# processes/processes_ImportSucessful.xml
+#: caption - PRO_UID
+msgid "Process Uid"
+msgstr "Process Uid"
+
+# processes/processes_ImportSucessful.xml?TITLE1
+# processes/processes_ImportSucessful.xml
+#: subtitle - TITLE1
+msgid "Please follow these instructions to complete installation"
+msgstr "Please follow these instructions to complete installation"
+
+# processes/processes_ImportSucessful.xml?SUBMIT
+# processes/processes_ImportSucessful.xml
+#: submit - SUBMIT
+msgid "[processes/processes_ImportSucessful.xml?SUBMIT] Continue"
+msgstr "Continue"
 
 # processes/processes_FilesList.xml?DELETE
 # processes/processes_FilesList.xml
@@ -11568,12 +11712,6 @@ msgstr "Title"
 #: textarea - TAS_DESCRIPTION
 msgid "[tasks/tasks_Definition.xml?TAS_DESCRIPTION] Description"
 msgstr "Description"
-
-# tasks/tasks_Definition.xml?TAS_PRIORITY_VARIABLE
-# tasks/tasks_Definition.xml
-#: textpm - TAS_PRIORITY_VARIABLE
-msgid "Variable for Case priority"
-msgstr "Variable for Case priority"
 
 # tasks/tasks_Definition.xml?TAS_START
 # tasks/tasks_Definition.xml
