@@ -219,10 +219,10 @@ class Form extends XmlForm
    * @parameter string template
    * @return string
    */
-  function getFields($template)
+  function getFields($template, $therow = -1)
   {
     $o = new xmlformTemplate($this, $template);
-    return $o->getFields( $this );
+    return $o->getFields( $this, $therow );
   }
   /**
    * Function that validates the values retrieved in $_POST

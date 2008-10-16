@@ -271,11 +271,11 @@ class XmlForm_Field
    * @parameter string values
    * @return string
    */
-  function renderGrid( $values=array(), $owner = NULL, $onlyValue = false )
+  function renderGrid( $values=array(), $owner = NULL, $onlyValue = false, $therow = -1 )
   {
     $result=array();$r=1;
     foreach($values as $v) {
-      $result[] = $this->render($v, $owner, '['. $owner->name .']['.$r.']', $onlyValue, $r);
+      $result[] = $this->render($v, $owner, '['. $owner->name .']['.$r.']', $onlyValue, $r, $therow);
       $r++;
     }
     return $result;
@@ -1663,9 +1663,16 @@ class XmlForm_Field_Dropdown extends XmlForm_Field
    * @parameter string owner
    * @return string
    */
-  function render( $value = NULL , $owner = NULL , $rowId = '', $onlyValue = false, $row = -1 )
+  function render( $value = NULL , $owner = NULL , $rowId = '', $onlyValue = false, $row = -1, $therow = -1 )
   {
-    $this->executeSQL( $owner, $row );
+    if ($therow == -1) {
+      $this->executeSQL( $owner, $row );
+    }
+    else {
+      if ($row == $therow) {
+        $this->executeSQL( $owner, $row );
+      }
+    }
     $html = '';
     if (!$onlyValue) {
       if ($this->mode === 'edit') {
@@ -1992,8 +1999,8 @@ class XmlForm_Field_Grid extends XmlForm_Field
    * @parameter string values
    * @return string
    */
-  function renderGrid( $values , $owner=NULL )
-  {//julichu
+  function renderGrid( $values , $owner=NULL, $therow = -1 )
+  {
     $this->id=$this->owner->id . $this->name;
     $tpl=new xmlformTemplate($this, PATH_CORE . 'templates/grid.html');
     if (!isset($values) || !is_array($values) || sizeof($values)==0)
@@ -2027,7 +2034,7 @@ class XmlForm_Field_Grid extends XmlForm_Field
     $oHeadPublisher =& headPublisher::getSingleton();
     $oHeadPublisher->addScriptFile( $this->scriptURL );
     $oHeadPublisher->addScriptCode( $tpl->printJavaScript($this) );
-    return $tpl->printObject($this);
+    return $tpl->printObject($this, $therow);
   }
   function flipValues( $values )
   {
@@ -2670,7 +2677,7 @@ class xmlformTemplate extends Smarty
    * @parameter string form
    * @return string
    */
-  function getFields(&$form)
+  function getFields(&$form, $therow = -1)
   {
 
     $result=array();
@@ -2703,7 +2710,17 @@ class xmlformTemplate extends Smarty
             }
           }
         }
-        $result['form'][$k] = $form->fields[$k]->renderGrid( $value, $form );
+        if ($v->type == 'grid') {
+          $result['form'][$k] = $form->fields[$k]->renderGrid( $value, $form, $therow );
+        }
+        else {
+          if ($v->type == 'dropdown') {
+            $result['form'][$k] = $form->fields[$k]->renderGrid( $value, $form, false, $therow );
+          }
+          else {
+            $result['form'][$k] = $form->fields[$k]->renderGrid( $value, $form );
+          }
+        }
       }
     }
     foreach($form as $name => $value) {
@@ -2719,7 +2736,7 @@ class xmlformTemplate extends Smarty
    * @parameter string form
    * @return string
    */
-  function printObject(&$form)
+  function printObject(&$form, $therow = -1)
   {
     //to do: generate the template for templatePower.
     //DONE: The template was generated in printTemplate, to use it
@@ -2729,7 +2746,7 @@ class xmlformTemplate extends Smarty
                                            array($this, '_get_timestamp'),
                                            array($this, '_get_secure'),
                                            array($this, '_get_trusted')));
-    $result = $this->getFields($form);
+    $result = $this->getFields($form, $therow);
 
     $this->assign(array('PATH_TPL' => PATH_TPL));
     $this->assign($result);

@@ -72,14 +72,14 @@ for($r=0;$r<sizeof($newValues);$r++) {
 		$dependentFields=array_merge($dependentFields, $myDependentFields);
 		//$_SESSION[$G_FORM->id][$k] = $v;
 	}
-}//var_dump($_SESSION[$G_FORM->id][$_POST['grid']]);die;
+}
 $G_FORM->values=isset($_SESSION[$G_FORM->id]) ? $_SESSION[$G_FORM->id] : array();
-//var_dump($_SESSION[$G_FORM->id]);die;
+
 $dependentFields=array_unique($dependentFields);
 
 //Parse and update the new content
 $template = PATH_CORE . 'templates/xmlform.html';
-$newContent=$G_FORM->getFields($template);
+$newContent=$G_FORM->getFields($template, (isset($_POST['row']) ? $_POST['row'] : -1));
 
 //Returns the dependentFields's content
 $sendContent=array();
@@ -105,11 +105,12 @@ foreach($dependentFields as $d) {
 	      $sendContent[$r]->content->{$attribute}=$value; break;
 	      case 'options':
 	      if ($sendContent[$r]->content->type != 'text') {
-	        $sendContent[$r]->content->{$attribute}=toJSArray($value); break;
+	        $sendContent[$r]->content->{$attribute}=toJSArray($value);
 	      }
 	      else {
-	        $sendContent[$r]->content->{$attribute}=toJSArray(array($value[$_POST['row']])); break;
+	        $sendContent[$r]->content->{$attribute}=toJSArray(array($value[$_POST['row']]));
 	      }
+	      break;
 	    }
 	  }
 	  $sendContent[$r]->value=isset($G_FORM->values[$_POST['grid']][$_POST['row']][$d]) ? $G_FORM->values[$_POST['grid']][$_POST['row']][$d] : '';

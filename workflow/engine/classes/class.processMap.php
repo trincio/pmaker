@@ -59,6 +59,7 @@ class processMap {
         $oPM->title->position->y = $aRow['PRO_TITLE_Y'];
         $oPM->task = array();
         $oCriteria = new Criteria('workflow');
+        $oCriteria->addSelectColumn(TaskPeer::PRO_UID);
         $oCriteria->addSelectColumn(TaskPeer::TAS_UID);
         $oCriteria->addSelectColumn(ContentPeer::CON_VALUE);
         $oCriteria->addSelectColumn(TaskPeer::TAS_START);
@@ -79,7 +80,22 @@ class processMap {
           $oTask                 = null;
       	  $oTask->uid            = $aRow1['TAS_UID'];
       	  $oTask->task_type      = $aRow1['TAS_TYPE'];
-      	  $oTask->label          = strip_tags($aRow1['CON_VALUE']);
+      	  if($aRow1['TAS_TYPE']=='NORMAL')      	        
+      	  	  $oTask->label          = strip_tags($aRow1['CON_VALUE']);
+      	  else
+      	     { 
+      	       require_once 'classes/model/SubProcess.php';
+    		   $oCriteria = new Criteria('workflow');
+    		   $oCriteria->add(SubProcessPeer::PRO_PARENT, $aRow1['PRO_UID']);
+    	       $oCriteria->add(SubProcessPeer::TAS_PARENT, $aRow1['TAS_UID']);
+    		   $oDataset = SubProcessPeer::doSelectRS($oCriteria);
+    		   $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    		   $oDataset->next();
+    		   $aRowx = $oDataset->getRow();	
+      	     	
+      	       $aRowy = $oProcess->load($aRowx['PRO_UID']);
+      	       $oTask->label          = $aRowy['PRO_TITLE'];	
+      	     }
       	  $oTask->taskINI        = (strtolower($aRow1['TAS_START']) == 'true' ? true : false);
       	  $oTask->position->x    = (int)$aRow1['TAS_POSX'];
       	  $oTask->position->y    = (int)$aRow1['TAS_POSY'];
@@ -2910,7 +2926,7 @@ class processMap {
     }
   }
 
-  function subProcess_Properties($sProcessUID = '', $sTaskUID= '') {
+  function subProcess_Properties($sProcessUID = '', $sTaskUID= '', $sIndex='') {
     try {
     	   $SP_VARIABLES_OUT = array();
     	   $SP_VARIABLES_IN  = array();
@@ -2919,10 +2935,10 @@ class processMap {
     	   global $_DBArray;    	  
   			 $_DBArray['NewCase'] = $this->subProcess_TaskIni($sProcessUID);
          //print_r($_DBArray['NewCase']); die;
-    	   require_once 'classes/model/SubProcess.php';
+    	     require_once 'classes/model/SubProcess.php';
     		 $oCriteria = new Criteria('workflow');
     		 $oCriteria->add(SubProcessPeer::PRO_PARENT, $sProcessUID);
-    	   $oCriteria->add(SubProcessPeer::TAS_PARENT, $sTaskUID);
+    	     $oCriteria->add(SubProcessPeer::TAS_PARENT, $sTaskUID);
     		 $oDataset = SubProcessPeer::doSelectRS($oCriteria);
     		 $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
     		 $oDataset->next();
@@ -2950,7 +2966,7 @@ class processMap {
 		           $j++;
 		         }
          }
-
+         $aRow['INDEX']=$sIndex;
     	  global $G_PUBLISH;
   	    $G_PUBLISH = new Publisher();
         $G_PUBLISH->AddContent('xmlform', 'xmlform', 'processes/processes_subProcess', '', $aRow, 'processes_subProcessSave');
