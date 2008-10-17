@@ -33,7 +33,9 @@
 
 class Report {
 	function generatedReport1()
-	{
+	{   
+		$this->reportsPatch();
+		
 		require_once 'classes/model/AppDelegation.php';
 		require_once 'classes/model/Application.php';
 		$oCriteria = new Criteria('workflow');
@@ -62,7 +64,8 @@ class Report {
       	                'MAX'       => 'float',
       	                'TOTALDUR'  => 'float',
       	                'PROMEDIO'  => 'float');
-    while ($aRow = $oDataset->getRow()) {
+    while ($aRow = $oDataset->getRow()) 
+    {    	
       	$oCriteria = new Criteria('workflow');
         $oCriteria->addSelectColumn(ApplicationPeer::PRO_UID);
         $oCriteria->add(ApplicationPeer::PRO_UID,     $aRow['PRO_UID']);
@@ -83,12 +86,14 @@ class Report {
     G::LoadClass('ArrayPeer');
     $oCriteria = new Criteria('dbarray');
     $oCriteria->setDBArrayTable('reports');
-
+    
     return $oCriteria;
 	}
 
   function generatedReport1_filter($from, $to, $startedby)
-	{
+	{   
+		$this->reportsPatch();
+		
 		require_once 'classes/model/AppDelegation.php';
 		require_once 'classes/model/Application.php';
 		require_once 'classes/model/Users.php';
@@ -154,7 +159,8 @@ class Report {
 	}
 
 	function descriptionReport1($PRO_UID)
-	{ 
+	{   $this->reportsPatch();
+	
 		require_once 'classes/model/AppDelegation.php';
 		require_once 'classes/model/Task.php';
 		require_once 'classes/model/Content.php';
@@ -213,7 +219,8 @@ class Report {
 	}
 
 	function generatedReport2()
-	{
+	{   $this->reportsPatch();
+	
 		require_once 'classes/model/AppDelegation.php';
 		require_once 'classes/model/Application.php';
 		$oCriteria = new Criteria('workflow');
@@ -306,7 +313,8 @@ class Report {
 	}
 
 	function reports_Description_filter($from, $to, $startedby, $PRO_UID)
-	{
+	{  
+		$this->reportsPatch();
 	  require_once 'classes/model/AppDelegation.php';
 		require_once 'classes/model/Task.php';
 		require_once 'classes/model/Content.php';
@@ -344,7 +352,7 @@ class Report {
 	}
 
 	function generatedReport2_filter($from, $to, $startedby)
-	{
+	{   $this->reportsPatch();
 		require_once 'classes/model/AppDelegation.php';
 		require_once 'classes/model/Application.php';
 		require_once 'classes/model/Users.php';
@@ -437,7 +445,7 @@ class Report {
 	}
 
  function generatedReport3()
-	{
+	{   $this->reportsPatch();
 		require_once 'classes/model/AppDelegation.php';
 		require_once 'classes/model/Application.php';
 		$oCriteria = new Criteria('workflow');
@@ -489,6 +497,7 @@ class Report {
 
 	function generatedReport3_filter($process, $task)
 	{ //echo $task; die;
+		$this->reportsPatch();
 		require_once 'classes/model/AppDelegation.php';
 		require_once 'classes/model/Application.php';
 		$oCriteria = new Criteria('workflow');
@@ -553,7 +562,7 @@ class Report {
 	}
 
 	function generatedReport4()
-	{
+	{   $this->reportsPatch();
 		require_once 'classes/model/AppDelegation.php';
 		require_once 'classes/model/Application.php';
 		require_once 'classes/model/Process.php';
@@ -609,6 +618,7 @@ class Report {
 
 	function generatedReport4_filter($process, $task)
 	{ //echo $task; die;
+		$this->reportsPatch();
 		require_once 'classes/model/AppDelegation.php';
 		require_once 'classes/model/Application.php';
 		require_once 'classes/model/Process.php';
@@ -677,7 +687,7 @@ class Report {
 	}
 
 	function generatedReport5()
-	{
+	{   $this->reportsPatch();
 		require_once 'classes/model/AppDelegation.php';
 		require_once 'classes/model/Application.php';
 		require_once 'classes/model/Process.php';
@@ -732,6 +742,7 @@ class Report {
 
 	function generatedReport5_filter($process, $task)
 	{ //echo $task; die;
+		$this->reportsPatch();
 		require_once 'classes/model/AppDelegation.php';
 		require_once 'classes/model/Application.php';
 		require_once 'classes/model/Process.php';
@@ -798,8 +809,50 @@ class Report {
     return $oCriteria;
 	}
 
+	
 	function getAvailableReports() {
 	  return array('ID_REPORT1', 'ID_REPORT2', 'ID_REPORT3', 'ID_REPORT4', 'ID_REPORT5');
 	}
 		
+	// Patch for reports by The Answer (17-10-2k8) 
+	function reportsPatch() {		
+	  	require_once 'classes/model/AppDelegation.php';		
+		   	  	
+	  	$oCriteria = new Criteria('workflow');
+		$del = DBAdapter::getStringDelimiter();
+        $oCriteria->addSelectColumn(AppDelegationPeer::APP_UID);
+        $oCriteria->addSelectColumn(AppDelegationPeer::DEL_INDEX);
+        $oCriteria->addSelectColumn(AppDelegationPeer::TAS_UID);
+		$oCriteria->addSelectColumn(AppDelegationPeer::DEL_DELEGATE_DATE);
+        $oCriteria->addSelectColumn(AppDelegationPeer::DEL_INIT_DATE);
+        $oCriteria->addSelectColumn(AppDelegationPeer::DEL_FINISH_DATE);
+        $oCriteria->addSelectColumn(AppDelegationPeer::DEL_DURATION);
+        $oDataset = AppDelegationPeer::doSelectRS($oCriteria);
+        $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+        $oDataset->next();
+        while ($aRow = $oDataset->getRow()) {
+      		$oAppDelegation = new AppDelegation(); 
+      		
+        	$aData['APP_UID']=$aRow['APP_UID'];
+      		$aData['DEL_INDEX']=$aRow['DEL_INDEX'];
+      		$aData['DEL_DELEGATE_DATE']=$aRow['DEL_DELEGATE_DATE'];
+      		
+      		if($aRow['DEL_INIT_DATE']==NULL)
+      		    $aData['DEL_INIT_DATE']=$aRow['DEL_DELEGATE_DATE'];
+      		else    
+      			$aData['DEL_INIT_DATE']=$aRow['DEL_INIT_DATE'];      			
+      		
+      		//$aData['DEL_FINISH_DATE']=$aRow['DEL_FINISH_DATE'];      		
+      		if($aRow['DEL_DURATION']!=0)      		
+      		 {	
+      		 	G::LoadClass('dates');
+                $oDates = new dates();                
+      		 	$aData['DEL_DURATION']= $oDates->calculateDuration($aData['DEL_INIT_DATE'], $aRow['DEL_FINISH_DATE'], null, null, $aRow['TAS_UID']);
+      		 }	
+
+      		$oAppDelegation->update($aData);
+      	}              
+		return;
+	}
+	
 }
