@@ -2256,9 +2256,9 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText
 			$value = date('Y-m-d');
 		}
 
-		if(isset($this->defaultValue))
+		/*if(isset($this->defaultValue))
 		{ $value = $this->defaultValue;
-		}
+		}*/
 
 		#the validations field was moved to javascript routines ;)
 		if($this->mode == 'edit') {

@@ -1426,7 +1426,8 @@ class Cases
         $c->addSelectColumn(ApplicationPeer::APP_NUMBER);
         $c->addSelectColumn(ApplicationPeer::APP_UPDATE_DATE);
         $c->addSelectColumn(AppDelegationPeer::DEL_PRIORITY);
-        $c->addSelectColumn(AppDelegationPeer::DEL_TASK_DUE_DATE);
+        //$c->addSelectColumn(AppDelegationPeer::DEL_TASK_DUE_DATE);
+		$c->addAsColumn('DEL_TASK_DUE_DATE', " IF (" . AppDelegationPeer::DEL_TASK_DUE_DATE . " <= NOW(), CONCAT('<span style=\'color:red\';>', " . AppDelegationPeer::DEL_TASK_DUE_DATE . ", '</span>'), " . AppDelegationPeer::DEL_TASK_DUE_DATE . ") ");
         $c->addSelectColumn(AppDelegationPeer::DEL_INDEX);
         $c->addSelectColumn(AppDelegationPeer::DEL_INIT_DATE);
         $c->addSelectColumn(AppDelegationPeer::DEL_FINISH_DATE);
