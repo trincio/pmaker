@@ -70,5 +70,16 @@ $oNode->plus  = '';
 $oNode->minus = '';
 $oNode->point = '';
 
+require_once 'classes/model/Process.php';
+$oProcess = new Process();
+$Fields = $oProcess->Load( $_SESSION['PROCESS'] );
+if($Fields['PRO_DEBUG']==1)
+{
+		$oNode        =& $oTree->addChild('7', '<a class="linkInBlue" href="../cases/casesDemo">' . G::LoadTranslation('ID_CASEDEMO') . '</a>', array('nodeType'=>'parentBlue'));
+		$oNode->plus  = '';
+		$oNode->minus = '';
+		$oNode->point = '';
+}		
+
 echo $oTree->render();
 ?>
