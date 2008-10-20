@@ -851,6 +851,8 @@ class Report {
       		 }	
 
       		$oAppDelegation->update($aData);
+      		
+      		$oDataset->next();
       	}              
 		return;
 	}
