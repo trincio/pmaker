@@ -198,7 +198,6 @@ class RBAC
   //
   function createUser($aData = array(), $sRolCode = '') {
   	$sUserUID = $this->userObj->create($aData);
-  	$this->assignRoleToUser($sUserUID, $sRolCode);
   	return $sUserUID;
   }
 
@@ -279,6 +278,10 @@ class RBAC
   /** @erik adds ****/
   function listAllRoles ( $systemCode = 'PROCESSMAKER') {
       return $this->rolesObj->listAllRoles($systemCode);
+  }
+  
+  function listAllPermissions ( $systemCode = 'PROCESSMAKER') {
+      return $this->rolesObj->listAllPermissions($systemCode);
   }
   
   function createRole($aData) {

@@ -95,9 +95,10 @@ class UsersRoles extends BaseUsersRoles {
   }
 
   function create($sUserUID = '', $sRolUID = '') {
-  	$this->setUsrUid($sUserUID);
-  	$this->setRolUid($sRolUID);
-  	$this->save();
+  	$oRole  = new UsersRoles();
+  	$oRole->setUsrUid($sUserUID);
+  	$oRole->setRolUid($sRolUID);
+  	$oRole->save();
   }
 
   function remove($sUserUID = '', $sRolUID = '') {
