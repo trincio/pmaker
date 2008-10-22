@@ -52,7 +52,7 @@ switch ($request) {
 		$sFrom    = ($_POST['FROM_NAME'] != '' ? $_POST['FROM_NAME'] . ' ' : '') . '<' . $_POST['FROM_EMAIL'] . '>';
 		$sSubject = G::LoadTranslation('ID_MESS_TEST_SUBJECT');
 		$msg = G::LoadTranslation('ID_MESS_TEST_BODY');
-		
+
 		switch ($_POST['MESS_ENGINE']) {
 			case 'MAIL':
 				$engine = G::LoadTranslation('ID_MESS_ENGINE_TYPE_1');
@@ -135,7 +135,11 @@ switch ($request) {
 		define("FAILED", 'FAILED');
 
 		//$host = 'smtp.bizmail.yahoo.com';
+		$tld = ereg("([^//]*$)", $_POST['srv'], $regs);
+    $srv1 = $regs[1];
+
 		$srv	= $_POST['srv'];
+
 		$port	= ($_POST['port'] == 'default')? 25: $_POST['port'];
 		$user	= $_POST['account'];
 		$passwd = $_POST['passwd'];
@@ -144,7 +148,7 @@ switch ($request) {
 		$send_test_mail = $_POST['send_test_mail'];
 		$mail_to		= $_POST['mail_to'];
 
-		$Server = new NET($srv);
+		$Server = new NET($srv1);
 		$oSMTP = new ESMTP;
 
 		switch ($step) {
@@ -192,6 +196,8 @@ switch ($request) {
 						$resp = $oSMTP->Connect($srv, $port);
 					}
 					if($resp) {
+					  $oSMTP->do_debug = false;
+						$oSMTP->Hello($srv);
 						if( !$oSMTP->Authenticate($user, $passwd) ) {
 							print(FAILED.','.$oSMTP->error['error']);
 						} else {
@@ -202,7 +208,7 @@ switch ($request) {
 					}
 				} else {
 					print(SUCCESSFUL.', No authentication required!');
-				}	
+				}
 			break;
 
 			case 5:
@@ -210,7 +216,7 @@ switch ($request) {
 					//print(SUCCESSFUL.',ok');
 					$_POST['FROM_NAME'] = 'Process Maker O.S. [Test mail]';
 					$_POST['FROM_EMAIL'] = $user;
-							
+
 					$_POST['MESS_ENGINE'] = 'PHPMAILER';
 					$_POST['MESS_SERVER'] = $srv;
 					$_POST['MESS_PORT']   = $port;
@@ -221,9 +227,9 @@ switch ($request) {
 						$_POST['SMTPAuth'] = true;
 					} else {
 						$_POST['SMTPAuth'] = false;
-					}	
+					}
 					$resp = sendTestMail();
-					
+
 					if($resp->status){
 						print(SUCCESSFUL.','.$resp->msg);
 					} else {
@@ -233,7 +239,7 @@ switch ($request) {
 					print('jump this step');
 				}
 			break;
-			
+
 			default:
 				print('test finished!');
 		}
@@ -241,11 +247,11 @@ switch ($request) {
 }
 
 function sendTestMail() {
-	
+
 	$sFrom    = ($_POST['FROM_NAME'] != '' ? $_POST['FROM_NAME'] . ' ' : '') . '<' . $_POST['FROM_EMAIL'] . '>';
 	$sSubject = G::LoadTranslation('ID_MESS_TEST_SUBJECT');
 	$msg = G::LoadTranslation('ID_MESS_TEST_BODY');
-	
+
 	switch ($_POST['MESS_ENGINE']) {
 		case 'MAIL':
 			$engine = G::LoadTranslation('ID_MESS_ENGINE_TYPE_1');
@@ -267,11 +273,11 @@ function sendTestMail() {
 	<br /><hr><b>This Business Process is powered by ProcessMaker.<b><br />
 	<a href='http://www.processmaker.com' style='color:#c40000;'>www.processmaker.com</a><br /></td>
 	</tr></tbody></table>";
-	
+
 	G::LoadClass('spool');
 	$oSpool = new spoolRun();
-	
-	
+
+
 	$oSpool->setConfig( array(
 		'MESS_ENGINE'   => $_POST['MESS_ENGINE'],
 		'MESS_SERVER'   => $_POST['MESS_SERVER'],
@@ -296,9 +302,9 @@ function sendTestMail() {
 		'app_msg_template' => '',
 		'app_msg_status'   => 'pending'
 	));
-	
+
 	$oSpool->sendMail();
-	
+
 	global $G_PUBLISH;
 	$G_PUBLISH = new Publisher();
 	if ($oSpool->status == 'sent') {
@@ -315,11 +321,11 @@ function sendTestMail() {
 
 function e_utf8_encode($input) {
 	$utftext = null;
-       
+
 	for ($n = 0; $n < strlen($input); $n++) {
 
 		$c = ord($input[$n]);
-           
+
 		if ($c < 128) {
 			$utftext .= chr($c);
 		} else if (($c > 128) && ($c < 2048)) {
@@ -331,6 +337,6 @@ function e_utf8_encode($input) {
 			$utftext .= chr(($c & 63) | 128);
 		}
 	}
-       
+
 	return $utftext;
 }

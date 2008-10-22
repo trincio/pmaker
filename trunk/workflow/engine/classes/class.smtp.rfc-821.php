@@ -48,7 +48,7 @@ class ESMTP
      * @access public
      * @return void
      */
-    function SMTP() {
+    function ESMTP() {
         $this->smtp_conn = 0;
         $this->error = null;
         $this->helo_rply = null;
@@ -155,7 +155,7 @@ class ESMTP
         }
 
         // Send encoded username
-		@fputs($this->smtp_conn, base64_encode($username) . $this->CRLF);
+        @fputs($this->smtp_conn, base64_encode($username) . $this->CRLF);
 
         $rply = $this->get_lines();
         $code = substr($rply,0,3);
