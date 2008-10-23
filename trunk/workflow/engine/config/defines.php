@@ -1,10 +1,10 @@
 <?php
 /**
  * defines.php
- *  
+ *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -14,13 +14,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
 
 //***************** URL KEY *********************************************
@@ -61,21 +61,20 @@
   }
 
 /*
- * Number of files per folder at PATH_UPLOAD (cases documents)  
+ * Number of files per folder at PATH_UPLOAD (cases documents)
  */
  define( 'APPLICATION_DOCUMENTS_PER_FOLDER', 1000 );
- 
+
 /*
  * Server of ProcessMaker Library
  */
-  define ( 'PML_SERVER' ,  'http://library.processmaker.com' );
-  //define ( 'PML_SERVER' ,  'http://pmlibrary.opensource.colosa.net' );
+  //define ( 'PML_SERVER' ,  'http://library.processmaker.com' );
+  define ( 'PML_SERVER' ,  'http://pmlibrary.opensource.colosa.net' );
   define ( 'PML_WSDL_URL' ,    PML_SERVER . '/syspmLibrary/en/green/services/wsdl');
   define ( 'PML_UPLOAD_URL',   PML_SERVER . "/syspmLibrary/en/green/services/uploadProcess");
   define ( 'PML_DOWNLOAD_URL', PML_SERVER . '/syspmLibrary/en/green/services/download');
- 
- 
- 
- 
- 
- 
+
+
+
+
+

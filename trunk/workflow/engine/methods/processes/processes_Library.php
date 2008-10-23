@@ -46,30 +46,30 @@ switch ($RBAC->userCanAccess('PM_FACTORY'))
 
 		$result = array();
 		if ( isset ( $array->item ) ) {
-		  foreach ($array->item as $key => $value) {			
+		  foreach ($array->item as $key => $value) {
   			$result[$value->key] = $value->value;
 	  	}
 	  }
 	  else {
-		  foreach ($array as $key => $value) {			
+		  foreach ($array as $key => $value) {
   			$result[$value->key] = $value->value;
 	  	}
 	  }
 		return $result;
-	}  
+	}
 
-      
-try {   
+
+try {
   G::LoadClass('processes');
   $oProcess = new Processes();
-  $oProcess->ws_open_public ();   
-    
+  $oProcess->ws_open_public ();
+
   $result = $oProcess->ws_ProcessList ( );
    	$processes[] = array ( 'uid' => 'char', 'name' => 'char', 'age' => 'integer', 'balance' => 'float' );
 
     if ( $result->status_code == 0 && isset($result->processes) ) {
     	foreach ( $result->processes as $key => $val ) {
-    		$process = parseItemArray($val); 
+    		$process = parseItemArray($val);
     		$processes[] = $process;
     	}
     }
@@ -86,6 +86,40 @@ try {
 
   $G_PUBLISH = new Publisher;
   $G_PUBLISH->AddContent('propeltable', 'paged-table', 'processes/processes_ListPublic', $c);
+  $oHeadPublisher =& headPublisher::getSingleton();
+  //$oHeadPublisher->addScriptCode('leimnud.Package.Load("newAccount",{Type:"file",Absolute:true,Path:"/jscore/newAccount.js"});');
+  $oHeadPublisher->addScriptCode("
+  var oPanel;
+  var oPanel2;
+  var showDetails = function(sUID) {
+    oPanel = new leimnud.module.panel();
+    oPanel.options = {
+    	size:{w:500,h:500},
+    	position:{x:0,y:0,center:true},
+    	title:'',
+    	theme:'firefox',
+    	statusBar:true,
+    	control	:{resize:false,roll:false,drag:true},
+    	fx	:{modal:true,opacity:true,blinkToFront:false,fadeIn:false}
+    };
+    oPanel.events = {
+	    remove: function() { delete(oPanel); }.extend(this)
+    };
+    oPanel.make();
+    oPanel.loader.show();
+    var oRPC = new leimnud.module.rpc.xmlhttp({
+    	url : 'processes_Ajax',
+    	args: 'action=showDetailsPMDWL&data=' + {pro_uid:sUID}.toJSONString()
+    });
+    oRPC.callback = function(rpc){
+    	oPanel.loader.hide();
+    	var scs = rpc.xmlhttp.responseText.extractScript();
+    	oPanel.addContent(rpc.xmlhttp.responseText);
+    	scs.evalScript();
+    }.extend(this);
+    oRPC.make();
+  };
+  ");
   G::RenderPage('publish');
   }
   catch ( Exception $e ) {
@@ -93,5 +127,4 @@ try {
     $aMessage['MESSAGE'] = $e->getMessage();
     $G_PUBLISH->AddContent('xmlform', 'xmlform', 'login/showMessage', '', $aMessage );
     G::RenderPage( 'publish', 'blank' );
-  }      
-  
+  }
