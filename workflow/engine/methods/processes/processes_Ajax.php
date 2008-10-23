@@ -119,11 +119,11 @@ try {
   	case 'addTask':
   	  $sOutput = $oProcessMap->addTask($oData->uid, $oData->position->x, $oData->position->y);
   	break;
-  	
+
   	case 'addSubProcess':
   	  $sOutput = $oProcessMap->addSubProcess($oData->uid, $oData->position->x, $oData->position->y);
   	break;
-  	
+
   	case 'editTaskProperties':
   	  $oProcessMap->editTaskProperties($oData->uid, (isset($oData->iForm) ? $oData->iForm : 1), $oData->index);
   	break;
@@ -276,7 +276,82 @@ try {
   	case 'subProcess_Properties':
   	  $oProcessMap->subProcess_Properties($oData->pro_uid, $oData->tas_uid, $oData->index);
   	break;
-  	
+  	case 'showDetailsPMDWL':
+  	  G::LoadClass('processes');
+	  	$oProcesses = new Processes();
+	  	$oProcesses->ws_open_public();
+	  	$aFields   = get_object_vars($oProcesses->ws_processGetData($oData->pro_uid));
+	  	switch ($aFields['privacy']) {
+	  	  case 'FREE':
+	  	    $aFields['link_label'] = G::LoadTranslation('ID_DOWNLOAD');
+	  	    $aFields['link_href']  = '../processes/downloadPML?id=' . $oData->pro_uid;
+	  	  break;
+	  	  case 'PUBLIC':
+	  	    require_once 'classes/model/Configuration.php';
+	  	    $oCriteria = new Criteria('workflow');
+	  	    $oCriteria->addSelectColumn(ConfigurationPeer::CFG_VALUE);
+	  	    $oCriteria->add(ConfigurationPeer::CFG_UID, 'REGISTER_INFORMATION');
+	  	    $oCriteria->add(ConfigurationPeer::USR_UID, $_SESSION['USER_LOGGED']);
+	  	    if (ConfigurationPeer::doCount($oCriteria) > 0) {
+	  	      $oDataset = ConfigurationPeer::doSelectRS($oCriteria);
+	  	      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+            $oDataset->next();
+            $aRow = $oDataset->getRow();
+            $aRI  = unserialize($aRow['CFG_VALUE']);
+            //verificar si es aún son datos validos
+	  	      $aFields['link_label'] = G::LoadTranslation('ID_DOWNLOAD');
+	  	      $aFields['link_href']  = '../processes/downloadPML?id=' . $oData->pro_uid . '&u=' . $aRI['u'] . '&p=' . base64_encode($aRI['p']);
+	  	    }
+	  	    else {
+	  	      $aFields['link_label'] = G::LoadTranslation('ID_NEED_REGISTER');
+	  	      $aFields['link_href']  = "javascript:registerPML('" . $oData->pro_uid . "');";
+	  	    }
+	  	  break;
+	  	}
+	  	$G_PUBLISH = new Publisher;
+      $G_PUBLISH->AddContent('xmlform', 'xmlform', 'processes/objectpmView', '', $aFields, '');
+      G::RenderPage('publish', 'raw');
+  	break;
+    case 'registerPML':
+      $aFields = array();
+      $aFields['pro_uid'] = $oData->pro_uid;
+      $aFields['link_create_account'] = PML_SERVER;
+      $G_PUBLISH = new Publisher;
+      $G_PUBLISH->AddContent('xmlform', 'xmlform', 'processes/registerPML', '', $aFields, '');
+      G::RenderPage('publish', 'raw');
+    break;
+    case 'loginPML':
+      G::LoadClass('processes');
+      G::LoadThirdParty('pear/json','class.json');
+	  	$oProcesses = new Processes();
+	  	try {
+        if ($oProcesses->ws_open($oData->u, $oData->p) == 1) {
+          $bExists = true;
+        }
+        else {
+          $bExists = false;
+        }
+      }
+      catch (Exception $oException) {
+        $bExists = false;
+      }
+      $oResponse = new stdclass();
+      if ($bExists) {
+        require_once 'classes/model/Configuration.php';
+	  	  $oConfiguration = new Configuration();
+	  	  $oConfiguration->create(array('CFG_UID'   => 'REGISTER_INFORMATION',
+	  	                                'OBJ_UID'   => '',
+	  	                                'CFG_VALUE' => serialize(array('u' => $oData->u, 'p' => $oData->p)),
+	  	                                'PRO_UID'   => '',
+	  	                                'USR_UID'   => $_SESSION['USER_LOGGED'],
+	  	                                'APP_UID'   => ''));
+	  	  $oResponse->sLabel = G::LoadTranslation('ID_DOWNLOAD');
+	  	  $oResponse->sLink  = '../processes/downloadPML?id=' . $oData->pro_uid . '&u=' . $oData->u . '&p=' . base64_encode($oData->p);
+      }
+      $oResponse->bExists = $bExists;
+      $oJSON = new Services_JSON();
+      echo $oJSON->encode($oResponse);
+    break;
   }
   die($sOutput);
 }

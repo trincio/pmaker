@@ -194,6 +194,7 @@
             else {
               $oPHPMailer->AddAddress($this->fileData['to']);
             }
+            $oPHPMailer->IsHTML(true);
             if ($oPHPMailer->Send()) {
               $this->error = '';
 				      $this->status = 'sent';

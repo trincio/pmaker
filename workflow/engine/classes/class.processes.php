@@ -1667,25 +1667,30 @@ class Processes {
 
     $fp = fopen( $pmFilename, "rb");
     $fsData = intval( fread ( $fp, 9)); //reading the size of $oData
-    $contents  = fread( $fp, $fsData );    //reading string $oData
-    $oData = unserialize ($contents);
+    $contents  = @fread( $fp, $fsData );    //reading string $oData
+    if ($contents != '') {
+      $oData = unserialize ($contents);
 
-    $oData->dynaformFiles = array();
-    $sIdentifier = 0;
-    while ( !feof ( $fp ) && is_numeric ( $sIdentifier ) ) {
-      $sIdentifier  = fread ( $fp, 9);      //reading the block identifier
-      if ( is_numeric ( $sIdentifier ) ) {
-      $fsXmlGuid    = intval( $sIdentifier );      //reading the size of $filename
-        if ( $fsXmlGuid > 0 )
-          $XmlGuid    = fread( $fp, $fsXmlGuid );    //reading string $XmlGuid
+      $oData->dynaformFiles = array();
+      $sIdentifier = 0;
+      while ( !feof ( $fp ) && is_numeric ( $sIdentifier ) ) {
+        $sIdentifier  = fread ( $fp, 9);      //reading the block identifier
+        if ( is_numeric ( $sIdentifier ) ) {
+        $fsXmlGuid    = intval( $sIdentifier );      //reading the size of $filename
+          if ( $fsXmlGuid > 0 )
+            $XmlGuid    = fread( $fp, $fsXmlGuid );    //reading string $XmlGuid
 
-        $fsXmlContent = intval( fread ( $fp, 9));      //reading the size of $XmlContent
-        if ( $fsXmlContent > 0 ) {
-        	$oData->dynaformFiles[$XmlGuid ] = $XmlGuid;
-          $XmlContent   = fread( $fp, $fsXmlContent );    //reading string $XmlContent
-          unset($XmlContent);
+          $fsXmlContent = intval( fread ( $fp, 9));      //reading the size of $XmlContent
+          if ( $fsXmlContent > 0 ) {
+          	$oData->dynaformFiles[$XmlGuid ] = $XmlGuid;
+            $XmlContent   = fread( $fp, $fsXmlContent );    //reading string $XmlContent
+            unset($XmlContent);
+          }
         }
       }
+    }
+    else {
+      $oData = null;
     }
     fclose ( $fp);
 

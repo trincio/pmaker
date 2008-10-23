@@ -118,7 +118,9 @@ class dates
 		if (isset($TasUid))
 		{
 			$task = TaskPeer::retrieveByPK( $TasUid );
-			$this->calendarDays=($task->getTasTypeDay()==2);
+			if (!is_null($task)) {
+			  $this->calendarDays=($task->getTasTypeDay()==2);
+			}
 		}
 		$aoHolidays=HolidayPeer::doSelect(new Criteria());
 		$holidays=array();

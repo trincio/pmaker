@@ -13,8 +13,8 @@
     G::mk_dir($localPath);
     $newfilename = G::GenerateUniqueId() . '.pm';
 
-    $downloadUrl = PML_DOWNLOAD_URL . '?id=' . $ObjUid;
-    //print "<hr>$downloadUrl<hr>";
+    $downloadUrl = PML_DOWNLOAD_URL . '?id=' . $ObjUid . (isset($_GET['u']) ? '&u=' . $_GET['u'] : '') . (isset($_GET['u']) ? '&p=' . $_GET['p'] : '');
+    //print "<hr>$downloadUrl<hr>";die;
 
     G::LoadClass('processes');
     $oProcess = new Processes();
@@ -22,7 +22,9 @@
 
     //getting the ProUid from the file recently downloaded
     $oData = $oProcess->getProcessData ( $localPath . $newfilename  );
-
+    if (is_null($oData)) {
+      throw new Exception('Error');
+    }
     $Fields['IMPORT_OPTION'] = 2;
     $Fields['PRO_FILENAME']  = $newfilename;
     $Fields['OBJ_UID']       = $ObjUid ;

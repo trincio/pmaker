@@ -29,16 +29,19 @@
 
 
 <user type="text" colWidth='80'  >
-  <en>User</en>
+  <en>Publisher</en>
 </user>
 
 <updateDate type="text" colWidth='120'  >
   <en>Update Date</en>
 </updateDate>
 
-
-<LINK2 type="link" colWidth="60" titleAlign="left" align="left" link='../processes/downloadPML?id=@#guid' >
+<!--<LINK2 type="link" colWidth="60" titleAlign="left" align="left" link='../processes/downloadPML?id=@#guid' >
   <en>Download</en>
-</LINK2 >
+</LINK2 >-->
+
+<LINK type="link" colWidth="60" titleAlign="left" align="left" link="javascript:showDetails(@@guid);" value="@G::LoadTranslation(ID_VIEW)">
+  <en></en>
+</LINK >
 
 </dynaForm>
