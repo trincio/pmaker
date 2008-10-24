@@ -13,7 +13,7 @@
     G::mk_dir($localPath);
     $newfilename = G::GenerateUniqueId() . '.pm';
 
-    $downloadUrl = PML_DOWNLOAD_URL . '?id=' . $ObjUid . (isset($_GET['u']) ? '&u=' . $_GET['u'] : '') . (isset($_GET['u']) ? '&p=' . $_GET['p'] : '');
+    $downloadUrl = PML_DOWNLOAD_URL . '?id=' . $ObjUid . (isset($_GET['s']) ? '&s=' . $_GET['s'] : '');
     //print "<hr>$downloadUrl<hr>";die;
 
     G::LoadClass('processes');
