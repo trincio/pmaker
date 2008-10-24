@@ -149,22 +149,22 @@ class RBAC
    * Verify if the user has a right
    *
    * @author Everth S. Berrios
-   * @access public   
+   * @access public
    */
-  function verifyUser($strUser) {  	
+  function verifyUser($strUser) {
     $res = $this->userObj->verifyUser($strUser);
-    return $res;    
+    return $res;
   }
-  
+
   /**
    * Verify if the user has a right for UID
    *
    * @author Everth S. Berrios
-   * @access public   
+   * @access public
    */
-  function verifyUserId($strUserId) {  	
+  function verifyUserId($strUserId) {
     $res = $this->userObj->verifyUserId($strUserId);
-    return $res;    
+    return $res;
   }
 
   /**
@@ -195,9 +195,12 @@ class RBAC
 
     return $res;
   }
-  //
+
   function createUser($aData = array(), $sRolCode = '') {
   	$sUserUID = $this->userObj->create($aData);
+  	if ($sRolCode != '') {
+  	  $this->assignRoleToUser($sUserUID, $sRolCode);
+    }
   	return $sUserUID;
   }
 
@@ -240,7 +243,7 @@ class RBAC
   }
   //
 
- 
+
   /**
    * Obtiene los datos b?sicos (rbac) del usuario
    *
@@ -259,7 +262,7 @@ class RBAC
     $this->userObj->Fields['USR_ROLE'] = $role['ROL_CODE'];
     return $this->userObj->Fields;
   }
-  
+
   function loadPermissionByCode($sCode) {
     return $this->permissionsObj->loadByCode($sCode);
   }
@@ -272,24 +275,24 @@ class RBAC
     return $this->rolesObj->loadByCode($sCode);
   }
 
-  
-  
-  
+
+
+
   /** @erik adds ****/
   function listAllRoles ( $systemCode = 'PROCESSMAKER') {
       return $this->rolesObj->listAllRoles($systemCode);
   }
-  
+
   function listAllPermissions ( $systemCode = 'PROCESSMAKER') {
       return $this->rolesObj->listAllPermissions($systemCode);
   }
-  
+
   function createRole($aData) {
-	  return $this->rolesObj->createRole($aData);	
+	  return $this->rolesObj->createRole($aData);
   }
   function removeRole($ROL_UID){
 	  return $this->rolesObj->removeRole($ROL_UID);
-  }	
+  }
   function verifyNewRole($code){
 	return $this->rolesObj->verifyNewRole($code);
   }
@@ -326,7 +329,7 @@ class RBAC
   function assignPermissionToRole($sRoleUID, $sPermissionUID) {
     return $this->rolesPermissionsObj->create(array('ROL_UID' => $sRoleUID, 'PER_UID' => $sPermissionUID));
   }
-  
+
   function  deletePermissionRole($ROL_UID, $PER_UID){
 	return $this->rolesObj->deletePermissionRole($ROL_UID, $PER_UID);
   }
@@ -337,10 +340,10 @@ class RBAC
   function createSystem($sCode) {
     return $this->systemObj->create(array('SYS_CODE' => $sCode));
   }
- 
+
   function verifyByCode($sCode) {
     return $this->rolesObj->verifyByCode($sCode);
   }
-    
+
 }
 ?>
