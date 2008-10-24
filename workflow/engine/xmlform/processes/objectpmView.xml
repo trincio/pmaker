@@ -23,12 +23,12 @@
   <en>Category</en>
 </category>
 
-<status type="dropdown">
+<!--<status type="dropdown">
   <en>Status
     <option name="ACTIVE">Active</option>
     <option name="INACTIVE">Inactive</option>
   </en>
-</status>
+</status>-->
 
 <rating type="text">
   <en>Rating</en>
@@ -121,7 +121,7 @@ var loginPML = function(sUID) {
       oPanel2.remove();
       getField('link').href = oResponse.sLink;
       getField('link').innerHTML = oResponse.sLabel;
-      //
+      window.location = oResponse.sLink;
     }
     else {
       new leimnud.module.app.alert().make({

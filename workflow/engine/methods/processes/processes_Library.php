@@ -94,7 +94,7 @@ try {
   var showDetails = function(sUID) {
     oPanel = new leimnud.module.panel();
     oPanel.options = {
-    	size:{w:500,h:500},
+    	size:{w:650,h:550},
     	position:{x:0,y:0,center:true},
     	title:'',
     	theme:'firefox',

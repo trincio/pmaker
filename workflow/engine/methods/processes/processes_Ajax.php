@@ -298,9 +298,25 @@ try {
             $oDataset->next();
             $aRow = $oDataset->getRow();
             $aRI  = unserialize($aRow['CFG_VALUE']);
-            //verificar si es aún son datos validos
-	  	      $aFields['link_label'] = G::LoadTranslation('ID_DOWNLOAD');
-	  	      $aFields['link_href']  = '../processes/downloadPML?id=' . $oData->pro_uid . '&u=' . $aRI['u'] . '&p=' . base64_encode($aRI['p']);
+	  	      try {
+              if ($oProcesses->ws_open($aRI['u'], $aRI['p']) == 1) {
+                $bExists = true;
+              }
+              else {
+                $bExists = false;
+              }
+            }
+            catch (Exception $oException) {
+              $bExists = false;
+            }
+            if ($bExists) {
+	  	        $aFields['link_label'] = G::LoadTranslation('ID_DOWNLOAD');
+	  	        $aFields['link_href']  = '../processes/downloadPML?id=' . $oData->pro_uid . '&s=' . $sessionId;
+	  	      }
+	  	      else {
+	  	        $aFields['link_label'] = G::LoadTranslation('ID_NEED_REGISTER');
+	  	        $aFields['link_href']  = "javascript:registerPML('" . $oData->pro_uid . "');";
+	  	      }
 	  	    }
 	  	    else {
 	  	      $aFields['link_label'] = G::LoadTranslation('ID_NEED_REGISTER');
@@ -346,7 +362,7 @@ try {
 	  	                                'USR_UID'   => $_SESSION['USER_LOGGED'],
 	  	                                'APP_UID'   => ''));
 	  	  $oResponse->sLabel = G::LoadTranslation('ID_DOWNLOAD');
-	  	  $oResponse->sLink  = '../processes/downloadPML?id=' . $oData->pro_uid . '&u=' . $oData->u . '&p=' . base64_encode($oData->p);
+	  	  $oResponse->sLink  = '../processes/downloadPML?id=' . $oData->pro_uid . '&s=' . $sessionId;
       }
       $oResponse->bExists = $bExists;
       $oJSON = new Services_JSON();
