@@ -43,7 +43,7 @@
 </subscriptions>
 
 <username type="text" colWidth='60'  >
-  <en>Publisher</en>
+  <en>Author</en>
 </username>
 
 <privacy type="dropdown">
