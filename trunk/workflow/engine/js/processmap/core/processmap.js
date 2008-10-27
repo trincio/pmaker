@@ -2149,7 +2149,7 @@ processmap.prototype={
 		//alert(this.parent.dom.mouse(evt).y)
 		//alert(this.menu.cursor.x)
 		//var m = this.parent.dom.mouse(evt);
-		var options = (window.event)?evt:tp;
+		var options = tp;
 		var m = this.menu.cursor;
 		var cpos = this.parent.dom.position(this.panels.editor.elements.content);
 
