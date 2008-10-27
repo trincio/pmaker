@@ -288,7 +288,7 @@ function run_propel_insert_sql($task, $args)
                      }
 
                    //exec ( 'mysqldump --add-drop-table --compatible=mysql40 --compact --default-character-set=utf8 --no-create-info  --complete-insert --extended-insert=false > data/mysql/insert.sql ' . $database );
-                   exec ( 'mysqldump --password= --compatible=mysql40 --compact --default-character-set=utf8 --no-create-info  --complete-insert=false --extended-insert=true > data/mysql/insert.sql ' . $database );
+                   exec ( 'mysqldump --password=atopml2005 --compatible=mysql40 --compact --default-character-set=utf8 --no-create-info  --complete-insert=false --extended-insert=true > data/mysql/insert.sql ' . $database );
                    break;
     case 'mssql' : _call_phing($task, 'insert-sql', true, 'propel.mssql.ini' );
                    break;
