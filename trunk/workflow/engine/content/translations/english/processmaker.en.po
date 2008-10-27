@@ -2,7 +2,7 @@ msgid ""
 msgstr "" 
 "Project-Id-Version: PM 4.0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-10-15 11:09+0100 \n"
+"PO-Revision-Date: 2008-10-27 13:01+0100 \n"
 "Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
 "Language-Team: Colosa Developers Team <developers@colosa.com>\n"
 "MIME-Version: 1.0\n"
@@ -1672,8 +1672,8 @@ msgstr "Test message send failed, error: "
 # TRANSLATION
 # LABEL/ID_MESS_TEST_MESSAGE_SENDED
 #: LABEL/ID_MESS_TEST_MESSAGE_SENDED
-msgid "Test message sended successfully"
-msgstr "Test message sended successfully"
+msgid "Test message sent successfully"
+msgstr "Test message sent successfully"
 
 # TRANSLATION
 # LABEL/ID_MESS_ENGINE_TYPE_2
@@ -2760,6 +2760,24 @@ msgstr "Properties"
 #: JAVASCRIPT/ID_PROCESSMAP_PSUPERVISORS
 msgid "Process Supervisors"
 msgstr "Process Supervisors"
+
+# TRANSLATION
+# LABEL/ID_CASEDEMO
+#: LABEL/ID_CASEDEMO
+msgid "Case Demo"
+msgstr "Case Demo"
+
+# TRANSLATION
+# LABEL/ID_NEED_REGISTER
+#: LABEL/ID_NEED_REGISTER
+msgid "You need to be registered for download this process, register NOW!"
+msgstr "You need to be registered for download this process, register NOW!"
+
+# TRANSLATION
+# JAVASCRIPT/ID_INCORRECT_USER_OR_PASS
+#: JAVASCRIPT/ID_INCORRECT_USER_OR_PASS
+msgid "Incorrect username or password"
+msgstr "Incorrect username or password"
 
 # messages/messages_Edit.xml?MESS_TITLE
 # messages/messages_Edit.xml
@@ -7000,8 +7018,8 @@ msgstr "Subscriptions"
 # processes/processes_ListPublic.xml?user
 # processes/processes_ListPublic.xml
 #: text - user
-msgid "[processes/processes_ListPublic.xml?user] User"
-msgstr "User"
+msgid "Publisher"
+msgstr "Publisher"
 
 # processes/processes_ListPublic.xml?updateDate
 # processes/processes_ListPublic.xml
@@ -7009,11 +7027,11 @@ msgstr "User"
 msgid "Update Date"
 msgstr "Update Date"
 
-# processes/processes_ListPublic.xml?LINK2
+# processes/processes_ListPublic.xml?LINK
 # processes/processes_ListPublic.xml
-#: link - LINK2
-msgid "[processes/processes_ListPublic.xml?LINK2] Download"
-msgstr "Download"
+#: link - LINK
+msgid "[processes/processes_ListPublic.xml?LINK] Edit"
+msgstr ""
 
 # processes/processes_subProcess_Out.xml?VAR_OUT1
 # processes/processes_subProcess_Out.xml
@@ -7056,6 +7074,30 @@ msgstr "Description"
 #: button - search
 msgid "[processes/processes_Search.xml?search] Apply Filter"
 msgstr "Apply Filter"
+
+# processes/registerPML.xml?TITLE
+# processes/registerPML.xml
+#: title - TITLE
+msgid "Login into ProcessMaker Library"
+msgstr "Login into ProcessMaker Library"
+
+# processes/registerPML.xml?PML_USER
+# processes/registerPML.xml
+#: text - PML_USER
+msgid "[processes/registerPML.xml?PML_USER] Username"
+msgstr "Username"
+
+# processes/registerPML.xml?PML_PASSWORD
+# processes/registerPML.xml
+#: password - PML_PASSWORD
+msgid "[processes/registerPML.xml?PML_PASSWORD] Password"
+msgstr "Password"
+
+# processes/registerPML.xml?PML_LOGIN
+# processes/registerPML.xml
+#: button - PML_LOGIN
+msgid "[processes/registerPML.xml?PML_LOGIN] Login"
+msgstr "Login"
 
 # processes/processes_FilesOptions.xml?MNU_UPLOAD
 # processes/processes_FilesOptions.xml
@@ -7585,6 +7627,120 @@ msgstr "First name"
 msgid "Last name"
 msgstr "Last name"
 
+# processes/objectpmView.xml?thetitle
+# processes/objectpmView.xml
+#: title - thetitle
+msgid "Process Properties"
+msgstr "Process Properties"
+
+# processes/objectpmView.xml?title
+# processes/objectpmView.xml
+#: text - title
+msgid "[processes/objectpmView.xml?title] Title"
+msgstr "Title"
+
+# processes/objectpmView.xml?version
+# processes/objectpmView.xml
+#: text - version
+msgid "[processes/objectpmView.xml?version] Version"
+msgstr "Version"
+
+# processes/objectpmView.xml?pm_version
+# processes/objectpmView.xml
+#: text - pm_version
+msgid "P.M. rev. required"
+msgstr "P.M. rev. required"
+
+# processes/objectpmView.xml?category
+# processes/objectpmView.xml
+#: text - category
+msgid "[processes/objectpmView.xml?category] Category"
+msgstr "Category"
+
+# processes/objectpmView.xml?rating
+# processes/objectpmView.xml
+#: text - rating
+msgid "[processes/objectpmView.xml?rating] Rating"
+msgstr "Rating"
+
+# processes/objectpmView.xml?downloads
+# processes/objectpmView.xml
+#: text - downloads
+msgid "[processes/objectpmView.xml?downloads] Downloads"
+msgstr "Downloads"
+
+# processes/objectpmView.xml?subscriptions
+# processes/objectpmView.xml
+#: text - subscriptions
+msgid "[processes/objectpmView.xml?subscriptions] Subscriptions"
+msgstr "Subscriptions"
+
+# processes/objectpmView.xml?username
+# processes/objectpmView.xml
+#: text - username
+msgid "[processes/objectpmView.xml?username] Publisher"
+msgstr "Publisher"
+
+# processes/objectpmView.xml?privacy
+# processes/objectpmView.xml
+#: dropdown - privacy
+msgid "Privacy"
+msgstr "Privacy"
+
+# processes/objectpmView.xml?privacy-FREE
+# processes/objectpmView.xml
+#: dropdown - privacy - FREE
+msgid "[processes/objectpmView.xml?privacy-FREE]"
+msgstr "Free Download"
+
+# processes/objectpmView.xml?privacy-PUBLIC
+# processes/objectpmView.xml
+#: dropdown - privacy - PUBLIC
+msgid "[processes/objectpmView.xml?privacy-PUBLIC]"
+msgstr "Public"
+
+# processes/objectpmView.xml?privacy-PRIVATE
+# processes/objectpmView.xml
+#: dropdown - privacy - PRIVATE
+msgid "[processes/objectpmView.xml?privacy-PRIVATE]"
+msgstr "Private"
+
+# processes/objectpmView.xml?privacy-COLOSA
+# processes/objectpmView.xml
+#: dropdown - privacy - COLOSA
+msgid "[processes/objectpmView.xml?privacy-COLOSA]"
+msgstr "Colosa"
+
+# processes/objectpmView.xml?createDate
+# processes/objectpmView.xml
+#: text - createDate
+msgid "[processes/objectpmView.xml?createDate] Create Date"
+msgstr "Create Date"
+
+# processes/objectpmView.xml?updateDate
+# processes/objectpmView.xml
+#: text - updateDate
+msgid "[processes/objectpmView.xml?updateDate] Update Date"
+msgstr "Update Date"
+
+# processes/objectpmView.xml?description
+# processes/objectpmView.xml
+#: text - description
+msgid "[processes/objectpmView.xml?description] Description"
+msgstr "Description"
+
+# processes/objectpmView.xml?installSteps
+# processes/objectpmView.xml
+#: text - installSteps
+msgid "Install Steps"
+msgstr "Install Steps"
+
+# processes/objectpmView.xml?link
+# processes/objectpmView.xml
+#: link - link
+msgid "link"
+msgstr ""
+
 # processes/processes_Import.xml?TITLE1
 # processes/processes_Import.xml
 #: title - TITLE1
@@ -7662,6 +7818,12 @@ msgstr "Process Uid"
 #: subtitle - TITLE1
 msgid "Please follow these instructions to complete installation"
 msgstr "Please follow these instructions to complete installation"
+
+# processes/processes_ImportSucessful.xml?installSteps
+# processes/processes_ImportSucessful.xml
+#: caption - installSteps
+msgid "[processes/processes_ImportSucessful.xml?installSteps] Install Steps"
+msgstr ""
 
 # processes/processes_ImportSucessful.xml?SUBMIT
 # processes/processes_ImportSucessful.xml
@@ -10897,12 +11059,6 @@ msgstr "Confirm Password"
 msgid "[users/myInfoView.xml?TITLEADD] Additional Information"
 msgstr "Additional Information"
 
-# users/myInfoView.xml?USR_PHOTO
-# users/myInfoView.xml
-#: image - USR_PHOTO
-msgid "[users/myInfoView.xml?USR_PHOTO] Photo"
-msgstr "Photo"
-
 # users/myInfoView.xml?USR_RESUME
 # users/myInfoView.xml
 #: link - USR_RESUME
@@ -11712,6 +11868,12 @@ msgstr "Title"
 #: textarea - TAS_DESCRIPTION
 msgid "[tasks/tasks_Definition.xml?TAS_DESCRIPTION] Description"
 msgstr "Description"
+
+# tasks/tasks_Definition.xml?TAS_PRIORITY_VARIABLE
+# tasks/tasks_Definition.xml
+#: textpm - TAS_PRIORITY_VARIABLE
+msgid "Variable for Case priority"
+msgstr "Variable for Case priority"
 
 # tasks/tasks_Definition.xml?TAS_START
 # tasks/tasks_Definition.xml
@@ -13818,12 +13980,6 @@ msgstr "Re-type Password:"
 #: submit - NW_SUB
 msgid "[login/newSite.xml?NW_SUB] Test"
 msgstr "Test"
-
-# login/nologin.xml?subtitle
-# login/nologin.xml
-#: subtitle - subtitle
-msgid "subtitle"
-msgstr ""
 
 # login/nologin.xml?BSUBMIT
 # login/nologin.xml
