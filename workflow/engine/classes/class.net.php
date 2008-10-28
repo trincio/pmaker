@@ -179,7 +179,7 @@ class NET
                     break;
 
                 case 'mssql':
-                    $str_port = ($this->db_port == "") ? "" : ",".$this->db_port;
+                    $str_port = ($this->db_port == "") ? "" : ":".$this->db_port;
                     $link = @mssql_connect($this->ip . $str_port, $this->db_user, $this->db_passwd);
 
                     if ($link) {
@@ -286,7 +286,7 @@ class NET
                     break;
 
                 case 'mssql':
-                    $str_port = ($this->db_port == "") ? "" : ",".$this->db_port;
+                    $str_port = ($this->db_port == "") ? "" : ":".$this->db_port;
                     $link = @mssql_connect($this->ip . $str_port, $this->db_user, $this->db_passwd);
                     if ($link) {
                         $db = @mssql_select_db($this->db_sourcename, $link);
