@@ -212,14 +212,14 @@ class Menu
    * @param string $strType type, defualt value ='relative'
    * @return void
    */
-  function AddIdRawOption( $strId, $strURL = "", $label = "", $icon = "",$js = "")
+  function AddIdRawOption( $strId, $strURL = "", $label = "", $icon = "",$js = "",  $strType = "relative" )
   {
     $pos = $this->OptionCount();
     $this->Options[$pos] = $strURL;
     $this->Labels[$pos] = $label;
     $this->Icons[$pos] = $icon;
     $this->JS[$pos] = $js;
-    $this->Types[$pos] = 'relative';
+    $this->Types[$pos] = $strType;
     $this->Enabled[$pos] = 1;
     if (is_array ($strId)) {
       $this->Id[$pos]      = $strId[0];
@@ -310,11 +310,12 @@ class Menu
   			//$aux = $this->Icons[$ncount];
   			$aux = $this->JS[$ncount];
   			if ($this->Types[$ncount] == 'absolute') {
-  			  $target = G::encryptLink(str_replace('sys' . SYS_TEMP, SYS_TEMP, $this->Options[$ncount]));
+  			  //$target = G::encryptLink(str_replace('sys' . SYS_TEMP, SYS_TEMP, $this->Options[$ncount]));
+  			  $target = $this->Options[$ncount];
   			}
   			if ($this->Types[$ncount] != 'absolute')   			{
   			  if (defined('SYS_SYS'))   			  {
-  				  $target = '/sys' . SYS_TEMP . G::encryptLink('/' . SYS_LANG . '/' . SYS_SKIN . '/' . $this->Options[$ncount]);
+  				  $target = $this->Types[$ncount] . '/sys' . SYS_TEMP . G::encryptLink('/' . SYS_LANG . '/' . SYS_SKIN . '/' . $this->Options[$ncount]);
   				}
   				else {
   				  $target = '/sys/' . G::encryptLink(SYS_LANG . '/' . SYS_SKIN . '/' . $this->Options[$ncount]);
