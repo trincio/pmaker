@@ -82,13 +82,14 @@ class Publisher
     //This is needed to prepare the "header content"
 		//before to send the body content. ($oHeadPublisher)
 		ob_start();
+		
 		$this->RenderContent0($pos);
-		if ((ob_get_contents()!=='') && ($this->publisherId!=='')) {
-		//	var_dump($strContent);
+		if ( (ob_get_contents()!=='') && ($this->publisherId!=='') && ($strType != 'template') ) {
   		$this->Parts[$pos]['RenderedContent'] = '<DIV id="'.$this->publisherId.'['.$pos.']" style="'.((is_string($strContent))?$strContent:'').'; margin:0px;" align="center">';
   		$this->Parts[$pos]['RenderedContent'].= ob_get_contents();
   		$this->Parts[$pos]['RenderedContent'].= '</DIV>';
-  	} else {
+  	} 
+  	else {
   		$this->Parts[$pos]['RenderedContent']= ob_get_contents();
 	  }
 		ob_end_clean();
@@ -132,14 +133,6 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
     $Part = $this->Parts[ $intPos ];
     switch( $Part['Type'] )
     {
-    /*//disabled because it is deprecated, Fatal error: Call to undefined method G::loadcontent()
-    case 'showcontent':
-      $G_CONTENT = new Content;
-      $G_CONTENT = G::LoadContent( $Part['File'] );
-      $G_CONTENT->output ( $Part['Template'] );
-      return;
-      break;
-    */
     case 'externalContent':
 	    $G_CONTENT = new Content;
 	    if( $Part['Content'] != "" ) $G_CONTENT = G::LoadContent( $Part['Content'] );
