@@ -315,7 +315,7 @@ class Menu
   			}
   			if ($this->Types[$ncount] != 'absolute')   			{
   			  if (defined('SYS_SYS'))   			  {
-  				  $target = $this->Types[$ncount] . '/sys' . SYS_TEMP . G::encryptLink('/' . SYS_LANG . '/' . SYS_SKIN . '/' . $this->Options[$ncount]);
+  				  $target = '/sys' . SYS_TEMP . G::encryptLink('/' . SYS_LANG . '/' . SYS_SKIN . '/' . $this->Options[$ncount]);
   				}
   				else {
   				  $target = '/sys/' . G::encryptLink(SYS_LANG . '/' . SYS_SKIN . '/' . $this->Options[$ncount]);
