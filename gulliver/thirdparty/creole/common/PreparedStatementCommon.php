@@ -112,7 +112,7 @@ abstract class PreparedStatementCommon {
      * @param array $positions The positions in SQL of ?'s.
      * @param restult $stmt If the driver supports prepared queries, then $stmt will contain the statement to use.
      */
-    public function __construct(Connection $conn, $sql)
+    public function __construct(Connection $conn, $sql='')
     {
         $this->conn = $conn;
         $this->sql = $sql;
