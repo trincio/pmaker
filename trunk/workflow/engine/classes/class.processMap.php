@@ -88,10 +88,10 @@ class processMap {
     		    $oCriteria = new Criteria('workflow');
     		    $oCriteria->add(SubProcessPeer::PRO_PARENT, $aRow1['PRO_UID']);
     	      $oCriteria->add(SubProcessPeer::TAS_PARENT, $aRow1['TAS_UID']);
-    		    $oDataset = SubProcessPeer::doSelectRS($oCriteria);
-    		    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-    		    $oDataset->next();
-    		    $aRowx = $oDataset->getRow();
+    		    $oDatasetX = SubProcessPeer::doSelectRS($oCriteria);
+    		    $oDatasetX->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    		    $oDatasetX->next();
+    		    $aRowx = $oDatasetX->getRow();
     		    if ($oProcess->exists($aRowx['PRO_UID'])) {
       	      $aRowy = $oProcess->load($aRowx['PRO_UID']);
       	      $oTask->label = $aRowy['PRO_TITLE'];
