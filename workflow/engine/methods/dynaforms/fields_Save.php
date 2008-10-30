@@ -1,4 +1,5 @@
 <?php
+//print_r( $_POST); die;
 /**
  * fields_Save.php
  *
@@ -30,6 +31,10 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
 
   $type=strtolower($_POST['form']['PME_TYPE']);
   if (!(isset($_POST['form']['PME_A']) && $_POST['form']['PME_A']!==''))  return;
+
+  if ($_POST['form']['PME_REQUIRED']=='')   $_POST['form']['PME_REQUIRED']=0;
+  if ($_POST['form']['PME_READONLY']=='')   $_POST['form']['PME_READONLY']=0;
+
 
   $file = G::decrypt( $_POST['form']['PME_A'] , URL_KEY );
   define('DB_XMLDB_HOST', PATH_DYNAFORM  . $file . '.xml' );
