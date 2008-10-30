@@ -617,7 +617,7 @@ var processmap=function(){
 				for(var i =0;i<lngt;i++)
 				{
 					//console.log(this.data.db.task[i]);
-					var tt = (this.data.db.task[i].task_type==='NORMAL')?'task':'subprocess';
+					var tt = ((this.data.db.task[i].task_type==='NORMAL') || (this.data.db.task[i].task_type==='ADHOC'))?'task':'subprocess';
 					//this.parent.exec(this.data.build.task,[this.data.db.task[i],i],false,this);
 					this.data.build.task(i,{tp:tt});
 				}
