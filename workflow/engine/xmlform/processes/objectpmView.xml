@@ -67,15 +67,20 @@
   <en>Description</en>
 </description>
 
-<installSteps type="text">
+<subinstallSteps type="subtitle" >
   <en>Install Steps</en>
+</subinstallSteps>
+
+<installSteps type="text" enableHtml="1">
+  <en></en>
 </installSteps>
 
 <link_label type="private" />
 
 <link_href type="private" />
 
-<link type="link" value="@#link_label" link="@#link_href" />
+<link type="link" value="@#link_label" link="@#link_href" >
+</link>
 
 <js type="javascript">
 <![CDATA[

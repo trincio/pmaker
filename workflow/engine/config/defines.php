@@ -68,8 +68,8 @@
 /*
  * Server of ProcessMaker Library
  */
-  define ( 'PML_SERVER' ,  'http://library.processmaker.com' );
-  //define ( 'PML_SERVER' ,  'http://pmlibrary.opensource.colosa.net' );
+  //define ( 'PML_SERVER' ,  'http://library.processmaker.com' );
+  define ( 'PML_SERVER' ,  'http://pmlibrary.opensource.colosa.net' );
   define ( 'PML_WSDL_URL' ,    PML_SERVER . '/syspmLibrary/en/green/services/wsdl');
   define ( 'PML_UPLOAD_URL',   PML_SERVER . "/syspmLibrary/en/green/services/uploadProcess");
   define ( 'PML_DOWNLOAD_URL', PML_SERVER . '/syspmLibrary/en/green/services/download');

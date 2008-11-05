@@ -693,12 +693,13 @@ class Processes {
   }
 
   function createCaseTrackerRows ($CaseTracker ){//julichu
-  	foreach ( $CaseTracker as $key => $row ) {
-      $oCaseTracker = new CaseTracker();
-      //if($oCaseTracker->subProcessExists ($row['PRO_UID']))
-       		//$oCaseTracker->remove($row['PRO_UID']);
-   		$res = $oCaseTracker->create($row);
-  	}
+  	if ( is_array ( $CaseTracker) )
+  	  foreach ( $CaseTracker as $key => $row ) {
+        $oCaseTracker = new CaseTracker();
+        //if($oCaseTracker->subProcessExists ($row['PRO_UID']))
+         		//$oCaseTracker->remove($row['PRO_UID']);
+   		  $res = $oCaseTracker->create($row);
+  	  }
   	return;
   }
 
@@ -2000,7 +2001,7 @@ class Processes {
     $this->createDBConnectionsRows($oData->dbconnections);
     $this->createReportTables($oData->reportTables, $oData->reportTablesVars);
     $this->createSubProcessRows( $oData->subProcess );
-    $this->createCaseTrackerRows( $oData->caseTracker);
+    $this->createCaseTrackerRows( isset($oData->caseTracker) ? $oData->caseTracker : null );
     $this->createCaseTrackerObjectRows( $oData->caseTrackerObject);
     $this->createObjectPermissionsRows( $oData->objectPermissions);
     $this->createStageRows( $oData->stage);
