@@ -112,7 +112,7 @@ class languages {
       		  	if (count($aAux) == 2) {
       		  	  $oDataset = $oSession->Execute('SELECT * FROM dynaForm WHERE XMLNODE_NAME = "' . $sFieldName . '"');
       		  	  if ($oDataset->count() > 0) {
-      		  	    $oDataset2 = $oSession->Execute('SELECT * FROM dynaForm WHERE XMLNODE_NAME = "' . $sFieldName . '.' . $sLanguageID . '"');
+      		  	    $oDataset2 = $oSession->Execute('SELECT * FROM dynaForm.' . $sFieldName . ' WHERE XMLNODE_NAME = "' . $sLanguageID . '"');
       		  	    if ($oDataset2->count() == 0) {
       		  	      $oSession->Execute('INSERT INTO dynaForm.' . $sFieldName . ' (XMLNODE_NAME) VALUES ("' . $sLanguageID . '")');
       		  	    }
@@ -128,7 +128,7 @@ class languages {
       		    	if ($bDelete) {
       		    	  $oDataset = $oSession->Execute('SELECT * FROM dynaForm WHERE XMLNODE_NAME = "' . $sFieldName . '"');
       		    	  if ($oDataset->count() > 0) {
-      		    	    $oDataset2 = $oSession->Execute('SELECT * FROM dynaForm WHERE XMLNODE_NAME = "' . $sFieldName . '.' . $sLanguageID . '"');
+      		    	    $oDataset2 = $oSession->Execute('SELECT * FROM dynaForm.' . $sFieldName . ' WHERE XMLNODE_NAME = "' . $sLanguageID . '"');
       		  	      if ($oDataset2->count() == 0) {
       		  	        $oSession->Execute('INSERT INTO dynaForm.' . $sFieldName . ' (XMLNODE_NAME) VALUES ("' . $sLanguageID . '")');
       		  	      }
@@ -151,7 +151,7 @@ class languages {
 	    		    if (count($aAux) == 2) {
 	    		      $oDataset = $oSession->Execute('SELECT * FROM dynaForm WHERE XMLNODE_NAME = "' . $sFieldName . '"');
       		  	  if ($oDataset->count() > 0) {
-      		  	    $oDataset2 = $oSession->Execute('SELECT * FROM dynaForm WHERE XMLNODE_NAME = "' . $sFieldName . '.' . $sLanguageID . '"');
+      		  	    $oDataset2 = $oSession->Execute('SELECT * FROM dynaForm.' . $sFieldName . ' WHERE XMLNODE_NAME = "' . $sLanguageID . '"');
       		  	    if ($oDataset2->count() == 0) {
       		  	      $oSession->Execute('INSERT INTO dynaForm.' . $sFieldName . ' (XMLNODE_NAME) VALUES ("' . $sLanguageID . '")');
       		  	    }
@@ -167,7 +167,7 @@ class languages {
       		    	if ($bDelete) {
       		    	  $oDataset = $oSession->Execute('SELECT * FROM dynaForm WHERE XMLNODE_NAME = "' . $sFieldName . '"');
       		    	  if ($oDataset->count() > 0) {
-      		    	    $oDataset2 = $oSession->Execute('SELECT * FROM dynaForm WHERE XMLNODE_NAME = "' . $sFieldName . '.' . $sLanguageID . '"');
+      		    	    $oDataset2 = $oSession->Execute('SELECT * FROM dynaForm.' . $sFieldName . ' WHERE XMLNODE_NAME = "' . $sLanguageID . '"');
       		  	      if ($oDataset2->count() == 0) {
       		  	        $oSession->Execute('INSERT INTO dynaForm.' . $sFieldName . ' (XMLNODE_NAME) VALUES ("' . $sLanguageID . '")');
       		  	      }
