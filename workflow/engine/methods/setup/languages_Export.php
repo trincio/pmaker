@@ -53,13 +53,15 @@ while ($aRow1 = $oDataset->getRow()) {
                      1 => '# ' . $aRow1['TRN_CATEGORY'] . '/' . $aRow1['TRN_ID'],
                      2 => '#: ' . $aRow1['TRN_CATEGORY'] . '/' . $aRow1['TRN_ID'],
                      3 => 'msgid "' . $msgid . '"',
-                     4 => 'msgstr "' . ($aRow2 ? $aRow2['TRN_VALUE'] : $aRow1['TRN_VALUE']) . '"');
+                     4 => 'msgstr "' . ($aRow2 ? ($aRow2['TRN_VALUE'] != '' ? $aRow2['TRN_VALUE'] : $aRow1['TRN_VALUE']) : $aRow1['TRN_VALUE']) . '"');
   $aMsgids[] = $msgid;
 	$oDataset->next();
 }
 G::LoadThirdParty('pake', 'pakeFinder.class');
-$aExceptionFields = array('', 'javascript', 'hidden', 'phpvariable', 'private', 'toolbar', 'xmlmenu', 'toolbutton', 'cellmark', 'grid');
-$aXMLForms = pakeFinder::type('file')->name( '*.xml' )->in(substr(PATH_XMLFORM, 0, -1));
+$aExceptionFields = array('', 'javascript', 'hidden', 'phpvariable', 'private', 'toolbar', 'xmlmenu', 'toolbutton', 'cellmark', 'grid', 'caption');
+$aXMLForms        = pakeFinder::type('file')->name( '*.xml' )->in(substr(PATH_XMLFORM, 0, -1));
+$aEnglishLabel    = array();
+$aOptions         = array();
 foreach ($aXMLForms as $sXmlForm) {
 	$sXmlForm = str_replace(chr(92), '/', $sXmlForm);
 	$sXmlForm = str_replace(PATH_XMLFORM, '', $sXmlForm);
@@ -67,12 +69,21 @@ foreach ($aXMLForms as $sXmlForm) {
 	foreach ($oForm->fields as $sNodeName => $oNode) {
 		if (is_object($oNode)) {
 		  if (trim($oNode->label) != '') {
-        $aEnglishLabel[$oNode->name] = str_replace('"', '\"', stripslashes(trim(str_replace(chr(10), '', $oNode->label))));
+        $aEnglishLabel[$oNode->name] = str_replace('"', '\"', stripslashes(ltrim(str_replace(chr(10), '', $oNode->label))));
+        $aOptions[$sXmlForm . '?' . $oNode->name] = $aEnglishLabel[$oNode->name];
       }
       if (isset($oNode->options)) {
       	if (!empty($oNode->options)) {
       		foreach ($oNode->options as $sKey => $sValue) {
-      			$aEnglishLabel[$oNode->name . '-' . $sKey] = str_replace('"', '\"', stripslashes(trim(str_replace(chr(10), '', $sValue))));
+      			$aEnglishLabel[$oNode->name . '-' . $sKey] = str_replace('"', '\"', stripslashes(ltrim(str_replace(chr(10), '', $sValue))));
+      			if (isset($aOptions[$sXmlForm . '?' . $oNode->name])) {
+      			  if (!is_array($aOptions[$sXmlForm . '?' . $oNode->name])) {
+      			    $sAux = $aOptions[$sXmlForm . '?' . $oNode->name];
+      			    //$aOptions[$sXmlForm . '?' . $oNode->name] = array('__LABEL__' => $sAux);//mmm
+      			    $aOptions[$sXmlForm . '?' . $oNode->name] = array();
+      			  }
+      		  }
+      		  $aOptions[$sXmlForm . '?' . $oNode->name][$sKey] = $aEnglishLabel[$oNode->name . '-' . $sKey];
       		}
       	}
       }
@@ -88,7 +99,7 @@ foreach ($aXMLForms as $sXmlForm) {
   	if (is_object($oNode)) {
       if (isset($aEnglishLabel[$oNode->name])) {
         $msgid = $aEnglishLabel[$oNode->name];
-        $oNode->label = str_replace('"', '\"', stripslashes(trim(str_replace(chr(10), '', $oNode->label))));
+        $oNode->label = str_replace('"', '\"', stripslashes(ltrim(str_replace(chr(10), '', $oNode->label))));
       }
       else {
         $msgid = '';
@@ -102,7 +113,7 @@ foreach ($aXMLForms as $sXmlForm) {
                              1 => '# ' . $sXmlForm,
                              2 => '#: ' . $oNode->type . ' - ' . $sNodeName,
                              3 => 'msgid "' . $msgid . '"',
-                             4 => 'msgstr "' . $oNode->label . '"');
+                             4 => 'msgstr "' . (trim($oNode->label) != '' ? ltrim($oNode->label) : (isset($aEnglishLabel[$oNode->name]) ? $aEnglishLabel[$oNode->name] : '')) . '"');
           $aMsgids[] = $msgid;
           if (isset($oNode->options)) {
           	if (!empty($oNode->options)) {
@@ -110,13 +121,50 @@ foreach ($aXMLForms as $sXmlForm) {
           			if ($sKey == '') {
           				$sKey = "''";
           			}
+          			$msgid = '[' . $sXmlForm . '?' . $oNode->name  . '-' . $sKey . ']';
           			$aLabels[] = array(0 => '# ' . $sXmlForm . '?' . $sNodeName . '-'. $sKey,
                                    1 => '# ' . $sXmlForm,
                                    2 => '#: ' . $oNode->type . ' - ' . $sNodeName . ' - ' . $sKey,
-                                   3 => 'msgid "[' . $sXmlForm . '?' . $oNode->name  . '-' . $sKey . ']"',
+                                   3 => 'msgid "' . $msgid . '"',
                                    4 => 'msgstr "' . $sValue . '"');
                 $aMsgids[] = $msgid;
           		}
+          	}
+          	else {
+          	  if (isset($aOptions[$sXmlForm . '?' . $sNodeName])) {
+          	    if (is_array($aOptions[$sXmlForm . '?' . $sNodeName])) {
+          	      foreach ($aOptions[$sXmlForm . '?' . $sNodeName] as $sKey => $sValue) {
+          	        if ($sKey == '') {
+          			    	$sKey = "''";
+          			    }
+          			    $msgid = '[' . $sXmlForm . '?' . $oNode->name  . '-' . $sKey . ']';
+          			    $aLabels[] = array(0 => '# ' . $sXmlForm . '?' . $sNodeName . '-'. $sKey,
+                                       1 => '# ' . $sXmlForm,
+                                       2 => '#: ' . $oNode->type . ' - ' . $sNodeName . ' - ' . $sKey,
+                                       3 => 'msgid "' . $msgid . '"',
+                                       4 => 'msgstr "' . $sValue . '"');
+                    $aMsgids[] = $msgid;
+          	      }
+          	    }
+          	  }
+          	}
+          }
+          else {
+            if (isset($aOptions[$sXmlForm . '?' . $sNodeName])) {
+          	  if (is_array($aOptions[$sXmlForm . '?' . $sNodeName])) {
+          	    foreach ($aOptions[$sXmlForm . '?' . $sNodeName] as $sKey => $sValue) {
+          	      if ($sKey == '') {
+          		    	$sKey = "''";
+          		    }
+          		    $msgid = '[' . $sXmlForm . '?' . $oNode->name  . '-' . $sKey . ']';
+          		    $aLabels[] = array(0 => '# ' . $sXmlForm . '?' . $sNodeName . '-'. $sKey,
+                                     1 => '# ' . $sXmlForm,
+                                     2 => '#: ' . $oNode->type . ' - ' . $sNodeName . ' - ' . $sKey,
+                                     3 => 'msgid "' . $msgid . '"',
+                                     4 => 'msgstr "' . $sValue . '"');
+                  $aMsgids[] = $msgid;
+          	    }
+          	  }
           	}
           }
         }
