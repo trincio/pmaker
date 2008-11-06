@@ -23,12 +23,14 @@
  *
  */
   global $G_TMP_MENU;
+  global $RBAC;
 
-  $G_TMP_MENU->AddIdRawOption('LANGUAGES',      'setup/languages',   G::LoadTranslation('ID_LANGUAGES'));
-  $G_TMP_MENU->AddIdRawOption('PLUGINS',        'setup/pluginsList', 'Plugins');
-  $G_TMP_MENU->AddIdRawOption('UPGRADE',        'setup/upgrade',     G::LoadTranslation('ID_UPGRADE'));
+  if ($RBAC->userCanAccess('PM_SETUP_ADVANCE') == 1) {
+    $G_TMP_MENU->AddIdRawOption('LANGUAGES',      'setup/languages',   G::LoadTranslation('ID_LANGUAGES'));
+    $G_TMP_MENU->AddIdRawOption('PLUGINS',        'setup/pluginsList', 'Plugins');
+    $G_TMP_MENU->AddIdRawOption('UPGRADE',        'setup/upgrade',     G::LoadTranslation('ID_UPGRADE'));
+  }
   $G_TMP_MENU->AddIdRawOption('EMAILS',         'setup/emails',      G::LoadTranslation('ID_EMAIL'));
   $G_TMP_MENU->AddIdRawOption('WEBSERVICES',    'setup/webServices', G::LoadTranslation('ID_WEB_SERVICES') );
   //$G_TMP_MENU->AddIdRawOption('TRANSLATION', 'tools/translations', 'Translations');
   //$G_TMP_MENU->AddIdRawOption('UPDATE_ALL',  'tools/updateTranslation', 'Update');
-

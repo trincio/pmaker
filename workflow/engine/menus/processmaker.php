@@ -30,7 +30,7 @@ $G_TMP_MENU->AddIdRawOption('USERS',      'users/users_List');
 $G_TMP_MENU->AddIdRawOption('CASES',      'cases/cases_List');
 $G_TMP_MENU->AddIdRawOption('PROCESSES',  'processes/processes_List');
 $G_TMP_MENU->AddIdRawOption('REPORTS',    'reports/reportsList');
-$G_TMP_MENU->AddIdRawOption('SETUP',      'setup/pluginsList');
+$G_TMP_MENU->AddIdRawOption('SETUP',      'setup/emails');
 $G_TMP_MENU->AddIdRawOption('DASHBOARD',  'dashboard/dashboard');
 
 $G_TMP_MENU->Labels = array(
