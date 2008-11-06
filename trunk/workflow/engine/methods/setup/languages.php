@@ -23,7 +23,7 @@
  *
  */
 global $RBAC;
-switch ($RBAC->userCanAccess('PM_FACTORY'))
+switch ($RBAC->userCanAccess('PM_SETUP_ADVANCE'))
 {
 	case -2:
 	  G::SendTemporalMessage('ID_USER_HAVENT_RIGHTS_SYSTEM', 'error', 'labels');

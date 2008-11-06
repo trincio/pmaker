@@ -1,10 +1,10 @@
 <?php
 /**
  * pluginsList.php
- *  
+ *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -14,29 +14,29 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
-/*  switch ($RBAC->userCanAccess('PM_CASES'))
-  {
-  	case -2:
-  	  G::SendTemporalMessage('ID_USER_HAVENT_RIGHTS_SYSTEM', 'error', 'labels');
-  	  G::header('location: ../login/login');
-  	  die;
-  	break;
-  	case -1:
-  	  G::SendTemporalMessage('ID_USER_HAVENT_RIGHTS_PAGE', 'error', 'labels');
-  	  G::header('location: ../login/login');
-  	  die;
-  	break;
-  }
-*/
-  
+global $RBAC;
+switch ($RBAC->userCanAccess('PM_SETUP_ADVANCE'))
+{
+	case -2:
+	  G::SendTemporalMessage('ID_USER_HAVENT_RIGHTS_SYSTEM', 'error', 'labels');
+	  G::header('location: ../login/login');
+	  die;
+	break;
+	case -1:
+	  G::SendTemporalMessage('ID_USER_HAVENT_RIGHTS_PAGE', 'error', 'labels');
+	  G::header('location: ../login/login');
+	  die;
+	break;
+}
+
 // lets display the items
 
 $items[] = array ( 'id' => 'char', 'title' => 'char', 'type' => 'char', 'creator' => 'char' ,
@@ -57,23 +57,23 @@ $items[] = array ( 'id' => 'char', 'title' => 'char', 'type' => 'char', 'creator
            if ( ! in_array ( SYS_SYS, $pluginDetail->aWorkspaces) )
              continue;
          }
-         $linkEditValue = $pluginDetail->sSetupPage != '' && $pluginDetail->enabled ?  G::LoadTranslation('ID_SETUP') : ' '; 
+         $linkEditValue = $pluginDetail->sSetupPage != '' && $pluginDetail->enabled ?  G::LoadTranslation('ID_SETUP') : ' ';
 
          $link = 'pluginsChange?id=' . $file . '&status=' . $pluginDetail->enabled;
          $linkEdit = 'pluginsSetup?id=' . $file ;
          if ( isset ($pluginDetail) )
-           $items[] = array ( 
+           $items[] = array (
              'id'   => count( $items ),
-             //'title'=>$pluginDetail->sFriendlyName, 
-             'title'=>$pluginDetail->sFriendlyName . "\n(" . $pluginDetail->sNamespace . '.php)', 
-             'className' => $pluginDetail->sNamespace, 
-             'description' => $pluginDetail->sDescription, 
-             'setupPage' => $pluginDetail->sSetupPage, 
-             'enabled'=> $status, 
+             //'title'=>$pluginDetail->sFriendlyName,
+             'title'=>$pluginDetail->sFriendlyName . "\n(" . $pluginDetail->sNamespace . '.php)',
+             'className' => $pluginDetail->sNamespace,
+             'description' => $pluginDetail->sDescription,
+             'setupPage' => $pluginDetail->sSetupPage,
+             'enabled'=> $status,
              'url' => $link,
              'urlEdit' => $linkEdit,
              'linkEditValue' => $linkEditValue );
-         
+
        }
     }
     closedir($handle);
@@ -88,13 +88,13 @@ $_SESSION['_DBArray'] = $_DBArray;
     $c = new Criteria ('dbarray');
     $c->setDBArrayTable('plugins');
     //$c->addAscendingOrderByColumn ('id');
-    
+
   $G_MAIN_MENU            = 'processmaker';
   $G_ID_MENU_SELECTED     = 'SETUP';
   $G_SUB_MENU             = 'setup';
   $G_ID_SUB_MENU_SELECTED = 'PLUGINS';
-  
+
   $G_PUBLISH = new Publisher;
 
-  $G_PUBLISH->AddContent( 'propeltable', 'paged-table', 'setup/pluginList', $c );  
+  $G_PUBLISH->AddContent( 'propeltable', 'paged-table', 'setup/pluginList', $c );
   G::RenderPage('publish');
