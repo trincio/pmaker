@@ -63,7 +63,7 @@
   <en>Update Date</en>
 </updateDate>
 
-<description type="text">
+<description type="text" enableHtml="1">
   <en>Description</en>
 </description>
 

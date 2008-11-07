@@ -919,7 +919,9 @@ class processMap {
   	  $oDataset  = TaskUserPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
       $oDataset->next();
+      $c=0;
       while ($aRow = $oDataset->getRow()) {
+      	$c++;
       	$oGroup    = new Groupwf();
       	$aFields   = $oGroup->load($aRow['USR_UID']);
       	if ($aFields['GRP_STATUS'] == 'ACTIVE') {
@@ -934,7 +936,7 @@ class processMap {
         else {
         	$aRow2['GROUP_INACTIVE'] = '<strong>(' . G::LoadTranslation('ID_GROUP_INACTIVE') . ')</strong>';
         }
-      	$aUsers[] = array('LABEL'       => (!isset($aRow2['GROUP_INACTIVE']) ? $aRow['GRP_TITLE'] . ' <strong>(' . $aRow2['MEMBERS_NUMBER'] . ' ' . ((int)$aRow2['MEMBERS_NUMBER'] == 1 ? G::LoadTranslation('ID_USER') : G::LoadTranslation('ID_USERS')) . ')</strong>' : $aRow['GRP_TITLE'] . ' ' . $aRow2['GROUP_INACTIVE']),
+      	$aUsers[] = array('LABEL'       => (!isset($aRow2['GROUP_INACTIVE']) ? $aRow['GRP_TITLE'] . ' <a href="#" onclick="usersGroup(\''.$aRow['USR_UID'].'\', \''.$c.'\');return false;"><font color="green"><strong>(' . $aRow2['MEMBERS_NUMBER'] . ' ' . ((int)$aRow2['MEMBERS_NUMBER'] == 1 ? G::LoadTranslation('ID_USER') : G::LoadTranslation('ID_USERS')) . ')</strong></font></a> <br /><div id="users'.$c.'" style="display: none"></div>' : $aRow['GRP_TITLE'] . ' ' . $aRow2['GROUP_INACTIVE']),
       	                  'TAS_UID'     => $aRow['TAS_UID'],
       	                  'USR_UID'     => $aRow['USR_UID'],
       	                  'TU_TYPE'     => $aRow['TU_TYPE'],

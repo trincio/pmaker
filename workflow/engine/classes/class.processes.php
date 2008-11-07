@@ -2002,9 +2002,11 @@ class Processes {
     $this->createReportTables($oData->reportTables, $oData->reportTablesVars);
     $this->createSubProcessRows( $oData->subProcess );
     $this->createCaseTrackerRows( isset($oData->caseTracker) ? $oData->caseTracker : null );
-    $this->createCaseTrackerObjectRows( $oData->caseTrackerObject);
+    if (isset($oData->caseTrackerObject))
+    			$this->createCaseTrackerObjectRows( $oData->caseTrackerObject);
     $this->createObjectPermissionsRows( $oData->objectPermissions);
-    $this->createStageRows( $oData->stage);
+    if (isset($oData->stage))
+    			$this->createStageRows( $oData->stage);
     //and finally create the files, dynaforms (xml and html), emailTemplates and Public files
     $this->createFiles ( $oData, $pmFilename  );
  }
