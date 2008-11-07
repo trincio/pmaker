@@ -147,7 +147,18 @@ try {
 	  $oGroup = new Groups();
 	  $oGroup->addUserToGroup($_POST['GRP_UID'], $_POST['USR_UID']);
 	  echo '<div align="center"><h2><font color="blue">'.G::LoadTranslation('ID_MSG_ASSIGN_DONE').'</font></h2></div>';
-	break;
+	  break;
+	  
+	  case 'usersGroup':
+  	  //echo $_POST['GRP_UID'];
+  	  G::LoadClass('groups');
+	    $oGroup = new Groups();
+  	  $aGroup = $oGroup->getUsersOfGroup($_POST['GRP_UID']);
+  	  //print_r($aGroup);
+  	  foreach ($aGroup as $iIndex => $aValues) {
+  				echo $aValues['USR_USERNAME']."<br>\n";
+			}
+  	break;
   }
 }
 catch (Exception $oException) {
