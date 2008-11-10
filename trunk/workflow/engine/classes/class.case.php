@@ -520,7 +520,7 @@ class Cases
       try {
         require_once 'classes/model/Route.php';
         $aPreviousTask = array();
-        $oCriteria = new Criteria();
+        $oCriteria = new Criteria('workflow');
         $oCriteria->add(RoutePeer::ROU_NEXT_TASK, $sNextTask);
         $oDataset = RoutePeer::doSelectRs($oCriteria);
         $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
@@ -529,7 +529,35 @@ class Cases
           $aPreviousTask[] = $aRow['TAS_UID'];
           $oDataset->next();
         }
-        $oCriteria = new Criteria();
+        $oCriteria = new Criteria('workflow');
+        $aConditions   = array();
+        $aConditions[] = array(AppThreadPeer::APP_UID, AppDelegationPeer::APP_UID);
+        $aConditions[] = array(AppThreadPeer::DEL_INDEX, AppDelegationPeer::DEL_INDEX);
+        $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
+        $oCriteria->add(AppDelegationPeer::TAS_UID, $aPreviousTask, Criteria::IN);
+        if (AppThreadPeer::doCount($oCriteria) == 1) {
+          $aAux = $aPreviousTask;
+          foreach ($aAux as $sTaskUid) {
+            $oCriteria = new Criteria('workflow');
+            $oCriteria->add(RoutePeer::ROU_NEXT_TASK, $sTaskUid);
+            $oDataset = RoutePeer::doSelectRs($oCriteria);
+            $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+            $oDataset->next();
+            while ($aRow = $oDataset->getRow()) {
+              $oCriteria = new Criteria('workflow');
+              $oCriteria->add(AppDelegationPeer::APP_UID, $sAppUid);
+              $oCriteria->add(AppDelegationPeer::TAS_UID, $aRow['TAS_UID']);
+              $oCriteria->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
+              if (AppDelegationPeer::doCount($oCriteria) == 1) {
+                if (!in_array($aRow['TAS_UID'], $aPreviousTask)) {
+                  $aPreviousTask[] = $aRow['TAS_UID'];
+                }
+              }
+              $oDataset->next();
+            }
+          }
+        }
+        $oCriteria = new Criteria('workflow');
         $oCriteria->add(AppThreadPeer::APP_UID, $sAppUid);
         $oCriteria->add(AppThreadPeer::DEL_INDEX, $iDelIndex);
         $oDataset = AppThreadPeer::doSelectRs($oCriteria);
@@ -538,7 +566,8 @@ class Cases
         $aRow          = $oDataset->getRow();
         $iParent       = $aRow['APP_THREAD_PARENT'];
         $aThreads      = array();
-        $oCriteria     = new Criteria();
+        $oCriteria = new Criteria('workflow');
+        $oCriteria->addSelectColumn('*');
         $aConditions   = array();
         $aConditions[] = array(AppThreadPeer::APP_UID, AppDelegationPeer::APP_UID);
         $aConditions[] = array(AppThreadPeer::DEL_INDEX, AppDelegationPeer::DEL_INDEX);
