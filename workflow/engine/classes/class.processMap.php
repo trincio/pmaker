@@ -1021,7 +1021,9 @@ class processMap {
       $oDataset  = GroupwfPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
       $oDataset->next();
+      $c=0;
       while ($aRow = $oDataset->getRow()) {
+      	$c++;
       	$oCriteria = new Criteria('workflow');
         $oCriteria->addSelectColumn('COUNT(*) AS MEMBERS_NUMBER');
         $oCriteria->add(GroupUserPeer::GRP_UID, $aRow['GRP_UID']);
@@ -1029,7 +1031,7 @@ class processMap {
         $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
         $oDataset2->next();
         $aRow2 = $oDataset2->getRow();
-      	$aUsers[] = array('LABEL'       => $aRow['GRP_TITLE'] . ' <strong>(' . $aRow2['MEMBERS_NUMBER'] . ' ' . ((int)$aRow2['MEMBERS_NUMBER'] == 1 ? G::LoadTranslation('ID_USER') : G::LoadTranslation('ID_USERS')) . ')</strong>',
+      	$aUsers[] = array('LABEL'       => $aRow['GRP_TITLE'] . ' <a href="#" onclick="usersGroup(\''.$aRow['GRP_UID'].'\', \''.$c.'\');return false;"><font color="green"><strong>(' . $aRow2['MEMBERS_NUMBER'] . ' ' . ((int)$aRow2['MEMBERS_NUMBER'] == 1 ? G::LoadTranslation('ID_USER') : G::LoadTranslation('ID_USERS')) . ')</strong></font></a> <br /><div id="users'.$c.'" style="display: none"></div>',
   		                    'TAS_UID'     => $sTaskUID,
   		                    'USR_UID'     => $aRow['GRP_UID'],
   		                    'TU_TYPE'     => $iType,
