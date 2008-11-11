@@ -29,10 +29,10 @@
  * @Date 24/04/2008
  * @LastModification 30/05/2008
  */
-
+  
 	G::LoadClass('tree');
 
-    $tree = new Tree();
+  $tree = new Tree();
 
 	$tree->name = 'debug';
 	$tree->nodeType = "base";
@@ -131,12 +131,41 @@
 	krumo::$show_details = 'disabled';
 	$vars_acum = Array();
 	for($i=0; $i<count($_SESSION['TRIGGER_DEBUG']['DATA']); $i++) {
+		
 		$tdebug_var = $_SESSION['TRIGGER_DEBUG']['DATA'][$i]['value'];
-
 		$vars_acum[$_SESSION['TRIGGER_DEBUG']['DATA'][$i]['key']] = $tdebug_var;
 	}
+	
+	$aKeys1 = array_keys($vars_acum);
+		
+	G::LoadClass('case');
+  $oApp= new Cases();
+  $aFields = $oApp->loadCase($_SESSION['APPLICATION']);
+  //print_r($aFields['APP_DATA']); die;
+  $aKeys2 = array_keys($aFields['APP_DATA']);
+  //var_dump($aKeys1, $aKeys2); die;
+  $x = array_merge($aFields['APP_DATA'], $vars_acum);
+	foreach($x as $key => $value)
+	{ 
+		if (!in_array($key, $aKeys2)) {		 
+		  	$x[$key] = $x[$key] . ' (CREATED / CHANGED)';
+		  }
+		  else {		  
+				if (in_array($key, $aKeys1)) {		
+					$x[$key] = $x[$key] . ' (CREATED / CHANGED)';
+				}
+				
+		  }		  				
+		/*foreach($aKeys as $ke => $val)
+		{
+				if($ke!=$key)
+						$vars_acum[$key]=$value;
+		}*/
+		//echo "Key: $key; Valor: $value <br />"; 		
+	}
+	
 	ob_start();
-	Krumo($vars_acum);
+	Krumo($x);
 	$oo1 = ob_get_contents();
 	ob_end_clean();
 	
@@ -148,6 +177,7 @@
 			</td>
 		</tr>
 	</table>";
+	
 	$ch = &$tree->addChild(0, $html, array('nodeType' => 'child'));
 	//$ch->point = '<img src="/images/btnGreen.gif" />';
 	
