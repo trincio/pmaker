@@ -71,17 +71,47 @@ SELECT * FROM usersGroups
 <CREATE type="button" onclick="saveObjectPermission(this.form);">
   <en>Create</en>
 </CREATE>
+<ID_DELETE type="private" />
 <JS type="javascript">
 <![CDATA[
 var aOptions = [];
 var getOptions = function() {
   var oAux = getField('OP_ACTION');
-  for (i = 0; i < oAux.options.length; i++) {
+  for (var i = 0; i < oAux.options.length; i++) {
     aOptions.push({label:oAux.options[i].text, value: oAux.options[i].value});
   }
 };
 var rebuildOptions = function(sType) {
-  /* for now nothing */
+  switch (sType) {
+    case 'INPUT':
+      var oAux = getField('OP_ACTION');
+      while (oAux.options.length) {
+        oAux.remove(0);
+      }
+      for (var i = 0; i < aOptions.length; i++) {
+        var oOption = document.createElement('OPTION');
+        oOption.value = aOptions[i].value;
+        oOption.text = aOptions[i].label;
+        oAux.options.add(oOption);
+      }
+      var oOption = document.createElement('OPTION');
+      oOption.value = 'DELETE';
+      oOption.text = '@#ID_DELETE';
+      oAux.options.add(oOption);
+    break
+    default:
+      var oAux = getField('OP_ACTION');
+      while (oAux.options.length) {
+        oAux.remove(0);
+      }
+      for (var i = 0; i < aOptions.length; i++) {
+        var oOption = document.createElement('OPTION');
+        oOption.value = aOptions[i].value;
+        oOption.text = aOptions[i].label;
+        oAux.options.add(oOption);
+      }
+    break;
+  }
 };
 leimnud.event.add(getField('OP_OBJ_TYPE'), 'change', function() {
   var vValue = getField('OP_OBJ_TYPE').value;

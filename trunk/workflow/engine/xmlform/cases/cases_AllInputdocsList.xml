@@ -2,6 +2,7 @@
 <dynaForm
   sqlConnection=""
   rowsPerPage="20"
+  name="cases_AllInputdocsList"
 >
 
 <DOC_UID type="hidden" showInTable="0"/>
@@ -28,5 +29,7 @@
 </ORIGIN>
 
 <VIEW type="link" colWidth="25" value="@G::LoadTranslation(ID_VIEW)" link="#" onclick="showUploadedDocument(@QAPP_DOC_UID);"/>
+
+<DELETE type="link" colWidth="" value="@#ID_DELETE" link="#" onclick="deleteUploadedDocument(@QAPP_DOC_UID);"/>
 
 </dynaForm>
