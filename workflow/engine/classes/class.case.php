@@ -2146,6 +2146,7 @@ class Cases
           $aObjectPermissions['OUTPUT_DOCUMENTS'] = array(-1);
         }
       }
+      $aDelete = $this->getAllObjectsFrom($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID, 'DELETE');
       require_once 'classes/model/AppDocument.php';
       $oAppDocument = new AppDocument();
       $oCriteria = new Criteria('workflow');
@@ -2182,6 +2183,9 @@ class Cases
           }
           $aFields['POSITION'] = $_SESSION['STEP_POSITION'];
           $aFields['CONFIRM'] = G::LoadTranslation('ID_CONFIRM_DELETE_ELEMENT');
+          if (in_array($aRow['APP_DOC_UID'], $aDelete['INPUT_DOCUMENTS'])) {
+            $aFields['ID_DELETE'] = G::LoadTranslation('ID_DELETE');
+          }
           $aInputDocuments[] = $aFields;
           $oDataset->next();
       }
@@ -2216,6 +2220,7 @@ class Cases
           }
           $aFields['POSITION'] = $_SESSION['STEP_POSITION'];
           $aFields['CONFIRM'] = G::LoadTranslation('ID_CONFIRM_DELETE_ELEMENT');
+          $aFields['ID_DELETE'] = G::LoadTranslation('ID_DELETE');
           $aInputDocuments[] = $aFields;
           $oDataset->next();
       }

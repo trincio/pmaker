@@ -650,7 +650,7 @@ var showDynaforms = function() {
     }.extend(this);
     oRPC.make();
   }
-  
+
 var showHistoryMessages = function()
  {
   oPanel = new leimnud.module.panel();
@@ -682,7 +682,7 @@ var showHistoryMessages = function()
 };
 
 function showHistoryMessage(APP_UID, APP_MSG_UID)
-  { 
+  {
     oPanel2 = new leimnud.module.panel();
     oPanel2.options = {
         size    :{w:600,h:400},
@@ -710,3 +710,19 @@ function showHistoryMessage(APP_UID, APP_MSG_UID)
     }.extend(this);
     oRPC.make();
   }
+
+var deleteUploadedDocument = function(APP_DOC_UID) {
+  new leimnud.module.app.confirm().make({
+    label : G_STRINGS.ID_MSG_CONFIRM_DELETE_FILE,
+    action: function() {
+      var oRPC = new leimnud.module.rpc.xmlhttp({
+        url:  'cases_Ajax',
+        args: 'action=deleteUploadedDocument&DOC=' + APP_DOC_UID
+      });
+      oRPC.callback = function(oRPC) {
+        cases_AllInputdocsList.refresh();
+      }.extend(this);
+      oRPC.make();
+    }.extend(this)
+  });
+};

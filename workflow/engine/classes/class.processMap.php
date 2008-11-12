@@ -2467,7 +2467,7 @@ class processMap {
     $_SESSION['_DBArray']           = $_DBArray;
     global $G_PUBLISH;
     $G_PUBLISH = new Publisher();
-    $G_PUBLISH->AddContent('xmlform', 'xmlform', 'processes/processes_NewObjectPermission', '', array('LANG' => SYS_LANG, 'PRO_UID' => $sProcessUID), 'processes_SaveObjectPermission');
+    $G_PUBLISH->AddContent('xmlform', 'xmlform', 'processes/processes_NewObjectPermission', '', array('LANG' => SYS_LANG, 'PRO_UID' => $sProcessUID, 'ID_DELETE' => G::LoadTranslation('ID_DELETE')), 'processes_SaveObjectPermission');
     G::RenderPage('publish', 'raw');
     return true;
   }

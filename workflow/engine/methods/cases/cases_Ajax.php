@@ -345,7 +345,7 @@ $oHeadPublisher->addScriptCode('
 		$G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_AllInputdocsList', $oCase->getAllUploadedDocumentsCriteria($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['TASK'], $_SESSION['USER_LOGGED']));
 		G::RenderPage('publish', 'raw');
 		break;
-	case 'showUploadedDocument':	  
+	case 'showUploadedDocument':
 		require_once 'classes/model/AppDocument.php';
 		require_once 'classes/model/AppDelegation.php';
 		require_once 'classes/model/InputDocument.php';
@@ -485,7 +485,7 @@ $oHeadPublisher->addScriptCode('
 		$G_PUBLISH->AddContent('propeltable', 'paged-table', 'processes/processes_viewreassignCase', $oCriteria, array('THETYPE' => 'ADHOC'));
 		G::RenderPage('publish', 'raw');
 		break;
-		
+
 		case 'showHistoryMessages':
 		G::LoadClass('case');
 		$oCase = new Cases();
@@ -495,14 +495,23 @@ $oHeadPublisher->addScriptCode('
 		G::RenderPage('publish', 'raw');
 		break;
 
-		case 'showHistoryMessage':		
+		case 'showHistoryMessage':
 		G::LoadClass('case');
 		$G_PUBLISH = new Publisher;
-		$oCase = new Cases();		
-		
+		$oCase = new Cases();
+
 		$G_PUBLISH->AddContent('xmlform', 'xmlform', 'cases/cases_MessagesView', '', $oCase->getHistoryMessagesTrackerView($_POST['APP_UID'], $_POST['APP_MSG_UID']));
 		G::RenderPage('publish', 'raw');
 		break;
-		
+
+		case 'deleteUploadedDocument':
+      require_once 'classes/model/AppDocument.php';
+      $oAppDocument = new AppDocument();
+      $oAppDocument->remove($_POST['DOC']);
+      G::LoadClass('case');
+      $oCase = new Cases();
+      $oCase->getAllUploadedDocumentsCriteria($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['TASK'], $_SESSION['USER_LOGGED']);
+		break;
+
     default: echo 'default';
 }
