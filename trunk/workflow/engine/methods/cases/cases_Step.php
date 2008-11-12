@@ -370,11 +370,27 @@ switch ($_GET['TYPE'])
       case 'VIEW':
         require_once 'classes/model/AppDocument.php';
         $oAppDocument = new AppDocument();
-        $aFields = $oAppDocument->load($_GET['DOC']);
+        $aFields = $oAppDocument->load($_GET['DOC']);        
+        
+        require_once 'classes/model/OutputDocument.php';
+        $oOutputDocument = new OutputDocument();
+        $aGields = $oOutputDocument->load($aFields['DOC_UID']);
+                
         $aFields['VIEW'] = G::LoadTranslation('ID_OPEN');
+        
         $aFields['FILE1'] = 'cases_ShowOutputDocument?a=' . $aFields['APP_DOC_UID'] . '&ext=doc&random=' . rand();
+        
         $aFields['FILE2'] = 'cases_ShowOutputDocument?a=' . $aFields['APP_DOC_UID'] . '&ext=pdf&random=' . rand();
-        $G_PUBLISH->AddContent('xmlform', 'xmlform', 'cases/cases_ViewOutputDocument1', '', G::array_merges($aOD, $aFields), '');
+        
+        if($aGields['OUT_DOC_GENERATE']=='BOTH')        
+        		$G_PUBLISH->AddContent('xmlform', 'xmlform', 'cases/cases_ViewOutputDocument1', '', G::array_merges($aOD, $aFields), '');
+        
+        if($aGields['OUT_DOC_GENERATE']=='DOC')  
+        		$G_PUBLISH->AddContent('xmlform', 'xmlform', 'cases/cases_ViewOutputDocument2', '', G::array_merges($aOD, $aFields), '');
+        
+        if($aGields['OUT_DOC_GENERATE']=='PDF')  
+        		$G_PUBLISH->AddContent('xmlform', 'xmlform', 'cases/cases_ViewOutputDocument3', '', G::array_merges($aOD, $aFields), '');
+        
     //call plugin
     if ( $oPluginRegistry->existsTrigger ( PM_CASE_DOCUMENT_LIST ) ) {
       $folderData = new folderData (null, null, $_SESSION['APPLICATION'], null, $_SESSION['USER_LOGGED'] );

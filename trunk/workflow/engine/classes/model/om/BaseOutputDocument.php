@@ -46,7 +46,14 @@ abstract class BaseOutputDocument extends BaseObject  implements Persistent {
 	 * The value for the out_doc_landscape field.
 	 * @var        int
 	 */
-	protected $out_doc_landscape = 1;
+	protected $out_doc_landscape = 0;
+
+
+	/**
+	 * The value for the out_doc_generate field.
+	 * @var        string
+	 */
+	protected $out_doc_generate = 'BOTH';
 
 	/**
 	 * Flag to prevent endless save loop, if this object is referenced
@@ -93,6 +100,17 @@ abstract class BaseOutputDocument extends BaseObject  implements Persistent {
 	{
 
 		return $this->out_doc_landscape;
+	}
+
+	/**
+	 * Get the [out_doc_generate] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getOutDocGenerate()
+	{
+
+		return $this->out_doc_generate;
 	}
 
 	/**
@@ -154,12 +172,34 @@ abstract class BaseOutputDocument extends BaseObject  implements Persistent {
 			$v = (int) $v;
 		}
 
-		if ($this->out_doc_landscape !== $v || $v === 1) {
+		if ($this->out_doc_landscape !== $v || $v === 0) {
 			$this->out_doc_landscape = $v;
 			$this->modifiedColumns[] = OutputDocumentPeer::OUT_DOC_LANDSCAPE;
 		}
 
 	} // setOutDocLandscape()
+
+	/**
+	 * Set the value of [out_doc_generate] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setOutDocGenerate($v)
+	{
+
+		// Since the native PHP type for this column is string,
+		// we will cast the input to a string (if it is not).
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->out_doc_generate !== $v || $v === 'BOTH') {
+			$this->out_doc_generate = $v;
+			$this->modifiedColumns[] = OutputDocumentPeer::OUT_DOC_GENERATE;
+		}
+
+	} // setOutDocGenerate()
 
 	/**
 	 * Hydrates (populates) the object variables with values from the database resultset.
@@ -184,12 +224,14 @@ abstract class BaseOutputDocument extends BaseObject  implements Persistent {
 
 			$this->out_doc_landscape = $rs->getInt($startcol + 2);
 
+			$this->out_doc_generate = $rs->getString($startcol + 3);
+
 			$this->resetModified();
 
 			$this->setNew(false);
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 3; // 3 = OutputDocumentPeer::NUM_COLUMNS - OutputDocumentPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 4; // 4 = OutputDocumentPeer::NUM_COLUMNS - OutputDocumentPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating OutputDocument object", $e);
@@ -401,6 +443,9 @@ abstract class BaseOutputDocument extends BaseObject  implements Persistent {
 			case 2:
 				return $this->getOutDocLandscape();
 				break;
+			case 3:
+				return $this->getOutDocGenerate();
+				break;
 			default:
 				return null;
 				break;
@@ -424,6 +469,7 @@ abstract class BaseOutputDocument extends BaseObject  implements Persistent {
 			$keys[0] => $this->getOutDocUid(),
 			$keys[1] => $this->getProUid(),
 			$keys[2] => $this->getOutDocLandscape(),
+			$keys[3] => $this->getOutDocGenerate(),
 		);
 		return $result;
 	}
@@ -464,6 +510,9 @@ abstract class BaseOutputDocument extends BaseObject  implements Persistent {
 			case 2:
 				$this->setOutDocLandscape($value);
 				break;
+			case 3:
+				$this->setOutDocGenerate($value);
+				break;
 		} // switch()
 	}
 
@@ -490,6 +539,7 @@ abstract class BaseOutputDocument extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[0], $arr)) $this->setOutDocUid($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setProUid($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setOutDocLandscape($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setOutDocGenerate($arr[$keys[3]]);
 	}
 
 	/**
@@ -504,6 +554,7 @@ abstract class BaseOutputDocument extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(OutputDocumentPeer::OUT_DOC_UID)) $criteria->add(OutputDocumentPeer::OUT_DOC_UID, $this->out_doc_uid);
 		if ($this->isColumnModified(OutputDocumentPeer::PRO_UID)) $criteria->add(OutputDocumentPeer::PRO_UID, $this->pro_uid);
 		if ($this->isColumnModified(OutputDocumentPeer::OUT_DOC_LANDSCAPE)) $criteria->add(OutputDocumentPeer::OUT_DOC_LANDSCAPE, $this->out_doc_landscape);
+		if ($this->isColumnModified(OutputDocumentPeer::OUT_DOC_GENERATE)) $criteria->add(OutputDocumentPeer::OUT_DOC_GENERATE, $this->out_doc_generate);
 
 		return $criteria;
 	}
@@ -561,6 +612,8 @@ abstract class BaseOutputDocument extends BaseObject  implements Persistent {
 		$copyObj->setProUid($this->pro_uid);
 
 		$copyObj->setOutDocLandscape($this->out_doc_landscape);
+
+		$copyObj->setOutDocGenerate($this->out_doc_generate);
 
 
 		$copyObj->setNew(true);

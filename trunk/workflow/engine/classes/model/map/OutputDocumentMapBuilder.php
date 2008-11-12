@@ -70,6 +70,8 @@ class OutputDocumentMapBuilder {
 
 		$tMap->addColumn('OUT_DOC_LANDSCAPE', 'OutDocLandscape', 'int', CreoleTypes::TINYINT, true, null);
 
+		$tMap->addColumn('OUT_DOC_GENERATE', 'OutDocGenerate', 'string', CreoleTypes::VARCHAR, true, 10);
+
 		$tMap->addValidator('OUT_DOC_UID', 'maxLength', 'propel.validator.MaxLengthValidator', '32', 'Output Document UID can be no larger than 32 in size');
 
 		$tMap->addValidator('OUT_DOC_UID', 'required', 'propel.validator.RequiredValidator', '', 'Output Document UID is required.');
@@ -77,6 +79,8 @@ class OutputDocumentMapBuilder {
 		$tMap->addValidator('PRO_UID', 'maxLength', 'propel.validator.MaxLengthValidator', '32', 'Process UID can be no larger than 32 in size');
 
 		$tMap->addValidator('PRO_UID', 'required', 'propel.validator.RequiredValidator', '', 'Process UID is required.');
+
+		$tMap->addValidator('OUT_DOC_GENERATE', 'validValues', 'propel.validator.ValidValuesValidator', 'BOTH|DOC|PDF', 'Please select a valid outputdocument.');
 
 	} // doBuild()
 
