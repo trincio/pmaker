@@ -148,11 +148,11 @@
 	foreach($x as $key => $value)
 	{ 
 		if (!in_array($key, $aKeys2)) {		 
-		  	$x[$key] = $x[$key] . ' (CREATED / CHANGED)';
+		  	$x[$key] = $x[$key] . ' -->(CREATED / CHANGED)';
 		  }
 		  else {		  
 				if (in_array($key, $aKeys1)) {		
-					$x[$key] = $x[$key] . ' (CREATED / CHANGED)';
+					$x[$key] = $x[$key] . ' -->(CREATED / CHANGED)';
 				}
 				
 		  }		  				
