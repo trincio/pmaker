@@ -1715,6 +1715,16 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
+    <column name="OUT_DOC_GENERATE" type="VARCHAR" size="10" required="true" default="BOTH">
+      <vendor type="mysql">
+        <parameter name="Field" value="OUT_DOC_GENERATE"/>
+        <parameter name="Type" value="varchar(10)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
     <validator column="OUT_DOC_UID">
       <rule name="maxLength" value="32" message="Output Document UID can be no larger than ${value} in size" />
       <rule name="required" message="Output Document UID is required." />
@@ -1722,6 +1732,9 @@
     <validator column="PRO_UID">
       <rule name="maxLength" value="32" message="Process UID can be no larger than ${value} in size" />
       <rule name="required" message="Process UID is required." />
+    </validator>
+    <validator column="OUT_DOC_GENERATE">
+      <rule name="validValues" value="BOTH|DOC|PDF" message="Please select a outputdocument." />     
     </validator>
   </table>
   <table name="PROCESS">

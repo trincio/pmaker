@@ -32,6 +32,14 @@
   </en>
 </OUT_DOC_LANDSCAPE>
 
+<OUT_DOC_GENERATE type="dropdown"  >
+  <en>OutPut Document to Generate
+  <option name="BOTH">BOTH</option>
+  <option name="DOC">DOC</option>
+  <option name="PDF">PDF</option>
+  </en>
+</OUT_DOC_GENERATE>
+
 <OUT_DOC_TEMPLATE type="html" rows="20" cols="50" defaultValue="&lt;br/&gt;">
   <en>Template</en>
 </OUT_DOC_TEMPLATE>
