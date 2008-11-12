@@ -324,13 +324,23 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
       $sPath = PATH_XMLFORM;
       if ( !is_file ( $sPath . $Part['File'] ) ) {
         $aux = explode ( PATH_SEP, $Part['File'] );
+
+        //search in PLUGINS folder, probably the file is in plugin
         if ( count($aux) == 2 ) {
           $oPluginRegistry =& PMPluginRegistry::getSingleton();
           if ( $oPluginRegistry->isRegisteredFolder($aux[0]) ) {
             $sPath = PATH_PLUGINS; // . $aux[0] . PATH_SEP ;
           }
         }
+        
+        //search in PATH_DYNAFORM folder
+        if ( !is_file ( $sPath . PATH_SEP. $Part['File'] . '.xml') ) {
+          $sPath = PATH_DYNAFORM; 
+        }  
+
       }
+      
+      //PATH_DATA_PUBLIC ???
       if ( !file_exists ($sPath .PATH_SEP. $Part['File'] . '.xml') && defined ( 'PATH_DATA_PUBLIC') ) {
       	$sPath = PATH_DATA_PUBLIC ;
       }
