@@ -84,6 +84,7 @@ var getOptions = function() {
 var rebuildOptions = function(sType) {
   switch (sType) {
     case 'INPUT':
+    case 'OUTPUT':
       var oAux = getField('OP_ACTION');
       while (oAux.options.length) {
         oAux.remove(0);

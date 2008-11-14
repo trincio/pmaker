@@ -403,11 +403,21 @@ class OutputDocument extends BaseOutputDocument {
   	        if (is_array($aFields[$sGridName])) {
   	          $sAux = '';
   	          foreach ($aFields[$sGridName] as $aRow) {
+  	            foreach ($aRow as $sKey => $vValue) {
+  	              if (!is_array($vValue)) {
+  	                $aRow[$sKey] = nl2br($aRow[$sKey]);
+  	              }
+  	            }
   	            $sAux .= G::replaceDataField($sStringToRepeat, $aRow);
   	          }
   	        }
   	      }
   	      $sContent = str_replace('@>' . $sGridName . $sStringToRepeat . '@<' . $sGridName, $sAux, $sContent);
+  	    }
+  	  }
+  	  foreach ($aFields as $sKey => $vValue) {
+  	    if (!is_array($vValue)) {
+  	      $aFields[$sKey] = nl2br($aFields[$sKey]);
   	    }
   	  }
   	  $sContent = G::replaceDataField($sContent, $aFields);

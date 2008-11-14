@@ -720,7 +720,39 @@ var deleteUploadedDocument = function(APP_DOC_UID) {
         args: 'action=deleteUploadedDocument&DOC=' + APP_DOC_UID
       });
       oRPC.callback = function(oRPC) {
-        cases_AllInputdocsList.refresh();
+        if ((window.location.href.indexOf('/cases/cases_Step') > -1) &&
+            (window.location.href.indexOf('?TYPE=INPUT_DOCUMENT&UID=') > -1) &&
+            (window.location.href.indexOf('&ACTION=VIEW&') > -1) &&
+            (window.location.href.indexOf('&DOC=' + APP_DOC_UID) > -1)) {
+          window.location = getField('DYN_FORWARD');
+        }
+        else {
+          cases_AllInputdocsList.refresh();
+        }
+      }.extend(this);
+      oRPC.make();
+    }.extend(this)
+  });
+};
+
+var deleteGeneratedDocument = function(APP_DOC_UID) {
+  new leimnud.module.app.confirm().make({
+    label : G_STRINGS.ID_MSG_CONFIRM_DELETE_FILE,
+    action: function() {
+      var oRPC = new leimnud.module.rpc.xmlhttp({
+        url:  'cases_Ajax',
+        args: 'action=deleteGeneratedDocument&DOC=' + APP_DOC_UID
+      });
+      oRPC.callback = function(oRPC) {
+        if ((window.location.href.indexOf('/cases/cases_Step') > -1) &&
+            (window.location.href.indexOf('?TYPE=OUTPUT_DOCUMENT&UID=') > -1) &&
+            (window.location.href.indexOf('&ACTION=VIEW&') > -1) &&
+            (window.location.href.indexOf('&DOC=' + APP_DOC_UID) > -1)) {
+          window.location = getField('DYN_FORWARD');
+        }
+        else {
+          cases_AllOutputdocsList.refresh();
+        }
       }.extend(this);
       oRPC.make();
     }.extend(this)
