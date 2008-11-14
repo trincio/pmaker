@@ -29,7 +29,8 @@ leimnud.Package.Public({
 				statusBar	:false,
 				titleBar	:true,
 				cursorToDrag	:"default",
-				elementToDrag	:"title"
+				elementToDrag	:"title",
+				strict_position:true
 			}.concat(this.options || {});
 			this.options.fx		= {
 				blinkToFront:true,
@@ -1187,8 +1188,11 @@ leimnud.Package.Public({
 					this.options.position.y = this.options.position.y || 0;
 				}
 				
-				//this.options.position.x = (this.options.position.x<0)?0:this.options.position.x;
-				//this.options.position.y = (this.options.position.y<0)?0:this.options.position.y;
+				if(this.options.strict_position)
+				{
+					this.options.position.x = (this.options.position.x<0)?0:this.options.position.x;
+					this.options.position.y = (this.options.position.y<0)?0:this.options.position.y;
+				}
 
 
 				this.zIndex		= this.options.zIndex || this.makezIndex();
