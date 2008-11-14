@@ -29,10 +29,12 @@ leimnud.Package.Public({
     },
     content	:function()
     {
+    	this.tmp = {};
         this.make=function(options)
         {
             this.options = {
                 template :'default.tpl',
+                sectionName:'section',
                 target   :document.body,
                 points   :{},
                 dom      :{},
@@ -40,7 +42,15 @@ leimnud.Package.Public({
 				drag	 :{},
 				menu	 :{},
 				debug	 :false,
-				observers:{}
+				editor	 :{showed:false},
+				observers:{},
+				panel	 :{},
+				tmp		 :{},
+				style:{
+					section:"#B3B3BF",
+					new_section:{border:'1px solid green',margin:4,minHeight:20},
+					add_section:{position:'relative',border:'1px solid #B3B3BF',margin:4,minHeight:20}
+				}
             }.concat(options || {});
 			this.db=[];
 			this.debug = new this.parent.module.debug(this.options.debug || false);
@@ -59,7 +69,9 @@ leimnud.Package.Public({
 						new DOM('div',{className:'b'}),
 							new DOM('div',{className:'c'})
 						),
-						this.options.dom.body = new DOM('div',{className:'boxContentNormal'},{minHeight:this.options.target.clientHeight-50,paddingBottom:20}),
+						new DOM('div',{className:'boxContentNormal',id:"bcn"},{minHeight:this.options.target.clientHeight-70,paddingBottom:20}).append(
+							this.options.dom.body = new DOM('div',{id:'root'},{border:'1px solid '+this.options.style.section,padding:5,minHeight:(this.options.target.clientHeight-80)})
+						),
 						new DOM('div',{className:'boxBottom'}).append(
 							new DOM('div',{className:'a'}),
 							new DOM('div',{className:'b'}),
@@ -86,7 +98,77 @@ leimnud.Package.Public({
 				template:this.options.template,
 				xmlform:this.options.xmlform
 			});
+			this.buttons_set();
             return this;
+        };
+        this.buttons_set=function()
+        {
+			//alert(this.options.buttons.xml);
+        	this.options.buttons.xml.onmouseup=function()
+        	{
+        		this.show_editor('xml');
+        		//alert(this.options.window.editor)
+        	}.extend(this);
+        	this.options.buttons.template.onmouseup=function()
+        	{
+        		this.show_editor('template');
+        	}.extend(this);
+        };
+        this.show_editor=function(b)
+        {
+        	//alert(this.options.editor.selected+":"+b);
+        	this.options.window.textarea.value='';
+        	if(this.options.editor.showed===true && this.options.editor.selected==b)
+        	{
+        		if(b=='xml')
+        		{        			
+        			//this.options.buttons.template.disabled=false;
+        			//this.options.buttons.xml.disabled=true;
+        			this.options.buttons.xml.className="dbo";
+        			this.options.buttons.xml.dv='0';
+        			this.options.buttons.template.dv='0';
+        			this.options.buttons.template.className="dbs";
+        		}
+        		else
+        		{
+        			//this.options.buttons.template.disabled=true;
+        			//this.options.buttons.xml.disabled=false;
+        			this.options.buttons.xml.dv='0';
+        			this.options.buttons.template.dv='0';
+        			this.options.buttons.xml.className="dbs";
+        			this.options.buttons.template.className="dbo";
+        		}
+        		this.options.window.editor.move({y:this.options.sizes.pi});
+        		this.options.editor.showed=false;
+        		this.options.editor.selected=b;
+        	}
+        	else
+        	{
+        		if(b=='xml')
+        		{
+        			//this.options.buttons.template.disabled=false;
+        			//this.options.buttons.xml.disabled=true;
+        			this.options.window.textarea.value=this.xmlform.serialize().sReplace('><','>\n<');        			
+        			
+        			this.options.buttons.xml.dv='1';
+        			this.options.buttons.template.dv='0';
+        			this.options.buttons.xml.className="dbo";
+        			this.options.buttons.template.className="dbs";
+        		}
+        		else
+        		{
+        			this.options.window.textarea.value='b';
+        			//this.options.buttons.template.disabled=true;
+        			//this.options.buttons.xml.disabled=false;
+        			this.options.buttons.xml.dv='0';
+        			this.options.buttons.template.dv='1';
+        			this.options.buttons.xml.className="dbs";
+        			this.options.buttons.template.className="dbo";
+        		}
+        		this.options.window.editor.move({y:this.options.sizes.pv,onFinish:function(){this.options.window.textarea.focus();}.extend(this)});
+        		this.options.editor.showed=true;
+        		this.options.editor.selected=b;
+        	}
         };
         this.setStyles=function()
         {
@@ -115,6 +197,10 @@ leimnud.Package.Public({
         };
         this.load=function(options)
         {
+        	options = {
+        		template:"empty.tpl",
+				xmlform:"empty.xml"
+        	}.concat(options || {});
             var r = new this.parent.module.rpc.xmlhttp({
                 url:options.template
             });
@@ -125,6 +211,7 @@ leimnud.Package.Public({
 					target	:this.options.target_info,
 					debug	:this.options.debug,
 					onload	:function(){
+						this.editor();
 						this.xmlform.tag_edit(this.xmlform.show_dyna(),'dyna_root');
 						this.parse_elements();
 					}.extend(this)
@@ -135,6 +222,11 @@ leimnud.Package.Public({
             }.extend(this);
             r.make();
         };
+        this.editor=function()
+        {
+        	var e =$dce("div",{innerHTML:"asd"},{height:100,width:1212,backgroundColor:"red",position:'absolute',zIndex:123123,top:0});
+        	document.body.appendChild(e);
+        };
         this.build=function(o)
         {
             this.options.dom.body.innerHTML=o.template;
@@ -143,76 +235,24 @@ leimnud.Package.Public({
             this.tplSetPoints({
                 html:t
             });
-            this.options.drop['groups'] = new this.parent.module.drop().make();
-/*
-            this.drag = new this.parent.module.drag({
-                elements:this.dynas,
-                fx:{
-                    type	: "clone",
-                    target  : this.options.dom.body,
-                    zIndex	: 11
-                }
-            });
-            this.drag.events={
-                move:this.drop.captureFromArray.args(this.drag),
-                finish:function(){
-                    //alert([parseInt(this.drag.currentElementDrag.style.top)+2,parseInt(this.drag.currentElementDrag.style.left)+2])
-                    //this.parent.dom.remove(this.drag.currentElementDrag);
-                    //console.info(this.drop.selected);
-                    if(this.drop.selected!==false)
-                    {
-                        //						this.dropables.derivation.launchEvents(this.dropables.derivation.elements[this.dropables.derivation.selected].events.out);
-                        //						vAux = this.dropables.derivation.launchEvents(this.dropables.derivation.elements[this.dropables.derivation.selected].events.click);
-
-                        var c,t = this.drop.elements[this.drop.selected].element,d = $(this.drag.currentElementDrag);
-                        d.setStyle({
-                            position:'relative',
-                            left:'auto',
-                            top:'auto',
-                            opacity:1
-                        });
-
-                        $(t).append(
-                        c = new DOM('div')
-                        );
-                        t.replaceChild(d,c);
-                        var men = new this.parent.module.app.menuRight();
-                        men.make({
-                            //target:this.panels.editor.elements.content,
-                            target:d,
-                            width:201,
-                            //theme:this.options.theme,
-                            menu:[
-                            {text:'b',launch:function(){}},
-                            {text:'b',launch:function(){}},
-                            ]
-                        });
-                        //						this.parent.dom.remove(this.dragables.currentElementDrag);
-                        //this.drop.setArrayPositions(true);
-                    }
-                    else
-                    {
-                        this.parent.dom.remove(this.drag.currentElementDrag);
-                    }
-                }.extend(this)
-            };
-
-            this.drag.make();*/
-
-
+            
             this.tplSetDropables();
-
-            this.options.drop['groups'].setArrayPositions(true);
-
-            this.menu = new this.parent.module.app.menuRight();
-			this.options.observers['menu'].register(this.menu.remove,this.menu);
-            this.menu.make({
+            
+            
+            
+            this.menu_root = new this.parent.module.app.menuRight();
+			this.options.observers['menu'].register(this.menu_root.remove,this.menu_root);
+            this.menu_root.make({
                 target:this.options.dom.body,
                 width:201,
-//                theme:'processmaker',
+                theme:'light',
                 menu:[
-	                {text:'Templates',launch:function(){}},
-   		            {text:'Properties',launch:function(){}}
+	                {text:'New Dynaform',launch:function(){}},
+	                {text:'New Section',launch:this.add_section.args(this.options.dom.body)},
+   		            {text:'Save Dynaform',launch:function(){}},
+   		            {separator:true},
+   		            {text:'Edit XML',launch:function(){this.show_editor('xml');}.extend(this)},
+   		            {text:'Edit Template',launch:function(){this.show_editor('template');}.extend(this)}
                 ]
             });
         };
@@ -229,12 +269,23 @@ leimnud.Package.Public({
             for(var i=0;i<c;i++)
             {
                 var e = $(t.childNodes[i]);
-                if(e.id)
+                var p = this.isPoint(e);
+                if(p)
                 {
+                	if(e.parentNode.id!='root')
+                	{
+	                	/*e.parentNode.setStyle({
+	                		border:"1px dashed #EEE"
+	                	});*/
+                	}
 					e.setStyle({
-						position:'relative'
+						position:'relative',
+						border:"1px solid "+this.options.style.section,
+						margin:4,
+						marginTop:((e.parentNode.id!='root')?4:0),
+						minHeight:20
 					});
-                    this.options.points[e.id]=e;
+                    this.options.points[p]=e;
                 }
                 if(e.childNodes && e.childNodes.length >0)
                 {
@@ -244,34 +295,68 @@ leimnud.Package.Public({
                 }
             }
         };
+        this.isPoint=function(e)
+        {
+        	if(e[this.options.sectionName]){
+        		return e[this.options.sectionName];
+        	}
+        	if(e.attributes)
+        	{
+        		for(var i=0;i<e.attributes.length;i++)
+        		{
+        			if(e.attributes[i].nodeName==this.options.sectionName)
+        			{
+        				return e.attributes[i].nodeValue;
+        			}
+        		}
+        		return false;
+        	}
+        	else
+        	{
+        		return false;
+        	}
+        };
 		this.tpl_default=function()
 		{
 			return this.options.points.get_by_key(0,true);
 		};
         this.tplSetDropables=function()
         {
+        	this.options.drop['groups'] = new this.parent.module.drop().make();
             var obj = this.options.points;
             for (var i in obj)
             {
                 if(obj.propertyIsEnumerable(i))
                 {
 					var dom = obj[i];
+					//dom.style.border="1px solid transparent";
                     this.options.drop['groups'].register({
                         element:dom,
                         value:i,
                         events:{
-                            over:function(e)
+                            over:function(dom)
                             {
-
-                            }.extend(this),
-                            out:function(e)
+								dom.style.border="1px dashed red";
+                            }.extend(this,dom),
+                            out:function(dom)
                             {
-
-                            }.extend(this)
+								dom.style.border="1px solid "+this.options.style.section;
+                            }.extend(this,dom)
                         }});
+                        //alert(dom.group);
 					this.menu.group(dom);
                 }
             }
+            this.options.drop['groups'].setArrayPositions(true);
+        };
+        this.isset_tagName=function(n)
+        {
+        	return (this.xmlform.xml.getElementsByTagName(n).length>0)?true:false;
+        	//return "Element_"+(new Date().getTime());
+        };
+        this.unique_name=function()
+        {
+        	return "Element_"+(new Date().getTime());
         };
 		this.menu={
 			/**
@@ -283,11 +368,111 @@ leimnud.Package.Public({
 		        menu.make({
 		        	target:dom,
 		            width:150,
-		            menu:this.group.elements.concat(
-					[
+		            theme:'light',
+		            //menu:this.group.elements.concat(
+		            menu:[
+		   		        {text:'Add element',launch:function(evt,g){
+		   		        	//alert(evt+":"+g)
+		   		        	this.options.panel.add=new this.parent.module.panel();
+		   		        	this.options.panel.add.options={
+		   		        		title:"Add element",
+		   		        		size:{w:400,h:350},
+		   		        		position:{center:true},
+		   		        		statusBarButtons:[
+		   		        			{value:'Create'},
+		   		        			{value:'Cancel'}
+		   		        		],
+		   		        		fx:{modal:true}
+		   		        	};
+		   		        	this.options.panel.add.make();
+		   		        	var a = {
+		   		        		textAlign:'right',
+		   		        		font:'normal 8pt Tahoma,sans-serif'
+		   		        	};
+		   		        	var b = {
+		   		        		textAlign:'left',
+		   		        		font:'normal 8pt Tahoma,sans-serif'
+		   		        	};
+		   		        	this.options.panel.add.addContent(
+									new DOM('table',{align:'center',cellPadding:2},{width:'100%',margin:0}).append(
+										new DOM('tbody').append(
+											new DOM('tr').append(
+												new DOM('td',{},{width:'30%'}).append(
+													new DOM('div',{innerHTML:'Type:'},a)
+												),
+												new DOM('td',{},{width:'70%'}).append(
+													new DOM('div',{},b).append(
+														this.tmp.t = this.dynaform_dom_types()
+													)
+												)
+											),
+											new DOM('tr').append(
+												new DOM('td').append(
+													new DOM('div',{innerHTML:'Name:'},a)
+												),
+												new DOM('td').append(
+													new DOM('div',{},b).append(
+														this.tmp.n = new input({label:this.unique_name()},{},{style:{width:'70%'}})
+													)
+												)
+											),
+											new DOM('tr').append(
+												new DOM('td').append(
+													new DOM('div',{innerHTML:'NodeValue:'},a)
+												),
+												new DOM('td').append(
+													new DOM('div',{},b).append(
+														this.tmp.v = new input({},{},{style:{width:'70%'}})
+													)
+												)
+											),
+											new DOM('tr').append(
+												new DOM('td',{colSpan:2}).append(
+													new DOM('div',{},a).append(
+														new DOM('fieldset',{},{border:'1px solid #B3B3BF'}).append(
+															new DOM('legend',{innerHTML:'Properties'}),
+															this.tmp.p = new DOM('div').append(this.dynaform_dom_properties())
+														)
+													)
+												)
+											)
+										)
+									)
+							);
+							this.tmp.g = window.event?evt:g;
+							this.options.panel.add.elements.statusBarButtons[0].onmouseup=function()
+							{
+								if(this.tmp.n.value.trim()=='' || !this.tmp.n.value.isAlphaUS() || this.isset_tagName(this.tmp.n.value))
+								{
+									this.tmp.n.failed();
+									return false;
+								}
+								else
+								{
+									this.tmp.n.passed();
+									var a = {};
+									for(var i=0;i<this.tmp.pr.length;i++)
+									{
+										a[this.tmp.pr[i].name]=this.tmp.pr[i].value;
+									}
+									//alert(this.tmp.p.length);
+									this.add_element(this.tmp.n.value.trim(),true,{group:this.tmp.g,type:this.tmp.t.value}.concat(a));
+									this.options.panel.add.remove();
+								}
+								//alert(this.tmp.t.value+":"+this.tmp.n.value+":"+this.tmp.v.value)
+							}.extend(this);
+							this.options.panel.add.elements.statusBarButtons[1].onmouseup=this.options.panel.add.remove;
+							
+							/*g = window.event?evt:g;
+							this.add_element(this.unique_name(),true,{group:g,type:"other",ufo:7676});*/
+							
+							
+							
+						}.extend(this,this.isPoint(dom))},
+						{text:'New section',launch:this.add_section.args(dom)},
 		   		        {separator:true},
 		   		        {text:'Delete element',launch:function(){}}
-		            ])
+		            ]
 		        });
 				this.options.observers['menu'].register(menu.remove,menu);
 			},
@@ -301,10 +486,9 @@ leimnud.Package.Public({
 		}.expand(this);
 		this.group={
 			elements:[
-				{text:'New Input',launch:function(){}},
-				{text:'New Input',launch:function(){}},
-				{text:'New Input',launch:function(){}},
-				{text:'New Input',launch:function(){}}
+				{text:'New Element',launch:function(){
+					console.log(this)
+				}.extend(this)},
 			]
 		};
 		this.parse_elements=function()
@@ -312,15 +496,179 @@ leimnud.Package.Public({
 			//alert(this.xmlform.db.length)
 			for(var i=0;i<this.xmlform.db.length;i++)
 			{
-				var e = {
-					type:'other',
-					group:this.tpl_default()
-				}.concat(this.xmlform.tag_attributes_to_object(this.xmlform.db[i]));
+				this.add_element(this.get_xml_parsed_from_uid(i));
+				//this.debug.log(e);
+			}
+		};
+		this.get_xml_parsed_from_uid=function(db_uid)
+		{
+			var e = {
+				type:'other',
+				group:this.tpl_default()
+			}.concat(this.xmlform.tag_attributes_to_object(this.xmlform.db[db_uid]));
+			//console.log(e);
+			return e;
+		};
+		this.add_section=function(e,d)
+		{
+			//d.setStyle({border:"1px solid "+this.options.style.section});
+			this.tmp.sh = this.add_section_shadow(d);
+			this.tmp.pn = new this.parent.module.panel();
+			this.tmp.pn.options={
+				title:"New section",
+				size:{
+					w:200,
+					h:250
+				},
+				control:{close:false},
+				statusBarButtons:[
+		   			{value:'Create'},
+		   		    {value:'Cancel'}
+		   		],
+				position:{center:true},
+				fx:{/*modal:true*/}
+			};
+			this.tmp.pn.make();
+			var a = {
+		   		textAlign:'right',
+		   		font:'normal 8pt Tahoma,sans-serif'
+			};
+		   	var b = {
+		   		textAlign:'left',
+		   		font:'normal 8pt Tahoma,sans-serif'
+		   	};
+			this.tmp.pn.addContent(
+				new DOM('table',{align:'center',cellPadding:2},{width:'100%',margin:0}).append(
+										new DOM('tbody').append(
+											new DOM('tr').append(
+												new DOM('td',{},{width:'50%'}).append(
+													new DOM('div',{innerHTML:'Columns:'},a)
+												),
+												new DOM('td',{},{width:'50%'}).append(
+													new DOM('div',{},b).append(
+														this.tmp.c = new DOM('select',{onchange:function(){
+																	this.tmp.p.innerHTML='';
+																	this.tmp.p.append(this.dynaform_dom_section_names());
+																}.extend(this)}
+															).append(
+															new DOM('option',{value:1,text:1}),
+															new DOM('option',{value:2,text:2}),
+															new DOM('option',{value:3,text:3}),
+															new DOM('option',{value:4,text:4})
+														)
+													)
+												)
+											),
+											new DOM('tr').append(
+												new DOM('td',{colSpan:2}).append(
+													new DOM('div',{},a).append(
+														new DOM('fieldset',{},{border:'1px solid #B3B3BF'}).append(
+															new DOM('legend',{innerHTML:'Labels'}),
+															this.tmp.p = new DOM('div').append(this.dynaform_dom_section_names())
+														)
+													)
+												)
+											)
+										)
+									)
+			);
+			this.tmp.pn.elements.statusBarButtons[1].onmouseup=function(){
+				this.tmp.sh.remove();
+				this.tmp.pn.remove;
+			}.extend(this);
+			this.tmp.pn.elements.statusBarButtons[0].onmouseup=function()
+							{
+								var s = [];
+								var r = true;
+								for(var i=0;i<this.tmp.pr.length;i++)
+								{
+									var v = this.tmp.pr[i].value;
+									if(v.trim()=='' || !v.isAlphaUS() || this.options.points[v] || s.inArray(v))
+									{
+										this.tmp.pr[i].failed();
+										r = false;
+									}
+									else
+									{
+										this.tmp.pr[i].passed();
+										s.push(v);
+									}									
+								}
+								if(r)
+								{
+									var w = 100/s.length;
+									var __t;
+									this.tmp.sh.replace(
+										new DOM('table',{},{width:"100%"}).append(
+											new DOM('tbody').append(
+												__t = new DOM('tr')
+											)
+										)
+									);
+									var e = [];
+									for(var i=0;i<s.length;i++)
+									{
+										var s_;
+										__t.append(
+											new DOM('td',{},{width:(w+"%")}).append(
+												s_ = new DOM('div',{section:s[i]},this.options.style.add_section)
+											)
+										)
+										this.options.points[s[i]]=s_;
+									}
+									this.tplSetDropables();
+									this.tmp.pn.remove();
+									if(this.tmp.sh_root)
+									{
+										this.tmp.sh_root.setStyle({border:'0px solid red'});
+										this.tmp.sh_root=false;
+									}
+								}
+								/*this.tmp.n.passed();
+									var a = {};
+									for(var i=0;i<this.tmp.pr.length;i++)
+									{
+										a[this.tmp.pr[i].name]=this.tmp.pr[i].value;
+									}
+									//alert(this.tmp.p.length);
+									this.add_element(this.tmp.n.value.trim(),true,{group:this.tmp.g,type:this.tmp.t.value}.concat(a));
+									this.options.panel.add.remove();*/
+								
+								//alert(this.tmp.t.value+":"+this.tmp.n.value+":"+this.tmp.v.value)
+							}.extend(this);
+		};
+		this.add_section_shadow=function(t)
+		{
+			var s;
+			if(t.id=='root')
+			{
+				t.append(
+					s = new DOM('div',{},this.options.style.new_section)
+				);
+			}
+			else
+			{
+				this.tmp.sh_root =t.parentNode;
+				this.tmp.sh_root.setStyle({border:'1px solid red'});
+				t.parentNode.append(
+					s = new DOM('div',{},this.options.style.new_section)
+				);
+			}
+			return s;
+		};
+		this.add_element=function(e,ne,at,o)
+		{
+				if(ne===true)
+				{
+					this.xmlform.add(e,at,o || {});
+					e = at.concat({nodeName:e});
+				}
 				e.group=(this.options.points.isset_key(e.group))?e.group:this.tpl_default();
+//console.info(e)
 				var d = this.dynaform_dom[((this.dynaform_dom.isset_key(e.type))?e.type:'other')](e);
 				pd = d.dom;
 				pd.setStyle({
-					margin:1,
+					margin:3,
 					border:'1px solid #EEE',
 					font:'normal 8pt Tahoma,MiscFixed',
 					padding:5
@@ -330,53 +678,27 @@ leimnud.Package.Public({
 					var event = window.event || evt;
 					var t = this.xmlform.db[db_uid];
 					var d = this.db[db_uid];
+					this.down_time = new Date().getTime();
+					if(this.inDragProcess===true)
+					{
+						return false;
+					}
+					if(this.phantom_static)
+					{
+						this.phantom_static.remove();
+					}
 					if(event.ctrlKey)
 					{
-						if(this.inDragProcess===true)
-						{
-							return false;
-						}
-						if(this.phantom_static)
-						{
-							this.phantom_static.remove();
-						}
-						this.inDragProcess=true;
-						var j = this.parent.dom.position(d,false,true);
-						this.options.points[d.group].append(
-							this.phantom_static = new DOM('div',{},{
-								position:"absolute",
-								width	:d.clientWidth,
-								height	:d.clientHeight,
-								border	:"1px solid orange",
-								backgroundColor	:"orange",
-								top		:j.y,
-								left	:j.x
-							}).opacity(40),
-							this.imageAddRow = new DOM('img',{
-								src:this.parent.info.images+"nr.gif"
-							})
-						);
-			
-						this.options.drop.elements = new this.parent.module.drop();
-						this.options.drop.elements.make();
-						this.register_elements_drop(d.group);
-						this.setImageAddRow(this.key_in_group(db_uid));
-
-						this.options.drag.phantom = new this.parent.module.drag({
-							elements:this.phantom_static,
-							limit:"x",
-							limitbox:this.options.points[d.group]
-						});
-						this.options.drag.phantom.events={
-							move	:this.options.drop.elements.captureFromArray.args(this.options.drag.phantom,false,true),
-							finish  :this.drag_elements_onfinish.args(db_uid)
-						};
-						this.options.drag.phantom.make();
-						this.options.drag.phantom.onInit(event,0);
-
-						//return false;
+						this.reorder_element(event,db_uid);
 					}
-					
+					else if(event.shiftKey)
+					{
+						this.options.drop.groups.setArrayPositions();
+						this.reorder_element_group(event,db_uid);
+					}
+					else
+					{
+					}
 					d.setStyle({
 						border:'1px solid orange'
 					});
@@ -390,9 +712,12 @@ leimnud.Package.Public({
 					catch(e){
 					
 					}
-						this.xmlform.tag_edit(t,db_uid,this.sync_xml_node.args(db_uid));
+					this.xmlform.tag_edit(t,db_uid,this.sync_xml_node.args(db_uid));
 					return false;
 				}.extend(this,d.db_uid,e.group);
+				pd.onmouseup=function(event,db_uid){
+					return false;
+				}.extend(this,d.db_uid);
 				pd.onmouseover=function(event,db_uid){
 					var d = this.db[db_uid];
 					if(this.xmlform.current_edit!==db_uid)
@@ -413,8 +738,86 @@ leimnud.Package.Public({
 					}
 				}.extend(this,d.db_uid);
 
-				//this.debug.log(e);
-			}
+		};
+		this.remove_element=function(db_uid)
+		{
+			this.db[db_uid].remove();
+		};
+		this.reorder_element_group=function(event,db_uid)
+		{
+				this.inDragProcess=true;
+//				alert([arguments[0],arguments[1],arguments[2]]);
+				var t = this.xmlform.db[db_uid];
+				var d = this.db[db_uid];
+				//var j = this.parent.dom.position(d,false,'bcn');
+				var st = this.options.target.scrollTop;
+				var sl = this.options.target.scrollLeft;
+				var j	= this.parent.dom.mouse(event);
+				this.options.dom.body.append(
+					this.phantom_static = new DOM('div',{},{
+						position:"absolute",
+						width	:d.clientWidth,
+						height	:d.clientHeight,
+						border	:"1px solid orange",
+						backgroundColor	:"orange",
+						top		:(j.y-35)+st,
+						left	:(j.x-40)+sl
+					}).opacity(40)
+				);
+//				this.setImageAddRow(this.key_in_group(db_uid));
+				this.options.drag.phantom = new this.parent.module.drag({
+					elements:this.phantom_static,
+					limitbox:this.options.dom.body
+				});
+				this.options.drag.phantom.events={
+					move	:this.options.drop.groups.captureFromArray.args(this.options.drag.phantom,false,true),
+					finish  :this.drag_elements_group_onfinish.args(db_uid)
+				};
+				this.options.drag.phantom.make();
+				this.options.drag.phantom.onInit(event,0);
+					//return false;
+			return false;		
+		};
+		this.reorder_element=function(event,db_uid)
+		{
+				var ctime = new Date().getTime();
+				this.inDragProcess=true;
+//				alert([arguments[0],arguments[1],arguments[2]]);
+				var t = this.xmlform.db[db_uid];
+				var d = this.db[db_uid];
+				var j = this.parent.dom.position(d,false,true);
+				this.options.points[d.group].append(
+					this.phantom_static = new DOM('div',{},{
+						position:"absolute",
+						width	:d.clientWidth,
+						height	:d.clientHeight,
+						border	:"1px solid orange",
+						backgroundColor	:"orange",
+						top		:j.y,
+						left	:j.x
+					}).opacity(40),
+					this.imageAddRow = new DOM('img',{
+						src:this.parent.info.images+"nr.gif"
+					})
+				);
+				this.options.drop.elements = new this.parent.module.drop();
+				this.options.drop.elements.make();
+				this.register_elements_drop(d.group);
+				this.setImageAddRow(this.key_in_group(db_uid));
+					this.options.drag.phantom = new this.parent.module.drag({
+					elements:this.phantom_static,
+					limit:"x",
+					limitbox:this.options.points[d.group]
+				});
+				this.options.drag.phantom.events={
+					move	:this.options.drop.elements.captureFromArray.args(this.options.drag.phantom,false,true),
+					finish  :this.drag_elements_onfinish.args(db_uid)
+				};
+				this.options.drag.phantom.make();
+				this.options.drag.phantom.onInit(event,0);
+					//return false;
+			
+			return false;
 		};
 		this.sync_xml_node=function(data,db_uid)
 		{
@@ -423,6 +826,10 @@ leimnud.Package.Public({
 			this.sync_dom(db_uid,cd);
 		};
 		this.sync_dom=function(db_uid,obj)
+		{
+			
+		};
+		this.register_groups_drop=function(group)
 		{
 			
 		};
@@ -470,6 +877,43 @@ leimnud.Package.Public({
 				top:((last)?this.options.drop.elements.arrayPositions[drop_uid].y2:this.options.drop.elements.arrayPositions[drop_uid].y1)-7,
 				left:this.options.drop.elements.arrayPositions[drop_uid].x1-3
 			});
+		};
+		this.drag_elements_group_onfinish=function(db_uid)
+		{
+			var drag = this.options.drag.phantom;
+			var drop = this.options.drop.groups;
+			if(drag.moved)
+			{
+				this.inDragProcess=false;
+				this.phantom_static.remove();
+				delete this.phantom_static;
+				if(drop.selected!==false)
+				{
+					var t = drop.elements[drop.selected].value;
+					//console.log(this.xmlform.db[db_uid])
+					var c = this.xmlform.tag_attributes_to_object(this.xmlform.db[db_uid]).concat({
+						group:t
+					});
+					var m = c['nodeName'];
+					//console.log(c.group)
+					////this.add_element(m,true,{group:c.group,type:"other"});
+					//this.add_element(m,true,{group:t,type:"other"});
+					this.add_element(m,true,c);
+					this.remove_element(db_uid);
+				}
+				else
+				{
+					
+				}
+
+			}
+			else
+			{
+				this.inDragProcess=false;
+				this.phantom_static.remove();
+				delete this.phantom_static;
+
+			}
 		};
 		this.drag_elements_onfinish=function(db_uid)
 		{
@@ -536,9 +980,14 @@ leimnud.Package.Public({
 			{
 				/*insertRowIn	= drag.currentElementDrag.db_uid-1;
 				begin		= true;*/
+				this.inDragProcess=false;
+				this.phantom_static.remove();
+				delete this.phantom_static;
 			}
 			
 		};
+		/* Contar elementos en grupo */
+
 		/*	Devuelve el Key actual de un objeto dentro del grupo	*/
 		this.key_in_group=function(db_uid)
 		{
@@ -553,9 +1002,84 @@ leimnud.Package.Public({
 			}
 			return j;
 		};
-		this.dynaform_dom={
-			text:function(options)
+		this.dynaform_dom_section_names=function()
+		{
+			var v = this.tmp.c.options[this.tmp.c.options.selectedIndex].value;
+			var a = {
+		   		textAlign:'right',
+		   		font:'normal 8pt Tahoma,sans-serif'
+		   	};
+		   	var b = {
+		   		textAlign:'left',
+		   		font:'normal 8pt Tahoma,sans-serif'
+		   	};
+			var at;
+			var tb = new DOM('ol',{type:1});
+			this.tmp.pr=[];
+			for(var i=0;i<v;i++)
 			{
+				tb.append(
+					new DOM('li').append(
+						this.tmp.pr[i]=new input({style:{width:"100%",marginTop:2}})
+					)
+				);
+			}
+			return tb;
+		};
+		this.dynaform_dom_properties=function()
+		{
+			var v = this.tmp.t.options[this.tmp.t.options.selectedIndex].value;
+			var a = {
+		   		textAlign:'right',
+		   		font:'normal 8pt Tahoma,sans-serif'
+		   	};
+		   	var b = {
+		   		textAlign:'left',
+		   		font:'normal 8pt Tahoma,sans-serif'
+		   	};
+			var at;
+			var tb = new DOM('table',{cellPadding:2},{width:'100%'}).append(
+				at = new DOM('tbody')
+			);
+			var as = this.dynaform_dom[v]({},true);
+			this.tmp.pr=[];
+			for(var i=0;i<as.length;i++)
+			{
+				at.append(
+					new DOM('tr').append(
+						new DOM('td',{},{width:'30%'}).append(
+							new DOM('div',{innerHTML:as[i]+":"},a)
+						),
+						new DOM('td',{},{width:'70%'}).append(
+							new DOM('div',{},b).append(
+								this.tmp.pr[i]=new input({label:'',properties:{name:as[i]},style:{width:'100%'}})
+							)
+						)
+					)
+				);
+			}
+			return tb;
+		};
+		this.dynaform_dom_types=function()
+		{
+			var a = new DOM('select',{onchange:function(){
+				this.tmp.p.innerHTML='';
+				this.tmp.p.append(this.dynaform_dom_properties());
+			}.extend(this)},{font:'normal 8pt Tahoma,sans-serif'});
+			//alert(this.dynaform_dom)
+			for (var i in this.dynaform_dom)
+            {
+                if(this.dynaform_dom.propertyIsEnumerable(i))
+                {
+					a.append(new DOM('option',{text:i,value:i}));
+				}
+            }
+			return a;
+		};
+		this.dynaform_dom={
+			text:function(options,get)
+			{
+				if(get){return ['size','maxlength','defaultvalue','required','dependentfields','linkfield','other_attribute'];}
 				options={
 					
 				}.concat(options || {});
@@ -569,14 +1093,15 @@ leimnud.Package.Public({
 					db_uid:pd.db_uid
 				};
 			},
-			other:function(options)
+			other:function(options,get)
 			{
+				if(get){return ['other1','other2','other_attribute'];}
 				options={
 					
 				}.concat(options || {});
 				var pd;
 				this.options.points[options.group].append(
-					pd = new DOM('div',{innerHTML:options.nodeName,group:options.group,db_uid:this.db.length})
+					pd = new DOM('div',{innerHTML:'Other',group:options.group,db_uid:this.db.length})
 				);
 				this.db.push(pd);
 				return {
@@ -584,8 +1109,9 @@ leimnud.Package.Public({
 					db_uid:pd.db_uid
 				};
 			},
-			title:function(options)
+			title:function(options,get)
 			{
+				if(get){return ['other_attribute'];}
 				options={
 					
 				}.concat(options || {});
@@ -599,7 +1125,6 @@ leimnud.Package.Public({
 					db_uid:pd.db_uid
 				};
 			}
-
 		}.expand(this)
         this.expand(this);
         return this;

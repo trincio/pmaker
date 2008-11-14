@@ -444,7 +444,7 @@ leimnud.Package.Public({
 				{
 					this.options.parent_menu.updateObservers();
 					//this.submenu.options.parent_menu.remove();
-					//alert(this.submenu.options.parent_menu)
+					//alert(this.submenu.options.parent_menu);
 				}
 				this.remove();
 				opt=this.parent.browser.isIE?evt:opt;
@@ -839,7 +839,7 @@ leimnud.Package.Public({
 					},
 					frontend:{
 						background:"",
-						backgroundColor:"#DFF2FD"
+						backgroundColor:"#ECECEC"
 					},
 					backend:{
 						backgroundColor:"transparent"
@@ -1042,7 +1042,7 @@ leimnud.Package.Public({
 				var rr = this.panel.elements.containerWindow;
 				this.parent.dom.setStyle(this.footer,{
 					position	: "absolute",
-					background	:"url("+this.options.skin_images+"background_bottom.png) no-repeat",
+					background	:"url("+this.options.skin_images+"background_bottom_dark.png) no-repeat",
 					width		:524,
 					height		:56,
 					top			:this.panel.options.position.y+rr.offsetHeight,
@@ -1080,14 +1080,14 @@ leimnud.Package.Public({
 				right	:parseInt(prev.style.right,10)+20
 				});*/
 				this.domNext	 = $dce("img");
-				this.domNext.src = this.options.skin_images+"next.png";
+				this.domNext.src = this.options.skin_images+"next_dark.png";
 				this.domNext.onmouseover = function()
 				{
-					this.domNext.src = this.options.skin_images+"next_on.png";
+					this.domNext.src = this.options.skin_images+"next_on_dark.png";
 				}.extend(this);
 				this.domNext.onmouseout = function()
 				{
-					this.domNext.src = this.options.skin_images+"next.png";
+					this.domNext.src = this.options.skin_images+"next_dark.png";
 				}.extend(this);
 				this.parent.dom.setStyle(this.domNext,{
 					position	: "absolute",
@@ -1112,14 +1112,14 @@ leimnud.Package.Public({
 					zIndex	:this.panel.elements.containerWindow.style.zIndex+1
 				});
 				this.domPrev = $dce("img");
-				this.domPrev.src = this.options.skin_images+"back.png";
+				this.domPrev.src = this.options.skin_images+"back_dark.png";
 				this.domPrev.onmouseover = function()
 				{
-					this.domPrev.src = this.options.skin_images+"back_on.png";
+					this.domPrev.src = this.options.skin_images+"back_on_dark.png";
 				}.extend(this);
 				this.domPrev.onmouseout = function()
 				{
-					this.domPrev.src = this.options.skin_images+"back.png";
+					this.domPrev.src = this.options.skin_images+"back_dark.png";
 				}.extend(this);
 				this.parent.dom.setStyle(this.domPrev,{
 					position	: "absolute",
@@ -1185,26 +1185,26 @@ leimnud.Package.Public({
 			this.control={
 				setPlay:function()
 				{
-					this.domPlay.src = this.options.skin_images+"play.png";
+					this.domPlay.src = this.options.skin_images+"play_dark.png";
 					this.domPlay.onmouseover = function()
 					{
-						this.domPlay.src = this.options.skin_images+"play_on.png";
+						this.domPlay.src = this.options.skin_images+"play_on_dark.png";
 					}.extend(this);
 					this.domPlay.onmouseout = function()
 					{
-						this.domPlay.src = this.options.skin_images+"play.png";
+						this.domPlay.src = this.options.skin_images+"play_dark.png";
 					}.extend(this);
 				},
 				setPause:function()
 				{
-					this.domPlay.src = this.options.skin_images+"pause.png";
+					this.domPlay.src = this.options.skin_images+"pause_dark.png";
 					this.domPlay.onmouseover = function()
 					{
-						this.domPlay.src = this.options.skin_images+"pause_on.png";
+						this.domPlay.src = this.options.skin_images+"pause_on_dark.png";
 					}.extend(this);
 					this.domPlay.onmouseout = function()
 					{
-						this.domPlay.src = this.options.skin_images+"pause.png";
+						this.domPlay.src = this.options.skin_images+"pause_dark.png";
 					}.extend(this);
 				},
 				play:function()

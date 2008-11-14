@@ -225,7 +225,7 @@ var maborak = function(){
 		* Check if a value exists in an Array
 		* @return Boolean
 		*/
-		Array.prototype.inArray		= function(search)
+		Array.prototype.inArray	= function(search)
 		{
 			var valid=[];
 			for(var i=0;i<this.length;i++)
@@ -607,6 +607,23 @@ var maborak = function(){
 				return oThis.apply(oThis,argumentsToArray(arguments).concat(args));
 			};
 		};
+		String.prototype.isAlphaUS=function()
+		{
+			var a = this.split("");
+			var b = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_".split("");
+			//alert(b.length)
+			for(var i=0;i<a.length;i++)
+			{
+				if(!b.inArray(a[i])){
+					return false;
+				}
+			}
+			return true;
+		};
+		/**
+		* Strip whitespaces from the beginning and end of String
+		* @return String with whitespaces stripped
+		*/
 		String.prototype.isString=true;
 		/**
 		* Strip whitespaces from the beginning and end of String
@@ -1594,8 +1611,9 @@ var maborak = function(){
 					while (DOM.offsetParent){
 						DOM = DOM.offsetParent;
 						//alert(StopOnAbsolute)
-						//alert(position.x+":"+position.y)
-						if(StopOnAbsolute && (this.parent.dom.getStyle(DOM,"position")=="absolute" || this.parent.dom.getStyle(DOM,"position")=="relative"))
+						var sta = (typeof StopOnAbsolute=="string")?(StopOnAbsolute==DOM.id):StopOnAbsolute;
+//						console.info(position.x+":"+position.y+":"+StopOnAbsolute+":"+DOM.id+":"+sta);
+						if(sta && (this.parent.dom.getStyle(DOM,"position")=="absolute" || this.parent.dom.getStyle(DOM,"position")=="relative"))
 						{
 							break;
 						}
