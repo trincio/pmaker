@@ -27,6 +27,27 @@ leimnud.Package.Public({
 			r.callback=this.parse;
 			r.make();
 		};
+		this.add=function(nn,at,o)
+		{			
+			var w = this.xml.createElement(nn);
+			w.textContent=o.textContent || nn;
+			this.add_attributes(w,at);
+			this.xml.documentElement.appendChild(w);
+			this.add_to_db(w);
+		};
+		this.add_attributes=function(dn,at)
+		{
+			for(var i in at)
+			{
+				
+				if(at.propertyIsEnumerable(i))
+				{
+					var af = this.xml.createAttribute(i);
+					af.nodeValue=at[i];
+					dn.setAttributeNode(af);
+				}
+			}
+		};
 		this.parse=function(rpc)
 		{
 				window.d = this.xml = rpc.xmlhttp.responseXML;

@@ -12,7 +12,7 @@ leimnud.Package.Public({
 		Version	:"1.0.5"
 	},
 	content	:function(options)
-	{
+	{		
 		this.uid	= this.parent.tools.createUID();
 		this.zIndex	= 0;
 		this.stepZindex	= 5;
@@ -424,10 +424,12 @@ leimnud.Package.Public({
 		this.move=function(opt)
 		{
 			opt = {
-				fx:true
+				fx:true,
+				x:this.options.position.x,
+				y:this.options.position.y
 			}.concat(opt);
-			if(typeof opt.x!=="undefined" && typeof opt.y!=="undefined")
-			{
+			//if(typeof opt.x!=="undefined" && typeof opt.y!=="undefined")
+			//{
 				this.options.position.x = opt.x;
 				this.options.position.y = opt.y;
 				if(opt.fx===true)
@@ -461,7 +463,7 @@ leimnud.Package.Public({
 						});
 					}
 				}
-			}
+			//}
 		};
 		this.maximize=function()
 		{
@@ -541,6 +543,7 @@ leimnud.Package.Public({
 				this.options.position.y = center.y;
 				this.options.position.x = this.options.position.x || 0;
 				this.options.position.y = this.options.position.y || 0;
+				
 			}
 			this.options.position.x = (this.options.position.x<0)?0:this.options.position.x;
 			this.options.position.y = (this.options.position.y<0)?0:this.options.position.y;
@@ -1183,9 +1186,9 @@ leimnud.Package.Public({
 					this.options.position.x = this.options.position.x || 0;
 					this.options.position.y = this.options.position.y || 0;
 				}
-
-				this.options.position.x = (this.options.position.x<0)?0:this.options.position.x;
-				this.options.position.y = (this.options.position.y<0)?0:this.options.position.y;
+				
+				//this.options.position.x = (this.options.position.x<0)?0:this.options.position.x;
+				//this.options.position.y = (this.options.position.y<0)?0:this.options.position.y;
 
 
 				this.zIndex		= this.options.zIndex || this.makezIndex();
