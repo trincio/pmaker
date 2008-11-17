@@ -10,6 +10,12 @@
 4.-  arrastrar soltar NO. right click Elementos.
 
 
+i: .xml, .tpl
+
+o: .xml, .tpl, .html
+
+
+
 
 
 */
@@ -574,7 +580,12 @@ leimnud.Package.Public({
 			);
 			this.tmp.pn.elements.statusBarButtons[1].onmouseup=function(){
 				this.tmp.sh.remove();
-				this.tmp.pn.remove;
+				if(this.tmp.sh_root)
+				{
+					this.tmp.sh_root.setStyle({border:'0px solid red'});
+					this.tmp.sh_root=false;
+				}
+				this.tmp.pn.remove();
 			}.extend(this);
 			this.tmp.pn.elements.statusBarButtons[0].onmouseup=function()
 							{
