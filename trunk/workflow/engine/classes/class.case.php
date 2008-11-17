@@ -2849,7 +2849,7 @@ funcion momentanea by Everth The Answer
 /*
 funcion input documents for case tracker by Everth The Answer
 */
-function getAllUploadedDocumentsCriteriaTracker($sProcessUID, $sApplicationUID) {
+function getAllUploadedDocumentsCriteriaTracker($sProcessUID, $sApplicationUID, $sDocUID) {
 
       require_once 'classes/model/AppDocument.php';
       $oAppDocument = new AppDocument();
@@ -2857,6 +2857,7 @@ function getAllUploadedDocumentsCriteriaTracker($sProcessUID, $sApplicationUID) 
       $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
       //$oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, array('INPUT'), Criteria::IN);
       $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, 'INPUT');
+      $oCriteria->add(AppDocumentPeer::DOC_UID, $sDocUID);
       $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
       $oDataset = AppDocumentPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
@@ -2938,13 +2939,14 @@ function getAllUploadedDocumentsCriteriaTracker($sProcessUID, $sApplicationUID) 
 /*
 funcion output documents for case tracker by Everth The Answer
 */
-function getAllGeneratedDocumentsCriteriaTracker($sProcessUID, $sApplicationUID) {
+function getAllGeneratedDocumentsCriteriaTracker($sProcessUID, $sApplicationUID, $sDocUID) {
 
       require_once 'classes/model/AppDocument.php';
       $oAppDocument = new AppDocument();
       $oCriteria = new Criteria('workflow');
       $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
       $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, 'OUTPUT');
+      $oCriteria->add(AppDocumentPeer::DOC_UID, $sDocUID);
       $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
       $oDataset = AppDocumentPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
