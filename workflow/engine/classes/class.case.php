@@ -535,6 +535,7 @@ class Cases
         $aConditions[] = array(AppThreadPeer::DEL_INDEX, AppDelegationPeer::DEL_INDEX);
         $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
         $oCriteria->add(AppDelegationPeer::TAS_UID, $aPreviousTask, Criteria::IN);
+        $oCriteria->add(AppDelegationPeer::APP_UID, $sAppUid);
         if (AppThreadPeer::doCount($oCriteria) == 1) {
           $aAux = $aPreviousTask;
           foreach ($aAux as $sTaskUid) {
