@@ -36,20 +36,6 @@ try {
   	  die;
   	break;
   }
-  /*$sUsers = '<select name="USERS[]" id="USERS[]"><option value=""> - ' . G::LoadTranslation('ID_NO_REASSIGN') . ' - </option>';
-  require_once 'classes/model/Users.php';
-  $oCriteria = new Criteria('workflow');
-  $oCriteria->addSelectColumn(UsersPeer::USR_UID);
-  $oCriteria->addAsColumn('USR_COMPLETENAME', "CONCAT(USR_LASTNAME, ' ', USR_FIRSTNAME, ' (', USR_USERNAME, ')')");
-  $oCriteria->add(UsersPeer::USR_UID, $_GET['sUser'], Criteria::NOT_EQUAL);
-  $oDataset = UsersPeer::doSelectRS($oCriteria);
-  $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-  $oDataset->next();
-  while ($aRow = $oDataset->getRow()) {
-    $sUsers .= '<option value="' . $aRow['USR_UID'] . '">' . $aRow['USR_COMPLETENAME'] . '</option>';
-    $oDataset->next();
-  }
-  $sUsers .= '</select>';*/
   $oTemplatePower = new TemplatePower(PATH_TPL . 'users/users_ReassignCases.html');
   $oTemplatePower->prepare();
   G::LoadClass('tasks');
@@ -70,9 +56,6 @@ try {
     foreach ($aKeys as $sKey) {
       $oTemplatePower->assign($sKey, $aRow[$sKey]);
     }
-    $sUsers  = '<input type="hidden" name="APPLICATIONS[]" id="APPLICATIONS[]" value="' . $aRow['APP_UID'] . '" />';
-    $sUsers .= '<input type="hidden" name="INDEXES[]" id="INDEXES[]" value="' . $aRow['DEL_INDEX'] . '" />';
-    $sUsers .= '<select name="USERS[]" id="USERS[]"><option value=""> - ' . G::LoadTranslation('ID_NO_REASSIGN') . ' - </option>';
     $aUsers  = array($_GET['sUser']);
     $aAux1   = $oTasks->getGroupsOfTask($aRow['TAS_UID'], 1);
   	foreach ($aAux1 as $aGroup) {
@@ -81,7 +64,9 @@ try {
         if (!in_array($aUser['USR_UID'], $aUsers)) {
           $aUsers[] = $aUser['USR_UID'];
           $aData    = $oUser->load($aUser['USR_UID']);
-          $sUsers .= '<option value="' . $aUser['USR_UID'] . '">' . $aData['USR_FIRSTNAME'] . ' ' . $aData['USR_LASTNAME'] . ' (' . $aData['USR_USERNAME'] . ')</option>';
+          $oTemplatePower->newBlock('users');
+          $oTemplatePower->assign('USR_UID', $aUser['USR_UID']);
+          $oTemplatePower->assign('USR_FULLNAME', $aData['USR_FIRSTNAME'] . ' ' . $aData['USR_LASTNAME'] . ' (' . $aData['USR_USERNAME'] . ')');
         }
   	  }
   	}
@@ -90,11 +75,14 @@ try {
       if (!in_array($aUser['USR_UID'], $aUsers)) {
         $aUsers[] = $aUser['USR_UID'];
         $aData    = $oUser->load($aUser['USR_UID']);
-        $sUsers .= '<option value="' . $aUser['USR_UID'] . '">' . $aData['USR_FIRSTNAME'] . ' ' . $aData['USR_LASTNAME'] . ' (' . $aData['USR_USERNAME'] . ')</option>';
+        $oTemplatePower->newBlock('users');
+        $oTemplatePower->assign('USR_UID', $aUser['USR_UID']);
+        $oTemplatePower->assign('USR_FULLNAME', $aData['USR_FIRSTNAME'] . ' ' . $aData['USR_LASTNAME'] . ' (' . $aData['USR_USERNAME'] . ')');
       }
   	}
-    $sUsers .= '</select>';
-    $oTemplatePower->assign('USERS', str_replace('USERS[]', 'USERS[]', $sUsers));
+  	$oTemplatePower->gotoBlock('cases');
+  	$oTemplatePower->assign('ID_STATUS', G::LoadTranslation('ID_TO_DO'));
+  	$oTemplatePower->assign('ID_NO_REASSIGN', G::LoadTranslation('ID_NO_REASSIGN'));
     $oDataset->next();
   }
   $oDataset = ApplicationPeer::doSelectRS($oCriteriaDraft);
@@ -106,7 +94,33 @@ try {
     foreach ($aKeys as $sKey) {
       $oTemplatePower->assign($sKey, $aRow[$sKey]);
     }
-    $oTemplatePower->assign('USERS', str_replace('USERS[]', 'USERS[]', $sUsers));
+    $aUsers  = array($_GET['sUser']);
+    $aAux1   = $oTasks->getGroupsOfTask($aRow['TAS_UID'], 1);
+  	foreach ($aAux1 as $aGroup) {
+  		$aAux2 = $oGroups->getUsersOfGroup($aGroup['GRP_UID']);
+  	  foreach ($aAux2 as $aUser) {
+        if (!in_array($aUser['USR_UID'], $aUsers)) {
+          $aUsers[] = $aUser['USR_UID'];
+          $aData    = $oUser->load($aUser['USR_UID']);
+          $oTemplatePower->newBlock('users');
+          $oTemplatePower->assign('USR_UID', $aUser['USR_UID']);
+          $oTemplatePower->assign('USR_FULLNAME', $aData['USR_FIRSTNAME'] . ' ' . $aData['USR_LASTNAME'] . ' (' . $aData['USR_USERNAME'] . ')');
+        }
+  	  }
+  	}
+  	$aAux1  = $oTasks->getUsersOfTask($aRow['TAS_UID'], 1);
+  	foreach ($aAux1 as $aUser) {
+      if (!in_array($aUser['USR_UID'], $aUsers)) {
+        $aUsers[] = $aUser['USR_UID'];
+        $aData    = $oUser->load($aUser['USR_UID']);
+        $oTemplatePower->newBlock('users');
+        $oTemplatePower->assign('USR_UID', $aUser['USR_UID']);
+        $oTemplatePower->assign('USR_FULLNAME', $aData['USR_FIRSTNAME'] . ' ' . $aData['USR_LASTNAME'] . ' (' . $aData['USR_USERNAME'] . ')');
+      }
+  	}
+  	$oTemplatePower->gotoBlock('cases');
+  	$oTemplatePower->assign('ID_STATUS', G::LoadTranslation('ID_DRAFT'));
+  	$oTemplatePower->assign('ID_NO_REASSIGN', G::LoadTranslation('ID_NO_REASSIGN'));
     $oDataset->next();
   }
   $oTemplatePower->gotoBlock('_ROOT');
@@ -114,6 +128,7 @@ try {
   $oTemplatePower->assign('ID_CASE',        G::LoadTranslation('ID_CASE'));
   $oTemplatePower->assign('ID_TASK',        G::LoadTranslation('ID_TASK'));
   $oTemplatePower->assign('ID_PROCESS',     G::LoadTranslation('ID_PROCESS'));
+  $oTemplatePower->assign('ID_STATUS',      G::LoadTranslation('ID_STATUS'));
   $oTemplatePower->assign('ID_REASSIGN_TO', G::LoadTranslation('ID_REASSIGN_TO'));
   $oTemplatePower->assign('ID_REASSIGN',    G::LoadTranslation('ID_REASSIGN'));
   $oTemplatePower->assign('USR_UID',        $_GET['sUser']);
