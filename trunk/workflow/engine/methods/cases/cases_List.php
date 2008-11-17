@@ -25,7 +25,7 @@
 
   /* Permissions */
   if (($RBAC_Response = $RBAC->userCanAccess("PM_CASES"))!=1) return $RBAC_Response;
-  //if (($RBAC_Response = $RBAC->userCanAccess("PM_CASES"))!=1) return $RBAC_Response;
+  
   /* Includes */
   G::LoadClass('case');
   G::LoadClass('configuration');
@@ -75,5 +75,11 @@
 
   /* Render page */
   $G_PUBLISH = new Publisher;
-  $G_PUBLISH->AddContent( 'propeltable', 'paged-table', $xmlfile, $Criteria );
+  if (($RBAC_Response = $RBAC->userCanAccess("PM_ALLCASES"))==1 && ($RBAC_Response = $RBAC->userCanAccess("PM_REASSIGNCASE"))==1)  
+  		$G_PUBLISH->AddContent( 'propeltable', 'paged-table','cases/cases_ListAll_Reassign' , $Criteria );		
+  else		
+  	{	if (($RBAC_Response = $RBAC->userCanAccess("PM_ALLCASES"))==1)  
+  				$G_PUBLISH->AddContent( 'propeltable', 'paged-table', $xmlfile, $Criteria );
+  	}	
+  
   G::RenderPage( "publish" );
