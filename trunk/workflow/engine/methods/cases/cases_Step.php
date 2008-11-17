@@ -382,7 +382,7 @@ switch ($_GET['TYPE'])
 
         $aFields['FILE2'] = 'cases_ShowOutputDocument?a=' . $aFields['APP_DOC_UID'] . '&ext=pdf&random=' . rand();
 
-        if(($aGields['OUT_DOC_GENERATE']=='BOTH')||$aGields['OUT_DOC_GENERATE']==''))
+        if(($aGields['OUT_DOC_GENERATE']=='BOTH')||($aGields['OUT_DOC_GENERATE']==''))
         		$G_PUBLISH->AddContent('xmlform', 'xmlform', 'cases/cases_ViewOutputDocument1', '', G::array_merges($aOD, $aFields), '');
 
         if($aGields['OUT_DOC_GENERATE']=='DOC')
