@@ -380,7 +380,7 @@ class Derivation
         default:
           // get all siblingThreads
           if ( $currentDelegation['ROU_TYPE'] == 'SEC-JOIN' ) {
-            $siblingThreads = $this->case->getOpenSiblingThreads($nextDel['TAS_UID'], $currentDelegation['APP_UID'], $currentDelegation['DEL_INDEX']);
+            $siblingThreads = $this->case->getOpenSiblingThreads($nextDel['TAS_UID'], $currentDelegation['APP_UID'], $currentDelegation['DEL_INDEX'], $currentDelegation['TAS_UID']);
             $canDerivate = count($siblingThreads) == 0;
           }
           else {
