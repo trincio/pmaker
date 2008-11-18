@@ -516,7 +516,7 @@ class Cases
     * @param string $sAppUid
     * @return
     */
-    function getOpenSiblingThreads($sNextTask, $sAppUid, $iDelIndex) {
+    function getOpenSiblingThreads($sNextTask, $sAppUid, $iDelIndex, $sCurrentTask) {
       try {
         require_once 'classes/model/Route.php';
         $aPreviousTask = array();
@@ -537,26 +537,44 @@ class Cases
         $oCriteria->add(AppDelegationPeer::TAS_UID, $aPreviousTask, Criteria::IN);
         $oCriteria->add(AppDelegationPeer::APP_UID, $sAppUid);
         if (AppThreadPeer::doCount($oCriteria) == 1) {
-          $aAux = $aPreviousTask;
-          foreach ($aAux as $sTaskUid) {
-            $oCriteria = new Criteria('workflow');
-            $oCriteria->add(RoutePeer::ROU_NEXT_TASK, $sTaskUid);
-            $oDataset = RoutePeer::doSelectRs($oCriteria);
-            $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-            $oDataset->next();
-            while ($aRow = $oDataset->getRow()) {
-              $oCriteria = new Criteria('workflow');
-              $oCriteria->add(AppDelegationPeer::APP_UID, $sAppUid);
-              $oCriteria->add(AppDelegationPeer::TAS_UID, $aRow['TAS_UID']);
-              $oCriteria->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
-              if (AppDelegationPeer::doCount($oCriteria) == 1) {
-                if (!in_array($aRow['TAS_UID'], $aPreviousTask)) {
-                  $aPreviousTask[] = $aRow['TAS_UID'];
+          $iCounter  = 0;
+          $bContinue = true;
+          $aTaskReviewed = array();
+          do {
+            $aAux = $aPreviousTask;
+            foreach ($aAux as $sTaskUid) {
+              if (!in_array($sTaskUid, $aTaskReviewed)) {
+                $aTaskReviewed[] = $sTaskUid;
+                $oCriteria = new Criteria('workflow');
+                $oCriteria->add(RoutePeer::ROU_NEXT_TASK, $sTaskUid);
+                $oDataset = RoutePeer::doSelectRs($oCriteria);
+                $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+                $oDataset->next();
+                while (($aRow = $oDataset->getRow()) && ($bContinue)) {
+                  if (!in_array($aRow['TAS_UID'], $aPreviousTask)) {
+                    $aPreviousTask[] = $aRow['TAS_UID'];
+                  }
+                  $oCriteria = new Criteria('workflow');
+                  $oCriteria->add(AppDelegationPeer::APP_UID, $sAppUid);
+                  $oCriteria->add(AppDelegationPeer::TAS_UID, $aRow['TAS_UID']);
+                  $oCriteria->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
+                  if (AppDelegationPeer::doCount($oCriteria) == 1) {
+                    if ($aRow['TAS_UID'] != $sCurrentTask) {
+                      $bContinue = false;
+                    }
+                    else {
+                      $bContinue = true;
+                    }
+                  }
+                  else {
+                    $bContinue = true;
+                  }
+                  $oDataset->next();
                 }
               }
-              $oDataset->next();
             }
-          }
+            $iCounter++;
+          } while (($bContinue) && ($iCounter < 100));
         }
         $oCriteria = new Criteria('workflow');
         $oCriteria->add(AppThreadPeer::APP_UID, $sAppUid);
