@@ -37,14 +37,34 @@ try {
   	break;
   }
   G::LoadClass('case');
-  $oCase = new Cases();
+  $oCase  = new Cases();
+  $aCases = array();
+  $aUsers = array();
   foreach ($_POST['USERS'] as $sKey => $sUser) {
     if ($sUser != '') {
       $oCase->reassignCase($_POST['APPLICATIONS'][$sKey], $_POST['INDEXES'][$sKey], $_POST['USR_UID'], $sUser);
+      $aCases[] = $_POST['APPLICATIONS'][$sKey];
+      $aUsers[] = $sUser;
     }
   }
-  G::SendMessageText(G::LoadTranslation('ID_FINISHED'), 'info');
-  G::header('Location: users_ReassignCases?sUser=' . $_POST['USR_UID']);
+  G::LoadClass('case');
+  $oCase = new Cases();
+  require_once 'classes/model/Users.php';
+  $oUser = new Users();
+  $sText = '';
+  foreach ($aCases as $sKey => $sCase) {
+    $aCase  = $oCase->loadCase($sCase);
+    $aUser  = $oUser->load($aUsers[$sKey]);
+    $sText .= $aCase['TITLE'] . ' => ' . $aUser['USR_FIRSTNAME'] . ' ' . $aUser['USR_LASTNAME'] . ' (' . $aUser['USR_USERNAME'] . ')' . '<br />';
+  }
+  $G_MAIN_MENU            = 'processmaker';
+  $G_SUB_MENU             = 'users';
+  $G_ID_MENU_SELECTED     = 'USERS';
+  $G_ID_SUB_MENU_SELECTED = '-';
+  $G_PUBLISH = new Publisher;
+  $aMessage['MESSAGE'] = $sText;
+  $G_PUBLISH->AddContent('xmlform', 'xmlform', 'login/showInfo', '', $aMessage);
+  G::RenderPage('publish');
 }
 catch (Exception $oException) {
 	die($oException->getMessage());
