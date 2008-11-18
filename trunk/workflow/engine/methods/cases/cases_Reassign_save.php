@@ -42,10 +42,26 @@ try {
   
     if ($_POST['USERS'] != '') {
       $oCase->reassignCase($_POST['APP_UID'], $_POST['DEL_INDEX'], $_SESSION['USER_LOGGED'], $_POST['USERS']);
+      
     }
+  $Fields=array();  
+  $Fields['USERS'] = $_POST['US'];
   
-  G::SendMessageText(G::LoadTranslation('ID_FINISHED'), 'info');
-  G::header('Location: cases_List');
+  G::LoadClass('case');
+  $oCases=new Cases();
+  $aCases=$oCases->loadCase($_POST['APP_UID'], $_POST['DEL_INDEX'] );
+  
+  $Fields['APP_NUMBER']=$aCases['APP_NUMBER'];
+  
+  $G_MAIN_MENU            = 'processmaker';
+  $G_SUB_MENU             = 'cases';
+  $G_ID_MENU_SELECTED     = 'CASES';
+  $G_ID_SUB_MENU_SELECTED = '-';
+  $G_PUBLISH = new Publisher;
+  $G_PUBLISH->AddContent('xmlform', 'xmlform', 'cases/cases_Reassign.xml', '', $Fields, '');
+  G::RenderPage( 'publish' );
+  //G::SendMessageText(G::LoadTranslation('ID_FINISHED'), 'info');
+  //G::header('Location: cases_List');
   
 }
 catch (Exception $oException) {

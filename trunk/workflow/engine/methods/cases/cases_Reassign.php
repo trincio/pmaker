@@ -89,7 +89,7 @@ $oUser   = new Users();
 				$name=$value['USR_FIRSTNAME'].' '.$value['USR_LASTNAME'].' ('.$value['USR_USERNAME'].')';
 				//$users=$users."<option value='".$value['USR_UID']."'>". $name ."</option>";				 
 				$tpl->assign( "USR_UID", $value['USR_UID'] );  
-				$tpl->assign( "USERS", $name );  
+				$tpl->assign( "USERS", $name );  								
 			}
 			//$users=$users.' </select>';
 		    
@@ -98,12 +98,13 @@ $oUser   = new Users();
 			$oDataset->next();
 	}
 	$tpl->gotoBlock('_ROOT');			
+	$tpl->assign( "US", $name );  
 	$tpl->assign( "ID_NO_REASSIGN", G::LoadTranslation('ID_NO_REASSIGN'));    
 	$tpl->assign( "APP_UID", $_GET['APP_UID']);    
 	$tpl->assign( "DEL_INDEX", $_GET['DEL_INDEX']);     
 	 
 	$G_MAIN_MENU            = 'processmaker';
-  //$G_SUB_MENU             = 'users';
+  $G_SUB_MENU             = 'cases';
   $G_ID_MENU_SELECTED     = 'CASES';
   $G_ID_SUB_MENU_SELECTED = '-';
   $G_PUBLISH              = new Publisher;
