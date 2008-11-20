@@ -2173,6 +2173,11 @@ class Cases
       $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
       $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, array('INPUT'), Criteria::IN);
       $oCriteria->add(AppDocumentPeer::APP_DOC_UID, $aObjectPermissions['INPUT_DOCUMENTS'], Criteria::IN);
+      $aConditions   = array();
+      $aConditions[] = array(AppDocumentPeer::APP_UID, AppDelegationPeer::APP_UID);
+      $aConditions[] = array(AppDocumentPeer::DEL_INDEX, AppDelegationPeer::DEL_INDEX);
+      $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
+      $oCriteria->add(AppDelegationPeer::PRO_UID, $sProcessUID);
       $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
       $oDataset = AppDocumentPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
@@ -2293,6 +2298,11 @@ class Cases
       $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
       $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, 'OUTPUT');
       $oCriteria->add(AppDocumentPeer::APP_DOC_UID, $aObjectPermissions['OUTPUT_DOCUMENTS'], Criteria::IN);
+      $aConditions   = array();
+      $aConditions[] = array(AppDocumentPeer::APP_UID, AppDelegationPeer::APP_UID);
+      $aConditions[] = array(AppDocumentPeer::DEL_INDEX, AppDelegationPeer::DEL_INDEX);
+      $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
+      $oCriteria->add(AppDelegationPeer::PRO_UID, $sProcessUID);
       $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
       $oDataset = AppDocumentPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
@@ -2877,6 +2887,11 @@ function getAllUploadedDocumentsCriteriaTracker($sProcessUID, $sApplicationUID, 
       //$oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, array('INPUT'), Criteria::IN);
       $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, 'INPUT');
       $oCriteria->add(AppDocumentPeer::DOC_UID, $sDocUID);
+      $aConditions   = array();
+      $aConditions[] = array(AppDocumentPeer::APP_UID, AppDelegationPeer::APP_UID);
+      $aConditions[] = array(AppDocumentPeer::DEL_INDEX, AppDelegationPeer::DEL_INDEX);
+      $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
+      $oCriteria->add(AppDelegationPeer::PRO_UID, $sProcessUID);
       $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
       $oDataset = AppDocumentPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
@@ -2966,6 +2981,11 @@ function getAllGeneratedDocumentsCriteriaTracker($sProcessUID, $sApplicationUID,
       $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
       $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, 'OUTPUT');
       $oCriteria->add(AppDocumentPeer::DOC_UID, $sDocUID);
+      $aConditions   = array();
+      $aConditions[] = array(AppDocumentPeer::APP_UID, AppDelegationPeer::APP_UID);
+      $aConditions[] = array(AppDocumentPeer::DEL_INDEX, AppDelegationPeer::DEL_INDEX);
+      $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
+      $oCriteria->add(AppDelegationPeer::PRO_UID, $sProcessUID);
       $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
       $oDataset = AppDocumentPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);

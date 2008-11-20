@@ -2036,7 +2036,7 @@ class processMap {
     try {
       global $G_PUBLISH;
       $G_PUBLISH = new Publisher;
-      $G_PUBLISH->AddContent('xmlform', 'xmlform', 'dynaforms/dynaforms_WebEntry', '', array('PRO_UID' => $sProcessUID));
+      $G_PUBLISH->AddContent('xmlform', 'xmlform', 'dynaforms/dynaforms_WebEntry', '', array('PRO_UID' => $sProcessUID, 'LANG' => SYS_LANG));
       G::RenderPage('publish', 'raw');
     	return true;
     }
