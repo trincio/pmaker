@@ -121,7 +121,7 @@ class PMPluginRegistry {
             $plugin->sDescription,
             $plugin->sSetupPage,
             $plugin->iVersion  );
-    if ( isset ($plugin->aWorkspaces) )         
+    if ( isset ($plugin->aWorkspaces) )
       $detail->aWorkspaces = $plugin->aWorkspaces;
     $this->_aPluginDetails[$sNamespace] = $detail;
   }
@@ -436,7 +436,7 @@ class PMPluginRegistry {
         }
         if ( $found ) {
     			require_once ( $classFile );
-    			$sClassName = str_replace ( 'plugin', 'class', $this->_aPluginDetails[ $detail->sNamespace ]->sClassName);
+    			$sClassName = substr($this->_aPluginDetails[ $detail->sNamespace ]->sClassName,0,1) . str_replace ( 'plugin', 'class', substr($this->_aPluginDetails[ $detail->sNamespace ]->sClassName,1));
           $obj = new $sClassName( );
           $methodName = $detail->sTriggerName;
           $response = $obj->{$methodName}( $oData );
@@ -526,7 +526,7 @@ class PMPluginRegistry {
   	}
   	return $sCompanyLogo;
   }
-  
+
   function setupPlugins() {
   	$iPlugins = 0;
     foreach ( $this->_aPluginDetails as $namespace=>$detail ) {

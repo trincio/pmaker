@@ -326,7 +326,6 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
   if ( file_exists ($sSerializedFile) )
     $oPluginRegistry->unSerializeInstance( file_get_contents  ( $sSerializedFile ) );
 
-  $oPluginRegistry->setupPlugins(); //get and setup enabled plugins
 
 //***************** create $G_ENVIRONMENTS dependent of SYS_SYS **************************
 
@@ -391,6 +390,9 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
 
     //********* Log Page Handler *************
     //  logPage ( $URL , SYS_CURRENT_PARMS);
+
+    //setup plugins
+  $oPluginRegistry->setupPlugins(); //get and setup enabled plugins
 
     //*********jump to php file in methods directory *************
     if ( $oPluginRegistry->isRegisteredFolder( SYS_COLLECTION ) )

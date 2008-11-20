@@ -1,4 +1,5 @@
 <?php
+//krumo ($items); die;
 /**
  * pluginsList.php
  *
@@ -44,6 +45,7 @@ $items[] = array ( 'id' => 'char', 'title' => 'char', 'type' => 'char', 'creator
 //***************** Plugins **************************
 	G::LoadClass('plugin');
   //here we are loading all plugins registered
+//krumo ($items); die;
 
   $oPluginRegistry =& PMPluginRegistry::getSingleton();
   if ($handle = opendir( PATH_PLUGINS  )) {
@@ -51,6 +53,7 @@ $items[] = array ( 'id' => 'char', 'title' => 'char', 'type' => 'char', 'creator
     	 if ( strpos($file, '.php',1) && is_file(PATH_PLUGINS . $file) ) {
          include_once ( PATH_PLUGINS . $file );
          $pluginDetail = $oPluginRegistry->getPluginDetails ( $file );
+         //krumo ($pluginDetail ); die;
          //$status = $pluginDetail->enabled ? 'Enabled' : 'Disabled';
          $status = $pluginDetail->enabled ? G::LoadTranslation('ID_ENABLED') : G::LoadTranslation('ID_DISABLED');
          if ( isset ($pluginDetail->aWorkspaces ) ) {
