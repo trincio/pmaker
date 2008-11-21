@@ -2272,8 +2272,13 @@ class processMap {
       }
       else {
         $oGroup     = new Groupwf();
-        $aFields    = $oGroup->load($aRow['USR_UID']);
-        $sUserGroup = $aFields['GRP_TITLE'];
+        try {
+          $aFields    = $oGroup->load($aRow['USR_UID']);
+          $sUserGroup = $aFields['GRP_TITLE'];
+        }
+        catch (Exception $oError) {
+          $sUserGroup = '(GROUP DELETED)';
+        }
       }
       //Obtain task source
       if ($aRow['OP_TASK_SOURCE'] != '') {

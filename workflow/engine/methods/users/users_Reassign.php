@@ -40,11 +40,13 @@ try {
   $oCase  = new Cases();
   $aCases = array();
   $aUsers = array();
-  foreach ($_POST['USERS'] as $sKey => $sUser) {
-    if ($sUser != '') {
-      $oCase->reassignCase($_POST['APPLICATIONS'][$sKey], $_POST['INDEXES'][$sKey], $_POST['USR_UID'], $sUser);
-      $aCases[] = $_POST['APPLICATIONS'][$sKey];
-      $aUsers[] = $sUser;
+  if (is_array($_POST['USERS'])) {
+    foreach ($_POST['USERS'] as $sKey => $sUser) {
+      if ($sUser != '') {
+        $oCase->reassignCase($_POST['APPLICATIONS'][$sKey], $_POST['INDEXES'][$sKey], $_POST['USR_UID'], $sUser);
+        $aCases[] = $_POST['APPLICATIONS'][$sKey];
+        $aUsers[] = $sUser;
+      }
     }
   }
   G::LoadClass('case');
