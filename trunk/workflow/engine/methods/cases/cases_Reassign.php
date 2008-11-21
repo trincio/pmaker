@@ -36,73 +36,74 @@ try {
   	  die;
   	break;
   }
-  
+
 G::LoadSystem('templatePower');
 $tpl = new TemplatePower(PATH_TPL ."cases/cases_Reassign.html");
-$tpl->prepare();  
+$tpl->prepare();
 
 require_once 'classes/model/AppDelegation.php';
-$oCriteria = new Criteria('workflow');		
+$oCriteria = new Criteria('workflow');
 $oCriteria->add(AppDelegationPeer::APP_UID, $_GET['APP_UID']);
 $oCriteria->add(AppDelegationPeer::DEL_FINISH_DATE, null);
 $oDataset = AppDelegationPeer::doSelectRS($oCriteria);
 $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
 $oDataset->next();
-$c=0; 
+$c=0;
 G::LoadClass('tasks');
 $oTasks=new Tasks();
-G::LoadClass('groups');  
+G::LoadClass('groups');
 $oGroups = new Groups();
 $oUser   = new Users();
-   while ($aRow = $oDataset->getRow()) {	
-			$c++;		
-			
+$name    = '';
+   while ($aRow = $oDataset->getRow()) {
+			$c++;
+
 			$aUsr=array();
-			$aUsrUid=array(); 
+			$aUsrUid=array();
 			$aAux1   = $oTasks->getGroupsOfTask($aRow['TAS_UID'], 1);
 			foreach ($aAux1 as $value1) {
 		  		$aAux2 = $oGroups->getUsersOfGroup($value1['GRP_UID']);
 		  	 	foreach ($aAux2 as $value2) {
-		  	  	if($aRow['USR_UID']!=$value2['USR_UID']) 						 
-					   {				 		 
+		  	  	if($aRow['USR_UID']!=$value2['USR_UID'])
+					   {
 					 		 if(!in_array($value2['USR_UID'], $aUsrUid))
 					 		 {		$aUsr[]=$oUser->load($value2['USR_UID']);
 					 		 		$aUsrUid[]=$value2['USR_UID'];
-					 		 }		
-					   }		
-		  	  }	  	 	
+					 		 }
+					   }
+		  	  }
 		  }
-				
-			$aUsers=$oTasks->getUsersOfTask($aRow['TAS_UID'], 1);			   
+
+			$aUsers=$oTasks->getUsersOfTask($aRow['TAS_UID'], 1);
 		  foreach($aUsers as $key => $value)
-			{	
-					if($aRow['USR_UID']!=$value['USR_UID']) 						 
+			{
+					if($aRow['USR_UID']!=$value['USR_UID'])
 					 {	 if(!in_array($value['USR_UID'], $aUsrUid))
 					 		 		$aUsr[]=$value;
-					 }	
+					 }
 			}
-				
+
 			//$users='';
 			//$users='<select name="USERS"><option value="">Seleccione</option>';
 			foreach($aUsr as $key => $value)
-			{	$tpl->newBlock( "users" );	
+			{	$tpl->newBlock( "users" );
 				$name=$value['USR_FIRSTNAME'].' '.$value['USR_LASTNAME'].' ('.$value['USR_USERNAME'].')';
-				//$users=$users."<option value='".$value['USR_UID']."'>". $name ."</option>";				 
-				$tpl->assign( "USR_UID", $value['USR_UID'] );  
-				$tpl->assign( "USERS", $name );  								
+				//$users=$users."<option value='".$value['USR_UID']."'>". $name ."</option>";
+				$tpl->assign( "USR_UID", $value['USR_UID'] );
+				$tpl->assign( "USERS", $name );
 			}
 			//$users=$users.' </select>';
-		    
-		  //$tpl->assign( "USERS", $users );  
-		  
+
+		  //$tpl->assign( "USERS", $users );
+
 			$oDataset->next();
 	}
-	$tpl->gotoBlock('_ROOT');			
-	$tpl->assign( "US", $name );  
-	$tpl->assign( "ID_NO_REASSIGN", G::LoadTranslation('ID_NO_REASSIGN'));    
-	$tpl->assign( "APP_UID", $_GET['APP_UID']);    
-	$tpl->assign( "DEL_INDEX", $_GET['DEL_INDEX']);     
-	 
+	$tpl->gotoBlock('_ROOT');
+	$tpl->assign( "US", $name );
+	$tpl->assign( "ID_NO_REASSIGN", G::LoadTranslation('ID_NO_REASSIGN'));
+	$tpl->assign( "APP_UID", $_GET['APP_UID']);
+	$tpl->assign( "DEL_INDEX", $_GET['DEL_INDEX']);
+
 	$G_MAIN_MENU            = 'processmaker';
   $G_SUB_MENU             = 'cases';
   $G_ID_MENU_SELECTED     = 'CASES';
@@ -110,7 +111,7 @@ $oUser   = new Users();
   $G_PUBLISH              = new Publisher;
   $G_PUBLISH->AddContent('template', '', '', '', $tpl);
   G::RenderPage('publish');
-  
+
 }
 catch (Exception $oException) {
 	die($oException->getMessage());
