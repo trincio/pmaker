@@ -2,7 +2,7 @@ msgid ""
 msgstr "" 
 "Project-Id-Version: PM 4.0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-10-27 13:01+0100 \n"
+"PO-Revision-Date: 2008-11-21 11:23+0100 \n"
 "Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
 "Language-Team: Colosa Developers Team <developers@colosa.com>\n"
 "MIME-Version: 1.0\n"
@@ -2779,6 +2779,54 @@ msgstr "You need to be registered for download this process, register NOW!"
 msgid "Incorrect username or password"
 msgstr "Incorrect username or password"
 
+# TRANSLATION
+# LABEL/ID_SELF_SERVICE
+#: LABEL/ID_SELF_SERVICE
+msgid "Self Service"
+msgstr "Self Service"
+
+# TRANSLATION
+# LABEL/ID_TAKE
+#: LABEL/ID_TAKE
+msgid "Take"
+msgstr "Take"
+
+# TRANSLATION
+# LABEL/ID_STAGES
+#: LABEL/ID_STAGES
+msgid "Stages"
+msgstr "Stages"
+
+# TRANSLATION
+# LABEL/ID_STATUS
+#: LABEL/ID_STATUS
+msgid "Status"
+msgstr "Status"
+
+# TRANSLATION
+# LABEL/ID_REASSIGN_TO
+#: LABEL/ID_REASSIGN_TO
+msgid "Reassign to"
+msgstr "Reassign to"
+
+# TRANSLATION
+# LABEL/ID_NO_REASSIGN
+#: LABEL/ID_NO_REASSIGN
+msgid "No reassign"
+msgstr "No reassign"
+
+# TRANSLATION
+# LABEL/ID_PROCESS
+#: LABEL/ID_PROCESS
+msgid "Process"
+msgstr "Process"
+
+# TRANSLATION
+# LABEL/ID_REASSIGN_CASES
+#: LABEL/ID_REASSIGN_CASES
+msgid "Reassign Cases"
+msgstr "Reassign Cases"
+
 # messages/messages_Edit.xml?MESS_TITLE
 # messages/messages_Edit.xml
 #: text - MESS_TITLE
@@ -2788,8 +2836,8 @@ msgstr "Message Title"
 # messages/messages_Edit.xml?MESS_TYPE
 # messages/messages_Edit.xml
 #: dropdown - MESS_TYPE
-msgid "Send as"
-msgstr "Send as"
+msgid "Send as  "
+msgstr "Send as  "
 
 # messages/messages_Edit.xml?MESS_TYPE-HTML
 # messages/messages_Edit.xml
@@ -2830,8 +2878,8 @@ msgstr "Output document"
 # messages/messages_List.xml?MESS_TYPE
 # messages/messages_List.xml
 #: dropdown - MESS_TYPE
-msgid "Type"
-msgstr "Type"
+msgid "Type  "
+msgstr "Type  "
 
 # messages/messages_List.xml?MESS_TYPE-HTML
 # messages/messages_List.xml
@@ -2890,8 +2938,8 @@ msgstr "Insert Translation"
 # tools/translationAdd.xml?trn_category
 # tools/translationAdd.xml
 #: dropdown - trn_category
-msgid "category"
-msgstr "category"
+msgid "category    "
+msgstr "category    "
 
 # tools/translationAdd.xml?trn_category-LABEL
 # tools/translationAdd.xml
@@ -2908,14 +2956,14 @@ msgstr "Javascript"
 # tools/translationAdd.xml?trn_id
 # tools/translationAdd.xml
 #: text - trn_id
-msgid "Id"
-msgstr "Id"
+msgid "Id "
+msgstr "Id "
 
 # tools/translationAdd.xml?trn_value
 # tools/translationAdd.xml
 #: text - trn_value
-msgid "value"
-msgstr "value"
+msgid "value "
+msgstr "value "
 
 # tools/translationAdd.xml?rowsJS
 # tools/translationAdd.xml
@@ -2932,7 +2980,7 @@ msgstr "Category"
 # tools/translationsList.xml?TRN_ID
 # tools/translationsList.xml
 #: text - TRN_ID
-msgid "[tools/translationsList.xml?TRN_ID] Id"
+msgid "Id"
 msgstr "Id"
 
 # tools/translationsList.xml?TRN_VALUE
@@ -2962,14 +3010,14 @@ msgstr "UpdateTranslation"
 # tools/updateTranslation.xml?cacheFile
 # tools/updateTranslation.xml
 #: text - cacheFile
-msgid "file"
-msgstr "file"
+msgid "file "
+msgstr "file "
 
 # tools/updateTranslation.xml?rows
 # tools/updateTranslation.xml
 #: text - rows
-msgid "rows"
-msgstr "rows"
+msgid "rows "
+msgstr "rows "
 
 # tools/updateTranslation.xml?titles2
 # tools/updateTranslation.xml
@@ -2980,14 +3028,14 @@ msgstr "JavaScript Update Translation"
 # tools/updateTranslation.xml?cacheFileJS
 # tools/updateTranslation.xml
 #: text - cacheFileJS
-msgid "[tools/updateTranslation.xml?cacheFileJS] file"
-msgstr "file"
+msgid "[tools/updateTranslation.xml?cacheFileJS] file "
+msgstr "file "
 
 # tools/updateTranslation.xml?rowsJS
 # tools/updateTranslation.xml
 #: text - rowsJS
-msgid "[tools/updateTranslation.xml?rowsJS] rows"
-msgstr "rows"
+msgid "[tools/updateTranslation.xml?rowsJS] rows "
+msgstr "rows "
 
 # tracker/tracker_Messages.xml?APP_MSG_DATE
 # tracker/tracker_Messages.xml
@@ -3046,8 +3094,8 @@ msgstr "Title"
 # tracker/tracker_DynaDocs.xml?CTO_TYPE_OBJ
 # tracker/tracker_DynaDocs.xml
 #: dropdown - CTO_TYPE_OBJ
-msgid "[tracker/tracker_DynaDocs.xml?CTO_TYPE_OBJ] Type"
-msgstr "Type"
+msgid "[tracker/tracker_DynaDocs.xml?CTO_TYPE_OBJ] Type  "
+msgstr "Type  "
 
 # tracker/tracker_DynaDocs.xml?CTO_TYPE_OBJ-DYNAFORM
 # tracker/tracker_DynaDocs.xml
@@ -3100,8 +3148,8 @@ msgstr "File (.pdf)"
 # tracker/tracker_Configuration.xml?CT_MAP_TYPE
 # tracker/tracker_Configuration.xml
 #: dropdown - CT_MAP_TYPE
-msgid "Map Type"
-msgstr "Map Type"
+msgid "Map Type  "
+msgstr "Map Type  "
 
 # tracker/tracker_Configuration.xml?CT_MAP_TYPE-NONE
 # tracker/tracker_Configuration.xml
@@ -3166,7 +3214,7 @@ msgstr "Title"
 # tracker/tracker_objectsList.xml?CTO_TYPE_OBJ
 # tracker/tracker_objectsList.xml
 #: text - CTO_TYPE_OBJ
-msgid "[tracker/tracker_objectsList.xml?CTO_TYPE_OBJ] Type"
+msgid "Type"
 msgstr "Type"
 
 # tracker/tracker_AvailableCaseTrackerObjects.xml?OBJECT_TITLE
@@ -3178,8 +3226,8 @@ msgstr "Title"
 # tracker/tracker_AvailableCaseTrackerObjects.xml?OBJECT_TYPE
 # tracker/tracker_AvailableCaseTrackerObjects.xml
 #: dropdown - OBJECT_TYPE
-msgid "[tracker/tracker_AvailableCaseTrackerObjects.xml?OBJECT_TYPE] Type"
-msgstr "Type"
+msgid "Type    "
+msgstr "Type    "
 
 # tracker/tracker_AvailableCaseTrackerObjects.xml?OBJECT_TYPE-DYNAFORM
 # tracker/tracker_AvailableCaseTrackerObjects.xml
@@ -3238,8 +3286,8 @@ msgstr "Description"
 # tracker/tracker_ViewAnyInputDocument2.xml?INP_DOC_FORM_NEEDED
 # tracker/tracker_ViewAnyInputDocument2.xml
 #: dropdown - INP_DOC_FORM_NEEDED
-msgid "Document Type"
-msgstr "Document Type"
+msgid "Document Type  "
+msgstr "Document Type  "
 
 # tracker/tracker_ViewAnyInputDocument2.xml?INP_DOC_FORM_NEEDED-VIRTUAL
 # tracker/tracker_ViewAnyInputDocument2.xml
@@ -3262,8 +3310,8 @@ msgstr "Digital/Printed"
 # tracker/tracker_ViewAnyInputDocument2.xml?INP_DOC_ORIGINAL
 # tracker/tracker_ViewAnyInputDocument2.xml
 #: dropdown - INP_DOC_ORIGINAL
-msgid "Format"
-msgstr "Format"
+msgid "Format  "
+msgstr "Format  "
 
 # tracker/tracker_ViewAnyInputDocument2.xml?INP_DOC_ORIGINAL-ORIGINAL
 # tracker/tracker_ViewAnyInputDocument2.xml
@@ -3310,8 +3358,8 @@ msgstr "Description"
 # tracker/tracker_ViewAnyInputDocument1.xml?INP_DOC_FORM_NEEDED
 # tracker/tracker_ViewAnyInputDocument1.xml
 #: dropdown - INP_DOC_FORM_NEEDED
-msgid "[tracker/tracker_ViewAnyInputDocument1.xml?INP_DOC_FORM_NEEDED] Document Type"
-msgstr "Document Type"
+msgid "[tracker/tracker_ViewAnyInputDocument1.xml?INP_DOC_FORM_NEEDED] Document Type  "
+msgstr "Document Type  "
 
 # tracker/tracker_ViewAnyInputDocument1.xml?INP_DOC_FORM_NEEDED-VIRTUAL
 # tracker/tracker_ViewAnyInputDocument1.xml
@@ -3334,8 +3382,8 @@ msgstr "Digital/Printed"
 # tracker/tracker_ViewAnyInputDocument1.xml?INP_DOC_ORIGINAL
 # tracker/tracker_ViewAnyInputDocument1.xml
 #: dropdown - INP_DOC_ORIGINAL
-msgid "[tracker/tracker_ViewAnyInputDocument1.xml?INP_DOC_ORIGINAL] Format"
-msgstr "Format"
+msgid "[tracker/tracker_ViewAnyInputDocument1.xml?INP_DOC_ORIGINAL] Format  "
+msgstr "Format  "
 
 # tracker/tracker_ViewAnyInputDocument1.xml?INP_DOC_ORIGINAL-ORIGINAL
 # tracker/tracker_ViewAnyInputDocument1.xml
@@ -3394,8 +3442,8 @@ msgstr "Description"
 # tracker/tracker_ViewAnyInputDocument3.xml?INP_DOC_FORM_NEEDED
 # tracker/tracker_ViewAnyInputDocument3.xml
 #: dropdown - INP_DOC_FORM_NEEDED
-msgid "[tracker/tracker_ViewAnyInputDocument3.xml?INP_DOC_FORM_NEEDED] Document Type"
-msgstr "Document Type"
+msgid "[tracker/tracker_ViewAnyInputDocument3.xml?INP_DOC_FORM_NEEDED] Document Type  "
+msgstr "Document Type  "
 
 # tracker/tracker_ViewAnyInputDocument3.xml?INP_DOC_FORM_NEEDED-VIRTUAL
 # tracker/tracker_ViewAnyInputDocument3.xml
@@ -3418,8 +3466,8 @@ msgstr "Digital/Printed"
 # tracker/tracker_ViewAnyInputDocument3.xml?INP_DOC_ORIGINAL
 # tracker/tracker_ViewAnyInputDocument3.xml
 #: dropdown - INP_DOC_ORIGINAL
-msgid "[tracker/tracker_ViewAnyInputDocument3.xml?INP_DOC_ORIGINAL] Format"
-msgstr "Format"
+msgid "[tracker/tracker_ViewAnyInputDocument3.xml?INP_DOC_ORIGINAL] Format  "
+msgstr "Format  "
 
 # tracker/tracker_ViewAnyInputDocument3.xml?INP_DOC_ORIGINAL-ORIGINAL
 # tracker/tracker_ViewAnyInputDocument3.xml
@@ -3538,8 +3586,8 @@ msgstr "End Date"
 # tracker/tracker_TransferHistory.xml?APP_TYPE
 # tracker/tracker_TransferHistory.xml
 #: dropdown - APP_TYPE
-msgid "Action"
-msgstr "Action"
+msgid "Action  "
+msgstr "Action  "
 
 # tracker/tracker_TransferHistory.xml?APP_TYPE-PAUSE
 # tracker/tracker_TransferHistory.xml
@@ -3604,8 +3652,8 @@ msgstr "Name"
 # groups/groups_Edit.xml?GRP_STATUS
 # groups/groups_Edit.xml
 #: dropdown - GRP_STATUS
-msgid "Status"
-msgstr "Status"
+msgid "Status  "
+msgstr "Status  "
 
 # groups/groups_Edit.xml?GRP_STATUS-ACTIVE
 # groups/groups_Edit.xml
@@ -3640,8 +3688,8 @@ msgstr "Group"
 # groups/groups_List.xml?GROUP_STATUS
 # groups/groups_List.xml
 #: dropdown - GROUP_STATUS
-msgid "[groups/groups_List.xml?GROUP_STATUS] Status"
-msgstr "Status"
+msgid "[groups/groups_List.xml?GROUP_STATUS] Status  "
+msgstr "Status  "
 
 # groups/groups_List.xml?GROUP_STATUS-ACTIVE
 # groups/groups_List.xml
@@ -3754,8 +3802,8 @@ msgstr "Role Code"
 # roles/roles_New.xml?ROL_STATUS
 # roles/roles_New.xml
 #: dropdown - ROL_STATUS
-msgid "[roles/roles_New.xml?ROL_STATUS] Status"
-msgstr "Status"
+msgid "Status  	"
+msgstr "Status  	"
 
 # roles/roles_New.xml?ROL_STATUS-1
 # roles/roles_New.xml
@@ -3796,8 +3844,8 @@ msgstr "Role Code"
 # roles/roles_Edit.xml?ROL_STATUS
 # roles/roles_Edit.xml
 #: dropdown - ROL_STATUS
-msgid "[roles/roles_Edit.xml?ROL_STATUS] Status"
-msgstr "Status"
+msgid "[roles/roles_Edit.xml?ROL_STATUS] Status  	"
+msgstr "Status  	"
 
 # roles/roles_Edit.xml?ROL_STATUS-1
 # roles/roles_Edit.xml
@@ -3935,7 +3983,7 @@ msgstr "Delete"
 # dbConnections/dbConnections_New.xml
 #: dropdown - DBS_TYPE
 msgid "[dbConnections/dbConnections_New.xml?DBS_TYPE] Type"
-msgstr ""
+msgstr "Type"
 
 # dbConnections/dbConnections_New.xml?DBS_SERVER
 # dbConnections/dbConnections_New.xml
@@ -4012,8 +4060,8 @@ msgstr "Dynaform"
 # dynaforms/dynaforms_Properties.xml?DYN_TYPE
 # dynaforms/dynaforms_Properties.xml
 #: dropdown - DYN_TYPE
-msgid "[dynaforms/dynaforms_Properties.xml?DYN_TYPE] Type"
-msgstr "Type"
+msgid "[dynaforms/dynaforms_Properties.xml?DYN_TYPE] Type  "
+msgstr "Type  "
 
 # dynaforms/dynaforms_Properties.xml?DYN_TYPE-xmlform
 # dynaforms/dynaforms_Properties.xml
@@ -4048,8 +4096,8 @@ msgstr "Width"
 # dynaforms/dynaforms_Properties.xml?MODE
 # dynaforms/dynaforms_Properties.xml
 #: dropdown - MODE
-msgid "Mode"
-msgstr "Mode"
+msgid "Mode  "
+msgstr "Mode  "
 
 # dynaforms/dynaforms_Properties.xml?MODE-edit
 # dynaforms/dynaforms_Properties.xml
@@ -4090,8 +4138,8 @@ msgstr "Title"
 # dynaforms/dynaforms_Edit.xml?DYN_TYPE
 # dynaforms/dynaforms_Edit.xml
 #: dropdown - DYN_TYPE
-msgid "[dynaforms/dynaforms_Edit.xml?DYN_TYPE] Type"
-msgstr "Type"
+msgid "[dynaforms/dynaforms_Edit.xml?DYN_TYPE] Type  "
+msgstr "Type  "
 
 # dynaforms/dynaforms_Edit.xml?DYN_TYPE-xmlform
 # dynaforms/dynaforms_Edit.xml
@@ -4132,8 +4180,8 @@ msgstr "Title"
 # dynaforms/dynaforms_ShortList.xml?DYN_TYPE
 # dynaforms/dynaforms_ShortList.xml
 #: dropdown - DYN_TYPE
-msgid "[dynaforms/dynaforms_ShortList.xml?DYN_TYPE] Type"
-msgstr "Type"
+msgid "[dynaforms/dynaforms_ShortList.xml?DYN_TYPE] Type  "
+msgstr "Type  "
 
 # dynaforms/dynaforms_ShortList.xml?DYN_TYPE-xmlform
 # dynaforms/dynaforms_ShortList.xml
@@ -4162,20 +4210,20 @@ msgstr "Properties"
 # dynaforms/dynaforms_WebEntry.xml?TASKS
 # dynaforms/dynaforms_WebEntry.xml
 #: dropdown - TASKS
-msgid "Initial Task"
-msgstr "Initial Task"
+msgid "Initial Task "
+msgstr "Initial Task "
 
 # dynaforms/dynaforms_WebEntry.xml?DYNAFORM
 # dynaforms/dynaforms_WebEntry.xml
 #: dropdown - DYNAFORM
-msgid "Initial Dynaform"
-msgstr "Initial Dynaform"
+msgid "Initial Dynaform "
+msgstr "Initial Dynaform "
 
 # dynaforms/dynaforms_WebEntry.xml?WE_TYPE
 # dynaforms/dynaforms_WebEntry.xml
 #: dropdown - WE_TYPE
-msgid "Method"
-msgstr "Method"
+msgid "Method    "
+msgstr "Method    "
 
 # dynaforms/dynaforms_WebEntry.xml?WE_TYPE-SINGLE
 # dynaforms/dynaforms_WebEntry.xml
@@ -4228,8 +4276,8 @@ msgstr "Dynaform"
 # dynaforms/dynaforms_List.xml?DYN_TYPE
 # dynaforms/dynaforms_List.xml
 #: dropdown - DYN_TYPE
-msgid "[dynaforms/dynaforms_List.xml?DYN_TYPE] Type"
-msgstr "Type"
+msgid "[dynaforms/dynaforms_List.xml?DYN_TYPE] Type  "
+msgstr "Type  "
 
 # dynaforms/dynaforms_List.xml?DYN_TYPE-1
 # dynaforms/dynaforms_List.xml
@@ -4276,8 +4324,8 @@ msgstr "Field name"
 # dynaforms/fields_Edit.xml?TYPE
 # dynaforms/fields_Edit.xml
 #: dropdown - TYPE
-msgid "[dynaforms/fields_Edit.xml?TYPE] Type"
-msgstr "Type"
+msgid "[dynaforms/fields_Edit.xml?TYPE] Type  "
+msgstr "Type  "
 
 # dynaforms/fields_Edit.xml?TYPE-title
 # dynaforms/fields_Edit.xml
@@ -4486,8 +4534,8 @@ msgstr "Field Name"
 # dynaforms/fields_List.xml?TYPE
 # dynaforms/fields_List.xml
 #: dropdown - TYPE
-msgid "[dynaforms/fields_List.xml?TYPE] Type"
-msgstr "Type"
+msgid "[dynaforms/fields_List.xml?TYPE] Type  "
+msgstr "Type  "
 
 # dynaforms/fields_List.xml?TYPE-title
 # dynaforms/fields_List.xml
@@ -4636,8 +4684,8 @@ msgstr "Apply Filter"
 # dynaforms/dynaforms_Editor.xml?title
 # dynaforms/dynaforms_Editor.xml
 #: title - title
-msgid "<table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"background-color:transparent\">    <tr>      <td  class='FormTitle'>Preview</td>      <td align=\"right\"><img id=\"processbar\" src=\"/images/dynamicForm/processbar.gif\" style=\"display:none\"/></td>    </tr>  </table>"
-msgstr "<table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"background-color:transparent\">    <tr>      <td  class='FormTitle'>Preview</td>      <td align=\"right\"><img id=\"processbar\" src=\"/images/dynamicForm/processbar.gif\" style=\"display:none\"/></td>    </tr>  </table>"
+msgid "<table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"background-color:transparent\">    <tr>      <td  class='FormTitle'>Preview</td>      <td align=\"right\"><img id=\"processbar\" src=\"/images/dynamicForm/processbar.gif\" style=\"display:none\"/></td>    </tr>  </table>  "
+msgstr "<table cellpadding=\"0\" cellspacing=\"0\" width=\"100%\" style=\"background-color:transparent\">    <tr>      <td  class='FormTitle'>Preview</td>      <td align=\"right\"><img id=\"processbar\" src=\"/images/dynamicForm/processbar.gif\" style=\"display:none\"/></td>    </tr>  </table>  "
 
 # dynaforms/fields/hidden.xml?PME_TITLE
 # dynaforms/fields/hidden.xml
@@ -4660,8 +4708,8 @@ msgstr "Default Value"
 # dynaforms/fields/hidden.xml?PME_MODE
 # dynaforms/fields/hidden.xml
 #: dropdown - PME_MODE
-msgid "[dynaforms/fields/hidden.xml?PME_MODE] Mode"
-msgstr "Mode"
+msgid "Mode    "
+msgstr "Mode    "
 
 # dynaforms/fields/hidden.xml?PME_MODE-edit
 # dynaforms/fields/hidden.xml
@@ -4684,8 +4732,8 @@ msgstr "Data"
 # dynaforms/fields/hidden.xml?PME_SQLCONNECTION
 # dynaforms/fields/hidden.xml
 #: dropdown - PME_SQLCONNECTION
-msgid "Sql Connection"
-msgstr "Sql Connection"
+msgid "Sql Connection  	"
+msgstr "Sql Connection  	"
 
 # dynaforms/fields/hidden.xml?PME_SQLCONNECTION-''
 # dynaforms/fields/hidden.xml
@@ -4756,8 +4804,8 @@ msgstr "Size"
 # dynaforms/fields/listbox.xml?PME_MODE
 # dynaforms/fields/listbox.xml
 #: dropdown - PME_MODE
-msgid "[dynaforms/fields/listbox.xml?PME_MODE] Mode"
-msgstr "Mode"
+msgid "[dynaforms/fields/listbox.xml?PME_MODE] Mode    "
+msgstr "Mode    "
 
 # dynaforms/fields/listbox.xml?PME_MODE-edit
 # dynaforms/fields/listbox.xml
@@ -4780,8 +4828,8 @@ msgstr "Data"
 # dynaforms/fields/listbox.xml?PME_SQLCONNECTION
 # dynaforms/fields/listbox.xml
 #: dropdown - PME_SQLCONNECTION
-msgid "[dynaforms/fields/listbox.xml?PME_SQLCONNECTION] Sql Connection"
-msgstr "Sql Connection"
+msgid "[dynaforms/fields/listbox.xml?PME_SQLCONNECTION] Sql Connection  	"
+msgstr "Sql Connection  	"
 
 # dynaforms/fields/listbox.xml?PME_SQLCONNECTION-''
 # dynaforms/fields/listbox.xml
@@ -4840,8 +4888,8 @@ msgstr "Appearance"
 # dynaforms/fields/checkgroup.xml?PME_MODE
 # dynaforms/fields/checkgroup.xml
 #: dropdown - PME_MODE
-msgid "[dynaforms/fields/checkgroup.xml?PME_MODE] Mode"
-msgstr "Mode"
+msgid "[dynaforms/fields/checkgroup.xml?PME_MODE] Mode    "
+msgstr "Mode    "
 
 # dynaforms/fields/checkgroup.xml?PME_MODE-edit
 # dynaforms/fields/checkgroup.xml
@@ -4864,8 +4912,8 @@ msgstr "Data"
 # dynaforms/fields/checkgroup.xml?PME_SQLCONNECTION
 # dynaforms/fields/checkgroup.xml
 #: dropdown - PME_SQLCONNECTION
-msgid "[dynaforms/fields/checkgroup.xml?PME_SQLCONNECTION] Sql Connection"
-msgstr "Sql Connection"
+msgid "[dynaforms/fields/checkgroup.xml?PME_SQLCONNECTION] Sql Connection  	"
+msgstr "Sql Connection  	"
 
 # dynaforms/fields/checkgroup.xml?PME_SQLCONNECTION-''
 # dynaforms/fields/checkgroup.xml
@@ -4918,8 +4966,8 @@ msgstr "Max. Length"
 # dynaforms/fields/percentage.xml?PME_VALIDATE
 # dynaforms/fields/percentage.xml
 #: dropdown - PME_VALIDATE
-msgid "Validate"
-msgstr "Validate"
+msgid "Validate    "
+msgstr "Validate    "
 
 # dynaforms/fields/percentage.xml?PME_VALIDATE-Int
 # dynaforms/fields/percentage.xml
@@ -4972,8 +5020,8 @@ msgstr "Size"
 # dynaforms/fields/percentage.xml?PME_MODE
 # dynaforms/fields/percentage.xml
 #: dropdown - PME_MODE
-msgid "[dynaforms/fields/percentage.xml?PME_MODE] Mode"
-msgstr "Mode"
+msgid "[dynaforms/fields/percentage.xml?PME_MODE] Mode    "
+msgstr "Mode    "
 
 # dynaforms/fields/percentage.xml?PME_MODE-edit
 # dynaforms/fields/percentage.xml
@@ -4996,8 +5044,8 @@ msgstr "Data"
 # dynaforms/fields/percentage.xml?PME_SQLCONNECTION
 # dynaforms/fields/percentage.xml
 #: dropdown - PME_SQLCONNECTION
-msgid "[dynaforms/fields/percentage.xml?PME_SQLCONNECTION] Sql Connection"
-msgstr "Sql Connection"
+msgid "[dynaforms/fields/percentage.xml?PME_SQLCONNECTION] Sql Connection  	"
+msgstr "Sql Connection  	"
 
 # dynaforms/fields/percentage.xml?PME_SQLCONNECTION-''
 # dynaforms/fields/percentage.xml
@@ -5098,8 +5146,8 @@ msgstr "Size"
 # dynaforms/fields/password.xml?PME_MODE
 # dynaforms/fields/password.xml
 #: dropdown - PME_MODE
-msgid "[dynaforms/fields/password.xml?PME_MODE] Mode"
-msgstr "Mode"
+msgid "[dynaforms/fields/password.xml?PME_MODE] Mode    "
+msgstr "Mode    "
 
 # dynaforms/fields/password.xml?PME_MODE-edit
 # dynaforms/fields/password.xml
@@ -5188,8 +5236,8 @@ msgstr "Read Only"
 # dynaforms/fields/dropdown.xml?PME_DEPENDENTFIELDS
 # dynaforms/fields/dropdown.xml
 #: listbox - PME_DEPENDENTFIELDS
-msgid "Dependent Fields"
-msgstr "Dependent Fields"
+msgid "Dependent Fields  "
+msgstr "Dependent Fields  "
 
 # dynaforms/fields/dropdown.xml?PME_DEPENDENTFIELDS-''
 # dynaforms/fields/dropdown.xml
@@ -5212,8 +5260,8 @@ msgstr "Appearance"
 # dynaforms/fields/dropdown.xml?PME_MODE
 # dynaforms/fields/dropdown.xml
 #: dropdown - PME_MODE
-msgid "[dynaforms/fields/dropdown.xml?PME_MODE] Mode"
-msgstr "Mode"
+msgid "[dynaforms/fields/dropdown.xml?PME_MODE] Mode    "
+msgstr "Mode    "
 
 # dynaforms/fields/dropdown.xml?PME_MODE-edit
 # dynaforms/fields/dropdown.xml
@@ -5236,8 +5284,8 @@ msgstr "Data"
 # dynaforms/fields/dropdown.xml?PME_SQLCONNECTION
 # dynaforms/fields/dropdown.xml
 #: dropdown - PME_SQLCONNECTION
-msgid "[dynaforms/fields/dropdown.xml?PME_SQLCONNECTION] Sql Connection"
-msgstr "Sql Connection"
+msgid "[dynaforms/fields/dropdown.xml?PME_SQLCONNECTION] Sql Connection  	"
+msgstr "Sql Connection  	"
 
 # dynaforms/fields/dropdown.xml?PME_SQLCONNECTION-''
 # dynaforms/fields/dropdown.xml
@@ -5368,8 +5416,8 @@ msgstr "Max. Length"
 # dynaforms/fields/text.xml?PME_VALIDATE
 # dynaforms/fields/text.xml
 #: dropdown - PME_VALIDATE
-msgid "[dynaforms/fields/text.xml?PME_VALIDATE] Validate"
-msgstr "Validate"
+msgid "[dynaforms/fields/text.xml?PME_VALIDATE] Validate    "
+msgstr "Validate    "
 
 # dynaforms/fields/text.xml?PME_VALIDATE-Any
 # dynaforms/fields/text.xml
@@ -5422,8 +5470,8 @@ msgstr "Mask"
 # dynaforms/fields/text.xml?PME_STRTO
 # dynaforms/fields/text.xml
 #: dropdown - PME_STRTO
-msgid "Text transform to"
-msgstr "Text transform to"
+msgid "Text transform to  "
+msgstr "Text transform to  "
 
 # dynaforms/fields/text.xml?PME_STRTO-''
 # dynaforms/fields/text.xml
@@ -5458,8 +5506,8 @@ msgstr "Read Only"
 # dynaforms/fields/text.xml?PME_DEPENDENTFIELDS
 # dynaforms/fields/text.xml
 #: listbox - PME_DEPENDENTFIELDS
-msgid "[dynaforms/fields/text.xml?PME_DEPENDENTFIELDS] Dependent Fields"
-msgstr "Dependent Fields"
+msgid "[dynaforms/fields/text.xml?PME_DEPENDENTFIELDS] Dependent Fields  "
+msgstr "Dependent Fields  "
 
 # dynaforms/fields/text.xml?PME_DEPENDENTFIELDS-''
 # dynaforms/fields/text.xml
@@ -5488,8 +5536,8 @@ msgstr "Size"
 # dynaforms/fields/text.xml?PME_MODE
 # dynaforms/fields/text.xml
 #: dropdown - PME_MODE
-msgid "[dynaforms/fields/text.xml?PME_MODE] Mode"
-msgstr "Mode"
+msgid "[dynaforms/fields/text.xml?PME_MODE] Mode    "
+msgstr "Mode    "
 
 # dynaforms/fields/text.xml?PME_MODE-edit
 # dynaforms/fields/text.xml
@@ -5512,8 +5560,8 @@ msgstr "Data"
 # dynaforms/fields/text.xml?PME_SQLCONNECTION
 # dynaforms/fields/text.xml
 #: dropdown - PME_SQLCONNECTION
-msgid "[dynaforms/fields/text.xml?PME_SQLCONNECTION] Sql Connection"
-msgstr "Sql Connection"
+msgid "[dynaforms/fields/text.xml?PME_SQLCONNECTION] Sql Connection  	"
+msgstr "Sql Connection  	"
 
 # dynaforms/fields/text.xml?PME_SQLCONNECTION-''
 # dynaforms/fields/text.xml
@@ -5614,8 +5662,8 @@ msgstr "Appearance"
 # dynaforms/fields/radiogroup.xml?PME_MODE
 # dynaforms/fields/radiogroup.xml
 #: dropdown - PME_MODE
-msgid "[dynaforms/fields/radiogroup.xml?PME_MODE] Mode"
-msgstr "Mode"
+msgid "[dynaforms/fields/radiogroup.xml?PME_MODE] Mode    "
+msgstr "Mode    "
 
 # dynaforms/fields/radiogroup.xml?PME_MODE-edit
 # dynaforms/fields/radiogroup.xml
@@ -5638,8 +5686,8 @@ msgstr "Data"
 # dynaforms/fields/radiogroup.xml?PME_SQLCONNECTION
 # dynaforms/fields/radiogroup.xml
 #: dropdown - PME_SQLCONNECTION
-msgid "[dynaforms/fields/radiogroup.xml?PME_SQLCONNECTION] Sql Connection"
-msgstr "Sql Connection"
+msgid "[dynaforms/fields/radiogroup.xml?PME_SQLCONNECTION] Sql Connection  	"
+msgstr "Sql Connection  	"
 
 # dynaforms/fields/radiogroup.xml?PME_SQLCONNECTION-''
 # dynaforms/fields/radiogroup.xml
@@ -5740,8 +5788,8 @@ msgstr "Currency"
 # dynaforms/fields/currency.xml?PME_VALIDATE
 # dynaforms/fields/currency.xml
 #: dropdown - PME_VALIDATE
-msgid "[dynaforms/fields/currency.xml?PME_VALIDATE] Validate"
-msgstr "Validate"
+msgid "[dynaforms/fields/currency.xml?PME_VALIDATE] Validate    "
+msgstr "Validate    "
 
 # dynaforms/fields/currency.xml?PME_VALIDATE-Int
 # dynaforms/fields/currency.xml
@@ -5794,8 +5842,8 @@ msgstr "Size"
 # dynaforms/fields/currency.xml?PME_MODE
 # dynaforms/fields/currency.xml
 #: dropdown - PME_MODE
-msgid "[dynaforms/fields/currency.xml?PME_MODE] Mode"
-msgstr "Mode"
+msgid "[dynaforms/fields/currency.xml?PME_MODE] Mode    "
+msgstr "Mode    "
 
 # dynaforms/fields/currency.xml?PME_MODE-edit
 # dynaforms/fields/currency.xml
@@ -5818,8 +5866,8 @@ msgstr "Data"
 # dynaforms/fields/currency.xml?PME_SQLCONNECTION
 # dynaforms/fields/currency.xml
 #: dropdown - PME_SQLCONNECTION
-msgid "[dynaforms/fields/currency.xml?PME_SQLCONNECTION] Sql Connection"
-msgstr "Sql Connection"
+msgid "[dynaforms/fields/currency.xml?PME_SQLCONNECTION] Sql Connection  	"
+msgstr "Sql Connection  	"
 
 # dynaforms/fields/currency.xml?PME_SQLCONNECTION-''
 # dynaforms/fields/currency.xml
@@ -5980,8 +6028,8 @@ msgstr "Relative Start and End Dates"
 # dynaforms/fields/date.xml?PMED_AFTERBEFORE_DESC
 # dynaforms/fields/date.xml
 #: subtitle - PMED_AFTERBEFORE_DESC
-msgid "Sufixes: d=day m=month y=year; <br />Or leave empty to use <b>Start and End dates</b>.<br/>Use negative numbers for past dates and positive numbers for future dates"
-msgstr "Sufixes: d=day m=month y=year; <br />Or leave empty to use <b>Start and End dates</b>.<br/>Use negative numbers for past dates and positive numbers for future dates"
+msgid "Sufixes: d=day m=month y=year; <br />Or leave empty to use <b>Start and End dates</b>.<br/>Use negative numbers for past dates and positive numbers for future dates   "
+msgstr "Sufixes: d=day m=month y=year; <br />Or leave empty to use <b>Start and End dates</b>.<br/>Use negative numbers for past dates and positive numbers for future dates   "
 
 # dynaforms/fields/date.xml?PME_BEFOREDATE
 # dynaforms/fields/date.xml
@@ -6016,8 +6064,8 @@ msgstr "Read Only"
 # dynaforms/fields/date.xml?PME_DEPENDENTFIELDS
 # dynaforms/fields/date.xml
 #: listbox - PME_DEPENDENTFIELDS
-msgid "[dynaforms/fields/date.xml?PME_DEPENDENTFIELDS] Dependent Fields"
-msgstr "Dependent Fields"
+msgid "[dynaforms/fields/date.xml?PME_DEPENDENTFIELDS] Dependent Fields  "
+msgstr "Dependent Fields  "
 
 # dynaforms/fields/date.xml?PME_DEPENDENTFIELDS-''
 # dynaforms/fields/date.xml
@@ -6046,8 +6094,8 @@ msgstr "Size"
 # dynaforms/fields/date.xml?PME_MODE
 # dynaforms/fields/date.xml
 #: dropdown - PME_MODE
-msgid "[dynaforms/fields/date.xml?PME_MODE] Mode"
-msgstr "Mode"
+msgid "[dynaforms/fields/date.xml?PME_MODE] Mode    "
+msgstr "Mode    "
 
 # dynaforms/fields/date.xml?PME_MODE-edit
 # dynaforms/fields/date.xml
@@ -6130,8 +6178,8 @@ msgstr "Columns"
 # dynaforms/fields/textarea.xml?PME_MODE
 # dynaforms/fields/textarea.xml
 #: dropdown - PME_MODE
-msgid "[dynaforms/fields/textarea.xml?PME_MODE] Mode"
-msgstr "Mode"
+msgid "[dynaforms/fields/textarea.xml?PME_MODE] Mode    "
+msgstr "Mode    "
 
 # dynaforms/fields/textarea.xml?PME_MODE-edit
 # dynaforms/fields/textarea.xml
@@ -6154,8 +6202,8 @@ msgstr "Data"
 # dynaforms/fields/textarea.xml?PME_SQLCONNECTION
 # dynaforms/fields/textarea.xml
 #: dropdown - PME_SQLCONNECTION
-msgid "[dynaforms/fields/textarea.xml?PME_SQLCONNECTION] Sql Connection"
-msgstr "Sql Connection"
+msgid "[dynaforms/fields/textarea.xml?PME_SQLCONNECTION] Sql Connection  	"
+msgstr "Sql Connection  	"
 
 # dynaforms/fields/textarea.xml?PME_SQLCONNECTION-''
 # dynaforms/fields/textarea.xml
@@ -6262,8 +6310,8 @@ msgstr "Read Only"
 # dynaforms/fields/yesno.xml?PME_DEFAULTVALUE
 # dynaforms/fields/yesno.xml
 #: dropdown - PME_DEFAULTVALUE
-msgid "[dynaforms/fields/yesno.xml?PME_DEFAULTVALUE] Default Value"
-msgstr "Default Value"
+msgid "Default Value  "
+msgstr "Default Value  "
 
 # dynaforms/fields/yesno.xml?PME_DEFAULTVALUE-1
 # dynaforms/fields/yesno.xml
@@ -6286,8 +6334,8 @@ msgstr "Appearance"
 # dynaforms/fields/yesno.xml?PME_MODE
 # dynaforms/fields/yesno.xml
 #: dropdown - PME_MODE
-msgid "[dynaforms/fields/yesno.xml?PME_MODE] Mode"
-msgstr "Mode"
+msgid "[dynaforms/fields/yesno.xml?PME_MODE] Mode    "
+msgstr "Mode    "
 
 # dynaforms/fields/yesno.xml?PME_MODE-edit
 # dynaforms/fields/yesno.xml
@@ -6388,8 +6436,8 @@ msgstr "Field"
 # dynaforms/dynaform_Fields.xml?TYPE
 # dynaforms/dynaform_Fields.xml
 #: dropdown - TYPE
-msgid "[dynaforms/dynaform_Fields.xml?TYPE] Type"
-msgstr "Type"
+msgid "[dynaforms/dynaform_Fields.xml?TYPE] Type  "
+msgstr "Type  "
 
 # dynaforms/dynaform_Fields.xml?TYPE-title
 # dynaforms/dynaform_Fields.xml
@@ -6556,8 +6604,8 @@ msgstr "Input document"
 # inputdocs/inputdocs_List.xml?INP_DOC_FORM_NEEDED
 # inputdocs/inputdocs_List.xml
 #: dropdown - INP_DOC_FORM_NEEDED
-msgid "[inputdocs/inputdocs_List.xml?INP_DOC_FORM_NEEDED] Type"
-msgstr "Type"
+msgid "[inputdocs/inputdocs_List.xml?INP_DOC_FORM_NEEDED] Type  "
+msgstr "Type  "
 
 # inputdocs/inputdocs_List.xml?INP_DOC_FORM_NEEDED-REAL
 # inputdocs/inputdocs_List.xml
@@ -6580,8 +6628,8 @@ msgstr "VReal"
 # inputdocs/inputdocs_List.xml?INP_DOC_ORIGINAL
 # inputdocs/inputdocs_List.xml
 #: dropdown - INP_DOC_ORIGINAL
-msgid "Original"
-msgstr "Original"
+msgid "Original  "
+msgstr "Original  "
 
 # inputdocs/inputdocs_List.xml?INP_DOC_ORIGINAL-COPY
 # inputdocs/inputdocs_List.xml
@@ -6610,8 +6658,8 @@ msgstr "Final"
 # inputdocs/inputdocs_List.xml?INP_DOC_PUBLISHED
 # inputdocs/inputdocs_List.xml
 #: dropdown - INP_DOC_PUBLISHED
-msgid "Access type"
-msgstr "Access type"
+msgid "Access type  "
+msgstr "Access type  "
 
 # inputdocs/inputdocs_List.xml?INP_DOC_PUBLISHED-PRIVATE
 # inputdocs/inputdocs_List.xml
@@ -6670,8 +6718,8 @@ msgstr "Title"
 # inputdocs/inputdocs_Edit.xml?INP_DOC_FORM_NEEDED
 # inputdocs/inputdocs_Edit.xml
 #: dropdown - INP_DOC_FORM_NEEDED
-msgid "[inputdocs/inputdocs_Edit.xml?INP_DOC_FORM_NEEDED] Document Type"
-msgstr "Document Type"
+msgid "[inputdocs/inputdocs_Edit.xml?INP_DOC_FORM_NEEDED] Document Type  "
+msgstr "Document Type  "
 
 # inputdocs/inputdocs_Edit.xml?INP_DOC_FORM_NEEDED-VIRTUAL
 # inputdocs/inputdocs_Edit.xml
@@ -6694,8 +6742,8 @@ msgstr "Digital/Printed"
 # inputdocs/inputdocs_Edit.xml?INP_DOC_ORIGINAL
 # inputdocs/inputdocs_Edit.xml
 #: dropdown - INP_DOC_ORIGINAL
-msgid "[inputdocs/inputdocs_Edit.xml?INP_DOC_ORIGINAL] Format"
-msgstr "Format"
+msgid "[inputdocs/inputdocs_Edit.xml?INP_DOC_ORIGINAL] Format  "
+msgstr "Format  "
 
 # inputdocs/inputdocs_Edit.xml?INP_DOC_ORIGINAL-ORIGINAL
 # inputdocs/inputdocs_Edit.xml
@@ -6778,8 +6826,8 @@ msgstr "Table Name"
 # reportTables/reportTables_Edit.xml?REP_TAB_TYPE
 # reportTables/reportTables_Edit.xml
 #: dropdown - REP_TAB_TYPE
-msgid "[reportTables/reportTables_Edit.xml?REP_TAB_TYPE] Type"
-msgstr "Type"
+msgid "[reportTables/reportTables_Edit.xml?REP_TAB_TYPE] Type  "
+msgstr "Type  "
 
 # reportTables/reportTables_Edit.xml?REP_TAB_TYPE-NORMAL
 # reportTables/reportTables_Edit.xml
@@ -6874,8 +6922,8 @@ msgstr "Description"
 # outputdocs/outputdocs_Edit.xml?OUT_DOC_LANDSCAPE
 # outputdocs/outputdocs_Edit.xml
 #: dropdown - OUT_DOC_LANDSCAPE
-msgid "Orientation"
-msgstr "Orientation"
+msgid "Orientation  "
+msgstr "Orientation  "
 
 # outputdocs/outputdocs_Edit.xml?OUT_DOC_LANDSCAPE-''
 # outputdocs/outputdocs_Edit.xml
@@ -6888,6 +6936,30 @@ msgstr "Vertical"
 #: dropdown - OUT_DOC_LANDSCAPE - 1
 msgid "[outputdocs/outputdocs_Edit.xml?OUT_DOC_LANDSCAPE-1]"
 msgstr "Horizontal"
+
+# outputdocs/outputdocs_Edit.xml?OUT_DOC_GENERATE
+# outputdocs/outputdocs_Edit.xml
+#: dropdown - OUT_DOC_GENERATE
+msgid "OutPut Document to Generate  "
+msgstr "OutPut Document to Generate  "
+
+# outputdocs/outputdocs_Edit.xml?OUT_DOC_GENERATE-BOTH
+# outputdocs/outputdocs_Edit.xml
+#: dropdown - OUT_DOC_GENERATE - BOTH
+msgid "[outputdocs/outputdocs_Edit.xml?OUT_DOC_GENERATE-BOTH]"
+msgstr "BOTH"
+
+# outputdocs/outputdocs_Edit.xml?OUT_DOC_GENERATE-DOC
+# outputdocs/outputdocs_Edit.xml
+#: dropdown - OUT_DOC_GENERATE - DOC
+msgid "[outputdocs/outputdocs_Edit.xml?OUT_DOC_GENERATE-DOC]"
+msgstr "DOC"
+
+# outputdocs/outputdocs_Edit.xml?OUT_DOC_GENERATE-PDF
+# outputdocs/outputdocs_Edit.xml
+#: dropdown - OUT_DOC_GENERATE - PDF
+msgid "[outputdocs/outputdocs_Edit.xml?OUT_DOC_GENERATE-PDF]"
+msgstr "PDF"
 
 # outputdocs/outputdocs_Edit.xml?OUT_DOC_TEMPLATE
 # outputdocs/outputdocs_Edit.xml
@@ -6934,8 +7006,8 @@ msgstr "Sub-Process"
 # processes/processes_subProcess.xml?TASKS
 # processes/processes_subProcess.xml
 #: dropdown - TASKS
-msgid "Process"
-msgstr "Process"
+msgid "Process  			"
+msgstr "Process  			"
 
 # processes/processes_subProcess.xml?TASKS-''
 # processes/processes_subProcess.xml
@@ -6946,8 +7018,8 @@ msgstr "Select a process"
 # processes/processes_subProcess.xml?SP_SYNCHRONOUS
 # processes/processes_subProcess.xml
 #: dropdown - SP_SYNCHRONOUS
-msgid "[processes/processes_subProcess.xml?SP_SYNCHRONOUS] Type"
-msgstr "Type"
+msgid "Type  								"
+msgstr "Type  								"
 
 # processes/processes_subProcess.xml?SP_SYNCHRONOUS-''
 # processes/processes_subProcess.xml
@@ -7018,8 +7090,8 @@ msgstr "Subscriptions"
 # processes/processes_ListPublic.xml?user
 # processes/processes_ListPublic.xml
 #: text - user
-msgid "Publisher"
-msgstr "Publisher"
+msgid "Author"
+msgstr "Author"
 
 # processes/processes_ListPublic.xml?updateDate
 # processes/processes_ListPublic.xml
@@ -7031,7 +7103,7 @@ msgstr "Update Date"
 # processes/processes_ListPublic.xml
 #: link - LINK
 msgid "[processes/processes_ListPublic.xml?LINK] Edit"
-msgstr ""
+msgstr "Edit"
 
 # processes/processes_subProcess_Out.xml?VAR_OUT1
 # processes/processes_subProcess_Out.xml
@@ -7126,8 +7198,8 @@ msgstr "Description"
 # processes/processes_Edit.xml?PRO_DEBUG
 # processes/processes_Edit.xml
 #: dropdown - PRO_DEBUG
-msgid "[processes/processes_Edit.xml?PRO_DEBUG] Mode"
-msgstr "Mode"
+msgid "Mode	"
+msgstr "Mode	"
 
 # processes/processes_Edit.xml?PRO_DEBUG-''
 # processes/processes_Edit.xml
@@ -7378,8 +7450,8 @@ msgstr "New Specific Permission"
 # processes/processes_NewObjectPermission.xml?TAS_UID
 # processes/processes_NewObjectPermission.xml
 #: dropdown - TAS_UID
-msgid "[processes/processes_NewObjectPermission.xml?TAS_UID] Target Task"
-msgstr "Target Task"
+msgid "Target Task  "
+msgstr "Target Task  "
 
 # processes/processes_NewObjectPermission.xml?TAS_UID-''
 # processes/processes_NewObjectPermission.xml
@@ -7396,8 +7468,8 @@ msgstr "Group or User"
 # processes/processes_NewObjectPermission.xml?OP_TASK_SOURCE
 # processes/processes_NewObjectPermission.xml
 #: dropdown - OP_TASK_SOURCE
-msgid "[processes/processes_NewObjectPermission.xml?OP_TASK_SOURCE] Origin Task"
-msgstr "Origin Task"
+msgid "Origin Task  "
+msgstr "Origin Task  "
 
 # processes/processes_NewObjectPermission.xml?OP_TASK_SOURCE-''
 # processes/processes_NewObjectPermission.xml
@@ -7414,8 +7486,8 @@ msgstr "Participation required?"
 # processes/processes_NewObjectPermission.xml?OP_OBJ_TYPE
 # processes/processes_NewObjectPermission.xml
 #: dropdown - OP_OBJ_TYPE
-msgid "[processes/processes_NewObjectPermission.xml?OP_OBJ_TYPE] Type"
-msgstr "Type"
+msgid "[processes/processes_NewObjectPermission.xml?OP_OBJ_TYPE] Type  "
+msgstr "Type  "
 
 # processes/processes_NewObjectPermission.xml?OP_OBJ_TYPE-ANY
 # processes/processes_NewObjectPermission.xml
@@ -7444,8 +7516,8 @@ msgstr "Output Document"
 # processes/processes_NewObjectPermission.xml?ALL
 # processes/processes_NewObjectPermission.xml
 #: dropdown - ALL
-msgid "[processes/processes_NewObjectPermission.xml?ALL] Object"
-msgstr "Object"
+msgid "Object    "
+msgstr "Object    "
 
 # processes/processes_NewObjectPermission.xml?ALL-''
 # processes/processes_NewObjectPermission.xml
@@ -7456,8 +7528,8 @@ msgstr "All"
 # processes/processes_NewObjectPermission.xml?DYNAFORMS
 # processes/processes_NewObjectPermission.xml
 #: dropdown - DYNAFORMS
-msgid "[processes/processes_NewObjectPermission.xml?DYNAFORMS] DynaForm"
-msgstr "DynaForm"
+msgid "DynaForm    "
+msgstr "DynaForm    "
 
 # processes/processes_NewObjectPermission.xml?DYNAFORMS-''
 # processes/processes_NewObjectPermission.xml
@@ -7468,8 +7540,8 @@ msgstr "All"
 # processes/processes_NewObjectPermission.xml?INPUTS
 # processes/processes_NewObjectPermission.xml
 #: dropdown - INPUTS
-msgid "[processes/processes_NewObjectPermission.xml?INPUTS] Input Document"
-msgstr "Input Document"
+msgid "Input Document    "
+msgstr "Input Document    "
 
 # processes/processes_NewObjectPermission.xml?INPUTS-''
 # processes/processes_NewObjectPermission.xml
@@ -7480,8 +7552,8 @@ msgstr "All"
 # processes/processes_NewObjectPermission.xml?OUTPUTS
 # processes/processes_NewObjectPermission.xml
 #: dropdown - OUTPUTS
-msgid "[processes/processes_NewObjectPermission.xml?OUTPUTS] Output Document"
-msgstr "Output Document"
+msgid "Output Document    "
+msgstr "Output Document    "
 
 # processes/processes_NewObjectPermission.xml?OUTPUTS-''
 # processes/processes_NewObjectPermission.xml
@@ -7492,8 +7564,8 @@ msgstr "All"
 # processes/processes_NewObjectPermission.xml?OP_ACTION
 # processes/processes_NewObjectPermission.xml
 #: dropdown - OP_ACTION
-msgid "[processes/processes_NewObjectPermission.xml?OP_ACTION] Permission"
-msgstr "Permission"
+msgid "Permission    "
+msgstr "Permission    "
 
 # processes/processes_NewObjectPermission.xml?OP_ACTION-VIEW
 # processes/processes_NewObjectPermission.xml
@@ -7582,8 +7654,8 @@ msgstr "Size in bytes"
 # processes/processes_Export.xml?FILENAME_LABEL
 # processes/processes_Export.xml
 #: link - FILENAME_LABEL
-msgid "[processes/processes_Export.xml?FILENAME_LABEL] File"
-msgstr "File"
+msgid "File "
+msgstr "File "
 
 # processes/processes_New.xml?TITLE1
 # processes/processes_New.xml
@@ -7678,14 +7750,14 @@ msgstr "Subscriptions"
 # processes/objectpmView.xml?username
 # processes/objectpmView.xml
 #: text - username
-msgid "[processes/objectpmView.xml?username] Publisher"
-msgstr "Publisher"
+msgid "[processes/objectpmView.xml?username] Author"
+msgstr "Author"
 
 # processes/objectpmView.xml?privacy
 # processes/objectpmView.xml
 #: dropdown - privacy
-msgid "Privacy"
-msgstr "Privacy"
+msgid "Privacy    "
+msgstr "Privacy    "
 
 # processes/objectpmView.xml?privacy-FREE
 # processes/objectpmView.xml
@@ -7729,9 +7801,9 @@ msgstr "Update Date"
 msgid "[processes/objectpmView.xml?description] Description"
 msgstr "Description"
 
-# processes/objectpmView.xml?installSteps
+# processes/objectpmView.xml?subinstallSteps
 # processes/objectpmView.xml
-#: text - installSteps
+#: subtitle - subinstallSteps
 msgid "Install Steps"
 msgstr "Install Steps"
 
@@ -7739,7 +7811,7 @@ msgstr "Install Steps"
 # processes/objectpmView.xml
 #: link - link
 msgid "link"
-msgstr ""
+msgstr "link"
 
 # processes/processes_Import.xml?TITLE1
 # processes/processes_Import.xml
@@ -7819,12 +7891,6 @@ msgstr "Process Uid"
 msgid "Please follow these instructions to complete installation"
 msgstr "Please follow these instructions to complete installation"
 
-# processes/processes_ImportSucessful.xml?installSteps
-# processes/processes_ImportSucessful.xml
-#: caption - installSteps
-msgid "[processes/processes_ImportSucessful.xml?installSteps] Install Steps"
-msgstr ""
-
 # processes/processes_ImportSucessful.xml?SUBMIT
 # processes/processes_ImportSucessful.xml
 #: submit - SUBMIT
@@ -7835,7 +7901,7 @@ msgstr "Continue"
 # processes/processes_FilesList.xml
 #: link - DELETE
 msgid "[processes/processes_FilesList.xml?DELETE] Delete"
-msgstr ""
+msgstr "Delete"
 
 # reports/report5_dashboard.xml?USER
 # reports/report5_dashboard.xml
@@ -7894,8 +7960,8 @@ msgstr "TO"
 # reports/reports_Description_search.xml?STARTEDBY_DES
 # reports/reports_Description_search.xml
 #: dropdown - STARTEDBY_DES
-msgid "STARTED BY"
-msgstr "STARTED BY"
+msgid "STARTED BY "
+msgstr "STARTED BY "
 
 # reports/reports_Description_search.xml?STARTEDBY_DES-''
 # reports/reports_Description_search.xml
@@ -7948,8 +8014,8 @@ msgstr "Average (Hours)"
 # reports/report_filter.xml?PROCESS
 # reports/report_filter.xml
 #: dropdown - PROCESS
-msgid "[reports/report_filter.xml?PROCESS] Process"
-msgstr "Process"
+msgid "Process   	  		"
+msgstr "Process   	  		"
 
 # reports/report_filter.xml?PROCESS-''
 # reports/report_filter.xml
@@ -7960,8 +8026,8 @@ msgstr "All"
 # reports/report_filter.xml?TASKS
 # reports/report_filter.xml
 #: dropdown - TASKS
-msgid "Tasks"
-msgstr "Tasks"
+msgid "Tasks "
+msgstr "Tasks "
 
 # reports/report_filter.xml?TASKS-''
 # reports/report_filter.xml
@@ -8284,8 +8350,8 @@ msgstr "TO"
 # reports/report1_search.xml?STARTEDBY
 # reports/report1_search.xml
 #: dropdown - STARTEDBY
-msgid "[reports/report1_search.xml?STARTEDBY] STARTED BY"
-msgstr "STARTED BY"
+msgid "[reports/report1_search.xml?STARTEDBY] STARTED BY "
+msgstr "STARTED BY "
 
 # reports/report1_search.xml?STARTEDBY-''
 # reports/report1_search.xml
@@ -9658,8 +9724,8 @@ msgstr "Enable Email Notifications"
 # setup/emails.xml?MESS_ENGINE
 # setup/emails.xml
 #: dropdown - MESS_ENGINE
-msgid "Email Engine"
-msgstr "Email Engine"
+msgid "Email Engine    "
+msgstr "Email Engine    "
 
 # setup/emails.xml?MESS_ENGINE-MAIL
 # setup/emails.xml
@@ -10090,8 +10156,8 @@ msgstr "Process ID"
 # setup/wsNewCase.xml?TASK_ID
 # setup/wsNewCase.xml
 #: dropdown - TASK_ID
-msgid "Task ID"
-msgstr "Task ID"
+msgid "Task ID "
+msgstr "Task ID "
 
 # setup/wsNewCase.xml?TASK_ID-''
 # setup/wsNewCase.xml
@@ -10192,8 +10258,8 @@ msgstr "Delete"
 # setup/location.xml?DESCRIPTION
 # setup/location.xml
 #: text - DESCRIPTION
-msgid "Region"
-msgstr "Region"
+msgid "Region "
+msgstr "Region "
 
 # setup/location.xml?BSUBMIT
 # setup/location.xml
@@ -10204,7 +10270,7 @@ msgstr "Add"
 # setup/location.xml?TITLE
 # setup/location.xml
 #: title - TITLE
-msgid "[setup/location.xml?TITLE] Region"
+msgid "Region"
 msgstr "Region"
 
 # setup/location.xml?USR_COUNTRY
@@ -10384,14 +10450,14 @@ msgstr "Accept"
 # setup/language_table.xml?TITLE
 # setup/language_table.xml
 #: title - TITLE
-msgid "[setup/language_table.xml?TITLE] Language"
-msgstr "Language"
+msgid "Language "
+msgstr "Language "
 
 # setup/language_table.xml?LEX_VALUE
 # setup/language_table.xml
 #: dropdown - LEX_VALUE
-msgid "[setup/language_table.xml?LEX_VALUE] Language"
-msgstr "Language"
+msgid "[setup/language_table.xml?LEX_VALUE] Language "
+msgstr "Language "
 
 # setup/language_table.xml?BSUBMIT
 # setup/language_table.xml
@@ -10426,14 +10492,14 @@ msgstr "AssignUserToGroup"
 # setup/language.xml?TITLE
 # setup/language.xml
 #: title - TITLE
-msgid "[setup/language.xml?TITLE] Language"
-msgstr "Language"
+msgid "[setup/language.xml?TITLE] Language "
+msgstr "Language "
 
 # setup/language.xml?LEX_VALUE
 # setup/language.xml
 #: dropdown - LEX_VALUE
-msgid "[setup/language.xml?LEX_VALUE] Language"
-msgstr "Language"
+msgid "[setup/language.xml?LEX_VALUE] Language "
+msgstr "Language "
 
 # setup/language.xml?BSUBMIT
 # setup/language.xml
@@ -10462,7 +10528,7 @@ msgstr "Email Settings"
 # setup/mail.xml?MAILER
 # setup/mail.xml
 #: dropdown - MAILER
-msgid "[setup/mail.xml?MAILER] Method"
+msgid "Method"
 msgstr "Method"
 
 # setup/mail.xml?MAILER-mail
@@ -10480,8 +10546,8 @@ msgstr "SMTP"
 # setup/mail.xml?HOST
 # setup/mail.xml
 #: text - HOST
-msgid "[setup/mail.xml?HOST] Server"
-msgstr "Server"
+msgid "Server "
+msgstr "Server "
 
 # setup/mail.xml?PORT
 # setup/mail.xml
@@ -10678,8 +10744,8 @@ msgstr "Manager"
 # departments/properties.xml?DEP_STATUS
 # departments/properties.xml
 #: dropdown - DEP_STATUS
-msgid "[departments/properties.xml?DEP_STATUS] Status"
-msgstr "Status"
+msgid "[departments/properties.xml?DEP_STATUS] Status  "
+msgstr "Status  "
 
 # departments/properties.xml?DEP_STATUS-ACTIVE
 # departments/properties.xml
@@ -10852,8 +10918,8 @@ msgstr "Expiration Date"
 # users/users_New.xml?USR_STATUS
 # users/users_New.xml
 #: dropdown - USR_STATUS
-msgid "[users/users_New.xml?USR_STATUS] Status"
-msgstr "Status"
+msgid "[users/users_New.xml?USR_STATUS] Status  "
+msgstr "Status  "
 
 # users/users_New.xml?USR_STATUS-ACTIVE
 # users/users_New.xml
@@ -10888,14 +10954,14 @@ msgstr "Change Password"
 # users/users_New.xml?USR_NEW_PASS
 # users/users_New.xml
 #: password - USR_NEW_PASS
-msgid "New Password"
-msgstr "New Password"
+msgid "New Password "
+msgstr "New Password "
 
 # users/users_New.xml?USR_CNF_PASS
 # users/users_New.xml
 #: password - USR_CNF_PASS
-msgid "Confirm Password"
-msgstr "Confirm Password"
+msgid "Confirm Password "
+msgstr "Confirm Password "
 
 # users/users_New.xml?TITLE3
 # users/users_New.xml
@@ -11008,8 +11074,8 @@ msgstr "Expiration Date"
 # users/myInfoView.xml?USR_STATUS
 # users/myInfoView.xml
 #: dropdown - USR_STATUS
-msgid "[users/myInfoView.xml?USR_STATUS] Status"
-msgstr "Status"
+msgid "[users/myInfoView.xml?USR_STATUS] Status  "
+msgstr "Status  "
 
 # users/myInfoView.xml?USR_STATUS-ACTIVE
 # users/myInfoView.xml
@@ -11044,20 +11110,26 @@ msgstr "Change Password"
 # users/myInfoView.xml?USR_NEW_PASS
 # users/myInfoView.xml
 #: password - USR_NEW_PASS
-msgid "[users/myInfoView.xml?USR_NEW_PASS] New Password"
-msgstr "New Password"
+msgid "[users/myInfoView.xml?USR_NEW_PASS] New Password "
+msgstr "New Password "
 
 # users/myInfoView.xml?USR_CNF_PASS
 # users/myInfoView.xml
 #: password - USR_CNF_PASS
-msgid "[users/myInfoView.xml?USR_CNF_PASS] Confirm Password"
-msgstr "Confirm Password"
+msgid "[users/myInfoView.xml?USR_CNF_PASS] Confirm Password "
+msgstr "Confirm Password "
 
 # users/myInfoView.xml?TITLEADD
 # users/myInfoView.xml
 #: title - TITLEADD
 msgid "[users/myInfoView.xml?TITLEADD] Additional Information"
 msgstr "Additional Information"
+
+# users/myInfoView.xml?USR_PHOTO
+# users/myInfoView.xml
+#: image - USR_PHOTO
+msgid "[users/myInfoView.xml?USR_PHOTO] Photo"
+msgstr "Photo"
 
 # users/myInfoView.xml?USR_RESUME
 # users/myInfoView.xml
@@ -11266,8 +11338,8 @@ msgstr "Expiration Date"
 # users/users_Edit.xml?USR_STATUS
 # users/users_Edit.xml
 #: dropdown - USR_STATUS
-msgid "[users/users_Edit.xml?USR_STATUS] Status"
-msgstr "Status"
+msgid "[users/users_Edit.xml?USR_STATUS] Status  "
+msgstr "Status  "
 
 # users/users_Edit.xml?USR_STATUS-ACTIVE
 # users/users_Edit.xml
@@ -11302,14 +11374,14 @@ msgstr "Change Password"
 # users/users_Edit.xml?USR_NEW_PASS
 # users/users_Edit.xml
 #: password - USR_NEW_PASS
-msgid "[users/users_Edit.xml?USR_NEW_PASS] New Password"
-msgstr "New Password"
+msgid "[users/users_Edit.xml?USR_NEW_PASS] New Password "
+msgstr "New Password "
 
 # users/users_Edit.xml?USR_CNF_PASS
 # users/users_Edit.xml
 #: password - USR_CNF_PASS
-msgid "[users/users_Edit.xml?USR_CNF_PASS] Confirm Password"
-msgstr "Confirm Password"
+msgid "[users/users_Edit.xml?USR_CNF_PASS] Confirm Password "
+msgstr "Confirm Password "
 
 # users/users_Edit.xml?TITLE3
 # users/users_Edit.xml
@@ -11452,8 +11524,8 @@ msgstr "Expiration Date"
 # users/myInfo.xml?USR_STATUS
 # users/myInfo.xml
 #: dropdown - USR_STATUS
-msgid "[users/myInfo.xml?USR_STATUS] Status"
-msgstr "Status"
+msgid "[users/myInfo.xml?USR_STATUS] Status  "
+msgstr "Status  "
 
 # users/myInfo.xml?USR_STATUS-ACTIVE
 # users/myInfo.xml
@@ -11488,14 +11560,14 @@ msgstr "Change Password"
 # users/myInfo.xml?USR_NEW_PASS
 # users/myInfo.xml
 #: password - USR_NEW_PASS
-msgid "[users/myInfo.xml?USR_NEW_PASS] New Password"
-msgstr "New Password"
+msgid "[users/myInfo.xml?USR_NEW_PASS] New Password "
+msgstr "New Password "
 
 # users/myInfo.xml?USR_CNF_PASS
 # users/myInfo.xml
 #: password - USR_CNF_PASS
-msgid "[users/myInfo.xml?USR_CNF_PASS] Confirm Password"
-msgstr "Confirm Password"
+msgid "[users/myInfo.xml?USR_CNF_PASS] Confirm Password "
+msgstr "Confirm Password "
 
 # users/myInfo.xml?TITLEADD
 # users/myInfo.xml
@@ -11608,8 +11680,8 @@ msgstr "Expiration Date"
 # users/users_View.xml?USR_STATUS
 # users/users_View.xml
 #: dropdown - USR_STATUS
-msgid "[users/users_View.xml?USR_STATUS] Status"
-msgstr "Status"
+msgid "[users/users_View.xml?USR_STATUS] Status  "
+msgstr "Status  "
 
 # users/users_View.xml?USR_STATUS-ACTIVE
 # users/users_View.xml
@@ -11644,14 +11716,14 @@ msgstr "Change Password"
 # users/users_View.xml?USR_NEW_PASS
 # users/users_View.xml
 #: password - USR_NEW_PASS
-msgid "[users/users_View.xml?USR_NEW_PASS] New Password"
-msgstr "New Password"
+msgid "[users/users_View.xml?USR_NEW_PASS] New Password "
+msgstr "New Password "
 
 # users/users_View.xml?USR_CNF_PASS
 # users/users_View.xml
 #: password - USR_CNF_PASS
-msgid "[users/users_View.xml?USR_CNF_PASS] Confirm Password"
-msgstr "Confirm Password"
+msgid "[users/users_View.xml?USR_CNF_PASS] Confirm Password "
+msgstr "Confirm Password "
 
 # users/users_View.xml?TITLEADD
 # users/users_View.xml
@@ -11698,8 +11770,8 @@ msgstr "Message"
 # tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_TYPE
 # tasks/tasks_AssignmentRules.xml
 #: radiogroup - TAS_ASSIGN_TYPE
-msgid "Case to be assigned by"
-msgstr "Case to be assigned by"
+msgid "Case to be assigned by    "
+msgstr "Case to be assigned by    "
 
 # tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_TYPE-BALANCED
 # tasks/tasks_AssignmentRules.xml
@@ -11719,29 +11791,11 @@ msgstr "Manual Assignment"
 msgid "[tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_TYPE-EVALUATE]"
 msgstr "Value Based Assignment"
 
-# tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_VARIABLE
-# tasks/tasks_AssignmentRules.xml
-#: textpm - TAS_ASSIGN_VARIABLE
-msgid "Variable for Value Based Assignment"
-msgstr "Variable for Value Based Assignment"
-
-# tasks/tasks_Labels.xml?TAS_DEF_TITLE
-# tasks/tasks_Labels.xml
-#: textareapm - TAS_DEF_TITLE
-msgid "[tasks/tasks_Labels.xml?TAS_DEF_TITLE] Case Title"
-msgstr "Case Title"
-
-# tasks/tasks_Labels.xml?TAS_DEF_DESCRIPTION
-# tasks/tasks_Labels.xml
-#: textareapm - TAS_DEF_DESCRIPTION
-msgid "Case Description"
-msgstr "Case Description"
-
 # tasks/tasks_Owner.xml?TAS_OWNER_APP
 # tasks/tasks_Owner.xml
 #: dropdown - TAS_OWNER_APP
-msgid "Set task performer as"
-msgstr "Set task performer as"
+msgid "Set task performer as    "
+msgstr "Set task performer as    "
 
 # tasks/tasks_Owner.xml?TAS_OWNER_APP-''
 # tasks/tasks_Owner.xml
@@ -11818,8 +11872,8 @@ msgstr "Task duration"
 # tasks/tasks_TimingControl.xml?TAS_TIMEUNIT
 # tasks/tasks_TimingControl.xml
 #: dropdown - TAS_TIMEUNIT
-msgid "Unit time"
-msgstr "Unit time"
+msgid "Unit time    "
+msgstr "Unit time    "
 
 # tasks/tasks_TimingControl.xml?TAS_TIMEUNIT-MINUTES
 # tasks/tasks_TimingControl.xml
@@ -11842,8 +11896,8 @@ msgstr "Days"
 # tasks/tasks_TimingControl.xml?TAS_TYPE_DAY
 # tasks/tasks_TimingControl.xml
 #: dropdown - TAS_TYPE_DAY
-msgid "Days to enter"
-msgstr "Days to enter"
+msgid "Days to enter    "
+msgstr "Days to enter    "
 
 # tasks/tasks_TimingControl.xml?TAS_TYPE_DAY-1
 # tasks/tasks_TimingControl.xml
@@ -11868,12 +11922,6 @@ msgstr "Title"
 #: textarea - TAS_DESCRIPTION
 msgid "[tasks/tasks_Definition.xml?TAS_DESCRIPTION] Description"
 msgstr "Description"
-
-# tasks/tasks_Definition.xml?TAS_PRIORITY_VARIABLE
-# tasks/tasks_Definition.xml
-#: textpm - TAS_PRIORITY_VARIABLE
-msgid "Variable for Case priority"
-msgstr "Variable for Case priority"
 
 # tasks/tasks_Definition.xml?TAS_START
 # tasks/tasks_Definition.xml
@@ -11938,8 +11986,8 @@ msgstr "Last Modification"
 # cases/cases_ListTodo.xml?DEL_PRIORITY
 # cases/cases_ListTodo.xml
 #: dropdown - DEL_PRIORITY
-msgid "Priority"
-msgstr "Priority"
+msgid "Priority        "
+msgstr "Priority        "
 
 # cases/cases_ListTodo.xml?DEL_PRIORITY-1
 # cases/cases_ListTodo.xml
@@ -11992,8 +12040,8 @@ msgstr "Filename/Comments"
 # cases/cases_AllInputdocsList.xml?TYPE
 # cases/cases_AllInputdocsList.xml
 #: dropdown - TYPE
-msgid "[cases/cases_AllInputdocsList.xml?TYPE] Type"
-msgstr "Type"
+msgid "[cases/cases_AllInputdocsList.xml?TYPE] Type  "
+msgstr "Type  "
 
 # cases/cases_AllInputdocsList.xml?TYPE-INPUT
 # cases/cases_AllInputdocsList.xml
@@ -12012,6 +12060,12 @@ msgstr "Attached in form"
 #: text - ORIGIN
 msgid "[cases/cases_AllInputdocsList.xml?ORIGIN] Origin Task"
 msgstr "Origin Task"
+
+# cases/cases_AllInputdocsList.xml?DELETE
+# cases/cases_AllInputdocsList.xml
+#: link - DELETE
+msgid "[cases/cases_AllInputdocsList.xml?DELETE] Delete"
+msgstr "Delete"
 
 # cases/cases_ListCompleted.xml?APP_NUMBER
 # cases/cases_ListCompleted.xml
@@ -12094,8 +12148,8 @@ msgstr "Type"
 # cases/cases_ViewInputDocumentToRevise.xml?INP_DOC_ORIGINAL
 # cases/cases_ViewInputDocumentToRevise.xml
 #: dropdown - INP_DOC_ORIGINAL
-msgid "[cases/cases_ViewInputDocumentToRevise.xml?INP_DOC_ORIGINAL] Format"
-msgstr "Format"
+msgid "[cases/cases_ViewInputDocumentToRevise.xml?INP_DOC_ORIGINAL] Format  "
+msgstr "Format  "
 
 # cases/cases_ViewInputDocumentToRevise.xml?INP_DOC_ORIGINAL-ORIGINAL
 # cases/cases_ViewInputDocumentToRevise.xml
@@ -12172,8 +12226,8 @@ msgstr "Description"
 # cases/cases_AttachInputDocument3.xml?INP_DOC_FORM_NEEDED
 # cases/cases_AttachInputDocument3.xml
 #: dropdown - INP_DOC_FORM_NEEDED
-msgid "[cases/cases_AttachInputDocument3.xml?INP_DOC_FORM_NEEDED] Document Type"
-msgstr "Document Type"
+msgid "[cases/cases_AttachInputDocument3.xml?INP_DOC_FORM_NEEDED] Document Type  "
+msgstr "Document Type  "
 
 # cases/cases_AttachInputDocument3.xml?INP_DOC_FORM_NEEDED-VIRTUAL
 # cases/cases_AttachInputDocument3.xml
@@ -12196,8 +12250,8 @@ msgstr "Digital/Printed"
 # cases/cases_AttachInputDocument3.xml?INP_DOC_ORIGINAL
 # cases/cases_AttachInputDocument3.xml
 #: dropdown - INP_DOC_ORIGINAL
-msgid "[cases/cases_AttachInputDocument3.xml?INP_DOC_ORIGINAL] Format"
-msgstr "Format"
+msgid "[cases/cases_AttachInputDocument3.xml?INP_DOC_ORIGINAL] Format  "
+msgstr "Format  "
 
 # cases/cases_AttachInputDocument3.xml?INP_DOC_ORIGINAL-ORIGINAL
 # cases/cases_AttachInputDocument3.xml
@@ -12274,8 +12328,8 @@ msgstr "End Date"
 # cases/cases_TransferHistory.xml?APP_TYPE
 # cases/cases_TransferHistory.xml
 #: dropdown - APP_TYPE
-msgid "[cases/cases_TransferHistory.xml?APP_TYPE] Action"
-msgstr "Action"
+msgid "[cases/cases_TransferHistory.xml?APP_TYPE] Action  "
+msgstr "Action  "
 
 # cases/cases_TransferHistory.xml?APP_TYPE-PAUSE
 # cases/cases_TransferHistory.xml
@@ -12300,6 +12354,12 @@ msgstr "In Progress"
 #: dropdown - APP_TYPE - ''
 msgid "[cases/cases_TransferHistory.xml?APP_TYPE-'']"
 msgstr "Derivated"
+
+# cases/cases_TransferHistory.xml?APP_TYPE-REASSIGN
+# cases/cases_TransferHistory.xml
+#: dropdown - APP_TYPE - REASSIGN
+msgid "[cases/cases_TransferHistory.xml?APP_TYPE-REASSIGN]"
+msgstr "Reassigned"
 
 # cases/cases_TransferHistory.xml?APP_ENABLE_ACTION_DATE
 # cases/cases_TransferHistory.xml
@@ -12352,8 +12412,8 @@ msgstr "Description"
 # cases/cases_ViewAnyInputDocument2.xml?INP_DOC_FORM_NEEDED
 # cases/cases_ViewAnyInputDocument2.xml
 #: dropdown - INP_DOC_FORM_NEEDED
-msgid "[cases/cases_ViewAnyInputDocument2.xml?INP_DOC_FORM_NEEDED] Document Type"
-msgstr "Document Type"
+msgid "[cases/cases_ViewAnyInputDocument2.xml?INP_DOC_FORM_NEEDED] Document Type  "
+msgstr "Document Type  "
 
 # cases/cases_ViewAnyInputDocument2.xml?INP_DOC_FORM_NEEDED-VIRTUAL
 # cases/cases_ViewAnyInputDocument2.xml
@@ -12376,8 +12436,8 @@ msgstr "Digital/Printed"
 # cases/cases_ViewAnyInputDocument2.xml?INP_DOC_ORIGINAL
 # cases/cases_ViewAnyInputDocument2.xml
 #: dropdown - INP_DOC_ORIGINAL
-msgid "[cases/cases_ViewAnyInputDocument2.xml?INP_DOC_ORIGINAL] Format"
-msgstr "Format"
+msgid "[cases/cases_ViewAnyInputDocument2.xml?INP_DOC_ORIGINAL] Format  "
+msgstr "Format  "
 
 # cases/cases_ViewAnyInputDocument2.xml?INP_DOC_ORIGINAL-ORIGINAL
 # cases/cases_ViewAnyInputDocument2.xml
@@ -12467,7 +12527,7 @@ msgstr "Start Date"
 # cases/cases_ListDraft.xml
 #: link - DELETE
 msgid "[cases/cases_ListDraft.xml?DELETE] Delete"
-msgstr ""
+msgstr "Delete"
 
 # cases/cases_ListDraft.xml?SEARCH
 # cases/cases_ListDraft.xml
@@ -12491,13 +12551,13 @@ msgstr "Pause this case"
 # cases/cases_InputdocsList.xml
 #: text - TITLE
 msgid "[cases/cases_InputdocsList.xml?TITLE] Title"
-msgstr ""
+msgstr "Title"
 
 # cases/cases_InputdocsList.xml?DELETE
 # cases/cases_InputdocsList.xml
 #: link - DELETE
 msgid "[cases/cases_InputdocsList.xml?DELETE] Delete"
-msgstr ""
+msgstr "Delete"
 
 # cases/cases_ListCancelled.xml?APP_NUMBER
 # cases/cases_ListCancelled.xml
@@ -12574,8 +12634,8 @@ msgstr "Description"
 # cases/cases_ViewInputDocument2.xml?INP_DOC_FORM_NEEDED
 # cases/cases_ViewInputDocument2.xml
 #: dropdown - INP_DOC_FORM_NEEDED
-msgid "[cases/cases_ViewInputDocument2.xml?INP_DOC_FORM_NEEDED] Document Type"
-msgstr "Document Type"
+msgid "[cases/cases_ViewInputDocument2.xml?INP_DOC_FORM_NEEDED] Document Type  "
+msgstr "Document Type  "
 
 # cases/cases_ViewInputDocument2.xml?INP_DOC_FORM_NEEDED-VIRTUAL
 # cases/cases_ViewInputDocument2.xml
@@ -12598,8 +12658,8 @@ msgstr "Digital/Printed"
 # cases/cases_ViewInputDocument2.xml?INP_DOC_ORIGINAL
 # cases/cases_ViewInputDocument2.xml
 #: dropdown - INP_DOC_ORIGINAL
-msgid "[cases/cases_ViewInputDocument2.xml?INP_DOC_ORIGINAL] Format"
-msgstr "Format"
+msgid "[cases/cases_ViewInputDocument2.xml?INP_DOC_ORIGINAL] Format  "
+msgstr "Format  "
 
 # cases/cases_ViewInputDocument2.xml?INP_DOC_ORIGINAL-ORIGINAL
 # cases/cases_ViewInputDocument2.xml
@@ -12733,6 +12793,36 @@ msgstr "Finish date"
 msgid "Duration"
 msgstr "Duration"
 
+# cases/cases_ViewOutputDocument3.xml?OUT_DOC_TITLE
+# cases/cases_ViewOutputDocument3.xml
+#: caption - OUT_DOC_TITLE
+msgid "[cases/cases_ViewOutputDocument3.xml?OUT_DOC_TITLE] Output document"
+msgstr "Output document"
+
+# cases/cases_ViewOutputDocument3.xml?OUT_DOC_DESCRIPTION
+# cases/cases_ViewOutputDocument3.xml
+#: caption - OUT_DOC_DESCRIPTION
+msgid "[cases/cases_ViewOutputDocument3.xml?OUT_DOC_DESCRIPTION] Description"
+msgstr "Description"
+
+# cases/cases_ViewOutputDocument3.xml?APP_DOC_CREATE_DATE
+# cases/cases_ViewOutputDocument3.xml
+#: caption - APP_DOC_CREATE_DATE
+msgid "[cases/cases_ViewOutputDocument3.xml?APP_DOC_CREATE_DATE] Create Date"
+msgstr "Create Date"
+
+# cases/cases_ViewOutputDocument3.xml?APP_DOC_FILENAME2
+# cases/cases_ViewOutputDocument3.xml
+#: link - APP_DOC_FILENAME2
+msgid "[cases/cases_ViewOutputDocument3.xml?APP_DOC_FILENAME2] File (.pdf)"
+msgstr "File (.pdf)"
+
+# cases/cases_ViewOutputDocument3.xml?NEXT_STEP
+# cases/cases_ViewOutputDocument3.xml
+#: button - NEXT_STEP
+msgid "[cases/cases_ViewOutputDocument3.xml?NEXT_STEP] Next step"
+msgstr "Next step"
+
 # cases/cases_TaskDetails.xml?TASK
 # cases/cases_TaskDetails.xml
 #: text - TASK
@@ -12775,6 +12865,36 @@ msgstr "Duration"
 msgid "[cases/cases_AllDynaformsList.xml?DYN_TITLE] Title"
 msgstr "Title"
 
+# cases/cases_ViewOutputDocument2.xml?OUT_DOC_TITLE
+# cases/cases_ViewOutputDocument2.xml
+#: caption - OUT_DOC_TITLE
+msgid "[cases/cases_ViewOutputDocument2.xml?OUT_DOC_TITLE] Output document"
+msgstr "Output document"
+
+# cases/cases_ViewOutputDocument2.xml?OUT_DOC_DESCRIPTION
+# cases/cases_ViewOutputDocument2.xml
+#: caption - OUT_DOC_DESCRIPTION
+msgid "[cases/cases_ViewOutputDocument2.xml?OUT_DOC_DESCRIPTION] Description"
+msgstr "Description"
+
+# cases/cases_ViewOutputDocument2.xml?APP_DOC_CREATE_DATE
+# cases/cases_ViewOutputDocument2.xml
+#: caption - APP_DOC_CREATE_DATE
+msgid "[cases/cases_ViewOutputDocument2.xml?APP_DOC_CREATE_DATE] Create Date"
+msgstr "Create Date"
+
+# cases/cases_ViewOutputDocument2.xml?APP_DOC_FILENAME1
+# cases/cases_ViewOutputDocument2.xml
+#: link - APP_DOC_FILENAME1
+msgid "[cases/cases_ViewOutputDocument2.xml?APP_DOC_FILENAME1] File (.doc)"
+msgstr "File (.doc)"
+
+# cases/cases_ViewOutputDocument2.xml?NEXT_STEP
+# cases/cases_ViewOutputDocument2.xml
+#: button - NEXT_STEP
+msgid "[cases/cases_ViewOutputDocument2.xml?NEXT_STEP] Next step"
+msgstr "Next step"
+
 # cases/cases_CannotInitiateCase.xml?TITLE
 # cases/cases_CannotInitiateCase.xml
 #: title - TITLE
@@ -12808,8 +12928,8 @@ msgstr "Description"
 # cases/cases_AttachInputDocument1.xml?INP_DOC_FORM_NEEDED
 # cases/cases_AttachInputDocument1.xml
 #: dropdown - INP_DOC_FORM_NEEDED
-msgid "[cases/cases_AttachInputDocument1.xml?INP_DOC_FORM_NEEDED] Document Type"
-msgstr "Document Type"
+msgid "[cases/cases_AttachInputDocument1.xml?INP_DOC_FORM_NEEDED] Document Type  "
+msgstr "Document Type  "
 
 # cases/cases_AttachInputDocument1.xml?INP_DOC_FORM_NEEDED-VIRTUAL
 # cases/cases_AttachInputDocument1.xml
@@ -12832,8 +12952,8 @@ msgstr "Digital/Printed"
 # cases/cases_AttachInputDocument1.xml?INP_DOC_ORIGINAL
 # cases/cases_AttachInputDocument1.xml
 #: dropdown - INP_DOC_ORIGINAL
-msgid "[cases/cases_AttachInputDocument1.xml?INP_DOC_ORIGINAL] Format"
-msgstr "Format"
+msgid "[cases/cases_AttachInputDocument1.xml?INP_DOC_ORIGINAL] Format  "
+msgstr "Format  "
 
 # cases/cases_AttachInputDocument1.xml?INP_DOC_ORIGINAL-ORIGINAL
 # cases/cases_AttachInputDocument1.xml
@@ -12892,8 +13012,8 @@ msgstr "Description"
 # cases/cases_ViewInputDocument1.xml?INP_DOC_FORM_NEEDED
 # cases/cases_ViewInputDocument1.xml
 #: dropdown - INP_DOC_FORM_NEEDED
-msgid "[cases/cases_ViewInputDocument1.xml?INP_DOC_FORM_NEEDED] Document Type"
-msgstr "Document Type"
+msgid "[cases/cases_ViewInputDocument1.xml?INP_DOC_FORM_NEEDED] Document Type  "
+msgstr "Document Type  "
 
 # cases/cases_ViewInputDocument1.xml?INP_DOC_FORM_NEEDED-VIRTUAL
 # cases/cases_ViewInputDocument1.xml
@@ -12916,8 +13036,8 @@ msgstr "Digital/Printed"
 # cases/cases_ViewInputDocument1.xml?INP_DOC_ORIGINAL
 # cases/cases_ViewInputDocument1.xml
 #: dropdown - INP_DOC_ORIGINAL
-msgid "[cases/cases_ViewInputDocument1.xml?INP_DOC_ORIGINAL] Format"
-msgstr "Format"
+msgid "[cases/cases_ViewInputDocument1.xml?INP_DOC_ORIGINAL] Format  "
+msgstr "Format  "
 
 # cases/cases_ViewInputDocument1.xml?INP_DOC_ORIGINAL-ORIGINAL
 # cases/cases_ViewInputDocument1.xml
@@ -12995,7 +13115,7 @@ msgstr "Sent by"
 # cases/cases_ListOnHold.xml
 #: date - APP_UPDATE_DATE
 msgid "[cases/cases_ListOnHold.xml?APP_UPDATE_DATE] Last Modification"
-msgstr ""
+msgstr "Last Modification"
 
 # cases/cases_ListOnHold.xml?DEL_TASK_DUE_DATE
 # cases/cases_ListOnHold.xml
@@ -13033,6 +13153,12 @@ msgstr "Title"
 msgid "[cases/cases_AllOutputdocsList.xml?ORIGIN] Origin Task"
 msgstr "Origin Task"
 
+# cases/cases_AllOutputdocsList.xml?DELETE
+# cases/cases_AllOutputdocsList.xml
+#: link - DELETE
+msgid "[cases/cases_AllOutputdocsList.xml?DELETE] Delete"
+msgstr "Delete"
+
 # cases/cases_AttachInputDocument2.xml?TITLE1
 # cases/cases_AttachInputDocument2.xml
 #: title - TITLE1
@@ -13054,8 +13180,8 @@ msgstr "Description"
 # cases/cases_AttachInputDocument2.xml?INP_DOC_FORM_NEEDED
 # cases/cases_AttachInputDocument2.xml
 #: dropdown - INP_DOC_FORM_NEEDED
-msgid "[cases/cases_AttachInputDocument2.xml?INP_DOC_FORM_NEEDED] Document Type"
-msgstr "Document Type"
+msgid "[cases/cases_AttachInputDocument2.xml?INP_DOC_FORM_NEEDED] Document Type  "
+msgstr "Document Type  "
 
 # cases/cases_AttachInputDocument2.xml?INP_DOC_FORM_NEEDED-VIRTUAL
 # cases/cases_AttachInputDocument2.xml
@@ -13078,8 +13204,8 @@ msgstr "Digital/Printed"
 # cases/cases_AttachInputDocument2.xml?INP_DOC_ORIGINAL
 # cases/cases_AttachInputDocument2.xml
 #: dropdown - INP_DOC_ORIGINAL
-msgid "[cases/cases_AttachInputDocument2.xml?INP_DOC_ORIGINAL] Format"
-msgstr "Format"
+msgid "[cases/cases_AttachInputDocument2.xml?INP_DOC_ORIGINAL] Format  "
+msgstr "Format  "
 
 # cases/cases_AttachInputDocument2.xml?INP_DOC_ORIGINAL-ORIGINAL
 # cases/cases_AttachInputDocument2.xml
@@ -13132,8 +13258,8 @@ msgstr "Description"
 # cases/cases_ViewInputDocument3.xml?INP_DOC_FORM_NEEDED
 # cases/cases_ViewInputDocument3.xml
 #: dropdown - INP_DOC_FORM_NEEDED
-msgid "[cases/cases_ViewInputDocument3.xml?INP_DOC_FORM_NEEDED] Document Type"
-msgstr "Document Type"
+msgid "[cases/cases_ViewInputDocument3.xml?INP_DOC_FORM_NEEDED] Document Type  "
+msgstr "Document Type  "
 
 # cases/cases_ViewInputDocument3.xml?INP_DOC_FORM_NEEDED-VIRTUAL
 # cases/cases_ViewInputDocument3.xml
@@ -13156,8 +13282,8 @@ msgstr "Digital/Printed"
 # cases/cases_ViewInputDocument3.xml?INP_DOC_ORIGINAL
 # cases/cases_ViewInputDocument3.xml
 #: dropdown - INP_DOC_ORIGINAL
-msgid "[cases/cases_ViewInputDocument3.xml?INP_DOC_ORIGINAL] Format"
-msgstr "Format"
+msgid "[cases/cases_ViewInputDocument3.xml?INP_DOC_ORIGINAL] Format  "
+msgstr "Format  "
 
 # cases/cases_ViewInputDocument3.xml?INP_DOC_ORIGINAL-ORIGINAL
 # cases/cases_ViewInputDocument3.xml
@@ -13282,8 +13408,8 @@ msgstr "Description"
 # cases/cases_ViewAnyInputDocument3.xml?INP_DOC_FORM_NEEDED
 # cases/cases_ViewAnyInputDocument3.xml
 #: dropdown - INP_DOC_FORM_NEEDED
-msgid "[cases/cases_ViewAnyInputDocument3.xml?INP_DOC_FORM_NEEDED] Document Type"
-msgstr "Document Type"
+msgid "[cases/cases_ViewAnyInputDocument3.xml?INP_DOC_FORM_NEEDED] Document Type  "
+msgstr "Document Type  "
 
 # cases/cases_ViewAnyInputDocument3.xml?INP_DOC_FORM_NEEDED-VIRTUAL
 # cases/cases_ViewAnyInputDocument3.xml
@@ -13306,8 +13432,8 @@ msgstr "Digital/Printed"
 # cases/cases_ViewAnyInputDocument3.xml?INP_DOC_ORIGINAL
 # cases/cases_ViewAnyInputDocument3.xml
 #: dropdown - INP_DOC_ORIGINAL
-msgid "[cases/cases_ViewAnyInputDocument3.xml?INP_DOC_ORIGINAL] Format"
-msgstr "Format"
+msgid "[cases/cases_ViewAnyInputDocument3.xml?INP_DOC_ORIGINAL] Format  "
+msgstr "Format  "
 
 # cases/cases_ViewAnyInputDocument3.xml?INP_DOC_ORIGINAL-ORIGINAL
 # cases/cases_ViewAnyInputDocument3.xml
@@ -13356,6 +13482,102 @@ msgstr "Comments"
 #: link - APP_DOC_FILENAME
 msgid "[cases/cases_ViewAnyInputDocument3.xml?APP_DOC_FILENAME] File"
 msgstr "File"
+
+# cases/cases_ListAll_Reassign.xml?APP_NUMBER
+# cases/cases_ListAll_Reassign.xml
+#: text - APP_NUMBER
+msgid "[cases/cases_ListAll_Reassign.xml?APP_NUMBER] #"
+msgstr "#"
+
+# cases/cases_ListAll_Reassign.xml?APP_TITLE
+# cases/cases_ListAll_Reassign.xml
+#: text - APP_TITLE
+msgid "[cases/cases_ListAll_Reassign.xml?APP_TITLE] Case"
+msgstr "Case"
+
+# cases/cases_ListAll_Reassign.xml?APP_TAS_TITLE
+# cases/cases_ListAll_Reassign.xml
+#: text - APP_TAS_TITLE
+msgid "[cases/cases_ListAll_Reassign.xml?APP_TAS_TITLE] Task"
+msgstr "Task"
+
+# cases/cases_ListAll_Reassign.xml?APP_PRO_TITLE
+# cases/cases_ListAll_Reassign.xml
+#: text - APP_PRO_TITLE
+msgid "[cases/cases_ListAll_Reassign.xml?APP_PRO_TITLE] Process"
+msgstr "Process"
+
+# cases/cases_ListAll_Reassign.xml?APP_CURRENT_USER
+# cases/cases_ListAll_Reassign.xml
+#: text - APP_CURRENT_USER
+msgid "Current User"
+msgstr "Current User"
+
+# cases/cases_ListAll_Reassign.xml?APP_DEL_PREVIOUS_USER
+# cases/cases_ListAll_Reassign.xml
+#: text - APP_DEL_PREVIOUS_USER
+msgid "[cases/cases_ListAll_Reassign.xml?APP_DEL_PREVIOUS_USER] Sent by"
+msgstr "Sent by"
+
+# cases/cases_ListAll_Reassign.xml?DEL_TASK_DUE_DATE
+# cases/cases_ListAll_Reassign.xml
+#: date - DEL_TASK_DUE_DATE
+msgid "[cases/cases_ListAll_Reassign.xml?DEL_TASK_DUE_DATE] Due Date"
+msgstr "Due Date"
+
+# cases/cases_ListAll_Reassign.xml?APP_UPDATE_DATE
+# cases/cases_ListAll_Reassign.xml
+#: date - APP_UPDATE_DATE
+msgid "[cases/cases_ListAll_Reassign.xml?APP_UPDATE_DATE] Last Modification"
+msgstr "Last Modification"
+
+# cases/cases_ListAll_Reassign.xml?DEL_INIT_DATE
+# cases/cases_ListAll_Reassign.xml
+#: date - DEL_INIT_DATE
+msgid "[cases/cases_ListAll_Reassign.xml?DEL_INIT_DATE] Start Date"
+msgstr "Start Date"
+
+# cases/cases_ListAll_Reassign.xml?DEL_FINISH_DATE
+# cases/cases_ListAll_Reassign.xml
+#: date - DEL_FINISH_DATE
+msgid "[cases/cases_ListAll_Reassign.xml?DEL_FINISH_DATE] Finish Date"
+msgstr "Finish Date"
+
+# cases/cases_ListAll_Reassign.xml?APP_STATUS
+# cases/cases_ListAll_Reassign.xml
+#: dropdown - APP_STATUS
+msgid "Status    "
+msgstr "Status    "
+
+# cases/cases_ListAll_Reassign.xml?APP_STATUS-DRAFT
+# cases/cases_ListAll_Reassign.xml
+#: dropdown - APP_STATUS - DRAFT
+msgid "[cases/cases_ListAll_Reassign.xml?APP_STATUS-DRAFT]"
+msgstr "Draft"
+
+# cases/cases_ListAll_Reassign.xml?APP_STATUS-TO_DO
+# cases/cases_ListAll_Reassign.xml
+#: dropdown - APP_STATUS - TO_DO
+msgid "[cases/cases_ListAll_Reassign.xml?APP_STATUS-TO_DO]"
+msgstr "To Do"
+
+# cases/cases_ListAll_Reassign.xml?APP_STATUS-CANCELLED
+# cases/cases_ListAll_Reassign.xml
+#: dropdown - APP_STATUS - CANCELLED
+msgid "[cases/cases_ListAll_Reassign.xml?APP_STATUS-CANCELLED]"
+msgstr "Cancelled"
+
+# cases/cases_ListAll_Reassign.xml?APP_STATUS-COMPLETED
+# cases/cases_ListAll_Reassign.xml
+#: dropdown - APP_STATUS - COMPLETED
+msgid "[cases/cases_ListAll_Reassign.xml?APP_STATUS-COMPLETED]"
+msgstr "Completed"
+
+# cases/cases_ListAll_Reassign.xml?SEARCH
+# cases/cases_ListAll_Reassign.xml
+#: button - SEARCH
+msgid "[cases/cases_ListAll_Reassign.xml?SEARCH] Apply Filter"
+msgstr "Apply Filter"
 
 # cases/cases_ViewAnyInputDocument.xml?FILENAME
 # cases/cases_ViewAnyInputDocument.xml
@@ -13438,7 +13660,7 @@ msgstr "Description"
 # cases/cases_ProcessInformation.xml?PRO_AUTHOR
 # cases/cases_ProcessInformation.xml
 #: text - PRO_AUTHOR
-msgid "Author"
+msgid "[cases/cases_ProcessInformation.xml?PRO_AUTHOR] Author"
 msgstr "Author"
 
 # cases/cases_ProcessInformation.xml?PRO_CREATE_DATE
@@ -13486,8 +13708,8 @@ msgstr "Description"
 # cases/cases_ViewAnyInputDocument1.xml?INP_DOC_FORM_NEEDED
 # cases/cases_ViewAnyInputDocument1.xml
 #: dropdown - INP_DOC_FORM_NEEDED
-msgid "[cases/cases_ViewAnyInputDocument1.xml?INP_DOC_FORM_NEEDED] Document Type"
-msgstr "Document Type"
+msgid "[cases/cases_ViewAnyInputDocument1.xml?INP_DOC_FORM_NEEDED] Document Type  "
+msgstr "Document Type  "
 
 # cases/cases_ViewAnyInputDocument1.xml?INP_DOC_FORM_NEEDED-VIRTUAL
 # cases/cases_ViewAnyInputDocument1.xml
@@ -13510,8 +13732,8 @@ msgstr "Digital/Printed"
 # cases/cases_ViewAnyInputDocument1.xml?INP_DOC_ORIGINAL
 # cases/cases_ViewAnyInputDocument1.xml
 #: dropdown - INP_DOC_ORIGINAL
-msgid "[cases/cases_ViewAnyInputDocument1.xml?INP_DOC_ORIGINAL] Format"
-msgstr "Format"
+msgid "[cases/cases_ViewAnyInputDocument1.xml?INP_DOC_ORIGINAL] Format  "
+msgstr "Format  "
 
 # cases/cases_ViewAnyInputDocument1.xml?INP_DOC_ORIGINAL-ORIGINAL
 # cases/cases_ViewAnyInputDocument1.xml
@@ -13613,7 +13835,7 @@ msgstr "Start Date"
 # cases/cases_List.xml
 #: link - DELETE
 msgid "[cases/cases_List.xml?DELETE] Delete"
-msgstr ""
+msgstr "Delete"
 
 # cases/cases_List.xml?SEARCH
 # cases/cases_List.xml
@@ -13648,7 +13870,7 @@ msgstr "Process"
 # cases/cases_ListToRevise.xml?APP_CURRENT_USER
 # cases/cases_ListToRevise.xml
 #: text - APP_CURRENT_USER
-msgid "Current User"
+msgid "[cases/cases_ListToRevise.xml?APP_CURRENT_USER] Current User"
 msgstr "Current User"
 
 # cases/cases_ListToRevise.xml?APP_DEL_PREVIOUS_USER
@@ -13672,8 +13894,8 @@ msgstr "Last Modification"
 # cases/cases_ListToRevise.xml?DEL_PRIORITY
 # cases/cases_ListToRevise.xml
 #: dropdown - DEL_PRIORITY
-msgid "[cases/cases_ListToRevise.xml?DEL_PRIORITY] Priority"
-msgstr "Priority"
+msgid "Priority      "
+msgstr "Priority      "
 
 # cases/cases_ListToRevise.xml?DEL_PRIORITY-1
 # cases/cases_ListToRevise.xml
@@ -13714,8 +13936,8 @@ msgstr "Start Date"
 # cases/cases_ListToRevise.xml?APP_STATUS
 # cases/cases_ListToRevise.xml
 #: dropdown - APP_STATUS
-msgid "[cases/cases_ListToRevise.xml?APP_STATUS] Status"
-msgstr "Status"
+msgid "[cases/cases_ListToRevise.xml?APP_STATUS] Status    "
+msgstr "Status    "
 
 # cases/cases_ListToRevise.xml?APP_STATUS-DRAFT
 # cases/cases_ListToRevise.xml
@@ -13810,8 +14032,8 @@ msgstr "Finish Date"
 # cases/cases_ListAll.xml?APP_STATUS
 # cases/cases_ListAll.xml
 #: dropdown - APP_STATUS
-msgid "[cases/cases_ListAll.xml?APP_STATUS] Status"
-msgstr "Status"
+msgid "[cases/cases_ListAll.xml?APP_STATUS] Status    "
+msgstr "Status    "
 
 # cases/cases_ListAll.xml?APP_STATUS-DRAFT
 # cases/cases_ListAll.xml
@@ -13997,7 +14219,7 @@ msgstr "Information"
 # login/showInfo.xml
 #: text - MESSAGE
 msgid "[login/showInfo.xml?MESSAGE] You do not have enabled the SOAP extension"
-msgstr ""
+msgstr "You do not have enabled the SOAP extension"
 
 # login/login.xml?TITLE
 # login/login.xml
@@ -14039,7 +14261,7 @@ msgstr "Error"
 # login/showMessage.xml
 #: text - MESSAGE
 msgid "[login/showMessage.xml?MESSAGE] You do not have enabled the SOAP extension"
-msgstr ""
+msgstr "You do not have enabled the SOAP extension"
 
 # login/dbInfo.xml?DYNA_HEADER
 # login/dbInfo.xml
@@ -14104,8 +14326,8 @@ msgstr "Database Name"
 # login/dbInfo.xml?AVAILABLE_DB
 # login/dbInfo.xml
 #: caption - AVAILABLE_DB
-msgid "Available Databases"
-msgstr "Available Databases"
+msgid "Available Databases "
+msgstr "Available Databases "
 
 # login/dbInfo.xml?HTTP_USER_AGENT
 # login/dbInfo.xml
@@ -14206,8 +14428,8 @@ msgstr "Title"
 # steps/steps_availableBB.xml?STEP_TYPE_OBJ
 # steps/steps_availableBB.xml
 #: dropdown - STEP_TYPE_OBJ
-msgid "[steps/steps_availableBB.xml?STEP_TYPE_OBJ] Type"
-msgstr "Type"
+msgid "[steps/steps_availableBB.xml?STEP_TYPE_OBJ] Type  "
+msgstr "Type  "
 
 # steps/steps_availableBB.xml?STEP_TYPE_OBJ-DYNAFORM
 # steps/steps_availableBB.xml
@@ -14261,7 +14483,7 @@ msgstr "Title"
 # steps/triggersBefore_List.xml
 #: link - DELETE
 msgid "[steps/triggersBefore_List.xml?DELETE] Delete"
-msgstr ""
+msgstr "Delete"
 
 # steps/triggersAfter_List.xml?TRI_TITLE
 # steps/triggersAfter_List.xml
@@ -14273,7 +14495,7 @@ msgstr "Title"
 # steps/triggersAfter_List.xml
 #: link - DELETE
 msgid "[steps/triggersAfter_List.xml?DELETE] Delete"
-msgstr ""
+msgstr "Delete"
 
 # steps/steps_List.xml?STEP_TITLE
 # steps/steps_List.xml
@@ -14284,8 +14506,8 @@ msgstr "Title"
 # steps/steps_List.xml?STEP_TYPE_OBJ
 # steps/steps_List.xml
 #: dropdown - STEP_TYPE_OBJ
-msgid "[steps/steps_List.xml?STEP_TYPE_OBJ] Type"
-msgstr "Type"
+msgid "[steps/steps_List.xml?STEP_TYPE_OBJ] Type  "
+msgstr "Type  "
 
 # steps/steps_List.xml?STEP_TYPE_OBJ-DYNAFORM
 # steps/steps_List.xml
@@ -14315,7 +14537,7 @@ msgstr "External Step"
 # steps/steps_List.xml
 #: link - DELETE
 msgid "[steps/steps_List.xml?DELETE] Delete"
-msgstr ""
+msgstr "Delete"
 
 # steps/steps_List.xml?SEARCH
 # steps/steps_List.xml
@@ -14374,8 +14596,8 @@ msgstr "Save"
 # patterns/patterns_GridEvaluateType.xml?ROU_NEXT_TASK
 # patterns/patterns_GridEvaluateType.xml
 #: dropdown - ROU_NEXT_TASK
-msgid "[patterns/patterns_GridEvaluateType.xml?ROU_NEXT_TASK] Next Task"
-msgstr "Next Task"
+msgid "Next Task    "
+msgstr "Next Task    "
 
 # patterns/patterns_GridEvaluateType.xml?ROU_NEXT_TASK--1
 # patterns/patterns_GridEvaluateType.xml
@@ -14410,8 +14632,8 @@ msgstr "Parallel Join"
 # patterns/patterns_ParallelJoin.xml?ROU_NEXT_TASK
 # patterns/patterns_ParallelJoin.xml
 #: dropdown - ROU_NEXT_TASK
-msgid "[patterns/patterns_ParallelJoin.xml?ROU_NEXT_TASK] Next Task"
-msgstr "Next Task"
+msgid "[patterns/patterns_ParallelJoin.xml?ROU_NEXT_TASK] Next Task    "
+msgstr "Next Task    "
 
 # patterns/patterns_ParallelJoin.xml?ROU_NEXT_TASK--1
 # patterns/patterns_ParallelJoin.xml
@@ -14434,8 +14656,8 @@ msgstr "Sequential"
 # patterns/patterns_Sequential.xml?ROU_NEXT_TASK
 # patterns/patterns_Sequential.xml
 #: dropdown - ROU_NEXT_TASK
-msgid "[patterns/patterns_Sequential.xml?ROU_NEXT_TASK] Next Task"
-msgstr "Next Task"
+msgid "[patterns/patterns_Sequential.xml?ROU_NEXT_TASK] Next Task    "
+msgstr "Next Task    "
 
 # patterns/patterns_Sequential.xml?ROU_NEXT_TASK--1
 # patterns/patterns_Sequential.xml
@@ -14458,8 +14680,8 @@ msgstr "Next Task"
 # patterns/patterns_GridSelectType.xml?ROU_NEXT_TASK
 # patterns/patterns_GridSelectType.xml
 #: dropdown - ROU_NEXT_TASK
-msgid "[patterns/patterns_GridSelectType.xml?ROU_NEXT_TASK] Next Task"
-msgstr "Next Task"
+msgid "[patterns/patterns_GridSelectType.xml?ROU_NEXT_TASK] Next Task    "
+msgstr "Next Task    "
 
 # patterns/patterns_GridSelectType.xml?ROU_NEXT_TASK--1
 # patterns/patterns_GridSelectType.xml
@@ -14482,8 +14704,8 @@ msgstr "Workflow Pattern"
 # patterns/patterns_Current.xml?ROU_TYPE
 # patterns/patterns_Current.xml
 #: dropdown - ROU_TYPE
-msgid "[patterns/patterns_Current.xml?ROU_TYPE] Type"
-msgstr "Type"
+msgid "[patterns/patterns_Current.xml?ROU_TYPE] Type    "
+msgstr "Type    "
 
 # patterns/patterns_Current.xml?ROU_TYPE-''
 # patterns/patterns_Current.xml
@@ -14530,8 +14752,8 @@ msgstr "Parallel (join)"
 # patterns/patterns_Current.xml?ROU_NEXT_TASK
 # patterns/patterns_Current.xml
 #: dropdown - ROU_NEXT_TASK
-msgid "[patterns/patterns_Current.xml?ROU_NEXT_TASK] Next Task"
-msgstr "Next Task"
+msgid "[patterns/patterns_Current.xml?ROU_NEXT_TASK] Next Task    "
+msgstr "Next Task    "
 
 # patterns/patterns_Current.xml?ROU_NEXT_TASK--1
 # patterns/patterns_Current.xml
@@ -14548,8 +14770,8 @@ msgstr "Leaf task"
 # patterns/patterns_Current.xml?ROU_TO_LAST_USER
 # patterns/patterns_Current.xml
 #: dropdown - ROU_TO_LAST_USER
-msgid "Selection of executant"
-msgstr "Selection of executant"
+msgid "Selection of executant    "
+msgstr "Selection of executant    "
 
 # patterns/patterns_Current.xml?ROU_TO_LAST_USER-FALSE
 # patterns/patterns_Current.xml
@@ -14627,7 +14849,7 @@ msgstr "Title"
 # triggers/triggers_ShortList.xml
 #: link - DELETE
 msgid "[triggers/triggers_ShortList.xml?DELETE] Delete"
-msgstr ""
+msgstr "Delete"
 
 # triggers/triggers_ShortList.xml?SEARCH
 # triggers/triggers_ShortList.xml
@@ -14658,12 +14880,6 @@ msgstr "Title"
 #: textarea - TRI_DESCRIPTION
 msgid "[triggers/triggers_Edit.xml?TRI_DESCRIPTION] Description"
 msgstr "Description"
-
-# triggers/triggers_Edit.xml?TRI_WEBBOT
-# triggers/triggers_Edit.xml
-#: textareapm - TRI_WEBBOT
-msgid "Script"
-msgstr "Script"
 
 # triggers/triggers_Edit.xml?SAVE
 # triggers/triggers_Edit.xml

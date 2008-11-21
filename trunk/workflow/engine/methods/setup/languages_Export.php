@@ -58,7 +58,7 @@ while ($aRow1 = $oDataset->getRow()) {
 	$oDataset->next();
 }
 G::LoadThirdParty('pake', 'pakeFinder.class');
-$aExceptionFields = array('', 'javascript', 'hidden', 'phpvariable', 'private', 'toolbar', 'xmlmenu', 'toolbutton', 'cellmark', 'grid', 'caption');
+$aExceptionFields = array('', 'javascript', 'hidden', 'phpvariable', 'private', 'toolbar', 'xmlmenu', 'toolbutton', 'cellmark', 'grid');
 $aXMLForms        = pakeFinder::type('file')->name( '*.xml' )->in(substr(PATH_XMLFORM, 0, -1));
 $aEnglishLabel    = array();
 $aOptions         = array();
