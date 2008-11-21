@@ -1,10 +1,10 @@
 <?php
 /**
  * class.tasks.php
- *  
+ *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -14,13 +14,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
 require_once 'classes/model/GroupUser.php';
 require_once 'classes/model/Groupwf.php';
@@ -93,7 +93,7 @@ class Tasks {
     	throw($oError);
     }
   }
-  
+
 
 /*
 	* creates row tasks from an Task Array
@@ -101,11 +101,11 @@ class Tasks {
 	* @return array
 	*/
   public function createTaskRows( $aTask ) {
-  	foreach ( $aTask as $key => $row ) {  		
+  	foreach ( $aTask as $key => $row ) {
       $oTask = new Task();
       if($oTask->taskExists ($row['TAS_UID']))
       		$oTask->remove($row['TAS_UID']);
-      
+
       $res = $oTask->createRow($row);
   	}
   	return;
@@ -120,7 +120,7 @@ class Tasks {
   	foreach ( $aTask as $key => $row ) {
       $oTask = new Task();
       if($oTask->taskExists ($row['TAS_UID']))
-      	   $oTask->remove($row['TAS_UID']);	
+      	   $oTask->remove($row['TAS_UID']);
       else
       	   $res = $oTask->update($row);
   	}
@@ -162,9 +162,9 @@ class Tasks {
       $oRoute = new Route();
       //unset ($row['ROU_UID']);
       if($oRoute->routeExists($row['ROU_UID']))
-      	  $oRoute->remove($row['ROU_UID']);      						   		
-      
-      $res = $oRoute->create($row);   
+      	  $oRoute->remove($row['ROU_UID']);
+
+      $res = $oRoute->create($row);
   	}
   	return;
   }
@@ -179,7 +179,7 @@ class Tasks {
       $oRoute = new Route();
       //krumo ($row);
       if(is_array($oRoute->load($row['ROU_UID'])))
-      		$oRoute->remove($row['ROU_UID']);      					
+      		$oRoute->remove($row['ROU_UID']);
       else
       		$res = $oRoute->update($row);
   	}
@@ -457,7 +457,7 @@ class Tasks {
     	throw($oError);
     }
   }
-  
+
   /*
 	* Get all tasks for any Process
 	* @param string $sProUid
@@ -468,7 +468,7 @@ class Tasks {
   	  $aTasks   = array();
   	  $oCriteria = new Criteria('workflow');
       $oCriteria->add(TaskPeer::PRO_UID,     $sProUid);
-      //$oCriteria->add(TaskPeer::TAS_USER,    $sUsrUid);  
+      //$oCriteria->add(TaskPeer::TAS_USER,    $sUsrUid);
       $oCriteria->add(TaskPeer::TAS_START,    'TRUE');
       $oDataset = TaskPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
@@ -484,54 +484,99 @@ class Tasks {
     	throw($oError);
     }
   }
-  
+
   /*
 	* Veryfy the user assig in any task
 	* @param string $sTaskUID
 	* @return array
 	*/
   public function assignUsertoTask($sTaskUID) {
-  	try {  	     
+  	try {
   	    $oCriteria = new Criteria('workflow');
   	    $oCriteria->addSelectColumn(TaskUserPeer::USR_UID);
-        $oCriteria->add(TaskUserPeer::TAS_UID, $sTaskUID);        
+        $oCriteria->add(TaskUserPeer::TAS_UID, $sTaskUID);
         $oDataset = TaskUserPeer::doSelectRS($oCriteria);
         $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
         $oDataset->next();
-        $aRow = $oDataset->getRow();       
+        $aRow = $oDataset->getRow();
         if(is_array($aRow))
         			 return 1;
-        else        			
-        			 return 0;                
-        }          
+        else
+        			 return 0;
+        }
   	catch (Exception $oError) {
     	throw($oError);
     }
   }
-  
+
   /*
 	* Veryfy the user assig in task
 	* @param string $sUsrUid, $sTaskUID
 	* @return array
 	*/
   public function verifyUsertoTask($sUsrUid, $sTaskUID) {
-  	try {  	     
+  	try {
   	    $oCriteria = new Criteria('workflow');
-  	    $oCriteria->addSelectColumn(TaskUserPeer::USR_UID);  	      	    
+  	    $oCriteria->addSelectColumn(TaskUserPeer::USR_UID);
   	    $oCriteria->addSelectColumn(TaskUserPeer::TAS_UID);
   	    $oCriteria->addSelectColumn(TaskUserPeer::TU_RELATION);
-        $oCriteria->add(TaskUserPeer::TAS_UID, $sTaskUID);        
-        $oCriteria->add(TaskUserPeer::USR_UID, $sUsrUid);        
+        $oCriteria->add(TaskUserPeer::TAS_UID, $sTaskUID);
+        $oCriteria->add(TaskUserPeer::USR_UID, $sUsrUid);
         $oDataset = TaskUserPeer::doSelectRS($oCriteria);
         $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
         $oDataset->next();
-        $aRow = $oDataset->getRow();       
+        $aRow = $oDataset->getRow();
         if(is_array($aRow))
         			return $aRow;
-        else        			
-        			return $aRow;                
-        }          
+        else
+        			return $aRow;
+        }
   	catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
+
+  public function getTasksThatUserIsAssigned($sUserUID) {
+    try {
+      $aTasks    = array();
+      $oCriteria = new Criteria('workflow');
+      $oCriteria->add(TaskUserPeer::USR_UID, $sUserUID);
+      $oCriteria->add(TaskUserPeer::TU_RELATION, 1);
+      $oDataset = TaskUserPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      while ($aRow = $oDataset->getRow()) {
+        $aTasks[] = $aRow['TAS_UID'];
+        $oDataset->next();
+      }
+      $aGroups   = array();
+      $oCriteria = new Criteria();
+      $oCriteria->add(GroupwfPeer::GRP_UID, '', Criteria::NOT_EQUAL);
+      $oCriteria->add(GroupUserPeer::USR_UID, $sUserUID);
+      $oCriteria->add(GroupwfPeer::GRP_STATUS, 'ACTIVE');
+      $oCriteria->addJoin(GroupUserPeer::GRP_UID, GroupwfPeer::GRP_UID, Criteria::LEFT_JOIN);
+      $oDataset = GroupwfPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      while ($aRow = $oDataset->getRow()) {
+        $aGroups[] = $aRow['GRP_UID'];
+        $oDataset->next();
+      }
+      $oCriteria = new Criteria('workflow');
+      $oCriteria->add(TaskUserPeer::USR_UID, $aGroups, Criteria::IN);
+      $oCriteria->add(TaskUserPeer::TU_RELATION, 2);
+      $oDataset = TaskUserPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      while ($aRow = $oDataset->getRow()) {
+        if (!in_array($aRow['TAS_UID'], $aTasks)) {
+          $aTasks[] = $aRow['TAS_UID'];
+        }
+        $oDataset->next();
+      }
+      return $aTasks;
+    }
+    catch (Exception $oError) {
     	throw($oError);
     }
   }
