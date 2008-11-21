@@ -87,7 +87,7 @@
 var registerPML = function(sUID) {
   oPanel2 = new leimnud.module.panel();
   oPanel2.options = {
-  	size:{w:300,h:240},
+  	size:{w:450,h:240},
   	position:{x:0,y:0,center:true},
   	title:'',
   	theme:'firefox',

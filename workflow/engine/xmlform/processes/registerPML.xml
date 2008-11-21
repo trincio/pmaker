@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<dynaForm name="registerPMLForm" width="100%" enableTemplate="1">
+<dynaForm name="registerPMLForm" width="100%" enableTemplate="1" labelWidth="50%">
 
 <pro_uid type="hidden" />
 
@@ -8,7 +8,7 @@
 </TITLE>
 
 <PML_USER type="text" size="25" maxlength="50" validate="Email" required="1">
-  <en>Username</en>
+  <en>Username (or Live Workspace)</en>
 </PML_USER>
 
 <PML_PASSWORD type="password" size="25" maxlength="32" required="1">
