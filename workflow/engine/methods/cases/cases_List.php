@@ -75,7 +75,7 @@
 
   /* Render page */
   $G_PUBLISH = new Publisher;
-  if (($RBAC_Response = $RBAC->userCanAccess("PM_ALLCASES")==1) && ($RBAC_Response = $RBAC->userCanAccess("PM_REASSIGNCASE")==1)) {
+  if (($RBAC_Response = $RBAC->userCanAccess("PM_ALLCASES")==1) && ($RBAC_Response = $RBAC->userCanAccess("PM_REASSIGNCASE")==1) && ($sTypeList == 'gral')) {
     $G_PUBLISH->AddContent( 'propeltable', 'paged-table','cases/cases_ListAll_Reassign' , $Criteria );
   }
   else {
