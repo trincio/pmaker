@@ -329,6 +329,7 @@ CREATE TABLE `OUTPUT_DOCUMENT`
 	`OUT_DOC_UID` VARCHAR(32) default '' NOT NULL,
 	`PRO_UID` VARCHAR(32) default '' NOT NULL,
 	`OUT_DOC_LANDSCAPE` TINYINT default 0 NOT NULL,
+	`OUT_DOC_GENERATE` VARCHAR(10) default 'BOTH' NOT NULL,
 	PRIMARY KEY (`OUT_DOC_UID`)
 )Type=MyISAM  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
