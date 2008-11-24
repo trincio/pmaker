@@ -75,7 +75,7 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
 	    $Fields['PME_'.$key] = $value;
 	  }
 	}
-  
+
   $Fields['PME_A'] = $_GET['A'];
   $Fields['PME_PRO_UID'] = $proUid;
   $Fields['PME_XMLNODE_NAME_OLD'] = (isset($Fields['PME_XMLNODE_NAME']) ? $Fields['PME_XMLNODE_NAME'] : '');
@@ -94,7 +94,7 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
     if (!is_array($options)) $options =array();
     $Fields['PME_OPTIONS'] = array(
       'NAME' => array_keys($options),
-      'LABEL_'.strtoupper(SYS_LANG) => array_values($options)
+      'LABEL' => array_values($options)
        );
     $type = strtolower( $fields->Fields['TYPE'] );
     if ($type==='checkbox') {
@@ -104,13 +104,13 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
         $Fields['PME_DEFAULTVALUE']='Off';
       }
     }
-    
+
     if (file_exists( PATH_XMLFORM . 'dynaforms/fields/' . $type . '.xml')) {
       $G_PUBLISH->AddContent('xmlform', 'xmlform', 'dynaforms/fields/' . $type, '', $Fields , SYS_URI.'dynaforms/fields_Save', SYS_URI.'dynaforms/fields_Ajax');
     } else {
       print(G::LoadTranslation('ID_UNKNOWN_FIELD_TYPE'));
     }
   }
-	
+
   G::RenderPage( "publish" , "raw" );
 ?>
