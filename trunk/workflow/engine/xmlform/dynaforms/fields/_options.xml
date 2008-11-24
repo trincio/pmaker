@@ -4,5 +4,5 @@
 <NAME type="text" validate="Field">
   <en>Value</en>
 </NAME>
-<LABEL_EN type="text"><en>Label</en></LABEL_EN>
+<LABEL type="text"><en>Label</en></LABEL>
 </dynaForm>

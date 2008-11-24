@@ -32,9 +32,23 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
   $type=strtolower($_POST['form']['PME_TYPE']);
   if (!(isset($_POST['form']['PME_A']) && $_POST['form']['PME_A']!==''))  return;
 
-  if ($_POST['form']['PME_REQUIRED']=='')   $_POST['form']['PME_REQUIRED']=0;
-  if ($_POST['form']['PME_READONLY']=='')   $_POST['form']['PME_READONLY']=0;
+  if (isset($_POST['form']['PME_REQUIRED'])) {
+    if ($_POST['form']['PME_REQUIRED'] == '') {
+      $_POST['form']['PME_REQUIRED'] = 0;
+    }
+  }
+  else {
+    $_POST['form']['PME_REQUIRED'] = 0;
+  }
 
+  if (isset($_POST['form']['PME_READONLY'])) {
+    if ($_POST['form']['PME_READONLY'] == '') {
+      $_POST['form']['PME_READONLY'] = 0;
+    }
+  }
+  else {
+    $_POST['form']['PME_READONLY'] = 0;
+  }
 
   $file = G::decrypt( $_POST['form']['PME_A'] , URL_KEY );
   define('DB_XMLDB_HOST', PATH_DYNAFORM  . $file . '.xml' );
@@ -101,7 +115,16 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
         if (is_array(reset($value))) {
           $langs = array();
           $options = array();
-          $first = reset($value);
+          $langs[] = SYS_LANG;
+          $options[SYS_LANG]=array();
+          foreach( $value as $row ) {
+            foreach( $langs as $lang ) {
+              $LANG = strtoupper($lang);
+              if (isset($row['LABEL']))
+                $options[$lang][$row['NAME']]=$row['LABEL'];
+            }
+          }
+          /*$first = reset($value);
           foreach( $first as $optKey => $optValue ) {
             if (substr($optKey,0,6)==='LABEL_') {
               $langs[]=strtolower(substr($optKey,6));
@@ -114,7 +137,7 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
               if (isset($row['LABEL_'.$LANG]))
                 $options[$lang][$row['NAME']]=$row['LABEL_'.$LANG];
             }
-          }
+          }*/
         }
       }
     } else {

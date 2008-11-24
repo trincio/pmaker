@@ -1038,9 +1038,9 @@ class G
     }
     header('Content-Type: ' . $contentType);
   	if (!$download) {
-  
+
       header('Pragma: cache');
-  
+
       $mtime = filemtime($filename);
       $gmt_mtime = gmdate("D, d M Y H:i:s", $mtime ) . " GMT";
       header('ETag: "' . md5 ($mtime . $filename ) . '"' );
@@ -1053,7 +1053,7 @@ class G
            exit();
         }
       }
-  
+
       if (isset($_SERVER['HTTP_IF_NONE_MATCH'])) {
         if ( str_replace('"', '', stripslashes($_SERVER['HTTP_IF_NONE_MATCH'])) == md5( $mtime . $filename))  {
           header("HTTP/1.1 304 Not Modified");
@@ -1409,7 +1409,9 @@ class G
       case 'mysql':
         return mysql_real_escape_string(stripslashes($sqlString));
       case 'myxml':
-        return str_replace(array('"',"'"),array('""',"''"),stripslashes($sqlString));
+        $sqlString = str_replace('"', '""', $sqlString);
+        return str_replace("'", "''", $sqlString);
+        //return str_replace(array('"',"'"),array('""',"''"),stripslashes($sqlString));
       default:
         return addslashes(stripslashes($sqlString));
     }
