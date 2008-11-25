@@ -18,5 +18,14 @@
   <en>Reassigned to</en>
 </USERS>
 
+<BACK type="button" onclick="back();">
+  <en>BACK</en>
+</BACK>
 
+
+<JS type="javascript">
+var back = function() {
+  window.location = 'cases_List?l=to_reassign';
+};
+</JS>
 </dynaForm>

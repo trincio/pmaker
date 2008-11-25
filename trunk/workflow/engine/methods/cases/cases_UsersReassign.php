@@ -1,6 +1,6 @@
 <?php
 /**
- * users_Reassign.php
+ * cases_UsersReassign.php
  *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
@@ -22,6 +22,7 @@
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
  *
  */
+
 try {
   global $RBAC;
   switch ($RBAC->userCanAccess('PM_REASSIGNCASE')) {
@@ -60,12 +61,13 @@ try {
     $sText .= $aCase['TITLE'] . ' => ' . $aUser['USR_FIRSTNAME'] . ' ' . $aUser['USR_LASTNAME'] . ' (' . $aUser['USR_USERNAME'] . ')' . '<br />';
   }
   $G_MAIN_MENU            = 'processmaker';
-  $G_SUB_MENU             = 'users';
-  $G_ID_MENU_SELECTED     = 'USERS';
-  $G_ID_SUB_MENU_SELECTED = '-';
+  $G_SUB_MENU             = 'cases';
+  $G_ID_MENU_SELECTED     = 'CASES';
+  $G_ID_SUB_MENU_SELECTED = 'CASES_TO_REASSIGN';
   $G_PUBLISH = new Publisher;
   $aMessage['MESSAGE'] = $sText;
-  $G_PUBLISH->AddContent('xmlform', 'xmlform', 'login/showInfo', '', $aMessage);
+  $aMessage['URL']     = 'cases_ReassignByUser?REASSIGN_USER=' . $_POST['USR_UID'];
+  $G_PUBLISH->AddContent('xmlform', 'xmlform', 'cases/cases_ReassignShowInfo', '', $aMessage);
   G::RenderPage('publish');
 }
 catch (Exception $oException) {
