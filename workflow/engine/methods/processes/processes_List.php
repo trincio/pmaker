@@ -38,7 +38,9 @@ switch ($RBAC->userCanAccess('PM_FACTORY'))
 }
 
   $G_MAIN_MENU            = 'processmaker';
+  $G_SUB_MENU             = 'process';
   $G_ID_MENU_SELECTED     = 'PROCESSES';
+  $G_ID_SUB_MENU_SELECTED = '-';
 
 
   $aLabels['LANG']     = SYS_LANG;
