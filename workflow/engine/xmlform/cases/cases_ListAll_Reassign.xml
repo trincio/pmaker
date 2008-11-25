@@ -4,8 +4,8 @@
   name          = "cases_List"
   type          = "filterform"
   sqlConnection = ""
-  menu          = "cases/cases_Options"
-  filterForm    = "cases/cases_List"
+  menu          = ""
+  filterForm    = ""
   searchBy      = "APPLICATION.APP_NUMBER | APP_TITLE.CON_VALUE | TAS_TITLE.CON_VALUE | PRO_TITLE.CON_VALUE "
   width         = "100%"
 >

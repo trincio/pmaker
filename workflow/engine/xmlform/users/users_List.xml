@@ -33,6 +33,7 @@
 <USR_DELETE type="link" colWidth="50" value="@#USR_DELETE" link="#" onclick="deleteUser('@#USR_UID');return false;">
   <en></en>
 </USR_DELETE>
+
 <!--<USR_STATUS style="background-color:red;" type="link" titlealign="left" align="left" colWidth="60" value="@#USR_STATUS" link="users_ChangeStatus?USR_UID=@#USR_UID">
   <en></en>
 </USR_STATUS>-->

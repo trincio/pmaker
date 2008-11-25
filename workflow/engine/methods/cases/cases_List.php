@@ -75,15 +75,8 @@
 
   /* Render page */
   $G_PUBLISH = new Publisher;
-  if (($RBAC_Response = $RBAC->userCanAccess("PM_ALLCASES")==1) && ($RBAC_Response = $RBAC->userCanAccess("PM_REASSIGNCASE")==1) && ($sTypeList == 'gral')) {
-    $G_PUBLISH->AddContent( 'propeltable', 'paged-table','cases/cases_ListAll_Reassign' , $Criteria );
+  if ($sTypeList == 'to_reassign') {
+    $G_PUBLISH->AddContent( 'xmlform', 'xmlform', 'cases/cases_ReassignBy', '', array('REASSIGN_BY' => 1));
   }
-  else {
-    if (($RBAC_Response = $RBAC->userCanAccess("PM_ALLCASES")!=1) && ($sTypeList == 'gral')) {
-      //nothing
-    }
-    else {
-      $G_PUBLISH->AddContent( 'propeltable', 'paged-table', $xmlfile, $Criteria );
-    }
-  }
-  G::RenderPage( "publish" );
+  $G_PUBLISH->AddContent('propeltable', 'paged-table', $xmlfile, $Criteria);
+  G::RenderPage('publish');

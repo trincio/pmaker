@@ -107,7 +107,7 @@ $name    = '';
 	$G_MAIN_MENU            = 'processmaker';
   $G_SUB_MENU             = 'cases';
   $G_ID_MENU_SELECTED     = 'CASES';
-  $G_ID_SUB_MENU_SELECTED = '-';
+  $G_ID_SUB_MENU_SELECTED = 'CASES_TO_REASSIGN';
   $G_PUBLISH              = new Publisher;
   $G_PUBLISH->AddContent('template', '', '', '', $tpl);
   G::RenderPage('publish');

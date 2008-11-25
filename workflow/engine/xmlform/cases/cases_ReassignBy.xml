@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm type="xmlform" name="cases_ReassignBy.xml" width="500" enabletemplate="0" mode="edit">
+<REASSIGN_BY type="radiogroup" required="0" defaultvalue="1" mode="edit">
+  <en>Reassign By
+    <option name="1">Case</option>
+    <option name="2">User</option>
+  </en>
+</REASSIGN_BY>
+<JS type="javascript">
+<![CDATA[
+var bFlag = false;
+var dynaformOnload = function() {
+  if (!bFlag) {
+    leimnud.event.add(getField('REASSIGN_BY][1'), 'click', function() {
+      if (this.checked) {
+        if (window.location.href.indexOf('cases_List?l=to_reassign') == -1) {
+          window.location = 'cases_List?l=to_reassign';
+        }
+      }
+    });
+    leimnud.event.add(getField('REASSIGN_BY][2'), 'click', function() {
+      if (this.checked) {
+        if (window.location.href.indexOf('cases_ReassignByUser') == -1) {
+          window.location = 'cases_ReassignByUser';
+        }
+      }
+    });
+    leimnud.event.add(getField('REASSIGN_USER'), 'change', function() {
+      window.location = 'cases_ReassignByUser?REASSIGN_USER=' + this.value;
+    });
+    bFlag = true;
+  }
+};
+]]>
+</JS>
+</dynaForm>
