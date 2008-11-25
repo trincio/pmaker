@@ -656,8 +656,7 @@ class Derivation
       }
     }  
 
-        $derivation[] = array ( 
-                        'processId' => 'xx' ); 
+       
     return $derivation;
   }
 
