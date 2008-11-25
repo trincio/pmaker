@@ -317,11 +317,60 @@ krumo ( 'DBArrayConnection connect '); die;
           }
         }
       }
-      $direction = SORT_ASC;
-      if ( trim($this->dataSql['orderByClause'][0]['direction']) != 'ASC' ) {
-        $direction = SORT_DESC;
+      foreach ( $this->dataSql['orderByClause'] as $keyOrder => $valOrder )  {
+      	$direction[$keyOrder] = (trim($valOrder['direction']) != 'ASC') ? SORT_DESC : SORT_ASC;
       }
-      array_multisort($column[ $this->dataSql['orderByClause'][0]['columnName'] ] , $direction , $resultRow );
+      $aOrderClause = $this->dataSql['orderByClause'];
+      switch ( count ($column)  )  {
+      case 1 : 	
+        array_multisort($column[ $aOrderClause[0]['columnName'] ] , $direction[0] , $resultRow );
+        break;
+      case 2 : 	
+        array_multisort($column[ $aOrderClause[0]['columnName'] ] , $direction[0] , 
+                        $column[ $aOrderClause[1]['columnName'] ] , $direction[1] ,         
+                        $resultRow );
+        break;
+      case 3 : 	
+        array_multisort($column[ $aOrderClause[0]['columnName'] ] , $direction[0] , 
+                        $column[ $aOrderClause[1]['columnName'] ] , $direction[1] ,         
+                        $column[ $aOrderClause[2]['columnName'] ] , $direction[2] ,         
+                        $resultRow );
+        break;
+      case 4 : 	
+        array_multisort($column[ $aOrderClause[0]['columnName'] ] , $direction[0] , 
+                        $column[ $aOrderClause[1]['columnName'] ] , $direction[1] ,         
+                        $column[ $aOrderClause[2]['columnName'] ] , $direction[2] ,         
+                        $column[ $aOrderClause[3]['columnName'] ] , $direction[3] ,         
+                        $resultRow );
+        break;
+      case 5 : 	
+        array_multisort($column[ $aOrderClause[0]['columnName'] ] , $direction[0] , 
+                        $column[ $aOrderClause[1]['columnName'] ] , $direction[1] ,         
+                        $column[ $aOrderClause[2]['columnName'] ] , $direction[2] ,         
+                        $column[ $aOrderClause[3]['columnName'] ] , $direction[3] ,         
+                        $column[ $aOrderClause[4]['columnName'] ] , $direction[4] ,         
+                        $resultRow );
+        break;
+      case 6 : 	
+        array_multisort($column[ $aOrderClause[0]['columnName'] ] , $direction[0] , 
+                        $column[ $aOrderClause[1]['columnName'] ] , $direction[1] ,         
+                        $column[ $aOrderClause[2]['columnName'] ] , $direction[2] ,         
+                        $column[ $aOrderClause[3]['columnName'] ] , $direction[3] ,         
+                        $column[ $aOrderClause[4]['columnName'] ] , $direction[4] ,         
+                        $column[ $aOrderClause[5]['columnName'] ] , $direction[5] ,         
+                        $resultRow );
+        break;
+      case 7 : 	
+        array_multisort($column[ $aOrderClause[0]['columnName'] ] , $direction[0] , 
+                        $column[ $aOrderClause[1]['columnName'] ] , $direction[1] ,         
+                        $column[ $aOrderClause[2]['columnName'] ] , $direction[2] ,         
+                        $column[ $aOrderClause[3]['columnName'] ] , $direction[3] ,         
+                        $column[ $aOrderClause[4]['columnName'] ] , $direction[4] ,         
+                        $column[ $aOrderClause[5]['columnName'] ] , $direction[5] ,         
+                        $column[ $aOrderClause[6]['columnName'] ] , $direction[6] ,         
+                        $resultRow );
+        break;
+      }
     }
 
     //prepend the headers in the resultRow

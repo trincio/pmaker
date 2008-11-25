@@ -800,6 +800,32 @@ font-weight:bold;
 {
 	color:orange;
 }
+
+/*Adicion Rube*/
+
+.pagedTableDefault .pagedTable .masterDetailMain
+{
+	background-image:url(/images/masterDetailMain.png);
+    background-repeat: repeat-x;
+	text-decoration:none;
+	color:#5B5B5B;
+	padding-left:5px;
+	font:normal 8pt Tahoma, sans-serif,MiscFixed;
+	font-weight: bold;
+}
+
+.pagedTableDefault .pagedTable .masterDetailOther
+{
+	background-image:url(/images/masterDetailOther.png);
+    background-repeat: repeat-x;
+	text-decoration:none;
+	color:#5B5B5B;
+	padding-left:5px;
+	font:normal 8pt Tahoma, sans-serif,MiscFixed;
+	font-weight: bold;
+}
+
+/*Fin Adicion Rube*/
 .pagedTableDefault .pagedTable .RowLink
 {
 	background-color:#6F7F75;
