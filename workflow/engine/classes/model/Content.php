@@ -112,8 +112,14 @@ class Content extends BaseContent {
       if ( is_null ( $con ) ) {
         $con = new Content();
       }
+      else {
+        if ( $con->getConParent() == $ConParent &&  $con->getConCategory() == $ConCategory 
+          && $con->getConValue() == $ConValue   &&  $con->getConLang() == $ConLang  &&  $con->getConId() == $ConId  ) 
+          return true;
+      }
       $con->setConCategory( $ConCategory );
-      $con->setConParent( $ConParent );
+      if ( $con->getConParent() != $ConParent )
+        $con->setConParent( $ConParent );
       $con->setConId( $ConId );
       $con->setConLang( $ConLang );
       $con->setConValue( $ConValue );

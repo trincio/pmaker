@@ -266,8 +266,12 @@ class Process extends BaseProcess {
   	    $this->fromArray ($aFields, BasePeer::TYPE_FIELDNAME );
   	    $aFields['PRO_TITLE']       = $oPro->getProTitle();
   	    $aFields['PRO_DESCRIPTION'] = $oPro->getProDescription();
-  	    $this->setProTitle (  $oPro->getProTitle() );
-  	    $this->setProDescription (  $oPro->getProDescription() );
+  	    $this->pro_title = $aFields['PRO_TITLE'];
+  	    $this->pro_description = $aFields['PRO_DESCRIPTION'];
+  	    
+  	    //optimized to avoid double and multiple execution of the same query
+  	    //$this->setProTitle (  $aFields['PRO_TITLE'] );
+  	    //$this->setProDescription (  $aFields['PRO_DESCRIPTION'] );
   	    
   	    //the following code is to copy the parent in old process, when the parent was empty.
   	    if ( $oPro->getProParent() == '' ) {
