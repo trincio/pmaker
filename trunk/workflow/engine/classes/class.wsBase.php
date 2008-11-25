@@ -598,19 +598,19 @@ class wsBase
 			$oDataset = AppDelegationPeer::doSelectRS($oCriteria);
 			$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
 
-                        $cnt = 0;
-                        while($oDataset->next()) {
-                          $aRow = $oDataset->getRow();
-                            if($aRow['DEL_FINISH_DATE']==NULL)
-                            {
-                                $cnt++;
-                            }
-                        }
+      $cnt = 0;
+      while($oDataset->next()) {
+        $aRow = $oDataset->getRow();
+          if($aRow['DEL_FINISH_DATE']==NULL)
+          {
+              $cnt++;
+          }
+      }
 
-                        if($cnt == 0){
-                            $result = new wsResponse (18, 'This case is already closed');
-                            return $result;
-                        }
+      if($cnt == 0){
+          $result = new wsResponse (18, 'This case is already closed');
+          return $result;
+      }
 
 			if(is_array($variables)) {
 				$cant = count ( $variables );
@@ -622,7 +622,7 @@ class wsBase
 					$oldFields = $caseFields['APP_DATA'];
 					$resFields = array();
 					foreach ( $variables as $key => $val ) {
-  				  $resFields[ $val ] =  $oldFields[ $val ] ;
+  				  //$resFields[ $val ] =  $oldFields[ $val ] ;
 						if ( isset ( $oldFields[ $val ] ) )
 						  $resFields[ $val ] =  $oldFields[ $val ] ;
 					}
@@ -648,8 +648,9 @@ class wsBase
 
 	public function newCase($processId, $userId, $taskId, $variables) {
 		try {
-			if(is_array($variables)) {
-				if(count($variables)>0){
+			$Fields = array();
+			if( is_array($variables) ) {
+				if( count($variables)>0 ){
 					$c=count($variables);
 
 					$Fields = $variables;
@@ -659,12 +660,6 @@ class wsBase
 					}
 				}
 			}
-/*
-			else {
-				$result = new wsResponse (100, "The variables param is not an array!");
-				return $result;
-			}
-*/
 			G::LoadClass('processes');
 			$oProcesses = new Processes();
 			$pro = $oProcesses->processExists($processId);
@@ -682,7 +677,7 @@ class wsBase
 				array_shift ($startingTasks); //remove the first row, the header row
 				$founded = '';
 				$tasksInThisProcess = 0;
-				$validTaskId = taskId;
+				$validTaskId = $taskId;
 				foreach ( $startingTasks as $key=> $val ) {
 					if ( $val['pro_uid'] == $processId ) { $tasksInThisProcess ++; $validTaskId = $val['uid']; }
 					if ( $val['uid'] == $taskId ) $founded = $val['value'];
@@ -847,7 +842,7 @@ class wsBase
 
 			if($appdel['DEL_FINISH_DATE']!=NULL)
 			{
-				$result = new wsResponse (18, 'This delegation already closed');
+				$result = new wsResponse (18, 'This delegation already closed or not exists');
 				return $result;
 			}
 
@@ -936,7 +931,8 @@ class wsBase
       }
 
 			$appFields['DEL_INDEX'] = $delIndex;
-			$appFields['TAS_UID']   = $derive['TAS_UID'];
+			if ( isset($derive['TAS_UID']) )
+			  $appFields['TAS_UID']   = $derive['TAS_UID'];
 
 			//Save data - Start
 			//$appFields = $oCase->loadCase( $caseId );
@@ -997,7 +993,10 @@ class wsBase
 			//Save data - End
 
 			$result = new wsResponse (0, $varResponse . $varTriggers );
-			return $result;
+      $res = $result->getPayloadArray ();
+      
+      $res['derivation'] = $oDerivation->getDerivatedCases( $caseId, $delIndex);
+			return $res;
 		}
 		catch ( Exception $e ) {
 			$result = new wsResponse (100, $e->getMessage());

@@ -180,9 +180,11 @@ class Application extends BaseApplication {
   	    $aFields = $oApplication->toArray(BasePeer::TYPE_FIELDNAME);
   	    $this->fromArray ($aFields, BasePeer::TYPE_FIELDNAME );
   	    $aFields['APP_TITLE']    = $oApplication->getAppTitle();
-  	    $this->setAppTitle (  $oApplication->getAppTitle() );
   	    $aFields['APP_DESCRIPTION']    = $oApplication->getAppDescription();
-  	    $this->setAppDescription (  $oApplication->getAppDescription() );
+
+  	    $this->app_title = $aFields['APP_TITLE'];
+  	    $this->app_description = $aFields['APP_DESCRIPTION'];
+
   	    //$aFields['APP_PROC_CODE']    = $oApplication->getAppProcCode();
   	    //$this->setAppProcCode (  $oApplication->getAppProcCode() );
   	    return $aFields;

@@ -26,10 +26,14 @@
   require_once ( "classes/model/Process.php" );
   require_once ( "classes/model/Step.php" );
   require_once ( "classes/model/Application.php" );
-  require_once 'classes/model/Groupwf.php';
+  require_once ( 'classes/model/Groupwf.php' );
   require_once ( "classes/model/GroupUser.php" );
   require_once ( "classes/model/AppDelegation.php" );
   require_once ( "classes/model/Route.php" );
+  require_once ( 'classes/model/SubApplication.php');
+  require_once ( 'classes/model/SubProcess.php' );
+  require_once ( "classes/model/Users.php" );
+  
   G::LoadClass( "plugin" );
 
 /**
@@ -123,7 +127,6 @@ class Derivation
           //3. load the task information of normal NEXT_TASK
           $aDerivation['NEXT_TASK'] = $oTask->load( $aDerivation['ROU_NEXT_TASK'] );
           if ($aDerivation['NEXT_TASK']['TAS_TYPE'] === 'SUBPROCESS') {
-            require_once 'classes/model/SubProcess.php';
             $oCriteria = new Criteria('workflow');
             $oCriteria->add(SubProcessPeer::PRO_PARENT, $aDerivation['PRO_UID']);
             $oCriteria->add(SubProcessPeer::TAS_PARENT, $aDerivation['NEXT_TASK']['TAS_UID']);
@@ -340,7 +343,6 @@ class Derivation
     foreach($nextDelegations as $nextDel)
     {
       if ($nextDel['TAS_PARENT'] != '') {
-        require_once 'classes/model/SubProcess.php';
         $oCriteria = new Criteria('workflow');
         $oCriteria->add(SubProcessPeer::PRO_PARENT, $appFields['PRO_UID']);
         $oCriteria->add(SubProcessPeer::TAS_PARENT, $nextDel['TAS_PARENT']);
@@ -440,7 +442,6 @@ class Derivation
                 $aSubApplication['SA_STATUS']      = 'FINISHED';
                 $aSubApplication['SA_FINISH_DATE'] = $aSubApplication['SA_INIT_DATE'];
               }
-              require_once 'classes/model/SubApplication.php';
               $oSubApplication = new SubApplication();
               $oSubApplication->create($aSubApplication);
               //If not is SYNCHRONOUS derivate one more time
@@ -516,7 +517,6 @@ class Derivation
 
   function verifyIsCaseChild($sApplicationUID) {
     //Obtain the related row in the table SUB_APPLICATION
-    require_once 'classes/model/SubApplication.php';
     $oCriteria = new Criteria('workflow');
     $oCriteria->add(SubApplicationPeer::APP_UID, $sApplicationUID);
     $oDataset = SubApplicationPeer::doSelectRS($oCriteria);
@@ -527,7 +527,6 @@ class Derivation
       //Obtain the related row in the table SUB_PROCESS
       $oCase = new Cases();
       $aParentCase = $oCase->loadCase($aSA['APP_PARENT'], $aSA['DEL_INDEX_PARENT']);
-      require_once 'classes/model/SubProcess.php';
       $oCriteria = new Criteria('workflow');
       $oCriteria->add(SubProcessPeer::PRO_PARENT, $aParentCase['PRO_UID']);
       $oCriteria->add(SubProcessPeer::TAS_PARENT, $aParentCase['TAS_UID']);
@@ -585,6 +584,81 @@ class Derivation
 		    }
       }
     }
+  }
+  
+  // getDerivatedCases
+  // get all derivated cases and subcases from any task, 
+  // this function is useful to know who users have been assigned and what task they do.
+  function getDerivatedCases ( $sParentUid, $sDelIndexParent ) {
+    $oCriteria = new Criteria('workflow');
+    $cases = array();  
+    $derivation = array();
+    //get the child delegations , of parent delIndex
+    $children = array();
+    $oCriteria->clearSelectColumns();
+    $oCriteria->addSelectColumn ( AppDelegationPeer::DEL_INDEX );
+    $oCriteria->add(AppDelegationPeer::APP_UID, $sParentUid);
+    $oCriteria->add(AppDelegationPeer::DEL_PREVIOUS, $sDelIndexParent );
+    $oDataset = AppDelegationPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    $aRow = $oDataset->getRow();
+    while ( is_array( $aRow) ) {
+      $children[] = $aRow['DEL_INDEX'];
+
+      $oDataset->next();
+      $aRow = $oDataset->getRow();
+    }
+
+    //foreach child , get the info of their derivations and subprocesses
+    foreach ( $children as $keyChild => $child ) {    
+      $oCriteria = new Criteria('workflow');
+      $oCriteria->clearSelectColumns();
+      $oCriteria->addSelectColumn ( SubApplicationPeer::APP_UID );
+      $oCriteria->addSelectColumn ( AppDelegationPeer::APP_UID );
+      $oCriteria->addSelectColumn ( AppDelegationPeer::DEL_INDEX );
+      $oCriteria->addSelectColumn ( AppDelegationPeer::PRO_UID );
+      $oCriteria->addSelectColumn ( AppDelegationPeer::TAS_UID );
+      $oCriteria->addSelectColumn ( AppDelegationPeer::USR_UID );
+      $oCriteria->addSelectColumn ( UsersPeer::USR_USERNAME );
+      $oCriteria->addSelectColumn ( UsersPeer::USR_FIRSTNAME );
+      $oCriteria->addSelectColumn ( UsersPeer::USR_LASTNAME );
+  
+      $oCriteria->add(SubApplicationPeer::APP_PARENT, $sParentUid);
+      $oCriteria->add(SubApplicationPeer::DEL_INDEX_PARENT, $child );
+      $oCriteria->addJoin ( SubApplicationPeer::APP_UID, AppDelegationPeer::APP_UID);
+      $oCriteria->addJoin ( AppDelegationPeer::USR_UID, UsersPeer::USR_UID);
+      $oDataset = SubApplicationPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      $aRow = $oDataset->getRow();
+      while ( is_array( $aRow) ) {
+        $oProcess = new Process();
+        $proFields = $oProcess->load($aRow['PRO_UID']);
+        $oCase = new Application();
+        $appFields = $oCase->load($aRow['APP_UID']);
+        $oTask = new Task();
+        $tasFields = $oTask->load($aRow['TAS_UID']);
+        $derivation[] = array ( 
+                        'processId' => $aRow['PRO_UID'], 
+                        'processTitle' => $proFields['PRO_TITLE'], 
+                        'caseId' => $aRow['APP_UID'], 
+                        'caseNumber' => $appFields['APP_NUMBER'], 
+                        'taskId' => $aRow['TAS_UID'], 
+                        'taskTitle' => $tasFields['TAS_TITLE'], 
+                        'userId' => $aRow['USR_UID'], 
+                        'userName' => $aRow['USR_USERNAME'], 
+                        'userFullname' => $aRow['USR_FIRSTNAME'] . ' ' . $aRow['USR_LASTNAME']
+                     );
+  
+        $oDataset->next();
+        $aRow = $oDataset->getRow();
+      }
+    }  
+
+        $derivation[] = array ( 
+                        'processId' => 'xx' ); 
+    return $derivation;
   }
 
 }

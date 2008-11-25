@@ -195,6 +195,7 @@ class Cases
                     break;
             }
             $oUser = new Users();
+            //aumentar validación
             $oUser->load($oApp->getAppInitUser());
             $uFields = $oUser->toArray(BasePeer::TYPE_FIELDNAME);
             $aFields['TITLE'] = $oApp->getAppTitle();

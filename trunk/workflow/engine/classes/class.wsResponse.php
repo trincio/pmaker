@@ -16,7 +16,7 @@ class wsResponse
 		$res .= "<status_code>" . $this->status_code . "</status_code>";
 		$res .= "<message>" . $this->message . "</message>";
 		$res .= "<timestamp>" . $this->timestamp . "</timestamp>";
-		$res .= "<array>" . $this->timestamp . "</array>";
+//		$res .= "<array>" . $this->timestamp . "</array>";
 		$res .= "<$operation>";
 		return $res;
 	}
