@@ -47,7 +47,6 @@
   try {
   /* Process the info */
 	$oCase = new Cases();
-	$oCase->thisIsTheCurrentUser($_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['USER_LOGGED'], 'REDIRECT', 'cases_List');
 
   /* Jump to Case Number APP_NUMBER*/
   if ( !isset($_GET['APP_UID']) && isset($_GET['APP_NUMBER']))
