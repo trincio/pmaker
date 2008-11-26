@@ -195,13 +195,20 @@ class Cases
                     break;
             }
             $oUser = new Users();
-            //aumentar validación
-            $oUser->load($oApp->getAppInitUser());
-            $uFields = $oUser->toArray(BasePeer::TYPE_FIELDNAME);
-            $aFields['TITLE'] = $oApp->getAppTitle();
-            $aFields['CREATOR'] = $oUser->getUsrFirstname() . ' ' . $oUser->getUsrLastname();
-            $aFields['CREATE_DATE'] = $oApp->getAppCreateDate();
-            $aFields['UPDATE_DATE'] = $oApp->getAppUpdateDate();
+            try {
+              $oUser->load($oApp->getAppInitUser());
+              $uFields = $oUser->toArray(BasePeer::TYPE_FIELDNAME);
+              $aFields['TITLE'] = $oApp->getAppTitle();
+              $aFields['CREATOR'] = $oUser->getUsrFirstname() . ' ' . $oUser->getUsrLastname();
+              $aFields['CREATE_DATE'] = $oApp->getAppCreateDate();
+              $aFields['UPDATE_DATE'] = $oApp->getAppUpdateDate();
+            }
+            catch (Exception $oError) {
+              $aFields['TITLE'] = $oApp->getAppTitle();
+              $aFields['CREATOR'] = '(USER_DELETED)';
+              $aFields['CREATE_DATE'] = $oApp->getAppCreateDate();
+              $aFields['UPDATE_DATE'] = $oApp->getAppUpdateDate();
+            }
 
             if ($iDelIndex > 0) { //get the Delegation fields,
                 $oAppDel = new AppDelegation();
@@ -3166,6 +3173,50 @@ funcion History messages for case tracker by Everth The Answer
     $this->updateCase($sApplication, $aData);
   }
 
+  function thisIsTheCurrentUser($sApplicationUID, $iIndex, $sUserUID, $sAction = '', $sURL = '') {
+    $oCriteria = new Criteria('workflow');
+    $oCriteria->add(AppDelegationPeer::APP_UID, $sApplicationUID);
+    $oCriteria->add(AppDelegationPeer::DEL_INDEX, $iIndex);
+    $oCriteria->add(AppDelegationPeer::USR_UID, $sUserUID);
+    switch ($sAction) {
+      case '':
+        return (boolean)AppDelegationPeer::doCount($oCriteria);
+      break;
+      case 'REDIRECT':
+        if (!(boolean)AppDelegationPeer::doCount($oCriteria)) {
+          $oCriteria = new Criteria('workflow');
+          $oCriteria->addSelectColumn(UsersPeer::USR_USERNAME);
+          $oCriteria->addSelectColumn(UsersPeer::USR_FIRSTNAME);
+          $oCriteria->addSelectColumn(UsersPeer::USR_LASTNAME);
+          $oCriteria->add(AppDelegationPeer::APP_UID, $sApplicationUID);
+          $oCriteria->add(AppDelegationPeer::DEL_INDEX, $iIndex);
+          $oCriteria->addJoin(AppDelegationPeer::USR_UID, UsersPeer::USR_UID, Criteria::LEFT_JOIN);
+          $oDataset = AppDelegationPeer::doSelectRs($oCriteria);
+          $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+          $oDataset->next();
+          $aData = $oDataset->getRow();
+          G::SendMessageText(G::LoadTranslation('ID_CASE_IS_CURRENTLY_WITH_ANOTHER_USER') . ': ' . $aData['USR_FIRSTNAME'] . ' ' . $aData['USR_LASTNAME'] . ' (' . $aData['USR_USERNAME'] . ')', 'error');
+          G::header('Location: ' . $sURL);
+          die;
+        }
+      break;
+      case 'SHOW_MESSAGE':
+        if (!(boolean)AppDelegationPeer::doCount($oCriteria)) {
+          $oCriteria = new Criteria('workflow');
+          $oCriteria->addSelectColumn(UsersPeer::USR_USERNAME);
+          $oCriteria->addSelectColumn(UsersPeer::USR_FIRSTNAME);
+          $oCriteria->addSelectColumn(UsersPeer::USR_LASTNAME);
+          $oCriteria->add(AppDelegationPeer::APP_UID, $sApplicationUID);
+          $oCriteria->add(AppDelegationPeer::DEL_INDEX, $iIndex);
+          $oCriteria->addJoin(AppDelegationPeer::USR_UID, UsersPeer::USR_UID, Criteria::LEFT_JOIN);
+          $oDataset = AppDelegationPeer::doSelectRs($oCriteria);
+          $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+          $oDataset->next();
+          $aData = $oDataset->getRow();
+          die('<strong>' . G::LoadTranslation('ID_CASE_IS_CURRENTLY_WITH_ANOTHER_USER') . ': ' . $aData['USR_FIRSTNAME'] . ' ' . $aData['USR_LASTNAME'] . ' (' . $aData['USR_USERNAME'] . ')</strong>');
+        }
+      break;
+    }
+  }
+
 }
-
-

@@ -55,7 +55,8 @@ foreach ($_POST['form']['TASKS'] as $aValues)
 
 try {
   //load data
-  $oCase     = new Cases ();
+  $oCase = new Cases ();
+  $oCase->thisIsTheCurrentUser($_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['USER_LOGGED'], 'REDIRECT', 'cases_List');
   $appFields = $oCase->loadCase( $_SESSION['APPLICATION'] );
   $appFields['APP_DATA'] = array_merge($appFields['APP_DATA'], G::getSystemConstants());
 
