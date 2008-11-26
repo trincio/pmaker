@@ -31,6 +31,7 @@
 
   //load the variables
   $oCase = new Cases();
+  $oCase->thisIsTheCurrentUser($_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['USER_LOGGED'], 'REDIRECT', 'cases_List');
   $Fields = $oCase->loadCase( $_SESSION['APPLICATION'] );
   $Fields['APP_DATA'] = array_merge($Fields['APP_DATA'], G::getSystemConstants());
   $Fields['APP_DATA'] = array_merge( $Fields['APP_DATA'], (array)$_POST['form']);
@@ -115,7 +116,7 @@
 	  $_SESSION['TRIGGER_DEBUG']['BREAKPAGE'] = $aNextStep['PAGE'];
 	  $aNextStep['PAGE'] = $aNextStep['PAGE'].'&breakpoint=triggerdebug';
   }
-  
+
   $oForm->validatePost();
   if( $missing_req_values = $oForm->validateRequiredFields($_POST['form']) ) {
 	  $_POST['next_step'] = $aNextStep;
@@ -126,7 +127,7 @@
 	  G::RenderPage('publish');
 	  exit(0);
   }
-  
+
   G::header('location: ' . $aNextStep['PAGE']);
 
 

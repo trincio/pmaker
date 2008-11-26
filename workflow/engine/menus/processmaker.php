@@ -78,3 +78,8 @@ if ($RBAC->userCanAccess('PM_REPORTS') != 1)
 {
   $G_TMP_MENU->DisableOptionId('REPORTS');
 }
+
+if ($RBAC->userCanAccess('PM_DASHBOARD') != 1)
+{
+  $G_TMP_MENU->DisableOptionId('DASHBOARD');
+}

@@ -51,6 +51,7 @@
 
  /* Prepare page before to show */
   $oCase = new Cases();
+  $oCase->thisIsTheCurrentUser($_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['USER_LOGGED'], 'SHOW_MESSAGE');
   $Fields = $oCase->loadCase( $_SESSION['APPLICATION'], $_SESSION['INDEX'] );
   if (isset($aRow['APP_TYPE'])) {
     switch ($aRow['APP_TYPE']) {

@@ -22,6 +22,10 @@
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
  *
  */
+G::LoadClass('case');
+$oCase = new Cases();
+$oCase->thisIsTheCurrentUser($_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['USER_LOGGED'], 'SHOW_MESSAGE');
+
 if (($RBAC_Response = $RBAC->userCanAccess("PM_CASES")) != 1)
     return $RBAC_Response;
 if (isset($_POST['showWindow'])) {
@@ -240,7 +244,6 @@ $oHeadPublisher->addScriptCode('
 		$_SESSION['APPLICATION'];
 		$iIndex = (isset($_POST['sApplicationUID'])) ? $_POST['iIndex']:
 		$_SESSION['INDEX'];
-		G::LoadClass('case');
 		$oCase = new Cases();
 		$oCase->cancelCase($sApplicationUID, $iIndex, $_SESSION['USER_LOGGED']);
 		break;
@@ -250,7 +253,6 @@ $oHeadPublisher->addScriptCode('
 		$_SESSION['APPLICATION'];
 		$iIndex = (isset($_POST['sApplicationUID'])) ? $_POST['iIndex']:
 		$_SESSION['INDEX'];
-		G::LoadClass('case');
 		$oCase = new Cases();
 		$oCase->reactivateCase($sApplicationUID, $iIndex, $_SESSION['USER_LOGGED']);
 		break;
@@ -262,7 +264,6 @@ $oHeadPublisher->addScriptCode('
         G::RenderPage('publish', 'raw');
 		break;
 	case 'pauseCase':
-		G::LoadClass('case');
 		$unpausedate = $_POST['unpausedate'];
 		$oCase = new Cases();
 		if (isset($_POST['sApplicationUID'])) {
@@ -276,12 +277,10 @@ $oHeadPublisher->addScriptCode('
 		$_SESSION['APPLICATION'];
 		$iIndex = (isset($_POST['sApplicationUID'])) ? $_POST['iIndex']:
 		$_SESSION['INDEX'];
-		G::LoadClass('case');
 		$oCase = new Cases();
 		$oCase->unpauseCase($sApplicationUID, $iIndex, $_SESSION['USER_LOGGED']);
 		break;
 	case 'deleteCase':
-		G::LoadClass('case');
 		$oCase = new Cases();
 		$sApplicationUID = (isset($_POST['sApplicationUID'])) ? $_POST['sApplicationUID']:
 		$_SESSION['APPLICATION'];
@@ -325,7 +324,6 @@ $oHeadPublisher->addScriptCode('
 		G::RenderPage('publish', 'raw');
 		break;
 	case 'reassignCase':
-		G::LoadClass('case');
 		$cases = new Cases();
 		$cases->reassignCase($_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['USER_LOGGED'], $_POST['USR_UID'], $_POST['THETYPE']);
 		break;
@@ -338,7 +336,6 @@ $oHeadPublisher->addScriptCode('
 			G::RenderPage('publish', 'raw');
 		break;
 	case 'showUploadedDocuments':
-		G::LoadClass('case');
 		$oCase = new Cases();
 		global $G_PUBLISH;
 		$G_PUBLISH = new Publisher();
@@ -393,7 +390,6 @@ $oHeadPublisher->addScriptCode('
 		G::RenderPage('publish', 'raw');
 		break;
 	case 'showGeneratedDocuments':
-		G::LoadClass('case');
 		$oCase = new Cases();
 		global $G_PUBLISH;
 		$G_PUBLISH = new Publisher();
@@ -431,7 +427,6 @@ $oHeadPublisher->addScriptCode('
 
 
 	case 'showDynaformList':
-		G::LoadClass('case');
 		$oCase = new Cases();
 		global $G_PUBLISH;
 		$G_PUBLISH = new Publisher();
@@ -440,7 +435,6 @@ $oHeadPublisher->addScriptCode('
 		break;
 
 	case 'showDynaform':
-		G::LoadClass('case');
 		$G_PUBLISH = new Publisher;
 		$oCase = new Cases();
 		$Fields = $oCase->loadCase( $_SESSION['APPLICATION'] );
@@ -487,7 +481,6 @@ $oHeadPublisher->addScriptCode('
 		break;
 
 		case 'showHistoryMessages':
-		G::LoadClass('case');
 		$oCase = new Cases();
 		global $G_PUBLISH;
 		$G_PUBLISH = new Publisher();
@@ -496,7 +489,6 @@ $oHeadPublisher->addScriptCode('
 		break;
 
 		case 'showHistoryMessage':
-		G::LoadClass('case');
 		$G_PUBLISH = new Publisher;
 		$oCase = new Cases();
 
@@ -508,7 +500,6 @@ $oHeadPublisher->addScriptCode('
       require_once 'classes/model/AppDocument.php';
       $oAppDocument = new AppDocument();
       $oAppDocument->remove($_POST['DOC']);
-      G::LoadClass('case');
       $oCase = new Cases();
       $oCase->getAllUploadedDocumentsCriteria($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['TASK'], $_SESSION['USER_LOGGED']);
 		break;
@@ -517,7 +508,6 @@ $oHeadPublisher->addScriptCode('
       require_once 'classes/model/AppDocument.php';
       $oAppDocument = new AppDocument();
       //$oAppDocument->remove($_POST['DOC']);
-      G::LoadClass('case');
       $oCase = new Cases();
       $oCase->getAllGeneratedDocumentsCriteria($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['TASK'], $_SESSION['USER_LOGGED']);
 		break;
