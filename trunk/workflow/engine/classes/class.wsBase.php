@@ -384,26 +384,26 @@ class wsBase
 		}
 	}
 
-	public function getCaseInfo($caseNumber ) {
+	public function getCaseInfo($caseId, $iDelIndex ) {
 		try {
 			G::LoadClass('case');
 			$oCase = new Cases();
-  	  $aRows = $oCase->loadCaseByNumber( $caseNumber);
+  	  $aRows = $oCase->loadCase( $caseId, $iDelIndex );
   	  if ( count($aRows) == 0 ) {
     	  $result = new wsResponse (27, "Case $caseNumber doesn't exists." );
   	    return $result;
   	  }
-  	  if ( count($aRows) > 1 ) {
-    	  $result = new wsResponse (27, "There are more than one case with the same CaseNumber $caseNumber." );
-  	    return $result;
-  	  }
+//  	  if ( count($aRows) > 1 ) {
+//    	  $result = new wsResponse (27, "There are more than one case with the same CaseNumber $caseNumber." );
+//  	    return $result;
+//  	  }
 
   	  $result = new wsResponse (0, "case found" );
-  	  $result->caseId = $aRows[0]['APP_UID'];
-  	  $result->caseNumber = $aRows[0]['APP_NUMBER'];
-  	  $result->caseStatus = $aRows[0]['APP_STATUS'];
-  	  $result->caseParalell = $aRows[0]['APP_PARALLEL'];
-  	  $result->caseCurrentUser = $aRows[0]['APP_CUR_USER'];
+  	  $result->caseId = $aRows['APP_UID'];
+  	  $result->caseNumber = $aRows['APP_NUMBER'];
+  	  $result->caseStatus = $aRows['APP_STATUS'];
+  	  $result->caseParalell = $aRows['APP_PARALLEL'];
+  	  $result->caseCurrentUser = $aRows['APP_CUR_USER'];
 			return $result;
 		}
 		catch ( Exception $e ) {
@@ -1004,7 +1004,7 @@ class wsBase
 		}
 	}
 
-	public function executeTrigger($userId, $caseId, $triggerIndex) {
+	public function executeTrigger($userId, $caseId, $triggerIndex, $delIndex) {
 		try {
 			require_once ("classes/model/AppDelegation.php");
 			require_once ("classes/model/Route.php");
@@ -1013,7 +1013,6 @@ class wsBase
 			G::LoadClass('sessions');
 
 			$oAppDel = new AppDelegation();
-			$delIndex = 1;  //default to first derivation
 			$appdel  = $oAppDel->Load($caseId, $delIndex);
 
 			if($userId!=$appdel['USR_UID'])
