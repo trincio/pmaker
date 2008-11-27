@@ -91,7 +91,22 @@ try {
   		$lang = 'en';
   	}
   }
-
+    
+    
+  /**log by Everth**/
+  require_once 'classes/model/LoginLog.php';
+  $weblog=new LoginLog();
+  $aLog['LOG_UID']            = G::generateUniqueID();
+  $aLog['LOG_STATUS']					= 'ACTIVE';
+  $aLog['LOG_IP']             = $_SERVER['REMOTE_ADDR'];
+  $aLog['LOG_SID']            = session_id();
+  $aLog['LOG_INIT_DATE']			= date('Y-m-d H:i:s');
+  //$aLog['LOG_END_DATE']				= '0000-00-00 00:00:00';
+  $aLog['LOG_CLIENT_HOSTNAME']= $_SERVER['HTTP_HOST']; 
+  $aLog['USR_UID']						= $_SESSION['USER_LOGGED'];
+  $weblog->create($aLog);
+  /**end log**/
+    
 	$res = $RBAC->userCanAccess('PM_FACTORY');
 	if ($res == 1) {
     G::header('location: /sys' .  SYS_TEMP . '/' . $lang . '/' . SYS_SKIN . '/' . 'processes/processes_List');
