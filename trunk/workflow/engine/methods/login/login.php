@@ -34,8 +34,39 @@ if (!isset($_SESSION['G_MESSAGE_TYPE']))
 $msg     = $_SESSION['G_MESSAGE'];
 $msgType = $_SESSION['G_MESSAGE_TYPE'];
 
+
+
+//log by Everth
+  require_once 'classes/model/LoginLog.php';
+  
+  $oCriteria = new Criteria('workflow');
+  $oCriteria->add(LoginLogPeer::LOG_SID, session_id());
+  $oCriteria->add(LoginLogPeer::USR_UID, isset($_SESSION['USER_LOGGED']) ? $_SESSION['USER_LOGGED'] : '-');
+  $oCriteria->add(LoginLogPeer::LOG_STATUS, 'ACTIVE');
+  $oCriteria->add(LoginLogPeer::LOG_END_DATE, NULL, Criteria::ISNULL);
+  $oDataset = LoginLogPeer::doSelectRS($oCriteria);
+  $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+  $oDataset->next();
+  $aRow = $oDataset->getRow();   
+  
+  if($aRow['LOG_STATUS']!='CLOSED' && $aRow['LOG_END_DATE']==NULL)
+   {  
+   	  $weblog=new LoginLog();
+  		$aLog['LOG_UID']            = $aRow['LOG_UID'];
+  		$aLog['LOG_STATUS']					= 'CLOSED';  		  		  		  		  		
+  		$aLog['LOG_IP']             = $aRow['LOG_IP'];
+  		$aLog['LOG_SID']            = session_id();
+  		$aLog['LOG_INIT_DATE']			= $aRow['LOG_INIT_DATE'];
+  		$aLog['LOG_END_DATE']			  = date('Y-m-d H:i:s'); 
+  		$aLog['LOG_CLIENT_HOSTNAME']= $aRow['LOG_CLIENT_HOSTNAME']; 
+  		$aLog['USR_UID']						= $aRow['USR_UID']; 		
+  		$weblog->update($aLog);
+	 }
+//end log
+
 session_destroy();
 session_start();
+session_regenerate_id();
 
 //$G_MAIN_MENU     = 'wf.login';
 //$G_MENU_SELECTED = '';
