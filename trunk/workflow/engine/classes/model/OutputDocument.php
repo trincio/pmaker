@@ -104,6 +104,14 @@ class OutputDocument extends BaseOutputDocument {
         unset ( $aData['OUT_DOC_UID'] );
       if ( !isset ( $aData['OUT_DOC_UID'] ) )
     		$aData['OUT_DOC_UID'] = G::generateUniqueID();
+      if (!isset($aData['OUT_DOC_GENERATE'])) {
+        $aData['OUT_DOC_GENERATE'] = 'BOTH';
+      }
+      else {
+        if ($aData['OUT_DOC_GENERATE'] == '') {
+          $aData['OUT_DOC_GENERATE'] = 'BOTH';
+        }
+      }
   	  $oOutputDocument = new OutputDocument();
   	  $oOutputDocument->fromArray($aData, BasePeer::TYPE_FIELDNAME);
   	  if ($oOutputDocument->validate()) {
