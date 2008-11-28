@@ -33,7 +33,7 @@
   require_once ( 'classes/model/SubApplication.php');
   require_once ( 'classes/model/SubProcess.php' );
   require_once ( "classes/model/Users.php" );
-  
+
   G::LoadClass( "plugin" );
 
 /**
@@ -585,13 +585,13 @@ class Derivation
       }
     }
   }
-  
+
   // getDerivatedCases
-  // get all derivated cases and subcases from any task, 
+  // get all derivated cases and subcases from any task,
   // this function is useful to know who users have been assigned and what task they do.
   function getDerivatedCases ( $sParentUid, $sDelIndexParent ) {
     $oCriteria = new Criteria('workflow');
-    $cases = array();  
+    $cases = array();
     $derivation = array();
     //get the child delegations , of parent delIndex
     $children = array();
@@ -611,7 +611,7 @@ class Derivation
     }
 
     //foreach child , get the info of their derivations and subprocesses
-    foreach ( $children as $keyChild => $child ) {    
+    foreach ( $children as $keyChild => $child ) {
       $oCriteria = new Criteria('workflow');
       $oCriteria->clearSelectColumns();
       $oCriteria->addSelectColumn ( SubApplicationPeer::APP_UID );
@@ -623,7 +623,7 @@ class Derivation
       $oCriteria->addSelectColumn ( UsersPeer::USR_USERNAME );
       $oCriteria->addSelectColumn ( UsersPeer::USR_FIRSTNAME );
       $oCriteria->addSelectColumn ( UsersPeer::USR_LASTNAME );
-  
+
       $oCriteria->add(SubApplicationPeer::APP_PARENT, $sParentUid);
       $oCriteria->add(SubApplicationPeer::DEL_INDEX_PARENT, $child );
       $oCriteria->addJoin ( SubApplicationPeer::APP_UID, AppDelegationPeer::APP_UID);
@@ -639,24 +639,24 @@ class Derivation
         $appFields = $oCase->load($aRow['APP_UID']);
         $oTask = new Task();
         $tasFields = $oTask->load($aRow['TAS_UID']);
-        $derivation[] = array ( 
-                        'processId' => $aRow['PRO_UID'], 
-                        'processTitle' => $proFields['PRO_TITLE'], 
-                        'caseId' => $aRow['APP_UID'], 
-                        'caseNumber' => $appFields['APP_NUMBER'], 
-                        'taskId' => $aRow['TAS_UID'], 
-                        'taskTitle' => $tasFields['TAS_TITLE'], 
-                        'userId' => $aRow['USR_UID'], 
-                        'userName' => $aRow['USR_USERNAME'], 
+        $derivation[] = array (
+                        'processId' => $aRow['PRO_UID'],
+                        'processTitle' => $proFields['PRO_TITLE'],
+                        'caseId' => $aRow['APP_UID'],
+                        'caseNumber' => $appFields['APP_NUMBER'],
+                        'taskId' => $aRow['TAS_UID'],
+                        'taskTitle' => $tasFields['TAS_TITLE'],
+                        'userId' => $aRow['USR_UID'],
+                        'userName' => $aRow['USR_USERNAME'],
                         'userFullname' => $aRow['USR_FIRSTNAME'] . ' ' . $aRow['USR_LASTNAME']
                      );
-  
+
         $oDataset->next();
         $aRow = $oDataset->getRow();
       }
-    }  
+    }
 
-       
+
     return $derivation;
   }
 

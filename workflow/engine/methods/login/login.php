@@ -37,6 +37,7 @@ $msgType = $_SESSION['G_MESSAGE_TYPE'];
 
 
 //log by Everth
+
   require_once 'classes/model/LoginLog.php';
   
   $oCriteria = new Criteria('workflow');
@@ -48,9 +49,9 @@ $msgType = $_SESSION['G_MESSAGE_TYPE'];
   $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
   $oDataset->next();
   $aRow = $oDataset->getRow();   
-  
-  if($aRow['LOG_STATUS']!='CLOSED' && $aRow['LOG_END_DATE']==NULL)
-   {  
+  if($aRow)
+  {	if($aRow['LOG_STATUS']!='CLOSED' && $aRow['LOG_END_DATE']==NULL)
+   	{  
    	  $weblog=new LoginLog();
   		$aLog['LOG_UID']            = $aRow['LOG_UID'];
   		$aLog['LOG_STATUS']					= 'CLOSED';  		  		  		  		  		
@@ -61,7 +62,9 @@ $msgType = $_SESSION['G_MESSAGE_TYPE'];
   		$aLog['LOG_CLIENT_HOSTNAME']= $aRow['LOG_CLIENT_HOSTNAME']; 
   		$aLog['USR_UID']						= $aRow['USR_UID']; 		
   		$weblog->update($aLog);
-	 }
+	 	}
+	} 	
+
 //end log
 
 session_destroy();

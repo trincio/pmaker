@@ -544,6 +544,7 @@ class Cases
         $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
         $oCriteria->add(AppDelegationPeer::TAS_UID, $aPreviousTask, Criteria::IN);
         $oCriteria->add(AppDelegationPeer::APP_UID, $sAppUid);
+        $oCriteria->add(AppThreadPeer::APP_THREAD_STATUS, 'OPEN');
         if (AppThreadPeer::doCount($oCriteria) == 1) {
           $iCounter  = 0;
           $bContinue = true;
