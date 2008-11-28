@@ -50,7 +50,7 @@
     $processData = $oProcess->ws_processGetData ( $ObjUid  );
     $Fields['pro_title']    = $processData->title;
     $Fields['installSteps'] = nl2br($processData->installSteps);
-    $Fields['category']     = $processData->category;
+    $Fields['category']     = (isset($processData->category) ? $processData->category : '');
     $Fields['version']      = $processData->version;
     $G_MAIN_MENU            = 'processmaker';
     $G_ID_MENU_SELECTED     = 'PROCESSES';

@@ -2,7 +2,7 @@ msgid ""
 msgstr "" 
 "Project-Id-Version: PM 4.0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-11-21 11:23+0100 \n"
+"PO-Revision-Date: 2008-11-28 18:15+0100 \n"
 "Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
 "Language-Team: Colosa Developers Team <developers@colosa.com>\n"
 "MIME-Version: 1.0\n"
@@ -2778,6 +2778,12 @@ msgstr "You need to be registered for download this process, register NOW!"
 #: JAVASCRIPT/ID_INCORRECT_USER_OR_PASS
 msgid "Incorrect username or password"
 msgstr "Incorrect username or password"
+
+# TRANSLATION
+# LABEL/ID_TO_REASSIGN
+#: LABEL/ID_TO_REASSIGN
+msgid "To Reassign"
+msgstr "To Reassign"
 
 # TRANSLATION
 # LABEL/ID_SELF_SERVICE
@@ -6229,10 +6235,10 @@ msgstr "Save"
 msgid "[dynaforms/fields/_options.xml?NAME] Value"
 msgstr "Value"
 
-# dynaforms/fields/_options.xml?LABEL_EN
+# dynaforms/fields/_options.xml?LABEL
 # dynaforms/fields/_options.xml
-#: text - LABEL_EN
-msgid "[dynaforms/fields/_options.xml?LABEL_EN] Label"
+#: text - LABEL
+msgid "[dynaforms/fields/_options.xml?LABEL] Label"
 msgstr "Label"
 
 # dynaforms/fields/title.xml?PME_TITLE
@@ -6907,12 +6913,6 @@ msgstr "Output Document Information"
 msgid "[outputdocs/outputdocs_Edit.xml?OUT_DOC_TITLE] Title"
 msgstr "Title"
 
-# outputdocs/outputdocs_Edit.xml?OUT_DOC_FILENAME
-# outputdocs/outputdocs_Edit.xml
-#: textpm - OUT_DOC_FILENAME
-msgid "Filename generated"
-msgstr "Filename generated"
-
 # outputdocs/outputdocs_Edit.xml?OUT_DOC_DESCRIPTION
 # outputdocs/outputdocs_Edit.xml
 #: textarea - OUT_DOC_DESCRIPTION
@@ -7156,8 +7156,8 @@ msgstr "Login into ProcessMaker Library"
 # processes/registerPML.xml?PML_USER
 # processes/registerPML.xml
 #: text - PML_USER
-msgid "[processes/registerPML.xml?PML_USER] Username"
-msgstr "Username"
+msgid "Username (or Live Workspace)"
+msgstr "Username (or Live Workspace)"
 
 # processes/registerPML.xml?PML_PASSWORD
 # processes/registerPML.xml
@@ -11731,12 +11731,6 @@ msgstr "Confirm Password "
 msgid "[users/users_View.xml?TITLEADD] Additional Information"
 msgstr "Additional Information"
 
-# users/users_View.xml?USR_PHOTO
-# users/users_View.xml
-#: image - USR_PHOTO
-msgid "[users/users_View.xml?USR_PHOTO] Photo"
-msgstr "Photo"
-
 # users/users_View.xml?USR_RESUME
 # users/users_View.xml
 #: link - USR_RESUME
@@ -11761,12 +11755,6 @@ msgstr "Allow arbitrary transfer (Ad hoc)"
 msgid "After derivation notify to each next user"
 msgstr "After derivation notify to each next user"
 
-# tasks/tasks_Notifications.xml?TAS_DEF_MESSAGE
-# tasks/tasks_Notifications.xml
-#: textareapm - TAS_DEF_MESSAGE
-msgid "[tasks/tasks_Notifications.xml?TAS_DEF_MESSAGE] Message"
-msgstr "Message"
-
 # tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_TYPE
 # tasks/tasks_AssignmentRules.xml
 #: radiogroup - TAS_ASSIGN_TYPE
@@ -11790,6 +11778,18 @@ msgstr "Manual Assignment"
 #: radiogroup - TAS_ASSIGN_TYPE - EVALUATE
 msgid "[tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_TYPE-EVALUATE]"
 msgstr "Value Based Assignment"
+
+# tasks/tasks_Labels.xml?TAS_DEF_TITLE
+# tasks/tasks_Labels.xml
+#: textareapm - TAS_DEF_TITLE
+msgid "[tasks/tasks_Labels.xml?TAS_DEF_TITLE] Case Title"
+msgstr "Case Title"
+
+# tasks/tasks_Labels.xml?TAS_DEF_DESCRIPTION
+# tasks/tasks_Labels.xml
+#: textareapm - TAS_DEF_DESCRIPTION
+msgid "Case Description"
+msgstr "Case Description"
 
 # tasks/tasks_Owner.xml?TAS_OWNER_APP
 # tasks/tasks_Owner.xml
@@ -12192,6 +12192,30 @@ msgstr "File"
 #: button - BACK
 msgid "[cases/cases_ViewInputDocumentToRevise.xml?BACK] Back"
 msgstr "Back"
+
+# cases/cases_Reassign.xml?TITLE
+# cases/cases_Reassign.xml
+#: title - TITLE
+msgid "Finish Reassigned"
+msgstr "Finish Reassigned"
+
+# cases/cases_Reassign.xml?APP_NUMBER
+# cases/cases_Reassign.xml
+#: text - APP_NUMBER
+msgid "Case #"
+msgstr "Case #"
+
+# cases/cases_Reassign.xml?USERS
+# cases/cases_Reassign.xml
+#: text - USERS
+msgid "Reassigned to"
+msgstr "Reassigned to"
+
+# cases/cases_Reassign.xml?BACK
+# cases/cases_Reassign.xml
+#: button - BACK
+msgid "BACK"
+msgstr "BACK"
 
 # cases/cases_OutputdocsListToRevise.xml?TITLE
 # cases/cases_OutputdocsListToRevise.xml
@@ -12619,6 +12643,24 @@ msgstr "Finish Date"
 msgid "[cases/cases_ListCancelled.xml?SEARCH] Apply Filter"
 msgstr "Apply Filter"
 
+# cases/cases_ReassignBy.xml?REASSIGN_BY
+# cases/cases_ReassignBy.xml
+#: radiogroup - REASSIGN_BY
+msgid "Reassign By    "
+msgstr "Reassign By    "
+
+# cases/cases_ReassignBy.xml?REASSIGN_BY-1
+# cases/cases_ReassignBy.xml
+#: radiogroup - REASSIGN_BY - 1
+msgid "[cases/cases_ReassignBy.xml?REASSIGN_BY-1]"
+msgstr "Case"
+
+# cases/cases_ReassignBy.xml?REASSIGN_BY-2
+# cases/cases_ReassignBy.xml
+#: radiogroup - REASSIGN_BY - 2
+msgid "[cases/cases_ReassignBy.xml?REASSIGN_BY-2]"
+msgstr "User"
+
 # cases/cases_ViewInputDocument2.xml?INP_DOC_TITLE
 # cases/cases_ViewInputDocument2.xml
 #: caption - INP_DOC_TITLE
@@ -12906,6 +12948,18 @@ msgstr "Start a new case"
 #: label - DESCRIPTION
 msgid "You cannot initiate a new case."
 msgstr "You cannot initiate a new case."
+
+# cases/cases_ReassignUsers.xml?REASSIGN_USER
+# cases/cases_ReassignUsers.xml
+#: dropdown - REASSIGN_USER
+msgid "User    "
+msgstr "User    "
+
+# cases/cases_ReassignUsers.xml?REASSIGN_USER-''
+# cases/cases_ReassignUsers.xml
+#: dropdown - REASSIGN_USER - ''
+msgid "[cases/cases_ReassignUsers.xml?REASSIGN_USER-'']"
+msgstr " - Select - "
 
 # cases/cases_AttachInputDocument1.xml?TITLE1
 # cases/cases_AttachInputDocument1.xml
@@ -13842,6 +13896,24 @@ msgstr "Delete"
 #: button - SEARCH
 msgid "[cases/cases_List.xml?SEARCH] Apply Filter"
 msgstr "Apply Filter"
+
+# cases/cases_ReassignShowInfo.xml?TITLE
+# cases/cases_ReassignShowInfo.xml
+#: title - TITLE
+msgid "[cases/cases_ReassignShowInfo.xml?TITLE] Information"
+msgstr "Information"
+
+# cases/cases_ReassignShowInfo.xml?MESSAGE
+# cases/cases_ReassignShowInfo.xml
+#: text - MESSAGE
+msgid "[cases/cases_ReassignShowInfo.xml?MESSAGE] You do not have enabled the SOAP extension"
+msgstr "You do not have enabled the SOAP extension"
+
+# cases/cases_ReassignShowInfo.xml?BACK
+# cases/cases_ReassignShowInfo.xml
+#: button - BACK
+msgid "[cases/cases_ReassignShowInfo.xml?BACK] BACK"
+msgstr "BACK"
 
 # cases/cases_ListToRevise.xml?APP_NUMBER
 # cases/cases_ListToRevise.xml
@@ -14880,6 +14952,12 @@ msgstr "Title"
 #: textarea - TRI_DESCRIPTION
 msgid "[triggers/triggers_Edit.xml?TRI_DESCRIPTION] Description"
 msgstr "Description"
+
+# triggers/triggers_Edit.xml?TRI_WEBBOT
+# triggers/triggers_Edit.xml
+#: textareapm - TRI_WEBBOT
+msgid "Script"
+msgstr "Script"
 
 # triggers/triggers_Edit.xml?SAVE
 # triggers/triggers_Edit.xml
