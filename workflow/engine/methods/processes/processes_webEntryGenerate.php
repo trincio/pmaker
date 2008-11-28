@@ -7,7 +7,7 @@
     $sWS_USER  = $oData->WS_USER;
     $sWS_PASS  = $oData->WS_PASS;
     $sWS_ROUNDROBIN = $oData->WS_ROUNDROBIN;
-    
+
     $withWS = $sWE_TYPE == 'WS';
 
   try {
@@ -15,26 +15,26 @@
     G::mk_dir ( $pathProcess, 0777 );
 
     $oTask    = new Task();
-    $TaskFields = $oTask->load( $sTASKS);          
-    if($TaskFields['TAS_ASSIGN_TYPE'] != 'BALANCED' )  { 
+    $TaskFields = $oTask->load( $sTASKS);
+    if($TaskFields['TAS_ASSIGN_TYPE'] != 'BALANCED' )  {
     	throw ( new Exception ( "The task '" . $TaskFields['TAS_TITLE'] . "' doesn't have a valid assignment type. The task needs to have a 'Cyclical Assignment'.") );
     }
 
     G::LoadClass('tasks');
     $oTask = new Tasks();
     $user = $oTask->assignUsertoTask($sTASKS);
-    
-    if($user == 0)  { 
+
+    if($user == 0)  {
     	throw ( new Exception ( "The task '" . $TaskFields['TAS_TITLE'] . "' doesn't have users.") );
     }
-	
+
 	if (G::is_https())
       $http= 'https://';
     else
    	  $http= 'http://';
-    
+
 	$sContent = '';
-	
+
 	if ($withWS) {
 	  //creating the first file
 	  require_once 'classes/model/Dynaform.php';
@@ -94,10 +94,10 @@
       $template->assign('dynFileName', $sPRO_UID . '/' . $sDYNAFORM);
       $template->assign('formId',      $G_FORM->id);
       $template->assign('scriptCode',  $scriptCode);
-	  
-	  print_r('<textarea cols="70" rows="20">' . htmlentities($template->getOutputContent()) . '</textarea>');
+
+	  print_r('<textarea cols="70" rows="20">' . htmlentities(str_replace('</body>', '</form></body>', str_replace('</form>', '', $template->getOutputContent()))) . '</textarea>');
 	}
-    
+
   }
   catch ( Exception $e ) {
     $G_PUBLISH = new Publisher;

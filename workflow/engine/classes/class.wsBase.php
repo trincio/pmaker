@@ -288,7 +288,7 @@ class wsBase
 	}
 
 	public function sendMessage($caseId, $sFrom, $sTo, $sCc, $sBcc, $sSubject, $sTemplate, $appFields = null ) {
-		try { 
+		try {
 			G::LoadClass('case');
       G::LoadClass('spool');
 
@@ -322,12 +322,12 @@ class wsBase
         $Fields = $appFields;
 
       $templateContents = file_get_contents ( $fileTemplate );
-    
-      //desde aki      
+
+      //desde aki
       //$sContent    = G::unhtmlentities($sContent);
   		$iAux        = 0;
   	  $iOcurrences = preg_match_all('/\@(?:([\>])([a-zA-Z\_]\w*)|([a-zA-Z\_][\w\-\>\:]*)\(((?:[^\\\\\)]*(?:[\\\\][\w\W])?)*)\))((?:\s*\[[\'"]?\w+[\'"]?\])+)?/',  $templateContents, $aMatch, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE);
-  	   
+
   	  if ($iOcurrences) {
   	    for($i = 0; $i < $iOcurrences; $i++) {
   	      preg_match_all('/@>' . $aMatch[2][$i][0] . '([\w\W]*)' . '@<' . $aMatch[2][$i][0] . '/', $templateContents, $aMatch2, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE);
@@ -343,7 +343,7 @@ class wsBase
   	      }
   	      $templateContents = str_replace('@>' . $sGridName . $sStringToRepeat . '@<' . $sGridName, $sAux, $templateContents);
   	    }
-  	  }  	   
+  	  }
       //hata aki
       $sBody = G::replaceDataField( $templateContents, $Fields);
 
@@ -987,6 +987,11 @@ class wsBase
         }
       }
 
+      $oUser     = new Users();
+      $aUser     = $oUser->load($userId);
+      $sFromName = '"' . $aUser['USR_FIRSTNAME'] . ' ' . $aUser['USR_LASTNAME'] . '"';
+      $oCase->sendNotifications($appdel['TAS_UID'], $nextDelegations, $appFields['APP_DATA'], $caseId, $delIndex, $sFromName);
+
 			//Save data - Start
 			//$appFields = $oCase->loadCase( $caseId );
 			//$oCase->updateCase ( $caseId, $appFields );
@@ -994,7 +999,7 @@ class wsBase
 
 			$result = new wsResponse (0, $varResponse . $varTriggers );
       $res = $result->getPayloadArray ();
-      
+
       $res['derivation'] = $oDerivation->getDerivatedCases( $caseId, $delIndex);
 			return $res;
 		}
