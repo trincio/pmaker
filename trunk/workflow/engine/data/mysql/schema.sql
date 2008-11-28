@@ -146,7 +146,7 @@ CREATE TABLE `CONTENT`
 	`CON_PARENT` VARCHAR(32) default '' NOT NULL,
 	`CON_ID` VARCHAR(100) default '' NOT NULL,
 	`CON_LANG` VARCHAR(10) default '' NOT NULL,
-	`CON_VALUE` MEDIUMTEXT  NOT NULL,
+	`CON_VALUE` TEXT  NOT NULL,
 	PRIMARY KEY (`CON_CATEGORY`,`CON_PARENT`,`CON_ID`,`CON_LANG`),
 	KEY `indexUid`(`CON_ID`)
 )Type=MyISAM  DEFAULT CHARSET='utf8';
@@ -840,6 +840,25 @@ CREATE TABLE `SUB_APPLICATION`
 	`SA_INIT_DATE` DATETIME  NOT NULL,
 	`SA_FINISH_DATE` DATETIME  NOT NULL,
 	PRIMARY KEY (`APP_UID`,`APP_PARENT`,`DEL_INDEX_PARENT`,`DEL_THREAD_PARENT`)
+)Type=MyISAM  DEFAULT CHARSET='utf8';
+#-----------------------------------------------------------------------------
+#-- LOGIN_LOG
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `LOGIN_LOG`;
+
+
+CREATE TABLE `LOGIN_LOG`
+(
+	`LOG_UID` VARCHAR(32) default '' NOT NULL,
+	`LOG_STATUS` VARCHAR(100) default '' NOT NULL,
+	`LOG_IP` VARCHAR(15) default '' NOT NULL,
+	`LOG_SID` VARCHAR(100) default '' NOT NULL,
+	`LOG_INIT_DATE` DATETIME,
+	`LOG_END_DATE` DATETIME,
+	`LOG_CLIENT_HOSTNAME` VARCHAR(100) default '' NOT NULL,
+	`USR_UID` VARCHAR(32) default '' NOT NULL,
+	PRIMARY KEY (`LOG_UID`)
 )Type=MyISAM  DEFAULT CHARSET='utf8';
 # This restores the fkey checks, after having unset them earlier
 SET FOREIGN_KEY_CHECKS = 1;

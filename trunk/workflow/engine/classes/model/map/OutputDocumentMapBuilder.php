@@ -80,7 +80,7 @@ class OutputDocumentMapBuilder {
 
 		$tMap->addValidator('PRO_UID', 'required', 'propel.validator.RequiredValidator', '', 'Process UID is required.');
 
-		$tMap->addValidator('OUT_DOC_GENERATE', 'validValues', 'propel.validator.ValidValuesValidator', 'BOTH|DOC|PDF', 'Please select a valid outputdocument.');
+		$tMap->addValidator('OUT_DOC_GENERATE', 'validValues', 'propel.validator.ValidValuesValidator', 'BOTH|DOC|PDF', 'Please select a outputdocument.');
 
 	} // doBuild()
 
