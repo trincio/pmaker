@@ -1058,6 +1058,7 @@ class processMap {
       }
       global $_DBArray;
       $_DBArray['availableUsers'] = $aUsers;
+      
       $_SESSION['_DBArray']  = $_DBArray;
       G::LoadClass('ArrayPeer');
       $oCriteria = new Criteria('dbarray');

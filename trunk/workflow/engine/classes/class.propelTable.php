@@ -543,6 +543,7 @@ class propelTable
         $template = PATH_CORE . 'templates' . PATH_SEP . $menu->type . '.html';
         $menu->setValues($this->xmlForm->values);
         $menu->setValues(array( 'PAGED_TABLE_ID' => $this->id ));
+        
         $menu->setValues(array( 'PAGED_TABLE_FAST_SEARCH' => $this->fastSearch ));
         if (isset($filterForm->name)) {
           $menu->setValues(array('SEARCH_FILTER_FORM' => $filterForm->name));
@@ -551,7 +552,6 @@ class propelTable
         $oHeadPublisher->addScriptFile( $menu->scriptURL );
         $oHeadPublisher->addScriptCode( $scriptCode );
       }
-
       if (file_exists($this->xmlForm->home . $this->filterForm . '.xml')) {
         $this->tpl->newBlock('headerBlock');
         $this->filterForm_Id = $filterForm->id;
@@ -625,8 +625,7 @@ die;*/
       for($j=0;$j< $rs->getRecordCount() ;$j++)
       {
         $result = $rs->getRow();
-	//krumo($result);
-        $rs->next();
+	      $rs->next();
 	
 	
 	
@@ -791,6 +790,8 @@ die;*/
         if ($this->addRow)  if($this->sqlInsert!='')$this->tpl->assign( "insert" , '<a href="#" onclick="pagedTable.event=\'Insert\';popup(\''.$this->popupPage.'\');return false;">'./*G::LoadXml('labels','ID_ADD_NEW')*/ 'ID_ADD_NEW' .'</a>' );
         $this->tpl->assign("pagesEnum", $pagesEnum);
     }
+    
+
 ?>
 
 <script language='JavaScript' >
@@ -818,10 +819,10 @@ var popupHeight<?='='.$this->popupHeight?>;
       $this->tpl->newBlock( "closeBlock" );
     }
     $this->tpl->printToScreen();
-
     unset($this->tpl);
     unset($this->dbc);
     unset($this->ses);
+
     $_SESSION['pagedTable['.$this->id.']']= serialize($this);
     return;
   }
