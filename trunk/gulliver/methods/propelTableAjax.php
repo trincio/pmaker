@@ -104,6 +104,7 @@
 		$ntable->printForm(get_ajax_value('filename'),$field);
 		return ;
 	}
+	
 	$ntable->renderTable( 'content' );
 
   G::LoadClass('configuration');
