@@ -46,6 +46,8 @@ try {
   require_once 'classes/model/Users.php';
   $oUser = new Users();
   $oUser->remove($_GET['USR_UID']);*/
+  
+  //print_r($_GET['USR_UID']); die
   G::LoadClass('tasks');
   $oTasks = new Tasks();
   $oTasks->ofToAssignUserOfAllTasks($_GET['USR_UID']);
@@ -63,7 +65,7 @@ try {
   $aFields['USR_STATUS'] = 'CLOSED';
   $aFields['USR_USERNAME'] = '';
   $oUser->update($aFields);
-  G::header('location: ' . $_SERVER['HTTP_REFERER']);
+  G::header('location: users_List');
 }
 catch (Exception $oException) {
 	die($oException->getMessage());

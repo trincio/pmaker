@@ -70,6 +70,11 @@ $oNode->plus  = '';
 $oNode->minus = '';
 $oNode->point = '';
 
+$oNode        =& $oTree->addChild('6', '<a class="linkInBlue" href="#" onclick="stages();return false;">' . G::LoadTranslation('ID_STAGES') . '</a>', array('nodeType'=>'parentBlue'));
+$oNode->plus  = '';
+$oNode->minus = '';
+$oNode->point = '';
+
 require_once 'classes/model/Process.php';
 $oProcess = new Process();
 $Fields = $oProcess->Load( $_SESSION['PROCESS'] );
