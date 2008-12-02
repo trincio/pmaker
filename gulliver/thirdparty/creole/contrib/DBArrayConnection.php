@@ -280,8 +280,28 @@ krumo ( 'DBArrayConnection connect '); die;
       if ( isset ($sql['whereClause'] ) )
         foreach ( $sql['whereClause'] as $keyClause => $valClause ) {
           if ( isset ( $valClause)  && $flag == 1  ) {
-            $toEval =  "\$flag = ( " . ($valClause != '' ? str_replace('=', '==', $valClause): '1') . ') ?1 :0;' ;
-            eval ( $toEval ).'<br />';
+            //$toEval =  "\$flag = ( " . ($valClause != '' ? str_replace('=', '==', $valClause): '1') . ') ?1 :0;' ;
+            //if the eval is EQUAL   add a double Equal 
+            if ( strpos( $valClause , "\$row['*'] CUSTOM'(" ) !== false ) {
+              $valClause = str_replace( "\$row['*'] CUSTOM'(" , '', $valClause );
+              $words = explode ( ' ', $valClause );
+              $valClause = str_replace( $words[0] , "\$row['" . $words[0] . "']", $valClause );
+              $valClause = str_replace( ")'" , "", $valClause );
+            }
+            
+            if ( strpos( $valClause , "LIKE" ) !== false ) {
+              $valClause = str_replace( "%" , "", $valClause );
+            	$operands = explode ( 'LIKE', $valClause );
+              $toEval =  "\$flag = ( strpos ( " . $operands[0] . ", " . $operands[1] . "  )  !== false ? 1 : 0 ) ;" ;
+              //krumo ( $toEval );
+              eval ( $toEval );
+            eval ( '$val = ' . $operands[0] . ';' );
+              
+            }
+            else //this is for EQUAL, LESS_THAN_EQUAL, ETC, 
+              $toEval =  "\$flag = ( " . ($valClause != '' ? $valClause: '1') . ') ?1 :0;' ;
+              
+            eval ( $toEval );
           }
         }
 
