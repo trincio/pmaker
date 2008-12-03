@@ -3,6 +3,8 @@
   sqlConnection=""
   width="100%"
   rowsPerPage="10"
+  menu="groups/groups_userSearch"
+  searchBy="USR_FIRSTNAME | USR_LASTNAME"   
 >
 <USR_UID type="hidden" showInTable="0"/>
 <USR_FIRSTNAME type="text" colWidth="150"  titleAlign="left" align="left" enableHtml="1">
