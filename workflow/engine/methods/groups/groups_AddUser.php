@@ -22,10 +22,12 @@
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
  *
  */
-
+  require_once ( 'classes/class.xmlfield_InputPM.php' );
+  
   if (($RBAC_Response=$RBAC->userCanAccess("PM_USERS"))!=1) return $RBAC_Response;
   G::LoadClass('groups');
   $oGroup = new Groups();
   $G_PUBLISH = new Publisher();
   $G_PUBLISH->AddContent('propeltable', 'paged-table', 'groups/groups_AvailableUsers', $oGroup->getAvailableUsersCriteria($_GET['UID']));
+  $G_PUBLISH->AddContent('xmlform', 'xmlform', 'groups/groups_SelectUsers','',  '','save' );
   G::RenderPage('publish', 'raw');

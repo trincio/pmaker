@@ -124,4 +124,33 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_USERS"))!=1) return $RBAC_Response;
     currentPopupWindow.remove();
     selectGroup(currentGroup);
   }
+  
+  
+function selection (){    
+    //alert(currentGroup);    
+		var x=document.getElementsByTagName('input');
+    //alert(x.length);
+    var p=[];
+    for (var i=0; x.length>i; i++)
+    {    	
+    	if(x[i].type=='checkbox')
+    	{
+    		if(x[i].checked)
+    		{
+    				p.push(x[i].value);    			
+    		}
+    	}
+    }
+    //alert(p);
+    var oRPC = new leimnud.module.rpc.xmlhttp({
+      url   : '../groups/groups_Ajax',
+      async : false,
+      method: 'POST',             
+      args  : 'action=assignAllUsers&GRP_UID=' + currentGroup + '&aUsers=' + p
+    });
+    oRPC.make();
+    currentPopupWindow.remove();
+    selectGroup(currentGroup);
+}
+  
 </script>
