@@ -272,10 +272,10 @@ class Groups
                 $aUIDs[] = $aRow['USR_UID'];
                 $oDataset->next();
             }
-            $oCriteria = new Criteria('workflow');
+            $oCriteria = new Criteria('workflow');            
             $oCriteria->addSelectColumn(UsersPeer::USR_UID);
             $oCriteria->addSelectColumn(UsersPeer::USR_FIRSTNAME);
-            $oCriteria->addSelectColumn(UsersPeer::USR_LASTNAME);
+            $oCriteria->addSelectColumn(UsersPeer::USR_LASTNAME);            
             $oCriteria->add(UsersPeer::USR_UID, $aUIDs, Criteria::NOT_IN);
             $oCriteria->add(UsersPeer::USR_STATUS, 'ACTIVE');
             return $oCriteria;

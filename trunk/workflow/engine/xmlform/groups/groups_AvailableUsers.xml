@@ -1,23 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dynaForm
+<dynaForm  
   sqlConnection=""
   width="100%"
   rowsPerPage="10"
   menu="groups/groups_userSearch"
   searchBy="USR_FIRSTNAME | USR_LASTNAME"   
 >
-<USR_UID type="hidden" showInTable="0"/>
+<!--<USR_UID type="text" showInTable="0"/>-->
+<!--<GRP_UID type="text" showInTable="0"/>-->
 <USR_FIRSTNAME type="text" colWidth="150"  titleAlign="left" align="left" enableHtml="1">
   <en>Firstname</en>
 </USR_FIRSTNAME>
+
 <USR_LASTNAME type="text" colWidth="150"  titleAlign="left" align="left" enableHtml="1">
   <en>Lastname</en>
 </USR_LASTNAME>
+
 <ASSIGN type="link" colWidth="50" value="@G::LoadTranslation(ID_ASSIGN)" link="#" onclick="saveUserGroup(@QUSR_UID);return false;"/>
+
+<USR_UID type="CheckboxTable" colWidth="5" titleAlign="left" align="left" value="@#USR_UID">
+  <en></en>
+</USR_UID>
+
 <PAGED_TABLE_ID type="private" showInTable="0"/>
+
 <JSFILTER type="javascript" replaceTags="1" showInTable="0">
 function pagedTableFilter( form ) {
   @#PAGED_TABLE_ID.doFilter( form );
 }
+
+
 </JSFILTER>
 </dynaForm>

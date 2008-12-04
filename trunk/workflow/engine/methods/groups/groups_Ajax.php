@@ -42,6 +42,16 @@ switch ($_POST['action'])
 	  $oGroup = new Groups();
 	  $oGroup->addUserToGroup($_POST['GRP_UID'], $_POST['USR_UID']);
 	break;
+	
+	case 'assignAllUsers':	  	  
+	  G::LoadClass('groups');
+	  $oGroup = new Groups();
+	  $aUsers=explode(',', $_POST['aUsers']);
+	  for($i=0; $i<count($aUsers); $i++)
+	  {	  	
+	  	$oGroup->addUserToGroup($_POST['GRP_UID'], $aUsers[$i]);
+	  }	
+	break;
 
 	case 'ofToAssignUser':
 	  G::LoadClass('groups');
