@@ -53,10 +53,10 @@ $_SESSION['_DBArray'] = $_DBArray;
   $G_MAIN_MENU            = 'processmaker';
   $G_ID_MENU_SELECTED     = 'CASES';
   $G_PUBLISH = new Publisher;
-  $G_PUBLISH->AddContent( 'propeltable', 'paged-table', 'cases/casesDemo', $c );
+//  $G_PUBLISH->AddContent( 'propeltable', 'paged-table', 'cases/casesDemo', $c );
 	//$G_PUBLISH->AddContent('smarty', 'cases/casesDemo', '', '', $Fields);
-  G::RenderPage( "publish" );
-die;
+//  G::RenderPage( "publish" );
+//die;
 
 /* Includes */
 G::LoadClass('pmScript');
@@ -132,8 +132,8 @@ $Fields['CANT_DELAYS'] = count($aDelays);
   $G_MAIN_MENU            = 'processmaker';
   $G_ID_MENU_SELECTED     = 'CASES';
   $G_PUBLISH = new Publisher;
-  $G_PUBLISH->AddContent( 'propeltable', 'paged-table', 'cases/casesDemo', $c );
-	//$G_PUBLISH->AddContent('smarty', 'cases/casesDemo', '', '', $Fields);
+  //$G_PUBLISH->AddContent( 'propeltable', 'paged-table', 'cases/casesDemo', $c );
+	$G_PUBLISH->AddContent('smarty', 'cases/casesDemo', '', '', $Fields);
   G::RenderPage( "publish" );
 
 }

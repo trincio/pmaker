@@ -2,7 +2,7 @@
 /*** enable display_error On to caught even fatal errors ***/
 ini_set('display_errors','On');
 ini_set('error_reporting', E_ALL  );
-//ini_set('memory_limit', '30M');
+ini_set('memory_limit', '80M');
 
 $memAcum = 0;
 function logMemory ($text=''){
@@ -395,8 +395,12 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
   $oPluginRegistry->setupPlugins(); //get and setup enabled plugins
 
     //*********jump to php file in methods directory *************
-    if ( $oPluginRegistry->isRegisteredFolder( SYS_COLLECTION ) )
+    $collectionPlugin = '';
+    if ( $oPluginRegistry->isRegisteredFolder( SYS_COLLECTION ) ) {
       $phpFile = PATH_PLUGINS . SYS_COLLECTION . PATH_SEP . SYS_TARGET.'.php';
+      $targetPlugin = explode( '/', SYS_TARGET );
+      $collectionPlugin = $targetPlugin[0];
+    }
     else
       $phpFile = G::ExpandPath('methods') . SYS_COLLECTION . PATH_SEP . SYS_TARGET.'.php';
 
@@ -450,7 +454,8 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
         //This sentence is used when you lost the Session
         if ( SYS_TARGET != 'authentication' and  SYS_TARGET != 'login'
         and  SYS_TARGET != 'dbInfo'         and  SYS_TARGET != 'sysLoginVerify' and SYS_TARGET != 'processes_Ajax'
-        and  SYS_TARGET != 'updateTranslation'  and  SYS_COLLECTION != 'services' and SYS_COLLECTION != 'tracker'
+        and  SYS_TARGET != 'updateTranslation'  
+        and  SYS_COLLECTION != 'services' and SYS_COLLECTION != 'tracker' and $collectionPlugin != 'services'
         and $bWE != true and SYS_TARGET != 'defaultAjaxDynaform' and SYS_TARGET != 'cases_ShowDocument'){
           header ("location: ".SYS_URI."login/login.php");
           die();

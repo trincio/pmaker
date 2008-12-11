@@ -149,8 +149,6 @@ class Groups
         }
     }
 
-    //que que de comentado que aqui estaba y me falta fachas huevadas por hacer, en si no tanto
-    //vale que solo es el puo query para enlazar las 3 tablas en cuestion y posteriormente su opcion para eliminar digamos y es todo!
 	function getUserGroups($sUserUID)
     {
         try {

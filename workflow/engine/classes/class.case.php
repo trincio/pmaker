@@ -1650,7 +1650,7 @@ class Cases
     *  @Description: This method set all cases with the APP_DISABLE_ACTION_DATE for today
 	*/
 
-    function ThrowUnpauseDaemon()
+  function ThrowUnpauseDaemon()
 	{
 		$today = date('Y-m-d');
 		$c = new Criteria('workflow');
@@ -2104,6 +2104,7 @@ class Cases
 
     function reassignCase($sApplicationUID, $iDelegation, $sUserUID, $newUserUID, $sType = 'REASSIGN')
     {
+    	try {
         $this->CloseCurrentDelegation($sApplicationUID, $iDelegation);
         $oAppDelegation = new AppDelegation();
         $aFieldsDel = $oAppDelegation->Load($sApplicationUID, $iDelegation);
@@ -2121,6 +2122,7 @@ class Cases
         $oAppDelegation->update($aData);
         $oAppThread = new AppThread();
         $oAppThread->update(array('APP_UID' => $sApplicationUID, 'APP_THREAD_INDEX' => $aFieldsDel['DEL_THREAD'], 'DEL_INDEX' => $iIndex));
+
         //Save in APP_DELAY
         $oApplication = new Application();
         $aFields = $oApplication->Load($sApplicationUID);
@@ -2135,6 +2137,13 @@ class Cases
         $aData['APP_ENABLE_ACTION_DATE'] = date('Y-m-d H:i:s');
         $oAppDelay = new AppDelay();
         $oAppDelay->create($aData);
+        
+      	return true;
+        
+      }
+     catch (exception $oException) {
+            throw $oException;
+     }
     }
 
     function getAllStepsToRevise($APP_UID, $DEL_INDEX)
