@@ -238,14 +238,21 @@ class Xml_document extends Xml_Node
    * @author David S. Callizaya S. <davidsantos@colosa.com>
    * @access public
    * @parameter string filename
+   * @parameter string content
    * @return string
    */
-  function parseXmlFile($filename)
-  {
-  	if ( !file_exists ($filename) ) {
-  		throw ( new Exception ( "failed to open Xmlform File : No such file or directory in $filename " ) );
-  	}
-	  $data = implode( '', file( $filename) );
+  function parseXmlFile($filename,$content="")
+  {	  //$content is a new variable, if it has any value then use it instead of the file content.
+	  if($content==""){
+		if ( !file_exists ($filename) ) {
+			throw ( new Exception ( "failed to open Xmlform File : No such file or directory in $filename " ) );
+		}	
+		$data = implode( '', file( $filename) );
+	  }else{
+	      $data = $content;
+	  }
+	  
+	  
 	  $parser = xml_parser_create( 'utf-8' );
 	  xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
 	  xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 0);
