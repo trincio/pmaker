@@ -648,7 +648,7 @@ class wsBase
 	}
 
 	public function newCase($processId, $userId, $taskId, $variables) {
-		try {
+		try {  
 			$Fields = array();
 			if( is_array($variables) ) {
 				if( count($variables)>0 ){
@@ -705,16 +705,17 @@ class wsBase
 				$caseId = $case['APPLICATION'];
 				$caseNr = $case['CASE_NUMBER'];
 
-				$oldFields = $oCase->loadCase( $caseId );
+				$oldFields = $oCase->loadCase( $caseId ); 
 
 				$oldFields['APP_DATA'] = array_merge( $oldFields['APP_DATA'], $Fields);
 
-				$up_case = $oCase->updateCase($caseId, $oldFields);
+				$up_case = $oCase->updateCase($caseId, $oldFields); 
+				
 				//$result = new wsResponse (0, "Sucessful\ncase uid = $caseId \ncase number = $caseNr ");
 				$result = new wsResponse (0, "Sucessful");
 				$result->caseId = $caseId;
-				$result->caseNumber = $caseNr;
-
+				$result->caseNumber = $caseNr;        
+						
 				return $result;
 		}
 		catch ( Exception $e ) {
@@ -1150,7 +1151,7 @@ class wsBase
 	public function reassignCase( $sessionId, $caseId, $delIndex, $userIdSource, $userIdTarget ){		
 		try {			
 			if ( $userIdTarget == $userIdSource ) {
-		  	$result = new wsResponse (93, "Target and Origin user are the same" );
+		  	$result = new wsResponse (30, "Target and Origin user are the same" );
 	  	  return $result;
 	  	}
 
@@ -1164,7 +1165,7 @@ class wsBase
 			$aRow = $oDataset->getRow();
 		  if(!is_array($aRow))
 		  {
-		  		$result = new wsResponse (90, "Usuario no habilitado!!!" );
+		  		$result = new wsResponse (31, "Invalid origin user" );
 	  			return $result;
 		  }		  
 		  
@@ -1173,7 +1174,7 @@ class wsBase
 			$rows = $oCase->loadCase($caseId);
 			if(!is_array($aRow))
 			{
-		  		$result = new wsResponse (91, "caso no abierto...!" );
+		  		$result = new wsResponse (32, "This case is not open." );
 	  			return $result;
 		  }
 		  
@@ -1194,14 +1195,14 @@ class wsBase
 			$aRow = $oDataset->getRow();
 		  if(!is_array($aRow))
 		  {
-		  		$result = new wsResponse (92, "delindex no valido para este usuario!!!" );
+		  		$result = new wsResponse (33, "Invalid delindex for this user" );
 	  			return $result;
 		  }		
 		  $tasUid = $aRow['TAS_UID'];
 		  $derivation = new Derivation ();
 		  $userList = $derivation->getAllUsersFromAnyTask( $tasUid );
 		  if ( ! in_array ( $userIdTarget, $userList ) ) {
-		  	$result = new wsResponse (93, "The user $userIdTarget hasn't rights to execute the task $tasUid " );
+		  	$result = new wsResponse (34, "The userTarget has not rights to execute the task" );
 	  	  return $result;
 	  	}
 
@@ -1216,7 +1217,7 @@ class wsBase
 			$aRow = $oDataset->getRow();
 		  if(!is_array($aRow))
 		  {
-		  		$result = new wsResponse (93, "Usuario no existe!!!" );
+		  		$result = new wsResponse (35, "The user destination is invalid" );
 	  			return $result;
 		  }		  
 		  
@@ -1226,7 +1227,7 @@ class wsBase
 		  
 		  if(!$var)
 		  {
-		  		$result = new wsResponse (94, "No se pudo reassignar!!!" );
+		  		$result = new wsResponse (36, "The case could not be reassigned." );
 	  			return $result;
 		  }		  
 		  
