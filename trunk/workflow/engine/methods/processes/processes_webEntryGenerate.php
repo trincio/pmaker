@@ -40,8 +40,9 @@
 	  require_once 'classes/model/Dynaform.php';
 	  $oDynaform = new Dynaform();
 	  $aDynaform = $oDynaform->load($sDYNAFORM);
-	  $dynTitle  = str_replace(' ', '_', $aDynaform['DYN_TITLE']);
+	  $dynTitle  = str_replace(' ', '_', str_replace('/', '_', $aDynaform['DYN_TITLE']));
 	  $sContent  = "<?\n";
+	  $sContent .= "\$_SESSION['PROCESS'] = '" . $sPRO_UID . "';\n";
 	  $sContent .= "\$G_PUBLISH = new Publisher;\n";
 	  $sContent .= "\$G_PUBLISH->AddContent('dynaform', 'xmlform', '" . $sPRO_UID . '/' . $sDYNAFORM . "', '', array(), '" . $dynTitle . 'Post.php' . "');\n";
 	  $sContent .= "G::RenderPage('publish', 'blank');";
