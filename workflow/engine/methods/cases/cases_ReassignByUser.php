@@ -69,33 +69,36 @@ try {
       foreach ($aKeys as $sKey) {
         $oTemplatePower->assign($sKey, $aRow[$sKey]);
       }
-      $aUsers  = array($_GET['REASSIGN_USER']);
-      $aAux1   = $oTasks->getGroupsOfTask($aRow['TAS_UID'], 1);
-    	foreach ($aAux1 as $aGroup) {
-    		$aAux2 = $oGroups->getUsersOfGroup($aGroup['GRP_UID']);
-    	  foreach ($aAux2 as $aUser) {
+      $aUsers     = array($_GET['REASSIGN_USER']);
+      $aUsersData = array();
+      $aAux1      = $oTasks->getGroupsOfTask($aRow['TAS_UID'], 1);
+      foreach ($aAux1 as $aGroup) {
+    	$aAux2 = $oGroups->getUsersOfGroup($aGroup['GRP_UID']);
+    	foreach ($aAux2 as $aUser) {
           if (!in_array($aUser['USR_UID'], $aUsers)) {
             $aUsers[] = $aUser['USR_UID'];
             $aData    = $oUser->load($aUser['USR_UID']);
-            $oTemplatePower->newBlock('users');
-            $oTemplatePower->assign('USR_UID', $aUser['USR_UID']);
-            $oTemplatePower->assign('USR_FULLNAME', $aData['USR_FIRSTNAME'] . ' ' . $aData['USR_LASTNAME'] . ' (' . $aData['USR_USERNAME'] . ')');
+            $aUsersData[$aData['USR_FIRSTNAME'] . ' ' . $aData['USR_LASTNAME'] . ' (' . $aData['USR_USERNAME'] . ')'] = $aData['USR_FIRSTNAME'] . ' ' . $aData['USR_LASTNAME'] . ' (' . $aData['USR_USERNAME'] . ')';
           }
-    	  }
-    	}
-    	$aAux1  = $oTasks->getUsersOfTask($aRow['TAS_UID'], 1);
-    	foreach ($aAux1 as $aUser) {
+        }
+      }
+     $aAux1  = $oTasks->getUsersOfTask($aRow['TAS_UID'], 1);
+      foreach ($aAux1 as $aUser) {
         if (!in_array($aUser['USR_UID'], $aUsers)) {
           $aUsers[] = $aUser['USR_UID'];
           $aData    = $oUser->load($aUser['USR_UID']);
-          $oTemplatePower->newBlock('users');
-          $oTemplatePower->assign('USR_UID', $aUser['USR_UID']);
-          $oTemplatePower->assign('USR_FULLNAME', $aData['USR_FIRSTNAME'] . ' ' . $aData['USR_LASTNAME'] . ' (' . $aData['USR_USERNAME'] . ')');
+          $aUsersData[$aData['USR_FIRSTNAME'] . ' ' . $aData['USR_LASTNAME'] . ' (' . $aData['USR_USERNAME'] . ')'] = $aData['USR_FIRSTNAME'] . ' ' . $aData['USR_LASTNAME'] . ' (' . $aData['USR_USERNAME'] . ')';
         }
-    	}
-    	$oTemplatePower->gotoBlock('cases');
-    	$oTemplatePower->assign('ID_STATUS', G::LoadTranslation('ID_TO_DO'));
-    	$oTemplatePower->assign('ID_NO_REASSIGN', G::LoadTranslation('ID_NO_REASSIGN'));
+      }
+      ksort($aUsersData);
+      foreach ($aUsersData as $sKey => $sValue) {
+        $oTemplatePower->newBlock('users');
+        $oTemplatePower->assign('USR_UID', $aData['USR_UID']);
+        $oTemplatePower->assign('USR_FULLNAME', $sValue);
+      }
+      $oTemplatePower->gotoBlock('cases');
+      $oTemplatePower->assign('ID_STATUS', G::LoadTranslation('ID_TO_DO'));
+      $oTemplatePower->assign('ID_NO_REASSIGN', G::LoadTranslation('ID_NO_REASSIGN'));
       $oDataset->next();
     }
     $oDataset = ApplicationPeer::doSelectRS($oCriteriaDraft);
@@ -107,33 +110,36 @@ try {
       foreach ($aKeys as $sKey) {
         $oTemplatePower->assign($sKey, $aRow[$sKey]);
       }
-      $aUsers  = array($_GET['REASSIGN_USER']);
-      $aAux1   = $oTasks->getGroupsOfTask($aRow['TAS_UID'], 1);
-    	foreach ($aAux1 as $aGroup) {
-    		$aAux2 = $oGroups->getUsersOfGroup($aGroup['GRP_UID']);
-    	  foreach ($aAux2 as $aUser) {
+      $aUsers     = array($_GET['REASSIGN_USER']);
+      $aUsersData = array();
+      $aAux1      = $oTasks->getGroupsOfTask($aRow['TAS_UID'], 1);
+      foreach ($aAux1 as $aGroup) {
+        $aAux2 = $oGroups->getUsersOfGroup($aGroup['GRP_UID']);
+        foreach ($aAux2 as $aUser) {
           if (!in_array($aUser['USR_UID'], $aUsers)) {
             $aUsers[] = $aUser['USR_UID'];
             $aData    = $oUser->load($aUser['USR_UID']);
-            $oTemplatePower->newBlock('users');
-            $oTemplatePower->assign('USR_UID', $aUser['USR_UID']);
-            $oTemplatePower->assign('USR_FULLNAME', $aData['USR_FIRSTNAME'] . ' ' . $aData['USR_LASTNAME'] . ' (' . $aData['USR_USERNAME'] . ')');
+            $aUsersData[$aData['USR_FIRSTNAME'] . ' ' . $aData['USR_LASTNAME'] . ' (' . $aData['USR_USERNAME'] . ')'] = $aData['USR_FIRSTNAME'] . ' ' . $aData['USR_LASTNAME'] . ' (' . $aData['USR_USERNAME'] . ')';
           }
-    	  }
-    	}
-    	$aAux1  = $oTasks->getUsersOfTask($aRow['TAS_UID'], 1);
-    	foreach ($aAux1 as $aUser) {
+        }
+      }
+      $aAux1  = $oTasks->getUsersOfTask($aRow['TAS_UID'], 1);
+      foreach ($aAux1 as $aUser) {
         if (!in_array($aUser['USR_UID'], $aUsers)) {
           $aUsers[] = $aUser['USR_UID'];
           $aData    = $oUser->load($aUser['USR_UID']);
-          $oTemplatePower->newBlock('users');
-          $oTemplatePower->assign('USR_UID', $aUser['USR_UID']);
-          $oTemplatePower->assign('USR_FULLNAME', $aData['USR_FIRSTNAME'] . ' ' . $aData['USR_LASTNAME'] . ' (' . $aData['USR_USERNAME'] . ')');
+          $aUsersData[$aData['USR_FIRSTNAME'] . ' ' . $aData['USR_LASTNAME'] . ' (' . $aData['USR_USERNAME'] . ')'] = $aData['USR_FIRSTNAME'] . ' ' . $aData['USR_LASTNAME'] . ' (' . $aData['USR_USERNAME'] . ')';
         }
-    	}
-    	$oTemplatePower->gotoBlock('cases');
-    	$oTemplatePower->assign('ID_STATUS', G::LoadTranslation('ID_DRAFT'));
-    	$oTemplatePower->assign('ID_NO_REASSIGN', G::LoadTranslation('ID_NO_REASSIGN'));
+      }
+      ksort($aUsersData);
+      foreach ($aUsersData as $sKey => $sValue) {
+        $oTemplatePower->newBlock('users');
+        $oTemplatePower->assign('USR_UID', $aData['USR_UID']);
+        $oTemplatePower->assign('USR_FULLNAME', $sValue);
+      }
+      $oTemplatePower->gotoBlock('cases');
+      $oTemplatePower->assign('ID_STATUS', G::LoadTranslation('ID_DRAFT'));
+      $oTemplatePower->assign('ID_NO_REASSIGN', G::LoadTranslation('ID_NO_REASSIGN'));
       $oDataset->next();
     }
     $oTemplatePower->gotoBlock('_ROOT');

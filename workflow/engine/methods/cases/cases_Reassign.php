@@ -67,7 +67,8 @@ $name    = '';
 		  	  	if($aRow['USR_UID']!=$value2['USR_UID'])
 					   {
 					 		 if(!in_array($value2['USR_UID'], $aUsrUid))
-					 		 {		$aUsr[]=$oUser->load($value2['USR_UID']);
+					 		 {		$aAux   = $oUser->load($value2['USR_UID']);
+					 		        $aUsr[$aAux['USR_FIRSTNAME'] . ' ' . $aAux['USR_LASTNAME']] = $aAux;
 					 		 		$aUsrUid[]=$value2['USR_UID'];
 					 		 }
 					   }
@@ -79,10 +80,10 @@ $name    = '';
 			{
 					if($aRow['USR_UID']!=$value['USR_UID'])
 					 {	 if(!in_array($value['USR_UID'], $aUsrUid))
-					 		 		$aUsr[]=$value;
+					 		 		$aUsr[$value['USR_FIRSTNAME'] . ' ' . $value['USR_LASTNAME']]=$value;
 					 }
 			}
-
+            ksort($aUsr);
 			//$users='';
 			//$users='<select name="USERS"><option value="">Seleccione</option>';
 			foreach($aUsr as $key => $value)
