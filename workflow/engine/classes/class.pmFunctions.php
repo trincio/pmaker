@@ -466,10 +466,10 @@ function getEmailConfiguration () {
   return $aFields;
 }
 
-function PMFSendMessage($caseId, $sFrom, $sTo, $sCc, $sBcc, $sSubject, $sBody) {
+function PMFSendMessage($caseId, $sFrom, $sTo, $sCc, $sBcc, $sSubject, $sTemplate, $aFields = array()) {
 	G::LoadClass('wsBase');
 	$ws = new wsBase ();
-	$result = $ws->sendMessage($caseId, $sFrom, $sTo, $sCc, $sBcc, $sSubject, $sBody);
+	$result = $ws->sendMessage($caseId, $sFrom, $sTo, $sCc, $sBcc, $sSubject, $sTemplate, $aFields);
 
 	if ( $result->status_code == 0){
 		return 1;
@@ -780,7 +780,7 @@ function generateCode ( $iDigits = 4, $sType = 'NUMERIC' ) {
 }
 
 
-function setCaseTrackerCode($sApplicationUID, $sCode, $sPIN = '') {    
+function setCaseTrackerCode($sApplicationUID, $sCode, $sPIN = '') {
   if ($sCode != '') {
     G::LoadClass('case');
     $oCase   = new Cases();
@@ -789,7 +789,7 @@ function setCaseTrackerCode($sApplicationUID, $sCode, $sPIN = '') {
     if ($sPIN != '') {
       $aFields['APP_DATA']['PIN'] = $sPIN;
       $aFields['APP_PIN']         = md5($sPIN);
-    }        
+    }
     $oCase->updateCase($sApplicationUID, $aFields);
     return 1;
   }
