@@ -176,9 +176,11 @@ class Derivation
     while ( is_array ( $row ) ) {
       if ( $row['TU_RELATION'] == '2' ) {
         $cGrp = new Criteria ('workflow');
-        $cGrp->add(GroupwfPeer::GRP_STATUS,  'ACTIVE' );
-        $cGrp->add ( GroupUserPeer::GRP_UID, $row['USR_UID']);
+        $cGrp->add(GroupwfPeer::GRP_STATUS,  'ACTIVE');
+        $cGrp->add(GroupUserPeer::GRP_UID, $row['USR_UID']);
         $cGrp->addJoin(GroupUserPeer::GRP_UID, GroupwfPeer::GRP_UID, Criteria::LEFT_JOIN);
+        $cGrp->addJoin(GroupUserPeer::USR_UID, UsersPeer::USR_UID, Criteria::LEFT_JOIN);
+        $cGrp->add(UsersPeer::USR_STATUS, 'ACTIVE');
         $rsGrp = GroupUserPeer::DoSelectRs ($cGrp);
         $rsGrp->setFetchmode (ResultSet::FETCHMODE_ASSOC);
         $rsGrp->next();
