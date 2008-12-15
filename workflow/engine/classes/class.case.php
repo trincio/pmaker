@@ -789,11 +789,11 @@ class Cases
     * @param string $iAppThreadIndex
     * @return
     */
-    function newAppDelegation($sProUid, $sAppUid, $sTasUid, $sUsrUid, $sPrevious, $sPriority, $sDelType, $iAppThreadIndex = 1)
+    function newAppDelegation($sProUid, $sAppUid, $sTasUid, $sUsrUid, $sPrevious, $iPriority, $sDelType, $iAppThreadIndex = 1)
     {
         try {
             $appDel = new AppDelegation();
-            $delIndex = $appDel->createAppDelegation($sProUid, $sAppUid, $sTasUid, $sUsrUid, $iAppThreadIndex);
+            $delIndex = $appDel->createAppDelegation($sProUid, $sAppUid, $sTasUid, $sUsrUid, $iAppThreadIndex, $iPriority);
             $aData = array();
             $aData['APP_UID'] = $sAppUid;
             $aData['DEL_INDEX'] = $delIndex;
@@ -1281,6 +1281,12 @@ class Cases
         //Note: Depreciated, delete in the future
         G::LoadClass('pmScript');
         $oPMScript = new PMScript();
+        $oApplication = new Application();
+        $aFields = $oApplication->load($sAppUid);
+        if (!is_array($aFields['APP_DATA'])) {
+            $aFields['APP_DATA'] = G::array_merges(G::getSystemConstants(), unserialize($aFields['APP_DATA']));
+        }
+        $oPMScript->setFields($aFields['APP_DATA']);
 
         try {
             //get the current Delegation, and TaskUID
@@ -1650,7 +1656,7 @@ class Cases
     *  @Description: This method set all cases with the APP_DISABLE_ACTION_DATE for today
 	*/
 
-  function ThrowUnpauseDaemon()
+    function ThrowUnpauseDaemon()
 	{
 		$today = date('Y-m-d');
 		$c = new Criteria('workflow');
@@ -1935,18 +1941,6 @@ class Cases
         $c->add(ApplicationPeer::PRO_UID, $PRO_UID);
         return $c;
     }
-    
-    function getCriteriaUsersCases($status, $USR_UID)
-    {
-        $oCriteria = new Criteria('workflow');
-
-        $oCriteria->addJoin(ApplicationPeer::APP_UID, AppDelegationPeer::APP_UID, Criteria::LEFT_JOIN);  
-			  $oCriteria->add(ApplicationPeer::APP_STATUS, $status);
-			  $oCriteria->add(AppDelegationPeer::USR_UID, $USR_UID);  
-			  $oCriteria->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);  
-  
-        return $oCriteria;
-    }
 
     function pauseCase($sApplicationUID, $iDelegation, $sUserUID, $sUnpauseDate = null)
     {
@@ -2104,7 +2098,6 @@ class Cases
 
     function reassignCase($sApplicationUID, $iDelegation, $sUserUID, $newUserUID, $sType = 'REASSIGN')
     {
-    	try {
         $this->CloseCurrentDelegation($sApplicationUID, $iDelegation);
         $oAppDelegation = new AppDelegation();
         $aFieldsDel = $oAppDelegation->Load($sApplicationUID, $iDelegation);
@@ -2122,7 +2115,6 @@ class Cases
         $oAppDelegation->update($aData);
         $oAppThread = new AppThread();
         $oAppThread->update(array('APP_UID' => $sApplicationUID, 'APP_THREAD_INDEX' => $aFieldsDel['DEL_THREAD'], 'DEL_INDEX' => $iIndex));
-
         //Save in APP_DELAY
         $oApplication = new Application();
         $aFields = $oApplication->Load($sApplicationUID);
@@ -2137,13 +2129,6 @@ class Cases
         $aData['APP_ENABLE_ACTION_DATE'] = date('Y-m-d H:i:s');
         $oAppDelay = new AppDelay();
         $oAppDelay->create($aData);
-        
-      	return true;
-        
-      }
-     catch (exception $oException) {
-            throw $oException;
-     }
     }
 
     function getAllStepsToRevise($APP_UID, $DEL_INDEX)
