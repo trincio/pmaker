@@ -41,7 +41,7 @@ G::LoadClass("dates");
  */
 class AppDelegation extends BaseAppDelegation {
 
-  function createAppDelegation ($sProUid, $sAppUid, $sTasUid, $sUsrUid, $sAppThread ) {
+  function createAppDelegation ($sProUid, $sAppUid, $sTasUid, $sUsrUid, $sAppThread, $iPriority = 3 ) {
     if (!isset($sProUid) || strlen($sProUid) == 0 ) {
       throw ( new Exception ( 'Column "PRO_UID" cannot be null.' ) );
     }
@@ -77,7 +77,7 @@ class AppDelegation extends BaseAppDelegation {
     $this->setDelPrevious     ( 0 );
     $this->setUsrUid          ( $sUsrUid );
     $this->setDelType         ( 'NORMAL' );
-    $this->setDelPriority     ( '3' );
+    $this->setDelPriority     ( ($iPriority != '' ? $iPriority : '3') );
     $this->setDelThread       ( $sAppThread );
     $this->setDelThreadStatus ( 'OPEN' );
     $this->setDelDelegateDate ( 'now' );
