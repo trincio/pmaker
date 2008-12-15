@@ -214,14 +214,14 @@
             $oPHPMailer->Username = $this->config['MESS_ACCOUNT'];
             $oPHPMailer->Password = $this->config['MESS_PASSWORD'];
             $oPHPMailer->From     = $this->fileData['from_email'];
-            $oPHPMailer->FromName = $this->fileData['from_name'];
+            $oPHPMailer->FromName = utf8_decode($this->fileData['from_name']);
             $oPHPMailer->Subject  = $this->fileData['subject'];
-            $oPHPMailer->Body     = $this->fileData['body'];
+            $oPHPMailer->Body     = utf8_decode($this->fileData['body']);
             if (strpos($this->fileData['to'], '<') !== false) {
               $aTo     = explode('<', $this->fileData['to']);
               $sToName = trim($aTo[0]);
               $sTo     = trim(str_replace('>', '', $aTo[1]));
-              $oPHPMailer->AddAddress($sTo, $sToName);
+              $oPHPMailer->AddAddress($sTo, utf8_decode($sToName));
             }
             else {
               $oPHPMailer->AddAddress($this->fileData['to']);
