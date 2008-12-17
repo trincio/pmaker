@@ -102,6 +102,8 @@
   $allWebservices[] = 'UserList';
   $allWebservices[] = 'TaskList';
   $allWebservices[] = 'TaskCase';
+  $allWebservices[] = 'ReassignCase';
+  $allWebservices[] = 'UploadFiles';
   foreach($allWebservices as $ws) {
     $ID_TEST     = G::LoadTranslation('ID_TEST');
     $UID         = htmlentities($ws);
