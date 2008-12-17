@@ -1276,6 +1276,8 @@ function run_propel_build_crud ( $task, $args)
   // the environment for poedit always is Development
   define ( 'G_ENVIRONMENT', G_DEV_ENV );
 
+ printf("Arguments: %s\n", pakeColor::colorize( './gulliver propel-build-crud <class-name> <table-name> <plugin-name> ', 'INFO'));
+
   //the class filename in the first argument
   if ( !isset($args[0]) ) {
     printf("Error: %s\n", pakeColor::colorize( 'you must specify a valid classname ', 'ERROR'));
@@ -1296,9 +1298,24 @@ function run_propel_build_crud ( $task, $args)
    
   //second parameter is the table name, by default is the same classname in uppercase.
   if ( isset( $args[1] )) $tableName = $args[1] ;
+ 
+  $pluginName = '';
+  if ( isset( $args[2] )) $pluginName = $args[2] ;
 
   //try to find the class in classes directory
   $classFilename = PATH_CORE . 'classes' . PATH_SEP . 'model' . PATH_SEP . $args[0] . '.php';
+
+  //try to find in the plugis directory, assuming there are a class in the plugin 
+  if ( $pluginName != '' ) {
+    $classFilename = PATH_PLUGINS . $pluginName . PATH_SEP . 'classes' . PATH_SEP . 'model' . PATH_SEP . $args[0] . '.php';
+    set_include_path(
+      PATH_PLUGINS . $pluginName . PATH_SEPARATOR .
+      get_include_path()
+    );
+    printf("using plugin : %s\n", pakeColor::colorize( $pluginName, 'ERROR'));
+  }
+  
+  
   if ( file_exists ( $classFilename ) )  
     printf("class found in %s \n", pakeColor::colorize( $classFilename, 'INFO'));
   else {
@@ -1317,6 +1334,11 @@ function run_propel_build_crud ( $task, $args)
 	define ( 'PATH_SHARED', PATH_SEP . 'shared' . PATH_SEP . $projectName . '_data' . PATH_SEP );
 
   $dbFile = PATH_SHARED . 'sites' . PATH_SEP . $projectName . PATH_SEP . 'db.php';
+  if ( !file_exists( $dbFile ) ) {
+    $dbFile = PATH_GULLIVER_HOME . 'bin' . PATH_SEP.'tasks'. PATH_SEP.'templates'. PATH_SEP . 'db.php.tpl';
+  }
+  printf ( "searching db file in : %s \n", pakeColor::colorize ( $dbFile, 'INFO' ));
+  
   $G_ENVIRONMENTS['DEVELOPMENT']['dbfile'] = $dbFile;
   Propel::init(  PATH_CORE . "config/databases.php");  
 
@@ -1324,32 +1346,48 @@ function run_propel_build_crud ( $task, $args)
   $connectionDSN = $configuration['datasources']['workflow']['connection'];
   printf("using DSN Connection %s \n", pakeColor::colorize( $connectionDSN, 'INFO'));
 
-  G::mk_dir (PATH_CORE . 'xmlform' . PATH_SEP . $phpClass );
-  G::mk_dir (PATH_CORE . 'methods' . PATH_SEP . $phpClass );
+  if ( $pluginName != '' ) {
+    $xmlformPath = PATH_PLUGINS . $pluginName . PATH_SEP;
+    $methodsPath = PATH_PLUGINS . $pluginName . PATH_SEP . $phpClass . PATH_SEP;
+    $corePath  = PATH_PLUGINS . $pluginName . PATH_SEP;
+  }
+  else {
+    $xmlformPath = PATH_CORE . 'xmlform' . PATH_SEP . $phpClass . PATH_SEP;
+    $methodsPath = PATH_CORE . 'methods' . PATH_SEP . $phpClass . PATH_SEP;
+    $corePath = PATH_CORE;
+  }
+  G::mk_dir ($xmlformPath );
+  G::mk_dir ($methodsPath );
 
   $fields['className'] = $class;
   $fields['phpClassName'] = $phpClass;
   $fields['tableName'] = $tableName;
   $fields['projectName'] = $projectName;
-  create_file_from_tpl ( 'pluginMenu',  PATH_CORE . 'menus'. PATH_SEP . $phpClass. ".php", $fields );
 
-  if ( !file_exists ( PATH_CORE . 'menus'. PATH_SEP . "welcome.php") ) {
-  	$fp = fopen ( PATH_CORE . 'menus'. PATH_SEP . "welcome.php", "w" );
-  	fwrite ( $fp, "<?php\n  " );
-  	fclose ( $fp );
+  //1. MENU
+  if ( $pluginName != '' ) {
+    create_file_from_tpl ( 'pluginMenu',  $corePath. $phpClass. ".php", $fields );
   }
-  $content = file_get_contents ( PATH_CORE . 'menus'. PATH_SEP . "welcome.php" );
+  else {
+    create_file_from_tpl ( 'pluginMenu',  PATH_CORE . 'menus'. PATH_SEP . $phpClass. ".php", $fields );
+  }
   
-  if ( strpos ( $content, $phpClass . ".php" )  == false ) {
-	  $fp = fopen ( PATH_CORE . 'menus'. PATH_SEP . "welcome.php", "a" );
-	  fwrite ( $fp, "  require_once ( '" . $phpClass . ".php' );\n" );
-	  fclose ( $fp );
-	}
-  //menu  
-  //savePluginFile ( $class . PATH_SEP . 'menu' . $class . '.php', 'pluginMenu', $class, $tableName );
+  //2. si existe menu welcome, añade la opcion
+  if ( $pluginName == '' ) {
+    if ( !file_exists ( PATH_CORE . 'menus'. PATH_SEP . "welcome.php") ) {
+    	$fp = fopen ( PATH_CORE . 'menus'. PATH_SEP . "welcome.php", "w" );
+    	fwrite ( $fp, "<?php\n  " );
+    	fclose ( $fp );
+    }
+    $content = file_get_contents ( PATH_CORE . 'menus'. PATH_SEP . "welcome.php" );
+    
+    if ( strpos ( $content, $phpClass . ".php" )  == false ) {
+  	  $fp = fopen ( PATH_CORE . 'menus'. PATH_SEP . "welcome.php", "a" );
+  	  fwrite ( $fp, "  require_once ( '" . $phpClass . ".php' );\n" );
+  	  fclose ( $fp );
+  	}
+  }
 
-  //default list
-  //savePluginFile ( $class . PATH_SEP . $class . 'List.php', 'pluginList', $class, $tableName );
 
 
   //parse the schema file in order to get Table definition
@@ -1414,10 +1452,10 @@ function run_propel_build_crud ( $task, $args)
   $fields['phpClassName'] = $phpClass;
   $fields['projectName'] = $projectName;
   $fields['firstKey'] = $fields['keys'][0]['name'];
-  create_file_from_tpl ( 'pluginXmlform',  PATH_CORE . 'xmlform'. PATH_SEP . $phpClass. PATH_SEP . "$phpClass.xml", $fields );
-  create_file_from_tpl ( 'pluginXmlformEdit',   PATH_CORE . 'xmlform'. PATH_SEP . $phpClass. PATH_SEP . $phpClass."Edit.xml", $fields );
-  create_file_from_tpl ( 'pluginXmlformDelete', PATH_CORE . 'xmlform'. PATH_SEP . $phpClass. PATH_SEP . $phpClass."Delete.xml", $fields );
-  create_file_from_tpl ( 'pluginList',  PATH_CORE . 'methods'. PATH_SEP . $phpClass. PATH_SEP . $phpClass."List.php", $fields );
+  create_file_from_tpl ( 'pluginXmlform',       $xmlformPath . "$phpClass.xml", $fields );
+  create_file_from_tpl ( 'pluginXmlformEdit',   $xmlformPath . $phpClass."Edit.xml", $fields );
+  create_file_from_tpl ( 'pluginXmlformDelete', $xmlformPath . $phpClass."Delete.xml", $fields );
+  create_file_from_tpl ( 'pluginList',          $xmlformPath . $phpClass."List.php", $fields );
 
   //xmlform for list
   //load the $fields array with fields data for PagedTable xml.
@@ -1462,8 +1500,8 @@ function run_propel_build_crud ( $task, $args)
   $fields['phpClassName'] = $phpClass;
   $fields['projectName'] = $projectName;
   $fields['tableName'] = $tableName;
-  create_file_from_tpl ( 'pluginXmlformList',  PATH_CORE . 'xmlform'. PATH_SEP . $phpClass. PATH_SEP . $phpClass."List.xml", $fields );
-  create_file_from_tpl ( 'pluginXmlformOptions',PATH_CORE. 'xmlform'. PATH_SEP . $phpClass. PATH_SEP . $phpClass."Options.xml", $fields );
+  create_file_from_tpl ( 'pluginXmlformList',   $xmlformPath . $phpClass."List.xml", $fields );
+  create_file_from_tpl ( 'pluginXmlformOptions',$xmlformPath . $phpClass."Options.xml", $fields );
 
   //default edit
   $fields= array();$index =0;
@@ -1495,11 +1533,11 @@ function run_propel_build_crud ( $task, $args)
   $fields['projectName'] = $projectName;
   //savePluginFile ( $class . PATH_SEP . $class . 'Edit.php', 'pluginEdit', $class, $tableName, $fields );
   //savePluginFile ( $class . PATH_SEP . $class . 'Save.php', 'pluginSave', $class, $tableName, $fields );
-  create_file_from_tpl ( 'pluginEdit',      PATH_CORE . 'methods'. PATH_SEP . $phpClass. PATH_SEP . $phpClass."Edit.php", $fields );
-  create_file_from_tpl ( 'pluginSave',      PATH_CORE . 'methods'. PATH_SEP . $phpClass. PATH_SEP . $phpClass."Save.php", $fields );
-  create_file_from_tpl ( 'pluginNew',       PATH_CORE . 'methods'. PATH_SEP . $phpClass. PATH_SEP . $phpClass."New.php", $fields );
-  create_file_from_tpl ( 'pluginDelete',    PATH_CORE . 'methods'. PATH_SEP . $phpClass. PATH_SEP . $phpClass."Delete.php", $fields );
-  create_file_from_tpl ( 'pluginDeleteExec',PATH_CORE . 'methods'. PATH_SEP . $phpClass. PATH_SEP . $phpClass."DeleteExec.php", $fields );
+  create_file_from_tpl ( 'pluginEdit',      $methodsPath . $phpClass."Edit.php", $fields );
+  create_file_from_tpl ( 'pluginSave',      $methodsPath . $phpClass."Save.php", $fields );
+  create_file_from_tpl ( 'pluginNew',       $methodsPath . $phpClass."New.php", $fields );
+  create_file_from_tpl ( 'pluginDelete',    $methodsPath . $phpClass."Delete.php", $fields );
+  create_file_from_tpl ( 'pluginDeleteExec',$methodsPath . $phpClass."DeleteExec.php", $fields );
 
   exit (0);
 }
