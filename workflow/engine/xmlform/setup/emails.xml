@@ -3,74 +3,72 @@
 	
 <THETITLE type="title" group="1">
   <en>Configuration</en>
-</THETITLE>
+<es><![CDATA[Configuración]]></es></THETITLE>
 
 <MESS_ENABLED type="checkbox" value="1">
   <en>Enable Email Notifications</en>
-</MESS_ENABLED>
+<es><![CDATA[Habilitar notificación del Correo Eletrónico]]></es></MESS_ENABLED>
 
-<MESS_ENGINE type="dropdown">
-  <en>Email Engine
-    <option name="MAIL">Mail (PHP)</option>
-    <option name="PHPMAILER">SMTP (PHPMailer)</option>
-    <option name="OPENMAIL">SMTP (OpenMail)</option>
+<MESS_ENGINE type="dropdown" sqlconnection='dbarray'>
+  select * from mails
+  <en>Email Engine    
   </en>
-</MESS_ENGINE>
+<es><![CDATA[Motor Correo Electrónico]]></es></MESS_ENGINE>
 
 <MESS_SERVER type="text" size="35" maxlength="100" required="true">
   <en>Server</en>
-</MESS_SERVER>
+<es>Servidor</es></MESS_SERVER>
 
 <MESS_PORT type="text" size="5" maxlength="5" validate="Int">
   <en>Port</en>
-</MESS_PORT>
+<es>Puerto</es></MESS_PORT>
 
 <MESS_RAUTH type="checkbox" value="1">
 	<en>Require authentification</en>
-</MESS_RAUTH>
+<es><![CDATA[Autenticación Requerida]]></es></MESS_RAUTH>
 
 <MESS_ACCOUNT type="text" size="35" maxlength="25" validate="Email">
   <en>Account From</en>
-</MESS_ACCOUNT>
+<es>Cuenta</es></MESS_ACCOUNT>
 
 <MESS_PASSWORD type="password" size="35" maxlength="25">
   <en>Password</en>
-</MESS_PASSWORD>
+<es><![CDATA[Contraseña]]></es></MESS_PASSWORD>
 
 <MESS_TEST_MAIL type="checkbox" value="1">
 	<en>Send a test mail</en>
-</MESS_TEST_MAIL>
+<es>Envie un mail de prueba</es></MESS_TEST_MAIL>
 
 <MESS_TEST_MAIL_TO type="text" size="35" maxlength="100" required="true">
 	<en>Mail to</en>
-</MESS_TEST_MAIL_TO>
+<es>Enviar a</es></MESS_TEST_MAIL_TO>
 
 <MESS_BACKGROUND type="checkbox" value="1">
   <en>Run in the background</en>
-</MESS_BACKGROUND>
+<es>Ejecutar en segundo plano</es></MESS_BACKGROUND>
 
 <MESS_EXECUTE_EVERY type="text" size="5" maxlength="5" required="true" validate="Int" defaultValue="5">
   <en>Execute every (in minutes)</en>
-</MESS_EXECUTE_EVERY>
+<es>Ejecutar todo (en minutos)*</es></MESS_EXECUTE_EVERY>
 
 <MESS_SEND_MAX type="text" size="5" maxlength="5" required="true" validate="Int" defaultValue="50">
   <en>Maximun number of mails sended by attempt</en>
-</MESS_SEND_MAX>
+<es><![CDATA[Número máximo de envío de correo por intento]]></es></MESS_SEND_MAX>
 
 <MESS_TRY_SEND_INMEDIATLY type="checkbox" value="1">
   <en>Try send mails inmediatly</en>
-</MESS_TRY_SEND_INMEDIATLY>
+<es>Intentar enviar correos de inmediato</es></MESS_TRY_SEND_INMEDIATLY>
 
 <TEST type="button" onclick="javascript:testConnection();">
   <en>Test</en>
-</TEST>
+<es>Prueba</es></TEST>
 
 <SAVE_CHANGES type="button" onclick="javascript:verifyData(this.form);">
   <en>Save Changes</en>
-</SAVE_CHANGES>
+<es>Guardar Cambios</es></SAVE_CHANGES>
 
-<JS type="javascript">
-<![CDATA[
+<JS type="javascript"><![CDATA[
+
 
 /***we disable the save button***/
 getField('SAVE_CHANGES').disabled = true;
@@ -505,7 +503,7 @@ var closeTestPanel = function() {
 
 initSet();
 
-]]>
-</JS>
+
+]]></JS>
 
 </dynaForm>
