@@ -1,44 +1,30 @@
-<?xml version="1.0"?>
-<dynaForm
-  width="95%"
->
-<!--
-<title type="title" >
-  <en>Server Setup</en>
-</title>
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm width="95%">
 
-<WS_ENABLE_PHP5 type="yesno" size="30" maxlength="64">
-  <en>Enable PHP 5 SOAP services</en>
-</WS_ENABLE_PHP5>
-
-<WS_ENABLE_WSO2 type="yesno" >
-  <en>Enable WSO2 services</en>
-</WS_ENABLE_WSO2>
--->
-<title2 type="title" >
+<title2 type="title">
   <en>Client Setup</en>
-</title2>
+<es><![CDATA[Configuración del Cliente]]></es></title2>
 
-<WS_PROTOCOL type="dropdown" mode="edit" options="Array">
-  <en>Protocol<option name="http">http</option>
-  						<option name="https">https</option>
+<WS_PROTOCOL type="dropdown" mode="edit" options="Array" sqlconnection='dbarray'>
+  select * from protocol
+  <en>Protocol
   </en>
-</WS_PROTOCOL>
+<es>Protocolo</es></WS_PROTOCOL>
 
 <WS_HOST type="text" size="30" maxlength="64">
   <en>Server Host</en>
-</WS_HOST>
+<es>Host Servidor</es></WS_HOST>
 
 <WS_WORKSPACE type="text" size="30" maxlength="64">
   <en>Workspace</en>
-</WS_WORKSPACE>
+<es>Espacio de Trabajo</es></WS_WORKSPACE>
 
 <WS_PORT type="text" size="10" maxlength="64">
   <en>Port</en>
-</WS_PORT>
+<es>Puerto</es></WS_PORT>
 
-<button type="submit" >
+<button type="submit">
   <en>Save</en>
-</button> 
+<es>Guardar</es></button> 
 
 </dynaForm>

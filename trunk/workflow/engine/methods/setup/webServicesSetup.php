@@ -48,6 +48,13 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
     $aFields['WS_WORKSPACE'] = substr($aAux[1], 3);
   }
 
+$rows[] = array ( 'uid' => 'char', 'name' => 'char', 'age' => 'integer', 'balance' => 'float' );
+$rows[] = array ( 'uid' => 'http', 'name' => 'http'  );
+$rows[] = array ( 'uid' => 'https', 'name' => 'https' );
+
+$_DBArray['protocol'] = $rows;
+$_SESSION['_DBArray'] = $_DBArray;
+
   $G_PUBLISH = new Publisher();
   $G_PUBLISH->AddContent('xmlform', 'xmlform', 'setup/webServicesSetup', '', $aFields , 'webServicesSetupSave');
 
