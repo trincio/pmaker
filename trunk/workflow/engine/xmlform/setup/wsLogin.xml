@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dynaForm name="webservices" width="500" mode="edit" border="0" enableTemplate="0" height="105px" 
-  ajaxSubmit="true"  callback="callbackWebService">
+<dynaForm name="webservices" width="500" mode="edit" border="0" enableTemplate="0" height="105px" ajaxSubmit="true" callback="callbackWebService">
 
-<USER_ID type="text" size="32" maxlength="32"  >
+<USER_ID type="text" size="32" maxlength="32">
   <en>User ID</en>
-</USER_ID>
+<es>ID de Usuario</es></USER_ID>
 
-<PASSWORD type="password" size="32" maxlength="32" >
+<PASSWORD type="password" size="32" maxlength="32">
   <en>Password</en>
-</PASSWORD>
+<es><![CDATA[Contraseña]]></es></PASSWORD>
 
-<ACTION type="button" onclick="submitThisForm(this.form);" >
+<ACTION type="hidden">
+</ACTION> 
+
+<ACTIONB type="button" onclick="submitThisForm(this.form);">
   <en>Login</en>
-</ACTION>
+  <es>Login</es>
+</ACTIONB>
 
-<JS type="javascript" replacetags="1">
+<JS type="javascript" replacetags="1"><![CDATA[
 var submitThisForm = function(oForm)
 {
 	var oAux;
@@ -33,5 +36,5 @@ var submitThisForm = function(oForm)
 		ajax_post(oForm.action, oForm, 'POST');
 	}
 };
-</JS>
+]]></JS>
 </dynaForm>
