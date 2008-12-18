@@ -45,6 +45,11 @@ class FetcherUrlCurl extends Fetcher {
     curl_setopt($curl, CURLOPT_FOLLOWLOCATION, 1);
     curl_setopt($curl, CURLOPT_HEADER, 1);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+    
+    //WARNING: this would prevent curl from detecting a 'man in the middle' attack
+    //Added by JHL to avoid problems with SSL but....
+    curl_setopt ($curl, CURLOPT_SSL_VERIFYHOST, 0);
+    curl_setopt ($curl, CURLOPT_SSL_VERIFYPEER, 0); 
 
     $proxy = $this->get_proxy();
     if (!is_null($proxy)) {

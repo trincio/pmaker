@@ -610,10 +610,13 @@ class OutputDocument extends BaseOutputDocument {
          break;
       }
       copy($sPath . $sFilename . '.html', PATH_OUTPUT_FILE_DIRECTORY . $sFilename . '.html');
-      $status = $pipeline->process(($_SERVER['SERVER_PORT'] == '243' ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . '/files/' . $_SESSION['APPLICATION'] . '/outdocs/' . $sFilename . '.html', $g_media);
+      $status = $pipeline->process((  (isset($_SERVER['HTTPS']))&&($_SERVER['HTTPS']=='on') ? 'https://' : 'http://') . $_SERVER['HTTP_HOST'] . '/files/' . $_SESSION['APPLICATION'] . '/outdocs/' . $sFilename . '.html', $g_media);
+      
       copy(PATH_OUTPUT_FILE_DIRECTORY . $sFilename . '.pdf', $sPath . $sFilename . '.pdf');
       unlink(PATH_OUTPUT_FILE_DIRECTORY . $sFilename . '.pdf');
       unlink(PATH_OUTPUT_FILE_DIRECTORY . $sFilename . '.html');
+      
+      
   	  /* End - Create .pdf */
     }
     else
