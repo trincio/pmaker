@@ -24,7 +24,9 @@
  */
 G::LoadClass('case');
 $oCase = new Cases();
-$oCase->thisIsTheCurrentUser($_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['USER_LOGGED'], 'SHOW_MESSAGE');
+if ($RBAC->userCanAccess('PM_ALLCASES') < 0) {
+  $oCase->thisIsTheCurrentUser($_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['USER_LOGGED'], 'SHOW_MESSAGE');
+}
 
 if (($RBAC_Response = $RBAC->userCanAccess("PM_CASES")) != 1)
     return $RBAC_Response;

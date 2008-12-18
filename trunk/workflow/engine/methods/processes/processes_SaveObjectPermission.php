@@ -60,7 +60,7 @@ $oOP = new ObjectPermission();
 $aData = array('OP_UID'           => G::generateUniqueID(),
                'PRO_UID'          => $_POST['form']['PRO_UID'],
                'TAS_UID'          => $_POST['form']['TAS_UID'],
-               'USR_UID'          => $sUserGroup,
+               'USR_UID'          => (string)$sUserGroup,
                'OP_USER_RELATION' => $iRelation,
                'OP_TASK_SOURCE'   => $_POST['form']['OP_TASK_SOURCE'],
                'OP_PARTICIPATE'   => $_POST['form']['OP_PARTICIPATE'],

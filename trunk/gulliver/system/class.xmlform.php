@@ -2253,7 +2253,12 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText
 		}
 
 		if ( trim($value) == '' or $value == NULL) {
-			$value = date('Y-m-d');
+			if ($beforeDate != '') {
+				$value = $startDate;
+			}
+			else {
+			  $value = date('Y-m-d');
+			}
 		}
 
 		/*if(isset($this->defaultValue))

@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dynaForm
-  sqlConnection=""
-  rowsPerPage="20"
-  name="cases_AllOutputdocsList"
->
+<dynaForm sqlConnection="" rowsPerPage="20" name="cases_AllOutputdocsList">
 
 <DOC_UID type="hidden" showInTable="0"/>
 
@@ -13,13 +9,21 @@
 
 <CONFIRM type="hidden" showInTable="0"/>
 
-<TITLE type="text" colWidth="300" titleAlign="left" align="left">
+<TITLE type="text" colWidth="200" titleAlign="left" align="left">
   <en>Title</en>
-</TITLE>
+<es><![CDATA[Título]]></es></TITLE>
 
-<ORIGIN type="text" colWidth="300" titleAlign="left" align="left">
+<ORIGIN type="text" colWidth="200" titleAlign="left" align="left">
   <en>Origin Task</en>
-</ORIGIN>
+<es>Tarea Original</es></ORIGIN>
+
+<CREATED_BY type="text" colWidth="150" titleAlign="left" align="left">
+  <en>Created By</en>
+<es>Created By</es></CREATED_BY>
+
+<CREATE_DATE type="text" colWidth="100" titleAlign="left" align="left">
+  <en>Create Date</en>
+<es>Create Date</es></CREATE_DATE>
 
 <VIEW type="link" colWidth="25" value="@G::LoadTranslation(ID_VIEW)" link="#" onclick="showGeneratedDocument(@QAPP_DOC_UID);"/>
 

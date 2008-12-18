@@ -215,7 +215,7 @@
             $oPHPMailer->Password = $this->config['MESS_PASSWORD'];
             $oPHPMailer->From     = $this->fileData['from_email'];
             $oPHPMailer->FromName = utf8_decode($this->fileData['from_name']);
-            $oPHPMailer->Subject  = $this->fileData['subject'];
+            $oPHPMailer->Subject  = utf8_decode($this->fileData['subject']);
             $oPHPMailer->Body     = utf8_decode($this->fileData['body']);
             if (strpos($this->fileData['to'], '<') !== false) {
               $aTo     = explode('<', $this->fileData['to']);
