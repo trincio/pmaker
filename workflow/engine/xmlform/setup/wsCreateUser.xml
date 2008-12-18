@@ -1,33 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dynaForm name="webservices" width="500" mode="edit" border="0" enableTemplate="0" height="205px">
 
-<SESSION_ID type="text" size="36" maxlength="32"  >
+<SESSION_ID type="text" size="36" maxlength="32">
   <en>Session Id</en>
-</SESSION_ID>
+<es><![CDATA[Id de Sesión]]></es></SESSION_ID>
 
-<USER_ID type="text" size="32" maxlength="32"  >
+<USER_ID type="text" size="32" maxlength="32">
   <en>User ID</en>
-</USER_ID>
+<es>ID de Usuario</es></USER_ID>
 
-<FIRST_NAME type="text" size="32" maxlength="32"  >
+<PASSWORD type="password" size="25" maxlength="32">
+  <en>Password</en>
+<es><![CDATA[Contraseña]]></es></PASSWORD>
+
+<FIRST_NAME type="text" size="32" maxlength="32">
   <en>First Name</en>
-</FIRST_NAME>
+<es>Nombres</es></FIRST_NAME>
 
-<LAST_NAME type="text" size="32" maxlength="32"  >
+<LAST_NAME type="text" size="32" maxlength="32">
   <en>Last Name</en>
-</LAST_NAME>
+<es>Apellidos</es></LAST_NAME>
 
-<EMAIL type="text" size="32" maxlength="32"  >
+<EMAIL type="text" size="32" maxlength="32">
   <en>Email</en>
-</EMAIL>
+<es><![CDATA[Correo Electrónico]]></es></EMAIL>
 
-<ROLE type="text" size="32" maxlength="32"  >
+<ROLE type="dropdown" sqlConnection="dbarray">
+  SELECT * from role
   <en>Role</en>
+<es>Rol</es>
 </ROLE>
 
-
-<ACTION type="submit" >
-  <en>Login</en>
+<ACTION type="hidden">
 </ACTION>
+
+<ACTIONB type="button" onclick="submitThisForm(this.form);">
+  <en>CreateUser</en>
+  <es>Craer Usuario</es>
+</ACTIONB>
 
 </dynaForm>

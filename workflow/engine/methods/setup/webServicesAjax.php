@@ -22,7 +22,7 @@
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
  *
  */
-  ini_set("soap.wsdl_cache_enabled", "0"); // disabling WSDL cache
+  ini_set("soap.wsdl_cache_enabled", "0"); // enabling WSDL cache
 
   G::LoadClass( 'ArrayPeer');
 
@@ -38,9 +38,10 @@
     	if ( file_exists ( PATH_XMLFORM . $xmlform . '.xml') ) {
     	  //print_r ($_SESSION['_DBArray']);
     	  global $_DBArray;
-        $_DBArray = $_SESSION['_DBArray'];
+        $_DBArray = (isset($_SESSION['_DBArray']) ? $_SESSION['_DBArray'] : '');
     	  $G_PUBLISH = new Publisher();
         $fields['SESSION_ID'] = isset ( $_SESSION['WS_SESSION_ID']) ? $_SESSION['WS_SESSION_ID'] : '';
+        $fields['ACTION'] = $_POST['wsID'];
         $G_PUBLISH->AddContent('xmlform', 'xmlform', $xmlform, '', $fields, '../setup/webServicesAjax');
         G::RenderPage('publish', 'raw');
       }
@@ -61,7 +62,7 @@
       $endpoint = isset( $_SESSION['END_POINT'] ) ? $_SESSION['END_POINT'] : $defaultEndpoint;
 
       $sessionId = isset( $_SESSION['SESSION_ID'] ) ? $_SESSION['SESSION_ID'] : '';
-      $client = new SoapClient( $endpoint );
+      @$client = new SoapClient( $endpoint );
 
      	switch ( $action ) {
      		case "Login" :
@@ -89,10 +90,16 @@
           $rows[] = array ( 'guid' => 'char', 'name' => 'char' );
           if ( isset ( $result->processes ) )
             foreach ( $result->processes as $key=> $item) {
-              foreach ( $item->item as $index=> $val ) {
-            	  if ( $val->key == 'guid' ) $guid = $val->value;
-            	  if ( $val->key == 'name' ) $name = $val->value;
-              }
+              if ( isset ($item->item) )
+                foreach ( $item->item as $index=> $val ) {
+          	      if ( $val->key == 'guid' ) $guid = $val->value;
+          	      if ( $val->key == 'name' ) $name = $val->value;
+                }
+              else
+                foreach ( $item as $index=> $val ) {
+              	  if ( $val->key == 'guid' ) $guid = $val->value;
+              	  if ( $val->key == 'name' ) $name = $val->value;
+                }
               $rows[] = array ( 'guid' => $guid, 'name' => $name );
             }
           if ( isset ($_SESSION['_DBArray']) ) $_DBArray = $_SESSION['_DBArray'];
@@ -284,6 +291,25 @@
           $G_PUBLISH->AddContent('xmlform', 'xmlform', 'setup/wsShowResult',null, $fields );
           G::RenderPage('publish', 'raw');
      		break;
+     		
+     		case "ReassignCase" :         
+          $sessionId 		= $frm["SESSION_ID"];
+          $caseId    		= $frm["CASE_ID"];
+          $delIndex  		= $frm["DEL_INDEX"];                    
+          $userIdSource = $frm['USERIDSOURCE']; 
+          $userIdTarget = $frm['USERIDTARGET'];
+          
+          $params = array('sessionId'=>$sessionId, 'caseId'=>$caseId, 'delIndex'=>$delIndex, 'userIdSource'=>$userIdSource, 'userIdTarget'=>$userIdTarget);
+          $result = $client->__SoapCall('reassignCase', array($params));
+      	  
+      	  $G_PUBLISH = new Publisher();
+          $fields['status_code'] = $result->status_code;
+          $fields['message']     = $result->message;
+          $fields['time_stamp']  = $result->timestamp;
+          $G_PUBLISH->AddContent('xmlform', 'xmlform', 'setup/wsShowResult',null, $fields );
+          G::RenderPage('publish', 'raw');
+          
+     		break;
 
      		case "NewCaseImpersonate" :
           $sessionId  = $frm["SESSION_ID"];
@@ -425,7 +451,17 @@
     	    $G_PUBLISH->AddContent('propeltable', 'paged-table', 'setup/wsrTaskCase', $c );
           G::RenderPage('publish', 'raw');
      		break;
-
+				
+				case "UploadFiles" :
+          $sessionId = $frm["SESSION_ID"];
+          $caseId = $frm["CASE_ID"];
+          print_r($_FILES); die;
+          /*$name=$_FILES['file']["name"];
+    			$type=$_FILES['file']["type"];
+    			$size=$_FILES['file']["size"];
+          echo $name."<br />".$type."<br />".$size;*/
+     		break;
+				
         default :
           print_r($_POST);
     	}

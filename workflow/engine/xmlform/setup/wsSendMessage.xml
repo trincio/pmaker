@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dynaForm name="SendVariables" width="500" mode="edit" border="0" enableTemplate="0" height="205px">
+<dynaForm name="SendVariables" width="500" mode="edit" border="0" enableTemplate="0" height="250px">
 
-<SESSION_ID type="text" size="36" maxlength="32"  >
+<SESSION_ID type="text" size="36" maxlength="32">
   <en>Session Id</en>
-</SESSION_ID>
+<es><![CDATA[Id de Sesión]]></es></SESSION_ID>
 
-<CASE_ID type="text" size="32" maxlength="32"  >
+<CASE_ID type="dropdown" sqlConnection="dbarray">
+  SELECT * from case
   <en>Case ID</en>
-</CASE_ID>
+<es>ID de caso</es></CASE_ID>
 
-<MESSAGE type="textarea" cols="42" rows="8"  >
+<MESSAGE type="textarea" cols="42" rows="8">
   <en>Message</en>
-</MESSAGE>
+<es>Mensaje</es></MESSAGE>
 
-
-<ACTION type="submit" >
-  <en>SendVariables</en>
+<ACTION type="hidden">
 </ACTION>
+
+<ACTIONB type="button" onclick="submitThisForm(this.form);">
+  <en>SendMessage</en>
+<es>Enviar Mensaje</es></ACTIONB>
 
 </dynaForm>
