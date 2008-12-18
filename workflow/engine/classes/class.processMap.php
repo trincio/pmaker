@@ -1058,7 +1058,6 @@ class processMap {
       }
       global $_DBArray;
       $_DBArray['availableUsers'] = $aUsers;
-      
       $_SESSION['_DBArray']  = $_DBArray;
       G::LoadClass('ArrayPeer');
       $oCriteria = new Criteria('dbarray');
@@ -2272,13 +2271,18 @@ class processMap {
         $sUserGroup = $aFields['USR_FIRSTNAME'] . ' ' . $aFields['USR_LASTNAME'] . ' (' . $aFields['USR_USERNAME'] . ')';
       }
       else {
-        $oGroup     = new Groupwf();
-        try {
-          $aFields    = $oGroup->load($aRow['USR_UID']);
-          $sUserGroup = $aFields['GRP_TITLE'];
+        $oGroup = new Groupwf();
+        if ($aRow['USR_UID'] != '') {
+        	try {
+        	  $aFields    = $oGroup->load($aRow['USR_UID']);
+        	  $sUserGroup = $aFields['GRP_TITLE'];
+        	}
+        	catch (Exception $oError) {
+        	  $sUserGroup = '(GROUP DELETED)';
+        	}
         }
-        catch (Exception $oError) {
-          $sUserGroup = '(GROUP DELETED)';
+        else {
+        	$sUserGroup = G::LoadTranslation('ID_ANY');
         }
       }
       //Obtain task source

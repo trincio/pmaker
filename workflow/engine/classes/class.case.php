@@ -2204,6 +2204,7 @@ class Cases
       $oDataset->next();
       $aInputDocuments = array();
       $aInputDocuments[] = array('APP_DOC_UID' => 'char', 'DOC_UID' => 'char', 'APP_DOC_COMMENT' => 'char', 'APP_DOC_FILENAME' => 'char', 'APP_DOC_INDEX' => 'integer');
+      $oUser = new Users();
       while ($aRow = $oDataset->getRow()) {
           $oCriteria2 = new Criteria('workflow');
           $oCriteria2->add(AppDelegationPeer::APP_UID, $sApplicationUID);
@@ -2220,7 +2221,14 @@ class Cases
             $aTask = array('TAS_TITLE' => '(TASK DELETED)');
           }
           $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
-          $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' => $aAux['APP_DOC_INDEX'], 'TYPE' => $aAux['APP_DOC_TYPE'], 'ORIGIN' => $aTask['TAS_TITLE']);
+          try {
+            $aAux1 = $oUser->load($aAux['USR_UID']);
+            $sUser = $aAux1['USR_FIRSTNAME'] . ' ' . $aAux1['USR_LASTNAME'];
+          }
+          catch (Exception $oException) {
+            $sUser = '(USER DELETED)';
+          }
+          $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' => $aAux['APP_DOC_INDEX'], 'TYPE' => $aAux['APP_DOC_TYPE'], 'ORIGIN' => $aTask['TAS_TITLE'], 'CREATE_DATE' => $aAux['APP_DOC_CREATE_DATE'], 'CREATED_BY' => $sUser);
           if ($aFields['APP_DOC_FILENAME'] != '') {
               $aFields['TITLE'] = $aFields['APP_DOC_FILENAME'];
           } else {
@@ -2257,7 +2265,14 @@ class Cases
             $aTask = array('TAS_TITLE' => '(TASK DELETED)');
           }
           $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
-          $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' => $aAux['APP_DOC_INDEX'], 'TYPE' => $aAux['APP_DOC_TYPE'], 'ORIGIN' => $aTask['TAS_TITLE']);
+          try {
+            $aAux1 = $oUser->load($aAux['USR_UID']);
+            $sUser = $aAux1['USR_FIRSTNAME'] . ' ' . $aAux1['USR_LASTNAME'];
+          }
+          catch (Exception $oException) {
+            $sUser = '(USER DELETED)';
+          }
+          $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' => $aAux['APP_DOC_INDEX'], 'TYPE' => $aAux['APP_DOC_TYPE'], 'ORIGIN' => $aTask['TAS_TITLE'], 'CREATE_DATE' => $aAux['APP_DOC_CREATE_DATE'], 'CREATED_BY' => $sUser);
           if ($aFields['APP_DOC_FILENAME'] != '') {
               $aFields['TITLE'] = $aFields['APP_DOC_FILENAME'];
           } else {
@@ -2275,7 +2290,7 @@ class Cases
       G::LoadClass('ArrayPeer');
       $oCriteria = new Criteria('dbarray');
       $oCriteria->setDBArrayTable('inputDocuments');
-      $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_CREATE_DATE);
+      $oCriteria->addDescendingOrderByColumn('CREATE_DATE');
       return $oCriteria;
     }
 
@@ -2329,6 +2344,7 @@ class Cases
       $oDataset->next();
       $aOutputDocuments = array();
       $aOutputDocuments[] = array('APP_DOC_UID' => 'char', 'DOC_UID' => 'char', 'APP_DOC_COMMENT' => 'char', 'APP_DOC_FILENAME' => 'char', 'APP_DOC_INDEX' => 'integer');
+      $oUser = new Users();
       while ($aRow = $oDataset->getRow()) {
           $oCriteria2 = new Criteria('workflow');
           $oCriteria2->add(AppDelegationPeer::APP_UID, $sApplicationUID);
@@ -2345,7 +2361,14 @@ class Cases
             $aTask = array('TAS_TITLE' => '(TASK DELETED)');
           }
           $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
-          $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' => $aAux['APP_DOC_INDEX'], 'ORIGIN' => $aTask['TAS_TITLE']);
+          try {
+            $aAux1 = $oUser->load($aAux['USR_UID']);
+            $sUser = $aAux1['USR_FIRSTNAME'] . ' ' . $aAux1['USR_LASTNAME'];
+          }
+          catch (Exception $oException) {
+            $sUser = '(USER DELETED)';
+          }
+          $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' => $aAux['APP_DOC_INDEX'], 'ORIGIN' => $aTask['TAS_TITLE'], 'CREATE_DATE' => $aAux['APP_DOC_CREATE_DATE'], 'CREATED_BY' => $sUser);
           if ($aFields['APP_DOC_FILENAME'] != '') {
               $aFields['TITLE'] = $aFields['APP_DOC_FILENAME'];
           } else {
@@ -2365,7 +2388,7 @@ class Cases
       G::LoadClass('ArrayPeer');
       $oCriteria = new Criteria('dbarray');
       $oCriteria->setDBArrayTable('outputDocuments');
-      $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_CREATE_DATE);
+      $oCriteria->addDescendingOrderByColumn('CREATE_DATE');
       return $oCriteria;
     }
 
@@ -2581,7 +2604,8 @@ class Cases
 
 		//permissions per user
 		$oCriteria = new Criteria('workflow');
-		$oCriteria->add(ObjectPermissionPeer::USR_UID, $USR_UID);
+		//$oCriteria->add(ObjectPermissionPeer::USR_UID, $USR_UID);
+		$oCriteria->add( $oCriteria->getNewCriterion(ObjectPermissionPeer::USR_UID, $USR_UID)->addOr($oCriteria->getNewCriterion(ObjectPermissionPeer::USR_UID, '')) );
 		$oCriteria->add(ObjectPermissionPeer::PRO_UID, $PRO_UID);
 		$oCriteria->add(ObjectPermissionPeer::OP_ACTION, $ACTION);
 		$oCriteria->add( $oCriteria->getNewCriterion(ObjectPermissionPeer::TAS_UID, $TAS_UID)->addOr($oCriteria->getNewCriterion(ObjectPermissionPeer::TAS_UID, '')) );

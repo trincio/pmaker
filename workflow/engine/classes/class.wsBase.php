@@ -58,7 +58,6 @@ require_once ( "classes/model/Content.php" );
 G::LoadClass('pmScript');
 G::LoadClass('wsResponse');
 G::LoadClass('case');
-G::LoadClass('derivation');
 
 class wsBase
 {
@@ -648,7 +647,7 @@ class wsBase
 	}
 
 	public function newCase($processId, $userId, $taskId, $variables) {
-		try {  
+		try {
 			$Fields = array();
 			if( is_array($variables) ) {
 				if( count($variables)>0 ){
@@ -705,17 +704,16 @@ class wsBase
 				$caseId = $case['APPLICATION'];
 				$caseNr = $case['CASE_NUMBER'];
 
-				$oldFields = $oCase->loadCase( $caseId ); 
+				$oldFields = $oCase->loadCase( $caseId );
 
 				$oldFields['APP_DATA'] = array_merge( $oldFields['APP_DATA'], $Fields);
 
-				$up_case = $oCase->updateCase($caseId, $oldFields); 
-				
+				$up_case = $oCase->updateCase($caseId, $oldFields);
 				//$result = new wsResponse (0, "Sucessful\ncase uid = $caseId \ncase number = $caseNr ");
 				$result = new wsResponse (0, "Sucessful");
 				$result->caseId = $caseId;
-				$result->caseNumber = $caseNr;        
-						
+				$result->caseNumber = $caseNr;
+
 				return $result;
 		}
 		catch ( Exception $e ) {
@@ -903,16 +901,17 @@ class wsBase
 			//load data
 			$oCase     = new Cases ();
 			$appFields = $oCase->loadCase( $caseId );
+			$appFields['APP_DATA']['APPLICATION'] = $caseId;
 
 			//Execute triggers before derivation
       $currentTask = $derive[1]['TAS_UID'];  //currentTask??? if this doesn't exists???
 
-      $aTriggers = $oCase->loadTriggers($currentTask, 'ASSIGN_TASK', -2, 'BEFORE' );
+      $aTriggers = $oCase->loadTriggers($appdel['TAS_UID'], 'ASSIGN_TASK', -2, 'BEFORE' );
       if (count($aTriggers) > 0) {
         $oPMScript = new PMScript();
         foreach ($aTriggers as $aTrigger) {
-          $appFields = $oCase->loadCase( $caseId );
-     			$appFields['APP_DATA']['APPLICATION'] = $caseId;
+          //$appFields = $oCase->loadCase( $caseId );
+     			//$appFields['APP_DATA']['APPLICATION'] = $caseId;
           $oPMScript->setFields( $appFields['APP_DATA'] );
           $bExecute = true;
           if ($aTrigger['ST_CONDITION'] !== '') {
@@ -923,8 +922,9 @@ class wsBase
             $oPMScript->setScript($aTrigger['TRI_WEBBOT']);
             $oPMScript->execute();
             $varTriggers .= "Before ----------\n" . $aTrigger['TRI_WEBBOT'] . "\n";
-            $appFields = $oCase->loadCase( $caseId );
+            //$appFields = $oCase->loadCase( $caseId );
             $appFields['APP_DATA'] = $oPMScript->aFields;
+            //$appFields['APP_DATA']['APPLICATION'] = $caseId;
 //$varTriggers .= "proccode " . $appFields['APP_PROC_CODE'] . "\n";
 //$varTriggers .= "pin " . $appFields['APP_DATA']['PIN'] . "\n";
       			$oCase->updateCase ( $caseId, $appFields );
@@ -968,9 +968,10 @@ class wsBase
 			$appFields['APP_STATUS'] = $sStatus;
       $oCase->updateCase ( $caseId, $appFields );
 
-			$aTriggers = $oCase->loadTriggers($currentTask, 'ASSIGN_TASK', -2, 'AFTER' );
+			$aTriggers = $oCase->loadTriggers($appdel['TAS_UID'], 'ASSIGN_TASK', -2, 'AFTER' );
       if (count($aTriggers) > 0) {
         $oPMScript = new PMScript();
+        //$appFields['APP_DATA']['APPLICATION'] = $caseId;
         $oPMScript->setFields( $appFields['APP_DATA'] );
         foreach ($aTriggers as $aTrigger) {
           $bExecute = true;
@@ -982,8 +983,10 @@ class wsBase
             $oPMScript->setScript($aTrigger['TRI_WEBBOT']);
             $oPMScript->execute();
             $varTriggers .= "After ----------\n" . $aTrigger['TRI_WEBBOT'] . "\n";
+            //$appFields = $oCase->loadCase( $caseId );
             $appFields['APP_DATA'] = $oPMScript->aFields;
-            $appFields = $oCase->loadCase( $caseId );
+            //$appFields['APP_DATA']['APPLICATION'] = $caseId;
+            //$appFields = $oCase->loadCase( $caseId );
       			$oCase->updateCase ( $caseId, $appFields );
           }
         }
@@ -1148,96 +1151,4 @@ class wsBase
 		}
 	}
 
-	public function reassignCase( $sessionId, $caseId, $delIndex, $userIdSource, $userIdTarget ){		
-		try {			
-			if ( $userIdTarget == $userIdSource ) {
-		  	$result = new wsResponse (30, "Target and Origin user are the same" );
-	  	  return $result;
-	  	}
-
-		  /******************( 1 )******************/		  
-			$oCriteria = new Criteria('workflow');
-			$oCriteria->add(UsersPeer::USR_STATUS, 'ACTIVE' );
-			$oCriteria->add(UsersPeer::USR_UID, $userIdSource);
-			$oDataset = UsersPeer::doSelectRS($oCriteria);
-			$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-			$oDataset->next();
-			$aRow = $oDataset->getRow();
-		  if(!is_array($aRow))
-		  {
-		  		$result = new wsResponse (31, "Invalid origin user" );
-	  			return $result;
-		  }		  
-		  
-		  /******************( 2 )******************/
-		  $oCase = new Cases();
-			$rows = $oCase->loadCase($caseId);
-			if(!is_array($aRow))
-			{
-		  		$result = new wsResponse (32, "This case is not open." );
-	  			return $result;
-		  }
-		  
-		  /******************( 3 )******************/		  
-			$oCriteria = new Criteria('workflow');
-			$aConditions   = array();
-//      $aConditions[] = array(AppDelegationPeer::USR_UID, TaskUserPeer::USR_UID);
-//      $aConditions[] = array(AppDelegationPeer::TAS_UID, TaskUserPeer::TAS_UID);
-//      $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
-		  //$oCriteria->addJoin(AppDelegationPeer::USR_UID, TaskUserPeer::USR_UID, Criteria::LEFT_JOIN);			
-			$oCriteria->add(AppDelegationPeer::APP_UID, $caseId );
-			$oCriteria->add(AppDelegationPeer::USR_UID, $userIdSource );
-			$oCriteria->add(AppDelegationPeer::DEL_INDEX, $delIndex);
-			$oCriteria->add(AppDelegationPeer::DEL_FINISH_DATE, null);			
-			$oDataset = AppDelegationPeer::doSelectRS($oCriteria);
-			$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-			$oDataset->next();
-			$aRow = $oDataset->getRow();
-		  if(!is_array($aRow))
-		  {
-		  		$result = new wsResponse (33, "Invalid delindex for this user" );
-	  			return $result;
-		  }		
-		  $tasUid = $aRow['TAS_UID'];
-		  $derivation = new Derivation ();
-		  $userList = $derivation->getAllUsersFromAnyTask( $tasUid );
-		  if ( ! in_array ( $userIdTarget, $userList ) ) {
-		  	$result = new wsResponse (34, "The userTarget has not rights to execute the task" );
-	  	  return $result;
-	  	}
-
-		  
-		  /******************( 4 )******************/		  
-			$oCriteria = new Criteria('workflow');
-			$oCriteria->add(UsersPeer::USR_STATUS, 'ACTIVE' );
-			$oCriteria->add(UsersPeer::USR_UID, $userIdTarget);
-			$oDataset = UsersPeer::doSelectRS($oCriteria);
-			$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-			$oDataset->next();
-			$aRow = $oDataset->getRow();
-		  if(!is_array($aRow))
-		  {
-		  		$result = new wsResponse (35, "The user destination is invalid" );
-	  			return $result;
-		  }		  
-		  
-		  		  		  
-		  /******************( 5 )******************/
-		  $var=$oCase->reassignCase($caseId, $delIndex, $userIdSource, $userIdTarget);		  
-		  
-		  if(!$var)
-		  {
-		  		$result = new wsResponse (36, "The case could not be reassigned." );
-	  			return $result;
-		  }		  
-		  
-			$result = new wsResponse (1, 'Succesful......!');
-		  
-			return $result;
-		}
-		catch ( Exception $e ) {
-			$result[] = array ( 'guid' => $e->getMessage(), 'name' => $e->getMessage() );
-			return $result;
-		}		
-	}
 }

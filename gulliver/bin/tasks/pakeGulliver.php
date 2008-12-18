@@ -1392,6 +1392,11 @@ function run_propel_build_crud ( $task, $args)
 
   //parse the schema file in order to get Table definition
   $schemaFile = PATH_CORE . 'config' . PATH_SEP . 'schema.xml';
+  if ( $pluginName != '' ) 
+    $schemaFile = PATH_PLUGINS . $pluginName . PATH_SEP . 'config' . PATH_SEP . 'schema.xml';
+
+  printf("using schemaFile %s \n", pakeColor::colorize( $schemaFile, 'INFO'));
+
   $xmlContent = file_get_contents ( $schemaFile );
   $s = simplexml_load_file( $schemaFile );
 

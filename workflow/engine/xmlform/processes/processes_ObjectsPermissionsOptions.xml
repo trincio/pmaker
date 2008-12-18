@@ -1,16 +1,16 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <dynaForm type="xmlmenu">
 
-<PRO_UID type="private" />
+<PRO_UID type="private"/>
 
 <MNU_ADD type="link" value="" link="#" onclick="newObjectPermission(@@PRO_UID);return false;" colAlign="left" colWidth="45">
   <en>New</en>
-</MNU_ADD>
+<es>Nuevo</es></MNU_ADD>
 
 <PAGED_TABLE_ID type="private"/>
 
-<JS type="javascript">
-<![CDATA[
+<JS type="javascript"><![CDATA[
+
 var oPanel;
 var newObjectPermission = function(PRO_UID) {
   oPanel = new leimnud.module.panel();
@@ -42,12 +42,12 @@ var newObjectPermission = function(PRO_UID) {
 };
 
 var saveObjectPermission = function(form) {
-  if (getField('GROUP_USER').value == '') {
+  /*if (getField('GROUP_USER').value == '') {
     new leimnud.module.app.alert().make({
       label:G_STRINGS.ID_PLEASE_SELECT_OTHER_OBJECT_TYPE
     });
     return;
-  }
+  }*/
   /*switch (getField('OP_OBJ_TYPE').value) {
     case 'DYNAFORM':
       if (getField('DYNAFORMS').value == '') {
@@ -88,7 +88,7 @@ var deleteObjectPermission = function(sURL) {
     }.extend(this)
   });
 };
-]]>
-</JS>
+
+]]></JS>
 
 </dynaForm>
