@@ -411,6 +411,7 @@ die;
           else
             $keylist .= ', $' . $phpName;
           $fields['keys'][] = $field;
+          //$index++;
         }
         $fields['fields'][] = $field;
         $fields['fields2'][] = $field;
@@ -898,11 +899,11 @@ function create_file_from_tpl ( $tplName, $newFilename, $fields = NULL )
     $httpFilename = $pathHome . PATH_SEP . $newFilename;
   $template = new TemplatePower( $httpdTpl );
   $template->prepare();
-  $template->assign ( 'pathHome', $pathHome);
-  $template->assign ( 'projectName', $projectName);
-  $template->assign ( 'rbacProjectName', strtoupper( $projectName)) ;
-  $template->assign ( 'siglaProjectName', substr ( strtoupper( $projectName),0,3) ) ;
-  $template->assign ( 'propel.output.dir', '{propel.output.dir}' );
+  $template->assignGlobal ( 'pathHome', $pathHome);
+  $template->assignGlobal ( 'projectName', $projectName);
+  $template->assignGlobal ( 'rbacProjectName', strtoupper( $projectName)) ;
+  $template->assignGlobal ( 'siglaProjectName', substr ( strtoupper( $projectName),0,3) ) ;
+  $template->assignGlobal ( 'propel.output.dir', '{propel.output.dir}' );
 
   if ( is_array ($fields) ) {
     foreach ( $fields as $block => $data ) {
@@ -1365,12 +1366,12 @@ function run_propel_build_crud ( $task, $args)
   $fields['projectName'] = $projectName;
 
   //1. MENU
-  if ( $pluginName != '' ) {
-    create_file_from_tpl ( 'pluginMenu',  $corePath. $phpClass. ".php", $fields );
-  }
-  else {
+  if ( $pluginName == '' ) {
     create_file_from_tpl ( 'pluginMenu',  PATH_CORE . 'menus'. PATH_SEP . $phpClass. ".php", $fields );
   }
+  //else {
+  //  create_file_from_tpl ( 'pluginMenu',  $corePath. $phpClass. ".php", $fields );
+  //}
   
   //2. si existe menu welcome, añade la opcion
   if ( $pluginName == '' ) {
@@ -1420,7 +1421,7 @@ function run_propel_build_crud ( $task, $args)
         //        print "\033[1;34m "; print_r ( $values); 
         //print $column['name'] . ' ' .$column['type'] . ' ' .$column['size'] . ' ' .$column['required'] . ' ' .$column['primaryKey'];
         //print_r ( $column); print "\n";
-        $maxlength = $column['size'];
+        $maxlength = isset ( $column['size'] ) ? $column['size'] : 25;
         $size      = ( $maxlength > 60 ) ? 60 : $maxlength;
         $values = NULL;
         if ( isset ($valuesOpt)  )  {
@@ -1443,7 +1444,9 @@ function run_propel_build_crud ( $task, $args)
         else {
           $label =  fieldToLabel($column['name']);
         }
-        $field = array ( 'name' => $column['name'], 'className' => $class, 'type' => $type, 'size' => $size, 'maxlength' => $maxlength, 'label'=> $label , 'values'=> $values);
+        $field = array ( 'name' => $column['name'], 'className' => $class, 'type' => $type, 
+                         'size' => $size, 'maxlength' => $maxlength, 'label'=> $label , 
+                         'values'=> $values);
         $fields['fields'][] = $field;
         if ( !$column['primaryKey'] ) {
           $fields['onlyFields'][] = $field;
@@ -1457,10 +1460,16 @@ function run_propel_build_crud ( $task, $args)
   $fields['phpClassName'] = $phpClass;
   $fields['projectName'] = $projectName;
   $fields['firstKey'] = $fields['keys'][0]['name'];
-  create_file_from_tpl ( 'pluginXmlform',       $xmlformPath . "$phpClass.xml", $fields );
-  create_file_from_tpl ( 'pluginXmlformEdit',   $xmlformPath . $phpClass."Edit.xml", $fields );
+
+  $fields['phpFolderName'] = $phpClass;
+  if ( $pluginName != '' ) {
+    $fields['plugin'][] = array ( 'pluginName' => $pluginName );
+    $fields['phpFolderName'] = $pluginName;
+  }
+  create_file_from_tpl ( 'pluginXmlform',       $xmlformPath . $phpClass.".xml",       $fields );
+  create_file_from_tpl ( 'pluginXmlformEdit',   $xmlformPath . $phpClass."Edit.xml",   $fields );
   create_file_from_tpl ( 'pluginXmlformDelete', $xmlformPath . $phpClass."Delete.xml", $fields );
-  create_file_from_tpl ( 'pluginList',          $xmlformPath . $phpClass."List.php", $fields );
+  create_file_from_tpl ( 'pluginList',          $methodsPath . $phpClass."List.php",   $fields );
 
   //xmlform for list
   //load the $fields array with fields data for PagedTable xml.
@@ -1477,9 +1486,9 @@ function run_propel_build_crud ( $task, $args)
         $label =  fieldToLabel($column['name']);
         if ( $column['primaryKey'] ) {
           if ( $primaryKey == '' ) 
-            $primaryKey .= '@@' . $column['name'];
+            $primaryKey .= '@!' . $column['name'];
           else
-            $primaryKey .= '|@@' . $column['name'];
+            $primaryKey .= '|@!' . $column['name'];
             
           if ( isset ( $column['label'] ) ) {
             $label =  $column['label'];
@@ -1503,6 +1512,10 @@ function run_propel_build_crud ( $task, $args)
   $fields['primaryKey'] = $primaryKey;
   $fields['className'] = $class;
   $fields['phpClassName'] = $phpClass;
+  $fields['phpFolderName'] = $phpClass;
+  if ( $pluginName != '' ) {
+    $fields['phpFolderName'] = $pluginName;
+  }
   $fields['projectName'] = $projectName;
   $fields['tableName'] = $tableName;
   create_file_from_tpl ( 'pluginXmlformList',   $xmlformPath . $phpClass."List.xml", $fields );
@@ -1533,9 +1546,14 @@ function run_propel_build_crud ( $task, $args)
   }
   $fields['keylist'] = $keylist;
   $fields['phpClassName'] = $phpClass;
+  $fields['phpFolderName'] = $phpClass;
   $fields['className'] = $class;
   $fields['tableName'] = $tableName;
   $fields['projectName'] = $projectName;
+  if ( $pluginName != '' ) {
+    $fields['plugin'][] = array ( 'pluginName' => $pluginName );
+    $fields['phpFolderName'] = $pluginName;
+  }
   //savePluginFile ( $class . PATH_SEP . $class . 'Edit.php', 'pluginEdit', $class, $tableName, $fields );
   //savePluginFile ( $class . PATH_SEP . $class . 'Save.php', 'pluginSave', $class, $tableName, $fields );
   create_file_from_tpl ( 'pluginEdit',      $methodsPath . $phpClass."Edit.php", $fields );
