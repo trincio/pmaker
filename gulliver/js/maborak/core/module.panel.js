@@ -1066,7 +1066,7 @@ leimnud.Package.Public({
 									form	: forms[i]
 							});
 							sub.callback = function(){
-								alert(sub.rpc.xmlhttp.responseText)
+								//alert(sub.rpc.xmlhttp.responseText)
 							};
 						}
 					}.extend(this);
@@ -1166,12 +1166,23 @@ leimnud.Package.Public({
 			containerWindow:function()
 			{
 				this.options.size.w 	= this.options.size.w || 200;
-				this.options.size.h 	= this.options.size.h || 200;
-
-				var center		= {
-					x:(((this.target().clientWidth/2)+this.target().scrollLeft)-(this.options.size.w/2)),
-					y:(((this.target().clientHeight/2)+this.target().scrollTop)-(this.options.size.h/2))
-				};
+				this.options.size.h 	= this.options.size.h || 200;				
+				if(this.options.intoDOM)
+				{
+					var center		= {
+						x:(((this.target().offsetWidth/2)+this.target().scrollLeft)-(this.options.size.w/2)),
+						y:(((this.target().offsetHeight/2)+this.target().scrollTop)-(this.options.size.h/2))
+					};
+				}
+				else
+				{
+					var scroll = this.parent.dom.getPageScroll();
+					this.parent.dom.get_doc()
+					var center		= {
+						x:((((this.parent.dom.get_doc().clientWidth)/2)+scroll[0])-(this.options.size.w/2)),
+						y:((((this.parent.dom.get_doc().clientHeight)/2)+scroll[1])-(this.options.size.h/2))
+					};
+				}
 				if(this.options.position.center===true)
 				{
 					this.options.position.x = center.x;
@@ -1400,11 +1411,18 @@ leimnud.Package.Public({
 			{
 				//if(this.parent.browser.isIE)
 				//{
-				var h = (this.parent.browser.isIE)?this.target().scrollHeight:this.target().scrollHeight;
+				//var h = (this.parent.browser.isIE)?this.target().scrollHeight:this.target().scrollHeight;
+				//var ps = this.parent.dom.getPageSize();
+				//var ps = this.parent.dom.getPageSize();
+				//alert(this.parent.dom.get_doc());
+				//alert(window.document.compatMode+":"+window.document.html+":"+window.document.body+":"+this.parent.dom.get_doc()+":");
+				//alert(this.parent.dom.getDoc()+":"+this.parent.dom.getDoc().scrollHeight)
+				var ps = [this.parent.dom.get_doc().scrollWidth,this.parent.dom.get_doc().scrollHeight];
+				//alert(ps[1]);
 				//alert(this.target().scrollHeight)
 				this.parent.dom.setStyle(this.elements.modal,{
-					height	:h,
-					width	:this.target().scrollWidth,
+					height	:ps[1],
+					width	:ps[0],
 					position:"absolute",
 					zIndex	:this.zIndex-3
 				});

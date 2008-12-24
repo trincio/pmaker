@@ -1414,6 +1414,14 @@ var maborak = function(){
 		*/
 		D0M:function()
 		{
+			this.get_html=function()
+			{
+				return document.getElementsByTagName('html')[0];
+			};
+			this.get_doc=function(){
+			    var doc = window.document;
+			    return (!doc.compatMode || doc.compatMode == 'CSS1Compat')?this.get_html():doc.body;
+			};
 			/**
 			* Capture DOM object from (String || DOM element)
 			* @param {string || object} element String.id || DOM object
@@ -1865,6 +1873,57 @@ var maborak = function(){
 				script.charset = this.parent.charset;
 				return true;
 			};
+			this.getPageScroll=function()
+			{
+				return [window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft,window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop];
+			};
+			this.getPageSize = function()
+				{	        
+				    var xScroll, yScroll;					
+					if (window.innerHeight && window.scrollMaxY) {	
+						xScroll = window.innerWidth + window.scrollMaxX;
+						yScroll = window.innerHeight + window.scrollMaxY;
+					} else if (document.body.scrollHeight > document.body.offsetHeight){ // all but Explorer Mac
+						xScroll = document.body.scrollWidth;
+						yScroll = document.body.scrollHeight;
+					} else { // Explorer Mac...would also work in Explorer 6 Strict, Mozilla and Safari
+						xScroll = document.body.offsetWidth;
+						yScroll = document.body.offsetHeight;
+					}
+					
+					var windowWidth, windowHeight;
+					
+					if (self.innerHeight) {	// all except Explorer
+						if(document.documentElement.clientWidth){
+							windowWidth = document.documentElement.clientWidth; 
+						} else {
+							windowWidth = self.innerWidth;
+						}
+						windowHeight = self.innerHeight;
+					} else if (document.documentElement && document.documentElement.clientHeight) { // Explorer 6 Strict Mode
+						windowWidth = document.documentElement.clientWidth;
+						windowHeight = document.documentElement.clientHeight;
+						//alert(windowHeight);
+					} else if (document.body) { // other Explorers
+						windowWidth = document.body.clientWidth;
+						windowHeight = document.body.clientHeight;
+					}	
+					
+					// for small pages with total height less then height of the viewport
+					if(yScroll < windowHeight){
+						pageHeight = windowHeight;
+					} else { 
+						pageHeight = yScroll;
+					}
+				
+					// for small pages with total width less then width of the viewport
+					if(xScroll < windowWidth){	
+						pageWidth = xScroll;		
+					} else {
+						pageWidth = windowWidth;
+					}			
+					return [pageWidth,pageHeight];
+				};
 			this.serializer = this.parent.factory(function(DOM,obj)
 			{
 				/**
@@ -1935,7 +1994,7 @@ var maborak = function(){
 						}
 					}
 					return this.serialized;
-				};
+				};				
 				this.select = function()
 				{
 					for(var i=0;i<this.DOM.length;i++)
