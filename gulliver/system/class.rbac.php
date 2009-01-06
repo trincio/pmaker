@@ -106,8 +106,38 @@ class RBAC
       require_once ( "classes/model/RolesPermissions.php" );
       $this->rolesPermissionsObj = new RolesPermissions;
     }
+
+    //hook for RBAC plugins
+    $pathPlugins = PATH_RBAC . 'plugins';
+    if ($handle = opendir( $pathPlugins )) {
+      while ( false !== ($file = readdir($handle))) {
+      	if ( strpos($file, '.php',1) && is_file( $pathPlugins . PATH_SEP . $file) && 
+      	     substr($file,0,6) == 'class.' && substr($file,-4) == '.php' )  {
+      		
+      		$sClassName = substr($file,6, strlen($file) - 10);
+      		require_once ($pathPlugins . PATH_SEP . $file);
+          $plugin =  new $sClassName();
+          $plugin->VerifyLogin ( 'admin', 'admin' );
+        }
+      }  
+    }
+    //print PATH_RBAC . 'plugins' ;
+    //die;    
+
   }
 
+  /**
+   * Gets the roles and permission for one RBAC_user
+   *
+   * gets the Role and their permissions for one User
+   *
+   * @author Fernando Ontiveros Lira <fernando@colosa.com>
+   * @access public
+
+   * @param  string $sSystem    the system 
+   * @param  string $sUser      the user
+   * @return $this->aUserInfo[ $sSystem ]
+   */
   function loadUserRolePermission( $sSystem, $sUser) {
     $this->sSystem = $sSystem;
     $fieldsSystem = $this->systemObj->loadByCode($sSystem);
@@ -146,7 +176,7 @@ class RBAC
   }
 
   /**
-   * Verify if the user has a right
+   * Verify if the user exist or not exists, the argument is the UserName
    *
    * @author Everth S. Berrios
    * @access public
@@ -157,7 +187,7 @@ class RBAC
   }
 
   /**
-   * Verify if the user has a right for UID
+   * Verify if the user exist or not exists, the argument is the UserUID
    *
    * @author Everth S. Berrios
    * @access public
@@ -168,7 +198,7 @@ class RBAC
   }
 
   /**
-   * Verify if the user has a right
+   * Verify if the user has a right over the permission
    *
    * @author Fernando Ontiveros
    * @access public
@@ -186,7 +216,7 @@ class RBAC
   {
     if ( isset ( $this->aUserInfo[ $this->sSystem ]['PERMISSIONS'] ) ) {
       $res = -3;
-      if ( !isset ( $this->aUserInfo[ $this->sSystem ]['ROLE'. 'x'] ) ) $res = -2;
+      //if ( !isset ( $this->aUserInfo[ $this->sSystem ]['ROLE'. 'x'] ) ) $res = -2;
       foreach ( $this->aUserInfo[ $this->sSystem ]['PERMISSIONS'] as $key=>$val )
         if ( $perm == $val['PER_CODE'] ) $res = 1;
     }
@@ -197,6 +227,12 @@ class RBAC
   }
 
   function createUser($aData = array(), $sRolCode = '') {
+	  if ($aData['USR_STATUS'] == 'ACTIVE') {
+	  	$aData['USR_STATUS'] = 1;
+	  }
+	  else {
+	  	$aData['USR_STATUS'] = 0;
+	  }
   	$sUserUID = $this->userObj->create($aData);
   	if ($sRolCode != '') {
   	  $this->assignRoleToUser($sUserUID, $sRolCode);
@@ -208,9 +244,6 @@ class RBAC
   	if (isset($aData['USR_STATUS'])) {
   	  if ($aData['USR_STATUS'] == 'ACTIVE') {
   	  	$aData['USR_STATUS'] = 1;
-  	  }
-  	  else {
-  	  	$aData['USR_STATUS'] = 0;
   	  }
     }
   	$this->userObj->update($aData);
@@ -232,6 +265,10 @@ class RBAC
   }
 
   function changeUserStatus($sUserUID = '', $sStatus = 'ACTIVE') {
+  	if ($sStatus == 'ACTIVE') {
+  		$sStatus = 1;
+  	}
+
   	$aFields               = $this->userObj->load($sUserUID);
   	$aFields['USR_STATUS'] = $sStatus;
   	$this->userObj->update($aFields);
@@ -257,9 +294,11 @@ class RBAC
    */
   function load ($uid ){
   	$this->initRBAC();
-    $this->userObj->load($uid);
-    $role = $this->usersRolesObj->getRolesBySystem ( $uid , $this->currentSystemobj);
-    $this->userObj->Fields['USR_ROLE'] = $role['ROL_CODE'];
+    $this->userObj->Fields = $this->userObj->load($uid);
+
+    $fieldsSystem = $this->systemObj->loadByCode($this->sSystem);
+    $fieldsRoles = $this->usersRolesObj->getRolesBySystem ($fieldsSystem['SYS_UID'], $uid );
+    $this->userObj->Fields['USR_ROLE'] = $fieldsRoles['ROL_CODE'];
     return $this->userObj->Fields;
   }
 

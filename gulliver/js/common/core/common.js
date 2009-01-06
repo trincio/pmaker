@@ -1182,3 +1182,17 @@ function MM_preloadImages() { //v3.0
 function backImage(oImg,p){
   oImg.style.background=p;
 }
+
+/* javascript para el toolbar */
+var lc=false;
+var sh=function(a,i)
+{
+    var c = (a.nextSibling.nextSibling)?a.nextSibling.nextSibling:a.nextSibling;
+    if(lc && lc.c!=i){
+        lc.d.style.display='none';
+        lc.a.style.color='#666';
+    }
+    lc={d:c,c:i,a:a};
+    a.style.color=(c.style.display=='' || c.style.display=='none')?"black":"#666";
+    c.style.display=(!c.style.display || c.style.display=='none')?"block":"none";    
+}
