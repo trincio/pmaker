@@ -149,6 +149,7 @@ class RbacUsers extends BaseRbacUsers {
   	    $aFields = $rs[0]->toArray(BasePeer::TYPE_FIELDNAME);
         return $aFields;
       }
+      return false;
     }
     catch ( Exception $oError) {
     	throw($oError);
@@ -184,6 +185,7 @@ class RbacUsers extends BaseRbacUsers {
   }
 
   function update($aData) {
+  	$oConnection = Propel::getConnection(RbacUsersPeer::DATABASE_NAME);
   	try {
   	  $this->fromArray($aData, BasePeer::TYPE_FIELDNAME);
       $this->setNew(false);

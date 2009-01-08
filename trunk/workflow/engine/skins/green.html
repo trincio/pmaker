@@ -1,4 +1,6 @@
-  <head>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" />
+<html>
+<head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="shortcut icon" href="/images/favicon.ico"   type="image/x-icon"/>
   <link rel="stylesheet" type="text/css" href="/skins/green/style.css"/>
@@ -11,8 +13,8 @@
    <table width="100%" height="32" border="0" cellspacing="0" cellpadding="0" bgcolor="#FFFFFF">
     <tr>
      <td width="50%" rowspan="2" valign="top"><img src="{$logo_company}"></td>
-     <td width="50%" height="16" align="right" valign="top">
-      <div align="right" class="logout"><small><a href="../users/myInfo">{$user}</a>{$pipe}<a href="../login/login">{$logout}</a></small> &nbsp; &nbsp;</div>
+     <td width="50%" height="16" align="right" valign="top">      
+      <div align="right" class="logout"><small>{php}if ((int)$_SESSION['USER_LOGGED'] != 0) {{/php}<a href="../users/myInfo">{$user}</a> | <a href="../login/login" class="tableOption">{php}echo G::LoadTranslation('ID_LOGOUT');{/php}</a>{php}}{/php}</small> &nbsp; &nbsp;</div>
      </td>
     </tr>
     <tr>
@@ -60,5 +62,32 @@
   </td>
  </tr>
 </table>
+
+
+<!--facebook 
+{literal}
+<div id="toolbar">
+    <div class="toolbar_container">
+        <div class="toolbar_wrapper">
+            <div class="toolbar_item">
+                <a href="#" onclick="sh(this,1);return false;">
+                    <img src="http://static.ak.fbcdn.net/images/icons/marketplace.gif?2:41989" border="0">&nbsp;maborak
+                </a>
+                <div class="toolbar_item_section">
+                    bla 2
+                </div>
+            </div>
+            <div class="toolbar_item">
+                <a href="#" onclick="sh(this,2);return false;">sample</a>
+                <div class="toolbar_item_section"  style="width:400px;height:200px;">
+                    bla 2
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+{/literal}
+-->
 </body>
 </html>

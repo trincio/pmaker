@@ -30,142 +30,142 @@
 class G
 {
 
-	function is_https()
-	{
-		if(isset($_SERVER['HTTPS']))
-		{		if($_SERVER['HTTPS']=='on')
-						return true;
-				else
-						return false;
-		}
-		else
-			return false;
-	}
-	/**
-	* Fill array values (recursive)
-	* @author maborak <maborak@maborak.com>
-	* @access public
-	* @param  Array $arr
-	* @param  Void  $value
-	* @param  Boolean $recursive
-	* @return Array
-	*/
-	function array_fill_value($arr=Array(),$value='',$recursive=false)
-	{
-		if(is_array($arr))
-		{
-			foreach($arr as $key=>$val)
-			{
-				if(is_array($arr[$key]))
-				{
-					$arr[$key]=($recursive===true)?G::array_fill_value($arr[$key],$value,true):$val;
-				}
-				else
-				{
-					$arr[$key]=$value;
-				}
-			}
-		}
-		else
-		{
-			$arr=Array();
-		}
-		return $arr;
-	}
-	/**
-	* Generate Password Random
-	* @author maborak <maborak@maborak.com>
-	* @access public
-	* @param  Int
-	* @return String
-	*/
-	function generate_password($length=8)
-	{
-		$password = "";
-		$possible = "0123456789bcdfghjkmnpqrstvwxyz";
-		$i = 0;
-		while($i<$length)
-		{
-			$char = substr($possible, mt_rand(0, strlen($possible)-1), 1);
-			if(!strstr($password, $char))
-			{
-				$password .= $char;
-				$i++;
-			}
-		}
-		return $password;
-	}
-	/**
-	* Array concat
-	* array_concat(ArrayToConcat,ArrayOriginal);
-	* @author maborak <maborak@maborak.com>
-	* @access public
-	* @param  Array
-	* @return Array
-	*/
-	function array_concat()
-	{
-		$nums = func_num_args();
-		$vars = func_get_args();
-		$ret  = Array();
-		for($i=0;$i<$nums;$i++)
-		{
-			if(is_array($vars[$i]))
-			{
-				foreach($vars[$i] as $key=>$value)
-				{
-					$ret[$key]=$value;
-				}
-			}
-		}
-		return $ret;
-	}
+  function is_https()
+  {
+    if(isset($_SERVER['HTTPS']))
+    {   if($_SERVER['HTTPS']=='on')
+            return true;
+        else
+            return false;
+    }
+    else
+      return false;
+  }
+  /**
+  * Fill array values (recursive)
+  * @author maborak <maborak@maborak.com>
+  * @access public
+  * @param  Array $arr
+  * @param  Void  $value
+  * @param  Boolean $recursive
+  * @return Array
+  */
+  function array_fill_value($arr=Array(),$value='',$recursive=false)
+  {
+    if(is_array($arr))
+    {
+      foreach($arr as $key=>$val)
+      {
+        if(is_array($arr[$key]))
+        {
+          $arr[$key]=($recursive===true)?G::array_fill_value($arr[$key],$value,true):$val;
+        }
+        else
+        {
+          $arr[$key]=$value;
+        }
+      }
+    }
+    else
+    {
+      $arr=Array();
+    }
+    return $arr;
+  }
+  /**
+  * Generate Password Random
+  * @author maborak <maborak@maborak.com>
+  * @access public
+  * @param  Int
+  * @return String
+  */
+  function generate_password($length=8)
+  {
+    $password = "";
+    $possible = "0123456789bcdfghjkmnpqrstvwxyz";
+    $i = 0;
+    while($i<$length)
+    {
+      $char = substr($possible, mt_rand(0, strlen($possible)-1), 1);
+      if(!strstr($password, $char))
+      {
+        $password .= $char;
+        $i++;
+      }
+    }
+    return $password;
+  }
+  /**
+  * Array concat
+  * array_concat(ArrayToConcat,ArrayOriginal);
+  * @author maborak <maborak@maborak.com>
+  * @access public
+  * @param  Array
+  * @return Array
+  */
+  function array_concat()
+  {
+    $nums = func_num_args();
+    $vars = func_get_args();
+    $ret  = Array();
+    for($i=0;$i<$nums;$i++)
+    {
+      if(is_array($vars[$i]))
+      {
+        foreach($vars[$i] as $key=>$value)
+        {
+          $ret[$key]=$value;
+        }
+      }
+    }
+    return $ret;
+  }
 
-	/**
-	* Compare Variables
-	* var_compare(value,[var1,var2,varN]);
-	* @author maborak <maborak@maborak.com>
-	* @access public
-	* @param  void $value
-	* @param  void $var1-N
-	* @return Boolean
-	*/
-	function var_compare($value=true,$varN)
-	{
-		$nums = func_num_args();
-		if($nums<2){return true;}
-		$vars = func_get_args();
-		$ret  = Array();
-		for($i=1;$i<$nums;$i++)
-		{
-			if($vars[$i]!==$value)
-			{
-				return false;
-			}
-		}
-		return true;
-	}
-	/**
-	* Emulate variable selector
-	* @author maborak <maborak@maborak.com>
-	* @access public
-	* @param  void
-	* @return void
-	*/
-	function var_probe()
-	{
-		//return (!$variable)?
-		$nums = func_num_args();
-		$vars = func_get_args();
-		for($i=0;$i<$nums;$i++)
-		{
-			if($vars[$i])
-			{
-				return $vars[$i];
-			}
-		}
-		return 1;
-	}
+  /**
+  * Compare Variables
+  * var_compare(value,[var1,var2,varN]);
+  * @author maborak <maborak@maborak.com>
+  * @access public
+  * @param  void $value
+  * @param  void $var1-N
+  * @return Boolean
+  */
+  function var_compare($value=true,$varN)
+  {
+    $nums = func_num_args();
+    if($nums<2){return true;}
+    $vars = func_get_args();
+    $ret  = Array();
+    for($i=1;$i<$nums;$i++)
+    {
+      if($vars[$i]!==$value)
+      {
+        return false;
+      }
+    }
+    return true;
+  }
+  /**
+  * Emulate variable selector
+  * @author maborak <maborak@maborak.com>
+  * @access public
+  * @param  void
+  * @return void
+  */
+  function var_probe()
+  {
+    //return (!$variable)?
+    $nums = func_num_args();
+    $vars = func_get_args();
+    for($i=0;$i<$nums;$i++)
+    {
+      if($vars[$i])
+      {
+        return $vars[$i];
+      }
+    }
+    return 1;
+  }
 
 /**
    * Get the current version of gulliver classes
@@ -471,7 +471,7 @@ class G
       array_push($folder_path, dirname(end($folder_path))); //var_dump($folder_path); die;
     while($parent_folder_path = array_pop($folder_path))
       if(!@is_dir($parent_folder_path))
-      		if(!@mkdir($parent_folder_path, $rights))
+          if(!@mkdir($parent_folder_path, $rights))
         //trigger_error ("Can't create folder \"$parent_folder_path\".", E_USER_WARNING);
     umask($oldumask);
   }
@@ -693,7 +693,7 @@ class G
     if ($handle = opendir( $baseDir  )) {
       while ( false !== ($file = readdir($handle))) {
         if ( strpos($file, '.php',1) && !strpos($file, 'Peer.php',1) ) {
-    	    require_once ( $baseDir . PATH_SEP . $file );
+          require_once ( $baseDir . PATH_SEP . $file );
         }
       }
     }
@@ -936,26 +936,26 @@ class G
     }
 
     switch ( strtolower($typefile ) ) {
-    	case "js" :
-      	$paths = explode ( '/', $filename);
-      	$jsName = $paths[ count ($paths) -1 ];
-      	$output = '';
-      	switch ( $jsName ) {
-      		case 'maborak.js' :
+      case "js" :
+        $paths = explode ( '/', $filename);
+        $jsName = $paths[ count ($paths) -1 ];
+        $output = '';
+        switch ( $jsName ) {
+          case 'maborak.js' :
             $oHeadPublisher =& headPublisher::getSingleton();
             foreach ( $oHeadPublisher->maborakFiles as $fileJS ) {
               $output .= G::trimSourceCodeFile ($fileJS );
             }
           break;
-      	  case 'maborak.loader.js':
+          case 'maborak.loader.js':
             $oHeadPublisher =& headPublisher::getSingleton();
             foreach ( $oHeadPublisher->maborakLoaderFiles as $fileJS ) {
               $output .= G::trimSourceCodeFile ($fileJS );
             }
           break;
-      	default :
+        default :
           $output = G::trimSourceCodeFile ($filename );
-      	}
+        }
         print $output;
       break;
       case 'css' :
@@ -1009,35 +1009,35 @@ class G
     $index = 0;
     $output = '';
     while ( $index < strlen ($content) ) {
-    	$car = $content[$index];
-    	$index++;
-    	if ( $car == '/' && isset($content[$index]) && $content[$index] == '*' ) {
-      	$endComment = false;
-    		$index ++;
+      $car = $content[$index];
+      $index++;
+      if ( $car == '/' && isset($content[$index]) && $content[$index] == '*' ) {
+        $endComment = false;
+        $index ++;
         while ( $endComment == false && $index < strlen ($content) ) {
           if ($content[$index] == '*' && isset($content[$index+1]) && $content[$index+1] == '/' ) {
-          	$endComment = true; $index ++;
+            $endComment = true; $index ++;
           }
           $index ++;
         }
         $car = '';
-    	}
-    	$output .= $car;
+      }
+      $output .= $car;
     }
     return $output;
   }
 
   function sendHeaders ( $filename , $contentType = '', $download = false, $downloadFileName = '' )
   {
-  	if ($download) {
-  	  if ($downloadFileName == '') {
-  	  	$aAux = explode('/', $filename);
-  	  	$downloadFileName = $aAux[count($aAux) - 1];
-  	  }
+    if ($download) {
+      if ($downloadFileName == '') {
+        $aAux = explode('/', $filename);
+        $downloadFileName = $aAux[count($aAux) - 1];
+      }
       header('Content-Disposition: attachment; filename="' . $downloadFileName . '"');
     }
     header('Content-Type: ' . $contentType);
-  	if (!$download) {
+    if (!$download) {
 
       header('Pragma: cache');
 
@@ -1199,111 +1199,111 @@ class G
 
   function getformatedDate($date, $format='yyyy-mm-dd', $lang='')
   {
-  	/********************************************************************************************************
-    *	if the year is 2008 and the format is yy  then -> 08
-	*	if the year is 2008 and the format is yyyy  then -> 2008
-	*
-	*	if the month is 05 and the format is mm  then -> 05
-	*	if the month is 05 and the format is m and the month is less than 10 then -> 5 else digit normal
-	*	if the month is 05 and the format is MM or M then -> May
-	*
-	*	if the day is 5 and the format is dd  then -> 05
-	*	if the day is 5 and the format is d and the day is less than 10 then -> 5 else digit normal
-	*	if the day is 5 and the format is DD or D then -> five
-	*********************************************************************************************************/
+    /********************************************************************************************************
+    * if the year is 2008 and the format is yy  then -> 08
+  * if the year is 2008 and the format is yyyy  then -> 2008
+  *
+  * if the month is 05 and the format is mm  then -> 05
+  * if the month is 05 and the format is m and the month is less than 10 then -> 5 else digit normal
+  * if the month is 05 and the format is MM or M then -> May
+  *
+  * if the day is 5 and the format is dd  then -> 05
+  * if the day is 5 and the format is d and the day is less than 10 then -> 5 else digit normal
+  * if the day is 5 and the format is DD or D then -> five
+  *********************************************************************************************************/
 
     //scape the literal
-	switch($lang)
-	{
-    	case 'es':
-			 $format = str_replace(' de ', '[of]', $format);
-		break;
-	}
+  switch($lang)
+  {
+      case 'es':
+       $format = str_replace(' de ', '[of]', $format);
+    break;
+  }
 
-	//first we must formatted the string
+  //first we must formatted the string
     $format = str_replace('yyyy', '{YEAR}', $format);
-	$format = str_replace('yy', '{year}', $format);
+  $format = str_replace('yy', '{year}', $format);
 
     $format = str_replace('mm', '{YONTH}', $format);
-	$format = str_replace('m', '{month}', $format);
-	$format = str_replace('M', '{XONTH}', $format);
+  $format = str_replace('m', '{month}', $format);
+  $format = str_replace('M', '{XONTH}', $format);
 
     $format = str_replace('dd', '{DAY}', $format);
-	$format = str_replace('d', '{day}', $format);
+  $format = str_replace('d', '{day}', $format);
 
 
 
     if ($lang==='') $lang=defined(SYS_LANG)?SYS_LANG:'en';
 
-    $aux	= explode (' ', $date);  //para dividir la fecha del dia
-    $date	= explode ('-', isset ( $aux[0] ) ? $aux[0] : '00-00-00' );   //para obtener los dias, el mes, y el año.
-    $time	= explode (':', isset ( $aux[1] ) ? $aux[1] : '00:00:00' );   //para obtener las horas, minutos, segundos.
+    $aux  = explode (' ', $date);  //para dividir la fecha del dia
+    $date = explode ('-', isset ( $aux[0] ) ? $aux[0] : '00-00-00' );   //para obtener los dias, el mes, y el año.
+    $time = explode (':', isset ( $aux[1] ) ? $aux[1] : '00:00:00' );   //para obtener las horas, minutos, segundos.
 
-    $year	= (int)((isset($date[0]))?$date[0]:'0'); //year
-    $month	= (int)((isset($date[1]))?$date[1]:'0'); //month
-    $day	= (int)((isset($date[2]))?$date[2]:'0'); //day
+    $year = (int)((isset($date[0]))?$date[0]:'0'); //year
+    $month  = (int)((isset($date[1]))?$date[1]:'0'); //month
+    $day  = (int)((isset($date[2]))?$date[2]:'0'); //day
 
     $time[0]=(int)((isset($time[0]))?$time[0]:'0'); //hour
     $time[1]=(int)((isset($time[1]))?$time[1]:'0'); //minute
     $time[2]=(int)((isset($time[2]))?$time[2]:'0'); //second
 
-	/*witch($lang)
-	{
-		case 'es':
-			// Spanish months
-			$MONTHS = array ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
-			// Spanish days
-    		$WEEKDAYS['es'] = array("Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado");
-			$number='latin';
-		break;
-		case 'fa':
-			// mouths in persian calendar
-			$MONTHS = array('فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند');
-			// Persian days
-    		$WEEKDAYS['fa'] = array('یک شنبه','دوشنبه','سه شنبه','چهارشنبه','پنج شنبه','جمعه','شنبه');
-			$number='persian';
+  /*witch($lang)
+  {
+    case 'es':
+      // Spanish months
+      $MONTHS = array ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
+      // Spanish days
+        $WEEKDAYS['es'] = array("Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado");
+      $number='latin';
+    break;
+    case 'fa':
+      // mouths in persian calendar
+      $MONTHS = array('فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند');
+      // Persian days
+        $WEEKDAYS['fa'] = array('یک شنبه','دوشنبه','سه شنبه','چهارشنبه','پنج شنبه','جمعه','شنبه');
+      $number='persian';
 
-		break;
+    break;
 
-		default:
-    	case 'en':
-			// English months
-			$MONTHS = array("January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December");
-			// English days
-    		$WEEKDAYS['en'] = array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
-			$number='latin';
-		break;
-	}*/
+    default:
+      case 'en':
+      // English months
+      $MONTHS = array("January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December");
+      // English days
+        $WEEKDAYS['en'] = array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
+      $number='latin';
+    break;
+  }*/
     $MONTHS = Array();
-	for($i=1; $i<=12; $i++){
-    	$MONTHS[$i] =   G::LoadTranslation("ID_MONTH_$i", $lang);
-	}
+  for($i=1; $i<=12; $i++){
+      $MONTHS[$i] =   G::LoadTranslation("ID_MONTH_$i", $lang);
+  }
 
     $d = (int)$day;
-	$dd = G::complete_field($day, 2, 1);
+  $dd = G::complete_field($day, 2, 1);
 
-	//missing D
+  //missing D
 
     $M = $MONTHS[$month];
-	$m = (int)$month;
-	$mm = G::complete_field($month, 2, 1);
+  $m = (int)$month;
+  $mm = G::complete_field($month, 2, 1);
 
 
     $yy = substr($year,strlen($year)-2,2);
-	$yyyy = $year;
+  $yyyy = $year;
 
     $names=array('{day}', '{DAY}', '{month}', '{YONTH}', '{XONTH}', '{year}', '{YEAR}');
     $values=array($d, $dd, $m, $mm, $M, $yy, $yyyy);
 
     $ret = str_replace( $names, $values, $format );
 
-	//recovering the original literal
-	switch($lang)
-	{
-    	case 'es':
-			 $ret = str_replace('[of]', ' de ', $ret);
-		break;
-	}
+  //recovering the original literal
+  switch($lang)
+  {
+      case 'es':
+       $ret = str_replace('[of]', ' de ', $ret);
+    break;
+  }
 
     return $ret;
   }
@@ -1314,89 +1314,89 @@ class G
   *  to iterate through the edited array, and I didn't need to original keys for anything.
   */
   function arrayDiff($array1, $array2) {
-	// This wrapper for array_diff rekeys the array returned
-	$valid_array = array_diff($array1,$array2);
+  // This wrapper for array_diff rekeys the array returned
+  $valid_array = array_diff($array1,$array2);
 
-	// reinstantiate $array1 variable
-	$array1 = array();
+  // reinstantiate $array1 variable
+  $array1 = array();
 
-	// loop through the validated array and move elements to $array1
-	// this is necessary because the array_diff function returns arrays that retain their original keys
-	foreach ($valid_array as $valid){
-		$array1[] = $valid;
-	}
-	return $array1;
+  // loop through the validated array and move elements to $array1
+  // this is necessary because the array_diff function returns arrays that retain their original keys
+  foreach ($valid_array as $valid){
+    $array1[] = $valid;
+  }
+  return $array1;
   }
 
-	/**
-	* @author Erik Amaru Ortiz <erik@colosa.com>
-	* @name complete_field($string, $lenght, $type={1:number/2:string/3:float})
-	*/
+  /**
+  * @author Erik Amaru Ortiz <erik@colosa.com>
+  * @name complete_field($string, $lenght, $type={1:number/2:string/3:float})
+  */
 
-	function complete_field($campo, $long, $tipo)
-	{
-		$campo=trim($campo);
-		switch($tipo)
-		{
-			case 1: //number
-				$long = $long-strlen($campo);
-				for($i=1; $i<=$long; $i++) {
-					$campo = "0".$campo;
-				}
-			break;
+  function complete_field($campo, $long, $tipo)
+  {
+    $campo=trim($campo);
+    switch($tipo)
+    {
+      case 1: //number
+        $long = $long-strlen($campo);
+        for($i=1; $i<=$long; $i++) {
+          $campo = "0".$campo;
+        }
+      break;
 
-			case 2: //string
-				$long = $long-strlen($campo);
-				for($i=1; $i<=$long; $i++) {
-					$campo = " ".$campo;
-				}
-			break;
+      case 2: //string
+        $long = $long-strlen($campo);
+        for($i=1; $i<=$long; $i++) {
+          $campo = " ".$campo;
+        }
+      break;
 
-			case 3: //float
-				if($campo!="0")	{
-					$vals = explode(".",$long);
-					$ints = $vals[0];
+      case 3: //float
+        if($campo!="0") {
+          $vals = explode(".",$long);
+          $ints = $vals[0];
 
-					$decs = $vals[1];
+          $decs = $vals[1];
 
-					$valscampo = explode(".",$campo);
+          $valscampo = explode(".",$campo);
 
-					$intscampo = $valscampo[0];
-					$decscampo = $valscampo[1];
+          $intscampo = $valscampo[0];
+          $decscampo = $valscampo[1];
 
-					$ints = $ints-strlen($intscampo);
+          $ints = $ints-strlen($intscampo);
 
-					for($i=1; $i<=$ints; $i++) {
-						$intscampo = "0".$intscampo;
-					}
+          for($i=1; $i<=$ints; $i++) {
+            $intscampo = "0".$intscampo;
+          }
 
-					//los decimales pueden ser 0 uno o dos
-					$decs = $decs-strlen($decscampo);
-					for($i=1; $i<=$decs; $i++) {
-						$decscampo = $decscampo."0";
-					}
+          //los decimales pueden ser 0 uno o dos
+          $decs = $decs-strlen($decscampo);
+          for($i=1; $i<=$decs; $i++) {
+            $decscampo = $decscampo."0";
+          }
 
-					$campo= $intscampo.".".$decscampo;
-				} else {
-					$vals = explode(".",$long);
-					$ints = $vals[0];
-					$decs = $vals[1];
+          $campo= $intscampo.".".$decscampo;
+        } else {
+          $vals = explode(".",$long);
+          $ints = $vals[0];
+          $decs = $vals[1];
 
-					$campo="";
-					for($i=1; $i<=$ints; $i++) {
-						$campo = "0".$campo;
-					}
-					$campod="";
-					for($i=1; $i<=$decs; $i++) {
-						$campod = "0".$campod;
-					}
+          $campo="";
+          for($i=1; $i<=$ints; $i++) {
+            $campo = "0".$campo;
+          }
+          $campod="";
+          for($i=1; $i<=$decs; $i++) {
+            $campod = "0".$campod;
+          }
 
-					$campo=$campo.".".$campod;
-				}
-			break;
-		}
-		return $campo;
-	}
+          $campo=$campo.".".$campod;
+        }
+      break;
+    }
+    return $campo;
+  }
 
  /* Escapes special characters in a string for use in a SQL statement
   * @author David Callizaya <calidavidx21@hotmail.com>
@@ -1430,9 +1430,9 @@ class G
   */
   function replaceDataField( $sqlString, $result, $DBEngine = 'mysql' )
   {
-  	if (!is_array($result)) {
-  		$result = array();
-  	}
+    if (!is_array($result)) {
+      $result = array();
+    }
     $result = $result + G::getSystemConstants();
     $__textoEval="";$u=0;
     $count=preg_match_all('/\@(?:([\@\%\#\!Qq])([a-zA-Z\_]\w*)|([a-zA-Z\_][\w\-\>\:]*)\(((?:[^\\\\\)]*(?:[\\\\][\w\W])?)*)\))/',$sqlString,$match,PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE);
@@ -1790,11 +1790,11 @@ class G
   }
   function toUpper($sText)
   {
-	return strtoupper($sText);
+  return strtoupper($sText);
   }
   function toLower($sText)
   {
-	return strtolower($sText);
+  return strtolower($sText);
   }
   function http_build_query( $formdata, $numeric_prefix = null, $key = null )
   {
@@ -1966,49 +1966,49 @@ class G
    * @return void
    */
   function uploadFile($file, $path ,$nameToSave, $permission=0666) {
-  	try {
-  		if ($file == '') {
-  			throw new Exception('The filename is empty!');
-  		}
-  		if (filesize($file) > ((((ini_get('upload_max_filesize') + 0)) * 1024) * 1024)) {
-  		  throw new Exception('The size of upload file exceeds the allowed by the server!');
-  	  }
+    try {
+      if ($file == '') {
+        throw new Exception('The filename is empty!');
+      }
+      if (filesize($file) > ((((ini_get('upload_max_filesize') + 0)) * 1024) * 1024)) {
+        throw new Exception('The size of upload file exceeds the allowed by the server!');
+      }
       $oldumask = umask(0);
       if (!is_dir($path)) {
-      	G::verifyPath($path, true);
+        G::verifyPath($path, true);
       }
       move_uploaded_file($file , $path . "/" . $nameToSave);
       chmod($path . "/" . $nameToSave , $permission);
       umask($oldumask);
     }
     catch (Exception $oException) {
-    	throw $oException;
+      throw $oException;
     }
   }
 
   function resizeImage($path, $resWidth, $resHeight, $saveTo=null) {
-  	try {
-  	  list($width, $height) = getimagesize($path);
-  	  $percentHeight        = $resHeight / $height;
-  	  $percentWidth         = $resWidth / $width;
-  	  $percent              = ($percentWidth < $percentHeight) ? $percentWidth : $percentHeight;
-  	  $resWidth             = $width * $percent;
-  	  $resHeight            = $height * $percent;
+    try {
+      list($width, $height) = getimagesize($path);
+      $percentHeight        = $resHeight / $height;
+      $percentWidth         = $resWidth / $width;
+      $percent              = ($percentWidth < $percentHeight) ? $percentWidth : $percentHeight;
+      $resWidth             = $width * $percent;
+      $resHeight            = $height * $percent;
 
-  	  // Resample
-  	  $image_p = imagecreatetruecolor($resWidth, $resHeight);
-  	  if (strcasecmp(substr(strtolower($path),-4),'.jpg')===0) $image = imagecreatefromjpeg($path);
-  	  if (strcasecmp(substr(strtolower($path),-5),'.jpeg')===0)$image = imagecreatefromjpeg($path);
-  	  if (strcasecmp(substr(strtolower($path),-4),'.png')===0) $image = imagecreatefrompng($path);
-  	  if (strcasecmp(substr(strtolower($path),-4),'.gif')===0) $image = imagecreatefromgif($path);
-  	  imagecopyresampled($image_p, $image, 0, 0, 0, 0, $resWidth, $resHeight, $width, $height);
+      // Resample
+      $image_p = imagecreatetruecolor($resWidth, $resHeight);
+      if (strcasecmp(substr(strtolower($path),-4),'.jpg')===0) $image = imagecreatefromjpeg($path);
+      if (strcasecmp(substr(strtolower($path),-5),'.jpeg')===0)$image = imagecreatefromjpeg($path);
+      if (strcasecmp(substr(strtolower($path),-4),'.png')===0) $image = imagecreatefrompng($path);
+      if (strcasecmp(substr(strtolower($path),-4),'.gif')===0) $image = imagecreatefromgif($path);
+      imagecopyresampled($image_p, $image, 0, 0, 0, 0, $resWidth, $resHeight, $width, $height);
 
-  	  // Output
-  	  imagejpeg($image_p, $saveTo, 100);
-  	  chmod($saveTo, 0666);
-  	}
+      // Output
+      imagejpeg($image_p, $saveTo, 100);
+      chmod($saveTo, 0666);
+    }
     catch (Exception $oException) {
-    	throw $oException;
+      throw $oException;
     }
   }
 
@@ -2074,7 +2074,7 @@ class G
   }
 
 
-	/**
+  /**
    * Generate a numeric or alphanumeric code
    *
    * @author Julio Cesar Laura Avenda�o <juliocesar@colosa.com>
@@ -2147,7 +2147,7 @@ class G
    */
   function CurDate($sFormat = '')
   {
-  	$sFormat = ( $sFormat != '' )? $sFormat: 'Y-m-d H:i:s';
+    $sFormat = ( $sFormat != '' )? $sFormat: 'Y-m-d H:i:s';
     return date($sFormat);
   }
 
@@ -2181,18 +2181,18 @@ class G
    */
   function capitalizeWords( $text )
   {
-  	$result = '';
-  	$space = true;
-  	for ( $i = 0; $i < strlen ( $text); $i++ ) {
-  		$car = strtolower ( $text[$i] );
-  		if ( strpos( "abcdefghijklmnopqrstuvwxyz1234567890", $car ) !== false ) {
-  			if ($space ) $car = strtoupper ( $car );
-  		  $result .= $car;
-  		  $space  = false;
-  		}
-  		else
-  		  $space = true;
-  	}
+    $result = '';
+    $space = true;
+    for ( $i = 0; $i < strlen ( $text); $i++ ) {
+      $car = strtolower ( $text[$i] );
+      if ( strpos( "abcdefghijklmnopqrstuvwxyz1234567890", $car ) !== false ) {
+        if ($space ) $car = strtoupper ( $car );
+        $result .= $car;
+        $space  = false;
+      }
+      else
+        $space = true;
+    }
     return $result;
   }
 
