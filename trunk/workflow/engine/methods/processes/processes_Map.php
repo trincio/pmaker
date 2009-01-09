@@ -22,6 +22,7 @@
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
  *
  */
+
 global $RBAC;
 switch ($RBAC->userCanAccess('PM_FACTORY'))
 {
@@ -59,6 +60,7 @@ $oHeadPublisher->addScriptCode( '
 	leimnud.Package.Load("json",{Type:"file"});
 	leimnud.Package.Load("processmap",{Type:"file",Absolute:true,Path:"/jscore/processmap/core/processmap.js"});
 	leimnud.Package.Load("processes_Map",{Type:"file",Absolute:true,Path:"/jscore/processmap/core/processes_Map.js"});
+	leimnud.Package.Load("stagesmap",{Type:"file",Absolute:true,Path:"/jscore/stagesmap/core/stagesmap.js"});
 	leimnud.exec(leimnud.fix.memoryLeak);
 	leimnud.event.add(window,"load",function(){
 		var pb=leimnud.dom.capture("tag.body 0");
@@ -69,7 +71,7 @@ $oHeadPublisher->addScriptCode( '
 			uid		:"' . $processUID . '",
 			lang		:"' . SYS_LANG . '",
 			theme		:"processmaker",
-			size		:{w:pb.offsetWidth-10,h:pb.offsetHeight},
+			size		:{w:pb.offsetWidth-10,h:1200},
 			images_dir	:"/jscore/processmap/core/images/"
 		}
 		Pm.make();
