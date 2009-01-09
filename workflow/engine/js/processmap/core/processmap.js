@@ -1,4 +1,4 @@
-var processmap=function(){
+var processmap=function(){ 
 	this.data={
 		load:function()
 		{
@@ -2102,7 +2102,7 @@ processmap.prototype={
 			position:{x:200,y:0,centerX:true},
 			title:"",
 			titleBar:false,
-			control:{
+			control:{ 
 				//drag	:false,
 				resize:false
 			},
