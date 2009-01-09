@@ -1475,9 +1475,9 @@ class XmlForm_Field_Checkbox extends XmlForm_Field
   	}
   	elseif ($this->mode==='view') {
       if ($this->labelOnRight) {
-    		return '<input id="form['.$this->name.']" value="'.$this->value.'" name="form['.$this->name.']" type=\'checkbox\' '. $value ? 'checked':'' .' disabled><span class="FormCheck">'.$this->label.'</span></input>';
-      } else {
-    		return '<input id="form['.$this->name.']" value="'.$this->value.'" name="form['.$this->name.']" type=\'checkbox\' '. $value ? 'checked':'' .' disabled/>';
+    		return "<input id='form[" . $this->name . "]' value='{$this->value}' name='form[" .$this->name . "]' type='checkbox' '. $checked disabled><span class='FormCheck'>".$this->label.'</span></input>';
+      } else {                                                       
+    		return "<input id='form[" . $this->name . "]' value='{$this->value}' name='form[" .$this->name . "]' type='checkbox' '. $checked disabled/>";
       }
   	} else {
   	    return $this->htmlentities( $value , ENT_COMPAT, 'utf-8');
