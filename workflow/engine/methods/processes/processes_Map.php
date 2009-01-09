@@ -22,8 +22,7 @@
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
  *
  */
-
-global $RBAC;
+global $RBAC; 
 switch ($RBAC->userCanAccess('PM_FACTORY'))
 {
 	case -2:
@@ -71,7 +70,7 @@ $oHeadPublisher->addScriptCode( '
 			uid		:"' . $processUID . '",
 			lang		:"' . SYS_LANG . '",
 			theme		:"processmaker",
-			size		:{w:pb.offsetWidth-10,h:1200},
+			size		:{w:pb.offsetWidth-10,h:pb.offsetHeight},
 			images_dir	:"/jscore/processmap/core/images/"
 		}
 		Pm.make();
