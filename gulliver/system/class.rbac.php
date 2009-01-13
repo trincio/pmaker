@@ -109,18 +109,21 @@ class RBAC
 
     //hook for RBAC plugins
     $pathPlugins = PATH_RBAC . 'plugins';
-    if ($handle = opendir( $pathPlugins )) {
-      while ( false !== ($file = readdir($handle))) {
-      	if ( strpos($file, '.php',1) && is_file( $pathPlugins . PATH_SEP . $file) && 
-      	     substr($file,0,6) == 'class.' && substr($file,-4) == '.php' )  {
-      		
-      		$sClassName = substr($file,6, strlen($file) - 10);
-      		require_once ($pathPlugins . PATH_SEP . $file);
-          $plugin =  new $sClassName();
-          $plugin->VerifyLogin ( 'admin', 'admin' );
-        }
-      }  
+    if ( is_dir ( $pathPlugins ) ) {
+      if ($handle = opendir( $pathPlugins )) {
+        while ( false !== ($file = readdir($handle))) {
+        	if ( strpos($file, '.php',1) && is_file( $pathPlugins . PATH_SEP . $file) && 
+        	     substr($file,0,6) == 'class.' && substr($file,-4) == '.php' )  {
+        		
+        		$sClassName = substr($file,6, strlen($file) - 10);
+        		require_once ($pathPlugins . PATH_SEP . $file);
+            $plugin =  new $sClassName();
+            $plugin->VerifyLogin ( 'admin', 'admin' );
+          }
+        }  
+      }
     }
+    
     //print PATH_RBAC . 'plugins' ;
     //die;    
 
