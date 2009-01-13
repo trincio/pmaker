@@ -32,4 +32,11 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_USERS"))!=1) return $RBAC_Response;
   
   $group->remove(urldecode($_POST['GRP_UID']));
   
+  require_once 'classes/model/TaskUser.php';
+  $oProcess   = new TaskUser();
+
+  $oCriteria = new Criteria('workflow');
+  $oCriteria->add(TaskUserPeer::USR_UID, $_POST['GRP_UID']);
+  TaskUserPeer::doDelete($oCriteria);
+  
 ?>

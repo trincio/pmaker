@@ -97,8 +97,11 @@ class DBConnection
     if ( $type == "mysql" )
       $dsn = "mysql://$strUser:$strPwd@$strServer/$strDB";
 
-    if ( $type == "pgsql" )
-      $dsn = "pgsql://postgres@$strServer/$strDB";
+    if ( $type == "pgsql" ) {
+        //$dsn = "pgsql://postgres@$strServer/$strDB";
+        $prt = ( $strPort == 0 || $strPort == 5432  ? '' : ":$strPort" );
+        $dsn = "pgsql://$strUser:$strPwd@$strServer$prt/$strDB";
+    }
 
     if ( $type == "odbc" )
       $dsn = "odbc://$strUser:$strPwd@$strServer/$strDB";
