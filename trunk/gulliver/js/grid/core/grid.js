@@ -206,9 +206,19 @@ var G_Grid = function(oForm, sGridName)
   		    	  aObjects = oNewRow.getElementsByTagName('td')[i].getElementsByTagName('select');
   		    	  if (aObjects)
   		    	  {
-  		    	  	aObjects[0].name  = aObjects[0].name.replace(/\[1\]/g, '\[' + (this.oGrid.rows.length - 2) + '\]');
+  		    	    var oAux = document.createElement(aObjects[0].tagName);
+  		    	    oAux.name  = aObjects[0].name.replace(/\[1\]/g, '\[' + (this.oGrid.rows.length - 2) + '\]');
+  		    	  	oAux.id    = aObjects[0].id.replace(/\[1\]/g, '\[' + (this.oGrid.rows.length - 2) + '\]');
+  		    	  	for (var j = 0; j < aObjects[0].options.length; j++) {
+  		    	  	  var oOption = document.createElement('OPTION');
+                  oOption.value = aObjects[0].options[j].value;
+                  oOption.text = aObjects[0].options[j].text;
+                  oAux.options.add(oOption);
+  		    	  	}
+  		    	  	aObjects[0].parentNode.replaceChild(oAux, aObjects[0]);
+  		    	  	/*aObjects[0].name  = aObjects[0].name.replace(/\[1\]/g, '\[' + (this.oGrid.rows.length - 2) + '\]');
   		    	  	aObjects[0].id    = aObjects[0].id.replace(/\[1\]/g, '\[' + (this.oGrid.rows.length - 2) + '\]');
-  		    	  	aObjects[0].selectedIndex = 0;
+  		    	  	aObjects[0].selectedIndex = 0;*/
   		    	  }
   		    	break;
   		    	case '<texta':
