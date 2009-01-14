@@ -68,9 +68,9 @@ else {
 }
 
 $rows[] = array ( 'uid' => 'char', 'name' => 'char', 'age' => 'integer', 'balance' => 'float' );
-$rows[] = array ( 'uid' => 'MAIL', 'name' => 'Mail (PHP)'  );
 $rows[] = array ( 'uid' => 'PHPMAILER', 'name' => 'SMTP (PHPMailer)' );
 $rows[] = array ( 'uid' => 'OPENMAIL', 'name' => 'SMTP (OpenMail)'  );
+$rows[] = array ( 'uid' => 'MAIL', 'name' => 'Mail (PHP)'  );
 
 $_DBArray['mails'] = $rows;
 $_SESSION['_DBArray'] = $_DBArray;
