@@ -115,7 +115,9 @@ $oHeadPublisher->addScriptCode('
 	$oDbConnections->loadAdditionalConnections();
 
 	$G_PUBLISH = new Publisher;
-	$G_PUBLISH->AddContent('dynaform', 'xmlform', $_SESSION['PROCESS'] . '/' . $_GET['DYN_UID'], '', $Fields['APP_DATA'], 'cases_SaveDataSupervisor?UID='.$_GET['DYN_UID']);
+	if ($_GET['DYN_UID'] != '') {
+	  $G_PUBLISH->AddContent('dynaform', 'xmlform', $_SESSION['PROCESS'] . '/' . $_GET['DYN_UID'], '', $Fields['APP_DATA'], 'cases_SaveDataSupervisor?UID='.$_GET['DYN_UID']);
+	}
 
 	G::RenderPage('publish');
 
