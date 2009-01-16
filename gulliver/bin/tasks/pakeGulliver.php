@@ -1373,7 +1373,7 @@ function run_propel_build_crud ( $task, $args)
   //  create_file_from_tpl ( 'pluginMenu',  $corePath. $phpClass. ".php", $fields );
   //}
   
-  //2. si existe menu welcome, añade la opcion
+  //2. si existe menu welcome, aqade la opcion
   if ( $pluginName == '' ) {
     if ( !file_exists ( PATH_CORE . 'menus'. PATH_SEP . "welcome.php") ) {
     	$fp = fopen ( PATH_CORE . 'menus'. PATH_SEP . "welcome.php", "w" );
