@@ -27,8 +27,6 @@
 G::LoadClass('groups');
 G::LoadClass('tree');
 
-global $G_HEADER;
-
 $tree = new Tree();
 $tree->name = 'Groups';
 $tree->nodeType = "base";
@@ -51,7 +49,7 @@ G::LoadClass('case');
 
 $o = new Cases();
 $steps = $o->getAllStepsToRevise($_GET['APP_UID'], $_GET['DEL_INDEX']);
-$APP_UID = $_GET['APP_UID']; 
+$APP_UID = $_GET['APP_UID'];
 $DEL_INDEX = $_GET['DEL_INDEX'];
 
 
@@ -65,19 +63,21 @@ $html = "
         $ch = &$tree->addChild("", $html, array('nodeType' => 'child'));
         $ch->point = '</span><img src="/images/plus.gif" />';
         $i=1;
+        $PRO_UID='';
+        $DYN_UID='';
 foreach ($steps as $step) {
 
-    if ($step['STEP_TYPE_OBJ'] == 'DYNAFORM') {        
-        
+    if ($step['STEP_TYPE_OBJ'] == 'DYNAFORM') {
+
         require_once 'classes/model/Dynaform.php';
         $od = new Dynaform();
         $dynaformF = $od->Load($step['STEP_UID_OBJ']);
-        
+
         $n = $step['STEP_POSITION'];
 		$TITLE = " - ".$dynaformF['DYN_TITLE'];
 		$DYN_UID = $dynaformF['DYN_UID'];
 		$PRO_UID = $step['PRO_UID'];
-		
+
         $html = "
       <table cellspacing='0' cellpadding='0' border='1' style='border:0px;'>
         <tr>
@@ -107,7 +107,7 @@ $html = "
 
         $ch = &$tree->addChild("", $html, array('nodeType' => 'child'));
         $ch->point = '</span><img src="/images/ftv2doc.gif" />';
-$i++;       
+$i++;
 $html = "
       <table cellspacing='0' cellpadding='0' border='1' style='border:0px;'>
         <tr>
