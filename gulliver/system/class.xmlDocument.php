@@ -169,7 +169,7 @@ class Xml_Node
     		foreach( $this->attributes as $attib => $value ) {
   	  	  $xml .= ' ' . $attib . '="' . htmlentities( $value, ENT_QUOTES, 'utf-8' ) . '"';
   	  	  if (strpos($xml, '&euro;') !== false) {
-  	  	    $xml = str_replace('&euro;', '€', $xml);
+  	  	    $xml = str_replace('&euro;', 'b,', $xml);
   	  	  }
   	  	}
     		$xml .= '>'.$this->getCDATAValue();
@@ -191,7 +191,7 @@ class Xml_Node
     		foreach( $this->attributes as $attib => $value ) {
   	  	  $xml .= ' ' . $attib . '="' . htmlentities( $value, ENT_QUOTES, 'utf-8' ) . '"';
   	  	  if (strpos($xml, '&euro;') !== false) {
-  	  	    $xml = str_replace('&euro;', '€', $xml);
+  	  	    $xml = str_replace('&euro;', 'b,', $xml);
   	  	  }
   	  	}
   	  	if ($this->value!=='') {

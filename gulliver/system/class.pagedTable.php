@@ -552,8 +552,8 @@ class pagedTable
       if (isset($this->style[$r]['colWidth'])) $this->tpl->assign( "widthPercent" , ($this->style[$r]['colWidth']*100 / $this->totalWidth) . "%" );
       if (isset($this->style[$r]['titleAlign'])) $this->tpl->assign( "align" , 'text-align:'.$this->style[$r]['titleAlign'].';');
       if ($this->style[$r]['titleVisibility']!='0') {
-        $sortOrder = (((isset($this->aOrder[$this->fields[$r]['Name']])) && ($this->aOrder[$this->fields[$r]['Name']]==='ASC'))?'▲':'');
-        $sortOrder = (((isset($this->aOrder[$this->fields[$r]['Name']])) && ($this->aOrder[$this->fields[$r]['Name']]==='DESC'))?'▼':$sortOrder);
+        $sortOrder = (((isset($this->aOrder[$this->fields[$r]['Name']])) && ($this->aOrder[$this->fields[$r]['Name']]==='ASC'))?'b2':'');
+        $sortOrder = (((isset($this->aOrder[$this->fields[$r]['Name']])) && ($this->aOrder[$this->fields[$r]['Name']]==='DESC'))?'b<':$sortOrder);
         $this->tpl->assign( "header" , $this->fields[$r]['Label'] . $sortOrder );
         $this->tpl->assign('displaySeparator',
           (($this->colCount==0)||(!isset($this->fields[$r]['Label']))||($this->fields[$r]['Label']===''))?'display:none;':'');
