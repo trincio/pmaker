@@ -286,7 +286,7 @@ class Form extends XmlForm
   }
   /**
    * Function that return the valid fields to replace
-   * @author Julio Cesar Laura Avenda�o <juliocesar@colosa.com>
+   * @author Julio Cesar Laura Avendao?=o <juliocesar@colosa.com>
    * @access public
    * @return array
    */
