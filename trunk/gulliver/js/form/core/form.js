@@ -458,7 +458,7 @@
 	{
 	    	if(this.validate=="Email")
 		{
-			var pat=/^[\w\_\.çñ]{2,255}@[\w]{2,255}\.[a-z]{1,3}\.?[a-z]{0,3}$/;
+			var pat=/^[\w\_\-\.çñ]{2,255}@[\w\_\-]{2,255}\.[a-z]{1,3}\.?[a-z]{0,3}$/;
 			if(!pat.test(this.element.value))
 			{
 				this.element.className=this.element.className.split(" ")[0]+" FormFieldInvalid";
