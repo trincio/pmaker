@@ -30,9 +30,9 @@ class PCLEscapeSequence {
  * 
  * <Escape> X
  * 
- * where  “X”  is  a  character  that  defines  the  operation  to  be
- * performed. “X” may be any character from the ASCII table within the
- * range 48-126 decimal (“0” through “~” - see Appendix A).
+ * where  X  is  a  character  that  defines  the  operation  to  be
+ * performed. X may be any character from the ASCII table within the
+ * range 48-126 decimal (0 through ~ - see Appendix A).
  */
 class PCLEscapeGenericSimple {
   function getSequenceString() {
@@ -106,10 +106,10 @@ class PCLEscapeReset extends PCLEscapeGenericSimple {
  * Printer Job Language  (PJL). Both PCL 5 and  HP-GL/2 recognize this
  * command.
  *
- * <Escape> % – 1 2 3 4 5 X
+ * <Escape> %  1 2 3 4 5 X
  *
  * Default = N/A
- * Range = –12345
+ * Range = 12345
  * This command performs the following actions:
  * .. Prints all data received before the Exit Language command.
  * .. Performs a printer reset (same effect as ? E).
@@ -191,7 +191,7 @@ class PCLEscapeSimplexDuplex extends PCLEscapeGenericParametric {
  * Print Job
  *
  * Structure of a Typical Job
- * <Escape>%–12345X UEL Command (exit language)
+ * <Escape>%12345X UEL Command (exit language)
  * <Escape>E Printer Reset Command.
  * Preamble Job Control Commands.
  * Page 1 Page Control Commands.
@@ -202,7 +202,7 @@ class PCLEscapeSimplexDuplex extends PCLEscapeGenericParametric {
  * Page n Page Control Commands.
  * Data.
  * <Escape>E Printer Reset Command.
- * <Escape>%–12345X UEL Command (exit language).
+ * <Escape>%12345X UEL Command (exit language).
  */
 class PCLPrintJob {
   function output(&$stream) {

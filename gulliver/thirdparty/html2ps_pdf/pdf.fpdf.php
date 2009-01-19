@@ -1106,8 +1106,8 @@ EOF
     //   assigned in any arbitrary order.
     // * A non-negative integer generation number. In a newly created file, all indirect
     //   objects have generation numbers of 0. Nonzero generation numbers may be introduced
-    //   when the file is later updated; see Sections 3.4.3, Cross-Reference
-    //   Table, and 3.4.5, Incremental Updates.
+    //   when the file is later updated; see Sections 3.4.3, BCross-Reference
+    //   Table,B and 3.4.5, BIncremental Updates.B
     // Together, the combination of an object number and a generation number uniquely
     // identifies an indirect object. The object retains the same object number and
     // generation number throughout its existence, even if its value is modified.
