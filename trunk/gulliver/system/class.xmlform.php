@@ -933,6 +933,9 @@ class XmlForm_Field_Textarea extends XmlForm_Field
    */
   function render( $value = NULL, $owner )
   {
+    $this->executeSQL( $owner );
+    $firstElement=key($this->sqlOption);
+	  if (isset($firstElement)) $value = $firstElement;
     $className = ($this->className)? (' class="'.$this->className.'"') : '';
     if ($this->mode==='edit') {
 	    if ($this->readOnly)
@@ -1476,7 +1479,7 @@ class XmlForm_Field_Checkbox extends XmlForm_Field
   	elseif ($this->mode==='view') {
       if ($this->labelOnRight) {
     		return "<input id='form[" . $this->name . "]' value='{$this->value}' name='form[" .$this->name . "]' type='checkbox' '. $checked disabled><span class='FormCheck'>".$this->label.'</span></input>';
-      } else {                                                       
+      } else {
     		return "<input id='form[" . $this->name . "]' value='{$this->value}' name='form[" .$this->name . "]' type='checkbox' '. $checked disabled/>";
       }
   	} else {
