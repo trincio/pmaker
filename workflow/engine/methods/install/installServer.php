@@ -98,7 +98,7 @@ else if($action==="install")
 	print_r($_POST);
 	print_r("\n------------------------------------------------\n");
 	/*
-	 * Instalación son SIMPLE POST
+	 * InstalaciC3n son SIMPLE POST
 	 *
 	 * Datos necesarios por POST:
 	 *
@@ -136,7 +136,7 @@ else if($action==="install")
 	 *		4.2.3 Dump del archivo processmaker/rbac/engine/data/mysql/schema.sql
 	 *		4.2.4 Dump del archivo processmaker/rbac/engine/data/mysql/insert.sql
 	 *
-	 *	4.3 Crear archivo de configuración y directorios para el sitio workflow
+	 *	4.3 Crear archivo de configuraciC3n y directorios para el sitio workflow
 	 *
 	 *		4.3.1 Crer los directorios:
 	 *			
@@ -176,7 +176,7 @@ else if($action==="install")
 	* 	$PATH_TO_WORKFLOW_DATA
 	* 	$PATH_TO_COMPILED DATA
 	*
-	*	4.2 Actualizar archivos de idiomas abriendo la página (background)
+	*	4.2 Actualizar archivos de idiomas abriendo la pC!gina (background)
 	*
 	*		http://ProcessmakerHostname/sysworkflow/en/green/tools/updateTranslation
 	*

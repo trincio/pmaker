@@ -71,6 +71,14 @@
     $oProcess->renewAllStepGuid ( $oData );
     $oProcess->renewAllTriggerGuid ( $oData );
     $oProcess->renewAllSubProcessGuid ( $oData );
+    $oProcess->renewAllCaseTrackerObjectGuid ( $oData );
+    $oProcess->renewAllDBSourceGuid ( $oData );
+    $oProcess->renewAllObjectPermissionGuid ( $oData );
+    $oProcess->renewAllRouteGuid ( $oData );
+    $oProcess->renewAllStageGuid ( $oData );
+    $oProcess->renewAllSwimlanesElementsGuid ( $oData );
+    $oProcess->renewAllReportTableGuid ( $oData );
+    $oProcess->renewAllReportVarGuid ( $oData );
     $oProcess->createProcessFromData ($oData, $path . $filename );
   }
 
@@ -87,35 +95,17 @@
     $oProcess->renewAllStepGuid ( $oData );
     $oProcess->renewAllTriggerGuid ( $oData );
     $oProcess->renewAllSubProcessGuid ( $oData );
+    $oProcess->renewAllCaseTrackerObjectGuid ( $oData );
+    $oProcess->renewAllDBSourceGuid ( $oData );
+    $oProcess->renewAllObjectPermissionGuid ( $oData );
+    $oProcess->renewAllRouteGuid ( $oData );
+    $oProcess->renewAllStageGuid ( $oData );
+    $oProcess->renewAllSwimlanesElementsGuid ( $oData );
+    $oProcess->renewAllReportTableGuid ( $oData );
+    $oProcess->renewAllReportVarGuid ( $oData );
     $oProcess->createProcessFromData ($oData, $path . $filename );
   }
-
-    //show the info after the imported process
-    G::LoadClass('processes');
-    $oProcess = new Processes();
-    try {
-      $oProcess->ws_open_public ();
-      $processData = $oProcess->ws_processGetData ( $ObjUid  );
-      $Fields['pro_title']    = $processData->title;
-      $Fields['installSteps'] = nl2br($processData->installSteps);
-      $Fields['category']     = $processData->category;
-      $Fields['version']      = $processData->version;
-    }
-    catch (Exception $e) {
-      $Fields['pro_title']    = $oData->process['PRO_TITLE'];
-      $Fields['installSteps'] = '';
-      $Fields['category']     = '';
-      $Fields['version']      = '';
-    }
-    $G_MAIN_MENU            = 'processmaker';
-    $G_ID_MENU_SELECTED     = 'PROCESSES';
-    $G_PUBLISH = new Publisher;
-    $Fields['PRO_UID'] =     $sNewProUid;
-    $processmapLink = "processes_Map?PRO_UID=$sNewProUid";
-    $G_PUBLISH->AddContent('xmlform', 'xmlform', 'processes/processes_ImportSucessful', '', $Fields, $processmapLink );
-    G::RenderPage('publish');
-    die;
-
+  G::header('Location: processes_Map?PRO_UID=' . $sNewProUid);
 }
 catch ( Exception $e ){
   $G_PUBLISH = new Publisher;
