@@ -160,8 +160,8 @@ span.XtreeMinus:hover
 .processmap_task___firefox
 {
 	position	: absolute;
-	height		: 30;
-	width		: 150;
+	height		: 30px;
+	width		: 150px;
 	background-color: #006699;
 	border		: 1px solid #006699;
 	z-index		: 10;
@@ -191,10 +191,10 @@ span.XtreeMinus:hover
 .processmap_task___processmaker
 {
 	position	: absolute;
-	height		: 40;
-	height		: 38;
-	width		: 171;
-	width		: 164;
+	height		: 40px;
+	height		: 38px;
+	width		: 171px;
+	width		: 164px;
 	z-index		: 10;
 	overflow	: hidden;
 	cursor		: move;
@@ -747,6 +747,9 @@ form.formSearch .Record
 	border:1px solid #DFDFDF;
 	border-collapse:collapse;
 	color:#27373F;
+}
+.pagedTable td{
+    text-align:left;
 }
 .pagedTableDefault .pagedTable .Row1
 {
