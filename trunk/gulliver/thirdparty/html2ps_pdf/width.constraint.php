@@ -4,7 +4,7 @@ require_once(HTML2PS_DIR.'value.generic.php');
 
 /**
  * @version 1.0
- * @created 14-θών-2006 17:49:11
+ * @created 14-h~m-2006 17:49:11
  */
 class WidthConstraint extends CSSValue {
   var $_min_width;

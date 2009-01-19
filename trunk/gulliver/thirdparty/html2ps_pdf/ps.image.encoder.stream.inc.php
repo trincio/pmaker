@@ -4,7 +4,7 @@
 /**
  * @author Konstantin Bournayev
  * @version 1.0
- * @created 24-џэт-2006 20:56:23
+ * @created 24-mb-2006 20:56:23
  */
 class PSImageEncoderStream
 {
@@ -23,10 +23,10 @@ class PSImageEncoderStream
 }
 
 /**
- * @created 24-џэт-2006 20:56:23
+ * @created 24-mb-2006 20:56:23
  * @author Konstantin Bournayev
  * @version 1.0
- * @updated 24-џэт-2006 21:19:35
+ * @updated 24-mb-2006 21:19:35
  */
 class PSImageEncoder
 {

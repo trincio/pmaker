@@ -148,8 +148,8 @@ function &create_node_box(&$root, &$pipeline) {
 
   // CSS 2.1:
   // 9.7 Relationships between 'display', 'position', and 'float'
-  // The three properties that affect box generation and layout  
-  // 'display', 'position', and 'float'  interact as follows:
+  // The three properties that affect box generation and layout B 
+  // 'display', 'position', and 'float' B interact as follows:
   // 1. If 'display' has the value 'none', then 'position' and 'float' do not apply. 
   //    In this case, the element generates no box.
   $position_handler =& CSS::get_handler(CSS_POSITION);
@@ -441,8 +441,8 @@ function &create_pdf_pseudoelement($root, $pe_type, &$pipeline) {
   
   // CSS 2.1:
   // 9.7 Relationships between 'display', 'position', and 'float'
-  // The three properties that affect box generation and layout  
-  // 'display', 'position', and 'float'  interact as follows:
+  // The three properties that affect box generation and layout B 
+  // 'display', 'position', and 'float' B interact as follows:
   // 1. If 'display' has the value 'none', then 'position' and 'float' do not apply. 
   //    In this case, the element generates no box.
     

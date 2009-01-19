@@ -7,7 +7,7 @@ require_once(HTML2PS_DIR.'ps.image.encoder.stream.inc.php');
  * another encoder.
  * @author Konstantin Bournayev
  * @version 1.0
- * @updated 24-џэт-2006 21:18:30
+ * @updated 24-mb-2006 21:18:30
  */
 class PSImageEncoderSimple extends PSImageEncoderStream {
   function PSImageEncoderSimple() {
