@@ -35,7 +35,6 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
   $file = G::decrypt( $_POST['A'] , URL_KEY );
 
  	$G_PUBLISH = new Publisher;
- 	$G_HEADER->clearScripts();
   $form = new Form( $file , PATH_DYNAFORM, SYS_LANG, true );
   switch(basename($form->template,'.html'))
   {
