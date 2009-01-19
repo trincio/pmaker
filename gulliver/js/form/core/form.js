@@ -73,7 +73,12 @@
     }
     this.setDependentFields = function(dependentFields) {
       var i;
-      dependentFields = dependentFields.split(',');
+      if (dependentFields.indexOf(',') > -1) {
+        dependentFields = dependentFields.split(',');
+      }
+      else {
+        dependentFields = dependentFields.split('|');
+      }alert(dependentFields.length);
       for(i=0;i<dependentFields.length;i++) {
         if (me.form.getElementIdByName(dependentFields[i])>=0) {
           me.dependentFields[i] = me.form.getElementByName(dependentFields[i]);

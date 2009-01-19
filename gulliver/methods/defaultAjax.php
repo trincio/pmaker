@@ -22,12 +22,12 @@
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
  *
  */
- 
+
   /*NEXT LINE: Runs any configuration defined to be executed before dependent fields recalc*/
-  if ( isset($_SESSION['CURRENT_PAGE_INITILIZATION']) ) 
+  if ( isset($_SESSION['CURRENT_PAGE_INITILIZATION']) )
     eval($_SESSION['CURRENT_PAGE_INITILIZATION']);
-    
-    
+
+
   G::LoadThirdParty('pear/json','class.json');
 
   $json=new Services_JSON();
@@ -40,7 +40,7 @@
 
   $xmlFile = G::getUIDName(urlDecode($_POST['form']));
   $sPath = XMLFORM_AJAX_PATH;
-  
+
   //if the xmlform file doesn't exists, then try with the plugins folders
   if ( !is_file ( XMLFORM_AJAX_PATH . $xmlFile ) ) {
      $aux = explode ( PATH_SEP, $xmlFile );
@@ -52,7 +52,7 @@
         }
       }
     }
-  
+
   $G_FORM=new form( $xmlFile , $sPath );
   $G_FORM->id=urlDecode($_POST['form']);
   //$G_FORM->values=isset($_SESSION[$G_FORM->id]) ? $_SESSION[$G_FORM->id] : array();
@@ -73,7 +73,7 @@
       unset($newValues[$sKey]->$aKeys[0]);
     }
   }
-  
+
   //Resolve dependencies
   //Returns an array ($dependentFields) with the names of the fields
   //that depends of fields passed through AJAX ($_GET/$_POST)
@@ -97,15 +97,15 @@
   		//$_SESSION[$G_FORM->id][$k] = $v;
   	}
   }
-  
+
   $G_FORM->values=isset($_SESSION[$G_FORM->id]) ? $_SESSION[$G_FORM->id] : array();
-  
+
   $dependentFields=array_unique($dependentFields);
-  
+
   //Parse and update the new content
   $template = PATH_CORE . 'templates/xmlform.html';
   $newContent=$G_FORM->getFields($template, (isset($_POST['row']) ? $_POST['row'] : -1));
-  
+
   //Returns the dependentFields's content
   $sendContent=array();
   $r=0;
@@ -158,14 +158,19 @@
     }
     return $result;
   }
-  
+
   function subDependencies( $k , &$G_FORM , &$aux, $grid = '') {
     if (array_search( $k, $aux )!==FALSE) return array();
     if ($grid == '') {
       if (!array_key_exists( $k , $G_FORM->fields )) return array();
       if (!isset($G_FORM->fields[$k]->dependentFields)) return array();
       $aux[] = $k;
-      $myDependentFields = explode( ',', $G_FORM->fields[$k]->dependentFields);
+      if (strpos($G_FORM->fields[$k]->dependentFields, ',') !== false) {
+        $myDependentFields = explode( ',', $G_FORM->fields[$k]->dependentFields);
+      }
+      else {
+        $myDependentFields = explode( '|', $G_FORM->fields[$k]->dependentFields);
+      }
       for( $r=0 ; $r < sizeof($myDependentFields) ; $r++ ) {
         if ($myDependentFields[$r]=="") unset($myDependentFields[$r]);
       }
@@ -178,7 +183,12 @@
       if (!array_key_exists( $k , $G_FORM->fields[$grid]->fields )) return array();
       if (!isset($G_FORM->fields[$grid]->fields[$k]->dependentFields)) return array();
       $aux[] = $k;
-      $myDependentFields = explode( ',', $G_FORM->fields[$grid]->fields[$k]->dependentFields);
+      if (strpos($G_FORM->fields[$grid]->fields[$k]->dependentFields, ',') !== false) {
+        $myDependentFields = explode( ',', $G_FORM->fields[$grid]->fields[$k]->dependentFields);
+      }
+      else {
+        $myDependentFields = explode( '|', $G_FORM->fields[$grid]->fields[$k]->dependentFields);
+      }
       for( $r=0 ; $r < sizeof($myDependentFields) ; $r++ ) {
         if ($myDependentFields[$r]=="") unset($myDependentFields[$r]);
       }

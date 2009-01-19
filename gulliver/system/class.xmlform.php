@@ -934,7 +934,8 @@ class XmlForm_Field_Textarea extends XmlForm_Field
   function render( $value = NULL, $owner )
   {
     $this->executeSQL( $owner );
-    $firstElement=key($this->sqlOption);
+
+    if (isset($this->sqlOption)) $firstElement=key($this->sqlOption);
 	  if (isset($firstElement)) $value = $firstElement;
     $className = ($this->className)? (' class="'.$this->className.'"') : '';
     if ($this->mode==='edit') {
