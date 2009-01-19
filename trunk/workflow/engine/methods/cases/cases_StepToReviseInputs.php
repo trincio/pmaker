@@ -148,13 +148,13 @@ function toRevisePanel(APP_UID,DEL_INDEX)
 {
 	oPanel = new leimnud.module.panel();
 	oPanel.options = {
-	  	size	:{w:250,h:450},
+	    size	:{w:250,h:450},
 	  	position:{x:0,y:100},
 	  	title	:'',
 	  	theme	:"processmaker",
 	  	statusBar:false,
 	  	control	:{resize:false,roll:false,close:false,drag:true},
-	  	fx	:{modal:false,opacity:true,blinkToFront:false,fadeIn:false,drag:true}
+	    fx	:{modal:false,opacity:true,blinkToFront:false,fadeIn:false,drag:true}
   	};
   	oPanel.events = {
   		remove: function() { delete(oPanel); }.extend(this)
