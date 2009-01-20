@@ -182,6 +182,12 @@ var G_Grid = function(oForm, sGridName)
   		    	  	aObjects[0].name  = aObjects[0].name.replace(/\[1\]/g, '\[' + (this.oGrid.rows.length - 2) + '\]');
   		    	  	aObjects[0].id    = aObjects[0].id.replace(/\[1\]/g, '\[' + (this.oGrid.rows.length - 2) + '\]');
   		    	  	aObjects[0].value = '';
+  		    	  	if (aObjects[1]) {
+  		            if (aObjects[1].onclick) {
+  		          		sAux = new String(aObjects[1].onclick);
+  		          	  eval('aObjects[1].onclick = ' + sAux.replace(/\[1\]/g, '\[' + (this.oGrid.rows.length - 2) + '\]') + ';');
+  		          	}
+  		          }
   		    	  }
   		    	  aObjects = oNewRow.getElementsByTagName('td')[i].getElementsByTagName('span');
   				    if (aObjects)
