@@ -2952,8 +2952,16 @@ class processMap {
  			 	 /* Prepare page before to show */
     	   global $_DBArray;
   			 $_DBArray['NewCase'] = $this->subProcess_TaskIni($sProcessUID);
-         //print_r($_DBArray['NewCase']); die;
-    	     require_once 'classes/model/SubProcess.php';
+  			 unset($_DBArray['TheProcesses']);
+  			 $_DBArray['TheProcesses'][] = array('pro_uid' => 'char', 'value' => 'char');
+  			 $i = 0;
+         foreach($_DBArray['NewCase'] as $aRow) {
+          if ($i > 0) {
+            $_DBArray['TheProcesses'][] = array('pro_uid' => $aRow['pro_uid'] . '_' . $i, 'value' => $aRow['value']);
+          }
+          $i++;
+         }
+    	   require_once 'classes/model/SubProcess.php';
     		 $oCriteria = new Criteria('workflow');
     		 $oCriteria->add(SubProcessPeer::PRO_PARENT, $sProcessUID);
     	     $oCriteria->add(SubProcessPeer::TAS_PARENT, $sTaskUID);
