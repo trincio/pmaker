@@ -2238,7 +2238,8 @@ class processMap {
     	                             'OBJECT_TYPE'  => 'char',
     	                             'OBJECT'       => 'char',
     	                             'PARTICIPATED' => 'char',
-    	                             'ACTION'       => 'char');
+    	                             'ACTION'       => 'char',
+    	                             'OP_CASE_STATUS'=> 'char');
     require_once 'classes/model/ObjectPermission.php';
     $oCriteria  = new Criteria('workflow');
     $oCriteria->addSelectColumn(ObjectPermissionPeer::OP_UID);
@@ -2250,6 +2251,7 @@ class processMap {
   	$oCriteria->addSelectColumn(ObjectPermissionPeer::OP_OBJ_TYPE);
   	$oCriteria->addSelectColumn(ObjectPermissionPeer::OP_OBJ_UID);
   	$oCriteria->addSelectColumn(ObjectPermissionPeer::OP_ACTION);
+  	$oCriteria->addSelectColumn(ObjectPermissionPeer::OP_CASE_STATUS);
     $oCriteria->add(ObjectPermissionPeer::PRO_UID, $sProcessUID);
     $oDataset = ObjectPermissionPeer::doSelectRS($oCriteria);
     $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
@@ -2366,7 +2368,8 @@ class processMap {
     	                               'OBJECT_TYPE'  => $sObjectType,
     	                               'OBJECT'       => $sObject,
     	                               'PARTICIPATED' => $sParticipated,
-    	                               'ACTION'       => $sAction);
+    	                               'ACTION'       => $sAction,
+    	                               'OP_CASE_STATUS'=> $aRow['OP_CASE_STATUS']);
       $oDataset->next();
     }
     global $_DBArray;

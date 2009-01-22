@@ -1,4 +1,4 @@
-<?php
+<?php //print_r($_POST); die;
 /**
  * processes_Save.php
  *
@@ -66,7 +66,8 @@ $aData = array('OP_UID'           => G::generateUniqueID(),
                'OP_PARTICIPATE'   => $_POST['form']['OP_PARTICIPATE'],
                'OP_OBJ_TYPE'      => $_POST['form']['OP_OBJ_TYPE'],
                'OP_OBJ_UID'       => $sObjectUID,
-               'OP_ACTION'        => $_POST['form']['OP_ACTION']);
+               'OP_ACTION'        => $_POST['form']['OP_ACTION'],
+               'OP_CASE_STATUS'   => $_POST['form']['OP_CASE_STATUS']);
 $oOP->fromArray($aData,BasePeer::TYPE_FIELDNAME);
 $oOP->save();
 G::LoadClass('processMap');
