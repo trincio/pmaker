@@ -4370,6 +4370,16 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
+    <column name="OP_CASE_STATUS" type="VARCHAR" size="10" required="false" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="OP_CASE_STATUS"/>
+        <parameter name="Type" value="varchar(10)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
     <validator column="OP_UID">
       <rule name="maxLength" value="32" message="Object permission UID can be no larger than ${value} in size" />
       <rule name="required" message="Object permission UID is required." />
@@ -4949,7 +4959,7 @@
       <vendor type="mysql">
         <parameter name="Field" value="SA_INIT_DATE"/>
         <parameter name="Type" value="datetime"/>
-        <parameter name="Null" value="NO"/>
+        <parameter name="Null" value="YES"/>
         <parameter name="Key" value=""/>
         <parameter name="Extra" value=""/>
       </vendor>
@@ -4958,7 +4968,7 @@
       <vendor type="mysql">
         <parameter name="Field" value="SA_FINISH_DATE"/>
         <parameter name="Type" value="datetime"/>
-        <parameter name="Null" value="NO"/>
+        <parameter name="Null" value="YES"/>
         <parameter name="Key" value=""/>
         <parameter name="Extra" value=""/>
       </vendor>
