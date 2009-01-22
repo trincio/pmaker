@@ -84,6 +84,8 @@ class ObjectPermissionMapBuilder {
 
 		$tMap->addColumn('OP_ACTION', 'OpAction', 'string', CreoleTypes::VARCHAR, true, 10);
 
+		$tMap->addColumn('OP_CASE_STATUS', 'OpCaseStatus', 'string', CreoleTypes::VARCHAR, false, 10);
+
 		$tMap->addValidator('OP_UID', 'maxLength', 'propel.validator.MaxLengthValidator', '32', 'Object permission UID can be no larger than 32 in size');
 
 		$tMap->addValidator('OP_UID', 'required', 'propel.validator.RequiredValidator', '', 'Object permission UID is required.');

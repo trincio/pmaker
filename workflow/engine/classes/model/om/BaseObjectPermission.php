@@ -97,6 +97,13 @@ abstract class BaseObjectPermission extends BaseObject  implements Persistent {
 	 */
 	protected $op_action = '0';
 
+
+	/**
+	 * The value for the op_case_status field.
+	 * @var        string
+	 */
+	protected $op_case_status = '0';
+
 	/**
 	 * Flag to prevent endless save loop, if this object is referenced
 	 * by another object which falls in this transaction.
@@ -219,6 +226,17 @@ abstract class BaseObjectPermission extends BaseObject  implements Persistent {
 	{
 
 		return $this->op_action;
+	}
+
+	/**
+	 * Get the [op_case_status] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getOpCaseStatus()
+	{
+
+		return $this->op_case_status;
 	}
 
 	/**
@@ -442,6 +460,28 @@ abstract class BaseObjectPermission extends BaseObject  implements Persistent {
 	} // setOpAction()
 
 	/**
+	 * Set the value of [op_case_status] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setOpCaseStatus($v)
+	{
+
+		// Since the native PHP type for this column is string,
+		// we will cast the input to a string (if it is not).
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->op_case_status !== $v || $v === '0') {
+			$this->op_case_status = $v;
+			$this->modifiedColumns[] = ObjectPermissionPeer::OP_CASE_STATUS;
+		}
+
+	} // setOpCaseStatus()
+
+	/**
 	 * Hydrates (populates) the object variables with values from the database resultset.
 	 *
 	 * An offset (1-based "start column") is specified so that objects can be hydrated
@@ -478,12 +518,14 @@ abstract class BaseObjectPermission extends BaseObject  implements Persistent {
 
 			$this->op_action = $rs->getString($startcol + 9);
 
+			$this->op_case_status = $rs->getString($startcol + 10);
+
 			$this->resetModified();
 
 			$this->setNew(false);
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 10; // 10 = ObjectPermissionPeer::NUM_COLUMNS - ObjectPermissionPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 11; // 11 = ObjectPermissionPeer::NUM_COLUMNS - ObjectPermissionPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating ObjectPermission object", $e);
@@ -716,6 +758,9 @@ abstract class BaseObjectPermission extends BaseObject  implements Persistent {
 			case 9:
 				return $this->getOpAction();
 				break;
+			case 10:
+				return $this->getOpCaseStatus();
+				break;
 			default:
 				return null;
 				break;
@@ -746,6 +791,7 @@ abstract class BaseObjectPermission extends BaseObject  implements Persistent {
 			$keys[7] => $this->getOpObjType(),
 			$keys[8] => $this->getOpObjUid(),
 			$keys[9] => $this->getOpAction(),
+			$keys[10] => $this->getOpCaseStatus(),
 		);
 		return $result;
 	}
@@ -807,6 +853,9 @@ abstract class BaseObjectPermission extends BaseObject  implements Persistent {
 			case 9:
 				$this->setOpAction($value);
 				break;
+			case 10:
+				$this->setOpCaseStatus($value);
+				break;
 		} // switch()
 	}
 
@@ -840,6 +889,7 @@ abstract class BaseObjectPermission extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[7], $arr)) $this->setOpObjType($arr[$keys[7]]);
 		if (array_key_exists($keys[8], $arr)) $this->setOpObjUid($arr[$keys[8]]);
 		if (array_key_exists($keys[9], $arr)) $this->setOpAction($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setOpCaseStatus($arr[$keys[10]]);
 	}
 
 	/**
@@ -861,6 +911,7 @@ abstract class BaseObjectPermission extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(ObjectPermissionPeer::OP_OBJ_TYPE)) $criteria->add(ObjectPermissionPeer::OP_OBJ_TYPE, $this->op_obj_type);
 		if ($this->isColumnModified(ObjectPermissionPeer::OP_OBJ_UID)) $criteria->add(ObjectPermissionPeer::OP_OBJ_UID, $this->op_obj_uid);
 		if ($this->isColumnModified(ObjectPermissionPeer::OP_ACTION)) $criteria->add(ObjectPermissionPeer::OP_ACTION, $this->op_action);
+		if ($this->isColumnModified(ObjectPermissionPeer::OP_CASE_STATUS)) $criteria->add(ObjectPermissionPeer::OP_CASE_STATUS, $this->op_case_status);
 
 		return $criteria;
 	}
@@ -932,6 +983,8 @@ abstract class BaseObjectPermission extends BaseObject  implements Persistent {
 		$copyObj->setOpObjUid($this->op_obj_uid);
 
 		$copyObj->setOpAction($this->op_action);
+
+		$copyObj->setOpCaseStatus($this->op_case_status);
 
 
 		$copyObj->setNew(true);

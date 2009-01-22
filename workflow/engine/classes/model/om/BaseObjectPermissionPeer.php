@@ -24,7 +24,7 @@ abstract class BaseObjectPermissionPeer {
 	const CLASS_DEFAULT = 'classes.model.ObjectPermission';
 
 	/** The total number of columns. */
-	const NUM_COLUMNS = 10;
+	const NUM_COLUMNS = 11;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -60,6 +60,9 @@ abstract class BaseObjectPermissionPeer {
 	/** the column name for the OP_ACTION field */
 	const OP_ACTION = 'OBJECT_PERMISSION.OP_ACTION';
 
+	/** the column name for the OP_CASE_STATUS field */
+	const OP_CASE_STATUS = 'OBJECT_PERMISSION.OP_CASE_STATUS';
+
 	/** The PHP to DB Name Mapping */
 	private static $phpNameMap = null;
 
@@ -71,10 +74,10 @@ abstract class BaseObjectPermissionPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('OpUid', 'ProUid', 'TasUid', 'UsrUid', 'OpUserRelation', 'OpTaskSource', 'OpParticipate', 'OpObjType', 'OpObjUid', 'OpAction', ),
-		BasePeer::TYPE_COLNAME => array (ObjectPermissionPeer::OP_UID, ObjectPermissionPeer::PRO_UID, ObjectPermissionPeer::TAS_UID, ObjectPermissionPeer::USR_UID, ObjectPermissionPeer::OP_USER_RELATION, ObjectPermissionPeer::OP_TASK_SOURCE, ObjectPermissionPeer::OP_PARTICIPATE, ObjectPermissionPeer::OP_OBJ_TYPE, ObjectPermissionPeer::OP_OBJ_UID, ObjectPermissionPeer::OP_ACTION, ),
-		BasePeer::TYPE_FIELDNAME => array ('OP_UID', 'PRO_UID', 'TAS_UID', 'USR_UID', 'OP_USER_RELATION', 'OP_TASK_SOURCE', 'OP_PARTICIPATE', 'OP_OBJ_TYPE', 'OP_OBJ_UID', 'OP_ACTION', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+		BasePeer::TYPE_PHPNAME => array ('OpUid', 'ProUid', 'TasUid', 'UsrUid', 'OpUserRelation', 'OpTaskSource', 'OpParticipate', 'OpObjType', 'OpObjUid', 'OpAction', 'OpCaseStatus', ),
+		BasePeer::TYPE_COLNAME => array (ObjectPermissionPeer::OP_UID, ObjectPermissionPeer::PRO_UID, ObjectPermissionPeer::TAS_UID, ObjectPermissionPeer::USR_UID, ObjectPermissionPeer::OP_USER_RELATION, ObjectPermissionPeer::OP_TASK_SOURCE, ObjectPermissionPeer::OP_PARTICIPATE, ObjectPermissionPeer::OP_OBJ_TYPE, ObjectPermissionPeer::OP_OBJ_UID, ObjectPermissionPeer::OP_ACTION, ObjectPermissionPeer::OP_CASE_STATUS, ),
+		BasePeer::TYPE_FIELDNAME => array ('OP_UID', 'PRO_UID', 'TAS_UID', 'USR_UID', 'OP_USER_RELATION', 'OP_TASK_SOURCE', 'OP_PARTICIPATE', 'OP_OBJ_TYPE', 'OP_OBJ_UID', 'OP_ACTION', 'OP_CASE_STATUS', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
 	);
 
 	/**
@@ -84,10 +87,10 @@ abstract class BaseObjectPermissionPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('OpUid' => 0, 'ProUid' => 1, 'TasUid' => 2, 'UsrUid' => 3, 'OpUserRelation' => 4, 'OpTaskSource' => 5, 'OpParticipate' => 6, 'OpObjType' => 7, 'OpObjUid' => 8, 'OpAction' => 9, ),
-		BasePeer::TYPE_COLNAME => array (ObjectPermissionPeer::OP_UID => 0, ObjectPermissionPeer::PRO_UID => 1, ObjectPermissionPeer::TAS_UID => 2, ObjectPermissionPeer::USR_UID => 3, ObjectPermissionPeer::OP_USER_RELATION => 4, ObjectPermissionPeer::OP_TASK_SOURCE => 5, ObjectPermissionPeer::OP_PARTICIPATE => 6, ObjectPermissionPeer::OP_OBJ_TYPE => 7, ObjectPermissionPeer::OP_OBJ_UID => 8, ObjectPermissionPeer::OP_ACTION => 9, ),
-		BasePeer::TYPE_FIELDNAME => array ('OP_UID' => 0, 'PRO_UID' => 1, 'TAS_UID' => 2, 'USR_UID' => 3, 'OP_USER_RELATION' => 4, 'OP_TASK_SOURCE' => 5, 'OP_PARTICIPATE' => 6, 'OP_OBJ_TYPE' => 7, 'OP_OBJ_UID' => 8, 'OP_ACTION' => 9, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+		BasePeer::TYPE_PHPNAME => array ('OpUid' => 0, 'ProUid' => 1, 'TasUid' => 2, 'UsrUid' => 3, 'OpUserRelation' => 4, 'OpTaskSource' => 5, 'OpParticipate' => 6, 'OpObjType' => 7, 'OpObjUid' => 8, 'OpAction' => 9, 'OpCaseStatus' => 10, ),
+		BasePeer::TYPE_COLNAME => array (ObjectPermissionPeer::OP_UID => 0, ObjectPermissionPeer::PRO_UID => 1, ObjectPermissionPeer::TAS_UID => 2, ObjectPermissionPeer::USR_UID => 3, ObjectPermissionPeer::OP_USER_RELATION => 4, ObjectPermissionPeer::OP_TASK_SOURCE => 5, ObjectPermissionPeer::OP_PARTICIPATE => 6, ObjectPermissionPeer::OP_OBJ_TYPE => 7, ObjectPermissionPeer::OP_OBJ_UID => 8, ObjectPermissionPeer::OP_ACTION => 9, ObjectPermissionPeer::OP_CASE_STATUS => 10, ),
+		BasePeer::TYPE_FIELDNAME => array ('OP_UID' => 0, 'PRO_UID' => 1, 'TAS_UID' => 2, 'USR_UID' => 3, 'OP_USER_RELATION' => 4, 'OP_TASK_SOURCE' => 5, 'OP_PARTICIPATE' => 6, 'OP_OBJ_TYPE' => 7, 'OP_OBJ_UID' => 8, 'OP_ACTION' => 9, 'OP_CASE_STATUS' => 10, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
 	);
 
 	/**
@@ -207,6 +210,8 @@ abstract class BaseObjectPermissionPeer {
 		$criteria->addSelectColumn(ObjectPermissionPeer::OP_OBJ_UID);
 
 		$criteria->addSelectColumn(ObjectPermissionPeer::OP_ACTION);
+
+		$criteria->addSelectColumn(ObjectPermissionPeer::OP_CASE_STATUS);
 
 	}
 
