@@ -78,7 +78,7 @@
       }
       else {
         dependentFields = dependentFields.split('|');
-      }alert(dependentFields.length);
+      }
       for(i=0;i<dependentFields.length;i++) {
         if (me.form.getElementIdByName(dependentFields[i])>=0) {
           me.dependentFields[i] = me.form.getElementByName(dependentFields[i]);

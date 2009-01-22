@@ -196,7 +196,7 @@ class NET
                 case 'oracle':
                     $this->db_port = ($this->db_port == "") ? "1521" : $this->db_port;
                     try{
-                        $link = $conn = @oci_connect($this->db_user,$this->db_passwd, "(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP) (HOST=$this->ip) (PORT=$this->db_port) )) (CONNECT_DATA=(SERVICE_NAME=)))");
+                        $link = $conn = @oci_connect($this->db_user,$this->db_passwd, "(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP) (HOST=$this->ip) (PORT=$this->db_port) )) (CONNECT_DATA=(SERVICE_NAME=$this->db_sourcename)))");
                         if ($link) {
                             $stat->status = 'SUCCESS';
                             $this->errstr = "";
@@ -308,7 +308,7 @@ class NET
 
                 case 'oracle':
                     $this->db_port = ($this->db_port == "") ? "1521" : $this->db_port;
-                    $link = @oci_connect($this->db_user,$this->db_passwd, "(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP) (HOST=$this->ip) (PORT=$this->db_port) )))");
+                    $link = @oci_connect($this->db_user,$this->db_passwd, "(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP) (HOST=$this->ip) (PORT=$this->db_port) )) (CONNECT_DATA=(SERVICE_NAME=$this->db_sourcename)))");
                     if ($link) {
                         $stid = @oci_parse($link, 'select AUTHENTICATION_TYPE from v$session_connect_info');
                         $result = @oci_execute($stid, OCI_DEFAULT);
