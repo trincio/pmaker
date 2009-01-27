@@ -54,8 +54,15 @@ try {
   $G_MAIN_MENU              = 'processmaker';
   $G_ID_MENU_SELECTED       = 'USERS';
   $G_PUBLISH                = new Publisher;
-  $G_PUBLISH->AddContent('xmlform', 'xmlform', 'users/users_View.xml', '', $aFields);
-  $G_PUBLISH->AddContent('xmlform', 'xmlform', 'users/users_Edit.xml', 'display:none', $aFields, 'users_Save?USR_UID=' . $_SESSION['CURRENT_USER']);
+  $G_PUBLISH->AddContent('xmlform', 'xmlform', 'users/users_View.xml', '', $aFields); 	  
+  if($_SESSION['CURRENT_USER']=='00000000000000000000000000000001')
+  {	//$G_PUBLISH->AddContent('xmlform', 'xmlform', 'users/users_ViewAdmin.xml', '', $aFields);  
+	  $G_PUBLISH->AddContent('xmlform', 'xmlform', 'users/users_EditAdmin.xml', 'display:none', $aFields, 'users_Save?USR_UID=' . $_SESSION['CURRENT_USER']);
+	}
+	else
+	{ 
+	  $G_PUBLISH->AddContent('xmlform', 'xmlform', 'users/users_Edit.xml', 'display:none', $aFields, 'users_Save?USR_UID=' . $_SESSION['CURRENT_USER']);
+	}  
   G::RenderPage('publish');
 }
 catch (Exception $oException) {
