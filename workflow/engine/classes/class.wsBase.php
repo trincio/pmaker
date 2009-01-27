@@ -1151,4 +1151,98 @@ class wsBase
 		}
 	}
 
+	public function reassignCase( $sessionId, $caseId, $delIndex, $userIdSource, $userIdTarget ){
+		try {
+		  G::LoadClass('derivation');
+			if ( $userIdTarget == $userIdSource ) {
+		  	$result = new wsResponse (30, "Target and Origin user are the same" );
+	  	  return $result;
+	  	}
+
+		  /******************( 1 )******************/
+			$oCriteria = new Criteria('workflow');
+			$oCriteria->add(UsersPeer::USR_STATUS, 'ACTIVE' );
+			$oCriteria->add(UsersPeer::USR_UID, $userIdSource);
+			$oDataset = UsersPeer::doSelectRS($oCriteria);
+			$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+			$oDataset->next();
+			$aRow = $oDataset->getRow();
+		  if(!is_array($aRow))
+		  {
+		  		$result = new wsResponse (31, "Invalid origin user" );
+	  			return $result;
+		  }
+
+		  /******************( 2 )******************/
+		  $oCase = new Cases();
+			$rows = $oCase->loadCase($caseId);
+			if(!is_array($aRow))
+			{
+		  		$result = new wsResponse (32, "This case is not open." );
+	  			return $result;
+		  }
+
+		  /******************( 3 )******************/
+			$oCriteria = new Criteria('workflow');
+			$aConditions   = array();
+//      $aConditions[] = array(AppDelegationPeer::USR_UID, TaskUserPeer::USR_UID);
+//      $aConditions[] = array(AppDelegationPeer::TAS_UID, TaskUserPeer::TAS_UID);
+//      $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
+		  //$oCriteria->addJoin(AppDelegationPeer::USR_UID, TaskUserPeer::USR_UID, Criteria::LEFT_JOIN);
+			$oCriteria->add(AppDelegationPeer::APP_UID, $caseId );
+			$oCriteria->add(AppDelegationPeer::USR_UID, $userIdSource );
+			$oCriteria->add(AppDelegationPeer::DEL_INDEX, $delIndex);
+			$oCriteria->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
+			$oDataset = AppDelegationPeer::doSelectRS($oCriteria);
+			$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+			$oDataset->next();
+			$aRow = $oDataset->getRow();
+		  if(!is_array($aRow))
+		  {
+		  		$result = new wsResponse (33, "Invalid delindex for this user" );
+	  			return $result;
+		  }
+		  $tasUid = $aRow['TAS_UID'];
+		  $derivation = new Derivation ();
+		  $userList = $derivation->getAllUsersFromAnyTask( $tasUid );
+		  if ( ! in_array ( $userIdTarget, $userList ) ) {
+		  	$result = new wsResponse (34, "The userTarget has not rights to execute the task" );
+	  	  return $result;
+	  	}
+
+
+		  /******************( 4 )******************/
+			$oCriteria = new Criteria('workflow');
+			$oCriteria->add(UsersPeer::USR_STATUS, 'ACTIVE' );
+			$oCriteria->add(UsersPeer::USR_UID, $userIdTarget);
+			$oDataset = UsersPeer::doSelectRS($oCriteria);
+			$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+			$oDataset->next();
+			$aRow = $oDataset->getRow();
+		  if(!is_array($aRow))
+		  {
+		  		$result = new wsResponse (35, "The user destination is invalid" );
+	  			return $result;
+		  }
+
+
+		  /******************( 5 )******************/
+		  $var=$oCase->reassignCase($caseId, $delIndex, $userIdSource, $userIdTarget);
+
+		  if(!$var)
+		  {
+		  		$result = new wsResponse (36, "The case could not be reassigned." );
+	  			return $result;
+		  }
+
+			$result = new wsResponse (1, 'Succesful......!');
+
+			return $result;
+		}
+		catch ( Exception $e ) {
+			$result[] = array ( 'guid' => $e->getMessage(), 'name' => $e->getMessage() );
+			return $result;
+		}
+	}
+
 }
