@@ -1,4 +1,4 @@
-var processmap=function(){ 
+var processmap=function(){
 	this.data={
 		load:function()
 		{
@@ -467,6 +467,36 @@ var processmap=function(){
 						var r = new leimnud.module.rpc.xmlhttp({
 							url:this.options.dataServer,
 							args:"action=supervisorDynaforms&data="+{
+								pro_uid	:this.options.uid
+							}.toJSONString()
+						});
+						r.callback=function(rpc,panel)
+						{
+							panel.loader.hide();
+							var scs = rpc.xmlhttp.responseText.extractScript();
+							panel.addContent(rpc.xmlhttp.responseText);
+							scs.evalScript();
+							//Pm.objeto.innerHTML="asdasd";
+						}.extend(this,panel);
+						r.make();
+					}.extend(this)},
+					{image:"/images/inputdocument.gif",text:G_STRINGS.ID_PROCESSMAP_SUPERVISORS_INPUTS,launch:function(event){
+						this.tmp.editProcessPanel = panel =new leimnud.module.panel();
+						panel.options={
+							limit	:true,
+							size	:{w:500,h:380},
+							position:{x:50,y:50,center:true},
+							title	:G_STRINGS.ID_PROCESSMAP_SUPERVISORS_INPUTS,
+							theme	:this.options.theme,
+							control	:{close:true,resize:false},fx:{modal:true},
+							statusBar:false,
+							fx	:{shadow:true,modal:true}
+						};
+						panel.make();
+						panel.loader.show();
+						var r = new leimnud.module.rpc.xmlhttp({
+							url:this.options.dataServer,
+							args:"action=supervisorInputs&data="+{
 								pro_uid	:this.options.uid
 							}.toJSONString()
 						});
@@ -2102,7 +2132,7 @@ processmap.prototype={
 			position:{x:200,y:0,centerX:true},
 			title:"",
 			titleBar:false,
-			control:{ 
+			control:{
 				//drag	:false,
 				resize:false
 			},

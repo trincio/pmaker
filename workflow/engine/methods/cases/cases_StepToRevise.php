@@ -87,8 +87,8 @@ $oHeadPublisher->addScriptCode('
 
 	//Obtain previous and next step - Start
 	try {
-	    $aNextStep = $oCase->getNextSupervisorStep($_SESSION['PROCESS'], $_SESSION['STEP_POSITION']);
-	    $aPreviousStep = $oCase->getPreviousSupervisorStep($_SESSION['PROCESS'], $_SESSION['STEP_POSITION']);
+	    $aNextStep = $oCase->getNextSupervisorStep($_SESSION['PROCESS'], $_SESSION['STEP_POSITION'], $_GET['type']);
+	    $aPreviousStep = $oCase->getPreviousSupervisorStep($_SESSION['PROCESS'], $_SESSION['STEP_POSITION'], $_GET['type']);
 	}
 	catch (exception $e) {
 
@@ -97,11 +97,11 @@ $oHeadPublisher->addScriptCode('
 	if (!$aPreviousStep) {
 	    $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['PREVIOUS_STEP_LABEL'] = '';
 	} else {
-	    $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['PREVIOUS_STEP'] = 'cases_StepToRevise?DYN_UID='.$aPreviousStep['UID'].'&position='.$aPreviousStep['POSITION'].'&APP_UID='.$_GET['APP_UID'].'&DEL_INDEX='.$_GET['DEL_INDEX'];
+	    $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['PREVIOUS_STEP'] = 'cases_StepToRevise?type=DYNAFORM&DYN_UID='.$aPreviousStep['UID'].'&position='.$aPreviousStep['POSITION'].'&APP_UID='.$_GET['APP_UID'].'&DEL_INDEX='.$_GET['DEL_INDEX'];
 	    $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['PREVIOUS_STEP_LABEL'] = G::loadTranslation("ID_PREVIOUS_STEP");
 	}
 
-	$Fields['APP_DATA']['__DYNAFORM_OPTIONS']['NEXT_STEP'] = 'cases_StepToRevise?DYN_UID='.$aNextStep['UID'].'&position='.$aNextStep['POSITION'].'&APP_UID='.$_GET['APP_UID'].'&DEL_INDEX='.$_GET['DEL_INDEX'];
+	$Fields['APP_DATA']['__DYNAFORM_OPTIONS']['NEXT_STEP'] = 'cases_StepToRevise?type=DYNAFORM&DYN_UID='.$aNextStep['UID'].'&position='.$aNextStep['POSITION'].'&APP_UID='.$_GET['APP_UID'].'&DEL_INDEX='.$_GET['DEL_INDEX'];
 
 
 

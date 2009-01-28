@@ -53,6 +53,15 @@ try {
     case 'removeSupervisorDynaform':
       $oProcessMap->removeSupervisorStep($_POST['STEP_UID'], $_POST['PRO_UID'], 'DYNAFORM', $_POST['DYN_UID'], $_POST['STEP_POSITION']);
     break;
+    case 'availableSupervisorInputs':
+  	  $oProcessMap->availableSupervisorInputs($_POST['PRO_UID']);
+    break;
+    case 'assignSupervisorInput':
+      $oProcessMap->assignSupervisorStep($_POST['PRO_UID'], 'INPUT_DOCUMENT', $_POST['INP_DOC_UID']);
+    break;
+    case 'removeSupervisorInput':
+      $oProcessMap->removeSupervisorStep($_POST['STEP_UID'], $_POST['PRO_UID'], 'INPUT_DOCUMENT', $_POST['INP_DOC_UID'], $_POST['STEP_POSITION']);
+    break;
   }
 }
 catch (Exception $oException) {

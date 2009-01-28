@@ -50,7 +50,7 @@ class StepSupervisor extends BaseStepSupervisor {
     	throw($oError);
     }
   }
-  
+
   /**
 	 * Create the step supervisor registry
    * @param array $aData
@@ -151,11 +151,12 @@ class StepSupervisor extends BaseStepSupervisor {
    * @param string $sProcessUID
    * @return integer
   **/
-  function getNextPosition($sProcessUID) {
+  function getNextPosition($sProcessUID, $sType) {
   	try {
   		$oCriteria = new Criteria('workflow');
       $oCriteria->addSelectColumn('(COUNT(*) + 1) AS POSITION');
       $oCriteria->add(StepSupervisorPeer::PRO_UID, $sProcessUID);
+      $oCriteria->add(StepSupervisorPeer::STEP_TYPE_OBJ, $sType);
       $oDataset = StepSupervisorPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
       $oDataset->next();
@@ -172,10 +173,11 @@ class StepSupervisor extends BaseStepSupervisor {
    * @param string $sProcessUID
    * @param string $iPosition
   **/
-  function reorderPositions($sProcessUID, $iPosition) {
+  function reorderPositions($sProcessUID, $iPosition, $sType) {
   	try {
       $oCriteria = new Criteria('workflow');
       $oCriteria->add(StepSupervisorPeer::PRO_UID,       $sProcessUID);
+      $oCriteria->add(StepSupervisorPeer::STEP_TYPE_OBJ, $sType);
   	  $oCriteria->add(StepSupervisorPeer::STEP_POSITION, $iPosition, '>');
       $oDataset = StepSupervisorPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);

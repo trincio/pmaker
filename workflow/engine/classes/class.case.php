@@ -1374,12 +1374,12 @@ class Cases
         }
     }
 
-    function getNextSupervisorStep($sProcessUID, $iPosition)
+    function getNextSupervisorStep($sProcessUID, $iPosition, $sType = 'DYNAFORM')
     {
         $iPosition += 1;
         $oCriteria = new Criteria();
         $oCriteria->add(StepSupervisorPeer::PRO_UID, $sProcessUID);
-        $oCriteria->add(StepSupervisorPeer::STEP_TYPE_OBJ, 'DYNAFORM');
+        $oCriteria->add(StepSupervisorPeer::STEP_TYPE_OBJ, $sType);
         $oCriteria->add(StepSupervisorPeer::STEP_POSITION, $iPosition);
         $oDataset = StepSupervisorPeer::doSelectRS($oCriteria);
         $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
@@ -1388,7 +1388,7 @@ class Cases
         if (!$aRow) {
             $oCriteria = new Criteria();
             $oCriteria->add(StepSupervisorPeer::PRO_UID, $sProcessUID);
-            $oCriteria->add(StepSupervisorPeer::STEP_TYPE_OBJ, 'DYNAFORM');
+            $oCriteria->add(StepSupervisorPeer::STEP_TYPE_OBJ, $sType);
             $oCriteria->add(StepSupervisorPeer::STEP_POSITION, 1);
             $oDataset = StepSupervisorPeer::doSelectRS($oCriteria);
             $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
@@ -1399,13 +1399,13 @@ class Cases
         return $aNextStep;
     }
 
-    function getPreviousSupervisorStep($sProcessUID, $iPosition)
+    function getPreviousSupervisorStep($sProcessUID, $iPosition, $sType = 'DYNAFORM')
     {
         $iPosition -= 1;
         if ($iPosition > 0) {
             $oCriteria = new Criteria();
             $oCriteria->add(StepSupervisorPeer::PRO_UID, $sProcessUID);
-            $oCriteria->add(StepSupervisorPeer::STEP_TYPE_OBJ, 'DYNAFORM');
+            $oCriteria->add(StepSupervisorPeer::STEP_TYPE_OBJ, $sType);
             $oCriteria->add(StepSupervisorPeer::STEP_POSITION, $iPosition);
             $oDataset = StepSupervisorPeer::doSelectRS($oCriteria);
             $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
@@ -1414,7 +1414,7 @@ class Cases
             if (!$aRow) {
                 $oCriteria = new Criteria();
                 $oCriteria->add(StepSupervisorPeer::PRO_UID, $sProcessUID);
-                $oCriteria->add(StepSupervisorPeer::STEP_TYPE_OBJ, 'DYNAFORM');
+                $oCriteria->add(StepSupervisorPeer::STEP_TYPE_OBJ, $sType);
                 $oCriteria->add(StepSupervisorPeer::STEP_POSITION, 1);
                 $oDataset = StepSupervisorPeer::doSelectRS($oCriteria);
                 $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
@@ -2133,31 +2133,40 @@ class Cases
         $oAppDelay->create($aData);
     }
 
-    function getAllStepsToRevise($APP_UID, $DEL_INDEX)
-    {
-
+    function getAllDynaformsStepsToRevise($APP_UID) {
+        $aCase = $this->loadCase($APP_UID);
         $oCriteria = new Criteria('workflow');
-
         $oCriteria->addSelectColumn(StepSupervisorPeer::STEP_UID);
         $oCriteria->addSelectColumn(StepSupervisorPeer::PRO_UID);
         $oCriteria->addSelectColumn(StepSupervisorPeer::STEP_TYPE_OBJ);
         $oCriteria->addSelectColumn(StepSupervisorPeer::STEP_UID_OBJ);
         $oCriteria->addSelectColumn(StepSupervisorPeer::STEP_POSITION);
-
-        $oCriteria->add(AppDelegationPeer::APP_UID, $APP_UID);
-        $oCriteria->add(AppDelegationPeer::DEL_INDEX, $DEL_INDEX);
-
-        $oCriteria->addJoin(AppDelegationPeer::PRO_UID, StepSupervisorPeer::PRO_UID);
+        $oCriteria->add(StepSupervisorPeer::PRO_UID, $aCase['PRO_UID']);
+        $oCriteria->add(StepSupervisorPeer::STEP_TYPE_OBJ, 'DYNAFORM');
         $oCriteria->addAscendingOrderByColumn(StepSupervisorPeer::STEP_POSITION);
-
-        $oDataset = AppDelegationPeer::doSelectRS($oCriteria);
+        $oDataset = StepSupervisorPeer::doSelectRS($oCriteria);
         $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+        return $oDataset;
+    }
 
+    function getAllInputsStepsToRevise($APP_UID) {
+        $aCase = $this->loadCase($APP_UID);
+        $oCriteria = new Criteria('workflow');
+        $oCriteria->addSelectColumn(StepSupervisorPeer::STEP_UID);
+        $oCriteria->addSelectColumn(StepSupervisorPeer::PRO_UID);
+        $oCriteria->addSelectColumn(StepSupervisorPeer::STEP_TYPE_OBJ);
+        $oCriteria->addSelectColumn(StepSupervisorPeer::STEP_UID_OBJ);
+        $oCriteria->addSelectColumn(StepSupervisorPeer::STEP_POSITION);
+        $oCriteria->add(StepSupervisorPeer::PRO_UID, $aCase['PRO_UID']);
+        $oCriteria->add(StepSupervisorPeer::STEP_TYPE_OBJ, 'INPUT_DOCUMENT');
+        $oCriteria->addAscendingOrderByColumn(StepSupervisorPeer::STEP_POSITION);
+        $oDataset = StepSupervisorPeer::doSelectRS($oCriteria);
+        $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
         return $oDataset;
     }
 
     function getAllUploadedDocumentsCriteria($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID) {
-    	//verifica si la tabla OBJECT_PERMISSION
+    	//verifica si existe la tabla OBJECT_PERMISSION
     	$this->verifyTable();
 
       $aObjectPermissions = $this->getAllObjects($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID);
@@ -2599,10 +2608,10 @@ class Cases
 	*/
 
 	function getAllObjectsFrom($PRO_UID, $APP_UID, $TAS_UID = '', $USR_UID, $ACTION='')
-	{		 
+	{
 		$aCase=$this->loadCase($APP_UID);
 		//if($aCase)
-		
+
 		$USER_PERMISSIONS = Array();
 		$GROUP_PERMISSIONS = Array();
 		$RESULT = Array("DYNAFORM"=>Array(), "INPUT"=>Array(), "OUTPUT"=>Array());
@@ -2610,7 +2619,7 @@ class Cases
 		//permissions per user
 		$oCriteria = new Criteria('workflow');
 		//$oCriteria->add(ObjectPermissionPeer::USR_UID, $USR_UID);
-		$oCriteria->add( $oCriteria->getNewCriterion(ObjectPermissionPeer::USR_UID, $USR_UID)->addOr($oCriteria->getNewCriterion(ObjectPermissionPeer::USR_UID, '')) );		
+		$oCriteria->add( $oCriteria->getNewCriterion(ObjectPermissionPeer::USR_UID, $USR_UID)->addOr($oCriteria->getNewCriterion(ObjectPermissionPeer::USR_UID, '')) );
 		$oCriteria->add(ObjectPermissionPeer::PRO_UID, $PRO_UID);
 		$oCriteria->add(ObjectPermissionPeer::OP_ACTION, $ACTION);
 		$oCriteria->add( $oCriteria->getNewCriterion(ObjectPermissionPeer::TAS_UID, $TAS_UID)->addOr($oCriteria->getNewCriterion(ObjectPermissionPeer::TAS_UID, '')->addOr($oCriteria->getNewCriterion(ObjectPermissionPeer::OP_CASE_STATUS, 'COMPLETED')) ) );
@@ -2620,9 +2629,9 @@ class Cases
     $rs->next();
 		while ($row=$rs->getRow()) {
 			if($aCase['APP_STATUS']==$row['OP_CASE_STATUS'])
-			{	
+			{
 				array_push($USER_PERMISSIONS, $row);
-			}	
+			}
 			$rs->next();
 		}
 
@@ -2663,7 +2672,7 @@ class Cases
 					$oCriteriax = new Criteria('workflow');
 					$oCriteriax->add(AppDelegationPeer::USR_UID, $USR_UID);
 					$oCriteriax->add(AppDelegationPeer::APP_UID, $APP_UID);
-      	
+
 					if( AppDelegationPeer::doCount($oCriteriax) == 0 ) {
 						$sw_participate = true;
 					}
@@ -2683,7 +2692,7 @@ class Cases
 							if($TASK_SOURCE != '') {
 								$oCriteria->add(StepPeer::TAS_UID, $TASK_SOURCE);
 							}
-						}	
+						}
 						$oCriteria->add(StepPeer::STEP_TYPE_OBJ, 'DYNAFORM');
 						$oCriteria->addAscendingOrderByColumn(StepPeer::STEP_POSITION);
 						$oCriteria->setDistinct();
@@ -2710,7 +2719,7 @@ class Cases
 							if($TASK_SOURCE != '') {
 								$oCriteria->add(AppDelegationPeer::TAS_UID, $TASK_SOURCE);
 							}
-						}	
+						}
 						$oCriteria->add( $oCriteria->getNewCriterion(AppDocumentPeer::APP_DOC_TYPE, 'INPUT')->addOr($oCriteria->getNewCriterion(AppDocumentPeer::APP_DOC_TYPE, 'OUTPUT')) );
 						$aConditions = Array();
 						$aConditions[] = array(AppDelegationPeer::APP_UID, AppDocumentPeer::APP_UID);
@@ -2737,7 +2746,7 @@ class Cases
 							if($TASK_SOURCE != '') {
 								$oCriteria->add(StepPeer::TAS_UID, $TASK_SOURCE);
 							}
-						}	
+						}
 						if($O_UID != '') {
 							$oCriteria->add(DynaformPeer::DYN_UID, $O_UID);
 						}
@@ -2778,7 +2787,7 @@ class Cases
 							if($TASK_SOURCE != '') {
 								$oCriteria->add(AppDelegationPeer::TAS_UID, $TASK_SOURCE);
 							}
-						}	
+						}
 						if($O_UID != '') {
 							$oCriteria->add(AppDocumentPeer::DOC_UID, $O_UID);
 						}

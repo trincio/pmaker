@@ -46,6 +46,7 @@ try {
   switch ($_POST['function'])
   {
   	case 'verifyUsername':
+  	  //print_r($_POST); die;
   	  $_POST['sOriginalUsername'] = get_ajax_value('sOriginalUsername');
   	  $_POST['sUsername']         = get_ajax_value('sUsername');
   	  if ($_POST['sOriginalUsername'] == $_POST['sUsername'])
@@ -53,17 +54,7 @@ try {
   	  	echo '0';
   	  }
   	  else
-  	  {/*
-  	  	G::LoadClassRBAC('user');
-  	  	$oUser = new RBAC_User(new DBConnection(DB_HOST, DB_RBAC_USER, DB_RBAC_PASS, DB_RBAC_NAME, null, null ,DB_ERROR_SHOWALL_AND_CONTINUE));
-  	  	if (!$oUser->loadByUsername($_POST['sUsername']))
-  	  	{
-  	  		echo '0';
-  	  	}
-  	  	else
-  	  	{
-  	  		echo '1';
-  	  	}*/
+  	  {
   	  	require_once 'classes/model/Users.php';
   	  	G::LoadClass('Users');
 	      $oUser = new Users();
@@ -72,7 +63,9 @@ try {
         $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
         $oDataset->next();
         $aRow = $oDataset->getRow();
-        if (!$aRow)
+        //print_r($aRow); die;  
+        //if (!$aRow)  
+        if (!is_array($aRow))      
   	  	{
   	  		echo '0';
   	  	}

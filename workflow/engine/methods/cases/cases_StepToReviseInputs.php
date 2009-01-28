@@ -87,8 +87,8 @@ $Fields = $oCase->loadCase($_SESSION['APPLICATION']);
 //Obtain previous and next step - Start
 try {
    	$aPreviousStep = '';
-    $aNextStep = $oCase->getNextSupervisorStep($_SESSION['PROCESS'], $_SESSION['STEP_POSITION']);
-    //$aPreviousStep = $oCase->getPreviousStep($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['STEP_POSITION']);
+    $aNextStep = $oCase->getNextSupervisorStep($_SESSION['PROCESS'], $_SESSION['STEP_POSITION'], $_GET['type']);
+    $aPreviousStep = $oCase->getPreviousSupervisorStep($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['STEP_POSITION'], $_GET['type']);
 }
 catch (exception $e) {
 
@@ -97,11 +97,11 @@ catch (exception $e) {
 if (!$aPreviousStep) {
     $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['PREVIOUS_STEP_LABEL'] = '';
 } else {
-    $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['PREVIOUS_STEP'] = 'cases_StepToRevise?DYN_UID='.$aNextStep['UID'].'&position='.$aNextStep['POSITION'];
+    $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['PREVIOUS_STEP'] = 'cases_StepToRevise?type=DYNAFORM&INP_DOC_UID='.$aNextStep['UID'].'&position='.$aNextStep['POSITION'];
     $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['PREVIOUS_STEP_LABEL'] = G::loadTranslation("ID_PREVIOUS_STEP");
 }
 
-$Fields['APP_DATA']['__DYNAFORM_OPTIONS']['NEXT_STEP'] = 'cases_StepToRevise?DYN_UID='.$aNextStep['UID'].'&position='.$aNextStep['POSITION'].'&APP_UID='.$_GET['APP_UID'].'&DEL_INDEX='.$_GET['DEL_INDEX'];
+$Fields['APP_DATA']['__DYNAFORM_OPTIONS']['NEXT_STEP'] = 'cases_StepToRevise?type=DYNAFORM&INP_DOC_UID='.$aNextStep['UID'].'&position='.$aNextStep['POSITION'].'&APP_UID='.$_GET['APP_UID'].'&DEL_INDEX='.$_GET['DEL_INDEX'];
 
 /** Added By erik
  * date: 16-05-08
@@ -113,13 +113,18 @@ $oDbConnections->loadAdditionalConnections();
 $G_PUBLISH = new Publisher;
 //$G_PUBLISH->AddContent('dynaform', 'xmlform', $_SESSION['PROCESS'] . '/' . $_GET['DYN_UID'], '', $Fields['APP_DATA'], 'cases_SaveDataSupervisor?UID='.$_GET['DYN_UID']);
 
- G::LoadClass('case');
-$oCase         = new Cases();
-$G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_InputdocsListToRevise', $oCase->getInputDocumentsCriteriaToRevise($_SESSION['APPLICATION']), '');
+if(!isset($_GET['ex'])) $_GET['ex']=0;
+
+if ($_GET['ex'] == 0) {
+  G::LoadClass('case');
+  $oCase         = new Cases();
+  $G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_InputdocsListToRevise', $oCase->getInputDocumentsCriteriaToRevise($_SESSION['APPLICATION']), '');
+}
+else {
+  //
+}
 
 G::RenderPage('publish');
-
-if(!isset($_GET['ex'])) $_GET['ex']=0;
 
 ?>
 
