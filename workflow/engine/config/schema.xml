@@ -4955,7 +4955,7 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="SA_INIT_DATE" type="TIMESTAMP" required="true">
+    <column name="SA_INIT_DATE" type="TIMESTAMP" required="false">
       <vendor type="mysql">
         <parameter name="Field" value="SA_INIT_DATE"/>
         <parameter name="Type" value="datetime"/>
@@ -4964,7 +4964,7 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="SA_FINISH_DATE" type="TIMESTAMP" required="true">
+    <column name="SA_FINISH_DATE" type="TIMESTAMP" required="false">
       <vendor type="mysql">
         <parameter name="Field" value="SA_FINISH_DATE"/>
         <parameter name="Type" value="datetime"/>
@@ -4976,7 +4976,7 @@
     <validator column="SA_STATUS">
       <rule name="validValues" value="ACTIVE|FINISHED|CANCELLED" message="Please select a valid value for SA_STATUS." />
     </validator>
-  </table>  
+  </table>
   <table name="LOGIN_LOG">
     <vendor type="mysql">
       <parameter name="Name" value="LOGIN_LOG"/>
@@ -5007,7 +5007,7 @@
         <parameter name="Default" value=""/>
         <parameter name="Extra" value=""/>
       </vendor>
-    </column>        
+    </column>
     <column name="LOG_STATUS" type="VARCHAR" size="100" required="true" default="">
       <vendor type="mysql">
         <parameter name="Field" value="LOG_STATUS"/>
