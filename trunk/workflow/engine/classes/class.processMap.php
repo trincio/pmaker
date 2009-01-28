@@ -2032,6 +2032,19 @@ class processMap {
     }
   }
 
+  function supervisorInputs($sProcessUID) {
+    try {
+      global $G_PUBLISH;
+      $G_PUBLISH = new Publisher;
+      $G_PUBLISH->AddContent('propeltable', 'paged-table', 'inputdocs/inputdocs_Supervisor', $this->getSupervisorInputsCriteria($sProcessUID), array('PRO_UID' => $sProcessUID));
+      G::RenderPage('publish', 'raw');
+    	return true;
+    }
+  	catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
+
   function webEntry($sProcessUID) {
     try {
       global $G_PUBLISH;
@@ -2072,6 +2085,39 @@ class processMap {
     $aConditions[] = array('C.CON_LANG'    , $sDelimiter . SYS_LANG    . $sDelimiter);
     $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
     $oCriteria->add(StepSupervisorPeer::PRO_UID, $sProcessUID);
+    $oCriteria->add(StepSupervisorPeer::STEP_TYPE_OBJ, 'DYNAFORM');
+    $oCriteria->addAscendingOrderByColumn(StepSupervisorPeer::STEP_POSITION);
+    return $oCriteria;
+  }
+
+  /*
+	* Return the supervisors dynaforms list criteria object
+	* @param string $sProcessUID
+	* @return object
+	*/
+  function getSupervisorInputsCriteria($sProcessUID = '') {
+    require_once 'classes/model/StepSupervisor.php';
+    require_once 'classes/model/InputDocument.php';
+  	$sDelimiter = DBAdapter::getStringDelimiter();
+  	$oCriteria  = new Criteria('workflow');
+  	$oCriteria->addSelectColumn(StepSupervisorPeer::STEP_UID);
+  	$oCriteria->addSelectColumn(StepSupervisorPeer::PRO_UID);
+  	$oCriteria->addSelectColumn(StepSupervisorPeer::STEP_TYPE_OBJ);
+  	$oCriteria->addSelectColumn(StepSupervisorPeer::STEP_UID_OBJ);
+  	$oCriteria->addSelectColumn(StepSupervisorPeer::STEP_POSITION);
+  	$oCriteria->addAsColumn('INP_DOC_TITLE', 'C.CON_VALUE');
+    $oCriteria->addAlias('C', 'CONTENT');
+  	$aConditions   = array();
+    $aConditions[] = array(StepSupervisorPeer::STEP_UID_OBJ , InputDocumentPeer::INP_DOC_UID);
+    $aConditions[] = array(StepSupervisorPeer::STEP_TYPE_OBJ, $sDelimiter . 'INPUT_DOCUMENT' . $sDelimiter);
+    $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
+    $aConditions   = array();
+    $aConditions[] = array(InputDocumentPeer::INP_DOC_UID , 'C.CON_ID');
+    $aConditions[] = array('C.CON_CATEGORY', $sDelimiter . 'INP_DOC_TITLE' . $sDelimiter);
+    $aConditions[] = array('C.CON_LANG'    , $sDelimiter . SYS_LANG    . $sDelimiter);
+    $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
+    $oCriteria->add(StepSupervisorPeer::PRO_UID, $sProcessUID);
+    $oCriteria->add(StepSupervisorPeer::STEP_TYPE_OBJ, 'INPUT_DOCUMENT');
     $oCriteria->addAscendingOrderByColumn(StepSupervisorPeer::STEP_POSITION);
     return $oCriteria;
   }
@@ -2086,6 +2132,24 @@ class processMap {
       global $G_PUBLISH;
       $G_PUBLISH = new Publisher;
       $G_PUBLISH->AddContent('propeltable', 'paged-table', 'dynaforms/dynaforms_AvailableSupervisorDynaforms', $this->getAvailableSupervisorDynaformsCriteria($sProcessUID), array('PRO_UID' => $sProcessUID));
+      G::RenderPage('publish', 'raw');
+    	return true;
+    }
+  	catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
+
+  /*
+	* Show the available input documents for the supervisors
+	* @param string $sProcessUID
+	* @return boolean
+	*/
+  function availableSupervisorInputs($sProcessUID) {
+    try {
+      global $G_PUBLISH;
+      $G_PUBLISH = new Publisher;
+      $G_PUBLISH->AddContent('propeltable', 'paged-table', 'inputdocs/inputdocs_AvailableSupervisorInputs', $this->getAvailableSupervisorInputsCriteria($sProcessUID), array('PRO_UID' => $sProcessUID));
       G::RenderPage('publish', 'raw');
     	return true;
     }
@@ -2128,21 +2192,53 @@ class processMap {
     return $oCriteria;
   }
 
+  /*
+	* Return the available supervisors input documents list criteria object
+	* @param string $sProcessUID
+	* @return object
+	*/
+  function getAvailableSupervisorInputsCriteria($sProcessUID = '') {
+    require_once 'classes/model/StepSupervisor.php';
+    require_once 'classes/model/InputDocument.php';
+    $oCriteria = $this->getSupervisorInputsCriteria($sProcessUID);
+    $oDataset = StepSupervisorPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    $aUIDS = array();
+    while ($aRow = $oDataset->getRow()) {
+      $aUIDS[] = $aRow['STEP_UID_OBJ'];
+      $oDataset->next();
+    }
+  	$sDelimiter = DBAdapter::getStringDelimiter();
+  	$oCriteria  = new Criteria('workflow');
+  	$oCriteria->addSelectColumn(InputDocumentPeer::INP_DOC_UID);
+    $oCriteria->addSelectColumn(InputDocumentPeer::PRO_UID);
+    $oCriteria->addAsColumn('INP_DOC_TITLE', 'C.CON_VALUE');
+    $oCriteria->addAlias('C', 'CONTENT');
+    $aConditions   = array();
+    $aConditions[] = array(InputDocumentPeer::INP_DOC_UID , 'C.CON_ID');
+    $aConditions[] = array('C.CON_CATEGORY', $sDelimiter . 'INP_DOC_TITLE' . $sDelimiter);
+    $aConditions[] = array('C.CON_LANG'    , $sDelimiter . SYS_LANG    . $sDelimiter);
+    $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
+    $oCriteria->add(InputDocumentPeer::PRO_UID, $sProcessUID);
+    $oCriteria->add(InputDocumentPeer::INP_DOC_UID, $aUIDS, Criteria::NOT_IN);
+    return $oCriteria;
+  }
+
   function assignSupervisorStep($sProcessUID, $sObjType, $sObjUID) {
     require_once 'classes/model/StepSupervisor.php';
     $oStepSupervisor = new StepSupervisor();
     $oStepSupervisor->create(array('PRO_UID'       => $sProcessUID,
-                                   'STEP_TYPE_OBJ' => 'DYNAFORM',
+                                   'STEP_TYPE_OBJ' => $sObjType,
                                    'STEP_UID_OBJ'  => $sObjUID,
-                                   'STEP_POSITION' => $oStepSupervisor->getNextPosition($sProcessUID)));
+                                   'STEP_POSITION' => $oStepSupervisor->getNextPosition($sProcessUID, $sObjType)));
   }
 
   function removeSupervisorStep($sStepUID, $sProcessUID, $sObjType, $sObjUID, $iPosition) {
     require_once 'classes/model/StepSupervisor.php';
     $oStepSupervisor = new StepSupervisor();
-    //$oStepSupervisor->remove($sProcessUID, 'DYNAFORM', $sObjUID, $iPosition);
     $oStepSupervisor->remove($sStepUID);
-    $oStepSupervisor->reorderPositions($sProcessUID, $iPosition);
+    $oStepSupervisor->reorderPositions($sProcessUID, $iPosition, $sObjType);
   }
 
   function listProcessesUser($sProcessUID) {

@@ -48,7 +48,7 @@ $tree->showSign = false;
 G::LoadClass('case');
 
 $o = new Cases();
-$steps = $o->getAllStepsToRevise($_GET['APP_UID'], $_GET['DEL_INDEX']);
+$steps = $o->getAllDynaformsStepsToRevise($_GET['APP_UID']);
 $APP_UID = $_GET['APP_UID'];
 $DEL_INDEX = $_GET['DEL_INDEX'];
 
@@ -66,9 +66,6 @@ $html = "
         $PRO_UID='';
         $DYN_UID='';
 foreach ($steps as $step) {
-
-    if ($step['STEP_TYPE_OBJ'] == 'DYNAFORM') {
-
         require_once 'classes/model/Dynaform.php';
         $od = new Dynaform();
         $dynaformF = $od->Load($step['STEP_UID_OBJ']);
@@ -84,7 +81,7 @@ foreach ($steps as $step) {
         <td class='treeNode' style='border:0px;background-color:transparent;'><span id='focus$i'></td>
         <td class='treeNode' style='border:0px;background-color:transparent;'>&nbsp;&nbsp;$n&nbsp;&nbsp;</td>
           <td class='treeNode' style='border:0px;background-color:transparent;'>
-		  	<a href=\"cases_StepToRevise?ex=$i&PRO_UID=$PRO_UID&DYN_UID=$DYN_UID&APP_UID=$APP_UID&position=".$step['STEP_POSITION']."&DEL_INDEX=$DEL_INDEX\">{$TITLE}</a>
+		  	<a href=\"cases_StepToRevise?type=DYNAFORM&ex=$i&PRO_UID=$PRO_UID&DYN_UID=$DYN_UID&APP_UID=$APP_UID&position=".$step['STEP_POSITION']."&DEL_INDEX=$DEL_INDEX\">{$TITLE}</a>
 		  </td>
         </tr>
       </table>";
@@ -92,7 +89,6 @@ foreach ($steps as $step) {
         $ch = &$tree->addChild("", $html, array('nodeType' => 'child'));
         $ch->point = '<img src="/images/ftv2mnode.gif" />';
 		$i++;
-    }
 }
 
 $html = "
@@ -100,13 +96,42 @@ $html = "
         <tr>
           <td class='treeNode' style='border:0px;background-color:transparent;'><span id='focus$i'></td>
           <td class='treeNode' style='border:0px;background-color:transparent;'>
-		  	<a href=\"cases_StepToReviseInputs?ex=$i&PRO_UID=$PRO_UID&DYN_UID=$DYN_UID&APP_UID=$APP_UID&DEL_INDEX=$DEL_INDEX\">&nbsp;&nbsp;Input Documents</a>
+		  	<a href=\"cases_StepToReviseInputs?ex=0&type=INPUT_DOCUMENT&PRO_UID=$PRO_UID&DYN_UID=$DYN_UID&APP_UID=$APP_UID&DEL_INDEX=$DEL_INDEX\">&nbsp;&nbsp;Input Documents</a>
+		  </td>
+        </tr>
+      </table>";
+        $ch = &$tree->addChild("", $html, array('nodeType' => 'child'));
+        $ch->point = '</span><img src="/images/plus.gif" />';
+
+$steps = $o->getAllInputsStepsToRevise($_GET['APP_UID']);
+$i=1;
+
+foreach ($steps as $step) {
+        require_once 'classes/model/InputDocument.php';
+        $od = new InputDocument();
+        $IDF = $od->Load($step['STEP_UID_OBJ']);
+
+        $n = $step['STEP_POSITION'];
+		$TITLE = " - ".$IDF['INP_DOC_TITLE'];
+		$INP_DOC_UID = $IDF['INP_DOC_UID'];
+		$PRO_UID = $step['PRO_UID'];
+
+        $html = "
+      <table cellspacing='0' cellpadding='0' border='1' style='border:0px;'>
+        <tr>
+        <td class='treeNode' style='border:0px;background-color:transparent;'><span id='focus$i'></td>
+        <td class='treeNode' style='border:0px;background-color:transparent;'>&nbsp;&nbsp;$n&nbsp;&nbsp;</td>
+          <td class='treeNode' style='border:0px;background-color:transparent;'>
+		  	<a href=\"cases_StepToReviseInputs?type=INPUT_DOCUMENT&ex=$i&PRO_UID=$PRO_UID&INP_DOC_UID=$INP_DOC_UID&APP_UID=$APP_UID&position=".$step['STEP_POSITION']."&DEL_INDEX=$DEL_INDEX\">{$TITLE}</a>
 		  </td>
         </tr>
       </table>";
 
         $ch = &$tree->addChild("", $html, array('nodeType' => 'child'));
-        $ch->point = '</span><img src="/images/ftv2doc.gif" />';
+        $ch->point = '<img src="/images/ftv2mnode.gif" />';
+		$i++;
+}
+
 $i++;
 $html = "
       <table cellspacing='0' cellpadding='0' border='1' style='border:0px;'>

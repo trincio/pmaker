@@ -88,6 +88,9 @@ try {
   	case 'supervisorDynaforms':
   	  $oProcessMap->supervisorDynaforms($oData->pro_uid);
   	break;
+  	case 'supervisorInputs':
+  	  $oProcessMap->supervisorInputs($oData->pro_uid);
+  	break;
   	case 'webEntry':
   	  $oProcessMap->webEntry($oData->pro_uid);
   	break;
@@ -281,7 +284,7 @@ try {
 	  	$oProcesses = new Processes();
 	  	$oProcesses->ws_open_public();
 	  	$aFields   = get_object_vars($oProcesses->ws_processGetData($oData->pro_uid));
-	  	
+
 	  	$aFields['description'] = nl2br ($aFields['description']);
 	  	$aFields['installSteps'] = nl2br ($aFields['installSteps']);
 	  	switch ($aFields['privacy']) {
