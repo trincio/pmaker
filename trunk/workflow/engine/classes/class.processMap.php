@@ -2355,9 +2355,14 @@ class processMap {
     while ($aRow = $oDataset->getRow()) {
       //Obtain task target
       if ($aRow['TAS_UID'] != '') {
-        $oTask       = new Task();
-        $aFields     = $oTask->load($aRow['TAS_UID']);
-        $sTaskTarget = $aFields['TAS_TITLE'];
+        try {
+          $oTask       = new Task();
+          $aFields     = $oTask->load($aRow['TAS_UID']);
+          $sTaskTarget = $aFields['TAS_TITLE'];
+        }
+        catch (Exception $oError) {
+          $sTaskTarget = '(TASK DELETED)';
+        }
       }
       else {
         $sTaskTarget = G::LoadTranslation('ID_ANY_TASK');

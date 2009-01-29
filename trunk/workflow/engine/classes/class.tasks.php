@@ -24,6 +24,7 @@
  */
 require_once 'classes/model/GroupUser.php';
 require_once 'classes/model/Groupwf.php';
+require_once 'classes/model/ObjectPermission.php';
 require_once 'classes/model/Process.php';
 require_once 'classes/model/Route.php';
 require_once 'classes/model/Step.php';
@@ -261,6 +262,13 @@ class Tasks {
         $oStep->remove($aRow1['STEP_UID']);
       	$oDataset1->next();
       }
+      //Delete permissions
+      $oCriteria = new Criteria('workflow');
+  	  $oCriteria->add(ObjectPermissionPeer::TAS_UID, $sTaskUID);
+  	  ObjectPermissionPeer::doDelete($oCriteria);
+  	  $oCriteria = new Criteria('workflow');
+  	  $oCriteria->add(ObjectPermissionPeer::OP_TASK_SOURCE, $sTaskUID);
+  	  ObjectPermissionPeer::doDelete($oCriteria);
 			//Delete task
 			$oTask->remove($sTaskUID);
 		}

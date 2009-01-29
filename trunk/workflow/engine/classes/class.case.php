@@ -1625,6 +1625,9 @@ class Cases
                 break;
             case 'to_reassign':
                 $c->add($c->getNewCriterion(ApplicationPeer::APP_STATUS, 'TO_DO')->addOr($c->getNewCriterion(ApplicationPeer::APP_STATUS, 'DRAFT')));
+                $c->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
+                $c->add(AppThreadPeer::APP_THREAD_STATUS, 'OPEN');
+                $c->add(AppDelegationPeer::DEL_THREAD_STATUS, 'OPEN');
                 $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
                 $xmlfile = $filesList[7];
                 break;
@@ -2627,7 +2630,7 @@ class Cases
 		$rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
     $rs->next();
 		while ($row=$rs->getRow()) {
-			if($aCase['APP_STATUS']==$row['OP_CASE_STATUS'])
+			if(($aCase['APP_STATUS']==$row['OP_CASE_STATUS']) || ($row['OP_CASE_STATUS'] == ''))
 			{
 				array_push($USER_PERMISSIONS, $row);
 			}
@@ -2666,7 +2669,7 @@ class Cases
 
 			// here!,. we should verify $PARTICIPATE
 			$sw_participate = false; // must be false for default
-			if($row['OP_CASE_STATUS']!='COMPLETED')
+			if(($row['OP_CASE_STATUS']!='COMPLETED') && ($row['OP_CASE_STATUS']!=''))
 			{	if($PARTICIPATE == 1){
 					$oCriteriax = new Criteria('workflow');
 					$oCriteriax->add(AppDelegationPeer::USR_UID, $USR_UID);
