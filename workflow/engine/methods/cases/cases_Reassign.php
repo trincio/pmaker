@@ -53,6 +53,7 @@ G::LoadClass('tasks');
 $oTasks=new Tasks();
 G::LoadClass('groups');
 $oGroups = new Groups();
+require_once 'classes/model/Users.php';
 $oUser   = new Users();
 $name    = '';
    while ($aRow = $oDataset->getRow()) {
