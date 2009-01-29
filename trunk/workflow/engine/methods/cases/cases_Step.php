@@ -191,8 +191,7 @@ switch ($_GET['TYPE'])
       //$Fields['__DYNAFORM_OPTIONS']['PREVIOUS_STEP'] = "javascript:alert('" . G::LoadTranslation('ID_YOU_ARE_FIRST_STEP') . "');";
       $Fields['__DYNAFORM_OPTIONS']['PREVIOUS_STEP_LABEL'] = '';
     }
-    else
-    {
+    else {
       $Fields['__DYNAFORM_OPTIONS']['PREVIOUS_STEP'] = $aPreviousStep['PAGE'];
       $Fields['__DYNAFORM_OPTIONS']['PREVIOUS_STEP_LABEL'] = G::loadTranslation("ID_PREVIOUS_STEP");
     }

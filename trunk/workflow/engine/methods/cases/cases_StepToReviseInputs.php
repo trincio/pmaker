@@ -84,44 +84,52 @@ $_SESSION['STEP_POSITION'] = (int)$_GET['position'];
 $oCase = new Cases();
 $Fields = $oCase->loadCase($_SESSION['APPLICATION']);
 
-//Obtain previous and next step - Start
-try {
-   	$aPreviousStep = '';
-    $aNextStep = $oCase->getNextSupervisorStep($_SESSION['PROCESS'], $_SESSION['STEP_POSITION'], $_GET['type']);
-    $aPreviousStep = $oCase->getPreviousSupervisorStep($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['STEP_POSITION'], $_GET['type']);
-}
-catch (exception $e) {
-
-}
-
-if (!$aPreviousStep) {
-    $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['PREVIOUS_STEP_LABEL'] = '';
-} else {
-    $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['PREVIOUS_STEP'] = 'cases_StepToRevise?type=DYNAFORM&INP_DOC_UID='.$aNextStep['UID'].'&position='.$aNextStep['POSITION'];
-    $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['PREVIOUS_STEP_LABEL'] = G::loadTranslation("ID_PREVIOUS_STEP");
-}
-
-$Fields['APP_DATA']['__DYNAFORM_OPTIONS']['NEXT_STEP'] = 'cases_StepToRevise?type=DYNAFORM&INP_DOC_UID='.$aNextStep['UID'].'&position='.$aNextStep['POSITION'].'&APP_UID='.$_GET['APP_UID'].'&DEL_INDEX='.$_GET['DEL_INDEX'];
-
-/** Added By erik
- * date: 16-05-08
- * Description: this was added for the additional database connections */
-G::LoadClass('dbConnections');
-$oDbConnections = new dbConnections($_SESSION['PROCESS']);
-$oDbConnections->loadAdditionalConnections();
-
 $G_PUBLISH = new Publisher;
-//$G_PUBLISH->AddContent('dynaform', 'xmlform', $_SESSION['PROCESS'] . '/' . $_GET['DYN_UID'], '', $Fields['APP_DATA'], 'cases_SaveDataSupervisor?UID='.$_GET['DYN_UID']);
 
 if(!isset($_GET['ex'])) $_GET['ex']=0;
 
-if ($_GET['ex'] == 0) {
+if (!isset($_GET['INP_DOC_UID'])) {
   G::LoadClass('case');
   $oCase         = new Cases();
   $G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_InputdocsListToRevise', $oCase->getInputDocumentsCriteriaToRevise($_SESSION['APPLICATION']), '');
 }
 else {
-  //
+  $oInputDocument = new InputDocument();
+  $Fields = $oInputDocument->load($_GET['INP_DOC_UID']);
+  //Obtain previous and next step - Start
+  try {
+    $aNextStep = $oCase->getNextSupervisorStep($_SESSION['PROCESS'], $_SESSION['STEP_POSITION'], $_GET['type']);
+    $aPreviousStep = $oCase->getPreviousSupervisorStep($_SESSION['PROCESS'], $_SESSION['STEP_POSITION'], $_GET['type']);
+    if (!$aPreviousStep) {
+      $Fields['__DYNAFORM_OPTIONS']['PREVIOUS_STEP_LABEL'] = '';
+    }
+    else {
+      $Fields['__DYNAFORM_OPTIONS']['PREVIOUS_STEP'] = 'cases_StepToReviseInputs?type=INPUT_DOCUMENT&INP_DOC_UID='.$aNextStep['UID'].'&position='.$aNextStep['POSITION'].'&APP_UID='.$_GET['APP_UID'].'&DEL_INDEX='.$_GET['DEL_INDEX'];
+      $Fields['__DYNAFORM_OPTIONS']['PREVIOUS_STEP_LABEL'] = G::loadTranslation("ID_PREVIOUS_STEP");
+    }
+    $Fields['__DYNAFORM_OPTIONS']['NEXT_STEP'] = 'cases_StepToReviseInputs?type=INPUT_DOCUMENT&INP_DOC_UID='.$aNextStep['UID'].'&position='.$aNextStep['POSITION'].'&APP_UID='.$_GET['APP_UID'].'&DEL_INDEX='.$_GET['DEL_INDEX'];
+  }
+  catch (exception $e) {
+
+  }
+
+  switch ($Fields['INP_DOC_FORM_NEEDED']) {
+    case 'REAL':
+      $Fields['TYPE_LABEL'] = G::LoadTranslation('ID_NEW');
+      $sXmlForm = 'cases/cases_AttachInputDocument2';
+      break;
+    case 'VIRTUAL':
+      $Fields['TYPE_LABEL'] = G::LoadTranslation('ID_ATTACH');
+      $sXmlForm = 'cases/cases_AttachInputDocument1';
+      break;
+    case 'VREAL':
+      $Fields['TYPE_LABEL'] = G::LoadTranslation('ID_ATTACH');
+      $sXmlForm = 'cases/cases_AttachInputDocument3';
+      break;
+  }
+  $Fields['MESSAGE1'] = G::LoadTranslation('ID_PLEASE_ENTER_COMMENTS');
+  $Fields['MESSAGE2'] = G::LoadTranslation('ID_PLEASE_SELECT_FILE');
+  $G_PUBLISH->AddContent('xmlform', 'xmlform', $sXmlForm, '', $Fields, 'cases_SupervisorSaveDocument?UID=' . $_GET['INP_DOC_UID'] . '&APP_UID=' . $_GET['APP_UID'] . '&position=' . $_GET['position']);
 }
 
 G::RenderPage('publish');
@@ -175,7 +183,7 @@ function toRevisePanel(APP_UID,DEL_INDEX)
     oRPC.callback = function(rpc) {
 	  	oPanel.loader.hide();
 	  	oPanel.addContent(rpc.xmlhttp.responseText);
-	  	setSelect();
+	  	//setSelect();
 
   	}.extend(this);
 	oRPC.make();
