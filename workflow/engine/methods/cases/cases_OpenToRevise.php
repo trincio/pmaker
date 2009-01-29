@@ -35,10 +35,10 @@
 	        die;
 	        break;
 	}
-	
+
 	/* Includes */
 	G::LoadClass('case');
-	
+
 	/* GET , POST & $_SESSION Vars */
 	if (isset($_SESSION['APPLICATION'])) {
 	    unset($_SESSION['APPLICATION']);
@@ -52,26 +52,26 @@
 	if (isset($_SESSION['STEP_POSITION'])) {
 	    unset($_SESSION['STEP_POSITION']);
 	}
-	
+
 	/* Process the info */
 	$oCase = new Cases();
 	$sAppUid =  $_GET['APP_UID'];
 	$iDelIndex = $_GET['DEL_INDEX'];
-	
-	
+
+
 	$_SESSION['APPLICATION'] = $_GET['APP_UID'];
 	$_SESSION['INDEX'] = $_GET['DEL_INDEX'];
-	
+
 	$aFields = $oCase->loadCase($sAppUid, $iDelIndex);
 
 	$_SESSION['PROCESS'] = $aFields['PRO_UID'];
 	$_SESSION['TASK'] = $aFields['TAS_UID'];
 	$_SESSION['STEP_POSITION'] = 0;
-	
+
 	/* Redirect to next step */
 	$aNextStep = $oCase->getNextSupervisorStep($_SESSION['PROCESS'],0);
-	$sPage =  "cases_StepToRevise?PRO_UID=".$aFields['PRO_UID']."&DYN_UID=".$aNextStep['UID']."&APP_UID=$sAppUid&DEL_INDEX=$iDelIndex&position=1";//$aNextStep['PAGE'];
+	$sPage =  "cases_StepToRevise?type=DYNAFORM&PRO_UID=".$aFields['PRO_UID']."&DYN_UID=".$aNextStep['UID']."&APP_UID=$sAppUid&DEL_INDEX=$iDelIndex&position=1";//$aNextStep['PAGE'];
 	G::header('location: ' . $sPage);
-	
-	
+
+
 ?>

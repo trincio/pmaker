@@ -96,7 +96,7 @@ $html = "
         <tr>
           <td class='treeNode' style='border:0px;background-color:transparent;'><span id='focus$i'></td>
           <td class='treeNode' style='border:0px;background-color:transparent;'>
-		  	<a href=\"cases_StepToReviseInputs?ex=0&type=INPUT_DOCUMENT&PRO_UID=$PRO_UID&DYN_UID=$DYN_UID&APP_UID=$APP_UID&DEL_INDEX=$DEL_INDEX\">&nbsp;&nbsp;Input Documents</a>
+		  	<a href=\"cases_StepToReviseInputs?PRO_UID=$PRO_UID&APP_UID=$APP_UID&DEL_INDEX=$DEL_INDEX\">&nbsp;&nbsp;Input Documents</a>
 		  </td>
         </tr>
       </table>";
@@ -104,7 +104,7 @@ $html = "
         $ch->point = '</span><img src="/images/plus.gif" />';
 
 $steps = $o->getAllInputsStepsToRevise($_GET['APP_UID']);
-$i=1;
+//$i=1;
 
 foreach ($steps as $step) {
         require_once 'classes/model/InputDocument.php';
