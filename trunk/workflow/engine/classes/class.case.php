@@ -750,8 +750,7 @@ class Cases
             $rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
             $rs->next();
             $row = $rs->getRow();
-            $sql = 'SELECT D.*,R.* FROM ROUTE R LEFT JOIN APP_DELEGATION D ON (R.TAS_UID=D.TAS_UID) WHERE APP_UID="' . $sAppUid . '" AND ROU_NEXT_TASK="' . $sTasUid . '"';
-            print $sql;
+            $sql = 'SELECT D.*,R.* FROM ROUTE R LEFT JOIN APP_DELEGATION D ON (R.TAS_UID=D.TAS_UID) WHERE APP_UID="' . $sAppUid . '" AND ROU_NEXT_TASK="' . $sTasUid . '"';            
 
             while (is_array($row)) {
                 switch ($row['DEL_THREAD_STATUS']) {

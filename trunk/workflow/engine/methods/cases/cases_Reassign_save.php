@@ -1,4 +1,4 @@
-<?
+<? 
 /**
  *cases_Reassign_save.php
  *
@@ -44,9 +44,17 @@ try {
       $oCase->reassignCase($_POST['APP_UID'], $_POST['DEL_INDEX'], $_SESSION['USER_LOGGED'], $_POST['USERS']);
 
     }
+  
+  require_once 'classes/model/Users.php';
+  $oUser   = new Users();
+  $aUser   = $oUser->load($_POST['USERS']);
+    
   $Fields=array();
-  $Fields['USERS'] = $_POST['US'];
-
+  
+  $Fields['USERS'] = $aUser['USR_FIRSTNAME'].' '.$aUser['USR_LASTNAME'].' ('.$aUser['USR_USERNAME'].')';
+  
+  
+  
   G::LoadClass('case');
   $oCases=new Cases();
   $aCases=$oCases->loadCase($_POST['APP_UID'], $_POST['DEL_INDEX'] );
