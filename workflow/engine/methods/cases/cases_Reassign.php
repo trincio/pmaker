@@ -44,6 +44,7 @@ $tpl->prepare();
 require_once 'classes/model/AppDelegation.php';
 $oCriteria = new Criteria('workflow');
 $oCriteria->add(AppDelegationPeer::APP_UID, $_GET['APP_UID']);
+$oCriteria->add(AppDelegationPeer::DEL_INDEX, $_GET['DEL_INDEX']);
 $oCriteria->add(AppDelegationPeer::DEL_FINISH_DATE, null);
 $oDataset = AppDelegationPeer::doSelectRS($oCriteria);
 $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
@@ -65,14 +66,13 @@ $name    = '';
 			foreach ($aAux1 as $value1) {
 		  		$aAux2 = $oGroups->getUsersOfGroup($value1['GRP_UID']);
 		  	 	foreach ($aAux2 as $value2) {
-		  	  	if($aRow['USR_UID']!=$value2['USR_UID'])
-					   {
-					 		 if(!in_array($value2['USR_UID'], $aUsrUid))
-					 		 {		$aAux   = $oUser->load($value2['USR_UID']);
-					 		        $aUsr[$aAux['USR_FIRSTNAME'] . ' ' . $aAux['USR_LASTNAME']] = $aAux;
-					 		 		$aUsrUid[]=$value2['USR_UID'];
-					 		 }
-					   }
+		  	  	if($aRow['USR_UID']!=$value2['USR_UID']) {
+					 	  if(!in_array($value2['USR_UID'], $aUsrUid)) {//var_dump($aRow['USR_UID'], $value2['USR_UID']);echo '<br /><br />';
+					 	    $aAux = $oUser->load($value2['USR_UID']);
+					 		  $aUsr[$aAux['USR_FIRSTNAME'] . ' ' . $aAux['USR_LASTNAME']] = $aAux;
+					 		 	$aUsrUid[]=$value2['USR_UID'];
+					 		}
+					  }
 		  	  }
 		  }
 

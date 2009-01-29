@@ -107,8 +107,13 @@ $oHeadPublisher->addScriptCode('
 		$aFields = $oProcess->load($_SESSION['PROCESS']);
 		require_once 'classes/model/Users.php';
 		$oUser = new Users();
-		$aUser = $oUser->load($aFields['PRO_CREATE_USER']);
-		$aFields['PRO_AUTHOR'] = $aUser['USR_FIRSTNAME'] . ' ' . $aUser['USR_LASTNAME'];
+		try {
+		  $aUser = $oUser->load($aFields['PRO_CREATE_USER']);
+		  $aFields['PRO_AUTHOR'] = $aUser['USR_FIRSTNAME'] . ' ' . $aUser['USR_LASTNAME'];
+		}
+		catch (Exception $oError) {
+		  $aFields['PRO_AUTHOR'] = '(USER DELETED)';
+		}
 		$aFields['PRO_CREATE_DATE'] = date('F j, Y', strtotime($aFields['PRO_CREATE_DATE']));
 		global $G_PUBLISH;
 		$G_PUBLISH = new Publisher();
