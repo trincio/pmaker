@@ -750,7 +750,7 @@ class Cases
             $rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
             $rs->next();
             $row = $rs->getRow();
-            $sql = 'SELECT D.*,R.* FROM ROUTE R LEFT JOIN APP_DELEGATION D ON (R.TAS_UID=D.TAS_UID) WHERE APP_UID="' . $sAppUid . '" AND ROU_NEXT_TASK="' . $sTasUid . '"';            
+            $sql = 'SELECT D.*,R.* FROM ROUTE R LEFT JOIN APP_DELEGATION D ON (R.TAS_UID=D.TAS_UID) WHERE APP_UID="' . $sAppUid . '" AND ROU_NEXT_TASK="' . $sTasUid . '"';
 
             while (is_array($row)) {
                 switch ($row['DEL_THREAD_STATUS']) {
@@ -2013,13 +2013,23 @@ class Cases
     function cancelCase($sApplicationUID, $iIndex, $user_logged)
     {
         require_once 'classes/model/Application.php';
+        require_once 'classes/model/AppDelegation.php';
         require_once 'classes/model/AppDelay.php';
         require_once 'classes/model/AppThread.php';
         $oApplication = new Application();
         $aFields = $oApplication->load($sApplicationUID);
-        $aFields['APP_STATUS'] = 'CANCELLED';
-        $oApplication->update($aFields);
+        $oCriteria = new Criteria('workflow');
+        $oCriteria->add(AppDelegationPeer::APP_UID, $sApplicationUID);
+        $oCriteria->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
+        if (AppDelegationPeer::doCount($oCriteria) == 1) {
+          $aFields['APP_STATUS'] = 'CANCELLED';
+          $oApplication->update($aFields);
+        }
         $this->CloseCurrentDelegation($sApplicationUID, $iIndex);
+        $oAppDel = new AppDelegation();
+        $oAppDel->Load($sApplicationUID, $iIndex);
+        $aAppDel = $oAppDel->toArray(BasePeer::TYPE_FIELDNAME);
+        $this->closeAppThread($sApplicationUID, $aAppDel['DEL_THREAD']);
 
         $delay = new AppDelay();
         $array['PRO_UID'] = $aFields['PRO_UID'];

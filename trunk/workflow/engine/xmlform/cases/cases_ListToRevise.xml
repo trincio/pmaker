@@ -73,6 +73,10 @@
   <en></en>
 </OPEN>-->
 
+<CANCEL type="link" colWidth="40" value="@G::LoadTranslation(ID_CANCEL)" link="#" onclick="cancelCase(@QAPP_UID, @QDEL_INDEX);return false;"/>
+
+<DELETE type="link" colWidth="40" value="@G::LoadTranslation(ID_DELETE)" link="#" onclick="new leimnud.module.app.confirm().make({label:'@G::LoadTranslation(ID_MSG_CONFIRM_DELETE_CASES)',action:function(){casesDelete(@QAPP_UID);}});return false;"/>
+
 <!-- FILTER FORM -->
 <SEARCH type="button" onclick="pagedTableFilter( this.form );" showInTable="0">
   <en>Apply Filter</en>

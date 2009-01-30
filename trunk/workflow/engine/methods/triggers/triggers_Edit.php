@@ -33,7 +33,7 @@ if (isset($_GET['TRI_UID']))
 else
 {
 	//$aFields['PRO_UID']  = $_GET['PRO_UID'];
-	$aFields['PRO_UID']  = $_SESSION['PROCESS'];
+	$aFields['PRO_UID']  = (isset($_SESSION['PROCESS']) ? $_SESSION['PROCESS'] : '');
 	$aFields['TRI_TYPE'] = 'SCRIPT';
 }
 
