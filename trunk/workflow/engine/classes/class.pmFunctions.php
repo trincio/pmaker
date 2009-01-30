@@ -798,4 +798,12 @@ function setCaseTrackerCode($sApplicationUID, $sCode, $sPIN = '') {
   }
 }
 
+function jumping ( $caseId, $delIndex ) {
+	$x = $this->PMFDerivateCase($caseId, $delIndex);
+	if($x==1)
+			G::header('Location: cases_List');
+	else	
+			echo "Not derivated";		
+}
+
 ?>
