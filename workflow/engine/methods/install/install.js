@@ -64,33 +64,33 @@ var installer=function()
 			cellpadding:23
 		});*/
 		this.table.className="inst_table";
-	
+
 		var tr = this.table.insertRow(-1);
 		$(tr).append(
 			new DOM('td',{innerHTML:"<b>Requeriments</b>",className:"app_grid_title___gray title",colSpan:4})
 		);
-		
+
 		var tr = this.table.insertRow(-1);
 		$(tr).append(
 			new DOM('td',{innerHTML:"PHP Version >= 5.1.x",className:"inst_td0",colSpan:2}),
 			this.phpVersion = new DOM('td',{innerHTML:'Loading...',className:"inst_td1",colSpan:2})
 		);
-		
+
 		var tr = this.table.insertRow(-1);
 		$(tr).append(
 			new DOM('td',{innerHTML:"MySQL",className:"inst_td0",colSpan:2}),
 			this.mysqlVersion = new DOM('td',{innerHTML:'Loading...',className:"inst_td1",colSpan:2})
 		);
-		
+
 		var tr = this.table.insertRow(-1);
 		$(tr).append(
 			new DOM('td',{innerHTML:"Maximum amount of memory a script may consume (memory_limit) >= 40M",className:"inst_td0",colSpan:2}),
 			this.checkMemory = new DOM('td',{innerHTML:'Loading...',className:"inst_td1",colSpan:2})
 		);
-		
+
 		var tr = this.table.insertRow(-1);
 		$(tr).append(
-			new DOM('td',{innerHTML:"Directory "+this.options.path_trunk+"config/<br> permissions: <b>0777</b> <br />OR<br />File <i>"+this.options.path_trunk+"config/paths_installep.php</i><br> permissions: <b>0775</b>",className:"inst_td0",colSpan:2}),
+			new DOM('td',{innerHTML:"Directory "+this.options.path_trunk+"config/<br> permissions: <b>0777</b> <br />OR<br />File <i>"+this.options.path_trunk+"config/paths_installed.php</i><br> permissions: <b>0666</b>",className:"inst_td0",colSpan:2}),
 			this.checkPI = new DOM('td',{innerHTML:'Loading...',className:"inst_td1",colSpan:2})
 		);
 
@@ -155,7 +155,7 @@ var installer=function()
 			)
 
 		);
-	
+
 		var tr = this.table.insertRow(-1);
 		$(tr).append(
 			new DOM('td',{innerHTML:"Username",className:"inst_td0"},{width:"30%"}),
@@ -169,7 +169,7 @@ var installer=function()
 			)
 
 		);
-		
+
 		var tr = this.table.insertRow(-1);
 		$(tr).append(
 			new DOM('td',{innerHTML:"Password",className:"inst_td0"},{width:"30%"}),
@@ -256,7 +256,7 @@ var installer=function()
 			)
 
 		);
-	
+
 		var tr = this.table.insertRow(-1);
 		$(tr).append(
 			new DOM('td',{innerHTML:"Compiled Templates Directory: ",className:"inst_td0"},{width:"30%"}),
@@ -353,7 +353,7 @@ var installer=function()
 			this.databaseHostname[(!this.cstatus.mysqlConnection)?"failed":"passed"]();
 			this.databaseUsername[(!this.cstatus.mysqlConnection)?"failed":"passed"]();
 			this.databasePassword[(!this.cstatus.mysqlConnection)?"failed":"passed"]();
-			
+
 			this.databaseGrant.className = (!this.cstatus.grantPriv && this.select_ao_db.selected().value==1)?"inst_td1 tdFailed":"inst_td1 tdOk";
 			this.databaseGrant.innerHTML = (!this.cstatus.grantPriv)?"FAILED":((this.cstatus.grantPriv==1)?'ALL PRIVILEGES':'USAGE');
 
@@ -362,8 +362,8 @@ var installer=function()
 
 			this.workflowData[(!this.cstatus.path_data)?"failed":"passed"]();
 			this.compiled[(!this.cstatus.path_compiled)?"failed":"passed"]();
-			
-			
+
+
 			this.ao_db_wf[((!this.cstatus.ao_db_wf['status'])?"failed":"passed")]();
 			this.ao_db_rb[((!this.cstatus.ao_db_rb['status'])?"failed":"passed")]();
 			this.ao_db_rp[((!this.cstatus.ao_db_rp['status'])?"failed":"passed")]();
@@ -390,11 +390,11 @@ var installer=function()
 			}
 			this.buttonFun(this.options.button0);
 			this.buttonFun(this.options.button1);
-			
+
 			this.ao_db_wf.title=this.cstatus.ao_db_wf.message;
 			this.ao_db_rb.title=this.cstatus.ao_db_rb.message;
 			this.ao_db_rp.title=this.cstatus.ao_db_rp.message;
-			
+
 			this.ao_admin.title=(this.cstatus.ao_admin)?'Username invalid':'PASSED';
 
 			inst.loader.hide();
@@ -479,22 +479,22 @@ var installer=function()
 			inst.loader.hide();
 			this.table = document.createElement("table");
 			this.table.className="inst_table";
-	
+
 			var tr = this.table.insertRow(-1);
 			var tdtitle = tr.insertCell(0);
 			tdtitle.innerHTML="Directories";
 			tdtitle.className="app_grid_title___gray title";
-	
+
 			var tr = this.table.insertRow(-1);
 			var td0 = tr.insertCell(0);
 			td0.innerHTML="SUCCESS";
 			td0.className="tdOk";
-	
+
 			var tr = this.table.insertRow(-1);
 			var tdtitle = tr.insertCell(0);
 			tdtitle.innerHTML="New Workspace";
 			tdtitle.className="app_grid_title___gray title";
-	
+
 			var tr = this.table.insertRow(-1);
 			var td0 = tr.insertCell(0);
 			td0.innerHTML="SUCCESS";
@@ -506,8 +506,8 @@ var installer=function()
 			tdS.colSpan = 2;
 			tdS.innerHTML="<br><br>";
 			tdS.className="tdNormal";
-	
-	
+
+
 			this.options.buttong = document.createElement("input");
 			this.options.buttong.type="button";
 			this.options.buttong.value="Finish Installation";
