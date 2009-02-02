@@ -1985,30 +1985,28 @@ class Processes {
   * @return boolean
   */
   function createProcessFromData ($oData, $pmFilename ) {
-    $this->createProcessRow ($oData->process );
-    $this->createTaskRows ($oData->tasks );
-    $this->createRouteRows ($oData->routes );
-    $this->createLaneRows ($oData->lanes );
-    $this->createDynaformRows ($oData->dynaforms );
-    $this->createInputRows ($oData->inputs );
-    $this->createOutputRows ($oData->outputs );
-    $this->createStepRows ($oData->steps );
-    $this->createStepSupervisorRows($oData->stepSupervisor);
-    $this->createTriggerRows ($oData->triggers);
-    $this->createStepTriggerRows ($oData->steptriggers);
-    $this->createTaskUserRows ($oData->taskusers);
-    $this->createGroupRow ($oData->groupwfs );
-    $this->createDBConnectionsRows($oData->dbconnections);
-    $this->createReportTables($oData->reportTables, $oData->reportTablesVars);
-    $this->createSubProcessRows( $oData->subProcess );
-    $this->createCaseTrackerRows( isset($oData->caseTracker) ? $oData->caseTracker : null );
-    if (isset($oData->caseTrackerObject))
-    			$this->createCaseTrackerObjectRows( $oData->caseTrackerObject);
-    $this->createObjectPermissionsRows( $oData->objectPermissions);
-    if (isset($oData->stage))
-    			$this->createStageRows( $oData->stage);
+    $this->createProcessRow($oData->process);
+    $this->createTaskRows($oData->tasks);
+    $this->createRouteRows($oData->routes);
+    $this->createLaneRows($oData->lanes);
+    $this->createDynaformRows($oData->dynaforms);
+    $this->createInputRows($oData->inputs);
+    $this->createOutputRows($oData->outputs);
+    $this->createStepRows($oData->steps);
+    $this->createStepSupervisorRows(isset($oData->stepSupervisor) ? $oData->stepSupervisor : array());
+    $this->createTriggerRows($oData->triggers);
+    $this->createStepTriggerRows($oData->steptriggers);
+    $this->createTaskUserRows($oData->taskusers);
+    $this->createGroupRow($oData->groupwfs);
+    $this->createDBConnectionsRows(isset($oData->dbconnections) ? $oData->dbconnections : array());
+    $this->createReportTables(isset($oData->reportTables) ? $oData->reportTables : array(), isset($oData->reportTablesVars) ? $oData->reportTablesVars : array());
+    $this->createSubProcessRows(isset($oData->subProcess) ? $oData->subProcess : array());
+    $this->createCaseTrackerRows(isset($oData->caseTracker) ? $oData->caseTracker : array());
+    $this->createCaseTrackerObjectRows(isset($oData->caseTrackerObject) ? $oData->caseTrackerObject: array());
+    $this->createObjectPermissionsRows(isset($oData->objectPermissions) ? $oData->objectPermissions : array());
+		$this->createStageRows(isset($oData->stage) ? $oData->stage : array());
     //and finally create the files, dynaforms (xml and html), emailTemplates and Public files
-    $this->createFiles ( $oData, $pmFilename  );
+    $this->createFiles($oData, $pmFilename);
  }
 
   /*

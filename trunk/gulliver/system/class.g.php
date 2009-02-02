@@ -2181,7 +2181,7 @@ class G
    */
   function capitalizeWords( $text )
   {
-    $result = '';
+    /*$result = '';
     $space = true;
     for ( $i = 0; $i < strlen ( $text); $i++ ) {
       $car = strtolower ( $text[$i] );
@@ -2193,7 +2193,18 @@ class G
       else
         $space = true;
     }
-    return $result;
+    return $result;*/
+    if (function_exists('mb_detect_encoding')) {
+      if (strtoupper(mb_detect_encoding($text)) == 'UTF-8') {
+        $text = utf8_encode($text);
+      }
+    }
+    if(function_exists('mb_ucwords')) {
+      return mb_ucwords($text);
+    }
+    else {
+      return mb_convert_case($text, MB_CASE_TITLE, "UTF-8");
+    }
   }
 
   function unhtmlentities ($string)
