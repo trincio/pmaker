@@ -800,10 +800,10 @@ function setCaseTrackerCode($sApplicationUID, $sCode, $sPIN = '') {
 
 function jumping ( $caseId, $delIndex ) {
 	$x = $this->PMFDerivateCase($caseId, $delIndex);
-	if($x==1)
-			G::header('Location: cases_List');
-	else	
-			echo "Not derivated";		
+	if($x==0)				
+		  G::SendTemporalMessage('ID_NOT_DERIVATED', 'error', 'labels');			
+		
+	G::header('Location: cases_List');		
 }
 
 ?>
