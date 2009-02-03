@@ -370,8 +370,16 @@ $oHeadPublisher->addScriptCode('
     $oDataset->next();
     $aRow = $oDataset->getRow();
     $oTask = new Task();
-    $aTask = $oTask->load($aRow['TAS_UID']);
-    $Fields['ORIGIN'] = $aTask['TAS_TITLE'];
+    try {
+          $aTask = $oTask->load($aRow['TAS_UID']);
+          $Fields['ORIGIN'] = $aTask['TAS_TITLE'];
+          $oAppDocument->Fields['VIEW'] = G::LoadTranslation('ID_OPEN');
+        }
+    catch (Exception $oException) {
+           $Fields['ORIGIN'] = '(TASK DELETED)';           
+        }
+    
+    
 		$oUser = new Users();
 		$aUser = $oUser->load($oAppDocument->Fields['USR_UID']);
 		$Fields['CREATOR'] = $aUser['USR_FIRSTNAME'] . ' ' . $aUser['USR_LASTNAME'];
@@ -390,7 +398,7 @@ $oHeadPublisher->addScriptCode('
 			$sXmlForm = 'cases/cases_ViewAnyInputDocument';
 			break;
 		}
-		$oAppDocument->Fields['VIEW'] = G::LoadTranslation('ID_OPEN');
+		//$oAppDocument->Fields['VIEW'] = G::LoadTranslation('ID_OPEN');
 		$oAppDocument->Fields['FILE'] = 'cases_ShowDocument?a=' . $_POST['APP_DOC_UID'] . '&r=' . rand();
 		$G_PUBLISH = new Publisher;
 		$G_PUBLISH->AddContent('xmlform', 'xmlform', $sXmlForm, '', G::array_merges($Fields, $oAppDocument->Fields), '');
