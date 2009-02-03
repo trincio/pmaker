@@ -357,10 +357,11 @@ class Cases
                 if (isset($x[$VAR_PRI])) {
                 	if ($x[$VAR_PRI] != '') {
                     $oDel = new AppDelegation;
+                    $array = array();
                     $array['APP_UID'] = $sAppUid;
                     $array['DEL_INDEX'] = $DEL_INDEX;
                     $array['TAS_UID'] = $TAS_UID;
-                    $array['DEL_PRIORITY'] = $x[$VAR_PRI];
+                    $array['DEL_PRIORITY'] = (isset($x[$VAR_PRI]) ? ($x[$VAR_PRI] >= 1 && $x[$VAR_PRI] <= 5 ? $x[$VAR_PRI] : '3') : '3');
                     $oDel->update($array);
                   }
                 }
@@ -2269,12 +2270,18 @@ class Cases
       $oCriteria = new Criteria('workflow');
       $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
       $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, array('ATTACHED'), Criteria::IN);
+      $aConditions   = array();
+      $aConditions[] = array(AppDocumentPeer::APP_UID, AppDelegationPeer::APP_UID);
+      $aConditions[] = array(AppDocumentPeer::DEL_INDEX, AppDelegationPeer::DEL_INDEX);
+      $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
+      $oCriteria->add(AppDelegationPeer::PRO_UID, $sProcessUID);
       $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
       $oDataset = AppDocumentPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
       $oDataset->next();
       while ($aRow = $oDataset->getRow()) {
           $oCriteria2 = new Criteria('workflow');
+          $oCriteria2->add(AppDelegationPeer::APP_UID, $sApplicationUID);
           $oCriteria2->add(AppDelegationPeer::DEL_INDEX, $aRow['DEL_INDEX']);
           $oDataset2 = AppDelegationPeer::doSelectRS($oCriteria2);
           $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
