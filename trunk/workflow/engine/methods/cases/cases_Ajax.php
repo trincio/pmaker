@@ -364,6 +364,7 @@ $oHeadPublisher->addScriptCode('
 		  $Fields = array('INP_DOC_FORM_NEEDED' => '', 'FILENAME' => $oAppDocument->Fields['APP_DOC_FILENAME']);
 		}
 		$oCriteria = new Criteria('workflow');
+		$oCriteria->add(AppDelegationPeer::APP_UID, $oAppDocument->Fields['APP_UID']);
     $oCriteria->add(AppDelegationPeer::DEL_INDEX, $oAppDocument->Fields['DEL_INDEX']);
     $oDataset = AppDelegationPeer::doSelectRS($oCriteria);
     $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
@@ -376,10 +377,10 @@ $oHeadPublisher->addScriptCode('
           $oAppDocument->Fields['VIEW'] = G::LoadTranslation('ID_OPEN');
         }
     catch (Exception $oException) {
-           $Fields['ORIGIN'] = '(TASK DELETED)';           
+           $Fields['ORIGIN'] = '(TASK DELETED)';
         }
-    
-    
+
+
 		$oUser = new Users();
 		$aUser = $oUser->load($oAppDocument->Fields['USR_UID']);
 		$Fields['CREATOR'] = $aUser['USR_FIRSTNAME'] . ' ' . $aUser['USR_LASTNAME'];
@@ -420,6 +421,7 @@ $oHeadPublisher->addScriptCode('
 		$oOutputDocument = new OutputDocument();
 		$aOD = $oOutputDocument->load($aFields['DOC_UID']);
 		$oCriteria = new Criteria('workflow');
+		$oCriteria->add(AppDelegationPeer::APP_UID, $aFields['APP_UID']);
     $oCriteria->add(AppDelegationPeer::DEL_INDEX, $aFields['DEL_INDEX']);
     $oDataset = AppDelegationPeer::doSelectRS($oCriteria);
     $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
