@@ -120,14 +120,15 @@ class Step extends BaseStep {
       $c->add ( StepPeer::PRO_UID, $sProUid );
       $c->add ( StepPeer::TAS_UID, $sTasUid );
       $c->add ( StepPeer::STEP_POSITION, $sPosition );
-      $rs = StepPeer::doSelect( $c );
-      if (!is_null($rs) && !is_null($rs[0]))
-      {
-        return $rs[0];
-      }
-      else {
-        return null;
-      }
+      $rs = StepPeer::doSelect( $c );       
+       if (!isset($rs))
+	      { if(!isset($rs[0]))
+	        		return $rs[0];
+	      }
+	      else {
+	        return null;
+	      }
+	    
     }
     catch (Exception $oError) {
       throw($oError);

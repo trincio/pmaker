@@ -2358,7 +2358,7 @@ class processMap {
         try {
           $oTask       = new Task();
           $aFields     = $oTask->load($aRow['TAS_UID']);
-          $sTaskTarget = $aFields['TAS_TITLE'];
+          $sTaskTarget = $aFields['TAS_TITLE'];          
         }
         catch (Exception $oError) {
           $sTaskTarget = '(TASK DELETED)';
@@ -2390,9 +2390,14 @@ class processMap {
       }
       //Obtain task source
       if ($aRow['OP_TASK_SOURCE'] != '') {
-        $oTask       = new Task();
-        $aFields     = $oTask->load($aRow['OP_TASK_SOURCE']);
-        $sTaskSource = $aFields['TAS_TITLE'];
+        try {
+        			$oTask       = new Task();
+        			$aFields     = $oTask->load($aRow['OP_TASK_SOURCE']);
+        			$sTaskSource = $aFields['TAS_TITLE'];
+        		}
+        catch (Exception $oError) {
+              $sTaskSource = '(TASK DELETED)';
+            }			
       }
       else {
         $sTaskSource = G::LoadTranslation('ID_ANY_TASK');
