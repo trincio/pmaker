@@ -126,6 +126,7 @@
 		{
 			$oAppMessage = AppMessagePeer::retrieveByPK($this->spool_id);
 			$oAppMessage->setappMsgstatus($this->status);
+			$oAppMessage->setappMsgsenddate(date('Y-m-d H:i:s'));
 			$oAppMessage->save();
 
 		}
