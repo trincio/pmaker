@@ -415,7 +415,8 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
     }
     else {
     	//when the file is part of the public directory of any PROCESS
-      if ( strlen (SYS_COLLECTION) == 32 || strlen (SYS_COLLECTION) == 31 || strlen (SYS_COLLECTION) == 14 ) { //the pattern is /sysSYS/LANG/SKIN/PRO_UID/file
+      if (preg_match('/^[0-9][[:alnum:]]+$/', SYS_COLLECTION) == 1)
+      { //the pattern is /sysSYS/LANG/SKIN/PRO_UID/file
         $auxPart = explode ( '/' ,  $_SERVER['REQUEST_URI']);
         $extPart = explode ( '.' , $auxPart[ count($auxPart)-1] );
         $extension = $extPart[ count($extPart)-1 ];
@@ -424,8 +425,8 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
           G::streamFile ( $phpFile );
           die;
         }
-		$bWE = true;
-        //  $phpFile = PATH_DATA_SITE . 'public' . PATH_SEP .  SYS_COLLECTION . PATH_SEP . $auxPart[ count($auxPart)-1];
+        $bWE = true;
+        //$phpFile = PATH_DATA_SITE . 'public' . PATH_SEP .  SYS_COLLECTION . PATH_SEP . $auxPart[ count($auxPart)-1];
       }
       if ( ! file_exists( $phpFile ) ) {
           $_SESSION['phpFileNotFound'] = $phpFile;
@@ -454,7 +455,7 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
         //This sentence is used when you lost the Session
         if ( SYS_TARGET != 'authentication' and  SYS_TARGET != 'login'
         and  SYS_TARGET != 'dbInfo'         and  SYS_TARGET != 'sysLoginVerify' and SYS_TARGET != 'processes_Ajax'
-        and  SYS_TARGET != 'updateTranslation'  
+        and  SYS_TARGET != 'updateTranslation'
         and  SYS_COLLECTION != 'services' and SYS_COLLECTION != 'tracker' and $collectionPlugin != 'services'
         and $bWE != true and SYS_TARGET != 'defaultAjaxDynaform' and SYS_TARGET != 'cases_ShowDocument'){
           header ("location: ".SYS_URI."login/login.php");
