@@ -681,6 +681,16 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
+    <column name="APP_MSG_SEND_DATE" type="TIMESTAMP" required="true">
+      <vendor type="mysql">
+        <parameter name="Field" value="APP_MSG_SEND_DATE"/>
+        <parameter name="Type" value="datetime"/>
+        <parameter name="Null" value="YES"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
   </table>
   <table name="APP_OWNER">
     <vendor type="mysql">
