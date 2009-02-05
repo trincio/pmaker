@@ -575,13 +575,12 @@ class Report {
 							MAX(AD.DEL_DURATION) AS MAX,
 							SUM(AD.DEL_DURATION) AS TOTALDUR,
 							AVG(AD.DEL_DURATION) AS PROMEDIO
-              FROM APP_DELEGATION AS AD
-              LEFT JOIN PROCESS AS P ON (P.PRO_UID = AD.PRO_UID)
-              LEFT JOIN APPLICATION AS A ON(A.APP_UID = AD.APP_UID)
+              FROM APPLICATION AS A              
+              LEFT JOIN APP_DELEGATION AS AD ON(A.APP_UID = AD.APP_UID AND AD.DEL_INDEX=1)
               LEFT JOIN USERS AS U ON(U.USR_UID = A.APP_INIT_USER)
-              WHERE AD.APP_UID<>''
+              WHERE A.APP_UID<>''
               GROUP BY USER";
-          // AND P.PRO_STATUS<>'DISABLED'  que sucede cuando se crea una new version del proceso q ya existe al momento de importar
+          // AND P.PRO_STATUS<>'DISABLED' que sucede cuando se crea una new version del proceso q ya existe al momento de importar
 			$con = Propel::getConnection("workflow");
 			$stmt = $con->prepareStatement($sql);
 			$rs = $stmt->executeQuery();
@@ -640,15 +639,15 @@ class Report {
              WHERE AD.PRO_UID='".$process."' AND AD.TAS_UID='".$task."' ";
     	}
     }
+               
 	  $sql = "SELECT CONCAT(U.USR_LASTNAME,' ',USR_FIRSTNAME) AS USER,
               COUNT(*) AS CANTCASES,
       				MIN(AD.DEL_DURATION) AS MIN,
 							MAX(AD.DEL_DURATION) AS MAX,
 							SUM(AD.DEL_DURATION) AS TOTALDUR,
 							AVG(AD.DEL_DURATION) AS PROMEDIO
-              FROM APP_DELEGATION AS AD
-              LEFT JOIN PROCESS AS P ON (P.PRO_UID = AD.PRO_UID)
-              LEFT JOIN APPLICATION AS A ON(A.APP_UID = AD.APP_UID)
+              FROM APPLICATION AS A            
+              LEFT JOIN APP_DELEGATION AS AD ON(A.APP_UID = AD.APP_UID AND AD.DEL_INDEX=1)
               LEFT JOIN USERS AS U ON(U.USR_UID = A.APP_INIT_USER)
               ".$var."
               GROUP BY USER";
