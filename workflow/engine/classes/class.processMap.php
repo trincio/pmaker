@@ -1582,10 +1582,10 @@ class processMap {
 	function triggersList($sProcessUID = '') {
 		try {
 			$oProcess = new Process();
-  	  //$aFields  = $oProcess->load($sProcessUID);
+  	  $aFields  = $oProcess->load($sProcessUID);
       global $G_PUBLISH;
       $G_PUBLISH = new Publisher;
-      $G_PUBLISH->AddContent('propeltable', 'paged-table', 'triggers/triggers_ShortList', $this->getTriggersCriteria($sProcessUID) /*, $aFields*/);
+      $G_PUBLISH->AddContent('propeltable', 'paged-table', 'triggers/triggers_ShortList', $this->getTriggersCriteria($sProcessUID) , $aFields);
       G::RenderPage('publish', 'raw');
       return true;
     }
