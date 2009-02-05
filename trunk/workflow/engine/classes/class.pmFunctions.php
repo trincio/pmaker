@@ -129,6 +129,7 @@ function executeQuery($SqlStatement, $DBConnectionUID = 'workflow')
 
 		switch(true) {
 			case eregi("SELECT", $SqlStatement):
+			case eregi("EXEC*", $SqlStatement):
 				$result = Array();
 				$i=1;
 				while ($rs->next()) {
@@ -800,10 +801,10 @@ function setCaseTrackerCode($sApplicationUID, $sCode, $sPIN = '') {
 
 function jumping ( $caseId, $delIndex ) {
 	$x = $this->PMFDerivateCase($caseId, $delIndex);
-	if($x==0)				
-		  G::SendTemporalMessage('ID_NOT_DERIVATED', 'error', 'labels');			
-		
-	G::header('Location: cases_List');		
+	if($x==0)
+		  G::SendTemporalMessage('ID_NOT_DERIVATED', 'error', 'labels');
+
+	G::header('Location: cases_List');
 }
 
 ?>

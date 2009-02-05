@@ -52,7 +52,7 @@ if (class_exists('folderData')) {
   $aAvailablePmFunctions = $oPluginRegistry->getPmFunctions();
   foreach ($aAvailablePmFunctions as $key => $class ) {
   	$filePlugin = PATH_PLUGINS . $class . PATH_SEP . 'classes' . PATH_SEP . 'class.pmFunctions.php';
-  	if ( file_exists ( $filePlugin ) ) 
+  	if ( file_exists ( $filePlugin ) )
   	  include_once( $filePlugin);
   }
 
@@ -341,7 +341,7 @@ class PMScript
 			}
 		}
 		$sScript .= substr($this->sScript, $iAux);
-		$sScript .= "\n} catch (Exception \$oException) {\n  \$this->aFields['__ERROR__'] = \$oException->getMessage();\n}";
+		$sScript .= "\n} catch (Exception \$oException) {\n  \$this->aFields['__ERROR__'] = utf8_encode(\$oException->getMessage());\n}";
 		//echo '<pre>-->'; print_r($this->aFields); echo '<---</pre>';
 		$this->executeAndCatchErrors($sScript);
 		for($i=0; $i<count($this->affected_fields); $i++){
