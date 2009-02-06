@@ -78,9 +78,9 @@ class SubApplicationMapBuilder {
 
 		$tMap->addColumn('SA_VALUES_IN', 'SaValuesIn', 'string', CreoleTypes::LONGVARCHAR, true, null);
 
-		$tMap->addColumn('SA_INIT_DATE', 'SaInitDate', 'int', CreoleTypes::TIMESTAMP, true, null);
+		$tMap->addColumn('SA_INIT_DATE', 'SaInitDate', 'int', CreoleTypes::TIMESTAMP, false, null);
 
-		$tMap->addColumn('SA_FINISH_DATE', 'SaFinishDate', 'int', CreoleTypes::TIMESTAMP, true, null);
+		$tMap->addColumn('SA_FINISH_DATE', 'SaFinishDate', 'int', CreoleTypes::TIMESTAMP, false, null);
 
 		$tMap->addValidator('SA_STATUS', 'validValues', 'propel.validator.ValidValuesValidator', 'ACTIVE|FINISHED|CANCELLED', 'Please select a valid value for SA_STATUS.');
 

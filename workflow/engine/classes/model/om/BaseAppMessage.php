@@ -132,6 +132,13 @@ abstract class BaseAppMessage extends BaseObject  implements Persistent {
 	 */
 	protected $app_msg_attach;
 
+
+	/**
+	 * The value for the app_msg_send_date field.
+	 * @var        int
+	 */
+	protected $app_msg_send_date;
+
 	/**
 	 * Flag to prevent endless save loop, if this object is referenced
 	 * by another object which falls in this transaction.
@@ -329,6 +336,37 @@ abstract class BaseAppMessage extends BaseObject  implements Persistent {
 	{
 
 		return $this->app_msg_attach;
+	}
+
+	/**
+	 * Get the [optionally formatted] [app_msg_send_date] column value.
+	 * 
+	 * @param      string $format The date/time format string (either date()-style or strftime()-style).
+	 *							If format is NULL, then the integer unix timestamp will be returned.
+	 * @return     mixed Formatted date/time value as string or integer unix timestamp (if format is NULL).
+	 * @throws     PropelException - if unable to convert the date/time to timestamp.
+	 */
+	public function getAppMsgSendDate($format = 'Y-m-d H:i:s')
+	{
+
+		if ($this->app_msg_send_date === null || $this->app_msg_send_date === '') {
+			return null;
+		} elseif (!is_int($this->app_msg_send_date)) {
+			// a non-timestamp value was set externally, so we convert it
+			$ts = strtotime($this->app_msg_send_date);
+			if ($ts === -1 || $ts === false) { // in PHP 5.1 return value changes to FALSE
+				throw new PropelException("Unable to parse value of [app_msg_send_date] as date/time value: " . var_export($this->app_msg_send_date, true));
+			}
+		} else {
+			$ts = $this->app_msg_send_date;
+		}
+		if ($format === null) {
+			return $ts;
+		} elseif (strpos($format, '%') !== false) {
+			return strftime($format, $ts);
+		} else {
+			return date($format, $ts);
+		}
 	}
 
 	/**
@@ -664,6 +702,30 @@ abstract class BaseAppMessage extends BaseObject  implements Persistent {
 	} // setAppMsgAttach()
 
 	/**
+	 * Set the value of [app_msg_send_date] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     void
+	 */
+	public function setAppMsgSendDate($v)
+	{
+
+		if ($v !== null && !is_int($v)) {
+			$ts = strtotime($v);
+			if ($ts === -1 || $ts === false) { // in PHP 5.1 return value changes to FALSE
+				throw new PropelException("Unable to parse date/time value for [app_msg_send_date] from input: " . var_export($v, true));
+			}
+		} else {
+			$ts = $v;
+		}
+		if ($this->app_msg_send_date !== $ts) {
+			$this->app_msg_send_date = $ts;
+			$this->modifiedColumns[] = AppMessagePeer::APP_MSG_SEND_DATE;
+		}
+
+	} // setAppMsgSendDate()
+
+	/**
 	 * Hydrates (populates) the object variables with values from the database resultset.
 	 *
 	 * An offset (1-based "start column") is specified so that objects can be hydrated
@@ -710,12 +772,14 @@ abstract class BaseAppMessage extends BaseObject  implements Persistent {
 
 			$this->app_msg_attach = $rs->getString($startcol + 14);
 
+			$this->app_msg_send_date = $rs->getTimestamp($startcol + 15, null);
+
 			$this->resetModified();
 
 			$this->setNew(false);
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 15; // 15 = AppMessagePeer::NUM_COLUMNS - AppMessagePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 16; // 16 = AppMessagePeer::NUM_COLUMNS - AppMessagePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating AppMessage object", $e);
@@ -963,6 +1027,9 @@ abstract class BaseAppMessage extends BaseObject  implements Persistent {
 			case 14:
 				return $this->getAppMsgAttach();
 				break;
+			case 15:
+				return $this->getAppMsgSendDate();
+				break;
 			default:
 				return null;
 				break;
@@ -998,6 +1065,7 @@ abstract class BaseAppMessage extends BaseObject  implements Persistent {
 			$keys[12] => $this->getAppMsgTemplate(),
 			$keys[13] => $this->getAppMsgStatus(),
 			$keys[14] => $this->getAppMsgAttach(),
+			$keys[15] => $this->getAppMsgSendDate(),
 		);
 		return $result;
 	}
@@ -1074,6 +1142,9 @@ abstract class BaseAppMessage extends BaseObject  implements Persistent {
 			case 14:
 				$this->setAppMsgAttach($value);
 				break;
+			case 15:
+				$this->setAppMsgSendDate($value);
+				break;
 		} // switch()
 	}
 
@@ -1112,6 +1183,7 @@ abstract class BaseAppMessage extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[12], $arr)) $this->setAppMsgTemplate($arr[$keys[12]]);
 		if (array_key_exists($keys[13], $arr)) $this->setAppMsgStatus($arr[$keys[13]]);
 		if (array_key_exists($keys[14], $arr)) $this->setAppMsgAttach($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setAppMsgSendDate($arr[$keys[15]]);
 	}
 
 	/**
@@ -1138,6 +1210,7 @@ abstract class BaseAppMessage extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(AppMessagePeer::APP_MSG_TEMPLATE)) $criteria->add(AppMessagePeer::APP_MSG_TEMPLATE, $this->app_msg_template);
 		if ($this->isColumnModified(AppMessagePeer::APP_MSG_STATUS)) $criteria->add(AppMessagePeer::APP_MSG_STATUS, $this->app_msg_status);
 		if ($this->isColumnModified(AppMessagePeer::APP_MSG_ATTACH)) $criteria->add(AppMessagePeer::APP_MSG_ATTACH, $this->app_msg_attach);
+		if ($this->isColumnModified(AppMessagePeer::APP_MSG_SEND_DATE)) $criteria->add(AppMessagePeer::APP_MSG_SEND_DATE, $this->app_msg_send_date);
 
 		return $criteria;
 	}
@@ -1219,6 +1292,8 @@ abstract class BaseAppMessage extends BaseObject  implements Persistent {
 		$copyObj->setAppMsgStatus($this->app_msg_status);
 
 		$copyObj->setAppMsgAttach($this->app_msg_attach);
+
+		$copyObj->setAppMsgSendDate($this->app_msg_send_date);
 
 
 		$copyObj->setNew(true);
