@@ -39,6 +39,20 @@ $msgType = $_SESSION['G_MESSAGE_TYPE'];
 //log by Everth
 
   require_once 'classes/model/LoginLog.php';
+  require_once 'classes/model/Configuration.php';
+  $oConfiguration = new Configuration();																																																		
+	$oCriteria      = new Criteria('workflow');
+	$oCriteria->addSelectColumn(ConfigurationPeer::CFG_VALUE);																											
+	$oCriteria->add(ConfigurationPeer::CFG_UID, 'Language');		  
+	$oCriteria->add(ConfigurationPeer::OBJ_UID, '');																																																						
+  $oCriteria->add(ConfigurationPeer::PRO_UID, '');																											
+  $oCriteria->add(ConfigurationPeer::USR_UID, '');																											
+  $oCriteria->add(ConfigurationPeer::APP_UID, ''); 	 
+  $oDataset1 = ConfigurationPeer::doSelectRS($oCriteria);
+  $oDataset1->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+  $oDataset1->next();   		    																											
+  $aRow1 = $oDataset1->getRow();
+  $aFields['USER_LANG'] = $aRow1['CFG_VALUE'];
   
   $oCriteria = new Criteria('workflow');
   $oCriteria->add(LoginLogPeer::LOG_SID, session_id());
@@ -83,7 +97,7 @@ if (strlen($msgType) > 0 )
 }
 
 $G_PUBLISH = new Publisher;
-$G_PUBLISH->AddContent('xmlform', 'xmlform', 'login/login', '', '', SYS_URI.'login/authentication.php');
+$G_PUBLISH->AddContent('xmlform', 'xmlform', 'login/login', '', $aFields, SYS_URI.'login/authentication.php');
 
 G::RenderPage( "publish" );
 ?>
