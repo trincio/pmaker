@@ -72,37 +72,39 @@
   $oCase->updateCase( $_SESSION['APPLICATION'], $aData );
   //save files
   require_once 'classes/model/AppDocument.php';
-  foreach ($_FILES['form']['name'] as $sFieldName => $vValue) {
-    if ($_FILES['form']['error'][$sFieldName] == 0) {
-      $oAppDocument = new AppDocument();
-      $aFields = array('APP_UID'             => $_SESSION['APPLICATION'],
-                       'DEL_INDEX'           => $_SESSION['INDEX'],
-                       'USR_UID'             => $_SESSION['USER_LOGGED'],
-                       'DOC_UID'             => -1,
-                       'APP_DOC_TYPE'        => 'ATTACHED',
-                       'APP_DOC_CREATE_DATE' => date('Y-m-d H:i:s'),
-                       'APP_DOC_COMMENT'     => '',
-                       'APP_DOC_TITLE'       => '',
-                       'APP_DOC_FILENAME'    => $_FILES['form']['name'][$sFieldName]);
-      $oAppDocument->create($aFields);
-      $sAppDocUid = $oAppDocument->getAppDocUid();
-      $aInfo      = pathinfo($oAppDocument->getAppDocFilename());
-      $sExtension = (isset($aInfo['extension']) ? $aInfo['extension'] : '');
-      $sPathName  = PATH_DOCUMENT . $_SESSION['APPLICATION'] . PATH_SEP;
-      $sFileName  = $sAppDocUid . '.' . $sExtension;
-      G::uploadFile($_FILES['form']['tmp_name'][$sFieldName], $sPathName, $sFileName);
-      //Plugin Hook PM_UPLOAD_DOCUMENT for upload document
-    	$oPluginRegistry =& PMPluginRegistry::getSingleton();
-      if ($oPluginRegistry->existsTrigger(PM_UPLOAD_DOCUMENT) && class_exists('uploadDocumentData')) {
-        $documentData = new uploadDocumentData (
-                          $_SESSION['APPLICATION'],
-                          $_SESSION['USER_LOGGED'],
-                          $sPathName . $sFileName,
-                          $aFields['APP_DOC_FILENAME'],
-                          $sAppDocUid
-                          );
-  	    $oPluginRegistry->executeTriggers(PM_UPLOAD_DOCUMENT, $documentData);
-  	    unlink($sPathName . $sFileName);
+  if (isset($_FILES['form'])) {
+    foreach ($_FILES['form']['name'] as $sFieldName => $vValue) {
+      if ($_FILES['form']['error'][$sFieldName] == 0) {
+        $oAppDocument = new AppDocument();
+        $aFields = array('APP_UID'             => $_SESSION['APPLICATION'],
+                         'DEL_INDEX'           => $_SESSION['INDEX'],
+                         'USR_UID'             => $_SESSION['USER_LOGGED'],
+                         'DOC_UID'             => -1,
+                         'APP_DOC_TYPE'        => 'ATTACHED',
+                         'APP_DOC_CREATE_DATE' => date('Y-m-d H:i:s'),
+                         'APP_DOC_COMMENT'     => '',
+                         'APP_DOC_TITLE'       => '',
+                         'APP_DOC_FILENAME'    => $_FILES['form']['name'][$sFieldName]);
+        $oAppDocument->create($aFields);
+        $sAppDocUid = $oAppDocument->getAppDocUid();
+        $aInfo      = pathinfo($oAppDocument->getAppDocFilename());
+        $sExtension = (isset($aInfo['extension']) ? $aInfo['extension'] : '');
+        $sPathName  = PATH_DOCUMENT . $_SESSION['APPLICATION'] . PATH_SEP;
+        $sFileName  = $sAppDocUid . '.' . $sExtension;
+        G::uploadFile($_FILES['form']['tmp_name'][$sFieldName], $sPathName, $sFileName);
+        //Plugin Hook PM_UPLOAD_DOCUMENT for upload document
+      	$oPluginRegistry =& PMPluginRegistry::getSingleton();
+        if ($oPluginRegistry->existsTrigger(PM_UPLOAD_DOCUMENT) && class_exists('uploadDocumentData')) {
+          $documentData = new uploadDocumentData (
+                            $_SESSION['APPLICATION'],
+                            $_SESSION['USER_LOGGED'],
+                            $sPathName . $sFileName,
+                            $aFields['APP_DOC_FILENAME'],
+                            $sAppDocUid
+                            );
+    	    $oPluginRegistry->executeTriggers(PM_UPLOAD_DOCUMENT, $documentData);
+    	    unlink($sPathName . $sFileName);
+        }
       }
     }
   }
