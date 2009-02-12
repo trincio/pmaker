@@ -435,6 +435,7 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
       }
     }
 
+
 //  ***************** enable rbac **************************
 
     $RBAC =& RBAC::getSingleton();
