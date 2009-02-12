@@ -39,4 +39,7 @@ if($RBAC->userCanAccess('PM_SUPERVISOR') == 1) {
 if ($RBAC->userCanAccess('PM_REASSIGNCASE') == 1) {
   $G_TMP_MENU->AddIdRawOption('CASES_TO_REASSIGN', 'cases/cases_List?l=to_reassign', G::LoadTranslation('ID_TO_REASSIGN'));
 }
+
+$G_TMP_MENU->AddIdRawOption('CASES_ADVANCEDSEARCH', 'cases/cases_advancedSearch', G::LoadTranslation('ID_ADVANCEDSEARCH'));
+
 ?>
