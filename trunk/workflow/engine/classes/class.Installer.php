@@ -92,7 +92,7 @@ class Installer
 				'message'=>($name)?'PASSED':'Workspace name invalid'
 			),
 			'admin'=>array(
-					'username'=>(preg_match('/^[\w@\.]+$/i',trim($this->options['admin']['username'])))?true:false,
+					'username'=>(preg_match('/^[\w@\.-]+$/i',trim($this->options['admin']['username'])))?true:false,
 					'password'=>((trim($this->options['admin']['password'])=='')?false:true)
 				)
 		);

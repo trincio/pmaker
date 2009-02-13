@@ -25,7 +25,7 @@
   <en>Workspace Administrator</en>
 </WS>
 
-<NW_USERNAME type="text" size="30" maxlength="32" validate="Login" defaultValue="admin"  style='width:100%;'>
+<NW_USERNAME type="text" size="30" maxlength="32" validate="Email" defaultValue="admin"  style='width:100%;'>
   <en>Username:</en>
 </NW_USERNAME>
 <NW_PASSWORD type="password" size="30" maxlength="32" validate="Any" defaultValue="admin" style='width:100%;'>
@@ -51,7 +51,7 @@
 		ao_admin_pass1:new input(getField('NW_PASSWORD')),
 		ao_admin_pass2:new input(getField('NW_PASSWORD2')),
 		action:getField('ACTION')
-	};	
+	};
 	data.reset = data.submit.parentNode.insertBefore(new button('reset',function()
 	{
 		ed('enable');
@@ -64,10 +64,10 @@
 		window.location="/sys"+data.name.value+"/en/green/login/login";
 		return false;
 	},{fontWeight:'bold'},{type:'reset'})).disable();
-	
+
 	data.loader= data.submit.parentNode.appendChild(new DOM('img',{src:'/js/maborak/core/images/loader_B.gif'},{width:22,height:22,position:'relative',display:'block'}));
 	data.loader.setStyle({visibility:'hidden'});
-		
+
 	var ed = function(mod)
 	{
 		data.name[mod]();
@@ -95,9 +95,9 @@
 		ed('enable');
 		data.name[(rp.result.name['status'])?'passed':'failed']().title=rp.result.name['message'];
 		data.ao_db_wf[(rp.result.database.ao.ao_db_wf['status'])?'passed':'failed']().title=rp.result.database.ao.ao_db_wf.message;
-		
-		
-		
+
+
+
 		data.ao_db_rb[(rp.result.database.ao.ao_db_rb['status'])?'passed':'failed']().title=rp.result.database.ao.ao_db_rb.message;
 		data.ao_db_rp[(rp.result.database.ao.ao_db_rp['status'])?'passed':'failed']().title=rp.result.database.ao.ao_db_rp.message;
 		data.ao_admin[(rp.result.admin.username)?'passed':'failed']().title=(rp.result.admin.username)?'OK':'PASSED';
