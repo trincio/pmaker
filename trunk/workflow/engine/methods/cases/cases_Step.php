@@ -397,8 +397,9 @@ switch ($_GET['TYPE'])
       $oPluginRegistry =& PMPluginRegistry::getSingleton();
       $oPluginRegistry->executeTriggers ( PM_CASE_DOCUMENT_LIST , $folderData );
     }
-    else
+    /*else
       $G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_InputdocsList', $oCase->getInputDocumentsCriteria($_SESSION['APPLICATION'], $_SESSION['INDEX'], $_GET['UID']), '');//$aFields
+      */
     //end plugin
       break;
     }
