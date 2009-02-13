@@ -3,6 +3,7 @@
  * green.php
  *
  */
+if(!defined('DB_SYSTEM_INFORMATION')) define('DB_SYSTEM_INFORMATION', 1);
 
   G::verifyPath ( PATH_SMARTY_C,     true );
   G::verifyPath ( PATH_SMARTY_CACHE, true );
