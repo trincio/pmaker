@@ -26,10 +26,10 @@ if(!defined('DB_SYSTEM_INFORMATION')) define('DB_SYSTEM_INFORMATION', 1);
     $smarty->display('blank.html');
   }
   else {
-	  
+
 	  $header = '';
 	  if (isset($oHeadPublisher)) {
-      $oHeadPublisher->title = isset($_SESSION['USR_USERNAME']) ? '(' . $_SESSION['USR_USERNAME'] . ' ' . G::LoadTranslation('ID_IN') . ' ' . SYS_SYS . ')' : '';	  
+      $oHeadPublisher->title = isset($_SESSION['USR_USERNAME']) ? '(' . $_SESSION['USR_USERNAME'] . ' ' . G::LoadTranslation('ID_IN') . ' ' . SYS_SYS . ')' : '';
 	  	$header = $oHeadPublisher->printHeader();
 	  }
 	  $footer = '';
@@ -56,9 +56,14 @@ if(!defined('DB_SYSTEM_INFORMATION')) define('DB_SYSTEM_INFORMATION', 1);
  	  $subMenus = $oSubMenu->generateArrayForTemplate ( $G_SUB_MENU,'selectedSubMenu', 'subMenu',$G_SUB_MENU_SELECTED, $G_ID_SUB_MENU_SELECTED );
 	  $smarty->assign('subMenus', $subMenus  );
 
-	  $smarty->assign('user',   isset($_SESSION['USR_USERNAME']) ? $_SESSION['USR_USERNAME'] : '');
-	  $smarty->assign('pipe',   isset($_SESSION['USR_USERNAME']) ? ' | ' : '');	  
-	  $smarty->assign('logout', G::LoadTranslation('ID_LOGOUT'));
+	  if (!defined('NO_DISPLAY_USERNAME')) {
+	    define('NO_DISPLAY_USERNAME', 0);
+	  }
+	  if (NO_DISPLAY_USERNAME == 0) {
+	    $smarty->assign('user',   isset($_SESSION['USR_USERNAME']) ? $_SESSION['USR_USERNAME'] : '');
+	    $smarty->assign('pipe',   isset($_SESSION['USR_USERNAME']) ? ' | ' : '');
+	    $smarty->assign('logout', G::LoadTranslation('ID_LOGOUT'));
+	  }
   	$smarty->assign('header', $header );
   	$smarty->assign('footer', $footer);
 	  $smarty->assign('tpl_menu', PATH_TEMPLATE . 'menu.html' );
@@ -74,4 +79,4 @@ if(!defined('DB_SYSTEM_INFORMATION')) define('DB_SYSTEM_INFORMATION', 1);
 	  $smarty->assign('logo_company', $sCompanyLogo );
     $smarty->display('green.html');
   }
-  
+

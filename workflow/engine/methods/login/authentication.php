@@ -39,6 +39,10 @@ try {
 	  $pwd = trim($frm['USR_PASSWORD']);
 	}
 	$uid = $RBAC->VerifyLogin($usr , $pwd);
+
+	//krumo ($uid);
+	//die;
+
 	switch ($uid) {
 		//The user not exists
 	  case -1:
@@ -91,8 +95,7 @@ try {
   		$lang = 'en';
   	}
   }
-    
-    
+
   /**log by Everth**/
   require_once 'classes/model/LoginLog.php';
   $weblog=new LoginLog();
@@ -102,11 +105,111 @@ try {
   $aLog['LOG_SID']            = session_id();
   $aLog['LOG_INIT_DATE']			= date('Y-m-d H:i:s');
   //$aLog['LOG_END_DATE']				= '0000-00-00 00:00:00';
-  $aLog['LOG_CLIENT_HOSTNAME']= $_SERVER['HTTP_HOST']; 
+  $aLog['LOG_CLIENT_HOSTNAME']= $_SERVER['HTTP_HOST'];
   $aLog['USR_UID']						= $_SESSION['USER_LOGGED'];
   $weblog->create($aLog);
   /**end log**/
-    
+
+  /* Check password using policy - Start */
+  if (!defined('PPU_MINIMUN_LENGTH')) {
+    define('PPU_MINIMUN_LENGTH', 5);
+  }
+  if (!defined('PPU_MAXIMUN_LENGTH')) {
+    define('PPU_MAXIMUN_LENGTH', 20);
+  }
+  if (!defined('PPU_NUMERICAL_CHARACTER_REQUIRED')) {
+    define('PPU_NUMERICAL_CHARACTER_REQUIRED', 0);
+  }
+  if (!defined('PPU_UPPERCASE_CHARACTER_REQUIRED')) {
+    define('PPU_UPPERCASE_CHARACTER_REQUIRED', 0);
+  }
+  if (!defined('PPU_SPECIAL_CHARACTER_REQUIRED')) {
+    define('PPU_SPECIAL_CHARACTER_REQUIRED', 0);
+  }
+  if (function_exists('mb_strlen')) {
+    $iLength = mb_strlen($_POST['form']['USR_PASSWORD']);
+  }
+  else {
+    $iLength = strlen($_POST['form']['USR_PASSWORD']);
+  }
+  $aErrors = array();
+  if ($iLength < PPU_MINIMUN_LENGTH) {
+    $aErrors[] = 'ID_PPU_MINIMUN_LENGTH';
+  }
+  if ($iLength > PPU_MAXIMUN_LENGTH) {
+    $aErrors[] = 'ID_PPU_MAXIMUN_LENGTH';
+  }
+  if (PPU_NUMERICAL_CHARACTER_REQUIRED == 1) {
+    if (preg_match_all('/[0-9]/', $_POST['form']['USR_PASSWORD'], $aMatch, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE) == 0) {
+      $aErrors[] = 'ID_PPU_NUMERICAL_CHARACTER_REQUIRED';
+    }
+  }
+  if (PPU_UPPERCASE_CHARACTER_REQUIRED == 1) {
+    if (preg_match_all('/[A-Z]/', $_POST['form']['USR_PASSWORD'], $aMatch, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE) == 0) {
+      $aErrors[] = 'ID_PPU_UPPERCASE_CHARACTER_REQUIRED';
+    }
+  }
+  if (PPU_SPECIAL_CHARACTER_REQUIRED == 1) {
+    if (preg_match_all('/[ºª\!|"@·#$~%€&¬\/()=\'?¡¿*+-_.:,;]/', $_POST['form']['USR_PASSWORD'], $aMatch, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE) == 0) {
+      $aErrors[] = 'ID_PPU_SPECIAL_CHARACTER_REQUIRED';
+    }
+  }
+  if (!empty($aErrors)) {
+    if (!defined('NO_DISPLAY_USERNAME')) {
+      define('NO_DISPLAY_USERNAME', 1);
+    }
+    $aFields = array();
+    $aFields['DESCRIPTION']  = '<span style="font-weight:normal;">';
+    $aFields['DESCRIPTION'] .= G::LoadTranslation('ID_POLICY_ALERT').':<br /><br />';
+    foreach ($aErrors as $sError)  {
+      switch ($sError) {
+        case 'ID_PPU_MINIMUN_LENGTH':
+          $aFields['DESCRIPTION'] .= ' - ' . G::LoadTranslation($sError).': ' . PPU_MINIMUN_LENGTH . '<br />';
+        break;
+        case 'ID_PPU_MAXIMUN_LENGTH':
+          $aFields['DESCRIPTION'] .= ' - ' . G::LoadTranslation($sError).': ' . PPU_MAXIMUN_LENGTH . '<br />';
+        break;
+        default:
+          $aFields['DESCRIPTION'] .= ' - ' . G::LoadTranslation($sError).'<br />';
+        break;
+      }
+    }
+    $aFields['DESCRIPTION'] .= '<br />' . G::LoadTranslation('ID_PLEASE_CHANGE_PASSWORD_POLICY') . '<br /><br /></span>';
+    $G_PUBLISH = new Publisher;
+    $G_PUBLISH->AddContent('xmlform', 'xmlform', 'login/changePassword', '', $aFields);
+    G::RenderPage('publish');
+    die;
+  }
+  /* Check password using policy - End */
+
+  //get the plugins, and check if there is redirectLogins
+  //if yes, then redirect according his Role
+  if ( class_exists('redirectDetail')) {
+    //falta validar...
+    if(isset($RBAC->aUserInfo['PROCESSMAKER']['ROLE']['ROL_CODE']))
+    		$userRole = $RBAC->aUserInfo['PROCESSMAKER']['ROLE']['ROL_CODE'];
+
+    $oPluginRegistry = &PMPluginRegistry::getSingleton();
+    //$oPluginRegistry->showArrays();
+    $aRedirectLogin = $oPluginRegistry->getRedirectLogins();
+    if(isset($aRedirectLogin))
+		 { if(is_array($aRedirectLogin))
+		 	 {
+		 	 		foreach ( $aRedirectLogin as $key=>$detail ) {
+			  	   if(isset($detail->sPathMethod))
+				  	  {
+				  	  	if ( $detail->sRoleCode == $userRole ) {
+				       	  G::header('location: /sys' .  SYS_TEMP . '/' . $lang . '/' . SYS_SKIN . '/' . $detail->sPathMethod );
+				       	  die;
+				  	   	}
+				  	  }
+		      }
+		   }
+     }
+  }
+  //end plugin
+
+
 	$res = $RBAC->userCanAccess('PM_FACTORY');
 	if ($res == 1) {
     G::header('location: /sys' .  SYS_TEMP . '/' . $lang . '/' . SYS_SKIN . '/' . 'processes/processes_List');

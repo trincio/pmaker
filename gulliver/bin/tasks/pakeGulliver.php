@@ -571,6 +571,20 @@ function run_new_plugin ( $task, $args)
     savePluginFile ( $pluginName . PATH_SEP . 'welcome.xml', 'welcome.xml', $pluginName, $pluginName );
   }
 
+  //RBAC features
+  $classNameUpperCase = strtoupper($pluginName);
+  //Create a new Permission a new role
+  $newPermission= strtolower ( prompt ( "Create the Role 'PROCESSMAKER_$classNameUpperCase' and \n       the Permission 'PM_$classNameUpperCase' [y/N]" ));
+  if ( $newPermission == 'y' ) {
+    $fields['createPermission'][] = array( 'className' => $classNameUpperCase );
+  }
+
+  //Redirect
+  $redirect= strtolower ( prompt ( "Create a Redirect Login for the Role 'PROCESSMAKER_$classNameUpperCase' [y/N]" ));
+  if ( $redirect == 'y' ) {
+    $fields['redirectLogin'][] = array( 'className' => $classNameUpperCase );
+  }
+
   $externalStep = strtolower ( prompt ( 'Create external step for Processmaker[y/N]' ));
   if ( $externalStep == 'y' ) {
     $fields['externalStep'][] = array( 'className' => $pluginName, 'GUID' => G::generateUniqueID() );
