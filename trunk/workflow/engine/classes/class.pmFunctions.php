@@ -744,7 +744,7 @@ function PMFNewCase($processId, $userId, $taskId, $variables)
 	$result = $ws->newCase($processId, $userId,$taskId, $variables);
 
 	if($result->status_code == 0){
-		return 1;
+		return $return->caseId;
 	} else {
 		return 0;
 	}
