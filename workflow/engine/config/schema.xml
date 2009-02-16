@@ -5087,4 +5087,125 @@
       </vendor>
     </column>
   </table>
+  <table name="USERS_PROPERTIES">
+    <vendor type="mysql">
+      <parameter name="Name" value="USERS_PROPERTIES"/>
+      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Version" value="10"/>
+      <parameter name="Row_format" value="Dynamic"/>
+      <parameter name="Rows" value="88"/>
+      <parameter name="Avg_row_length" value="311"/>
+      <parameter name="Data_length" value="27984"/>
+      <parameter name="Max_data_length" value="281474976710655"/>
+      <parameter name="Index_length" value="7168"/>
+      <parameter name="Data_free" value="564"/>
+      <parameter name="Auto_increment" value=""/>
+      <parameter name="Create_time" value="2009-02-16 16:13:00"/>
+      <parameter name="Update_time" value="2009-02-16 16:13:00"/>
+      <parameter name="Check_time" value=""/>
+      <parameter name="Collation" value="utf8_general_ci"/>
+      <parameter name="Checksum" value=""/>
+      <parameter name="Create_options" value=""/>
+      <parameter name="Comment" value=""/>
+    </vendor>
+    <column name="USR_UID" type="VARCHAR" size="32" required="true" primaryKey="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="USR_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value="PRI"/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="USR_LAST_UPDATE_DATE" type="TIMESTAMP">
+      <vendor type="mysql">
+        <parameter name="Field" value="USR_LAST_UPDATE_DATE"/>
+        <parameter name="Type" value="datetime"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="USR_LOGGED_FIRST_TIME" type="INTEGER" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="USR_LOGGED_FIRST_TIME"/>
+        <parameter name="Type" value="int(1)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="0"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="USR_PASSWORD_HISTORY" type="LONGVARCHAR">
+      <vendor type="mysql">
+        <parameter name="Field" value="USR_PASSWORD_HISTORY"/>
+        <parameter name="Type" value="text"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="USR_LDAP_SOURCE" type="VARCHAR" size="32" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="USR_LDAP_SOURCE"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="USR_LDAP_DN" type="VARCHAR" size="255" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="USR_LDAP_DN"/>
+        <parameter name="Type" value="varchar(255)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="USR_LDAP_DN_ROLE" type="VARCHAR" size="255" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="USR_LDAP_DN_ROLE"/>
+        <parameter name="Type" value="varchar(255)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="USR_SEC_METHOD" type="VARCHAR" size="16" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="USR_SEC_METHOD"/>
+        <parameter name="Type" value="varchar(16)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="USR_SEC_USR" type="VARCHAR" size="25" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="USR_SEC_USR"/>
+        <parameter name="Type" value="varchar(25)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="USR_SEC_ROLE" type="VARCHAR" size="255" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="USR_SEC_ROLE"/>
+        <parameter name="Type" value="varchar(255)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+  </table>
 </database>
