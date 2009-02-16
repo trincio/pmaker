@@ -111,6 +111,20 @@ try {
   /**end log**/
 
   /* Check password using policy - Start */
+  require_once 'classes/model/UsersProperties.php';
+  $oUserProperty = new UsersProperties();
+  if (!$oUserProperty->UserPropertyExists($_SESSION['USER_LOGGED'])) {
+    $oCriteria = new Criteria('workflow');
+    $oCriteria->add(LoginLogPeer::USR_UID, $_SESSION['USER_LOGGED']);
+    $aUserProperty = array('USR_UID'               => $_SESSION['USER_LOGGED'],
+                           'USR_LAST_UPDATE_DATE'  => date('Y-m-d H:i:s'),
+                           'USR_LOGGED_FIRST_TIME' => (LoginLogPeer::doCount($oCriteria) > 0 ? 0 : 1),
+                           'USR_PASSWORD_HISTORY'  => serialize(array($_POST['form']['USR_PASSWORD'])));
+    $oUserProperty->create($aUserProperty);
+  }
+  else {
+    $aUserProperty = $oUserProperty->load($_SESSION['USER_LOGGED']);
+  }
   if (!defined('PPU_MINIMUN_LENGTH')) {
     define('PPU_MINIMUN_LENGTH', 5);
   }
@@ -125,6 +139,15 @@ try {
   }
   if (!defined('PPU_SPECIAL_CHARACTER_REQUIRED')) {
     define('PPU_SPECIAL_CHARACTER_REQUIRED', 0);
+  }
+  if (!defined('PPU_EXPIRATION_IN')) {
+    define('PPU_EXPIRATION_IN', 0);
+  }
+  /*if (!defined('PPU_FAILED_LOGINS')) {
+    define('PPU_FAILED_LOGINS', 0);
+  }*/
+  if (!defined('PPU_CHANGE_PASSWORD_AFTER_FIRST_LOGIN')) {
+    define('PPU_CHANGE_PASSWORD_AFTER_FIRST_LOGIN', 0);
   }
   if (function_exists('mb_strlen')) {
     $iLength = mb_strlen($_POST['form']['USR_PASSWORD']);
@@ -154,6 +177,13 @@ try {
       $aErrors[] = 'ID_PPU_SPECIAL_CHARACTER_REQUIRED';
     }
   }
+  if (PPU_EXPIRATION_IN > 0) {
+    //comparar fecha de la última actualización con la actual
+  }
+  if (PPU_CHANGE_PASSWORD_AFTER_FIRST_LOGIN == 1) {
+    //si es el primer llogin cambiar de password
+  }
+  //die(':o');
   if (!empty($aErrors)) {
     if (!defined('NO_DISPLAY_USERNAME')) {
       define('NO_DISPLAY_USERNAME', 1);
