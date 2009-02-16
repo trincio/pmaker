@@ -150,7 +150,7 @@ try {
     }
   }
   if (PPU_SPECIAL_CHARACTER_REQUIRED == 1) {
-    if (preg_match_all('/[ºª\!|"@·#$~%€&¬\/()=\'?¡¿*+-_.:,;]/', $_POST['form']['USR_PASSWORD'], $aMatch, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE) == 0) {
+    if (preg_match_all('/[ºª\\!|"@·#$~%€&¬\/()=\'?¡¿*+\-_.:,;]/', $_POST['form']['USR_PASSWORD'], $aMatch, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE) == 0) {
       $aErrors[] = 'ID_PPU_SPECIAL_CHARACTER_REQUIRED';
     }
   }
@@ -165,18 +165,21 @@ try {
       switch ($sError) {
         case 'ID_PPU_MINIMUN_LENGTH':
           $aFields['DESCRIPTION'] .= ' - ' . G::LoadTranslation($sError).': ' . PPU_MINIMUN_LENGTH . '<br />';
+          $aFields[substr($sError, 3)] = PPU_MINIMUN_LENGTH;
         break;
         case 'ID_PPU_MAXIMUN_LENGTH':
           $aFields['DESCRIPTION'] .= ' - ' . G::LoadTranslation($sError).': ' . PPU_MAXIMUN_LENGTH . '<br />';
+          $aFields[substr($sError, 3)] = PPU_MAXIMUN_LENGTH;
         break;
         default:
           $aFields['DESCRIPTION'] .= ' - ' . G::LoadTranslation($sError).'<br />';
+          $aFields[substr($sError, 3)] = 1;
         break;
       }
     }
     $aFields['DESCRIPTION'] .= '<br />' . G::LoadTranslation('ID_PLEASE_CHANGE_PASSWORD_POLICY') . '<br /><br /></span>';
     $G_PUBLISH = new Publisher;
-    $G_PUBLISH->AddContent('xmlform', 'xmlform', 'login/changePassword', '', $aFields);
+    $G_PUBLISH->AddContent('xmlform', 'xmlform', 'login/changePassword', '', $aFields, 'changePassword');
     G::RenderPage('publish');
     die;
   }
