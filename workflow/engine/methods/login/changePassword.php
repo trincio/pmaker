@@ -20,6 +20,26 @@ $aData['USR_PHONE']       = $aUser['USR_PHONE'];
 $aData['USR_ZIP_CODE']    = $aUser['USR_ZIP_CODE'];
 $aData['USR_POSITION']    = $aUser['USR_POSITION'];
 $oUser->update($aData);
+require_once 'classes/model/UsersProperties.php';
+$oUserProperty = new UsersProperties();
+$aUserProperty = $oUserProperty->load($_SESSION['USER_LOGGED']);
+$aHistory      = unserialize($aUserProperty['USR_PASSWORD_HISTORY']);
+if (!is_array($aHistory)) {
+  $aHistory = array();
+}
+if (!defined('PPU_PASSWORD_HISTORY')) {
+  define('PPU_PASSWORD_HISTORY', 0);
+}
+if (PPU_PASSWORD_HISTORY > 0) {
+  if (count($aHistory) > PPU_PASSWORD_HISTORY) {
+    array_shift($aHistory);
+  }
+  $aHistory[] = $_POST['form']['USR_PASSWORD'];
+}
+$aUserProperty['USR_LAST_UPDATE_DATE']  = date('Y-m-d H:i:s');
+$aUserProperty['USR_LOGGED_FIRST_TIME'] = 0;
+$aUserProperty['USR_PASSWORD_HISTORY']  = serialize($aHistory);
+$oUserProperty->update($aUserProperty);
 if ( class_exists('redirectDetail')) {
   //falta validar...
   if(isset($RBAC->aUserInfo['PROCESSMAKER']['ROLE']['ROL_CODE']))

@@ -72,4 +72,35 @@ class UsersProperties extends BaseUsersProperties {
     	throw($oError);
     }
   }
+
+  public function update($aData) {
+  	$oConnection = Propel::getConnection(UsersPropertiesPeer::DATABASE_NAME);
+  	try {
+  	  $oUserProperty = UsersPropertiesPeer::retrieveByPK($aData['USR_UID']);
+  	  if (!is_null($oUserProperty)) {
+  	  	$oUserProperty->fromArray($aData, BasePeer::TYPE_FIELDNAME);
+  	    if ($oUserProperty->validate()) {
+  	    	$oConnection->begin();
+          $iResult = $oUserProperty->save();
+          $oConnection->commit();
+          return $iResult;
+  	    }
+  	    else {
+  	    	$sMessage = '';
+  	      $aValidationFailures = $oUserProperty->getValidationFailures();
+  	      foreach($aValidationFailures as $oValidationFailure) {
+            $sMessage .= $oValidationFailure->getMessage() . '<br />';
+          }
+          throw(new Exception('The registry cannot be updated!<br />'.$sMessage));
+  	    }
+      }
+      else {
+        throw(new Exception('This row doesn\'t exists!'));
+      }
+    }
+    catch (Exception $oError) {
+    	$oConnection->rollback();
+    	throw($oError);
+    }
+  }
 } // UsersProperties

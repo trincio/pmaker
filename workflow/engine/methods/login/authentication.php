@@ -118,7 +118,7 @@ try {
     $oCriteria->add(LoginLogPeer::USR_UID, $_SESSION['USER_LOGGED']);
     $aUserProperty = array('USR_UID'               => $_SESSION['USER_LOGGED'],
                            'USR_LAST_UPDATE_DATE'  => date('Y-m-d H:i:s'),
-                           'USR_LOGGED_FIRST_TIME' => (LoginLogPeer::doCount($oCriteria) > 0 ? 0 : 1),
+                           'USR_LOGGED_FIRST_TIME' => (LoginLogPeer::doCount($oCriteria) > 1 ? 0 : 1),
                            'USR_PASSWORD_HISTORY'  => serialize(array($_POST['form']['USR_PASSWORD'])));
     $oUserProperty->create($aUserProperty);
   }
@@ -143,9 +143,6 @@ try {
   if (!defined('PPU_EXPIRATION_IN')) {
     define('PPU_EXPIRATION_IN', 0);
   }
-  /*if (!defined('PPU_FAILED_LOGINS')) {
-    define('PPU_FAILED_LOGINS', 0);
-  }*/
   if (!defined('PPU_CHANGE_PASSWORD_AFTER_FIRST_LOGIN')) {
     define('PPU_CHANGE_PASSWORD_AFTER_FIRST_LOGIN', 0);
   }
@@ -181,9 +178,11 @@ try {
     //comparar fecha de la última actualización con la actual
   }
   if (PPU_CHANGE_PASSWORD_AFTER_FIRST_LOGIN == 1) {
-    //si es el primer llogin cambiar de password
+    if ($aUserProperty['USR_LOGGED_FIRST_TIME'] == 1) {
+      $aErrors[] = 'ID_PPU_CHANGE_PASSWORD_AFTER_FIRST_LOGIN';
+    }
   }
-  //die(':o');
+  //header('content-Type: text/plain;');var_dump($aErrors);die('');
   if (!empty($aErrors)) {
     if (!defined('NO_DISPLAY_USERNAME')) {
       define('NO_DISPLAY_USERNAME', 1);
