@@ -39,48 +39,48 @@ require_once 'classes/model/om/BaseSystems.php';
  */
 class Systems extends BaseSystems {
 
-	/**
-	 * Load the Application row specified in [app_id] column value.
-	 * 
-	 * @param      string $AppUid   the uid of the application 
-	 * @return     array  $Fields   the fields 
-	 */
+  /**
+   * Load the Application row specified in [app_id] column value.
+   * 
+   * @param      string $AppUid   the uid of the application 
+   * @return     array  $Fields   the fields 
+   */
   
   function Load ( $SysUid ) {
-  	$con = Propel::getConnection(SystemsPeer::DATABASE_NAME);
+    $con = Propel::getConnection(SystemsPeer::DATABASE_NAME);
     try {
       $oSystem = SystemsPeer::retrieveByPk( $SysUid );
-  	  if ( get_class ($oSystem) == 'Systems' ) { 
-  	    $aFields = $oSystem->toArray(BasePeer::TYPE_FIELDNAME);
-  	    $this->fromArray ($aFields, BasePeer::TYPE_FIELDNAME );
-  	    return $aFields;
-  	  }
+      if ( get_class ($oSystem) == 'Systems' ) { 
+        $aFields = $oSystem->toArray(BasePeer::TYPE_FIELDNAME);
+        $this->fromArray ($aFields, BasePeer::TYPE_FIELDNAME );
+        return $aFields;
+      }
       else {
         throw( new Exception( "This Systems row doesn't exists!" ));
       }
     }
     catch (Exception $oError) {
-    	throw($oError);
+      throw($oError);
     }
   }
 
   function LoadByCode ( $SysUid ) {
-  	$con = Propel::getConnection(SystemsPeer::DATABASE_NAME);
+    $con = Propel::getConnection(SystemsPeer::DATABASE_NAME);
     try {
       $c = new Criteria( 'rbac' );
       $c->add ( SystemsPeer::SYS_CODE, $SysUid );
       $rs = SystemsPeer::doSelect( $c );
       if ( is_array($rs) && isset( $rs[0] ) && get_class ( $rs[0] ) == 'Systems' ) { 
-  	    $aFields = $rs[0]->toArray(BasePeer::TYPE_FIELDNAME);
-  	    $this->fromArray ($aFields, BasePeer::TYPE_FIELDNAME );
-  	    return $aFields;
-  	  }
+        $aFields = $rs[0]->toArray(BasePeer::TYPE_FIELDNAME);
+        $this->fromArray ($aFields, BasePeer::TYPE_FIELDNAME );
+        return $aFields;
+      }
       else {
         throw( new Exception( "This Systems row doesn't exists!" ));
       }
     }
     catch (Exception $oError) {
-    	throw($oError);
+      throw($oError);
     }
   }
 

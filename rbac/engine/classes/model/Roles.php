@@ -44,7 +44,7 @@ require_once 'classes/model/om/BaseUsersRoles.php';
  */
 class Roles extends BaseRoles
 {
-	public function load($Uid)
+  public function load($Uid)
     {
         try {
             $oRow = RolesPeer::retrieveByPK($Uid);
@@ -54,7 +54,7 @@ class Roles extends BaseRoles
                 $this->setNew(false);
                 return $aFields;
             } else {
-                throw (new Exception("This row doesn't exists!"));
+                throw (new Exception("The '$Uid' row doesn't exists!"));
             }
         }
         catch (exception $oError) {
@@ -74,7 +74,7 @@ class Roles extends BaseRoles
             if (is_array($aRow)) {
                 return $aRow;
             } else {
-                throw (new Exception('This row doesn\'t exists!'));
+                throw (new Exception("The role '$sRolCode' doesn\'t exists!"));
             }
         }
         catch (exception $oError) {
@@ -96,9 +96,29 @@ class Roles extends BaseRoles
         $oCriteria->addSelectColumn(RolesPeer::ROL_STATUS);
         $oCriteria->add(RolesPeer::ROL_UID, '', Criteria::NOT_EQUAL);
         $oCriteria->add(SystemsPeer::SYS_CODE, $systemCode );
-			  $oCriteria->add(RolesPeer::ROL_CREATE_DATE, '', Criteria::NOT_EQUAL);
-        $oCriteria->add(RolesPeer::ROL_UPDATE_DATE, '', Criteria::NOT_EQUAL);	
+        $oCriteria->add(RolesPeer::ROL_CREATE_DATE, '', Criteria::NOT_EQUAL);
+        $oCriteria->add(RolesPeer::ROL_UPDATE_DATE, '', Criteria::NOT_EQUAL); 
         $oCriteria->addJoin(RolesPeer::ROL_SYSTEM, SystemsPeer::SYS_UID);
+        
+        return $oCriteria;
+
+      }
+      catch (exception $oError) {
+        throw (new Exception("Class ROLES::FATAL ERROR. Criteria with rbac Can't initialized "));
+      }
+    }
+    
+    function listAllPermissions( $systemCode = 'PROCESSMAKER')
+    {
+      try {
+        $oCriteria = new Criteria('rbac');
+        $oCriteria->addSelectColumn(PermissionsPeer::PER_UID);
+        $oCriteria->addSelectColumn(PermissionsPeer::PER_CODE);
+        $oCriteria->addSelectColumn(PermissionsPeer::PER_CREATE_DATE);
+        $oCriteria->addSelectColumn(PermissionsPeer::PER_UPDATE_DATE);
+        $oCriteria->addSelectColumn(PermissionsPeer::PER_STATUS);
+        $oCriteria->add(PermissionsPeer::PER_CODE, substr($systemCode,0,3).'_%' , Criteria::LIKE);
+  
         
         return $oCriteria;
 
@@ -110,8 +130,9 @@ class Roles extends BaseRoles
     
     function createRole($aData)
     {
-	$con = Propel::getConnection(RolesPeer::DATABASE_NAME);
+        $con = Propel::getConnection(RolesPeer::DATABASE_NAME);
         try {
+            $con->begin();
             $sRolCode   = $aData['ROL_CODE'];
             $sRolSystem = $aData['ROL_SYSTEM'];
             $oCriteria = new Criteria('rbac');
@@ -121,27 +142,29 @@ class Roles extends BaseRoles
             $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
             $oDataset->next();
             $aRow = $oDataset->getRow();
-            if (is_array($aRow)) {
+            if (is_array($aRow)) {              
                 return $aRow;
             } 
-            $this->fromArray($aData, BasePeer::TYPE_FIELDNAME);
-            if ($this->validate()) {
-                $result = $this->save();
-            } else {
+            $obj = new Roles();
+            $obj->fromArray($aData, BasePeer::TYPE_FIELDNAME);
+            if ($obj->validate()) {
+              $result = $obj->save();
+              $con->commit();
+            } 
+            else {
                 $e = new Exception("Failed Validation in class " . get_class($this) . ".");
                 $e->aValidationFailures = $this->getValidationFailures();
                 throw ($e);
             }
-            $con->commit();
             return $result;
         }
         catch (exception $e) {
             $con->rollback();
             throw ($e);
         }
-	}
-	
-	public function updateRole($fields)
+  }
+  
+  public function updateRole($fields)
     {
         $con = Propel::getConnection(RolesPeer::DATABASE_NAME);
         try {
@@ -162,8 +185,8 @@ class Roles extends BaseRoles
             throw ($e);
         }
     }
-	
-	function removeRole($ROL_UID)
+  
+  function removeRole($ROL_UID)
     {
         $con = Propel::getConnection(RolesPeer::DATABASE_NAME);
         try {
@@ -181,21 +204,21 @@ class Roles extends BaseRoles
     
     function verifyNewRole($code)
     {
-    	$code = trim($code);
-	$oCriteria = new Criteria('rbac');
+      $code = trim($code);
+  $oCriteria = new Criteria('rbac');
         $oCriteria->addSelectColumn(RolesPeer::ROL_UID);
         $oCriteria->add(RolesPeer::ROL_CODE, $code);
-	$count = RolesPeer::doCount($oCriteria);
+  $count = RolesPeer::doCount($oCriteria);
         
         if($count == 0){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}
-	
-	function loadById($ROL_UID){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+  
+  function loadById($ROL_UID){
 
         $oCriteria = new Criteria('rbac');
         $oCriteria->addSelectColumn(RolesPeer::ROL_UID);
@@ -206,35 +229,35 @@ class Roles extends BaseRoles
         $oCriteria->addSelectColumn(RolesPeer::ROL_UPDATE_DATE);
         $oCriteria->addSelectColumn(RolesPeer::ROL_STATUS);
         $oCriteria->add(RolesPeer::ROL_UID, $ROL_UID);   
-		
+    
         $result = RolesPeer::doSelectRS($oCriteria);
         $result->next();
         
         $row = $result->getRow();
-				 if (is_array($row)) 
-				 {
+         if (is_array($row)) 
+         {
              $aFields['ROL_UID'] = $row[0];
-				     $aFields['ROL_PARENT'] = $row[1];
-				     $aFields['ROL_SYSTEM'] = $row[2];
-				     $aFields['ROL_CODE'] = $row[3];
-				     $aFields['ROL_CREATE_DATE'] = $row[4];
-				     $aFields['ROL_UPDATE_DATE'] = $row[5];
-				     $aFields['ROL_STATUS'] = $row[6];        
-        	   return $aFields;
+             $aFields['ROL_PARENT'] = $row[1];
+             $aFields['ROL_SYSTEM'] = $row[2];
+             $aFields['ROL_CODE'] = $row[3];
+             $aFields['ROL_CREATE_DATE'] = $row[4];
+             $aFields['ROL_UPDATE_DATE'] = $row[5];
+             $aFields['ROL_STATUS'] = $row[6];        
+             return $aFields;
          } 
          else 
          {
             return null;
          }        
-	}
-	
-	function getRoleCode($ROL_UID)
-	{
-		$oCriteria = new Criteria('rbac');
+  }
+  
+  function getRoleCode($ROL_UID)
+  {
+    $oCriteria = new Criteria('rbac');
         $oCriteria->addSelectColumn(RolesPeer::ROL_UID);
         $oCriteria->addSelectColumn(RolesPeer::ROL_CODE);  
         $oCriteria->add(RolesPeer::ROL_UID, $ROL_UID);   
-		
+    
         $result = RolesPeer::doSelectRS($oCriteria);
         $result->setFetchmode(ResultSet::FETCHMODE_ASSOC);
         $result->next();
@@ -242,23 +265,23 @@ class Roles extends BaseRoles
         $ret = $row['ROL_CODE'];
         
         return $ret;
-	}
-	
-	function getRoleUsers($ROL_UID)
+  }
+  
+  function getRoleUsers($ROL_UID)
     {
         try {
             $criteria = new Criteria();
             $criteria->addSelectColumn(RolesPeer::ROL_UID);
-	        $criteria->addSelectColumn(RolesPeer::ROL_PARENT);
-	        $criteria->addSelectColumn(RolesPeer::ROL_SYSTEM);
-	        $criteria->addSelectColumn(RolesPeer::ROL_CODE);
-	        $criteria->addSelectColumn(RolesPeer::ROL_CREATE_DATE);
-	        $criteria->addSelectColumn(RolesPeer::ROL_UPDATE_DATE);
-	        $criteria->addSelectColumn(RolesPeer::ROL_STATUS);
-	        $criteria->addSelectColumn(RbacUsersPeer::USR_UID);
-	        $criteria->addSelectColumn(RbacUsersPeer::USR_USERNAME);
-	        $criteria->addSelectColumn(RbacUsersPeer::USR_FIRSTNAME);
-	        $criteria->addSelectColumn(RbacUsersPeer::USR_LASTNAME);
+          $criteria->addSelectColumn(RolesPeer::ROL_PARENT);
+          $criteria->addSelectColumn(RolesPeer::ROL_SYSTEM);
+          $criteria->addSelectColumn(RolesPeer::ROL_CODE);
+          $criteria->addSelectColumn(RolesPeer::ROL_CREATE_DATE);
+          $criteria->addSelectColumn(RolesPeer::ROL_UPDATE_DATE);
+          $criteria->addSelectColumn(RolesPeer::ROL_STATUS);
+          $criteria->addSelectColumn(RbacUsersPeer::USR_UID);
+          $criteria->addSelectColumn(RbacUsersPeer::USR_USERNAME);
+          $criteria->addSelectColumn(RbacUsersPeer::USR_FIRSTNAME);
+          $criteria->addSelectColumn(RbacUsersPeer::USR_LASTNAME);
             $criteria->add(RolesPeer::ROL_UID, "", Criteria::NOT_EQUAL);
             $criteria->add(RolesPeer::ROL_UID, $ROL_UID);
             $criteria->addJoin(RolesPeer::ROL_UID, UsersRolesPeer::ROL_UID);
@@ -267,7 +290,7 @@ class Roles extends BaseRoles
             $oDataset = RolesPeer::doSelectRS($criteria);
             $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
             return $oDataset;
-			
+      
         }
         catch (exception $e) {
             throw $e;
@@ -277,28 +300,28 @@ class Roles extends BaseRoles
     function getAllUsers($ROL_UID)
     {
         try {
-        	$c = new Criteria();
-        	$c->addSelectColumn(RbacUsersPeer::USR_UID);
-        	$c->add(RolesPeer::ROL_UID, $ROL_UID);
+          $c = new Criteria();
+          $c->addSelectColumn(RbacUsersPeer::USR_UID);
+          $c->add(RolesPeer::ROL_UID, $ROL_UID);
             $c->addJoin(RolesPeer::ROL_UID, UsersRolesPeer::ROL_UID);
             $c->addJoin(UsersRolesPeer::USR_UID, RbacUsersPeer::USR_UID);
             
-        	$result = RolesPeer::doSelectRS($c);
-        	$result->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-        	$result->next();
-        	
-        	$a = Array();
+          $result = RolesPeer::doSelectRS($c);
+          $result->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+          $result->next();
+          
+          $a = Array();
             while($row = $result->getRow()){
-            	$a[] = $row['USR_UID'];
-				$result->next();	
-			}
+              $a[] = $row['USR_UID'];
+        $result->next();  
+      }
         
             $criteria = new Criteria();
 
-	        $criteria->addSelectColumn(RbacUsersPeer::USR_UID);
-	        $criteria->addSelectColumn(RbacUsersPeer::USR_USERNAME);
-	        $criteria->addSelectColumn(RbacUsersPeer::USR_FIRSTNAME);
-	        $criteria->addSelectColumn(RbacUsersPeer::USR_LASTNAME);
+          $criteria->addSelectColumn(RbacUsersPeer::USR_UID);
+          $criteria->addSelectColumn(RbacUsersPeer::USR_USERNAME);
+          $criteria->addSelectColumn(RbacUsersPeer::USR_FIRSTNAME);
+          $criteria->addSelectColumn(RbacUsersPeer::USR_LASTNAME);
             $criteria->add(RbacUsersPeer::USR_UID, $a, Criteria::NOT_IN);
             
             $oDataset = RbacUsersPeer::doSelectRS($criteria);
@@ -315,13 +338,13 @@ class Roles extends BaseRoles
       /*find the system uid for this role */
       $c = new Criteria();
       $c->add(RolesPeer::ROL_UID, $aData['ROL_UID']);
-    	$result = RolesPeer::doSelectRS($c);
-    	$result->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-    	$result->next();
-    	$row = $result->getRow();
-    	$sSystemId = $row['ROL_SYSTEM'];
+      $result = RolesPeer::doSelectRS($c);
+      $result->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $result->next();
+      $row = $result->getRow();
+      $sSystemId = $row['ROL_SYSTEM'];
 
-      //delete roles for the same System    	
+      //delete roles for the same System      
       $c = new Criteria();
       $c->addSelectColumn(UsersRolesPeer::USR_UID);
       $c->addSelectColumn(RolesPeer::ROL_UID);
@@ -329,17 +352,17 @@ class Roles extends BaseRoles
       $c->addSelectColumn(RolesPeer::ROL_SYSTEM);
       $c->add(UsersRolesPeer::USR_UID, $aData['USR_UID'] );
       $c->add(RolesPeer::ROL_SYSTEM, $sSystemId );
-	    $c->addJoin(RolesPeer::ROL_UID, UsersRolesPeer::ROL_UID);
-    	$result = RolesPeer::doSelectRS($c);
-    	$result->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-    	$result->next();
-        	
+      $c->addJoin(RolesPeer::ROL_UID, UsersRolesPeer::ROL_UID);
+      $result = RolesPeer::doSelectRS($c);
+      $result->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $result->next();
+          
       while($row = $result->getRow() ) {
         $crit = new Criteria();
         $crit->add(UsersRolesPeer::USR_UID, $row['USR_UID'] );
-        $crit->add(UsersRolesPeer::ROL_UID, $row['ROL_UID'] );	
-  	    UsersRolesPeer::doDelete($crit);
-        $result->next();	
+        $crit->add(UsersRolesPeer::ROL_UID, $row['ROL_UID'] );  
+        UsersRolesPeer::doDelete($crit);
+        $result->next();  
       }
             
       //save the unique role for this system      
@@ -353,29 +376,29 @@ class Roles extends BaseRoles
   {
     $crit = new Criteria();
     $crit->add(UsersRolesPeer::USR_UID, $USR_UID);
-		
-	  if($ROL_UID != '%') {
-	     $crit->add(UsersRolesPeer::ROL_UID, $ROL_UID);	
-	  }
-	  UsersRolesPeer::doDelete($crit);
+    
+    if($ROL_UID != '%') {
+       $crit->add(UsersRolesPeer::ROL_UID, $ROL_UID); 
+    }
+    UsersRolesPeer::doDelete($crit);
   }
-	
+  
     function getRolePermissions($ROL_UID)
     {
         try {
           $criteria = new Criteria();
           $criteria->addSelectColumn(RolesPeer::ROL_UID);
-	        $criteria->addSelectColumn(RolesPeer::ROL_PARENT);
-	        $criteria->addSelectColumn(RolesPeer::ROL_SYSTEM);
-	        $criteria->addSelectColumn(RolesPeer::ROL_CODE);
-	        $criteria->addSelectColumn(RolesPeer::ROL_CREATE_DATE);
-	        $criteria->addSelectColumn(RolesPeer::ROL_UPDATE_DATE);
-	        $criteria->addSelectColumn(RolesPeer::ROL_STATUS);
-	        $criteria->addSelectColumn(PermissionsPeer::PER_UID);
-	        $criteria->addSelectColumn(PermissionsPeer::PER_CODE);
-	        $criteria->addSelectColumn(PermissionsPeer::PER_CREATE_DATE);
-	        $criteria->addSelectColumn(PermissionsPeer::PER_UPDATE_DATE);
-	        $criteria->addSelectColumn(PermissionsPeer::PER_STATUS);
+          $criteria->addSelectColumn(RolesPeer::ROL_PARENT);
+          $criteria->addSelectColumn(RolesPeer::ROL_SYSTEM);
+          $criteria->addSelectColumn(RolesPeer::ROL_CODE);
+          $criteria->addSelectColumn(RolesPeer::ROL_CREATE_DATE);
+          $criteria->addSelectColumn(RolesPeer::ROL_UPDATE_DATE);
+          $criteria->addSelectColumn(RolesPeer::ROL_STATUS);
+          $criteria->addSelectColumn(PermissionsPeer::PER_UID);
+          $criteria->addSelectColumn(PermissionsPeer::PER_CODE);
+          $criteria->addSelectColumn(PermissionsPeer::PER_CREATE_DATE);
+          $criteria->addSelectColumn(PermissionsPeer::PER_UPDATE_DATE);
+          $criteria->addSelectColumn(PermissionsPeer::PER_STATUS);
           $criteria->add(RolesPeer::ROL_UID, "", Criteria::NOT_EQUAL);
           $criteria->add(RolesPeer::ROL_UID, $ROL_UID);
           $criteria->addJoin(RolesPeer::ROL_UID, RolesPermissionsPeer::ROL_UID);
@@ -384,7 +407,7 @@ class Roles extends BaseRoles
           $oDataset = RolesPeer::doSelectRS($criteria);
           $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
           return $oDataset;
-			
+      
         }
         catch (exception $e) {
             throw $e;
@@ -407,16 +430,16 @@ class Roles extends BaseRoles
         
         $a = Array();
         while($row = $result->getRow()){
-        	$a[] = $row['PER_UID'];
-			    $result->next();	
-			  }
-        	
+          $a[] = $row['PER_UID'];
+          $result->next();  
+        }
+          
         $criteria = new Criteria();
-	      $criteria->addSelectColumn(PermissionsPeer::PER_UID);
-	      $criteria->addSelectColumn(PermissionsPeer::PER_CODE);
-	      $criteria->addSelectColumn(PermissionsPeer::PER_CREATE_DATE);
-	      $criteria->addSelectColumn(PermissionsPeer::PER_UPDATE_DATE);
-	      $criteria->addSelectColumn(PermissionsPeer::PER_STATUS);
+        $criteria->addSelectColumn(PermissionsPeer::PER_UID);
+        $criteria->addSelectColumn(PermissionsPeer::PER_CODE);
+        $criteria->addSelectColumn(PermissionsPeer::PER_CREATE_DATE);
+        $criteria->addSelectColumn(PermissionsPeer::PER_UPDATE_DATE);
+        $criteria->addSelectColumn(PermissionsPeer::PER_STATUS);
         $criteria->add(PermissionsPeer::PER_UID, $a, Criteria::NOT_IN);
         
         $oDataset = PermissionsPeer::doSelectRS($criteria);
@@ -429,24 +452,24 @@ class Roles extends BaseRoles
     }
     
     function assignPermissionRole($sData)
-	{
-		$o = new RolesPermissions();
-		$o->setPerUid($sData['PER_UID']);
-		$o->setRolUid($sData['ROL_UID']);
-		$o->save();
-	} 
-	
-	function deletePermissionRole($ROL_UID, $PER_UID)
+  {
+    $o = new RolesPermissions();
+    $o->setPerUid($sData['PER_UID']);
+    $o->setRolUid($sData['ROL_UID']);
+    $o->save();
+  } 
+  
+  function deletePermissionRole($ROL_UID, $PER_UID)
     {
-    	$crit = new Criteria();
-		$crit->add(RolesPermissionsPeer::ROL_UID, $ROL_UID);
-		$crit->add(RolesPermissionsPeer::PER_UID, $PER_UID);
-		RolesPermissionsPeer::doDelete($crit);
-	}
-	
-	function numUsersWithRole($ROL_UID)
-	{
-		$criteria = new Criteria();
+      $crit = new Criteria();
+    $crit->add(RolesPermissionsPeer::ROL_UID, $ROL_UID);
+    $crit->add(RolesPermissionsPeer::PER_UID, $PER_UID);
+    RolesPermissionsPeer::doDelete($crit);
+  }
+  
+  function numUsersWithRole($ROL_UID)
+  {
+    $criteria = new Criteria();
         $criteria->addSelectColumn(RbacUsersPeer::USR_UID);
         $criteria->add(RolesPeer::ROL_UID, "", Criteria::NOT_EQUAL);
         $criteria->add(RolesPeer::ROL_UID, $ROL_UID);
@@ -454,7 +477,7 @@ class Roles extends BaseRoles
         $criteria->addJoin(UsersRolesPeer::USR_UID, RbacUsersPeer::USR_UID);
         
         return RolesPeer::doCount($criteria); 
-	}
+  }
 
   function verifyByCode($sRolCode = '')
     {

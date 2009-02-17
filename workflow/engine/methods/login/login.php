@@ -34,26 +34,29 @@ if (!isset($_SESSION['G_MESSAGE_TYPE']))
 $msg     = $_SESSION['G_MESSAGE'];
 $msgType = $_SESSION['G_MESSAGE_TYPE'];
 
-
+if (!isset($_SESSION['FAILED_LOGINS'])) {
+  $_SESSION['FAILED_LOGINS'] = 0;
+}
+$sFailedLogins = $_SESSION['FAILED_LOGINS'];
 
 //log by Everth
 
   require_once 'classes/model/LoginLog.php';
   require_once 'classes/model/Configuration.php';
-  $oConfiguration = new Configuration();																																																		
+  $oConfiguration = new Configuration();
 	$oCriteria      = new Criteria('workflow');
-	$oCriteria->addSelectColumn(ConfigurationPeer::CFG_VALUE);																											
-	$oCriteria->add(ConfigurationPeer::CFG_UID, 'Language');		  
-	$oCriteria->add(ConfigurationPeer::OBJ_UID, '');																																																						
-  $oCriteria->add(ConfigurationPeer::PRO_UID, '');																											
-  $oCriteria->add(ConfigurationPeer::USR_UID, '');																											
-  $oCriteria->add(ConfigurationPeer::APP_UID, ''); 	 
+	$oCriteria->addSelectColumn(ConfigurationPeer::CFG_VALUE);
+	$oCriteria->add(ConfigurationPeer::CFG_UID, 'Language');
+	$oCriteria->add(ConfigurationPeer::OBJ_UID, '');
+  $oCriteria->add(ConfigurationPeer::PRO_UID, '');
+  $oCriteria->add(ConfigurationPeer::USR_UID, '');
+  $oCriteria->add(ConfigurationPeer::APP_UID, '');
   $oDataset1 = ConfigurationPeer::doSelectRS($oCriteria);
   $oDataset1->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-  $oDataset1->next();   		    																											
+  $oDataset1->next();
   $aRow1 = $oDataset1->getRow();
   $aFields['USER_LANG'] = $aRow1['CFG_VALUE'];
-  
+
   $oCriteria = new Criteria('workflow');
   $oCriteria->add(LoginLogPeer::LOG_SID, session_id());
   $oCriteria->add(LoginLogPeer::USR_UID, isset($_SESSION['USER_LOGGED']) ? $_SESSION['USER_LOGGED'] : '-');
@@ -62,22 +65,22 @@ $msgType = $_SESSION['G_MESSAGE_TYPE'];
   $oDataset = LoginLogPeer::doSelectRS($oCriteria);
   $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
   $oDataset->next();
-  $aRow = $oDataset->getRow();   
+  $aRow = $oDataset->getRow();
   if($aRow)
   {	if($aRow['LOG_STATUS']!='CLOSED' && $aRow['LOG_END_DATE']==NULL)
-   	{  
+   	{
    	  $weblog=new LoginLog();
   		$aLog['LOG_UID']            = $aRow['LOG_UID'];
-  		$aLog['LOG_STATUS']					= 'CLOSED';  		  		  		  		  		
+  		$aLog['LOG_STATUS']					= 'CLOSED';
   		$aLog['LOG_IP']             = $aRow['LOG_IP'];
   		$aLog['LOG_SID']            = session_id();
   		$aLog['LOG_INIT_DATE']			= $aRow['LOG_INIT_DATE'];
-  		$aLog['LOG_END_DATE']			  = date('Y-m-d H:i:s'); 
-  		$aLog['LOG_CLIENT_HOSTNAME']= $aRow['LOG_CLIENT_HOSTNAME']; 
-  		$aLog['USR_UID']						= $aRow['USR_UID']; 		
+  		$aLog['LOG_END_DATE']			  = date('Y-m-d H:i:s');
+  		$aLog['LOG_CLIENT_HOSTNAME']= $aRow['LOG_CLIENT_HOSTNAME'];
+  		$aLog['USR_UID']						= $aRow['USR_UID'];
   		$weblog->update($aLog);
 	 	}
-	} 	
+	}
 
 //end log
 
@@ -95,6 +98,7 @@ if (strlen($msgType) > 0 )
 {
 	$_SESSION['G_MESSAGE_TYPE'] = $msgType;
 }
+$_SESSION['FAILED_LOGINS'] = $sFailedLogins;
 
 $G_PUBLISH = new Publisher;
 $G_PUBLISH->AddContent('xmlform', 'xmlform', 'login/login', '', $aFields, SYS_URI.'login/authentication.php');

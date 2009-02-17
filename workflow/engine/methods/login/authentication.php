@@ -62,12 +62,38 @@ try {
 	}
 
 	if ($uid < 0 ) {
+	  $_SESSION['FAILED_LOGINS']++;
+	  if (!defined('PPU_FAILED_LOGINS')) {
+      define('PPU_FAILED_LOGINS', 0);
+    }
+    if (PPU_FAILED_LOGINS > 0) {
+      if ($_SESSION['FAILED_LOGINS'] > PPU_FAILED_LOGINS) {
+        $oConnection = Propel::getConnection('rbac');
+        $oStatement  = $oConnection->prepareStatement("SELECT USR_UID FROM USERS WHERE USR_USERNAME = '" . $usr . "'");
+        $oDataset    = $oStatement->executeQuery();
+        if ($oDataset->next()) {
+          $sUserUID = $oDataset->getString('USR_UID');
+          $oConnection = Propel::getConnection('rbac');
+          $oStatement  = $oConnection->prepareStatement("UPDATE USERS SET USR_STATUS = 0 WHERE USR_UID = '" . $sUserUID . "'");
+          $oStatement->executeQuery();
+          $oConnection = Propel::getConnection('workflow');
+          $oStatement  = $oConnection->prepareStatement("UPDATE USERS SET USR_STATUS = 'INACTIVE' WHERE USR_UID = '" . $sUserUID . "'");
+          $oStatement->executeQuery();
+          unset($_SESSION['FAILED_LOGINS']);
+          G::SendMessageText(G::LoadTranslation('ID_ACCOUNT') . ' "' . $usr . '" ' . G::LoadTranslation('ID_ACCOUNT_DISABLED_CONTACT_ADMIN'), 'warning');
+        }
+        else {
+          //Nothing
+        }
+      }
+    }
 	  G::header  ("location: login.html");
 	  die;
 	}
 
 	$_SESSION['USER_LOGGED']  = $uid;
 	$_SESSION['USR_USERNAME'] = $usr;
+	unset($_SESSION['FAILED_LOGINS']);
 
   // Asign the uid of user to userloggedobj
   $RBAC->loadUserRolePermission($RBAC->sSystem, $uid);
@@ -114,11 +140,9 @@ try {
   require_once 'classes/model/UsersProperties.php';
   $oUserProperty = new UsersProperties();
   if (!$oUserProperty->UserPropertyExists($_SESSION['USER_LOGGED'])) {
-    $oCriteria = new Criteria('workflow');
-    $oCriteria->add(LoginLogPeer::USR_UID, $_SESSION['USER_LOGGED']);
     $aUserProperty = array('USR_UID'               => $_SESSION['USER_LOGGED'],
                            'USR_LAST_UPDATE_DATE'  => date('Y-m-d H:i:s'),
-                           'USR_LOGGED_FIRST_TIME' => (LoginLogPeer::doCount($oCriteria) > 1 ? 0 : 1),
+                           'USR_LOGGED_NEXT_TIME'  => 0,
                            'USR_PASSWORD_HISTORY'  => serialize(array($_POST['form']['USR_PASSWORD'])));
     $oUserProperty->create($aUserProperty);
   }
@@ -143,8 +167,8 @@ try {
   if (!defined('PPU_EXPIRATION_IN')) {
     define('PPU_EXPIRATION_IN', 0);
   }
-  if (!defined('PPU_CHANGE_PASSWORD_AFTER_FIRST_LOGIN')) {
-    define('PPU_CHANGE_PASSWORD_AFTER_FIRST_LOGIN', 0);
+  if (!defined('PPU_CHANGE_PASSWORD_AFTER_NEXT_LOGIN')) {
+    define('PPU_CHANGE_PASSWORD_AFTER_NEXT_LOGIN', 0);
   }
   if (function_exists('mb_strlen')) {
     $iLength = mb_strlen($_POST['form']['USR_PASSWORD']);
@@ -175,14 +199,18 @@ try {
     }
   }
   if (PPU_EXPIRATION_IN > 0) {
-    //comparar fecha de la última actualización con la actual
-  }
-  if (PPU_CHANGE_PASSWORD_AFTER_FIRST_LOGIN == 1) {
-    if ($aUserProperty['USR_LOGGED_FIRST_TIME'] == 1) {
-      $aErrors[] = 'ID_PPU_CHANGE_PASSWORD_AFTER_FIRST_LOGIN';
+    G::LoadClass('dates');
+    $oDates = new dates();
+    $fDays  = $oDates->calculateDuration(date('Y-m-d H:i:s'), $aUserProperty['USR_LAST_UPDATE_DATE']);
+    if ($fDays > PPU_EXPIRATION_IN) {
+      $aErrors[] = 'ID_PPU_EXPIRATION_IN';
     }
   }
-  //header('content-Type: text/plain;');var_dump($aErrors);die('');
+  if (PPU_CHANGE_PASSWORD_AFTER_NEXT_LOGIN == 1) {
+    if ($aUserProperty['USR_LOGGED_NEXT_TIME'] == 1) {
+      $aErrors[] = 'ID_PPU_CHANGE_PASSWORD_AFTER_NEXT_LOGIN';
+    }
+  }
   if (!empty($aErrors)) {
     if (!defined('NO_DISPLAY_USERNAME')) {
       define('NO_DISPLAY_USERNAME', 1);
@@ -199,6 +227,10 @@ try {
         case 'ID_PPU_MAXIMUN_LENGTH':
           $aFields['DESCRIPTION'] .= ' - ' . G::LoadTranslation($sError).': ' . PPU_MAXIMUN_LENGTH . '<br />';
           $aFields[substr($sError, 3)] = PPU_MAXIMUN_LENGTH;
+        break;
+        case 'ID_PPU_EXPIRATION_IN':
+          $aFields['DESCRIPTION'] .= ' - ' . G::LoadTranslation($sError).' ' . PPU_EXPIRATION_IN . ' ' . G::LoadTranslation('ID_DAYS') . '<br />';
+          $aFields[substr($sError, 3)] = PPU_EXPIRATION_IN;
         break;
         default:
           $aFields['DESCRIPTION'] .= ' - ' . G::LoadTranslation($sError).'<br />';

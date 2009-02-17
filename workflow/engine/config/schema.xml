@@ -5127,9 +5127,9 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="USR_LOGGED_FIRST_TIME" type="INTEGER" default="0">
+    <column name="USR_LOGGED_NEXT_TIME" type="INTEGER" default="0">
       <vendor type="mysql">
-        <parameter name="Field" value="USR_LOGGED_FIRST_TIME"/>
+        <parameter name="Field" value="USR_LOGGED_NEXT_TIME"/>
         <parameter name="Type" value="int(1)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>

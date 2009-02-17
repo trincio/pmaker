@@ -63,13 +63,13 @@ class RbacUsers extends BaseRbacUsers {
     //invalid password
     if ( $sPassword == '' ) return -2;
 
- 	  $con = Propel::getConnection(RbacUsersPeer::DATABASE_NAME);
+    $con = Propel::getConnection(RbacUsersPeer::DATABASE_NAME);
     try {
       $c = new Criteria( 'rbac' );
       $c->add ( RbacUsersPeer::USR_USERNAME, $sUsername );
       $rs = RbacUsersPeer::doSelect( $c );
       if ( is_array($rs) && isset( $rs[0] ) && get_class ( $rs[0] ) == 'RbacUsers' ) {
-  	    $aFields = $rs[0]->toArray(BasePeer::TYPE_FIELDNAME);
+        $aFields = $rs[0]->toArray(BasePeer::TYPE_FIELDNAME);
         //verify password with md5, and md5 format
         //if ( $aFields['USR_PASSWORD'] == md5 ($sPassword ) ) {
         if ( $aFields['USR_PASSWORD'] == md5 ($sPassword ) || 'md5:'.$aFields['USR_PASSWORD'] === $sPassword) {
@@ -81,13 +81,13 @@ class RbacUsers extends BaseRbacUsers {
         }
         else
           return -2;
-  	  }
+      }
       else {
         return -1;
       }
     }
     catch (Exception $oError) {
-    	throw($oError);
+      throw($oError);
     }
     return -1;
   }
@@ -96,22 +96,22 @@ class RbacUsers extends BaseRbacUsers {
   {
     //invalid user
     if ( $sUsername == '' ) return 0;  
- 	  $con = Propel::getConnection(RbacUsersPeer::DATABASE_NAME);
+    $con = Propel::getConnection(RbacUsersPeer::DATABASE_NAME);
     try {
       $c = new Criteria( 'rbac' );
       $c->add ( RbacUsersPeer::USR_USERNAME, $sUsername );
       $rs = RbacUsersPeer::doSelect( $c );
       if (is_array($rs) && isset( $rs[0] ) && get_class ( $rs[0] ) == 'RbacUsers') 
       {
-  	    return 1;
-  	  }
+        return 1;
+      }
       else 
       { 
-      	return 0;       
+        return 0;       
       }
     }
     catch (Exception $oError) {
-    	throw($oError);
+      throw($oError);
     }    
   }
   
@@ -119,87 +119,87 @@ class RbacUsers extends BaseRbacUsers {
   {
     //invalid user
     if ( $sUserId == '' ) return 0;  
- 	  $con = Propel::getConnection(RbacUsersPeer::DATABASE_NAME);
+    $con = Propel::getConnection(RbacUsersPeer::DATABASE_NAME);
     try {
       $c = new Criteria( 'rbac' );
       $c->add ( RbacUsersPeer::USR_UID, $sUserId );
       $rs = RbacUsersPeer::doSelect( $c );
       if (is_array($rs) && isset( $rs[0] ) && get_class ( $rs[0] ) == 'RbacUsers') 
       {
-  	    return 1;
-  	  }
+        return 1;
+      }
       else 
       { 
-      	return 0;       
+        return 0;       
       }
     }
     catch (Exception $oError) {
-    	throw($oError);
+      throw($oError);
     }    
   }
 
   function load($sUsrUid)
   {
- 	  $con = Propel::getConnection(RbacUsersPeer::DATABASE_NAME);
+    $con = Propel::getConnection(RbacUsersPeer::DATABASE_NAME);
     try {
       $c = new Criteria( 'rbac' );
       $c->add ( RbacUsersPeer::USR_UID, $sUsrUid );
       $rs = RbacUsersPeer::doSelect( $c );
       if ( is_array($rs) && isset( $rs[0] ) && get_class ( $rs[0] ) == 'RbacUsers' ) {
-  	    $aFields = $rs[0]->toArray(BasePeer::TYPE_FIELDNAME);
+        $aFields = $rs[0]->toArray(BasePeer::TYPE_FIELDNAME);
         return $aFields;
       }
       return false;
     }
     catch ( Exception $oError) {
-    	throw($oError);
+      throw($oError);
     }
     return $res;
   }
 
   function create($aData) {
-  	$oConnection = Propel::getConnection(RbacUsersPeer::DATABASE_NAME);
-  	try {
-  		$aData['USR_UID'] = G::generateUniqueID();
-  	  $oRBACUsers       = new RbacUsers();
-  	  $oRBACUsers->fromArray($aData, BasePeer::TYPE_FIELDNAME);
-  	  //if ($oRBACUsers->validate()) {
+    $oConnection = Propel::getConnection(RbacUsersPeer::DATABASE_NAME);
+    try {
+      $aData['USR_UID'] = G::generateUniqueID();
+      $oRBACUsers       = new RbacUsers();
+      $oRBACUsers->fromArray($aData, BasePeer::TYPE_FIELDNAME);
+      //if ($oRBACUsers->validate()) {
         //$oConnection->begin();
         $iResult = $oRBACUsers->save();
         //$oConnection->commit();
         return $aData['USR_UID'];
-  	  /*}
-  	  else {
-  	  	$sMessage = '';
-  	    $aValidationFailures = $oRBACUsers->getValidationFailures();
-  	    foreach($aValidationFailures as $oValidationFailure) {
+      /*}
+      else {
+        $sMessage = '';
+        $aValidationFailures = $oRBACUsers->getValidationFailures();
+        foreach($aValidationFailures as $oValidationFailure) {
           $sMessage .= $oValidationFailure->getMessage() . '<br />';
         }
         throw(new Exception('The registry cannot be created!<br />' . $sMessage));
-  	  }*/
-  	}
+      }*/
+    }
     catch (Exception $oError) {
       $oConnection->rollback();
-    	throw($oError);
+      throw($oError);
     }
   }
 
   function update($aData) {
-  	$oConnection = Propel::getConnection(RbacUsersPeer::DATABASE_NAME);
-  	try {
-  	  $this->fromArray($aData, BasePeer::TYPE_FIELDNAME);
+    $oConnection = Propel::getConnection(RbacUsersPeer::DATABASE_NAME);
+    try {
+      $this->fromArray($aData, BasePeer::TYPE_FIELDNAME);
       $this->setNew(false);
       $iResult = $this->save();
-  	}
+    }
     catch (Exception $oError) {
       $oConnection->rollback();
-    	throw($oError);
+      throw($oError);
     }
   }
 
   function remove($sUserUID = '') {
-  	$this->setUsrUid($sUserUID);
-  	$this->delete();
+    $this->setUsrUid($sUserUID);
+    $this->delete();
   }
 
 } // Users
