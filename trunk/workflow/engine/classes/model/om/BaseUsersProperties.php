@@ -43,10 +43,10 @@ abstract class BaseUsersProperties extends BaseObject  implements Persistent {
 
 
 	/**
-	 * The value for the usr_logged_first_time field.
+	 * The value for the usr_logged_next_time field.
 	 * @var        int
 	 */
-	protected $usr_logged_first_time = 0;
+	protected $usr_logged_next_time = 0;
 
 
 	/**
@@ -154,14 +154,14 @@ abstract class BaseUsersProperties extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Get the [usr_logged_first_time] column value.
+	 * Get the [usr_logged_next_time] column value.
 	 * 
 	 * @return     int
 	 */
-	public function getUsrLoggedFirstTime()
+	public function getUsrLoggedNextTime()
 	{
 
-		return $this->usr_logged_first_time;
+		return $this->usr_logged_next_time;
 	}
 
 	/**
@@ -288,12 +288,12 @@ abstract class BaseUsersProperties extends BaseObject  implements Persistent {
 	} // setUsrLastUpdateDate()
 
 	/**
-	 * Set the value of [usr_logged_first_time] column.
+	 * Set the value of [usr_logged_next_time] column.
 	 * 
 	 * @param      int $v new value
 	 * @return     void
 	 */
-	public function setUsrLoggedFirstTime($v)
+	public function setUsrLoggedNextTime($v)
 	{
 
 		// Since the native PHP type for this column is integer,
@@ -302,12 +302,12 @@ abstract class BaseUsersProperties extends BaseObject  implements Persistent {
 			$v = (int) $v;
 		}
 
-		if ($this->usr_logged_first_time !== $v || $v === 0) {
-			$this->usr_logged_first_time = $v;
-			$this->modifiedColumns[] = UsersPropertiesPeer::USR_LOGGED_FIRST_TIME;
+		if ($this->usr_logged_next_time !== $v || $v === 0) {
+			$this->usr_logged_next_time = $v;
+			$this->modifiedColumns[] = UsersPropertiesPeer::USR_LOGGED_NEXT_TIME;
 		}
 
-	} // setUsrLoggedFirstTime()
+	} // setUsrLoggedNextTime()
 
 	/**
 	 * Set the value of [usr_password_history] column.
@@ -484,7 +484,7 @@ abstract class BaseUsersProperties extends BaseObject  implements Persistent {
 
 			$this->usr_last_update_date = $rs->getTimestamp($startcol + 1, null);
 
-			$this->usr_logged_first_time = $rs->getInt($startcol + 2);
+			$this->usr_logged_next_time = $rs->getInt($startcol + 2);
 
 			$this->usr_password_history = $rs->getString($startcol + 3);
 
@@ -715,7 +715,7 @@ abstract class BaseUsersProperties extends BaseObject  implements Persistent {
 				return $this->getUsrLastUpdateDate();
 				break;
 			case 2:
-				return $this->getUsrLoggedFirstTime();
+				return $this->getUsrLoggedNextTime();
 				break;
 			case 3:
 				return $this->getUsrPasswordHistory();
@@ -760,7 +760,7 @@ abstract class BaseUsersProperties extends BaseObject  implements Persistent {
 		$result = array(
 			$keys[0] => $this->getUsrUid(),
 			$keys[1] => $this->getUsrLastUpdateDate(),
-			$keys[2] => $this->getUsrLoggedFirstTime(),
+			$keys[2] => $this->getUsrLoggedNextTime(),
 			$keys[3] => $this->getUsrPasswordHistory(),
 			$keys[4] => $this->getUsrLdapSource(),
 			$keys[5] => $this->getUsrLdapDn(),
@@ -806,7 +806,7 @@ abstract class BaseUsersProperties extends BaseObject  implements Persistent {
 				$this->setUsrLastUpdateDate($value);
 				break;
 			case 2:
-				$this->setUsrLoggedFirstTime($value);
+				$this->setUsrLoggedNextTime($value);
 				break;
 			case 3:
 				$this->setUsrPasswordHistory($value);
@@ -854,7 +854,7 @@ abstract class BaseUsersProperties extends BaseObject  implements Persistent {
 
 		if (array_key_exists($keys[0], $arr)) $this->setUsrUid($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setUsrLastUpdateDate($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setUsrLoggedFirstTime($arr[$keys[2]]);
+		if (array_key_exists($keys[2], $arr)) $this->setUsrLoggedNextTime($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setUsrPasswordHistory($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setUsrLdapSource($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setUsrLdapDn($arr[$keys[5]]);
@@ -875,7 +875,7 @@ abstract class BaseUsersProperties extends BaseObject  implements Persistent {
 
 		if ($this->isColumnModified(UsersPropertiesPeer::USR_UID)) $criteria->add(UsersPropertiesPeer::USR_UID, $this->usr_uid);
 		if ($this->isColumnModified(UsersPropertiesPeer::USR_LAST_UPDATE_DATE)) $criteria->add(UsersPropertiesPeer::USR_LAST_UPDATE_DATE, $this->usr_last_update_date);
-		if ($this->isColumnModified(UsersPropertiesPeer::USR_LOGGED_FIRST_TIME)) $criteria->add(UsersPropertiesPeer::USR_LOGGED_FIRST_TIME, $this->usr_logged_first_time);
+		if ($this->isColumnModified(UsersPropertiesPeer::USR_LOGGED_NEXT_TIME)) $criteria->add(UsersPropertiesPeer::USR_LOGGED_NEXT_TIME, $this->usr_logged_next_time);
 		if ($this->isColumnModified(UsersPropertiesPeer::USR_PASSWORD_HISTORY)) $criteria->add(UsersPropertiesPeer::USR_PASSWORD_HISTORY, $this->usr_password_history);
 		if ($this->isColumnModified(UsersPropertiesPeer::USR_LDAP_SOURCE)) $criteria->add(UsersPropertiesPeer::USR_LDAP_SOURCE, $this->usr_ldap_source);
 		if ($this->isColumnModified(UsersPropertiesPeer::USR_LDAP_DN)) $criteria->add(UsersPropertiesPeer::USR_LDAP_DN, $this->usr_ldap_dn);
@@ -939,7 +939,7 @@ abstract class BaseUsersProperties extends BaseObject  implements Persistent {
 
 		$copyObj->setUsrLastUpdateDate($this->usr_last_update_date);
 
-		$copyObj->setUsrLoggedFirstTime($this->usr_logged_first_time);
+		$copyObj->setUsrLoggedNextTime($this->usr_logged_next_time);
 
 		$copyObj->setUsrPasswordHistory($this->usr_password_history);
 

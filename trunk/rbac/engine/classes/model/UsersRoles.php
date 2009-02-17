@@ -40,7 +40,7 @@ require_once 'classes/model/om/BaseUsersRoles.php';
 class UsersRoles extends BaseUsersRoles {
 
   function getRolesBySystem ( $SysUid, $UsrUid ) {
-  	$con = Propel::getConnection(UsersRolesPeer::DATABASE_NAME);
+    $con = Propel::getConnection(UsersRolesPeer::DATABASE_NAME);
     try {
       $c = new Criteria( 'rbac' );
       $c->clearSelectColumns();
@@ -53,23 +53,23 @@ class UsersRoles extends BaseUsersRoles {
       $rs->setFetchmode (ResultSet::FETCHMODE_ASSOC);
       $rs->next();
       $row = $rs->getRow();
-/*  return only the first row, no other rows can be permitted
+      /*  return only the first row, no other rows can be permitted
       while ( is_array ( $row ) ) {
         $rows[] = $row;
         $rs->next();
         $row = $rs->getRow();
       }
-*/
+      */
       return $row;
     }
     catch (Exception $oError) {
-    	throw($oError);
+      throw($oError);
     }
   }
 
 
   function getAllPermissions  ( $sRolUid, $sUsrUid ) {
-  	$con = Propel::getConnection(RolesPermissionsPeer::DATABASE_NAME);
+    $con = Propel::getConnection(RolesPermissionsPeer::DATABASE_NAME);
     try {
       $c = new Criteria( 'rbac' );
 //      $c->clearSelectColumns();
@@ -90,21 +90,21 @@ class UsersRoles extends BaseUsersRoles {
       return $rows;
     }
     catch (Exception $oError) {
-    	throw($oError);
+      throw($oError);
     }
   }
 
   function create($sUserUID = '', $sRolUID = '') {
-  	$oRole  = new UsersRoles();
-  	$oRole->setUsrUid($sUserUID);
-  	$oRole->setRolUid($sRolUID);
-  	$oRole->save();
+    $oRole  = new UsersRoles();
+    $oRole->setUsrUid($sUserUID);
+    $oRole->setRolUid($sRolUID);
+    $oRole->save();
   }
 
   function remove($sUserUID = '', $sRolUID = '') {
-  	$this->setUsrUid($sUserUID);
-  	$this->setRolUid($sRolUID);
-  	$this->delete();
+    $this->setUsrUid($sUserUID);
+    $this->setRolUid($sRolUID);
+    $this->delete();
   }
 
 } // UsersRoles

@@ -36,8 +36,8 @@ abstract class BaseUsersPropertiesPeer {
 	/** the column name for the USR_LAST_UPDATE_DATE field */
 	const USR_LAST_UPDATE_DATE = 'USERS_PROPERTIES.USR_LAST_UPDATE_DATE';
 
-	/** the column name for the USR_LOGGED_FIRST_TIME field */
-	const USR_LOGGED_FIRST_TIME = 'USERS_PROPERTIES.USR_LOGGED_FIRST_TIME';
+	/** the column name for the USR_LOGGED_NEXT_TIME field */
+	const USR_LOGGED_NEXT_TIME = 'USERS_PROPERTIES.USR_LOGGED_NEXT_TIME';
 
 	/** the column name for the USR_PASSWORD_HISTORY field */
 	const USR_PASSWORD_HISTORY = 'USERS_PROPERTIES.USR_PASSWORD_HISTORY';
@@ -71,9 +71,9 @@ abstract class BaseUsersPropertiesPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('UsrUid', 'UsrLastUpdateDate', 'UsrLoggedFirstTime', 'UsrPasswordHistory', 'UsrLdapSource', 'UsrLdapDn', 'UsrLdapDnRole', 'UsrSecMethod', 'UsrSecUsr', 'UsrSecRole', ),
-		BasePeer::TYPE_COLNAME => array (UsersPropertiesPeer::USR_UID, UsersPropertiesPeer::USR_LAST_UPDATE_DATE, UsersPropertiesPeer::USR_LOGGED_FIRST_TIME, UsersPropertiesPeer::USR_PASSWORD_HISTORY, UsersPropertiesPeer::USR_LDAP_SOURCE, UsersPropertiesPeer::USR_LDAP_DN, UsersPropertiesPeer::USR_LDAP_DN_ROLE, UsersPropertiesPeer::USR_SEC_METHOD, UsersPropertiesPeer::USR_SEC_USR, UsersPropertiesPeer::USR_SEC_ROLE, ),
-		BasePeer::TYPE_FIELDNAME => array ('USR_UID', 'USR_LAST_UPDATE_DATE', 'USR_LOGGED_FIRST_TIME', 'USR_PASSWORD_HISTORY', 'USR_LDAP_SOURCE', 'USR_LDAP_DN', 'USR_LDAP_DN_ROLE', 'USR_SEC_METHOD', 'USR_SEC_USR', 'USR_SEC_ROLE', ),
+		BasePeer::TYPE_PHPNAME => array ('UsrUid', 'UsrLastUpdateDate', 'UsrLoggedNextTime', 'UsrPasswordHistory', 'UsrLdapSource', 'UsrLdapDn', 'UsrLdapDnRole', 'UsrSecMethod', 'UsrSecUsr', 'UsrSecRole', ),
+		BasePeer::TYPE_COLNAME => array (UsersPropertiesPeer::USR_UID, UsersPropertiesPeer::USR_LAST_UPDATE_DATE, UsersPropertiesPeer::USR_LOGGED_NEXT_TIME, UsersPropertiesPeer::USR_PASSWORD_HISTORY, UsersPropertiesPeer::USR_LDAP_SOURCE, UsersPropertiesPeer::USR_LDAP_DN, UsersPropertiesPeer::USR_LDAP_DN_ROLE, UsersPropertiesPeer::USR_SEC_METHOD, UsersPropertiesPeer::USR_SEC_USR, UsersPropertiesPeer::USR_SEC_ROLE, ),
+		BasePeer::TYPE_FIELDNAME => array ('USR_UID', 'USR_LAST_UPDATE_DATE', 'USR_LOGGED_NEXT_TIME', 'USR_PASSWORD_HISTORY', 'USR_LDAP_SOURCE', 'USR_LDAP_DN', 'USR_LDAP_DN_ROLE', 'USR_SEC_METHOD', 'USR_SEC_USR', 'USR_SEC_ROLE', ),
 		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
 	);
 
@@ -84,9 +84,9 @@ abstract class BaseUsersPropertiesPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('UsrUid' => 0, 'UsrLastUpdateDate' => 1, 'UsrLoggedFirstTime' => 2, 'UsrPasswordHistory' => 3, 'UsrLdapSource' => 4, 'UsrLdapDn' => 5, 'UsrLdapDnRole' => 6, 'UsrSecMethod' => 7, 'UsrSecUsr' => 8, 'UsrSecRole' => 9, ),
-		BasePeer::TYPE_COLNAME => array (UsersPropertiesPeer::USR_UID => 0, UsersPropertiesPeer::USR_LAST_UPDATE_DATE => 1, UsersPropertiesPeer::USR_LOGGED_FIRST_TIME => 2, UsersPropertiesPeer::USR_PASSWORD_HISTORY => 3, UsersPropertiesPeer::USR_LDAP_SOURCE => 4, UsersPropertiesPeer::USR_LDAP_DN => 5, UsersPropertiesPeer::USR_LDAP_DN_ROLE => 6, UsersPropertiesPeer::USR_SEC_METHOD => 7, UsersPropertiesPeer::USR_SEC_USR => 8, UsersPropertiesPeer::USR_SEC_ROLE => 9, ),
-		BasePeer::TYPE_FIELDNAME => array ('USR_UID' => 0, 'USR_LAST_UPDATE_DATE' => 1, 'USR_LOGGED_FIRST_TIME' => 2, 'USR_PASSWORD_HISTORY' => 3, 'USR_LDAP_SOURCE' => 4, 'USR_LDAP_DN' => 5, 'USR_LDAP_DN_ROLE' => 6, 'USR_SEC_METHOD' => 7, 'USR_SEC_USR' => 8, 'USR_SEC_ROLE' => 9, ),
+		BasePeer::TYPE_PHPNAME => array ('UsrUid' => 0, 'UsrLastUpdateDate' => 1, 'UsrLoggedNextTime' => 2, 'UsrPasswordHistory' => 3, 'UsrLdapSource' => 4, 'UsrLdapDn' => 5, 'UsrLdapDnRole' => 6, 'UsrSecMethod' => 7, 'UsrSecUsr' => 8, 'UsrSecRole' => 9, ),
+		BasePeer::TYPE_COLNAME => array (UsersPropertiesPeer::USR_UID => 0, UsersPropertiesPeer::USR_LAST_UPDATE_DATE => 1, UsersPropertiesPeer::USR_LOGGED_NEXT_TIME => 2, UsersPropertiesPeer::USR_PASSWORD_HISTORY => 3, UsersPropertiesPeer::USR_LDAP_SOURCE => 4, UsersPropertiesPeer::USR_LDAP_DN => 5, UsersPropertiesPeer::USR_LDAP_DN_ROLE => 6, UsersPropertiesPeer::USR_SEC_METHOD => 7, UsersPropertiesPeer::USR_SEC_USR => 8, UsersPropertiesPeer::USR_SEC_ROLE => 9, ),
+		BasePeer::TYPE_FIELDNAME => array ('USR_UID' => 0, 'USR_LAST_UPDATE_DATE' => 1, 'USR_LOGGED_NEXT_TIME' => 2, 'USR_PASSWORD_HISTORY' => 3, 'USR_LDAP_SOURCE' => 4, 'USR_LDAP_DN' => 5, 'USR_LDAP_DN_ROLE' => 6, 'USR_SEC_METHOD' => 7, 'USR_SEC_USR' => 8, 'USR_SEC_ROLE' => 9, ),
 		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
 	);
 
@@ -192,7 +192,7 @@ abstract class BaseUsersPropertiesPeer {
 
 		$criteria->addSelectColumn(UsersPropertiesPeer::USR_LAST_UPDATE_DATE);
 
-		$criteria->addSelectColumn(UsersPropertiesPeer::USR_LOGGED_FIRST_TIME);
+		$criteria->addSelectColumn(UsersPropertiesPeer::USR_LOGGED_NEXT_TIME);
 
 		$criteria->addSelectColumn(UsersPropertiesPeer::USR_PASSWORD_HISTORY);
 

@@ -1,10 +1,10 @@
 <?php
 /**
  * myInfo_Save.php
- *  
+ *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -14,13 +14,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
 try {
   global $RBAC;
@@ -65,6 +65,26 @@ try {
 	if (isset($_POST['form']['USR_PASSWORD'])) {
 	  if ($_POST['form']['USR_PASSWORD'] != '') {
 	    $aData['USR_PASSWORD'] = $_POST['form']['USR_PASSWORD'];
+	    require_once 'classes/model/UsersProperties.php';
+      $oUserProperty = new UsersProperties();
+      $aUserProperty = $oUserProperty->load($_POST['form']['USR_UID']);
+      $aHistory      = unserialize($aUserProperty['USR_PASSWORD_HISTORY']);
+      if (!is_array($aHistory)) {
+        $aHistory = array();
+      }
+      if (!defined('PPU_PASSWORD_HISTORY')) {
+        define('PPU_PASSWORD_HISTORY', 0);
+      }
+      if (PPU_PASSWORD_HISTORY > 0) {
+        if (count($aHistory) >= PPU_PASSWORD_HISTORY) {
+          array_shift($aHistory);
+        }
+        $aHistory[] = $_POST['form']['USR_NEW_PASS'];
+      }
+      $aUserProperty['USR_LAST_UPDATE_DATE'] = date('Y-m-d H:i:s');
+      $aUserProperty['USR_LOGGED_NEXT_TIME'] = 0;
+      $aUserProperty['USR_PASSWORD_HISTORY'] = serialize($aHistory);
+      $oUserProperty->update($aUserProperty);
 	  }
 	}
 	$aData['USR_FIRSTNAME']   = $_POST['form']['USR_FIRSTNAME'];

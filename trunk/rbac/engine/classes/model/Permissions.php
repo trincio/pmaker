@@ -40,21 +40,21 @@ require_once 'classes/model/om/BasePermissions.php';
 class Permissions extends BasePermissions {
   function loadByCode($sCode = '') {
     try {
-  		$oCriteria = new Criteria('rbac');
+      $oCriteria = new Criteria('rbac');
       $oCriteria->add(PermissionsPeer::PER_CODE, $sCode);
       $oDataset = PermissionsPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
       $oDataset->next();
       $aRow = $oDataset->getRow();
-  	  if (is_array($aRow)) {
-  	    return $aRow;
+      if (is_array($aRow)) {
+        return $aRow;
       }
       else {
         return false;
       }
     }
     catch (Exception $oError) {
-    	throw($oError);
+      throw($oError);
     }
   }
 
@@ -74,13 +74,13 @@ class Permissions extends BasePermissions {
       $aData['PER_CREATE_DATE'] = date('Y-m-d H:i:s');
       $aData['PER_UPDATE_DATE'] = $aData['PER_CREATE_DATE'];
       $aData['PER_STATUS']      = 1;
-  	  $oPermission              = new Permissions();
-  	  $oPermission->fromArray($aData, BasePeer::TYPE_FIELDNAME);
-  	  $iResult = $oPermission->save();
-  	  return $aData['PER_UID'];
+      $oPermission              = new Permissions();
+      $oPermission->fromArray($aData, BasePeer::TYPE_FIELDNAME);
+      $iResult = $oPermission->save();
+      return $aData['PER_UID'];
     }
     catch (Exception $oError) {
-    	throw($oError);
+      throw($oError);
     }
   }
 } // Permissions

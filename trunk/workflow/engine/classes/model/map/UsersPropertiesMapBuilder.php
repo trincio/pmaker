@@ -68,7 +68,7 @@ class UsersPropertiesMapBuilder {
 
 		$tMap->addColumn('USR_LAST_UPDATE_DATE', 'UsrLastUpdateDate', 'int', CreoleTypes::TIMESTAMP, false, null);
 
-		$tMap->addColumn('USR_LOGGED_FIRST_TIME', 'UsrLoggedFirstTime', 'int', CreoleTypes::INTEGER, false, null);
+		$tMap->addColumn('USR_LOGGED_NEXT_TIME', 'UsrLoggedNextTime', 'int', CreoleTypes::INTEGER, false, null);
 
 		$tMap->addColumn('USR_PASSWORD_HISTORY', 'UsrPasswordHistory', 'string', CreoleTypes::LONGVARCHAR, false, null);
 

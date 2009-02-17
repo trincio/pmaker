@@ -31,14 +31,14 @@ if (!defined('PPU_PASSWORD_HISTORY')) {
   define('PPU_PASSWORD_HISTORY', 0);
 }
 if (PPU_PASSWORD_HISTORY > 0) {
-  if (count($aHistory) > PPU_PASSWORD_HISTORY) {
+  if (count($aHistory) >= PPU_PASSWORD_HISTORY) {
     array_shift($aHistory);
   }
   $aHistory[] = $_POST['form']['USR_PASSWORD'];
 }
-$aUserProperty['USR_LAST_UPDATE_DATE']  = date('Y-m-d H:i:s');
-$aUserProperty['USR_LOGGED_FIRST_TIME'] = 0;
-$aUserProperty['USR_PASSWORD_HISTORY']  = serialize($aHistory);
+$aUserProperty['USR_LAST_UPDATE_DATE'] = date('Y-m-d H:i:s');
+$aUserProperty['USR_LOGGED_NEXT_TIME'] = 0;
+$aUserProperty['USR_PASSWORD_HISTORY'] = serialize($aHistory);
 $oUserProperty->update($aUserProperty);
 if ( class_exists('redirectDetail')) {
   //falta validar...
