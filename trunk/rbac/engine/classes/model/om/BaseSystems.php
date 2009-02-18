@@ -1,27 +1,4 @@
 <?php
-/**
- * BaseSystems.php
- *  
- * ProcessMaker Open Source Edition
- * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- * 
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
- * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
- */
 
 require_once 'propel/om/BaseObject.php';
 
@@ -132,7 +109,6 @@ abstract class BaseSystems extends BaseObject  implements Persistent {
 	public function getSysCreateDate($format = 'Y-m-d H:i:s')
 	{
 
-		return $this->sys_create_date;
 		if ($this->sys_create_date === null || $this->sys_create_date === '') {
 			return null;
 		} elseif (!is_int($this->sys_create_date)) {
@@ -163,7 +139,6 @@ abstract class BaseSystems extends BaseObject  implements Persistent {
 	 */
 	public function getSysUpdateDate($format = 'Y-m-d H:i:s')
 	{
-		return $this->sys_update_date;
 
 		if ($this->sys_update_date === null || $this->sys_update_date === '') {
 			return null;
@@ -248,15 +223,7 @@ abstract class BaseSystems extends BaseObject  implements Persistent {
 	 */
 	public function setSysCreateDate($v)
 	{
-		if ($v !== null && !is_string($v)) {
-			$v = (string) $v; 
-		}
 
-		if ($this->sys_create_date !== $v || $v === '') {
-			$this->sys_create_date = $v;
-			$this->modifiedColumns[] = SystemsPeer::SYS_CREATE_DATE;
-		}
-            return;
 		if ($v !== null && !is_int($v)) {
 			$ts = strtotime($v);
 			if ($ts === -1 || $ts === false) { // in PHP 5.1 return value changes to FALSE
@@ -280,15 +247,6 @@ abstract class BaseSystems extends BaseObject  implements Persistent {
 	 */
 	public function setSysUpdateDate($v)
 	{
-		if ($v !== null && !is_string($v)) {
-			$v = (string) $v; 
-		}
-
-		if ($this->sys_update_date !== $v || $v === '') {
-			$this->sys_update_date = $v;
-			$this->modifiedColumns[] = SystemsPeer::SYS_UPDATE_DATE;
-		}
-            return;
 
 		if ($v !== null && !is_int($v)) {
 			$ts = strtotime($v);
@@ -348,11 +306,9 @@ abstract class BaseSystems extends BaseObject  implements Persistent {
 
 			$this->sys_code = $rs->getString($startcol + 1);
 
-//			$this->sys_create_date = $rs->getTimestamp($startcol + 2, null);
-			$this->sys_create_date = $rs->getString($startcol + 2, null);
+			$this->sys_create_date = $rs->getTimestamp($startcol + 2, null);
 
-//			$this->sys_update_date = $rs->getTimestamp($startcol + 3, null);
-			$this->sys_update_date = $rs->getString($startcol + 3, null);
+			$this->sys_update_date = $rs->getTimestamp($startcol + 3, null);
 
 			$this->sys_status = $rs->getInt($startcol + 4);
 
@@ -364,7 +320,7 @@ abstract class BaseSystems extends BaseObject  implements Persistent {
 			return $startcol + 5; // 5 = SystemsPeer::NUM_COLUMNS - SystemsPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
-			throw new PropelException("Error populating Systems object ", $e);
+			throw new PropelException("Error populating Systems object", $e);
 		}
 	}
 

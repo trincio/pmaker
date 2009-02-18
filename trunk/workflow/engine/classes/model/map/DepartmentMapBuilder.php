@@ -72,13 +72,9 @@ class DepartmentMapBuilder {
 
 		$tMap->addColumn('DEP_LOCATION', 'DepLocation', 'int', CreoleTypes::INTEGER, true, null);
 
-		$tMap->addColumn('DEP_STATUS', 'DepStatus', 'string', CreoleTypes::CHAR, true, 1);
+		$tMap->addColumn('DEP_STATUS', 'DepStatus', 'string', CreoleTypes::VARCHAR, true, 10);
 
-		$tMap->addColumn('DEP_TYPE', 'DepType', 'string', CreoleTypes::VARCHAR, true, 5);
-
-		$tMap->addColumn('DEP_REF_CODE', 'DepRefCode', 'string', CreoleTypes::VARCHAR, true, 10);
-
-		$tMap->addValidator('DEP_TYPE', 'validValues', 'propel.validator.ValidValuesValidator', 'INTER', 'Please select a valid department type.');
+		$tMap->addColumn('DEP_REF_CODE', 'DepRefCode', 'string', CreoleTypes::VARCHAR, true, 50);
 
 	} // doBuild()
 
