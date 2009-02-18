@@ -103,4 +103,87 @@ class UsersProperties extends BaseUsersProperties {
     	throw($oError);
     }
   }
+
+  public function loadOrCreateIfNotExists($sUserUID, $aUserProperty = array()) {
+    if (!$this->UserPropertyExists($sUserUID)) {
+      $aUserProperty['USR_UID'] = $sUserUID;
+      if (!isset($aUserProperty['USR_LAST_UPDATE_DATE'])) {
+        $aUserProperty['USR_LAST_UPDATE_DATE'] = date('Y-m-d H:i:s');
+      }
+      if (!isset($aUserProperty['USR_LOGGED_NEXT_TIME'])) {
+        $aUserProperty['USR_LOGGED_NEXT_TIME'] = 0;
+      }
+      $this->create($aUserProperty);
+    }
+    else {
+      $aUserProperty = $this->load($sUserUID);
+    }
+    return $aUserProperty;
+  }
+
+  public function validatePassword($sPassword, $sLastUpdate, $iChangePasswordNextTime) {
+    if (!defined('PPU_MINIMUN_LENGTH')) {
+      define('PPU_MINIMUN_LENGTH', 5);
+    }
+    if (!defined('PPU_MAXIMUN_LENGTH')) {
+      define('PPU_MAXIMUN_LENGTH', 20);
+    }
+    if (!defined('PPU_NUMERICAL_CHARACTER_REQUIRED')) {
+      define('PPU_NUMERICAL_CHARACTER_REQUIRED', 0);
+    }
+    if (!defined('PPU_UPPERCASE_CHARACTER_REQUIRED')) {
+      define('PPU_UPPERCASE_CHARACTER_REQUIRED', 0);
+    }
+    if (!defined('PPU_SPECIAL_CHARACTER_REQUIRED')) {
+      define('PPU_SPECIAL_CHARACTER_REQUIRED', 0);
+    }
+    if (!defined('PPU_EXPIRATION_IN')) {
+      define('PPU_EXPIRATION_IN', 0);
+    }
+    if (!defined('PPU_CHANGE_PASSWORD_AFTER_NEXT_LOGIN')) {
+      define('PPU_CHANGE_PASSWORD_AFTER_NEXT_LOGIN', 0);
+    }
+    if (function_exists('mb_strlen')) {
+      $iLength = mb_strlen($sPassword);
+    }
+    else {
+      $iLength = strlen($sPassword);
+    }
+    $aErrors = array();
+    if ($iLength < PPU_MINIMUN_LENGTH) {
+      $aErrors[] = 'ID_PPU_MINIMUN_LENGTH';
+    }
+    if ($iLength > PPU_MAXIMUN_LENGTH) {
+      $aErrors[] = 'ID_PPU_MAXIMUN_LENGTH';
+    }
+    if (PPU_NUMERICAL_CHARACTER_REQUIRED == 1) {
+      if (preg_match_all('/[0-9]/', $sPassword, $aMatch, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE) == 0) {
+        $aErrors[] = 'ID_PPU_NUMERICAL_CHARACTER_REQUIRED';
+      }
+    }
+    if (PPU_UPPERCASE_CHARACTER_REQUIRED == 1) {
+      if (preg_match_all('/[A-Z]/', $sPassword, $aMatch, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE) == 0) {
+        $aErrors[] = 'ID_PPU_UPPERCASE_CHARACTER_REQUIRED';
+      }
+    }
+    if (PPU_SPECIAL_CHARACTER_REQUIRED == 1) {
+      if (preg_match_all('/[ºª\\!|"@·#$~%€&¬\/()=\'?¡¿*+\-_.:,;]/', $sPassword, $aMatch, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE) == 0) {
+        $aErrors[] = 'ID_PPU_SPECIAL_CHARACTER_REQUIRED';
+      }
+    }
+    if (PPU_EXPIRATION_IN > 0) {
+      G::LoadClass('dates');
+      $oDates = new dates();
+      $fDays  = $oDates->calculateDuration(date('Y-m-d H:i:s'), $sLastUpdate);
+      if ($fDays > PPU_EXPIRATION_IN) {
+        $aErrors[] = 'ID_PPU_EXPIRATION_IN';
+      }
+    }
+    if (PPU_CHANGE_PASSWORD_AFTER_NEXT_LOGIN == 1) {
+      if ($iChangePasswordNextTime == 1) {
+        $aErrors[] = 'ID_PPU_CHANGE_PASSWORD_AFTER_NEXT_LOGIN';
+      }
+    }
+    return $aErrors;
+  }
 } // UsersProperties

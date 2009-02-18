@@ -139,78 +139,8 @@ try {
   /* Check password using policy - Start */
   require_once 'classes/model/UsersProperties.php';
   $oUserProperty = new UsersProperties();
-  if (!$oUserProperty->UserPropertyExists($_SESSION['USER_LOGGED'])) {
-    $aUserProperty = array('USR_UID'               => $_SESSION['USER_LOGGED'],
-                           'USR_LAST_UPDATE_DATE'  => date('Y-m-d H:i:s'),
-                           'USR_LOGGED_NEXT_TIME'  => 0,
-                           'USR_PASSWORD_HISTORY'  => serialize(array($_POST['form']['USR_PASSWORD'])));
-    $oUserProperty->create($aUserProperty);
-  }
-  else {
-    $aUserProperty = $oUserProperty->load($_SESSION['USER_LOGGED']);
-  }
-  if (!defined('PPU_MINIMUN_LENGTH')) {
-    define('PPU_MINIMUN_LENGTH', 5);
-  }
-  if (!defined('PPU_MAXIMUN_LENGTH')) {
-    define('PPU_MAXIMUN_LENGTH', 20);
-  }
-  if (!defined('PPU_NUMERICAL_CHARACTER_REQUIRED')) {
-    define('PPU_NUMERICAL_CHARACTER_REQUIRED', 0);
-  }
-  if (!defined('PPU_UPPERCASE_CHARACTER_REQUIRED')) {
-    define('PPU_UPPERCASE_CHARACTER_REQUIRED', 0);
-  }
-  if (!defined('PPU_SPECIAL_CHARACTER_REQUIRED')) {
-    define('PPU_SPECIAL_CHARACTER_REQUIRED', 0);
-  }
-  if (!defined('PPU_EXPIRATION_IN')) {
-    define('PPU_EXPIRATION_IN', 0);
-  }
-  if (!defined('PPU_CHANGE_PASSWORD_AFTER_NEXT_LOGIN')) {
-    define('PPU_CHANGE_PASSWORD_AFTER_NEXT_LOGIN', 0);
-  }
-  if (function_exists('mb_strlen')) {
-    $iLength = mb_strlen($_POST['form']['USR_PASSWORD']);
-  }
-  else {
-    $iLength = strlen($_POST['form']['USR_PASSWORD']);
-  }
-  $aErrors = array();
-  if ($iLength < PPU_MINIMUN_LENGTH) {
-    $aErrors[] = 'ID_PPU_MINIMUN_LENGTH';
-  }
-  if ($iLength > PPU_MAXIMUN_LENGTH) {
-    $aErrors[] = 'ID_PPU_MAXIMUN_LENGTH';
-  }
-  if (PPU_NUMERICAL_CHARACTER_REQUIRED == 1) {
-    if (preg_match_all('/[0-9]/', $_POST['form']['USR_PASSWORD'], $aMatch, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE) == 0) {
-      $aErrors[] = 'ID_PPU_NUMERICAL_CHARACTER_REQUIRED';
-    }
-  }
-  if (PPU_UPPERCASE_CHARACTER_REQUIRED == 1) {
-    if (preg_match_all('/[A-Z]/', $_POST['form']['USR_PASSWORD'], $aMatch, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE) == 0) {
-      $aErrors[] = 'ID_PPU_UPPERCASE_CHARACTER_REQUIRED';
-    }
-  }
-  if (PPU_SPECIAL_CHARACTER_REQUIRED == 1) {
-    if (preg_match_all('/[ºª\\!|"@·#$~%€&¬\/()=\'?¡¿*+\-_.:,;]/', $_POST['form']['USR_PASSWORD'], $aMatch, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE) == 0) {
-      $aErrors[] = 'ID_PPU_SPECIAL_CHARACTER_REQUIRED';
-    }
-  }
-  if (PPU_EXPIRATION_IN > 0) {
-    G::LoadClass('dates');
-    $oDates = new dates();
-    $fDays  = $oDates->calculateDuration(date('Y-m-d H:i:s'), $aUserProperty['USR_LAST_UPDATE_DATE']);
-    if ($fDays > PPU_EXPIRATION_IN) {
-      $aErrors[] = 'ID_PPU_EXPIRATION_IN';
-    }
-  }
-  if (PPU_CHANGE_PASSWORD_AFTER_NEXT_LOGIN == 1) {
-    if ($aUserProperty['USR_LOGGED_NEXT_TIME'] == 1) {
-      $aErrors[] = 'ID_PPU_CHANGE_PASSWORD_AFTER_NEXT_LOGIN';
-    }
-  }
+  $aUserProperty = $oUserProperty->loadOrCreateIfNotExists($_SESSION['USER_LOGGED'], array('USR_PASSWORD_HISTORY' => serialize(array($_POST['form']['USR_PASSWORD']))));
+  $aErrors       = $oUserProperty->validatePassword($_POST['form']['USR_PASSWORD'], $aUserProperty['USR_LAST_UPDATE_DATE'], $aUserProperty['USR_LOGGED_NEXT_TIME']);
   if (!empty($aErrors)) {
     if (!defined('NO_DISPLAY_USERNAME')) {
       define('NO_DISPLAY_USERNAME', 1);
