@@ -61,6 +61,7 @@ class RBAC
   var $rolesPermissionsObj;
 
   var $aUserInfo = array();
+  var $aRbacPlugins = array();
   var $sSystem = '';
 
   static private $instance = NULL;
@@ -112,21 +113,18 @@ class RBAC
     if ( is_dir ( $pathPlugins ) ) {
       if ($handle = opendir( $pathPlugins )) {
         while ( false !== ($file = readdir($handle))) {
-        	if ( strpos($file, '.php',1) && is_file( $pathPlugins . PATH_SEP . $file) && 
-        	     substr($file,0,6) == 'class.' && substr($file,-4) == '.php' )  {
-        		
-        		$sClassName = substr($file,6, strlen($file) - 10);
-        		require_once ($pathPlugins . PATH_SEP . $file);
-            $plugin =  new $sClassName();
-            $plugin->VerifyLogin ( 'admin', 'admin' );
+          if ( strpos($file, '.php',1) && is_file( $pathPlugins . PATH_SEP . $file) && 
+               substr($file,0,6) == 'class.' && substr($file,-4) == '.php' )  {
+        
+            $sClassName = substr($file,6, strlen($file) - 10);
+            require_once ($pathPlugins . PATH_SEP . $file);
+            $this->aRbacPlugins[] = $sClassName;
+
           }
         }  
       }
     }
     
-    //print PATH_RBAC . 'plugins' ;
-    //die;    
-
   }
 
   /**
@@ -173,9 +171,38 @@ class RBAC
    */
   function VerifyLogin( $strUser, $strPass)
   {
+  	//check if the user exists in the table WF_WORKFLOW.USERS
     $this->initRBAC();
-    $res = $this->userObj->VerifyLogin($strUser, $strPass);
-    return $res;
+    if ( $this->userObj->verifyUser($strUser) == 0 ) {
+      return -1;
+    }
+
+    //get the user properties if this user exists
+    //$sAuthType   = 'ldap';
+    //$sAuthSource = 'server51';
+    //$strUser = 'Manager';
+    //$strPass = 'Colosa1';
+
+    $sAuthType   = '';
+    if ( $sAuthType != '' ) {
+      //hook for RBAC plugins
+      $pathPlugins = PATH_RBAC . 'plugins';
+      foreach ( $this->aRbacPlugins as $sClassName) {
+      	if ( $sClassName == $sAuthType ) {
+          $plugin =  new $sClassName();
+          $plugin->sAuthSource = $sAuthSource;
+          $plugin->sSystem     = $this->sSystem;
+
+          $res = $plugin->VerifyLogin ( $strUser, $strPass );
+          krumo ( $res );
+          die;    
+        }
+      }
+    }
+    else {
+      $res = $this->userObj->VerifyLogin($strUser, $strPass);
+      return $res;
+    }
   }
 
   /**
@@ -230,56 +257,56 @@ class RBAC
   }
 
   function createUser($aData = array(), $sRolCode = '') {
-	  if ($aData['USR_STATUS'] == 'ACTIVE') {
-	  	$aData['USR_STATUS'] = 1;
-	  }
-	  else {
-	  	$aData['USR_STATUS'] = 0;
-	  }
-  	$sUserUID = $this->userObj->create($aData);
-  	if ($sRolCode != '') {
-  	  $this->assignRoleToUser($sUserUID, $sRolCode);
+    if ($aData['USR_STATUS'] == 'ACTIVE') {
+      $aData['USR_STATUS'] = 1;
     }
-  	return $sUserUID;
+    else {
+      $aData['USR_STATUS'] = 0;
+    }
+    $sUserUID = $this->userObj->create($aData);
+    if ($sRolCode != '') {
+      $this->assignRoleToUser($sUserUID, $sRolCode);
+    }
+    return $sUserUID;
   }
 
   function updateUser($aData = array(), $sRolCode = '') {
-  	if (isset($aData['USR_STATUS'])) {
-  	  if ($aData['USR_STATUS'] == 'ACTIVE') {
-  	  	$aData['USR_STATUS'] = 1;
-  	  }
+    if (isset($aData['USR_STATUS'])) {
+      if ($aData['USR_STATUS'] == 'ACTIVE') {
+        $aData['USR_STATUS'] = 1;
+      }
     }
-  	$this->userObj->update($aData);
-  	if ($sRolCode != '') {
-  		$this->removeRolesFromUser($aData['USR_UID']);
-  	  $this->assignRoleToUser($aData['USR_UID'], $sRolCode);
+    $this->userObj->update($aData);
+    if ($sRolCode != '') {
+      $this->removeRolesFromUser($aData['USR_UID']);
+      $this->assignRoleToUser($aData['USR_UID'], $sRolCode);
     }
   }
 
   function assignRoleToUser($sUserUID = '', $sRolCode = '') {
-  	$aRol = $this->rolesObj->loadByCode($sRolCode);
-  	$this->usersRolesObj->create($sUserUID, $aRol['ROL_UID']);
+    $aRol = $this->rolesObj->loadByCode($sRolCode);
+    $this->usersRolesObj->create($sUserUID, $aRol['ROL_UID']);
   }
 
   function removeRolesFromUser($sUserUID = '') {
-  	$oCriteria = new Criteria('rbac');
-  	$oCriteria->add(UsersRolesPeer::USR_UID, $sUserUID);
-  	UsersRolesPeer::doDelete($oCriteria);
+    $oCriteria = new Criteria('rbac');
+    $oCriteria->add(UsersRolesPeer::USR_UID, $sUserUID);
+    UsersRolesPeer::doDelete($oCriteria);
   }
 
   function changeUserStatus($sUserUID = '', $sStatus = 'ACTIVE') {
-  	if ($sStatus == 'ACTIVE') {
-  		$sStatus = 1;
-  	}
+    if ($sStatus == 'ACTIVE') {
+      $sStatus = 1;
+    }
 
-  	$aFields               = $this->userObj->load($sUserUID);
-  	$aFields['USR_STATUS'] = $sStatus;
-  	$this->userObj->update($aFields);
+    $aFields               = $this->userObj->load($sUserUID);
+    $aFields['USR_STATUS'] = $sStatus;
+    $this->userObj->update($aFields);
   }
 
   function removeUser($sUserUID = '') {
-  	$this->userObj->remove($sUserUID);
-  	$this->removeRolesFromUser($sUserUID);
+    $this->userObj->remove($sUserUID);
+    $this->removeRolesFromUser($sUserUID);
   }
   //
 
@@ -296,7 +323,7 @@ class RBAC
    * @return array con el registro del usuario
    */
   function load ($uid ){
-  	$this->initRBAC();
+    $this->initRBAC();
     $this->userObj->Fields = $this->userObj->load($uid);
 
     $fieldsSystem = $this->systemObj->loadByCode($this->sSystem);
@@ -330,53 +357,53 @@ class RBAC
   }
 
   function createRole($aData) {
-	  return $this->rolesObj->createRole($aData);
+    return $this->rolesObj->createRole($aData);
   }
   function removeRole($ROL_UID){
-	  return $this->rolesObj->removeRole($ROL_UID);
+    return $this->rolesObj->removeRole($ROL_UID);
   }
   function verifyNewRole($code){
-	return $this->rolesObj->verifyNewRole($code);
+  return $this->rolesObj->verifyNewRole($code);
   }
   function updateRole($fields){
-	return $this->rolesObj->updateRole($fields);
+  return $this->rolesObj->updateRole($fields);
   }
   function loadById($ROL_UID){
-	return $this->rolesObj->loadById($ROL_UID);
+  return $this->rolesObj->loadById($ROL_UID);
   }
   function getRoleUsers($ROL_UID){
-	return $this->rolesObj->getRoleUsers($ROL_UID);
+  return $this->rolesObj->getRoleUsers($ROL_UID);
   }
   function getRoleCode($ROL_UID){
-	return $this->rolesObj->getRoleCode($ROL_UID);
+  return $this->rolesObj->getRoleCode($ROL_UID);
   }
   function deleteUserRole($ROL_UID, $USR_UID){
-	return $this->rolesObj->deleteUserRole($ROL_UID, $USR_UID);
+  return $this->rolesObj->deleteUserRole($ROL_UID, $USR_UID);
   }
   function getAllUsers($ROL_UID){
-	return $this->rolesObj->getAllUsers($ROL_UID);
+  return $this->rolesObj->getAllUsers($ROL_UID);
   }
   function assignUserToRole($aData){
-	return $this->rolesObj->assignUserToRole($aData);
+  return $this->rolesObj->assignUserToRole($aData);
   }
   function getRolePermissions($ROL_UID){
-	return $this->rolesObj->getRolePermissions($ROL_UID);
+  return $this->rolesObj->getRolePermissions($ROL_UID);
   }
   function getAllPermissions($ROL_UID){
-	return $this->rolesObj->getAllPermissions($ROL_UID);
+  return $this->rolesObj->getAllPermissions($ROL_UID);
   }
   function  assignPermissionRole($sData){
-	return $this->rolesObj->assignPermissionRole($sData);
+  return $this->rolesObj->assignPermissionRole($sData);
   }
   function assignPermissionToRole($sRoleUID, $sPermissionUID) {
     return $this->rolesPermissionsObj->create(array('ROL_UID' => $sRoleUID, 'PER_UID' => $sPermissionUID));
   }
 
   function  deletePermissionRole($ROL_UID, $PER_UID){
-	return $this->rolesObj->deletePermissionRole($ROL_UID, $PER_UID);
+  return $this->rolesObj->deletePermissionRole($ROL_UID, $PER_UID);
   }
   function numUsersWithRole($ROL_UID){
-	return $this->rolesObj->numUsersWithRole($ROL_UID);
+  return $this->rolesObj->numUsersWithRole($ROL_UID);
   }
 
   function createSystem($sCode) {
