@@ -55,48 +55,6 @@ abstract class BaseUsersProperties extends BaseObject  implements Persistent {
 	 */
 	protected $usr_password_history;
 
-
-	/**
-	 * The value for the usr_ldap_source field.
-	 * @var        string
-	 */
-	protected $usr_ldap_source = '';
-
-
-	/**
-	 * The value for the usr_ldap_dn field.
-	 * @var        string
-	 */
-	protected $usr_ldap_dn = '';
-
-
-	/**
-	 * The value for the usr_ldap_dn_role field.
-	 * @var        string
-	 */
-	protected $usr_ldap_dn_role = '';
-
-
-	/**
-	 * The value for the usr_sec_method field.
-	 * @var        string
-	 */
-	protected $usr_sec_method = '';
-
-
-	/**
-	 * The value for the usr_sec_usr field.
-	 * @var        string
-	 */
-	protected $usr_sec_usr = '';
-
-
-	/**
-	 * The value for the usr_sec_role field.
-	 * @var        string
-	 */
-	protected $usr_sec_role = '';
-
 	/**
 	 * Flag to prevent endless save loop, if this object is referenced
 	 * by another object which falls in this transaction.
@@ -173,72 +131,6 @@ abstract class BaseUsersProperties extends BaseObject  implements Persistent {
 	{
 
 		return $this->usr_password_history;
-	}
-
-	/**
-	 * Get the [usr_ldap_source] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getUsrLdapSource()
-	{
-
-		return $this->usr_ldap_source;
-	}
-
-	/**
-	 * Get the [usr_ldap_dn] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getUsrLdapDn()
-	{
-
-		return $this->usr_ldap_dn;
-	}
-
-	/**
-	 * Get the [usr_ldap_dn_role] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getUsrLdapDnRole()
-	{
-
-		return $this->usr_ldap_dn_role;
-	}
-
-	/**
-	 * Get the [usr_sec_method] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getUsrSecMethod()
-	{
-
-		return $this->usr_sec_method;
-	}
-
-	/**
-	 * Get the [usr_sec_usr] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getUsrSecUsr()
-	{
-
-		return $this->usr_sec_usr;
-	}
-
-	/**
-	 * Get the [usr_sec_role] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getUsrSecRole()
-	{
-
-		return $this->usr_sec_role;
 	}
 
 	/**
@@ -332,138 +224,6 @@ abstract class BaseUsersProperties extends BaseObject  implements Persistent {
 	} // setUsrPasswordHistory()
 
 	/**
-	 * Set the value of [usr_ldap_source] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     void
-	 */
-	public function setUsrLdapSource($v)
-	{
-
-		// Since the native PHP type for this column is string,
-		// we will cast the input to a string (if it is not).
-		if ($v !== null && !is_string($v)) {
-			$v = (string) $v; 
-		}
-
-		if ($this->usr_ldap_source !== $v || $v === '') {
-			$this->usr_ldap_source = $v;
-			$this->modifiedColumns[] = UsersPropertiesPeer::USR_LDAP_SOURCE;
-		}
-
-	} // setUsrLdapSource()
-
-	/**
-	 * Set the value of [usr_ldap_dn] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     void
-	 */
-	public function setUsrLdapDn($v)
-	{
-
-		// Since the native PHP type for this column is string,
-		// we will cast the input to a string (if it is not).
-		if ($v !== null && !is_string($v)) {
-			$v = (string) $v; 
-		}
-
-		if ($this->usr_ldap_dn !== $v || $v === '') {
-			$this->usr_ldap_dn = $v;
-			$this->modifiedColumns[] = UsersPropertiesPeer::USR_LDAP_DN;
-		}
-
-	} // setUsrLdapDn()
-
-	/**
-	 * Set the value of [usr_ldap_dn_role] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     void
-	 */
-	public function setUsrLdapDnRole($v)
-	{
-
-		// Since the native PHP type for this column is string,
-		// we will cast the input to a string (if it is not).
-		if ($v !== null && !is_string($v)) {
-			$v = (string) $v; 
-		}
-
-		if ($this->usr_ldap_dn_role !== $v || $v === '') {
-			$this->usr_ldap_dn_role = $v;
-			$this->modifiedColumns[] = UsersPropertiesPeer::USR_LDAP_DN_ROLE;
-		}
-
-	} // setUsrLdapDnRole()
-
-	/**
-	 * Set the value of [usr_sec_method] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     void
-	 */
-	public function setUsrSecMethod($v)
-	{
-
-		// Since the native PHP type for this column is string,
-		// we will cast the input to a string (if it is not).
-		if ($v !== null && !is_string($v)) {
-			$v = (string) $v; 
-		}
-
-		if ($this->usr_sec_method !== $v || $v === '') {
-			$this->usr_sec_method = $v;
-			$this->modifiedColumns[] = UsersPropertiesPeer::USR_SEC_METHOD;
-		}
-
-	} // setUsrSecMethod()
-
-	/**
-	 * Set the value of [usr_sec_usr] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     void
-	 */
-	public function setUsrSecUsr($v)
-	{
-
-		// Since the native PHP type for this column is string,
-		// we will cast the input to a string (if it is not).
-		if ($v !== null && !is_string($v)) {
-			$v = (string) $v; 
-		}
-
-		if ($this->usr_sec_usr !== $v || $v === '') {
-			$this->usr_sec_usr = $v;
-			$this->modifiedColumns[] = UsersPropertiesPeer::USR_SEC_USR;
-		}
-
-	} // setUsrSecUsr()
-
-	/**
-	 * Set the value of [usr_sec_role] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     void
-	 */
-	public function setUsrSecRole($v)
-	{
-
-		// Since the native PHP type for this column is string,
-		// we will cast the input to a string (if it is not).
-		if ($v !== null && !is_string($v)) {
-			$v = (string) $v; 
-		}
-
-		if ($this->usr_sec_role !== $v || $v === '') {
-			$this->usr_sec_role = $v;
-			$this->modifiedColumns[] = UsersPropertiesPeer::USR_SEC_ROLE;
-		}
-
-	} // setUsrSecRole()
-
-	/**
 	 * Hydrates (populates) the object variables with values from the database resultset.
 	 *
 	 * An offset (1-based "start column") is specified so that objects can be hydrated
@@ -488,24 +248,12 @@ abstract class BaseUsersProperties extends BaseObject  implements Persistent {
 
 			$this->usr_password_history = $rs->getString($startcol + 3);
 
-			$this->usr_ldap_source = $rs->getString($startcol + 4);
-
-			$this->usr_ldap_dn = $rs->getString($startcol + 5);
-
-			$this->usr_ldap_dn_role = $rs->getString($startcol + 6);
-
-			$this->usr_sec_method = $rs->getString($startcol + 7);
-
-			$this->usr_sec_usr = $rs->getString($startcol + 8);
-
-			$this->usr_sec_role = $rs->getString($startcol + 9);
-
 			$this->resetModified();
 
 			$this->setNew(false);
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 10; // 10 = UsersPropertiesPeer::NUM_COLUMNS - UsersPropertiesPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 4; // 4 = UsersPropertiesPeer::NUM_COLUMNS - UsersPropertiesPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating UsersProperties object", $e);
@@ -720,24 +468,6 @@ abstract class BaseUsersProperties extends BaseObject  implements Persistent {
 			case 3:
 				return $this->getUsrPasswordHistory();
 				break;
-			case 4:
-				return $this->getUsrLdapSource();
-				break;
-			case 5:
-				return $this->getUsrLdapDn();
-				break;
-			case 6:
-				return $this->getUsrLdapDnRole();
-				break;
-			case 7:
-				return $this->getUsrSecMethod();
-				break;
-			case 8:
-				return $this->getUsrSecUsr();
-				break;
-			case 9:
-				return $this->getUsrSecRole();
-				break;
 			default:
 				return null;
 				break;
@@ -762,12 +492,6 @@ abstract class BaseUsersProperties extends BaseObject  implements Persistent {
 			$keys[1] => $this->getUsrLastUpdateDate(),
 			$keys[2] => $this->getUsrLoggedNextTime(),
 			$keys[3] => $this->getUsrPasswordHistory(),
-			$keys[4] => $this->getUsrLdapSource(),
-			$keys[5] => $this->getUsrLdapDn(),
-			$keys[6] => $this->getUsrLdapDnRole(),
-			$keys[7] => $this->getUsrSecMethod(),
-			$keys[8] => $this->getUsrSecUsr(),
-			$keys[9] => $this->getUsrSecRole(),
 		);
 		return $result;
 	}
@@ -811,24 +535,6 @@ abstract class BaseUsersProperties extends BaseObject  implements Persistent {
 			case 3:
 				$this->setUsrPasswordHistory($value);
 				break;
-			case 4:
-				$this->setUsrLdapSource($value);
-				break;
-			case 5:
-				$this->setUsrLdapDn($value);
-				break;
-			case 6:
-				$this->setUsrLdapDnRole($value);
-				break;
-			case 7:
-				$this->setUsrSecMethod($value);
-				break;
-			case 8:
-				$this->setUsrSecUsr($value);
-				break;
-			case 9:
-				$this->setUsrSecRole($value);
-				break;
 		} // switch()
 	}
 
@@ -856,12 +562,6 @@ abstract class BaseUsersProperties extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[1], $arr)) $this->setUsrLastUpdateDate($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setUsrLoggedNextTime($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setUsrPasswordHistory($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setUsrLdapSource($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setUsrLdapDn($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setUsrLdapDnRole($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setUsrSecMethod($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setUsrSecUsr($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setUsrSecRole($arr[$keys[9]]);
 	}
 
 	/**
@@ -877,12 +577,6 @@ abstract class BaseUsersProperties extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(UsersPropertiesPeer::USR_LAST_UPDATE_DATE)) $criteria->add(UsersPropertiesPeer::USR_LAST_UPDATE_DATE, $this->usr_last_update_date);
 		if ($this->isColumnModified(UsersPropertiesPeer::USR_LOGGED_NEXT_TIME)) $criteria->add(UsersPropertiesPeer::USR_LOGGED_NEXT_TIME, $this->usr_logged_next_time);
 		if ($this->isColumnModified(UsersPropertiesPeer::USR_PASSWORD_HISTORY)) $criteria->add(UsersPropertiesPeer::USR_PASSWORD_HISTORY, $this->usr_password_history);
-		if ($this->isColumnModified(UsersPropertiesPeer::USR_LDAP_SOURCE)) $criteria->add(UsersPropertiesPeer::USR_LDAP_SOURCE, $this->usr_ldap_source);
-		if ($this->isColumnModified(UsersPropertiesPeer::USR_LDAP_DN)) $criteria->add(UsersPropertiesPeer::USR_LDAP_DN, $this->usr_ldap_dn);
-		if ($this->isColumnModified(UsersPropertiesPeer::USR_LDAP_DN_ROLE)) $criteria->add(UsersPropertiesPeer::USR_LDAP_DN_ROLE, $this->usr_ldap_dn_role);
-		if ($this->isColumnModified(UsersPropertiesPeer::USR_SEC_METHOD)) $criteria->add(UsersPropertiesPeer::USR_SEC_METHOD, $this->usr_sec_method);
-		if ($this->isColumnModified(UsersPropertiesPeer::USR_SEC_USR)) $criteria->add(UsersPropertiesPeer::USR_SEC_USR, $this->usr_sec_usr);
-		if ($this->isColumnModified(UsersPropertiesPeer::USR_SEC_ROLE)) $criteria->add(UsersPropertiesPeer::USR_SEC_ROLE, $this->usr_sec_role);
 
 		return $criteria;
 	}
@@ -942,18 +636,6 @@ abstract class BaseUsersProperties extends BaseObject  implements Persistent {
 		$copyObj->setUsrLoggedNextTime($this->usr_logged_next_time);
 
 		$copyObj->setUsrPasswordHistory($this->usr_password_history);
-
-		$copyObj->setUsrLdapSource($this->usr_ldap_source);
-
-		$copyObj->setUsrLdapDn($this->usr_ldap_dn);
-
-		$copyObj->setUsrLdapDnRole($this->usr_ldap_dn_role);
-
-		$copyObj->setUsrSecMethod($this->usr_sec_method);
-
-		$copyObj->setUsrSecUsr($this->usr_sec_usr);
-
-		$copyObj->setUsrSecRole($this->usr_sec_role);
 
 
 		$copyObj->setNew(true);

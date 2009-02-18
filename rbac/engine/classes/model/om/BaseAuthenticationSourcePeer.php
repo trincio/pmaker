@@ -2,39 +2,69 @@
 
 require_once 'propel/util/BasePeer.php';
 // The object class -- needed for instanceof checks in this class.
-// actual class may be a subclass -- as returned by UsersRolesPeer::getOMClass()
-include_once 'classes/model/UsersRoles.php';
+// actual class may be a subclass -- as returned by AuthenticationSourcePeer::getOMClass()
+include_once 'classes/model/AuthenticationSource.php';
 
 /**
- * Base static class for performing query and update operations on the 'USERS_ROLES' table.
+ * Base static class for performing query and update operations on the 'AUTHENTICATION_SOURCE' table.
  *
  * 
  *
  * @package    classes.model.om
  */
-abstract class BaseUsersRolesPeer {
+abstract class BaseAuthenticationSourcePeer {
 
 	/** the default database name for this class */
 	const DATABASE_NAME = 'rbac';
 
 	/** the table name for this class */
-	const TABLE_NAME = 'USERS_ROLES';
+	const TABLE_NAME = 'AUTHENTICATION_SOURCE';
 
 	/** A class that can be returned by this peer. */
-	const CLASS_DEFAULT = 'classes.model.UsersRoles';
+	const CLASS_DEFAULT = 'classes.model.AuthenticationSource';
 
 	/** The total number of columns. */
-	const NUM_COLUMNS = 2;
+	const NUM_COLUMNS = 12;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
 
 
-	/** the column name for the USR_UID field */
-	const USR_UID = 'USERS_ROLES.USR_UID';
+	/** the column name for the AUTH_SOURCE_UID field */
+	const AUTH_SOURCE_UID = 'AUTHENTICATION_SOURCE.AUTH_SOURCE_UID';
 
-	/** the column name for the ROL_UID field */
-	const ROL_UID = 'USERS_ROLES.ROL_UID';
+	/** the column name for the AUTH_SOURCE_NAME field */
+	const AUTH_SOURCE_NAME = 'AUTHENTICATION_SOURCE.AUTH_SOURCE_NAME';
+
+	/** the column name for the AUTH_SOURCE_PROVIDER field */
+	const AUTH_SOURCE_PROVIDER = 'AUTHENTICATION_SOURCE.AUTH_SOURCE_PROVIDER';
+
+	/** the column name for the AUTH_SOURCE_SERVER_NAME field */
+	const AUTH_SOURCE_SERVER_NAME = 'AUTHENTICATION_SOURCE.AUTH_SOURCE_SERVER_NAME';
+
+	/** the column name for the AUTH_SOURCE_PORT field */
+	const AUTH_SOURCE_PORT = 'AUTHENTICATION_SOURCE.AUTH_SOURCE_PORT';
+
+	/** the column name for the AUTH_SOURCE_ENABLED_TLS field */
+	const AUTH_SOURCE_ENABLED_TLS = 'AUTHENTICATION_SOURCE.AUTH_SOURCE_ENABLED_TLS';
+
+	/** the column name for the AUTH_SOURCE_VERSION field */
+	const AUTH_SOURCE_VERSION = 'AUTHENTICATION_SOURCE.AUTH_SOURCE_VERSION';
+
+	/** the column name for the AUTH_SOURCE_BASE_DN field */
+	const AUTH_SOURCE_BASE_DN = 'AUTHENTICATION_SOURCE.AUTH_SOURCE_BASE_DN';
+
+	/** the column name for the AUTH_SOURCE_SEARCH_USER field */
+	const AUTH_SOURCE_SEARCH_USER = 'AUTHENTICATION_SOURCE.AUTH_SOURCE_SEARCH_USER';
+
+	/** the column name for the AUTH_SOURCE_PASSWORD field */
+	const AUTH_SOURCE_PASSWORD = 'AUTHENTICATION_SOURCE.AUTH_SOURCE_PASSWORD';
+
+	/** the column name for the AUTH_SOURCE_ATTRIBUTES field */
+	const AUTH_SOURCE_ATTRIBUTES = 'AUTHENTICATION_SOURCE.AUTH_SOURCE_ATTRIBUTES';
+
+	/** the column name for the AUTH_SOURCE_OBJECT_CLASSES field */
+	const AUTH_SOURCE_OBJECT_CLASSES = 'AUTHENTICATION_SOURCE.AUTH_SOURCE_OBJECT_CLASSES';
 
 	/** The PHP to DB Name Mapping */
 	private static $phpNameMap = null;
@@ -47,10 +77,10 @@ abstract class BaseUsersRolesPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('UsrUid', 'RolUid', ),
-		BasePeer::TYPE_COLNAME => array (UsersRolesPeer::USR_UID, UsersRolesPeer::ROL_UID, ),
-		BasePeer::TYPE_FIELDNAME => array ('USR_UID', 'ROL_UID', ),
-		BasePeer::TYPE_NUM => array (0, 1, )
+		BasePeer::TYPE_PHPNAME => array ('AuthSourceUid', 'AuthSourceName', 'AuthSourceProvider', 'AuthSourceServerName', 'AuthSourcePort', 'AuthSourceEnabledTls', 'AuthSourceVersion', 'AuthSourceBaseDn', 'AuthSourceSearchUser', 'AuthSourcePassword', 'AuthSourceAttributes', 'AuthSourceObjectClasses', ),
+		BasePeer::TYPE_COLNAME => array (AuthenticationSourcePeer::AUTH_SOURCE_UID, AuthenticationSourcePeer::AUTH_SOURCE_NAME, AuthenticationSourcePeer::AUTH_SOURCE_PROVIDER, AuthenticationSourcePeer::AUTH_SOURCE_SERVER_NAME, AuthenticationSourcePeer::AUTH_SOURCE_PORT, AuthenticationSourcePeer::AUTH_SOURCE_ENABLED_TLS, AuthenticationSourcePeer::AUTH_SOURCE_VERSION, AuthenticationSourcePeer::AUTH_SOURCE_BASE_DN, AuthenticationSourcePeer::AUTH_SOURCE_SEARCH_USER, AuthenticationSourcePeer::AUTH_SOURCE_PASSWORD, AuthenticationSourcePeer::AUTH_SOURCE_ATTRIBUTES, AuthenticationSourcePeer::AUTH_SOURCE_OBJECT_CLASSES, ),
+		BasePeer::TYPE_FIELDNAME => array ('AUTH_SOURCE_UID', 'AUTH_SOURCE_NAME', 'AUTH_SOURCE_PROVIDER', 'AUTH_SOURCE_SERVER_NAME', 'AUTH_SOURCE_PORT', 'AUTH_SOURCE_ENABLED_TLS', 'AUTH_SOURCE_VERSION', 'AUTH_SOURCE_BASE_DN', 'AUTH_SOURCE_SEARCH_USER', 'AUTH_SOURCE_PASSWORD', 'AUTH_SOURCE_ATTRIBUTES', 'AUTH_SOURCE_OBJECT_CLASSES', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
 	);
 
 	/**
@@ -60,10 +90,10 @@ abstract class BaseUsersRolesPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('UsrUid' => 0, 'RolUid' => 1, ),
-		BasePeer::TYPE_COLNAME => array (UsersRolesPeer::USR_UID => 0, UsersRolesPeer::ROL_UID => 1, ),
-		BasePeer::TYPE_FIELDNAME => array ('USR_UID' => 0, 'ROL_UID' => 1, ),
-		BasePeer::TYPE_NUM => array (0, 1, )
+		BasePeer::TYPE_PHPNAME => array ('AuthSourceUid' => 0, 'AuthSourceName' => 1, 'AuthSourceProvider' => 2, 'AuthSourceServerName' => 3, 'AuthSourcePort' => 4, 'AuthSourceEnabledTls' => 5, 'AuthSourceVersion' => 6, 'AuthSourceBaseDn' => 7, 'AuthSourceSearchUser' => 8, 'AuthSourcePassword' => 9, 'AuthSourceAttributes' => 10, 'AuthSourceObjectClasses' => 11, ),
+		BasePeer::TYPE_COLNAME => array (AuthenticationSourcePeer::AUTH_SOURCE_UID => 0, AuthenticationSourcePeer::AUTH_SOURCE_NAME => 1, AuthenticationSourcePeer::AUTH_SOURCE_PROVIDER => 2, AuthenticationSourcePeer::AUTH_SOURCE_SERVER_NAME => 3, AuthenticationSourcePeer::AUTH_SOURCE_PORT => 4, AuthenticationSourcePeer::AUTH_SOURCE_ENABLED_TLS => 5, AuthenticationSourcePeer::AUTH_SOURCE_VERSION => 6, AuthenticationSourcePeer::AUTH_SOURCE_BASE_DN => 7, AuthenticationSourcePeer::AUTH_SOURCE_SEARCH_USER => 8, AuthenticationSourcePeer::AUTH_SOURCE_PASSWORD => 9, AuthenticationSourcePeer::AUTH_SOURCE_ATTRIBUTES => 10, AuthenticationSourcePeer::AUTH_SOURCE_OBJECT_CLASSES => 11, ),
+		BasePeer::TYPE_FIELDNAME => array ('AUTH_SOURCE_UID' => 0, 'AUTH_SOURCE_NAME' => 1, 'AUTH_SOURCE_PROVIDER' => 2, 'AUTH_SOURCE_SERVER_NAME' => 3, 'AUTH_SOURCE_PORT' => 4, 'AUTH_SOURCE_ENABLED_TLS' => 5, 'AUTH_SOURCE_VERSION' => 6, 'AUTH_SOURCE_BASE_DN' => 7, 'AUTH_SOURCE_SEARCH_USER' => 8, 'AUTH_SOURCE_PASSWORD' => 9, 'AUTH_SOURCE_ATTRIBUTES' => 10, 'AUTH_SOURCE_OBJECT_CLASSES' => 11, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
 	);
 
 	/**
@@ -73,8 +103,8 @@ abstract class BaseUsersRolesPeer {
 	 */
 	public static function getMapBuilder()
 	{
-		include_once 'classes/model/map/UsersRolesMapBuilder.php';
-		return BasePeer::getMapBuilder('classes.model.map.UsersRolesMapBuilder');
+		include_once 'classes/model/map/AuthenticationSourceMapBuilder.php';
+		return BasePeer::getMapBuilder('classes.model.map.AuthenticationSourceMapBuilder');
 	}
 	/**
 	 * Gets a map (hash) of PHP names to DB column names.
@@ -87,7 +117,7 @@ abstract class BaseUsersRolesPeer {
 	public static function getPhpNameMap()
 	{
 		if (self::$phpNameMap === null) {
-			$map = UsersRolesPeer::getTableMap();
+			$map = AuthenticationSourcePeer::getTableMap();
 			$columns = $map->getColumns();
 			$nameMap = array();
 			foreach ($columns as $column) {
@@ -142,12 +172,12 @@ abstract class BaseUsersRolesPeer {
 	 *		$c->addJoin(TablePeer::alias("alias1", TablePeer::PRIMARY_KEY_COLUMN), TablePeer::PRIMARY_KEY_COLUMN);
 	 * </code>
 	 * @param      string $alias The alias for the current table.
-	 * @param      string $column The column name for current table. (i.e. UsersRolesPeer::COLUMN_NAME).
+	 * @param      string $column The column name for current table. (i.e. AuthenticationSourcePeer::COLUMN_NAME).
 	 * @return     string
 	 */
 	public static function alias($alias, $column)
 	{
-		return str_replace(UsersRolesPeer::TABLE_NAME.'.', $alias.'.', $column);
+		return str_replace(AuthenticationSourcePeer::TABLE_NAME.'.', $alias.'.', $column);
 	}
 
 	/**
@@ -164,14 +194,34 @@ abstract class BaseUsersRolesPeer {
 	public static function addSelectColumns(Criteria $criteria)
 	{
 
-		$criteria->addSelectColumn(UsersRolesPeer::USR_UID);
+		$criteria->addSelectColumn(AuthenticationSourcePeer::AUTH_SOURCE_UID);
 
-		$criteria->addSelectColumn(UsersRolesPeer::ROL_UID);
+		$criteria->addSelectColumn(AuthenticationSourcePeer::AUTH_SOURCE_NAME);
+
+		$criteria->addSelectColumn(AuthenticationSourcePeer::AUTH_SOURCE_PROVIDER);
+
+		$criteria->addSelectColumn(AuthenticationSourcePeer::AUTH_SOURCE_SERVER_NAME);
+
+		$criteria->addSelectColumn(AuthenticationSourcePeer::AUTH_SOURCE_PORT);
+
+		$criteria->addSelectColumn(AuthenticationSourcePeer::AUTH_SOURCE_ENABLED_TLS);
+
+		$criteria->addSelectColumn(AuthenticationSourcePeer::AUTH_SOURCE_VERSION);
+
+		$criteria->addSelectColumn(AuthenticationSourcePeer::AUTH_SOURCE_BASE_DN);
+
+		$criteria->addSelectColumn(AuthenticationSourcePeer::AUTH_SOURCE_SEARCH_USER);
+
+		$criteria->addSelectColumn(AuthenticationSourcePeer::AUTH_SOURCE_PASSWORD);
+
+		$criteria->addSelectColumn(AuthenticationSourcePeer::AUTH_SOURCE_ATTRIBUTES);
+
+		$criteria->addSelectColumn(AuthenticationSourcePeer::AUTH_SOURCE_OBJECT_CLASSES);
 
 	}
 
-	const COUNT = 'COUNT(USERS_ROLES.USR_UID)';
-	const COUNT_DISTINCT = 'COUNT(DISTINCT USERS_ROLES.USR_UID)';
+	const COUNT = 'COUNT(AUTHENTICATION_SOURCE.AUTH_SOURCE_UID)';
+	const COUNT_DISTINCT = 'COUNT(DISTINCT AUTHENTICATION_SOURCE.AUTH_SOURCE_UID)';
 
 	/**
 	 * Returns the number of rows matching criteria.
@@ -189,9 +239,9 @@ abstract class BaseUsersRolesPeer {
 		// clear out anything that might confuse the ORDER BY clause
 		$criteria->clearSelectColumns()->clearOrderByColumns();
 		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(UsersRolesPeer::COUNT_DISTINCT);
+			$criteria->addSelectColumn(AuthenticationSourcePeer::COUNT_DISTINCT);
 		} else {
-			$criteria->addSelectColumn(UsersRolesPeer::COUNT);
+			$criteria->addSelectColumn(AuthenticationSourcePeer::COUNT);
 		}
 
 		// just in case we're grouping: add those columns to the select statement
@@ -200,7 +250,7 @@ abstract class BaseUsersRolesPeer {
 			$criteria->addSelectColumn($column);
 		}
 
-		$rs = UsersRolesPeer::doSelectRS($criteria, $con);
+		$rs = AuthenticationSourcePeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
 			return $rs->getInt(1);
 		} else {
@@ -213,7 +263,7 @@ abstract class BaseUsersRolesPeer {
 	 *
 	 * @param      Criteria $criteria object used to create the SELECT statement.
 	 * @param      Connection $con
-	 * @return     UsersRoles
+	 * @return     AuthenticationSource
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -221,7 +271,7 @@ abstract class BaseUsersRolesPeer {
 	{
 		$critcopy = clone $criteria;
 		$critcopy->setLimit(1);
-		$objects = UsersRolesPeer::doSelect($critcopy, $con);
+		$objects = AuthenticationSourcePeer::doSelect($critcopy, $con);
 		if ($objects) {
 			return $objects[0];
 		}
@@ -238,7 +288,7 @@ abstract class BaseUsersRolesPeer {
 	 */
 	public static function doSelect(Criteria $criteria, $con = null)
 	{
-		return UsersRolesPeer::populateObjects(UsersRolesPeer::doSelectRS($criteria, $con));
+		return AuthenticationSourcePeer::populateObjects(AuthenticationSourcePeer::doSelectRS($criteria, $con));
 	}
 	/**
 	 * Prepares the Criteria object and uses the parent doSelect()
@@ -262,7 +312,7 @@ abstract class BaseUsersRolesPeer {
 
 		if (!$criteria->getSelectColumns()) {
 			$criteria = clone $criteria;
-			UsersRolesPeer::addSelectColumns($criteria);
+			AuthenticationSourcePeer::addSelectColumns($criteria);
 		}
 
 		// Set the correct dbName
@@ -284,7 +334,7 @@ abstract class BaseUsersRolesPeer {
 		$results = array();
 	
 		// set the class once to avoid overhead in the loop
-		$cls = UsersRolesPeer::getOMClass();
+		$cls = AuthenticationSourcePeer::getOMClass();
 		$cls = Propel::import($cls);
 		// populate the object(s)
 		while($rs->next()) {
@@ -319,13 +369,13 @@ abstract class BaseUsersRolesPeer {
 	 */
 	public static function getOMClass()
 	{
-		return UsersRolesPeer::CLASS_DEFAULT;
+		return AuthenticationSourcePeer::CLASS_DEFAULT;
 	}
 
 	/**
-	 * Method perform an INSERT on the database, given a UsersRoles or Criteria object.
+	 * Method perform an INSERT on the database, given a AuthenticationSource or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or UsersRoles object containing data that is used to create the INSERT statement.
+	 * @param      mixed $values Criteria or AuthenticationSource object containing data that is used to create the INSERT statement.
 	 * @param      Connection $con the connection to use
 	 * @return     mixed The new primary key.
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -340,7 +390,7 @@ abstract class BaseUsersRolesPeer {
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 		} else {
-			$criteria = $values->buildCriteria(); // build Criteria from UsersRoles object
+			$criteria = $values->buildCriteria(); // build Criteria from AuthenticationSource object
 		}
 
 
@@ -362,9 +412,9 @@ abstract class BaseUsersRolesPeer {
 	}
 
 	/**
-	 * Method perform an UPDATE on the database, given a UsersRoles or Criteria object.
+	 * Method perform an UPDATE on the database, given a AuthenticationSource or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or UsersRoles object containing data that is used to create the UPDATE statement.
+	 * @param      mixed $values Criteria or AuthenticationSource object containing data that is used to create the UPDATE statement.
 	 * @param      Connection $con The connection to use (specify Connection object to exert more control over transactions).
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -381,13 +431,10 @@ abstract class BaseUsersRolesPeer {
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 
-			$comparison = $criteria->getComparison(UsersRolesPeer::USR_UID);
-			$selectCriteria->add(UsersRolesPeer::USR_UID, $criteria->remove(UsersRolesPeer::USR_UID), $comparison);
+			$comparison = $criteria->getComparison(AuthenticationSourcePeer::AUTH_SOURCE_UID);
+			$selectCriteria->add(AuthenticationSourcePeer::AUTH_SOURCE_UID, $criteria->remove(AuthenticationSourcePeer::AUTH_SOURCE_UID), $comparison);
 
-			$comparison = $criteria->getComparison(UsersRolesPeer::ROL_UID);
-			$selectCriteria->add(UsersRolesPeer::ROL_UID, $criteria->remove(UsersRolesPeer::ROL_UID), $comparison);
-
-		} else { // $values is UsersRoles object
+		} else { // $values is AuthenticationSource object
 			$criteria = $values->buildCriteria(); // gets full criteria
 			$selectCriteria = $values->buildPkeyCriteria(); // gets criteria w/ primary key(s)
 		}
@@ -399,7 +446,7 @@ abstract class BaseUsersRolesPeer {
 	}
 
 	/**
-	 * Method to DELETE all rows from the USERS_ROLES table.
+	 * Method to DELETE all rows from the AUTHENTICATION_SOURCE table.
 	 *
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 */
@@ -413,7 +460,7 @@ abstract class BaseUsersRolesPeer {
 			// use transaction because $criteria could contain info
 			// for more than one table or we could emulating ON DELETE CASCADE, etc.
 			$con->begin();
-			$affectedRows += BasePeer::doDeleteAll(UsersRolesPeer::TABLE_NAME, $con);
+			$affectedRows += BasePeer::doDeleteAll(AuthenticationSourcePeer::TABLE_NAME, $con);
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {
@@ -423,9 +470,9 @@ abstract class BaseUsersRolesPeer {
 	}
 
 	/**
-	 * Method perform a DELETE on the database, given a UsersRoles or Criteria object OR a primary key value.
+	 * Method perform a DELETE on the database, given a AuthenticationSource or Criteria object OR a primary key value.
 	 *
-	 * @param      mixed $values Criteria or UsersRoles object or primary key or array of primary keys
+	 * @param      mixed $values Criteria or AuthenticationSource object or primary key or array of primary keys
 	 *              which is used to create the DELETE statement
 	 * @param      Connection $con the connection to use
 	 * @return     int 	The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -436,35 +483,18 @@ abstract class BaseUsersRolesPeer {
 	 public static function doDelete($values, $con = null)
 	 {
 		if ($con === null) {
-			$con = Propel::getConnection(UsersRolesPeer::DATABASE_NAME);
+			$con = Propel::getConnection(AuthenticationSourcePeer::DATABASE_NAME);
 		}
 
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
-		} elseif ($values instanceof UsersRoles) {
+		} elseif ($values instanceof AuthenticationSource) {
 
 			$criteria = $values->buildPkeyCriteria();
 		} else {
 			// it must be the primary key
 			$criteria = new Criteria(self::DATABASE_NAME);
-			// primary key is composite; we therefore, expect
-			// the primary key passed to be an array of pkey
-			// values
-			if(count($values) == count($values, COUNT_RECURSIVE))
-			{
-				// array is not multi-dimensional
-				$values = array($values);
-			}
-			$vals = array();
-			foreach($values as $value)
-			{
-
-				$vals[0][] = $value[0];
-				$vals[1][] = $value[1];
-			}
-
-			$criteria->add(UsersRolesPeer::USR_UID, $vals[0], Criteria::IN);
-			$criteria->add(UsersRolesPeer::ROL_UID, $vals[1], Criteria::IN);
+			$criteria->add(AuthenticationSourcePeer::AUTH_SOURCE_UID, (array) $values, Criteria::IN);
 		}
 
 		// Set the correct dbName
@@ -487,24 +517,24 @@ abstract class BaseUsersRolesPeer {
 	}
 
 	/**
-	 * Validates all modified columns of given UsersRoles object.
+	 * Validates all modified columns of given AuthenticationSource object.
 	 * If parameter $columns is either a single column name or an array of column names
 	 * than only those columns are validated.
 	 *
 	 * NOTICE: This does not apply to primary or foreign keys for now.
 	 *
-	 * @param      UsersRoles $obj The object to validate.
+	 * @param      AuthenticationSource $obj The object to validate.
 	 * @param      mixed $cols Column name or array of column names.
 	 *
 	 * @return     mixed TRUE if all columns are valid or the error message of the first invalid column.
 	 */
-	public static function doValidate(UsersRoles $obj, $cols = null)
+	public static function doValidate(AuthenticationSource $obj, $cols = null)
 	{
 		$columns = array();
 
 		if ($cols) {
-			$dbMap = Propel::getDatabaseMap(UsersRolesPeer::DATABASE_NAME);
-			$tableMap = $dbMap->getTable(UsersRolesPeer::TABLE_NAME);
+			$dbMap = Propel::getDatabaseMap(AuthenticationSourcePeer::DATABASE_NAME);
+			$tableMap = $dbMap->getTable(AuthenticationSourcePeer::TABLE_NAME);
 
 			if (! is_array($cols)) {
 				$cols = array($cols);
@@ -520,42 +550,71 @@ abstract class BaseUsersRolesPeer {
 
 		}
 
-		return BasePeer::doValidate(UsersRolesPeer::DATABASE_NAME, UsersRolesPeer::TABLE_NAME, $columns);
+		return BasePeer::doValidate(AuthenticationSourcePeer::DATABASE_NAME, AuthenticationSourcePeer::TABLE_NAME, $columns);
 	}
 
 	/**
-	 * Retrieve object using using composite pkey values.
-	 * @param string $usr_uid
-	   @param string $rol_uid
-	   
-	 * @param      Connection $con
-	 * @return     UsersRoles
+	 * Retrieve a single object by pkey.
+	 *
+	 * @param      mixed $pk the primary key.
+	 * @param      Connection $con the connection to use
+	 * @return     AuthenticationSource
 	 */
-	public static function retrieveByPK( $usr_uid, $rol_uid, $con = null) {
+	public static function retrieveByPK($pk, $con = null)
+	{
 		if ($con === null) {
 			$con = Propel::getConnection(self::DATABASE_NAME);
 		}
-		$criteria = new Criteria();
-		$criteria->add(UsersRolesPeer::USR_UID, $usr_uid);
-		$criteria->add(UsersRolesPeer::ROL_UID, $rol_uid);
-		$v = UsersRolesPeer::doSelect($criteria, $con);
 
-		return !empty($v) ? $v[0] : null;
+		$criteria = new Criteria(AuthenticationSourcePeer::DATABASE_NAME);
+
+		$criteria->add(AuthenticationSourcePeer::AUTH_SOURCE_UID, $pk);
+
+
+		$v = AuthenticationSourcePeer::doSelect($criteria, $con);
+
+		return !empty($v) > 0 ? $v[0] : null;
 	}
-} // BaseUsersRolesPeer
+
+	/**
+	 * Retrieve multiple objects by pkey.
+	 *
+	 * @param      array $pks List of primary keys
+	 * @param      Connection $con the connection to use
+	 * @throws     PropelException Any exceptions caught during processing will be
+	 *		 rethrown wrapped into a PropelException.
+	 */
+	public static function retrieveByPKs($pks, $con = null)
+	{
+		if ($con === null) {
+			$con = Propel::getConnection(self::DATABASE_NAME);
+		}
+
+		$objs = null;
+		if (empty($pks)) {
+			$objs = array();
+		} else {
+			$criteria = new Criteria();
+			$criteria->add(AuthenticationSourcePeer::AUTH_SOURCE_UID, $pks, Criteria::IN);
+			$objs = AuthenticationSourcePeer::doSelect($criteria, $con);
+		}
+		return $objs;
+	}
+
+} // BaseAuthenticationSourcePeer
 
 // static code to register the map builder for this Peer with the main Propel class
 if (Propel::isInit()) {
 	// the MapBuilder classes register themselves with Propel during initialization
 	// so we need to load them here.
 	try {
-		BaseUsersRolesPeer::getMapBuilder();
+		BaseAuthenticationSourcePeer::getMapBuilder();
 	} catch (Exception $e) {
 		Propel::log('Could not initialize Peer: ' . $e->getMessage(), Propel::LOG_ERR);
 	}
 } else {
 	// even if Propel is not yet initialized, the map builder class can be registered
 	// now and then it will be loaded when Propel initializes.
-	require_once 'classes/model/map/UsersRolesMapBuilder.php';
-	Propel::registerMapBuilder('classes.model.map.UsersRolesMapBuilder');
+	require_once 'classes/model/map/AuthenticationSourceMapBuilder.php';
+	Propel::registerMapBuilder('classes.model.map.AuthenticationSourceMapBuilder');
 }

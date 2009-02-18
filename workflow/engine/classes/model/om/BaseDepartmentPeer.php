@@ -24,7 +24,7 @@ abstract class BaseDepartmentPeer {
 	const CLASS_DEFAULT = 'classes.model.Department';
 
 	/** The total number of columns. */
-	const NUM_COLUMNS = 7;
+	const NUM_COLUMNS = 6;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -45,9 +45,6 @@ abstract class BaseDepartmentPeer {
 	/** the column name for the DEP_STATUS field */
 	const DEP_STATUS = 'DEPARTMENT.DEP_STATUS';
 
-	/** the column name for the DEP_TYPE field */
-	const DEP_TYPE = 'DEPARTMENT.DEP_TYPE';
-
 	/** the column name for the DEP_REF_CODE field */
 	const DEP_REF_CODE = 'DEPARTMENT.DEP_REF_CODE';
 
@@ -62,10 +59,10 @@ abstract class BaseDepartmentPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('DepUid', 'DepParent', 'DepManager', 'DepLocation', 'DepStatus', 'DepType', 'DepRefCode', ),
-		BasePeer::TYPE_COLNAME => array (DepartmentPeer::DEP_UID, DepartmentPeer::DEP_PARENT, DepartmentPeer::DEP_MANAGER, DepartmentPeer::DEP_LOCATION, DepartmentPeer::DEP_STATUS, DepartmentPeer::DEP_TYPE, DepartmentPeer::DEP_REF_CODE, ),
-		BasePeer::TYPE_FIELDNAME => array ('DEP_UID', 'DEP_PARENT', 'DEP_MANAGER', 'DEP_LOCATION', 'DEP_STATUS', 'DEP_TYPE', 'DEP_REF_CODE', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
+		BasePeer::TYPE_PHPNAME => array ('DepUid', 'DepParent', 'DepManager', 'DepLocation', 'DepStatus', 'DepRefCode', ),
+		BasePeer::TYPE_COLNAME => array (DepartmentPeer::DEP_UID, DepartmentPeer::DEP_PARENT, DepartmentPeer::DEP_MANAGER, DepartmentPeer::DEP_LOCATION, DepartmentPeer::DEP_STATUS, DepartmentPeer::DEP_REF_CODE, ),
+		BasePeer::TYPE_FIELDNAME => array ('DEP_UID', 'DEP_PARENT', 'DEP_MANAGER', 'DEP_LOCATION', 'DEP_STATUS', 'DEP_REF_CODE', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
 	);
 
 	/**
@@ -75,10 +72,10 @@ abstract class BaseDepartmentPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('DepUid' => 0, 'DepParent' => 1, 'DepManager' => 2, 'DepLocation' => 3, 'DepStatus' => 4, 'DepType' => 5, 'DepRefCode' => 6, ),
-		BasePeer::TYPE_COLNAME => array (DepartmentPeer::DEP_UID => 0, DepartmentPeer::DEP_PARENT => 1, DepartmentPeer::DEP_MANAGER => 2, DepartmentPeer::DEP_LOCATION => 3, DepartmentPeer::DEP_STATUS => 4, DepartmentPeer::DEP_TYPE => 5, DepartmentPeer::DEP_REF_CODE => 6, ),
-		BasePeer::TYPE_FIELDNAME => array ('DEP_UID' => 0, 'DEP_PARENT' => 1, 'DEP_MANAGER' => 2, 'DEP_LOCATION' => 3, 'DEP_STATUS' => 4, 'DEP_TYPE' => 5, 'DEP_REF_CODE' => 6, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
+		BasePeer::TYPE_PHPNAME => array ('DepUid' => 0, 'DepParent' => 1, 'DepManager' => 2, 'DepLocation' => 3, 'DepStatus' => 4, 'DepRefCode' => 5, ),
+		BasePeer::TYPE_COLNAME => array (DepartmentPeer::DEP_UID => 0, DepartmentPeer::DEP_PARENT => 1, DepartmentPeer::DEP_MANAGER => 2, DepartmentPeer::DEP_LOCATION => 3, DepartmentPeer::DEP_STATUS => 4, DepartmentPeer::DEP_REF_CODE => 5, ),
+		BasePeer::TYPE_FIELDNAME => array ('DEP_UID' => 0, 'DEP_PARENT' => 1, 'DEP_MANAGER' => 2, 'DEP_LOCATION' => 3, 'DEP_STATUS' => 4, 'DEP_REF_CODE' => 5, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
 	);
 
 	/**
@@ -188,8 +185,6 @@ abstract class BaseDepartmentPeer {
 		$criteria->addSelectColumn(DepartmentPeer::DEP_LOCATION);
 
 		$criteria->addSelectColumn(DepartmentPeer::DEP_STATUS);
-
-		$criteria->addSelectColumn(DepartmentPeer::DEP_TYPE);
 
 		$criteria->addSelectColumn(DepartmentPeer::DEP_REF_CODE);
 
@@ -522,9 +517,6 @@ abstract class BaseDepartmentPeer {
 				}
 			}
 		} else {
-
-		if ($obj->isNew() || $obj->isColumnModified(DepartmentPeer::DEP_TYPE))
-			$columns[DepartmentPeer::DEP_TYPE] = $obj->getDepType();
 
 		}
 

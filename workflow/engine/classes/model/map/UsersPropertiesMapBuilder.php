@@ -72,18 +72,6 @@ class UsersPropertiesMapBuilder {
 
 		$tMap->addColumn('USR_PASSWORD_HISTORY', 'UsrPasswordHistory', 'string', CreoleTypes::LONGVARCHAR, false, null);
 
-		$tMap->addColumn('USR_LDAP_SOURCE', 'UsrLdapSource', 'string', CreoleTypes::VARCHAR, false, 32);
-
-		$tMap->addColumn('USR_LDAP_DN', 'UsrLdapDn', 'string', CreoleTypes::VARCHAR, false, 255);
-
-		$tMap->addColumn('USR_LDAP_DN_ROLE', 'UsrLdapDnRole', 'string', CreoleTypes::VARCHAR, false, 255);
-
-		$tMap->addColumn('USR_SEC_METHOD', 'UsrSecMethod', 'string', CreoleTypes::VARCHAR, false, 16);
-
-		$tMap->addColumn('USR_SEC_USR', 'UsrSecUsr', 'string', CreoleTypes::VARCHAR, false, 25);
-
-		$tMap->addColumn('USR_SEC_ROLE', 'UsrSecRole', 'string', CreoleTypes::VARCHAR, false, 255);
-
 	} // doBuild()
 
 } // UsersPropertiesMapBuilder

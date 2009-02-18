@@ -980,30 +980,20 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="DEP_STATUS" type="CHAR" size="1" required="true" default="A">
+    <column name="DEP_STATUS" type="VARCHAR" size="10" required="true" default="ACTIVE">
       <vendor type="mysql">
         <parameter name="Field" value="DEP_STATUS"/>
-        <parameter name="Type" value="char(1)"/>
+        <parameter name="Type" value="varchar(10)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
-        <parameter name="Default" value="A"/>
+        <parameter name="Default" value="ACTIVE"/>
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="DEP_TYPE" type="VARCHAR" size="5" required="true" default="INTER">
-      <vendor type="mysql">
-        <parameter name="Field" value="DEP_TYPE"/>
-        <parameter name="Type" value="varchar(5)"/>
-        <parameter name="Null" value="NO"/>
-        <parameter name="Key" value=""/>
-        <parameter name="Default" value="INTER"/>
-        <parameter name="Extra" value=""/>
-      </vendor>
-    </column>
-    <column name="DEP_REF_CODE" type="VARCHAR" size="10" required="true" default="">
+    <column name="DEP_REF_CODE" type="VARCHAR" size="50" required="true" default="">
       <vendor type="mysql">
         <parameter name="Field" value="DEP_REF_CODE"/>
-        <parameter name="Type" value="varchar(10)"/>
+        <parameter name="Type" value="varchar(50)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
@@ -1027,9 +1017,6 @@
         <parameter name="Comment" value=""/>
       </vendor>
     </index>
-    <validator column="DEP_TYPE">
-      <rule name="validValues" value="INTER" message="Please select a valid department type." />
-    </validator>
   </table>
   <table name="DYNAFORM">
     <vendor type="mysql">
@@ -5141,66 +5128,6 @@
       <vendor type="mysql">
         <parameter name="Field" value="USR_PASSWORD_HISTORY"/>
         <parameter name="Type" value="text"/>
-        <parameter name="Null" value="NO"/>
-        <parameter name="Key" value=""/>
-        <parameter name="Default" value=""/>
-        <parameter name="Extra" value=""/>
-      </vendor>
-    </column>
-    <column name="USR_LDAP_SOURCE" type="VARCHAR" size="32" default="">
-      <vendor type="mysql">
-        <parameter name="Field" value="USR_LDAP_SOURCE"/>
-        <parameter name="Type" value="varchar(32)"/>
-        <parameter name="Null" value="NO"/>
-        <parameter name="Key" value=""/>
-        <parameter name="Default" value=""/>
-        <parameter name="Extra" value=""/>
-      </vendor>
-    </column>
-    <column name="USR_LDAP_DN" type="VARCHAR" size="255" default="">
-      <vendor type="mysql">
-        <parameter name="Field" value="USR_LDAP_DN"/>
-        <parameter name="Type" value="varchar(255)"/>
-        <parameter name="Null" value="NO"/>
-        <parameter name="Key" value=""/>
-        <parameter name="Default" value=""/>
-        <parameter name="Extra" value=""/>
-      </vendor>
-    </column>
-    <column name="USR_LDAP_DN_ROLE" type="VARCHAR" size="255" default="">
-      <vendor type="mysql">
-        <parameter name="Field" value="USR_LDAP_DN_ROLE"/>
-        <parameter name="Type" value="varchar(255)"/>
-        <parameter name="Null" value="NO"/>
-        <parameter name="Key" value=""/>
-        <parameter name="Default" value=""/>
-        <parameter name="Extra" value=""/>
-      </vendor>
-    </column>
-    <column name="USR_SEC_METHOD" type="VARCHAR" size="16" default="">
-      <vendor type="mysql">
-        <parameter name="Field" value="USR_SEC_METHOD"/>
-        <parameter name="Type" value="varchar(16)"/>
-        <parameter name="Null" value="NO"/>
-        <parameter name="Key" value=""/>
-        <parameter name="Default" value=""/>
-        <parameter name="Extra" value=""/>
-      </vendor>
-    </column>
-    <column name="USR_SEC_USR" type="VARCHAR" size="25" default="">
-      <vendor type="mysql">
-        <parameter name="Field" value="USR_SEC_USR"/>
-        <parameter name="Type" value="varchar(25)"/>
-        <parameter name="Null" value="NO"/>
-        <parameter name="Key" value=""/>
-        <parameter name="Default" value=""/>
-        <parameter name="Extra" value=""/>
-      </vendor>
-    </column>
-    <column name="USR_SEC_ROLE" type="VARCHAR" size="255" default="">
-      <vendor type="mysql">
-        <parameter name="Field" value="USR_SEC_ROLE"/>
-        <parameter name="Type" value="varchar(255)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
