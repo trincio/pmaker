@@ -2,7 +2,7 @@ msgid ""
 msgstr "" 
 "Project-Id-Version: PM 4.0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2008-11-28 18:15+0100 \n"
+"PO-Revision-Date: 2009-02-18 17:16+0100 \n"
 "Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
 "Language-Team: Colosa Developers Team <developers@colosa.com>\n"
 "MIME-Version: 1.0\n"
@@ -2780,10 +2780,16 @@ msgid "Incorrect username or password"
 msgstr "Incorrect username or password"
 
 # TRANSLATION
+# LABEL/ID_CASESREASSIGN
+#: LABEL/ID_CASESREASSIGN
+msgid "You still have cases to reassign."
+msgstr "You still have cases to reassign."
+
+# TRANSLATION
 # LABEL/ID_TO_REASSIGN
 #: LABEL/ID_TO_REASSIGN
-msgid "To Reassign"
-msgstr "To Reassign"
+msgid "Reassign to"
+msgstr "Reassign to"
 
 # TRANSLATION
 # LABEL/ID_SELF_SERVICE
@@ -2812,7 +2818,7 @@ msgstr "Status"
 # TRANSLATION
 # LABEL/ID_REASSIGN_TO
 #: LABEL/ID_REASSIGN_TO
-msgid "Reassign to"
+msgid "[LABEL/ID_REASSIGN_TO] Reassign to"
 msgstr "Reassign to"
 
 # TRANSLATION
@@ -2832,6 +2838,120 @@ msgstr "Process"
 #: LABEL/ID_REASSIGN_CASES
 msgid "Reassign Cases"
 msgstr "Reassign Cases"
+
+# TRANSLATION
+# LABEL/ID_ALERT_MESSAGE
+#: LABEL/ID_ALERT_MESSAGE
+msgid "Alert Message"
+msgstr "Alert Message"
+
+# TRANSLATION
+# JAVASCRIPT/ID_ROLES_MSG
+#: JAVASCRIPT/ID_ROLES_MSG
+msgid "You cannot modify this role."
+msgstr "You cannot modify this role."
+
+# TRANSLATION
+# JAVASCRIPT/ID_PROCESSMAP_SUPERVISORS_INPUTS
+#: JAVASCRIPT/ID_PROCESSMAP_SUPERVISORS_INPUTS
+msgid "[JAVASCRIPT/ID_PROCESSMAP_SUPERVISORS_INPUTS] Input Documents"
+msgstr "Input Documents"
+
+# TRANSLATION
+# JAVASCRIPT/ID_ASSIGN_INPUT_DOCUMENT
+#: JAVASCRIPT/ID_ASSIGN_INPUT_DOCUMENT
+msgid "Assign Input Document"
+msgstr "Assign Input Document"
+
+# TRANSLATION
+# LABEL/ID_NOT_DERIVATED
+#: LABEL/ID_NOT_DERIVATED
+msgid "The case couldn't be derivated. Consult the system administrator"
+msgstr "The case couldn't be derivated. Consult the system administrator"
+
+# TRANSLATION
+# LABEL/ID_MSG_CONFIRM_DELETE_SUPERVISOR_INPUT
+#: LABEL/ID_MSG_CONFIRM_DELETE_SUPERVISOR_INPUT
+msgid "Do you want to remove this Input Document?"
+msgstr "Do you want to remove this Input Document?"
+
+# TRANSLATION
+# LABEL/ID_ADVANCEDSEARCH
+#: LABEL/ID_ADVANCEDSEARCH
+msgid "[LABEL/ID_ADVANCEDSEARCH] Advanced Search"
+msgstr "Advanced Search"
+
+# TRANSLATION
+# LABEL/ID_POLICY_ALERT
+#: LABEL/ID_POLICY_ALERT
+msgid "Your password does not meet the following password policies"
+msgstr "Your password does not meet the following password policies"
+
+# TRANSLATION
+# LABEL/ID_PLEASE_CHANGE_PASSWORD_POLICY
+#: LABEL/ID_PLEASE_CHANGE_PASSWORD_POLICY
+msgid "Please change your password to one that complies with these policies."
+msgstr "Please change your password to one that complies with these policies."
+
+# TRANSLATION
+# LABEL/ID_PPP_MINIMUN_LENGTH
+#: LABEL/ID_PPP_MINIMUN_LENGTH
+msgid "Minimun length"
+msgstr "Minimun length"
+
+# TRANSLATION
+# LABEL/ID_PPP_MAXIMUN_LENGTH
+#: LABEL/ID_PPP_MAXIMUN_LENGTH
+msgid "Maximum length"
+msgstr "Maximum length"
+
+# TRANSLATION
+# LABEL/ID_PPP_NUMERICAL_CHARACTER_REQUIRED
+#: LABEL/ID_PPP_NUMERICAL_CHARACTER_REQUIRED
+msgid "Numerical Character is required"
+msgstr "Numerical Character is required"
+
+# TRANSLATION
+# LABEL/ID_PPP_UPPERCASE_CHARACTER_REQUIRED
+#: LABEL/ID_PPP_UPPERCASE_CHARACTER_REQUIRED
+msgid "Uppercase Character is required"
+msgstr "Uppercase Character is required"
+
+# TRANSLATION
+# LABEL/ID_PPP_SPECIAL_CHARACTER_REQUIRED
+#: LABEL/ID_PPP_SPECIAL_CHARACTER_REQUIRED
+msgid "Special Character is required"
+msgstr "Special Character is required"
+
+# TRANSLATION
+# LABEL/ID_PPP_CHANGE_PASSWORD_AFTER_NEXT_LOGIN
+#: LABEL/ID_PPP_CHANGE_PASSWORD_AFTER_NEXT_LOGIN
+msgid "User must change his password after next login"
+msgstr "User must change his password after next login"
+
+# TRANSLATION
+# LABEL/ID_PPP_EXPIRATION_IN
+#: LABEL/ID_PPP_EXPIRATION_IN
+msgid "Password Expiration in"
+msgstr "Password Expiration in"
+
+# TRANSLATION
+# LABEL/ID_DAYS
+#: LABEL/ID_DAYS
+msgid "Days"
+msgstr "Days"
+
+# TRANSLATION
+# LABEL/ID_ACCOUNT
+#: LABEL/ID_ACCOUNT
+msgid "Account"
+msgstr "Account"
+
+# TRANSLATION
+# LABEL/ID_ACCOUNT_DISABLED_CONTACT_ADMIN
+#: LABEL/ID_ACCOUNT_DISABLED_CONTACT_ADMIN
+msgid "disabled, please contact with the system administrator"
+msgstr "disabled, please contact with the system administrator"
 
 # messages/messages_Edit.xml?MESS_TITLE
 # messages/messages_Edit.xml
@@ -3642,6 +3762,12 @@ msgstr "Title"
 #: link - MNU_ADD_EMPLOYE
 msgid "Assign Employee"
 msgstr "Assign Employee"
+
+# groups/groups_SelectUsers.xml?BTN_SUBMIT
+# groups/groups_SelectUsers.xml
+#: button - BTN_SUBMIT
+msgid "Assign To"
+msgstr "Assign To"
 
 # groups/groups_Edit.xml?title
 # groups/groups_Edit.xml
@@ -5194,8 +5320,8 @@ msgstr "Label"
 # dynaforms/fields/submit.xml?PME_ONCLICK
 # dynaforms/fields/submit.xml
 #: text - PME_ONCLICK
-msgid "Onclick"
-msgstr "Onclick"
+msgid "Javascript to Execute On Click"
+msgstr "Javascript to Execute On Click"
 
 # dynaforms/fields/submit.xml?PME_ACCEPT
 # dynaforms/fields/submit.xml
@@ -5914,8 +6040,8 @@ msgstr "Label"
 # dynaforms/fields/button.xml?PME_ONCLICK
 # dynaforms/fields/button.xml
 #: text - PME_ONCLICK
-msgid "[dynaforms/fields/button.xml?PME_ONCLICK] Onclick"
-msgstr "Onclick"
+msgid "[dynaforms/fields/button.xml?PME_ONCLICK] Javascript to Execute On Click"
+msgstr "Javascript to Execute On Click"
 
 # dynaforms/fields/button.xml?PME_ACCEPT
 # dynaforms/fields/button.xml
@@ -6781,6 +6907,36 @@ msgstr "Description"
 msgid "[inputdocs/inputdocs_Edit.xml?ACCEPT] Save"
 msgstr "Save"
 
+# inputdocs/inputdocs_AvailableSupervisorInputs.xml?INP_DOC_TITLE
+# inputdocs/inputdocs_AvailableSupervisorInputs.xml
+#: text - INP_DOC_TITLE
+msgid "[inputdocs/inputdocs_AvailableSupervisorInputs.xml?INP_DOC_TITLE] Title"
+msgstr "Title"
+
+# inputdocs/inputdocs_AvailableSupervisorInputs.xml?SEARCH
+# inputdocs/inputdocs_AvailableSupervisorInputs.xml
+#: button - SEARCH
+msgid "[inputdocs/inputdocs_AvailableSupervisorInputs.xml?SEARCH] Apply Filter"
+msgstr "Apply Filter"
+
+# inputdocs/inputdocs_Supervisor.xml?INP_DOC_TITLE
+# inputdocs/inputdocs_Supervisor.xml
+#: text - INP_DOC_TITLE
+msgid "[inputdocs/inputdocs_Supervisor.xml?INP_DOC_TITLE] Title"
+msgstr "Title"
+
+# inputdocs/inputdocs_Supervisor.xml?SEARCH
+# inputdocs/inputdocs_Supervisor.xml
+#: button - SEARCH
+msgid "[inputdocs/inputdocs_Supervisor.xml?SEARCH] Apply Filter"
+msgstr "Apply Filter"
+
+# inputdocs/inputdocs_SupervisorOptions.xml?MNU_ASSIGN
+# inputdocs/inputdocs_SupervisorOptions.xml
+#: link - MNU_ASSIGN
+msgid "[inputdocs/inputdocs_SupervisorOptions.xml?MNU_ASSIGN] Assign"
+msgstr "Assign"
+
 # dashboard/dashboard_AvailableDashboards.xml?TITLE
 # dashboard/dashboard_AvailableDashboards.xml
 #: title - TITLE
@@ -6912,6 +7068,12 @@ msgstr "Output Document Information"
 #: text - OUT_DOC_TITLE
 msgid "[outputdocs/outputdocs_Edit.xml?OUT_DOC_TITLE] Title"
 msgstr "Title"
+
+# outputdocs/outputdocs_Edit.xml?OUT_DOC_FILENAME
+# outputdocs/outputdocs_Edit.xml
+#: textpm - OUT_DOC_FILENAME
+msgid "Filename generated"
+msgstr "Filename generated"
 
 # outputdocs/outputdocs_Edit.xml?OUT_DOC_DESCRIPTION
 # outputdocs/outputdocs_Edit.xml
@@ -7107,13 +7269,13 @@ msgstr "Edit"
 
 # processes/processes_subProcess_Out.xml?VAR_OUT1
 # processes/processes_subProcess_Out.xml
-#: text - VAR_OUT1
+#: textpm - VAR_OUT1
 msgid "Origin"
 msgstr "Origin"
 
 # processes/processes_subProcess_Out.xml?VAR_OUT2
 # processes/processes_subProcess_Out.xml
-#: text - VAR_OUT2
+#: textpm - VAR_OUT2
 msgid "Target"
 msgstr "Target"
 
@@ -7417,6 +7579,12 @@ msgstr "Object"
 msgid "Permission"
 msgstr "Permission"
 
+# processes/processes_ObjectsPermissionsList.xml?OP_CASE_STATUS
+# processes/processes_ObjectsPermissionsList.xml
+#: text - OP_CASE_STATUS
+msgid "[processes/processes_ObjectsPermissionsList.xml?OP_CASE_STATUS] Status"
+msgstr "Status"
+
 # processes/processes_ObjectsPermissionsList.xml?DELETE
 # processes/processes_ObjectsPermissionsList.xml
 #: link - DELETE
@@ -7446,6 +7614,36 @@ msgstr "Description"
 #: title - TITLE
 msgid "New Specific Permission"
 msgstr "New Specific Permission"
+
+# processes/processes_NewObjectPermission.xml?OP_CASE_STATUS
+# processes/processes_NewObjectPermission.xml
+#: dropdown - OP_CASE_STATUS
+msgid "Status Case    "
+msgstr "Status Case    "
+
+# processes/processes_NewObjectPermission.xml?OP_CASE_STATUS-DRAFT
+# processes/processes_NewObjectPermission.xml
+#: dropdown - OP_CASE_STATUS - DRAFT
+msgid "[processes/processes_NewObjectPermission.xml?OP_CASE_STATUS-DRAFT]"
+msgstr "DRAFT"
+
+# processes/processes_NewObjectPermission.xml?OP_CASE_STATUS-TO_DO
+# processes/processes_NewObjectPermission.xml
+#: dropdown - OP_CASE_STATUS - TO_DO
+msgid "[processes/processes_NewObjectPermission.xml?OP_CASE_STATUS-TO_DO]"
+msgstr "TO_DO"
+
+# processes/processes_NewObjectPermission.xml?OP_CASE_STATUS-PAUSED
+# processes/processes_NewObjectPermission.xml
+#: dropdown - OP_CASE_STATUS - PAUSED
+msgid "[processes/processes_NewObjectPermission.xml?OP_CASE_STATUS-PAUSED]"
+msgstr "PAUSED"
+
+# processes/processes_NewObjectPermission.xml?OP_CASE_STATUS-COMPLETED
+# processes/processes_NewObjectPermission.xml
+#: dropdown - OP_CASE_STATUS - COMPLETED
+msgid "[processes/processes_NewObjectPermission.xml?OP_CASE_STATUS-COMPLETED]"
+msgstr "COMPLETED"
 
 # processes/processes_NewObjectPermission.xml?TAS_UID
 # processes/processes_NewObjectPermission.xml
@@ -7833,13 +8031,13 @@ msgstr "Import"
 
 # processes/processes_subProcess_In.xml?VAR_IN1
 # processes/processes_subProcess_In.xml
-#: text - VAR_IN1
+#: textpm - VAR_IN1
 msgid "[processes/processes_subProcess_In.xml?VAR_IN1] Origin"
 msgstr "Origin"
 
 # processes/processes_subProcess_In.xml?VAR_IN2
 # processes/processes_subProcess_In.xml
-#: text - VAR_IN2
+#: textpm - VAR_IN2
 msgid "[processes/processes_subProcess_In.xml?VAR_IN2] Target"
 msgstr "Target"
 
@@ -8401,9 +8599,9 @@ msgstr "Average"
 msgid "Session Id"
 msgstr "Session Id"
 
-# setup/wsCaseList.xml?ACTION
+# setup/wsCaseList.xml?ACTIONB
 # setup/wsCaseList.xml
-#: button - ACTION
+#: button - ACTIONB
 msgid "CaseList"
 msgstr "CaseList"
 
@@ -9649,6 +9847,48 @@ msgstr "23:30 p.m"
 msgid "[setup/workPeriod.xml?BSUBMIT] Accept"
 msgstr "Accept"
 
+# setup/wsReassignCase.xml?SESSION_ID
+# setup/wsReassignCase.xml
+#: text - SESSION_ID
+msgid "[setup/wsReassignCase.xml?SESSION_ID] Session Id"
+msgstr "Session Id"
+
+# setup/wsReassignCase.xml?CASE_ID
+# setup/wsReassignCase.xml
+#: dropdown - CASE_ID
+msgid "Case ID"
+msgstr "Case ID"
+
+# setup/wsReassignCase.xml?DEL_INDEX
+# setup/wsReassignCase.xml
+#: dropdown - DEL_INDEX
+msgid "Delindex"
+msgstr "Delindex"
+
+# setup/wsReassignCase.xml?DEL_INDEX-''
+# setup/wsReassignCase.xml
+#: dropdown - DEL_INDEX - ''
+msgid "[setup/wsReassignCase.xml?DEL_INDEX-'']"
+msgstr "Default"
+
+# setup/wsReassignCase.xml?USERIDSOURCE
+# setup/wsReassignCase.xml
+#: dropdown - USERIDSOURCE
+msgid "User Source"
+msgstr "User Source"
+
+# setup/wsReassignCase.xml?USERIDTARGET
+# setup/wsReassignCase.xml
+#: dropdown - USERIDTARGET
+msgid "User Target"
+msgstr "User Target"
+
+# setup/wsReassignCase.xml?ACTIONB
+# setup/wsReassignCase.xml
+#: button - ACTIONB
+msgid "ReassignCase"
+msgstr "ReassignCase"
+
 # setup/wsrRoleList.xml?guid
 # setup/wsrRoleList.xml
 #: text - guid
@@ -9724,26 +9964,8 @@ msgstr "Enable Email Notifications"
 # setup/emails.xml?MESS_ENGINE
 # setup/emails.xml
 #: dropdown - MESS_ENGINE
-msgid "Email Engine    "
-msgstr "Email Engine    "
-
-# setup/emails.xml?MESS_ENGINE-MAIL
-# setup/emails.xml
-#: dropdown - MESS_ENGINE - MAIL
-msgid "[setup/emails.xml?MESS_ENGINE-MAIL]"
-msgstr "Mail (PHP)"
-
-# setup/emails.xml?MESS_ENGINE-PHPMAILER
-# setup/emails.xml
-#: dropdown - MESS_ENGINE - PHPMAILER
-msgid "[setup/emails.xml?MESS_ENGINE-PHPMAILER]"
-msgstr "SMTP (PHPMailer)"
-
-# setup/emails.xml?MESS_ENGINE-OPENMAIL
-# setup/emails.xml
-#: dropdown - MESS_ENGINE - OPENMAIL
-msgid "[setup/emails.xml?MESS_ENGINE-OPENMAIL]"
-msgstr "SMTP (OpenMail)"
+msgid "Email Engine      "
+msgstr "Email Engine      "
 
 # setup/emails.xml?MESS_SERVER
 # setup/emails.xml
@@ -9919,9 +10141,9 @@ msgstr "Email"
 msgid "Role"
 msgstr "Role"
 
-# setup/wsCreateUser.xml?ACTION
+# setup/wsCreateUser.xml?ACTIONB
 # setup/wsCreateUser.xml
-#: button - ACTION
+#: button - ACTIONB
 msgid "CreateUser"
 msgstr "CreateUser"
 
@@ -9988,20 +10210,8 @@ msgstr "Client Setup"
 # setup/webServicesSetup.xml?WS_PROTOCOL
 # setup/webServicesSetup.xml
 #: dropdown - WS_PROTOCOL
-msgid "Protocol"
-msgstr "Protocol"
-
-# setup/webServicesSetup.xml?WS_PROTOCOL-http
-# setup/webServicesSetup.xml
-#: dropdown - WS_PROTOCOL - http
-msgid "[setup/webServicesSetup.xml?WS_PROTOCOL-http]"
-msgstr "http"
-
-# setup/webServicesSetup.xml?WS_PROTOCOL-https
-# setup/webServicesSetup.xml
-#: dropdown - WS_PROTOCOL - https
-msgid "[setup/webServicesSetup.xml?WS_PROTOCOL-https]"
-msgstr "https"
+msgid "Protocol  "
+msgstr "Protocol  "
 
 # setup/webServicesSetup.xml?WS_HOST
 # setup/webServicesSetup.xml
@@ -10036,7 +10246,7 @@ msgstr "Session Id"
 # setup/wsSendMessage.xml?CASE_ID
 # setup/wsSendMessage.xml
 #: dropdown - CASE_ID
-msgid "Case ID"
+msgid "[setup/wsSendMessage.xml?CASE_ID] Case ID"
 msgstr "Case ID"
 
 # setup/wsSendMessage.xml?MESSAGE
@@ -10045,9 +10255,9 @@ msgstr "Case ID"
 msgid "Message"
 msgstr "Message"
 
-# setup/wsSendMessage.xml?ACTION
+# setup/wsSendMessage.xml?ACTIONB
 # setup/wsSendMessage.xml
-#: button - ACTION
+#: button - ACTIONB
 msgid "SendMessage"
 msgstr "SendMessage"
 
@@ -10063,9 +10273,9 @@ msgstr "Session Id"
 msgid "[setup/wsTaskCase.xml?CASE_ID] Case ID"
 msgstr "Case ID"
 
-# setup/wsTaskCase.xml?ACTION
+# setup/wsTaskCase.xml?ACTIONB
 # setup/wsTaskCase.xml
-#: button - ACTION
+#: button - ACTIONB
 msgid "TaskCase"
 msgstr "TaskCase"
 
@@ -10081,10 +10291,10 @@ msgstr "User ID"
 msgid "[setup/wsLogin.xml?PASSWORD] Password"
 msgstr "Password"
 
-# setup/wsLogin.xml?ACTION
+# setup/wsLogin.xml?ACTIONB
 # setup/wsLogin.xml
-#: button - ACTION
-msgid "[setup/wsLogin.xml?ACTION] Login"
+#: button - ACTIONB
+msgid "[setup/wsLogin.xml?ACTIONB] Login"
 msgstr "Login"
 
 # setup/pluginImport.xml?TITLE1
@@ -10111,9 +10321,9 @@ msgstr "Import"
 msgid "[setup/wsTaskList.xml?SESSION_ID] Session Id"
 msgstr "Session Id"
 
-# setup/wsTaskList.xml?ACTION
+# setup/wsTaskList.xml?ACTIONB
 # setup/wsTaskList.xml
-#: button - ACTION
+#: button - ACTIONB
 msgid "TaskList"
 msgstr "TaskList"
 
@@ -10135,9 +10345,9 @@ msgstr "Group Title"
 msgid "[setup/wsRoleList.xml?SESSION_ID] Session Id"
 msgstr "Session Id"
 
-# setup/wsRoleList.xml?ACTION
+# setup/wsRoleList.xml?ACTIONB
 # setup/wsRoleList.xml
-#: button - ACTION
+#: button - ACTIONB
 msgid "RoleList"
 msgstr "RoleList"
 
@@ -10165,9 +10375,9 @@ msgstr "Task ID "
 msgid "[setup/wsNewCase.xml?TASK_ID-'']"
 msgstr "Default"
 
-# setup/wsNewCase.xml?ACTION
+# setup/wsNewCase.xml?ACTIONB
 # setup/wsNewCase.xml
-#: button - ACTION
+#: button - ACTIONB
 msgid "NewCase"
 msgstr "NewCase"
 
@@ -10207,9 +10417,9 @@ msgstr "Time Stamp"
 msgid "[setup/wsProcessList.xml?SESSION_ID] Session Id"
 msgstr "Session Id"
 
-# setup/wsProcessList.xml?ACTION
+# setup/wsProcessList.xml?ACTIONB
 # setup/wsProcessList.xml
-#: button - ACTION
+#: button - ACTIONB
 msgid "ProcessList"
 msgstr "ProcessList"
 
@@ -10327,9 +10537,9 @@ msgstr "Process ID"
 msgid "[setup/wsNewCaseImpersonate.xml?USER_ID] User ID"
 msgstr "User ID"
 
-# setup/wsNewCaseImpersonate.xml?ACTION
+# setup/wsNewCaseImpersonate.xml?ACTIONB
 # setup/wsNewCaseImpersonate.xml
-#: button - ACTION
+#: button - ACTIONB
 msgid "NewCaseImpersonate"
 msgstr "NewCaseImpersonate"
 
@@ -10357,9 +10567,9 @@ msgstr "Import or Update"
 msgid "[setup/wsUserList.xml?SESSION_ID] Session Id"
 msgstr "Session Id"
 
-# setup/wsUserList.xml?ACTION
+# setup/wsUserList.xml?ACTIONB
 # setup/wsUserList.xml
-#: button - ACTION
+#: button - ACTIONB
 msgid "UserList"
 msgstr "UserList"
 
@@ -10483,9 +10693,9 @@ msgstr "User ID"
 msgid "Group ID"
 msgstr "Group ID"
 
-# setup/wsAssignUserToGroup.xml?ACTION
+# setup/wsAssignUserToGroup.xml?ACTIONB
 # setup/wsAssignUserToGroup.xml
-#: button - ACTION
+#: button - ACTIONB
 msgid "AssignUserToGroup"
 msgstr "AssignUserToGroup"
 
@@ -10513,9 +10723,9 @@ msgstr "Add"
 msgid "[setup/wsGroupList.xml?SESSION_ID] Session Id"
 msgstr "Session Id"
 
-# setup/wsGroupList.xml?ACTION
+# setup/wsGroupList.xml?ACTIONB
 # setup/wsGroupList.xml
-#: button - ACTION
+#: button - ACTIONB
 msgid "GroupList"
 msgstr "GroupList"
 
@@ -10645,9 +10855,9 @@ msgstr "Name 2"
 msgid "Value 2"
 msgstr "Value 2"
 
-# setup/wsSendVariables.xml?ACTION
+# setup/wsSendVariables.xml?ACTIONB
 # setup/wsSendVariables.xml
-#: button - ACTION
+#: button - ACTIONB
 msgid "SendVariables"
 msgstr "SendVariables"
 
@@ -10705,9 +10915,9 @@ msgstr "Task Case(delindex)"
 msgid "[setup/wsDerivateCase.xml?DEL_INDEX-'']"
 msgstr "Default"
 
-# setup/wsDerivateCase.xml?ACTION
+# setup/wsDerivateCase.xml?ACTIONB
 # setup/wsDerivateCase.xml
-#: button - ACTION
+#: button - ACTIONB
 msgid "DerivateCase"
 msgstr "DerivateCase"
 
@@ -11125,12 +11335,6 @@ msgstr "Confirm Password "
 msgid "[users/myInfoView.xml?TITLEADD] Additional Information"
 msgstr "Additional Information"
 
-# users/myInfoView.xml?USR_PHOTO
-# users/myInfoView.xml
-#: image - USR_PHOTO
-msgid "[users/myInfoView.xml?USR_PHOTO] Photo"
-msgstr "Photo"
-
 # users/myInfoView.xml?USR_RESUME
 # users/myInfoView.xml
 #: link - USR_RESUME
@@ -11407,6 +11611,162 @@ msgstr "Resume"
 msgid "[users/users_Edit.xml?SUBMIT] Save"
 msgstr "Save"
 
+# users/users_EditAdmin.xml?TITLE1
+# users/users_EditAdmin.xml
+#: title - TITLE1
+msgid "[users/users_EditAdmin.xml?TITLE1] Personal Information"
+msgstr "Personal Information"
+
+# users/users_EditAdmin.xml?USR_FIRSTNAME
+# users/users_EditAdmin.xml
+#: text - USR_FIRSTNAME
+msgid "[users/users_EditAdmin.xml?USR_FIRSTNAME] First Name"
+msgstr "First Name"
+
+# users/users_EditAdmin.xml?USR_LASTNAME
+# users/users_EditAdmin.xml
+#: text - USR_LASTNAME
+msgid "[users/users_EditAdmin.xml?USR_LASTNAME] Last Name"
+msgstr "Last Name"
+
+# users/users_EditAdmin.xml?USR_USERNAME
+# users/users_EditAdmin.xml
+#: text - USR_USERNAME
+msgid "[users/users_EditAdmin.xml?USR_USERNAME] User ID (*)"
+msgstr "User ID (*)"
+
+# users/users_EditAdmin.xml?USR_EMAIL
+# users/users_EditAdmin.xml
+#: text - USR_EMAIL
+msgid "[users/users_EditAdmin.xml?USR_EMAIL] Email"
+msgstr "Email"
+
+# users/users_EditAdmin.xml?USR_ADDRESS
+# users/users_EditAdmin.xml
+#: textarea - USR_ADDRESS
+msgid "[users/users_EditAdmin.xml?USR_ADDRESS] Address"
+msgstr "Address"
+
+# users/users_EditAdmin.xml?USR_ZIP_CODE
+# users/users_EditAdmin.xml
+#: text - USR_ZIP_CODE
+msgid "[users/users_EditAdmin.xml?USR_ZIP_CODE] Zip Code"
+msgstr "Zip Code"
+
+# users/users_EditAdmin.xml?USR_COUNTRY
+# users/users_EditAdmin.xml
+#: dropdown - USR_COUNTRY
+msgid "[users/users_EditAdmin.xml?USR_COUNTRY] Country"
+msgstr "Country"
+
+# users/users_EditAdmin.xml?USR_COUNTRY-''
+# users/users_EditAdmin.xml
+#: dropdown - USR_COUNTRY - ''
+msgid "[users/users_EditAdmin.xml?USR_COUNTRY-'']"
+msgstr ""
+
+# users/users_EditAdmin.xml?USR_CITY
+# users/users_EditAdmin.xml
+#: dropdown - USR_CITY
+msgid "[users/users_EditAdmin.xml?USR_CITY] State or Region"
+msgstr "State or Region"
+
+# users/users_EditAdmin.xml?USR_LOCATION
+# users/users_EditAdmin.xml
+#: dropdown - USR_LOCATION
+msgid "[users/users_EditAdmin.xml?USR_LOCATION] Location"
+msgstr "Location"
+
+# users/users_EditAdmin.xml?USR_PHONE
+# users/users_EditAdmin.xml
+#: text - USR_PHONE
+msgid "[users/users_EditAdmin.xml?USR_PHONE] Phone"
+msgstr "Phone"
+
+# users/users_EditAdmin.xml?USR_POSITION
+# users/users_EditAdmin.xml
+#: text - USR_POSITION
+msgid "[users/users_EditAdmin.xml?USR_POSITION] Position"
+msgstr "Position"
+
+# users/users_EditAdmin.xml?USR_DUE_DATE
+# users/users_EditAdmin.xml
+#: date - USR_DUE_DATE
+msgid "[users/users_EditAdmin.xml?USR_DUE_DATE] Expiration Date"
+msgstr "Expiration Date"
+
+# users/users_EditAdmin.xml?USR_STATUS
+# users/users_EditAdmin.xml
+#: dropdown - USR_STATUS
+msgid "[users/users_EditAdmin.xml?USR_STATUS] Status  "
+msgstr "Status  "
+
+# users/users_EditAdmin.xml?USR_STATUS-ACTIVE
+# users/users_EditAdmin.xml
+#: dropdown - USR_STATUS - ACTIVE
+msgid "[users/users_EditAdmin.xml?USR_STATUS-ACTIVE]"
+msgstr "ACTIVE"
+
+# users/users_EditAdmin.xml?USR_STATUS-INACTIVE
+# users/users_EditAdmin.xml
+#: dropdown - USR_STATUS - INACTIVE
+msgid "[users/users_EditAdmin.xml?USR_STATUS-INACTIVE]"
+msgstr "INACTIVE"
+
+# users/users_EditAdmin.xml?USR_STATUS-VACATION
+# users/users_EditAdmin.xml
+#: dropdown - USR_STATUS - VACATION
+msgid "[users/users_EditAdmin.xml?USR_STATUS-VACATION]"
+msgstr "ON VACATION"
+
+# users/users_EditAdmin.xml?USR_ROLE
+# users/users_EditAdmin.xml
+#: dropdown - USR_ROLE
+msgid "[users/users_EditAdmin.xml?USR_ROLE] Role"
+msgstr "Role"
+
+# users/users_EditAdmin.xml?TITLE2
+# users/users_EditAdmin.xml
+#: title - TITLE2
+msgid "[users/users_EditAdmin.xml?TITLE2] Change Password"
+msgstr "Change Password"
+
+# users/users_EditAdmin.xml?USR_NEW_PASS
+# users/users_EditAdmin.xml
+#: password - USR_NEW_PASS
+msgid "[users/users_EditAdmin.xml?USR_NEW_PASS] New Password "
+msgstr "New Password "
+
+# users/users_EditAdmin.xml?USR_CNF_PASS
+# users/users_EditAdmin.xml
+#: password - USR_CNF_PASS
+msgid "[users/users_EditAdmin.xml?USR_CNF_PASS] Confirm Password "
+msgstr "Confirm Password "
+
+# users/users_EditAdmin.xml?TITLE3
+# users/users_EditAdmin.xml
+#: title - TITLE3
+msgid "[users/users_EditAdmin.xml?TITLE3] Additional Information"
+msgstr "Additional Information"
+
+# users/users_EditAdmin.xml?USR_PHOTO
+# users/users_EditAdmin.xml
+#: file - USR_PHOTO
+msgid "[users/users_EditAdmin.xml?USR_PHOTO] Photo"
+msgstr "Photo"
+
+# users/users_EditAdmin.xml?USR_RESUME
+# users/users_EditAdmin.xml
+#: file - USR_RESUME
+msgid "[users/users_EditAdmin.xml?USR_RESUME] Resume"
+msgstr "Resume"
+
+# users/users_EditAdmin.xml?SUBMIT
+# users/users_EditAdmin.xml
+#: button - SUBMIT
+msgid "[users/users_EditAdmin.xml?SUBMIT] Save"
+msgstr "Save"
+
 # users/users_EditOptions.xml?MNU1
 # users/users_EditOptions.xml
 #: link - MNU1
@@ -11593,6 +11953,36 @@ msgstr "Resume"
 msgid "[users/myInfo.xml?SUBMIT3] Save"
 msgstr "Save"
 
+# users/users_DeleteAssign.xml?MESSAGE
+# users/users_DeleteAssign.xml
+#: title - MESSAGE
+msgid "The user has cases pending or in progress.  Before deletion, you should reassign the user's cases."
+msgstr "The user has cases pending or in progress.  Before deletion, you should reassign the user's cases."
+
+# users/users_DeleteAssign.xml?TO_DO
+# users/users_DeleteAssign.xml
+#: text - TO_DO
+msgid "[users/users_DeleteAssign.xml?TO_DO] To Do"
+msgstr "To Do"
+
+# users/users_DeleteAssign.xml?COMPLETED
+# users/users_DeleteAssign.xml
+#: text - COMPLETED
+msgid "[users/users_DeleteAssign.xml?COMPLETED] Completed"
+msgstr "Completed"
+
+# users/users_DeleteAssign.xml?DRAFT
+# users/users_DeleteAssign.xml
+#: text - DRAFT
+msgid "[users/users_DeleteAssign.xml?DRAFT] Draft"
+msgstr "Draft"
+
+# users/users_DeleteAssign.xml?CANCELLED
+# users/users_DeleteAssign.xml
+#: text - CANCELLED
+msgid "[users/users_DeleteAssign.xml?CANCELLED] Cancelled"
+msgstr "Cancelled"
+
 # users/users_View.xml?TITLE9689
 # users/users_View.xml
 #: title - TITLE9689
@@ -11737,6 +12127,24 @@ msgstr "Additional Information"
 msgid "[users/users_View.xml?USR_RESUME] Resume"
 msgstr "Resume"
 
+# users/users_ReassignShowInfo.xml?TITLE
+# users/users_ReassignShowInfo.xml
+#: title - TITLE
+msgid "[users/users_ReassignShowInfo.xml?TITLE] Information"
+msgstr "Information"
+
+# users/users_ReassignShowInfo.xml?MESSAGE
+# users/users_ReassignShowInfo.xml
+#: text - MESSAGE
+msgid "[users/users_ReassignShowInfo.xml?MESSAGE] The user has cases pending or in progress.  Before deletion, you should reassign the user's cases."
+msgstr "The user has cases pending or in progress.  Before deletion, you should reassign the user's cases."
+
+# users/users_ReassignShowInfo.xml?DELETE
+# users/users_ReassignShowInfo.xml
+#: button - DELETE
+msgid "[users/users_ReassignShowInfo.xml?DELETE] Delete"
+msgstr "Delete"
+
 # tasks/tasks_Permissions.xml?TAS_SUBTITLE1
 # tasks/tasks_Permissions.xml
 #: subtitle - TAS_SUBTITLE1
@@ -11778,18 +12186,6 @@ msgstr "Manual Assignment"
 #: radiogroup - TAS_ASSIGN_TYPE - EVALUATE
 msgid "[tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_TYPE-EVALUATE]"
 msgstr "Value Based Assignment"
-
-# tasks/tasks_Labels.xml?TAS_DEF_TITLE
-# tasks/tasks_Labels.xml
-#: textareapm - TAS_DEF_TITLE
-msgid "[tasks/tasks_Labels.xml?TAS_DEF_TITLE] Case Title"
-msgstr "Case Title"
-
-# tasks/tasks_Labels.xml?TAS_DEF_DESCRIPTION
-# tasks/tasks_Labels.xml
-#: textareapm - TAS_DEF_DESCRIPTION
-msgid "Case Description"
-msgstr "Case Description"
 
 # tasks/tasks_Owner.xml?TAS_OWNER_APP
 # tasks/tasks_Owner.xml
@@ -12031,6 +12427,102 @@ msgstr "Start Date"
 msgid "[cases/cases_ListTodo.xml?SEARCH] Apply Filter"
 msgstr "Apply Filter"
 
+# cases/cases_advancedSearch.xml?APP_NUMBER
+# cases/cases_advancedSearch.xml
+#: text - APP_NUMBER
+msgid "[cases/cases_advancedSearch.xml?APP_NUMBER] #"
+msgstr "#"
+
+# cases/cases_advancedSearch.xml?APP_TITLE
+# cases/cases_advancedSearch.xml
+#: text - APP_TITLE
+msgid "[cases/cases_advancedSearch.xml?APP_TITLE] Case"
+msgstr "Case"
+
+# cases/cases_advancedSearch.xml?APP_TAS_TITLE
+# cases/cases_advancedSearch.xml
+#: text - APP_TAS_TITLE
+msgid "[cases/cases_advancedSearch.xml?APP_TAS_TITLE] Task"
+msgstr "Task"
+
+# cases/cases_advancedSearch.xml?APP_PRO_TITLE
+# cases/cases_advancedSearch.xml
+#: text - APP_PRO_TITLE
+msgid "[cases/cases_advancedSearch.xml?APP_PRO_TITLE] Process"
+msgstr "Process"
+
+# cases/cases_advancedSearch.xml?APP_CURRENT_USER
+# cases/cases_advancedSearch.xml
+#: text - APP_CURRENT_USER
+msgid "Current User"
+msgstr "Current User"
+
+# cases/cases_advancedSearch.xml?APP_DEL_PREVIOUS_USER
+# cases/cases_advancedSearch.xml
+#: text - APP_DEL_PREVIOUS_USER
+msgid "[cases/cases_advancedSearch.xml?APP_DEL_PREVIOUS_USER] Sent by"
+msgstr "Sent by"
+
+# cases/cases_advancedSearch.xml?DEL_TASK_DUE_DATE
+# cases/cases_advancedSearch.xml
+#: date - DEL_TASK_DUE_DATE
+msgid "[cases/cases_advancedSearch.xml?DEL_TASK_DUE_DATE] Due Date"
+msgstr "Due Date"
+
+# cases/cases_advancedSearch.xml?APP_UPDATE_DATE
+# cases/cases_advancedSearch.xml
+#: date - APP_UPDATE_DATE
+msgid "[cases/cases_advancedSearch.xml?APP_UPDATE_DATE] Last Modification"
+msgstr "Last Modification"
+
+# cases/cases_advancedSearch.xml?DEL_INIT_DATE
+# cases/cases_advancedSearch.xml
+#: date - DEL_INIT_DATE
+msgid "[cases/cases_advancedSearch.xml?DEL_INIT_DATE] Start Date"
+msgstr "Start Date"
+
+# cases/cases_advancedSearch.xml?DEL_FINISH_DATE
+# cases/cases_advancedSearch.xml
+#: date - DEL_FINISH_DATE
+msgid "Finish Date"
+msgstr "Finish Date"
+
+# cases/cases_advancedSearch.xml?APP_STATUS
+# cases/cases_advancedSearch.xml
+#: dropdown - APP_STATUS
+msgid "Status    "
+msgstr "Status    "
+
+# cases/cases_advancedSearch.xml?APP_STATUS-DRAFT
+# cases/cases_advancedSearch.xml
+#: dropdown - APP_STATUS - DRAFT
+msgid "[cases/cases_advancedSearch.xml?APP_STATUS-DRAFT]"
+msgstr "Draft"
+
+# cases/cases_advancedSearch.xml?APP_STATUS-TO_DO
+# cases/cases_advancedSearch.xml
+#: dropdown - APP_STATUS - TO_DO
+msgid "[cases/cases_advancedSearch.xml?APP_STATUS-TO_DO]"
+msgstr "To Do"
+
+# cases/cases_advancedSearch.xml?APP_STATUS-CANCELLED
+# cases/cases_advancedSearch.xml
+#: dropdown - APP_STATUS - CANCELLED
+msgid "[cases/cases_advancedSearch.xml?APP_STATUS-CANCELLED]"
+msgstr "Cancelled"
+
+# cases/cases_advancedSearch.xml?APP_STATUS-COMPLETED
+# cases/cases_advancedSearch.xml
+#: dropdown - APP_STATUS - COMPLETED
+msgid "[cases/cases_advancedSearch.xml?APP_STATUS-COMPLETED]"
+msgstr "Completed"
+
+# cases/cases_advancedSearch.xml?SEARCH
+# cases/cases_advancedSearch.xml
+#: button - SEARCH
+msgid "[cases/cases_advancedSearch.xml?SEARCH] Apply Filter"
+msgstr "Apply Filter"
+
 # cases/cases_AllInputdocsList.xml?TITLE
 # cases/cases_AllInputdocsList.xml
 #: text - TITLE
@@ -12060,6 +12552,18 @@ msgstr "Attached in form"
 #: text - ORIGIN
 msgid "[cases/cases_AllInputdocsList.xml?ORIGIN] Origin Task"
 msgstr "Origin Task"
+
+# cases/cases_AllInputdocsList.xml?CREATED_BY
+# cases/cases_AllInputdocsList.xml
+#: text - CREATED_BY
+msgid "Created By"
+msgstr "Created By"
+
+# cases/cases_AllInputdocsList.xml?CREATE_DATE
+# cases/cases_AllInputdocsList.xml
+#: text - CREATE_DATE
+msgid "[cases/cases_AllInputdocsList.xml?CREATE_DATE] Create Date"
+msgstr "Create Date"
 
 # cases/cases_AllInputdocsList.xml?DELETE
 # cases/cases_AllInputdocsList.xml
@@ -12118,7 +12622,7 @@ msgstr "Start Date"
 # cases/cases_ListCompleted.xml?DEL_FINISH_DATE
 # cases/cases_ListCompleted.xml
 #: date - DEL_FINISH_DATE
-msgid "Finish Date"
+msgid "[cases/cases_ListCompleted.xml?DEL_FINISH_DATE] Finish Date"
 msgstr "Finish Date"
 
 # cases/cases_ListCompleted.xml?SEARCH
@@ -12126,6 +12630,108 @@ msgstr "Finish Date"
 #: button - SEARCH
 msgid "[cases/cases_ListCompleted.xml?SEARCH] Apply Filter"
 msgstr "Apply Filter"
+
+# cases/cases_advancedSearchFilter.xml?CASE_NUMBER
+# cases/cases_advancedSearchFilter.xml
+#: text - CASE_NUMBER
+msgid "Case Number"
+msgstr "Case Number"
+
+# cases/cases_advancedSearchFilter.xml?PROCESS
+# cases/cases_advancedSearchFilter.xml
+#: dropdown - PROCESS
+msgid "Process "
+msgstr "Process "
+
+# cases/cases_advancedSearchFilter.xml?PROCESS-''
+# cases/cases_advancedSearchFilter.xml
+#: dropdown - PROCESS - ''
+msgid "[cases/cases_advancedSearchFilter.xml?PROCESS-'']"
+msgstr "All"
+
+# cases/cases_advancedSearchFilter.xml?TASKS
+# cases/cases_advancedSearchFilter.xml
+#: dropdown - TASKS
+msgid "[cases/cases_advancedSearchFilter.xml?TASKS] Tasks "
+msgstr "Tasks "
+
+# cases/cases_advancedSearchFilter.xml?TASKS-''
+# cases/cases_advancedSearchFilter.xml
+#: dropdown - TASKS - ''
+msgid "[cases/cases_advancedSearchFilter.xml?TASKS-'']"
+msgstr "All"
+
+# cases/cases_advancedSearchFilter.xml?CURRENT_USER
+# cases/cases_advancedSearchFilter.xml
+#: dropdown - CURRENT_USER
+msgid "Current User "
+msgstr "Current User "
+
+# cases/cases_advancedSearchFilter.xml?CURRENT_USER-''
+# cases/cases_advancedSearchFilter.xml
+#: dropdown - CURRENT_USER - ''
+msgid "[cases/cases_advancedSearchFilter.xml?CURRENT_USER-'']"
+msgstr "All"
+
+# cases/cases_advancedSearchFilter.xml?SENT_BY
+# cases/cases_advancedSearchFilter.xml
+#: dropdown - SENT_BY
+msgid "Sent by "
+msgstr "Sent by "
+
+# cases/cases_advancedSearchFilter.xml?SENT_BY-''
+# cases/cases_advancedSearchFilter.xml
+#: dropdown - SENT_BY - ''
+msgid "[cases/cases_advancedSearchFilter.xml?SENT_BY-'']"
+msgstr "All"
+
+# cases/cases_advancedSearchFilter.xml?LAST_MODIFICATION_F
+# cases/cases_advancedSearchFilter.xml
+#: date - LAST_MODIFICATION_F
+msgid "[cases/cases_advancedSearchFilter.xml?LAST_MODIFICATION_F] Last Modification"
+msgstr "Last Modification"
+
+# cases/cases_advancedSearchFilter.xml?APP_STATUS
+# cases/cases_advancedSearchFilter.xml
+#: dropdown - APP_STATUS
+msgid "[cases/cases_advancedSearchFilter.xml?APP_STATUS] Status    "
+msgstr "Status    "
+
+# cases/cases_advancedSearchFilter.xml?APP_STATUS-''
+# cases/cases_advancedSearchFilter.xml
+#: dropdown - APP_STATUS - ''
+msgid "[cases/cases_advancedSearchFilter.xml?APP_STATUS-'']"
+msgstr "All"
+
+# cases/cases_advancedSearchFilter.xml?APP_STATUS-DRAFT
+# cases/cases_advancedSearchFilter.xml
+#: dropdown - APP_STATUS - DRAFT
+msgid "[cases/cases_advancedSearchFilter.xml?APP_STATUS-DRAFT]"
+msgstr "Draft"
+
+# cases/cases_advancedSearchFilter.xml?APP_STATUS-TO_DO
+# cases/cases_advancedSearchFilter.xml
+#: dropdown - APP_STATUS - TO_DO
+msgid "[cases/cases_advancedSearchFilter.xml?APP_STATUS-TO_DO]"
+msgstr "To Do"
+
+# cases/cases_advancedSearchFilter.xml?APP_STATUS-CANCELLED
+# cases/cases_advancedSearchFilter.xml
+#: dropdown - APP_STATUS - CANCELLED
+msgid "[cases/cases_advancedSearchFilter.xml?APP_STATUS-CANCELLED]"
+msgstr "Cancelled"
+
+# cases/cases_advancedSearchFilter.xml?APP_STATUS-COMPLETED
+# cases/cases_advancedSearchFilter.xml
+#: dropdown - APP_STATUS - COMPLETED
+msgid "[cases/cases_advancedSearchFilter.xml?APP_STATUS-COMPLETED]"
+msgstr "Completed"
+
+# cases/cases_advancedSearchFilter.xml?FILTER
+# cases/cases_advancedSearchFilter.xml
+#: submit - FILTER
+msgid "[cases/cases_advancedSearchFilter.xml?FILTER] Filter"
+msgstr "Filter"
 
 # cases/cases_ViewInputDocumentToRevise.xml?APP_DOC_TITLE
 # cases/cases_ViewInputDocumentToRevise.xml
@@ -13207,6 +13813,18 @@ msgstr "Title"
 msgid "[cases/cases_AllOutputdocsList.xml?ORIGIN] Origin Task"
 msgstr "Origin Task"
 
+# cases/cases_AllOutputdocsList.xml?CREATED_BY
+# cases/cases_AllOutputdocsList.xml
+#: text - CREATED_BY
+msgid "[cases/cases_AllOutputdocsList.xml?CREATED_BY] Created By"
+msgstr "Created By"
+
+# cases/cases_AllOutputdocsList.xml?CREATE_DATE
+# cases/cases_AllOutputdocsList.xml
+#: text - CREATE_DATE
+msgid "[cases/cases_AllOutputdocsList.xml?CREATE_DATE] Create Date"
+msgstr "Create Date"
+
 # cases/cases_AllOutputdocsList.xml?DELETE
 # cases/cases_AllOutputdocsList.xml
 #: link - DELETE
@@ -13564,7 +14182,7 @@ msgstr "Process"
 # cases/cases_ListAll_Reassign.xml?APP_CURRENT_USER
 # cases/cases_ListAll_Reassign.xml
 #: text - APP_CURRENT_USER
-msgid "Current User"
+msgid "[cases/cases_ListAll_Reassign.xml?APP_CURRENT_USER] Current User"
 msgstr "Current User"
 
 # cases/cases_ListAll_Reassign.xml?APP_DEL_PREVIOUS_USER
@@ -13600,7 +14218,7 @@ msgstr "Finish Date"
 # cases/cases_ListAll_Reassign.xml?APP_STATUS
 # cases/cases_ListAll_Reassign.xml
 #: dropdown - APP_STATUS
-msgid "Status    "
+msgid "[cases/cases_ListAll_Reassign.xml?APP_STATUS] Status    "
 msgstr "Status    "
 
 # cases/cases_ListAll_Reassign.xml?APP_STATUS-DRAFT
@@ -13906,8 +14524,8 @@ msgstr "Information"
 # cases/cases_ReassignShowInfo.xml?MESSAGE
 # cases/cases_ReassignShowInfo.xml
 #: text - MESSAGE
-msgid "[cases/cases_ReassignShowInfo.xml?MESSAGE] You do not have enabled the SOAP extension"
-msgstr "You do not have enabled the SOAP extension"
+msgid "[cases/cases_ReassignShowInfo.xml?MESSAGE] The user has cases pending or in progress.  Before deletion, you should reassign the user's cases."
+msgstr "The user has cases pending or in progress.  Before deletion, you should reassign the user's cases."
 
 # cases/cases_ReassignShowInfo.xml?BACK
 # cases/cases_ReassignShowInfo.xml
@@ -14034,6 +14652,12 @@ msgstr "Cancelled"
 #: dropdown - APP_STATUS - COMPLETED
 msgid "[cases/cases_ListToRevise.xml?APP_STATUS-COMPLETED]"
 msgstr "Completed"
+
+# cases/cases_ListToRevise.xml?DELETE
+# cases/cases_ListToRevise.xml
+#: link - DELETE
+msgid "[cases/cases_ListToRevise.xml?DELETE] Delete"
+msgstr "Delete"
 
 # cases/cases_ListToRevise.xml?SEARCH
 # cases/cases_ListToRevise.xml
@@ -14275,6 +14899,12 @@ msgstr "Re-type Password:"
 msgid "[login/newSite.xml?NW_SUB] Test"
 msgstr "Test"
 
+# login/nologin.xml?subtitle
+# login/nologin.xml
+#: subtitle - subtitle
+msgid "subtitle"
+msgstr "subtitle"
+
 # login/nologin.xml?BSUBMIT
 # login/nologin.xml
 #: submit - BSUBMIT
@@ -14290,8 +14920,8 @@ msgstr "Information"
 # login/showInfo.xml?MESSAGE
 # login/showInfo.xml
 #: text - MESSAGE
-msgid "[login/showInfo.xml?MESSAGE] You do not have enabled the SOAP extension"
-msgstr "You do not have enabled the SOAP extension"
+msgid "[login/showInfo.xml?MESSAGE] The user has cases pending or in progress.  Before deletion, you should reassign the user's cases."
+msgstr "The user has cases pending or in progress.  Before deletion, you should reassign the user's cases."
 
 # login/login.xml?TITLE
 # login/login.xml
@@ -14332,8 +14962,8 @@ msgstr "Error"
 # login/showMessage.xml?MESSAGE
 # login/showMessage.xml
 #: text - MESSAGE
-msgid "[login/showMessage.xml?MESSAGE] You do not have enabled the SOAP extension"
-msgstr "You do not have enabled the SOAP extension"
+msgid "[login/showMessage.xml?MESSAGE] The user has cases pending or in progress.  Before deletion, you should reassign the user's cases."
+msgstr "The user has cases pending or in progress.  Before deletion, you should reassign the user's cases."
 
 # login/dbInfo.xml?DYNA_HEADER
 # login/dbInfo.xml
@@ -14412,6 +15042,36 @@ msgstr "User's Browser"
 #: caption - IP
 msgid "User's Ip Address"
 msgstr "User's Ip Address"
+
+# login/changePassword.xml?THETITLE
+# login/changePassword.xml
+#: title - THETITLE
+msgid "Change password"
+msgstr "Change password"
+
+# login/changePassword.xml?THEDESCRIPTION
+# login/changePassword.xml
+#: title - THEDESCRIPTION
+msgid "@#DESCRIPTION"
+msgstr "@#DESCRIPTION"
+
+# login/changePassword.xml?USR_PASSWORD
+# login/changePassword.xml
+#: password - USR_PASSWORD
+msgid "[login/changePassword.xml?USR_PASSWORD] Password"
+msgstr "Password"
+
+# login/changePassword.xml?USR_PASSWORD_CONFIRM
+# login/changePassword.xml
+#: password - USR_PASSWORD_CONFIRM
+msgid "Re-Type Password"
+msgstr "Re-Type Password"
+
+# login/changePassword.xml?btnSave
+# login/changePassword.xml
+#: button - btnSave
+msgid "[login/changePassword.xml?btnSave] Save"
+msgstr "Save"
 
 # login/sysLogin.xml?TITLE
 # login/sysLogin.xml

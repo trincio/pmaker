@@ -27,11 +27,11 @@ $aHistory      = unserialize($aUserProperty['USR_PASSWORD_HISTORY']);
 if (!is_array($aHistory)) {
   $aHistory = array();
 }
-if (!defined('PPU_PASSWORD_HISTORY')) {
-  define('PPU_PASSWORD_HISTORY', 0);
+if (!defined('PPP_PASSWORD_HISTORY')) {
+  define('PPP_PASSWORD_HISTORY', 0);
 }
-if (PPU_PASSWORD_HISTORY > 0) {
-  if (count($aHistory) >= PPU_PASSWORD_HISTORY) {
+if (PPP_PASSWORD_HISTORY > 0) {
+  if (count($aHistory) >= PPP_PASSWORD_HISTORY) {
     array_shift($aHistory);
   }
   $aHistory[] = $_POST['form']['USR_PASSWORD'];
