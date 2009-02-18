@@ -63,11 +63,11 @@ try {
 
 	if ($uid < 0 ) {
 	  $_SESSION['FAILED_LOGINS']++;
-	  if (!defined('PPU_FAILED_LOGINS')) {
-      define('PPU_FAILED_LOGINS', 0);
+	  if (!defined('PPP_FAILED_LOGINS')) {
+      define('PPP_FAILED_LOGINS', 0);
     }
-    if (PPU_FAILED_LOGINS > 0) {
-      if ($_SESSION['FAILED_LOGINS'] > PPU_FAILED_LOGINS) {
+    if (PPP_FAILED_LOGINS > 0) {
+      if ($_SESSION['FAILED_LOGINS'] > PPP_FAILED_LOGINS) {
         $oConnection = Propel::getConnection('rbac');
         $oStatement  = $oConnection->prepareStatement("SELECT USR_UID FROM USERS WHERE USR_USERNAME = '" . $usr . "'");
         $oDataset    = $oStatement->executeQuery();
@@ -150,17 +150,17 @@ try {
     $aFields['DESCRIPTION'] .= G::LoadTranslation('ID_POLICY_ALERT').':<br /><br />';
     foreach ($aErrors as $sError)  {
       switch ($sError) {
-        case 'ID_PPU_MINIMUN_LENGTH':
-          $aFields['DESCRIPTION'] .= ' - ' . G::LoadTranslation($sError).': ' . PPU_MINIMUN_LENGTH . '<br />';
-          $aFields[substr($sError, 3)] = PPU_MINIMUN_LENGTH;
+        case 'ID_PPP_MINIMUN_LENGTH':
+          $aFields['DESCRIPTION'] .= ' - ' . G::LoadTranslation($sError).': ' . PPP_MINIMUN_LENGTH . '<br />';
+          $aFields[substr($sError, 3)] = PPP_MINIMUN_LENGTH;
         break;
-        case 'ID_PPU_MAXIMUN_LENGTH':
-          $aFields['DESCRIPTION'] .= ' - ' . G::LoadTranslation($sError).': ' . PPU_MAXIMUN_LENGTH . '<br />';
-          $aFields[substr($sError, 3)] = PPU_MAXIMUN_LENGTH;
+        case 'ID_PPP_MAXIMUN_LENGTH':
+          $aFields['DESCRIPTION'] .= ' - ' . G::LoadTranslation($sError).': ' . PPP_MAXIMUN_LENGTH . '<br />';
+          $aFields[substr($sError, 3)] = PPP_MAXIMUN_LENGTH;
         break;
-        case 'ID_PPU_EXPIRATION_IN':
-          $aFields['DESCRIPTION'] .= ' - ' . G::LoadTranslation($sError).' ' . PPU_EXPIRATION_IN . ' ' . G::LoadTranslation('ID_DAYS') . '<br />';
-          $aFields[substr($sError, 3)] = PPU_EXPIRATION_IN;
+        case 'ID_PPP_EXPIRATION_IN':
+          $aFields['DESCRIPTION'] .= ' - ' . G::LoadTranslation($sError).' ' . PPP_EXPIRATION_IN . ' ' . G::LoadTranslation('ID_DAYS') . '<br />';
+          $aFields[substr($sError, 3)] = PPP_EXPIRATION_IN;
         break;
         default:
           $aFields['DESCRIPTION'] .= ' - ' . G::LoadTranslation($sError).'<br />';
@@ -176,65 +176,9 @@ try {
   }
   /* Check password using policy - End */
 
-  //get the plugins, and check if there is redirectLogins
-  //if yes, then redirect according his Role
-  if ( class_exists('redirectDetail')) {
-    //falta validar...
-    if(isset($RBAC->aUserInfo['PROCESSMAKER']['ROLE']['ROL_CODE']))
-    		$userRole = $RBAC->aUserInfo['PROCESSMAKER']['ROLE']['ROL_CODE'];
-
-    $oPluginRegistry = &PMPluginRegistry::getSingleton();
-    //$oPluginRegistry->showArrays();
-    $aRedirectLogin = $oPluginRegistry->getRedirectLogins();
-    if(isset($aRedirectLogin))
-		 { if(is_array($aRedirectLogin))
-		 	 {
-		 	 		foreach ( $aRedirectLogin as $key=>$detail ) {
-			  	   if(isset($detail->sPathMethod))
-				  	  {
-				  	  	if ( $detail->sRoleCode == $userRole ) {
-				       	  G::header('location: /sys' .  SYS_TEMP . '/' . $lang . '/' . SYS_SKIN . '/' . $detail->sPathMethod );
-				       	  die;
-				  	   	}
-				  	  }
-		      }
-		   }
-     }
-  }
-  //end plugin
-
-
-	$res = $RBAC->userCanAccess('PM_FACTORY');
-	if ($res == 1) {
-    G::header('location: /sys' .  SYS_TEMP . '/' . $lang . '/' . SYS_SKIN . '/' . 'processes/processes_List');
-	  die;
-	}
-
-	$res = $RBAC->userCanAccess('PM_CASES');
-	if ($res == 1) {
-    G::header('location: /sys' .  SYS_TEMP . '/' . $lang . '/' . SYS_SKIN . '/' . 'cases/cases_List');
-	  die;
-	}
-
-	$res = $RBAC->userCanAccess('PM_REPORTS');
-	if ($res == 1) {
-    G::header('location: /sys' .  SYS_TEMP . '/' . $lang . '/' . SYS_SKIN . '/' . 'reports/reportsList');
-	  die;
-	}
-
-	$res = $RBAC->userCanAccess('PM_USERS');
-	if ($res == 1) {
-    G::header('location: /sys' .  SYS_TEMP . '/' . $lang . '/' . SYS_SKIN . '/' . 'users/users_List');
-	  die;
-	}
-
-	$res = $RBAC->userCanAccess('PM_SETUP');
-	if ($res == 1) {
-    G::header('location: /sys' .  SYS_TEMP . '/' . $lang . '/' . SYS_SKIN . '/' . 'setup/pluginsList');
-	  die;
-	}
-
-	G::header('location: /sys' .  SYS_TEMP . '/' . $lang . '/' . SYS_SKIN . '/' . 'users/myInfo');
+  $sLocation = $oUserProperty->redirectTo($_SESSION['USER_LOGGED'], $lang);
+  G::header('Location: ' . $sLocation);
+  die;
 
 }
 catch ( Exception $e ) {

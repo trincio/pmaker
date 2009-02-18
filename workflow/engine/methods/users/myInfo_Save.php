@@ -68,15 +68,39 @@ try {
 	    require_once 'classes/model/UsersProperties.php';
       $oUserProperty = new UsersProperties();
       $aUserProperty = $oUserProperty->load($_POST['form']['USR_UID']);
-      $aHistory      = unserialize($aUserProperty['USR_PASSWORD_HISTORY']);
+      $aErrors       = $oUserProperty->validatePassword($_POST['form']['USR_NEW_PASS'], $aUserProperty['USR_LAST_UPDATE_DATE'], $aUserProperty['USR_LOGGED_NEXT_TIME']);
+      if (count($aErrors) > 0) {
+        $sDescription = G::LoadTranslation('ID_POLICY_ALERT').':<br /><br />';
+        foreach ($aErrors as $sError)  {
+          switch ($sError) {
+            case 'ID_PPP_MINIMUN_LENGTH':
+              $sDescription .= ' - ' . G::LoadTranslation($sError).': ' . PPP_MINIMUN_LENGTH . '<br />';
+            break;
+            case 'ID_PPP_MAXIMUN_LENGTH':
+              $sDescription .= ' - ' . G::LoadTranslation($sError).': ' . PPP_MAXIMUN_LENGTH . '<br />';
+            break;
+            case 'ID_PPP_EXPIRATION_IN':
+              $sDescription .= ' - ' . G::LoadTranslation($sError).' ' . PPP_EXPIRATION_IN . ' ' . G::LoadTranslation('ID_DAYS') . '<br />';
+            break;
+            default:
+              $sDescription .= ' - ' . G::LoadTranslation($sError).'<br />';
+            break;
+          }
+        }
+        $sDescription .= '<br />' . G::LoadTranslation('ID_PLEASE_CHANGE_PASSWORD_POLICY');
+        G::SendMessageText($sDescription, 'warning');
+        G::header('Location: ' . $_SERVER['HTTP_REFERER']);
+        die;
+      }
+      $aHistory = unserialize($aUserProperty['USR_PASSWORD_HISTORY']);
       if (!is_array($aHistory)) {
         $aHistory = array();
       }
-      if (!defined('PPU_PASSWORD_HISTORY')) {
-        define('PPU_PASSWORD_HISTORY', 0);
+      if (!defined('PPP_PASSWORD_HISTORY')) {
+        define('PPP_PASSWORD_HISTORY', 0);
       }
-      if (PPU_PASSWORD_HISTORY > 0) {
-        if (count($aHistory) >= PPU_PASSWORD_HISTORY) {
+      if (PPP_PASSWORD_HISTORY > 0) {
+        if (count($aHistory) >= PPP_PASSWORD_HISTORY) {
           array_shift($aHistory);
         }
         $aHistory[] = $_POST['form']['USR_NEW_PASS'];
