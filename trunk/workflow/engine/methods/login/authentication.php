@@ -67,7 +67,7 @@ try {
       define('PPP_FAILED_LOGINS', 0);
     }
     if (PPP_FAILED_LOGINS > 0) {
-      if ($_SESSION['FAILED_LOGINS'] > PPP_FAILED_LOGINS) {
+      if ($_SESSION['FAILED_LOGINS'] >= PPP_FAILED_LOGINS) {
         $oConnection = Propel::getConnection('rbac');
         $oStatement  = $oConnection->prepareStatement("SELECT USR_UID FROM USERS WHERE USR_USERNAME = '" . $usr . "'");
         $oDataset    = $oStatement->executeQuery();

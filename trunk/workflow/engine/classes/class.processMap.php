@@ -2358,7 +2358,7 @@ class processMap {
         try {
           $oTask       = new Task();
           $aFields     = $oTask->load($aRow['TAS_UID']);
-          $sTaskTarget = $aFields['TAS_TITLE'];          
+          $sTaskTarget = $aFields['TAS_TITLE'];
         }
         catch (Exception $oError) {
           $sTaskTarget = '(TASK DELETED)';
@@ -2397,7 +2397,7 @@ class processMap {
         		}
         catch (Exception $oError) {
               $sTaskSource = '(TASK DELETED)';
-            }			
+            }
       }
       else {
         $sTaskSource = G::LoadTranslation('ID_ANY_TASK');
@@ -2640,29 +2640,34 @@ class processMap {
     $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
     $oDataset->next();
     while ($aRow = $oDataset->getRow()) {
-    	switch ($aRow['CTO_TYPE_OBJ']) {
-          case 'DYNAFORM':
-            $oDynaform = new Dynaform();
-            $aFields   = $oDynaform->load($aRow['CTO_UID_OBJ']);
-            $sTitle    = $aFields['DYN_TITLE'];
-          break;
-          case 'INPUT_DOCUMENT':
-            $oInputDocument = new InputDocument();
-            $aFields        = $oInputDocument->load($aRow['CTO_UID_OBJ']);
-            $sTitle         = $aFields['INP_DOC_TITLE'];
-          break;
-          case 'OUTPUT_DOCUMENT':
-            $oOutputDocument = new OutputDocument();
-            $aFields         = $oOutputDocument->load($aRow['CTO_UID_OBJ']);
-            $sTitle          = $aFields['OUT_DOC_TITLE'];
-          break;
-    	}
-    	$aObjects[] = array('CTO_TITLE'     => $sTitle,
-    	                    'CTO_UID'       => $aRow['CTO_UID'],
-    	                    'CTO_TYPE_OBJ'  => $aRow['CTO_TYPE_OBJ'],
-    	                    'CTO_UID_OBJ'   => $aRow['CTO_UID_OBJ'],
-    	                    'CTO_CONDITION' => $aRow['CTO_CONDITION'],
-    	                    'CTO_POSITION'  => $aRow['CTO_POSITION']);
+      try {
+    	  switch ($aRow['CTO_TYPE_OBJ']) {
+            case 'DYNAFORM':
+              $oDynaform = new Dynaform();
+              $aFields   = $oDynaform->load($aRow['CTO_UID_OBJ']);
+              $sTitle    = $aFields['DYN_TITLE'];
+            break;
+            case 'INPUT_DOCUMENT':
+              $oInputDocument = new InputDocument();
+              $aFields        = $oInputDocument->load($aRow['CTO_UID_OBJ']);
+              $sTitle         = $aFields['INP_DOC_TITLE'];
+            break;
+            case 'OUTPUT_DOCUMENT':
+              $oOutputDocument = new OutputDocument();
+              $aFields         = $oOutputDocument->load($aRow['CTO_UID_OBJ']);
+              $sTitle          = $aFields['OUT_DOC_TITLE'];
+            break;
+    	  }
+    	  $aObjects[] = array('CTO_TITLE'     => $sTitle,
+    	                      'CTO_UID'       => $aRow['CTO_UID'],
+    	                      'CTO_TYPE_OBJ'  => $aRow['CTO_TYPE_OBJ'],
+    	                      'CTO_UID_OBJ'   => $aRow['CTO_UID_OBJ'],
+    	                      'CTO_CONDITION' => $aRow['CTO_CONDITION'],
+    	                      'CTO_POSITION'  => $aRow['CTO_POSITION']);
+      }
+      catch (Exception $oError) {
+        //Nothing
+      }
     	$oDataset->next();
     }
 		global $_DBArray;
