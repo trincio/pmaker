@@ -113,18 +113,18 @@ class RBAC
     if ( is_dir ( $pathPlugins ) ) {
       if ($handle = opendir( $pathPlugins )) {
         while ( false !== ($file = readdir($handle))) {
-          if ( strpos($file, '.php',1) && is_file( $pathPlugins . PATH_SEP . $file) && 
+          if ( strpos($file, '.php',1) && is_file( $pathPlugins . PATH_SEP . $file) &&
                substr($file,0,6) == 'class.' && substr($file,-4) == '.php' )  {
-        
+
             $sClassName = substr($file,6, strlen($file) - 10);
             require_once ($pathPlugins . PATH_SEP . $file);
             $this->aRbacPlugins[] = $sClassName;
 
           }
-        }  
+        }
       }
     }
-    
+
   }
 
   /**
@@ -135,7 +135,7 @@ class RBAC
    * @author Fernando Ontiveros Lira <fernando@colosa.com>
    * @access public
 
-   * @param  string $sSystem    the system 
+   * @param  string $sSystem    the system
    * @param  string $sUser      the user
    * @return $this->aUserInfo[ $sSystem ]
    */
@@ -195,7 +195,7 @@ class RBAC
 
           $res = $plugin->VerifyLogin ( $strUser, $strPass );
           krumo ( $res );
-          die;    
+          die;
         }
       }
     }
@@ -260,7 +260,7 @@ class RBAC
     if ($aData['USR_STATUS'] == 'ACTIVE') {
       $aData['USR_STATUS'] = 1;
     }
-    else {
+    if ($aData['USR_STATUS'] == 'INACTIVE') {
       $aData['USR_STATUS'] = 0;
     }
     $sUserUID = $this->userObj->create($aData);
