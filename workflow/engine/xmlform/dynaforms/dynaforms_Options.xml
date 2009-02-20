@@ -67,10 +67,18 @@
 
      return document.getElementById(id);
   }
-  function dynaformSave ( form ) {
-    ajax_post( form.action, form, 'POST' );
-    currentPopupWindow.remove();
-    @#PAGED_TABLE_ID.refresh();
+  function dynaformSave ( form, bOpen ) {
+    if (!bOpen) {
+      ajax_post( form.action, form, 'POST' );
+      currentPopupWindow.remove();
+      @#PAGED_TABLE_ID.refresh();
+    }
+    else {
+      ajax_post( form.action, form, 'POST', openDynaform );
+    }
+  }
+  function openDynaform(sUID) {
+    dynaformEdit(sUID);
   }
   function dynaformDelete ( uid ){
     new leimnud.module.app.confirm().make({

@@ -28,9 +28,12 @@
   <en>Description</en>
 </DYN_DESCRIPTION>
 
-
-<ACCEPT type="button" onclick="dynaformSave( this.form );">
+<ACCEPT type="button" onclick="dynaformSave( this.form, false );">
   <en>Save</en>
 </ACCEPT>
+
+<SAVE_OPEN type="button" onclick="dynaformSave( this.form, true );">
+  <en><![CDATA[Save & Open]]></en>
+</SAVE_OPEN>
 
 </dynaForm>

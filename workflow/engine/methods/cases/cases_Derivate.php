@@ -142,7 +142,7 @@ try {
   $_SESSION['TRIGGER_DEBUG']['TRIGGERS_NAMES'] = Array();
   $_SESSION['TRIGGER_DEBUG']['TRIGGERS_VALUES'] = Array();
 
-  $triggers = $oCase->loadTriggers( $_SESSION['TASK'], 'DYNAFORM', $_GET['UID'], 'AFTER');
+  $triggers = $oCase->loadTriggers( $_SESSION['TASK'], 'ASSIGN_TASK', -2, 'AFTER');
 
   $_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] = count($triggers);
   $_SESSION['TRIGGER_DEBUG']['TIME'] = 'AFTER';
@@ -153,7 +153,7 @@ try {
 
   if( $_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] != 0 ) {
 	//Execute after triggers - Start
-	$Fields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], 'DYNAFORM', $_GET['UID'], 'AFTER', $Fields['APP_DATA'] );
+	$Fields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], 'ASSIGN_TASK', -2, 'AFTER', $Fields['APP_DATA'] );
 	//Execute after triggers - End
   }
 
