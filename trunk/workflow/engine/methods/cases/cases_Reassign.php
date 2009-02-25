@@ -102,7 +102,7 @@ $name    = '';
 	}
 	$tpl->gotoBlock('_ROOT');
 	$tpl->assign( "US", $name );
-	$tpl->assign( "ID_NO_REASSIGN", G::LoadTranslation('ID_NO_REASSIGN'));
+	$tpl->assign( "ID_NO_REASSIGN", '-');
 	$tpl->assign( "APP_UID", $_GET['APP_UID']);
 	$tpl->assign( "DEL_INDEX", $_GET['DEL_INDEX']);
 
