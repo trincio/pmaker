@@ -2,7 +2,7 @@ msgid ""
 msgstr "" 
 "Project-Id-Version: PM 4.0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-02-18 17:16+0100 \n"
+"PO-Revision-Date: 2009-02-25 10:32+0100 \n"
 "Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
 "Language-Team: Colosa Developers Team <developers@colosa.com>\n"
 "MIME-Version: 1.0\n"
@@ -1654,8 +1654,8 @@ msgstr "Assign Dynaform"
 # TRANSLATION
 # LABEL/ID_TO_REVISE
 #: LABEL/ID_TO_REVISE
-msgid "To Revise"
-msgstr "To Revise"
+msgid "For Supervisor"
+msgstr "For Supervisor"
 
 # TRANSLATION
 # LABEL/ID_MESS_ENGINE_TYPE_3
@@ -4296,6 +4296,12 @@ msgstr "Description"
 #: button - ACCEPT
 msgid "[dynaforms/dynaforms_Edit.xml?ACCEPT] Save"
 msgstr "Save"
+
+# dynaforms/dynaforms_Edit.xml?SAVE_OPEN
+# dynaforms/dynaforms_Edit.xml
+#: button - SAVE_OPEN
+msgid "Save & Open"
+msgstr "Save & Open"
 
 # dynaforms/dynaforms_SupervisorOptions.xml?MNU_ASSIGN
 # dynaforms/dynaforms_SupervisorOptions.xml
@@ -8005,12 +8011,6 @@ msgstr "Description"
 msgid "Install Steps"
 msgstr "Install Steps"
 
-# processes/objectpmView.xml?link
-# processes/objectpmView.xml
-#: link - link
-msgid "link"
-msgstr "link"
-
 # processes/processes_Import.xml?TITLE1
 # processes/processes_Import.xml
 #: title - TITLE1
@@ -11335,6 +11335,12 @@ msgstr "Confirm Password "
 msgid "[users/myInfoView.xml?TITLEADD] Additional Information"
 msgstr "Additional Information"
 
+# users/myInfoView.xml?USR_PHOTO
+# users/myInfoView.xml
+#: image - USR_PHOTO
+msgid "[users/myInfoView.xml?USR_PHOTO] Photo"
+msgstr "Photo"
+
 # users/myInfoView.xml?USR_RESUME
 # users/myInfoView.xml
 #: link - USR_RESUME
@@ -12186,6 +12192,12 @@ msgstr "Manual Assignment"
 #: radiogroup - TAS_ASSIGN_TYPE - EVALUATE
 msgid "[tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_TYPE-EVALUATE]"
 msgstr "Value Based Assignment"
+
+# tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_VARIABLE
+# tasks/tasks_AssignmentRules.xml
+#: textpm - TAS_ASSIGN_VARIABLE
+msgid "Variable for Value Based Assignment"
+msgstr "Variable for Value Based Assignment"
 
 # tasks/tasks_Owner.xml?TAS_OWNER_APP
 # tasks/tasks_Owner.xml
@@ -14899,12 +14911,6 @@ msgstr "Re-type Password:"
 msgid "[login/newSite.xml?NW_SUB] Test"
 msgstr "Test"
 
-# login/nologin.xml?subtitle
-# login/nologin.xml
-#: subtitle - subtitle
-msgid "subtitle"
-msgstr "subtitle"
-
 # login/nologin.xml?BSUBMIT
 # login/nologin.xml
 #: submit - BSUBMIT
@@ -15187,12 +15193,6 @@ msgstr "Documentation"
 msgid "[steps/steps_availableBB.xml?STEP_TYPE_OBJ-EXTERNAL]"
 msgstr "External Step"
 
-# steps/conditions_Edit.xml?STEP_CONDITION
-# steps/conditions_Edit.xml
-#: textareapm - STEP_CONDITION
-msgid "[steps/conditions_Edit.xml?STEP_CONDITION] Condition"
-msgstr "Condition"
-
 # steps/conditions_Edit.xml?ACCEPT
 # steps/conditions_Edit.xml
 #: button - ACCEPT
@@ -15288,12 +15288,6 @@ msgstr "Available Triggers"
 #: dropdown - TRI_UID
 msgid "[steps/triggers_Assign.xml?TRI_UID] Triggers"
 msgstr "Triggers"
-
-# steps/triggers_Assign.xml?ST_CONDITION
-# steps/triggers_Assign.xml
-#: textareapm - ST_CONDITION
-msgid "[steps/triggers_Assign.xml?ST_CONDITION] Condition"
-msgstr "Condition"
 
 # steps/triggers_Assign.xml?ASSIGN
 # steps/triggers_Assign.xml
@@ -15612,12 +15606,6 @@ msgstr "Title"
 #: textarea - TRI_DESCRIPTION
 msgid "[triggers/triggers_Edit.xml?TRI_DESCRIPTION] Description"
 msgstr "Description"
-
-# triggers/triggers_Edit.xml?TRI_WEBBOT
-# triggers/triggers_Edit.xml
-#: textareapm - TRI_WEBBOT
-msgid "Script"
-msgstr "Script"
 
 # triggers/triggers_Edit.xml?SAVE
 # triggers/triggers_Edit.xml
