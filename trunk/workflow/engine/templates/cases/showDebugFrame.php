@@ -137,25 +137,33 @@
 	}
 	
 	$aKeys1 = array_keys($vars_acum);
-		
+	//var_dump($aKeys1); echo"<hr>";
 	G::LoadClass('case');
   $oApp= new Cases();
   $aFields = $oApp->loadCase($_SESSION['APPLICATION']);
-  //print_r($aFields['APP_DATA']); die;
+  
   $aKeys2 = array_keys($aFields['APP_DATA']);
-  //var_dump($aKeys1, $aKeys2); die;
+  //var_dump($aKeys2); die;
   $x = array_merge($aFields['APP_DATA'], $vars_acum);
 	foreach($x as $key => $value)
-	{ 
-		if (!in_array($key, $aKeys2)) {		 
-		  	$x[$key] = $x[$key] . ' -->(CREATED / CHANGED)';
-		  }
-		  else {		  
-				if (in_array($key, $aKeys1)) {		
-					$x[$key] = $x[$key] . ' -->(CREATED / CHANGED)';
-				}
-				
-		  }		  				
+	{ //var_dump($x[$key]); echo "<br>";		
+		if (!in_array($key, $aKeys2)) 
+		 {		 
+		  	if(is_array($x[$key]))
+		  		$x[$key] = $x[$key]; //. ' -->(CREATED / CHANGED)';
+		  	else*/
+		  		$x[$key] = $x[$key]. ' -->(CREATED / CHANGED)';	
+		 }
+		else 
+		 {		  
+				if (in_array($key, $aKeys1)) 
+				 {		
+						if(is_array($x[$key]))
+							$x[$key] = $x[$key];// . ' -->(CREATED / CHANGED)';
+						else
+							$x[$key] = $x[$key]. ' -->(CREATED / CHANGED)';		
+				 }				
+		  }	 				
 		/*foreach($aKeys as $ke => $val)
 		{
 				if($ke!=$key)
