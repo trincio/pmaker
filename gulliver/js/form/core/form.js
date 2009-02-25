@@ -1116,3 +1116,16 @@ function validateForm(aRequiredFields)
 	{	return true;
   }
 }
+
+var getObject = function(sObject) {
+  var i;
+  var oAux;
+  var iLength = __aObjects__.length;
+  for (i = 0; i < iLength; i++) {
+    oAux = __aObjects__[i].getElementByName(sObject);
+    if (oAux) {
+      return oAux;
+    }
+  }
+  return null;
+};
