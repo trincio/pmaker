@@ -1119,7 +1119,7 @@ function validateForm(aRequiredFields)
 
 var getObject = function(sObject) {
   var i;
-  var oAux;
+  var oAux = null;
   var iLength = __aObjects__.length;
   for (i = 0; i < iLength; i++) {
     oAux = __aObjects__[i].getElementByName(sObject);
@@ -1127,5 +1127,5 @@ var getObject = function(sObject) {
       return oAux;
     }
   }
-  return null;
+  return oAux;
 };
