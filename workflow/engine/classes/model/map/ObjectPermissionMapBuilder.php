@@ -110,7 +110,7 @@ class ObjectPermissionMapBuilder {
 
 		$tMap->addValidator('OP_TASK_SOURCE', 'required', 'propel.validator.RequiredValidator', '', 'Source task is required.');
 
-		$tMap->addValidator('OP_PARTICIPATE', 'validValues', 'propel.validator.ValidValuesValidator', '1|2', 'Please select a valid participation value.');
+		$tMap->addValidator('OP_PARTICIPATE', 'validValues', 'propel.validator.ValidValuesValidator', '0|1', 'Please select a valid participation value.');
 
 		$tMap->addValidator('OP_PARTICIPATE', 'required', 'propel.validator.RequiredValidator', '', 'Participation is required.');
 
