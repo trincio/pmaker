@@ -29,7 +29,7 @@
  * @Date 24/04/2008
  * @LastModification 30/05/2008
  */
-  
+
 	G::LoadClass('tree');
 
   $tree = new Tree();
@@ -49,7 +49,7 @@
 	<div class="boxBottomBlue"><div class="a"></div><div class="b"></div><div class="c"></div></div>';
 
 	$triggers_names = '';
-	
+
 	if($_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] != 0) {
 		$triggers_onfly = $_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS']." trigger(s) was executed <font color='#641213'><b>".strtolower($_SESSION['TRIGGER_DEBUG']['TIME'])."</b></font><br/>";
 		$cnt = -1;
@@ -60,13 +60,13 @@
 			$t_code = addslashes($t_code);
 			//Krumo($t_code);
 			$t_code = Only1br($t_code);
-			
+
 			$triggers_names .= "<li><a href='#' onmouseout='hideTooltip()' onmouseover=\"showTooltip(event,'<b>Trigger code</b><br/><br/>".$t_code."<br/><br/>');return false\">Trigger: $name</a>";
 		}
 	} else {
 		$triggers_onfly = " No triggers found <font color='#641213'><b>".strtolower($_SESSION['TRIGGER_DEBUG']['TIME'])."</b></font>";
 	}
-	
+
 	$html = "[Triggers]<br><br>
 	<table width='100%' cellspacing='0' cellpadding='0' border='1' style='border:0px;'>
 		<tr>
@@ -113,7 +113,7 @@
 						<fieldset style='width:103%'>
 							<legend><font color='red'>Some trigger throws an error</font></legend>
 							".trim($DEBUG_POST[$i]['FATAL'])."
-						</fieldset>	
+						</fieldset>
 					</td>
 					<td width='60px' class='treeNode' style='border:0px;background-color:transparent;'>
 						<div id='status_'></div>
@@ -124,59 +124,59 @@
 				//$ch->point = '<img src="/images/iconoenlace.png" />';
 			}
 		} catch(Exception $e) {
-			
-		}	
-	}	
+
+		}
+	}
 
 	krumo::$show_details = 'disabled';
 	$vars_acum = Array();
 	for($i=0; $i<count($_SESSION['TRIGGER_DEBUG']['DATA']); $i++) {
-		
+
 		$tdebug_var = $_SESSION['TRIGGER_DEBUG']['DATA'][$i]['value'];
 		$vars_acum[$_SESSION['TRIGGER_DEBUG']['DATA'][$i]['key']] = $tdebug_var;
 	}
-	
+
 	$aKeys1 = array_keys($vars_acum);
 	//var_dump($aKeys1); echo"<hr>";
 	G::LoadClass('case');
   $oApp= new Cases();
   $aFields = $oApp->loadCase($_SESSION['APPLICATION']);
-  
+
   $aKeys2 = array_keys($aFields['APP_DATA']);
   //var_dump($aKeys2); die;
   $x = array_merge($aFields['APP_DATA'], $vars_acum);
 	foreach($x as $key => $value)
-	{ //var_dump($x[$key]); echo "<br>";		
-		if (!in_array($key, $aKeys2)) 
-		 {		 
+	{ //var_dump($x[$key]); echo "<br>";
+		if (!in_array($key, $aKeys2))
+		 {
 		  	if(is_array($x[$key]))
 		  		$x[$key] = $x[$key]; //. ' -->(CREATED / CHANGED)';
-		  	else*/
-		  		$x[$key] = $x[$key]. ' -->(CREATED / CHANGED)';	
+		  	else
+		  		$x[$key] = $x[$key]. ' -->(CREATED / CHANGED)';
 		 }
-		else 
-		 {		  
-				if (in_array($key, $aKeys1)) 
-				 {		
+		else
+		 {
+				if (in_array($key, $aKeys1))
+				 {
 						if(is_array($x[$key]))
 							$x[$key] = $x[$key];// . ' -->(CREATED / CHANGED)';
 						else
-							$x[$key] = $x[$key]. ' -->(CREATED / CHANGED)';		
-				 }				
-		  }	 				
+							$x[$key] = $x[$key]. ' -->(CREATED / CHANGED)';
+				 }
+		  }
 		/*foreach($aKeys as $ke => $val)
 		{
 				if($ke!=$key)
 						$vars_acum[$key]=$value;
 		}*/
-		//echo "Key: $key; Valor: $value <br />"; 		
+		//echo "Key: $key; Valor: $value <br />";
 	}
-	
+
 	ob_start();
 	Krumo($x);
 	$oo1 = ob_get_contents();
 	ob_end_clean();
-	
+
 	$html = "
 	<table width='100%' cellspacing='0' cellpadding='0' border='1' style='border:0px;'>
 		<tr>
@@ -185,12 +185,12 @@
 			</td>
 		</tr>
 	</table>";
-	
+
 	$ch = &$tree->addChild(0, $html, array('nodeType' => 'child'));
 	//$ch->point = '<img src="/images/btnGreen.gif" />';
-	
+
 	print ($tree->render());
-	
+
 	if(isset($_POST['NextStep'])){
 		print('<input type="button" value="Continue" class="module_app_button___gray" onclick="javascript:location.href=\''.$_POST['NextStep'].'\'">');
 	}
@@ -212,7 +212,7 @@
 		font-size:0.9em;
 		-moz-border-radius:6px;	/* Rounded edges in Firefox */
 		font-family: "Trebuchet MS", "Lucida Sans Unicode", Arial, sans-serif;
-		
+
 	}
 	#nyk_tooltipShadow{
 		position:absolute;
@@ -236,18 +236,18 @@
 	var tooltip_is_msie = (navigator.userAgent.indexOf('MSIE')>=0 && navigator.userAgent.indexOf('opera')==-1 && document.all)?true:false;
 	function showTooltip(e,tooltipTxt)
 	{
-		
+
 		var bodyWidth = Math.max(document.body.clientWidth,document.documentElement.clientWidth) - 20;
-	
+
 		if(!nyk_tooltip){
 			nyk_tooltip = document.createElement('DIV');
 			nyk_tooltip.id = 'nyk_tooltip';
 			nyk_tooltipShadow = document.createElement('DIV');
 			nyk_tooltipShadow.id = 'nyk_tooltipShadow';
-			
+
 			document.body.appendChild(nyk_tooltip);
 			document.body.appendChild(nyk_tooltipShadow);
-			
+
 			if(tooltip_is_msie){
 				nyk_iframe = document.createElement('IFRAME');
 				nyk_iframe.frameborder='5';
@@ -257,58 +257,58 @@
 				nyk_iframe.style.position = 'absolute';
 				document.body.appendChild(nyk_iframe);
 			}
-			
+
 		}
-		
+
 		nyk_tooltip.style.display='block';
 		nyk_tooltipShadow.style.display='block';
 		if(tooltip_is_msie)nyk_iframe.style.display='block';
-		
+
 		var st = Math.max(document.body.scrollTop,document.documentElement.scrollTop);
-		if(navigator.userAgent.toLowerCase().indexOf('safari')>=0)st=0; 
+		if(navigator.userAgent.toLowerCase().indexOf('safari')>=0)st=0;
 		var leftPos = e.clientX + 10;
-		
+
 		nyk_tooltip.style.width = null;	// Reset style width if it's set
 		nyk_tooltip.innerHTML = tooltipTxt;
 		nyk_tooltip.style.left = leftPos + 'px';
 		nyk_tooltip.style.top = e.clientY + 10 + st + 'px';
 
-		
+
 		nyk_tooltipShadow.style.left =  leftPos + nyk_shadowSize + 'px';
 		nyk_tooltipShadow.style.top = e.clientY + 10 + st + nyk_shadowSize + 'px';
-		
+
 		if(nyk_tooltip.offsetWidth>nyk_tooltipMaxWidth){	/* Exceeding max width of tooltip ? */
 			nyk_tooltip.style.width = nyk_tooltipMaxWidth + 'px';
 		}
-		
+
 		var tooltipWidth = nyk_tooltip.offsetWidth;
 		if(tooltipWidth<nyk_tooltipMinWidth)tooltipWidth = nyk_tooltipMinWidth;
-		
-		
+
+
 		nyk_tooltip.style.width = tooltipWidth + 'px';
 		nyk_tooltipShadow.style.width = nyk_tooltip.offsetWidth + 'px';
 		nyk_tooltipShadow.style.height = nyk_tooltip.offsetHeight + 'px';
-		
+
 		if((leftPos + tooltipWidth)>bodyWidth){
 			nyk_tooltip.style.left = (nyk_tooltipShadow.style.left.replace('px','') - ((leftPos + tooltipWidth)-bodyWidth)) + 'px';
 			nyk_tooltipShadow.style.left = (nyk_tooltipShadow.style.left.replace('px','') - ((leftPos + tooltipWidth)-bodyWidth) + nyk_shadowSize) + 'px';
 		}
-		
+
 		if(tooltip_is_msie){
 			nyk_iframe.style.left = nyk_tooltip.style.left;
 			nyk_iframe.style.top = nyk_tooltip.style.top;
 			nyk_iframe.style.width = nyk_tooltip.offsetWidth + 'px';
 			nyk_iframe.style.height = nyk_tooltip.offsetHeight + 'px';
-		
+
 		}
-				
+
 	}
-	
+
 	function hideTooltip()
 	{
 		nyk_tooltip.style.display='none';
 		nyk_tooltipShadow.style.display='none';
 		if(tooltip_is_msie)nyk_iframe.style.display='none';
 	}
-	
-	</SCRIPT>	
+
+	</SCRIPT>
