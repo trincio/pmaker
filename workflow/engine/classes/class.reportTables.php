@@ -180,6 +180,14 @@ class ReportTables {
   	  	      		break;
   	  	      		case 'char':
   	  	      		case 'text':
+  	  	      		  if (!isset($aData[$aField['sFieldName']])) {
+  	  	      		    $aData[$aField['sFieldName']] = '';
+  	  	      		  }
+  	  	      		  if (function_exists('mb_detect_encoding')) {
+  	  	      		    if (strtoupper(mb_detect_encoding($aData[$aField['sFieldName']])) == 'UTF-8') {
+                        $aData[$aField['sFieldName']] = utf8_decode($aData[$aField['sFieldName']]);
+  	  	      		    }
+  	  	      		  }
   	  	      		  $sQuery .= ",'" . (isset($aData[$aField['sFieldName']]) ? mysql_real_escape_string($aData[$aField['sFieldName']]) : '') . "'";
   	  	      		break;
   	  	      		case 'date':
@@ -208,6 +216,14 @@ class ReportTables {
   	  	          		break;
   	  	          		case 'char':
   	  	          		case 'text':
+  	  	          		  if (!isset($aGridRow[$aField['sFieldName']])) {
+  	  	      		        $aGridRow[$aField['sFieldName']] = '';
+  	  	      		      }
+  	  	          		  if (function_exists('mb_detect_encoding')) {
+  	  	      		        if (strtoupper(mb_detect_encoding($aGridRow[$aField['sFieldName']])) == 'UTF-8') {
+                            $aGridRow[$aField['sFieldName']] = utf8_decode($aGridRow[$aField['sFieldName']]);
+  	  	      		        }
+  	  	      		      }
   	  	          		  $sQuery .= ",'" . (isset($aGridRow[$aField['sFieldName']]) ? mysql_real_escape_string($aGridRow[$aField['sFieldName']]) : '') . "'";
   	  	          		break;
   	  	          		case 'date':
@@ -312,6 +328,14 @@ class ReportTables {
   	  	        		break;
   	  	        		case 'char':
   	  	        		case 'text':
+  	  	        		  if (!isset($aFields[$aField['sFieldName']])) {
+  	  	      		      $aFields[$aField['sFieldName']] = '';
+  	  	      		    }
+  	  	        		  if (function_exists('mb_detect_encoding')) {
+  	  	      		      if (strtoupper(mb_detect_encoding($aFields[$aField['sFieldName']])) == 'UTF-8') {
+                          $aFields[$aField['sFieldName']] = utf8_decode($aFields[$aField['sFieldName']]);
+  	  	      		      }
+  	  	      		    }
   	  	        		  $sQuery .= "'" . (isset($aFields[$aField['sFieldName']]) ? mysql_real_escape_string($aFields[$aField['sFieldName']]) : '') . "',";
   	  	        		break;
   	  	        		case 'date':
@@ -336,6 +360,14 @@ class ReportTables {
   	  	        		break;
   	  	        		case 'char':
   	  	        		case 'text':
+  	  	        		  if (!isset($aFields[$aField['sFieldName']])) {
+  	  	      		      $aFields[$aField['sFieldName']] = '';
+  	  	      		    }
+  	  	        		  if (function_exists('mb_detect_encoding')) {
+  	  	      		      if (strtoupper(mb_detect_encoding($aFields[$aField['sFieldName']])) == 'UTF-8') {
+                          $aFields[$aField['sFieldName']] = utf8_decode($aFields[$aField['sFieldName']]);
+  	  	      		      }
+  	  	      		    }
   	  	        		  $sQuery .= ",'" . (isset($aFields[$aField['sFieldName']]) ? mysql_real_escape_string($aFields[$aField['sFieldName']]) : '') . "'";
   	  	        		break;
   	  	        		case 'date':
@@ -367,6 +399,14 @@ class ReportTables {
   	  	          		break;
   	  	          		case 'char':
   	  	          		case 'text':
+  	  	          		  if (!isset($aGridRow[$aField['sFieldName']])) {
+  	  	      		        $aGridRow[$aField['sFieldName']] = '';
+  	  	      		      }
+  	  	          		  if (function_exists('mb_detect_encoding')) {
+  	  	      		        if (strtoupper(mb_detect_encoding($aGridRow[$aField['sFieldName']])) == 'UTF-8') {
+                            $aGridRow[$aField['sFieldName']] = utf8_decode($aGridRow[$aField['sFieldName']]);
+  	  	      		        }
+  	  	      		      }
   	  	          		  $sQuery .= ",'" . (isset($aGridRow[$aField['sFieldName']]) ? mysql_real_escape_string($aGridRow[$aField['sFieldName']]) : '') . "'";
   	  	          		break;
   	  	          		case 'date':
