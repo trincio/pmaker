@@ -4402,7 +4402,7 @@
       <rule name="required" message="Source task is required." />
     </validator>
     <validator column="OP_PARTICIPATE">
-      <rule name="validValues" value="1|2" message="Please select a valid participation value." />
+      <rule name="validValues" value="0|1" message="Please select a valid participation value." />
       <rule name="required" message="Participation is required." />
     </validator>
     <validator column="OP_OBJ_TYPE">
