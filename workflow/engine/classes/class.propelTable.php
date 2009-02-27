@@ -98,7 +98,7 @@ class propelTable
   var $tdClass='';
   //Config Save definition
   var $__Configuration='orderBy,filter,fastSearch,style/*/showInTable';//order,rowsPerPage,disableFooter';
-  
+
   //Variable for MasterDetail feature
   var $masterdetail='';
 
@@ -158,14 +158,14 @@ class propelTable
             $this->aOrder[$field] = $fieldOrder;
         }
       }
-      
+
       if(count($this->masterdetail) > 0){
-	      $this->criteria->clearOrderByColumns();	      
+	      $this->criteria->clearOrderByColumns();
 	      foreach($this->masterdetail as $idMasterDetail => $fieldMasterDetail){
 		      $this->criteria->addAscendingOrderByColumn( $fieldMasterDetail );
 	      }
       }
-      
+
       if (!empty($this->aOrder)) {
 	      if(count($this->masterdetail) <= 0){
 		      $this->criteria->clearOrderByColumns();
@@ -179,7 +179,7 @@ class propelTable
         }
       }
       //krumo($this->criteria->getOrderByColumns());
-      
+
       /*
        * Add limits
        */
@@ -215,21 +215,24 @@ class propelTable
     //Config
     $this->name = $xmlForm->name;
     $this->id   = $xmlForm->id;
-    
-    
-    
+
     //$this->sqlConnection=((isset($this->xmlForm->sqlConnection))?$this->xmlForm->sqlConnection:'');
 
     if ( isset($_GET['page']))   $this->currentPage = $_GET['page']; else $this->currentPage = 1;
     if ( isset($_GET['order']))  $this->orderBy     = urldecode($_GET['order']); else $this->orderBy = "";
     if ( isset($_GET['filter'])) $this->filter      = urldecode($_GET['filter']); else $this->filter = "";
 
-    $this->ajaxServer = G::encryptLink( '../gulliver/propelTableAjax' );
+    if ($xmlForm->ajaxServer != '') {
+      $this->ajaxServer = G::encryptLink( $xmlForm->ajaxServer );
+    }
+    else {
+      $this->ajaxServer = G::encryptLink( '../gulliver/propelTableAjax' );
+    }
     $this->ownerPage  = G::encryptLink( SYS_CURRENT_URI );
 
     // Config attributes from XMLFORM file
-    $myAttributes = get_class_vars(get_class($this));    
-    foreach ($this->xmlForm->xmlform->tree->attribute as $atrib => $value)	    
+    $myAttributes = get_class_vars(get_class($this));
+    foreach ($this->xmlForm->xmlform->tree->attribute as $atrib => $value)
     if (array_key_exists( $atrib, $myAttributes))
     {
       eval('settype($value, gettype($this->' . $atrib.'));');
@@ -326,7 +329,7 @@ class propelTable
     //Render headers
     $this->colCount=0;
     $this->shownFields='[';
-    foreach($this->fields as $r => $rval)     
+    foreach($this->fields as $r => $rval)
     if (($this->style[$r]['showInTable'] != '0' )&&(!(in_array($this->fields[$r]['Name'],$this->masterdetail))))
     //if (($this->style[$r]['showInTable'] != '0' ))
     {
@@ -523,7 +526,7 @@ class propelTable
       	$this->tpl->assign( $key , $val );
     	}
     }
-    
+
     //$this->tpl->newBlock('headerBlock');
 
     /********** HEAD BLOCK ***************/
@@ -543,7 +546,7 @@ class propelTable
         $template = PATH_CORE . 'templates' . PATH_SEP . $menu->type . '.html';
         $menu->setValues($this->xmlForm->values);
         $menu->setValues(array( 'PAGED_TABLE_ID' => $this->id ));
-        
+
         $menu->setValues(array( 'PAGED_TABLE_FAST_SEARCH' => $this->fastSearch ));
         if (isset($filterForm->name)) {
           $menu->setValues(array('SEARCH_FILTER_FORM' => $filterForm->name));
@@ -595,8 +598,8 @@ class propelTable
       $rs = GulliverBasePeer::doSelectRs ( $this->criteria);
     }
     $rs->setFetchmode (ResultSet::FETCHMODE_ASSOC);
-    
-/*    
+
+/*
     print "<div class='pagedTableDefault'><table  class='default'>";
     $rs->next();
     $row = $rs->getRow();
@@ -608,86 +611,86 @@ class propelTable
       $row = $rs->getRow();
     }
     print "</table></div>";
-  
+
 die;*/
 //      krumo ( G::microtime_float() - $t1);
       $gridRows=0;
       $rs->next();
-      
-      
+
+
       //Initialize the array of breakFields for Master Detail View
       foreach($this->masterdetail as $keyMasterDetail => $fieldMasterDetail){
 	      $breakField[$fieldMasterDetail]="novaluehere";
-      }      
+      }
       $breakFieldKeys=array_flip($this->masterdetail);
-     
-      
+
+
       for($j=0;$j< $rs->getRecordCount() ;$j++)
       {
         $result = $rs->getRow();
 	      $rs->next();
-	
-	
-	
 
-	
-	
-	
-	
+
+
+
+
+
+
+
         $gridRows++;
         $this->tpl->newBlock( "row" );
         $this->tpl->assign( "class" , "Row".(($j%2)+1));
         $this->tdStyle='';
         $this->tdClass='';
-	
-	
+
+
 	//Start Master Detail: This enable the MasterDEtail view. By JHL November 2008
 	if(count($this->masterdetail)>0){
 		//TODO: Validate if there is a Field that not exists
 		//TODO: Style
 		//TODO: Improve Collapse function....
-		
-		foreach($this->masterdetail as $keyMasterDetail => $fieldMasterDetail){			
+
+		foreach($this->masterdetail as $keyMasterDetail => $fieldMasterDetail){
 			if($breakField[$fieldMasterDetail]!=$result[$fieldMasterDetail]){
-				$this->tpl->newBlock( "rowMaster" );							
+				$this->tpl->newBlock( "rowMaster" );
 				$this->tpl->newBlock( "fieldMaster" );
 				$this->tpl->assign( "alignAttr" , " colspan=".(count($this->fields)*2));
 				$this->tpl->assign( "value" , $this->fields[$fieldMasterDetail]['Label'].": ".$this->xmlForm->fields[ $fieldMasterDetail ]->renderTable( $result[$fieldMasterDetail], $this->xmlForm, true ));
-								
+
 				$breakField[$fieldMasterDetail]=$result[$fieldMasterDetail];
-				
-				for($i=$breakFieldKeys[$fieldMasterDetail]+1;$i<count($breakField);$i++){				
+
+				for($i=$breakFieldKeys[$fieldMasterDetail]+1;$i<count($breakField);$i++){
 					$breakField[$this->masterdetail[$i]]="novaluehere";
-					
+
 				}
 				$rowName=array();
-				foreach($breakField as $key => $value){				
+				foreach($breakField as $key => $value){
 					if($value!="novaluehere"){
 						$rowName[$key]=$key."_".$value;
 					}
-				}				
+				}
 				$this->tpl->assign( "masterRowName" , implode(",",$rowName));
 				$this->tpl->assign( 'pagedTable_Name' , $this->name );
-				$many="";				
+				$many="";
 				$this->tpl->assign( "value1" ,str_pad($many, count($rowName)-1 , "-") );
 				$this->tpl->gotoblock("rowMaster");
 				$this->tpl->assign( "masterRowName" , "_MD_".implode(",",$rowName));
 				$this->tpl->assign( "masterRowClass" , $keyMasterDetail==0?"masterDetailMain":"masterDetailOther");
-				
-				
-			}			
+
+
+			}
 		}
 		$this->tpl->gotoblock("row");
 		$this->tpl->assign( "rowName" , implode(",",$rowName));
 	}
 	//End Master Detail: This enable the MasterDEtail view
-	
-	
+
+
        //Merge $result with $xmlForm values (for default valuesSettings)
         if ( is_array ( $this->xmlForm->values ) )
         $result = array_merge($this->xmlForm->values, $result);
         foreach($this->fields as $r => $rval)
-        {		
+        {
           if (strcasecmp($this->fields[$r]['Type'],'cellMark')==0)
           {
             $result1 = $result;
@@ -703,10 +706,10 @@ die;*/
             if (($this->style[$r]['showInTable'] != '0' )&&(!(in_array($this->fields[$r]['Name'],$this->masterdetail))))
 	    //if (($this->style[$r]['showInTable'] != '0' ))
             $this->renderField($j+1,$r,$result);
-	    
-    
-    
-    
+
+
+
+
           }
         }
       }
@@ -790,7 +793,7 @@ die;*/
         if ($this->addRow)  if($this->sqlInsert!='')$this->tpl->assign( "insert" , '<a href="#" onclick="pagedTable.event=\'Insert\';popup(\''.$this->popupPage.'\');return false;">'./*G::LoadXml('labels','ID_ADD_NEW')*/ 'ID_ADD_NEW' .'</a>' );
         $this->tpl->assign("pagesEnum", $pagesEnum);
     }
-    
+
 
 ?>
 
