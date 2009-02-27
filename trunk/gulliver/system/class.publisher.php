@@ -82,13 +82,13 @@ class Publisher
     //This is needed to prepare the "header content"
 		//before to send the body content. ($oHeadPublisher)
 		ob_start();
-		
+
 		$this->RenderContent0($pos);
 		if ( (ob_get_contents()!=='') && ($this->publisherId!=='') && ($strType != 'template') ) {
   		$this->Parts[$pos]['RenderedContent'] = '<DIV id="'.$this->publisherId.'['.$pos.']" style="'.((is_string($strContent))?$strContent:'').'; margin:0px;" align="center">';
   		$this->Parts[$pos]['RenderedContent'].= ob_get_contents();
   		$this->Parts[$pos]['RenderedContent'].= '</DIV>';
-  	} 
+  	}
   	else {
   		$this->Parts[$pos]['RenderedContent']= ob_get_contents();
 	  }
@@ -332,14 +332,14 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
             $sPath = PATH_PLUGINS; // . $aux[0] . PATH_SEP ;
           }
         }
-        
+
         //search in PATH_DYNAFORM folder
         if ( !is_file ( $sPath . PATH_SEP. $Part['File'] . '.xml') ) {
-          $sPath = PATH_DYNAFORM; 
-        }  
+          $sPath = PATH_DYNAFORM;
+        }
 
       }
-      
+
       //PATH_DATA_PUBLIC ???
       if ( !file_exists ($sPath .PATH_SEP. $Part['File'] . '.xml') && defined ( 'PATH_DATA_PUBLIC') ) {
       	$sPath = PATH_DATA_PUBLIC ;
@@ -347,7 +347,10 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
 
       $G_FORM = new Form ( $Part['File'] , $sPath, SYS_LANG, true );
 
-      $G_FORM->ajaxServer  = urlencode( G::encrypt( $Part['ajaxServer'] ,URL_KEY ) );
+      if ( defined ( 'ENABLE_ENCRYPT' ) && ENABLE_ENCRYPT == 'yes' )
+        $G_FORM->ajaxServer  = urlencode( G::encrypt( $Part['ajaxServer'] ,URL_KEY ) );
+      else
+        $G_FORM->ajaxServer  = $Part['ajaxServer'];
 
       //$G_FORM->setValues ($Part['Data']);
       if (isset($_SESSION)) $_SESSION[$G_FORM->id] = $G_FORM->values;
