@@ -33,9 +33,9 @@
 
 class Report {
 	function generatedReport1()
-	{   
+	{
 		$this->reportsPatch();
-		
+
 		require_once 'classes/model/AppDelegation.php';
 		require_once 'classes/model/Application.php';
 		$oCriteria = new Criteria('workflow');
@@ -64,8 +64,8 @@ class Report {
       	                'MAX'       => 'float',
       	                'TOTALDUR'  => 'float',
       	                'PROMEDIO'  => 'float');
-    while ($aRow = $oDataset->getRow()) 
-    {    	
+    while ($aRow = $oDataset->getRow())
+    {
       	$oCriteria = new Criteria('workflow');
         $oCriteria->addSelectColumn(ApplicationPeer::PRO_UID);
         $oCriteria->add(ApplicationPeer::PRO_UID,     $aRow['PRO_UID']);
@@ -86,14 +86,14 @@ class Report {
     G::LoadClass('ArrayPeer');
     $oCriteria = new Criteria('dbarray');
     $oCriteria->setDBArrayTable('reports');
-    
+
     return $oCriteria;
 	}
 
   function generatedReport1_filter($from, $to, $startedby)
-	{   
+	{
 		$this->reportsPatch();
-		
+
 		require_once 'classes/model/AppDelegation.php';
 		require_once 'classes/model/Application.php';
 		require_once 'classes/model/Users.php';
@@ -118,7 +118,7 @@ class Report {
     //$aAux1 = explode('-', $from);  date('Y-m-d H:i:s', mktime(0, 0, 0, $aAux1[1], $aAux1[2], $aAux1[0]))
     $oCriteria->add($oCriteria->getNewCriterion(AppDelegationPeer::DEL_INIT_DATE, $from.' 00:00:00', Criteria::GREATER_EQUAL)->addAnd($oCriteria->getNewCriterion(AppDelegationPeer::DEL_INIT_DATE, $to.' 23:59:59', Criteria::LESS_EQUAL)));
 
-    if($startedby!='') $oCriteria->add(AppDelegationPeer::USR_UID,  $startedby);
+    if($startedby!='') $oCriteria->add(ApplicationPeer::APP_INIT_USER,  $startedby);
 
     $oCriteria->addGroupByColumn(AppDelegationPeer::PRO_UID);
 
@@ -137,6 +137,7 @@ class Report {
       	$oCriteria = new Criteria('workflow');
         $oCriteria->addSelectColumn(ApplicationPeer::PRO_UID);
         $oCriteria->add(ApplicationPeer::PRO_UID,     $aRow['PRO_UID']);
+        if($startedby!='') $oCriteria->add(ApplicationPeer::APP_INIT_USER,  $startedby);
 
       	$aProcess[] = array('PRO_UID'   => $aRow['PRO_UID'],
       	                    'PRO_TITLE' => $aRow['PRO_TITLE'],
@@ -160,7 +161,7 @@ class Report {
 
 	function descriptionReport1($PRO_UID)
 	{   $this->reportsPatch();
-	
+
 		require_once 'classes/model/AppDelegation.php';
 		require_once 'classes/model/Task.php';
 		require_once 'classes/model/Content.php';
@@ -194,13 +195,13 @@ class Report {
     $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
     $oDataset->next();
 
-    $aProcess[] = array('TAS_TITLE'   => 'char',      	                
+    $aProcess[] = array('TAS_TITLE'   => 'char',
       	                'MIN'       => 'float',
       	                'MAX'       => 'float',
       	                'TOTALDUR'  => 'float',
       	                'PROMEDIO'  => 'float');
-    while ($aRow = $oDataset->getRow()) {      	
-      	$aProcess[] = array('TAS_TITLE'   => $aRow['TAS_TITLE'],      	                    
+    while ($aRow = $oDataset->getRow()) {
+      	$aProcess[] = array('TAS_TITLE'   => $aRow['TAS_TITLE'],
       	                    'MIN'       => number_format($aRow['MIN'],2),
       	                    'MAX'       => number_format($aRow['MAX'],2),
       	                    'TOTALDUR'  => number_format($aRow['TOTALDUR'],2),
@@ -220,7 +221,7 @@ class Report {
 
 	function generatedReport2()
 	{   $this->reportsPatch();
-	
+
 		require_once 'classes/model/AppDelegation.php';
 		require_once 'classes/model/Application.php';
 		$oCriteria = new Criteria('workflow');
@@ -241,11 +242,11 @@ class Report {
     $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
     $oDataset->next();
 
-    $lastmonth = mktime(0, 0, 0, date("m")-1  , date("d"), date("Y"));
-    $month = date( 'Y-m-d' , $lastmonth );
+    $month = date( 'Y-m-d' , mktime(0, 0, 0, date("m")-1  , date("d"), date("Y")) );
+    $lastmonth = date( 'Y-m-d' , mktime(0, 0, 0, date("m")-2  , date("d"), date("Y")) );
 
-    $lastday = mktime(0, 0, 0, date("m")  , date("d")-1, date("Y"));
-    $day = date( 'Y-m-d' , $lastday );
+    $day = mktime(0, 0, 0, date("m")  , date("d")-1, date("Y"));
+    $lastday = mktime(0, 0, 0, date("m")  , date("d")-2, date("Y"));
 
     $aProcess[] = array('PRO_UID'   => 'char',
       	                'PRO_TITLE' => 'char',
@@ -272,7 +273,8 @@ class Report {
       	$oCriteria2->addSelectColumn(ApplicationPeer::PRO_UID);
         $oCriteria2->addAsColumn("CANTCASES", "COUNT(*)");
         $oCriteria2->add(ApplicationPeer::PRO_UID, $aRow['PRO_UID']);
-        $oCriteria2->add(ApplicationPeer::APP_INIT_DATE, $month, Criteria::GREATER_EQUAL);
+        $oCriteria2->add(ApplicationPeer::APP_INIT_DATE, $lastmonth, Criteria::GREATER_EQUAL);
+        $oCriteria2->add(ApplicationPeer::APP_INIT_DATE, $month, Criteria::LESS_EQUAL);
         $oCriteria2->addGroupByColumn(ApplicationPeer::PRO_UID);
         $oDataset2 = AppDelegationPeer::doSelectRS($oCriteria2);
         $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
@@ -284,7 +286,8 @@ class Report {
       	$oCriteria2->addSelectColumn(ApplicationPeer::PRO_UID);
         $oCriteria2->addAsColumn("CANTCASES", "COUNT(*)");
         $oCriteria2->add(ApplicationPeer::PRO_UID, $aRow['PRO_UID']);
-        $oCriteria2->add(ApplicationPeer::APP_INIT_DATE, $day, Criteria::GREATER_EQUAL);
+        $oCriteria2->add(ApplicationPeer::APP_INIT_DATE, $lastday, Criteria::GREATER_EQUAL);
+        $oCriteria2->add(ApplicationPeer::APP_INIT_DATE, $day, Criteria::LESS_EQUAL);
         $oCriteria2->addGroupByColumn(ApplicationPeer::PRO_UID);
         $oDataset2 = AppDelegationPeer::doSelectRS($oCriteria2);
         $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
@@ -313,7 +316,7 @@ class Report {
 	}
 
 	function reports_Description_filter($from, $to, $startedby, $PRO_UID)
-	{  
+	{
 		$this->reportsPatch();
 	  require_once 'classes/model/AppDelegation.php';
 		require_once 'classes/model/Task.php';
@@ -360,6 +363,8 @@ class Report {
 		$oCriteria = new Criteria('workflow');
 		$del = DBAdapter::getStringDelimiter();
     $oCriteria->addSelectColumn(AppDelegationPeer::PRO_UID);
+    $oCriteria->addAsColumn("MIN", "MIN(".AppDelegationPeer::DEL_DURATION.")");
+    $oCriteria->addAsColumn("MAX", "MAX(".AppDelegationPeer::DEL_DURATION.")");
     $oCriteria->addAsColumn('PRO_TITLE', 'C1.CON_VALUE' );
     $oCriteria->addAlias("C1",  'CONTENT');
     $proTitleConds = array();
@@ -377,15 +382,17 @@ class Report {
     $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
     $oDataset->next();
 
-    $lastmonth = mktime(0, 0, 0, date("m")-1  , date("d"), date("Y"));
-    $month = date( 'Y-m-d' , $lastmonth );
+    $month = date( 'Y-m-d' , mktime(0, 0, 0, date("m")-1  , date("d"), date("Y")) );
+    $lastmonth = date( 'Y-m-d' , mktime(0, 0, 0, date("m")-2  , date("d"), date("Y")) );
 
-    $lastday = mktime(0, 0, 0, date("m")  , date("d")-1, date("Y"));
-    $day = date( 'Y-m-d' , $lastday );
+    $day = mktime(0, 0, 0, date("m")  , date("d")-1, date("Y"));
+    $lastday = mktime(0, 0, 0, date("m")  , date("d")-2, date("Y"));
 
     $aProcess[] = array('PRO_UID'   => 'char',
       	                'PRO_TITLE' => 'char',
       	                'CANTCASES' => 'integer',
+      	                'MIN'       => 'float',
+      	                'MAX'       => 'float',
       	                'CASELASTMONTH' => 'integer',
       	                'CASELASTDAY' => 'integer'
       	                );
@@ -395,6 +402,7 @@ class Report {
       	$oCriteria2->addSelectColumn(ApplicationPeer::PRO_UID);
         $oCriteria2->addAsColumn("CANTCASES", "COUNT(*)");
         $oCriteria2->add(ApplicationPeer::PRO_UID, $aRow['PRO_UID']);
+        if($startedby!='') $oCriteria2->add(ApplicationPeer::APP_INIT_USER,  $startedby);
         $oCriteria2->addGroupByColumn(ApplicationPeer::PRO_UID);
         $oDataset2 = AppDelegationPeer::doSelectRS($oCriteria2);
         $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
@@ -406,7 +414,9 @@ class Report {
       	$oCriteria2->addSelectColumn(ApplicationPeer::PRO_UID);
         $oCriteria2->addAsColumn("CANTCASES", "COUNT(*)");
         $oCriteria2->add(ApplicationPeer::PRO_UID, $aRow['PRO_UID']);
-        $oCriteria2->add(ApplicationPeer::APP_INIT_DATE, $month, Criteria::GREATER_EQUAL);
+        $oCriteria2->add(ApplicationPeer::APP_INIT_DATE, $lastmonth, Criteria::GREATER_EQUAL);
+        $oCriteria2->add(ApplicationPeer::APP_INIT_DATE, $month, Criteria::LESS_EQUAL);
+        if($startedby!='') $oCriteria2->add(ApplicationPeer::APP_INIT_USER,  $startedby);
         $oCriteria2->addGroupByColumn(ApplicationPeer::PRO_UID);
         $oDataset2 = AppDelegationPeer::doSelectRS($oCriteria2);
         $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
@@ -418,7 +428,9 @@ class Report {
       	$oCriteria2->addSelectColumn(ApplicationPeer::PRO_UID);
         $oCriteria2->addAsColumn("CANTCASES", "COUNT(*)");
         $oCriteria2->add(ApplicationPeer::PRO_UID, $aRow['PRO_UID']);
-        $oCriteria2->add(ApplicationPeer::APP_INIT_DATE, $day, Criteria::GREATER_EQUAL);
+        $oCriteria2->add(ApplicationPeer::APP_INIT_DATE, $lastday, Criteria::GREATER_EQUAL);
+        $oCriteria2->add(ApplicationPeer::APP_INIT_DATE, $day, Criteria::LESS_EQUAL);
+        if($startedby!='') $oCriteria2->add(ApplicationPeer::APP_INIT_USER,  $startedby);
         $oCriteria2->addGroupByColumn(ApplicationPeer::PRO_UID);
         $oDataset2 = AppDelegationPeer::doSelectRS($oCriteria2);
         $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
@@ -426,11 +438,19 @@ class Report {
         $aRow2 = $oDataset2->getRow();
         $cant2 = $aRow2['CANTCASES'];
 
-      	$aProcess[] = array('PRO_UID'   => $aRow['PRO_UID'],
+      	/*$aProcess[] = array('PRO_UID'   => $aRow['PRO_UID'],
       	                    'PRO_TITLE' => $aRow['PRO_TITLE'],
       	                    'CANTCASES' => $cant,
       	                    'CASELASTMONTH' => $cant1,
       	                    'CASELASTDAY' => $cant2
+      	                   );*/
+      	$aProcess[] = array('PRO_UID'   => $aRow['PRO_UID'],
+      	                    'PRO_TITLE' => $aRow['PRO_TITLE'],
+      	                    'CANTCASES' => $cant,
+      	                    'MIN'       => number_format($aRow['MIN'],2),
+      	                    'MAX'       => number_format($aRow['MAX'],2),
+      	                    'CASELASTMONTH' => number_format($cant1,2),
+      	                    'CASELASTDAY' => number_format($cant2,2)
       	                   );
       	$oDataset->next();
      }
@@ -451,7 +471,7 @@ class Report {
 		$oCriteria = new Criteria('workflow');
 		$del = DBAdapter::getStringDelimiter();
     $sql = "SELECT CONCAT(SUBSTRING(AD.DEL_INIT_DATE,6,2),'-', SUBSTRING(AD.DEL_INIT_DATE,1,4)) AS FECHA,
-              COUNT(*) AS CANTCASES,
+              COUNT(DISTINCT(AD.APP_UID)) AS CANTCASES,
       				MIN(AD.DEL_DURATION) AS MIN,
 							MAX(AD.DEL_DURATION) AS MAX,
 							SUM(AD.DEL_DURATION) AS TOTALDUR,
@@ -518,7 +538,7 @@ class Report {
     	}
     }
 	  $sql = "SELECT CONCAT(SUBSTRING(AD.DEL_INIT_DATE,6,2),'-', SUBSTRING(AD.DEL_INIT_DATE,1,4)) AS FECHA,
-              COUNT(*) AS CANTCASES,
+              COUNT(DISTINCT(AD.APP_UID)) AS CANTCASES,
       				MIN(AD.DEL_DURATION) AS MIN,
 							MAX(AD.DEL_DURATION) AS MAX,
 							SUM(AD.DEL_DURATION) AS TOTALDUR,
@@ -575,7 +595,7 @@ class Report {
 							MAX(AD.DEL_DURATION) AS MAX,
 							SUM(AD.DEL_DURATION) AS TOTALDUR,
 							AVG(AD.DEL_DURATION) AS PROMEDIO
-              FROM APPLICATION AS A              
+              FROM APPLICATION AS A
               LEFT JOIN APP_DELEGATION AS AD ON(A.APP_UID = AD.APP_UID AND AD.DEL_INDEX=1)
               LEFT JOIN USERS AS U ON(U.USR_UID = A.APP_INIT_USER)
               WHERE A.APP_UID<>''
@@ -639,14 +659,14 @@ class Report {
              WHERE AD.PRO_UID='".$process."' AND AD.TAS_UID='".$task."' ";
     	}
     }
-               
+
 	  $sql = "SELECT CONCAT(U.USR_LASTNAME,' ',USR_FIRSTNAME) AS USER,
               COUNT(*) AS CANTCASES,
       				MIN(AD.DEL_DURATION) AS MIN,
 							MAX(AD.DEL_DURATION) AS MAX,
 							SUM(AD.DEL_DURATION) AS TOTALDUR,
 							AVG(AD.DEL_DURATION) AS PROMEDIO
-              FROM APPLICATION AS A            
+              FROM APPLICATION AS A
               LEFT JOIN APP_DELEGATION AS AD ON(A.APP_UID = AD.APP_UID AND AD.DEL_INDEX=1)
               LEFT JOIN USERS AS U ON(U.USR_UID = A.APP_INIT_USER)
               ".$var."
@@ -808,15 +828,15 @@ class Report {
     return $oCriteria;
 	}
 
-	
+
 	function getAvailableReports() {
 	  return array('ID_REPORT1', 'ID_REPORT2', 'ID_REPORT3', 'ID_REPORT4', 'ID_REPORT5');
 	}
-		
-	// Patch for reports by The Answer (17-10-2k8) 
-	function reportsPatch() {		
-	  	require_once 'classes/model/AppDelegation.php';		
-		   	  	
+
+	// Patch for reports by The Answer (17-10-2k8)
+	function reportsPatch() {
+	  	require_once 'classes/model/AppDelegation.php';
+
 	  	$oCriteria = new Criteria('workflow');
 		$del = DBAdapter::getStringDelimiter();
         $oCriteria->addSelectColumn(AppDelegationPeer::APP_UID);
@@ -830,30 +850,30 @@ class Report {
         $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
         $oDataset->next();
         while ($aRow = $oDataset->getRow()) {
-      		$oAppDelegation = new AppDelegation(); 
-      		
+      		$oAppDelegation = new AppDelegation();
+
         	$aData['APP_UID']=$aRow['APP_UID'];
       		$aData['DEL_INDEX']=$aRow['DEL_INDEX'];
       		$aData['DEL_DELEGATE_DATE']=$aRow['DEL_DELEGATE_DATE'];
-      		
+
       		if($aRow['DEL_INIT_DATE']==NULL)
       		    $aData['DEL_INIT_DATE']=$aRow['DEL_DELEGATE_DATE'];
-      		else    
-      			$aData['DEL_INIT_DATE']=$aRow['DEL_INIT_DATE'];      			
-      		
-      		//$aData['DEL_FINISH_DATE']=$aRow['DEL_FINISH_DATE'];      		
-      		if($aRow['DEL_DURATION']!=0)      		
-      		 {	
+      		else
+      			$aData['DEL_INIT_DATE']=$aRow['DEL_INIT_DATE'];
+
+      		//$aData['DEL_FINISH_DATE']=$aRow['DEL_FINISH_DATE'];
+      		if($aRow['DEL_DURATION']!=0)
+      		 {
       		 	G::LoadClass('dates');
-                $oDates = new dates();                
+                $oDates = new dates();
       		 	$aData['DEL_DURATION']= $oDates->calculateDuration($aData['DEL_INIT_DATE'], $aRow['DEL_FINISH_DATE'], null, null, $aRow['TAS_UID']);
-      		 }	
+      		 }
 
       		$oAppDelegation->update($aData);
-      		
+
       		$oDataset->next();
-      	}              
+      	}
 		return;
 	}
-	
+
 }

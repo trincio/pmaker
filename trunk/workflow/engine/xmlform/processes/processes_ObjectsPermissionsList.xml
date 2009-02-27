@@ -25,6 +25,12 @@
 <OP_CASE_STATUS type="text" titleAlign="left" colWidth="60">
   <en>Status</en>
 <es>Estado</es></OP_CASE_STATUS>
+
+<EDIT type="link" titleAlign="center" colWidth="50" link="#" onclick="editObjectPermission(@@OP_UID);return false;">
+  <en>Edit</en>
+<es>Editar</es>
+</EDIT>
+
 <DELETE type="link" titleAlign="center" colWidth="50" link="processes_DeleteObjectPermission?OP_UID=@#OP_UID" onclick="deleteObjectPermission(this.href);return false;">
   <en>Delete</en>
 <es>Borrar</es><pt>Eliminar</pt></DELETE>

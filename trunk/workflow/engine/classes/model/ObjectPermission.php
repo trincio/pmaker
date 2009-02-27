@@ -81,4 +81,25 @@ class ObjectPermission extends BaseObjectPermission {
 		}
 	}
 
+  function update($aFields) { //print_r($aFields); die;
+    $oConnection = Propel::getConnection(ObjectPermissionPeer::DATABASE_NAME);
+    try {
+      $oConnection->begin();
+      $this->load($aFields['OP_UID']);
+      $this->fromArray($aFields, BasePeer::TYPE_FIELDNAME);
+      if ($this->validate()) {
+        $iResult = $this->save();
+        $oConnection->commit();
+        return $iResult;
+      }
+      else {
+        $oConnection->rollback();
+        throw(new Exception('Failed Validation in class ' . get_class($this) . '.'));
+      }
+    }
+    catch(Exception $e) {
+      $oConnection->rollback();
+      throw($e);
+    }
+  }
 } // ObjectPermission
