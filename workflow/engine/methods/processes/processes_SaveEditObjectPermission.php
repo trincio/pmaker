@@ -57,15 +57,15 @@ require_once 'classes/model/ObjectPermission.php';
 $oOP = new ObjectPermission();
 $aData = array('OP_UID'           => $_POST['form']['OP_UID'],
                'PRO_UID'          => $_POST['form']['PRO_UID'],
-               'TAS_UID'          => $_POST['form']['TAS_UID'],
+               'TAS_UID'          => $_POST['form']['TAS_UID']!='' ? $_POST['form']['TAS_UID'] : '0' ,
                'USR_UID'          => (string)$sUserGroup,
                'OP_USER_RELATION' => $iRelation,
-               'OP_TASK_SOURCE'   => $_POST['form']['OP_TASK_SOURCE'],
-               'OP_PARTICIPATE'   => $_POST['form']['OP_PARTICIPATE'],
-               'OP_OBJ_TYPE'      => $_POST['form']['OP_OBJ_TYPE'],
-               'OP_OBJ_UID'       => $sObjectUID,
-               'OP_ACTION'        => $_POST['form']['OP_ACTION'],
-               'OP_CASE_STATUS'   => $_POST['form']['OP_CASE_STATUS']
+               'OP_TASK_SOURCE'   => $_POST['form']['OP_TASK_SOURCE']!='' ? $_POST['form']['OP_TASK_SOURCE'] : '0',
+               'OP_PARTICIPATE'   => $_POST['form']['OP_PARTICIPATE']!='' ? $_POST['form']['OP_PARTICIPATE'] : 0,
+               'OP_OBJ_TYPE'      => $_POST['form']['OP_OBJ_TYPE']!='' ? $_POST['form']['OP_OBJ_TYPE'] : '0',
+               'OP_OBJ_UID'       => $sObjectUID!='' ? $sObjectUID : '0',
+               'OP_ACTION'        => $_POST['form']['OP_ACTION']!='' ? $_POST['form']['OP_ACTION'] : '0',
+               'OP_CASE_STATUS'   => $_POST['form']['OP_CASE_STATUS']!='' ? $_POST['form']['OP_CASE_STATUS'] : '0'
               );
 
 $oObj = new ObjectPermission();

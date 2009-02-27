@@ -2361,7 +2361,7 @@ class processMap {
           $sTaskTarget = $aFields['TAS_TITLE'];
         }
         catch (Exception $oError) {
-          $sTaskTarget = '(TASK DELETED)';
+          $sTaskTarget = 'All Tasks';
         }
       }
       else {
@@ -2396,7 +2396,7 @@ class processMap {
         			$sTaskSource = $aFields['TAS_TITLE'];
         		}
         catch (Exception $oError) {
-              $sTaskSource = '(TASK DELETED)';
+              $sTaskSource = 'All Tasks';
             }
       }
       else {
