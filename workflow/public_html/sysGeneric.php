@@ -458,14 +458,31 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
         and  SYS_TARGET != 'dbInfo'         and  SYS_TARGET != 'sysLoginVerify' and SYS_TARGET != 'processes_Ajax'
         and  SYS_TARGET != 'updateTranslation'
         and  SYS_COLLECTION != 'services' and SYS_COLLECTION != 'tracker' and $collectionPlugin != 'services'
-        and $bWE != true and SYS_TARGET != 'defaultAjaxDynaform' and SYS_TARGET != 'cases_ShowDocument'){
-          if (empty($_POST)) {
-            header('location: ' . SYS_URI . 'login/login?u=' . urlencode($_SERVER['REQUEST_URI']));
+        and $bWE != true and SYS_TARGET != 'defaultAjaxDynaform' and SYS_TARGET != 'cases_ShowDocument') {
+          $bRedirect = true;
+          if (isset($_GET['sid'])) {
+            G::LoadClass('sessions');
+            $oSessions = new Sessions();
+            if ($aSession = $oSessions->verifySession($_GET['sid'])) {
+              require_once 'classes/model/Users.php';
+              $oUser = new Users();
+              $aUser = $oUser->load($aSession['USR_UID']);
+              $_SESSION['USER_LOGGED']  = $aUser['USR_UID'];
+              $_SESSION['USR_USERNAME'] = $aUser['USR_USERNAME'];
+              $bRedirect = false;
+              $RBAC->initRBAC();
+              $RBAC->loadUserRolePermission( $RBAC->sSystem, $_SESSION['USER_LOGGED'] );
+            }
           }
-          else {
-            header('location: ' . SYS_URI . 'login/login');
+          if ($bRedirect) {
+            if (empty($_POST)) {
+              header('location: ' . SYS_URI . 'login/login?u=' . urlencode($_SERVER['REQUEST_URI']));
+            }
+            else {
+              header('location: ' . SYS_URI . 'login/login');
+            }
+            die();
           }
-          die();
         }
       }
 
