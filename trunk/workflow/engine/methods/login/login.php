@@ -22,6 +22,12 @@
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
  *
  */
+if (!isset($_GET['u'])) {
+  $aFields['URL'] = '';
+}
+else {
+  $aFields['URL'] = urldecode($_GET['u']);
+}
 if (!isset($_SESSION['G_MESSAGE']))
 {
 	$_SESSION['G_MESSAGE'] = '';
