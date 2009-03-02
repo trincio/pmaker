@@ -459,7 +459,12 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
         and  SYS_TARGET != 'updateTranslation'
         and  SYS_COLLECTION != 'services' and SYS_COLLECTION != 'tracker' and $collectionPlugin != 'services'
         and $bWE != true and SYS_TARGET != 'defaultAjaxDynaform' and SYS_TARGET != 'cases_ShowDocument'){
-          header ("location: ".SYS_URI."login/login.php");
+          if (empty($_POST)) {
+            header('location: ' . SYS_URI . 'login/login?u=' . urlencode($_SERVER['REQUEST_URI']));
+          }
+          else {
+            header('location: ' . SYS_URI . 'login/login');
+          }
           die();
         }
       }
