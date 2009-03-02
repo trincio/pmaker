@@ -227,7 +227,7 @@ class dynaformEditor extends WebResource
 		$G_PUBLISH->AddContent('panel-tab',G::LoadTranslation("ID_XML"),$sName.'[4]','dynaformEditor.changeToXmlCode','dynaformEditor.saveCurrentView');
 		$G_PUBLISH->AddContent('panel-tab',G::LoadTranslation("ID_HTML"),$sName.'[5]','dynaformEditor.changeToHtmlCode','dynaformEditor.saveCurrentView');
 		$G_PUBLISH->AddContent('panel-tab',G::LoadTranslation("ID_FIELDS_LIST"),$sName.'[6]','dynaformEditor.changeToFieldsList','dynaformEditor.saveCurrentView');
-		$G_PUBLISH->AddContent('panel-tab',G::LoadTranslation("ID_JAVASCRIPTS"),$sName.'[7]','dynaformEditor.changeToJavascripts','dynaformEditor.saveCurrentView');
+		//$G_PUBLISH->AddContent('panel-tab',G::LoadTranslation("ID_JAVASCRIPTS"),$sName.'[7]','dynaformEditor.changeToJavascripts','dynaformEditor.saveCurrentView');
 		$G_PUBLISH->AddContent('panel-tab',G::LoadTranslation("ID_PROPERTIES"),$sName.'[8]','dynaformEditor.changeToProperties','dynaformEditor.saveCurrentView');
 		$G_PUBLISH->AddContent('panel-close');
 		$oHeadPublisher->addScriptFile('/jscore/dynaformEditor/core/dynaformEditor.js');
