@@ -700,6 +700,32 @@ class G
   }
 
 /**
+   * Include all model plugin files
+   *
+   * @author Hugo Loza <hugo@colosa.com>
+   * @access public
+   * @return void
+   */
+  function LoadAllPluginModelClasses(){
+  	//Get the current Include path, where the plugins directories should be
+  	$path=explode(":",get_include_path());
+
+  	foreach($path as $possiblePath){
+  		if(strstr($possiblePath,"plugins")){
+  			$baseDir = $possiblePath . 'classes' . PATH_SEP . 'model';
+		    if ($handle = opendir( $baseDir  )) {
+		      while ( false !== ($file = readdir($handle))) {
+		        if ( strpos($file, '.php',1) && !strpos($file, 'Peer.php',1) ) {
+		          require_once ( $baseDir . PATH_SEP . $file );
+		        }
+		      }
+		    }
+  		}
+  	}
+
+  }
+
+/**
    * Load a template
    *
    * @author Fernando Ontiveros Lira <fernando@colosa.com>

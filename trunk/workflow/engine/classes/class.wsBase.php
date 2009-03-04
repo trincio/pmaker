@@ -202,6 +202,8 @@ class wsBase
 			$oCriteria = new Criteria('workflow');
 			$del = DBAdapter::getStringDelimiter();
 			$oCriteria->addSelectColumn(ApplicationPeer::APP_UID);
+			$oCriteria->addSelectColumn(ApplicationPeer::APP_STATUS);
+			$oCriteria->addSelectColumn(AppDelegationPeer::DEL_INDEX);
 			$oCriteria->addAsColumn('CASE_TITLE', 'C1.CON_VALUE' );
 			$oCriteria->addAlias("C1",  'CONTENT');
 			$caseTitleConds = array();
@@ -220,13 +222,13 @@ class wsBase
 			$oDataset->next();
 
 			while ($aRow = $oDataset->getRow()) {
-				$result[] = array ( 'guid' => $aRow['APP_UID'], 'name' => $aRow['CASE_TITLE'] );
+				$result[] = array ( 'guid' => $aRow['APP_UID'], 'name' => $aRow['CASE_TITLE'], 'status' => $aRow['APP_STATUS'], 'delIndex' => $aRow['DEL_INDEX'] );
 				$oDataset->next();
 			}
 			return $result;
 		}
 		catch ( Exception $e ) {
-			$result[] = array ( 'guid' => $e->getMessage(), 'name' => $e->getMessage() );
+			$result[] = array ( 'guid' => $e->getMessage(), 'name' => $e->getMessage(), 'status' => $e->getMessage() , 'status' => $e->getMessage() );
 			return $result;
 		}
 	}
