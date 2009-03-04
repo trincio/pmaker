@@ -27,6 +27,7 @@
 	G::LoadClass('propelTable');
 	G::LoadInclude('ajax');
   G::LoadAllModelClasses();
+  G::LoadAllPluginModelClasses();
 require_once ( 'classes/class.xmlfield_InputPM.php' );
 	$id = get_ajax_value('ptID');
 	$ntable= unserialize($_SESSION['pagedTable['.$id.']']);
@@ -104,7 +105,7 @@ require_once ( 'classes/class.xmlfield_InputPM.php' );
 		$ntable->printForm(get_ajax_value('filename'),$field);
 		return ;
 	}
-	
+
 	$ntable->renderTable( 'content' );
 
   G::LoadClass('configuration');
