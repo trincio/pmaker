@@ -59,6 +59,7 @@ class RBAC
   var $userloggedobj;
   var $currentSystemobj;
   var $rolesPermissionsObj;
+  var $authSourcesObj;
 
   var $aUserInfo = array();
   var $aRbacPlugins = array();
@@ -106,6 +107,11 @@ class RBAC
     if ( is_null($this->rolesPermissionsObj ) ) {
       require_once ( "classes/model/RolesPermissions.php" );
       $this->rolesPermissionsObj = new RolesPermissions;
+    }
+
+    if (is_null($this->authSourcesObj)) {
+      require_once 'classes/model/AuthenticationSource.php';
+      $this->authSourcesObj = new AuthenticationSource();
     }
 
     //hook for RBAC plugins
@@ -344,18 +350,13 @@ class RBAC
     return $this->rolesObj->loadByCode($sCode);
   }
 
-
-
-
   /** @erik adds ****/
   function listAllRoles ( $systemCode = 'PROCESSMAKER') {
       return $this->rolesObj->listAllRoles($systemCode);
   }
-
   function listAllPermissions ( $systemCode = 'PROCESSMAKER') {
       return $this->rolesObj->listAllPermissions($systemCode);
   }
-
   function createRole($aData) {
     return $this->rolesObj->createRole($aData);
   }
@@ -398,21 +399,37 @@ class RBAC
   function assignPermissionToRole($sRoleUID, $sPermissionUID) {
     return $this->rolesPermissionsObj->create(array('ROL_UID' => $sRoleUID, 'PER_UID' => $sPermissionUID));
   }
-
   function  deletePermissionRole($ROL_UID, $PER_UID){
   return $this->rolesObj->deletePermissionRole($ROL_UID, $PER_UID);
   }
   function numUsersWithRole($ROL_UID){
   return $this->rolesObj->numUsersWithRole($ROL_UID);
   }
-
   function createSystem($sCode) {
     return $this->systemObj->create(array('SYS_CODE' => $sCode));
   }
-
   function verifyByCode($sCode) {
     return $this->rolesObj->verifyByCode($sCode);
   }
 
+  /* Authentication Sources */
+  function getAllAuthSources() {
+    return $this->authSourcesObj->getAllAuthSources();
+  }
+
+  function getAuthSource($sUID) {
+    return $this->authSourcesObj->load($sUID);
+  }
+
+  function createAuthSource($aData) {
+    $this->authSourcesObj->create($aData);
+  }
+
+  function updateAuthSource($aData) {
+    $this->authSourcesObj->update($aData);
+  }
+
+  function removeAuthSource($sUID) {
+    $this->authSourcesObj->remove($sUID);
+  }
 }
-?>
