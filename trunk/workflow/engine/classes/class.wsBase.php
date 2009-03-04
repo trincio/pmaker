@@ -127,7 +127,8 @@ class wsBase
 
 			$result  = array();
 			$oCriteria = new Criteria('workflow');
-			$oCriteria->add(ProcessPeer::PRO_STATUS ,  'ACTIVE' );
+			//$oCriteria->add(ProcessPeer::PRO_STATUS ,  'ACTIVE' );
+			$oCriteria->add(ProcessPeer::PRO_STATUS, 'DISABLED', Criteria::NOT_EQUAL);
 			$oDataset = ProcessPeer::doSelectRS($oCriteria);
 			$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
 			$oDataset->next();
@@ -138,6 +139,7 @@ class wsBase
 				$result[] = array ( 'guid' => $aRow['PRO_UID'], 'name' => $arrayProcess['PRO_TITLE'] );
 				$oDataset->next();
 			}
+			
 			return $result;
 		}
 		catch ( Exception $e ) {
