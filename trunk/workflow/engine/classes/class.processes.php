@@ -776,13 +776,15 @@ class Processes {
   	  $newGuid = $this->getUnusedInputGUID();
   	  $map[ $val['INP_DOC_UID'] ] = $newGuid;
   	  $oData->inputs[$key]['INP_DOC_UID'] = $newGuid;
-  	}
-  	foreach ( $oData->steps as $key => $val ) {
-  	  if ( $val['STEP_TYPE_OBJ'] == 'INPUT_DOCUMENT' ) {
-    	  $newGuid = $map[ $val['STEP_UID_OBJ'] ];
-  	    $oData->steps[$key]['STEP_UID_OBJ'] = $newGuid;
-  	  }
-  	}
+  	}  	
+  	foreach ( $oData->steps as $key => $val ) {  	  
+  	  if(isset($val['STEP_TYPE_OBJ'])){
+  	  		if ( $val['STEP_TYPE_OBJ'] == 'INPUT_DOCUMENT' ) { 
+    			  $newGuid = $map[ $val['STEP_UID_OBJ'] ];
+  	  		  $oData->steps[$key]['STEP_UID_OBJ'] = $newGuid;
+  	  		}
+  	  }		
+  	}  	
   	foreach ( $oData->caseTrackerObject as $key => $val ) {
   	  if ( $val['CTO_TYPE_OBJ'] == 'INPUT_DOCUMENT' ) {
     	  $newGuid = $map[ $val['CTO_UID_OBJ'] ];
@@ -848,10 +850,12 @@ class Processes {
   	  $oData->outputs[$key]['OUT_DOC_UID'] = $newGuid;
   	}
   	foreach ( $oData->steps as $key => $val ) {
-  	  if ( $val['STEP_TYPE_OBJ'] == 'OUTPUT_DOCUMENT' ) {
-    	  $newGuid = $map[ $val['STEP_UID_OBJ'] ];
-  	    $oData->steps[$key]['STEP_UID_OBJ'] = $newGuid;
-  	  }
+  	  if(isset($val['STEP_TYPE_OBJ'])){
+  	  		if ( $val['STEP_TYPE_OBJ'] == 'OUTPUT_DOCUMENT' ) {
+    			  $newGuid = $map[ $val['STEP_UID_OBJ'] ];
+  	  		  $oData->steps[$key]['STEP_UID_OBJ'] = $newGuid;
+  	  		}
+  	  }		
   	}
   	foreach ( $oData->caseTrackerObject as $key => $val ) {
   	  if ( $val['CTO_TYPE_OBJ'] == 'OUTPUT_DOCUMENT' ) {
@@ -1007,14 +1011,15 @@ class Processes {
     }
   }
 
-  function createStepRows ($aStep ){
+  function createStepRows ($aStep ){  
   	foreach ( $aStep as $key => $row ) {
-      $oStep = new Step();
-      //unset ($row['TAS_UID']);
-      if($oStep->StepExists ($row['STEP_UID']))
-      		$oStep->remove($row['STEP_UID']);
-
-      $res = $oStep->create($row);
+      $oStep = new Step();      
+      if(isset($row['STEP_UID'])) {
+      		if($oStep->StepExists ($row['STEP_UID']))
+      				$oStep->remove($row['STEP_UID']);
+      		
+      		$res = $oStep->create($row);
+      }		
   	}
   	return;
   }
@@ -1035,11 +1040,13 @@ class Processes {
   * @return boolean
   */
   function renewAllStepGuid ( &$oData ) {
-  	$map = array ();
+  	$map = array ();  	
   	foreach ( $oData->steps as $key => $val ) {
-  	  $newGuid = $this->getUnusedStepGUID();
-  	  $map[ $val['STEP_UID'] ] = $newGuid;
-  	  $oData->steps[$key]['STEP_UID'] = $newGuid;
+  	 	if(isset($val['STEP_UID'])) {
+  	  		$newGuid = $this->getUnusedStepGUID();
+  	  		$map[ $val['STEP_UID'] ] = $newGuid;
+  	  		$oData->steps[$key]['STEP_UID'] = $newGuid;
+  	  }		
   	}
   	foreach ( $oData->steptriggers as $key => $val ) {
   		if ( $val['STEP_UID'] > 0 ) {

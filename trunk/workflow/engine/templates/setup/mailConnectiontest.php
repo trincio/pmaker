@@ -54,7 +54,7 @@
 		'',
 		'Resolve host name '.$_POST['srv'],
 		'Checking port <b>'.$_POST['port'].'</b>',
-		'Stablishing connection to host <b>'.$host->hostname.'</b>'
+		'Establishing connection to host <b>'.$host->hostname.'</b>'
     );
 	$tests[] = 'Login as <b>'.$_POST['account'].'</b> on '.$host->hostname.' SMTP Server';
 // 	if($_POST['auth_required'] == 'yes'){
