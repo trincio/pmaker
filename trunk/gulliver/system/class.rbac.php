@@ -59,7 +59,8 @@ class RBAC
   var $userloggedobj;
   var $currentSystemobj;
   var $rolesPermissionsObj;
-
+  var $authSourcesObj;
+  
   var $aUserInfo = array();
   var $aRbacPlugins = array();
   var $sSystem = '';
@@ -108,6 +109,10 @@ class RBAC
       $this->rolesPermissionsObj = new RolesPermissions;
     }
 
+    if (is_null($this->authSourcesObj)) {
+      require_once 'classes/model/AuthenticationSource.php';
+      $this->authSourcesObj = new AuthenticationSource();
+    }
     //hook for RBAC plugins
     $pathPlugins = PATH_RBAC . 'plugins';
     if ( is_dir ( $pathPlugins ) ) {
@@ -433,4 +438,24 @@ class RBAC
     return $this->rolesObj->verifyByCode($sCode);
   }
 
+  /* Authentication Sources */
+  function getAllAuthSources() {
+    return $this->authSourcesObj->getAllAuthSources();
+  }
+
+  function getAuthSource($sUID) {
+    return $this->authSourcesObj->load($sUID);
+  }
+
+  function createAuthSource($aData) {
+    $this->authSourcesObj->create($aData);
+  }
+
+  function updateAuthSource($aData) {
+    $this->authSourcesObj->update($aData);
+  }
+
+  function removeAuthSource($sUID) {
+    $this->authSourcesObj->remove($sUID);
+  }
 }
