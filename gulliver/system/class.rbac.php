@@ -59,7 +59,6 @@ class RBAC
   var $userloggedobj;
   var $currentSystemobj;
   var $rolesPermissionsObj;
-  var $authSourcesObj;
 
   var $aUserInfo = array();
   var $aRbacPlugins = array();
@@ -109,11 +108,6 @@ class RBAC
       $this->rolesPermissionsObj = new RolesPermissions;
     }
 
-    if (is_null($this->authSourcesObj)) {
-      require_once 'classes/model/AuthenticationSource.php';
-      $this->authSourcesObj = new AuthenticationSource();
-    }
-
     //hook for RBAC plugins
     $pathPlugins = PATH_RBAC . 'plugins';
     if ( is_dir ( $pathPlugins ) ) {
@@ -157,6 +151,34 @@ class RBAC
 
   }
 
+  function VerifyWithOtherAuthenticationSource( $sAuthType, $sAuthSource, $aUserFields, $sAuthUserDn, $strPass)
+  {
+    //check if the user is active 
+    if ( $aUserFields['USR_STATUS']  != 1 ) 
+      return -3;  //inactive user
+
+    //check if the user's due date is valid
+    if ( $aUserFields['USR_DUE_DATE']  < date('Y-m-d') ) 
+      return -4;  //due date
+
+    foreach ( $this->aRbacPlugins as $sClassName) {
+      if ( $sClassName == $sAuthType ) {
+        $plugin =  new $sClassName();
+        $plugin->sAuthSource = $sAuthSource;
+        $plugin->sSystem     = $this->sSystem;
+        krumo ( $aUserFields );
+
+        $bValidUser = $plugin->VerifyLogin ( $sAuthUserDn, $strPass );
+
+        if ( $bValidUser == TRUE) 
+          return ( $aUserFields['USR_UID'] ); 
+        else
+          return -2; //wrong password
+          
+      }
+    }
+    return -5; //invalid authentication source
+  }
 
   /**
    * Autentificacion de un usuario a traves de la clase RBAC_user
@@ -173,37 +195,28 @@ class RBAC
    *  -2: password errado
    *  -3: usuario inactivo
    *  -4: usuario vencido
+   *  -5: invalid authentication source   ( **new )
    *  n : uid de usuario
    */
   function VerifyLogin( $strUser, $strPass)
   {
-  	//check if the user exists in the table WF_WORKFLOW.USERS
+  	//check if the user exists in the table RB_WORKFLOW.USERS
     $this->initRBAC();
     if ( $this->userObj->verifyUser($strUser) == 0 ) {
       return -1;
     }
+    //if the user exists, the VerifyUser function will return the user properties 
 
-    //get the user properties if this user exists
-    //$sAuthType   = 'ldap';
-    //$sAuthSource = 'server51';
-    //$strUser = 'Manager';
-    //$strPass = 'Colosa1';
-
-    $sAuthType   = '';
-    if ( $sAuthType != '' ) {
-      //hook for RBAC plugins
-      $pathPlugins = PATH_RBAC . 'plugins';
-      foreach ( $this->aRbacPlugins as $sClassName) {
-      	if ( $sClassName == $sAuthType ) {
-          $plugin =  new $sClassName();
-          $plugin->sAuthSource = $sAuthSource;
-          $plugin->sSystem     = $this->sSystem;
-
-          $res = $plugin->VerifyLogin ( $strUser, $strPass );
-          krumo ( $res );
-          die;
-        }
-      }
+    //default values
+    $sAuthType = 'mysql';
+    if ( isset($this->userObj->fields['USR_AUTH_TYPE']) ) $sAuthType = strtolower ( $this->userObj->fields['USR_AUTH_TYPE'] );
+    
+    //hook for RBAC plugins
+    if ( $sAuthType != 'mysql' && $sAuthType != '' ) {
+      $sAuthSource = $this->userObj->fields['UID_AUTH_SOURCE'];
+      $sAuthUserDn = $this->userObj->fields['USR_AUTH_USER_DN'];
+      $res = $this->VerifyWithOtherAuthenticationSource( $sAuthType, $sAuthSource, $this->userObj->fields, $sAuthUserDn, $strPass);
+      return $res;
     }
     else {
       $res = $this->userObj->VerifyLogin($strUser, $strPass);
@@ -350,13 +363,18 @@ class RBAC
     return $this->rolesObj->loadByCode($sCode);
   }
 
+
+
+
   /** @erik adds ****/
   function listAllRoles ( $systemCode = 'PROCESSMAKER') {
       return $this->rolesObj->listAllRoles($systemCode);
   }
+
   function listAllPermissions ( $systemCode = 'PROCESSMAKER') {
       return $this->rolesObj->listAllPermissions($systemCode);
   }
+
   function createRole($aData) {
     return $this->rolesObj->createRole($aData);
   }
@@ -399,37 +417,20 @@ class RBAC
   function assignPermissionToRole($sRoleUID, $sPermissionUID) {
     return $this->rolesPermissionsObj->create(array('ROL_UID' => $sRoleUID, 'PER_UID' => $sPermissionUID));
   }
+
   function  deletePermissionRole($ROL_UID, $PER_UID){
   return $this->rolesObj->deletePermissionRole($ROL_UID, $PER_UID);
   }
   function numUsersWithRole($ROL_UID){
   return $this->rolesObj->numUsersWithRole($ROL_UID);
   }
+
   function createSystem($sCode) {
     return $this->systemObj->create(array('SYS_CODE' => $sCode));
   }
+
   function verifyByCode($sCode) {
     return $this->rolesObj->verifyByCode($sCode);
   }
 
-  /* Authentication Sources */
-  function getAllAuthSources() {
-    return $this->authSourcesObj->getAllAuthSources();
-  }
-
-  function getAuthSource($sUID) {
-    return $this->authSourcesObj->load($sUID);
-  }
-
-  function createAuthSource($aData) {
-    $this->authSourcesObj->create($aData);
-  }
-
-  function updateAuthSource($aData) {
-    $this->authSourcesObj->update($aData);
-  }
-
-  function removeAuthSource($sUID) {
-    $this->authSourcesObj->remove($sUID);
-  }
 }

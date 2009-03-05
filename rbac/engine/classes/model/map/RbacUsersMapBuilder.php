@@ -1,27 +1,4 @@
 <?php
-/**
- * RbacUsersMapBuilder.php
- *  
- * ProcessMaker Open Source Edition
- * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- * 
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
- * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
- */
 
 require_once 'propel/map/MapBuilder.php';
 include_once 'creole/CreoleTypes.php';
@@ -44,7 +21,7 @@ class RbacUsersMapBuilder {
 	/**
 	 * The (dot-path) name of this class
 	 */
-	const CLASS_NAME = 'classes.model.map.UsersMapBuilder';
+	const CLASS_NAME = 'classes.model.map.RbacUsersMapBuilder';
 
 	/**
 	 * The database map.
@@ -83,13 +60,13 @@ class RbacUsersMapBuilder {
 		$this->dbMap = Propel::getDatabaseMap('rbac');
 
 		$tMap = $this->dbMap->addTable('USERS');
-		$tMap->setPhpName('Users');
+		$tMap->setPhpName('RbacUsers');
 
 		$tMap->setUseIdGenerator(false);
 
 		$tMap->addPrimaryKey('USR_UID', 'UsrUid', 'string', CreoleTypes::VARCHAR, true, 32);
 
-		$tMap->addColumn('USR_USERNAME', 'UsrUsername', 'string', CreoleTypes::VARCHAR, true, 50);
+		$tMap->addColumn('USR_USERNAME', 'UsrUsername', 'string', CreoleTypes::VARCHAR, true, 100);
 
 		$tMap->addColumn('USR_PASSWORD', 'UsrPassword', 'string', CreoleTypes::VARCHAR, true, 32);
 
@@ -97,7 +74,7 @@ class RbacUsersMapBuilder {
 
 		$tMap->addColumn('USR_LASTNAME', 'UsrLastname', 'string', CreoleTypes::VARCHAR, true, 50);
 
-		$tMap->addColumn('USR_EMAIL', 'UsrEmail', 'string', CreoleTypes::VARCHAR, true, 50);
+		$tMap->addColumn('USR_EMAIL', 'UsrEmail', 'string', CreoleTypes::VARCHAR, true, 100);
 
 		$tMap->addColumn('USR_DUE_DATE', 'UsrDueDate', 'int', CreoleTypes::DATE, true, null);
 
@@ -107,6 +84,14 @@ class RbacUsersMapBuilder {
 
 		$tMap->addColumn('USR_STATUS', 'UsrStatus', 'int', CreoleTypes::INTEGER, true, null);
 
+		$tMap->addColumn('USR_AUTH_TYPE', 'UsrAuthType', 'string', CreoleTypes::VARCHAR, true, 32);
+
+		$tMap->addColumn('UID_AUTH_SOURCE', 'UidAuthSource', 'string', CreoleTypes::VARCHAR, true, 32);
+
+		$tMap->addColumn('USR_AUTH_USER_DN', 'UsrAuthUserDn', 'string', CreoleTypes::VARCHAR, true, 255);
+
+		$tMap->addColumn('USR_AUTH_SUPERVISOR_DN', 'UsrAuthSupervisorDn', 'string', CreoleTypes::VARCHAR, true, 255);
+
 	} // doBuild()
 
-} // UsersMapBuilder
+} // RbacUsersMapBuilder

@@ -1,27 +1,4 @@
 <?php
-/**
- * BaseRbacUsers.php
- *  
- * ProcessMaker Open Source Edition
- * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- * 
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
- * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
- */
 
 require_once 'propel/om/BaseObject.php';
 
@@ -33,7 +10,7 @@ include_once 'propel/util/Criteria.php';
 include_once 'classes/model/RbacUsersPeer.php';
 
 /**
- * Base class that represents a row from the 'USERS' table.
+ * Base class that represents a row from the 'RBAC_USERS' table.
  *
  * 
  *
@@ -119,6 +96,34 @@ abstract class BaseRbacUsers extends BaseObject  implements Persistent {
 	 * @var        int
 	 */
 	protected $usr_status = 1;
+
+
+	/**
+	 * The value for the usr_auth_type field.
+	 * @var        string
+	 */
+	protected $usr_auth_type = '';
+
+
+	/**
+	 * The value for the uid_auth_source field.
+	 * @var        string
+	 */
+	protected $uid_auth_source = '';
+
+
+	/**
+	 * The value for the usr_auth_user_dn field.
+	 * @var        string
+	 */
+	protected $usr_auth_user_dn = '';
+
+
+	/**
+	 * The value for the usr_auth_supervisor_dn field.
+	 * @var        string
+	 */
+	protected $usr_auth_supervisor_dn = '';
 
 	/**
 	 * Flag to prevent endless save loop, if this object is referenced
@@ -302,6 +307,50 @@ abstract class BaseRbacUsers extends BaseObject  implements Persistent {
 	{
 
 		return $this->usr_status;
+	}
+
+	/**
+	 * Get the [usr_auth_type] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getUsrAuthType()
+	{
+
+		return $this->usr_auth_type;
+	}
+
+	/**
+	 * Get the [uid_auth_source] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getUidAuthSource()
+	{
+
+		return $this->uid_auth_source;
+	}
+
+	/**
+	 * Get the [usr_auth_user_dn] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getUsrAuthUserDn()
+	{
+
+		return $this->usr_auth_user_dn;
+	}
+
+	/**
+	 * Get the [usr_auth_supervisor_dn] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getUsrAuthSupervisorDn()
+	{
+
+		return $this->usr_auth_supervisor_dn;
 	}
 
 	/**
@@ -531,6 +580,94 @@ abstract class BaseRbacUsers extends BaseObject  implements Persistent {
 	} // setUsrStatus()
 
 	/**
+	 * Set the value of [usr_auth_type] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setUsrAuthType($v)
+	{
+
+		// Since the native PHP type for this column is string,
+		// we will cast the input to a string (if it is not).
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->usr_auth_type !== $v || $v === '') {
+			$this->usr_auth_type = $v;
+			$this->modifiedColumns[] = RbacUsersPeer::USR_AUTH_TYPE;
+		}
+
+	} // setUsrAuthType()
+
+	/**
+	 * Set the value of [uid_auth_source] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setUidAuthSource($v)
+	{
+
+		// Since the native PHP type for this column is string,
+		// we will cast the input to a string (if it is not).
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->uid_auth_source !== $v || $v === '') {
+			$this->uid_auth_source = $v;
+			$this->modifiedColumns[] = RbacUsersPeer::UID_AUTH_SOURCE;
+		}
+
+	} // setUidAuthSource()
+
+	/**
+	 * Set the value of [usr_auth_user_dn] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setUsrAuthUserDn($v)
+	{
+
+		// Since the native PHP type for this column is string,
+		// we will cast the input to a string (if it is not).
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->usr_auth_user_dn !== $v || $v === '') {
+			$this->usr_auth_user_dn = $v;
+			$this->modifiedColumns[] = RbacUsersPeer::USR_AUTH_USER_DN;
+		}
+
+	} // setUsrAuthUserDn()
+
+	/**
+	 * Set the value of [usr_auth_supervisor_dn] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setUsrAuthSupervisorDn($v)
+	{
+
+		// Since the native PHP type for this column is string,
+		// we will cast the input to a string (if it is not).
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->usr_auth_supervisor_dn !== $v || $v === '') {
+			$this->usr_auth_supervisor_dn = $v;
+			$this->modifiedColumns[] = RbacUsersPeer::USR_AUTH_SUPERVISOR_DN;
+		}
+
+	} // setUsrAuthSupervisorDn()
+
+	/**
 	 * Hydrates (populates) the object variables with values from the database resultset.
 	 *
 	 * An offset (1-based "start column") is specified so that objects can be hydrated
@@ -567,15 +704,23 @@ abstract class BaseRbacUsers extends BaseObject  implements Persistent {
 
 			$this->usr_status = $rs->getInt($startcol + 9);
 
+			$this->usr_auth_type = $rs->getString($startcol + 10);
+
+			$this->uid_auth_source = $rs->getString($startcol + 11);
+
+			$this->usr_auth_user_dn = $rs->getString($startcol + 12);
+
+			$this->usr_auth_supervisor_dn = $rs->getString($startcol + 13);
+
 			$this->resetModified();
 
 			$this->setNew(false);
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 10; // 10 = UsersPeer::NUM_COLUMNS - UsersPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 14; // 14 = RbacUsersPeer::NUM_COLUMNS - RbacUsersPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
-			throw new PropelException("Error populating Users object", $e);
+			throw new PropelException("Error populating RbacUsers object", $e);
 		}
 	}
 
@@ -805,6 +950,18 @@ abstract class BaseRbacUsers extends BaseObject  implements Persistent {
 			case 9:
 				return $this->getUsrStatus();
 				break;
+			case 10:
+				return $this->getUsrAuthType();
+				break;
+			case 11:
+				return $this->getUidAuthSource();
+				break;
+			case 12:
+				return $this->getUsrAuthUserDn();
+				break;
+			case 13:
+				return $this->getUsrAuthSupervisorDn();
+				break;
 			default:
 				return null;
 				break;
@@ -835,6 +992,10 @@ abstract class BaseRbacUsers extends BaseObject  implements Persistent {
 			$keys[7] => $this->getUsrCreateDate(),
 			$keys[8] => $this->getUsrUpdateDate(),
 			$keys[9] => $this->getUsrStatus(),
+			$keys[10] => $this->getUsrAuthType(),
+			$keys[11] => $this->getUidAuthSource(),
+			$keys[12] => $this->getUsrAuthUserDn(),
+			$keys[13] => $this->getUsrAuthSupervisorDn(),
 		);
 		return $result;
 	}
@@ -896,6 +1057,18 @@ abstract class BaseRbacUsers extends BaseObject  implements Persistent {
 			case 9:
 				$this->setUsrStatus($value);
 				break;
+			case 10:
+				$this->setUsrAuthType($value);
+				break;
+			case 11:
+				$this->setUidAuthSource($value);
+				break;
+			case 12:
+				$this->setUsrAuthUserDn($value);
+				break;
+			case 13:
+				$this->setUsrAuthSupervisorDn($value);
+				break;
 		} // switch()
 	}
 
@@ -929,6 +1102,10 @@ abstract class BaseRbacUsers extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[7], $arr)) $this->setUsrCreateDate($arr[$keys[7]]);
 		if (array_key_exists($keys[8], $arr)) $this->setUsrUpdateDate($arr[$keys[8]]);
 		if (array_key_exists($keys[9], $arr)) $this->setUsrStatus($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setUsrAuthType($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setUidAuthSource($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setUsrAuthUserDn($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setUsrAuthSupervisorDn($arr[$keys[13]]);
 	}
 
 	/**
@@ -950,6 +1127,10 @@ abstract class BaseRbacUsers extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(RbacUsersPeer::USR_CREATE_DATE)) $criteria->add(RbacUsersPeer::USR_CREATE_DATE, $this->usr_create_date);
 		if ($this->isColumnModified(RbacUsersPeer::USR_UPDATE_DATE)) $criteria->add(RbacUsersPeer::USR_UPDATE_DATE, $this->usr_update_date);
 		if ($this->isColumnModified(RbacUsersPeer::USR_STATUS)) $criteria->add(RbacUsersPeer::USR_STATUS, $this->usr_status);
+		if ($this->isColumnModified(RbacUsersPeer::USR_AUTH_TYPE)) $criteria->add(RbacUsersPeer::USR_AUTH_TYPE, $this->usr_auth_type);
+		if ($this->isColumnModified(RbacUsersPeer::UID_AUTH_SOURCE)) $criteria->add(RbacUsersPeer::UID_AUTH_SOURCE, $this->uid_auth_source);
+		if ($this->isColumnModified(RbacUsersPeer::USR_AUTH_USER_DN)) $criteria->add(RbacUsersPeer::USR_AUTH_USER_DN, $this->usr_auth_user_dn);
+		if ($this->isColumnModified(RbacUsersPeer::USR_AUTH_SUPERVISOR_DN)) $criteria->add(RbacUsersPeer::USR_AUTH_SUPERVISOR_DN, $this->usr_auth_supervisor_dn);
 
 		return $criteria;
 	}
@@ -997,7 +1178,7 @@ abstract class BaseRbacUsers extends BaseObject  implements Persistent {
 	 * If desired, this method can also make copies of all associated (fkey referrers)
 	 * objects.
 	 *
-	 * @param      object $copyObj An object of Users (or compatible) type.
+	 * @param      object $copyObj An object of RbacUsers (or compatible) type.
 	 * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
 	 * @throws     PropelException
 	 */
@@ -1022,6 +1203,14 @@ abstract class BaseRbacUsers extends BaseObject  implements Persistent {
 
 		$copyObj->setUsrStatus($this->usr_status);
 
+		$copyObj->setUsrAuthType($this->usr_auth_type);
+
+		$copyObj->setUidAuthSource($this->uid_auth_source);
+
+		$copyObj->setUsrAuthUserDn($this->usr_auth_user_dn);
+
+		$copyObj->setUsrAuthSupervisorDn($this->usr_auth_supervisor_dn);
+
 
 		$copyObj->setNew(true);
 
@@ -1038,7 +1227,7 @@ abstract class BaseRbacUsers extends BaseObject  implements Persistent {
 	 * objects.
 	 *
 	 * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-	 * @return     Users Clone of current object.
+	 * @return     RbacUsers Clone of current object.
 	 * @throws     PropelException
 	 */
 	public function copy($deepCopy = false)
@@ -1067,4 +1256,4 @@ abstract class BaseRbacUsers extends BaseObject  implements Persistent {
 		return self::$peer;
 	}
 
-} // BaseUsers
+} // BaseRbacUsers
