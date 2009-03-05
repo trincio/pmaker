@@ -55,9 +55,13 @@ try {
 	  //The user is inactive
 	  case -3:
 	  	G::SendTemporalMessage ('ID_USER_INACTIVE', "warning");
+	  	break;
 	  //The Due date is finished
 	  case -4:
-	    G::SendTemporalMessage ('ID_USER_INACTIVE', "warning");
+	    G::SendTemporalMessage ('ID_USER_INACTIVE_BY_DATE', "warning");
+	    break;
+	  case -5:
+	    G::SendTemporalMessage ('ID_AUTHENTICATION_SOURCE_INVALID', "warning");
 	    break;
 	}
 
@@ -176,12 +180,7 @@ try {
   }
   /* Check password using policy - End */
 
-  if ($_POST['form']['URL'] != '') {
-    $sLocation = $_POST['form']['URL'];
-  }
-  else {
-    $sLocation = $oUserProperty->redirectTo($_SESSION['USER_LOGGED'], $lang);
-  }
+  $sLocation = $oUserProperty->redirectTo($_SESSION['USER_LOGGED'], $lang);
   G::header('Location: ' . $sLocation);
   die;
 
