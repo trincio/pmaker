@@ -1,31 +1,8 @@
 <?php
-/**
- * BaseRbacUsersPeer.php
- *  
- * ProcessMaker Open Source Edition
- * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Affero General Public License as
- * published by the Free Software Foundation, either version 3 of the
- * License, or (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU Affero General Public License for more details.
- * 
- * You should have received a copy of the GNU Affero General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
- * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
- */
 
 require_once 'propel/util/BasePeer.php';
 // The object class -- needed for instanceof checks in this class.
-// actual class may be a subclass -- as returned by UsersPeer::getOMClass()
+// actual class may be a subclass -- as returned by RbacUsersPeer::getOMClass()
 include_once 'classes/model/RbacUsers.php';
 
 /**
@@ -47,7 +24,7 @@ abstract class BaseRbacUsersPeer {
 	const CLASS_DEFAULT = 'classes.model.RbacUsers';
 
 	/** The total number of columns. */
-	const NUM_COLUMNS = 10;
+	const NUM_COLUMNS = 14;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -83,6 +60,18 @@ abstract class BaseRbacUsersPeer {
 	/** the column name for the USR_STATUS field */
 	const USR_STATUS = 'USERS.USR_STATUS';
 
+	/** the column name for the USR_AUTH_TYPE field */
+	const USR_AUTH_TYPE = 'USERS.USR_AUTH_TYPE';
+
+	/** the column name for the UID_AUTH_SOURCE field */
+	const UID_AUTH_SOURCE = 'USERS.UID_AUTH_SOURCE';
+
+	/** the column name for the USR_AUTH_USER_DN field */
+	const USR_AUTH_USER_DN = 'USERS.USR_AUTH_USER_DN';
+
+	/** the column name for the USR_AUTH_SUPERVISOR_DN field */
+	const USR_AUTH_SUPERVISOR_DN = 'USERS.USR_AUTH_SUPERVISOR_DN';
+
 	/** The PHP to DB Name Mapping */
 	private static $phpNameMap = null;
 
@@ -94,12 +83,10 @@ abstract class BaseRbacUsersPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('UsrUid', 'UsrUsername', 'UsrPassword', 'UsrFirstname', 'UsrLastname', 'UsrEmail', 'UsrDueDate', 'UsrCreateDate', 'UsrUpdateDate', 'UsrStatus', ),
-		BasePeer::TYPE_COLNAME => array (RbacUsersPeer::USR_UID, RbacUsersPeer::USR_USERNAME, RbacUsersPeer::USR_PASSWORD, 
-    RbacUsersPeer::USR_FIRSTNAME, RbacUsersPeer::USR_LASTNAME, RbacUsersPeer::USR_EMAIL, RbacUsersPeer::USR_DUE_DATE, 
-    RbacUsersPeer::USR_CREATE_DATE, RbacUsersPeer::USR_UPDATE_DATE, RbacUsersPeer::USR_STATUS, ),
-		BasePeer::TYPE_FIELDNAME => array ('USR_UID', 'USR_USERNAME', 'USR_PASSWORD', 'USR_FIRSTNAME', 'USR_LASTNAME', 'USR_EMAIL', 'USR_DUE_DATE', 'USR_CREATE_DATE', 'USR_UPDATE_DATE', 'USR_STATUS', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+		BasePeer::TYPE_PHPNAME => array ('UsrUid', 'UsrUsername', 'UsrPassword', 'UsrFirstname', 'UsrLastname', 'UsrEmail', 'UsrDueDate', 'UsrCreateDate', 'UsrUpdateDate', 'UsrStatus', 'UsrAuthType', 'UidAuthSource', 'UsrAuthUserDn', 'UsrAuthSupervisorDn', ),
+		BasePeer::TYPE_COLNAME => array (RbacUsersPeer::USR_UID, RbacUsersPeer::USR_USERNAME, RbacUsersPeer::USR_PASSWORD, RbacUsersPeer::USR_FIRSTNAME, RbacUsersPeer::USR_LASTNAME, RbacUsersPeer::USR_EMAIL, RbacUsersPeer::USR_DUE_DATE, RbacUsersPeer::USR_CREATE_DATE, RbacUsersPeer::USR_UPDATE_DATE, RbacUsersPeer::USR_STATUS, RbacUsersPeer::USR_AUTH_TYPE, RbacUsersPeer::UID_AUTH_SOURCE, RbacUsersPeer::USR_AUTH_USER_DN, RbacUsersPeer::USR_AUTH_SUPERVISOR_DN, ),
+		BasePeer::TYPE_FIELDNAME => array ('USR_UID', 'USR_USERNAME', 'USR_PASSWORD', 'USR_FIRSTNAME', 'USR_LASTNAME', 'USR_EMAIL', 'USR_DUE_DATE', 'USR_CREATE_DATE', 'USR_UPDATE_DATE', 'USR_STATUS', 'USR_AUTH_TYPE', 'UID_AUTH_SOURCE', 'USR_AUTH_USER_DN', 'USR_AUTH_SUPERVISOR_DN', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
 	);
 
 	/**
@@ -109,10 +96,10 @@ abstract class BaseRbacUsersPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('UsrUid' => 0, 'UsrUsername' => 1, 'UsrPassword' => 2, 'UsrFirstname' => 3, 'UsrLastname' => 4, 'UsrEmail' => 5, 'UsrDueDate' => 6, 'UsrCreateDate' => 7, 'UsrUpdateDate' => 8, 'UsrStatus' => 9, ),
-		BasePeer::TYPE_COLNAME => array (RbacUsersPeer::USR_UID => 0, RbacUsersPeer::USR_USERNAME => 1, RbacUsersPeer::USR_PASSWORD => 2, RbacUsersPeer::USR_FIRSTNAME => 3, RbacUsersPeer::USR_LASTNAME => 4, RbacUsersPeer::USR_EMAIL => 5, RbacUsersPeer::USR_DUE_DATE => 6, RbacUsersPeer::USR_CREATE_DATE => 7, RbacUsersPeer::USR_UPDATE_DATE => 8, RbacUsersPeer::USR_STATUS => 9, ),
-		BasePeer::TYPE_FIELDNAME => array ('USR_UID' => 0, 'USR_USERNAME' => 1, 'USR_PASSWORD' => 2, 'USR_FIRSTNAME' => 3, 'USR_LASTNAME' => 4, 'USR_EMAIL' => 5, 'USR_DUE_DATE' => 6, 'USR_CREATE_DATE' => 7, 'USR_UPDATE_DATE' => 8, 'USR_STATUS' => 9, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
+		BasePeer::TYPE_PHPNAME => array ('UsrUid' => 0, 'UsrUsername' => 1, 'UsrPassword' => 2, 'UsrFirstname' => 3, 'UsrLastname' => 4, 'UsrEmail' => 5, 'UsrDueDate' => 6, 'UsrCreateDate' => 7, 'UsrUpdateDate' => 8, 'UsrStatus' => 9, 'UsrAuthType' => 10, 'UidAuthSource' => 11, 'UsrAuthUserDn' => 12, 'UsrAuthSupervisorDn' => 13, ),
+		BasePeer::TYPE_COLNAME => array (RbacUsersPeer::USR_UID => 0, RbacUsersPeer::USR_USERNAME => 1, RbacUsersPeer::USR_PASSWORD => 2, RbacUsersPeer::USR_FIRSTNAME => 3, RbacUsersPeer::USR_LASTNAME => 4, RbacUsersPeer::USR_EMAIL => 5, RbacUsersPeer::USR_DUE_DATE => 6, RbacUsersPeer::USR_CREATE_DATE => 7, RbacUsersPeer::USR_UPDATE_DATE => 8, RbacUsersPeer::USR_STATUS => 9, RbacUsersPeer::USR_AUTH_TYPE => 10, RbacUsersPeer::UID_AUTH_SOURCE => 11, RbacUsersPeer::USR_AUTH_USER_DN => 12, RbacUsersPeer::USR_AUTH_SUPERVISOR_DN => 13, ),
+		BasePeer::TYPE_FIELDNAME => array ('USR_UID' => 0, 'USR_USERNAME' => 1, 'USR_PASSWORD' => 2, 'USR_FIRSTNAME' => 3, 'USR_LASTNAME' => 4, 'USR_EMAIL' => 5, 'USR_DUE_DATE' => 6, 'USR_CREATE_DATE' => 7, 'USR_UPDATE_DATE' => 8, 'USR_STATUS' => 9, 'USR_AUTH_TYPE' => 10, 'UID_AUTH_SOURCE' => 11, 'USR_AUTH_USER_DN' => 12, 'USR_AUTH_SUPERVISOR_DN' => 13, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
 	);
 
 	/**
@@ -233,6 +220,14 @@ abstract class BaseRbacUsersPeer {
 
 		$criteria->addSelectColumn(RbacUsersPeer::USR_STATUS);
 
+		$criteria->addSelectColumn(RbacUsersPeer::USR_AUTH_TYPE);
+
+		$criteria->addSelectColumn(RbacUsersPeer::UID_AUTH_SOURCE);
+
+		$criteria->addSelectColumn(RbacUsersPeer::USR_AUTH_USER_DN);
+
+		$criteria->addSelectColumn(RbacUsersPeer::USR_AUTH_SUPERVISOR_DN);
+
 	}
 
 	const COUNT = 'COUNT(USERS.USR_UID)';
@@ -278,7 +273,7 @@ abstract class BaseRbacUsersPeer {
 	 *
 	 * @param      Criteria $criteria object used to create the SELECT statement.
 	 * @param      Connection $con
-	 * @return     Users
+	 * @return     RbacUsers
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -388,9 +383,9 @@ abstract class BaseRbacUsersPeer {
 	}
 
 	/**
-	 * Method perform an INSERT on the database, given a Users or Criteria object.
+	 * Method perform an INSERT on the database, given a RbacUsers or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or Users object containing data that is used to create the INSERT statement.
+	 * @param      mixed $values Criteria or RbacUsers object containing data that is used to create the INSERT statement.
 	 * @param      Connection $con the connection to use
 	 * @return     mixed The new primary key.
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -405,7 +400,7 @@ abstract class BaseRbacUsersPeer {
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 		} else {
-			$criteria = $values->buildCriteria(); // build Criteria from Users object
+			$criteria = $values->buildCriteria(); // build Criteria from RbacUsers object
 		}
 
 
@@ -427,9 +422,9 @@ abstract class BaseRbacUsersPeer {
 	}
 
 	/**
-	 * Method perform an UPDATE on the database, given a Users or Criteria object.
+	 * Method perform an UPDATE on the database, given a RbacUsers or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or Users object containing data that is used to create the UPDATE statement.
+	 * @param      mixed $values Criteria or RbacUsers object containing data that is used to create the UPDATE statement.
 	 * @param      Connection $con The connection to use (specify Connection object to exert more control over transactions).
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -449,7 +444,7 @@ abstract class BaseRbacUsersPeer {
 			$comparison = $criteria->getComparison(RbacUsersPeer::USR_UID);
 			$selectCriteria->add(RbacUsersPeer::USR_UID, $criteria->remove(RbacUsersPeer::USR_UID), $comparison);
 
-		} else { // $values is Users object
+		} else { // $values is RbacUsers object
 			$criteria = $values->buildCriteria(); // gets full criteria
 			$selectCriteria = $values->buildPkeyCriteria(); // gets criteria w/ primary key(s)
 		}
@@ -485,9 +480,9 @@ abstract class BaseRbacUsersPeer {
 	}
 
 	/**
-	 * Method perform a DELETE on the database, given a Users or Criteria object OR a primary key value.
+	 * Method perform a DELETE on the database, given a RbacUsers or Criteria object OR a primary key value.
 	 *
-	 * @param      mixed $values Criteria or Users object or primary key or array of primary keys
+	 * @param      mixed $values Criteria or RbacUsers object or primary key or array of primary keys
 	 *              which is used to create the DELETE statement
 	 * @param      Connection $con the connection to use
 	 * @return     int 	The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -503,7 +498,7 @@ abstract class BaseRbacUsersPeer {
 
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
-		} elseif ($values instanceof Users) {
+		} elseif ($values instanceof RbacUsers) {
 
 			$criteria = $values->buildPkeyCriteria();
 		} else {
@@ -532,18 +527,18 @@ abstract class BaseRbacUsersPeer {
 	}
 
 	/**
-	 * Validates all modified columns of given Users object.
+	 * Validates all modified columns of given RbacUsers object.
 	 * If parameter $columns is either a single column name or an array of column names
 	 * than only those columns are validated.
 	 *
 	 * NOTICE: This does not apply to primary or foreign keys for now.
 	 *
-	 * @param      Users $obj The object to validate.
+	 * @param      RbacUsers $obj The object to validate.
 	 * @param      mixed $cols Column name or array of column names.
 	 *
 	 * @return     mixed TRUE if all columns are valid or the error message of the first invalid column.
 	 */
-	public static function doValidate(Users $obj, $cols = null)
+	public static function doValidate(RbacUsers $obj, $cols = null)
 	{
 		$columns = array();
 
@@ -573,7 +568,7 @@ abstract class BaseRbacUsersPeer {
 	 *
 	 * @param      mixed $pk the primary key.
 	 * @param      Connection $con the connection to use
-	 * @return     Users
+	 * @return     RbacUsers
 	 */
 	public static function retrieveByPK($pk, $con = null)
 	{
@@ -583,7 +578,7 @@ abstract class BaseRbacUsersPeer {
 
 		$criteria = new Criteria(RbacUsersPeer::DATABASE_NAME);
 
-		$criteria->add(UsersPeer::USR_UID, $pk);
+		$criteria->add(RbacUsersPeer::USR_UID, $pk);
 
 
 		$v = RbacUsersPeer::doSelect($criteria, $con);
@@ -630,6 +625,6 @@ if (Propel::isInit()) {
 } else {
 	// even if Propel is not yet initialized, the map builder class can be registered
 	// now and then it will be loaded when Propel initializes.
-	require_once 'classes/model/map/UsersMapBuilder.php';
-	Propel::registerMapBuilder('classes.model.map.UsersMapBuilder');
+	require_once 'classes/model/map/RbacUsersMapBuilder.php';
+	Propel::registerMapBuilder('classes.model.map.RbacUsersMapBuilder');
 }

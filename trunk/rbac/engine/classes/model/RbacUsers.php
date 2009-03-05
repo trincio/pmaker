@@ -103,6 +103,8 @@ class RbacUsers extends BaseRbacUsers {
       $rs = RbacUsersPeer::doSelect( $c );
       if (is_array($rs) && isset( $rs[0] ) && get_class ( $rs[0] ) == 'RbacUsers') 
       {
+      	//return the row for futher check of which Autentificacion method belongs this user
+      	$this->fields = $rs[0]->toArray(BasePeer::TYPE_FIELDNAME);; 
         return 1;
       }
       else 
