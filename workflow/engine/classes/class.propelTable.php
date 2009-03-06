@@ -821,6 +821,13 @@ var popupHeight<?='='.$this->popupHeight?>;
     if (($block ==='') || ($block==='close')) {
       $this->tpl->newBlock( "closeBlock" );
     }
+    
+    //By JHL
+    //Put the content of the table in a variable to be used for other puposes
+    //Like rendering as PDF
+    global $_TABLE_CONTENT_;
+    $_TABLE_CONTENT_=$this->tpl->getOutputContent();
+    
     $this->tpl->printToScreen();
     unset($this->tpl);
     unset($this->dbc);
