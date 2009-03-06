@@ -29,7 +29,7 @@ $G_TMP_MENU->AddIdRawOption('USERS', 'users/users_List');
 //$G_TMP_MENU->AddIdRawOption('DEPARTMENTS', 'departments/departments_List');
 $G_TMP_MENU->AddIdRawOption('GROUPS', 'groups/groups');
 $G_TMP_MENU->AddIdRawOption('ROLES', 'roles/roles_List');
-//$G_TMP_MENU->AddIdRawOption('AUTH_SOURCES', 'authSources/authSources_List');
+$G_TMP_MENU->AddIdRawOption('AUTH_SOURCES', 'authSources/authSources_List');
 
 $G_TMP_MENU->Labels = array(
   G::LoadTranslation('ID_USERS_LIST'),
@@ -37,5 +37,5 @@ $G_TMP_MENU->Labels = array(
   //G::LoadTranslation('ID_ORGANIZATIONAL_CHART'),
   G::LoadTranslation('ID_GROUP_USERS'),
   G::LoadTranslation('ID_ROLES'),
-  //G::LoadTranslation('ID_AUTH_SOURCES')
+  G::LoadTranslation('ID_AUTH_SOURCES')
 );
