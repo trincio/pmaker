@@ -67,13 +67,13 @@ CREATE TABLE `SYSTEMS`
 	PRIMARY KEY (`SYS_UID`)
 )Type=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Systems';
 #-----------------------------------------------------------------------------
-#-- USERS
+#-- RBAC_USERS
 #-----------------------------------------------------------------------------
 
-DROP TABLE IF EXISTS `USERS`;
+DROP TABLE IF EXISTS `RBAC_USERS`;
 
 
-CREATE TABLE `USERS`
+CREATE TABLE `RBAC_USERS`
 (
 	`USR_UID` VARCHAR(32) default '' NOT NULL,
 	`USR_USERNAME` VARCHAR(100) default '' NOT NULL,
@@ -85,6 +85,10 @@ CREATE TABLE `USERS`
 	`USR_CREATE_DATE` DATETIME default '0000-00-00 00:00:00' NOT NULL,
 	`USR_UPDATE_DATE` DATETIME default '0000-00-00 00:00:00' NOT NULL,
 	`USR_STATUS` INTEGER default 1 NOT NULL,
+	`USR_AUTH_TYPE` VARCHAR(32) default '' NOT NULL,
+	`UID_AUTH_SOURCE` VARCHAR(32) default '' NOT NULL,
+	`USR_AUTH_USER_DN` VARCHAR(255) default '' NOT NULL,
+	`USR_AUTH_SUPERVISOR_DN` VARCHAR(255) default '' NOT NULL,
 	PRIMARY KEY (`USR_UID`)
 )Type=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Users';
 #-----------------------------------------------------------------------------
@@ -100,5 +104,30 @@ CREATE TABLE `USERS_ROLES`
 	`ROL_UID` VARCHAR(32) default '' NOT NULL,
 	PRIMARY KEY (`USR_UID`,`ROL_UID`)
 )Type=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Roles of the users';
+#-----------------------------------------------------------------------------
+#-- AUTHENTICATION_SOURCE
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `AUTHENTICATION_SOURCE`;
+
+
+CREATE TABLE `AUTHENTICATION_SOURCE`
+(
+	`AUTH_SOURCE_UID` VARCHAR(32) default '' NOT NULL,
+	`AUTH_SOURCE_NAME` VARCHAR(50) default '' NOT NULL,
+	`AUTH_SOURCE_PROVIDER` VARCHAR(20) default '' NOT NULL,
+	`AUTH_SOURCE_SERVER_NAME` VARCHAR(50) default '' NOT NULL,
+	`AUTH_SOURCE_PORT` INTEGER default 389,
+	`AUTH_SOURCE_ENABLED_TLS` INTEGER default 0,
+	`AUTH_SOURCE_VERSION` VARCHAR(16) default '3' NOT NULL,
+	`AUTH_SOURCE_BASE_DN` VARCHAR(128) default '' NOT NULL,
+	`AUTH_ANONYMOUS` INTEGER default 0,
+	`AUTH_SOURCE_SEARCH_USER` VARCHAR(128) default '' NOT NULL,
+	`AUTH_SOURCE_PASSWORD` VARCHAR(32) default '' NOT NULL,
+	`AUTH_SOURCE_ATTRIBUTES` VARCHAR(255) default '' NOT NULL,
+	`AUTH_SOURCE_OBJECT_CLASSES` VARCHAR(255) default '' NOT NULL,
+	`AUTH_SOURCE_DATA` TEXT,
+	PRIMARY KEY (`AUTH_SOURCE_UID`)
+)Type=MyISAM  DEFAULT CHARSET='utf8';
 # This restores the fkey checks, after having unset them earlier
 SET FOREIGN_KEY_CHECKS = 1;

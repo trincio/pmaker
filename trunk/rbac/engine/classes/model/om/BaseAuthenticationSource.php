@@ -85,6 +85,13 @@ abstract class BaseAuthenticationSource extends BaseObject  implements Persisten
 
 
 	/**
+	 * The value for the auth_anonymous field.
+	 * @var        int
+	 */
+	protected $auth_anonymous = 0;
+
+
+	/**
 	 * The value for the auth_source_search_user field.
 	 * @var        string
 	 */
@@ -110,6 +117,13 @@ abstract class BaseAuthenticationSource extends BaseObject  implements Persisten
 	 * @var        string
 	 */
 	protected $auth_source_object_classes = '';
+
+
+	/**
+	 * The value for the auth_source_data field.
+	 * @var        string
+	 */
+	protected $auth_source_data;
 
 	/**
 	 * Flag to prevent endless save loop, if this object is referenced
@@ -214,6 +228,17 @@ abstract class BaseAuthenticationSource extends BaseObject  implements Persisten
 	}
 
 	/**
+	 * Get the [auth_anonymous] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getAuthAnonymous()
+	{
+
+		return $this->auth_anonymous;
+	}
+
+	/**
 	 * Get the [auth_source_search_user] column value.
 	 * 
 	 * @return     string
@@ -255,6 +280,17 @@ abstract class BaseAuthenticationSource extends BaseObject  implements Persisten
 	{
 
 		return $this->auth_source_object_classes;
+	}
+
+	/**
+	 * Get the [auth_source_data] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getAuthSourceData()
+	{
+
+		return $this->auth_source_data;
 	}
 
 	/**
@@ -434,6 +470,28 @@ abstract class BaseAuthenticationSource extends BaseObject  implements Persisten
 	} // setAuthSourceBaseDn()
 
 	/**
+	 * Set the value of [auth_anonymous] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     void
+	 */
+	public function setAuthAnonymous($v)
+	{
+
+		// Since the native PHP type for this column is integer,
+		// we will cast the input value to an int (if it is not).
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->auth_anonymous !== $v || $v === 0) {
+			$this->auth_anonymous = $v;
+			$this->modifiedColumns[] = AuthenticationSourcePeer::AUTH_ANONYMOUS;
+		}
+
+	} // setAuthAnonymous()
+
+	/**
 	 * Set the value of [auth_source_search_user] column.
 	 * 
 	 * @param      string $v new value
@@ -522,6 +580,28 @@ abstract class BaseAuthenticationSource extends BaseObject  implements Persisten
 	} // setAuthSourceObjectClasses()
 
 	/**
+	 * Set the value of [auth_source_data] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setAuthSourceData($v)
+	{
+
+		// Since the native PHP type for this column is string,
+		// we will cast the input to a string (if it is not).
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->auth_source_data !== $v) {
+			$this->auth_source_data = $v;
+			$this->modifiedColumns[] = AuthenticationSourcePeer::AUTH_SOURCE_DATA;
+		}
+
+	} // setAuthSourceData()
+
+	/**
 	 * Hydrates (populates) the object variables with values from the database resultset.
 	 *
 	 * An offset (1-based "start column") is specified so that objects can be hydrated
@@ -554,20 +634,24 @@ abstract class BaseAuthenticationSource extends BaseObject  implements Persisten
 
 			$this->auth_source_base_dn = $rs->getString($startcol + 7);
 
-			$this->auth_source_search_user = $rs->getString($startcol + 8);
+			$this->auth_anonymous = $rs->getInt($startcol + 8);
 
-			$this->auth_source_password = $rs->getString($startcol + 9);
+			$this->auth_source_search_user = $rs->getString($startcol + 9);
 
-			$this->auth_source_attributes = $rs->getString($startcol + 10);
+			$this->auth_source_password = $rs->getString($startcol + 10);
 
-			$this->auth_source_object_classes = $rs->getString($startcol + 11);
+			$this->auth_source_attributes = $rs->getString($startcol + 11);
+
+			$this->auth_source_object_classes = $rs->getString($startcol + 12);
+
+			$this->auth_source_data = $rs->getString($startcol + 13);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 12; // 12 = AuthenticationSourcePeer::NUM_COLUMNS - AuthenticationSourcePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 14; // 14 = AuthenticationSourcePeer::NUM_COLUMNS - AuthenticationSourcePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating AuthenticationSource object", $e);
@@ -795,16 +879,22 @@ abstract class BaseAuthenticationSource extends BaseObject  implements Persisten
 				return $this->getAuthSourceBaseDn();
 				break;
 			case 8:
-				return $this->getAuthSourceSearchUser();
+				return $this->getAuthAnonymous();
 				break;
 			case 9:
-				return $this->getAuthSourcePassword();
+				return $this->getAuthSourceSearchUser();
 				break;
 			case 10:
-				return $this->getAuthSourceAttributes();
+				return $this->getAuthSourcePassword();
 				break;
 			case 11:
+				return $this->getAuthSourceAttributes();
+				break;
+			case 12:
 				return $this->getAuthSourceObjectClasses();
+				break;
+			case 13:
+				return $this->getAuthSourceData();
 				break;
 			default:
 				return null;
@@ -834,10 +924,12 @@ abstract class BaseAuthenticationSource extends BaseObject  implements Persisten
 			$keys[5] => $this->getAuthSourceEnabledTls(),
 			$keys[6] => $this->getAuthSourceVersion(),
 			$keys[7] => $this->getAuthSourceBaseDn(),
-			$keys[8] => $this->getAuthSourceSearchUser(),
-			$keys[9] => $this->getAuthSourcePassword(),
-			$keys[10] => $this->getAuthSourceAttributes(),
-			$keys[11] => $this->getAuthSourceObjectClasses(),
+			$keys[8] => $this->getAuthAnonymous(),
+			$keys[9] => $this->getAuthSourceSearchUser(),
+			$keys[10] => $this->getAuthSourcePassword(),
+			$keys[11] => $this->getAuthSourceAttributes(),
+			$keys[12] => $this->getAuthSourceObjectClasses(),
+			$keys[13] => $this->getAuthSourceData(),
 		);
 		return $result;
 	}
@@ -894,16 +986,22 @@ abstract class BaseAuthenticationSource extends BaseObject  implements Persisten
 				$this->setAuthSourceBaseDn($value);
 				break;
 			case 8:
-				$this->setAuthSourceSearchUser($value);
+				$this->setAuthAnonymous($value);
 				break;
 			case 9:
-				$this->setAuthSourcePassword($value);
+				$this->setAuthSourceSearchUser($value);
 				break;
 			case 10:
-				$this->setAuthSourceAttributes($value);
+				$this->setAuthSourcePassword($value);
 				break;
 			case 11:
+				$this->setAuthSourceAttributes($value);
+				break;
+			case 12:
 				$this->setAuthSourceObjectClasses($value);
+				break;
+			case 13:
+				$this->setAuthSourceData($value);
 				break;
 		} // switch()
 	}
@@ -936,10 +1034,12 @@ abstract class BaseAuthenticationSource extends BaseObject  implements Persisten
 		if (array_key_exists($keys[5], $arr)) $this->setAuthSourceEnabledTls($arr[$keys[5]]);
 		if (array_key_exists($keys[6], $arr)) $this->setAuthSourceVersion($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setAuthSourceBaseDn($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setAuthSourceSearchUser($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setAuthSourcePassword($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setAuthSourceAttributes($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setAuthSourceObjectClasses($arr[$keys[11]]);
+		if (array_key_exists($keys[8], $arr)) $this->setAuthAnonymous($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setAuthSourceSearchUser($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setAuthSourcePassword($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setAuthSourceAttributes($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setAuthSourceObjectClasses($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setAuthSourceData($arr[$keys[13]]);
 	}
 
 	/**
@@ -959,10 +1059,12 @@ abstract class BaseAuthenticationSource extends BaseObject  implements Persisten
 		if ($this->isColumnModified(AuthenticationSourcePeer::AUTH_SOURCE_ENABLED_TLS)) $criteria->add(AuthenticationSourcePeer::AUTH_SOURCE_ENABLED_TLS, $this->auth_source_enabled_tls);
 		if ($this->isColumnModified(AuthenticationSourcePeer::AUTH_SOURCE_VERSION)) $criteria->add(AuthenticationSourcePeer::AUTH_SOURCE_VERSION, $this->auth_source_version);
 		if ($this->isColumnModified(AuthenticationSourcePeer::AUTH_SOURCE_BASE_DN)) $criteria->add(AuthenticationSourcePeer::AUTH_SOURCE_BASE_DN, $this->auth_source_base_dn);
+		if ($this->isColumnModified(AuthenticationSourcePeer::AUTH_ANONYMOUS)) $criteria->add(AuthenticationSourcePeer::AUTH_ANONYMOUS, $this->auth_anonymous);
 		if ($this->isColumnModified(AuthenticationSourcePeer::AUTH_SOURCE_SEARCH_USER)) $criteria->add(AuthenticationSourcePeer::AUTH_SOURCE_SEARCH_USER, $this->auth_source_search_user);
 		if ($this->isColumnModified(AuthenticationSourcePeer::AUTH_SOURCE_PASSWORD)) $criteria->add(AuthenticationSourcePeer::AUTH_SOURCE_PASSWORD, $this->auth_source_password);
 		if ($this->isColumnModified(AuthenticationSourcePeer::AUTH_SOURCE_ATTRIBUTES)) $criteria->add(AuthenticationSourcePeer::AUTH_SOURCE_ATTRIBUTES, $this->auth_source_attributes);
 		if ($this->isColumnModified(AuthenticationSourcePeer::AUTH_SOURCE_OBJECT_CLASSES)) $criteria->add(AuthenticationSourcePeer::AUTH_SOURCE_OBJECT_CLASSES, $this->auth_source_object_classes);
+		if ($this->isColumnModified(AuthenticationSourcePeer::AUTH_SOURCE_DATA)) $criteria->add(AuthenticationSourcePeer::AUTH_SOURCE_DATA, $this->auth_source_data);
 
 		return $criteria;
 	}
@@ -1031,6 +1133,8 @@ abstract class BaseAuthenticationSource extends BaseObject  implements Persisten
 
 		$copyObj->setAuthSourceBaseDn($this->auth_source_base_dn);
 
+		$copyObj->setAuthAnonymous($this->auth_anonymous);
+
 		$copyObj->setAuthSourceSearchUser($this->auth_source_search_user);
 
 		$copyObj->setAuthSourcePassword($this->auth_source_password);
@@ -1038,6 +1142,8 @@ abstract class BaseAuthenticationSource extends BaseObject  implements Persisten
 		$copyObj->setAuthSourceAttributes($this->auth_source_attributes);
 
 		$copyObj->setAuthSourceObjectClasses($this->auth_source_object_classes);
+
+		$copyObj->setAuthSourceData($this->auth_source_data);
 
 
 		$copyObj->setNew(true);

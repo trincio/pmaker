@@ -2,7 +2,7 @@ msgid ""
 msgstr "" 
 "Project-Id-Version: PM 4.0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-02-25 10:32+0100 \n"
+"PO-Revision-Date: 2009-03-06 17:20+0100 \n"
 "Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
 "Language-Team: Colosa Developers Team <developers@colosa.com>\n"
 "MIME-Version: 1.0\n"
@@ -1978,8 +1978,8 @@ msgstr "Are you sure you want to remove this user group?"
 # TRANSLATION
 # LABEL/ID_MSG_ASSIGN_DONE
 #: LABEL/ID_MSG_ASSIGN_DONE
-msgid "The assignation was done successfully!"
-msgstr "The assignation was done successfully!"
+msgid "User successfully assigned to group"
+msgstr "User successfully assigned to group"
 
 # TRANSLATION
 # LABEL/ID_ASSIGN_GROUP
@@ -2844,6 +2844,36 @@ msgstr "Reassign Cases"
 #: LABEL/ID_ALERT_MESSAGE
 msgid "Alert Message"
 msgstr "Alert Message"
+
+# TRANSLATION
+# LABEL/ID_AUTHENTICATION_SOURCE_INVALID
+#: LABEL/ID_AUTHENTICATION_SOURCE_INVALID
+msgid "Authentication Source for this user is invalid"
+msgstr "Authentication Source for this user is invalid"
+
+# TRANSLATION
+# LABEL/ID_USER_INACTIVE_BY_DATE
+#: LABEL/ID_USER_INACTIVE_BY_DATE
+msgid "User not allowed to access passed due date"
+msgstr "User not allowed to access passed due date"
+
+# TRANSLATION
+# LABEL/ID_MSG_CONFIRM_DELETE_AUTH_SOURCE
+#: LABEL/ID_MSG_CONFIRM_DELETE_AUTH_SOURCE
+msgid "Do you want to delete this authentication source ?"
+msgstr "Do you want to delete this authentication source ?"
+
+# TRANSLATION
+# LABEL/ID_ERROR_OBJECT_NOT_EXISTS
+#: LABEL/ID_ERROR_OBJECT_NOT_EXISTS
+msgid "Error, object not exists"
+msgstr "Error, object not exists"
+
+# TRANSLATION
+# LABEL/ID_AUTH_SOURCES
+#: LABEL/ID_AUTH_SOURCES
+msgid "Authentication Sources"
+msgstr "Authentication Sources"
 
 # TRANSLATION
 # JAVASCRIPT/ID_ROLES_MSG
@@ -7219,6 +7249,180 @@ msgstr "Variables In"
 msgid "[processes/processes_subProcess.xml?SAVE] Save"
 msgstr "Save"
 
+# processes/processes_EditObjectPermission.xml?TITLE
+# processes/processes_EditObjectPermission.xml
+#: title - TITLE
+msgid "Edit Specific Permission"
+msgstr "Edit Specific Permission"
+
+# processes/processes_EditObjectPermission.xml?OP_CASE_STATUS
+# processes/processes_EditObjectPermission.xml
+#: dropdown - OP_CASE_STATUS
+msgid "Status Case    "
+msgstr "Status Case    "
+
+# processes/processes_EditObjectPermission.xml?OP_CASE_STATUS-DRAFT
+# processes/processes_EditObjectPermission.xml
+#: dropdown - OP_CASE_STATUS - DRAFT
+msgid "[processes/processes_EditObjectPermission.xml?OP_CASE_STATUS-DRAFT]"
+msgstr "DRAFT"
+
+# processes/processes_EditObjectPermission.xml?OP_CASE_STATUS-TO_DO
+# processes/processes_EditObjectPermission.xml
+#: dropdown - OP_CASE_STATUS - TO_DO
+msgid "[processes/processes_EditObjectPermission.xml?OP_CASE_STATUS-TO_DO]"
+msgstr "TO_DO"
+
+# processes/processes_EditObjectPermission.xml?OP_CASE_STATUS-PAUSED
+# processes/processes_EditObjectPermission.xml
+#: dropdown - OP_CASE_STATUS - PAUSED
+msgid "[processes/processes_EditObjectPermission.xml?OP_CASE_STATUS-PAUSED]"
+msgstr "PAUSED"
+
+# processes/processes_EditObjectPermission.xml?OP_CASE_STATUS-COMPLETED
+# processes/processes_EditObjectPermission.xml
+#: dropdown - OP_CASE_STATUS - COMPLETED
+msgid "[processes/processes_EditObjectPermission.xml?OP_CASE_STATUS-COMPLETED]"
+msgstr "COMPLETED"
+
+# processes/processes_EditObjectPermission.xml?TAS_UID
+# processes/processes_EditObjectPermission.xml
+#: dropdown - TAS_UID
+msgid "Target Task  "
+msgstr "Target Task  "
+
+# processes/processes_EditObjectPermission.xml?TAS_UID-''
+# processes/processes_EditObjectPermission.xml
+#: dropdown - TAS_UID - ''
+msgid "[processes/processes_EditObjectPermission.xml?TAS_UID-'']"
+msgstr "All Tasks"
+
+# processes/processes_EditObjectPermission.xml?GROUP_USER
+# processes/processes_EditObjectPermission.xml
+#: dropdown - GROUP_USER
+msgid "Group or User"
+msgstr "Group or User"
+
+# processes/processes_EditObjectPermission.xml?OP_TASK_SOURCE
+# processes/processes_EditObjectPermission.xml
+#: dropdown - OP_TASK_SOURCE
+msgid "Origin Task  "
+msgstr "Origin Task  "
+
+# processes/processes_EditObjectPermission.xml?OP_TASK_SOURCE-''
+# processes/processes_EditObjectPermission.xml
+#: dropdown - OP_TASK_SOURCE - ''
+msgid "[processes/processes_EditObjectPermission.xml?OP_TASK_SOURCE-'']"
+msgstr "All Tasks"
+
+# processes/processes_EditObjectPermission.xml?OP_PARTICIPATE
+# processes/processes_EditObjectPermission.xml
+#: yesno - OP_PARTICIPATE
+msgid "Participation required?"
+msgstr "Participation required?"
+
+# processes/processes_EditObjectPermission.xml?OP_OBJ_TYPE
+# processes/processes_EditObjectPermission.xml
+#: dropdown - OP_OBJ_TYPE
+msgid "[processes/processes_EditObjectPermission.xml?OP_OBJ_TYPE] Type  "
+msgstr "Type  "
+
+# processes/processes_EditObjectPermission.xml?OP_OBJ_TYPE-ANY
+# processes/processes_EditObjectPermission.xml
+#: dropdown - OP_OBJ_TYPE - ANY
+msgid "[processes/processes_EditObjectPermission.xml?OP_OBJ_TYPE-ANY]"
+msgstr "All"
+
+# processes/processes_EditObjectPermission.xml?OP_OBJ_TYPE-DYNAFORM
+# processes/processes_EditObjectPermission.xml
+#: dropdown - OP_OBJ_TYPE - DYNAFORM
+msgid "[processes/processes_EditObjectPermission.xml?OP_OBJ_TYPE-DYNAFORM]"
+msgstr "Dynaform"
+
+# processes/processes_EditObjectPermission.xml?OP_OBJ_TYPE-INPUT
+# processes/processes_EditObjectPermission.xml
+#: dropdown - OP_OBJ_TYPE - INPUT
+msgid "[processes/processes_EditObjectPermission.xml?OP_OBJ_TYPE-INPUT]"
+msgstr "Input Document"
+
+# processes/processes_EditObjectPermission.xml?OP_OBJ_TYPE-OUTPUT
+# processes/processes_EditObjectPermission.xml
+#: dropdown - OP_OBJ_TYPE - OUTPUT
+msgid "[processes/processes_EditObjectPermission.xml?OP_OBJ_TYPE-OUTPUT]"
+msgstr "Output Document"
+
+# processes/processes_EditObjectPermission.xml?ALL
+# processes/processes_EditObjectPermission.xml
+#: dropdown - ALL
+msgid "Object    "
+msgstr "Object    "
+
+# processes/processes_EditObjectPermission.xml?ALL-''
+# processes/processes_EditObjectPermission.xml
+#: dropdown - ALL - ''
+msgid "[processes/processes_EditObjectPermission.xml?ALL-'']"
+msgstr "All"
+
+# processes/processes_EditObjectPermission.xml?DYNAFORMS
+# processes/processes_EditObjectPermission.xml
+#: dropdown - DYNAFORMS
+msgid "DynaForm    "
+msgstr "DynaForm    "
+
+# processes/processes_EditObjectPermission.xml?DYNAFORMS-''
+# processes/processes_EditObjectPermission.xml
+#: dropdown - DYNAFORMS - ''
+msgid "[processes/processes_EditObjectPermission.xml?DYNAFORMS-'']"
+msgstr "All"
+
+# processes/processes_EditObjectPermission.xml?INPUTS
+# processes/processes_EditObjectPermission.xml
+#: dropdown - INPUTS
+msgid "Input Document    "
+msgstr "Input Document    "
+
+# processes/processes_EditObjectPermission.xml?INPUTS-''
+# processes/processes_EditObjectPermission.xml
+#: dropdown - INPUTS - ''
+msgid "[processes/processes_EditObjectPermission.xml?INPUTS-'']"
+msgstr "All"
+
+# processes/processes_EditObjectPermission.xml?OUTPUTS
+# processes/processes_EditObjectPermission.xml
+#: dropdown - OUTPUTS
+msgid "Output Document    "
+msgstr "Output Document    "
+
+# processes/processes_EditObjectPermission.xml?OUTPUTS-''
+# processes/processes_EditObjectPermission.xml
+#: dropdown - OUTPUTS - ''
+msgid "[processes/processes_EditObjectPermission.xml?OUTPUTS-'']"
+msgstr "All"
+
+# processes/processes_EditObjectPermission.xml?OP_ACTION
+# processes/processes_EditObjectPermission.xml
+#: dropdown - OP_ACTION
+msgid "Permission    "
+msgstr "Permission    "
+
+# processes/processes_EditObjectPermission.xml?OP_ACTION-VIEW
+# processes/processes_EditObjectPermission.xml
+#: dropdown - OP_ACTION - VIEW
+msgid "[processes/processes_EditObjectPermission.xml?OP_ACTION-VIEW]"
+msgstr "View"
+
+# processes/processes_EditObjectPermission.xml?OP_ACTION-BLOCK
+# processes/processes_EditObjectPermission.xml
+#: dropdown - OP_ACTION - BLOCK
+msgid "[processes/processes_EditObjectPermission.xml?OP_ACTION-BLOCK]"
+msgstr "Block"
+
+# processes/processes_EditObjectPermission.xml?CREATE
+# processes/processes_EditObjectPermission.xml
+#: button - CREATE
+msgid "[processes/processes_EditObjectPermission.xml?CREATE] Edit"
+msgstr "Edit"
+
 # processes/processes_ListPublic.xml?title
 # processes/processes_ListPublic.xml
 #: text - title
@@ -7552,7 +7756,7 @@ msgstr "Target Task"
 # processes/processes_ObjectsPermissionsList.xml?GROUP_USER
 # processes/processes_ObjectsPermissionsList.xml
 #: text - GROUP_USER
-msgid "Group or User"
+msgid "[processes/processes_ObjectsPermissionsList.xml?GROUP_USER] Group or User"
 msgstr "Group or User"
 
 # processes/processes_ObjectsPermissionsList.xml?TASK_SOURCE
@@ -7591,6 +7795,12 @@ msgstr "Permission"
 msgid "[processes/processes_ObjectsPermissionsList.xml?OP_CASE_STATUS] Status"
 msgstr "Status"
 
+# processes/processes_ObjectsPermissionsList.xml?EDIT
+# processes/processes_ObjectsPermissionsList.xml
+#: link - EDIT
+msgid "[processes/processes_ObjectsPermissionsList.xml?EDIT] Edit"
+msgstr "Edit"
+
 # processes/processes_ObjectsPermissionsList.xml?DELETE
 # processes/processes_ObjectsPermissionsList.xml
 #: link - DELETE
@@ -7624,7 +7834,7 @@ msgstr "New Specific Permission"
 # processes/processes_NewObjectPermission.xml?OP_CASE_STATUS
 # processes/processes_NewObjectPermission.xml
 #: dropdown - OP_CASE_STATUS
-msgid "Status Case    "
+msgid "[processes/processes_NewObjectPermission.xml?OP_CASE_STATUS] Status Case    "
 msgstr "Status Case    "
 
 # processes/processes_NewObjectPermission.xml?OP_CASE_STATUS-DRAFT
@@ -7654,7 +7864,7 @@ msgstr "COMPLETED"
 # processes/processes_NewObjectPermission.xml?TAS_UID
 # processes/processes_NewObjectPermission.xml
 #: dropdown - TAS_UID
-msgid "Target Task  "
+msgid "[processes/processes_NewObjectPermission.xml?TAS_UID] Target Task  "
 msgstr "Target Task  "
 
 # processes/processes_NewObjectPermission.xml?TAS_UID-''
@@ -7672,7 +7882,7 @@ msgstr "Group or User"
 # processes/processes_NewObjectPermission.xml?OP_TASK_SOURCE
 # processes/processes_NewObjectPermission.xml
 #: dropdown - OP_TASK_SOURCE
-msgid "Origin Task  "
+msgid "[processes/processes_NewObjectPermission.xml?OP_TASK_SOURCE] Origin Task  "
 msgstr "Origin Task  "
 
 # processes/processes_NewObjectPermission.xml?OP_TASK_SOURCE-''
@@ -7684,7 +7894,7 @@ msgstr "All Tasks"
 # processes/processes_NewObjectPermission.xml?OP_PARTICIPATE
 # processes/processes_NewObjectPermission.xml
 #: yesno - OP_PARTICIPATE
-msgid "Participation required?"
+msgid "[processes/processes_NewObjectPermission.xml?OP_PARTICIPATE] Participation required?"
 msgstr "Participation required?"
 
 # processes/processes_NewObjectPermission.xml?OP_OBJ_TYPE
@@ -7720,7 +7930,7 @@ msgstr "Output Document"
 # processes/processes_NewObjectPermission.xml?ALL
 # processes/processes_NewObjectPermission.xml
 #: dropdown - ALL
-msgid "Object    "
+msgid "[processes/processes_NewObjectPermission.xml?ALL] Object    "
 msgstr "Object    "
 
 # processes/processes_NewObjectPermission.xml?ALL-''
@@ -7732,7 +7942,7 @@ msgstr "All"
 # processes/processes_NewObjectPermission.xml?DYNAFORMS
 # processes/processes_NewObjectPermission.xml
 #: dropdown - DYNAFORMS
-msgid "DynaForm    "
+msgid "[processes/processes_NewObjectPermission.xml?DYNAFORMS] DynaForm    "
 msgstr "DynaForm    "
 
 # processes/processes_NewObjectPermission.xml?DYNAFORMS-''
@@ -7744,7 +7954,7 @@ msgstr "All"
 # processes/processes_NewObjectPermission.xml?INPUTS
 # processes/processes_NewObjectPermission.xml
 #: dropdown - INPUTS
-msgid "Input Document    "
+msgid "[processes/processes_NewObjectPermission.xml?INPUTS] Input Document    "
 msgstr "Input Document    "
 
 # processes/processes_NewObjectPermission.xml?INPUTS-''
@@ -7756,7 +7966,7 @@ msgstr "All"
 # processes/processes_NewObjectPermission.xml?OUTPUTS
 # processes/processes_NewObjectPermission.xml
 #: dropdown - OUTPUTS
-msgid "Output Document    "
+msgid "[processes/processes_NewObjectPermission.xml?OUTPUTS] Output Document    "
 msgstr "Output Document    "
 
 # processes/processes_NewObjectPermission.xml?OUTPUTS-''
@@ -7768,7 +7978,7 @@ msgstr "All"
 # processes/processes_NewObjectPermission.xml?OP_ACTION
 # processes/processes_NewObjectPermission.xml
 #: dropdown - OP_ACTION
-msgid "Permission    "
+msgid "[processes/processes_NewObjectPermission.xml?OP_ACTION] Permission    "
 msgstr "Permission    "
 
 # processes/processes_NewObjectPermission.xml?OP_ACTION-VIEW
@@ -8010,6 +8220,12 @@ msgstr "Description"
 #: subtitle - subinstallSteps
 msgid "Install Steps"
 msgstr "Install Steps"
+
+# processes/objectpmView.xml?link
+# processes/objectpmView.xml
+#: link - link
+msgid "link"
+msgstr "link"
 
 # processes/processes_Import.xml?TITLE1
 # processes/processes_Import.xml
@@ -10603,6 +10819,18 @@ msgstr "GUID"
 msgid "Case Title"
 msgstr "Case Title"
 
+# setup/wsrCaseList.xml?status
+# setup/wsrCaseList.xml
+#: text - status
+msgid "[setup/wsrCaseList.xml?status] Status"
+msgstr "Status"
+
+# setup/wsrCaseList.xml?delIndex
+# setup/wsrCaseList.xml
+#: text - delIndex
+msgid "[setup/wsrCaseList.xml?delIndex] Del Index"
+msgstr "Del Index"
+
 # setup/weekend.xml?TITLE9592
 # setup/weekend.xml
 #: title - TITLE9592
@@ -12127,6 +12355,12 @@ msgstr "Confirm Password "
 msgid "[users/users_View.xml?TITLEADD] Additional Information"
 msgstr "Additional Information"
 
+# users/users_View.xml?USR_PHOTO
+# users/users_View.xml
+#: image - USR_PHOTO
+msgid "[users/users_View.xml?USR_PHOTO] Photo"
+msgstr "Photo"
+
 # users/users_View.xml?USR_RESUME
 # users/users_View.xml
 #: link - USR_RESUME
@@ -12151,6 +12385,282 @@ msgstr "The user has cases pending or in progress.  Before deletion, you should 
 msgid "[users/users_ReassignShowInfo.xml?DELETE] Delete"
 msgstr "Delete"
 
+# authSources/authSources_List.xml?AUTH_SOURCE_NAME
+# authSources/authSources_List.xml
+#: text - AUTH_SOURCE_NAME
+msgid "[authSources/authSources_List.xml?AUTH_SOURCE_NAME] Name"
+msgstr "Name"
+
+# authSources/authSources_List.xml?AUTH_SOURCE_PROVIDER
+# authSources/authSources_List.xml
+#: text - AUTH_SOURCE_PROVIDER
+msgid "Provider"
+msgstr "Provider"
+
+# authSources/authSources_List.xml?AUTH_SOURCE_SERVER_NAME
+# authSources/authSources_List.xml
+#: text - AUTH_SOURCE_SERVER_NAME
+msgid "Server Name"
+msgstr "Server Name"
+
+# authSources/authSources_List.xml?AUTH_SOURCE_PORT
+# authSources/authSources_List.xml
+#: text - AUTH_SOURCE_PORT
+msgid "[authSources/authSources_List.xml?AUTH_SOURCE_PORT] Port"
+msgstr "Port"
+
+# authSources/authSources_List.xml?EDIT
+# authSources/authSources_List.xml
+#: link - EDIT
+msgid "[authSources/authSources_List.xml?EDIT] Edit"
+msgstr "Edit"
+
+# authSources/authSources_List.xml?DELETE
+# authSources/authSources_List.xml
+#: link - DELETE
+msgid "[authSources/authSources_List.xml?DELETE] Delete"
+msgstr "Delete"
+
+# authSources/authSources_Options.xml?MNU_ADD
+# authSources/authSources_Options.xml
+#: link - MNU_ADD
+msgid "[authSources/authSources_Options.xml?MNU_ADD] New"
+msgstr "New"
+
+# authSources/ldap_Edit.xml?TITLE
+# authSources/ldap_Edit.xml
+#: title - TITLE
+msgid "Authentication Source Information"
+msgstr "Authentication Source Information"
+
+# authSources/ldap_Edit.xml?AUTH_SOURCE_NAME
+# authSources/ldap_Edit.xml
+#: text - AUTH_SOURCE_NAME
+msgid "[authSources/ldap_Edit.xml?AUTH_SOURCE_NAME] Name"
+msgstr "Name"
+
+# authSources/ldap_Edit.xml?AUTH_SOURCE_PROVIDER
+# authSources/ldap_Edit.xml
+#: dropdown - AUTH_SOURCE_PROVIDER
+msgid "Provider    "
+msgstr "Provider    "
+
+# authSources/ldap_Edit.xml?AUTH_SOURCE_PROVIDER-LDAP
+# authSources/ldap_Edit.xml
+#: dropdown - AUTH_SOURCE_PROVIDER - LDAP
+msgid "[authSources/ldap_Edit.xml?AUTH_SOURCE_PROVIDER-LDAP]"
+msgstr "LDAP"
+
+# authSources/ldap_Edit.xml?AUTH_SOURCE_PROVIDER-AD
+# authSources/ldap_Edit.xml
+#: dropdown - AUTH_SOURCE_PROVIDER - AD
+msgid "[authSources/ldap_Edit.xml?AUTH_SOURCE_PROVIDER-AD]"
+msgstr "Active Directory"
+
+# authSources/ldap_Edit.xml?AUTH_SOURCE_SERVER_NAME
+# authSources/ldap_Edit.xml
+#: text - AUTH_SOURCE_SERVER_NAME
+msgid "[authSources/ldap_Edit.xml?AUTH_SOURCE_SERVER_NAME] Server Name"
+msgstr "Server Name"
+
+# authSources/ldap_Edit.xml?AUTH_SOURCE_PORT
+# authSources/ldap_Edit.xml
+#: text - AUTH_SOURCE_PORT
+msgid "[authSources/ldap_Edit.xml?AUTH_SOURCE_PORT] Port"
+msgstr "Port"
+
+# authSources/ldap_Edit.xml?AUTH_SOURCE_ENABLED_TLS
+# authSources/ldap_Edit.xml
+#: dropdown - AUTH_SOURCE_ENABLED_TLS
+msgid "Enabled TLS    "
+msgstr "Enabled TLS    "
+
+# authSources/ldap_Edit.xml?AUTH_SOURCE_ENABLED_TLS-''
+# authSources/ldap_Edit.xml
+#: dropdown - AUTH_SOURCE_ENABLED_TLS - ''
+msgid "[authSources/ldap_Edit.xml?AUTH_SOURCE_ENABLED_TLS-'']"
+msgstr "No"
+
+# authSources/ldap_Edit.xml?AUTH_SOURCE_ENABLED_TLS-1
+# authSources/ldap_Edit.xml
+#: dropdown - AUTH_SOURCE_ENABLED_TLS - 1
+msgid "[authSources/ldap_Edit.xml?AUTH_SOURCE_ENABLED_TLS-1]"
+msgstr "Yes"
+
+# authSources/ldap_Edit.xml?AUTH_SOURCE_VERSION
+# authSources/ldap_Edit.xml
+#: dropdown - AUTH_SOURCE_VERSION
+msgid "Version    "
+msgstr "Version    "
+
+# authSources/ldap_Edit.xml?AUTH_SOURCE_VERSION-2
+# authSources/ldap_Edit.xml
+#: dropdown - AUTH_SOURCE_VERSION - 2
+msgid "[authSources/ldap_Edit.xml?AUTH_SOURCE_VERSION-2]"
+msgstr "2"
+
+# authSources/ldap_Edit.xml?AUTH_SOURCE_VERSION-3
+# authSources/ldap_Edit.xml
+#: dropdown - AUTH_SOURCE_VERSION - 3
+msgid "[authSources/ldap_Edit.xml?AUTH_SOURCE_VERSION-3]"
+msgstr "3"
+
+# authSources/ldap_Edit.xml?AUTH_SOURCE_BASE_DN
+# authSources/ldap_Edit.xml
+#: text - AUTH_SOURCE_BASE_DN
+msgid "Base DN"
+msgstr "Base DN"
+
+# authSources/ldap_Edit.xml?AUTH_ANONYMOUS
+# authSources/ldap_Edit.xml
+#: dropdown - AUTH_ANONYMOUS
+msgid "Anonymous    "
+msgstr "Anonymous    "
+
+# authSources/ldap_Edit.xml?AUTH_ANONYMOUS-''
+# authSources/ldap_Edit.xml
+#: dropdown - AUTH_ANONYMOUS - ''
+msgid "[authSources/ldap_Edit.xml?AUTH_ANONYMOUS-'']"
+msgstr "No"
+
+# authSources/ldap_Edit.xml?AUTH_ANONYMOUS-1
+# authSources/ldap_Edit.xml
+#: dropdown - AUTH_ANONYMOUS - 1
+msgid "[authSources/ldap_Edit.xml?AUTH_ANONYMOUS-1]"
+msgstr "Yes"
+
+# authSources/ldap_Edit.xml?AUTH_SOURCE_SEARCH_USER
+# authSources/ldap_Edit.xml
+#: text - AUTH_SOURCE_SEARCH_USER
+msgid "Search User"
+msgstr "Search User"
+
+# authSources/ldap_Edit.xml?AUTH_SOURCE_PASSWORD
+# authSources/ldap_Edit.xml
+#: password - AUTH_SOURCE_PASSWORD
+msgid "[authSources/ldap_Edit.xml?AUTH_SOURCE_PASSWORD] Password"
+msgstr "Password"
+
+# authSources/ldap_Edit.xml?AUTH_SOURCE_OBJECT_CLASSES
+# authSources/ldap_Edit.xml
+#: text - AUTH_SOURCE_OBJECT_CLASSES
+msgid "Object Classes"
+msgstr "Object Classes"
+
+# authSources/ldap_Edit.xml?AUTH_SOURCE_ATTRIBUTES
+# authSources/ldap_Edit.xml
+#: text - AUTH_SOURCE_ATTRIBUTES
+msgid "Atributes"
+msgstr "Atributes"
+
+# authSources/ldap_Edit.xml?btnSave
+# authSources/ldap_Edit.xml
+#: submit - btnSave
+msgid "[authSources/ldap_Edit.xml?btnSave] Save"
+msgstr "Save"
+
+# authSources/test_Edit.xml?TITLE
+# authSources/test_Edit.xml
+#: title - TITLE
+msgid "Authentication Source Information (TEST)"
+msgstr "Authentication Source Information (TEST)"
+
+# authSources/test_Edit.xml?AUTH_SOURCE_NAME
+# authSources/test_Edit.xml
+#: text - AUTH_SOURCE_NAME
+msgid "[authSources/test_Edit.xml?AUTH_SOURCE_NAME] Name"
+msgstr "Name"
+
+# authSources/test_Edit.xml?AUTH_SOURCE_SERVER_NAME
+# authSources/test_Edit.xml
+#: text - AUTH_SOURCE_SERVER_NAME
+msgid "[authSources/test_Edit.xml?AUTH_SOURCE_SERVER_NAME] Server Name"
+msgstr "Server Name"
+
+# authSources/test_Edit.xml?AUTH_SOURCE_PORT
+# authSources/test_Edit.xml
+#: text - AUTH_SOURCE_PORT
+msgid "[authSources/test_Edit.xml?AUTH_SOURCE_PORT] Port"
+msgstr "Port"
+
+# authSources/test_Edit.xml?AUTH_SOURCE_ENABLED_TLS
+# authSources/test_Edit.xml
+#: dropdown - AUTH_SOURCE_ENABLED_TLS
+msgid "[authSources/test_Edit.xml?AUTH_SOURCE_ENABLED_TLS] Enabled TLS    "
+msgstr "Enabled TLS    "
+
+# authSources/test_Edit.xml?AUTH_SOURCE_ENABLED_TLS-''
+# authSources/test_Edit.xml
+#: dropdown - AUTH_SOURCE_ENABLED_TLS - ''
+msgid "[authSources/test_Edit.xml?AUTH_SOURCE_ENABLED_TLS-'']"
+msgstr "No"
+
+# authSources/test_Edit.xml?AUTH_SOURCE_ENABLED_TLS-1
+# authSources/test_Edit.xml
+#: dropdown - AUTH_SOURCE_ENABLED_TLS - 1
+msgid "[authSources/test_Edit.xml?AUTH_SOURCE_ENABLED_TLS-1]"
+msgstr "Yes"
+
+# authSources/test_Edit.xml?AUTH_ANONYMOUS
+# authSources/test_Edit.xml
+#: dropdown - AUTH_ANONYMOUS
+msgid "[authSources/test_Edit.xml?AUTH_ANONYMOUS] Anonymous    "
+msgstr "Anonymous    "
+
+# authSources/test_Edit.xml?AUTH_ANONYMOUS-''
+# authSources/test_Edit.xml
+#: dropdown - AUTH_ANONYMOUS - ''
+msgid "[authSources/test_Edit.xml?AUTH_ANONYMOUS-'']"
+msgstr "No"
+
+# authSources/test_Edit.xml?AUTH_ANONYMOUS-1
+# authSources/test_Edit.xml
+#: dropdown - AUTH_ANONYMOUS - 1
+msgid "[authSources/test_Edit.xml?AUTH_ANONYMOUS-1]"
+msgstr "Yes"
+
+# authSources/test_Edit.xml?AUTH_SOURCE_SEARCH_USER
+# authSources/test_Edit.xml
+#: text - AUTH_SOURCE_SEARCH_USER
+msgid "[authSources/test_Edit.xml?AUTH_SOURCE_SEARCH_USER] Search User"
+msgstr "Search User"
+
+# authSources/test_Edit.xml?AUTH_SOURCE_PASSWORD
+# authSources/test_Edit.xml
+#: password - AUTH_SOURCE_PASSWORD
+msgid "[authSources/test_Edit.xml?AUTH_SOURCE_PASSWORD] Password"
+msgstr "Password"
+
+# authSources/test_Edit.xml?FIELD_1
+# authSources/test_Edit.xml
+#: text - FIELD_1
+msgid "Field 1"
+msgstr "Field 1"
+
+# authSources/test_Edit.xml?FIELD_2
+# authSources/test_Edit.xml
+#: text - FIELD_2
+msgid "Field 2"
+msgstr "Field 2"
+
+# authSources/test_Edit.xml?FIELD_3
+# authSources/test_Edit.xml
+#: text - FIELD_3
+msgid "Field 3"
+msgstr "Field 3"
+
+# authSources/test_Edit.xml?FIELD_4
+# authSources/test_Edit.xml
+#: text - FIELD_4
+msgid "Field 4"
+msgstr "Field 4"
+
+# authSources/test_Edit.xml?btnSave
+# authSources/test_Edit.xml
+#: submit - btnSave
+msgid "[authSources/test_Edit.xml?btnSave] Save"
+msgstr "Save"
+
 # tasks/tasks_Permissions.xml?TAS_SUBTITLE1
 # tasks/tasks_Permissions.xml
 #: subtitle - TAS_SUBTITLE1
@@ -12168,6 +12678,12 @@ msgstr "Allow arbitrary transfer (Ad hoc)"
 #: checkbox - SEND_EMAIL
 msgid "After derivation notify to each next user"
 msgstr "After derivation notify to each next user"
+
+# tasks/tasks_Notifications.xml?TAS_DEF_MESSAGE
+# tasks/tasks_Notifications.xml
+#: textareapm - TAS_DEF_MESSAGE
+msgid "[tasks/tasks_Notifications.xml?TAS_DEF_MESSAGE] Message"
+msgstr "Message"
 
 # tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_TYPE
 # tasks/tasks_AssignmentRules.xml
@@ -12198,6 +12714,18 @@ msgstr "Value Based Assignment"
 #: textpm - TAS_ASSIGN_VARIABLE
 msgid "Variable for Value Based Assignment"
 msgstr "Variable for Value Based Assignment"
+
+# tasks/tasks_Labels.xml?TAS_DEF_TITLE
+# tasks/tasks_Labels.xml
+#: textareapm - TAS_DEF_TITLE
+msgid "[tasks/tasks_Labels.xml?TAS_DEF_TITLE] Case Title"
+msgstr "Case Title"
+
+# tasks/tasks_Labels.xml?TAS_DEF_DESCRIPTION
+# tasks/tasks_Labels.xml
+#: textareapm - TAS_DEF_DESCRIPTION
+msgid "Case Description"
+msgstr "Case Description"
 
 # tasks/tasks_Owner.xml?TAS_OWNER_APP
 # tasks/tasks_Owner.xml
@@ -12330,6 +12858,12 @@ msgstr "Title"
 #: textarea - TAS_DESCRIPTION
 msgid "[tasks/tasks_Definition.xml?TAS_DESCRIPTION] Description"
 msgstr "Description"
+
+# tasks/tasks_Definition.xml?TAS_PRIORITY_VARIABLE
+# tasks/tasks_Definition.xml
+#: textpm - TAS_PRIORITY_VARIABLE
+msgid "Variable for Case priority"
+msgstr "Variable for Case priority"
 
 # tasks/tasks_Definition.xml?TAS_START
 # tasks/tasks_Definition.xml
@@ -14665,6 +15199,12 @@ msgstr "Cancelled"
 msgid "[cases/cases_ListToRevise.xml?APP_STATUS-COMPLETED]"
 msgstr "Completed"
 
+# cases/cases_ListToRevise.xml?EDIT
+# cases/cases_ListToRevise.xml
+#: link - EDIT
+msgid "[cases/cases_ListToRevise.xml?EDIT] Edit"
+msgstr "Edit"
+
 # cases/cases_ListToRevise.xml?DELETE
 # cases/cases_ListToRevise.xml
 #: link - DELETE
@@ -14911,6 +15451,12 @@ msgstr "Re-type Password:"
 msgid "[login/newSite.xml?NW_SUB] Test"
 msgstr "Test"
 
+# login/nologin.xml?subtitle
+# login/nologin.xml
+#: subtitle - subtitle
+msgid "subtitle"
+msgstr "subtitle"
+
 # login/nologin.xml?BSUBMIT
 # login/nologin.xml
 #: submit - BSUBMIT
@@ -14998,7 +15544,7 @@ msgstr "Web Server"
 # login/dbInfo.xml?SERVER_NAME
 # login/dbInfo.xml
 #: caption - SERVER_NAME
-msgid "Server Name"
+msgid "[login/dbInfo.xml?SERVER_NAME] Server Name"
 msgstr "Server Name"
 
 # login/dbInfo.xml?SERVER_ADDR
@@ -15151,6 +15697,12 @@ msgstr "Title"
 msgid "[steps/conditions_List.xml?STEP_CONDITION] Condition"
 msgstr "Condition"
 
+# steps/conditions_List.xml?EDIT
+# steps/conditions_List.xml
+#: link - EDIT
+msgid "[steps/conditions_List.xml?EDIT] Edit"
+msgstr "Edit"
+
 # steps/conditions_List.xml?SEARCH
 # steps/conditions_List.xml
 #: button - SEARCH
@@ -15192,6 +15744,12 @@ msgstr "Documentation"
 #: dropdown - STEP_TYPE_OBJ - EXTERNAL
 msgid "[steps/steps_availableBB.xml?STEP_TYPE_OBJ-EXTERNAL]"
 msgstr "External Step"
+
+# steps/conditions_Edit.xml?STEP_CONDITION
+# steps/conditions_Edit.xml
+#: textareapm - STEP_CONDITION
+msgid "[steps/conditions_Edit.xml?STEP_CONDITION] Condition"
+msgstr "Condition"
 
 # steps/conditions_Edit.xml?ACCEPT
 # steps/conditions_Edit.xml
@@ -15288,6 +15846,12 @@ msgstr "Available Triggers"
 #: dropdown - TRI_UID
 msgid "[steps/triggers_Assign.xml?TRI_UID] Triggers"
 msgstr "Triggers"
+
+# steps/triggers_Assign.xml?ST_CONDITION
+# steps/triggers_Assign.xml
+#: textareapm - ST_CONDITION
+msgid "[steps/triggers_Assign.xml?ST_CONDITION] Condition"
+msgstr "Condition"
 
 # steps/triggers_Assign.xml?ASSIGN
 # steps/triggers_Assign.xml
@@ -15571,6 +16135,12 @@ msgstr "Save"
 msgid "[triggers/triggers_ShortList.xml?TRI_TITLE] Title"
 msgstr "Title"
 
+# triggers/triggers_ShortList.xml?EDIT
+# triggers/triggers_ShortList.xml
+#: link - EDIT
+msgid "[triggers/triggers_ShortList.xml?EDIT] Edit"
+msgstr "Edit"
+
 # triggers/triggers_ShortList.xml?DELETE
 # triggers/triggers_ShortList.xml
 #: link - DELETE
@@ -15606,6 +16176,12 @@ msgstr "Title"
 #: textarea - TRI_DESCRIPTION
 msgid "[triggers/triggers_Edit.xml?TRI_DESCRIPTION] Description"
 msgstr "Description"
+
+# triggers/triggers_Edit.xml?TRI_WEBBOT
+# triggers/triggers_Edit.xml
+#: textareapm - TRI_WEBBOT
+msgid "Script"
+msgstr "Script"
 
 # triggers/triggers_Edit.xml?SAVE
 # triggers/triggers_Edit.xml

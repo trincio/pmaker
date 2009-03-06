@@ -28,6 +28,7 @@ class AuthenticationSource extends BaseAuthenticationSource {
   	  if (!is_null($oAuthenticationSource)) {
   	    $aFields = $oAuthenticationSource->toArray(BasePeer::TYPE_FIELDNAME);
         $this->fromArray($aFields, BasePeer::TYPE_FIELDNAME);
+        $aFields['AUTH_SOURCE_DATA'] = ($aFields['AUTH_SOURCE_DATA'] != '' ? unserialize($aFields['AUTH_SOURCE_DATA']) : array());
   	    return $aFields;
       }
       else {
@@ -48,6 +49,7 @@ class AuthenticationSource extends BaseAuthenticationSource {
         $aData['AUTH_SOURCE_UID'] = G::generateUniqueID();
       }
     }
+    $aData['AUTH_SOURCE_DATA'] = (is_array($aData['AUTH_SOURCE_DATA']) ? serialize($aData['AUTH_SOURCE_DATA']) : $aData['AUTH_SOURCE_DATA']);
     $oConnection = Propel::getConnection(AuthenticationSourcePeer::DATABASE_NAME);
   	try {
   	  $oAuthenticationSource = new AuthenticationSource();
@@ -74,6 +76,7 @@ class AuthenticationSource extends BaseAuthenticationSource {
   }
 
   function update($aData) {
+    $aData['AUTH_SOURCE_DATA'] = (is_array($aData['AUTH_SOURCE_DATA']) ? serialize($aData['AUTH_SOURCE_DATA']) : $aData['AUTH_SOURCE_DATA']);
     $oConnection = Propel::getConnection(AuthenticationSourcePeer::DATABASE_NAME);
   	try {
   	  $oAuthenticationSource = AuthenticationSourcePeer::retrieveByPK($aData['AUTH_SOURCE_UID']);

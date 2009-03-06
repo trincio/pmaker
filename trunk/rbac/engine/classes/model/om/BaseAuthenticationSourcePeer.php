@@ -24,7 +24,7 @@ abstract class BaseAuthenticationSourcePeer {
 	const CLASS_DEFAULT = 'classes.model.AuthenticationSource';
 
 	/** The total number of columns. */
-	const NUM_COLUMNS = 12;
+	const NUM_COLUMNS = 14;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -54,6 +54,9 @@ abstract class BaseAuthenticationSourcePeer {
 	/** the column name for the AUTH_SOURCE_BASE_DN field */
 	const AUTH_SOURCE_BASE_DN = 'AUTHENTICATION_SOURCE.AUTH_SOURCE_BASE_DN';
 
+	/** the column name for the AUTH_ANONYMOUS field */
+	const AUTH_ANONYMOUS = 'AUTHENTICATION_SOURCE.AUTH_ANONYMOUS';
+
 	/** the column name for the AUTH_SOURCE_SEARCH_USER field */
 	const AUTH_SOURCE_SEARCH_USER = 'AUTHENTICATION_SOURCE.AUTH_SOURCE_SEARCH_USER';
 
@@ -66,6 +69,9 @@ abstract class BaseAuthenticationSourcePeer {
 	/** the column name for the AUTH_SOURCE_OBJECT_CLASSES field */
 	const AUTH_SOURCE_OBJECT_CLASSES = 'AUTHENTICATION_SOURCE.AUTH_SOURCE_OBJECT_CLASSES';
 
+	/** the column name for the AUTH_SOURCE_DATA field */
+	const AUTH_SOURCE_DATA = 'AUTHENTICATION_SOURCE.AUTH_SOURCE_DATA';
+
 	/** The PHP to DB Name Mapping */
 	private static $phpNameMap = null;
 
@@ -77,10 +83,10 @@ abstract class BaseAuthenticationSourcePeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('AuthSourceUid', 'AuthSourceName', 'AuthSourceProvider', 'AuthSourceServerName', 'AuthSourcePort', 'AuthSourceEnabledTls', 'AuthSourceVersion', 'AuthSourceBaseDn', 'AuthSourceSearchUser', 'AuthSourcePassword', 'AuthSourceAttributes', 'AuthSourceObjectClasses', ),
-		BasePeer::TYPE_COLNAME => array (AuthenticationSourcePeer::AUTH_SOURCE_UID, AuthenticationSourcePeer::AUTH_SOURCE_NAME, AuthenticationSourcePeer::AUTH_SOURCE_PROVIDER, AuthenticationSourcePeer::AUTH_SOURCE_SERVER_NAME, AuthenticationSourcePeer::AUTH_SOURCE_PORT, AuthenticationSourcePeer::AUTH_SOURCE_ENABLED_TLS, AuthenticationSourcePeer::AUTH_SOURCE_VERSION, AuthenticationSourcePeer::AUTH_SOURCE_BASE_DN, AuthenticationSourcePeer::AUTH_SOURCE_SEARCH_USER, AuthenticationSourcePeer::AUTH_SOURCE_PASSWORD, AuthenticationSourcePeer::AUTH_SOURCE_ATTRIBUTES, AuthenticationSourcePeer::AUTH_SOURCE_OBJECT_CLASSES, ),
-		BasePeer::TYPE_FIELDNAME => array ('AUTH_SOURCE_UID', 'AUTH_SOURCE_NAME', 'AUTH_SOURCE_PROVIDER', 'AUTH_SOURCE_SERVER_NAME', 'AUTH_SOURCE_PORT', 'AUTH_SOURCE_ENABLED_TLS', 'AUTH_SOURCE_VERSION', 'AUTH_SOURCE_BASE_DN', 'AUTH_SOURCE_SEARCH_USER', 'AUTH_SOURCE_PASSWORD', 'AUTH_SOURCE_ATTRIBUTES', 'AUTH_SOURCE_OBJECT_CLASSES', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
+		BasePeer::TYPE_PHPNAME => array ('AuthSourceUid', 'AuthSourceName', 'AuthSourceProvider', 'AuthSourceServerName', 'AuthSourcePort', 'AuthSourceEnabledTls', 'AuthSourceVersion', 'AuthSourceBaseDn', 'AuthAnonymous', 'AuthSourceSearchUser', 'AuthSourcePassword', 'AuthSourceAttributes', 'AuthSourceObjectClasses', 'AuthSourceData', ),
+		BasePeer::TYPE_COLNAME => array (AuthenticationSourcePeer::AUTH_SOURCE_UID, AuthenticationSourcePeer::AUTH_SOURCE_NAME, AuthenticationSourcePeer::AUTH_SOURCE_PROVIDER, AuthenticationSourcePeer::AUTH_SOURCE_SERVER_NAME, AuthenticationSourcePeer::AUTH_SOURCE_PORT, AuthenticationSourcePeer::AUTH_SOURCE_ENABLED_TLS, AuthenticationSourcePeer::AUTH_SOURCE_VERSION, AuthenticationSourcePeer::AUTH_SOURCE_BASE_DN, AuthenticationSourcePeer::AUTH_ANONYMOUS, AuthenticationSourcePeer::AUTH_SOURCE_SEARCH_USER, AuthenticationSourcePeer::AUTH_SOURCE_PASSWORD, AuthenticationSourcePeer::AUTH_SOURCE_ATTRIBUTES, AuthenticationSourcePeer::AUTH_SOURCE_OBJECT_CLASSES, AuthenticationSourcePeer::AUTH_SOURCE_DATA, ),
+		BasePeer::TYPE_FIELDNAME => array ('AUTH_SOURCE_UID', 'AUTH_SOURCE_NAME', 'AUTH_SOURCE_PROVIDER', 'AUTH_SOURCE_SERVER_NAME', 'AUTH_SOURCE_PORT', 'AUTH_SOURCE_ENABLED_TLS', 'AUTH_SOURCE_VERSION', 'AUTH_SOURCE_BASE_DN', 'AUTH_ANONYMOUS', 'AUTH_SOURCE_SEARCH_USER', 'AUTH_SOURCE_PASSWORD', 'AUTH_SOURCE_ATTRIBUTES', 'AUTH_SOURCE_OBJECT_CLASSES', 'AUTH_SOURCE_DATA', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
 	);
 
 	/**
@@ -90,10 +96,10 @@ abstract class BaseAuthenticationSourcePeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('AuthSourceUid' => 0, 'AuthSourceName' => 1, 'AuthSourceProvider' => 2, 'AuthSourceServerName' => 3, 'AuthSourcePort' => 4, 'AuthSourceEnabledTls' => 5, 'AuthSourceVersion' => 6, 'AuthSourceBaseDn' => 7, 'AuthSourceSearchUser' => 8, 'AuthSourcePassword' => 9, 'AuthSourceAttributes' => 10, 'AuthSourceObjectClasses' => 11, ),
-		BasePeer::TYPE_COLNAME => array (AuthenticationSourcePeer::AUTH_SOURCE_UID => 0, AuthenticationSourcePeer::AUTH_SOURCE_NAME => 1, AuthenticationSourcePeer::AUTH_SOURCE_PROVIDER => 2, AuthenticationSourcePeer::AUTH_SOURCE_SERVER_NAME => 3, AuthenticationSourcePeer::AUTH_SOURCE_PORT => 4, AuthenticationSourcePeer::AUTH_SOURCE_ENABLED_TLS => 5, AuthenticationSourcePeer::AUTH_SOURCE_VERSION => 6, AuthenticationSourcePeer::AUTH_SOURCE_BASE_DN => 7, AuthenticationSourcePeer::AUTH_SOURCE_SEARCH_USER => 8, AuthenticationSourcePeer::AUTH_SOURCE_PASSWORD => 9, AuthenticationSourcePeer::AUTH_SOURCE_ATTRIBUTES => 10, AuthenticationSourcePeer::AUTH_SOURCE_OBJECT_CLASSES => 11, ),
-		BasePeer::TYPE_FIELDNAME => array ('AUTH_SOURCE_UID' => 0, 'AUTH_SOURCE_NAME' => 1, 'AUTH_SOURCE_PROVIDER' => 2, 'AUTH_SOURCE_SERVER_NAME' => 3, 'AUTH_SOURCE_PORT' => 4, 'AUTH_SOURCE_ENABLED_TLS' => 5, 'AUTH_SOURCE_VERSION' => 6, 'AUTH_SOURCE_BASE_DN' => 7, 'AUTH_SOURCE_SEARCH_USER' => 8, 'AUTH_SOURCE_PASSWORD' => 9, 'AUTH_SOURCE_ATTRIBUTES' => 10, 'AUTH_SOURCE_OBJECT_CLASSES' => 11, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
+		BasePeer::TYPE_PHPNAME => array ('AuthSourceUid' => 0, 'AuthSourceName' => 1, 'AuthSourceProvider' => 2, 'AuthSourceServerName' => 3, 'AuthSourcePort' => 4, 'AuthSourceEnabledTls' => 5, 'AuthSourceVersion' => 6, 'AuthSourceBaseDn' => 7, 'AuthAnonymous' => 8, 'AuthSourceSearchUser' => 9, 'AuthSourcePassword' => 10, 'AuthSourceAttributes' => 11, 'AuthSourceObjectClasses' => 12, 'AuthSourceData' => 13, ),
+		BasePeer::TYPE_COLNAME => array (AuthenticationSourcePeer::AUTH_SOURCE_UID => 0, AuthenticationSourcePeer::AUTH_SOURCE_NAME => 1, AuthenticationSourcePeer::AUTH_SOURCE_PROVIDER => 2, AuthenticationSourcePeer::AUTH_SOURCE_SERVER_NAME => 3, AuthenticationSourcePeer::AUTH_SOURCE_PORT => 4, AuthenticationSourcePeer::AUTH_SOURCE_ENABLED_TLS => 5, AuthenticationSourcePeer::AUTH_SOURCE_VERSION => 6, AuthenticationSourcePeer::AUTH_SOURCE_BASE_DN => 7, AuthenticationSourcePeer::AUTH_ANONYMOUS => 8, AuthenticationSourcePeer::AUTH_SOURCE_SEARCH_USER => 9, AuthenticationSourcePeer::AUTH_SOURCE_PASSWORD => 10, AuthenticationSourcePeer::AUTH_SOURCE_ATTRIBUTES => 11, AuthenticationSourcePeer::AUTH_SOURCE_OBJECT_CLASSES => 12, AuthenticationSourcePeer::AUTH_SOURCE_DATA => 13, ),
+		BasePeer::TYPE_FIELDNAME => array ('AUTH_SOURCE_UID' => 0, 'AUTH_SOURCE_NAME' => 1, 'AUTH_SOURCE_PROVIDER' => 2, 'AUTH_SOURCE_SERVER_NAME' => 3, 'AUTH_SOURCE_PORT' => 4, 'AUTH_SOURCE_ENABLED_TLS' => 5, 'AUTH_SOURCE_VERSION' => 6, 'AUTH_SOURCE_BASE_DN' => 7, 'AUTH_ANONYMOUS' => 8, 'AUTH_SOURCE_SEARCH_USER' => 9, 'AUTH_SOURCE_PASSWORD' => 10, 'AUTH_SOURCE_ATTRIBUTES' => 11, 'AUTH_SOURCE_OBJECT_CLASSES' => 12, 'AUTH_SOURCE_DATA' => 13, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, )
 	);
 
 	/**
@@ -210,6 +216,8 @@ abstract class BaseAuthenticationSourcePeer {
 
 		$criteria->addSelectColumn(AuthenticationSourcePeer::AUTH_SOURCE_BASE_DN);
 
+		$criteria->addSelectColumn(AuthenticationSourcePeer::AUTH_ANONYMOUS);
+
 		$criteria->addSelectColumn(AuthenticationSourcePeer::AUTH_SOURCE_SEARCH_USER);
 
 		$criteria->addSelectColumn(AuthenticationSourcePeer::AUTH_SOURCE_PASSWORD);
@@ -217,6 +225,8 @@ abstract class BaseAuthenticationSourcePeer {
 		$criteria->addSelectColumn(AuthenticationSourcePeer::AUTH_SOURCE_ATTRIBUTES);
 
 		$criteria->addSelectColumn(AuthenticationSourcePeer::AUTH_SOURCE_OBJECT_CLASSES);
+
+		$criteria->addSelectColumn(AuthenticationSourcePeer::AUTH_SOURCE_DATA);
 
 	}
 

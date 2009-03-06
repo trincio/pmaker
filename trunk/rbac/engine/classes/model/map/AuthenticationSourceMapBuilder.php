@@ -80,6 +80,8 @@ class AuthenticationSourceMapBuilder {
 
 		$tMap->addColumn('AUTH_SOURCE_BASE_DN', 'AuthSourceBaseDn', 'string', CreoleTypes::VARCHAR, true, 128);
 
+		$tMap->addColumn('AUTH_ANONYMOUS', 'AuthAnonymous', 'int', CreoleTypes::INTEGER, true, null);
+
 		$tMap->addColumn('AUTH_SOURCE_SEARCH_USER', 'AuthSourceSearchUser', 'string', CreoleTypes::VARCHAR, true, 128);
 
 		$tMap->addColumn('AUTH_SOURCE_PASSWORD', 'AuthSourcePassword', 'string', CreoleTypes::VARCHAR, true, 32);
@@ -87,6 +89,8 @@ class AuthenticationSourceMapBuilder {
 		$tMap->addColumn('AUTH_SOURCE_ATTRIBUTES', 'AuthSourceAttributes', 'string', CreoleTypes::VARCHAR, true, 255);
 
 		$tMap->addColumn('AUTH_SOURCE_OBJECT_CLASSES', 'AuthSourceObjectClasses', 'string', CreoleTypes::VARCHAR, true, 255);
+
+		$tMap->addColumn('AUTH_SOURCE_DATA', 'AuthSourceData', 'string', CreoleTypes::LONGVARCHAR, false, null);
 
 	} // doBuild()
 
