@@ -208,11 +208,11 @@ class Process extends BaseProcess {
 	 * @param      string $sProUid   the uid of the Prolication
 	 */
 
-  function processExists ( $ProUid ) {
+  function processExists ( $ProUid ) { 
   	$con = Propel::getConnection(ProcessPeer::DATABASE_NAME);
     try {
       $oPro = ProcessPeer::retrieveByPk( $ProUid );
-  	  if ( get_class ($oPro) == 'Process' ) {
+  	  if ( get_class($oPro) == 'Process' ) {
   	    return true;
   	  }
       else {

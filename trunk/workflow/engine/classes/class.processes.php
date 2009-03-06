@@ -44,6 +44,8 @@ require_once 'classes/model/SubProcess.php';
 require_once 'classes/model/CaseTracker.php';
 require_once 'classes/model/CaseTrackerObject.php';
 require_once 'classes/model/Stage.php';
+require_once 'classes/model/TaskUser.php';
+
 
 G::LoadClass('tasks');
 G::LoadClass('reportTables');
@@ -178,6 +180,11 @@ class Processes {
     return $oCaseTrackerObject->caseTrackerObjectExists( $sUid );
   }
 
+	function caseTrackerExists ( $sUid = '') {
+    $oCaseTracker = new CaseTracker();
+    return $oCaseTracker->caseTrackerExists( $sUid );
+  }	
+	
   function dbConnectionExists ( $sUid = '') {
     $oDBSource = new DbSource();
     return $oDBSource->Exists( $sUid );
@@ -706,7 +713,7 @@ class Processes {
   function createCaseTrackerObjectRows ($CaseTrackerObject ) {
   	foreach ( $CaseTrackerObject as $key => $row ) {
       $oCaseTrackerObject = new CaseTrackerObject();
-      if($oCaseTrackerObject->caseTrackerObjectExists ($row['CTO_UID']))
+      if($oCaseTrackerObject->caseTrackerObjectExists ($row['CTO_UID'])) 
        		$oCaseTrackerObject->remove($row['CTO_UID']);
    		$res = $oCaseTrackerObject->create($row);
   	}
@@ -1823,21 +1830,25 @@ class Processes {
   * @param string $sProUid
   * @return boolean
   */
-  function removeProcessRows ($sProUid )  {
-    try {
+  function removeProcessRows ($sProUid )  { 
+    try { 
   	  //Instance all classes necesaries
-  	  $oProcess         = new Process();
+  	  $oProcess         = new Process();  	 						
   	  $oDynaform        = new Dynaform();
   	  $oInputDocument   = new InputDocument();
-  	  $oOutputDocument  = new OutputDocument();
+  	  $oOutputDocument  = new OutputDocument();  	    	  
   	  $oTrigger         = new Triggers();
-  	  $oStepTrigger     = new StepTrigger();
+  	  $oStepTrigger     = new StepTrigger();  	  
   	  $oRoute           = new Route();
   	  $oStep            = new Step();
   	  $oSubProcess      = new SubProcess();
+  	  $oCaseTracker     = new CaseTracker();
+  	  $oCaseTrackerObject=new CaseTrackerObject();
+  	  $oObjectPermission= new ObjectPermission();
   	  $oSwimlaneElement = new SwimlanesElements();
-  	  $oConnection      = new DbSource();
-
+  	  $oConnection      = new DbSource();  	  
+  	  $oStage						= new Stage();     
+                                     
   	  //Delete the tasks of process
   	  $oCriteria = new Criteria('workflow');
   	  $oCriteria->add(TaskPeer::PRO_UID, $sProUid);
@@ -1845,11 +1856,11 @@ class Processes {
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
       $oDataset->next();
       $oTask = new Task();
-      while ($aRow = $oDataset->getRow()) {
+      while ($aRow = $oDataset->getRow()) {      	
         $oTask->remove( $aRow['TAS_UID']);
       	$oDataset->next();
       }
-
+           
     //Delete the dynaforms of process
     $oCriteria = new Criteria('workflow');
     $oCriteria->add(DynaformPeer::PRO_UID, $sProUid);
@@ -1979,6 +1990,57 @@ class Processes {
     	$oDataset->next();
     }
 
+    //Delete the caseTracker of process
+		$oCriteria = new Criteria('workflow');
+	  $oCriteria->add(CaseTrackerPeer::PRO_UID, $sProUid);
+	  $oDataset = CaseTrackerPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    while ($aRow = $oDataset->getRow()) {    	
+    	if($oCaseTracker->caseTrackerExists ($aRow['PRO_UID']))
+    			$oCaseTracker->remove($aRow['PRO_UID']);
+    	$oDataset->next();
+    }
+
+    //Delete the caseTrackerObject of process
+		$oCriteria = new Criteria('workflow');
+	  $oCriteria->add(CaseTrackerObjectPeer::PRO_UID, $sProUid);
+	  $oDataset = CaseTrackerObjectPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next(); 
+    while ($aRow = $oDataset->getRow()) { 
+    	if($oCaseTrackerObject->caseTrackerObjectExists ($aRow['CTO_UID'])) {
+    			$oCaseTrackerObject->remove($aRow['CTO_UID']);    	  	    	        
+      }
+    	$oDataset->next();    	
+    }
+ 
+    //Delete the ObjectPermission of process
+		$oCriteria = new Criteria('workflow');
+	  $oCriteria->add(ObjectPermissionPeer::PRO_UID, $sProUid);
+	  $oDataset = ObjectPermissionPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next(); 
+    while ($aRow = $oDataset->getRow()) { 
+    		if($oObjectPermission->Exists ($aRow['OP_UID'])) {   			
+    				$oObjectPermission->remove($aRow['OP_UID']);
+        }	
+    	$oDataset->next();
+    }
+    
+    //Delete the Stage of process
+		$oCriteria = new Criteria('workflow');
+	  $oCriteria->add(StagePeer::PRO_UID, $sProUid);
+	  $oDataset = StagePeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    while ($aRow = $oDataset->getRow()) {
+    	if($oStage->Exists ($aRow['STG_UID']))
+    			$oStage->remove($aRow['STG_UID']);
+    	$oDataset->next();
+    }
+	
+		
  		return true;
   	}
   	catch ( Exception $oError) {
@@ -1992,6 +2054,7 @@ class Processes {
   * @return boolean
   */
   function createProcessFromData ($oData, $pmFilename ) {
+		$this->removeProcessRows ($oData->process['PRO_UID'] );   
     $this->createProcessRow($oData->process);
     $this->createTaskRows($oData->tasks);
     $this->createRouteRows($oData->routes);
@@ -2023,8 +2086,8 @@ class Processes {
   */
   function updateProcessFromData ($oData, $pmFilename ) {
     $this->updateProcessRow ($oData->process );
-    $this->removeProcessRows ($oData->process['PRO_UID'] );
-    $this->createTaskRows ($oData->tasks );
+    $this->removeProcessRows ($oData->process['PRO_UID'] ); 
+    $this->createTaskRows ($oData->tasks ); 
     $this->createRouteRows ($oData->routes );
     $this->createLaneRows ($oData->lanes );
     $this->createDynaformRows ($oData->dynaforms );

@@ -93,4 +93,29 @@ class CaseTracker extends BaseCaseTracker {
     	throw($oError);
     }
   }
+  
+   public function remove($sProcessUID) {
+  	$oConnection = Propel::getConnection(CaseTrackerPeer::DATABASE_NAME);
+  	try {
+  	  	$oConnection->begin();
+  	  	$this->setProUid($sProcessUID);
+        $iResult = $this->delete();
+        $oConnection->commit();
+        return $iResult;
+    }
+    catch (Exception $oError) {
+    	$oConnection->rollback();
+    	throw($oError);
+    }
+  }
+  
+  function caseTrackerExists ( $sUid ) {
+    try {
+      $oObj = CaseTrackerPeer::retrieveByPk($sUid);
+      return (get_class($oObj) == 'CaseTracker');
+    }
+    catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
 } // CaseTracker

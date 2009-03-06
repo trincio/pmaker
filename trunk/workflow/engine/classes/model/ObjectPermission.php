@@ -67,21 +67,27 @@ class ObjectPermission extends BaseObjectPermission {
 
 	function remove($Uid)
 	{
-		$con = Propel::getConnection(DbSourcePeer::DATABASE_NAME);
-		try {
-			$con->begin();
-			$this->setOpUid($Uid);
-			$result = $this->delete();
-			$con->commit();
-			return $result;
-		}
+		$con = Propel::getConnection(ObjectPermissionPeer::DATABASE_NAME);		
+		try { 
+  	  $oObjPer = ObjectPermissionPeer::retrieveByPK($Uid);
+  	  if (get_class($oObjPer) == 'ObjectPermission')
+  	  { 
+  	  	$con->begin();          	  	
+        $iResult = $oObjPer->delete();
+        $con->commit();
+        return $iResult;
+      }
+      else {
+        throw( new Exception( "The row '" . $Uid . "' in table CaseTrackerObject doesn't exists!" ));
+      }
+    }	
 		catch (exception $e) {
 			$con->rollback();
 			throw ($e);
 		}
 	}
 
-  function update($aFields) { //print_r($aFields); die;
+  function update($aFields) { 
     $oConnection = Propel::getConnection(ObjectPermissionPeer::DATABASE_NAME);
     try {
       $oConnection->begin();
