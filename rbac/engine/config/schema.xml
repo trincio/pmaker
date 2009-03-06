@@ -279,7 +279,7 @@
       </vendor>
     </column>
   </table>
-  <table name="USERS">
+  <table name="RBAC_USERS">
     <vendor type="mysql">
       <parameter name="Name" value="USERS"/>
       <parameter name="Engine" value="MyISAM"/>
@@ -400,7 +400,48 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
+    <column name="USR_AUTH_TYPE" type="VARCHAR" size="32" required="true"  default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="USR_AUTH_TYPE"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="UID_AUTH_SOURCE" type="VARCHAR" size="32" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="UID_AUTH_SOURCE"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="USR_AUTH_USER_DN" type="VARCHAR" size="255" required="true"  default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="USR_AUTH_USER_DN"/>
+        <parameter name="Type" value="varchar(255)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="USR_AUTH_SUPERVISOR_DN" type="VARCHAR" size="255" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="USR_AUTH_SUPERVISOR_DN"/>
+        <parameter name="Type" value="varchar(255)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
   </table>
+
   <table name="USERS_ROLES">
     <vendor type="mysql">
       <parameter name="Name" value="USERS_ROLES"/>
@@ -544,6 +585,16 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
+    <column name="AUTH_ANONYMOUS" type="INTEGER" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="AUTH_ANONYMOUS"/>
+        <parameter name="Type" value="int(1)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="0"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
     <column name="AUTH_SOURCE_SEARCH_USER" type="VARCHAR" size="128" required="true" default="">
       <vendor type="mysql">
         <parameter name="Field" value="AUTH_SOURCE_SEARCH_USER"/>
@@ -578,6 +629,16 @@
       <vendor type="mysql">
         <parameter name="Field" value="AUTH_SOURCE_OBJECT_CLASSES"/>
         <parameter name="Type" value="varchar(255)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="AUTH_SOURCE_DATA" type="LONGVARCHAR">
+      <vendor type="mysql">
+        <parameter name="Field" value="AUTH_SOURCE_DATA"/>
+        <parameter name="Type" value="text"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
