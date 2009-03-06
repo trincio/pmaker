@@ -107,7 +107,7 @@
   }
   G::header('Location: processes_Map?PRO_UID=' . $sNewProUid);
 }
-catch ( Exception $e ){
+catch ( Exception $e ){ 
   $G_PUBLISH = new Publisher;
 	$aMessage['MESSAGE'] = $e->getMessage();
   $G_PUBLISH->AddContent('xmlform', 'xmlform', 'login/showMessage', '', $aMessage );

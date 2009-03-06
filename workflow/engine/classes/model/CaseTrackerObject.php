@@ -97,15 +97,21 @@ class CaseTrackerObject extends BaseCaseTrackerObject {
   }
 
   public function remove($sCTOUID) {
-  	$oConnection = Propel::getConnection(CaseTrackerObjectPeer::DATABASE_NAME);
-  	try {
-  	  	$oConnection->begin();
-  	  	$this->setCtoUid($sCTOUID);
-        $iResult = $this->delete();
+  	$oConnection = Propel::getConnection(CaseTrackerObjectPeer::DATABASE_NAME);  	
+  	try { 
+  	  $oCaseTobj = CaseTrackerObjectPeer::retrieveByPK($sCTOUID);
+  	  if (get_class($oCaseTobj) == 'CaseTrackerObject')
+  	  { 
+  	  	$oConnection->begin();          	  	
+        $iResult = $oCaseTobj->delete();
         $oConnection->commit();
         return $iResult;
+      }
+      else {
+        throw( new Exception( "The row '" . $sCTOUID . "' in table CaseTrackerObject doesn't exists!" ));
+      }
     }
-    catch (Exception $oError) {
+    catch (Exception $oError) {var_dump($oError);die;
     	$oConnection->rollback();
     	throw($oError);
     }
@@ -134,13 +140,18 @@ class CaseTrackerObject extends BaseCaseTrackerObject {
   	}
   }
 
-  function caseTrackerObjectExists ( $sUid ) {
-    try {
-      $oObj = CaseTrackerObjectPeer::retrieveByPk($sUid);
-      return (get_class($oObj) == 'CaseTrackerObject');
-    }
-    catch (Exception $oError) {
-    	throw($oError);
-    }
-  }
+  function caseTrackerObjectExists ( $Uid ) {
+		try {
+			$oObj = CaseTrackerObjectPeer::retrieveByPk( $Uid );
+			if ( get_class ($oObj) == 'CaseTrackerObject' ) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		catch (Exception $oError) {
+			throw($oError);
+		}
+	}
 } // CaseTrackerObject
