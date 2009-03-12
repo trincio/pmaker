@@ -457,6 +457,8 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
         if ( SYS_TARGET != 'authentication' and  SYS_TARGET != 'login' and  SYS_TARGET != 'login_Ajax'
         and  SYS_TARGET != 'dbInfo'         and  SYS_TARGET != 'sysLoginVerify' and SYS_TARGET != 'processes_Ajax'
         and  SYS_TARGET != 'updateTranslation'
+        and  SYS_TARGET != 'autoinstallProcesses'
+        and  SYS_TARGET != 'autoinstallPlugins'
         and  SYS_COLLECTION != 'services' and SYS_COLLECTION != 'tracker' and $collectionPlugin != 'services'
         and $bWE != true and SYS_TARGET != 'defaultAjaxDynaform' and SYS_TARGET != 'cases_ShowDocument') {
           $bRedirect = true;

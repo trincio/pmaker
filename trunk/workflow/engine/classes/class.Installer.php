@@ -357,6 +357,23 @@ class Installer
 	  		return (is_writable($dir) && ($this->file_permisions($dir)==777 || $this->file_permisions($dir)==755));
 		}
 	}
+	public function getDirectoryFiles($dir,$extension){
+	  $filesArray=array();
+	  if (file_exists($dir)){
+  	  if ($handle = opendir($dir)) {         
+          while (false !== ($file = readdir($handle))) {
+              $fileParts=explode(".",$file);
+              if($fileParts[count($fileParts)-1]==$extension){
+                $filesArray[]=$file;                
+              }
+          }
+          closedir($handle);
+      }
+    }
+    return $filesArray;
+	}
+	
+	
 	public function check_db_empty($dbName)
 	{
 		$a = @mysql_select_db($dbName,$this->connection_database);

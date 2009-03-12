@@ -89,6 +89,20 @@ if($action==="check")
 
 	$data->ao_admin		=$s['result']['admin']['username'];
 	$data->ao_admin_pass=($p1!==$p2)?false:true;
+	
+	//*Autoinstall Process and Plugins. By JHL
+	// March 11th. 2009
+	// To enable the way of aoutoinstall process and/or plugins 
+	// at same time of initial PM setup
+	
+	//Get Available autoinstall process
+	$data->availableProcess = $inst->getDirectoryFiles(PATH_OUTTRUNK."autoinstall","pm");
+	
+	//Get Available autoinstall plugins
+	$data->availablePlugins = $inst->getDirectoryFiles(PATH_OUTTRUNK."autoinstall","tar");
+	
+	//End autoinstall
+	
 	$data->microtime	=microtime(true);
 	echo $oJSON->encode($data);
 }
@@ -181,7 +195,13 @@ else if($action==="install")
 	*		http://ProcessmakerHostname/sysworkflow/en/green/tools/updateTranslation
 	*
  	*
+ 	*
+ 	*
+ 	*5) Auto instalar Procesos o Plugins 
+ 	*5.1 Intalar procesos
+ 	*5.2 Intalar plugins
 	* */
+	
 	$sp		= "/";
 	$dir_data	= $dataClient->path_data;
 	$dir_compiled	= $dataClient->path_compiled;
@@ -250,5 +270,13 @@ else if($action==="install")
 	/* Update languages */
 	$update = file_get_contents("http://".$_SERVER['SERVER_NAME'].":".$_SERVER['SERVER_PORT']."/sysworkflow/en/green/tools/updateTranslation");
 	print_r("Update language:  => ".((!$update)?$update:"OK")."\n");
+	
+	/* Autoinstall Process */
+	$update = file_get_contents("http://".$_SERVER['SERVER_NAME'].":".$_SERVER['SERVER_PORT']."/sysworkflow/en/green/install/autoinstallProcesses");
+	print_r("Process AutoInstall:  => <br>".str_replace("<br>","\n",$update)."\n"); 
+	
+	/* Autoinstall Plugins */
+	$update = file_get_contents("http://".$_SERVER['SERVER_NAME'].":".$_SERVER['SERVER_PORT']."/sysworkflow/en/green/install/autoinstallPlugins");
+	print_r("Plugin AutoInstall:  => <br>".str_replace("<br>","\n",$update)."\n"); 
 }
 ?>

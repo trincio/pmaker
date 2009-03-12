@@ -277,6 +277,32 @@ var installer=function()
 				this.ao_admin_pass2 = new input({label:'admin',properties:{onkeyup:this.submit,type:'password'},style:{width:"100%"}}).passed().disable()
 			)
 		);
+		
+		//alert(this.options.availableProcess);
+		//alert(this.options.availableProcess.length);
+		var tr = this.table.insertRow(-1);
+		$(tr).append(
+			new DOM('td',{innerHTML:"<b>Available Processes (auto install)</b>",className:"app_grid_title___gray title",colSpan:4})
+		);
+		this.availableProcessTitle=tr;
+		
+		var tr = this.table.insertRow(-1);
+		$(tr).append(			
+			this.availableProcess = new DOM('td',{innerHTML:'Loading...',className:"inst_td1",colSpan:2})
+		);
+		this.availableProcessRow=tr;
+		
+		var tr = this.table.insertRow(-1);
+		$(tr).append(
+			new DOM('td',{innerHTML:"<b>Available Plugins (auto install)</b>",className:"app_grid_title___gray title",colSpan:4})
+		);
+		this.availablePluginsTitle=tr;
+		
+		var tr = this.table.insertRow(-1);
+		$(tr).append(
+			this.availablePlugins = new DOM('td',{innerHTML:'Loading...',className:"inst_td1",colSpan:2})
+		);
+		this.availablePluginsRow=tr;		
 
 
 		leimnud.dom.setStyle([this.workflowData,this.compiled],{
@@ -396,6 +422,36 @@ var installer=function()
 			this.ao_db_rp.title=this.cstatus.ao_db_rp.message;
 
 			this.ao_admin.title=(this.cstatus.ao_admin)?'Username invalid':'PASSED';
+			
+			
+			//*Autoinstall Process and Plugins. By JHL
+    	// March 11th. 2009
+    	// To enable the way of aoutoinstall process and/or plugins 
+    	// at same time of initial PM setup
+			if(this.cstatus.availableProcess.length>0){			  
+			 this.availableProcess.className = "inst_td1 tdOk";
+			 this.availableProcess.innerHTML=""; 
+			 for(i_process=0;i_process<this.cstatus.availableProcess.length;i_process++){
+			  this.availableProcess.innerHTML+=this.cstatus.availableProcess[i_process]+"<br />";
+			 }	  
+			}else{
+			  //Hide entire Group
+			  this.availableProcessTitle.style.display="none";
+			  this.availableProcessRow.style.display="none";
+			}
+			
+			if(this.cstatus.availablePlugins.length>0){			  
+			 this.availablePlugins.className = "inst_td1 tdOk";
+			 this.availablePlugins.innerHTML=""; 
+			 for(i_plugin=0;i_plugin<this.cstatus.availablePlugins.length;i_plugin++){
+			  this.availablePlugins.innerHTML+=this.cstatus.availablePlugins[i_plugin]+"<br />";
+			 }	  
+			}else{
+			  //Hide entire Group
+			  this.availablePluginsTitle.style.display="none";
+			  this.availablePluginsRow.style.display="none";
+			}
+			//End Autoinstall			
 
 			inst.loader.hide();
 		}.extend(this);
