@@ -70,10 +70,10 @@ CREATE TABLE `SYSTEMS`
 #-- RBAC_USERS
 #-----------------------------------------------------------------------------
 
-DROP TABLE IF EXISTS `RBAC_USERS`;
+DROP TABLE IF EXISTS `USERS`;
 
 
-CREATE TABLE `RBAC_USERS`
+CREATE TABLE `USERS`
 (
 	`USR_UID` VARCHAR(32) default '' NOT NULL,
 	`USR_USERNAME` VARCHAR(100) default '' NOT NULL,
