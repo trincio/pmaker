@@ -2300,7 +2300,7 @@ class Cases
             $sUser = $aAux1['USR_FIRSTNAME'] . ' ' . $aAux1['USR_LASTNAME'];
           }
           catch (Exception $oException) {
-            $sUser = '(USER DELETED)';
+            $sUser = '***';
           }
           $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' => $aAux['APP_DOC_INDEX'], 'TYPE' => $aAux['APP_DOC_TYPE'], 'ORIGIN' => $aTask['TAS_TITLE'], 'CREATE_DATE' => $aAux['APP_DOC_CREATE_DATE'], 'CREATED_BY' => $sUser);
           if ($aFields['APP_DOC_FILENAME'] != '') {

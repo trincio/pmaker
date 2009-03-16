@@ -380,10 +380,13 @@ $oHeadPublisher->addScriptCode('
            $Fields['ORIGIN'] = '(TASK DELETED)';
         }
 
-
-		$oUser = new Users();
-		$aUser = $oUser->load($oAppDocument->Fields['USR_UID']);
-		$Fields['CREATOR'] = $aUser['USR_FIRSTNAME'] . ' ' . $aUser['USR_LASTNAME'];
+		try {
+			$oUser = new Users();
+			$aUser = $oUser->load($oAppDocument->Fields['USR_UID']);
+			$Fields['CREATOR'] = $aUser['USR_FIRSTNAME'] . ' ' . $aUser['USR_LASTNAME'];
+		} catch (Exception $e){
+			$Fields['CREATOR'] = '***';
+		}
 		switch ($Fields['INP_DOC_FORM_NEEDED'])
 		{
 			case 'REAL':
