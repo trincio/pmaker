@@ -2,7 +2,7 @@ msgid ""
 msgstr "" 
 "Project-Id-Version: PM 4.0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-03-06 17:20+0100 \n"
+"PO-Revision-Date: 2009-03-17 18:24+0100 \n"
 "Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
 "Language-Team: Colosa Developers Team <developers@colosa.com>\n"
 "MIME-Version: 1.0\n"
@@ -2844,6 +2844,12 @@ msgstr "Reassign Cases"
 #: LABEL/ID_ALERT_MESSAGE
 msgid "Alert Message"
 msgstr "Alert Message"
+
+# TRANSLATION
+# LABEL/ID_AUTHENTICATION
+#: LABEL/ID_AUTHENTICATION
+msgid "Authentication"
+msgstr "Authentication"
 
 # TRANSLATION
 # LABEL/ID_AUTHENTICATION_SOURCE_INVALID
@@ -7477,18 +7483,6 @@ msgstr "Update Date"
 msgid "[processes/processes_ListPublic.xml?LINK] Edit"
 msgstr "Edit"
 
-# processes/processes_subProcess_Out.xml?VAR_OUT1
-# processes/processes_subProcess_Out.xml
-#: textpm - VAR_OUT1
-msgid "Origin"
-msgstr "Origin"
-
-# processes/processes_subProcess_Out.xml?VAR_OUT2
-# processes/processes_subProcess_Out.xml
-#: textpm - VAR_OUT2
-msgid "Target"
-msgstr "Target"
-
 # processes/processes_ObjectsPermissionsOptions.xml?MNU_ADD
 # processes/processes_ObjectsPermissionsOptions.xml
 #: link - MNU_ADD
@@ -8244,18 +8238,6 @@ msgstr "File"
 #: submit - SAVE
 msgid "[processes/processes_Import.xml?SAVE] Import"
 msgstr "Import"
-
-# processes/processes_subProcess_In.xml?VAR_IN1
-# processes/processes_subProcess_In.xml
-#: textpm - VAR_IN1
-msgid "[processes/processes_subProcess_In.xml?VAR_IN1] Origin"
-msgstr "Origin"
-
-# processes/processes_subProcess_In.xml?VAR_IN2
-# processes/processes_subProcess_In.xml
-#: textpm - VAR_IN2
-msgid "[processes/processes_subProcess_In.xml?VAR_IN2] Target"
-msgstr "Target"
 
 # processes/processes_User.xml?USR_FIRSTNAME
 # processes/processes_User.xml
@@ -11269,6 +11251,36 @@ msgstr "OrganizationalChart"
 msgid "[departments/organizationalChart.xml?CHART] OrganizationalChart"
 msgstr "OrganizationalChart"
 
+# users/users_AuthSource.xml?TITLE
+# users/users_AuthSource.xml
+#: title - TITLE
+msgid "Authentication Source Assignment"
+msgstr "Authentication Source Assignment"
+
+# users/users_AuthSource.xml?UID_AUTH_SOURCE
+# users/users_AuthSource.xml
+#: dropdown - UID_AUTH_SOURCE
+msgid "Authentication Source    "
+msgstr "Authentication Source    "
+
+# users/users_AuthSource.xml?UID_AUTH_SOURCE-MYSQL
+# users/users_AuthSource.xml
+#: dropdown - UID_AUTH_SOURCE - MYSQL
+msgid "[users/users_AuthSource.xml?UID_AUTH_SOURCE-MYSQL]"
+msgstr "ProcessMaker"
+
+# users/users_AuthSource.xml?USR_AUTH_USER_DN
+# users/users_AuthSource.xml
+#: text - USR_AUTH_USER_DN
+msgid "DN"
+msgstr "DN"
+
+# users/users_AuthSource.xml?btnSave
+# users/users_AuthSource.xml
+#: submit - btnSave
+msgid "[users/users_AuthSource.xml?btnSave] Save"
+msgstr "Save"
+
 # users/users_New.xml?TITLE1
 # users/users_New.xml
 #: title - TITLE1
@@ -12355,12 +12367,6 @@ msgstr "Confirm Password "
 msgid "[users/users_View.xml?TITLEADD] Additional Information"
 msgstr "Additional Information"
 
-# users/users_View.xml?USR_PHOTO
-# users/users_View.xml
-#: image - USR_PHOTO
-msgid "[users/users_View.xml?USR_PHOTO] Photo"
-msgstr "Photo"
-
 # users/users_View.xml?USR_RESUME
 # users/users_View.xml
 #: link - USR_RESUME
@@ -12385,6 +12391,24 @@ msgstr "The user has cases pending or in progress.  Before deletion, you should 
 msgid "[users/users_ReassignShowInfo.xml?DELETE] Delete"
 msgstr "Delete"
 
+# authSources/authSources_SelectType.xml?TITLE
+# authSources/authSources_SelectType.xml
+#: title - TITLE
+msgid "Authentication Source Available Types"
+msgstr "Authentication Source Available Types"
+
+# authSources/authSources_SelectType.xml?AUTH_SOURCE_PROVIDER
+# authSources/authSources_SelectType.xml
+#: dropdown - AUTH_SOURCE_PROVIDER
+msgid "Provider"
+msgstr "Provider"
+
+# authSources/authSources_SelectType.xml?btnContinue
+# authSources/authSources_SelectType.xml
+#: submit - btnContinue
+msgid "[authSources/authSources_SelectType.xml?btnContinue] Continue"
+msgstr "Continue"
+
 # authSources/authSources_List.xml?AUTH_SOURCE_NAME
 # authSources/authSources_List.xml
 #: text - AUTH_SOURCE_NAME
@@ -12394,7 +12418,7 @@ msgstr "Name"
 # authSources/authSources_List.xml?AUTH_SOURCE_PROVIDER
 # authSources/authSources_List.xml
 #: text - AUTH_SOURCE_PROVIDER
-msgid "Provider"
+msgid "[authSources/authSources_List.xml?AUTH_SOURCE_PROVIDER] Provider"
 msgstr "Provider"
 
 # authSources/authSources_List.xml?AUTH_SOURCE_SERVER_NAME
@@ -12445,16 +12469,16 @@ msgstr "Name"
 msgid "Provider    "
 msgstr "Provider    "
 
-# authSources/ldap_Edit.xml?AUTH_SOURCE_PROVIDER-LDAP
+# authSources/ldap_Edit.xml?AUTH_SOURCE_PROVIDER-ldap
 # authSources/ldap_Edit.xml
-#: dropdown - AUTH_SOURCE_PROVIDER - LDAP
-msgid "[authSources/ldap_Edit.xml?AUTH_SOURCE_PROVIDER-LDAP]"
+#: dropdown - AUTH_SOURCE_PROVIDER - ldap
+msgid "[authSources/ldap_Edit.xml?AUTH_SOURCE_PROVIDER-ldap]"
 msgstr "LDAP"
 
-# authSources/ldap_Edit.xml?AUTH_SOURCE_PROVIDER-AD
+# authSources/ldap_Edit.xml?AUTH_SOURCE_PROVIDER-ad
 # authSources/ldap_Edit.xml
-#: dropdown - AUTH_SOURCE_PROVIDER - AD
-msgid "[authSources/ldap_Edit.xml?AUTH_SOURCE_PROVIDER-AD]"
+#: dropdown - AUTH_SOURCE_PROVIDER - ad
+msgid "[authSources/ldap_Edit.xml?AUTH_SOURCE_PROVIDER-ad]"
 msgstr "Active Directory"
 
 # authSources/ldap_Edit.xml?AUTH_SOURCE_SERVER_NAME
