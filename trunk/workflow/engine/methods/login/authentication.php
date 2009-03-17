@@ -55,19 +55,49 @@ try {
 	  //The user is inactive
 	  case -3:
 	  	G::SendTemporalMessage ('ID_USER_INACTIVE', "warning");
+	  	break;
 	  //The Due date is finished
 	  case -4:
-	    G::SendTemporalMessage ('ID_USER_INACTIVE', "warning");
+	    G::SendTemporalMessage ('ID_USER_INACTIVE_BY_DATE', "warning");
+	    break;
+	  case -5:
+	    G::SendTemporalMessage ('ID_AUTHENTICATION_SOURCE_INVALID', "warning");
 	    break;
 	}
 
 	if ($uid < 0 ) {
+	  $_SESSION['FAILED_LOGINS']++;
+	  if (!defined('PPP_FAILED_LOGINS')) {
+      define('PPP_FAILED_LOGINS', 0);
+    }
+    if (PPP_FAILED_LOGINS > 0) {
+      if ($_SESSION['FAILED_LOGINS'] >= PPP_FAILED_LOGINS) {
+        $oConnection = Propel::getConnection('rbac');
+        $oStatement  = $oConnection->prepareStatement("SELECT USR_UID FROM USERS WHERE USR_USERNAME = '" . $usr . "'");
+        $oDataset    = $oStatement->executeQuery();
+        if ($oDataset->next()) {
+          $sUserUID = $oDataset->getString('USR_UID');
+          $oConnection = Propel::getConnection('rbac');
+          $oStatement  = $oConnection->prepareStatement("UPDATE USERS SET USR_STATUS = 0 WHERE USR_UID = '" . $sUserUID . "'");
+          $oStatement->executeQuery();
+          $oConnection = Propel::getConnection('workflow');
+          $oStatement  = $oConnection->prepareStatement("UPDATE USERS SET USR_STATUS = 'INACTIVE' WHERE USR_UID = '" . $sUserUID . "'");
+          $oStatement->executeQuery();
+          unset($_SESSION['FAILED_LOGINS']);
+          G::SendMessageText(G::LoadTranslation('ID_ACCOUNT') . ' "' . $usr . '" ' . G::LoadTranslation('ID_ACCOUNT_DISABLED_CONTACT_ADMIN'), 'warning');
+        }
+        else {
+          //Nothing
+        }
+      }
+    }
 	  G::header  ("location: login.html");
 	  die;
 	}
 
 	$_SESSION['USER_LOGGED']  = $uid;
 	$_SESSION['USR_USERNAME'] = $usr;
+	unset($_SESSION['FAILED_LOGINS']);
 
   // Asign the uid of user to userloggedobj
   $RBAC->loadUserRolePermission($RBAC->sSystem, $uid);
@@ -113,77 +143,8 @@ try {
   /* Check password using policy - Start */
   require_once 'classes/model/UsersProperties.php';
   $oUserProperty = new UsersProperties();
-  if (!$oUserProperty->UserPropertyExists($_SESSION['USER_LOGGED'])) {
-    $oCriteria = new Criteria('workflow');
-    $oCriteria->add(LoginLogPeer::USR_UID, $_SESSION['USER_LOGGED']);
-    $aUserProperty = array('USR_UID'               => $_SESSION['USER_LOGGED'],
-                           'USR_LAST_UPDATE_DATE'  => date('Y-m-d H:i:s'),
-                           'USR_LOGGED_FIRST_TIME' => (LoginLogPeer::doCount($oCriteria) > 0 ? 0 : 1),
-                           'USR_PASSWORD_HISTORY'  => serialize(array($_POST['form']['USR_PASSWORD'])));
-    $oUserProperty->create($aUserProperty);
-  }
-  else {
-    $aUserProperty = $oUserProperty->load($_SESSION['USER_LOGGED']);
-  }
-  if (!defined('PPU_MINIMUN_LENGTH')) {
-    define('PPU_MINIMUN_LENGTH', 5);
-  }
-  if (!defined('PPU_MAXIMUN_LENGTH')) {
-    define('PPU_MAXIMUN_LENGTH', 20);
-  }
-  if (!defined('PPU_NUMERICAL_CHARACTER_REQUIRED')) {
-    define('PPU_NUMERICAL_CHARACTER_REQUIRED', 0);
-  }
-  if (!defined('PPU_UPPERCASE_CHARACTER_REQUIRED')) {
-    define('PPU_UPPERCASE_CHARACTER_REQUIRED', 0);
-  }
-  if (!defined('PPU_SPECIAL_CHARACTER_REQUIRED')) {
-    define('PPU_SPECIAL_CHARACTER_REQUIRED', 0);
-  }
-  if (!defined('PPU_EXPIRATION_IN')) {
-    define('PPU_EXPIRATION_IN', 0);
-  }
-  /*if (!defined('PPU_FAILED_LOGINS')) {
-    define('PPU_FAILED_LOGINS', 0);
-  }*/
-  if (!defined('PPU_CHANGE_PASSWORD_AFTER_FIRST_LOGIN')) {
-    define('PPU_CHANGE_PASSWORD_AFTER_FIRST_LOGIN', 0);
-  }
-  if (function_exists('mb_strlen')) {
-    $iLength = mb_strlen($_POST['form']['USR_PASSWORD']);
-  }
-  else {
-    $iLength = strlen($_POST['form']['USR_PASSWORD']);
-  }
-  $aErrors = array();
-  if ($iLength < PPU_MINIMUN_LENGTH) {
-    $aErrors[] = 'ID_PPU_MINIMUN_LENGTH';
-  }
-  if ($iLength > PPU_MAXIMUN_LENGTH) {
-    $aErrors[] = 'ID_PPU_MAXIMUN_LENGTH';
-  }
-  if (PPU_NUMERICAL_CHARACTER_REQUIRED == 1) {
-    if (preg_match_all('/[0-9]/', $_POST['form']['USR_PASSWORD'], $aMatch, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE) == 0) {
-      $aErrors[] = 'ID_PPU_NUMERICAL_CHARACTER_REQUIRED';
-    }
-  }
-  if (PPU_UPPERCASE_CHARACTER_REQUIRED == 1) {
-    if (preg_match_all('/[A-Z]/', $_POST['form']['USR_PASSWORD'], $aMatch, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE) == 0) {
-      $aErrors[] = 'ID_PPU_UPPERCASE_CHARACTER_REQUIRED';
-    }
-  }
-  if (PPU_SPECIAL_CHARACTER_REQUIRED == 1) {
-    if (preg_match_all('/[ºª\\!|"@·#$~%€&¬\/()=\'?¡¿*+\-_.:,;]/', $_POST['form']['USR_PASSWORD'], $aMatch, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE) == 0) {
-      $aErrors[] = 'ID_PPU_SPECIAL_CHARACTER_REQUIRED';
-    }
-  }
-  if (PPU_EXPIRATION_IN > 0) {
-    //comparar fecha de la última actualización con la actual
-  }
-  if (PPU_CHANGE_PASSWORD_AFTER_FIRST_LOGIN == 1) {
-    //si es el primer llogin cambiar de password
-  }
-  //die(':o');
+  $aUserProperty = $oUserProperty->loadOrCreateIfNotExists($_SESSION['USER_LOGGED'], array('USR_PASSWORD_HISTORY' => serialize(array($_POST['form']['USR_PASSWORD']))));
+  $aErrors       = $oUserProperty->validatePassword($_POST['form']['USR_PASSWORD'], $aUserProperty['USR_LAST_UPDATE_DATE'], $aUserProperty['USR_LOGGED_NEXT_TIME']);
   if (!empty($aErrors)) {
     if (!defined('NO_DISPLAY_USERNAME')) {
       define('NO_DISPLAY_USERNAME', 1);
@@ -193,13 +154,17 @@ try {
     $aFields['DESCRIPTION'] .= G::LoadTranslation('ID_POLICY_ALERT').':<br /><br />';
     foreach ($aErrors as $sError)  {
       switch ($sError) {
-        case 'ID_PPU_MINIMUN_LENGTH':
-          $aFields['DESCRIPTION'] .= ' - ' . G::LoadTranslation($sError).': ' . PPU_MINIMUN_LENGTH . '<br />';
-          $aFields[substr($sError, 3)] = PPU_MINIMUN_LENGTH;
+        case 'ID_PPP_MINIMUN_LENGTH':
+          $aFields['DESCRIPTION'] .= ' - ' . G::LoadTranslation($sError).': ' . PPP_MINIMUN_LENGTH . '<br />';
+          $aFields[substr($sError, 3)] = PPP_MINIMUN_LENGTH;
         break;
-        case 'ID_PPU_MAXIMUN_LENGTH':
-          $aFields['DESCRIPTION'] .= ' - ' . G::LoadTranslation($sError).': ' . PPU_MAXIMUN_LENGTH . '<br />';
-          $aFields[substr($sError, 3)] = PPU_MAXIMUN_LENGTH;
+        case 'ID_PPP_MAXIMUN_LENGTH':
+          $aFields['DESCRIPTION'] .= ' - ' . G::LoadTranslation($sError).': ' . PPP_MAXIMUN_LENGTH . '<br />';
+          $aFields[substr($sError, 3)] = PPP_MAXIMUN_LENGTH;
+        break;
+        case 'ID_PPP_EXPIRATION_IN':
+          $aFields['DESCRIPTION'] .= ' - ' . G::LoadTranslation($sError).' ' . PPP_EXPIRATION_IN . ' ' . G::LoadTranslation('ID_DAYS') . '<br />';
+          $aFields[substr($sError, 3)] = PPP_EXPIRATION_IN;
         break;
         default:
           $aFields['DESCRIPTION'] .= ' - ' . G::LoadTranslation($sError).'<br />';
@@ -215,65 +180,9 @@ try {
   }
   /* Check password using policy - End */
 
-  //get the plugins, and check if there is redirectLogins
-  //if yes, then redirect according his Role
-  if ( class_exists('redirectDetail')) {
-    //falta validar...
-    if(isset($RBAC->aUserInfo['PROCESSMAKER']['ROLE']['ROL_CODE']))
-    		$userRole = $RBAC->aUserInfo['PROCESSMAKER']['ROLE']['ROL_CODE'];
-
-    $oPluginRegistry = &PMPluginRegistry::getSingleton();
-    //$oPluginRegistry->showArrays();
-    $aRedirectLogin = $oPluginRegistry->getRedirectLogins();
-    if(isset($aRedirectLogin))
-		 { if(is_array($aRedirectLogin))
-		 	 {
-		 	 		foreach ( $aRedirectLogin as $key=>$detail ) {
-			  	   if(isset($detail->sPathMethod))
-				  	  {
-				  	  	if ( $detail->sRoleCode == $userRole ) {
-				       	  G::header('location: /sys' .  SYS_TEMP . '/' . $lang . '/' . SYS_SKIN . '/' . $detail->sPathMethod );
-				       	  die;
-				  	   	}
-				  	  }
-		      }
-		   }
-     }
-  }
-  //end plugin
-
-
-	$res = $RBAC->userCanAccess('PM_FACTORY');
-	if ($res == 1) {
-    G::header('location: /sys' .  SYS_TEMP . '/' . $lang . '/' . SYS_SKIN . '/' . 'processes/processes_List');
-	  die;
-	}
-
-	$res = $RBAC->userCanAccess('PM_CASES');
-	if ($res == 1) {
-    G::header('location: /sys' .  SYS_TEMP . '/' . $lang . '/' . SYS_SKIN . '/' . 'cases/cases_List');
-	  die;
-	}
-
-	$res = $RBAC->userCanAccess('PM_REPORTS');
-	if ($res == 1) {
-    G::header('location: /sys' .  SYS_TEMP . '/' . $lang . '/' . SYS_SKIN . '/' . 'reports/reportsList');
-	  die;
-	}
-
-	$res = $RBAC->userCanAccess('PM_USERS');
-	if ($res == 1) {
-    G::header('location: /sys' .  SYS_TEMP . '/' . $lang . '/' . SYS_SKIN . '/' . 'users/users_List');
-	  die;
-	}
-
-	$res = $RBAC->userCanAccess('PM_SETUP');
-	if ($res == 1) {
-    G::header('location: /sys' .  SYS_TEMP . '/' . $lang . '/' . SYS_SKIN . '/' . 'setup/pluginsList');
-	  die;
-	}
-
-	G::header('location: /sys' .  SYS_TEMP . '/' . $lang . '/' . SYS_SKIN . '/' . 'users/myInfo');
+  $sLocation = $oUserProperty->redirectTo($_SESSION['USER_LOGGED'], $lang);
+  G::header('Location: ' . $sLocation);
+  die;
 
 }
 catch ( Exception $e ) {
