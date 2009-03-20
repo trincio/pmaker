@@ -257,7 +257,7 @@ switch ($_GET['TYPE'])
     }
   break;
 
-  case 'OUTPUT_DOCUMENT':
+  case 'OUTPUT_DOCUMENT': //print_r($_GET['UID']); die;
     require_once 'classes/model/OutputDocument.php';
     $oOutputDocument = new OutputDocument();
     $aOD = $oOutputDocument->load($_GET['UID']);

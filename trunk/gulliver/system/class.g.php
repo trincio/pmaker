@@ -712,17 +712,22 @@ class G
 
   	foreach($path as $possiblePath){
   		if(strstr($possiblePath,"plugins")){
-  			$baseDir = $possiblePath . 'classes' . PATH_SEP . 'model';
-		    if ($handle = opendir( $baseDir  )) {
+  			$baseDir = $possiblePath . 'classes' . PATH_SEP . 'model';  			
+		    if(file_exists($baseDir)){
+		    if ($handle = opendir( $baseDir  )) {		      
 		      while ( false !== ($file = readdir($handle))) {
 		        if ( strpos($file, '.php',1) && !strpos($file, 'Peer.php',1) ) {
-		          require_once ( $baseDir . PATH_SEP . $file );
+		          require_once ( $baseDir . PATH_SEP . $file );		          
 		        }
 		      }
 		    }
+		    //Include also the extendGulliverClass that could have some new definitions for fields
+		    if(file_exists($possiblePath . 'classes' . PATH_SEP.'class.extendGulliver.php')){
+		      include_once $possiblePath . 'classes' . PATH_SEP.'class.extendGulliver.php';
+		    }
+		  }
   		}
   	}
-
   }
 
 /**
@@ -2103,7 +2108,7 @@ class G
   /**
    * Generate a numeric or alphanumeric code
    *
-   * @author Julio Cesar Laura Avendaño <juliocesar@colosa.com>
+   * @author Julio Cesar Laura Avendað­ž¼juliocesar@colosa.com>
    * @access public
    * @return string
    */

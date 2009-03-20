@@ -51,15 +51,15 @@
   define ( 'G_DEV_ENV',  'DEVELOPMENT' );
   define ( 'G_TEST_ENV', 'TEST' );
 
-///************TimeZone Set***************//
-
+///************TimeZone Set***************// 
+/*
   if (version_compare(phpversion(), "5.1.0", ">=")) {
     date_default_timezone_set("America/La_Paz");
   }
   else {
     // you're not
   }
-
+*/
 /*
  * Number of files per folder at PATH_UPLOAD (cases documents)
  */

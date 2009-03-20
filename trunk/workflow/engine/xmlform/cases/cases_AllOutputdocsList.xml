@@ -11,22 +11,24 @@
 
 <TITLE type="text" colWidth="200" titleAlign="left" align="left">
   <en>Title</en>
-<es><![CDATA[Título]]></es></TITLE>
+<es><![CDATA[Título]]></es><pt><![CDATA[Título]]></pt></TITLE>
 
 <ORIGIN type="text" colWidth="200" titleAlign="left" align="left">
   <en>Origin Task</en>
-<es>Tarea Original</es></ORIGIN>
+<es><![CDATA[Tarea orígen]]></es><pt>Tarefa Origem</pt></ORIGIN>
 
 <CREATED_BY type="text" colWidth="150" titleAlign="left" align="left">
   <en>Created By</en>
-<es>Created By</es></CREATED_BY>
+<es>Creado por</es></CREATED_BY>
 
 <CREATE_DATE type="text" colWidth="100" titleAlign="left" align="left">
   <en>Create Date</en>
-<es>Create Date</es></CREATE_DATE>
+<es><![CDATA[Fecha de creación]]></es></CREATE_DATE>
 
 <VIEW type="link" colWidth="25" value="@G::LoadTranslation(ID_VIEW)" link="#" onclick="showGeneratedDocument(@QAPP_DOC_UID);"/>
 
 <DELETE type="link" colWidth="" value="@#ID_DELETE" link="#" onclick="deleteGeneratedDocument(@QAPP_DOC_UID);"/>
+
+<DOWNLOAD type="link" colWidth="25" target="_blank" value="@G::LoadTranslation(ID_DOWNLOAD)" link="cases_Redirect?a=@#APP_DOC_UID" />
 
 </dynaForm>
