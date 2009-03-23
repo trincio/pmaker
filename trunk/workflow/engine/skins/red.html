@@ -46,7 +46,7 @@
       	<tr>
           <td width="50%" rowspan="2" height="32" valign="top"><img src="{$logo_company}"><font color=white><? /*acá iba el nombre*/ ?></font></td>
           <td width="50%" height="16" align="right" valign="top">
-            <div align="right" class="title"><small>{php}if ((int)$_SESSION['USER_LOGGED'] != 0) {{/php}<a href="../users/myInfo">{$user}</a> | <a href="../login/login" class="tableOption">{php}echo G::LoadTranslation('ID_LOGOUT');{/php}</a>{php}}{/php}</small> &nbsp; &nbsp;</div>
+            <div align="right" class="title"><small>{php}if ((int)$_SESSION['USER_LOGGED'] != 0) {{/php}<a href="../users/myInfo">{$user}</a> | <a href="{$linklogout}" class="tableOption">{php}echo G::LoadTranslation('ID_LOGOUT');{/php}</a>{php}}{/php}</small> &nbsp; &nbsp;</div>
           </td>
         </tr>
         <tr>
