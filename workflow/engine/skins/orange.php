@@ -37,16 +37,18 @@
   $smarty->cache_dir    = PATH_SMARTY_CACHE;
   $smarty->config_dir   = PATH_THIRDPARTY . 'smarty/configs';
 
-  global $G_HEADER;
   global $G_ENABLE_BLANK_SKIN;
 
   if ( isset($G_ENABLE_BLANK_SKIN) && $G_ENABLE_BLANK_SKIN ) {
     $smarty->display('blank.html');
   }
   else {
-	  if (isset($GLOBALS['G_HEADER'])) $header = $GLOBALS['G_HEADER']->printHeader();
+    $oHeadPublisher =& headPublisher::getSingleton();
+    if (isset($oHeadPublisher)) $header = $oHeadPublisher->printHeader();
 	  $smarty->assign('user', isset($_SESSION['USR_USERNAME']) ? $_SESSION['USR_USERNAME'] : '');
 	  $smarty->assign('username', (isset($_SESSION['USR_USERNAME']) ? '(' . $_SESSION['USR_USERNAME'] . ' ' . G::LoadTranslation('ID_IN') . ' ' . SYS_SYS . ')' : '') );
+	  $logout='/sys'.SYS_SYS.'/'.SYS_LANG.'/'.SYS_SKIN.'/login/login';
+    $smarty->assign('linklogout', $logout );
   	$smarty->assign('header', $header );
 	  $smarty->assign('tpl_menu', PATH_TEMPLATE . 'menu.html' );
 	  $smarty->assign('tpl_submenu', PATH_TEMPLATE . 'submenu.html' );
@@ -57,7 +59,7 @@
     else
       $sCompanyLogo = '/images/processmaker.logo.jpg';
     
-	  $smarty->assign('logo_company', $sCompanyLogo );
+	  $smarty->assign('logo_company', $sCompanyLogo );	  
     $smarty->display('orange.html');
   }
 ?>

@@ -51,19 +51,21 @@ if(!defined('DB_SYSTEM_INFORMATION')) define('DB_SYSTEM_INFORMATION', 1);
  	  $oMenu = new Menu();
  	  $menus = $oMenu->generateArrayForTemplate ( $G_MAIN_MENU,'SelectedMenu', 'mainMenu',$G_MENU_SELECTED, $G_ID_MENU_SELECTED );
 	  $smarty->assign('menus', $menus  );
-
+	          
  	  $oSubMenu = new Menu();
  	  $subMenus = $oSubMenu->generateArrayForTemplate ( $G_SUB_MENU,'selectedSubMenu', 'subMenu',$G_SUB_MENU_SELECTED, $G_ID_SUB_MENU_SELECTED );
 	  $smarty->assign('subMenus', $subMenus  );
-
+ 
 	  if (!defined('NO_DISPLAY_USERNAME')) {
 	    define('NO_DISPLAY_USERNAME', 0);
 	  }
 	  if (NO_DISPLAY_USERNAME == 0) {
 	    $smarty->assign('user',   isset($_SESSION['USR_USERNAME']) ? $_SESSION['USR_USERNAME'] : '');
-	    $smarty->assign('pipe',   isset($_SESSION['USR_USERNAME']) ? ' | ' : '');
+	    $smarty->assign('pipe',   isset($_SESSION['USR_USERNAME']) ? ' | ' : '');	    
 	    $smarty->assign('logout', G::LoadTranslation('ID_LOGOUT'));
 	  }
+    $logout='/sys'.SYS_SYS.'/'.SYS_LANG.'/'.SYS_SKIN.'/login/login';
+    $smarty->assign('linklogout', $logout );
   	$smarty->assign('header', $header );
   	$smarty->assign('footer', $footer);
 	  $smarty->assign('tpl_menu', PATH_TEMPLATE . 'menu.html' );

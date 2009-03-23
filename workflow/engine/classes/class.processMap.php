@@ -1986,32 +1986,33 @@ class processMap {
   }
 
   function getConditionProcessList () {
-    $c = new Criteria('workflow');
-    $del = DBAdapter::getStringDelimiter();
-
-    $c->clearSelectColumns();
-    $c->addSelectColumn ( ProcessPeer::PRO_UID );
-    //$c->addSelectColumn ( ProcessPeer::PRO_STATUS );
-    $c->addAsColumn ( 'PRO_STATUS', "IF (PRO_STATUS = 'ACTIVE', '" . G::LoadTranslation('ID_ACTIVE') . "', '" . G::LoadTranslation('ID_INACTIVE') . "')" );
-    $c->addAsColumn ( 'PRO_TITLE', 'C1.CON_VALUE' );
-    $c->addAsColumn ( 'PRO_DESCRIPTION', 'C2.CON_VALUE' );
-
-    $c->addAlias( "C1",    'CONTENT');
-    $c->addAlias( "C2",    'CONTENT');
-
-    $proTitleConds = array();
-    $proTitleConds[] = array( ProcessPeer::PRO_UID , 'C1.CON_ID' );
-    $proTitleConds[] = array( 'C1.CON_CATEGORY' , $del . 'PRO_TITLE' . $del );
-    $proTitleConds[] = array( 'C1.CON_LANG' ,     $del . SYS_LANG . $del );
-    $c->addJoinMC ( $proTitleConds ,      Criteria::LEFT_JOIN );
-
-    $proDescripConds = array();
-    $proDescripConds[] = array( ProcessPeer::PRO_UID , 'C2.CON_ID' );
-    $proDescripConds[] = array( 'C2.CON_CATEGORY' , $del . 'PRO_DESCRIPTION' . $del );
-    $proDescripConds[] = array( 'C2.CON_LANG' ,     $del . SYS_LANG . $del );
-    $c->addJoinMC ( $proDescripConds ,      Criteria::LEFT_JOIN );
-    $c->add(ProcessPeer::PRO_STATUS, 'DISABLED', Criteria::NOT_EQUAL);
-    return $c;
+    $aProcesses   = array();
+  	$aProcesses[] = array('PRO_UID'         => 'char',
+  	                      'PRO_TITLE'       => 'char',
+    	                    'PRO_DESCRIPTION' => 'char',
+    	                    'PRO_STATUS'      => 'char');
+    $oCriteria = new Criteria('workflow');
+    $oCriteria->addSelectColumn(ProcessPeer::PRO_UID);
+    $oCriteria->add(ProcessPeer::PRO_STATUS, 'DISABLED', Criteria::NOT_EQUAL);
+    $oDataset = ProcessPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    $oProcess = new Process();
+    while ($aRow = $oDataset->getRow()) {
+      $aProcess     = $oProcess->load($aRow['PRO_UID']);
+      $aProcesses[] = array('PRO_UID'         => $aProcess['PRO_UID'],
+  	                        'PRO_TITLE'       => $aProcess['PRO_TITLE'],
+    	                      'PRO_DESCRIPTION' => $aProcess['PRO_DESCRIPTION'],
+    	                      'PRO_STATUS'      => ($aProcess['PRO_STATUS'] == 'ACTIVE' ? G::LoadTranslation('ID_ACTIVE') : G::LoadTranslation('ID_INACTIVE')));
+    	$oDataset->next();
+    }
+    global $_DBArray;
+    $_DBArray['processes'] = $aProcesses;
+    $_SESSION['_DBArray']  = $_DBArray;
+    G::LoadClass('ArrayPeer');
+    $oCriteria = new Criteria('dbarray');
+    $oCriteria->setDBArrayTable('processes');
+    return $oCriteria;
   }
 
   /*
@@ -2593,40 +2594,40 @@ class processMap {
 
 function editObjectPermission($sOP_UID)
   {
-  	require_once 'classes/model/ObjectPermission.php';  	
+  	require_once 'classes/model/ObjectPermission.php';
   	require_once 'classes/model/Dynaform.php';
   	require_once 'classes/model/InputDocument.php';
   	require_once 'classes/model/OutputDocument.php';
-  	$oCriteria  = new Criteria();    
+  	$oCriteria  = new Criteria();
     $oCriteria->add(ObjectPermissionPeer::OP_UID, $sOP_UID);
     $oDataset = ObjectPermissionPeer::doSelectRS($oCriteria);
     $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
     $oDataset->next();
     $aRows = $oDataset->getRow();
-    
-    $oCriteria  = new Criteria();    
+
+    $oCriteria  = new Criteria();
     $oCriteria->add(GroupwfPeer::GRP_UID, $aRows['USR_UID']);
     if(GroupwfPeer::doCount($oCriteria)==1)
     		$user='2|'.$aRows['USR_UID'];
-    
-    $oCriteria  = new Criteria();    
+
+    $oCriteria  = new Criteria();
     $oCriteria->add(UsersPeer::USR_UID, $aRows['USR_UID']);
     if(UsersPeer::doCount($oCriteria)==1)
-    		$user='1|'.$aRows['USR_UID'];    
-                    
+    		$user='1|'.$aRows['USR_UID'];
+
     $aFields['LANG']					= SYS_LANG;
     $aFields['OP_UID']				= $aRows['OP_UID'];
     $aFields['PRO_UID']				= $aRows['PRO_UID'];
     $aFields['OP_CASE_STATUS']= $aRows['OP_CASE_STATUS'];
-    $aFields['TAS_UID']       = $aRows['TAS_UID'];                
+    $aFields['TAS_UID']       = $aRows['TAS_UID'];
     $aFields['GROUP_USER']    = $user;
     $aFields['OP_TASK_SOURCE']= $aRows['OP_TASK_SOURCE'];
     $aFields['OP_PARTICIPATE']= $aRows['OP_PARTICIPATE'];
     $aFields['OP_OBJ_TYPE']   = $aRows['OP_OBJ_TYPE'];
-    $aFields['OP_ACTION']     = $aRows['OP_ACTION'];    
-   
+    $aFields['OP_ACTION']     = $aRows['OP_ACTION'];
+
     switch ($aRows['OP_OBJ_TYPE']) {
-		  /*case 'ANY': 
+		  /*case 'ANY':
 		    $aFields['OP_OBJ_TYPE'] = '';
 		  break;*/
 		  case 'DYNAFORM':
@@ -2674,7 +2675,7 @@ function editObjectPermission($sOP_UID)
     	                        'LABEL' => $aRow['USR_FIRSTNAME'] . ' ' . $aRow['USR_LASTNAME'] . ' (' . $aRow['USR_USERNAME'] . ')');
       $oDataset->next();
     }
-        
+
     $aAllObjects   = array();
   	$aAllObjects[] = array('UID'     => 'char',
     	                     'LABEL'   => 'char');
@@ -2729,13 +2730,13 @@ function editObjectPermission($sOP_UID)
     $_DBArray['allInputs']          = $aAllInputs;
     $_DBArray['allOutputs']         = $aAllOutputs;
     $_SESSION['_DBArray']           = $_DBArray;
-        
+
     global $G_PUBLISH;
     $G_PUBLISH = new Publisher();
-    
+
     $G_PUBLISH->AddContent('xmlform', 'xmlform', 'processes/processes_EditObjectPermission', '', $aFields, 'processes_SaveEditObjectPermission');
     G::RenderPage('publish', 'raw');
-  }  
+  }
 
 
   function caseTracker($sProcessUID) {
@@ -2964,7 +2965,7 @@ function editObjectPermission($sOP_UID)
   		$oCriteria2->add(CaseTrackerObjectPeer::PRO_UID, $sProcessUID);
   		$oCriteria2->add(CaseTrackerObjectPeer::CTO_POSITION, ($iPosition - 1));
   		BasePeer::doUpdate($oCriteria2, $oCriteria1, Propel::getConnection('workflow'));
-  		
+
   		$oCriteria1 = new Criteria('workflow');
   		$oCriteria1->add(CaseTrackerObjectPeer::CTO_POSITION, ($iPosition - 1));
   		$oCriteria2 = new Criteria('workflow');
