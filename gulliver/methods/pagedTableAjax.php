@@ -24,8 +24,11 @@
  */
 
 	G::LoadSystem('pagedTable');
+	G::LoadClass('propelTable');
 	G::LoadInclude('ajax');
-
+  G::LoadAllModelClasses();
+  G::LoadAllPluginModelClasses();
+require_once ( 'classes/class.xmlfield_InputPM.php' );
 	$id=get_ajax_value('ptID');
 	$ntable= unserialize($_SESSION['pagedTable['.$id.']']);
 	$page=get_ajax_value('page');
