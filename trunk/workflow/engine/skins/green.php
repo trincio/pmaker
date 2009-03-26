@@ -64,7 +64,10 @@ if(!defined('DB_SYSTEM_INFORMATION')) define('DB_SYSTEM_INFORMATION', 1);
 	    $smarty->assign('pipe',   isset($_SESSION['USR_USERNAME']) ? ' | ' : '');	    
 	    $smarty->assign('logout', G::LoadTranslation('ID_LOGOUT'));
 	  }
-    $logout='/sys'.SYS_SYS.'/'.SYS_LANG.'/'.SYS_SKIN.'/login/login';
+	  if(defined('SYS_SYS'))
+    	$logout='/sys'.SYS_SYS.'/'.SYS_LANG.'/'.SYS_SKIN.'/login/login';
+    else
+    	$logout='/sys/'.SYS_LANG.'/'.SYS_SKIN.'/login/login';	
     $smarty->assign('linklogout', $logout );
   	$smarty->assign('header', $header );
   	$smarty->assign('footer', $footer);
