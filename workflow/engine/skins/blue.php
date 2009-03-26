@@ -50,7 +50,10 @@
   	$smarty->assign('header', $header );
 	  $smarty->assign('tpl_menu', PATH_TEMPLATE . 'menu.html' );
 	  $smarty->assign('tpl_submenu', PATH_TEMPLATE . 'submenu.html' );
-	  $logout='/sys'.SYS_SYS.'/'.SYS_LANG.'/'.SYS_SKIN.'/login/login';
+	  if(defined('SYS_SYS'))
+    	$logout='/sys'.SYS_SYS.'/'.SYS_LANG.'/'.SYS_SKIN.'/login/login';
+    else
+    	$logout='/sys/'.SYS_LANG.'/'.SYS_SKIN.'/login/login';	
     $smarty->assign('linklogout', $logout );
     if (class_exists('PMPluginRegistry')) {
       $oPluginRegistry = &PMPluginRegistry::getSingleton();

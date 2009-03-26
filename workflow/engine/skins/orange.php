@@ -47,7 +47,10 @@
     if (isset($oHeadPublisher)) $header = $oHeadPublisher->printHeader();
 	  $smarty->assign('user', isset($_SESSION['USR_USERNAME']) ? $_SESSION['USR_USERNAME'] : '');
 	  $smarty->assign('username', (isset($_SESSION['USR_USERNAME']) ? '(' . $_SESSION['USR_USERNAME'] . ' ' . G::LoadTranslation('ID_IN') . ' ' . SYS_SYS . ')' : '') );
-	  $logout='/sys'.SYS_SYS.'/'.SYS_LANG.'/'.SYS_SKIN.'/login/login';
+	  if(defined('SYS_SYS'))
+    	$logout='/sys'.SYS_SYS.'/'.SYS_LANG.'/'.SYS_SKIN.'/login/login';
+    else
+    	$logout='/sys/'.SYS_LANG.'/'.SYS_SKIN.'/login/login';	
     $smarty->assign('linklogout', $logout );
   	$smarty->assign('header', $header );
 	  $smarty->assign('tpl_menu', PATH_TEMPLATE . 'menu.html' );
