@@ -5,11 +5,11 @@
   <en>New</en>
 </MNU_ADD>
 
-<MNU_IMPORT type="link" value='' link="#" onclick="window.location = 'processes_Import';return false;" colAlign="left" colWidth="50">
+<MNU_IMPORT type="link" value='' link="#" onclick="window.location = 'processes_Import';return false;" colAlign="left" colWidth="60">
   <en>Import</en>
 </MNU_IMPORT>
 
-<MNU_LIBRARY type="link" value='' link="#" onclick="window.location = 'processes_Library';return false;" colAlign="left" colWidth="95">
+<MNU_LIBRARY type="link" value='' link="#" onclick="window.location = 'processes_Library';return false;" colAlign="left" colWidth="150">
   <en>Browse Library</en>
 </MNU_LIBRARY>
 
