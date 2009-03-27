@@ -10,11 +10,11 @@
   <en>UID</en>
 </PRO_UID>
 
-<PRO_TITLE type="text" style="width:100%;" dataCompareField="C1.CON_VALUE" dataCompareType="contains">
+<PRO_TITLE type="text" style="width:100%;" dataCompareField="PRO_TITLE" dataCompareType="contains">
   <en>Title</en>
 </PRO_TITLE>
 
-<PRO_DESCRIPTION type="text" style="width:100%;" dataCompareField="C2.CON_VALUE" dataCompareType="contains">
+<PRO_DESCRIPTION type="text" style="width:100%;" dataCompareField="PRO_DESCRIPTION" dataCompareType="contains">
   <en>Description</en>
 </PRO_DESCRIPTION>
 

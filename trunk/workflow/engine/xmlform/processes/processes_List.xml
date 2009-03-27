@@ -2,7 +2,7 @@
 <dynaForm type="pagetable"
   sqlConnection=""
   menu="processes/processes_Options"
-  searchBy = " C1.CON_VALUE | C2.CON_VALUE "
+  searchBy = "PRO_TITLE"
   filterForm="processes/processes_Search"
 >
 <PRO_UID type="private" showInTable="0" />
