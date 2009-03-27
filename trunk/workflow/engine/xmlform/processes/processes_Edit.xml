@@ -18,12 +18,17 @@
   <en>Description</en>
 </PRO_DESCRIPTION>
 
-<PRO_DEBUG type="dropdown" defaultvalue="0">
+<!-- <PRO_DEBUG type="dropdown" defaultvalue="0">
   <en>Mode
 	<option name="0">Normal</option>
     <option name="1">Debug</option>
   </en>
+</PRO_DEBUG>-->
+
+<PRO_DEBUG type="checkbox"  value="1" falsevalue="0" defaultvalue="1" labelonright="0">
+  <en>Debug</en>
 </PRO_DEBUG>
+
 
 <SUBMIT type="button" onclick="verifyProcessInformation(this.form);" group="1">
   <en>Save</en>

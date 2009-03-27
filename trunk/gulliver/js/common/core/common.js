@@ -137,38 +137,42 @@
     		alert("Error: "+ var_dump(ss));
     	}
   }
+  
+  /*
+   * Refactoring.......................   
+   * Fixed by checkboxes binary values 
+   * By Neyek <erik@colosa.com>
+   * Date March 27th, 2009 12:20:00 GMT-4
+   */
+  
   function ajax_getForm( thisform ) {
-    var formdata='';
-    // Loop through form fields
-    for (var i=0; i < thisform.length; i++)
-    {
-      if ( formdata!=='' ) formdata = formdata + '&';
-      //Build Send String
-      if(thisform.elements[i].type == "text"){ //Handle Textbox's
-        formdata = formdata + thisform.elements[i].name + "=" + encodeURIComponent(thisform.elements[i].value);
-      }else if(thisform.elements[i].type == "textarea"){ //Handle textareas
-        formdata = formdata + thisform.elements[i].name + "=" + encodeURIComponent(thisform.elements[i].value);
-      }else if(thisform.elements[i].type == "checkbox"){ //Handle checkbox's
-        if (thisform.elements[i].checked) formdata = formdata + thisform.elements[i].name + "=" + thisform.elements[i].value;
-      }else if(thisform.elements[i].type == "radio"){ //Handle Radio buttons
-        if(thisform.elements[i].checked==true){
-           formdata = formdata + thisform.elements[i].name + "=" + thisform.elements[i].value;
-        }
-      }else if(thisform.elements[i].type == "select-multiple"){ //Handle list box
-        for(var j=0; j<thisform.elements[i].options.length ;j++){
-           if ( j!==0 ) formdata = formdata + '&';
-           formdata = formdata + (
-            (thisform.elements[i].options[j].selected)?
-              thisform.elements[i].name + "=" + encodeURIComponent(thisform.elements[i].options[j].value)
-              :''
-            );
-        }
-      }else{
-        //finally, this should theoretically this is a select box.
-        formdata = formdata + thisform.elements[i].name + "=" + encodeURIComponent(thisform.elements[i].value);
-      }
-    }
-    return formdata;
+	var formdata='';
+	
+	// Loop through form fields
+	for (var i=0; i < thisform.length; i++) {
+	  if ( formdata!=='' ) formdata += '&';
+	  //Build Send String
+	  if(thisform.elements[i].type == "text") { //Handle Textbox's
+		  formdata += thisform.elements[i].name + "=" + encodeURIComponent(thisform.elements[i].value);
+	  } else if(thisform.elements[i].type == "textarea") { //Handle textareas
+		  formdata += thisform.elements[i].name + "=" + encodeURIComponent(thisform.elements[i].value);
+	  } else if(thisform.elements[i].type == "checkbox") { //Handle checkbox's
+		  formdata += thisform.elements[i].name + '=' + ((thisform.elements[i].checked)? '1': '0');
+	  } else if(thisform.elements[i].type == "radio") { //Handle Radio buttons
+		  if(thisform.elements[i].checked==true){
+			  formdata += thisform.elements[i].name + "=" + thisform.elements[i].value;
+		  }
+	  } else if(thisform.elements[i].type == "select-multiple") { //Handle list box
+		  for(var j=0; j<thisform.elements[i].options.length ;j++) {
+			  if ( j!==0 ) formdata += '&';
+			  formdata += ( (thisform.elements[i].options[j].selected)? thisform.elements[i].name + "=" + encodeURIComponent(thisform.elements[i].options[j].value): '');
+		  }
+	  } else {
+		  //finally, this should theoretically this is a select box.
+		  formdata += thisform.elements[i].name + "=" + encodeURIComponent(thisform.elements[i].value);
+	  }
+	}
+	return formdata;
   }
 
 /* COMMON FUNCTIONS

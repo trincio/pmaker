@@ -1,10 +1,10 @@
 <?php
 /**
  * class.plugin.php
- *  
+ *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -14,13 +14,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
 
 require_once ( 'class.pluginRegistry.php');
@@ -86,6 +86,18 @@ class stepDetail {
 	 }
 }
 
+class redirectDetail {
+ 	var $sNamespace;
+	var $sRoleCode;
+ 	var $sPathMethod;
+
+  function __construct( $sNamespace, $sRoleCode, $sPathMethod ) {
+   	$this->sNamespace  = $sNamespace;
+   	$this->sRoleCode   = $sRoleCode;
+   	$this->sPathMethod = $sPathMethod;
+	 }
+}
+
 class folderData {
  	var $sProcessUid;
 	var $sProcessTitle;
@@ -94,7 +106,7 @@ class folderData {
  	var $sUserUid;
  	var $sUserLogin;
  	var $sUserFullName;
- 	
+
   function __construct( $sProcessUid, $sProcessTitle, $sApplicationUid, $sApplicationTitle, $sUserUid, $sUserLogin = '', $sUserFullName ='') {
    	$this->sProcessUid       = $sProcessUid;
    	$this->sProcessTitle     = $sProcessTitle;
@@ -114,7 +126,7 @@ class uploadDocumentData {
  	var $sFileTitle;
  	var $sDocumentUid;
  	var $bUseOutputFolder;
- 	
+
   function __construct( $sApplicationUid, $sUserUid, $sFilename, $sFileTitle, $sDocumentUid ) {
    	$this->sApplicationUid = $sApplicationUid;
    	$this->sUserUid        = $sUserUid;
@@ -165,6 +177,11 @@ class PMPlugin {
   function setCompanyLogo( $filename ) {
     $oPluginRegistry =& PMPluginRegistry::getSingleton();
     $oPluginRegistry->setCompanyLogo( $this->sNamespace, $filename);
+  }
+
+  function redirectLogin( $role, $pathMethod ) {
+    $oPluginRegistry =& PMPluginRegistry::getSingleton();
+    $oPluginRegistry->registerRedirectLogin( $this->sNamespace, $role, $pathMethod );
   }
 
   /**

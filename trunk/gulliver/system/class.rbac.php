@@ -60,7 +60,7 @@ class RBAC
   var $currentSystemobj;
   var $rolesPermissionsObj;
   var $authSourcesObj;
-  
+
   var $aUserInfo = array();
   var $aRbacPlugins = array();
   var $sSystem = '';
@@ -158,12 +158,12 @@ class RBAC
 
   function VerifyWithOtherAuthenticationSource( $sAuthType, $sAuthSource, $aUserFields, $sAuthUserDn, $strPass)
   {
-    //check if the user is active 
-    if ( $aUserFields['USR_STATUS']  != 1 ) 
+    //check if the user is active
+    if ( $aUserFields['USR_STATUS']  != 1 )
       return -3;  //inactive user
 
     //check if the user's due date is valid
-    if ( $aUserFields['USR_DUE_DATE']  < date('Y-m-d') ) 
+    if ( $aUserFields['USR_DUE_DATE']  < date('Y-m-d') )
       return -4;  //due date
 
     foreach ( $this->aRbacPlugins as $sClassName) {
@@ -175,11 +175,11 @@ class RBAC
 
         $bValidUser = $plugin->VerifyLogin ( $sAuthUserDn, $strPass );
 
-        if ( $bValidUser == TRUE) 
-          return ( $aUserFields['USR_UID'] ); 
+        if ( $bValidUser == TRUE)
+          return ( $aUserFields['USR_UID'] );
         else
           return -2; //wrong password
-          
+
       }
     }
     return -5; //invalid authentication source
@@ -210,12 +210,12 @@ class RBAC
     if ( $this->userObj->verifyUser($strUser) == 0 ) {
       return -1;
     }
-    //if the user exists, the VerifyUser function will return the user properties 
+    //if the user exists, the VerifyUser function will return the user properties
 
     //default values
     $sAuthType = 'mysql';
     if ( isset($this->userObj->fields['USR_AUTH_TYPE']) ) $sAuthType = strtolower ( $this->userObj->fields['USR_AUTH_TYPE'] );
-    
+
     //hook for RBAC plugins
     if ( $sAuthType != 'mysql' && $sAuthType != '' ) {
       $sAuthSource = $this->userObj->fields['UID_AUTH_SOURCE'];
@@ -457,5 +457,19 @@ class RBAC
 
   function removeAuthSource($sUID) {
     $this->authSourcesObj->remove($sUID);
+  }
+
+  function searchUsers($sUID, $sKeyword) {
+    $aAuthSource = $this->getAuthSource($sUID);
+    $sAuthType   = strtolower($aAuthSource['AUTH_SOURCE_PROVIDER']);
+    foreach ( $this->aRbacPlugins as $sClassName) {
+      if ( $sClassName == $sAuthType ) {
+        $plugin =  new $sClassName();
+        $plugin->sAuthSource = $sUID;
+        $plugin->sSystem     = $this->sSystem;
+        return $plugin->searchUsers($sKeyword);
+      }
+    }
+    return array();
   }
 }
