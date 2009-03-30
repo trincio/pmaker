@@ -2,7 +2,7 @@ msgid ""
 msgstr "" 
 "Project-Id-Version: PM 4.0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-03-17 18:24+0100 \n"
+"PO-Revision-Date: 2009-03-27 16:33+0100 \n"
 "Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
 "Language-Team: Colosa Developers Team <developers@colosa.com>\n"
 "MIME-Version: 1.0\n"
@@ -2844,6 +2844,18 @@ msgstr "Reassign Cases"
 #: LABEL/ID_ALERT_MESSAGE
 msgid "Alert Message"
 msgstr "Alert Message"
+
+# TRANSLATION
+# LABEL/ID_IMPORT_USERS
+#: LABEL/ID_IMPORT_USERS
+msgid "Import Users"
+msgstr "Import Users"
+
+# TRANSLATION
+# LABEL/ID_MSG_CONFIRM_DELETE_STEP
+#: LABEL/ID_MSG_CONFIRM_DELETE_STEP
+msgid "Are you sure you want to eliminate this step from the task?"
+msgstr "Are you sure you want to eliminate this step from the task?"
 
 # TRANSLATION
 # LABEL/ID_AUTHENTICATION
@@ -7483,6 +7495,18 @@ msgstr "Update Date"
 msgid "[processes/processes_ListPublic.xml?LINK] Edit"
 msgstr "Edit"
 
+# processes/processes_subProcess_Out.xml?VAR_OUT1
+# processes/processes_subProcess_Out.xml
+#: textpm - VAR_OUT1
+msgid "Origin"
+msgstr "Origin"
+
+# processes/processes_subProcess_Out.xml?VAR_OUT2
+# processes/processes_subProcess_Out.xml
+#: textpm - VAR_OUT2
+msgid "Target"
+msgstr "Target"
+
 # processes/processes_ObjectsPermissionsOptions.xml?MNU_ADD
 # processes/processes_ObjectsPermissionsOptions.xml
 #: link - MNU_ADD
@@ -7563,20 +7587,8 @@ msgstr "Description"
 
 # processes/processes_Edit.xml?PRO_DEBUG
 # processes/processes_Edit.xml
-#: dropdown - PRO_DEBUG
-msgid "Mode	"
-msgstr "Mode	"
-
-# processes/processes_Edit.xml?PRO_DEBUG-''
-# processes/processes_Edit.xml
-#: dropdown - PRO_DEBUG - ''
-msgid "[processes/processes_Edit.xml?PRO_DEBUG-'']"
-msgstr "Normal"
-
-# processes/processes_Edit.xml?PRO_DEBUG-1
-# processes/processes_Edit.xml
-#: dropdown - PRO_DEBUG - 1
-msgid "[processes/processes_Edit.xml?PRO_DEBUG-1]"
+#: checkbox - PRO_DEBUG
+msgid "Debug"
 msgstr "Debug"
 
 # processes/processes_Edit.xml?SUBMIT
@@ -8238,6 +8250,18 @@ msgstr "File"
 #: submit - SAVE
 msgid "[processes/processes_Import.xml?SAVE] Import"
 msgstr "Import"
+
+# processes/processes_subProcess_In.xml?VAR_IN1
+# processes/processes_subProcess_In.xml
+#: textpm - VAR_IN1
+msgid "[processes/processes_subProcess_In.xml?VAR_IN1] Origin"
+msgstr "Origin"
+
+# processes/processes_subProcess_In.xml?VAR_IN2
+# processes/processes_subProcess_In.xml
+#: textpm - VAR_IN2
+msgid "[processes/processes_subProcess_In.xml?VAR_IN2] Target"
+msgstr "Target"
 
 # processes/processes_User.xml?USR_FIRSTNAME
 # processes/processes_User.xml
@@ -12367,6 +12391,12 @@ msgstr "Confirm Password "
 msgid "[users/users_View.xml?TITLEADD] Additional Information"
 msgstr "Additional Information"
 
+# users/users_View.xml?USR_PHOTO
+# users/users_View.xml
+#: image - USR_PHOTO
+msgid "[users/users_View.xml?USR_PHOTO] Photo"
+msgstr "Photo"
+
 # users/users_View.xml?USR_RESUME
 # users/users_View.xml
 #: link - USR_RESUME
@@ -12394,8 +12424,8 @@ msgstr "Delete"
 # authSources/authSources_SelectType.xml?TITLE
 # authSources/authSources_SelectType.xml
 #: title - TITLE
-msgid "Authentication Source Available Types"
-msgstr "Authentication Source Available Types"
+msgid "Available Authentication Source Types"
+msgstr "Available Authentication Source Types"
 
 # authSources/authSources_SelectType.xml?AUTH_SOURCE_PROVIDER
 # authSources/authSources_SelectType.xml
@@ -12408,6 +12438,162 @@ msgstr "Provider"
 #: submit - btnContinue
 msgid "[authSources/authSources_SelectType.xml?btnContinue] Continue"
 msgstr "Continue"
+
+# authSources/authSources_SearchUsers.xml?TITLE
+# authSources/authSources_SearchUsers.xml
+#: title - TITLE
+msgid "Sarch for user"
+msgstr "Sarch for user"
+
+# authSources/authSources_SearchUsers.xml?KEYWORD
+# authSources/authSources_SearchUsers.xml
+#: text - KEYWORD
+msgid "User's name"
+msgstr "User's name"
+
+# authSources/authSources_SearchUsers.xml?btnSearch
+# authSources/authSources_SearchUsers.xml
+#: button - btnSearch
+msgid "[authSources/authSources_SearchUsers.xml?btnSearch] Search"
+msgstr "Search"
+
+# authSources/authSources_SearchUsers.xml?btnImport
+# authSources/authSources_SearchUsers.xml
+#: button - btnImport
+msgid "[authSources/authSources_SearchUsers.xml?btnImport] Import"
+msgstr "Import"
+
+# authSources/ldapEdit.xml?TITLE
+# authSources/ldapEdit.xml
+#: title - TITLE
+msgid "Authentication Source Information"
+msgstr "Authentication Source Information"
+
+# authSources/ldapEdit.xml?AUTH_SOURCE_NAME
+# authSources/ldapEdit.xml
+#: text - AUTH_SOURCE_NAME
+msgid "[authSources/ldapEdit.xml?AUTH_SOURCE_NAME] Name"
+msgstr "Name"
+
+# authSources/ldapEdit.xml?LDAP_TYPE
+# authSources/ldapEdit.xml
+#: dropdown - LDAP_TYPE
+msgid "[authSources/ldapEdit.xml?LDAP_TYPE] Type    "
+msgstr "Type    "
+
+# authSources/ldapEdit.xml?LDAP_TYPE-ldap
+# authSources/ldapEdit.xml
+#: dropdown - LDAP_TYPE - ldap
+msgid "[authSources/ldapEdit.xml?LDAP_TYPE-ldap]"
+msgstr "LDAP"
+
+# authSources/ldapEdit.xml?LDAP_TYPE-ad
+# authSources/ldapEdit.xml
+#: dropdown - LDAP_TYPE - ad
+msgid "[authSources/ldapEdit.xml?LDAP_TYPE-ad]"
+msgstr "Active Directory"
+
+# authSources/ldapEdit.xml?AUTH_SOURCE_SERVER_NAME
+# authSources/ldapEdit.xml
+#: text - AUTH_SOURCE_SERVER_NAME
+msgid "Server Name"
+msgstr "Server Name"
+
+# authSources/ldapEdit.xml?AUTH_SOURCE_PORT
+# authSources/ldapEdit.xml
+#: text - AUTH_SOURCE_PORT
+msgid "[authSources/ldapEdit.xml?AUTH_SOURCE_PORT] Port"
+msgstr "Port"
+
+# authSources/ldapEdit.xml?AUTH_SOURCE_ENABLED_TLS
+# authSources/ldapEdit.xml
+#: dropdown - AUTH_SOURCE_ENABLED_TLS
+msgid "Enabled TLS    "
+msgstr "Enabled TLS    "
+
+# authSources/ldapEdit.xml?AUTH_SOURCE_ENABLED_TLS-''
+# authSources/ldapEdit.xml
+#: dropdown - AUTH_SOURCE_ENABLED_TLS - ''
+msgid "[authSources/ldapEdit.xml?AUTH_SOURCE_ENABLED_TLS-'']"
+msgstr "No"
+
+# authSources/ldapEdit.xml?AUTH_SOURCE_ENABLED_TLS-1
+# authSources/ldapEdit.xml
+#: dropdown - AUTH_SOURCE_ENABLED_TLS - 1
+msgid "[authSources/ldapEdit.xml?AUTH_SOURCE_ENABLED_TLS-1]"
+msgstr "Yes"
+
+# authSources/ldapEdit.xml?AUTH_SOURCE_VERSION
+# authSources/ldapEdit.xml
+#: dropdown - AUTH_SOURCE_VERSION
+msgid "Version    "
+msgstr "Version    "
+
+# authSources/ldapEdit.xml?AUTH_SOURCE_VERSION-2
+# authSources/ldapEdit.xml
+#: dropdown - AUTH_SOURCE_VERSION - 2
+msgid "[authSources/ldapEdit.xml?AUTH_SOURCE_VERSION-2]"
+msgstr "2"
+
+# authSources/ldapEdit.xml?AUTH_SOURCE_VERSION-3
+# authSources/ldapEdit.xml
+#: dropdown - AUTH_SOURCE_VERSION - 3
+msgid "[authSources/ldapEdit.xml?AUTH_SOURCE_VERSION-3]"
+msgstr "3"
+
+# authSources/ldapEdit.xml?AUTH_SOURCE_BASE_DN
+# authSources/ldapEdit.xml
+#: text - AUTH_SOURCE_BASE_DN
+msgid "Base DN"
+msgstr "Base DN"
+
+# authSources/ldapEdit.xml?AUTH_ANONYMOUS
+# authSources/ldapEdit.xml
+#: dropdown - AUTH_ANONYMOUS
+msgid "Anonymous    "
+msgstr "Anonymous    "
+
+# authSources/ldapEdit.xml?AUTH_ANONYMOUS-''
+# authSources/ldapEdit.xml
+#: dropdown - AUTH_ANONYMOUS - ''
+msgid "[authSources/ldapEdit.xml?AUTH_ANONYMOUS-'']"
+msgstr "No"
+
+# authSources/ldapEdit.xml?AUTH_ANONYMOUS-1
+# authSources/ldapEdit.xml
+#: dropdown - AUTH_ANONYMOUS - 1
+msgid "[authSources/ldapEdit.xml?AUTH_ANONYMOUS-1]"
+msgstr "Yes"
+
+# authSources/ldapEdit.xml?AUTH_SOURCE_SEARCH_USER
+# authSources/ldapEdit.xml
+#: text - AUTH_SOURCE_SEARCH_USER
+msgid "Search User"
+msgstr "Search User"
+
+# authSources/ldapEdit.xml?AUTH_SOURCE_PASSWORD
+# authSources/ldapEdit.xml
+#: password - AUTH_SOURCE_PASSWORD
+msgid "[authSources/ldapEdit.xml?AUTH_SOURCE_PASSWORD] Password"
+msgstr "Password"
+
+# authSources/ldapEdit.xml?AUTH_SOURCE_OBJECT_CLASSES
+# authSources/ldapEdit.xml
+#: textarea - AUTH_SOURCE_OBJECT_CLASSES
+msgid "Object Classes"
+msgstr "Object Classes"
+
+# authSources/ldapEdit.xml?AUTH_SOURCE_ATTRIBUTES
+# authSources/ldapEdit.xml
+#: textarea - AUTH_SOURCE_ATTRIBUTES
+msgid "Atributes"
+msgstr "Atributes"
+
+# authSources/ldapEdit.xml?btnSave
+# authSources/ldapEdit.xml
+#: submit - btnSave
+msgid "[authSources/ldapEdit.xml?btnSave] Save"
+msgstr "Save"
 
 # authSources/authSources_List.xml?AUTH_SOURCE_NAME
 # authSources/authSources_List.xml
@@ -12424,7 +12610,7 @@ msgstr "Provider"
 # authSources/authSources_List.xml?AUTH_SOURCE_SERVER_NAME
 # authSources/authSources_List.xml
 #: text - AUTH_SOURCE_SERVER_NAME
-msgid "Server Name"
+msgid "[authSources/authSources_List.xml?AUTH_SOURCE_SERVER_NAME] Server Name"
 msgstr "Server Name"
 
 # authSources/authSources_List.xml?AUTH_SOURCE_PORT
@@ -12451,239 +12637,23 @@ msgstr "Delete"
 msgid "[authSources/authSources_Options.xml?MNU_ADD] New"
 msgstr "New"
 
-# authSources/ldap_Edit.xml?TITLE
-# authSources/ldap_Edit.xml
-#: title - TITLE
-msgid "Authentication Source Information"
-msgstr "Authentication Source Information"
-
-# authSources/ldap_Edit.xml?AUTH_SOURCE_NAME
-# authSources/ldap_Edit.xml
-#: text - AUTH_SOURCE_NAME
-msgid "[authSources/ldap_Edit.xml?AUTH_SOURCE_NAME] Name"
+# authSources/ldapSearchResults.xml?FullName
+# authSources/ldapSearchResults.xml
+#: text - FullName
+msgid "[authSources/ldapSearchResults.xml?FullName] Name"
 msgstr "Name"
 
-# authSources/ldap_Edit.xml?AUTH_SOURCE_PROVIDER
-# authSources/ldap_Edit.xml
-#: dropdown - AUTH_SOURCE_PROVIDER
-msgid "Provider    "
-msgstr "Provider    "
+# authSources/ldapSearchResults.xml?Email
+# authSources/ldapSearchResults.xml
+#: text - Email
+msgid "[authSources/ldapSearchResults.xml?Email] E-Mail"
+msgstr "E-Mail"
 
-# authSources/ldap_Edit.xml?AUTH_SOURCE_PROVIDER-ldap
-# authSources/ldap_Edit.xml
-#: dropdown - AUTH_SOURCE_PROVIDER - ldap
-msgid "[authSources/ldap_Edit.xml?AUTH_SOURCE_PROVIDER-ldap]"
-msgstr "LDAP"
-
-# authSources/ldap_Edit.xml?AUTH_SOURCE_PROVIDER-ad
-# authSources/ldap_Edit.xml
-#: dropdown - AUTH_SOURCE_PROVIDER - ad
-msgid "[authSources/ldap_Edit.xml?AUTH_SOURCE_PROVIDER-ad]"
-msgstr "Active Directory"
-
-# authSources/ldap_Edit.xml?AUTH_SOURCE_SERVER_NAME
-# authSources/ldap_Edit.xml
-#: text - AUTH_SOURCE_SERVER_NAME
-msgid "[authSources/ldap_Edit.xml?AUTH_SOURCE_SERVER_NAME] Server Name"
-msgstr "Server Name"
-
-# authSources/ldap_Edit.xml?AUTH_SOURCE_PORT
-# authSources/ldap_Edit.xml
-#: text - AUTH_SOURCE_PORT
-msgid "[authSources/ldap_Edit.xml?AUTH_SOURCE_PORT] Port"
-msgstr "Port"
-
-# authSources/ldap_Edit.xml?AUTH_SOURCE_ENABLED_TLS
-# authSources/ldap_Edit.xml
-#: dropdown - AUTH_SOURCE_ENABLED_TLS
-msgid "Enabled TLS    "
-msgstr "Enabled TLS    "
-
-# authSources/ldap_Edit.xml?AUTH_SOURCE_ENABLED_TLS-''
-# authSources/ldap_Edit.xml
-#: dropdown - AUTH_SOURCE_ENABLED_TLS - ''
-msgid "[authSources/ldap_Edit.xml?AUTH_SOURCE_ENABLED_TLS-'']"
-msgstr "No"
-
-# authSources/ldap_Edit.xml?AUTH_SOURCE_ENABLED_TLS-1
-# authSources/ldap_Edit.xml
-#: dropdown - AUTH_SOURCE_ENABLED_TLS - 1
-msgid "[authSources/ldap_Edit.xml?AUTH_SOURCE_ENABLED_TLS-1]"
-msgstr "Yes"
-
-# authSources/ldap_Edit.xml?AUTH_SOURCE_VERSION
-# authSources/ldap_Edit.xml
-#: dropdown - AUTH_SOURCE_VERSION
-msgid "Version    "
-msgstr "Version    "
-
-# authSources/ldap_Edit.xml?AUTH_SOURCE_VERSION-2
-# authSources/ldap_Edit.xml
-#: dropdown - AUTH_SOURCE_VERSION - 2
-msgid "[authSources/ldap_Edit.xml?AUTH_SOURCE_VERSION-2]"
-msgstr "2"
-
-# authSources/ldap_Edit.xml?AUTH_SOURCE_VERSION-3
-# authSources/ldap_Edit.xml
-#: dropdown - AUTH_SOURCE_VERSION - 3
-msgid "[authSources/ldap_Edit.xml?AUTH_SOURCE_VERSION-3]"
-msgstr "3"
-
-# authSources/ldap_Edit.xml?AUTH_SOURCE_BASE_DN
-# authSources/ldap_Edit.xml
-#: text - AUTH_SOURCE_BASE_DN
-msgid "Base DN"
-msgstr "Base DN"
-
-# authSources/ldap_Edit.xml?AUTH_ANONYMOUS
-# authSources/ldap_Edit.xml
-#: dropdown - AUTH_ANONYMOUS
-msgid "Anonymous    "
-msgstr "Anonymous    "
-
-# authSources/ldap_Edit.xml?AUTH_ANONYMOUS-''
-# authSources/ldap_Edit.xml
-#: dropdown - AUTH_ANONYMOUS - ''
-msgid "[authSources/ldap_Edit.xml?AUTH_ANONYMOUS-'']"
-msgstr "No"
-
-# authSources/ldap_Edit.xml?AUTH_ANONYMOUS-1
-# authSources/ldap_Edit.xml
-#: dropdown - AUTH_ANONYMOUS - 1
-msgid "[authSources/ldap_Edit.xml?AUTH_ANONYMOUS-1]"
-msgstr "Yes"
-
-# authSources/ldap_Edit.xml?AUTH_SOURCE_SEARCH_USER
-# authSources/ldap_Edit.xml
-#: text - AUTH_SOURCE_SEARCH_USER
-msgid "Search User"
-msgstr "Search User"
-
-# authSources/ldap_Edit.xml?AUTH_SOURCE_PASSWORD
-# authSources/ldap_Edit.xml
-#: password - AUTH_SOURCE_PASSWORD
-msgid "[authSources/ldap_Edit.xml?AUTH_SOURCE_PASSWORD] Password"
-msgstr "Password"
-
-# authSources/ldap_Edit.xml?AUTH_SOURCE_OBJECT_CLASSES
-# authSources/ldap_Edit.xml
-#: text - AUTH_SOURCE_OBJECT_CLASSES
-msgid "Object Classes"
-msgstr "Object Classes"
-
-# authSources/ldap_Edit.xml?AUTH_SOURCE_ATTRIBUTES
-# authSources/ldap_Edit.xml
-#: text - AUTH_SOURCE_ATTRIBUTES
-msgid "Atributes"
-msgstr "Atributes"
-
-# authSources/ldap_Edit.xml?btnSave
-# authSources/ldap_Edit.xml
-#: submit - btnSave
-msgid "[authSources/ldap_Edit.xml?btnSave] Save"
-msgstr "Save"
-
-# authSources/test_Edit.xml?TITLE
-# authSources/test_Edit.xml
-#: title - TITLE
-msgid "Authentication Source Information (TEST)"
-msgstr "Authentication Source Information (TEST)"
-
-# authSources/test_Edit.xml?AUTH_SOURCE_NAME
-# authSources/test_Edit.xml
-#: text - AUTH_SOURCE_NAME
-msgid "[authSources/test_Edit.xml?AUTH_SOURCE_NAME] Name"
-msgstr "Name"
-
-# authSources/test_Edit.xml?AUTH_SOURCE_SERVER_NAME
-# authSources/test_Edit.xml
-#: text - AUTH_SOURCE_SERVER_NAME
-msgid "[authSources/test_Edit.xml?AUTH_SOURCE_SERVER_NAME] Server Name"
-msgstr "Server Name"
-
-# authSources/test_Edit.xml?AUTH_SOURCE_PORT
-# authSources/test_Edit.xml
-#: text - AUTH_SOURCE_PORT
-msgid "[authSources/test_Edit.xml?AUTH_SOURCE_PORT] Port"
-msgstr "Port"
-
-# authSources/test_Edit.xml?AUTH_SOURCE_ENABLED_TLS
-# authSources/test_Edit.xml
-#: dropdown - AUTH_SOURCE_ENABLED_TLS
-msgid "[authSources/test_Edit.xml?AUTH_SOURCE_ENABLED_TLS] Enabled TLS    "
-msgstr "Enabled TLS    "
-
-# authSources/test_Edit.xml?AUTH_SOURCE_ENABLED_TLS-''
-# authSources/test_Edit.xml
-#: dropdown - AUTH_SOURCE_ENABLED_TLS - ''
-msgid "[authSources/test_Edit.xml?AUTH_SOURCE_ENABLED_TLS-'']"
-msgstr "No"
-
-# authSources/test_Edit.xml?AUTH_SOURCE_ENABLED_TLS-1
-# authSources/test_Edit.xml
-#: dropdown - AUTH_SOURCE_ENABLED_TLS - 1
-msgid "[authSources/test_Edit.xml?AUTH_SOURCE_ENABLED_TLS-1]"
-msgstr "Yes"
-
-# authSources/test_Edit.xml?AUTH_ANONYMOUS
-# authSources/test_Edit.xml
-#: dropdown - AUTH_ANONYMOUS
-msgid "[authSources/test_Edit.xml?AUTH_ANONYMOUS] Anonymous    "
-msgstr "Anonymous    "
-
-# authSources/test_Edit.xml?AUTH_ANONYMOUS-''
-# authSources/test_Edit.xml
-#: dropdown - AUTH_ANONYMOUS - ''
-msgid "[authSources/test_Edit.xml?AUTH_ANONYMOUS-'']"
-msgstr "No"
-
-# authSources/test_Edit.xml?AUTH_ANONYMOUS-1
-# authSources/test_Edit.xml
-#: dropdown - AUTH_ANONYMOUS - 1
-msgid "[authSources/test_Edit.xml?AUTH_ANONYMOUS-1]"
-msgstr "Yes"
-
-# authSources/test_Edit.xml?AUTH_SOURCE_SEARCH_USER
-# authSources/test_Edit.xml
-#: text - AUTH_SOURCE_SEARCH_USER
-msgid "[authSources/test_Edit.xml?AUTH_SOURCE_SEARCH_USER] Search User"
-msgstr "Search User"
-
-# authSources/test_Edit.xml?AUTH_SOURCE_PASSWORD
-# authSources/test_Edit.xml
-#: password - AUTH_SOURCE_PASSWORD
-msgid "[authSources/test_Edit.xml?AUTH_SOURCE_PASSWORD] Password"
-msgstr "Password"
-
-# authSources/test_Edit.xml?FIELD_1
-# authSources/test_Edit.xml
-#: text - FIELD_1
-msgid "Field 1"
-msgstr "Field 1"
-
-# authSources/test_Edit.xml?FIELD_2
-# authSources/test_Edit.xml
-#: text - FIELD_2
-msgid "Field 2"
-msgstr "Field 2"
-
-# authSources/test_Edit.xml?FIELD_3
-# authSources/test_Edit.xml
-#: text - FIELD_3
-msgid "Field 3"
-msgstr "Field 3"
-
-# authSources/test_Edit.xml?FIELD_4
-# authSources/test_Edit.xml
-#: text - FIELD_4
-msgid "Field 4"
-msgstr "Field 4"
-
-# authSources/test_Edit.xml?btnSave
-# authSources/test_Edit.xml
-#: submit - btnSave
-msgid "[authSources/test_Edit.xml?btnSave] Save"
-msgstr "Save"
+# authSources/ldapSearchResults.xml?DistinguishedName
+# authSources/ldapSearchResults.xml
+#: text - DistinguishedName
+msgid "Distinguished Name"
+msgstr "Distinguished Name"
 
 # tasks/tasks_Permissions.xml?TAS_SUBTITLE1
 # tasks/tasks_Permissions.xml

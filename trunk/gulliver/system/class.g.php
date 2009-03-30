@@ -708,7 +708,11 @@ class G
    */
   function LoadAllPluginModelClasses(){
   	//Get the current Include path, where the plugins directories should be
-  	$path=explode(":",get_include_path());
+	if ( !defined('PATH_SEPARATOR') ) {
+		define('PATH_SEPARATOR', ( substr(PHP_OS, 0, 3) == 'WIN' ) ? ';' : ':');
+	}
+  	$path=explode(PATH_SEPARATOR,get_include_path());
+	
 
   	foreach($path as $possiblePath){
   		if(strstr($possiblePath,"plugins")){
