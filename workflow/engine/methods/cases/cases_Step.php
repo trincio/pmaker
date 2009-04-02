@@ -457,12 +457,12 @@ switch ($_GET['TYPE'])
             $aFields['TASK'][$sKey]['NEXT_TASK']['USR_UID'] = $aFields['TASK'][$sKey]['NEXT_TASK']['USER_ASSIGNED']['USR_FULLNAME'];
             $aFields['TASK'][$sKey]['NEXT_TASK']['USR_HIDDEN_FIELD'] = '<input type="hidden" name="' . $hiddenName . '" id="' . $hiddenName . '" value="' . $aValues['NEXT_TASK']['USER_ASSIGNED']['USR_UID'] . '">';
             break;
-        case 'MANUAL':            
+        case 'MANUAL':
             foreach ($aValues['NEXT_TASK']['USER_ASSIGNED'] as $aUser)
             {
               $Aux[$aUser['USR_UID']] = $aUser['USR_FULLNAME'];
             }
-            asort($Aux);            
+            asort($Aux);
             $sAux      = '<select name="form[TASKS][' . $sKey . '][USR_UID]" id="form[TASKS][' . $sKey . '][USR_UID]">';
             /*foreach ($aValues['NEXT_TASK']['USER_ASSIGNED'] as $aUser)
             {
@@ -471,9 +471,9 @@ switch ($_GET['TYPE'])
             foreach ($Aux as $key => $value)
             {
               $sAux .= '<option value="' . $key . '">' . $value . '</option>';
-            }            
-            $sAux .= '</select>'; 
-            
+            }
+            $sAux .= '</select>';
+
             $aFields['TASK'][$sKey]['NEXT_TASK']['USR_UID'] = $sAux;
             break;
         case 'SELFSERVICE':
