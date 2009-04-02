@@ -22,7 +22,7 @@
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
  *
  */
-try {
+try {ini_set('display_errors','1');
   global $RBAC;
   switch ($RBAC->userCanAccess('PM_LOGIN'))
   {
@@ -106,7 +106,7 @@ try {
         $aHistory[] = $_POST['form']['USR_NEW_PASS'];
       }
       $aUserProperty['USR_LAST_UPDATE_DATE'] = date('Y-m-d H:i:s');
-      $aUserProperty['USR_LOGGED_NEXT_TIME'] = 0;
+      $aUserProperty['USR_LOGGED_NEXT_TIME'] = 1;
       $aUserProperty['USR_PASSWORD_HISTORY'] = serialize($aHistory);
       $oUserProperty->update($aUserProperty);
 	  }
@@ -116,7 +116,8 @@ try {
 	$aData['USR_EMAIL']       = $_POST['form']['USR_EMAIL'];
 	$aData['USR_DUE_DATE']    = $_POST['form']['USR_DUE_DATE'];
 	$aData['USR_UPDATE_DATE'] = date('Y-m-d H:i:s');
-	$RBAC->updateUser($aData, $_POST['form']['USR_ROLE']);
+	$RBAC->updateUser($aData);
+	$aData['USR_PASSWORD']    = md5($_POST['form']['USR_USERNAME']);//fake :p
 	$aData['USR_COUNTRY']     = $_POST['form']['USR_COUNTRY'];
 	$aData['USR_CITY']        = $_POST['form']['USR_CITY'];
 	$aData['USR_LOCATION']    = $_POST['form']['USR_LOCATION'];
