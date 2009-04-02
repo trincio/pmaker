@@ -289,18 +289,18 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
        G::RenderPage( 'publish' );
        die;
       }
-    }   
+    }
     ///************TimeZone Set***************//
-    
+
 	  if(!defined('TIME_ZONE'))
 	  		define('TIME_ZONE', 'America/La_Paz');
-	    		  
+
 		if (version_compare(phpversion(), "5.1.0", ">=")) {
 			    date_default_timezone_set(TIME_ZONE);
 		}
 	  else {
 	    // you're not
-	  }    	  
+	  }
   }
   else {  //when we are in global pages, outside any valid workspace
 
@@ -455,9 +455,10 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
 //  ***************** Headers **************************
     if ( ! defined('EXECUTE_BY_CRON') ) {
       header("Expires: Tue, 19 Jan 1999 04:30:00 GMT");
-      header("Last-Modified: Tue, 19 Jan 1999 04:30:00 GMT");
-      header('Cache-Control: no-cache, must-revalidate, post-check=0,pre-check=0 ');
-      header('P3P: CP="CAO PSA OUR"');
+      header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
+      header("Cache-Control: no-store, no-cache, must-revalidate");
+      header("Cache-Control: post-check=0, pre-check=0", false);
+      header("Pragma: no-cache");
 
       if(isset( $_SESSION['USER_LOGGED'] )) {
         $RBAC->initRBAC();
