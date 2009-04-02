@@ -232,7 +232,7 @@ class Propel {
 	{
 	krumo ( self::$configuration);
 	}
-		
+
 
 	public static function configure($configFile)
 	{
@@ -253,7 +253,7 @@ class Propel {
 	 */
 	public static function init($c)
 	{
-		self::configure($c); 
+		self::configure($c);
 		self::initialize();
 	}
 
@@ -473,7 +473,7 @@ class Propel {
 			$name = self::getDefaultDB();
 		}
 		$con = isset(self::$connectionMap[$name]) ? self::$connectionMap[$name] : null;
-		if ($con === null) {
+		if ($con === null || $name === 'dbarray') {
 
 			$dsn = isset(self::$configuration['datasources'][$name]['connection']) ? self::$configuration['datasources'][$name]['connection'] : null;
 			if ($dsn === null) {
@@ -485,10 +485,10 @@ class Propel {
 					G::LoadClass ('dbConnections');
     				$oDbConnections = new dbConnections($_SESSION['PROCESS']);
     				$oDbConnections->loadAdditionalConnections();
-    				$dsn = isset(self::$configuration['datasources'][$name]['connection']) ? self::$configuration['datasources'][$name]['connection'] : null;	
+    				$dsn = isset(self::$configuration['datasources'][$name]['connection']) ? self::$configuration['datasources'][$name]['connection'] : null;
 				} else {
     				throw new PropelException("No connection params set for " . $name);
-    			}	
+    			}
 			}
 
 			include_once 'creole/Creole.php';

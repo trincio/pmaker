@@ -277,33 +277,33 @@ krumo ( 'DBArrayConnection connect '); die;
     foreach ( $this->_DBArray[ $tableName ] as $key => $row ) {
       if ( $key == 0 ) continue;
       $flag = 1;
-      if ( isset ($sql['whereClause'] ) ) 
+      if ( isset ($sql['whereClause'] ) )
         foreach ( $sql['whereClause'] as $keyClause => $valClause ) {
           if ( isset ( $valClause)  && $flag == 1  ) {
             //$toEval =  "\$flag = ( " . ($valClause != '' ? str_replace('=', '==', $valClause): '1') . ') ?1 :0;' ;
-            //if the eval is EQUAL   add a double Equal 
+            //if the eval is EQUAL   add a double Equal
             if ( strpos( $valClause , "\$row['*'] CUSTOM'(" ) !== false ) {
               $valClause = str_replace( "\$row['*'] CUSTOM'(" , '', $valClause );
               $words = explode ( ' ', $valClause );
               $valClause = str_replace( $words[0] , "\$row['" . $words[0] . "']", $valClause );
               $valClause = str_replace( ")'" , "", $valClause );
             }
-            
-            if ( stripos( $valClause , "LIKE" ) !== false ) {                                
-              $valClause = str_replace( "%" , "", $valClause );        
-            	$operands = explode ( 'LIKE', $valClause );                	 
-            	if ($operands[1]==' ""'){ 
+
+            if ( stripos( $valClause , "LIKE" ) !== false ) {
+              $valClause = str_replace( "%" , "", $valClause );
+            	$operands = explode ( 'LIKE', $valClause );
+            	if ($operands[1]==' ""'){
             		            		$toEval =  "\$flag = 1;";
             		}
             	else
-              {	$toEval =  "\$flag = ( stripos ( " . $operands[0] . ", " . $operands[1] . "  )  !== false ? 1 : 0 ) ;" ;              	
+              {	$toEval =  "\$flag = ( stripos ( " . $operands[0] . ", " . $operands[1] . "  )  !== false ? 1 : 0 ) ;" ;
               	eval ( $toEval );
             		eval ( '$val = ' . $operands[0] . ';' );
               }
             }
-            else //this is for EQUAL, LESS_THAN_EQUAL, ETC, 
+            else //this is for EQUAL, LESS_THAN_EQUAL, ETC,
               $toEval =  "\$flag = ( " . ($valClause != '' ? $valClause: '1') . ') ?1 :0;' ;
-              
+
             eval ( $toEval );
           }
         }
@@ -346,52 +346,52 @@ krumo ( 'DBArrayConnection connect '); die;
       }
       $aOrderClause = $this->dataSql['orderByClause'];
       switch ( count ($column)  )  {
-      case 1 : 	
+      case 1 :
         array_multisort($column[ $aOrderClause[0]['columnName'] ] , $direction[0] , $resultRow );
         break;
-      case 2 : 	
-        array_multisort($column[ $aOrderClause[0]['columnName'] ] , $direction[0] , 
-                        $column[ $aOrderClause[1]['columnName'] ] , $direction[1] ,         
+      case 2 :
+        array_multisort($column[ $aOrderClause[0]['columnName'] ] , $direction[0] ,
+                        $column[ $aOrderClause[1]['columnName'] ] , $direction[1] ,
                         $resultRow );
         break;
-      case 3 : 	
-        array_multisort($column[ $aOrderClause[0]['columnName'] ] , $direction[0] , 
-                        $column[ $aOrderClause[1]['columnName'] ] , $direction[1] ,         
-                        $column[ $aOrderClause[2]['columnName'] ] , $direction[2] ,         
+      case 3 :
+        array_multisort($column[ $aOrderClause[0]['columnName'] ] , $direction[0] ,
+                        $column[ $aOrderClause[1]['columnName'] ] , $direction[1] ,
+                        $column[ $aOrderClause[2]['columnName'] ] , $direction[2] ,
                         $resultRow );
         break;
-      case 4 : 	
-        array_multisort($column[ $aOrderClause[0]['columnName'] ] , $direction[0] , 
-                        $column[ $aOrderClause[1]['columnName'] ] , $direction[1] ,         
-                        $column[ $aOrderClause[2]['columnName'] ] , $direction[2] ,         
-                        $column[ $aOrderClause[3]['columnName'] ] , $direction[3] ,         
+      case 4 :
+        array_multisort($column[ $aOrderClause[0]['columnName'] ] , $direction[0] ,
+                        $column[ $aOrderClause[1]['columnName'] ] , $direction[1] ,
+                        $column[ $aOrderClause[2]['columnName'] ] , $direction[2] ,
+                        $column[ $aOrderClause[3]['columnName'] ] , $direction[3] ,
                         $resultRow );
         break;
-      case 5 : 	
-        array_multisort($column[ $aOrderClause[0]['columnName'] ] , $direction[0] , 
-                        $column[ $aOrderClause[1]['columnName'] ] , $direction[1] ,         
-                        $column[ $aOrderClause[2]['columnName'] ] , $direction[2] ,         
-                        $column[ $aOrderClause[3]['columnName'] ] , $direction[3] ,         
-                        $column[ $aOrderClause[4]['columnName'] ] , $direction[4] ,         
+      case 5 :
+        array_multisort($column[ $aOrderClause[0]['columnName'] ] , $direction[0] ,
+                        $column[ $aOrderClause[1]['columnName'] ] , $direction[1] ,
+                        $column[ $aOrderClause[2]['columnName'] ] , $direction[2] ,
+                        $column[ $aOrderClause[3]['columnName'] ] , $direction[3] ,
+                        $column[ $aOrderClause[4]['columnName'] ] , $direction[4] ,
                         $resultRow );
         break;
-      case 6 : 	
-        array_multisort($column[ $aOrderClause[0]['columnName'] ] , $direction[0] , 
-                        $column[ $aOrderClause[1]['columnName'] ] , $direction[1] ,         
-                        $column[ $aOrderClause[2]['columnName'] ] , $direction[2] ,         
-                        $column[ $aOrderClause[3]['columnName'] ] , $direction[3] ,         
-                        $column[ $aOrderClause[4]['columnName'] ] , $direction[4] ,         
-                        $column[ $aOrderClause[5]['columnName'] ] , $direction[5] ,         
+      case 6 :
+        array_multisort($column[ $aOrderClause[0]['columnName'] ] , $direction[0] ,
+                        $column[ $aOrderClause[1]['columnName'] ] , $direction[1] ,
+                        $column[ $aOrderClause[2]['columnName'] ] , $direction[2] ,
+                        $column[ $aOrderClause[3]['columnName'] ] , $direction[3] ,
+                        $column[ $aOrderClause[4]['columnName'] ] , $direction[4] ,
+                        $column[ $aOrderClause[5]['columnName'] ] , $direction[5] ,
                         $resultRow );
         break;
-      case 7 : 	
-        array_multisort($column[ $aOrderClause[0]['columnName'] ] , $direction[0] , 
-                        $column[ $aOrderClause[1]['columnName'] ] , $direction[1] ,         
-                        $column[ $aOrderClause[2]['columnName'] ] , $direction[2] ,         
-                        $column[ $aOrderClause[3]['columnName'] ] , $direction[3] ,         
-                        $column[ $aOrderClause[4]['columnName'] ] , $direction[4] ,         
-                        $column[ $aOrderClause[5]['columnName'] ] , $direction[5] ,         
-                        $column[ $aOrderClause[6]['columnName'] ] , $direction[6] ,         
+      case 7 :
+        array_multisort($column[ $aOrderClause[0]['columnName'] ] , $direction[0] ,
+                        $column[ $aOrderClause[1]['columnName'] ] , $direction[1] ,
+                        $column[ $aOrderClause[2]['columnName'] ] , $direction[2] ,
+                        $column[ $aOrderClause[3]['columnName'] ] , $direction[3] ,
+                        $column[ $aOrderClause[4]['columnName'] ] , $direction[4] ,
+                        $column[ $aOrderClause[5]['columnName'] ] , $direction[5] ,
+                        $column[ $aOrderClause[6]['columnName'] ] , $direction[6] ,
                         $resultRow );
         break;
       }

@@ -1,10 +1,10 @@
 <?php
 /**
  * RbacUsers.php
- *  
+ *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -14,13 +14,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
 
 require_once 'classes/model/om/BaseRbacUsers.php';
@@ -91,53 +91,53 @@ class RbacUsers extends BaseRbacUsers {
     }
     return -1;
   }
-  
+
   function verifyUser($sUsername)
   {
     //invalid user
-    if ( $sUsername == '' ) return 0;  
+    if ( $sUsername == '' ) return 0;
     $con = Propel::getConnection(RbacUsersPeer::DATABASE_NAME);
     try {
       $c = new Criteria( 'rbac' );
       $c->add ( RbacUsersPeer::USR_USERNAME, $sUsername );
       $rs = RbacUsersPeer::doSelect( $c );
-      if (is_array($rs) && isset( $rs[0] ) && get_class ( $rs[0] ) == 'RbacUsers') 
+      if (is_array($rs) && isset( $rs[0] ) && get_class ( $rs[0] ) == 'RbacUsers')
       {
       	//return the row for futher check of which Autentificacion method belongs this user
-      	$this->fields = $rs[0]->toArray(BasePeer::TYPE_FIELDNAME);; 
+      	$this->fields = $rs[0]->toArray(BasePeer::TYPE_FIELDNAME);;
         return 1;
       }
-      else 
-      { 
-        return 0;       
+      else
+      {
+        return 0;
       }
     }
     catch (Exception $oError) {
       throw($oError);
-    }    
+    }
   }
-  
+
   function verifyUserId($sUserId)
   {
     //invalid user
-    if ( $sUserId == '' ) return 0;  
+    if ( $sUserId == '' ) return 0;
     $con = Propel::getConnection(RbacUsersPeer::DATABASE_NAME);
     try {
       $c = new Criteria( 'rbac' );
       $c->add ( RbacUsersPeer::USR_UID, $sUserId );
       $rs = RbacUsersPeer::doSelect( $c );
-      if (is_array($rs) && isset( $rs[0] ) && get_class ( $rs[0] ) == 'RbacUsers') 
+      if (is_array($rs) && isset( $rs[0] ) && get_class ( $rs[0] ) == 'RbacUsers')
       {
         return 1;
       }
-      else 
-      { 
-        return 0;       
+      else
+      {
+        return 0;
       }
     }
     catch (Exception $oError) {
       throw($oError);
-    }    
+    }
   }
 
   function load($sUsrUid)
