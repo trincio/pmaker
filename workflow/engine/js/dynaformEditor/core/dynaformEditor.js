@@ -104,7 +104,7 @@ var dynaformEditor={
 		var code=this.getJSCode();
 		if (field.value)
 		{
-			var res=this.ajax.set_javascript(this.A,field.value,code);
+			var res=this.ajax.set_javascript(this.A,field.value,code.replace(/\+/g, '%2B'));
 			if (typeof(res["*message"])==="string")
 			{
 				G.alert(res["*message"]);

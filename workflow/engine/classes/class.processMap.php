@@ -506,7 +506,12 @@ class processMap {
       	$oDataset->next();
       }
       //Delete the process
-  		$oProcess->remove($sProcessUID);
+      try {
+  		  $oProcess->remove($sProcessUID);
+  		}
+  		catch (Exception $oError) {
+  		  //nada
+  		}
   		return true;
   	}
   	catch (Exception $oError) {
