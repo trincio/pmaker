@@ -373,7 +373,7 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
         G::LoadClass('configuration');
       $objUID = $Part['File'];
       $conf = new Configurations( $oTable );
-      $conf->loadConfig($oTable,'pagedTable',$objUID,'',$_SESSION['USER_LOGGED'],'');
+      $conf->loadConfig($oTable,'pagedTable',$objUID,'',(isset($_SESSION['USER_LOGGED']) ? $_SESSION['USER_LOGGED'] : ''),'');
       $oTable->__OBJ_UID = $objUID;
       //$_SESSION['USER_LOGGED']
       //$oTable->__OBJ_UID = '';

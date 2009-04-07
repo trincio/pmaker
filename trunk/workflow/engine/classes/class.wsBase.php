@@ -139,7 +139,7 @@ class wsBase
 				$result[] = array ( 'guid' => $aRow['PRO_UID'], 'name' => $arrayProcess['PRO_TITLE'] );
 				$oDataset->next();
 			}
-			
+
 			return $result;
 		}
 		catch ( Exception $e ) {
@@ -907,9 +907,34 @@ class wsBase
 			$appFields = $oCase->loadCase( $caseId );
 			$appFields['APP_DATA']['APPLICATION'] = $caseId;
 
-			//Execute triggers before derivation
-      $currentTask = $derive[1]['TAS_UID'];  //currentTask??? if this doesn't exists???
+      //Execute triggers before assignment
+      $aTriggers = $oCase->loadTriggers($appdel['TAS_UID'], 'ASSIGN_TASK', -1, 'BEFORE' );
+      if (count($aTriggers) > 0) {
+        $oPMScript = new PMScript();
+        foreach ($aTriggers as $aTrigger) {
+          //$appFields = $oCase->loadCase( $caseId );
+     			//$appFields['APP_DATA']['APPLICATION'] = $caseId;
+          $oPMScript->setFields( $appFields['APP_DATA'] );
+          $bExecute = true;
+          if ($aTrigger['ST_CONDITION'] !== '') {
+            $oPMScript->setScript($aTrigger['ST_CONDITION']);
+            $bExecute = $oPMScript->evaluate();
+          }
+          if ($bExecute) {
+            $oPMScript->setScript($aTrigger['TRI_WEBBOT']);
+            $oPMScript->execute();
+            $varTriggers .= "Before Assignment ----------\n" . $aTrigger['TRI_WEBBOT'] . "\n";
+            //$appFields = $oCase->loadCase( $caseId );
+            $appFields['APP_DATA'] = $oPMScript->aFields;
+            //$appFields['APP_DATA']['APPLICATION'] = $caseId;
+//$varTriggers .= "proccode " . $appFields['APP_PROC_CODE'] . "\n";
+//$varTriggers .= "pin " . $appFields['APP_DATA']['PIN'] . "\n";
+      			$oCase->updateCase ( $caseId, $appFields );
+          }
+        }
+      }
 
+			//Execute triggers before derivation
       $aTriggers = $oCase->loadTriggers($appdel['TAS_UID'], 'ASSIGN_TASK', -2, 'BEFORE' );
       if (count($aTriggers) > 0) {
         $oPMScript = new PMScript();
@@ -925,7 +950,7 @@ class wsBase
           if ($bExecute) {
             $oPMScript->setScript($aTrigger['TRI_WEBBOT']);
             $oPMScript->execute();
-            $varTriggers .= "Before ----------\n" . $aTrigger['TRI_WEBBOT'] . "\n";
+            $varTriggers .= "Before Derivation ----------\n" . $aTrigger['TRI_WEBBOT'] . "\n";
             //$appFields = $oCase->loadCase( $caseId );
             $appFields['APP_DATA'] = $oPMScript->aFields;
             //$appFields['APP_DATA']['APPLICATION'] = $caseId;
@@ -986,7 +1011,7 @@ class wsBase
           if ($bExecute) {
             $oPMScript->setScript($aTrigger['TRI_WEBBOT']);
             $oPMScript->execute();
-            $varTriggers .= "After ----------\n" . $aTrigger['TRI_WEBBOT'] . "\n";
+            $varTriggers .= "After Derivation ----------\n" . $aTrigger['TRI_WEBBOT'] . "\n";
             //$appFields = $oCase->loadCase( $caseId );
             $appFields['APP_DATA'] = $oPMScript->aFields;
             //$appFields['APP_DATA']['APPLICATION'] = $caseId;
