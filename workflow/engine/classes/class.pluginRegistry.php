@@ -60,6 +60,7 @@ class PMPluginRegistry {
   private $_aDashboards = array();
   private $_aReports = array();
   private $_aPmFunctions = array();
+  private $_aRedirectLogin = array();
   private $_aSteps = array();
 
   static private $instance = NULL;
@@ -96,6 +97,7 @@ class PMPluginRegistry {
   krumo ( $this->_aDashboards);
   krumo ( $this->_aReports);
   krumo ( $this->_aPmFunctions);
+  krumo ( $this->_aRedirectLogin);
   krumo ( $this->_aSteps);
   }
 
@@ -193,11 +195,17 @@ class PMPluginRegistry {
   	     unset ( $this->_aPmFunctions[ $key ] );
     }
 
+ 	 foreach ( $this->_aRedirectLogin as $key=>$detail ) {
+  	   if ( $detail->sNamespace == $sNamespace )
+  	     unset ( $this->_aRedirectLogin[ $key ] );
+    }
+
  	 foreach ( $this->_aSteps as $key=>$detail ) {
   	   if ( $detail->sNamespace == $sNamespace )
   	     unset ( $this->_aSteps[ $key ] );
     }
 
+    //aca aumentar llamada de función de deshabilitar del plugin
   }
 
   /**
@@ -302,6 +310,24 @@ class PMPluginRegistry {
   	}
     if ( !$found ) {
       $this->_aPmFunctions[] = $sNamespace;
+    }
+  }
+
+  /**
+   * Register a redirectLogin class in the singleton
+   *
+   * @param unknown_type $sNamespace
+   * @param unknown_type $sRole
+   * @param unknown_type $sPath
+   */
+  function registerRedirectLogin($sNamespace, $sRole, $sPathMethod ) {
+    $found = false;
+  	foreach ( $this->_aRedirectLogin as $row=>$detail ) {
+  		if ( $sNamespace == $detail->sNamespace )
+  		  $found = true;
+  	}
+    if ( !$found ) {
+      $this->_aRedirectLogin[] = new redirectDetail ( $sNamespace, $sRole, $sPathMethod);
     }
   }
 
@@ -412,6 +438,14 @@ class PMPluginRegistry {
    */
   function getSteps( ) {
     return $this->_aSteps;
+  }
+
+  /**
+   * return all redirect registered
+   *
+   */
+  function getRedirectLogins( ) {
+    return $this->_aRedirectLogin;
   }
 
   /**
