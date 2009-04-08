@@ -1,5 +1,4 @@
 <?php
-//krumo ($items); die;
 /**
  * pluginsList.php
  *
@@ -46,10 +45,19 @@ $items[] = array ( 'id' => 'char', 'title' => 'char', 'type' => 'char', 'creator
 	G::LoadClass('plugin');
   //here we are loading all plugins registered
 //krumo ($items); die;
-
+  $aPluginsPP = array();
+  if (is_file(PATH_PLUGINS . 'powerPack/data/data')) {
+    $aPlugins = unserialize(trim(file_get_contents(PATH_PLUGINS . 'powerPack/data/data')));
+    foreach ($aPlugins as $aPlugin) {
+      $aPluginsPP[] = substr($aPlugin['sFilename'], 0, strpos($aPlugin['sFilename'], '-')) . '.php';
+    }
+  }
   $oPluginRegistry =& PMPluginRegistry::getSingleton();
   if ($handle = opendir( PATH_PLUGINS  )) {
     while ( false !== ($file = readdir($handle))) {
+       if (in_array($file, $aPluginsPP)) {
+         continue;
+       }
     	 if ( strpos($file, '.php',1) && is_file(PATH_PLUGINS . $file) ) {
          include_once ( PATH_PLUGINS . $file );
          $pluginDetail = $oPluginRegistry->getPluginDetails ( $file );
