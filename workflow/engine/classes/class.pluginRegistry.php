@@ -150,6 +150,11 @@ class PMPluginRegistry {
   		if ( $sNamespace == $namespace ) {
   		  $this->registerFolder($sNamespace, $sNamespace, $detail->sPluginFolder ); //register the default directory, later we can have more
   		  $this->_aPluginDetails[$sNamespace]->enabled = true;
+  		  $oPlugin =& new $detail->sClassName( $detail->sNamespace, $detail->sFilename );
+        $this->_aPlugins[$detail->sNamespace] =& $oPlugin;
+        if (method_exists($oPlugin, 'enable')) {
+ 		      $oPlugin->enable();
+ 		    }
   		}
   	}
   }
@@ -161,10 +166,15 @@ class PMPluginRegistry {
    */
   function disablePlugin($sNamespace ) {
   	foreach ( $this->_aPluginDetails as $namespace=>$detail ) {
-  		if ( $sNamespace == $namespace )
-//  		  $this->_aPluginDetails[$sNamespace]->enabled = false;
+  		if ( $sNamespace == $namespace ) {
   		  unset ($this->_aPluginDetails[$sNamespace]);
-  	 }
+        $oPlugin =& new $detail->sClassName( $detail->sNamespace, $detail->sFilename );
+        $this->_aPlugins[$detail->sNamespace] =& $oPlugin;
+        if (method_exists($oPlugin, 'disable')) {
+ 		      $oPlugin->disable();
+ 		    }
+  		}
+  	}
 
   	foreach ( $this->_aMenus as $key=>$detail ) {
   	   if ( $detail->sNamespace == $sNamespace )
@@ -205,7 +215,6 @@ class PMPluginRegistry {
   	     unset ( $this->_aSteps[ $key ] );
     }
 
-    //aca aumentar llamada de función de deshabilitar del plugin
   }
 
   /**
