@@ -136,7 +136,7 @@
   	        $sendContent[$r]->content->{$attribute}=toJSArray($value);
   	      }
   	      else {
-  	        $sendContent[$r]->content->{$attribute}=toJSArray(array($value[$_POST['row']]));
+  	        $sendContent[$r]->content->{$attribute}=toJSArray((isset($value[$_POST['row']]) ? array($value[$_POST['row']]) : array()));
   	      }
   	      break;
   	    }
