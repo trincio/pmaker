@@ -722,7 +722,8 @@ class XmlForm_Field_Text extends XmlForm_Field_SimpleText
   		  else
   		    $result[] = '<input class="module_app_input___gray" id="form['. $owner->name .']['.$r.']['.$this->name.']" name="form['. $owner->name .']['.$r.']['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value="'.$this->htmlentities( $v , ENT_COMPAT, 'utf-8').'" style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'"/>';
   		} elseif ($this->mode==='view') {
-  		    $result[] = $this->htmlentities( $v , ENT_COMPAT, 'utf-8');
+  		    $result[] = '<input class="module_app_input___gray" id="form['. $owner->name .']['.$r.']['.$this->name.']" name="form['. $owner->name .']['.$r.']['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value="'.$this->htmlentities( $v , ENT_COMPAT, 'utf-8').'" style="display:none;'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'"/>' .
+  		      htmlentities( $v , ENT_COMPAT, 'utf-8');
   		} else {
   		    $result[] = $this->htmlentities( $v , ENT_COMPAT, 'utf-8');
   		}
@@ -1328,8 +1329,7 @@ class XmlForm_Field_YesNo extends XmlForm_Field
     */
     function render( $value = NULL )
     {
-      $mode = ($this->mode == 'view')?' disabled="disabled"':'';
-		  $html='<select id="form['.$this->name.']" name="form['.$this->name.']"'.$mode.'>';
+      $html =($this->mode == 'view' ? ($value==='0'?'NO':'YES') : '') . '<select id="form['. $this->name .']" name="form['.$this->name.']"'.($this->mode == 'view' ? ' style="display:none;"' : '').'>';
 		  $html.='<option value="'.'0'.'"'.($value==='0'?' selected':'').'>'.'NO'.'</input>';
 		  $html.='<option value="'.'1'.'"'.($value==='1'?' selected':'').'>'.'YES'.'</input>';
 		  $html.='</select>';
@@ -1340,8 +1340,7 @@ class XmlForm_Field_YesNo extends XmlForm_Field
     {
       $result=array();$r=1;
       foreach($values as $v)  {
-    		$mode = ($this->mode == 'view')?' disabled="disabled"':'';
-    		$html='<select id="form['. $owner->name .']['.$r.']['.$this->name.']" name="form['. $owner->name .']['.$r.']['.$this->name.']"'.$mode.'>';
+    		$html =($this->mode == 'view' ? ($v==='0'?'NO':'YES') : '') . '<select id="form['. $owner->name .']['.$r.']['.$this->name.']" name="form['. $owner->name .']['.$r.']['.$this->name.']"'.($this->mode == 'view' ? ' style="display:none;"' : '').'>';
 		    $html.='<option value="'.'0'.'"'.($v==='0'?' selected':'').'>'.'NO'.'</input>';
 		    $html.='<option value="'.'1'.'"'.($v==='1'?' selected':'').'>'.'YES'.'</input>';
 		    $html.='</select>';
@@ -1683,7 +1682,7 @@ class XmlForm_Field_Dropdown extends XmlForm_Field
         $html='<select class="module_app_input___gray" id="form'.$rowId.'['.$this->name.']" name="form'.$rowId.'['.$this->name.']" '.(($this->style)?'style="'.$this->style.'"':'').'>';
       } elseif ($this->mode === 'view') {
         $html  = $this->htmlentities( isset($this->options[ $value ])? $this->options[ $value ]:'' , ENT_COMPAT, 'utf-8');
-        $html .='<select class="module_app_input___gray" id="form'.$rowId.'['.$this->name.']" name="form'.$rowId.'['.$this->name.']" style="display:none" disabled '.(($this->style)?'style="'.$this->style.'"':'').'>';
+        $html .='<select class="module_app_input___gray" id="form'.$rowId.'['.$this->name.']" name="form'.$rowId.'['.$this->name.']" style="display:none" '.(($this->style)?'style="'.$this->style.'"':'').'>';
       }
         foreach($this->option as $optionName => $option) {
           $html.='<option value="'.$optionName.'" '.
