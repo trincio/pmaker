@@ -807,7 +807,7 @@ class wsBase
 		}
 	}
 
-	public function derivateCase($userId, $caseId, $delIndex) {
+	public function derivateCase($userId, $caseId, $delIndex, $bExecuteTriggersBeforeAssignment = false) {
 		try { $sStatus = 'TO_DO';
 			require_once ("classes/model/AppDelegation.php");
 			require_once ("classes/model/Route.php");
@@ -907,29 +907,31 @@ class wsBase
 			$appFields = $oCase->loadCase( $caseId );
 			$appFields['APP_DATA']['APPLICATION'] = $caseId;
 
-      //Execute triggers before assignment
-      $aTriggers = $oCase->loadTriggers($appdel['TAS_UID'], 'ASSIGN_TASK', -1, 'BEFORE' );
-      if (count($aTriggers) > 0) {
-        $oPMScript = new PMScript();
-        foreach ($aTriggers as $aTrigger) {
-          //$appFields = $oCase->loadCase( $caseId );
-     			//$appFields['APP_DATA']['APPLICATION'] = $caseId;
-          $oPMScript->setFields( $appFields['APP_DATA'] );
-          $bExecute = true;
-          if ($aTrigger['ST_CONDITION'] !== '') {
-            $oPMScript->setScript($aTrigger['ST_CONDITION']);
-            $bExecute = $oPMScript->evaluate();
-          }
-          if ($bExecute) {
-            $oPMScript->setScript($aTrigger['TRI_WEBBOT']);
-            $oPMScript->execute();
-            $varTriggers .= "Before Assignment ----------\n" . $aTrigger['TRI_WEBBOT'] . "\n";
+      if ($bExecuteTriggersBeforeAssignment) {
+        //Execute triggers before assignment
+        $aTriggers = $oCase->loadTriggers($appdel['TAS_UID'], 'ASSIGN_TASK', -1, 'BEFORE' );
+        if (count($aTriggers) > 0) {
+          $oPMScript = new PMScript();
+          foreach ($aTriggers as $aTrigger) {
             //$appFields = $oCase->loadCase( $caseId );
-            $appFields['APP_DATA'] = $oPMScript->aFields;
-            //$appFields['APP_DATA']['APPLICATION'] = $caseId;
-//$varTriggers .= "proccode " . $appFields['APP_PROC_CODE'] . "\n";
-//$varTriggers .= "pin " . $appFields['APP_DATA']['PIN'] . "\n";
-      			$oCase->updateCase ( $caseId, $appFields );
+     	  		//$appFields['APP_DATA']['APPLICATION'] = $caseId;
+            $oPMScript->setFields( $appFields['APP_DATA'] );
+            $bExecute = true;
+            if ($aTrigger['ST_CONDITION'] !== '') {
+              $oPMScript->setScript($aTrigger['ST_CONDITION']);
+              $bExecute = $oPMScript->evaluate();
+            }
+            if ($bExecute) {
+              $oPMScript->setScript($aTrigger['TRI_WEBBOT']);
+              $oPMScript->execute();
+              $varTriggers .= "Before Assignment ----------\n" . $aTrigger['TRI_WEBBOT'] . "\n";
+              //$appFields = $oCase->loadCase( $caseId );
+              $appFields['APP_DATA'] = $oPMScript->aFields;
+              //$appFields['APP_DATA']['APPLICATION'] = $caseId;
+//$var  Triggers .= "proccode " . $appFields['APP_PROC_CODE'] . "\n";
+//$var  Triggers .= "pin " . $appFields['APP_DATA']['PIN'] . "\n";
+        			$oCase->updateCase ( $caseId, $appFields );
+            }
           }
         }
       }

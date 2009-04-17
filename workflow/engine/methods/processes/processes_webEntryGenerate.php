@@ -51,7 +51,7 @@
       $pluginTpl = PATH_CORE . 'templates' . PATH_SEP . 'processes' .PATH_SEP . 'webentryPost.tpl';
       $template  = new TemplatePower( $pluginTpl );
       $template->prepare();
-      $template->assign ( 'wsdlUrl', $http . $_SERVER['HTTP_HOST']. '/sys' . SYS_SYS .'/en/green/services/wsdl');
+      $template->assign ( 'wsdlUrl', $http . $_SERVER['HTTP_HOST']. '/sys' . SYS_SYS .'/' . SYS_LANG . '/' . SYS_SKIN . '/services/wsdl');
       $template->assign ( 'processUid',   $sPRO_UID );
       $template->assign ( 'dynaformUid',  $sDYNAFORM );
       $template->assign ( 'taskUid',      $sTASKS );

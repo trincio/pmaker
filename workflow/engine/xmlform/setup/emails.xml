@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dynaForm name="processes_New" width="600px" labelWidth="40%">
-	
+
 <THETITLE type="title" group="1">
   <en>Configuration</en>
 <es><![CDATA[Configuración]]></es></THETITLE>
@@ -11,7 +11,7 @@
 
 <MESS_ENGINE type="dropdown" sqlconnection='dbarray'>
   select * from mails
-  <en>Email Engine    
+  <en>Email Engine
   </en>
 <es><![CDATA[Motor Correo Electrónico]]></es></MESS_ENGINE>
 
@@ -27,11 +27,11 @@
 	<en>Require authentification</en>
 <es><![CDATA[Autenticación Requerida]]></es></MESS_RAUTH>
 
-<MESS_ACCOUNT type="text" size="35" maxlength="25" validate="Email">
+<MESS_ACCOUNT type="text" size="35" maxlength="50" validate="Email">
   <en>Account From</en>
 <es>Cuenta</es></MESS_ACCOUNT>
 
-<MESS_PASSWORD type="password" size="35" maxlength="25">
+<MESS_PASSWORD type="password" size="35" maxlength="50">
   <en>Password</en>
 <es><![CDATA[Contraseña]]></es></MESS_PASSWORD>
 
@@ -86,7 +86,7 @@ var passwd;
 var auth_required;
 var send_test_mail;
 var mail_to;
-	
+
 function testConnection() {
 	/***get in the connection parameters***/
 	resultset = true;
@@ -102,7 +102,7 @@ function testConnection() {
 	} else {
 		auth_required = 'no';
   	}
-	
+
 	if ($('form[MESS_TEST_MAIL]').checked) {
 		send_test_mail = 'yes';
 	} else {
@@ -112,7 +112,7 @@ function testConnection() {
 	mail_to	 = $('form[MESS_TEST_MAIL_TO]').value;
 
 	var uri = 'srv='+srv+'&port='+port+'&account='+account+'&passwd='+passwd+'&auth_required='+auth_required+'&send_test_mail='+send_test_mail+'&mail_to='+mail_to;
-	
+
 	oPanel = new leimnud.module.panel();
 	oPanel.options = {
 		size	:{w:590,h:480},
@@ -146,14 +146,14 @@ var resultset = true;
 function testSMTPHost(step)
 {
 	$("test_"+step).style.display = "block";
-	
+
 	var requestfile = PROCESS_REQUEST_FILE;
 	var uri = 'request=testConnection&step='+step+'&srv='+srv+'&port='+port+'&account='+account+'&passwd='+passwd+'&auth_required='+auth_required+'&send_test_mail='+send_test_mail+'&mail_to='+mail_to;
-	
+
 	var ajax = AJAX();
 	ajax.open("POST", requestfile, true);
 	ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;");
-	ajax.onreadystatechange = function() { 
+	ajax.onreadystatechange = function() {
 		if(ajax.readyState == 4) {
 			try{
 				response = ajax.responseText.trim();
@@ -184,11 +184,11 @@ function testSMTPHost(step)
 				}
 				else {
 					$('form[SAVE_CHANGES]').disabled = true;
-				} 
+				}
 				$('bnt_ok').style.display = 'block';
 				return;
 			};
-		} else {	
+		} else {
 			var html = "<center><img src='/images/activityanimation.gif'><br/>"+G_STRINGS.DBCONNECTIONS_MSG3+"....</center>"; //
 		    $('status_'+step).innerHTML = html;
 		}
@@ -217,11 +217,11 @@ String.prototype.trim = function() {
 function $(id) {
 	return document.getElementById(id);
 }
-function AJAX() 
+function AJAX()
 {
 	try	{
 		xmlhttp = new XMLHttpRequest();
-	} 
+	}
 	catch(generic_error) {
 		try {
 			xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
@@ -241,7 +241,7 @@ function initSet(){
 	//$('form[MESS_RAUTH]').checked = true;
 	hideRowById('MESS_TEST_MAIL_TO');
 	if(!($('form[MESS_ENABLED]').checked)) {
-		
+
 		hideRowById('MESS_ENGINE');
 		hideRowById('MESS_SERVER');
 		hideRowById('MESS_PORT');
@@ -254,7 +254,7 @@ function initSet(){
 		hideRowById('MESS_RAUTH');
 		hideRowById('MESS_TEST_MAIL');
 		hideRowById('MESS_TEST_MAIL_TO');
-		
+
 		$('form[SAVE_CHANGES]').disabled = false;
 	} else {
 		if(getField('MESS_ENGINE').value == 'MAIL'){
@@ -263,7 +263,7 @@ function initSet(){
 			hideRowById('MESS_TEST_MAIL_TO');
 			hideRowById('TEST');
 		}
-			
+
 	}
 }
 

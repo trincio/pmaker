@@ -710,11 +710,11 @@ function PMFSendVariables($caseId, $variables)
 	}
 }
 
-function PMFDerivateCase($caseId, $delIndex)
+function PMFDerivateCase($caseId, $delIndex, $bExecuteTriggersBeforeAssignment = false)
 {
 	G::LoadClass('wsBase');
 	$ws = new wsBase ();
-	$result = $ws->derivateCase($_SESSION['USER_LOGGED'], $caseId, $delIndex);//var_dump($result);die;
+	$result = $ws->derivateCase($_SESSION['USER_LOGGED'], $caseId, $delIndex, $bExecuteTriggersBeforeAssignment);//var_dump($result);die;
 	return $result->status_code;
 	if($result->status_code == 0){
 		return 1;
