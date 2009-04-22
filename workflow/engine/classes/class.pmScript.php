@@ -192,9 +192,15 @@ class PMScript
 				$sAux = substr($this->sScript, $iAux, $aMatch[0][$i][1] - $iAux);
 				if (!$bEqual)
 				{
-					if (strpos($sAux, '=') !== false)
+					if (strpos($sAux, '==') !== false)
 					{
-						$bEqual = true;
+						$bEqual = false;
+					}
+					else {
+					  if (strpos($sAux, '=') !== false)
+					  {
+						  $bEqual = true;
+					  }
 					}
 				}
 				if ($bEqual)
