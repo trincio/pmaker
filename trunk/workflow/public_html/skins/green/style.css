@@ -982,7 +982,7 @@ div.treeBase table td.b
 /* TreeParent BEGIN */
 div.treeParent
 {
-	position:relative;
+
 }
 div.treeParent table
 {
@@ -1389,7 +1389,7 @@ div.calendar { position: relative; }
 /**************************** End -> JSCalendar Widget by Erik Amaru Ortiz <erik@colosa.com> *********************************/
 
 /**************************** Start -> Suggest Widget by Erik Amaru Ortiz <erik@colosa.com>  *********************************/
-/* 
+/*
 ================================================
 autosuggest, inquisitor style
 ================================================
@@ -1409,7 +1409,7 @@ div.autosuggest
 	background-repeat: no-repeat;
 	padding: 10px 0 0 0;
 	z-index:1000;
-	
+
 	border-bottom: 1px #708090 solid;
 	/*border-left	 : 1px #708090 solid;*/
 	border-right : 1px #708090 solid;
@@ -1480,11 +1480,11 @@ div.autosuggest ul li
 /*celda*/
 div.autosuggest ul li a
 {
-	
+
 	/*color: #ccc;*/
 	color: #000;
 
-	
+
 	display: block;
 	text-decoration: none;
 	background-color: transparent;
@@ -1501,7 +1501,7 @@ div.autosuggest ul li a:hover
 /*al pasar por encima*/
 div.autosuggest ul li.as_highlight a:hover
 {
-	
+
 	/*background-color: #1B5CCD;*/
 	background-color: #EFEFEF;
 }
