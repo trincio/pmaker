@@ -134,7 +134,7 @@ body
 	border-bottom:0px solid red;
 	overflow:hidden;
 }
-.app_menuRight_option___processmaker, .app_menuRight_option_over___processmaker, .app_menuRight_optionNull___processmaker 
+.app_menuRight_option___processmaker, .app_menuRight_option_over___processmaker, .app_menuRight_optionNull___processmaker
 
 {
 	padding:0;
@@ -1077,7 +1077,7 @@ div.grid .tableGrid .vFormTitle
 }
 div.treeParent
 {
-	position:relative;
+
 }
 
 div.treeParent .content
