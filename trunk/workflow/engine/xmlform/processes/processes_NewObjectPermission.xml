@@ -8,7 +8,8 @@
 
 <OP_CASE_STATUS type="dropdown" mode="edit">
   <en>Status Case  
-  <option name="DRAFT">DRAFT</option>
+  <option name="ALL">All</option>
+  <option name="DRAFT">DRAFT</option>  
   <option name="TO_DO">TO_DO</option>
   <option name="PAUSED">PAUSED</option>
   <option name="COMPLETED">COMPLETED</option>
