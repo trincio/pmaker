@@ -1,10 +1,10 @@
 <?php
 /**
  * dynaforms_Ajax.php
- *  
+ *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -14,20 +14,23 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
 /*
  * Created on 07/01/2008
  *
  * @author David Callizaya <davidsantos@colosa.com>
  */
- 
+global $_DBArray;
+if (!isset($_DBArray)) {
+  $_DBArray = array();
+}
 G::LoadClass('dynaformEditor');
 $oDynaformEditorAjax = new dynaformEditorAjax($_POST);
 
@@ -41,7 +44,7 @@ $oDynaformEditorAjax = new dynaformEditorAjax($_POST);
 //  G::LoadClass('dynaform');
 //
 //  if (!((isset($_POST['A']) && $_POST['A']!=='')||(isset($_GET['A']) && $_GET['A']!==''))) return;
-//  
+//
 //  $file = G::decrypt( get_ajax_value('A') , URL_KEY );
 //
 //	$function=get_ajax_value('function');
@@ -111,7 +114,6 @@ $oDynaformEditorAjax = new dynaformEditorAjax($_POST);
 //      $form = new Form( $file , PATH_DYNAFORM, SYS_LANG, true );
 //      $G_PUBLISH = new Publisher;
 //      $G_PUBLISH->publisherId='';
-//      $G_HEADER->clearScripts();
 //      /* Navigation Bar */
 //      	$form->fields=G::array_merges(
 //      		array('__DYNAFORM_OPTIONS' => new XmlForm_Field_XmlMenu(
@@ -121,8 +123,8 @@ $oDynaformEditorAjax = new dynaformEditorAjax($_POST);
 //      				'',
 //      				array('type'=>'xmlmenu','xmlfile'=>'gulliver/dynaforms_Options')
 //      				),SYS_LANG,PATH_XMLFORM,$form) ),
-//      		$form->fields); 
-//      		
+//      		$form->fields);
+//
 //      /**/
 //      $html=$form->printTemplate( $form->template , $script );
 //      $html=str_replace('{$form_className}','formDefault', $html );
@@ -145,7 +147,7 @@ $oDynaformEditorAjax = new dynaformEditorAjax($_POST);
 //    case 'htmlcodeSave':
 //  	  $htmlcode = stripslashes(urldecode(get_ajax_value('htmlcode')));
 //      $form = new Form( $file , PATH_DYNAFORM, SYS_LANG, true );
-//  	  $filename = substr($form->fileName , 0, -3) . 
+//  	  $filename = substr($form->fileName , 0, -3) .
 //  	    ( $form->type==='xmlform' ? '' : '.' . $form->type  ) . 'html';
 //      $fp=fopen($filename, 'w');
 //      fwrite($fp, $htmlcode );
@@ -153,7 +155,7 @@ $oDynaformEditorAjax = new dynaformEditorAjax($_POST);
 //      break;
 //    case 'resetTemplate':
 //      $form = new Form( $file , PATH_DYNAFORM, SYS_LANG, true );
-//  	  $filename = substr($form->fileName , 0, -3) . 
+//  	  $filename = substr($form->fileName , 0, -3) .
 //  	    ( $form->type==='xmlform' ? '' : '.' . $form->type  ) . 'html';
 //      $fp=fopen($filename, 'w');
 //      fwrite($fp, $htmlcode );
@@ -165,7 +167,7 @@ $oDynaformEditorAjax = new dynaformEditorAjax($_POST);
 //      $dynaform = new dynaform( $dbc );
 //      $dynaform->Fields['DYN_UID']=get_ajax_value('DYN_UID');
 //      $dynaform->Load( $dynaform->Fields['DYN_UID'] );
-//      
+//
 //      $form = new Form( $file , PATH_DYNAFORM, SYS_LANG, true );
 //      $Properties=array(
 //        'A'=>G::encrypt( $file , URL_KEY ),
@@ -187,7 +189,6 @@ $oDynaformEditorAjax = new dynaformEditorAjax($_POST);
 //
 //      $G_PUBLISH = new Publisher;
 //      $G_PUBLISH->publisherId='';
-//      $G_HEADER->clearScripts();
 //      $G_PUBLISH->AddContent('xmlform', 'xmlform', 'dynaforms/dynaforms_JSEditor', '', $Properties , '', '');
 //      G::RenderPage( "publish" , "raw" );
 //      break;
@@ -205,7 +206,7 @@ $oDynaformEditorAjax = new dynaformEditorAjax($_POST);
 //        $dynaform->Load( $dynaform->Fields['DYN_UID'] );
 //        $_SESSION['CURRENT_DYNAFORM']=$dynaform->Fields;
 //      }
-//      
+//
 //      $form = new Form( $file , PATH_DYNAFORM, SYS_LANG, true );
 //      $Properties=array(
 //        'A'=>G::encrypt( $file , URL_KEY ),
@@ -220,10 +221,9 @@ $oDynaformEditorAjax = new dynaformEditorAjax($_POST);
 //        );
 //      $G_PUBLISH = new Publisher;
 //      $G_PUBLISH->publisherId='';
-//      $G_HEADER->clearScripts();
 //      $G_PUBLISH->AddContent('xmlform', 'xmlform', 'dynaforms/dynaforms_Properties', 'visivility:hidden', $Properties , SYS_URI.'dynaforms/dynaforms_SaveProperties');
 //      G::RenderPage( "publish" , "raw" );
 //      break;
 //	}
-//  
+//
 ?>
