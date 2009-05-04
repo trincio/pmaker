@@ -17,7 +17,7 @@
 SELECT XMLNODE_NAME, TYPE FROM dynaForm WHERE XMLNODE_NAME = @@PME_XMLNODE_NAME
 </PME_VALIDATE_NAME>
 
-<PME_LABEL type="text" maxlength="50" size="50">
+<PME_LABEL type="text" maxlength="50" size="32">
   <en>Label</en>
 </PME_LABEL>
 
@@ -25,31 +25,30 @@ SELECT XMLNODE_NAME, TYPE FROM dynaForm WHERE XMLNODE_NAME = @@PME_XMLNODE_NAME
   <en>Start and End Dates</en>
 </PME_SUBTITLE3>
 
-<PME_STARTDATE type="date" mask="yyyy-mm-dd" defaultvalue="" beforedate="10y">
+<PME_STARTDATE type="date"  defaultvalue="" beforedate="-10y">
   <en>Start Date</en>
 </PME_STARTDATE>
-<PME_ENDDATE type="date" mask="yyyy-mm-dd" defaultvalue="" afterdate="10y">
+<PME_ENDDATE type="date" defaultvalue="" afterdate="10y">
   <en>End Date</en>
 </PME_ENDDATE>
 
 
-<!--
 <PME_SUBTITLE3a type="title" enableHTML="1">
   <en>Relative Start and End Dates</en>
 </PME_SUBTITLE3a>
 <PMED_AFTERBEFORE_DESC type="subtitle" defaultvalue="1m" enableHtml="1">
-
-  <en><![CDATA[Sufixes: d=day m=month y=year; <br />Or leave empty to use <b>Start and End dates</b>.]]></en>
+  <en><![CDATA[Sufixes: d=day m=month y=year; <br />Or leave empty to use <b>Start and End dates</b>.<br/>Use negative numbers for past dates and positive numbers for future dates ]]>
+  </en>
 </PMED_AFTERBEFORE_DESC>
 
+<PME_BEFOREDATE type="text" defaultvalue="1m">
+  <en>Start Relative Date</en>
+</PME_BEFOREDATE>
 
 <PME_AFTERDATE type="text" defaultvalue="1m">
-  <en>After Date</en>
+  <en>End Relative Date</en>
 </PME_AFTERDATE>
-<PME_BEFOREDATE type="text" defaultvalue="1m">
-  <en>Before Date</en>
-</PME_BEFOREDATE>
--->
+
 
 <PME_SUBTITLE3b type="title" enableHTML="1">
   <en>Behaviour</en>
@@ -57,11 +56,13 @@ SELECT XMLNODE_NAME, TYPE FROM dynaForm WHERE XMLNODE_NAME = @@PME_XMLNODE_NAME
 <!-- <PME_FORMAT type="text" maxlength="50" size="30" defaultvalue="Y-m-d" >
 
   <en>Format</en>
-</PME_FORMAT>
-<PME_MASK type="text" maxlength="50" size="30" defaultvalue="yyyy-mm-dd" >
-
+</PME_FORMAT>-->
+<PME_SUBTITLE3x type="subtitle" enableHTML="1">
+  <en><![CDATA[<b>Mask Sufixes: </b>%Y=Year, %m=Month, %d=Day]]></en>
+</PME_SUBTITLE3x>
+<PME_MASK type="text" maxlength="50" size="30" defaultvalue="%Y-%M-%D" >
   <en>Mask</en>
-</PME_MASK> -->
+</PME_MASK>
 <PME_REQUIRED type="checkbox" falseValue="0" value="1" defaultvalue="0" labelOnRight="0">
   <en>Required</en>
 </PME_REQUIRED>
