@@ -44,6 +44,8 @@ try {
   	case 'saveTaskData':
   	  require_once 'classes/model/Task.php';
   	  $oTask = new Task();
+  	  $aData['TAS_DEF_TITLE'] = strip_tags($aData['TAS_DEF_TITLE'],'<p><b><font><strong><u><i>');
+  	       	    	  	  
   	  if (isset($aData['SEND_EMAIL'])) {
 	      if( $aData['SEND_EMAIL'] == 'TRUE' ) {
 		      $aData['TAS_SEND_LAST_EMAIL'] = 'TRUE';
