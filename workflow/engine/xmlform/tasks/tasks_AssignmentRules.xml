@@ -20,7 +20,7 @@
   </en>
 </TAS_ASSIGN_TYPE>
 
-<TAS_ASSIGN_VARIABLE type="textpm" size="40" maxlength="155" defaultvalue="@@SYS_NEXT_USER_TO_BE_ASSIGNED" showVars="1" process="@#PRO_UID" readOnly="readOnly">
+<TAS_ASSIGN_VARIABLE type="textpm" size="40" maxlength="155" defaultvalue="@@SYS_NEXT_USER_TO_BE_ASSIGNED" showVars="1" process="@#PRO_UID">
   <en>Variable for Value Based Assignment</en>
 </TAS_ASSIGN_VARIABLE>
 
@@ -130,7 +130,7 @@ var showDynaformsFormVars = function(sFieldName, sAjaxServer, sProcess, sSymbol)
 var insertFormVar = function(sFieldName, sValue) {
 	oAux = document.getElementById(sFieldName);
 	if (oAux.setSelectionRange) {
-	  oAux.value     = '';
+	  //oAux.value     = '';
 		var rangeStart = oAux.selectionStart;
     var rangeEnd   = oAux.selectionEnd;
     var tempStr1   = oAux.value.substring(0,rangeStart);

@@ -2,7 +2,7 @@ msgid ""
 msgstr "" 
 "Project-Id-Version: PM 4.0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-03-27 16:33+0100 \n"
+"PO-Revision-Date: 2009-05-04 18:57+0100 \n"
 "Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
 "Language-Team: Colosa Developers Team <developers@colosa.com>\n"
 "MIME-Version: 1.0\n"
@@ -2844,6 +2844,12 @@ msgstr "Reassign Cases"
 #: LABEL/ID_ALERT_MESSAGE
 msgid "Alert Message"
 msgstr "Alert Message"
+
+# TRANSLATION
+# LABEL/ID_REQUEST_SENT
+#: LABEL/ID_REQUEST_SENT
+msgid "Request sent."
+msgstr "Request sent."
 
 # TRANSLATION
 # LABEL/ID_IMPORT_USERS
@@ -7279,6 +7285,12 @@ msgstr "Edit Specific Permission"
 msgid "Status Case    "
 msgstr "Status Case    "
 
+# processes/processes_EditObjectPermission.xml?OP_CASE_STATUS-ALL
+# processes/processes_EditObjectPermission.xml
+#: dropdown - OP_CASE_STATUS - ALL
+msgid "[processes/processes_EditObjectPermission.xml?OP_CASE_STATUS-ALL]"
+msgstr "ALL"
+
 # processes/processes_EditObjectPermission.xml?OP_CASE_STATUS-DRAFT
 # processes/processes_EditObjectPermission.xml
 #: dropdown - OP_CASE_STATUS - DRAFT
@@ -7843,6 +7855,12 @@ msgstr "New Specific Permission"
 msgid "[processes/processes_NewObjectPermission.xml?OP_CASE_STATUS] Status Case    "
 msgstr "Status Case    "
 
+# processes/processes_NewObjectPermission.xml?OP_CASE_STATUS-ALL
+# processes/processes_NewObjectPermission.xml
+#: dropdown - OP_CASE_STATUS - ALL
+msgid "[processes/processes_NewObjectPermission.xml?OP_CASE_STATUS-ALL]"
+msgstr "All"
+
 # processes/processes_NewObjectPermission.xml?OP_CASE_STATUS-DRAFT
 # processes/processes_NewObjectPermission.xml
 #: dropdown - OP_CASE_STATUS - DRAFT
@@ -8226,12 +8244,6 @@ msgstr "Description"
 #: subtitle - subinstallSteps
 msgid "Install Steps"
 msgstr "Install Steps"
-
-# processes/objectpmView.xml?link
-# processes/objectpmView.xml
-#: link - link
-msgid "link"
-msgstr "link"
 
 # processes/processes_Import.xml?TITLE1
 # processes/processes_Import.xml
@@ -10186,8 +10198,8 @@ msgstr "Enable Email Notifications"
 # setup/emails.xml?MESS_ENGINE
 # setup/emails.xml
 #: dropdown - MESS_ENGINE
-msgid "Email Engine      "
-msgstr "Email Engine      "
+msgid "Email Engine  "
+msgstr "Email Engine  "
 
 # setup/emails.xml?MESS_SERVER
 # setup/emails.xml
@@ -15444,12 +15456,6 @@ msgstr "Re-type Password:"
 #: submit - NW_SUB
 msgid "[login/newSite.xml?NW_SUB] Test"
 msgstr "Test"
-
-# login/nologin.xml?subtitle
-# login/nologin.xml
-#: subtitle - subtitle
-msgid "subtitle"
-msgstr "subtitle"
 
 # login/nologin.xml?BSUBMIT
 # login/nologin.xml
