@@ -45,6 +45,7 @@ class Form extends XmlForm
   var $template;
   var $className="formDefault";
   var $objectRequiredFields = null;
+  var $nextstepsave = '';
   /**
    * Function setDefaultValues
    * @author David S. Callizaya S. <davidsantos@colosa.com>
