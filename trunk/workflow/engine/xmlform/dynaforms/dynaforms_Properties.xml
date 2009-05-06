@@ -43,6 +43,14 @@
   </en>
 </MODE>
 
+<NEXTSTEPSAVE type="dropdown" colWidth="80" align="center">
+  <en>Next Step Link
+  <option name=""><![CDATA[No save & Continue]]></option>
+  <option name="save"><![CDATA[Save & Continue]]></option>
+  <option name="prompt">Show prompt</option>
+  </en>
+</NEXTSTEPSAVE>
+
 <!--<ENABLETEMPLATE type="checkbox" value="1" defaultvalue="0" labelOnRight="0">
   <en>Enable Template</en>
 </ENABLETEMPLATE>-->

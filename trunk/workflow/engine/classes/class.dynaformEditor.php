@@ -566,7 +566,8 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 				'DYN_DESCRIPTION'=> $dynaform->getDynDescription(),
 				'WIDTH'=> $form->width,
 				//'ENABLETEMPLATE'=> $form->enableTemplate,
-				'MODE'=> $form->mode
+				'MODE'=> $form->mode,
+				'NEXTSTEPSAVE'=> $form->nextstepsave
 			);
 			$tmp['Properties']=$Properties;
 			self::_setTmpData($tmp);
@@ -616,6 +617,9 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 			}
 			if (isset($Fields['MODE'])) {
 			  $ses2->execute(G::replaceDataField("UPDATE . SET MODE = @@MODE WHERE XMLNODE_NAME = 'dynaForm' ", $Fields));
+			}
+			if (isset($Fields['NEXTSTEPSAVE'])) {
+			  $ses2->execute(G::replaceDataField("UPDATE . SET NEXTSTEPSAVE = @@NEXTSTEPSAVE WHERE XMLNODE_NAME = 'dynaForm' ", $Fields));
 			}
 			return 0;
   		}
