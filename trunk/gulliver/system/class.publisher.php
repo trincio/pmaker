@@ -213,10 +213,20 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
       //Asegurese de que no entre cuando $Part['Template']=="grid"
       //de hecho soo deberia usarse cuando $Part['Template']=="xmlform"
       if ((($Part['Type'] == 'dynaform') && $Part['Template']=="xmlform") || ($Part['Template']=="xmlform"))
-      {//var_dump($G_FORM->values, $Part['Data']);
+      {
       	$G_FORM->values=G::array_merges(
       	array('__DYNAFORM_OPTIONS' => isset($Part['Data']['__DYNAFORM_OPTIONS'])? $Part['Data']['__DYNAFORM_OPTIONS']:''),
       	$G_FORM->values);
+      	if (isset($G_FORM->nextstepsave)) {
+          switch ($G_FORM->nextstepsave) {
+            case 'save':
+              $G_FORM->values['__DYNAFORM_OPTIONS']['NEXT_ACTION'] = 'if (document.getElementById("' . $G_FORM->id . '")) {document.getElementById("' . $G_FORM->id . '").submit();}return false;';
+            break;
+            case 'prompt':
+              $G_FORM->values['__DYNAFORM_OPTIONS']['NEXT_ACTION'] = 'if (document.getElementById("' . $G_FORM->id . '")) {new leimnud.module.app.confirm().make({label:"@G::LoadTranslation(ID_DYNAFORM_SAVE_CHANGES)",action:function(){document.getElementById("' . $G_FORM->id . '").submit();}.extend(this),cancel:function(){window.location = getField("DYN_FORWARD").href;}.extend(this)});};return false;}';
+            break;
+          }
+        }
       }
       if (isset($_SESSION)) $_SESSION[$G_FORM->id]=$G_FORM->values;
 

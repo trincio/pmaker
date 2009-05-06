@@ -2,7 +2,7 @@ msgid ""
 msgstr "" 
 "Project-Id-Version: PM 4.0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-05-04 18:57+0100 \n"
+"PO-Revision-Date: 2009-05-05 20:02+0100 \n"
 "Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
 "Language-Team: Colosa Developers Team <developers@colosa.com>\n"
 "MIME-Version: 1.0\n"
@@ -2850,6 +2850,12 @@ msgstr "Alert Message"
 #: LABEL/ID_REQUEST_SENT
 msgid "Request sent."
 msgstr "Request sent."
+
+# TRANSLATION
+# LABEL/ID_DYNAFORM_SAVE_CHANGES
+#: LABEL/ID_DYNAFORM_SAVE_CHANGES
+msgid "[LABEL/ID_DYNAFORM_SAVE_CHANGES] Do you want to save changes?"
+msgstr "Do you want to save changes?"
 
 # TRANSLATION
 # LABEL/ID_IMPORT_USERS
@@ -6241,6 +6247,18 @@ msgstr "End Relative Date"
 msgid "[dynaforms/fields/date.xml?PME_SUBTITLE3b] Behaviour"
 msgstr "Behaviour"
 
+# dynaforms/fields/date.xml?PME_SUBTITLE3x
+# dynaforms/fields/date.xml
+#: subtitle - PME_SUBTITLE3x
+msgid "<b>Mask Sufixes: </b>%Y=Year, %m=Month, %d=Day"
+msgstr "<b>Mask Sufixes: </b>%Y=Year, %m=Month, %d=Day"
+
+# dynaforms/fields/date.xml?PME_MASK
+# dynaforms/fields/date.xml
+#: text - PME_MASK
+msgid "[dynaforms/fields/date.xml?PME_MASK] Mask"
+msgstr "Mask"
+
 # dynaforms/fields/date.xml?PME_REQUIRED
 # dynaforms/fields/date.xml
 #: checkbox - PME_REQUIRED
@@ -8244,6 +8262,12 @@ msgstr "Description"
 #: subtitle - subinstallSteps
 msgid "Install Steps"
 msgstr "Install Steps"
+
+# processes/objectpmView.xml?link
+# processes/objectpmView.xml
+#: link - link
+msgid "link"
+msgstr "link"
 
 # processes/processes_Import.xml?TITLE1
 # processes/processes_Import.xml
@@ -12715,12 +12739,6 @@ msgstr "Manual Assignment"
 msgid "[tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_TYPE-EVALUATE]"
 msgstr "Value Based Assignment"
 
-# tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_VARIABLE
-# tasks/tasks_AssignmentRules.xml
-#: textpm - TAS_ASSIGN_VARIABLE
-msgid "Variable for Value Based Assignment"
-msgstr "Variable for Value Based Assignment"
-
 # tasks/tasks_Labels.xml?TAS_DEF_TITLE
 # tasks/tasks_Labels.xml
 #: textareapm - TAS_DEF_TITLE
@@ -12864,12 +12882,6 @@ msgstr "Title"
 #: textarea - TAS_DESCRIPTION
 msgid "[tasks/tasks_Definition.xml?TAS_DESCRIPTION] Description"
 msgstr "Description"
-
-# tasks/tasks_Definition.xml?TAS_PRIORITY_VARIABLE
-# tasks/tasks_Definition.xml
-#: textpm - TAS_PRIORITY_VARIABLE
-msgid "Variable for Case priority"
-msgstr "Variable for Case priority"
 
 # tasks/tasks_Definition.xml?TAS_START
 # tasks/tasks_Definition.xml
