@@ -127,7 +127,7 @@ try {
 		    require_once 'classes/model/UsersProperties.php';
         $oUserProperty = new UsersProperties();
         $aUserProperty = $oUserProperty->loadOrCreateIfNotExists($_POST['form']['USR_UID'], array('USR_PASSWORD_HISTORY' => serialize(array($_POST['form']['USR_NEW_PASS']))));
-        $aErrors       = $oUserProperty->validatePassword($_POST['form']['USR_NEW_PASS'], $aUserProperty['USR_LAST_UPDATE_DATE'], $aUserProperty['USR_LOGGED_NEXT_TIME']);
+        $aErrors       = $oUserProperty->validatePassword($_POST['form']['USR_NEW_PASS'], $aUserProperty['USR_LAST_UPDATE_DATE'], 0);
         if (count($aErrors) > 0) {
           $sDescription = G::LoadTranslation('ID_POLICY_ALERT').':<br /><br />';
           foreach ($aErrors as $sError)  {
@@ -175,8 +175,15 @@ try {
 		$aData['USR_EMAIL']       = $_POST['form']['USR_EMAIL'];
 		$aData['USR_DUE_DATE']    = $_POST['form']['USR_DUE_DATE'];
 		$aData['USR_UPDATE_DATE'] = date('Y-m-d H:i:s');
-		$aData['USR_STATUS']      = $_POST['form']['USR_STATUS'];
-		$RBAC->updateUser($aData, $_POST['form']['USR_ROLE']);
+		if (isset($_POST['form']['USR_STATUS'])) {
+		  $aData['USR_STATUS']      = $_POST['form']['USR_STATUS'];
+	  }
+	  if (isset($_POST['form']['USR_ROLE'])) {
+		  $RBAC->updateUser($aData, $_POST['form']['USR_ROLE']);
+		}
+		else {
+		  $RBAC->updateUser($aData);
+		}
 		$aData['USR_COUNTRY']     = $_POST['form']['USR_COUNTRY'];
 		$aData['USR_CITY']        = $_POST['form']['USR_CITY'];
 		$aData['USR_LOCATION']    = $_POST['form']['USR_LOCATION'];
@@ -187,7 +194,9 @@ try {
 		if ($_POST['form']['USR_RESUME'] != '') {
 		  $aData['USR_RESUME'] = $_POST['form']['USR_RESUME'];
 	  }
-		$aData['USR_ROLE'] = $_POST['form']['USR_ROLE'];
+	  if (isset($_POST['form']['USR_ROLE'])) {
+		  $aData['USR_ROLE'] = $_POST['form']['USR_ROLE'];
+		}
 		require_once 'classes/model/Users.php';
 		$oUser = new Users();
 		$oUser->update($aData);
