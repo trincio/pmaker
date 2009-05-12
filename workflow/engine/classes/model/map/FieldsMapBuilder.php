@@ -5,7 +5,7 @@ include_once 'creole/CreoleTypes.php';
 
 
 /**
- * This class adds structure of 'FIELDS' table to 'propel' DatabaseMap object.
+ * This class adds structure of 'FIELDS' table to 'workflow' DatabaseMap object.
  *
  *
  *
@@ -57,7 +57,7 @@ class FieldsMapBuilder {
 	 */
 	public function doBuild()
 	{
-		$this->dbMap = Propel::getDatabaseMap('propel');
+		$this->dbMap = Propel::getDatabaseMap('workflow');
 
 		$tMap = $this->dbMap->addTable('FIELDS');
 		$tMap->setPhpName('Fields');
@@ -66,7 +66,7 @@ class FieldsMapBuilder {
 
 		$tMap->addPrimaryKey('FLD_UID', 'FldUid', 'string', CreoleTypes::VARCHAR, true, 32);
 
-		$tMap->addColumn('TAB_UID', 'TabUid', 'string', CreoleTypes::VARCHAR, true, 32);
+		$tMap->addColumn('ADD_TAB_UID', 'AddTabUid', 'string', CreoleTypes::VARCHAR, true, 32);
 
 		$tMap->addColumn('FLD_NAME', 'FldName', 'string', CreoleTypes::VARCHAR, true, 60);
 

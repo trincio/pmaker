@@ -60,7 +60,7 @@ class XmlForm_Field {
 	var $dataCompareType = '=';
 	var $sql = '';
 	var $sqlConnection = '';
-	
+
 	/**
 	 * Function XmlForm_Field
 	 * @author David S. Callizaya S. <davidsantos@colosa.com>
@@ -111,7 +111,7 @@ class XmlForm_Field {
 		if (! $this->sqlConnection)
 			$dbc = new DBConnection ( );
 		else {
-			
+
 			if (defined ( 'DB_' . $this->sqlConnection . '_USER' )) {
 				if (defined ( 'DB_' . $this->sqlConnection . '_HOST' ))
 					eval ( '$res[\'DBC_SERVER\'] = DB_' . $this->sqlConnection . '_HOST;' );
@@ -199,10 +199,10 @@ class XmlForm_Field {
 			return 1;
 		if ($this->sql === '')
 			return 1;
-		
+
 		if (! $this->sqlConnection)
 			$this->sqlConnection = 'workflow';
-			
+
 		//Read the result of the query
 		if ($this->sqlConnection === "XMLDB") {
 			$result = $this->executeXmlDB ( $owner, $row );
@@ -220,7 +220,7 @@ class XmlForm_Field {
 			$this->sqlOption [$key] = next ( $result [$r] );
 			$this->options [$key] = $this->sqlOption [$key];
 		}
-		
+
 		if ($this->type != 'listbox') {
 			if (isset ( $this->options ) && isset ( $this->owner ) && isset ( $this->owner->values [$this->name] )) {
 				if ((! is_array ( $this->owner->values [$this->name] )) && ! ((is_string ( $this->owner->values [$this->name] ) || is_int ( $this->owner->values [$this->name] )) && array_key_exists ( $this->owner->values [$this->name], $this->options ))) {
@@ -235,7 +235,7 @@ class XmlForm_Field {
 		}
 		return 0;
 	}
-	
+
 	function htmlentities($value, $flags = ENT_QUOTES, $encoding = 'utf-8') {
 		if ($this->enableHtml)
 			return $value;
@@ -274,7 +274,7 @@ class XmlForm_Field {
 		$result = $this->render ( $values, $owner, '[' . $owner->name . '][' . $r . ']', $onlyValue );
 		return $result;
 	}
-	
+
 	/**
 	 * Function dependentOf
 	 * @author David S. Callizaya S. <davidsantos@colosa.com>
@@ -345,7 +345,7 @@ class XmlForm_Field {
 		}
 		if ($e !== '')
 			$correct = FALSE;
-			
+
 		//##,###.##   --> ^...$ no parece pero no, o mejor si, donde # es \d?, en general todos
 		// es valida cuando no encuentra un caracter que no deberia estar, puede no terminar la mascara
 		// pero si sobran caracteres en el value entonces no se cumple la mascara.
@@ -637,7 +637,7 @@ class XmlForm_Field_Text extends XmlForm_Field_SimpleText {
 	var $formula = '';
 	var $function = '';
 	var $replaceTags = 0;
-	
+
 	/**
 	 * Function render
 	 * @author David S. Callizaya S. <davidsantos@colosa.com>
@@ -707,7 +707,7 @@ class XmlForm_Field_Text extends XmlForm_Field_SimpleText {
 		$this->options = $aux;
 		return $result;
 	}
-	
+
 	function renderTable($values = '', $owner) {
 		$result = $this->htmlentities ( $values, ENT_COMPAT, 'utf-8' );
 		return $result;
@@ -742,7 +742,7 @@ class XmlForm_Field_Suggest extends XmlForm_Field_SimpleText //by neyek
 	var $formula = '';
 	var $function = '';
 	var $replaceTags = 0;
-	
+
 	/**
 	 * Function render
 	 * @author David S. Callizaya S. <davidsantos@colosa.com>
@@ -752,7 +752,7 @@ class XmlForm_Field_Suggest extends XmlForm_Field_SimpleText //by neyek
 	 * @return string
 	 */
 	function render($value = NULL, $owner = NULL) {
-		
+
 		//NOTE: string functions must be in G class
 		if ($this->strTo === 'UPPER')
 			$value = strtoupper ( $value );
@@ -783,7 +783,7 @@ class XmlForm_Field_Suggest extends XmlForm_Field_SimpleText //by neyek
                             };
                             var as_json = new bsn.AutoSuggest(\'form[' . $this->name . '_suggest]\', options);
                         </script>';
-				
+
 				return $str;
 				//return '<input class="module_app_input___gray" id="form['.$this->name.']" name="form['.$this->name.']" type ="text" size="'.$this->size.'" maxlength="'.$this->maxLength.'" value=\''.$this->htmlentities( $value , ENT_COMPAT, 'utf-8').'\' style="'.htmlentities( $this->style , ENT_COMPAT, 'utf-8').'" onkeypress="'.htmlentities( $onkeypress , ENT_COMPAT, 'utf-8').'"/>';
 			}
@@ -821,9 +821,9 @@ class XmlForm_Field_Suggest extends XmlForm_Field_SimpleText //by neyek
 			$r ++;
 		}
 		return $result;
-	
+
 	}
-	
+
 	function renderTable($values = '', $owner) {
 		$result = $this->htmlentities ( $values, ENT_COMPAT, 'utf-8' );
 		return $result;
@@ -892,7 +892,7 @@ class XmlForm_Field_Textarea extends XmlForm_Field {
 	var $required = false;
 	var $readOnly = false;
 	var $wrap = 'OFF';
-	
+
 	/**
 	 * Function render
 	 * @author David S. Callizaya S. <davidsantos@colosa.com>
@@ -902,7 +902,7 @@ class XmlForm_Field_Textarea extends XmlForm_Field {
 	 */
 	function render($value = NULL, $owner) {
 		$this->executeSQL ( $owner );
-		
+
 		if (isset ( $this->sqlOption ))
 			$firstElement = key ( $this->sqlOption );
 		if (isset ( $firstElement ))
@@ -944,7 +944,7 @@ class XmlForm_Field_Textarea extends XmlForm_Field {
 					//$result[] = '<div style="overflow:hidden;width:inherit;height:2em;padding:0px;margin:0px;">'.$this->htmlentities( $v , ENT_COMPAT, 'utf-8').'</div>';
 					$result [] = $this->htmlentities ( $v, ENT_COMPAT, 'utf-8' );
 				}
-			
+
 			} else {
 				$result [] = $this->htmlentities ( $v, ENT_COMPAT, 'utf-8' );
 			}
@@ -967,7 +967,7 @@ class XmlForm_Field_Currency extends XmlForm_Field_SimpleText {
 	var $linkField = '';
 	var $readOnly = false;
 	var $maxLength = 15;
-	
+
 	var $mask = '_###,###,###,###;###,###,###,###.##';
 	var $currency = '$';
 	//Atributes only for grids
@@ -1088,7 +1088,7 @@ class XmlForm_Field_Date2 extends XmlForm_Field_SimpleText {
 	var $readOnly = false;
 	var $mask = 'yyyy-mm-dd';
 	var $dependentFields = '';
-	
+
 	function verifyDateFormat($date) {
 		$aux = explode ( '-', $date );
 		if (count ( $aux ) != 3)
@@ -1099,7 +1099,7 @@ class XmlForm_Field_Date2 extends XmlForm_Field_SimpleText {
 			return false;
 		return true;
 	}
-	
+
 	function isvalidBeforeFormat($date) {
 		$part1 = substr ( $date, 0, strlen ( $date ) - 1 );
 		$part2 = substr ( $date, strlen ( $date ) - 1 );
@@ -1109,7 +1109,7 @@ class XmlForm_Field_Date2 extends XmlForm_Field_SimpleText {
 			return false;
 		return true;
 	}
-	
+
 	function calculateBeforeFormat($date, $sign) {
 		$part1 = $sign * substr ( $date, 0, strlen ( $date ) - 1 );
 		$part2 = substr ( $date, strlen ( $date ) - 1 );
@@ -1123,13 +1123,13 @@ class XmlForm_Field_Date2 extends XmlForm_Field_SimpleText {
 			case 'y' :
 				$res = date ( 'Y-m-d', mktime ( 0, 0, 0, date ( 'm' ), date ( 'd' ), date ( 'Y' ) + $part1 ) );
 				break;
-		
+
 		}
 		return $res;
 	}
-	
+
 	function render($value = NULL, $owner = NULL) {
-		
+
 		$value = G::replaceDataField ( $value, $owner->values );
 		$startDate = G::replaceDataField ( $this->startDate, $owner->values );
 		$endDate = G::replaceDataField ( $this->endDate, $owner->values );
@@ -1144,15 +1144,15 @@ class XmlForm_Field_Date2 extends XmlForm_Field_SimpleText {
 			if ($this->isvalidBeforeFormat ( $beforeDate ))
 				$startDate = $this->calculateBeforeFormat ( $beforeDate, - 1 );
 		}
-		
+
 		if ($startDate == '' && isset ( $this->size ) && is_numeric ( $this->size ) && $this->size >= 1900 && $this->size <= 2100) {
 			$startDate = $this->size . '-01-01';
 		}
-		
+
 		if ($startDate == '') {
 			$startDate = date ( 'Y-m-d' ); // the default is the current date
 		}
-		
+
 		//for backward compatibility maxlength
 		//if ( $this->endDate == '')   $this->finalYear = date('Y') + 8;
 		//for backward compatibility size and maxlength
@@ -1160,12 +1160,12 @@ class XmlForm_Field_Date2 extends XmlForm_Field_SimpleText {
 			if (! $this->verifyDateFormat ( $endDate ))
 				$endDate = '';
 		}
-		
+
 		if (isset ( $afterDate ) && $afterDate != '') {
 			if ($this->isvalidBeforeFormat ( $afterDate ))
 				$endDate = $this->calculateBeforeFormat ( $afterDate, + 1 );
 		}
-		
+
 		if (isset ( $this->maxlength ) && is_numeric ( $this->maxlength ) && $this->maxlength >= 1900 && $this->maxlength <= 2100) {
 			$endDate = $this->maxlength . '-01-01';
 		}
@@ -1182,7 +1182,7 @@ class XmlForm_Field_Date2 extends XmlForm_Field_SimpleText {
 			$html .= "<a href='#' onclick=\"showDatePicker(event,'" . $owner->id . "', '" . $this->name . "', '" . $value . "', '" . $startDate . "', '" . $endDate . "'); return false;\" ><img src='/controls/cal.gif' border='0'></a>";
 		return $html;
 	}
-	
+
 	function renderGrid($values = NULL, $owner = NULL, $onlyValue = false) {
 		$result = array ();
 		$r = 1;
@@ -1201,15 +1201,15 @@ class XmlForm_Field_Date2 extends XmlForm_Field_SimpleText {
 				if ($this->isvalidBeforeFormat ( $beforeDate ))
 					$startDate = $this->calculateBeforeFormat ( $beforeDate, - 1 );
 			}
-			
+
 			if ($startDate == '' && isset ( $this->size ) && is_numeric ( $this->size ) && $this->size >= 1900 && $this->size <= 2100) {
 				$startDate = $this->size . '-01-01';
 			}
-			
+
 			if ($startDate == '') {
 				$startDate = date ( 'Y-m-d' ); // the default is the current date
 			}
-			
+
 			//for backward compatibility maxlength
 			//if ( $this->endDate == '')   $this->finalYear = date('Y') + 8;
 			//for backward compatibility size and maxlength
@@ -1217,12 +1217,12 @@ class XmlForm_Field_Date2 extends XmlForm_Field_SimpleText {
 				if (! $this->verifyDateFormat ( $endDate ))
 					$endDate = '';
 			}
-			
+
 			if ($endDate == '' && isset ( $afterDate ) && $afterDate != '') {
 				if ($this->isvalidBeforeFormat ( $afterDate ))
 					$endDate = $this->calculateBeforeFormat ( $afterDate, + 1 );
 			}
-			
+
 			if ($endDate == '' && isset ( $this->maxlength ) && is_numeric ( $this->maxlength ) && $this->maxlength >= 1900 && $this->maxlength <= 2100) {
 				$endDate = $this->maxlength . '-01-01';
 			}
@@ -1290,7 +1290,7 @@ class XmlForm_Field_YesNo extends XmlForm_Field {
 		$html .= '</select>';
 		return $html;
 	}
-	
+
 	function renderGrid($values = array(), $owner) {
 		$result = array ();
 		$r = 1;
@@ -1333,7 +1333,7 @@ class XmlForm_Field_Link extends XmlForm_Field {
 		$label = G::replaceDataField ( $this->label, $owner->values );
 		return '<a class="tableOption" href=\'' . $this->htmlentities ( $link, ENT_QUOTES, 'utf-8' ) . '\'' . 'id="form[' . $this->name . ']" name="form[' . $this->name . ']"' . (($this->onclick) ? ' onclick="' . htmlentities ( $onclick, ENT_QUOTES, 'utf-8' ) . '"' : '') . (($this->target) ? ' target="' . htmlentities ( $target, ENT_QUOTES, 'utf-8' ) . '"' : '') . '>' . $this->htmlentities ( $this->value === '' ? $label : $value, ENT_QUOTES, 'utf-8' ) . '</a>';
 	}
-	
+
 	function renderTable($value = NULL, $owner = NULL) {
 		$onclick = $this->htmlentities ( G::replaceDataField ( $this->onclick, $owner->values ), ENT_QUOTES, 'utf-8' );
 		$link = $this->htmlentities ( G::replaceDataField ( $this->link, $owner->values ), ENT_QUOTES, 'utf-8' );
@@ -1353,7 +1353,7 @@ class XmlForm_Field_Link extends XmlForm_Field {
  */
 class XmlForm_Field_File extends XmlForm_Field {
 	var $required = false;
-	
+
 	/**
 	 * Function render
 	 * @author David S. Callizaya S. <davidsantos@colosa.com>
@@ -1425,6 +1425,19 @@ class XmlForm_Field_Checkbox extends XmlForm_Field {
 		} else {
 			return $this->htmlentities ( $value, ENT_COMPAT, 'utf-8' );
 		}
+	}
+
+	function renderGrid($values = array(), $owner) {
+	  $result = array ();
+		$r = 1;
+		foreach ( $values as $v ) {
+		  $checked = (($v == $this->value) ? 'checked="checked"' : '');
+		  $disabled = (($this->value == 'view') ? 'disabled="disabled"' : '');
+			$html = $res = "<input id='form[" . $owner->name . "][" . $r . "][" . $this->name . "]' value='{$this->value}' name='form[" . $owner->name . "][" . $r . "][" . $this->name . "]' type='checkbox' $checked $disabled />";
+			$result [] = $html;
+			$r ++;
+		}
+		return $result;
 	}
 	/* Used in Form::validatePost
 	 */
@@ -1801,7 +1814,7 @@ class XmlForm_Field_CheckGroup extends XmlForm_Field {
 		} else {
 			return $this->htmlentities ( $value, ENT_COMPAT, 'utf-8' );
 		}
-	
+
 	}
 }
 
@@ -2014,7 +2027,7 @@ class XmlForm_Field_JavaScript extends XmlForm_Field {
 class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
 	public $required = false;
 	public $readOnly = false;
-	
+
 	public $startDate = '';
 	public $endDate = '';
 	/*
@@ -2027,10 +2040,10 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
 	public $beforeDate = '';
 	public $defaultValue = NULL;
 	public $format = 'Y-m-d';
-	
+
 	public $mask = 'yyyy-mm-dd';
 	public $dependentFields = '';
-	
+
 	function verifyDateFormat($date) {
 		$aux = explode ( '-', $date );
 		if (count ( $aux ) != 3)
@@ -2041,7 +2054,7 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
 			return false;
 		return true;
 	}
-	
+
 	function isvalidBeforeFormat($date) {
 		$part1 = substr ( $date, 0, strlen ( $date ) - 1 );
 		$part2 = substr ( $date, strlen ( $date ) - 1 );
@@ -2051,7 +2064,7 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
 			return false;
 		return true;
 	}
-	
+
 	function calculateBeforeFormat($date, $sign) {
 		$part1 = $sign * substr ( $date, 0, strlen ( $date ) - 1 );
 		$part2 = substr ( $date, strlen ( $date ) - 1 );
@@ -2065,18 +2078,18 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
 			case 'y' :
 				$res = date ( 'Y-m-d', mktime ( 0, 0, 0, date ( 'm' ), date ( 'd' ), date ( 'Y' ) + $part1 ) );
 				break;
-		
+
 		}
 		return $res;
 	}
-	
+
 	function render($value = NULL, $owner = NULL) {
 		$value = G::replaceDataField ( $value, $owner->values );
 		//$this->defaultValue = G::replaceDataField( $this->defaultValue, $owner->values);
 		$id = "form[$this->name]";
 		return $this->__draw_widget ( $id, $value, $owner );
 	}
-	
+
 	function renderGrid($values = NULL, $owner = NULL, $onlyValue = false) {
 		$result = array ();
 		$r = 1;
@@ -2093,14 +2106,14 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
 		}
 		return $result;
 	}
-	
+
 	function __draw_widget($pID, $value, $owner = '') {
 		$startDate = G::replaceDataField ( $this->startDate, $owner->values );
 		$endDate = G::replaceDataField ( $this->endDate, $owner->values );
-		
+
 		$beforeDate = G::replaceDataField ( $this->beforeDate, $owner->values );
 		$afterDate = G::replaceDataField ( $this->afterDate, $owner->values );
-		
+
 		if ($startDate != '') {
 			if (! $this->verifyDateFormat ( $startDate ))
 				$startDate = '';
@@ -2109,25 +2122,25 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
 			if ($this->isvalidBeforeFormat ( $beforeDate ))
 				$startDate = $this->calculateBeforeFormat ( $beforeDate, 1 );
 		}
-		
+
 		if ($startDate == '' && isset ( $this->size ) && is_numeric ( $this->size ) && $this->size >= 1900 && $this->size <= 2100) {
 			$startDate = $this->size . '-01-01';
 		}
-		
+
 		if ($startDate == '') {
 			$startDate = date ( 'Y-m-d' ); // the default is the current date
 		}
-		
+
 		if ($endDate != '') {
 			if (! $this->verifyDateFormat ( $endDate ))
 				$endDate = '';
 		}
-		
+
 		if (isset ( $afterDate ) && $afterDate != '') {
 			if ($this->isvalidBeforeFormat ( $afterDate ))
 				$endDate = $this->calculateBeforeFormat ( $afterDate, + 1 );
 		}
-		
+
 		if (isset ( $this->maxlength ) && is_numeric ( $this->maxlength ) && $this->maxlength >= 1900 && $this->maxlength <= 2100) {
 			$endDate = $this->maxlength . '-01-01';
 		}
@@ -2135,18 +2148,18 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
 			//$this->endDate = mktime ( 0,0,0,date('m'),date('d'),date('y') );  // the default is the current date + 2 years
 			$endDate = date ( 'Y-m-d', mktime ( 0, 0, 0, date ( 'm' ), date ( 'd' ), date ( 'Y' ) + 2 ) ); // the default is the current date + 2 years
 		}
-		
+
 		if( isset($this->mask) && $this->mask != '' ){
 			$mask = $this->mask;
 		} else {
 			$mask = '%Y-%m-%d';
 		}
-		
+
 		if ( trim ($value) == '' or $value == NULL ) {
 			$tmp = str_replace("%", "", $mask);
 			$value = date ($tmp);
 		}
-		
+
 		#the validations field was moved to javascript routines ;)
 		if ($this->mode == 'edit') {
 			$html = "<input size=15  class='module_app_input___gray' readonly=true type='text' id='" . $pID . "' name='" . $pID . "' value='" . $value . "'>";
@@ -2286,7 +2299,7 @@ class XmlForm {
 		$this->scriptFile = substr ( (defined ( 'PATH_C' ) ? PATH_C : PATH_DATA) . 'xmlform/', 0, - 1 ) . substr ( $this->scriptURL, 7 );
 		$this->id = G::createUID ( '', substr ( $this->fileName, strlen ( $this->home ) ) );
 		$this->scriptURL = str_replace ( '\\', '/', $this->scriptURL );
-		
+
 		$newVersion = false;
 		if ($forceParse || ((! file_exists ( $this->parsedFile )) || (filemtime ( $filename ) > filemtime ( $this->parsedFile )) || (filemtime ( __FILE__ ) > filemtime ( $this->parsedFile ))) || (! file_exists ( $this->scriptFile )) || (filemtime ( $filename ) > filemtime ( $this->scriptFile ))) {
 			$this->tree = new Xml_Document ( );
@@ -2299,7 +2312,7 @@ class XmlForm {
 			if (! isset ( $this->tree ))
 				return 1;
 			$xmlNode = & $this->tree->children;
-			
+
 			//Set the form's attributes
 			$myAttributes = get_class_vars ( get_class ( $this ) );
 			foreach ( $myAttributes as $k => $v )
@@ -2312,7 +2325,7 @@ class XmlForm {
 			//Reeplace non valid characters in xmlform name with "_"
 			$this->name = preg_replace ( '/\W/', '_', $this->name );
 			//Create fields
-			
+
 
 			foreach ( $xmlNode as $k => $v ) {
 				if (($xmlNode [$k]->type !== 'cdata') && isset ( $xmlNode [$k]->attributes ['type'] )) {
@@ -2324,17 +2337,17 @@ class XmlForm {
 					$field->language = $this->language;
 					$this->fields [$field->name] = $field;
 				}
-				
+
 				if (isset ( $xmlNode [$k]->attributes ['required'] )) {
 					if ($xmlNode [$k]->attributes ['required'] == 1)
 						$this->requiredFields [] = array ('name' => $field->name, 'type' => $xmlNode [$k]->attributes ['type'], 'label' => trim ( $field->label ) );
 				}
-			
+
 			}
 			//var_dump($this->requiredFields);
 			$oJSON = new Services_JSON ( );
 			$this->objectRequiredFields = addslashes ( $oJSON->encode ( $this->requiredFields ) );
-			
+
 			//Load the default values
 			//$this->setDefaultValues();
 			//Save the cache file
@@ -2383,7 +2396,7 @@ class XmlForm {
 		require ($this->parsedFile);
 		$this->fileName = $filename;
 		$this->parsedFile = $parsedFile;
-		
+
 		//RECREATE LA JS file
 		//Note: Template defined with publisher doesn't affect the .js file
 		//created at this point.
@@ -2453,7 +2466,7 @@ class xmlformTemplate extends Smarty {
 		$this->cache_dir = PATH_SMARTY_CACHE;
 		$this->config_dir = PATH_THIRDPARTY . 'smarty/configs';
 		$this->caching = false;
-		
+
 		// register the resource name "db"
 		$this->templateFile = $templateFile;
 	}
@@ -2470,7 +2483,7 @@ class xmlformTemplate extends Smarty {
 			$varPrefix = '$';
 		if (strcasecmp ( $target, 'templatePower' ) === 0)
 			$varPrefix = '';
-		
+
 		$ft = new StdClass ( );
 		foreach ( $form as $name => $value ) {
 			if (($name !== 'fields') && ($value !== ''))
@@ -2493,7 +2506,7 @@ class xmlformTemplate extends Smarty {
 		foreach ( $form->fields as $k => $v ) {
 			$ft->fields [$k] = $v->cloneObject ();
 			$ft->fields [$k]->label = '{' . $varPrefix . $k . '}';
-			
+
 			if ($form->type === 'grid') {
 				if (strcasecmp ( $target, 'smarty' ) === 0)
 					$ft->fields [$k]->field = '{' . $varPrefix . 'form.' . $k . '[row]}';
@@ -2505,7 +2518,7 @@ class xmlformTemplate extends Smarty {
 				if (strcasecmp ( $target, 'templatePower' ) === 0)
 					$ft->fields [$k]->field = '{' . $varPrefix . 'form[' . $k . ']}';
 			}
-			
+
 			$hasRequiredFields = $hasRequiredFields | (isset ( $v->required ) && ($v->required == '1') && ($v->mode == 'edit'));
 		}
 		$this->assign ( 'hasRequiredFields', $hasRequiredFields );
@@ -2551,7 +2564,7 @@ class xmlformTemplate extends Smarty {
 	 * @return string
 	 */
 	function getFields(&$form, $therow = -1) {
-		
+
 		$result = array ();
 		foreach ( $form->fields as $k => $v ) {
 			if ($form->mode != '') { #@ last modification: erik
@@ -2611,7 +2624,7 @@ class xmlformTemplate extends Smarty {
 		//result
 		$this->register_resource ( 'mem', array (array (&$this, '_get_template' ), array ($this, '_get_timestamp' ), array ($this, '_get_secure' ), array ($this, '_get_trusted' ) ) );
 		$result = $this->getFields ( $form, $therow );
-		
+
 		$this->assign ( array ('PATH_TPL' => PATH_TPL ) );
 		$this->assign ( $result );
 		$this->assign ( array ('_form' => $form ) );
@@ -2625,7 +2638,7 @@ class xmlformTemplate extends Smarty {
 		$output = $this->fetch ( 'mem:defaultTemplate' . $form->name );
 		return $output;
 	}
-	
+
 	/*
    * Smarty plugin
    * -------------------------------------------------------------

@@ -26,12 +26,13 @@ global $G_TMP_MENU;
 global $RBAC;
 
 //$G_TMP_MENU->AddIdRawOption('MY_ACCOUNT', 'users/myInfo');
-$G_TMP_MENU->AddIdRawOption('USERS',      'users/users_List');
-$G_TMP_MENU->AddIdRawOption('CASES',      'cases/cases_List');
-$G_TMP_MENU->AddIdRawOption('PROCESSES',  'processes/processes_List');
-$G_TMP_MENU->AddIdRawOption('REPORTS',    'reports/reportsList');
-$G_TMP_MENU->AddIdRawOption('SETUP',      'setup/emails');
-$G_TMP_MENU->AddIdRawOption('DASHBOARD',  'dashboard/dashboard');
+$G_TMP_MENU->AddIdRawOption('USERS',             'users/users_List');
+$G_TMP_MENU->AddIdRawOption('CASES',             'cases/cases_List');
+$G_TMP_MENU->AddIdRawOption('PROCESSES',         'processes/processes_List');
+$G_TMP_MENU->AddIdRawOption('REPORTS',           'reports/reportsList');
+//$G_TMP_MENU->AddIdRawOption('ADDITIONAL_TABLES', 'additionalTables/additionalTablesList');
+$G_TMP_MENU->AddIdRawOption('SETUP',             'setup/emails');
+$G_TMP_MENU->AddIdRawOption('DASHBOARD',         'dashboard/dashboard');
 
 $G_TMP_MENU->Labels = array(
   //G::LoadTranslation('ID_MY_ACCOUNT'),
@@ -39,6 +40,7 @@ $G_TMP_MENU->Labels = array(
   G::LoadTranslation('ID_CASES'),
   G::LoadTranslation('ID_APPLICATIONS'),
   G::LoadTranslation('ID_REPORTS'),
+  //G::LoadTranslation('ID_ADDITIONAL_TABLES'),
   G::LoadTranslation('ID_SETUP'),
   G::LoadTranslation('ID_DASHBOARD')
 
@@ -77,6 +79,11 @@ if ($RBAC->userCanAccess('PM_SETUP') != 1)
 if ($RBAC->userCanAccess('PM_REPORTS') != 1)
 {
   $G_TMP_MENU->DisableOptionId('REPORTS');
+}
+
+if ($RBAC->userCanAccess('PM_SETUP') != 1)
+{
+  $G_TMP_MENU->DisableOptionId('ADDITIONAL_TABLES');
 }
 
 if ($RBAC->userCanAccess('PM_DASHBOARD') != 1)
