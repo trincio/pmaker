@@ -36,10 +36,10 @@ abstract class BaseFields extends BaseObject  implements Persistent {
 
 
 	/**
-	 * The value for the tab_uid field.
+	 * The value for the add_tab_uid field.
 	 * @var        string
 	 */
-	protected $tab_uid = '';
+	protected $add_tab_uid = '';
 
 
 	/**
@@ -130,14 +130,14 @@ abstract class BaseFields extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Get the [tab_uid] column value.
+	 * Get the [add_tab_uid] column value.
 	 * 
 	 * @return     string
 	 */
-	public function getTabUid()
+	public function getAddTabUid()
 	{
 
-		return $this->tab_uid;
+		return $this->add_tab_uid;
 	}
 
 	/**
@@ -262,12 +262,12 @@ abstract class BaseFields extends BaseObject  implements Persistent {
 	} // setFldUid()
 
 	/**
-	 * Set the value of [tab_uid] column.
+	 * Set the value of [add_tab_uid] column.
 	 * 
 	 * @param      string $v new value
 	 * @return     void
 	 */
-	public function setTabUid($v)
+	public function setAddTabUid($v)
 	{
 
 		// Since the native PHP type for this column is string,
@@ -276,12 +276,12 @@ abstract class BaseFields extends BaseObject  implements Persistent {
 			$v = (string) $v; 
 		}
 
-		if ($this->tab_uid !== $v || $v === '') {
-			$this->tab_uid = $v;
-			$this->modifiedColumns[] = FieldsPeer::TAB_UID;
+		if ($this->add_tab_uid !== $v || $v === '') {
+			$this->add_tab_uid = $v;
+			$this->modifiedColumns[] = FieldsPeer::ADD_TAB_UID;
 		}
 
-	} // setTabUid()
+	} // setAddTabUid()
 
 	/**
 	 * Set the value of [fld_name] column.
@@ -500,7 +500,7 @@ abstract class BaseFields extends BaseObject  implements Persistent {
 
 			$this->fld_uid = $rs->getString($startcol + 0);
 
-			$this->tab_uid = $rs->getString($startcol + 1);
+			$this->add_tab_uid = $rs->getString($startcol + 1);
 
 			$this->fld_name = $rs->getString($startcol + 2);
 
@@ -732,7 +732,7 @@ abstract class BaseFields extends BaseObject  implements Persistent {
 				return $this->getFldUid();
 				break;
 			case 1:
-				return $this->getTabUid();
+				return $this->getAddTabUid();
 				break;
 			case 2:
 				return $this->getFldName();
@@ -782,7 +782,7 @@ abstract class BaseFields extends BaseObject  implements Persistent {
 		$keys = FieldsPeer::getFieldNames($keyType);
 		$result = array(
 			$keys[0] => $this->getFldUid(),
-			$keys[1] => $this->getTabUid(),
+			$keys[1] => $this->getAddTabUid(),
 			$keys[2] => $this->getFldName(),
 			$keys[3] => $this->getFldDescription(),
 			$keys[4] => $this->getFldType(),
@@ -827,7 +827,7 @@ abstract class BaseFields extends BaseObject  implements Persistent {
 				$this->setFldUid($value);
 				break;
 			case 1:
-				$this->setTabUid($value);
+				$this->setAddTabUid($value);
 				break;
 			case 2:
 				$this->setFldName($value);
@@ -880,7 +880,7 @@ abstract class BaseFields extends BaseObject  implements Persistent {
 		$keys = FieldsPeer::getFieldNames($keyType);
 
 		if (array_key_exists($keys[0], $arr)) $this->setFldUid($arr[$keys[0]]);
-		if (array_key_exists($keys[1], $arr)) $this->setTabUid($arr[$keys[1]]);
+		if (array_key_exists($keys[1], $arr)) $this->setAddTabUid($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setFldName($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setFldDescription($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setFldType($arr[$keys[4]]);
@@ -902,7 +902,7 @@ abstract class BaseFields extends BaseObject  implements Persistent {
 		$criteria = new Criteria(FieldsPeer::DATABASE_NAME);
 
 		if ($this->isColumnModified(FieldsPeer::FLD_UID)) $criteria->add(FieldsPeer::FLD_UID, $this->fld_uid);
-		if ($this->isColumnModified(FieldsPeer::TAB_UID)) $criteria->add(FieldsPeer::TAB_UID, $this->tab_uid);
+		if ($this->isColumnModified(FieldsPeer::ADD_TAB_UID)) $criteria->add(FieldsPeer::ADD_TAB_UID, $this->add_tab_uid);
 		if ($this->isColumnModified(FieldsPeer::FLD_NAME)) $criteria->add(FieldsPeer::FLD_NAME, $this->fld_name);
 		if ($this->isColumnModified(FieldsPeer::FLD_DESCRIPTION)) $criteria->add(FieldsPeer::FLD_DESCRIPTION, $this->fld_description);
 		if ($this->isColumnModified(FieldsPeer::FLD_TYPE)) $criteria->add(FieldsPeer::FLD_TYPE, $this->fld_type);
@@ -966,7 +966,7 @@ abstract class BaseFields extends BaseObject  implements Persistent {
 	public function copyInto($copyObj, $deepCopy = false)
 	{
 
-		$copyObj->setTabUid($this->tab_uid);
+		$copyObj->setAddTabUid($this->add_tab_uid);
 
 		$copyObj->setFldName($this->fld_name);
 
