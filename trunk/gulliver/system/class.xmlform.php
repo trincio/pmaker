@@ -2039,9 +2039,9 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
 	public $afterDate = '';
 	public $beforeDate = '';
 	public $defaultValue = NULL;
-	public $format = 'Y-m-d';
+	public $format = '%Y-%m-%d';
 
-	public $mask = 'yyyy-mm-dd';
+	public $mask = '%Y-%m-%d';
 	public $dependentFields = '';
 
 	function verifyDateFormat($date) {
@@ -2158,6 +2158,11 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
 		if ( trim ($value) == '' or $value == NULL ) {
 			$tmp = str_replace("%", "", $mask);
 			$value = date ($tmp);
+		}
+		
+		/*for old mask definitions...*/
+		if($mask == 'yyyy-mm-dd'){
+			$mask = '%Y-%m-%d';
 		}
 
 		#the validations field was moved to javascript routines ;)
