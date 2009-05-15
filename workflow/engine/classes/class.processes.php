@@ -1769,24 +1769,24 @@ class Processes {
             $fsXmlContent = intval( fread ( $fp, 9));      //reading the size of $XmlContent
             if ( $fsXmlContent > 0 ) {
               $newXmlGuid = $oData->dynaformFiles[ $XmlGuid ];
-
-              //print "$sFileName <br>";
-              $XmlContent   = fread( $fp, $fsXmlContent );    //reading string $XmlContent
-              
-              $XmlContent = str_replace($oData->process['PRO_UID_OLD'], $oData->process['PRO_UID'], $XmlContent);
-              $XmlContent = str_replace($XmlGuid, $newXmlGuid, $XmlContent);
-              //foreach
-              foreach($oData->gridFiles as $key => $value)
-              	{
-              			$XmlContent = str_replace($key, $value, $XmlContent);
-              	}
-
-              #here we verify if is adynaform or a html
-              $ext = (substr(trim($XmlContent),0,5) == '<?xml')?'.xml':'.html';
-
-              $sFileName = $path . $newXmlGuid . $ext;
-              $bytesSaved = @file_put_contents ( $sFileName, $XmlContent );
-              //if ( $bytesSaved != $fsXmlContent ) throw ( new Exception ('Error writing dynaform file in directory : ' . $path ) );
+							if(isset($oData->process['PRO_UID_OLD'])){
+              		//print "$sFileName <br>";
+              		$XmlContent   = fread( $fp, $fsXmlContent );    //reading string $XmlContent
+              		
+              		$XmlContent = str_replace($oData->process['PRO_UID_OLD'], $oData->process['PRO_UID'], $XmlContent);
+              		$XmlContent = str_replace($XmlGuid, $newXmlGuid, $XmlContent);
+              		//foreach
+              		foreach($oData->gridFiles as $key => $value)
+              			{
+              					$XmlContent = str_replace($key, $value, $XmlContent);
+              			}              
+              		#here we verify if is adynaform or a html
+              		$ext = (substr(trim($XmlContent),0,5) == '<?xml')?'.xml':'.html';
+             
+              		$sFileName = $path . $newXmlGuid . $ext;
+              		$bytesSaved = @file_put_contents ( $sFileName, $XmlContent );
+              		//if ( $bytesSaved != $fsXmlContent ) throw ( new Exception ('Error writing dynaform file in directory : ' . $path ) );
+              }	
             }
           }
         }

@@ -44,6 +44,11 @@
     G::header('location: ' . $_SERVER['HTTP_REFERER']);
     die;
   }
+  global $_DBArray;
+  if (!isset($_DBArray)) {
+    $_DBArray = array();
+  }
+
   /* Includes */
   G::LoadClass('case');
   G::LoadClass('derivation');

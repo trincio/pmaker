@@ -42,6 +42,10 @@
 	  $aDynaform = $oDynaform->load($sDYNAFORM);
 	  $dynTitle  = str_replace(' ', '_', str_replace('/', '_', $aDynaform['DYN_TITLE']));
 	  $sContent  = "<?\n";
+	  $sContent .= "global \$_DBArray;\n";
+	  $sContent .= "if (!isset(\$_DBArray)) {\n";
+	  $sContent .= "  \$_DBArray = array();\n";
+	  $sContent .= "}\n";
 	  $sContent .= "\$_SESSION['PROCESS'] = '" . $sPRO_UID . "';\n";
 	  $sContent .= "\$G_PUBLISH = new Publisher;\n";
 	  $sContent .= "\$G_PUBLISH->AddContent('dynaform', 'xmlform', '" . $sPRO_UID . '/' . $sDYNAFORM . "', '', array(), '" . $dynTitle . 'Post.php' . "');\n";
