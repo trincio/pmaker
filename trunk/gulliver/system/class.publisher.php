@@ -223,7 +223,7 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
               $G_FORM->values['__DYNAFORM_OPTIONS']['NEXT_ACTION'] = 'if (document.getElementById("' . $G_FORM->id . '")) {document.getElementById("' . $G_FORM->id . '").submit();}return false;';
             break;
             case 'prompt':
-              $G_FORM->values['__DYNAFORM_OPTIONS']['NEXT_ACTION'] = 'if (document.getElementById("' . $G_FORM->id . '")) {new leimnud.module.app.confirm().make({label:"@G::LoadTranslation(ID_DYNAFORM_SAVE_CHANGES)",action:function(){document.getElementById("' . $G_FORM->id . '").submit();}.extend(this),cancel:function(){window.location = getField("DYN_FORWARD").href;}.extend(this)});};return false;}';
+              $G_FORM->values['__DYNAFORM_OPTIONS']['NEXT_ACTION'] = 'if (document.getElementById("' . $G_FORM->id . '")) {new leimnud.module.app.confirm().make({label:"@G::LoadTranslation(ID_DYNAFORM_SAVE_CHANGES)",action:function(){document.getElementById("' . $G_FORM->id . '").submit();}.extend(this),cancel:function(){window.location = getField("DYN_FORWARD").href;}.extend(this)});return false;}';
             break;
           }
         }

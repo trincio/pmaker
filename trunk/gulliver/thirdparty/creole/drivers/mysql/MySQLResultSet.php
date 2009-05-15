@@ -66,7 +66,7 @@ class MySQLResultSet extends ResultSetCommon implements ResultSet {
                 throw new SQLException("Error fetching result", mysql_error($this->conn->getResource()));
             }
         }
-        else {
+        /*else {
         	if (is_array($this->fields)) {
         		foreach ($this->fields as $sKey => $sValue) {
         			if (function_exists('mb_detect_encoding')) {
@@ -76,7 +76,7 @@ class MySQLResultSet extends ResultSetCommon implements ResultSet {
         			}
         		}
         	}
-        }
+        }*/
 
         if ($this->fetchmode === ResultSet::FETCHMODE_ASSOC && $this->lowerAssocCase) {
             $this->fields = array_change_key_case($this->fields, CASE_LOWER);
