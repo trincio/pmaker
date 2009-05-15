@@ -480,20 +480,21 @@ var G_Grid = function(oForm, sGridName)
   	var oContinue = true;
   	aAux    = oDOM.name.split('][');
   	sAux    = oField.sFormula.replace(/\+|\-|\*|\/|\(|\)|\[|\]|\{|\}|\%|\$/g, ' ');
-  	sAux    = sAux.replace(/^\s+|\^s+$/g,'');
+  	sAux    = sAux.replace(/^\s+|\s+$/g,'');
   	sAux    = sAux.replace(/      /g, ' ');
   	sAux    = sAux.replace(/     /g, ' ');
   	sAux    = sAux.replace(/    /g, ' ');
   	sAux    = sAux.replace(/   /g, ' ');
   	sAux    = sAux.replace(/  /g, ' ');
   	aFields = sAux.split(' ');
+  	aFields = aFields.unique();
   	sAux    = oField.sFormula;
   	for (i = 0; i < aFields.length; i++)
   	{
   		if (!isNumber(aFields[i]))
   		{
   		  oAux = this.getElementByName(aAux[1], aFields[i]);
-  		  sAux = sAux.replace(aFields[i], "parseFloat(G.cleanMask(this.getElementByName(" + aAux[1] + ", '" + aFields[i] + "').value() || 0, '" + (oAux.sMask ? oAux.sMask : '') + "').result.replace(/,/g, ''))");
+  		  sAux = sAux.replace(new RegExp(aFields[i],"g"), "parseFloat(G.cleanMask(this.getElementByName(" + aAux[1] + ", '" + aFields[i] + "').value() || 0, '" + (oAux.sMask ? oAux.sMask : '') + "').result.replace(/,/g, ''))");
   		  eval("if (!document.getElementById('" + aAux[0] + '][' + aAux[1] + '][' + aFields[i] + "]')) { oContinue = false; }");
   	  }
   	}
