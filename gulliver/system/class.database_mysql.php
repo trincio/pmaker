@@ -184,6 +184,9 @@ class database extends database_base {
 	public function generateShowTablesSQL() {
     return 'SHOW TABLES' . $this->sEndLine;
 	}
+	public function generateShowTablesLikeSQL($sTable) {
+    return "SHOW TABLES LIKE '" . $sTable . "'" . $this->sEndLine;
+	}
 	public function generateDescTableSQL($sTable) {
 	  try {
 	    if ($sTable == '') {
@@ -211,6 +214,9 @@ class database extends database_base {
 	  catch (Exception $oException) {
 	  	throw $oException;
 	  }
+	}
+	public function countResults($oDataset) {
+	  return @mysql_num_rows($oDataset);
 	}
 	public function getRegistry($oDataset) {
 	  return @mysql_fetch_array($oDataset, $this->iFetchType);
