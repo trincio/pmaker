@@ -460,7 +460,8 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
       header("Cache-Control: post-check=0, pre-check=0", false);
       header("Pragma: no-cache");
 
-      if(isset( $_SESSION['USER_LOGGED'] )) {
+      //if(isset( $_SESSION['USER_LOGGED'] )) {
+      if((isset( $_SESSION['USER_LOGGED'] ))&&(!(isset($_GET['sid'])))) {
         $RBAC->initRBAC();
         $RBAC->loadUserRolePermission( $RBAC->sSystem, $_SESSION['USER_LOGGED'] );
       }
