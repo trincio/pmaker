@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dynaForm name="processes_New" width="500px" labelWidth="55px"   mode="edit" enableTemplate="0">
+<dynaForm name="processes_New" width="50%" labelWidth="55px"   mode="edit" enableTemplate="0">
 
 
-<title type="title" >
-  <en>Importing Existing Process</en>
+<title type="title" enableHTML="1">
+  <en><![CDATA[<div align="center">Importing Existing Process</div>]]></en>
 </title>
 
 <TITLE1 type="subtitle" >
-  <en>The process you are trying to import already exists. Please select one of these options to continue</en>
+  <en>A process with the same name already exists. Please select one of the following options:</en>
 </TITLE1>
 
 
 <IMPORT_OPTION type="radiogroup">
   <en>
-    <option name='1'>Update the current Process, overwriting all tasks and steps </option>
-    <option name='2'>Disable current Process and create a new version of the Process</option>
-    <option name='3'>Create a completely new Process without change the current Process</option>
+    <option name='1'>Replace the existing Process.</option>
+    <option name='2'>Create a new Process version (2) and disable the existing Process.</option>
+    <option name='3'>Create a new Process version (2) and do not change the existing Process.</option>
   </en>
 </IMPORT_OPTION>
 
