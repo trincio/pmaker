@@ -1591,3 +1591,23 @@ div.autosuggest ul em
 
 /**************************** End -> Suggest Widget by Erik Amaru Ortiz <erik@colosa.com>  *********************************/
 
+.tableGrid_view
+{
+	width: 100%;
+	border-top: 0px solid #DADADA;
+	border-bottom: 0px solid #DADADA;
+	border-left: 0px solid #DADADA;
+	border-right: 0px solid #DADADA;
+	padding: 0px;
+	
+}
+
+table.tableGrid_view td 
+{
+	border-top: 1px solid #DADADA;
+	border-bottom: 1px solid #DADADA;
+	border-left: 1px solid #DADADA;
+	border-right: 1px solid #DADADA;
+	padding: 0px;
+	
+}

@@ -308,7 +308,7 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 		global $G_PUBLISH;
 		$G_PUBLISH = new Publisher;
 		$G_PUBLISH->publisherId='preview';
-		$form = new Form( $file , PATH_DYNAFORM, SYS_LANG, true );
+		$form = new Form( $file , PATH_DYNAFORM, SYS_LANG, true, $G_PUBLISH->publisherId);
 		switch(basename($form->template,'.html'))
 		{
 		  case 'grid': $template='grid';
@@ -323,7 +323,8 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 		  	  foreach($aFields as $key => $val) $aFields[$key]=array(1=>"",2=>"",3=>"",4=>"",5=>"");
 		    }
 		  break;
-		  default: $template='xmlform';
+		  default: 
+		  	$template='xmlform_' . $G_PUBLISH->publisherId;
 			$aFields = array(
 					'__DYNAFORM_OPTIONS'=> array(
 					'PREVIOUS_STEP' => '#',
@@ -333,8 +334,7 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 				)
 			);
 		}
-		$G_PUBLISH->AddContent('dynaform', $template , $file, '',
-			$aFields, '');
+		$G_PUBLISH->AddContent('dynaform', $template , $file, '',$aFields, '');
 		G::RenderPage('publish','raw');
 		return ob_get_clean();
 	}
