@@ -232,7 +232,7 @@ class Form extends XmlForm
    * @return array $_POST['form']
    */
   function validatePost()
-  {
+  { 
     return $_POST['form']=$this->validateArray($_POST['form']);
   }
   /**
@@ -243,13 +243,13 @@ class Form extends XmlForm
    * @return array
    */
   function validateArray($newValues)
-  {
+  { 
     //$values = $this->values;
-    foreach($this->fields as $k => $v){
+    foreach($this->fields as $k => $v){ 
       if (($v->type != 'submit')) {
-        if ($v->type != 'file') {
-          if ( array_key_exists($k,$newValues) ) {
-            if ( is_array($newValues[$k]) ) {
+        if ($v->type != 'file') { 
+          if ( array_key_exists($k,$newValues) ) { 
+            if ( is_array($newValues[$k]) ) { 
             	if (($v->type == 'checkgroup') || ($v->type == 'listbox')) {
             		$values[$k] = implode('|', $newValues[$k]);
             	}
@@ -265,13 +265,18 @@ class Form extends XmlForm
                 }
                 if (sizeof($values[$k])===0) $values[$k] = '';
               }
-            } else {
+            } else {  
               if ($this->fields[$k]->validateValue($newValues[$k], $this ))
                 $values[$k] = $this->fields[$k]->maskValue( $newValues[$k], $this );
             }
           }
+         else
+          { 
+            if($v->type == 'checkbox')                  
+                $values[$k]=$v->falseValue;            
+          } 
         }
-        else {
+        else { 
           if (isset($_FILES['form']['name'][$k])) {
             $values[$k] = $_FILES['form']['name'][$k];
           }
@@ -282,7 +287,7 @@ class Form extends XmlForm
     	if (strpos($k, 'SYS_GRID_AGGREGATE_') !== false) {
     		$values[$k] = $v;
     	}
-    }
+    } 
     return $values;
   }
   /**
