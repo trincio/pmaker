@@ -174,7 +174,7 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
       else
         eval( '$G_FORM = new ' . $Part['Template'] . ' ( $Part[\'File\'] , "' . $sPath . '");');
 
-      if (($Part['Type'] == 'dynaform') && ($Part['Template'] == 'xmlform'))
+      if (($Part['Type'] == 'dynaform') && (($Part['Template'] == 'xmlform') || ($Part['Template'] == 'xmlform_preview')) )
       {
       	$G_FORM->fields=G::array_merges(
       		array('__DYNAFORM_OPTIONS' => new XmlForm_Field_XmlMenu(

@@ -46,6 +46,9 @@ class Form extends XmlForm
   var $className="formDefault";
   var $objectRequiredFields = null;
   var $nextstepsave = '';
+
+  public $visual_frontend;
+  
   /**
    * Function setDefaultValues
    * @author David S. Callizaya S. <davidsantos@colosa.com>
@@ -81,8 +84,10 @@ class Form extends XmlForm
    * @parameter string forceParse
    * @return string
    */
-  function Form($filename, $home='', $language = '', $forceParse = false)
+  function Form($filename, $home='', $language = '', $forceParse = false, $visual_frontend=null)
   {
+  	$this->visual_frontend = $visual_frontend;
+  	 
     if ($language=== '') $language = defined('SYS_LANG')? SYS_LANG : 'en';
     if ($home=== '') $home = defined('PATH_XMLFORM')? PATH_XMLFORM :
      (defined('PATH_DYNAFORM')? PATH_DYNAFORM: '');
@@ -151,6 +156,16 @@ class Form extends XmlForm
    */
   function render( $template, &$scriptContent )
   {
+  	/***
+  	 * This section was added for store the current used template.   
+	 */
+  	$tmp_var = explode('/', $template);
+  	if( is_array($tmp_var) ){
+  		$tmp_var = $tmp_var[sizeof($tmp_var)-1];
+  		$this->using_template = $tmp_var;	
+  	}
+  	/***/
+  	
     $this->template = $template;
     $o = new xmlformTemplate($this, $template);
     $values = $this->values;
