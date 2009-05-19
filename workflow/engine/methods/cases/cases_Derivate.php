@@ -153,7 +153,7 @@ try {
 
   if( $_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] != 0 ) {
 	//Execute after triggers - Start
-	$Fields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], 'ASSIGN_TASK', -2, 'AFTER', $Fields['APP_DATA'] );
+	$Fields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], 'ASSIGN_TASK', -2, 'AFTER', $appFields['APP_DATA'] );
 	//Execute after triggers - End
   }
 

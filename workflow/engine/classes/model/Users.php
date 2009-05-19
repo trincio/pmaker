@@ -141,7 +141,7 @@ class Users extends BaseUsers {
   function getAllInformation($UsrUid)
   {
 	if( !isset($UsrUid) or $UsrUid == '' ) {
-		throw $oException;
+		throw new Exception('$UsrUid is empty.');
 	}
 	try {
 
