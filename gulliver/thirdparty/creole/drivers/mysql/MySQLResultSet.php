@@ -134,7 +134,12 @@ class MySQLResultSet extends ResultSetCommon implements ResultSet {
         if (!array_key_exists($column, $this->fields)) { throw new SQLException("Invalid resultset column: " . (is_int($column) ? $column + 1 : $column)); }
         if ($this->fields[$column] === null) { return null; }
 
-        $ts = strtotime($this->fields[$column]);
+        if (($this->fields[$column] == '0000-00-00 00:00:00') || ($this->fields[$column] == '0000-00-00')) {
+          $ts = '943916400';
+        }
+        else {
+          $ts = strtotime($this->fields[$column]);
+        }
         if ($ts === -1 || $ts === false) { // in PHP 5.1 return value changes to FALSE
             // otherwise it's an ugly MySQL timestamp!
             // YYYYMMDDHHMMSS
