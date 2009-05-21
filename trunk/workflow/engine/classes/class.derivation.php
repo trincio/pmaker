@@ -402,7 +402,7 @@ class Derivation
             $iNewDelIndex = $this->case->newAppDelegation( $appFields['PRO_UID'],
               $currentDelegation['APP_UID'],
               $nextDel['TAS_UID'],
-              $nextDel['USR_UID'],
+              (isset($nextDel['USR_UID']) ? $nextDel['USR_UID'] : ''),
               $currentDelegation['DEL_INDEX'],
               $nextDel['DEL_PRIORITY'],
               $delType,

@@ -463,6 +463,7 @@ switch ($_GET['TYPE'])
             $aFields['TASK'][$sKey]['NEXT_TASK']['USR_HIDDEN_FIELD'] = '<input type="hidden" name="' . $hiddenName . '" id="' . $hiddenName . '" value="' . $aValues['NEXT_TASK']['USER_ASSIGNED']['USR_UID'] . '">';
             break;
         case 'MANUAL':
+            $Aux = array();
             foreach ($aValues['NEXT_TASK']['USER_ASSIGNED'] as $aUser)
             {
               $Aux[$aUser['USR_UID']] = $aUser['USR_FULLNAME'];

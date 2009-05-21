@@ -83,6 +83,13 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 	 */
 	protected $dbs_port = 0;
 
+
+	/**
+	 * The value for the dbs_encode field.
+	 * @var        string
+	 */
+	protected $dbs_encode = '';
+
 	/**
 	 * Flag to prevent endless save loop, if this object is referenced
 	 * by another object which falls in this transaction.
@@ -183,6 +190,17 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 	{
 
 		return $this->dbs_port;
+	}
+
+	/**
+	 * Get the [dbs_encode] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getDbsEncode()
+	{
+
+		return $this->dbs_encode;
 	}
 
 	/**
@@ -362,6 +380,28 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 	} // setDbsPort()
 
 	/**
+	 * Set the value of [dbs_encode] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setDbsEncode($v)
+	{
+
+		// Since the native PHP type for this column is string,
+		// we will cast the input to a string (if it is not).
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->dbs_encode !== $v || $v === '') {
+			$this->dbs_encode = $v;
+			$this->modifiedColumns[] = DbSourcePeer::DBS_ENCODE;
+		}
+
+	} // setDbsEncode()
+
+	/**
 	 * Hydrates (populates) the object variables with values from the database resultset.
 	 *
 	 * An offset (1-based "start column") is specified so that objects can be hydrated
@@ -394,12 +434,14 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 
 			$this->dbs_port = $rs->getInt($startcol + 7);
 
+			$this->dbs_encode = $rs->getString($startcol + 8);
+
 			$this->resetModified();
 
 			$this->setNew(false);
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 8; // 8 = DbSourcePeer::NUM_COLUMNS - DbSourcePeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 9; // 9 = DbSourcePeer::NUM_COLUMNS - DbSourcePeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating DbSource object", $e);
@@ -626,6 +668,9 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 			case 7:
 				return $this->getDbsPort();
 				break;
+			case 8:
+				return $this->getDbsEncode();
+				break;
 			default:
 				return null;
 				break;
@@ -654,6 +699,7 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 			$keys[5] => $this->getDbsUsername(),
 			$keys[6] => $this->getDbsPassword(),
 			$keys[7] => $this->getDbsPort(),
+			$keys[8] => $this->getDbsEncode(),
 		);
 		return $result;
 	}
@@ -709,6 +755,9 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 			case 7:
 				$this->setDbsPort($value);
 				break;
+			case 8:
+				$this->setDbsEncode($value);
+				break;
 		} // switch()
 	}
 
@@ -740,6 +789,7 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[5], $arr)) $this->setDbsUsername($arr[$keys[5]]);
 		if (array_key_exists($keys[6], $arr)) $this->setDbsPassword($arr[$keys[6]]);
 		if (array_key_exists($keys[7], $arr)) $this->setDbsPort($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setDbsEncode($arr[$keys[8]]);
 	}
 
 	/**
@@ -759,6 +809,7 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(DbSourcePeer::DBS_USERNAME)) $criteria->add(DbSourcePeer::DBS_USERNAME, $this->dbs_username);
 		if ($this->isColumnModified(DbSourcePeer::DBS_PASSWORD)) $criteria->add(DbSourcePeer::DBS_PASSWORD, $this->dbs_password);
 		if ($this->isColumnModified(DbSourcePeer::DBS_PORT)) $criteria->add(DbSourcePeer::DBS_PORT, $this->dbs_port);
+		if ($this->isColumnModified(DbSourcePeer::DBS_ENCODE)) $criteria->add(DbSourcePeer::DBS_ENCODE, $this->dbs_encode);
 
 		return $criteria;
 	}
@@ -826,6 +877,8 @@ abstract class BaseDbSource extends BaseObject  implements Persistent {
 		$copyObj->setDbsPassword($this->dbs_password);
 
 		$copyObj->setDbsPort($this->dbs_port);
+
+		$copyObj->setDbsEncode($this->dbs_encode);
 
 
 		$copyObj->setNew(true);
