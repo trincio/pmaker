@@ -143,9 +143,9 @@ class NET
             {
                 case 'mysql':
                     if ($this->db_passwd == '') {
-						$link = @mysql_connect($this->ip.':'.$this->db_port, $this->db_user);
+						$link = @mysql_connect($this->ip.(($this->db_port != '') && ($this->db_port != 0) ? ':'.$this->db_port : ''), $this->db_user);
                     } else {
-						$link = @mysql_connect($this->ip.':'.$this->db_port, $this->db_user, $this->db_passwd);
+						$link = @mysql_connect($this->ip.(($this->db_port != '') && ($this->db_port != 0) ? ':'.$this->db_port : ''), $this->db_user, $this->db_passwd);
                     }
                     if ($link) {
                         if (@mysql_ping($link)) {
@@ -194,7 +194,7 @@ class NET
                     break;
 
                 case 'oracle':
-                    $this->db_port = ($this->db_port == "") ? "1521" : $this->db_port;
+                    $this->db_port = (($this->db_port == "") || ($this->db_port == 0)) ? "1521" : $this->db_port;
                     try{
                         $link = $conn = @oci_connect($this->db_user,$this->db_passwd, "(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP) (HOST=$this->ip) (PORT=$this->db_port) )) (CONNECT_DATA=(SERVICE_NAME=$this->db_sourcename)))");
                         if ($link) {
@@ -238,7 +238,7 @@ class NET
             switch($pDbDriver)
             {
                 case 'mysql':
-					$link = @mysql_connect($this->ip.':'.$this->db_port, $this->db_user, $this->db_passwd);
+					$link = @mysql_connect($this->ip.':'.(($this->db_port != '') && ($this->db_port != 0) ? ':'.$this->db_port : ''), $this->db_user, $this->db_passwd);
                     $db = @mysql_select_db($this->db_sourcename);
                     if ($link) {
                         if ($db) {
@@ -266,7 +266,7 @@ class NET
                     break;
 
                 case 'pgsql':
-                    $this->db_port = ($this->db_port == "") ? "5432" : $this->db_port;
+                    $this->db_port = (($this->db_port == "") || ($this->db_port == 0)) ? "5432" : $this->db_port;
                     $link = @pg_connect("host='$this->ip' port='$this->db_port' user='$this->db_user' password='$this->db_passwd' dbname='$this->db_sourcename'");
                     if ($link) {
                         if (@pg_ping($link)) {
@@ -307,7 +307,7 @@ class NET
                     break;
 
                 case 'oracle':
-                    $this->db_port = ($this->db_port == "") ? "1521" : $this->db_port;
+                    $this->db_port = (($this->db_port == "") || ($this->db_port == 0)) ? "1521" : $this->db_port;
                     $link = @oci_connect($this->db_user,$this->db_passwd, "(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP) (HOST=$this->ip) (PORT=$this->db_port) )) (CONNECT_DATA=(SERVICE_NAME=$this->db_sourcename)))");
                     if ($link) {
                         $stid = @oci_parse($link, 'select AUTHENTICATION_TYPE from v$session_connect_info');
@@ -358,7 +358,7 @@ class NET
                         break;
 
                     case 'pgsql':
-                        $this->db_port = ($this->db_port == "") ? "5432" : $this->db_port;
+                        $this->db_port = (($this->db_port == "") || ($this->db_port == 0)) ? "5432" : $this->db_port;
                         $link = @pg_connect("host='$this->ip' port='$this->db_port' user='$this->db_user' password='$this->db_passwd' dbname='$this->db_sourcename'");
                         if($link){
                             $v = @pg_version($link);
