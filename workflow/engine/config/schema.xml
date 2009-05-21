@@ -4134,6 +4134,16 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
+    <column name="DBS_ENCODE" type="VARCHAR" size="32" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="DBS_ENCODE"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="YES"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
     <index name="indexDBSource">
       <index-column name="PRO_UID"/>
       <vendor type="mysql">

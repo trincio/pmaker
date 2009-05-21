@@ -24,8 +24,10 @@ class dbConnections
     /*errors handle*/
     private $errno;
     private $errstr;
+    
+    private $encodesList;
 
-    function __construct($pPRO_UID)
+    public function __construct($pPRO_UID=null)
     {
         $this->errno = 0;
         $this->errstr = "";
@@ -34,56 +36,60 @@ class dbConnections
         $this->getAllConnections();
     }
 
-    function getAllConnections()
+    public function getAllConnections()
     {
-        $oDBSource = new DbSource();
-        $oContent = new Content();
-		$connections = Array();
-		$types = Array();
-		$this->have_any_connectios = false;
-		
-        $c = new Criteria();
-        
-        $c->clearSelectColumns();
-        $c->addSelectColumn(DbSourcePeer::DBS_UID);
-        $c->addSelectColumn(DbSourcePeer::PRO_UID);
-        $c->addSelectColumn(DbSourcePeer::DBS_TYPE);
-        $c->addSelectColumn(DbSourcePeer::DBS_SERVER);
-        $c->addSelectColumn(DbSourcePeer::DBS_DATABASE_NAME);
-        $c->addSelectColumn(DbSourcePeer::DBS_USERNAME);
-        $c->addSelectColumn(DbSourcePeer::DBS_PASSWORD);
-        $c->addSelectColumn(DbSourcePeer::DBS_PORT);
-        $c->addSelectColumn(ContentPeer::CON_VALUE);
-
-        $c->add(DbSourcePeer::PRO_UID, $this->PRO_UID);
-        $c->add(ContentPeer::CON_CATEGORY, 'DBS_DESCRIPTION');
-        $c->addJoin(DbSourcePeer::DBS_UID, ContentPeer::CON_ID);
-
-        $result = DbSourcePeer::doSelectRS($c);
-        $result->next();
-        $row = $result->getRow();
-
-        while ($row = $result->getRow()) {
-            $connections[] = Array(
-				'DBS_UID' 		=> $row[0], 
-				'DBS_TYPE' 		=> $row[2],
-				'DBS_SERVER'	=> $row[3],
-				'DBS_DATABASE_NAME' => $row[4],
-				'DBS_USERNAME' 	=> $row[5],
-				'DBS_PASSWORD' 	=> $row[6],
-				'DBS_PORT' 		=> $row[7],
-				'CON_VALUE' 	=> $row[8],
-			);
-            $result->next();
-        }
-        if(!in_array($row[2], $types)) {
-			$types[] = $row[2];
-		}
-        $this->connections = $connections;
-        return $connections;
+    	if( isset($this->PRO_UID) ){
+	        $oDBSource = new DbSource();
+	        $oContent = new Content();
+			$connections = Array();
+			$types = Array();
+			$this->have_any_connectios = false;
+			
+	        $c = new Criteria();
+	        
+	        $c->clearSelectColumns();
+	        $c->addSelectColumn(DbSourcePeer::DBS_UID);
+	        $c->addSelectColumn(DbSourcePeer::PRO_UID);
+	        $c->addSelectColumn(DbSourcePeer::DBS_TYPE);
+	        $c->addSelectColumn(DbSourcePeer::DBS_SERVER);
+	        $c->addSelectColumn(DbSourcePeer::DBS_DATABASE_NAME);
+	        $c->addSelectColumn(DbSourcePeer::DBS_USERNAME);
+	        $c->addSelectColumn(DbSourcePeer::DBS_PASSWORD);
+	        $c->addSelectColumn(DbSourcePeer::DBS_PORT);
+	        $c->addSelectColumn(DbSourcePeer::DBS_ENCODE);
+	        $c->addSelectColumn(ContentPeer::CON_VALUE);
+	
+	        $c->add(DbSourcePeer::PRO_UID, $this->PRO_UID);
+	        $c->add(ContentPeer::CON_CATEGORY, 'DBS_DESCRIPTION');
+	        $c->addJoin(DbSourcePeer::DBS_UID, ContentPeer::CON_ID);
+	
+	        $result = DbSourcePeer::doSelectRS($c);
+	        $result->next();
+	        $row = $result->getRow();
+	
+	        while ($row = $result->getRow()) {
+	            $connections[] = Array(
+					'DBS_UID' 		=> $row[0], 
+					'DBS_TYPE' 		=> $row[2],
+					'DBS_SERVER'	=> $row[3],
+					'DBS_DATABASE_NAME' => $row[4],
+					'DBS_USERNAME' 	=> $row[5],
+					'DBS_PASSWORD' 	=> $row[6],
+					'DBS_PORT' 		=> $row[7],
+	            	'DBS_ENCODE' 	=> $row[8],
+					'CON_VALUE' 	=> $row[9],
+				);
+	            $result->next();
+	        }
+	        if(!in_array($row[2], $types)) {
+				$types[] = $row[2];
+			}
+	        $this->connections = $connections;
+	        return $connections;
+    	}
     }
 
-	function getConnections($pType){
+	public function getConnections($pType){
 		$connections = Array();	
 		foreach($this->connections as $c){
 			if(trim($pType) == trim($c['DBS_TYPE'])){
@@ -99,12 +105,12 @@ class dbConnections
 		
 	}
 	
-	function loadAdditionalConnections()
+	public function loadAdditionalConnections()
 	{	
 		PROPEL::Init ( PATH_METHODS.'dbConnections/genericDbConnections.php'); 
 	}
 	
-	function getDbServicesAvailables()
+	public function getDbServicesAvailables()
 	{ 
 		$servicesAvailables = Array();
 		
@@ -117,7 +123,7 @@ class dbConnections
 			'pgsql' => Array(
                  'id'       => 'pgsql',
                  'command'  => 'pg_connect',
-                 'name'     => 'PostgreSQL'
+                 'name'     => 'PostgreSql'
             ),
 			'mssql' => Array(
                   'id'      => 'mssql',
@@ -150,7 +156,7 @@ class dbConnections
 		return $servicesAvailables;
 	}
 	
-    function showMsg()
+    public function showMsg()
     {
         if ($this->errno != 0) {
             $msg = "
@@ -167,15 +173,122 @@ class dbConnections
             print ($msg);
         }
     }
+    
+    public function getEncondeList($engine=''){
+    	switch( $engine ){
+    		default:
+    		case 'mysql':
+    			$encodes = Array( 
+					Array('big5',     'big5 - Big5 Traditional Chinese'),
+					Array('dec8',     'dec8 - DEC West European'),
+					Array('cp850',    'cp850 - DOS West European'),
+					Array('hp8',      'hp8 - HP West European'),
+					Array('koi8r',    'koi8r - KOI8-R Relcom Russian'),
+					Array('latin1',   'latin1 - cp1252 West European'),
+					Array('latin2',   'latin2 - ISO 8859-2 Central European'),
+					Array('swe7',     'swe7 - 7bit Swedish'),               
+					Array('ascii',    'ascii - US ASCII'),                   
+					Array('ujis',     'ujis - EUC-JP Japanese'),            
+					Array('sjis',     'sjis - Shift-JIS Japanese'),         
+					Array('hebrew',   'hebrew - ISO 8859-8 Hebrew'),          
+					Array('tis620',   'tis620 - TIS620 Thai'),                
+					Array('euckr',    'euckr - EUC-KR Korean'),              
+					Array('koi8u',    'koi8u - KOI8-U Ukrainian'),           
+					Array('gb2312',   'gb2312 - GB2312 Simplified Chinese'), 
+					Array('greek',    'greek - ISO 8859-7 Greek'),           
+					Array('cp1250',   'cp1250 - Windows Central European'),   
+					Array('gbk',      'gbk - GBK Simplified Chinese'),     
+					Array('latin5',   'latin5 - ISO 8859-9 Turkish'),         
+					Array('armscii8', 'armscii8 - ARMSCII-8 Armenian'),         
+					Array('utf8',     'utf8 - UTF-8 Unicode'),              
+					Array('ucs2',     'ucs2 - UCS-2 Unicode'),              
+					Array('cp866',    'cp866 - DOS Russian'),                
+					Array('keybcs2',  'keybcs2 - DOS Kamenicky Czech-Slovak'),
+					Array('macce',    'macce - Mac Central European'),
+					Array('macroman', 'macroman - Mac West European'),
+					Array('cp852',    'cp852 - DOS Central European'),
+					Array('latin7',   'atin7 - ISO 8859-13 Baltic'),  
+					Array('cp1251',   'cp1251 - Windows Cyrillic'),    
+					Array('cp1256',   'cp1256  - Windows Arabic'),      
+					Array('cp1257',   'cp1257  - Windows Baltic'),      
+					Array('binary',   'binary  - Binary pseudo charset'),
+					Array('geostd8',  'geostd8 - GEOSTD8 Georgian'),    
+					Array('cp932',    'cp932] - SJIS for Windows Japanese'),
+					Array('eucjpms',  'eucjpms - UJIS for Windows Japanese') 
+				);
 
-    function getErrno()
+    		break;
+    		case 'pgsql':
+    			$encodes = Array( 
+					Array("BIG5",  "BIG5"),
+					Array("EUC_CN",  "EUC_CN"),
+					Array("EUC_JP",  "EUC_JP"),
+					Array("EUC_KR",  "EUC_KR"),
+					Array("EUC_TW",  "EUC_TW"),
+					Array("GB18030",  "GB18030"),
+					Array("GBK",  "GBK"),
+					Array("ISO_8859_5",  "ISO_8859_5"),
+					Array("ISO_8859_6",  "ISO_8859_6"),
+					Array("ISO_8859_7",  "ISO_8859_7"),
+					Array("ISO_8859_8",  "ISO_8859_8"),
+					Array("JOHAB",  "JOHAB"),
+					Array("KOI8",  "KOI8"),
+					Array("selected",  "LATIN1"),
+					Array("LATIN2",  "LATIN2"),
+					Array("LATIN3",  "LATIN3"),
+					Array("LATIN4",  "LATIN4"),
+					Array("LATIN5",  "LATIN5"),
+					Array("LATIN6",  "LATIN6"),
+					Array("LATIN7",  "LATIN7"),
+					Array("LATIN8",  "LATIN8"),
+					Array("LATIN9",  "LATIN9"),
+					Array("LATIN10",  "LATIN10"),
+					Array("SJIS",  "SJIS"),
+					Array("SQL_ASCII",  "SQL_ASCII"),
+					Array("UHC",  "UHC"),
+					Array("UTF8",  "UTF8"),
+					Array("WIN866",  "WIN866"),
+					Array("WIN874",  "WIN874"),
+					Array("WIN1250",  "WIN1250"),
+					Array("WIN1251",  "WIN1251"),
+					Array("WIN1252",  "WIN1252"),
+					Array("WIN1256",  "WIN1256"),
+					Array("WIN1258",  "WIN1258")
+				);
+    		break;
+    		case 'mssql':
+    		break;
+    		case 'oracle':
+    		break;
+    	}
+    	
+    	$this->encodesList = $encodes;
+    	return $this->ordx($this->encodesList);
+    }
+
+    public function getErrno()
     {
         return $this->errno;
     }
 
-    function getErrmsg()
+    public function getErrmsg()
     {
         return $this->errstr;
+    }
+    
+    public function ordx($m){
+    	$aTmp = Array();
+    	$aRet = Array();
+    	for($i=0; $i<count($m); $i++){
+			array_push($aTmp, $m[$i][0].'|'.$m[$i][1]);  
+    	}
+		usort($aTmp,"strnatcasecmp");
+	
+		for($i=0; $i<count($aTmp); $i++){
+			$x = explode('|', $aTmp[$i]);
+			array_push($aRet, Array($x[0], $x[1]));
+		}
+    	return $aRet;
     }
 
 }

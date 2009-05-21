@@ -1623,10 +1623,13 @@ class XmlForm_Field_Dropdown extends XmlForm_Field {
 				$html = $this->htmlentities ( isset ( $this->options [$value] ) ? $this->options [$value] : '', ENT_COMPAT, 'utf-8' );
 				$html .= '<select class="module_app_input___gray" id="form' . $rowId . '[' . $this->name . ']" name="form' . $rowId . '[' . $this->name . ']" style="display:none" ' . (($this->style) ? 'style="' . $this->style . '"' : '') . '>';
 			}
+			
 			foreach ( $this->option as $optionName => $option ) {
+				$option = utf8_encode($option);
 				$html .= '<option value="' . $optionName . '" ' . ($optionName == $value ? 'selected="selected"' : '') . '>' . $option . '</option>';
 			}
 			foreach ( $this->sqlOption as $optionName => $option ) {
+				$option = utf8_encode($option);
 				$html .= '<option value="' . $optionName . '" ' . ($optionName == $value ? 'selected="selected"' : '') . '>' . $option . '</option>';
 			}
 			$html .= '</select>';

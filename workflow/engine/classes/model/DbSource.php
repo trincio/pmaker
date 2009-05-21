@@ -157,10 +157,11 @@ class DbSource extends BaseDbSource
 
     function create($aData)
     {
-        $con = Propel::getConnection(UsersPeer::DATABASE_NAME);
+        $con = Propel::getConnection(DbSourcePeer::DATABASE_NAME);
         try {
             $this->fromArray($aData, BasePeer::TYPE_FIELDNAME);
             if ($this->validate()) {
+            	$this->setDbsUid( md5(date("dMYHis")) );
                 $result = $this->save();
             } else {
                 $e = new Exception("Failed Validation in class " . get_class($this) . ".");
@@ -168,7 +169,7 @@ class DbSource extends BaseDbSource
                 throw ($e);
             }
             $con->commit();
-            return $result;
+            return $this->getDbsUid();
         }
         catch (exception $e) {
             $con->rollback();

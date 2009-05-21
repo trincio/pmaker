@@ -80,6 +80,8 @@ class DbSourceMapBuilder {
 
 		$tMap->addColumn('DBS_PORT', 'DbsPort', 'int', CreoleTypes::INTEGER, false, null);
 
+		$tMap->addColumn('DBS_ENCODE', 'DbsEncode', 'string', CreoleTypes::VARCHAR, false, 32);
+
 	} // doBuild()
 
 } // DbSourceMapBuilder
