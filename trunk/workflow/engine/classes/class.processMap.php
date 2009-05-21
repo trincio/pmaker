@@ -367,19 +367,23 @@ class processMap {
   		require_once 'classes/model/ProcessUser.php';
   		require_once 'classes/model/StepSupervisor.php';
   		require_once 'classes/model/ReportTable.php';
+  		require_once 'classes/model/CaseTracker.php';
+  		require_once 'classes/model/CaseTrackerObject.php';
   		G::LoadClass('case');
   		G::LoadClass('reportTables');
   		//Instance all classes necesaries
-  		$oProcess         = new Process();
-  		$oDynaform        = new Dynaform();
-  		$oInputDocument   = new InputDocument();
-  		$oOutputDocument  = new OutputDocument();
-  		$oTrigger         = new Triggers();
-  		$oRoute           = new Route();
-  		$oSwimlaneElement = new SwimlanesElements();
-  		$oConfiguration   = new Configuration();
-  		$oDbSource        = new DbSource();
-  		$oReportTable     = new ReportTables();
+  		$oProcess           = new Process();
+  		$oDynaform          = new Dynaform();
+  		$oInputDocument     = new InputDocument();
+  		$oOutputDocument    = new OutputDocument();
+  		$oTrigger           = new Triggers();
+  		$oRoute             = new Route();
+  		$oSwimlaneElement   = new SwimlanesElements();
+  		$oConfiguration     = new Configuration();
+  		$oDbSource          = new DbSource();
+  		$oReportTable       = new ReportTables();
+  		$oCaseTracker       = new CaseTracker();
+  		$oCaseTrackerObject = new CaseTrackerObject();
       //Delete the applications of process
   		$oCriteria = new Criteria('workflow');
   	  $oCriteria->add(ApplicationPeer::PRO_UID, $sProcessUID);
@@ -505,6 +509,12 @@ class processMap {
       	$oReportTable->deleteReportTable($aRow['REP_TAB_UID']);
       	$oDataset->next();
       }
+      //Delete case tracker configuration
+      $oCaseTracker->remove($sProcessUID);
+      //Delete case tracker objects
+      $oCriteria = new Criteria('workflow');
+  	  $oCriteria->add(CaseTrackerObjectPeer::PRO_UID, $sProcessUID);
+      ProcessUserPeer::doDelete($oCriteria);
       //Delete the process
       try {
   		  $oProcess->remove($sProcessUID);

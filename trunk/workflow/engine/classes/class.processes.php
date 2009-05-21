@@ -183,8 +183,8 @@ class Processes {
 	function caseTrackerExists ( $sUid = '') {
     $oCaseTracker = new CaseTracker();
     return $oCaseTracker->caseTrackerExists( $sUid );
-  }	
-	
+  }
+
   function dbConnectionExists ( $sUid = '') {
     $oDBSource = new DbSource();
     return $oDBSource->Exists( $sUid );
@@ -703,12 +703,12 @@ class Processes {
   	return;
   }
 
-  function createCaseTrackerRows ($CaseTracker ){//julichu
+  function createCaseTrackerRows ($CaseTracker ){
   	if ( is_array ( $CaseTracker) )
   	  foreach ( $CaseTracker as $key => $row ) {
         $oCaseTracker = new CaseTracker();
-        //if($oCaseTracker->subProcessExists ($row['PRO_UID']))
-         		//$oCaseTracker->remove($row['PRO_UID']);
+        if($oCaseTracker->caseTrackerExists ($row['PRO_UID']))
+          $oCaseTracker->remove($row['PRO_UID']);
    		  $res = $oCaseTracker->create($row);
   	  }
   	return;
@@ -717,7 +717,7 @@ class Processes {
   function createCaseTrackerObjectRows ($CaseTrackerObject ) {
   	foreach ( $CaseTrackerObject as $key => $row ) {
       $oCaseTrackerObject = new CaseTrackerObject();
-      if($oCaseTrackerObject->caseTrackerObjectExists ($row['CTO_UID'])) 
+      if($oCaseTrackerObject->caseTrackerObjectExists ($row['CTO_UID']))
        		$oCaseTrackerObject->remove($row['CTO_UID']);
    		$res = $oCaseTrackerObject->create($row);
   	}
@@ -787,15 +787,15 @@ class Processes {
   	  $newGuid = $this->getUnusedInputGUID();
   	  $map[ $val['INP_DOC_UID'] ] = $newGuid;
   	  $oData->inputs[$key]['INP_DOC_UID'] = $newGuid;
-  	}  	
-  	foreach ( $oData->steps as $key => $val ) {  	  
+  	}
+  	foreach ( $oData->steps as $key => $val ) {
   	  if(isset($val['STEP_TYPE_OBJ'])){
-  	  		if ( $val['STEP_TYPE_OBJ'] == 'INPUT_DOCUMENT' ) { 
+  	  		if ( $val['STEP_TYPE_OBJ'] == 'INPUT_DOCUMENT' ) {
     			  $newGuid = $map[ $val['STEP_UID_OBJ'] ];
   	  		  $oData->steps[$key]['STEP_UID_OBJ'] = $newGuid;
   	  		}
-  	  }		
-  	}  	
+  	  }
+  	}
   	foreach ( $oData->caseTrackerObject as $key => $val ) {
   	  if ( $val['CTO_TYPE_OBJ'] == 'INPUT_DOCUMENT' ) {
     	  $newGuid = $map[ $val['CTO_UID_OBJ'] ];
@@ -866,7 +866,7 @@ class Processes {
     			  $newGuid = $map[ $val['STEP_UID_OBJ'] ];
   	  		  $oData->steps[$key]['STEP_UID_OBJ'] = $newGuid;
   	  		}
-  	  }		
+  	  }
   	}
   	foreach ( $oData->caseTrackerObject as $key => $val ) {
   	  if ( $val['CTO_TYPE_OBJ'] == 'OUTPUT_DOCUMENT' ) {
@@ -1022,15 +1022,15 @@ class Processes {
     }
   }
 
-  function createStepRows ($aStep ){  
+  function createStepRows ($aStep ){
   	foreach ( $aStep as $key => $row ) {
-      $oStep = new Step();      
+      $oStep = new Step();
       if(isset($row['STEP_UID'])) {
       		if($oStep->StepExists ($row['STEP_UID']))
       				$oStep->remove($row['STEP_UID']);
-      		
+
       		$res = $oStep->create($row);
-      }		
+      }
   	}
   	return;
   }
@@ -1051,13 +1051,13 @@ class Processes {
   * @return boolean
   */
   function renewAllStepGuid ( &$oData ) {
-  	$map = array ();  	
+  	$map = array ();
   	foreach ( $oData->steps as $key => $val ) {
   	 	if(isset($val['STEP_UID'])) {
   	  		$newGuid = $this->getUnusedStepGUID();
   	  		$map[ $val['STEP_UID'] ] = $newGuid;
   	  		$oData->steps[$key]['STEP_UID'] = $newGuid;
-  	  }		
+  	  }
   	}
   	foreach ( $oData->steptriggers as $key => $val ) {
   		if ( $val['STEP_UID'] > 0 ) {
@@ -1692,10 +1692,10 @@ class Processes {
 
 		  foreach($oData->dynaforms as $key => $value)
 		  	{
-		  		//print_r($value); echo "<br>";		  		
+		  		//print_r($value); echo "<br>";
 		  		if($value['DYN_TYPE']=='grid')
-		  		 {	$oData->gridFiles[$value['DYN_UID'] ] = $value['DYN_UID'];  		  		 	 
-		  		 }			  		
+		  		 {	$oData->gridFiles[$value['DYN_UID'] ] = $value['DYN_UID'];
+		  		 }
 		  	}
       $oData->dynaformFiles = array();
       $sIdentifier = 0;
@@ -1708,7 +1708,7 @@ class Processes {
 
           $fsXmlContent = intval( fread ( $fp, 9));      //reading the size of $XmlContent
           if ( $fsXmlContent > 0 ) {
-          	$oData->dynaformFiles[$XmlGuid ] = $XmlGuid;          	
+          	$oData->dynaformFiles[$XmlGuid ] = $XmlGuid;
             $XmlContent   = fread( $fp, $fsXmlContent );    //reading string $XmlContent
             unset($XmlContent);
           }
@@ -1772,21 +1772,21 @@ class Processes {
 							if(isset($oData->process['PRO_UID_OLD'])){
               		//print "$sFileName <br>";
               		$XmlContent   = fread( $fp, $fsXmlContent );    //reading string $XmlContent
-              		
+
               		$XmlContent = str_replace($oData->process['PRO_UID_OLD'], $oData->process['PRO_UID'], $XmlContent);
               		$XmlContent = str_replace($XmlGuid, $newXmlGuid, $XmlContent);
               		//foreach
               		foreach($oData->gridFiles as $key => $value)
               			{
               					$XmlContent = str_replace($key, $value, $XmlContent);
-              			}              
+              			}
               		#here we verify if is adynaform or a html
               		$ext = (substr(trim($XmlContent),0,5) == '<?xml')?'.xml':'.html';
-             
+
               		$sFileName = $path . $newXmlGuid . $ext;
               		$bytesSaved = @file_put_contents ( $sFileName, $XmlContent );
               		//if ( $bytesSaved != $fsXmlContent ) throw ( new Exception ('Error writing dynaform file in directory : ' . $path ) );
-              }	
+              }
             }
           }
         }
@@ -1849,15 +1849,15 @@ class Processes {
   * @param string $sProUid
   * @return boolean
   */
-  function removeProcessRows ($sProUid )  { 
-    try { 
+  function removeProcessRows ($sProUid )  {
+    try {
   	  //Instance all classes necesaries
-  	  $oProcess         = new Process();  	 						
+  	  $oProcess         = new Process();
   	  $oDynaform        = new Dynaform();
   	  $oInputDocument   = new InputDocument();
-  	  $oOutputDocument  = new OutputDocument();  	    	  
+  	  $oOutputDocument  = new OutputDocument();
   	  $oTrigger         = new Triggers();
-  	  $oStepTrigger     = new StepTrigger();  	  
+  	  $oStepTrigger     = new StepTrigger();
   	  $oRoute           = new Route();
   	  $oStep            = new Step();
   	  $oSubProcess      = new SubProcess();
@@ -1865,9 +1865,9 @@ class Processes {
   	  $oCaseTrackerObject=new CaseTrackerObject();
   	  $oObjectPermission= new ObjectPermission();
   	  $oSwimlaneElement = new SwimlanesElements();
-  	  $oConnection      = new DbSource();  	  
-  	  $oStage						= new Stage();     
-                                     
+  	  $oConnection      = new DbSource();
+  	  $oStage						= new Stage();
+
   	  //Delete the tasks of process
   	  $oCriteria = new Criteria('workflow');
   	  $oCriteria->add(TaskPeer::PRO_UID, $sProUid);
@@ -1875,11 +1875,11 @@ class Processes {
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
       $oDataset->next();
       $oTask = new Task();
-      while ($aRow = $oDataset->getRow()) {      	
+      while ($aRow = $oDataset->getRow()) {
         $oTask->remove( $aRow['TAS_UID']);
       	$oDataset->next();
       }
-           
+
     //Delete the dynaforms of process
     $oCriteria = new Criteria('workflow');
     $oCriteria->add(DynaformPeer::PRO_UID, $sProUid);
@@ -2015,7 +2015,7 @@ class Processes {
 	  $oDataset = CaseTrackerPeer::doSelectRS($oCriteria);
     $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
     $oDataset->next();
-    while ($aRow = $oDataset->getRow()) {    	
+    while ($aRow = $oDataset->getRow()) {
     	if($oCaseTracker->caseTrackerExists ($aRow['PRO_UID']))
     			$oCaseTracker->remove($aRow['PRO_UID']);
     	$oDataset->next();
@@ -2026,27 +2026,27 @@ class Processes {
 	  $oCriteria->add(CaseTrackerObjectPeer::PRO_UID, $sProUid);
 	  $oDataset = CaseTrackerObjectPeer::doSelectRS($oCriteria);
     $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-    $oDataset->next(); 
-    while ($aRow = $oDataset->getRow()) { 
+    $oDataset->next();
+    while ($aRow = $oDataset->getRow()) {
     	if($oCaseTrackerObject->caseTrackerObjectExists ($aRow['CTO_UID'])) {
-    			$oCaseTrackerObject->remove($aRow['CTO_UID']);    	  	    	        
+    			$oCaseTrackerObject->remove($aRow['CTO_UID']);
       }
-    	$oDataset->next();    	
+    	$oDataset->next();
     }
- 
+
     //Delete the ObjectPermission of process
 		$oCriteria = new Criteria('workflow');
 	  $oCriteria->add(ObjectPermissionPeer::PRO_UID, $sProUid);
 	  $oDataset = ObjectPermissionPeer::doSelectRS($oCriteria);
     $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-    $oDataset->next(); 
-    while ($aRow = $oDataset->getRow()) { 
-    		if($oObjectPermission->Exists ($aRow['OP_UID'])) {   			
+    $oDataset->next();
+    while ($aRow = $oDataset->getRow()) {
+    		if($oObjectPermission->Exists ($aRow['OP_UID'])) {
     				$oObjectPermission->remove($aRow['OP_UID']);
-        }	
+        }
     	$oDataset->next();
     }
-    
+
     //Delete the Stage of process
 		$oCriteria = new Criteria('workflow');
 	  $oCriteria->add(StagePeer::PRO_UID, $sProUid);
@@ -2058,8 +2058,8 @@ class Processes {
     			$oStage->remove($aRow['STG_UID']);
     	$oDataset->next();
     }
-	
-		
+
+
  		return true;
   	}
   	catch ( Exception $oError) {
@@ -2072,8 +2072,8 @@ class Processes {
   * @param string $sProUid
   * @return boolean
   */
-  function createProcessFromData ($oData, $pmFilename ) {  
-		$this->removeProcessRows ($oData->process['PRO_UID'] );   
+  function createProcessFromData ($oData, $pmFilename ) {
+		$this->removeProcessRows ($oData->process['PRO_UID'] );
     $this->createProcessRow($oData->process);
     $this->createTaskRows($oData->tasks);
     $this->createRouteRows($oData->routes);
@@ -2105,8 +2105,8 @@ class Processes {
   */
   function updateProcessFromData ($oData, $pmFilename ) {
     $this->updateProcessRow ($oData->process );
-    $this->removeProcessRows ($oData->process['PRO_UID'] ); 
-    $this->createTaskRows ($oData->tasks ); 
+    $this->removeProcessRows ($oData->process['PRO_UID'] );
+    $this->createTaskRows ($oData->tasks );
     $this->createRouteRows ($oData->routes );
     $this->createLaneRows ($oData->lanes );
     $this->createDynaformRows ($oData->dynaforms );
