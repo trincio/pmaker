@@ -257,8 +257,10 @@ class dbConnections
 				);
     		break;
     		case 'mssql':
+    			$encodes = Array();
     		break;
     		case 'oracle':
+    			$encodes = Array();
     		break;
     	}
     	

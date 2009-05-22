@@ -119,6 +119,9 @@ class DbSource extends BaseDbSource
 
     public function update($fields)
     {
+    	if( $fields['DBS_ENCODE'] == '0'){
+    		unset($fields['DBS_ENCODE']);
+    	}
         $con = Propel::getConnection(DbSourcePeer::DATABASE_NAME);
         try {
             $con->begin();
@@ -157,6 +160,9 @@ class DbSource extends BaseDbSource
 
     function create($aData)
     {
+    	if( $aData['DBS_ENCODE'] == '0'){
+    		unset($aData['DBS_ENCODE']);
+    	}
         $con = Propel::getConnection(DbSourcePeer::DATABASE_NAME);
         try {
             $this->fromArray($aData, BasePeer::TYPE_FIELDNAME);
