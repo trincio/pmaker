@@ -28,12 +28,13 @@ $_POST['action'] = get_ajax_value('action');
 
 switch ($_POST['action'])
 {
-	case 'showUsers':
+	case 'showUsers': 
 	  G::LoadClass('groups');
 	  $oGroup = new Groups();
 	  global $G_PUBLISH;
   	$G_PUBLISH = new Publisher();
-  	$G_PUBLISH->AddContent('propeltable', 'paged-table', 'groups/groups_UsersList', $oGroup->getUsersGroupCriteria($_POST['sGroupUID']), array('GRP_UID' => $_POST['sGroupUID']));
+  	$G_PUBLISH->AddContent('xmlform', 'xmlform', 'groups/groups_UsersListTitle', '', array('GRP_NAME' => $_POST['GroupName']));
+  	$G_PUBLISH->AddContent('propeltable', 'paged-table', 'groups/groups_UsersList', $oGroup->getUsersGroupCriteria($_POST['sGroupUID']), array('GRP_UID' => $_POST['sGroupUID'], 'GRP_NAME' => $_POST['GroupName']));
     G::RenderPage('publish', 'raw');
 	break;
 

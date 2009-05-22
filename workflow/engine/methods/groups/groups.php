@@ -57,21 +57,22 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_USERS"))!=1) return $RBAC_Response;
     popupWindow('' , '<?=$groups_Edit?>' , 500 , 200 );
 //    refreshTree();
   }
-  function addUserGroup( uid ){
-    popupWindow('' , '<?=$groups_AddUser?>?UID='+uid+'&nobug' , 500 , 400 );
+  function addUserGroup( uid, gname ){ 
+    popupWindow('' , '<?=$groups_AddUser?>?UID='+uid+'&GroupName='+gname , 500 , 520 );
   }
   function saveGroup( form ) {
     ajax_post( form.action, form, 'POST' );
     currentPopupWindow.remove();
     refreshTree();
   }
-  function selectGroup( uid, element ){
+  //function selectGroup( uid, element ){
+  function selectGroup( uid, group ){ 
     currentGroup = uid;
     var oRPC = new leimnud.module.rpc.xmlhttp({
       url   : '../groups/groups_Ajax',
       async : false,
       method: 'POST',
-      args  : 'action=showUsers&sGroupUID=' + uid
+      args  : 'action=showUsers&sGroupUID=' + uid + '&GroupName=' + group
     });
     oRPC.make();
     document.getElementById('spanUsersList').innerHTML = oRPC.xmlhttp.responseText;

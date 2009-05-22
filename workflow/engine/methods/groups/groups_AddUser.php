@@ -28,6 +28,7 @@
   G::LoadClass('groups');
   $oGroup = new Groups();
   $G_PUBLISH = new Publisher();
+  $G_PUBLISH->AddContent('xmlform', 'xmlform', 'groups/groups_UsersListTitle', '', array('GRP_NAME' => $_GET['GroupName']));
   $G_PUBLISH->AddContent('propeltable', 'paged-table', 'groups/groups_AvailableUsers', $oGroup->getAvailableUsersCriteria($_GET['UID']));
   $G_PUBLISH->AddContent('xmlform', 'xmlform', 'groups/groups_SelectUsers','',  '','save' );
   G::RenderPage('publish', 'raw');
