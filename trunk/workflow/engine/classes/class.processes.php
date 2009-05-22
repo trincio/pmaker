@@ -1876,7 +1876,8 @@ class Processes {
       $oDataset->next();
       $oTask = new Task();
       while ($aRow = $oDataset->getRow()) {
-        $oTask->remove( $aRow['TAS_UID']);
+        if ($oTask->taskExists($aRow['TAS_UID']))
+          $oTask->remove($aRow['TAS_UID']);
       	$oDataset->next();
       }
 
@@ -1895,7 +1896,8 @@ class Processes {
     	foreach( glob($sWildcard) as $fn ) {
         @unlink($fn);
       }
-    	$oDynaform->remove( $aRow['DYN_UID'] );
+      if ($oDynaform->dynaformExists($aRow['DYN_UID']))
+    	  $oDynaform->remove($aRow['DYN_UID']);
     	$oDataset->next();
     }
 
@@ -1906,7 +1908,8 @@ class Processes {
     $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
     $oDataset->next();
     while ($aRow = $oDataset->getRow()) {
-    	$oInputDocument->remove($aRow['INP_DOC_UID']);
+      if ($oInputDocument->InputExists($aRow['INP_DOC_UID']))
+    	  $oInputDocument->remove($aRow['INP_DOC_UID']);
     	$oDataset->next();
     }
 
@@ -1917,7 +1920,8 @@ class Processes {
     $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
     $oDataset->next();
     while ($aRow = $oDataset->getRow()) {
-    	$oOutputDocument->remove($aRow['OUT_DOC_UID']);
+      if ($oOutputDocument->OutputExists($aRow['OUT_DOC_UID']))
+    	  $oOutputDocument->remove($aRow['OUT_DOC_UID']);
     	$oDataset->next();
     }
 
@@ -1935,7 +1939,8 @@ class Processes {
     	$oDataseti->setFetchmode(ResultSet::FETCHMODE_ASSOC);
     	$oDataseti->next();
     	while ($aRowi = $oDataseti->getRow()) {
-    		$oStepTrigger->remove($aRowi['STEP_UID'], $aRowi['TAS_UID'], $aRowi['TRI_UID'], $aRowi['ST_TYPE']);
+    	  if ($oStepTrigger->stepTriggerExists($aRowi['STEP_UID'], $aRowi['TAS_UID'], $aRowi['TRI_UID'], $aRowi['ST_TYPE']))
+    		  $oStepTrigger->remove($aRowi['STEP_UID'], $aRowi['TAS_UID'], $aRowi['TRI_UID'], $aRowi['ST_TYPE']);
     		$oDataseti->next();
     	}
 
@@ -1950,7 +1955,8 @@ class Processes {
     $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
     $oDataset->next();
     while ($aRow = $oDataset->getRow()) {
-        $oStep->remove($aRow['STEP_UID']);
+        if ($oStep->StepExists($aRow['STEP_UID']))
+          $oStep->remove($aRow['STEP_UID']);
         $oDataset->next();
     }
 
@@ -1961,7 +1967,8 @@ class Processes {
     $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
     $oDataset->next();
     while ($aRow = $oDataset->getRow()) {
-    	$oTrigger->remove($aRow['TRI_UID']);
+      if ($oTrigger->TriggerExists($aRow['TRI_UID']))
+    	  $oTrigger->remove($aRow['TRI_UID']);
     	$oDataset->next();
     }
 
@@ -1972,7 +1979,8 @@ class Processes {
     $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
     $oDataset->next();
     while ($aRow = $oDataset->getRow()) {
-    	$oRoute->remove($aRow['ROU_UID']);
+      if ($oRoute->routeExists($aRow['ROU_UID']))
+    	  $oRoute->remove($aRow['ROU_UID']);
     	$oDataset->next();
     }
 
@@ -1983,7 +1991,8 @@ class Processes {
     $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
     $oDataset->next();
     while ($aRow = $oDataset->getRow()) {
-    	$oSwimlaneElement->remove($aRow['SWI_UID']);
+      if ($oSwimlaneElement->swimlanesElementsExists($aRow['SWI_UID']))
+    	  $oSwimlaneElement->remove($aRow['SWI_UID']);
     	$oDataset->next();
     }
 
@@ -1994,7 +2003,8 @@ class Processes {
     $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
     $oDataset->next();
     while ($aRow = $oDataset->getRow()) {
-    	$oConnection->remove($aRow['DBS_UID']);
+      if ($oConnection->Exists($aRow['DBS_UID']))
+    	  $oConnection->remove($aRow['DBS_UID']);
     	$oDataset->next();
     }
 
@@ -2005,7 +2015,8 @@ class Processes {
     $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
     $oDataset->next();
     while ($aRow = $oDataset->getRow()) {
-    	$oSubProcess->remove($aRow['SP_UID']);
+      if ($oSubProcess->subProcessExists($aRow['SP_UID']))
+    	  $oSubProcess->remove($aRow['SP_UID']);
     	$oDataset->next();
     }
 
