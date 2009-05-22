@@ -435,16 +435,17 @@ class wsBase
 
 			global $RBAC;
 			$RBAC->initRBAC();
-			$user=$RBAC->verifyUser($userId);
-			if($user==1){
+
+			$user = $RBAC->verifyUser($userId);
+			if ( $user == 1){
 				$result = new wsResponse (7, "User ID: $userId already exist!!!");
 				return $result;
 			}
 
 			$rol=$RBAC->loadById($role);
-			if(!is_array($rol)){
-				$very_rol=$RBAC->verifyByCode($role);
-				if($very_rol==0){
+			if ( !is_array($rol) ){
+				$very_rol = $RBAC->verifyByCode($role);
+				if ( $very_rol==0 ){
 					$result = new wsResponse (6, "Invalid role: $role");
 					return $result;
 				}
@@ -460,7 +461,7 @@ class wsBase
 			$aData['USR_UPDATE_DATE'] = date('Y-m-d H:i:s');
 			$aData['USR_STATUS']      = 1;
 
-			$sUserUID                 = $RBAC->createUser($aData,  $rol['ROL_CODE']);
+			$sUserUID                 = $RBAC->createUser($aData,  $role );
 
 			$aData['USR_UID']         = $sUserUID;
 			$aData['USR_PASSWORD']    = md5($sUserUID);
@@ -474,7 +475,7 @@ class wsBase
 			$aData['USR_POSITION']    = '';
 			$aData['USR_RESUME']      = '';
 			$aData['USR_BIRTHDAY']    = date('Y-m-d');
-			$aData['USR_ROLE']        = $rol['ROL_CODE'];
+			$aData['USR_ROLE']        = $role ;
 
 			$oUser = new Users();
 			$oUser->create($aData);
@@ -507,6 +508,7 @@ class wsBase
 				return $result;
 			}
 
+      /*  this code is unnecesary because the restriccions is over the user is calling this method, not over the user we are changing group.
 			$oRBAC = RBAC::getSingleton();
       $oRBAC->loadUserRolePermission($oRBAC->sSystem, $userId);
       $aPermissions = $oRBAC->aUserInfo[$oRBAC->sSystem]['PERMISSIONS'];
@@ -521,7 +523,8 @@ class wsBase
 					return $result;
         }
       }
-
+      */
+       
 			$very_user=$groups->verifyUsertoGroup( $groupId, $userId);
 			if($very_user==1){
 				$result = new wsResponse (8, "User exist in the group");
