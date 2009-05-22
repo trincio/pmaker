@@ -2,7 +2,7 @@ msgid ""
 msgstr "" 
 "Project-Id-Version: PM 4.0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-05-05 20:02+0100 \n"
+"PO-Revision-Date: 2009-05-22 15:23+0100 \n"
 "Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
 "Language-Team: Colosa Developers Team <developers@colosa.com>\n"
 "MIME-Version: 1.0\n"
@@ -1690,8 +1690,8 @@ msgstr "Mail (PHP)"
 # TRANSLATION
 # LABEL/ID_MESS_TEST_BODY
 #: LABEL/ID_MESS_TEST_BODY
-msgid "This mail was sent using"
-msgstr "This mail was sent using"
+msgid "ProcessMaker Test Email"
+msgstr "ProcessMaker Test Email"
 
 # TRANSLATION
 # LABEL/ID_MESS_TEST_SUBJECT
@@ -2846,6 +2846,12 @@ msgid "Alert Message"
 msgstr "Alert Message"
 
 # TRANSLATION
+# LABEL/ID_ADDITIONAL_TABLES
+#: LABEL/ID_ADDITIONAL_TABLES
+msgid "Additional Tables"
+msgstr "Additional Tables"
+
+# TRANSLATION
 # LABEL/ID_REQUEST_SENT
 #: LABEL/ID_REQUEST_SENT
 msgid "Request sent."
@@ -3817,17 +3823,23 @@ msgstr "Save"
 msgid "[tracker/tracker_Outputdocs.xml?TITLE] Title"
 msgstr "Title"
 
+# groups/groups_UsersListTitle.xml?GRP_LABEL
+# groups/groups_UsersListTitle.xml
+#: title - GRP_LABEL
+msgid "@#GRP_NAME"
+msgstr "@#GRP_NAME"
+
 # groups/groups_Options.xml?MNU_ADD_EMPLOYE
 # groups/groups_Options.xml
 #: link - MNU_ADD_EMPLOYE
-msgid "Assign Employee"
-msgstr "Assign Employee"
+msgid "Assign New Member"
+msgstr "Assign New Member"
 
 # groups/groups_SelectUsers.xml?BTN_SUBMIT
 # groups/groups_SelectUsers.xml
 #: button - BTN_SUBMIT
-msgid "Assign To"
-msgstr "Assign To"
+msgid "[groups/groups_SelectUsers.xml?BTN_SUBMIT] Assign"
+msgstr "Assign"
 
 # groups/groups_Edit.xml?title
 # groups/groups_Edit.xml
@@ -4081,6 +4093,30 @@ msgstr "Update date"
 msgid "UID"
 msgstr "UID"
 
+# dbConnections/dbConnections_Edit.xml?DBS_TYPE
+# dbConnections/dbConnections_Edit.xml
+#: dropdown - DBS_TYPE
+msgid "Engine 	"
+msgstr "Engine 	"
+
+# dbConnections/dbConnections_Edit.xml?DBS_TYPE-''
+# dbConnections/dbConnections_Edit.xml
+#: dropdown - DBS_TYPE - ''
+msgid "[dbConnections/dbConnections_Edit.xml?DBS_TYPE-'']"
+msgstr "..."
+
+# dbConnections/dbConnections_Edit.xml?DBS_ENCODE
+# dbConnections/dbConnections_Edit.xml
+#: dropdown - DBS_ENCODE
+msgid "Encode 	"
+msgstr "Encode 	"
+
+# dbConnections/dbConnections_Edit.xml?DBS_ENCODE-''
+# dbConnections/dbConnections_Edit.xml
+#: dropdown - DBS_ENCODE - ''
+msgid "[dbConnections/dbConnections_Edit.xml?DBS_ENCODE-'']"
+msgstr "..."
+
 # dbConnections/dbConnections_Edit.xml?DBS_SERVER
 # dbConnections/dbConnections_Edit.xml
 #: text - DBS_SERVER
@@ -4174,8 +4210,26 @@ msgstr "Delete"
 # dbConnections/dbConnections_New.xml?DBS_TYPE
 # dbConnections/dbConnections_New.xml
 #: dropdown - DBS_TYPE
-msgid "[dbConnections/dbConnections_New.xml?DBS_TYPE] Type"
-msgstr "Type"
+msgid "[dbConnections/dbConnections_New.xml?DBS_TYPE] Engine 	"
+msgstr "Engine 	"
+
+# dbConnections/dbConnections_New.xml?DBS_TYPE-''
+# dbConnections/dbConnections_New.xml
+#: dropdown - DBS_TYPE - ''
+msgid "[dbConnections/dbConnections_New.xml?DBS_TYPE-'']"
+msgstr "Select..."
+
+# dbConnections/dbConnections_New.xml?DBS_ENCODE
+# dbConnections/dbConnections_New.xml
+#: dropdown - DBS_ENCODE
+msgid "[dbConnections/dbConnections_New.xml?DBS_ENCODE] Encode 	"
+msgstr "Encode 	"
+
+# dbConnections/dbConnections_New.xml?DBS_ENCODE-''
+# dbConnections/dbConnections_New.xml
+#: dropdown - DBS_ENCODE - ''
+msgid "[dbConnections/dbConnections_New.xml?DBS_ENCODE-'']"
+msgstr "..."
 
 # dbConnections/dbConnections_New.xml?DBS_SERVER
 # dbConnections/dbConnections_New.xml
@@ -4302,6 +4356,30 @@ msgstr "Edit"
 #: dropdown - MODE - view
 msgid "[dynaforms/dynaforms_Properties.xml?MODE-view]"
 msgstr "View"
+
+# dynaforms/dynaforms_Properties.xml?NEXTSTEPSAVE
+# dynaforms/dynaforms_Properties.xml
+#: dropdown - NEXTSTEPSAVE
+msgid "Next Step Link  "
+msgstr "Next Step Link  "
+
+# dynaforms/dynaforms_Properties.xml?NEXTSTEPSAVE-''
+# dynaforms/dynaforms_Properties.xml
+#: dropdown - NEXTSTEPSAVE - ''
+msgid "[dynaforms/dynaforms_Properties.xml?NEXTSTEPSAVE-'']"
+msgstr "No save & Continue"
+
+# dynaforms/dynaforms_Properties.xml?NEXTSTEPSAVE-save
+# dynaforms/dynaforms_Properties.xml
+#: dropdown - NEXTSTEPSAVE - save
+msgid "[dynaforms/dynaforms_Properties.xml?NEXTSTEPSAVE-save]"
+msgstr "Save & Continue"
+
+# dynaforms/dynaforms_Properties.xml?NEXTSTEPSAVE-prompt
+# dynaforms/dynaforms_Properties.xml
+#: dropdown - NEXTSTEPSAVE - prompt
+msgid "[dynaforms/dynaforms_Properties.xml?NEXTSTEPSAVE-prompt]"
+msgstr "Show prompt"
 
 # dynaforms/dynaforms_Properties.xml?PME_PROP_APPLY
 # dynaforms/dynaforms_Properties.xml
@@ -6805,6 +6883,102 @@ msgstr "Field name"
 msgid "[dynaforms/fields_ShortList.xml?SEARCH] Apply Filter"
 msgstr "Apply Filter"
 
+# additionalTables/additionalTablesOptions.xml?MNU_ADD
+# additionalTables/additionalTablesOptions.xml
+#: link - MNU_ADD
+msgid "[additionalTables/additionalTablesOptions.xml?MNU_ADD] New"
+msgstr "New"
+
+# additionalTables/additionalTablesList.xml?ADD_TAB_NAME
+# additionalTables/additionalTablesList.xml
+#: text - ADD_TAB_NAME
+msgid "[additionalTables/additionalTablesList.xml?ADD_TAB_NAME] Name"
+msgstr "Name"
+
+# additionalTables/additionalTablesList.xml?ADD_TAB_DESCRIPTION
+# additionalTables/additionalTablesList.xml
+#: text - ADD_TAB_DESCRIPTION
+msgid "[additionalTables/additionalTablesList.xml?ADD_TAB_DESCRIPTION] Description"
+msgstr "Description"
+
+# additionalTables/additionalTablesEdit.xml?TITLE1
+# additionalTables/additionalTablesEdit.xml
+#: title - TITLE1
+msgid "Table Information"
+msgstr "Table Information"
+
+# additionalTables/additionalTablesEdit.xml?ADD_TAB_NAME
+# additionalTables/additionalTablesEdit.xml
+#: text - ADD_TAB_NAME
+msgid "Table Name"
+msgstr "Table Name"
+
+# additionalTables/additionalTablesEdit.xml?ADD_TAB_CLASS_NAME
+# additionalTables/additionalTablesEdit.xml
+#: text - ADD_TAB_CLASS_NAME
+msgid "Propel Class Name"
+msgstr "Propel Class Name"
+
+# additionalTables/additionalTablesEdit.xml?ADD_TAB_DESCRIPTION
+# additionalTables/additionalTablesEdit.xml
+#: textarea - ADD_TAB_DESCRIPTION
+msgid "[additionalTables/additionalTablesEdit.xml?ADD_TAB_DESCRIPTION] Description"
+msgstr "Description"
+
+# additionalTables/additionalTablesEdit.xml?TITLE2
+# additionalTables/additionalTablesEdit.xml
+#: title - TITLE2
+msgid "Log configuration"
+msgstr "Log configuration"
+
+# additionalTables/additionalTablesEdit.xml?ADD_TAB_SDW_LOG_INSERT
+# additionalTables/additionalTablesEdit.xml
+#: checkbox - ADD_TAB_SDW_LOG_INSERT
+msgid "Save log for insert actions"
+msgstr "Save log for insert actions"
+
+# additionalTables/additionalTablesEdit.xml?ADD_TAB_SDW_LOG_UPDATE
+# additionalTables/additionalTablesEdit.xml
+#: checkbox - ADD_TAB_SDW_LOG_UPDATE
+msgid "Save log for update actions"
+msgstr "Save log for update actions"
+
+# additionalTables/additionalTablesEdit.xml?ADD_TAB_SDW_LOG_DELETE
+# additionalTables/additionalTablesEdit.xml
+#: checkbox - ADD_TAB_SDW_LOG_DELETE
+msgid "Save log for delete actions"
+msgstr "Save log for delete actions"
+
+# additionalTables/additionalTablesEdit.xml?ADD_TAB_SDW_LOG_SELECT
+# additionalTables/additionalTablesEdit.xml
+#: checkbox - ADD_TAB_SDW_LOG_SELECT
+msgid "Save log for select actions"
+msgstr "Save log for select actions"
+
+# additionalTables/additionalTablesEdit.xml?ADD_TAB_SDW_MAX_LENGTH
+# additionalTables/additionalTablesEdit.xml
+#: text - ADD_TAB_SDW_MAX_LENGTH
+msgid "Maximun rows to store (-1 for unlimited)"
+msgstr "Maximun rows to store (-1 for unlimited)"
+
+# additionalTables/additionalTablesEdit.xml?ADD_TAB_SDW_AUTO_DELETE
+# additionalTables/additionalTablesEdit.xml
+#: checkbox - ADD_TAB_SDW_AUTO_DELETE
+msgid "Delete log related when table is deleted"
+msgstr "Delete log related when table is deleted"
+
+# additionalTables/additionalTablesEdit.xml?TITLE3
+# additionalTables/additionalTablesEdit.xml
+#: title - TITLE3
+msgid "Fields"
+msgstr "Fields"
+
+# additionalTables/additionalTablesEdit.xml?btnSave
+# additionalTables/additionalTablesEdit.xml
+#: button - btnSave
+msgid "[additionalTables/additionalTablesEdit.xml?btnSave] Save"
+msgstr "Save"
+
 # inputdocs/inputdocs_List.xml?INP_DOC_TITLE
 # inputdocs/inputdocs_List.xml
 #: text - INP_DOC_TITLE
@@ -7060,7 +7234,7 @@ msgstr "Title"
 # reportTables/reportTables_Edit.xml?REP_TAB_NAME
 # reportTables/reportTables_Edit.xml
 #: text - REP_TAB_NAME
-msgid "Table Name"
+msgid "[reportTables/reportTables_Edit.xml?REP_TAB_NAME] Table Name"
 msgstr "Table Name"
 
 # reportTables/reportTables_Edit.xml?REP_TAB_TYPE
@@ -7090,7 +7264,7 @@ msgstr "Grid Fields"
 # reportTables/reportTables_Edit.xml?FIELDS
 # reportTables/reportTables_Edit.xml
 #: listbox - FIELDS
-msgid "Fields"
+msgid "[reportTables/reportTables_Edit.xml?FIELDS] Fields"
 msgstr "Fields"
 
 # reportTables/reportTables_Edit.xml?SAVE
@@ -7750,14 +7924,14 @@ msgstr "Save"
 # processes/processes_ImportExisting.xml?title
 # processes/processes_ImportExisting.xml
 #: title - title
-msgid "Importing Existing Process"
-msgstr "Importing Existing Process"
+msgid "<div align=\"center\">Importing Existing Process</div>"
+msgstr "<div align=\"center\">Importing Existing Process</div>"
 
 # processes/processes_ImportExisting.xml?TITLE1
 # processes/processes_ImportExisting.xml
 #: subtitle - TITLE1
-msgid "The process you are trying to import already exists. Please select one of these options to continue"
-msgstr "The process you are trying to import already exists. Please select one of these options to continue"
+msgid "A process with the same name already exists. Please select one of the following options:"
+msgstr "A process with the same name already exists. Please select one of the following options:"
 
 # processes/processes_ImportExisting.xml?SUBMIT
 # processes/processes_ImportExisting.xml
@@ -12739,6 +12913,12 @@ msgstr "Manual Assignment"
 msgid "[tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_TYPE-EVALUATE]"
 msgstr "Value Based Assignment"
 
+# tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_VARIABLE
+# tasks/tasks_AssignmentRules.xml
+#: textpm - TAS_ASSIGN_VARIABLE
+msgid "Variable for Value Based Assignment"
+msgstr "Variable for Value Based Assignment"
+
 # tasks/tasks_Labels.xml?TAS_DEF_TITLE
 # tasks/tasks_Labels.xml
 #: textareapm - TAS_DEF_TITLE
@@ -12882,6 +13062,12 @@ msgstr "Title"
 #: textarea - TAS_DESCRIPTION
 msgid "[tasks/tasks_Definition.xml?TAS_DESCRIPTION] Description"
 msgstr "Description"
+
+# tasks/tasks_Definition.xml?TAS_PRIORITY_VARIABLE
+# tasks/tasks_Definition.xml
+#: textpm - TAS_PRIORITY_VARIABLE
+msgid "Variable for Case priority"
+msgstr "Variable for Case priority"
 
 # tasks/tasks_Definition.xml?TAS_START
 # tasks/tasks_Definition.xml
@@ -15468,6 +15654,12 @@ msgstr "Re-type Password:"
 #: submit - NW_SUB
 msgid "[login/newSite.xml?NW_SUB] Test"
 msgstr "Test"
+
+# login/nologin.xml?subtitle
+# login/nologin.xml
+#: subtitle - subtitle
+msgid "subtitle"
+msgstr "subtitle"
 
 # login/nologin.xml?BSUBMIT
 # login/nologin.xml
