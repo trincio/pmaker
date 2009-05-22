@@ -69,7 +69,7 @@ switch ($request) {
 		$sBody = "
 		<table style=\"background-color: white; font-family: Arial,Helvetica,sans-serif; color: black; font-size: 11px; text-align: left;\" cellpadding='10' cellspacing='0' width='100%'>
 		<tbody><tr><td><img id='logo' src='http://".$_SERVER['SERVER_NAME']."/images/processmaker.logo.jpg' /></td></tr>
-		<tr><td style='font-size: 14px;'>$msg $engine - ".date('H:i:s')."</td></tr>
+		<tr><td style='font-size: 14px;'>$msg $engine [".date('H:i:s')."]</td></tr>
 		<tr><td style='vertical-align:middel;'>
 		<br /><hr><b>This Business Process is powered by ProcessMaker.<b><br />
 		<a href='http://www.processmaker.com' style='color:#c40000;'>www.processmaker.com</a><br /></td>
@@ -268,7 +268,7 @@ function sendTestMail() {
 	$sBody = "
 	<table style=\"background-color: white; font-family: Arial,Helvetica,sans-serif; color: black; font-size: 11px; text-align: left;\" cellpadding='10' cellspacing='0' width='100%'>
 	<tbody><tr><td><img id='logo' src='http://".$_SERVER['SERVER_NAME']."/images/processmaker.logo.jpg' /></td></tr>
-	<tr><td style='font-size: 14px;'>$msg $engine - ".date('H:i:s')."</td></tr>
+	<tr><td style='font-size: 14px;'>$msg [".date('H:i:s')."] - $engine</td></tr>
 	<tr><td style='vertical-align:middel;'>
 	<br /><hr><b>This Business Process is powered by ProcessMaker.<b><br />
 	<a href='http://www.processmaker.com' style='color:#c40000;'>www.processmaker.com</a><br /></td>
