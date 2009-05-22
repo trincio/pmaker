@@ -33,37 +33,37 @@ interface iDatabase {
 }
 
 class database_base implements iDatabase {
-	protected $sType;
-	protected $sServer;
-	protected $sUser;
-	protected $sPass;
-	protected $sDataBase;
-	protected $oConnection;
-	protected $sQuoteCharacter = '';
-	protected $sEndLine = ';';
-	public function __construct($sType = DB_ADAPTER, $sServer = DB_HOST, $sUser = DB_USER, $sPass = DB_PASS, $sDataBase = DB_NAME) {
-		$this->sType           = $sType;
-		$this->sServer         = $sServer;
-		$this->sUser           = $sUser;
-		$this->sPass           = $sPass;
-		$this->sDataBase       = $sDataBase;
-		$this->oConnection     = null;
-		$this->sQuoteCharacter = '';
-	}
-	public function generateDropTableSQL($sTable) {
-		$sSQL = 'DROP TABLE IF EXISTS ' . $this->sQuoteCharacter . $sTable . $this->sQuoteCharacter . $this->sEndLine;
-		return $sSQL;
-	}
-	public function generateCreateTableSQL($sTable, $aColumns) {
-	}
-	public function generateDropColumnSQL($sTable, $sColumn) {
-	}
-	public function generateAddColumnSQL($sTable, $sColumn, $aParameters) {
-	}
-	public function generateChangeColumnSQL($sTable, $sColumn, $aParameters) {
-	}
-	public function executeQuery($sQuery) {
-	}
-	public function close() {
-	}
+  protected $sType;
+  protected $sServer;
+  protected $sUser;
+  protected $sPass;
+  protected $sDataBase;
+  protected $oConnection;
+  protected $sQuoteCharacter = '';
+  protected $sEndLine = ';';
+  public function __construct($sType = DB_ADAPTER, $sServer = DB_HOST, $sUser = DB_USER, $sPass = DB_PASS, $sDataBase = DB_NAME) {
+    $this->sType           = $sType;
+    $this->sServer         = $sServer;
+    $this->sUser           = $sUser;
+    $this->sPass           = $sPass;
+    $this->sDataBase       = $sDataBase;
+    $this->oConnection     = null;
+    $this->sQuoteCharacter = '';
+  }
+  public function generateDropTableSQL($sTable) {
+    $sSQL = 'DROP TABLE IF EXISTS ' . $this->sQuoteCharacter . $sTable . $this->sQuoteCharacter . $this->sEndLine;
+    return $sSQL;
+  }
+  public function generateCreateTableSQL($sTable, $aColumns) {
+  }
+  public function generateDropColumnSQL($sTable, $sColumn) {
+  }
+  public function generateAddColumnSQL($sTable, $sColumn, $aParameters) {
+  }
+  public function generateChangeColumnSQL($sTable, $sColumn, $aParameters) {
+  }
+  public function executeQuery($sQuery) {
+  }
+  public function close() {
+  }
 }

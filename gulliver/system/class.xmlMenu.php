@@ -42,15 +42,15 @@
       $this->xmlMenu = new xmlMenu( $this->xmlfile , $this->home );
       $this->xmlMenu->setValues($value);
       $template = PATH_CORE . 'templates/'  . $this->type . '.html';
-    	$out =  $this->xmlMenu->render( $template , $scriptCode ) ;
-    	
+      $out =  $this->xmlMenu->render( $template , $scriptCode ) ;
+      
       $oHeadPublisher =& headPublisher::getSingleton();
       $oHeadPublisher->addScriptFile( $this->xmlMenu->scriptURL );
       $oHeadPublisher->addScriptCode( $scriptCode );
       return $out;
     }
     function renderGrid ($value){
-    	return $this->render($value);
+      return $this->render($value);
     }
 
 

@@ -39,4 +39,3 @@
       return $this->fetch($this->templateFile);
     }
   }
-?>

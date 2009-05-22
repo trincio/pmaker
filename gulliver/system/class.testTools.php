@@ -111,4 +111,3 @@ function domain($location)
   if (count($result)==0) trigger_error("'$location' is an empty domain.", E_USER_WARNING);
   return $result;
 }
-?>

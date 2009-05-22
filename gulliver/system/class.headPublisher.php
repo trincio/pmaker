@@ -40,18 +40,18 @@ class headPublisher
   var $leimnudInitString = '  var leimnud = new maborak();
   leimnud.make(
     {
-		zip:true,
-		inGulliver:true,
-		modules	:"dom,abbr,rpc,drag,drop,app,panel,fx,grid,xmlform,validator,dashboard",
-		files	:"json"
-	}
+    zip:true,
+    inGulliver:true,
+    modules :"dom,abbr,rpc,drag,drop,app,panel,fx,grid,xmlform,validator,dashboard",
+    files :"json"
+  }
   );';
   var $headerScript = '
-	  leimnud.exec(leimnud.fix.memoryLeak);
-  	if(leimnud.browser.isIphone)
-	{
-		leimnud.iphone.make();
-	}';
+    leimnud.exec(leimnud.fix.memoryLeak);
+    if(leimnud.browser.isIphone)
+  {
+    leimnud.iphone.make();
+  }';
   var $disableHeaderScripts = false;
   var $title='';
 
@@ -96,7 +96,7 @@ class headPublisher
    */
   function addMaborakFile( $filename, $loader = false)
   {
-  	if ( $loader )
+    if ( $loader )
       $this->maborakLoaderFiles[] = $filename;
     else
       $this->maborakFiles[] = $filename;
@@ -173,7 +173,7 @@ class headPublisher
       $this->addScriptFile( '/jscore/' . $jslabel , 1 );
     }
     if ($this->disableHeaderScripts) return '';
-	$this->addScriptFile("/js/jscalendar/lang/calendar-".SYS_LANG.".js");
+  $this->addScriptFile("/js/widgets/jscalendar/lang/calendar-".SYS_LANG.".js");
     $head = '';
     $head .= '<TITLE>'.$this->title . "</TITLE>\n";
     foreach($this->scriptFiles as $file)
@@ -236,4 +236,3 @@ class headPublisher
     $this->headerScript = '';
   }
 }
-?>

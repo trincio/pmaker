@@ -29,20 +29,19 @@ class XmlForm_Field_HTML extends XmlForm_Field
   var $skin       = 'default';
   //'Default','Basic'
   var $toolbarSet = 'Default';
-	var $width  = '90%';
-	var $height = '200' ;
+  var $width  = '90%';
+  var $height = '200' ;
   function render( $value , $owner=NULL ) {
     $this->FCKeditor = new FCKeditor('form['.$this->name.']') ;
     $this->FCKeditor->BasePath = '/fckeditor/';
-  	$this->FCKeditor->Config['AutoDetectLanguage']	= false ;
-  	$this->FCKeditor->Config['DefaultLanguage']		= $this->language ;
+    $this->FCKeditor->Config['AutoDetectLanguage']  = false ;
+    $this->FCKeditor->Config['DefaultLanguage']   = $this->language ;
     $this->FCKeditor->ToolbarSet = $this->toolbarSet;
     $this->FCKeditor->Config['SkinPath'] = $this->FCKeditor->BasePath . 'editor/skins/' . htmlspecialchars($this->skin) . '/' ;
-    $this->FCKeditor->Value	 = $value;
-    $this->FCKeditor->Width	 = $this->width;
+    $this->FCKeditor->Value  = $value;
+    $this->FCKeditor->Width  = $this->width;
     $this->FCKeditor->Height = $this->height;
     
     return $this->FCKeditor->CreateHtml();
   }
 }*/
-?>

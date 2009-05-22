@@ -80,8 +80,8 @@ class TemplatePowerParser
     * @param $tpl_file
     * @param $type
     * @return
-	*
-	* @access private
+  *
+  * @access private
     */
    function TemplatePowerParser( $tpl_file, $type )
    {
@@ -89,7 +89,7 @@ class TemplatePowerParser
 
        $this->tpl_base       = Array( $tpl_file, $type );
        $this->tpl_count      = 0;
-	   $this->ignore_stack   = Array( false );
+     $this->ignore_stack   = Array( false );
    }
 
    /**
@@ -97,8 +97,8 @@ class TemplatePowerParser
     *
     * @param $message
     * @return
-	*
-	* @access private
+  *
+  * @access private
     */
    function __errorAlert( $message )
    {
@@ -109,8 +109,8 @@ class TemplatePowerParser
     * TemplatePowerParser::__prepare()
     *
     * @return
-	*
-	* @access private
+  *
+  * @access private
     */
    function __prepare()
    {
@@ -130,8 +130,8 @@ class TemplatePowerParser
      * TemplatePowerParser::__cleanUp()
      *
      * @return
-	 *
-	 * @access private
+   *
+   * @access private
      */
     function __cleanUp()
     {
@@ -148,8 +148,8 @@ class TemplatePowerParser
      * @param $tpl_file
      * @param $type
      * @return
-	 *
-	 * @access private
+   *
+   * @access private
      */
     function __prepareTemplate( $tpl_file, $type )
     {
@@ -163,7 +163,7 @@ class TemplatePowerParser
         {
 // Trigger the error in the local scope of the function    
 //    trigger_error ("Some error", E_USER_WARNING); 
-            	
+              
             $this->{$tplvar}["content"] = @file( $tpl_file ) or
                 die( $this->__errorAlert('TemplatePower Error: Couldn\'t open [ '. $tpl_file .' ]!'));
         }
@@ -182,8 +182,8 @@ class TemplatePowerParser
      * @param $blockname
      * @param $initdev
      * @return
-	 *
-	 * @access private
+   *
+   * @access private
      */
     function __parseTemplate( $tplvar, $blockname, $initdev )
     {
@@ -199,12 +199,12 @@ class TemplatePowerParser
                 if( $ignreg[1] == 'START')
                 {
                     //$ignore = true;
-					          array_push( $this->ignore_stack, true );
+                    array_push( $this->ignore_stack, true );
                 }
                 else
                 {
                     //$ignore = false;
-					          array_pop( $this->ignore_stack );
+                    array_pop( $this->ignore_stack );
                 }
             }
             else
@@ -261,13 +261,13 @@ class TemplatePowerParser
                             if( isset( $this->tpl_include[ $regs[2] ]) )
                             {
                                 $include_file = $this->tpl_include[ $regs[2] ][0];
-								                $type         = $this->tpl_include[ $regs[2] ][1];
+                                $type         = $this->tpl_include[ $regs[2] ][1];
                             }
                             else
                             if (file_exists( $regs[2] ))    //check if defined as constant in template
                             {
                                 $include_file = $regs[2];
-								                $type         = T_BYFILE;
+                                $type         = T_BYFILE;
                             }
                             else
                             {
@@ -278,18 +278,18 @@ class TemplatePowerParser
                             {
                                 ob_start();
 
-								                if( $type == T_BYFILE )
-								                {
+                                if( $type == T_BYFILE )
+                                {
                                     if( !@include_once( $include_file ) )
                                     {
                                         $this->__errorAlert( 'TemplatePower Error: Couldn\'t include script [ '. $include_file .' ]!' );
-										                    exit();
+                                        exit();
                                     }
-								                }
-								                else
-								                {
-								                    eval( "?>" . $include_file );
-								                }
+                                }
+                                else
+                                {
+                                    eval( "?>" . $include_file );
+                                }
 
                                 $this->defBlock[$blockname]["_C:$coderow"] = ob_get_contents();
                                 $coderow++;
@@ -365,7 +365,7 @@ class TemplatePowerParser
                        //explode current template line on the curly bracket '{'
                         $sstr = explode( '{', $this->{$tplvar}["content"][$index] );
 
-						            reset( $sstr );
+                        reset( $sstr );
 
                         if (current($sstr) != '')
                         {
@@ -444,7 +444,7 @@ class TemplatePowerParser
      * TemplatePowerParser::version()
      *
      * @return
-	 * @access public
+   * @access public
      */
     function version()
     {
@@ -457,10 +457,10 @@ class TemplatePowerParser
      * @param $iblockname
      * @param $value
      * @param $type
-	 *
-	 * @return
-	 *
-	 * @access public
+   *
+   * @return
+   *
+   * @access public
      */
     function assignInclude( $iblockname, $value, $type=T_BYFILE )
     {
@@ -485,8 +485,8 @@ class TemplatePower extends TemplatePowerParser
      * @param $tpl_file
      * @param $type
      * @return
-	 *
-	 * @access public
+   *
+   * @access public
      */
     function TemplatePower( $tpl_file='', $type= T_BYFILE )
     {
@@ -494,7 +494,7 @@ class TemplatePower extends TemplatePowerParser
 
         $this->prepared       = false;
         $this->showUnAssigned = false;
-		    $this->serialized     = false;  //added: 26 April 2002
+        $this->serialized     = false;  //added: 26 April 2002
     }
 
     /**
@@ -503,8 +503,8 @@ class TemplatePower extends TemplatePowerParser
      * @param $stpl_file
      * @param $tplvar
      * @return
-	 *
-	 * @access private
+   *
+   * @access private
      */
     function __deSerializeTPL( $stpl_file, $type )
     {
@@ -529,8 +529,8 @@ class TemplatePower extends TemplatePowerParser
      * TemplatePower::__makeContentRoot()
      *
      * @return
-	 *
-	 * @access private
+   *
+   * @access private
      */
     function __makeContentRoot()
     {
@@ -544,14 +544,14 @@ class TemplatePower extends TemplatePowerParser
      * @param $varname
      * @param $value
      * @return
-	 *
-	 * @access private
+   *
+   * @access private
      */
     function __assign( $varname, $value)
     {
         if( sizeof( $regs = explode('.', $varname ) ) == 2 )  //this is faster then preg_match
         {
-	          $ind_blockname = $regs[0] .'_'. $this->index[ $regs[0] ];
+            $ind_blockname = $regs[0] .'_'. $this->index[ $regs[0] ];
 
             $lastitem = sizeof( $this->content[ $ind_blockname ] );
 
@@ -575,8 +575,8 @@ class TemplatePower extends TemplatePowerParser
      * @param $varname
      * @param $value
      * @return
-	 *
-	 * @access private
+   *
+   * @access private
      */
     function __assignGlobal( $varname, $value )
     {
@@ -589,8 +589,8 @@ class TemplatePower extends TemplatePowerParser
      *
      * @param $blockname
      * @return
-	 *
-	 * @access private
+   *
+   * @access private
      */
     function __outputContent( $blockname )
     {
@@ -619,26 +619,26 @@ class TemplatePower extends TemplatePowerParser
                         }
                         else
                         {
-	                        //Verify if $defValue is like 
-	                        //                            "xmlfile:ID_LABEL"
-	                        //if it is load an xml label.
-	                        //if not continues with non assigned value.
-                        	if (preg_match("/(.+):(.+)/",$defValue,$xmlreg))
-                        	{
-                        		$value=G::LoadTranslation(/*$xmlreg[1],*/$xmlreg[2]);
-                        	}     
-                        	else  
-                        	{
-	                            if( $this->showUnAssigned )
-	                            {
-	                                //$value = '{'. $this->defBlock[ $defblockname ][$k] .'}';
-	                                $value = '{'. $defValue .'}';
-	                            }
-	                            else
-	                            {
-	                                $value = '';
-	                            }
-                        	}
+                          //Verify if $defValue is like 
+                          //                            "xmlfile:ID_LABEL"
+                          //if it is load an xml label.
+                          //if not continues with non assigned value.
+                          if (preg_match("/(.+):(.+)/",$defValue,$xmlreg))
+                          {
+                            $value=G::LoadTranslation(/*$xmlreg[1],*/$xmlreg[2]);
+                          }     
+                          else  
+                          {
+                              if( $this->showUnAssigned )
+                              {
+                                  //$value = '{'. $this->defBlock[ $defblockname ][$k] .'}';
+                                  $value = '{'. $defValue .'}';
+                              }
+                              else
+                              {
+                                  $value = '';
+                              }
+                          }
                         }
                     }
                     else
@@ -646,7 +646,7 @@ class TemplatePower extends TemplatePowerParser
                         $value = $this->content[ $blockname ][$i][ "_V:". $defValue ];
                     }
                     if ($this->unhtmlentities)
-											$value = G::unhtmlentities($value);
+                      $value = G::unhtmlentities($value);
                     print( $value );
 
                 }
@@ -677,8 +677,8 @@ class TemplatePower extends TemplatePowerParser
      * TemplatePower::serializedBase()
      *
      * @return
-	 *
-	 * @access public
+   *
+   * @access public
      */
     function serializedBase()
     {
@@ -691,8 +691,8 @@ class TemplatePower extends TemplatePowerParser
      *
      * @param $state
      * @return
-	 *
-	 * @access public
+   *
+   * @access public
      */
     function showUnAssigned( $state = true )
     {
@@ -703,8 +703,8 @@ class TemplatePower extends TemplatePowerParser
      * TemplatePower::prepare()
      *
      * @return
-	 *
-	 * @access public
+   *
+   * @access public
      */
     function prepare()
     {
@@ -724,17 +724,17 @@ class TemplatePower extends TemplatePowerParser
      *
      * @param $blockname
      * @return
-	 *
-	 * @access public
+   *
+   * @access public
      */
     function newBlock( $blockname )
     {
         $parent = &$this->content[ $this->parent[$blockname] .'_'. $this->index[$this->parent[$blockname]] ];
 
-		    $lastitem = sizeof( $parent );
+        $lastitem = sizeof( $parent );
         $lastitem > 1 ? $lastitem-- : $lastitem = 0;
 
-		    $ind_blockname = $blockname .'_'. $this->index[ $blockname ];
+        $ind_blockname = $blockname .'_'. $this->index[ $blockname ];
 
         if ( !isset( $parent[ $lastitem ]["_B:$blockname"] ))
         {
@@ -769,8 +769,8 @@ class TemplatePower extends TemplatePowerParser
      * @param $varname
      * @param $value
      * @return
-	 *
-	 * @access public
+   *
+   * @access public
      */
     function assignGlobal( $varname, $value='' )
     {
@@ -794,8 +794,8 @@ class TemplatePower extends TemplatePowerParser
      * @param $varname
      * @param $value
      * @return
-	 *
-	 * @access public
+   *
+   * @access public
      */
     function assign( $varname, $value='' )
     {
@@ -817,14 +817,14 @@ class TemplatePower extends TemplatePowerParser
      *
      * @param $blockname
      * @return
-	 *
-	 * @access public
+   *
+   * @access public
      */
     function gotoBlock( $blockname )
     {
         if ( isset( $this->defBlock[ $blockname ] ) )
         {
-		       $ind_blockname = $blockname .'_'. $this->index[ $blockname ];
+           $ind_blockname = $blockname .'_'. $this->index[ $blockname ];
 
            //get lastitem indexnumber
             $lastitem = sizeof( $this->content[ $ind_blockname ] );
@@ -841,14 +841,14 @@ class TemplatePower extends TemplatePowerParser
      *
      * @param $varname
      * @return
-	 *
-	 * @access public
+   *
+   * @access public
      */
     function getVarValue( $varname )
     {
         if( sizeof( $regs = explode('.', $varname ) ) == 2 )  //this is faster then preg_match
         {
-		        $ind_blockname = $regs[0] .'_'. $this->index[ $regs[0] ];
+            $ind_blockname = $regs[0] .'_'. $this->index[ $regs[0] ];
 
             $lastitem = sizeof( $this->content[ $ind_blockname ] );
 
@@ -869,8 +869,8 @@ class TemplatePower extends TemplatePowerParser
      * TemplatePower::printToScreen()
      *
      * @return
-	 *
-	 * @access public
+   *
+   * @access public
      */
     function printToScreen()
     {
@@ -888,8 +888,8 @@ class TemplatePower extends TemplatePowerParser
      * TemplatePower::getOutputContent()
      *
      * @return
-	 *
-	 * @access public
+   *
+   * @access public
      */
     function getOutputContent()
     {
@@ -904,4 +904,3 @@ class TemplatePower extends TemplatePowerParser
         return $content;
     }
 }
-?>

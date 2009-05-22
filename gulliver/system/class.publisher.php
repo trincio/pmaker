@@ -71,28 +71,28 @@ class Publisher
     }
     $this->Parts[$pos] = array(
         'Type'     => $strType,
-			  'Template' => $strLayout,
-			  'File'     => $strName,
-			  'Content'  => $strContent,
-			  'Data'     => $arrData,
-			  'Target'   => $strTarget,
-			  'ajaxServer'   => $ajaxServer
-			  );
+        'Template' => $strLayout,
+        'File'     => $strName,
+        'Content'  => $strContent,
+        'Data'     => $arrData,
+        'Target'   => $strTarget,
+        'ajaxServer'   => $ajaxServer
+        );
 
     //This is needed to prepare the "header content"
-		//before to send the body content. ($oHeadPublisher)
-		ob_start();
+    //before to send the body content. ($oHeadPublisher)
+    ob_start();
 
-		$this->RenderContent0($pos);
-		if ( (ob_get_contents()!=='') && ($this->publisherId!=='') && ($strType != 'template') ) {
-  		$this->Parts[$pos]['RenderedContent'] = '<DIV id="'.$this->publisherId.'['.$pos.']" style="'.((is_string($strContent))?$strContent:'').'; margin:0px;" align="center">';
-  		$this->Parts[$pos]['RenderedContent'].= ob_get_contents();
-  		$this->Parts[$pos]['RenderedContent'].= '</DIV>';
-  	}
-  	else {
-  		$this->Parts[$pos]['RenderedContent']= ob_get_contents();
-	  }
-		ob_end_clean();
+    $this->RenderContent0($pos);
+    if ( (ob_get_contents()!=='') && ($this->publisherId!=='') && ($strType != 'template') ) {
+      $this->Parts[$pos]['RenderedContent'] = '<DIV id="'.$this->publisherId.'['.$pos.']" style="'.((is_string($strContent))?$strContent:'').'; margin:0px;" align="center">';
+      $this->Parts[$pos]['RenderedContent'].= ob_get_contents();
+      $this->Parts[$pos]['RenderedContent'].= '</DIV>';
+    }
+    else {
+      $this->Parts[$pos]['RenderedContent']= ob_get_contents();
+    }
+    ob_end_clean();
   }
 
 
@@ -134,9 +134,9 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
     switch( $Part['Type'] )
     {
     case 'externalContent':
-	    $G_CONTENT = new Content;
-	    if( $Part['Content'] != "" ) $G_CONTENT = G::LoadContent( $Part['Content'] );
-	    G::LoadTemplateExternal( $Part['Template'] );
+      $G_CONTENT = new Content;
+      if( $Part['Content'] != "" ) $G_CONTENT = G::LoadContent( $Part['Content'] );
+      G::LoadTemplateExternal( $Part['Template'] );
       break;
 
     case 'image':
@@ -154,9 +154,9 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
       global $G_FORM;
 
       if ($Part['Type'] == 'xmlform')
-      	$sPath = PATH_XMLFORM;
+        $sPath = PATH_XMLFORM;
       else
-      	$sPath = PATH_DYNAFORM;
+        $sPath = PATH_DYNAFORM;
 
       //if the xmlform file doesn't exists, then try with the plugins folders
       if ( !is_file ( $sPath . $Part['File'] ) ) {
@@ -176,22 +176,22 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
 
       if (($Part['Type'] == 'dynaform') && (($Part['Template'] == 'xmlform') || ($Part['Template'] == 'xmlform_preview')) )
       {
-      	$G_FORM->fields=G::array_merges(
-      		array('__DYNAFORM_OPTIONS' => new XmlForm_Field_XmlMenu(
-      			new Xml_Node(
-      				'__DYNAFORM_OPTIONS',
-      				'complete',
-      				'',
-      				array('type'=>'xmlmenu','xmlfile'=>'gulliver/dynaforms_Options')
-      				),SYS_LANG,PATH_XMLFORM,$G_FORM) ),
-      		$G_FORM->fields);
+        $G_FORM->fields=G::array_merges(
+          array('__DYNAFORM_OPTIONS' => new XmlForm_Field_XmlMenu(
+            new Xml_Node(
+              '__DYNAFORM_OPTIONS',
+              'complete',
+              '',
+              array('type'=>'xmlmenu','xmlfile'=>'gulliver/dynaforms_Options')
+              ),SYS_LANG,PATH_XMLFORM,$G_FORM) ),
+          $G_FORM->fields);
       }
 
       //Needed to make ajax calls
 
       //The action in the form tag.
       if ( defined ( 'ENABLE_ENCRYPT' ) && ENABLE_ENCRYPT == 'yes' )
-      	$G_FORM->action  = urlencode( G::encrypt( $Part['Target'] ,URL_KEY ) );
+        $G_FORM->action  = urlencode( G::encrypt( $Part['Target'] ,URL_KEY ) );
       else
         $G_FORM->action  = $Part['Target'];
 
@@ -202,7 +202,7 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
           $Part['ajaxServer']='../gulliver/defaultAjax';
 
       if ( defined ( 'ENABLE_ENCRYPT' ) && ENABLE_ENCRYPT == 'yes' )
-      	$G_FORM->ajaxServer  = urlencode( G::encrypt( $Part['ajaxServer'] ,URL_KEY ) );
+        $G_FORM->ajaxServer  = urlencode( G::encrypt( $Part['ajaxServer'] ,URL_KEY ) );
       else
         $G_FORM->ajaxServer  = $Part['ajaxServer'];
 
@@ -214,10 +214,10 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
       //de hecho soo deberia usarse cuando $Part['Template']=="xmlform"
       if ((($Part['Type'] == 'dynaform') && $Part['Template']=="xmlform") || ($Part['Template']=="xmlform"))
       {
-      	$G_FORM->values=G::array_merges(
-      	array('__DYNAFORM_OPTIONS' => isset($Part['Data']['__DYNAFORM_OPTIONS'])? $Part['Data']['__DYNAFORM_OPTIONS']:''),
-      	$G_FORM->values);
-      	if (isset($G_FORM->nextstepsave)) {
+        $G_FORM->values=G::array_merges(
+        array('__DYNAFORM_OPTIONS' => isset($Part['Data']['__DYNAFORM_OPTIONS'])? $Part['Data']['__DYNAFORM_OPTIONS']:''),
+        $G_FORM->values);
+        if (isset($G_FORM->nextstepsave)) {
           switch ($G_FORM->nextstepsave) {
             case 'save':
               $G_FORM->values['__DYNAFORM_OPTIONS']['NEXT_ACTION'] = 'if (document.getElementById("' . $G_FORM->id . '")) {document.getElementById("' . $G_FORM->id . '").submit();}return false;';
@@ -262,7 +262,7 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
       $G_FORM = new Form ( $Part['File'] , $sPath, SYS_LANG, true );
 
       if ( defined ( 'ENABLE_ENCRYPT' ) && ENABLE_ENCRYPT == 'yes' )
-      	$G_FORM->ajaxServer  = urlencode( G::encrypt( $Part['ajaxServer'] ,URL_KEY ) );
+        $G_FORM->ajaxServer  = urlencode( G::encrypt( $Part['ajaxServer'] ,URL_KEY ) );
       else
         $G_FORM->ajaxServer  = $Part['ajaxServer'];
 
@@ -270,21 +270,21 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
       if (isset($_SESSION)) $_SESSION[$G_FORM->id]=$G_FORM->values;
 
 
-  		$oTable                           = new pagedTable();
-  		$oTable->template                 = 'templates/'.$Part['Template'] . '.html';
-  		$G_FORM->xmlform                  = '';
-  		$G_FORM->xmlform->fileXml         = $G_FORM->fileName;
-  		$G_FORM->xmlform->home            = $G_FORM->home;
-  		$G_FORM->xmlform->tree->attribute = $G_FORM->tree->attributes;
-  		$G_FORM->values                   = array_merge($G_FORM->values,$Part['Data']);
+      $oTable                           = new pagedTable();
+      $oTable->template                 = 'templates/'.$Part['Template'] . '.html';
+      $G_FORM->xmlform                  = '';
+      $G_FORM->xmlform->fileXml         = $G_FORM->fileName;
+      $G_FORM->xmlform->home            = $G_FORM->home;
+      $G_FORM->xmlform->tree->attribute = $G_FORM->tree->attributes;
+      $G_FORM->values                   = array_merge($G_FORM->values,$Part['Data']);
 
-  		$oTable->setupFromXmlform($G_FORM);
+      $oTable->setupFromXmlform($G_FORM);
 
-  		if (isset($Part['ajaxServer']) && ($Part['ajaxServer']!==''))
-  		  $oTable->ajaxServer  = $Part['ajaxServer'];
-  		/* Start Block: Load user configuration for the pagedTable */
+      if (isset($Part['ajaxServer']) && ($Part['ajaxServer']!==''))
+        $oTable->ajaxServer  = $Part['ajaxServer'];
+      /* Start Block: Load user configuration for the pagedTable */
         G::LoadClass('configuration');
-		    $objUID = $Part['File'];
+        $objUID = $Part['File'];
         $conf = new Configurations(  );
         $conf->loadConfig($oTable,'pagedTable',$objUID,'',$_SESSION['USER_LOGGED'],'');
         $oTable->__OBJ_UID=$objUID;
@@ -317,14 +317,14 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
         print($pm->render(PATH_CORE . 'templates/popupMenu.html',$sc));
       /* End Block */
 
-  		$oTable->renderTable();
+      $oTable->renderTable();
 
-  	  /* Start Block: Load PagedTable Right Click */
-  	    print('<script type="text/javascript">');
+      /* Start Block: Load PagedTable Right Click */
+        print('<script type="text/javascript">');
         print($sc);
-  	    print('loadPopupMenu_'.$oTable->id.'();');
-  	    print('</script>');
-  	  /* End Block */
+        print('loadPopupMenu_'.$oTable->id.'();');
+        print('</script>');
+      /* End Block */
       break;
 
     case 'propeltable':
@@ -352,7 +352,7 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
 
       //PATH_DATA_PUBLIC ???
       if ( !file_exists ($sPath .PATH_SEP. $Part['File'] . '.xml') && defined ( 'PATH_DATA_PUBLIC') ) {
-      	$sPath = PATH_DATA_PUBLIC ;
+        $sPath = PATH_DATA_PUBLIC ;
       }
 
       $G_FORM = new Form ( $Part['File'] , $sPath, SYS_LANG, true );
@@ -368,18 +368,18 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
       G::LoadClass('propelTable');
 
       $oTable                           = new propelTable();
-  		$oTable->template                 = $Part['Template'] ;
-  		$oTable->criteria                 = $Part['Content'];
-  		if ( isset($Part['ajaxServer'] ) && ( $Part['ajaxServer']!=='' ))
-  		  $oTable->ajaxServer  = $Part['ajaxServer'];
-  		$G_FORM->xmlform->fileXml         = $G_FORM->fileName;
-  		$G_FORM->xmlform->home            = $G_FORM->home;
-  		$G_FORM->xmlform->tree->attribute = $G_FORM->tree->attributes;
+      $oTable->template                 = $Part['Template'] ;
+      $oTable->criteria                 = $Part['Content'];
+      if ( isset($Part['ajaxServer'] ) && ( $Part['ajaxServer']!=='' ))
+        $oTable->ajaxServer  = $Part['ajaxServer'];
+      $G_FORM->xmlform->fileXml         = $G_FORM->fileName;
+      $G_FORM->xmlform->home            = $G_FORM->home;
+      $G_FORM->xmlform->tree->attribute = $G_FORM->tree->attributes;
       if ( is_array($Part['Data'] ))
-  		  $G_FORM->values                 = array_merge($G_FORM->values, $Part['Data'] );
+        $G_FORM->values                 = array_merge($G_FORM->values, $Part['Data'] );
 
-  		$oTable->setupFromXmlform($G_FORM);
-  	  /* Start Block: Load user configuration for the pagedTable */
+      $oTable->setupFromXmlform($G_FORM);
+      /* Start Block: Load user configuration for the pagedTable */
         G::LoadClass('configuration');
       $objUID = $Part['File'];
       $conf = new Configurations( $oTable );
@@ -396,10 +396,10 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
       /* End Block */
       //krumo ( $Part );
       try {
-      	if ( is_array ( $Part['Data'] ))
-    		  $oTable->renderTable('', $Part['Data']);
-    		else
-    		  $oTable->renderTable();
+        if ( is_array ( $Part['Data'] ))
+          $oTable->renderTable('', $Part['Data']);
+        else
+          $oTable->renderTable();
         print($sc);
       }
       catch ( Exception $e ) {
@@ -438,30 +438,30 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
       $mainPanelScript = 'var '.$panelName.'={},'.$panelName.'Tabs=[];'.
         'leimnud.event.add(window,"load",function(){'.$panelName.' = new leimnud.module.panel();'.
         'var mycontent=document.getElementById("'.$this->publisherId.'['.$intPos.']");'.
-	      $panelName.'.options={'.
-	        'size:{w:'.$data['width'].',h:'.$data['height'].'},'.
-	        'position:{x:'.$data['left'].',y:'.$data['top'].'},'.
-	        'title:"'.addcslashes($data['title'],'\\"').'",'.
-	        'theme:"processmaker",'.
-	        'statusBar:true,'.
-	        'headerBar:true,'.
-	        'control:{'.
-	        '	close:'.($data['close']?'true':'false').','.
-	        '	roll:'.($data['roll']?'true':'false').','.
-	        '	drag:'.($data['drag']?'true':'false').','.
-	        '	resize:'.($data['resize']?'true':'false').
-	        '},'.
-	        'fx:{'.
-	        '	drag:'.($data['drag']?'true':'false').','.
-	        '	modal:'.($data['modal']?'true':'false').','.
-	        ' blinkToFront:'.($data['blinkToFront']?'true':'false').
-	        '}'.
-	      '};'.
+        $panelName.'.options={'.
+          'size:{w:'.$data['width'].',h:'.$data['height'].'},'.
+          'position:{x:'.$data['left'].',y:'.$data['top'].'},'.
+          'title:"'.addcslashes($data['title'],'\\"').'",'.
+          'theme:"processmaker",'.
+          'statusBar:true,'.
+          'headerBar:true,'.
+          'control:{'.
+          ' close:'.($data['close']?'true':'false').','.
+          ' roll:'.($data['roll']?'true':'false').','.
+          ' drag:'.($data['drag']?'true':'false').','.
+          ' resize:'.($data['resize']?'true':'false').
+          '},'.
+          'fx:{'.
+          ' drag:'.($data['drag']?'true':'false').','.
+          ' modal:'.($data['modal']?'true':'false').','.
+          ' blinkToFront:'.($data['blinkToFront']?'true':'false').
+          '}'.
+        '};'.
         $panelName.'.setStyle='.$json->encode($data['style']).';'.
         $panelName.'.tab={'.
           'width:'.($data['tabWidth']+$data['tabSpace']).','.
           'optWidth:'.$data['tabWidth'].','.
-          'step	:'.$data['tabStep'].','.
+          'step :'.$data['tabStep'].','.
           'options:[]'.
           '};';
        print(' ');
@@ -477,9 +477,9 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
           'document.getElementById("'.$Part['File'].'");'.
           $panelName.'.tab.options['.$panelName.'.tab.options.length]='.
           '{'.
-          'title	:"'.addcslashes($Part['Template'],'\\"').'",'.
-          'noClear	:true,'.
-          'content	:function(){'.
+          'title  :"'.addcslashes($Part['Template'],'\\"').'",'.
+          'noClear  :true,'.
+          'content  :function(){'.
               ($beforeChange!='' ? ('if (typeof('.$beforeChange.')!=="undefined") {'.$beforeChange.'();}'): '').
                 $panelName.'Clear();'.
                 $panelName.'Tabs['.$tabCount.'].style.display="";'.
@@ -561,20 +561,20 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
         $template->set_filenames(array('body' => $Part['Template'] . '.html') );
         $dataArray = $Part['Data'] ;
           if ( is_array ( $dataArray ) ) {
-          	foreach ( $dataArray as $key => $val )
+            foreach ( $dataArray as $key => $val )
               if ( is_array ( $val ) ) {
-              	foreach ( $val as $key_val => $val_array )
-       	  			  $template->assign_block_vars( $key, $val_array );
+                foreach ( $val as $key_val => $val_array )
+                  $template->assign_block_vars( $key, $val_array );
               }
               else
-   	            $template->assign_vars( array ( $key => $val ) );
+                $template->assign_vars( array ( $key => $val ) );
             }
-  	      $template->pparse('body' );
-  	    }
-  	    if ( gettype( $Part['Data'] ) == 'object' &&  strtolower(get_class ( $Part['Data'] )) == 'templatepower' ) {
+          $template->pparse('body' );
+        }
+        if ( gettype( $Part['Data'] ) == 'object' &&  strtolower(get_class ( $Part['Data'] )) == 'templatepower' ) {
           $Part['Data']->printToScreen();
 
-    	  }
+        }
         return;
       break;
     case 'view':
@@ -597,9 +597,9 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
 
       break;
       case 'graphLayout': //Added by JHL to render GraphLayout component
-    	$G_OBJGRAPH = $Part['Data'];
-    	$G_TMP_TARGET = $Part['Target'];
-   		$G_TMP_FILE = $Part['File'];
+      $G_OBJGRAPH = $Part['Data'];
+      $G_TMP_TARGET = $Part['Target'];
+      $G_TMP_FILE = $Part['File'];
       break;
     }
 

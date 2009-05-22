@@ -39,7 +39,7 @@ class WebResource
     if (isset($post['function'])&&$post['function']!='')
     {
       /*Call a function*/
-      header('Content-Type:	text/json');
+      header('Content-Type: text/json');
       $parameters=json_decode((urldecode($post['parameters'])));
       $paramsRef=array();
       foreach($parameters as $key => $value)
@@ -59,7 +59,7 @@ class WebResource
   }
   function _encode()
   {
-    header('Content-Type:	text/json');
+    header('Content-Type: text/json');
     $methods=get_class_methods(get_class($this));
     print('{');
     $first=true;
@@ -108,4 +108,3 @@ if (!function_exists('json_decode')) {
       return $json->decode($value);
     }
 }
-?>

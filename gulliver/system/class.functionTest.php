@@ -35,4 +35,3 @@ class functionTest
     return "OK";
   }
 }
-?>
