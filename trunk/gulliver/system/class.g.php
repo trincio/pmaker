@@ -707,31 +707,31 @@ class G
    * @return void
    */
   function LoadAllPluginModelClasses(){
-  	//Get the current Include path, where the plugins directories should be
-	if ( !defined('PATH_SEPARATOR') ) {
-		define('PATH_SEPARATOR', ( substr(PHP_OS, 0, 3) == 'WIN' ) ? ';' : ':');
-	}
-  	$path=explode(PATH_SEPARATOR,get_include_path());
-	
+    //Get the current Include path, where the plugins directories should be
+  if ( !defined('PATH_SEPARATOR') ) {
+    define('PATH_SEPARATOR', ( substr(PHP_OS, 0, 3) == 'WIN' ) ? ';' : ':');
+  }
+    $path=explode(PATH_SEPARATOR,get_include_path());
+  
 
-  	foreach($path as $possiblePath){
-  		if(strstr($possiblePath,"plugins")){
-  			$baseDir = $possiblePath . 'classes' . PATH_SEP . 'model';  			
-		    if(file_exists($baseDir)){
-		    if ($handle = opendir( $baseDir  )) {		      
-		      while ( false !== ($file = readdir($handle))) {
-		        if ( strpos($file, '.php',1) && !strpos($file, 'Peer.php',1) ) {
-		          require_once ( $baseDir . PATH_SEP . $file );		          
-		        }
-		      }
-		    }
-		    //Include also the extendGulliverClass that could have some new definitions for fields
-		    if(file_exists($possiblePath . 'classes' . PATH_SEP.'class.extendGulliver.php')){
-		      include_once $possiblePath . 'classes' . PATH_SEP.'class.extendGulliver.php';
-		    }
-		  }
-  		}
-  	}
+    foreach($path as $possiblePath){
+      if(strstr($possiblePath,"plugins")){
+        $baseDir = $possiblePath . 'classes' . PATH_SEP . 'model';        
+        if(file_exists($baseDir)){
+        if ($handle = opendir( $baseDir  )) {         
+          while ( false !== ($file = readdir($handle))) {
+            if ( strpos($file, '.php',1) && !strpos($file, 'Peer.php',1) ) {
+              require_once ( $baseDir . PATH_SEP . $file );             
+            }
+          }
+        }
+        //Include also the extendGulliverClass that could have some new definitions for fields
+        if(file_exists($possiblePath . 'classes' . PATH_SEP.'class.extendGulliver.php')){
+          include_once $possiblePath . 'classes' . PATH_SEP.'class.extendGulliver.php';
+        }
+      }
+      }
+    }
   }
 
 /**
@@ -1471,7 +1471,7 @@ class G
     $result = $result + G::getSystemConstants();
     $__textoEval="";$u=0;
     //$count=preg_match_all('/\@(?:([\@\%\#\!Qq])([a-zA-Z\_]\w*)|([a-zA-Z\_][\w\-\>\:]*)\(((?:[^\\\\\)]*(?:[\\\\][\w\W])?)*)\))/',$sqlString,$match,PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE);
-    $count=preg_match_all('/\@(?:([\@\%\#\!Qq])([a-zA-Z\_]\w*)|([a-zA-Z\_][\w\-\>\:]*)\(((?:[^\\\\\)]*?)*)\))/',$sqlString,$match,PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE);	
+    $count=preg_match_all('/\@(?:([\@\%\#\!Qq])([a-zA-Z\_]\w*)|([a-zA-Z\_][\w\-\>\:]*)\(((?:[^\\\\\)]*?)*)\))/',$sqlString,$match,PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE);  
 
     if ($count)
     {
@@ -2994,4 +2994,3 @@ class oldG
     return 1;
   }
 }
-?>

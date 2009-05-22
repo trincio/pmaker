@@ -52,8 +52,8 @@ class DBSession
    */
   function DBSession( $objConnection = NULL, $strDBName = '' )
   {
-  	if ($strDBName!='') $strDBName = $objConnection->db->_db;
-  	$this->setTo( $objConnection, $strDBName );
+    if ($strDBName!='') $strDBName = $objConnection->db->_db;
+    $this->setTo( $objConnection, $strDBName );
   }
 
 
@@ -110,13 +110,13 @@ class DBSession
     //BUG::traceRoute();
     if ($this->dbc == NULL ) { 
       $dberror = PEAR::raiseError(null, DB_ERROR_OBJECT_NOT_DEFINED, null, 'null', 
-      				'You have tried to call a DBSession function without create an instance of DBConnection',
+              'You have tried to call a DBSession function without create an instance of DBConnection',
              'G_Error', true);
       DBconnection::logError( $dberror, $errorLevel );
       return $dberror;
     };
 
-  	if ( $errorLevel === null ) $errorLevel = $this->dbc->errorLevel;
+    if ( $errorLevel === null ) $errorLevel = $this->dbc->errorLevel;
 
     $this->Free( true );
 
@@ -143,20 +143,20 @@ class DBSession
 /*    function deprecated... by Onti, 30th july 2007
   function Query( $strQuery = '', $debug = false, $error = '' )
   {
-  	if ( $error == '' && defined('ERROR_STATE') ) {
-  			$error = ERROR_STATE;
-  	}
+    if ( $error == '' && defined('ERROR_STATE') ) {
+        $error = ERROR_STATE;
+    }
 
     if ( !defined('ERROR_STATE') ) $error = 4;
 
-  	if( $debug ) {
+    if( $debug ) {
       print( $strQuery . "<br>\n" );
     }
     
     $this->Free( true );
 
     $this->result = $this->dbc->db->query ( $strQuery );
-  	
+    
     if (DB::isError ($this->result)) {
       $this->dbc->ShowLogError( $this->result->getMessage() , $this->result->userinfo, $error);
       die;
@@ -179,5 +179,3 @@ class DBSession
     return;
   }
 }
-
-?>

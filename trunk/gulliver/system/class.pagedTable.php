@@ -391,8 +391,8 @@ class pagedTable
       $xmlPopup='';
       $this->xmlFormFile="";
 /*      if ($table->Action)
-				$this->ajaxServer=G::encryptLink($table->Action);
-			else*/
+        $this->ajaxServer=G::encryptLink($table->Action);
+      else*/
         $this->ajaxServer=G::encryptLink('../gulliver/pagedTableAjax');
       $this->popupPage = $this->ajaxServer . '?function=printForm&filename=' . urlencode($xmlPopup);
       $this->ownerPage=G::encryptLink(SYS_CURRENT_URI);
@@ -444,18 +444,18 @@ class pagedTable
       }
     //Add a delete column if sqlDelete is established
     /*  if ($this->sqlDelete!='')
-			{
-				$this->fields[$r]['Name']='';
-				$this->fields[$r]['Type']='linknew';
-				$this->fields[$r]['Label']=G::LoadXml('labels','ID_DELETE');
-			}*/
+      {
+        $this->fields[$r]['Name']='';
+        $this->fields[$r]['Type']='linknew';
+        $this->fields[$r]['Label']=G::LoadXml('labels','ID_DELETE');
+      }*/
     //Set the default settings
       $this->defaultStyle();
     /*  if ($this->sqlDelete!='')
-			{
-				$this->style[$r]['href']="#";
-				$this->style[$r]['onclick']="document.getElementById('pagedTable').outerHTML=ajax_function('{$this->ajaxServer}','delete','".$this->fieldDataList."');";
-			}*/
+      {
+        $this->style[$r]['href']="#";
+        $this->style[$r]['onclick']="document.getElementById('pagedTable').outerHTML=ajax_function('{$this->ajaxServer}','delete','".$this->fieldDataList."');";
+      }*/
     //Prepare the columns's properties
       if ($table->show_nummbers=='YES')
       {
@@ -989,4 +989,3 @@ function var_dump2($o)
   else
     var_dump($o);
 }
-?>

@@ -179,7 +179,7 @@ class XmlForm_Field {
         $rs = $con->executeQuery ( $query, ResultSet::FETCHMODE_NUM );
       }
       catch ( Exception $e ) {  //dismiss error because dbarray shouldnt be defined in some contexts.
-      	return $result;
+        return $result;
       }
     } 
     else {

@@ -69,7 +69,7 @@ class Form extends XmlForm
       }
     }
     foreach($this->fields as $k => $v){
-    	if (is_object($v)) {//julichu
+      if (is_object($v)) {//julichu
         $this->fields[$k]->owner =& $this;
       }
     }
@@ -86,8 +86,8 @@ class Form extends XmlForm
    */
   function Form($filename, $home='', $language = '', $forceParse = false, $visual_frontend=null)
   {
-  	$this->visual_frontend = $visual_frontend;
-  	 
+    $this->visual_frontend = $visual_frontend;
+     
     if ($language=== '') $language = defined('SYS_LANG')? SYS_LANG : 'en';
     if ($home=== '') $home = defined('PATH_XMLFORM')? PATH_XMLFORM :
      (defined('PATH_DYNAFORM')? PATH_DYNAFORM: '');
@@ -125,10 +125,10 @@ class Form extends XmlForm
    */
   function printTemplate( $template, &$scriptContent )
   {
-	if (!file_exists($template))
-	{
+  if (!file_exists($template))
+  {
       throw(new Exception('Template "'.basename($template).'" doesn`t exists.'));
-	}
+  }
     $o = new xmlformTemplate($this, $template);
     if (is_array(reset($this->values))) $this->rows=count(reset($this->values));
     if ($this->enableTemplate) {
@@ -156,16 +156,16 @@ class Form extends XmlForm
    */
   function render( $template, &$scriptContent )
   {
-  	/***
-  	 * This section was added for store the current used template.   
-	 */
-  	$tmp_var = explode('/', $template);
-  	if( is_array($tmp_var) ){
-  		$tmp_var = $tmp_var[sizeof($tmp_var)-1];
-  		$this->using_template = $tmp_var;	
-  	}
-  	/***/
-  	
+    /***
+     * This section was added for store the current used template.   
+   */
+    $tmp_var = explode('/', $template);
+    if( is_array($tmp_var) ){
+      $tmp_var = $tmp_var[sizeof($tmp_var)-1];
+      $this->using_template = $tmp_var; 
+    }
+    /***/
+    
     $this->template = $template;
     $o = new xmlformTemplate($this, $template);
     $values = $this->values;
@@ -265,10 +265,10 @@ class Form extends XmlForm
         if ($v->type != 'file') { 
           if ( array_key_exists($k,$newValues) ) { 
             if ( is_array($newValues[$k]) ) { 
-            	if (($v->type == 'checkgroup') || ($v->type == 'listbox')) {
-            		$values[$k] = implode('|', $newValues[$k]);
-            	}
-            	else {
+              if (($v->type == 'checkgroup') || ($v->type == 'listbox')) {
+                $values[$k] = implode('|', $newValues[$k]);
+              }
+              else {
                 $values[$k] = array();
                 foreach( $newValues[$k] as $j => $item ) {
                   if ($this->fields[$k]->validateValue($newValues[$k][$j], $this ))
@@ -299,9 +299,9 @@ class Form extends XmlForm
       }
     }
     foreach ($newValues as $k => $v) {
-    	if (strpos($k, 'SYS_GRID_AGGREGATE_') !== false) {
-    		$values[$k] = $v;
-    	}
+      if (strpos($k, 'SYS_GRID_AGGREGATE_') !== false) {
+        $values[$k] = $v;
+      }
     } 
     return $values;
   }
@@ -312,22 +312,22 @@ class Form extends XmlForm
    * @return array
    */
   function getVars($bWhitSystemVars = true) {
-  	$aFields = array();
-  	if ($bWhitSystemVars) {
-  	  $aAux    = G::getSystemConstants();
-  	  foreach ($aAux as $sName => $sValue) {
-  	  	$aFields[] = array('sName' => $sName, 'sType' => 'system');
-  	  }
+    $aFields = array();
+    if ($bWhitSystemVars) {
+      $aAux    = G::getSystemConstants();
+      foreach ($aAux as $sName => $sValue) {
+        $aFields[] = array('sName' => $sName, 'sType' => 'system');
+      }
     }
-  	foreach($this->fields as $k => $v) {
-  		if (($v->type != 'title')  && ($v->type != 'subtitle') && ($v->type != 'link')       &&
-  		    ($v->type != 'file')   && ($v->type != 'button')   && ($v->type != 'reset')      &&
-  		    ($v->type != 'submit') && ($v->type != 'listbox')  && ($v->type != 'checkgroup') &&
-	    	  ($v->type != 'grid')   && ($v->type != 'javascript')) {
-  		  $aFields[] = array('sName' => trim($k), 'sType' => trim($v->type));
-  	  }
-  	}
-  	return $aFields;
+    foreach($this->fields as $k => $v) {
+      if (($v->type != 'title')  && ($v->type != 'subtitle') && ($v->type != 'link')       &&
+          ($v->type != 'file')   && ($v->type != 'button')   && ($v->type != 'reset')      &&
+          ($v->type != 'submit') && ($v->type != 'listbox')  && ($v->type != 'checkgroup') &&
+          ($v->type != 'grid')   && ($v->type != 'javascript')) {
+        $aFields[] = array('sName' => trim($k), 'sType' => trim($v->type));
+      }
+    }
+    return $aFields;
   }
 
    /**
@@ -336,35 +336,34 @@ class Form extends XmlForm
    * @access public
    * @return array/false
    */
-	function validateRequiredFields($values)
-	{
-		$rFields = Array();
-		$missingFields = Array();
+  function validateRequiredFields($values)
+  {
+    $rFields = Array();
+    $missingFields = Array();
 
-		foreach ($this->fields as $o) {
-			if(property_exists(get_class($o), 'required')) {
-				if( $o->required == 1) {
-					array_push($rFields, $o->name);
-				}
-			}
-		}
+    foreach ($this->fields as $o) {
+      if(property_exists(get_class($o), 'required')) {
+        if( $o->required == 1) {
+          array_push($rFields, $o->name);
+        }
+      }
+    }
 
-		foreach($rFields as $field){
-			#we verify if the requiered field is in array values,. t
-			if (array_key_exists($field, $values)) {
-			    if( $values[$field] == "") {
-					array_push($missingFields, $field);
-				}
-			} else {
-				array_push($missingFields, $field);
-			}
-		}
+    foreach($rFields as $field){
+      #we verify if the requiered field is in array values,. t
+      if (array_key_exists($field, $values)) {
+          if( $values[$field] == "") {
+          array_push($missingFields, $field);
+        }
+      } else {
+        array_push($missingFields, $field);
+      }
+    }
 
-		if(sizeof($missingFields) != 0) {
-			return $missingFields;
-		} else {
-			return false;
-		}
-	}
+    if(sizeof($missingFields) != 0) {
+      return $missingFields;
+    } else {
+      return false;
+    }
+  }
 }
-?>

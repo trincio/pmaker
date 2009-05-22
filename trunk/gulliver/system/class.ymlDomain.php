@@ -229,4 +229,3 @@ class ymlDomain
     foreach($appendFrom as $appendItem) $to[]=$appendItem;
   } 
 }
-?>

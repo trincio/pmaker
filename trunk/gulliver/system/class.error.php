@@ -31,9 +31,9 @@ require_once 'PEAR.php';
  */
 
 define('G_ERROR',                         -100);
-define('DB_ERROR_FEATURE_NOT_AVAILABLE',	-101);
-define('DB_ERROR_OBJECT_NOT_DEFINED', 		-102);
-define('G_ERROR_WARNING_MESSAGE',     		-103);
+define('DB_ERROR_FEATURE_NOT_AVAILABLE',  -101);
+define('DB_ERROR_OBJECT_NOT_DEFINED',     -102);
+define('G_ERROR_WARNING_MESSAGE',         -103);
 define('G_ERROR_DBCONNECTION',            -104);
 define('G_ERROR_SYSTEM_UID',              -105);
 define('G_ERROR_SYSTEM_CODE',             -106);
@@ -82,7 +82,7 @@ class G_Error extends PEAR_Error
       else {
         if (!isset($gErrorMessages)) {
             $gErrorMessages = array(
-                G_ERROR                    	=> 'unknown error',
+                G_ERROR                     => 'unknown error',
                 DB_ERROR_FEATURE_NOT_AVAILABLE   => 'this function or feature is not available for this database engine',
                 DB_ERROR_OBJECT_NOT_DEFINED  => 'Object or variable not defined',
                 G_ERROR_WARNING_MESSAGE      => 'Warning message',
@@ -99,4 +99,3 @@ class G_Error extends PEAR_Error
 
 
 }
-?>

@@ -63,15 +63,15 @@ class DBConnection
 /* 4 display complete error information and continue.
 /* 
 /* Error Structure
-/* 	int error code
-/* 	string error message
-/* 	string error detailed message
+/*  int error code
+/*  string error message
+/*  string error detailed message
 /*
 /*  In all cases, the error will be saved in the apache log file
 /* 
 /* */
 
-	/**
+  /**
    * Starts DB connection with default values
    * @author Fernando Ontiveros Lira <fernando@colosa.com>
    * @access public
@@ -87,12 +87,12 @@ class DBConnection
    */
   function DBConnection( $strServer = DB_HOST, $strUser = DB_USER, $strPwd = DB_PASS, $strDB = DB_NAME , $type = 'mysql', $strPort = 0,  $errorLevel = 2 )
   {
-  	$this->errorLevel = $errorLevel;
-  	
-  	if ($type == null ) $type = 'mysql';
-  	
-  	$this->type = $type;
-  	
+    $this->errorLevel = $errorLevel;
+    
+    if ($type == null ) $type = 'mysql';
+    
+    $this->type = $type;
+    
     //print "<hr>$type $strServer, $strUser, $strPwd, $strDB <hr>";
     if ( $type == "mysql" )
       $dsn = "mysql://$strUser:$strPwd@$strServer/$strDB";
@@ -124,8 +124,8 @@ class DBConnection
     }
 
     if ( DB::isError ($this->db) ) {
-  	  $this->db_error = $this->db;
-  	  $this->db = NULL;
+      $this->db_error = $this->db;
+      $this->db = NULL;
       $this->logError( $this->db_error );
     }
   }
@@ -169,7 +169,7 @@ class DBConnection
     $this->Reset();
   }
 
-	/**
+  /**
    * log Errors
    * @author Fernando Ontiveros Lira <fernando@colosa.com>
    *
@@ -180,34 +180,34 @@ class DBConnection
   function logError( $obj, $errorLevel = NULL )
   {
     global $_SESSION;
-  	global $_SERVER;
-  	
-  	if ( is_null( $errorLevel ) )
-  	  if ( isset ( $this->errorLevel) ) 
-  	    $errorLevel = $this->errorLevel;
-  	  else
-  	    $errorLevel = DB_ERROR_SHOWALL_AND_STOP;  //for fatal errors the default is 3, show detailed and die.
-  	  
-  	if ($errorLevel == DB_ERROR_SHOW_AND_STOP || $errorLevel == DB_ERROR_SHOW_AND_CONTINUE || 
-  	    $errorLevel == DB_ERROR_SHOWALL_AND_STOP || $errorLevel == DB_ERROR_SHOWALL_AND_CONTINUE ) {
-		  print "<table border=1 style='font-family:Arial' cellspacing=1 cellpadding = 0 width=400 class= 'tableError' >";
-		  print "<tr><td><b>" . $obj->code . ' '. $obj->message . "</b></td></tr>";
-	  	if ($errorLevel == DB_ERROR_SHOWALL_AND_STOP || $errorLevel == DB_ERROR_SHOWALL_AND_CONTINUE ) {
-		    print "<tr><td>" . $obj->userinfo . "</td></tr>";
-		  }
-		  print "</table>";
-		}
-		if (defined('DB_ERROR_BACKTRACE') && DB_ERROR_BACKTRACE) {
-			print "<table border = 1 width=400 class= 'sendMsgRojo'><tr><td><textarea rows='12' cols='180' style='width:100%;font-family:courier;white-space:pre-line;overflow:auto;border:none;'>";
-			print((htmlentities(DBConnection::traceError())));
-			print "</textarea></td></tr></table>";
-		}
-		//G::setErrorHandler ( );
+    global $_SERVER;
+    
+    if ( is_null( $errorLevel ) )
+      if ( isset ( $this->errorLevel) ) 
+        $errorLevel = $this->errorLevel;
+      else
+        $errorLevel = DB_ERROR_SHOWALL_AND_STOP;  //for fatal errors the default is 3, show detailed and die.
+      
+    if ($errorLevel == DB_ERROR_SHOW_AND_STOP || $errorLevel == DB_ERROR_SHOW_AND_CONTINUE || 
+        $errorLevel == DB_ERROR_SHOWALL_AND_STOP || $errorLevel == DB_ERROR_SHOWALL_AND_CONTINUE ) {
+      print "<table border=1 style='font-family:Arial' cellspacing=1 cellpadding = 0 width=400 class= 'tableError' >";
+      print "<tr><td><b>" . $obj->code . ' '. $obj->message . "</b></td></tr>";
+      if ($errorLevel == DB_ERROR_SHOWALL_AND_STOP || $errorLevel == DB_ERROR_SHOWALL_AND_CONTINUE ) {
+        print "<tr><td>" . $obj->userinfo . "</td></tr>";
+      }
+      print "</table>";
+    }
+    if (defined('DB_ERROR_BACKTRACE') && DB_ERROR_BACKTRACE) {
+      print "<table border = 1 width=400 class= 'sendMsgRojo'><tr><td><textarea rows='12' cols='180' style='width:100%;font-family:courier;white-space:pre-line;overflow:auto;border:none;'>";
+      print((htmlentities(DBConnection::traceError())));
+      print "</textarea></td></tr></table>";
+    }
+    //G::setErrorHandler ( );
     G::customErrorLog ('DB_Error', $obj->code . ' '. $obj->message .'-' . $obj->userinfo, '', '');
-  	if ($errorLevel == DB_ERROR_SHOW_AND_STOP || $errorLevel == DB_ERROR_SHOWALL_AND_STOP ) {
+    if ($errorLevel == DB_ERROR_SHOW_AND_STOP || $errorLevel == DB_ERROR_SHOWALL_AND_STOP ) {
       die; //stop
-		}
-	}	  
+    }
+  }   
   /**
    * Get the trace of the current execution (debug_backtrace).
    * @author David Callizaya
@@ -255,13 +255,13 @@ class DBConnection
     return $out;
   }
 
-  	/**
-	   * Gets last autoincrement value inserted
-	   * @author Fernando Ontiveros Lira <fernando@colosa.com>
-	   *
-	   * @access public
-	   * @return  void
-	  */
+    /**
+     * Gets last autoincrement value inserted
+     * @author Fernando Ontiveros Lira <fernando@colosa.com>
+     *
+     * @access public
+     * @return  void
+    */
   function GetLastID()
   {
     if ( PEAR_DATABASE == "mysql" ){
@@ -279,5 +279,3 @@ class DBConnection
   }
 
 }
-
-?>

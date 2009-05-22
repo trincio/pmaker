@@ -274,10 +274,10 @@ class Menu
     $target = $this->Options[$intPos];
     if( $this->Types[$intPos] != "absolute" )
     {
-    	if (defined('ENABLE_ENCRYPT'))  {
+      if (defined('ENABLE_ENCRYPT'))  {
 
         $target = "/sys" . SYS_SYS . "/" . SYS_LANG . "/" . SYS_SKIN . "/" . $target;
-    	}
+      }
       else
         if (defined('SYS_SYS'))
           $target = "/sys" . SYS_SYS . "/" . SYS_LANG . "/" . SYS_SKIN . "/" . $target;
@@ -294,56 +294,56 @@ class Menu
   }
   
   function generateArrayForTemplate($G_MAIN_MENU,$classOn,$classOff,$G_MENU_SELECTED, $G_ID_MENU_SELECTED ) {
-  	$menus = array();
+    $menus = array();
     if ($G_MAIN_MENU == null) {
-    	return $menus;
+      return $menus;
     }
-  	$this->Load ($G_MAIN_MENU);
-  	$this->optionOn = $G_MENU_SELECTED;
-  	$this->id_optionOn = $G_ID_MENU_SELECTED;
-  	//$this->Class = $G_MENU_CLASS;
-  	if (is_array($this->Options)) 
-  	{
-  		for ($ncount = 0; $ncount < $this->OptionCount(); $ncount++)
-  		{
-  			$target = $this->Options[$ncount];
-  			//$aux = $this->Icons[$ncount];
-  			$aux = $this->JS[$ncount];
-  			if ($this->Types[$ncount] == 'absolute') {
-  			  //$target = G::encryptLink(str_replace('sys' . SYS_TEMP, SYS_TEMP, $this->Options[$ncount]));
-  			  $target = $this->Options[$ncount];
-  			}
-  			if ($this->Types[$ncount] != 'absolute')   			{
-  			  if (defined('SYS_SYS'))   			  {
-  				  $target = '/sys' . SYS_TEMP . G::encryptLink('/' . SYS_LANG . '/' . SYS_SKIN . '/' . $this->Options[$ncount]);
-  				}
-  				else {
-  				  $target = '/sys/' . G::encryptLink(SYS_LANG . '/' . SYS_SKIN . '/' . $this->Options[$ncount]);
-  				}
-  			}
-  			$label = $this->Labels[$ncount];
-  			if ($this->id_optionOn != '') {
-  				$onMenu = ($this->Id[$ncount] == $this->id_optionOn ? true : false);
-  			}
-  			else {
-  				$onMenu = ($ncount == $this->optionOn ? true : false);
-  			}
-  			$classname = ($onMenu ? $classOn : $classOff);
-  			$imageLeft = ($onMenu ? "<img src=\"/images/bulletSubMenu.jpg\" />" : '');
-  			$onclick = '';
-  			if ($this->JS[$ncount] !== '' ) {
+    $this->Load ($G_MAIN_MENU);
+    $this->optionOn = $G_MENU_SELECTED;
+    $this->id_optionOn = $G_ID_MENU_SELECTED;
+    //$this->Class = $G_MENU_CLASS;
+    if (is_array($this->Options)) 
+    {
+      for ($ncount = 0; $ncount < $this->OptionCount(); $ncount++)
+      {
+        $target = $this->Options[$ncount];
+        //$aux = $this->Icons[$ncount];
+        $aux = $this->JS[$ncount];
+        if ($this->Types[$ncount] == 'absolute') {
+          //$target = G::encryptLink(str_replace('sys' . SYS_TEMP, SYS_TEMP, $this->Options[$ncount]));
+          $target = $this->Options[$ncount];
+        }
+        if ($this->Types[$ncount] != 'absolute')        {
+          if (defined('SYS_SYS'))           {
+            $target = '/sys' . SYS_TEMP . G::encryptLink('/' . SYS_LANG . '/' . SYS_SKIN . '/' . $this->Options[$ncount]);
+          }
+          else {
+            $target = '/sys/' . G::encryptLink(SYS_LANG . '/' . SYS_SKIN . '/' . $this->Options[$ncount]);
+          }
+        }
+        $label = $this->Labels[$ncount];
+        if ($this->id_optionOn != '') {
+          $onMenu = ($this->Id[$ncount] == $this->id_optionOn ? true : false);
+        }
+        else {
+          $onMenu = ($ncount == $this->optionOn ? true : false);
+        }
+        $classname = ($onMenu ? $classOn : $classOff);
+        $imageLeft = ($onMenu ? "<img src=\"/images/bulletSubMenu.jpg\" />" : '');
+        $onclick = '';
+        if ($this->JS[$ncount] !== '' ) {
           $onclick = " onclick=\"" . $this->JS[$ncount] . "\"";
-  			}
-  			$icon = '';
-  			if ($this->Icons[$ncount] !== '' ) {
+        }
+        $icon = '';
+        if ($this->Icons[$ncount] !== '' ) {
           $icon = " <a href=\"#\" onclick=\"" . $this->JS[$ncount] . "\" class=\"$classname\">" .
-	      	  	  "<img src=\"". $this->Icons[$ncount] . "\" border=\"0\"/></a>";
+                "<img src=\"". $this->Icons[$ncount] . "\" border=\"0\"/></a>";
           $icon = $this->Icons[$ncount];
-  			}
-  			if ( $this->Classes[$ncount] != '') {
-  			  $classname = $this->Classes[$ncount];
-  			  $target = "#";
-  			}
+        }
+        if ( $this->Classes[$ncount] != '') {
+          $classname = $this->Classes[$ncount];
+          $target = "#";
+        }
         $menus[] = array ( 'id' => $ncount, 'target' => $target, 'label' => $label, 'onMenu' => $onMenu, 'classname' => $classname, 
                            'imageLeft' => $imageLeft, 'onclick' => $onclick, 
                            'icon' => $icon, 'aux' => $aux ); 

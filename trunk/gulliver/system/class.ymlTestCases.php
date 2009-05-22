@@ -236,4 +236,3 @@ class ymlTestCases
     return $this->run( $testerObject, $fields, $count, $start );
   }
 }
-?>

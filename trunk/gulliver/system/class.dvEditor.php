@@ -34,10 +34,9 @@ class XmlForm_Field_HTML extends XmlForm_Field
     return '<div style="width:'.$this->width.';"><input id="form['.$this->name.']" name="form['.$this->name.']" type="hidden" value="'.htmlentities($value,ENT_QUOTES,'UTF-8').'"/></div>';
   }
   function attachEvents($element) {
-		$html='window._editor'.$this->name.'=new DVEditor(getField("'.$this->name.'").parentNode,getField("'.$this->name.'").value,element,"'.$this->height.'");';
-		$html.='window._editor'.$this->name.'.loadToolBar("/js/dveditor/core/toolbars/'.$this->toolbarSet.'.html");';
-		$html.='window._editor'.$this->name.'.syncHidden("window._editor'.$this->name.'");';
-		return $html;
+    $html='window._editor'.$this->name.'=new DVEditor(getField("'.$this->name.'").parentNode,getField("'.$this->name.'").value,element,"'.$this->height.'");';
+    $html.='window._editor'.$this->name.'.loadToolBar("/js/dveditor/core/toolbars/'.$this->toolbarSet.'.html");';
+    $html.='window._editor'.$this->name.'.syncHidden("window._editor'.$this->name.'");';
+    return $html;
   }
 }
-?>

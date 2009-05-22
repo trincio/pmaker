@@ -59,7 +59,7 @@ class DBRecordSet
    */
   function SetTo( $intResult = null )
   {
-  	if ( $intResult === null ) {
+    if ( $intResult === null ) {
       $dberror = PEAR::raiseError(null, DB_ERROR_OBJECT_NOT_DEFINED, null, 'null',
              "You tried to call to a DBRecordset with an invalid result recordset.",
              'G_Error', true);
@@ -78,7 +78,7 @@ class DBRecordSet
    */
   function Free()
   {
-  	if ( $this->result === null ) {
+    if ( $this->result === null ) {
       $dberror = PEAR::raiseError(null, DB_ERROR_OBJECT_NOT_DEFINED, null, 'null',
              "You tried to call to a DBRecordset with an invalid result recordset.",
              'G_Error', true);
@@ -96,7 +96,7 @@ class DBRecordSet
    */
   function Count()
   {
-  	if ( $this->result === null ) {
+    if ( $this->result === null ) {
       $dberror = PEAR::raiseError(null, DB_ERROR_OBJECT_NOT_DEFINED, null, 'null',
              "You tried to call to a DBRecordset with an invalid result recordset.",
              'G_Error', true);
@@ -113,7 +113,7 @@ class DBRecordSet
    */
   function Read()
   {
-  	if ( $this->result === null ) {
+    if ( $this->result === null ) {
       $dberror = PEAR::raiseError(null, DB_ERROR_OBJECT_NOT_DEFINED, null, 'null',
              "You tried to call to a DBRecordset with an invalid result recordset.",
              'G_Error', true);
@@ -149,5 +149,3 @@ class DBRecordSet
     return $res;
   }
 }
-
-?>

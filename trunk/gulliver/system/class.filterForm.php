@@ -33,4 +33,3 @@ class filterForm extends form
     return parent::render( $template, $scriptContent );
   }
 }
-?>

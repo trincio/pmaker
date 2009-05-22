@@ -44,9 +44,9 @@
  * 16-Jun-2005 Jorge Hugo Loza *JHL
  *            La Funcion AddRawColumn soporta ahora un nuevo tipo "textimage"
  *            el cual permite tener un campo con texto (field) e im?gen tipo
- *						Icono, se visualiza con el siguiente formato -><img> ($field)<-
- *						incluye los par?ntesis. La sintaxis es similar a la de texto,
- 							pero al final se incluye un par?metro que es la im?gen
+ *            Icono, se visualiza con el siguiente formato -><img> ($field)<-
+ *            incluye los par?ntesis. La sintaxis es similar a la de texto,
+              pero al final se incluye un par?metro que es la im?gen
  * 11-Feb-2005 Fernando Ontiveros Lira
  *            Se agrega el Campo BOLD_FIELD para indicar que un registro debe
  *            ser mostrado en negrita
@@ -103,8 +103,8 @@ class Table
   var $show_nummbers = NULL;
   var $first_row     = 0;
   var $row_pos       = 0;
-  var $Action        = "";				//not used
-  var $ActionLabel   = "Continuar";		//not used
+  var $Action        = "";        //not used
+  var $ActionLabel   = "Continuar";   //not used
   var $_dbc          = NULL;
   var $_dbses        = NULL;
   var $_dbset        = NULL;
@@ -179,7 +179,7 @@ class Table
    */
   function SetSource( $stQry = "", $stDefaultOrder = "UID", $stDefaultOrderDir = 'ASC' )
   {
-  	//to fix missing value for variable orderDir, when between pages changes.
+    //to fix missing value for variable orderDir, when between pages changes.
     $url1 = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '?';
     $url2 = strstr ( $_SERVER['HTTP_REFERER']. '?', $_SERVER['HTTP_HOST'] );
     $url1 =  substr ( $url1, 0, strpos ( $url1, '?' ) ) ;
@@ -206,7 +206,7 @@ class Table
     global $HTTP_SESSION_VARS;
     $stOrderByDir = $this->DefaultOrderDir;
     if( isset( $HTTP_SESSION_VARS['OrderDir'] ) && ( $HTTP_SESSION_VARS['OrderDir'] == 'DESC' || $HTTP_SESSION_VARS['OrderDir'] == 'ASC' ) )
-  		$stOrderByDir = $HTTP_SESSION_VARS['OrderDir'] ;
+      $stOrderByDir = $HTTP_SESSION_VARS['OrderDir'] ;
 
 
     $stQry = $this->_source;
@@ -221,18 +221,18 @@ class Table
       $stOrderLb = ( isset ( $HTTP_GET_VARS[ $this->orderprefix . 'label'] ) ? $HTTP_GET_VARS[ $this->orderprefix . 'label'] : '' );
 
         //if( isset( $HTTP_SESSION_VARS['OrderDir'] ) && $HTTP_SESSION_VARS['OrderDir'] == $stOrderBy ) {
-      		if ( $stOrderLb ) {
-						if ( $HTTP_SESSION_VARS['OrderDir'] == 'ASC')
-							$stOrderByDir = 'DESC';
-						elseif ($HTTP_SESSION_VARS['OrderDir'] == 'DESC')
-							$stOrderByDir = 'ASC';
-					}
-					else
-					  if ( isset ( $HTTP_SESSION_VARS['OrderDir'] ) && $HTTP_SESSION_VARS['OrderDir'] != '' )
-						  $stOrderByDir = $HTTP_SESSION_VARS['OrderDir'];
-						else
-						  $stOrderByDir = $this->DefaultOrderDir;
-				//}
+          if ( $stOrderLb ) {
+            if ( $HTTP_SESSION_VARS['OrderDir'] == 'ASC')
+              $stOrderByDir = 'DESC';
+            elseif ($HTTP_SESSION_VARS['OrderDir'] == 'DESC')
+              $stOrderByDir = 'ASC';
+          }
+          else
+            if ( isset ( $HTTP_SESSION_VARS['OrderDir'] ) && $HTTP_SESSION_VARS['OrderDir'] != '' )
+              $stOrderByDir = $HTTP_SESSION_VARS['OrderDir'];
+            else
+              $stOrderByDir = $this->DefaultOrderDir;
+        //}
 
       if( $stOrderBy == "" )      {
         if( $this->DefaultOrder != "" )
@@ -247,7 +247,7 @@ class Table
       {
         $stQry .= " ORDER BY " . $stOrderBy;
         if( $stOrderByDir != "" )
-		      $stQry .= "  $stOrderByDir";
+          $stQry .= "  $stOrderByDir";
       }
     }
     else
@@ -261,7 +261,7 @@ class Table
   //print $stQry;
 
     $HTTP_SESSION_VARS['OrderBy']  = isset ( $stOrderBy ) ? $stOrderBy : '' ;
-	  $HTTP_SESSION_VARS['OrderDir'] = $stOrderByDir;
+    $HTTP_SESSION_VARS['OrderDir'] = $stOrderByDir;
 
     $page = ( isset ($HTTP_GET_VARS[ "page"] ) ? $HTTP_GET_VARS[ "page"] : '' ) ;
 
@@ -458,12 +458,12 @@ class Table
       else
       {
         if( $this->rows_per_page != 0 )
-	      {
-	        if( $this->row_pos >= $this->first_row + $this->rows_per_page )
-	        {
-	          $result = true;
-	        }
-	      }
+        {
+          if( $this->row_pos >= $this->first_row + $this->rows_per_page )
+          {
+            $result = true;
+          }
+        }
       }
     }
     return $result;
@@ -487,10 +487,10 @@ class Table
   {
     $tmpCol = array( "Name" => $strName ,
                      "Type" => $strType ,
-		     "Width" => $intWidth ,
-		     "Align" => $strAlign ,
-		     "Target" => $strTarget ,
-		     "Content" => $strContent );
+         "Width" => $intWidth ,
+         "Align" => $strAlign ,
+         "Target" => $strTarget ,
+         "Content" => $strContent );
     $pos = 0;
     if( is_array( $this->Columns ) )
     {
@@ -518,15 +518,15 @@ class Table
    */
   function AddRawColumn( $strType = "text", $strName = "", $strAlign = "left", $intWidth = 0, $strTarget = "", $strContent = "", $strExtra = "", $strCondition="", $orderByThis = true )
   {
-    $tmpCol = array( 	"Name" => $strName ,
-                     	"Type" => $strType ,
-		     							"Width" => $intWidth ,
-		     							"Align" => $strAlign ,
-		     							"Target" => $strTarget ,
-		     							"Content" => $strContent,
-                     	"Extra" => $strExtra,
-                     	"Condition" => $strCondition,
-                     	"orderByThis" => $orderByThis);
+    $tmpCol = array(  "Name" => $strName ,
+                      "Type" => $strType ,
+                      "Width" => $intWidth ,
+                      "Align" => $strAlign ,
+                      "Target" => $strTarget ,
+                      "Content" => $strContent,
+                      "Extra" => $strExtra,
+                      "Condition" => $strCondition,
+                      "orderByThis" => $orderByThis);
     $pos = 0;
     if( is_array( $this->Columns ) )
     {
@@ -560,8 +560,8 @@ class Table
       if ( $col["Width"] > 0) $res .= " width=\"" . $col["Width"] . "\"";
       $res .= ">";
       /*if($HTTP_SESSION_VARS['OrderBy'] == $this->Columns[$intPos]['Name'] ){
-      	if($HTTP_SESSION_VARS['OrderDir'] == 'DESC')
-      		$res .= "<img src='/images/arrow_order_desc.gif' border=0><br>";
+        if($HTTP_SESSION_VARS['OrderDir'] == 'DESC')
+          $res .= "<img src='/images/arrow_order_desc.gif' border=0><br>";
       }*/
       //$res .= "<a class=\"" . $strClass . "Link\" href=\"";
       $res .= "<a class=\"" . $strClass . "\" href=\"";
@@ -569,15 +569,15 @@ class Table
       //$res .= $_SERVER['REDIRECT_URL'] . "?order=" . $this->Columns[$intPos]['Name']."&page=".$pa."&label=true";
       $res .= "\">" . $this->Labels[$intPos] . "</a>";
       /*if($HTTP_SESSION_VARS['OrderBy'] == $this->Columns[$intPos]['Name'] ){
-      	if($HTTP_SESSION_VARS['OrderDir'] == 'ASC')
-      		$res .= "<br><img src='/images/arrow_order_asc.gif' border=0>";
+        if($HTTP_SESSION_VARS['OrderDir'] == 'ASC')
+          $res .= "<br><img src='/images/arrow_order_asc.gif' border=0>";
       }*/
       /*
       if($HTTP_SESSION_VARS['OrderBy'] == $this->Columns[$intPos]['Name'] ){
-      	$img_dir = 'asc';
-      	if($HTTP_SESSION_VARS['OrderDir'] == 'DESC')
-      		$img_dir = 'desc';
-      	$res .= "<br><img src='/images/arrow_order_$img_dir.gif' border=0>";
+        $img_dir = 'asc';
+        if($HTTP_SESSION_VARS['OrderDir'] == 'DESC')
+          $img_dir = 'desc';
+        $res .= "<br><img src='/images/arrow_order_$img_dir.gif' border=0>";
       }
       */
       $res .= "</th>\n";//echo $res;die;
@@ -615,8 +615,8 @@ class Table
       $res .= ">";
       /*
       if($HTTP_SESSION_VARS['OrderBy'] == $this->Columns[$intPos]['Name'] ){
-      	if($HTTP_SESSION_VARS['OrderDir'] == 'DESC')
-      		$res .= "<img src='/images/arrow_order_desc.gif' border=0><br>";
+        if($HTTP_SESSION_VARS['OrderDir'] == 'DESC')
+          $res .= "<img src='/images/arrow_order_desc.gif' border=0><br>";
       }
       */
       //$res .= "<a class=\"" . $strClass . "Link\" href=\"";
@@ -627,21 +627,21 @@ class Table
       $res .= "\">" . $this->Labels[$intPos] . "</a>";
       if($HTTP_SESSION_VARS['OrderBy'] == $this->Columns[$intPos]['Name'] )
       {
-      	if($HTTP_SESSION_VARS['OrderDir'] == 'DESC')
-      		$res .= "&nbsp;<img src='/images/arrow_order_desc.gif' border=0>";
-      	else
-      		$res .= "&nbsp;<img src='/images/arrow_order_asc.gif' border=0>";
+        if($HTTP_SESSION_VARS['OrderDir'] == 'DESC')
+          $res .= "&nbsp;<img src='/images/arrow_order_desc.gif' border=0>";
+        else
+          $res .= "&nbsp;<img src='/images/arrow_order_asc.gif' border=0>";
       }
       /*if($HTTP_SESSION_VARS['OrderBy'] == $this->Columns[$intPos]['Name'] ){
-      	if($HTTP_SESSION_VARS['OrderDir'] == 'ASC')
-      		$res .= "<br><img src='/images/arrow_order_asc.gif' border=0>";
+        if($HTTP_SESSION_VARS['OrderDir'] == 'ASC')
+          $res .= "<br><img src='/images/arrow_order_asc.gif' border=0>";
       }*/
 /*
       if($HTTP_SESSION_VARS['OrderBy'] == $this->Columns[$intPos]['Name'] ){
-      	$img_dir = 'asc';
-      	if($HTTP_SESSION_VARS['OrderDir'] == 'DESC')
-      		$img_dir = 'desc';
-      	$res .= "<br><img src='/images/arrow_order_$img_dir.gif' border=0>";
+        $img_dir = 'asc';
+        if($HTTP_SESSION_VARS['OrderDir'] == 'DESC')
+          $img_dir = 'desc';
+        $res .= "<br><img src='/images/arrow_order_$img_dir.gif' border=0>";
       }
 */
       $res .= "</th>\n";//echo $res;die;
@@ -670,15 +670,15 @@ class Table
    */
   function RenderTitle2($pa, $fil, $intPos, $strClass = "tblHeader", $auxgetval = '') {
     if ( ! defined ( 'ENABLE_ENCRYPT') ) define ( 'ENABLE_ENCRYPT', 'no' ) ;
-  	global $HTTP_SESSION_VARS;
+    global $HTTP_SESSION_VARS;
 
-  	if ($auxgetval == '')
-  	  $targ = SYS_TARGET.".html";
-  	else
-  	  $targ = SYS_TARGET.'.html?'.$auxgetval;
-		$target = (ENABLE_ENCRYPT=='yes'?G::encryptUrl(urldecode($targ), URL_KEY):$targ);
+    if ($auxgetval == '')
+      $targ = SYS_TARGET.".html";
+    else
+      $targ = SYS_TARGET.'.html?'.$auxgetval;
+    $target = (ENABLE_ENCRYPT=='yes'?G::encryptUrl(urldecode($targ), URL_KEY):$targ);
 
-  	$col = $this->Columns[$intPos];
+    $col = $this->Columns[$intPos];
 
     if ($col['Type'] == 'hidden') return '';
 
@@ -686,33 +686,33 @@ class Table
 
     if( ($this->_ordered == true) && ($order) && ($this->Columns[$intPos]['orderByThis']))
     {
-    	$res = "";
-    	if (($this->show_nummbers) and ($intPos == 0))
-    		$res = "<th class=\"$strClass\" align=\"left\" height=\"25\">#</th> ";
+      $res = "";
+      if (($this->show_nummbers) and ($intPos == 0))
+        $res = "<th class=\"$strClass\" align=\"left\" height=\"25\">#</th> ";
 
       $res .= "<th class=\"$strClass\" align=\"left\" height=\"25\"";
       if ( $col["Width"] > 0) $res .= " width=\"" . $col["Width"] . "\"";
       $res .= ">&nbsp;";
       /*if($HTTP_SESSION_VARS['OrderBy'] == $this->Columns[$intPos]['Name'] ){
-      	if($HTTP_SESSION_VARS['OrderDir'] == 'DESC')
-      		$res .= "<img src='/images/arrow_order_desc.gif' border=0><br>";
+        if($HTTP_SESSION_VARS['OrderDir'] == 'DESC')
+          $res .= "<img src='/images/arrow_order_desc.gif' border=0><br>";
       }*/
       $res .= "<a class=\"" . $strClass . "\" href=\"";
       if ($fil != '') $fil .= '&';
       $direccion = $target."?".$fil."order=" . $this->Columns[$intPos]['Name']."&page=".$pa."&label=true";
       $res .= "javascript:bsearch('$direccion')";
-			//$res .= $target . "?".$fil."order=" . $this->Columns[$intPos]['Name']."&page=".$pa."&label=true";
+      //$res .= $target . "?".$fil."order=" . $this->Columns[$intPos]['Name']."&page=".$pa."&label=true";
       $res .= "\">" . $this->Labels[$intPos] . "</a>";
       /*if($HTTP_SESSION_VARS['OrderBy'] == $this->Columns[$intPos]['Name'] ){
-      	if($HTTP_SESSION_VARS['OrderDir'] == 'ASC')
-      		$res .= "<br><img src='/images/arrow_order_asc.gif' border=0>";
+        if($HTTP_SESSION_VARS['OrderDir'] == 'ASC')
+          $res .= "<br><img src='/images/arrow_order_asc.gif' border=0>";
       }*/
       /*
       if($HTTP_SESSION_VARS['OrderBy'] == $this->Columns[$intPos]['Name'] ){
-      	$img_dir = 'asc';
-      	if($HTTP_SESSION_VARS['OrderDir'] == 'DESC')
-      		$img_dir = 'desc';
-      	$res .= "<br><img src='/images/arrow_order_$img_dir.gif' border=0>";
+        $img_dir = 'asc';
+        if($HTTP_SESSION_VARS['OrderDir'] == 'DESC')
+          $img_dir = 'desc';
+        $res .= "<br><img src='/images/arrow_order_$img_dir.gif' border=0>";
       }
       */
       $res .= "</th>\n";
@@ -765,11 +765,11 @@ class Table
       $val = isset ( $this->_row_values[$fieldname] ) ? $this->_row_values[$fieldname] : '' ;
     }
 
-		$res = "";
+    $res = "";
     if (($this->show_nummbers)and ($intPos == 0))
-				$res = "<td>$number</td>";
+        $res = "<td>$number</td>";
 
-		if(!(stristr($val,"script") === false)) 		$val = htmlentities($val,ENT_QUOTES,'utf-8');
+    if(!(stristr($val,"script") === false))     $val = htmlentities($val,ENT_QUOTES,'utf-8');
 
     if ( $renderTD == 1 ) {
       $res .= "<td class=\"$strClass\" align=\"" . $col["Align"] . "\" height=\"25\"";
@@ -839,15 +839,15 @@ class Table
         $part = explode (' ', $val);
         $aux  = explode ('-', $part[0]);
 
-		switch($G_DATE_FORMAT)
-		{
-		case 'DD/MM/AAAA':$res.=formatDate('$d/$m/$Y $H:$i:$s',$val);break;
-		case 'MM/DD/AAAA':$res.=formatDate('$m/$d/$Y $H:$i:$s <small>EST</small>',$val);break;
-		case 'AAAA/MM/DD':$res.=formatDate('$Y/$m/$d $H:$i:$s',$val);break;
-		case 'LITERAL':$res.=formatDate('$M $d $Y',$val);break;
-		}
+    switch($G_DATE_FORMAT)
+    {
+    case 'DD/MM/AAAA':$res.=formatDate('$d/$m/$Y $H:$i:$s',$val);break;
+    case 'MM/DD/AAAA':$res.=formatDate('$m/$d/$Y $H:$i:$s <small>EST</small>',$val);break;
+    case 'AAAA/MM/DD':$res.=formatDate('$Y/$m/$d $H:$i:$s',$val);break;
+    case 'LITERAL':$res.=formatDate('$M $d $Y',$val);break;
+    }
         /*
-	      if ($G_DATE_FORMAT == 'DD/MM/AAAA') {
+        if ($G_DATE_FORMAT == 'DD/MM/AAAA') {
           $dateFormat = $aux[2] . "/" . $aux[1] . "/" . $aux[0];
           $res .= htmlentities( $dateFormat ) . ' ' . $part[1] . ($G_DATE_FORMAT == 'MM/DD/AAAA' ? ' ' : '',ENT_QUOTES,'utf-8');
         }
@@ -862,13 +862,13 @@ class Table
           $res .= htmlentities( $dateFormat ,ENT_QUOTES,'utf-8') . ' ' . $part[1] . ($G_DATE_FORMAT == 'MM/DD/AAAA' ? ' ' : '');
         }
 
-		if ($G_TABLE_DATE_FORMAT == 'LITERAL') {
+    if ($G_TABLE_DATE_FORMAT == 'LITERAL') {
           // mejorar esto porque solo funciona hasta el 2038
           $dateFormat = date ( 'M d, Y', mktime (0,0,0, $aux[1], $aux[2], $aux[0]) );
         }
 /**/
 
-	    }
+      }
       else
         $res .= "&nbsp;";
 
@@ -931,14 +931,14 @@ class Table
     //print_r ($this->_row_values);
     if (is_array($col["Condition"])) //By JHL to enable Condition to display a image -- New parameter Condition in Addrawcolumn
     {
-    	$field_compare=$col["Condition"]['field'];
-    	$tlabel = substr($field_compare,0,1);
-    	switch($tlabel)
+      $field_compare=$col["Condition"]['field'];
+      $tlabel = substr($field_compare,0,1);
+      switch($tlabel)
       {
-      	case "&":
-      	$vname = substr($field_compare, 1, (strlen($field_compare) - 1) );
-      	$field_val = $this->_row_values[$vname];
-      	break;
+        case "&":
+        $vname = substr($field_compare, 1, (strlen($field_compare) - 1) );
+        $field_val = $this->_row_values[$vname];
+        break;
       }
 
 
@@ -947,12 +947,12 @@ class Table
       $val = "<img border=0 src='$fieldname'>";
 //      break;
 
-		case "textimage":
+    case "textimage":
     $AAS=$col['Extra'];
       $val1 = " <img border=0 src='$AAS' align='middle'>";
 //      break;
-		case "image-text":
-				if ( is_array($col['Content']) && $col['Content'] != "") {
+    case "image-text":
+        if ( is_array($col['Content']) && $col['Content'] != "") {
         // Hay mas de un valor para el link
         $values = $col['Content'];
         $n = count($values);
@@ -963,14 +963,14 @@ class Table
           $element = $values[$i];
 
           $tlabel = substr($element, 0, 1 );
-      	  switch($tlabel)
-      	  {
-          	  case "&":
-      	    $vname = substr($element, 1, (strlen($element) - 1) );
-      	    $lval = $this->_row_values[$vname];
+          switch($tlabel)
+          {
+              case "&":
+            $vname = substr($element, 1, (strlen($element) - 1) );
+            $lval = $this->_row_values[$vname];
 
-      	    $res .= $i == $n-1 ? $lval : $lval . "/";
-      	    break;
+            $res .= $i == $n-1 ? $lval : $lval . "/";
+            break;
                 }
           }
           $res .= "\"><span class='txtin3'>".strtoupper($fieldname)."$val</span></a>";
@@ -996,76 +996,76 @@ class Table
           $element = $values[$i];
 
           $tlabel = substr($element, 0, 1 );
-      	  switch($tlabel)
-      	  {
-          	  case "&":
-      	    $vname = substr($element, 1, (strlen($element) - 1) );
-      	    $lval = $this->_row_values[$vname];
+          switch($tlabel)
+          {
+              case "&":
+            $vname = substr($element, 1, (strlen($element) - 1) );
+            $lval = $this->_row_values[$vname];
 
-      	    $res .= $i == $n-1 ? $lval : $lval . "/";
-      	    break;
+            $res .= $i == $n-1 ? $lval : $lval . "/";
+            break;
                 }
           }
           $res .= "\">$val</a>";
       }
       elseif ( $col["Content"] != "" && !is_array($col['Content']) ) {
          $tlabel = substr( $col["Content"] , 0, 1 );
-        	switch( $tlabel )
-         	{
-              	case "&":
-          	  $vname = substr( $col["Content"], 1, (strlen($col["Content"]) - 1) );
-          	  $lval = $this->_row_values[$vname];
+          switch( $tlabel )
+          {
+                case "&":
+              $vname = substr( $col["Content"], 1, (strlen($col["Content"]) - 1) );
+              $lval = $this->_row_values[$vname];
               if ( ENABLE_ENCRYPT == 'yes' )  {
 
                     //$encoded = G::encrypt ( $col["Target"] . "/" . $lval . ".html", URL_KEY );
                     $encoded = G::encryptUrl ( $col["Target"] . "/" . $lval . ".html", URL_KEY );
                     $res .= "<a class='$strClassLink' $title href=\"" . $encoded . "\" " . $col['Extra'] . ">";
-	          	        if ($col["Type"]=="textimage")
-	          	        {
-	          	        	$res .= $val1;
-	          	        	$val=" (".$val.")";
-	          	        }
-	          	        if ($col["Type"]=="image-text")  {
+                      if ($col["Type"]=="textimage")
+                      {
+                        $res .= $val1;
+                        $val=" (".$val.")";
+                      }
+                      if ($col["Type"]=="image-text")  {
 
-	          	        	$res .= $val2;
-	          	        }
-          	        		$res .= $val;
-                    		$res .= "</a" . $col['Extra'] . ">";
-          	  }
-          	  else {
-                    $res .= "<a class='$strClassLink' $title href=\"" . $col["Target"] . "/" . $lval . ".html\" " . $col['Extra'] . ">";
-          	        if ($col["Type"]=="textimage")
-          	        {
-          	        	$res .= $val1;
-          	        	$val=" (".$val.")";
-          	        }
-          	        if ($col["Type"]=="image-text")  {
-
-          	        	$res .= $val2;
-          	        }
-          	        $res .= $val;
-          	        $res .= "</a" . $col['Extra'] . ">";
+                        $res .= $val2;
+                      }
+                        $res .= $val;
+                        $res .= "</a" . $col['Extra'] . ">";
               }
-          	  break;
+              else {
+                    $res .= "<a class='$strClassLink' $title href=\"" . $col["Target"] . "/" . $lval . ".html\" " . $col['Extra'] . ">";
+                    if ($col["Type"]=="textimage")
+                    {
+                      $res .= $val1;
+                      $val=" (".$val.")";
+                    }
+                    if ($col["Type"]=="image-text")  {
+
+                      $res .= $val2;
+                    }
+                    $res .= $val;
+                    $res .= "</a" . $col['Extra'] . ">";
+              }
+              break;
                   case "$":
-          	  $vname = substr( $col["Content"], 1, (strlen($col["Content"]) - 1) );
+              $vname = substr( $col["Content"], 1, (strlen($col["Content"]) - 1) );
                     $lval = $HTTP_SESSION_VARS[$vname];
                     $res .= "<a class='$strClassLink' href=\"" . $col["Target"] . "/" . $lval . ".html\" " . $col['Extra'] . ">";
-          	  $res .= $val;
+              $res .= $val;
                     $res .= "</a" . $col['Extra'] . ">";
-          	  break;
+              break;
                   default:
                     $res .= "<a class='$strClassLink' href=\"" . $col["Target"] . "/" . $val . ".html\" " . $col['Extra'] . ">";
-          	        $res .= $col["Content"];
+                    $res .= $col["Content"];
                     $res .= "</a" . $col['Extra'] . ">";
-          	  break;
+              break;
                   }
                 }
           else
           {
             $res .= "<a class='$strClassLink' href=\"" . $col["Target"] . "/" . $val . ".html\" " . $col['Extra'] . ">";
-          	$res .= $val;
-    	      $res .= "</a" . $col['Extra'] . ">";
+            $res .= $val;
+            $res .= "</a" . $col['Extra'] . ">";
           }
           break;
 
@@ -1075,45 +1075,45 @@ class Table
       if ( $col["Content"] != "" )
       {
         $tlabel = substr( $col["Content"] , 0, 1 );
-      	switch( $tlabel )
-      	{
-      	case "&":
-            	if ( ENABLE_ENCRYPT == 'yes' )  {
-						      	  $vname = substr( $col["Content"], 1, (strlen($col["Content"]) - 1) );
-						                $lval = $this->_row_values[$vname];
-						                //$encoded = G::encryptUrl ( $col["Target"] , URL_KEY ). "/" . $lval . ".html";
-						                $encoded = G::encryptUrl ( $col["Target"]. "/" . $lval . "" , URL_KEY );
-						                $res .= "<a class='$strClassLink' href=\"" . $encoded . "\" " ." target=\"_new\"" . $col['Extra'] . ">";
-						      	  			$res .= $val;
-						                $res .= "</a" . $col['Extra'] . ">";
-          	  }
-          	  else {
-						      	  $vname = substr( $col["Content"], 1, (strlen($col["Content"]) - 1) );
-						                $lval = $this->_row_values[$vname];
-						                $res .= "<a class='$strClassLink' href=\"" . $col["Target"] . "/" . $lval . "\" target=\"_new\"" . $col['Extra'] . ">";
-						      	  $res .= $val;
-						                $res .= "</a" . $col['Extra'] . ">";
+        switch( $tlabel )
+        {
+        case "&":
+              if ( ENABLE_ENCRYPT == 'yes' )  {
+                      $vname = substr( $col["Content"], 1, (strlen($col["Content"]) - 1) );
+                            $lval = $this->_row_values[$vname];
+                            //$encoded = G::encryptUrl ( $col["Target"] , URL_KEY ). "/" . $lval . ".html";
+                            $encoded = G::encryptUrl ( $col["Target"]. "/" . $lval . "" , URL_KEY );
+                            $res .= "<a class='$strClassLink' href=\"" . $encoded . "\" " ." target=\"_new\"" . $col['Extra'] . ">";
+                            $res .= $val;
+                            $res .= "</a" . $col['Extra'] . ">";
               }
-      	  break;
-      	case "$":
-          	  $vname = substr( $col["Content"], 1, (strlen($col["Content"]) - 1) );
-      	  $lval = $HTTP_SESSION_VARS[$vname];
+              else {
+                      $vname = substr( $col["Content"], 1, (strlen($col["Content"]) - 1) );
+                            $lval = $this->_row_values[$vname];
+                            $res .= "<a class='$strClassLink' href=\"" . $col["Target"] . "/" . $lval . "\" target=\"_new\"" . $col['Extra'] . ">";
+                      $res .= $val;
+                            $res .= "</a" . $col['Extra'] . ">";
+              }
+          break;
+        case "$":
+              $vname = substr( $col["Content"], 1, (strlen($col["Content"]) - 1) );
+          $lval = $HTTP_SESSION_VARS[$vname];
                 $res .= "<a class='$strClassLink' href=\"" . $col["Target"] . "/" . $lval . ".html\" target=\"_new\"" . $col['Extra'] . ">";
-          	  $res .= $val;
+              $res .= $val;
                 $res .= "</a" . $col['Extra'] . ">";
-      	  break;
-      	default:
+          break;
+        default:
                 $res .= "<a class='$strClassLink' href=\"" . $col["Target"] . "/" . $val . ".html\" target=\"_new\"" . $col['Extra'] . ">";
-          	  $res .= $col["Content"];
+              $res .= $col["Content"];
                 $res .= "</a" . $col['Extra'] . ">";
-      	  break;
-    	}
+          break;
+      }
       }
       else
       {
         $res .= "<a class='$strClassLink' href=\"" . $col["Target"] . "/" . $val . ".html\" target=\"_new\"" . $col['Extra'] . ">";
-    	$res .= $val;
-    	$res .= "</a" . $col['Extra'] . ">";
+      $res .= $val;
+      $res .= "</a" . $col['Extra'] . ">";
           }
           break;
 
@@ -1121,41 +1121,41 @@ class Table
       if ( $col["Content"] != "" )
       {
         $tlabel = substr( $col["Content"] , 0, 1 );
-	if( $val != "" )
-	{
-	  switch( $tlabel )
-	  {
-	  case "&":
-	    $vname = substr( $col["Content"], 1, (strlen($col["Content"]) - 1) );
-    	    $lval = $this->_row_values[$vname];
+  if( $val != "" )
+  {
+    switch( $tlabel )
+    {
+    case "&":
+      $vname = substr( $col["Content"], 1, (strlen($col["Content"]) - 1) );
+          $lval = $this->_row_values[$vname];
             $res .= "<a class='$strClassLink' href=\"" . $col["Target"] . "/" . $lval . ".html\" " . $col['Extra'] . ">";
-	    $res .= $val;
+      $res .= $val;
             $res .= "</a" . $col['Extra'] . ">";
-    	    break;
-	  case "$":
-    	    $vname = substr( $col["Content"], 1, (strlen($col["Content"]) - 1) );
-	    $lval = $HTTP_SESSION_VARS[$vname];
+          break;
+    case "$":
+          $vname = substr( $col["Content"], 1, (strlen($col["Content"]) - 1) );
+      $lval = $HTTP_SESSION_VARS[$vname];
             $res .= "<a class='$strClassLink' href=\"" . $col["Target"] . "/" . $lval . ".html\" " . $col['Extra'] . ">";
-    	    $res .= $val;
+          $res .= $val;
             $res .= "</a" . $col['Extra'] . ">";
-	    break;
-	  default:
+      break;
+    default:
             $res .= "<a class='$strClassLink' href=\"" . $col["Target"] . "/" . $val . ".html\" " . $col['Extra'] . ">";
-    	    $res .= $col["Content"];
+          $res .= $col["Content"];
             $res .= "</a" . $col['Extra'] . ">";
-	    break;
-    	  }
-    	}
-    	else
-    	{
-    	  $res .= "&nbsp;";
-    	}
+      break;
+        }
+      }
+      else
+      {
+        $res .= "&nbsp;";
+      }
       }
       else
       {
         $res .= "<a class='$strClassLink' href=\"" . $col["Target"] . "/" . $val . ".html\" " . $col['Extra'] . ">";
-	      $res .= $val;
-	      $res .= "</a" . $col['Extra'] . ">";
+        $res .= $val;
+        $res .= "</a" . $col['Extra'] . ">";
       }
       break;
 
@@ -1169,54 +1169,54 @@ class Table
       if ( $col["Content"] != "" )
       {
         $tlabel = substr( $col["Content"] , 0, 1 );
-      	switch( $tlabel )
-      	{
-         	case "&":
-           	   $vname = substr( $col["Content"], 1, (strlen($col["Content"]) - 1) );
-      	       $lval = $this->_row_values[$vname];
+        switch( $tlabel )
+        {
+          case "&":
+               $vname = substr( $col["Content"], 1, (strlen($col["Content"]) - 1) );
+               $lval = $this->_row_values[$vname];
                $res .= "<a class='$strClassLink' href=\"javascript:" . $col["Target"] . "('" . $lval . "')\"" . $col['Extra'] . ">";
-      	       $res .= $val;
+               $res .= $val;
                $res .= "</a" . $col['Extra'] . ">";
-      	  break;
+          break;
 
           case "$":
-      	        $vname = substr( $col["Content"], 1, (strlen($col["Content"]) - 1) );
+                $vname = substr( $col["Content"], 1, (strlen($col["Content"]) - 1) );
                 $lval = $HTTP_SESSION_VARS[$vname];
                 $res .= "<a class='$strClassLink' href=\"javascript:" . $col["Target"] . "('" . $lval . "')\"" . $col['Extra'] . ">";
-      	        $res .= $val;
+                $res .= $val;
                 $res .= "</a" . $col['Extra'] . ">";
-      	  break;
+          break;
 
-      	  case '_':
-      	       $Values = explode(',', substr($col['Content'], 1, strlen($col['Content'])));
-      	       $res .= "<a class='$strClassLink' href=\"javascript:" . $col["Target"] . "(";
-      	       foreach ($Values as $Value) {
-      	       	 if (substr($Value, 0, 1) == '&')
-      	       	   if (is_numeric($Value))
-      	       	     $res .= $this->_row_values[substr($Value, 1, strlen($Value))] . ',';
-      	       	   else
-      	       	     $res .= "'" . $this->_row_values[substr($Value, 1, strlen($Value))] . "',";
-      	       	 else
-      	       	   $res .= $Value . ',';
-      	       }
-      	       $res  = substr($res, 0, strlen($res) - 1);
-      	       $res .= ")\"" . $col['Extra'] . ">";
-       	       $res .= $val;
+          case '_':
+               $Values = explode(',', substr($col['Content'], 1, strlen($col['Content'])));
+               $res .= "<a class='$strClassLink' href=\"javascript:" . $col["Target"] . "(";
+               foreach ($Values as $Value) {
+                 if (substr($Value, 0, 1) == '&')
+                   if (is_numeric($Value))
+                     $res .= $this->_row_values[substr($Value, 1, strlen($Value))] . ',';
+                   else
+                     $res .= "'" . $this->_row_values[substr($Value, 1, strlen($Value))] . "',";
+                 else
+                   $res .= $Value . ',';
+               }
+               $res  = substr($res, 0, strlen($res) - 1);
+               $res .= ")\"" . $col['Extra'] . ">";
+               $res .= $val;
                $res .= "</a" . $col['Extra'] . ">";
-      	  break;
+          break;
 
           default:
                  $res .= "<a class='$strClassLink' href=\"javascript:" . $col["Target"] . "('" . $val . "')\"" . $col['Extra'] . ">";
-       	         $res .= $col["Content"];
+                 $res .= $col["Content"];
                  $res .= "</a" . $col['Extra'] . ">";
-       	  break;
+          break;
         }
       }
       else
       {
         $res .= "<a  class='$strClassLink' href=\"javascript:" . $col["Target"] . "(" . $val . ")\"" . $col['Extra'] . ">";
         $res .= $val;
-      	$res .= "</a" . $col['Extra'] . ">";
+        $res .= "</a" . $col['Extra'] . ">";
       }
       break;
 
@@ -1262,26 +1262,26 @@ class Table
    */
 function setTranslate( $contexto, $tabla, $nombre )
   {
-	if (is_array($this->contexto)) {
-		$this->contexto[0][] = $contexto;
-		$this->contexto[1][] = $nombre;
-		// array_push($this->contexto[0], $contexto);
-		// array_push($this->contexto[1], $nombre);
-  	} else {
-		$this->contexto = array();
-		$this->contexto[0][] = $contexto;
-		$this->contexto[1][] = $nombre;
-		// array_push($this->contexto[0], $contexto);
-		// array_push($this->contexto[1], $nombre);
-	}
-	if (is_array($this->translate)) {
-    		$this->translate = array();
-		$this->translate[$nombre] = $tabla;
-	} else {
-		$this->translate[$nombre] = $tabla;
-	}
-	// Fijamos ultimo contexto usado
-	$this->_contexto = $contexto;
+  if (is_array($this->contexto)) {
+    $this->contexto[0][] = $contexto;
+    $this->contexto[1][] = $nombre;
+    // array_push($this->contexto[0], $contexto);
+    // array_push($this->contexto[1], $nombre);
+    } else {
+    $this->contexto = array();
+    $this->contexto[0][] = $contexto;
+    $this->contexto[1][] = $nombre;
+    // array_push($this->contexto[0], $contexto);
+    // array_push($this->contexto[1], $nombre);
+  }
+  if (is_array($this->translate)) {
+        $this->translate = array();
+    $this->translate[$nombre] = $tabla;
+  } else {
+    $this->translate[$nombre] = $tabla;
+  }
+  // Fijamos ultimo contexto usado
+  $this->_contexto = $contexto;
   }
 
   /**
@@ -1351,16 +1351,15 @@ function setTranslate( $contexto, $tabla, $nombre )
             $Flag = 1;
        }
        if($br == '<BR>' || $br == '</P>')
-       	$token .= "<BR>";
+        $token .= "<BR>";
 
        if (($Flag == 1)&& ($car != '>')){
          $token .= $car;
        if ( $i == $number )
-       		$token .= "... ";
+          $token .= "... ";
     }
     $i = $i +1;
   }
      return $token;
 }
 }
-?>

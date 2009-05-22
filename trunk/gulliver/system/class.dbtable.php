@@ -130,7 +130,7 @@ class DBTable
         }
         else
         {
-	        $this->table_keys[0] = $fname;
+          $this->table_keys[0] = $fname;
         }
       }
 
@@ -144,7 +144,7 @@ class DBTable
         case 'double':
         case 'float':
         $fval = 0;
-	      break;
+        break;
       }
 
       $this->Fields[ $fname ] = $fval;
@@ -203,7 +203,7 @@ class DBTable
       foreach ($this->table_keys as $key=>$val) {
         if( $stWhere == "" ){
           $stWhere .= " $val = '" . $arrKeys[0][ $val ] . "' ";
-	      }else
+        }else
           $stWhere .= " AND $val = '" . $arrKeys[0][ $val ] . "' ";
       }
     }
@@ -361,20 +361,20 @@ class DBTable
     foreach ( $this->table_keys as $k => $v ) $remainKeys[ $v ] = false;
 
     if ( is_array ( $this->Fields ) ) {
-    	foreach( $this->Fields as $field => $val )
-    	{
-    	  $iskey = false;
-    	  $iskey = in_array( $field, $this->table_keys );
-    	    if( $iskey == true ) {
-    	      if( $stWhere == "" ) {
-    	        $stWhere .= $field . "='" . G::sqlEscape ( $val, isset( $this->_dbc->type) ? $this->_dbc->type : 'mysql'  ) . "'";
-    	      }
-    	      else {
-    	        $stWhere .= " AND " . $field . "='" . G::sqlEscape ( $val, isset( $this->_dbc->type) ? $this->_dbc->type : 'mysql' ) . "'";
-    	      }
-    	      $remainKeys[ $field ] = true;
-    	    }
-    	}
+      foreach( $this->Fields as $field => $val )
+      {
+        $iskey = false;
+        $iskey = in_array( $field, $this->table_keys );
+          if( $iskey == true ) {
+            if( $stWhere == "" ) {
+              $stWhere .= $field . "='" . G::sqlEscape ( $val, isset( $this->_dbc->type) ? $this->_dbc->type : 'mysql'  ) . "'";
+            }
+            else {
+              $stWhere .= " AND " . $field . "='" . G::sqlEscape ( $val, isset( $this->_dbc->type) ? $this->_dbc->type : 'mysql' ) . "'";
+            }
+            $remainKeys[ $field ] = true;
+          }
+      }
     }
     foreach( $remainKeys as $field => $bool )
       if ( $bool == false) {
@@ -410,7 +410,6 @@ class DBTable
    */
   function next()
   {
-  	$this->Fields = $this->_dset->read ();
+    $this->Fields = $this->_dset->read ();
   }
 }
-?>
