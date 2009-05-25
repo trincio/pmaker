@@ -263,7 +263,7 @@ class processMap {
         		case 'text':
         			$oText              = null;
         		  $oText->uid         = $aRow['SWI_UID'];
-        		  $oText->label       = strip_tags(($aRow['CON_VALUE'] != '' ? $aRow['CON_VALUE'] : '-'));
+        		  $oText->label       = strip_tags(($aRow['CON_VALUE'] != '' ? str_replace(chr(92),'&#92;',str_replace('<','&lt;',$aRow['CON_VALUE'])) : '-'));
         		  $oText->position->x = $aRow['SWI_X'];
         		  $oText->position->y = $aRow['SWI_Y'];
         		  $oPM->text[]        = $oText;
