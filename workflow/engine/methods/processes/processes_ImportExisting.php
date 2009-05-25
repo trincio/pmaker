@@ -23,8 +23,8 @@
  *
  */
 
- try { 
-  //load the variables 
+ try {
+  //load the variables
   G::LoadClass('processes');
   $oProcess = new Processes();
 
@@ -37,11 +37,11 @@
   $ObjUid   = $_POST['form']['OBJ_UID'];
 
   $path     = PATH_DOCUMENT . 'input' . PATH_SEP ;
-  $oData = $oProcess->getProcessData ( $path . $filename  );  
+  $oData = $oProcess->getProcessData ( $path . $filename  );
 
   $Fields['PRO_FILENAME'] = $filename;
   $sProUid = $oData->process['PRO_UID'];
-  
+
   $oData->process['PRO_UID_OLD']=$sProUid;
 
   //Update the current Process, overwriting all tasks and steps
@@ -85,8 +85,8 @@
   }
 
   //Create a completely new Process without change the current Process
-  if ( $option == 3 ) { 
-    //krumo ($oData); die;    
+  if ( $option == 3 ) {
+    //krumo ($oData); die;
     $sNewProUid = $oProcess->getUnusedProcessGUID() ;
     $oProcess->setProcessGuid ( $oData, $sNewProUid );
     $oData->process['PRO_TITLE'] = "Copy of  - " . $oData->process['PRO_TITLE'] . ' - ' . date ( 'M d, H:i' );
@@ -109,7 +109,7 @@
   }
   G::header('Location: processes_Map?PRO_UID=' . $sNewProUid);
 }
-catch ( Exception $e ){ 
+catch ( Exception $e ){
   $G_PUBLISH = new Publisher;
 	$aMessage['MESSAGE'] = $e->getMessage();
   $G_PUBLISH->AddContent('xmlform', 'xmlform', 'login/showMessage', '', $aMessage );
