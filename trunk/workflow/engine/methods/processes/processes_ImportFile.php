@@ -1,4 +1,4 @@
-<? 
+<?
 /**
  * processes_ImportFile.php
  *
@@ -23,7 +23,7 @@
  *
  */
 
- try { 
+ try {
   //load the variables
   G::LoadClass('processes');
   $oProcess = new Processes();
@@ -46,11 +46,12 @@
 
   $sProUid = $oData->process['PRO_UID'];
 
+  $oData->process['PRO_UID_OLD']=$sProUid;
 
-  if ( $oProcess->processExists ( $sProUid ) ) { 
+  if ( $oProcess->processExists ( $sProUid ) ) {
     $G_MAIN_MENU            = 'processmaker';
     $G_ID_MENU_SELECTED     = 'PROCESSES';
-    $G_PUBLISH = new Publisher;  
+    $G_PUBLISH = new Publisher;
     $G_PUBLISH->AddContent('xmlform', 'xmlform', 'processes/processes_ImportExisting', '', $Fields, 'processes_ImportExisting'  );
     G::RenderPage('publish');
     die;
