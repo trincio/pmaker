@@ -29,6 +29,7 @@
     $Fields['PRO_FILENAME']  = $newfilename;
     $Fields['OBJ_UID']       = $ObjUid ;
     $sProUid = $oData->process['PRO_UID'];
+    $oData->process['PRO_UID_OLD']=$sProUid;
 
     //if the process exists, we need to ask what kind of re-import the user wants,
     if ( $oProcess->processExists ( $sProUid ) ) {

@@ -41,6 +41,7 @@
 
   $Fields['PRO_FILENAME'] = $filename;
   $sProUid = $oData->process['PRO_UID'];
+  $oData->process['PRO_UID_OLD']=$sProUid;
 
   //Update the current Process, overwriting all tasks and steps
   if ( $option == 1 ) {
