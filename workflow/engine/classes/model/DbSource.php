@@ -165,9 +165,12 @@ class DbSource extends BaseDbSource
     	}
         $con = Propel::getConnection(DbSourcePeer::DATABASE_NAME);
         try {
+            if ( isset ( $aData['DBS_UID'] ) && $aData['DBS_UID']== '' )
+              unset ( $aData['DBS_UID'] );
+            if ( !isset ( $aData['DBS_UID'] ) )
+    	      	$aData['DBS_UID'] = G::generateUniqueID();
             $this->fromArray($aData, BasePeer::TYPE_FIELDNAME);
             if ($this->validate()) {
-            	$this->setDbsUid( md5(date("dMYHis")) );
                 $result = $this->save();
             } else {
                 $e = new Exception("Failed Validation in class " . get_class($this) . ".");
