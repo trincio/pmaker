@@ -28,13 +28,15 @@ $_POST['action'] = get_ajax_value('action');
 
 switch ($_POST['action'])
 {
-	case 'showUsers': 
+	case 'showUsers':
 	  G::LoadClass('groups');
-	  $oGroup = new Groups();
+	  $oGroups = new Groups();
+	  $oGroup  = new Groupwf();
+	  $aFields = $oGroup->load($_POST['sGroupUID']);
 	  global $G_PUBLISH;
   	$G_PUBLISH = new Publisher();
-  	$G_PUBLISH->AddContent('xmlform', 'xmlform', 'groups/groups_UsersListTitle', '', array('GRP_NAME' => $_POST['GroupName']));
-  	$G_PUBLISH->AddContent('propeltable', 'paged-table', 'groups/groups_UsersList', $oGroup->getUsersGroupCriteria($_POST['sGroupUID']), array('GRP_UID' => $_POST['sGroupUID'], 'GRP_NAME' => $_POST['GroupName']));
+  	$G_PUBLISH->AddContent('xmlform', 'xmlform', 'groups/groups_UsersListTitle', '', array('GRP_NAME' => $aFields['GRP_TITLE']));
+  	$G_PUBLISH->AddContent('propeltable', 'paged-table', 'groups/groups_UsersList', $oGroups->getUsersGroupCriteria($_POST['sGroupUID']), array('GRP_UID' => $_POST['sGroupUID'], 'GRP_NAME' => $aFields['GRP_TITLE']));
     G::RenderPage('publish', 'raw');
 	break;
 
@@ -43,40 +45,40 @@ switch ($_POST['action'])
 	  $oGroup = new Groups();
 	  $oGroup->addUserToGroup($_POST['GRP_UID'], $_POST['USR_UID']);
 	break;
-	
-	case 'assignAllUsers':	  	  
+
+	case 'assignAllUsers':
 	  G::LoadClass('groups');
 	  $oGroup = new Groups();
 	  $aUsers=explode(',', $_POST['aUsers']);
 	  for($i=0; $i<count($aUsers); $i++)
-	  {	  	
+	  {
 	  	$oGroup->addUserToGroup($_POST['GRP_UID'], $aUsers[$i]);
-	  }	
+	  }
 	break;
 
 	case 'ofToAssignUser':
 	  G::LoadClass('groups');
 	  $oGroup = new Groups();
 	  $oGroup->removeUserOfGroup($_POST['GRP_UID'], $_POST['USR_UID']);
-	break;	
-	
-	case 'verifyGroupname':  	  	    	  
+	break;
+
+	case 'verifyGroupname':
   	  $_POST['sOriginalGroupname'] = get_ajax_value('sOriginalGroupname');
-  	  $_POST['sGroupname']         = get_ajax_value('sGroupname');  	    	   	  	
+  	  $_POST['sGroupname']         = get_ajax_value('sGroupname');
   	  if ($_POST['sOriginalGroupname'] == $_POST['sGroupname'])
   	  {
   	    echo '0';
   	  }
   	  else
-  	  {   	  	
+  	  {
   	  	require_once 'classes/model/Groupwf.php';
   	  	G::LoadClass('Groupswf');
 	      $oGroup = new Groupwf();
-	      $oCriteria=$oGroup->loadByGroupname($_POST['sGroupname']);	        	    
+	      $oCriteria=$oGroup->loadByGroupname($_POST['sGroupname']);
   	  	$oDataset = GroupwfPeer::doSelectRS($oCriteria);
         $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
         $oDataset->next();
-        $aRow = $oDataset->getRow();                      
+        $aRow = $oDataset->getRow();
         if (!$aRow)
   	  	{
   	  		echo '0';
@@ -84,7 +86,7 @@ switch ($_POST['action'])
   	  	else
   	  	{
   	  		echo '1';
-  	  	} 	   
+  	  	}
   	  }
   	break;
 }

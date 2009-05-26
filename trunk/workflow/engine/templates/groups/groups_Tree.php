@@ -63,7 +63,7 @@
         <tr>
           <td width='250px' class='treeNode' style='border:0px;background-color:transparent;'>{$GROUP_TITLE}</td>
           <td class='treeNode' style='border:0px;background-color:transparent;'>[<a href="#" onclick="editGroup('{$UID}');return false;">{$ID_EDIT}</a>]</td>
-          <td class='treeNode' style='border:0px;background-color:transparent;'>[<a href="#" onclick="selectGroup('{$UID}','{$GROUP_TITLE}');return false;">{$ID_MEMBERS}</a>]</td>
+          <td class='treeNode' style='border:0px;background-color:transparent;'>[<a href="#" onclick="selectGroup('{$UID}');return false;">{$ID_MEMBERS}</a>]</td>
           <td class='treeNode' style='border:0px;background-color:transparent;'>[<a href="#" onclick="deleteGroup('{$UID}');return false;">{$ID_DELETE}</a>]</td>
         </tr>
       </table>

@@ -23,12 +23,14 @@
  *
  */
   require_once ( 'classes/class.xmlfield_InputPM.php' );
-  
+
   if (($RBAC_Response=$RBAC->userCanAccess("PM_USERS"))!=1) return $RBAC_Response;
   G::LoadClass('groups');
-  $oGroup = new Groups();
+  $oGroups = new Groups();
+  $oGroup  = new Groupwf();
+	$aFields = $oGroup->load($_GET['UID']);
   $G_PUBLISH = new Publisher();
-  $G_PUBLISH->AddContent('xmlform', 'xmlform', 'groups/groups_UsersListTitle', '', array('GRP_NAME' => $_GET['GroupName']));
-  $G_PUBLISH->AddContent('propeltable', 'paged-table', 'groups/groups_AvailableUsers', $oGroup->getAvailableUsersCriteria($_GET['UID']));
+  $G_PUBLISH->AddContent('xmlform', 'xmlform', 'groups/groups_UsersListTitle', '', array('GRP_NAME' => $aFields['GRP_TITLE']));
+  $G_PUBLISH->AddContent('propeltable', 'paged-table', 'groups/groups_AvailableUsers', $oGroups->getAvailableUsersCriteria($_GET['UID']));
   $G_PUBLISH->AddContent('xmlform', 'xmlform', 'groups/groups_SelectUsers','',  '','save' );
   G::RenderPage('publish', 'raw');
