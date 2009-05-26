@@ -57,8 +57,8 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_USERS"))!=1) return $RBAC_Response;
     popupWindow('' , '<?=$groups_Edit?>' , 500 , 200 );
 //    refreshTree();
   }
-  function addUserGroup( uid, gname ){ 
-    popupWindow('' , '<?=$groups_AddUser?>?UID='+uid+'&GroupName='+gname , 500 , 520 );
+  function addUserGroup( uid ){
+    popupWindow('' , '<?=$groups_AddUser?>?UID='+uid, 500 , 520 );
   }
   function saveGroup( form ) {
     ajax_post( form.action, form, 'POST' );
@@ -66,18 +66,18 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_USERS"))!=1) return $RBAC_Response;
     refreshTree();
   }
   //function selectGroup( uid, element ){
-  function selectGroup( uid, group ){ 
+  function selectGroup( uid ){
     currentGroup = uid;
     var oRPC = new leimnud.module.rpc.xmlhttp({
       url   : '../groups/groups_Ajax',
       async : false,
       method: 'POST',
-      args  : 'action=showUsers&sGroupUID=' + uid + '&GroupName=' + group
+      args  : 'action=showUsers&sGroupUID=' + uid
     });
     oRPC.make();
     document.getElementById('spanUsersList').innerHTML = oRPC.xmlhttp.responseText;
     var scs = oRPC.xmlhttp.responseText.extractScript();
-    scs.evalScript();
+    //scs.evalScript();
   }
   function deleteGroup( uid ){
     new leimnud.module.app.confirm().make({
@@ -125,20 +125,20 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_USERS"))!=1) return $RBAC_Response;
     currentPopupWindow.remove();
     selectGroup(currentGroup);
   }
-  
-  
-function selection (){    
-    //alert(currentGroup);    
+
+
+function selection (){
+    //alert(currentGroup);
 		var x=document.getElementsByTagName('input');
     //alert(x.length);
     var p=[];
     for (var i=0; x.length>i; i++)
-    {    	
+    {
     	if(x[i].type=='checkbox')
     	{
     		if(x[i].checked)
     		{
-    				p.push(x[i].value);    			
+    				p.push(x[i].value);
     		}
     	}
     }
@@ -146,12 +146,12 @@ function selection (){
     var oRPC = new leimnud.module.rpc.xmlhttp({
       url   : '../groups/groups_Ajax',
       async : false,
-      method: 'POST',             
+      method: 'POST',
       args  : 'action=assignAllUsers&GRP_UID=' + currentGroup + '&aUsers=' + p
     });
     oRPC.make();
     currentPopupWindow.remove();
     selectGroup(currentGroup);
 }
-  
+
 </script>
