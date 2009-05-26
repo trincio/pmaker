@@ -427,6 +427,10 @@ class Derivation
               $aNewFields = array();
               $aOldFields = $this->case->loadCase($aNewCase['APPLICATION']);
               foreach ($aFields as $sOriginField => $sTargetField) {
+                $sOriginField = str_replace('@', '', $sOriginField);
+                $sOriginField = str_replace('#', '', $sOriginField);
+                $sTargetField = str_replace('@', '', $sTargetField);
+                $sTargetField = str_replace('#', '', $sTargetField);
                 $aNewFields[$sTargetField] = isset($appFields['APP_DATA'][$sOriginField]) ? $appFields['APP_DATA'][$sOriginField] : '';
               }
 				      $aOldFields['APP_DATA']   = array_merge($aOldFields['APP_DATA'], $aNewFields);
@@ -542,6 +546,10 @@ class Derivation
         $aFields    = unserialize($aSP['SP_VARIABLES_IN']);
         $aNewFields = array();
         foreach ($aFields as $sOriginField => $sTargetField) {
+          $sOriginField = str_replace('@', '', $sOriginField);
+          $sOriginField = str_replace('#', '', $sOriginField);
+          $sTargetField = str_replace('@', '', $sTargetField);
+          $sTargetField = str_replace('#', '', $sTargetField);
           $aNewFields[$sTargetField] = isset($appFields['APP_DATA'][$sOriginField]) ? $appFields['APP_DATA'][$sOriginField] : '';
         }
 		    $aParentCase['APP_DATA'] = array_merge($aParentCase['APP_DATA'], $aNewFields);
