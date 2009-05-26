@@ -183,9 +183,14 @@ class XmlForm_Field {
       }
     } 
     else {
-      $con = Propel::getConnection ( $this->sqlConnection );
-      $stmt = $con->createStatement ();
-      $rs = $stmt->executeQuery ( $query, ResultSet::FETCHMODE_NUM );
+      try {
+        $con = Propel::getConnection ( $this->sqlConnection );
+        $stmt = $con->createStatement ();
+        $rs = $stmt->executeQuery ( $query, ResultSet::FETCHMODE_NUM );
+      }
+      catch  ( Exception $e ) {  //dismiss error because dbarray shouldnt be defined in some contexts.
+        return $result;
+      }   
     }
     
     $rs->next ();
