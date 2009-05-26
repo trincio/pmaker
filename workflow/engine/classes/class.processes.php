@@ -1776,10 +1776,14 @@ class Processes {
               		$XmlContent = str_replace($oData->process['PRO_UID_OLD'], $oData->process['PRO_UID'], $XmlContent);
               		$XmlContent = str_replace($XmlGuid, $newXmlGuid, $XmlContent);
               		//foreach
-              		foreach($oData->gridFiles as $key => $value)
-              			{
-              					$XmlContent = str_replace($key, $value, $XmlContent);
-              			}
+              		if (isset($oData->gridFiles)) {
+              		  if (is_array($oData->gridFiles)) {
+              		    foreach($oData->gridFiles as $key => $value)
+              		  	{
+              		  			$XmlContent = str_replace($key, $value, $XmlContent);
+              		  	}
+              		  }
+              		}
               		#here we verify if is adynaform or a html
               		$ext = (substr(trim($XmlContent),0,5) == '<?xml')?'.xml':'.html';
 
