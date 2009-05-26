@@ -3283,6 +3283,7 @@ function editObjectPermission($sOP_UID)
 
 
   function subProcess_TaskIni($sProcessUID) {
+        $tasks = array();
   	    $aUIDS = array();
   		  $aUIDS[] = $sProcessUID;
   	    $c = new Criteria();
