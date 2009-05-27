@@ -179,8 +179,12 @@ try {
     die;
   }
   /* Check password using policy - End */
-
-  $sLocation = $oUserProperty->redirectTo($_SESSION['USER_LOGGED'], $lang);
+  if ($_POST['form']['URL'] != '') {
+    $sLocation = $_POST['form']['URL'];
+  }
+  else {
+    $sLocation = $oUserProperty->redirectTo($_SESSION['USER_LOGGED'], $lang);
+  }
   G::header('Location: ' . $sLocation);
   die;
 
