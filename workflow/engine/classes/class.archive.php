@@ -468,7 +468,7 @@ class tar_file extends archive
 				}
 				//chown($file['name'], $file['stat'][4]);
 				//chgrp($file['name'], $file['stat'][5]);
-				touch($file['name'], $file['stat'][9]);
+				@touch($file['name'], $file['stat'][9]);
 				unset ($file);
 			}
 		}
