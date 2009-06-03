@@ -1129,3 +1129,17 @@ var getObject = function(sObject) {
   }
   return oAux;
 };
+
+var saveAndRefreshForm = function(oObject) {
+  if (oObject) {
+    oObject.form.action += '&_REFRESH_=1';
+    oObject.form.submit();
+  }
+  else {
+    var oAux = window.document.getElementsByTagName('form');
+    if (oAux.length > 0) {
+      oAux[0].action += '&_REFRESH_=1';
+      oAux[0].submit();
+    }
+  }
+};

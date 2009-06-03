@@ -111,6 +111,9 @@
 
   //go to the next step
   $aNextStep = $oCase->getNextStep($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['STEP_POSITION']);
+  if (isset($_GET['_REFRESH_'])) {
+    G::header('location: ' . $_SERVER['HTTP_REFERER']);die;
+  }
   $_SESSION['STEP_POSITION'] = $aNextStep['POSITION'];
 
 
