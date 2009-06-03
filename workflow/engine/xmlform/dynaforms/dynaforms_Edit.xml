@@ -36,4 +36,10 @@
   <en><![CDATA[Save & Open]]></en>
 </SAVE_OPEN>
 
+<JS type="javascript">
+<![CDATA[
+getField('DYN_TITLE').form.onsubmit = function() {return false;};
+]]>
+</JS>
+
 </dynaForm>
