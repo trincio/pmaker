@@ -2,6 +2,8 @@
 <dynaForm
   name  = "cases_ListToRevise"
   menu  = "cases/cases_Options"
+  filterForm="cases/cases_List"
+  searchBy="APPLICATION.APP_NUMBER | APP_TITLE.CON_VALUE | TAS_TITLE.CON_VALUE | PRO_TITLE.CON_VALUE"
   width = "100%"
 >
 <cases_Open type="private" defaultValue="cases_Open" showInTable="0"/>
