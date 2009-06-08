@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm name="showInfoUpdate" xmlform_type="NORMAL" width="520px" labelwidth="0">
+<THETITLE1 type="title">
+  <en>Information</en>
+</THETITLE1>
+<THEMESSAGE1 type="text" mode="view" enableHtml="1" />
+<THETITLE2 type="title">
+  <en>Affected Files</en>
+</THETITLE2>
+<THEMESSAGE2 type="textarea" cols="90" rows="15" mode="view" enableHtml="1" />
+<THETITLE3 type="title">
+  <en>Environments Updated</en>
+</THETITLE3>
+<THEMESSAGE3 type="text" mode="view" enableHtml="1" />
+<THETITLE4 type="title">
+  <en>Errors</en>
+</THETITLE4>
+<THEMESSAGE4 type="text" mode="view" enableHtml="1" />
+</dynaForm>
