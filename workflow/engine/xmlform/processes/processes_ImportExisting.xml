@@ -7,15 +7,15 @@
 </title>
 
 <TITLE1 type="subtitle" >
-  <en>A process with the same name already exists. Please select one of the following options:</en>
+  <en>The process you are trying to import already exists. Please select one of the following options to continue:</en>
 </TITLE1>
 
 
 <IMPORT_OPTION type="radiogroup">
   <en>
-    <option name='1'>Replace the existing Process.</option>
-    <option name='2'>Create a new Process version (2) and disable the existing Process.</option>
-    <option name='3'>Create a new Process version (2) and do not change the existing Process.</option>
+    <option name='1'>Update the current process, overwriting all tasks and steps</option>
+    <option name='2'>Disable the current process and create a new version of the process</option>
+    <option name='3'>Create a completely new process without changing the current process</option>
   </en>
 </IMPORT_OPTION>
 
