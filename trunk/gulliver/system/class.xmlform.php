@@ -1922,7 +1922,20 @@ class XmlForm_Field_Grid extends XmlForm_Field {
    */
   function renderGrid($values, $owner = NULL, $therow = -1) {
     $this->id = $this->owner->id . $this->name;
-    $tpl = new xmlformTemplate ( $this, PATH_CORE . 'templates/grid.html' );
+    
+      $using_template = "grid";
+  
+	### added by Erik <erik@colosa.com>
+	### For throw the preview view
+	if( isset($this->owner->visual_frontend) ){
+	 $using_template = "grid_{$this->owner->visual_frontend}";
+	} 
+	
+	if( $this->mode == 'view' ){
+	 $using_template = "grid_view";
+	} 
+	
+    $tpl = new xmlformTemplate ( $this, PATH_CORE . "templates/{$using_template}.html" );
     if (! isset ( $values ) || ! is_array ( $values ) || sizeof ( $values ) == 0) {
       $values = array_keys ( $this->fields );
     }
