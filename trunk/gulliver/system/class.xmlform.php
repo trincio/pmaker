@@ -2143,7 +2143,7 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
     }
 
     if ($startDate == '') {
-      $startDate = date ( 'Y-m-d' ); // the default is the current date
+      //$startDate = date ( 'Y-m-d' ); // the default is the current date
     }
 
     if ($endDate != '') {
@@ -2172,7 +2172,7 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
 
     if ( trim ($value) == '' or $value == NULL ) {
       $tmp = str_replace("%", "", $mask);
-      $value = date ($tmp);
+      $value = ''; //date ($tmp);
     }
 
     /*for old mask definitions...*/
@@ -2183,7 +2183,10 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
     #the validations field was moved to javascript routines ;)
     if ($this->mode == 'edit') {
       $html = "<input size=15  class='module_app_input___gray' readonly=true type='text' id='" . $pID . "' name='" . $pID . "' value='" . $value . "'>";
-      $html .= "<a href='#' onclick=\"return showCalendar('$pID', '$mask', '24', true, '$startDate', '$endDate');\" ><img src='/controls/cal.gif' border='0'></a>";
+      $html .= "<a title='Show calendar' href='#' onclick=\"return showCalendar('$pID', '$mask', '24', true, '$startDate', '$endDate');\" >
+      			  <img src='/controls/Calendar-32x32.png' border='0' width='12' height='14'>
+      			</a>
+      			<a title='Reset date field' href='#' onclick=\"document.getElementById('$pID').value='';\"><img src='/controls/TrashIcon.jpg' border='0' width='12' height='15'></a>";
     } else {
       $html = "<span style='border:1;border-color:#000;width:100px;' name='" . $pID . "'>$value</span>";
     }

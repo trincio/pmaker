@@ -257,7 +257,7 @@ class dbConnections
 				);
     		break;
     		case 'mssql':
-    			$encodes = Array();
+    			$encodes = Array(Array('utf8',     'utf8 - UTF-8 Unicode'));
     		break;
     		case 'oracle':
     			$encodes = Array();
