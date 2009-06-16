@@ -10,7 +10,7 @@ include_once 'propel/util/Criteria.php';
 include_once 'classes/model/RbacUsersPeer.php';
 
 /**
- * Base class that represents a row from the 'RBAC_USERS' table.
+ * Base class that represents a row from the 'USERS' table.
  *
  * 
  *
