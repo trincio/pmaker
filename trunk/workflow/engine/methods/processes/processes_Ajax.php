@@ -1,4 +1,4 @@
-<?php
+<?php 
 /**
  * processes_Ajax.php
  *
@@ -37,10 +37,9 @@ try {
   	  die;
   	break;
   }*/
-
   $oJSON   = new Services_JSON();
   if ( !isset ($_POST['data']) ) {
-    die;
+    die();
   }
 
   $oData   = $oJSON->decode(stripslashes($_POST['data']));
@@ -79,6 +78,9 @@ try {
   	case 'webEntry_generate':
   	  include(PATH_METHODS . 'processes/processes_webEntryGenerate.php');
   	break;
+  	case 'webEntry_new': 
+  	  $oProcessMap->webEntry_new($oData->PRO_UID);
+  	break;  	  	
   	case 'assignProcessUser':
   	  $oProcessMap->assignProcessUser($oData->PRO_UID, $oData->USR_UID);
   	break;

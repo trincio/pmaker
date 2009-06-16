@@ -65,7 +65,6 @@ class ReportTables {
   	try {
   	  switch (DB_ADAPTER) {
   	  	case 'mysql':
-  	  	case 'pgsql':
   	  	  eval('$oConnection = @mysql_connect(' . $sDBHost . ', ' . $sDBUser . ', ' . $sDBPass . ');');
   	  	  if (!$oConnection) {
   	  	  	throw new Exception('Cannot connect to the server!');
@@ -83,7 +82,7 @@ class ReportTables {
     	throw($oError);
     }
   }
-  public function createTable($sTableName, $sConnection = 'report', $sType = 'NORMAL', $aFields = array()) {
+  public function createTable($sTableName, $sConnection = 'report', $sType = 'NORMAL', $aFields = array(), $bDefaultFields = true) {
   	$sTableName = $this->sPrefix . $sTableName;
   	if ($sConnection == '') {
   		$sConnection = 'report';
@@ -95,7 +94,6 @@ class ReportTables {
   	try {
   	  switch (DB_ADAPTER) {
   	  	case 'mysql':
-  	  	case 'pgsql':
   	  	  eval('$oConnection = @mysql_connect(' . $sDBHost . ', ' . $sDBUser . ', ' . $sDBPass . ');');
   	  	  if (!$oConnection) {
   	  	  	throw new Exception('Cannot connect to the server!');
@@ -104,9 +102,11 @@ class ReportTables {
   	  	  	throw new Exception('Cannot connect to the database ' . $sDBName . '!');
   	  	  }");
   	  	  $sQuery  = 'CREATE TABLE IF NOT EXISTS `' . $sTableName . '` (';
-  	  	  $sQuery .= "`APP_UID` VARCHAR(32) NOT NULL DEFAULT '',`APP_NUMBER` INT NOT NULL,";
-  	  	  if ($sType == 'GRID') {
-  	  	  	$sQuery .= "`ROW` INT NOT NULL,";
+  	  	  if ($bDefaultFields) {
+  	  	    $sQuery .= "`APP_UID` VARCHAR(32) NOT NULL DEFAULT '',`APP_NUMBER` INT NOT NULL,";
+  	  	    if ($sType == 'GRID') {
+  	  	  	  $sQuery .= "`ROW` INT NOT NULL,";
+  	  	    }
   	  	  }
   	  	  foreach ($aFields as $aField) {
   	  	  	switch ($aField['sType']) {
@@ -114,6 +114,8 @@ class ReportTables {
   	  	  		  $sQuery .= '`' . $aField['sFieldName'] . '` ' . $this->aDef['mysql'][$aField['sType']] . " NOT NULL DEFAULT '0',";
   	  	  		break;
   	  	  		case 'char':
+  	  	  		  $sQuery .= '`' . $aField['sFieldName'] . '` ' . $this->aDef['mysql'][$aField['sType']] . " NOT NULL DEFAULT '',";
+  	  	  		break;
   	  	  		case 'text':
   	  	  		  $sQuery .= '`' . $aField['sFieldName'] . '` ' . $this->aDef['mysql'][$aField['sType']] . " NOT NULL DEFAULT '',";
   	  	  		break;
@@ -122,7 +124,12 @@ class ReportTables {
   	  	  		break;
   	  	  	}
   	  	  }
-  	  	  $sQuery .= 'PRIMARY KEY (APP_UID' . ($sType == 'GRID' ? ',ROW' : '') . ')) DEFAULT CHARSET=utf8;';
+  	  	  if ($bDefaultFields) {
+  	  	    $sQuery .= 'PRIMARY KEY (APP_UID' . ($sType == 'GRID' ? ',ROW' : '') . ')) DEFAULT CHARSET=utf8;';
+  	  	  }
+  	  	  else {
+  	  	    $sQuery .= ' DEFAULT CHARSET=utf8;';
+  	  	  }
   	  	  if (!@mysql_query($sQuery)) {
   	  	  	throw new Exception('Cannot create the table "' . $sTableName . '"!');
   	  	  }
@@ -149,7 +156,6 @@ class ReportTables {
   	try {
   	  switch (DB_ADAPTER) {
   	  	case 'mysql':
-  	  	case 'pgsql':
   	  	  eval('$oConnection = @mysql_connect(' . $sDBHost . ', ' . $sDBUser . ', ' . $sDBPass . ');');
   	  	  if (!$oConnection) {
   	  	  	throw new Exception('Cannot connect to the server!');
@@ -307,7 +313,6 @@ class ReportTables {
   	    $sDBPass = 'DB' . ($aRow['REP_TAB_CONNECTION'] != 'wf' ? '_' . strtoupper($aRow['REP_TAB_CONNECTION']) : '') . '_PASS';
   	    switch (DB_ADAPTER) {
   	  	  case 'mysql':
-  	  	  case 'pgsql':
   	  	    eval('$oConnection = @mysql_connect(' . $sDBHost . ', ' . $sDBUser . ', ' . $sDBPass . ');');
   	  	    if (!$oConnection) {
   	  	    	throw new Exception('Cannot connect to the server!');
