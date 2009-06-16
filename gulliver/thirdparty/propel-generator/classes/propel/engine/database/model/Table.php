@@ -550,6 +550,9 @@ class Table extends XMLElement implements IDMethod {
 	 */
 	public function getName()
 	{
+    if ( isset ( $this->vendorSpecificInfo['Name'] ) )
+	  	$this->name = $this->vendorSpecificInfo['Name'];
+
 		return $this->name;
 	}
 
