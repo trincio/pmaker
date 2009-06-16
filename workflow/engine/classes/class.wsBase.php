@@ -524,7 +524,7 @@ class wsBase
         }
       }
       */
-       
+
 			$very_user=$groups->verifyUsertoGroup( $groupId, $userId);
 			if($very_user==1){
 				$result = new wsResponse (8, "User exist in the group");
@@ -876,35 +876,6 @@ class wsBase
 			$aData['APP_UID']   = $caseId;
 			$aData['DEL_INDEX'] = $delIndex;
 
-			$oDerivation = new Derivation();
-			$derive  = $oDerivation->prepareInformation($aData);
-			if (isset($derive[1])) {
-			  if ($derive[1]['ROU_TYPE'] == 'SELECT') {
-			    $result = new wsResponse (21, 'Cannot derivate a "Manual" derivation using webservices.');
-					return $result;
-			  }
-			}
-			else {
-			  $result = new wsResponse (22, 'Task does not have derivation rule, check process definition');
-				return $result;
-			}
-			foreach ( $derive as $key=>$val ) {
-				if($val['NEXT_TASK']['TAS_ASSIGN_TYPE']=='MANUAL')
-				{
-					$result = new wsResponse (15, "The task is defined for Manual assignment");
-					return $result;
-				}
-				$nextDelegations[] = array(
-																		'TAS_UID' => $val['NEXT_TASK']['TAS_UID'],
-																		'USR_UID' => $val['NEXT_TASK']['USER_ASSIGNED']['USR_UID'],
-																		'TAS_ASSIGN_TYPE' =>	$val['NEXT_TASK']['TAS_ASSIGN_TYPE'],
-																		'TAS_DEF_PROC_CODE' => $val['NEXT_TASK']['TAS_DEF_PROC_CODE'],
-																		'DEL_PRIORITY'	=>	$appdel['DEL_PRIORITY'],
-																		'TAS_PARENT' => $val['NEXT_TASK']['TAS_PARENT']
-																	);
-				$varResponse = $varResponse . ($varResponse!=''?',':'') . $val['NEXT_TASK']['TAS_TITLE'].'('.$val['NEXT_TASK']['USER_ASSIGNED']['USR_USERNAME'].')';
-			}
-
 			//load data
 			$oCase     = new Cases ();
 			$appFields = $oCase->loadCase( $caseId );
@@ -965,6 +936,35 @@ class wsBase
           }
         }
       }
+
+      $oDerivation = new Derivation();
+			$derive  = $oDerivation->prepareInformation($aData);
+			if (isset($derive[1])) {
+			  if ($derive[1]['ROU_TYPE'] == 'SELECT') {
+			    $result = new wsResponse (21, 'Cannot derivate a "Manual" derivation using webservices.');
+					return $result;
+			  }
+			}
+			else {
+			  $result = new wsResponse (22, 'Task does not have derivation rule, check process definition');
+				return $result;
+			}
+			foreach ( $derive as $key=>$val ) {
+				if($val['NEXT_TASK']['TAS_ASSIGN_TYPE']=='MANUAL')
+				{
+					$result = new wsResponse (15, "The task is defined for Manual assignment");
+					return $result;
+				}
+				$nextDelegations[] = array(
+																		'TAS_UID' => $val['NEXT_TASK']['TAS_UID'],
+																		'USR_UID' => $val['NEXT_TASK']['USER_ASSIGNED']['USR_UID'],
+																		'TAS_ASSIGN_TYPE' =>	$val['NEXT_TASK']['TAS_ASSIGN_TYPE'],
+																		'TAS_DEF_PROC_CODE' => $val['NEXT_TASK']['TAS_DEF_PROC_CODE'],
+																		'DEL_PRIORITY'	=>	$appdel['DEL_PRIORITY'],
+																		'TAS_PARENT' => $val['NEXT_TASK']['TAS_PARENT']
+																	);
+				$varResponse = $varResponse . ($varResponse!=''?',':'') . $val['NEXT_TASK']['TAS_TITLE'].'('.$val['NEXT_TASK']['USER_ASSIGNED']['USR_USERNAME'].')';
+			}
 
 			$appFields['DEL_INDEX'] = $delIndex;
 			if ( isset($derive['TAS_UID']) )

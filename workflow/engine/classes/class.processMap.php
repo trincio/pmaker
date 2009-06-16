@@ -2064,8 +2064,36 @@ class processMap {
   function webEntry($sProcessUID) {
     try {
       global $G_PUBLISH;
-      $G_PUBLISH = new Publisher;
-      $G_PUBLISH->AddContent('xmlform', 'xmlform', 'dynaforms/dynaforms_WebEntry', '', array('PRO_UID' => $sProcessUID, 'LANG' => SYS_LANG));
+      $G_PUBLISH = new Publisher;      
+      
+      $row = array();
+      $c=0;
+      $row[] = array('W_UID'   => '','W_TITLE' => '');            	                
+      
+      if(is_dir(PATH_DATA ."sites" . PATH_SEP . SYS_SYS . PATH_SEP . "public" . PATH_SEP . $sProcessUID))      
+       {	$dir = opendir(PATH_DATA ."sites" . PATH_SEP . SYS_SYS . PATH_SEP . "public" . PATH_SEP . $sProcessUID); 						
+					while($archivo = readdir($dir))
+							{ 
+							  if($archivo!='.')
+							   { 
+							   	 if($archivo!='..')
+							   	  { 
+							   	  	$c++;				
+								      $row[] = array('W_UID' => $c,'W_TITLE' => $archivo);							 
+								    }  
+								 }   
+							}
+			 }			
+			
+			global $_DBArray;
+      $_DBArray['reports']  = $row;      
+      $_SESSION['_DBArray'] = $_DBArray;
+      G::LoadClass('ArrayPeer');
+      $oCriteria = new Criteria('dbarray');
+      $oCriteria->setDBArrayTable('reports');
+      
+      //$G_PUBLISH->AddContent('xmlform', 'xmlform', 'dynaforms/dynaforms_WebEntry', '', array('PRO_UID' => $sProcessUID, 'LANG' => SYS_LANG));
+      $G_PUBLISH->AddContent('propeltable', 'paged-table', 'dynaforms/dynaforms_WebEntryList', $oCriteria, array('PRO_UID' => $sProcessUID, 'LANG' => SYS_LANG));
       G::RenderPage('publish', 'raw');
     	return true;
     }
@@ -2074,6 +2102,19 @@ class processMap {
     }
   }
 
+	function webEntry_new($sProcessUID) {
+    try { 
+      global $G_PUBLISH;
+      $G_PUBLISH = new Publisher;                        
+      $G_PUBLISH->AddContent('xmlform', 'xmlform', 'dynaforms/dynaforms_WebEntry', '', array('PRO_UID' => $sProcessUID, 'LANG' => SYS_LANG));      
+      G::RenderPage('publish', 'raw');
+    	return true;
+    }
+  	catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
+  
   /*
 	* Return the supervisors dynaforms list criteria object
 	* @param string $sProcessUID
