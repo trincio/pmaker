@@ -973,8 +973,9 @@ var processmap=function(){
 				//options.color = ((options_task.tp==='task')?"auto":"#9B88CA");
 				//options.color = "auto";
 				//alert(this.options.rw);
+				
 				if (this.options.rw) {
-				  options.color = ((options_task.tp==='task')?"auto":"#9B88CA");
+				  options.color = ((options_task.tp==='task')?"auto":"#9B88CA");				  
 				}
 
 				var db		= this.data.db, task=db.task[index];
@@ -987,14 +988,20 @@ var processmap=function(){
 					cursor:((this.options.rw===true)?"move":"default"),
 					backgroundColor:(options.color ? options.color : 'auto')
 				});
+
+				var subp = ((options_task.tp==='task')?"":"url(/images/subp.png)");								
 				var b = document.createElement("div");
 				b.className="processmap_task_label___"+this.options.theme;
-				this.parent.dom.setStyle(b,{
-					cursor:((this.options.rw===true)?"move":"default")
-				});
-				b.innerHTML = options.label;
-
-/*        if (task.derivation.type==5) {
+				this.parent.dom.setStyle(b,{										
+					cursor:((this.options.rw===true)?"move":"default"),
+					background:subp,
+					backgroundRepeat:"no-repeat",
+					backgroundPosition:"center",
+					height:40								
+				});				
+				b.innerHTML = options.label;    													
+				//clip: "rect(0,0,0,0)"															
+        /*if (task.derivation.type==5) {
           for(var it=0;it< db.task.length;it++)
 				  {
 					  if ( db.task[it].uid == derivation[0].task )
@@ -1003,7 +1010,8 @@ var processmap=function(){
 					    var joinPosY = db.task[it].position.y - 30;
 					  }
 				  }
-        }*/
+        }*/               
+        
 				var c = document.createElement("div");
 				this.parent.dom.setStyle(c,{
 					position:"absolute",

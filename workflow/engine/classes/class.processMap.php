@@ -2083,8 +2083,8 @@ class processMap {
 								    }  
 								 }   
 							}
-			 }			
-			
+			 }	
+		
 			global $_DBArray;
       $_DBArray['reports']  = $row;      
       $_SESSION['_DBArray'] = $_DBArray;
