@@ -66,6 +66,9 @@ class database extends database_base {
     $sSQL .= ')' . $this->sEndLine;
     return $sSQL;
   }
+  public function generateDropTableSQL($sTable) {
+    return 'DROP TABLE ' . $this->sQuoteCharacter . $sTable . $this->sQuoteCharacter . $this->sEndLine;
+  }
   public function generateDropColumnSQL($sTable, $sColumn) {
     $sSQL = 'ALTER TABLE ' . $this->sQuoteCharacter . $sTable . $this->sQuoteCharacter .
             ' DROP COLUMN ' . $this->sQuoteCharacter . $sColumn . $this->sQuoteCharacter . $this->sEndLine;
@@ -85,15 +88,27 @@ class database extends database_base {
       $sKeys .= 'ALTER TABLE ' . $this->sQuoteCharacter . $sTable . $this->sQuoteCharacter .
                 ' ADD PRIMARY KEY (' . $this->sQuoteCharacter . $sColumn . $this->sQuoteCharacter . ')' . $this->sEndLine;
     }*/
-    if ($aParameters['Default'] != '') {
-      $sSQL .= " DEFAULT '" . $aParameters['Default'] . "'";
+    if (isset($aParameters['AI'])) {
+      if ($aParameters['AI'] == 1) {
+        $sSQL .= ' AUTO_INCREMENT';
+      }
+      else {
+        if ($aParameters['Default'] != '') {
+          $sSQL .= " DEFAULT '" . $aParameters['Default'] . "'";
+        }
+      }
+    }
+    else {
+      if ($aParameters['Default'] != '') {
+        $sSQL .= " DEFAULT '" . $aParameters['Default'] . "'";
+      }
     }
     $sSQL .= $this->sEndLine;
     return $sSQL;
   }
-  public function generateChangeColumnSQL($sTable, $sColumn, $aParameters) {
+  public function generateChangeColumnSQL($sTable, $sColumn, $aParameters, $sColumnNewName = '') {
     $sSQL = 'ALTER TABLE ' . $this->sQuoteCharacter . $sTable . $this->sQuoteCharacter .
-            ' CHANGE COLUMN ' . $this->sQuoteCharacter . $sColumn . $this->sQuoteCharacter .
+            ' CHANGE COLUMN ' . $this->sQuoteCharacter . ($sColumnNewName != '' ? $sColumnNewName : $sColumn) . $this->sQuoteCharacter .
             ' ' . $this->sQuoteCharacter . $sColumn . $this->sQuoteCharacter;
     if (isset($aParameters['Type'])) {
       $sSQL .= ' ' . $aParameters['Type'];
@@ -106,9 +121,23 @@ class database extends database_base {
         $sSQL .= ' NOT NULL';
       }
     }
-    if (isset($aParameters['Default'])) {
-      if ($aParameters['Default'] != '') {
-        $sSQL .= " DEFAULT '" . $aParameters['Default'] . "'";
+    if (isset($aParameters['AI'])) {
+      if ($aParameters['AI'] == 1) {
+        $sSQL .= ' AUTO_INCREMENT';
+      }
+      else {
+        if (isset($aParameters['Default'])) {
+          if ($aParameters['Default'] != '') {
+            $sSQL .= " DEFAULT '" . $aParameters['Default'] . "'";
+          }
+        }
+      }
+    }
+    else {
+      if (isset($aParameters['Default'])) {
+        if ($aParameters['Default'] != '') {
+          $sSQL .= " DEFAULT '" . $aParameters['Default'] . "'";
+        }
       }
     }
     $sSQL .= $this->sEndLine;

@@ -1368,7 +1368,7 @@ class XmlForm_Field_Link extends XmlForm_Field {
  */
 class XmlForm_Field_File extends XmlForm_Field {
   var $required = false;
-
+  var $input    = '';
   /**
    * Function render
    * @author David S. Callizaya S. <davidsantos@colosa.com>

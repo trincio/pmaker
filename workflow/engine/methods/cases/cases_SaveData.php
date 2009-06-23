@@ -1,4 +1,4 @@
-<?
+<? 
 /**
  * cases_SaveData.php
  *
@@ -74,18 +74,34 @@
   require_once 'classes/model/AppDocument.php';
   if (isset($_FILES['form'])) {
     foreach ($_FILES['form']['name'] as $sFieldName => $vValue) {
-      if ($_FILES['form']['error'][$sFieldName] == 0) {
-        $oAppDocument = new AppDocument();
-        $aFields = array('APP_UID'             => $_SESSION['APPLICATION'],
-                         'DEL_INDEX'           => $_SESSION['INDEX'],
-                         'USR_UID'             => $_SESSION['USER_LOGGED'],
-                         'DOC_UID'             => -1,
-                         'APP_DOC_TYPE'        => 'ATTACHED',
-                         'APP_DOC_CREATE_DATE' => date('Y-m-d H:i:s'),
-                         'APP_DOC_COMMENT'     => '',
-                         'APP_DOC_TITLE'       => '',
-                         'APP_DOC_FILENAME'    => $_FILES['form']['name'][$sFieldName]);
-        $oAppDocument->create($aFields);
+      if ($_FILES['form']['error'][$sFieldName] == 0) {      	      	
+      	$oAppDocument = new AppDocument();
+      	if($_POST['INPUTS']['input']!='') 
+      	 {     
+      	 	   $aFields = array('APP_UID'             => $_SESSION['APPLICATION'],
+                     					'DEL_INDEX'           => $_SESSION['INDEX'],
+                     					'USR_UID'             => $_SESSION['USER_LOGGED'],
+                     					'DOC_UID'             => $_POST['INPUTS']['input'],
+                     					'APP_DOC_TYPE'        => 'INPUT',
+                     					'APP_DOC_CREATE_DATE' => date('Y-m-d H:i:s'),
+                     					'APP_DOC_COMMENT'     => '',
+                     					'APP_DOC_TITLE'       => '',
+                     					'APP_DOC_FILENAME'    => $_FILES['form']['name'][$sFieldName]);
+      	 }
+      	else
+         {         		
+        		$aFields = array('APP_UID'             => $_SESSION['APPLICATION'],
+        		                 'DEL_INDEX'           => $_SESSION['INDEX'],
+        		                 'USR_UID'             => $_SESSION['USER_LOGGED'],
+        		                 'DOC_UID'             => -1,
+        		                 'APP_DOC_TYPE'        => 'ATTACHED',
+        		                 'APP_DOC_CREATE_DATE' => date('Y-m-d H:i:s'),
+        		                 'APP_DOC_COMMENT'     => '',
+        		                 'APP_DOC_TITLE'       => '',
+        		                 'APP_DOC_FILENAME'    => $_FILES['form']['name'][$sFieldName]);        		
+         }		
+         
+        $oAppDocument->create($aFields); 
         $sAppDocUid = $oAppDocument->getAppDocUid();
         $aInfo      = pathinfo($oAppDocument->getAppDocFilename());
         $sExtension = (isset($aInfo['extension']) ? $aInfo['extension'] : '');
