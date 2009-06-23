@@ -294,7 +294,9 @@ class Form extends XmlForm
         else { 
           if (isset($_FILES['form']['name'][$k])) {
             $values[$k] = $_FILES['form']['name'][$k];
-          }
+          }        
+          
+          $_POST['INPUTS']['input'] = $v->input;          
         }
       }
     }

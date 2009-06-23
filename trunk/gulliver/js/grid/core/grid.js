@@ -181,7 +181,12 @@ var G_Grid = function(oForm, sGridName)
   		    	  {
   		    	  	aObjects[0].name  = aObjects[0].name.replace(/\[1\]/g, '\[' + (this.oGrid.rows.length - 2) + '\]');
   		    	  	aObjects[0].id    = aObjects[0].id.replace(/\[1\]/g, '\[' + (this.oGrid.rows.length - 2) + '\]');
-  		    	  	aObjects[0].value = '';
+  		    	  	if (aObjects[0].type != 'checkbox') {
+  		    	  	  aObjects[0].value = '';
+  		    	  	}
+  		    	  	else {
+  		    	  	  aObjects[0].checked = false;
+  		    	  	}
   		    	  	if (aObjects[1]) {
   		            if (aObjects[1].onclick) {
   		          		sAux = new String(aObjects[1].onclick);

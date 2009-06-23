@@ -151,7 +151,7 @@ class Tasks {
   	catch (Exception $oError) {
     	throw($oError);
     }
-  }
+  }  
 
   /*
 	* creates row tasks from an Route Array
@@ -585,6 +585,33 @@ class Tasks {
       return $aTasks;
     }
     catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
+  
+  /*
+	* Get Routes for any Process and any Task
+	* @param string $sProUid, $sTaskUid
+	* @return array
+	* by Everth 
+	*/
+  public function getRoute($sProUid, $sTaskUid) {
+  	try {  
+  	  $aRoutes   = array();
+  	  $oCriteria = new Criteria('workflow');
+      $oCriteria->add(RoutePeer::PRO_UID,     $sProUid);
+      $oCriteria->add(RoutePeer::TAS_UID,     $sTaskUid);
+      $oDataset = RoutePeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      while ($aRow = $oDataset->getRow()) {
+      	$aRoutes[] = $aRow;
+      	$oDataset->next();
+      }
+            
+      return $aRoutes;
+    }
+  	catch (Exception $oError) {
     	throw($oError);
     }
   }
