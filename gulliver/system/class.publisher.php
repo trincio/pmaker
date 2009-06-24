@@ -59,7 +59,7 @@ class Publisher
    * @return void
    *
    */
-  function AddContent( $strType = "form", $strLayout = "form", $strName = "", $strContent = "", $arrData = NULL, $strTarget = "", $ajaxServer='', $mode='')
+  function AddContent( $strType = "form", $strLayout = "form", $strName = "", $strContent = "", $arrData = NULL, $strTarget = "", $ajaxServer='', $mode='', $bAbsolutePath = false)
   {
     if($mode != '') {
        $this->localMode = $mode;
@@ -70,13 +70,14 @@ class Publisher
       $pos = count($this->Parts);
     }
     $this->Parts[$pos] = array(
-        'Type'     => $strType,
-        'Template' => $strLayout,
-        'File'     => $strName,
-        'Content'  => $strContent,
-        'Data'     => $arrData,
-        'Target'   => $strTarget,
-        'ajaxServer'   => $ajaxServer
+        'Type'         => $strType,
+        'Template'     => $strLayout,
+        'File'         => $strName,
+        'Content'      => $strContent,
+        'Data'         => $arrData,
+        'Target'       => $strTarget,
+        'ajaxServer'   => $ajaxServer,
+        'AbsolutePath' => $bAbsolutePath
         );
 
     //This is needed to prepare the "header content"
@@ -153,10 +154,15 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
     case 'dynaform':
       global $G_FORM;
 
-      if ($Part['Type'] == 'xmlform')
-        $sPath = PATH_XMLFORM;
-      else
-        $sPath = PATH_DYNAFORM;
+      if ($Part['AbsolutePath']) {
+        $sPath = $Part['AbsolutePath'];
+      }
+      else {
+        if ($Part['Type'] == 'xmlform')
+          $sPath = PATH_XMLFORM;
+        else
+          $sPath = PATH_DYNAFORM;
+      }
 
       //if the xmlform file doesn't exists, then try with the plugins folders
       if ( !is_file ( $sPath . $Part['File'] ) ) {
@@ -331,7 +337,12 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
       global $G_FORM;
 
       //if the xmlform file doesn't exists, then try with the plugins folders
-      $sPath = PATH_XMLFORM;
+      if ($Part['AbsolutePath']) {
+        $sPath = '';
+      }
+      else {
+        $sPath = PATH_XMLFORM;
+      }
       if ( !is_file ( $sPath . $Part['File'] ) ) {
         $aux = explode ( PATH_SEP, $Part['File'] );
 
