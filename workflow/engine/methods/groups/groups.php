@@ -127,7 +127,7 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_USERS"))!=1) return $RBAC_Response;
   }
 
 
-function selection (){
+function selectionX (){
     //alert(currentGroup);
 		var x=document.getElementsByTagName('input');
     //alert(x.length);
