@@ -700,4 +700,89 @@ class AdditionalTables extends BaseAdditionalTables {
     	throw($oError);
     }
   }
+
+  function createXmlList($sUID) {
+    try {
+      $aData = $this->load($sUID, true);
+      $sPath = PATH_DYNAFORM . 'xmlLists' . PATH_SEP;
+      if (!file_exists($sPath)) {
+        G::mk_dir($sPath);
+      }
+      if (!file_exists($sPath . 'additionalTablesDataOptions.xml')) {
+        file_put_contents($sPath . 'additionalTablesDataOptions.xml', '<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm type="xmlmenu">
+
+<ADD_TAB_UID type="private" showInTable="0" />
+
+<MNU_ADD type="link" link="additionalTablesDataNew?sUID=@#ADD_TAB_UID" colAlign="left" colWidth="35">
+  <en>New</en>
+</MNU_ADD>
+
+<PAGED_TABLE_ID type="private" />
+
+<JS type="javascript" replaceTags="1">
+<![CDATA[
+var additionalTablesDelete = function(sUID) {
+  new leimnud.module.app.confirm().make({
+    label:"Dou you want to delete this collection?",
+    action:function() {
+      ajax_function(@G::encryptlink("additionalTablesDelete"), "", "sUID=" + sUID, "POST");
+      @#PAGED_TABLE_ID.refresh();
+    }.extend(this)
+  });
+};
+]]>
+</JS>
+</dynaForm>');
+      }
+      $sXml  = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+      $sXml .= '<dynaForm width="100%" menu="xmlLists/additionalTablesDataOptions">' . "\n";
+      //$sXml .= '<dynaForm width="100%">' . "\n";
+      foreach ($aData['FIELDS'] as $aField) {
+        $sXml .= '<' . $aField['FLD_NAME'] . ' type="text" colWidth="100" titleAlign="left" align="left">' . "\n";
+        $sXml .= '<' . SYS_LANG . '>' . ($aField['FLD_DESCRIPTION'] != '' ? $aField['FLD_DESCRIPTION'] : $aField['FLD_NAME']) . '</' . SYS_LANG . '>' . "\n";
+        $sXml .= '</' . $aField['FLD_NAME'] . '>' . "\n";
+      }
+      $sXml .= '<EDIT type="link" colWidth="40" value="@G::LoadTranslation(ID_EDIT)" link="additionalTablesDataEdit?sUID=@#ADD_TAB_UID" onclick=""/>' . "\n";
+      //$sXml .= '<DELETE type="link" colWidth="40" value="@G::LoadTranslation(ID_DELETE)" link="#" onclick="additionalTablesDelete(@QADD_TAB_UID);return false;"/>' . "\n";
+      $sXml .= '</dynaForm>';
+      file_put_contents($sPath . $sUID . '.xml', $sXml);
+    }
+  	catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
+
+  function getDataCriteria($sUID) {
+    try {
+      $aData = $this->load($sUID, true);
+      $sPath = PATH_DB . SYS_SYS . PATH_SEP . 'classes' . PATH_SEP;
+      $sClassName = $this->getPHPName(($aData['ADD_TAB_CLASS_NAME'] != '' ? $aData['ADD_TAB_CLASS_NAME'] : $aData['ADD_TAB_NAME']));
+      require_once $sPath . $sClassName . '.php';
+      $sClassPeerName = $sClassName . 'Peer';
+      $oCriteria = new Criteria('workflow');
+      foreach ($aData['FIELDS'] as $aField) {
+        eval('$oCriteria->addSelectColumn(' . $sClassPeerName . '::' . $aField['FLD_NAME'] . ');');
+      }
+      eval('$oCriteria->add(' . $sClassPeerName . '::' . $aField['FLD_NAME'] . ', \'(º_·_º)\', Criteria::EQUAL);');
+      return $oCriteria;
+    }
+  	catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
+
+  function createXmlEdit($sUID) {
+    try {
+      $sPath = PATH_DYNAFORM . 'xmlLists' . PATH_SEP;
+      $sXml  = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
+      $sXml .= '<dynaForm name="xmlLists/' . $sUID . 'Edit" type="xmlform" width="" mode="">';
+      $sXml .= '<btnSave type="submit"><' . SYS_LANG . '>' . G::LoadTranslation('ID_SAVE') . '</' . SYS_LANG . '></btnSave>';
+      $sXml .= '</dynaForm>';
+      file_put_contents($sPath . $sUID . 'Edit.xml', $sXml);
+    }
+  	catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
 } // AdditionalTables
