@@ -715,7 +715,12 @@ function PMFDerivateCase($caseId, $delIndex, $bExecuteTriggersBeforeAssignment =
 	G::LoadClass('wsBase');
 	$ws = new wsBase ();
 	$result = $ws->derivateCase($_SESSION['USER_LOGGED'], $caseId, $delIndex, $bExecuteTriggersBeforeAssignment);//var_dump($result);die;
-	return $result->status_code;
+	if (isset($result->status_code)) {
+	  return $result->status_code;
+	}
+	else {
+	  return 0;
+	}
 	if($result->status_code == 0){
 		return 1;
 	} else {
