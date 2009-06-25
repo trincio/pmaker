@@ -43,6 +43,13 @@ abstract class BaseFields extends BaseObject  implements Persistent {
 
 
 	/**
+	 * The value for the fld_index field.
+	 * @var        int
+	 */
+	protected $fld_index = 1;
+
+
+	/**
 	 * The value for the fld_name field.
 	 * @var        string
 	 */
@@ -138,6 +145,17 @@ abstract class BaseFields extends BaseObject  implements Persistent {
 	{
 
 		return $this->add_tab_uid;
+	}
+
+	/**
+	 * Get the [fld_index] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getFldIndex()
+	{
+
+		return $this->fld_index;
 	}
 
 	/**
@@ -282,6 +300,28 @@ abstract class BaseFields extends BaseObject  implements Persistent {
 		}
 
 	} // setAddTabUid()
+
+	/**
+	 * Set the value of [fld_index] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     void
+	 */
+	public function setFldIndex($v)
+	{
+
+		// Since the native PHP type for this column is integer,
+		// we will cast the input value to an int (if it is not).
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->fld_index !== $v || $v === 1) {
+			$this->fld_index = $v;
+			$this->modifiedColumns[] = FieldsPeer::FLD_INDEX;
+		}
+
+	} // setFldIndex()
 
 	/**
 	 * Set the value of [fld_name] column.
@@ -502,30 +542,32 @@ abstract class BaseFields extends BaseObject  implements Persistent {
 
 			$this->add_tab_uid = $rs->getString($startcol + 1);
 
-			$this->fld_name = $rs->getString($startcol + 2);
+			$this->fld_index = $rs->getInt($startcol + 2);
 
-			$this->fld_description = $rs->getString($startcol + 3);
+			$this->fld_name = $rs->getString($startcol + 3);
 
-			$this->fld_type = $rs->getString($startcol + 4);
+			$this->fld_description = $rs->getString($startcol + 4);
 
-			$this->fld_size = $rs->getInt($startcol + 5);
+			$this->fld_type = $rs->getString($startcol + 5);
 
-			$this->fld_null = $rs->getInt($startcol + 6);
+			$this->fld_size = $rs->getInt($startcol + 6);
 
-			$this->fld_auto_increment = $rs->getInt($startcol + 7);
+			$this->fld_null = $rs->getInt($startcol + 7);
 
-			$this->fld_key = $rs->getInt($startcol + 8);
+			$this->fld_auto_increment = $rs->getInt($startcol + 8);
 
-			$this->fld_foreign_key = $rs->getInt($startcol + 9);
+			$this->fld_key = $rs->getInt($startcol + 9);
 
-			$this->fld_foreign_key_table = $rs->getString($startcol + 10);
+			$this->fld_foreign_key = $rs->getInt($startcol + 10);
+
+			$this->fld_foreign_key_table = $rs->getString($startcol + 11);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 11; // 11 = FieldsPeer::NUM_COLUMNS - FieldsPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 12; // 12 = FieldsPeer::NUM_COLUMNS - FieldsPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Fields object", $e);
@@ -735,30 +777,33 @@ abstract class BaseFields extends BaseObject  implements Persistent {
 				return $this->getAddTabUid();
 				break;
 			case 2:
-				return $this->getFldName();
+				return $this->getFldIndex();
 				break;
 			case 3:
-				return $this->getFldDescription();
+				return $this->getFldName();
 				break;
 			case 4:
-				return $this->getFldType();
+				return $this->getFldDescription();
 				break;
 			case 5:
-				return $this->getFldSize();
+				return $this->getFldType();
 				break;
 			case 6:
-				return $this->getFldNull();
+				return $this->getFldSize();
 				break;
 			case 7:
-				return $this->getFldAutoIncrement();
+				return $this->getFldNull();
 				break;
 			case 8:
-				return $this->getFldKey();
+				return $this->getFldAutoIncrement();
 				break;
 			case 9:
-				return $this->getFldForeignKey();
+				return $this->getFldKey();
 				break;
 			case 10:
+				return $this->getFldForeignKey();
+				break;
+			case 11:
 				return $this->getFldForeignKeyTable();
 				break;
 			default:
@@ -783,15 +828,16 @@ abstract class BaseFields extends BaseObject  implements Persistent {
 		$result = array(
 			$keys[0] => $this->getFldUid(),
 			$keys[1] => $this->getAddTabUid(),
-			$keys[2] => $this->getFldName(),
-			$keys[3] => $this->getFldDescription(),
-			$keys[4] => $this->getFldType(),
-			$keys[5] => $this->getFldSize(),
-			$keys[6] => $this->getFldNull(),
-			$keys[7] => $this->getFldAutoIncrement(),
-			$keys[8] => $this->getFldKey(),
-			$keys[9] => $this->getFldForeignKey(),
-			$keys[10] => $this->getFldForeignKeyTable(),
+			$keys[2] => $this->getFldIndex(),
+			$keys[3] => $this->getFldName(),
+			$keys[4] => $this->getFldDescription(),
+			$keys[5] => $this->getFldType(),
+			$keys[6] => $this->getFldSize(),
+			$keys[7] => $this->getFldNull(),
+			$keys[8] => $this->getFldAutoIncrement(),
+			$keys[9] => $this->getFldKey(),
+			$keys[10] => $this->getFldForeignKey(),
+			$keys[11] => $this->getFldForeignKeyTable(),
 		);
 		return $result;
 	}
@@ -830,30 +876,33 @@ abstract class BaseFields extends BaseObject  implements Persistent {
 				$this->setAddTabUid($value);
 				break;
 			case 2:
-				$this->setFldName($value);
+				$this->setFldIndex($value);
 				break;
 			case 3:
-				$this->setFldDescription($value);
+				$this->setFldName($value);
 				break;
 			case 4:
-				$this->setFldType($value);
+				$this->setFldDescription($value);
 				break;
 			case 5:
-				$this->setFldSize($value);
+				$this->setFldType($value);
 				break;
 			case 6:
-				$this->setFldNull($value);
+				$this->setFldSize($value);
 				break;
 			case 7:
-				$this->setFldAutoIncrement($value);
+				$this->setFldNull($value);
 				break;
 			case 8:
-				$this->setFldKey($value);
+				$this->setFldAutoIncrement($value);
 				break;
 			case 9:
-				$this->setFldForeignKey($value);
+				$this->setFldKey($value);
 				break;
 			case 10:
+				$this->setFldForeignKey($value);
+				break;
+			case 11:
 				$this->setFldForeignKeyTable($value);
 				break;
 		} // switch()
@@ -881,15 +930,16 @@ abstract class BaseFields extends BaseObject  implements Persistent {
 
 		if (array_key_exists($keys[0], $arr)) $this->setFldUid($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setAddTabUid($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setFldName($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setFldDescription($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setFldType($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setFldSize($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setFldNull($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setFldAutoIncrement($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setFldKey($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setFldForeignKey($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setFldForeignKeyTable($arr[$keys[10]]);
+		if (array_key_exists($keys[2], $arr)) $this->setFldIndex($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setFldName($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setFldDescription($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setFldType($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setFldSize($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setFldNull($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setFldAutoIncrement($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setFldKey($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setFldForeignKey($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setFldForeignKeyTable($arr[$keys[11]]);
 	}
 
 	/**
@@ -903,6 +953,7 @@ abstract class BaseFields extends BaseObject  implements Persistent {
 
 		if ($this->isColumnModified(FieldsPeer::FLD_UID)) $criteria->add(FieldsPeer::FLD_UID, $this->fld_uid);
 		if ($this->isColumnModified(FieldsPeer::ADD_TAB_UID)) $criteria->add(FieldsPeer::ADD_TAB_UID, $this->add_tab_uid);
+		if ($this->isColumnModified(FieldsPeer::FLD_INDEX)) $criteria->add(FieldsPeer::FLD_INDEX, $this->fld_index);
 		if ($this->isColumnModified(FieldsPeer::FLD_NAME)) $criteria->add(FieldsPeer::FLD_NAME, $this->fld_name);
 		if ($this->isColumnModified(FieldsPeer::FLD_DESCRIPTION)) $criteria->add(FieldsPeer::FLD_DESCRIPTION, $this->fld_description);
 		if ($this->isColumnModified(FieldsPeer::FLD_TYPE)) $criteria->add(FieldsPeer::FLD_TYPE, $this->fld_type);
@@ -967,6 +1018,8 @@ abstract class BaseFields extends BaseObject  implements Persistent {
 	{
 
 		$copyObj->setAddTabUid($this->add_tab_uid);
+
+		$copyObj->setFldIndex($this->fld_index);
 
 		$copyObj->setFldName($this->fld_name);
 

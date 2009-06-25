@@ -68,6 +68,8 @@ class FieldsMapBuilder {
 
 		$tMap->addColumn('ADD_TAB_UID', 'AddTabUid', 'string', CreoleTypes::VARCHAR, true, 32);
 
+		$tMap->addColumn('FLD_INDEX', 'FldIndex', 'int', CreoleTypes::INTEGER, true, null);
+
 		$tMap->addColumn('FLD_NAME', 'FldName', 'string', CreoleTypes::VARCHAR, true, 60);
 
 		$tMap->addColumn('FLD_DESCRIPTION', 'FldDescription', 'string', CreoleTypes::LONGVARCHAR, true, null);

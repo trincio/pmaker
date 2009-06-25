@@ -39,6 +39,13 @@
  * @copyright 2007 COLOSA
  */
 
+function __autoload($sClassName) {
+  $sPath  = PATH_DB . SYS_SYS . PATH_SEP . 'classes' . PATH_SEP;
+  if (file_exists($sPath . $sClassName . '.php')) {
+    require_once $sPath . $sClassName . '.php';
+  }
+}
+
 $Err=""; //global var
 
 
