@@ -74,7 +74,8 @@
       }
 	  //Show link
 	  $link = $http . $_SERVER['HTTP_HOST']. '/sys' . SYS_SYS .'/' . SYS_LANG . '/' . SYS_SKIN . '/' . $sPRO_UID . '/' . $dynTitle .'.php';
-      print "\n<a href='$link' target='_new' > $link </a>";
+    //print "\n<a href='$link' target='_new' > $link </a>";
+      
 	}
 	else {
 	  $G_FORM = new Form($sPRO_UID . '/' . $sDYNAFORM, PATH_DYNAFORM, SYS_LANG, false);

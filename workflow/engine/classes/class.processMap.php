@@ -2066,9 +2066,16 @@ class processMap {
       global $G_PUBLISH;
       $G_PUBLISH = new Publisher;      
       
+      if (G::is_https())
+      	$http= 'https://';
+    	else
+   	  	$http= 'http://';
+   	  
+   	  $link = $http . $_SERVER['HTTP_HOST']. '/sys' . SYS_SYS .'/' . SYS_LANG . '/' . SYS_SKIN . '/' . $sProcessUID . '/';
+      
       $row = array();
       $c=0;
-      $row[] = array('W_UID'   => '','W_TITLE' => '');            	                
+      $row[] = array('W_TITLE' => '');            	                
       
       if(is_dir(PATH_DATA ."sites" . PATH_SEP . SYS_SYS . PATH_SEP . "public" . PATH_SEP . $sProcessUID))      
        {	$dir = opendir(PATH_DATA ."sites" . PATH_SEP . SYS_SYS . PATH_SEP . "public" . PATH_SEP . $sProcessUID); 						
@@ -2077,9 +2084,18 @@ class processMap {
 							  if($archivo!='.')
 							   { 
 							   	 if($archivo!='..')
-							   	  { 
-							   	  	$c++;				
-								      $row[] = array('W_UID' => $c,'W_TITLE' => $archivo);							 
+							   	  { $one = 0;
+							   	  	$two = 0;
+
+							   	  	$alink = $link.$archivo;
+							   	  	$one = count(explode('wsClient.php',$archivo));
+							   	  	$two = count(explode('Post.php',$archivo));
+							   	  	
+							   	  	if($one==1 && $two==1)
+							   	  	 {	
+							   	  	 	  $arlink = "<a href='".$alink."' target='blank'><font color='#9999CC'>".$alink."</font></a>";
+							   	  		 	$row[] = array('W_TITLE' => $arlink);							 
+							   	  	 }	 	
 								    }  
 								 }   
 							}
@@ -3281,15 +3297,20 @@ function editObjectPermission($sOP_UID)
           $i++;
          }
     	   require_once 'classes/model/SubProcess.php';
-    		 $oCriteria = new Criteria('workflow');
+    	   require_once 'classes/model/Content.php';    	            
+         
+    		 $oCriteria = new Criteria('workflow');    		 
+    		 $oCriteria->add(SubProcessPeer::PRO_PARENT, $sProcessUID);    		 
     		 $oCriteria->add(SubProcessPeer::PRO_PARENT, $sProcessUID);
-    	     $oCriteria->add(SubProcessPeer::TAS_PARENT, $sTaskUID);
+    	   $oCriteria->add(SubProcessPeer::TAS_PARENT, $sTaskUID);
     		 $oDataset = SubProcessPeer::doSelectRS($oCriteria);
     		 $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
     		 $oDataset->next();
     		 $aRow = $oDataset->getRow();
 
-    		 $aRow['TASKS'] = $aRow['TAS_UID'];
+    		 $aRow['TASKS'] = $aRow['TAS_UID'];    		                
+         $aRow['SPROCESS_NAME'] = Content::load('SP_TITLE', '', $sProcessUID, SYS_LANG);
+         
 		     $SP_VARIABLES_OUT = unserialize($aRow['SP_VARIABLES_OUT']);
 		     if(is_array($SP_VARIABLES_OUT))
          {
@@ -3311,7 +3332,8 @@ function editObjectPermission($sOP_UID)
 		           $j++;
 		         }
          }
-         $aRow['INDEX']=$sIndex;
+         $aRow['INDEX']=$sIndex;                  
+         
     	  global $G_PUBLISH;
   	    $G_PUBLISH = new Publisher();
         $G_PUBLISH->AddContent('xmlform', 'xmlform', 'processes/processes_subProcess', '', $aRow, 'processes_subProcessSave');
@@ -3355,4 +3377,4 @@ function editObjectPermission($sOP_UID)
   return $rows;
   }
 } // processMap
-?>
+?>   

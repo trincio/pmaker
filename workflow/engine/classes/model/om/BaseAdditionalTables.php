@@ -104,6 +104,13 @@ abstract class BaseAdditionalTables extends BaseObject  implements Persistent {
 	 */
 	protected $add_tab_plg_uid = '';
 
+
+	/**
+	 * The value for the dbs_uid field.
+	 * @var        string
+	 */
+	protected $dbs_uid = '0';
+
 	/**
 	 * Flag to prevent endless save loop, if this object is referenced
 	 * by another object which falls in this transaction.
@@ -237,6 +244,17 @@ abstract class BaseAdditionalTables extends BaseObject  implements Persistent {
 	{
 
 		return $this->add_tab_plg_uid;
+	}
+
+	/**
+	 * Get the [dbs_uid] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getDbsUid()
+	{
+
+		return $this->dbs_uid;
 	}
 
 	/**
@@ -482,6 +500,28 @@ abstract class BaseAdditionalTables extends BaseObject  implements Persistent {
 	} // setAddTabPlgUid()
 
 	/**
+	 * Set the value of [dbs_uid] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setDbsUid($v)
+	{
+
+		// Since the native PHP type for this column is string,
+		// we will cast the input to a string (if it is not).
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->dbs_uid !== $v || $v === '0') {
+			$this->dbs_uid = $v;
+			$this->modifiedColumns[] = AdditionalTablesPeer::DBS_UID;
+		}
+
+	} // setDbsUid()
+
+	/**
 	 * Hydrates (populates) the object variables with values from the database resultset.
 	 *
 	 * An offset (1-based "start column") is specified so that objects can be hydrated
@@ -520,12 +560,14 @@ abstract class BaseAdditionalTables extends BaseObject  implements Persistent {
 
 			$this->add_tab_plg_uid = $rs->getString($startcol + 10);
 
+			$this->dbs_uid = $rs->getString($startcol + 11);
+
 			$this->resetModified();
 
 			$this->setNew(false);
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 11; // 11 = AdditionalTablesPeer::NUM_COLUMNS - AdditionalTablesPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 12; // 12 = AdditionalTablesPeer::NUM_COLUMNS - AdditionalTablesPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating AdditionalTables object", $e);
@@ -761,6 +803,9 @@ abstract class BaseAdditionalTables extends BaseObject  implements Persistent {
 			case 10:
 				return $this->getAddTabPlgUid();
 				break;
+			case 11:
+				return $this->getDbsUid();
+				break;
 			default:
 				return null;
 				break;
@@ -792,6 +837,7 @@ abstract class BaseAdditionalTables extends BaseObject  implements Persistent {
 			$keys[8] => $this->getAddTabSdwMaxLength(),
 			$keys[9] => $this->getAddTabSdwAutoDelete(),
 			$keys[10] => $this->getAddTabPlgUid(),
+			$keys[11] => $this->getDbsUid(),
 		);
 		return $result;
 	}
@@ -856,6 +902,9 @@ abstract class BaseAdditionalTables extends BaseObject  implements Persistent {
 			case 10:
 				$this->setAddTabPlgUid($value);
 				break;
+			case 11:
+				$this->setDbsUid($value);
+				break;
 		} // switch()
 	}
 
@@ -890,6 +939,7 @@ abstract class BaseAdditionalTables extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[8], $arr)) $this->setAddTabSdwMaxLength($arr[$keys[8]]);
 		if (array_key_exists($keys[9], $arr)) $this->setAddTabSdwAutoDelete($arr[$keys[9]]);
 		if (array_key_exists($keys[10], $arr)) $this->setAddTabPlgUid($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setDbsUid($arr[$keys[11]]);
 	}
 
 	/**
@@ -912,6 +962,7 @@ abstract class BaseAdditionalTables extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(AdditionalTablesPeer::ADD_TAB_SDW_MAX_LENGTH)) $criteria->add(AdditionalTablesPeer::ADD_TAB_SDW_MAX_LENGTH, $this->add_tab_sdw_max_length);
 		if ($this->isColumnModified(AdditionalTablesPeer::ADD_TAB_SDW_AUTO_DELETE)) $criteria->add(AdditionalTablesPeer::ADD_TAB_SDW_AUTO_DELETE, $this->add_tab_sdw_auto_delete);
 		if ($this->isColumnModified(AdditionalTablesPeer::ADD_TAB_PLG_UID)) $criteria->add(AdditionalTablesPeer::ADD_TAB_PLG_UID, $this->add_tab_plg_uid);
+		if ($this->isColumnModified(AdditionalTablesPeer::DBS_UID)) $criteria->add(AdditionalTablesPeer::DBS_UID, $this->dbs_uid);
 
 		return $criteria;
 	}
@@ -985,6 +1036,8 @@ abstract class BaseAdditionalTables extends BaseObject  implements Persistent {
 		$copyObj->setAddTabSdwAutoDelete($this->add_tab_sdw_auto_delete);
 
 		$copyObj->setAddTabPlgUid($this->add_tab_plg_uid);
+
+		$copyObj->setDbsUid($this->dbs_uid);
 
 
 		$copyObj->setNew(true);

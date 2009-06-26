@@ -211,7 +211,8 @@ class AdditionalTables extends BaseAdditionalTables {
 
   function updateTable($sTableName, $sConnection = 'wf', $aNewFields = array(), $aOldFields = array()) {
     try {
-      $aKeys           = array('PM_UNIQUE_ID');
+      //$aKeys           = array('PM_UNIQUE_ID');
+      $aKeys           = array();
       $aFieldsToAdd    = array();
       $aFieldsToDelete = array();
       $aFieldsToAlter  = array();
@@ -335,13 +336,13 @@ class AdditionalTables extends BaseAdditionalTables {
 
   function createPropelClasses($sTableName, $sClassName, $aFields) {
     try {
-      $aUID = array('FLD_NAME'           => 'PM_UNIQUE_ID',
+      /*$aUID = array('FLD_NAME'           => 'PM_UNIQUE_ID',
                     'FLD_TYPE'           => 'INT',
                     'FLD_SIZE'           => '11',
                     'FLD_KEY'            => 'on',
                     'FLD_NULL'           => '',
                     'FLD_AUTO_INCREMENT' => 'on');
-      array_unshift($aFields, $aUID);
+      array_unshift($aFields, $aUID);*/
       $aTypes = array('VARCHAR' => 'string',
                       'TEXT'    => 'string',
                       'DATE'    => 'int',
@@ -610,12 +611,12 @@ class AdditionalTables extends BaseAdditionalTables {
       file_put_contents($sPath . PATH_SEP . 'om' . PATH_SEP . 'Base' . $sClassName . '.php', $oTP4->getOutputContent());
       $oTP5  = new TemplatePower(PATH_TPL . 'additionalTables' . PATH_SEP . 'om' . PATH_SEP . 'BaseTablePeer.tpl');
       $oTP5->prepare();
-      /*$sKeys = '';
+      $sKeys = '';
       foreach ($aPKs as $iIndex => $aColumn) {
         $sKeys .= '$' . $aColumn['var'] . ', ';
       }
-      $sKeys = substr($sKeys, 0, -2);*/
-      $sKeys = '$pm_unique_id';
+      $sKeys = substr($sKeys, 0, -2);
+      //$sKeys = '$pm_unique_id';
       $aData['sKeys'] = $sKeys;
       $oTP5->assignGlobal($aData);
       foreach ($aColumns as $iIndex => $aColumn) {
@@ -696,12 +697,7 @@ class AdditionalTables extends BaseAdditionalTables {
     $sName = trim($sName);
     $aAux  = explode('_', $sName);
     foreach ($aAux as $iKey => $sPart) {
-      /*if ($iKey == 0) {
-        $aAux[$iKey] = strtolower($sPart);
-      }
-      else {*/
-        $aAux[$iKey] = ucwords(strtolower($sPart));
-      //}
+      $aAux[$iKey] = ucwords(strtolower($sPart));
     }
     return implode('', $aAux);
   }
@@ -738,8 +734,7 @@ class AdditionalTables extends BaseAdditionalTables {
       if (!file_exists($sPath)) {
         G::mk_dir($sPath);
       }
-      //if (!file_exists($sPath . 'additionalTablesDataOptions.xml')) {
-        file_put_contents($sPath . 'additionalTablesDataOptions.xml', '<?xml version="1.0" encoding="UTF-8"?>
+      file_put_contents($sPath . 'additionalTablesDataOptions.xml', '<?xml version="1.0" encoding="UTF-8"?>
 <dynaForm type="xmlmenu">
 
 <ADD_TAB_UID type="private" showInTable="0" />
@@ -752,30 +747,34 @@ class AdditionalTables extends BaseAdditionalTables {
 
 <JS type="javascript" replaceTags="1">
 <![CDATA[
-var additionalTablesDataDelete = function(sUID, sPMUID) {
+var additionalTablesDataDelete = function(sUID, sKeys) {
   new leimnud.module.app.confirm().make({
     label:"' . G::LoadTranslation('ID_CONFIRM_DELETE_ELEMENT') . '",
     action:function() {
       //ajax_function(@G::encryptlink("additionalTablesDataDelete"), "", "sUID=" + sUID + "&sPMUID=" + sPMUID, "POST");
       //@#PAGED_TABLE_ID.refresh();
-      window.location = "additionalTablesDataDelete?" + "sUID=" + sUID + "&sPMUID=" + sPMUID;
+      window.location = "additionalTablesDataDelete?" + "sUID=" + sUID + "&" + sKeys;
     }.extend(this)
   });
 };
 ]]>
 </JS>
 </dynaForm>');
-      //}
+      $sKeys = '';
       $sXml  = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
       $sXml .= '<dynaForm width="100%" menu="xmlLists/additionalTablesDataOptions">' . "\n";
-      $sXml .= '<PM_UNIQUE_ID type="private" showInTable="0" />' . "\n";
+      //$sXml .= '<PM_UNIQUE_ID type="private" showInTable="0" />' . "\n";
       foreach ($aData['FIELDS'] as $aField) {
         $sXml .= '<' . $aField['FLD_NAME'] . ' type="text" colWidth="100" titleAlign="left" align="left">' . "\n";
         $sXml .= '<' . SYS_LANG . '>' . ($aField['FLD_DESCRIPTION'] != '' ? $aField['FLD_DESCRIPTION'] : $aField['FLD_NAME']) . '</' . SYS_LANG . '>' . "\n";
         $sXml .= '</' . $aField['FLD_NAME'] . '>' . "\n";
+        if ($aField['FLD_KEY'] == 1) {
+          $sKeys .= $aField['FLD_NAME'] . '=@#' . $aField['FLD_NAME'] . '&amp;';
+        }
       }
-      $sXml .= '<EDIT type="link" colWidth="40" value="@G::LoadTranslation(ID_EDIT)" link="additionalTablesDataEdit?sUID=@#ADD_TAB_UID&amp;sPMUID=@#PM_UNIQUE_ID" onclick=""/>' . "\n";
-      $sXml .= '<DELETE type="link" colWidth="40" value="@G::LoadTranslation(ID_DELETE)" link="#" onclick="additionalTablesDataDelete(@QADD_TAB_UID, @#PM_UNIQUE_ID);return false;"/>' . "\n";
+      $sKeys = substr($sKeys, 0, -5);
+      $sXml .= '<EDIT type="link" colWidth="40" value="@G::LoadTranslation(ID_EDIT)" link="additionalTablesDataEdit?sUID=@#ADD_TAB_UID&amp;' . $sKeys . '" onclick=""/>' . "\n";
+      $sXml .= '<DELETE type="link" colWidth="40" value="@G::LoadTranslation(ID_DELETE)" link="#" onclick="additionalTablesDataDelete(@QADD_TAB_UID, \'' . $sKeys . '\');return false;"/>' . "\n";
       $sXml .= '</dynaForm>';
       file_put_contents($sPath . $sUID . '.xml', $sXml);
     }
@@ -788,16 +787,21 @@ var additionalTablesDataDelete = function(sUID, sPMUID) {
     try {
       $aData = $this->load($sUID, true);
       $sPath = PATH_DB . SYS_SYS . PATH_SEP . 'classes' . PATH_SEP;
-      $sClassName = $this->getPHPName(($aData['ADD_TAB_CLASS_NAME'] != '' ? $aData['ADD_TAB_CLASS_NAME'] : $aData['ADD_TAB_NAME']));
+      $sClassName = ($aData['ADD_TAB_CLASS_NAME'] != '' ? $aData['ADD_TAB_CLASS_NAME'] : $this->getPHPName($aData['ADD_TAB_NAME']));
       require_once $sPath . $sClassName . '.php';
       $sClassPeerName = $sClassName . 'Peer';
       $oCriteria = new Criteria('workflow');
-      eval('$oCriteria->addSelectColumn(' . $sClassPeerName . '::PM_UNIQUE_ID);');
+      //eval('$oCriteria->addSelectColumn(' . $sClassPeerName . '::PM_UNIQUE_ID);');
+      eval('$oCriteria->addSelectColumn("\'1\' AS DUMMY");');
       foreach ($aData['FIELDS'] as $aField) {
         eval('$oCriteria->addSelectColumn(' . $sClassPeerName . '::' . $aField['FLD_NAME'] . ');');
       }
+      /*switch () {
+      }*/
       eval('$oCriteria->add(' . $sClassPeerName . '::' . $aField['FLD_NAME'] . ', \'(º_·_º)\', Criteria::NOT_EQUAL);');
-      eval('$oCriteria->addAscendingOrderByColumn(' . $sClassPeerName . '::PM_UNIQUE_ID);');
+      //die('$oCriteria->add(' . $sClassPeerName . '::' . $aField['FLD_NAME'] . ', ' . $sClassPeerName . '::' . $aField['FLD_NAME'] . ');');
+      //eval('$oCriteria->add(' . $sClassPeerName . '::' . $aField['FLD_NAME'] . ', ' . $sClassPeerName . '::' . $aField['FLD_NAME'] . ', Criteria::NOT_EQUAL);');
+      //eval('$oCriteria->addAscendingOrderByColumn(' . $sClassPeerName . '::PM_UNIQUE_ID);');
       return $oCriteria;
     }
   	catch (Exception $oError) {
@@ -805,29 +809,30 @@ var additionalTablesDataDelete = function(sUID, sPMUID) {
     }
   }
 
-  function createXmlEdit($sUID) {
+  function createXmlEdit($sUID, $bEnableKeys) {
     try {
       $aData = $this->load($sUID, true);
       $sPath = PATH_DYNAFORM . 'xmlLists' . PATH_SEP;
       $sXml  = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
       $sXml .= '<dynaForm name="xmlLists/' . $sUID . 'Edit" type="xmlform" width="50%" mode="">';
-      $sXml .= '<PM_UNIQUE_ID type="hidden" />';
+      //$sXml .= '<PM_UNIQUE_ID type="hidden" />';
+      $sXml .= '<TITLE type="title" label="' . $aData['ADD_TAB_NAME'] . '" />';
       foreach ($aData['FIELDS'] as $aField) {
         switch ($aField['FLD_TYPE']) {
           case 'VARCHAR':
-            $sXml .= '<' . $aField['FLD_NAME'] . ' type="text" maxlength="' . $aField['FLD_SIZE'] . '" validate="Any" required="' . (($aField['FLD_KEY'] == 1) && ($aField['FLD_AUTO_INCREMENT'] == 0) ? '1' : '0') . '" readonly="0" size="' . (int)($aField['FLD_SIZE'] / 2) . '" mode="edit"><' . SYS_LANG . '>' . ($aField['FLD_DESCRIPTION'] != '' ? $aField['FLD_DESCRIPTION'] : $aField['FLD_NAME']) . '</' . SYS_LANG . '></' . $aField['FLD_NAME'] . '>';
+            $sXml .= '<' . $aField['FLD_NAME'] . ' type="text" maxlength="' . $aField['FLD_SIZE'] . '" validate="Any" required="' . (($aField['FLD_KEY'] == 1) && ($aField['FLD_AUTO_INCREMENT'] == 0) ? '1' : '0') . '" readonly="0" size="' . (int)($aField['FLD_SIZE'] / 2) . '" mode="' . ($bEnableKeys ? 'edit' : ($aField['FLD_KEY'] == 1 ? 'view' : 'edit')) . '"><' . SYS_LANG . '>' . ($aField['FLD_DESCRIPTION'] != '' ? $aField['FLD_DESCRIPTION'] : $aField['FLD_NAME']) . '</' . SYS_LANG . '></' . $aField['FLD_NAME'] . '>';
           break;
           case 'TEXT':
-            $sXml .= '<' . $aField['FLD_NAME'] . ' type="textarea" required="' . (($aField['FLD_KEY'] == 1) && ($aField['FLD_AUTO_INCREMENT'] == 0) ? '1' : '0') . '" readonly="0" rows="8" cols="45" mode="edit"><' . SYS_LANG . '>' . ($aField['FLD_DESCRIPTION'] != '' ? $aField['FLD_DESCRIPTION'] : $aField['FLD_NAME']) . '</' . SYS_LANG . '></' . $aField['FLD_NAME'] . '>';
+            $sXml .= '<' . $aField['FLD_NAME'] . ' type="textarea" required="' . (($aField['FLD_KEY'] == 1) && ($aField['FLD_AUTO_INCREMENT'] == 0) ? '1' : '0') . '" readonly="0" rows="8" cols="45" mode="' . ($bEnableKeys ? 'edit' : ($aField['FLD_KEY'] == 1 ? 'view' : 'edit')) . '"><' . SYS_LANG . '>' . ($aField['FLD_DESCRIPTION'] != '' ? $aField['FLD_DESCRIPTION'] : $aField['FLD_NAME']) . '</' . SYS_LANG . '></' . $aField['FLD_NAME'] . '>';
           break;
           case 'DATE':
-            $sXml .= '<' . $aField['FLD_NAME'] . ' type="date" beforedate="-20y" afterdate="20y" mask="%Y-%m-%d" required="' . (($aField['FLD_KEY'] == 1) && ($aField['FLD_AUTO_INCREMENT'] == 0) ? '1' : '0') . '" readonly="0" size="15" mode="edit"><' . SYS_LANG . '>' . ($aField['FLD_DESCRIPTION'] != '' ? $aField['FLD_DESCRIPTION'] : $aField['FLD_NAME']) . '</' . SYS_LANG . '></' . $aField['FLD_NAME'] . '>';
+            $sXml .= '<' . $aField['FLD_NAME'] . ' type="date" beforedate="-20y" afterdate="20y" mask="%Y-%m-%d" required="' . (($aField['FLD_KEY'] == 1) && ($aField['FLD_AUTO_INCREMENT'] == 0) ? '1' : '0') . '" readonly="0" size="15" mode="' . ($bEnableKeys ? 'edit' : ($aField['FLD_KEY'] == 1 ? 'view' : 'edit')) . '"><' . SYS_LANG . '>' . ($aField['FLD_DESCRIPTION'] != '' ? $aField['FLD_DESCRIPTION'] : $aField['FLD_NAME']) . '</' . SYS_LANG . '></' . $aField['FLD_NAME'] . '>';
           break;
           case 'INT':
-            $sXml .= '<' . $aField['FLD_NAME'] . ' type="text" maxlength="' . $aField['FLD_SIZE'] . '" validate="Int" required="' . (($aField['FLD_KEY'] == 1) && ($aField['FLD_AUTO_INCREMENT'] == 0) ? '1' : '0') . '" readonly="0" size="' . (int)($aField['FLD_SIZE'] / 2) . '" mode="edit"><' . SYS_LANG . '>' . ($aField['FLD_DESCRIPTION'] != '' ? $aField['FLD_DESCRIPTION'] : $aField['FLD_NAME']) . '</' . SYS_LANG . '></' . $aField['FLD_NAME'] . '>';
+            $sXml .= '<' . $aField['FLD_NAME'] . ' type="text" maxlength="' . $aField['FLD_SIZE'] . '" validate="Int" required="' . (($aField['FLD_KEY'] == 1) && ($aField['FLD_AUTO_INCREMENT'] == 0) ? '1' : '0') . '" readonly="0" size="' . (int)($aField['FLD_SIZE'] / 2) . '" mode="' . ($bEnableKeys ? 'edit' : ($aField['FLD_KEY'] == 1 ? 'view' : 'edit')) . '"><' . SYS_LANG . '>' . ($aField['FLD_DESCRIPTION'] != '' ? $aField['FLD_DESCRIPTION'] : $aField['FLD_NAME']) . '</' . SYS_LANG . '></' . $aField['FLD_NAME'] . '>';
           break;
           case 'FLOAT':
-            $sXml .= '<' . $aField['FLD_NAME'] . ' type="text" maxlength="' . $aField['FLD_SIZE'] . '" validate="Real" required="' . (($aField['FLD_KEY'] == 1) && ($aField['FLD_AUTO_INCREMENT'] == 0) ? '1' : '0') . '" readonly="0" size="' . (int)($aField['FLD_SIZE'] / 2) . '" mode="edit"><' . SYS_LANG . '>' . ($aField['FLD_DESCRIPTION'] != '' ? $aField['FLD_DESCRIPTION'] : $aField['FLD_NAME']) . '</' . SYS_LANG . '></' . $aField['FLD_NAME'] . '>';
+            $sXml .= '<' . $aField['FLD_NAME'] . ' type="text" maxlength="' . $aField['FLD_SIZE'] . '" validate="Real" required="' . (($aField['FLD_KEY'] == 1) && ($aField['FLD_AUTO_INCREMENT'] == 0) ? '1' : '0') . '" readonly="0" size="' . (int)($aField['FLD_SIZE'] / 2) . '" mode="' . ($bEnableKeys ? 'edit' : ($aField['FLD_KEY'] == 1 ? 'view' : 'edit')) . '"><' . SYS_LANG . '>' . ($aField['FLD_DESCRIPTION'] != '' ? $aField['FLD_DESCRIPTION'] : $aField['FLD_NAME']) . '</' . SYS_LANG . '></' . $aField['FLD_NAME'] . '>';
           break;
         }
       }
@@ -844,7 +849,7 @@ var additionalTablesDataDelete = function(sUID, sPMUID) {
     try {
       $aData = $this->load($sUID, true);
       $sPath = PATH_DB . SYS_SYS . PATH_SEP . 'classes' . PATH_SEP;
-      $sClassName = $this->getPHPName(($aData['ADD_TAB_CLASS_NAME'] != '' ? $aData['ADD_TAB_CLASS_NAME'] : $aData['ADD_TAB_NAME']));
+      $sClassName = ($aData['ADD_TAB_CLASS_NAME'] != '' ? $aData['ADD_TAB_CLASS_NAME'] : $this->getPHPName($aData['ADD_TAB_NAME']));
       $oConnection = Propel::getConnection(FieldsPeer::DATABASE_NAME);
       require_once $sPath . $sClassName . '.php';
       $oClass = new $sClassName;
@@ -862,21 +867,20 @@ var additionalTablesDataDelete = function(sUID, sPMUID) {
     }
   }
 
-  function getDataTable($sUID, $sPMUID) {
+  function getDataTable($sUID, $aKeys) {
     try {
       $aData = $this->load($sUID, true);
       $sPath = PATH_DB . SYS_SYS . PATH_SEP . 'classes' . PATH_SEP;
-      $sClassName = $this->getPHPName(($aData['ADD_TAB_CLASS_NAME'] != '' ? $aData['ADD_TAB_CLASS_NAME'] : $aData['ADD_TAB_NAME']));
+      $sClassName = ($aData['ADD_TAB_CLASS_NAME'] != '' ? $aData['ADD_TAB_CLASS_NAME'] : $this->getPHPName($aData['ADD_TAB_NAME']));
       require_once $sPath . $sClassName . '.php';
-      /*$sKeys = '$sPMUID, ';
-      foreach ($aData['FIELDS'] as $aField) {
-        if (($aField['FLD_KEY'] == 1) || ($aField['FLD_AUTO_INCREMENT'] == 1)) {
-          $sKeys .= '$' . strtolower($aField['FLD_NAME']) . ', ';
-        }
+      $sKeys = '';
+      foreach ($aKeys as $sName => $vValue) {
+        eval('$' . $sName . ' = $vValue;');
+        $sKeys .= '$' . $sName . ',';
       }
-      $sKeys = substr($sKeys, 0, -2);
-      eval('$oClass = ' . $sClassName . 'Peer::retrieveByPK(' . $sKeys . ');');*/
-      eval('$oClass = ' . $sClassName . 'Peer::retrieveByPK($sPMUID);');
+      $sKeys = substr($sKeys, 0, -1);
+      eval('$oClass = ' . $sClassName . 'Peer::retrieveByPK(' . $sKeys . ');');
+      //eval('$oClass = ' . $sClassName . 'Peer::retrieveByPK($sPMUID);');
       if (!is_null($oClass)) {
         return $oClass->toArray(BasePeer::TYPE_FIELDNAME);
       }
@@ -891,13 +895,23 @@ var additionalTablesDataDelete = function(sUID, sPMUID) {
 
   function updateDataInTable($sUID, $aFields) {
     try {
-      $sPMUID = $aFields['PM_UNIQUE_ID'];
+      //$sPMUID = $aFields['PM_UNIQUE_ID'];
       $aData  = $this->load($sUID, true);
       $sPath  = PATH_DB . SYS_SYS . PATH_SEP . 'classes' . PATH_SEP;
-      $sClassName = $this->getPHPName(($aData['ADD_TAB_CLASS_NAME'] != '' ? $aData['ADD_TAB_CLASS_NAME'] : $aData['ADD_TAB_NAME']));
+      $sClassName = ($aData['ADD_TAB_CLASS_NAME'] != '' ? $aData['ADD_TAB_CLASS_NAME'] : $this->getPHPName($aData['ADD_TAB_NAME']));
       $oConnection = Propel::getConnection(FieldsPeer::DATABASE_NAME);
       require_once $sPath . $sClassName . '.php';
-      eval('$oClass = ' . $sClassName . 'Peer::retrieveByPK($sPMUID);');
+      $sKeys = '';
+      foreach ($aData['FIELDS'] as $aField) {//$sName => $vValue
+        if ($aField['FLD_KEY'] == 1) {
+          $vValue = $aFields[$aField['FLD_NAME']];
+          eval('$' . $aField['FLD_NAME'] . ' = $vValue;');
+          $sKeys .= '$' . $aField['FLD_NAME'] . ',';
+        }
+      }
+      $sKeys = substr($sKeys, 0, -1);
+      eval('$oClass = ' . $sClassName . 'Peer::retrieveByPK(' . $sKeys . ');');
+      //eval('$oClass = ' . $sClassName . 'Peer::retrieveByPK($sPMUID);');
       if (!is_null($oClass)) {
         $oClass->fromArray($aFields, BasePeer::TYPE_FIELDNAME);
         if ($oClass->validate()) {
@@ -909,7 +923,7 @@ var additionalTablesDataDelete = function(sUID, sPMUID) {
       }
       else {
       	$sMessage = '';
-        $aValidationFailures = $oConnection-->getValidationFailures();
+        $aValidationFailures = $oConnection->getValidationFailures();
         foreach($aValidationFailures as $oValidationFailure) {
           $sMessage .= $oValidationFailure->getMessage() . '<br />';
         }
@@ -921,14 +935,21 @@ var additionalTablesDataDelete = function(sUID, sPMUID) {
     }
   }
 
-  function deleteDataInTable($sUID, $sPMUID) {
+  function deleteDataInTable($sUID, $aKeys) {
     try {
       $aData  = $this->load($sUID, true);
       $sPath  = PATH_DB . SYS_SYS . PATH_SEP . 'classes' . PATH_SEP;
-      $sClassName = $this->getPHPName(($aData['ADD_TAB_CLASS_NAME'] != '' ? $aData['ADD_TAB_CLASS_NAME'] : $aData['ADD_TAB_NAME']));
+      $sClassName = ($aData['ADD_TAB_CLASS_NAME'] != '' ? $aData['ADD_TAB_CLASS_NAME'] : $this->getPHPName($aData['ADD_TAB_NAME']));
       $oConnection = Propel::getConnection(FieldsPeer::DATABASE_NAME);
       require_once $sPath . $sClassName . '.php';
-      eval('$oClass = ' . $sClassName . 'Peer::retrieveByPK($sPMUID);');
+      $sKeys = '';
+      foreach ($aKeys as $sName => $vValue) {
+        eval('$' . $sName . ' = $vValue;');
+        $sKeys .= '$' . $sName . ',';
+      }
+      $sKeys = substr($sKeys, 0, -1);
+      eval('$oClass = ' . $sClassName . 'Peer::retrieveByPK(' . $sKeys . ');');
+      //eval('$oClass = ' . $sClassName . 'Peer::retrieveByPK($sPMUID);');
       if (!is_null($oClass)) {
         if ($oClass->validate()) {
           $oConnection->begin();

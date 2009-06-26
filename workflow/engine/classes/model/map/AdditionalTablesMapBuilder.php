@@ -86,6 +86,8 @@ class AdditionalTablesMapBuilder {
 
 		$tMap->addColumn('ADD_TAB_PLG_UID', 'AddTabPlgUid', 'string', CreoleTypes::VARCHAR, true, 32);
 
+		$tMap->addColumn('DBS_UID', 'DbsUid', 'string', CreoleTypes::VARCHAR, false, 32);
+
 	} // doBuild()
 
 } // AdditionalTablesMapBuilder
