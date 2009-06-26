@@ -24,7 +24,7 @@ abstract class BaseAdditionalTablesPeer {
 	const CLASS_DEFAULT = 'classes.model.AdditionalTables';
 
 	/** The total number of columns. */
-	const NUM_COLUMNS = 11;
+	const NUM_COLUMNS = 12;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -63,6 +63,9 @@ abstract class BaseAdditionalTablesPeer {
 	/** the column name for the ADD_TAB_PLG_UID field */
 	const ADD_TAB_PLG_UID = 'ADDITIONAL_TABLES.ADD_TAB_PLG_UID';
 
+	/** the column name for the DBS_UID field */
+	const DBS_UID = 'ADDITIONAL_TABLES.DBS_UID';
+
 	/** The PHP to DB Name Mapping */
 	private static $phpNameMap = null;
 
@@ -74,10 +77,10 @@ abstract class BaseAdditionalTablesPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('AddTabUid', 'AddTabName', 'AddTabClassName', 'AddTabDescription', 'AddTabSdwLogInsert', 'AddTabSdwLogUpdate', 'AddTabSdwLogDelete', 'AddTabSdwLogSelect', 'AddTabSdwMaxLength', 'AddTabSdwAutoDelete', 'AddTabPlgUid', ),
-		BasePeer::TYPE_COLNAME => array (AdditionalTablesPeer::ADD_TAB_UID, AdditionalTablesPeer::ADD_TAB_NAME, AdditionalTablesPeer::ADD_TAB_CLASS_NAME, AdditionalTablesPeer::ADD_TAB_DESCRIPTION, AdditionalTablesPeer::ADD_TAB_SDW_LOG_INSERT, AdditionalTablesPeer::ADD_TAB_SDW_LOG_UPDATE, AdditionalTablesPeer::ADD_TAB_SDW_LOG_DELETE, AdditionalTablesPeer::ADD_TAB_SDW_LOG_SELECT, AdditionalTablesPeer::ADD_TAB_SDW_MAX_LENGTH, AdditionalTablesPeer::ADD_TAB_SDW_AUTO_DELETE, AdditionalTablesPeer::ADD_TAB_PLG_UID, ),
-		BasePeer::TYPE_FIELDNAME => array ('ADD_TAB_UID', 'ADD_TAB_NAME', 'ADD_TAB_CLASS_NAME', 'ADD_TAB_DESCRIPTION', 'ADD_TAB_SDW_LOG_INSERT', 'ADD_TAB_SDW_LOG_UPDATE', 'ADD_TAB_SDW_LOG_DELETE', 'ADD_TAB_SDW_LOG_SELECT', 'ADD_TAB_SDW_MAX_LENGTH', 'ADD_TAB_SDW_AUTO_DELETE', 'ADD_TAB_PLG_UID', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
+		BasePeer::TYPE_PHPNAME => array ('AddTabUid', 'AddTabName', 'AddTabClassName', 'AddTabDescription', 'AddTabSdwLogInsert', 'AddTabSdwLogUpdate', 'AddTabSdwLogDelete', 'AddTabSdwLogSelect', 'AddTabSdwMaxLength', 'AddTabSdwAutoDelete', 'AddTabPlgUid', 'DbsUid', ),
+		BasePeer::TYPE_COLNAME => array (AdditionalTablesPeer::ADD_TAB_UID, AdditionalTablesPeer::ADD_TAB_NAME, AdditionalTablesPeer::ADD_TAB_CLASS_NAME, AdditionalTablesPeer::ADD_TAB_DESCRIPTION, AdditionalTablesPeer::ADD_TAB_SDW_LOG_INSERT, AdditionalTablesPeer::ADD_TAB_SDW_LOG_UPDATE, AdditionalTablesPeer::ADD_TAB_SDW_LOG_DELETE, AdditionalTablesPeer::ADD_TAB_SDW_LOG_SELECT, AdditionalTablesPeer::ADD_TAB_SDW_MAX_LENGTH, AdditionalTablesPeer::ADD_TAB_SDW_AUTO_DELETE, AdditionalTablesPeer::ADD_TAB_PLG_UID, AdditionalTablesPeer::DBS_UID, ),
+		BasePeer::TYPE_FIELDNAME => array ('ADD_TAB_UID', 'ADD_TAB_NAME', 'ADD_TAB_CLASS_NAME', 'ADD_TAB_DESCRIPTION', 'ADD_TAB_SDW_LOG_INSERT', 'ADD_TAB_SDW_LOG_UPDATE', 'ADD_TAB_SDW_LOG_DELETE', 'ADD_TAB_SDW_LOG_SELECT', 'ADD_TAB_SDW_MAX_LENGTH', 'ADD_TAB_SDW_AUTO_DELETE', 'ADD_TAB_PLG_UID', 'DBS_UID', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
 	);
 
 	/**
@@ -87,10 +90,10 @@ abstract class BaseAdditionalTablesPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('AddTabUid' => 0, 'AddTabName' => 1, 'AddTabClassName' => 2, 'AddTabDescription' => 3, 'AddTabSdwLogInsert' => 4, 'AddTabSdwLogUpdate' => 5, 'AddTabSdwLogDelete' => 6, 'AddTabSdwLogSelect' => 7, 'AddTabSdwMaxLength' => 8, 'AddTabSdwAutoDelete' => 9, 'AddTabPlgUid' => 10, ),
-		BasePeer::TYPE_COLNAME => array (AdditionalTablesPeer::ADD_TAB_UID => 0, AdditionalTablesPeer::ADD_TAB_NAME => 1, AdditionalTablesPeer::ADD_TAB_CLASS_NAME => 2, AdditionalTablesPeer::ADD_TAB_DESCRIPTION => 3, AdditionalTablesPeer::ADD_TAB_SDW_LOG_INSERT => 4, AdditionalTablesPeer::ADD_TAB_SDW_LOG_UPDATE => 5, AdditionalTablesPeer::ADD_TAB_SDW_LOG_DELETE => 6, AdditionalTablesPeer::ADD_TAB_SDW_LOG_SELECT => 7, AdditionalTablesPeer::ADD_TAB_SDW_MAX_LENGTH => 8, AdditionalTablesPeer::ADD_TAB_SDW_AUTO_DELETE => 9, AdditionalTablesPeer::ADD_TAB_PLG_UID => 10, ),
-		BasePeer::TYPE_FIELDNAME => array ('ADD_TAB_UID' => 0, 'ADD_TAB_NAME' => 1, 'ADD_TAB_CLASS_NAME' => 2, 'ADD_TAB_DESCRIPTION' => 3, 'ADD_TAB_SDW_LOG_INSERT' => 4, 'ADD_TAB_SDW_LOG_UPDATE' => 5, 'ADD_TAB_SDW_LOG_DELETE' => 6, 'ADD_TAB_SDW_LOG_SELECT' => 7, 'ADD_TAB_SDW_MAX_LENGTH' => 8, 'ADD_TAB_SDW_AUTO_DELETE' => 9, 'ADD_TAB_PLG_UID' => 10, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
+		BasePeer::TYPE_PHPNAME => array ('AddTabUid' => 0, 'AddTabName' => 1, 'AddTabClassName' => 2, 'AddTabDescription' => 3, 'AddTabSdwLogInsert' => 4, 'AddTabSdwLogUpdate' => 5, 'AddTabSdwLogDelete' => 6, 'AddTabSdwLogSelect' => 7, 'AddTabSdwMaxLength' => 8, 'AddTabSdwAutoDelete' => 9, 'AddTabPlgUid' => 10, 'DbsUid' => 11, ),
+		BasePeer::TYPE_COLNAME => array (AdditionalTablesPeer::ADD_TAB_UID => 0, AdditionalTablesPeer::ADD_TAB_NAME => 1, AdditionalTablesPeer::ADD_TAB_CLASS_NAME => 2, AdditionalTablesPeer::ADD_TAB_DESCRIPTION => 3, AdditionalTablesPeer::ADD_TAB_SDW_LOG_INSERT => 4, AdditionalTablesPeer::ADD_TAB_SDW_LOG_UPDATE => 5, AdditionalTablesPeer::ADD_TAB_SDW_LOG_DELETE => 6, AdditionalTablesPeer::ADD_TAB_SDW_LOG_SELECT => 7, AdditionalTablesPeer::ADD_TAB_SDW_MAX_LENGTH => 8, AdditionalTablesPeer::ADD_TAB_SDW_AUTO_DELETE => 9, AdditionalTablesPeer::ADD_TAB_PLG_UID => 10, AdditionalTablesPeer::DBS_UID => 11, ),
+		BasePeer::TYPE_FIELDNAME => array ('ADD_TAB_UID' => 0, 'ADD_TAB_NAME' => 1, 'ADD_TAB_CLASS_NAME' => 2, 'ADD_TAB_DESCRIPTION' => 3, 'ADD_TAB_SDW_LOG_INSERT' => 4, 'ADD_TAB_SDW_LOG_UPDATE' => 5, 'ADD_TAB_SDW_LOG_DELETE' => 6, 'ADD_TAB_SDW_LOG_SELECT' => 7, 'ADD_TAB_SDW_MAX_LENGTH' => 8, 'ADD_TAB_SDW_AUTO_DELETE' => 9, 'ADD_TAB_PLG_UID' => 10, 'DBS_UID' => 11, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, )
 	);
 
 	/**
@@ -212,6 +215,8 @@ abstract class BaseAdditionalTablesPeer {
 		$criteria->addSelectColumn(AdditionalTablesPeer::ADD_TAB_SDW_AUTO_DELETE);
 
 		$criteria->addSelectColumn(AdditionalTablesPeer::ADD_TAB_PLG_UID);
+
+		$criteria->addSelectColumn(AdditionalTablesPeer::DBS_UID);
 
 	}
 
