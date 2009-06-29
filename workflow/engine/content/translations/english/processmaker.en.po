@@ -2,7 +2,7 @@ msgid ""
 msgstr "" 
 "Project-Id-Version: PM 4.0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-05-22 15:23+0100 \n"
+"PO-Revision-Date: 2009-06-29 11:43+0100 \n"
 "Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
 "Language-Team: Colosa Developers Team <developers@colosa.com>\n"
 "MIME-Version: 1.0\n"
@@ -2762,6 +2762,48 @@ msgid "Process Supervisors"
 msgstr "Process Supervisors"
 
 # TRANSLATION
+# LABEL/ID_DATA
+#: LABEL/ID_DATA
+msgid "Data"
+msgstr "Data"
+
+# TRANSLATION
+# LABEL/ID_SAVE_CHANGES
+#: LABEL/ID_SAVE_CHANGES
+msgid "Save Changes"
+msgstr "Save Changes"
+
+# TRANSLATION
+# LABEL/ID_CLASS_ALREADY_EXISTS
+#: LABEL/ID_CLASS_ALREADY_EXISTS
+msgid "Class already exists"
+msgstr "Class already exists"
+
+# TRANSLATION
+# LABEL/ID_FIELD_KEY_TABLE
+#: LABEL/ID_FIELD_KEY_TABLE
+msgid "Please select the table key(s)"
+msgstr "Please select the table key(s)"
+
+# TRANSLATION
+# LABEL/ID_FIELD_FOREIGN_TABLE
+#: LABEL/ID_FIELD_FOREIGN_TABLE
+msgid "Field "table" is required"
+msgstr "Field "table" is required"
+
+# TRANSLATION
+# LABEL/ID_FIELD_NAME_REQUIRED
+#: LABEL/ID_FIELD_NAME_REQUIRED
+msgid "Field name is required"
+msgstr "Field name is required"
+
+# TRANSLATION
+# LABEL/ID_FIELD_SIZE_REQUIRED
+#: LABEL/ID_FIELD_SIZE_REQUIRED
+msgid "Field size is required"
+msgstr "Field size is required"
+
+# TRANSLATION
 # LABEL/ID_CASEDEMO
 #: LABEL/ID_CASEDEMO
 msgid "Case Demo"
@@ -2848,8 +2890,8 @@ msgstr "Alert Message"
 # TRANSLATION
 # LABEL/ID_ADDITIONAL_TABLES
 #: LABEL/ID_ADDITIONAL_TABLES
-msgid "Additional Tables"
-msgstr "Additional Tables"
+msgid "PM Tables"
+msgstr "PM Tables"
 
 # TRANSLATION
 # LABEL/ID_REQUEST_SENT
@@ -4285,6 +4327,12 @@ msgstr "Create"
 msgid "[dynaforms/dynaforms_Options.xml?MNU_ADD] New"
 msgstr "New"
 
+# dynaforms/dynaforms_WebEntryOptions.xml?MNU_ASSIGN
+# dynaforms/dynaforms_WebEntryOptions.xml
+#: link - MNU_ASSIGN
+msgid "[dynaforms/dynaforms_WebEntryOptions.xml?MNU_ASSIGN] New"
+msgstr "New"
+
 # dynaforms/dynaforms_XmlEditor.xml?XML
 # dynaforms/dynaforms_XmlEditor.xml
 #: textarea - XML
@@ -5002,7 +5050,7 @@ msgstr "View"
 # dynaforms/fields/hidden.xml?PME_SUBTITLE2
 # dynaforms/fields/hidden.xml
 #: title - PME_SUBTITLE2
-msgid "Data"
+msgid "[dynaforms/fields/hidden.xml?PME_SUBTITLE2] Data"
 msgstr "Data"
 
 # dynaforms/fields/hidden.xml?PME_SQLCONNECTION
@@ -5598,6 +5646,18 @@ msgstr "Field Name"
 #: text - PME_LABEL
 msgid "[dynaforms/fields/file.xml?PME_LABEL] Label"
 msgstr "Label"
+
+# dynaforms/fields/file.xml?PME_INPUT
+# dynaforms/fields/file.xml
+#: dropdown - PME_INPUT
+msgid "Input"
+msgstr "Input"
+
+# dynaforms/fields/file.xml?PME_INPUT-''
+# dynaforms/fields/file.xml
+#: dropdown - PME_INPUT - ''
+msgid "[dynaforms/fields/file.xml?PME_INPUT-'']"
+msgstr "None"
 
 # dynaforms/fields/file.xml?PME_SUBTITLE3b
 # dynaforms/fields/file.xml
@@ -6883,11 +6943,125 @@ msgstr "Field name"
 msgid "[dynaforms/fields_ShortList.xml?SEARCH] Apply Filter"
 msgstr "Apply Filter"
 
+# additionalTables/additionalTablesNew.xml?TITLE1
+# additionalTables/additionalTablesNew.xml
+#: title - TITLE1
+msgid "Table Information"
+msgstr "Table Information"
+
+# additionalTables/additionalTablesNew.xml?ADD_TAB_NAME
+# additionalTables/additionalTablesNew.xml
+#: text - ADD_TAB_NAME
+msgid "Table Name"
+msgstr "Table Name"
+
+# additionalTables/additionalTablesNew.xml?ADD_TAB_CLASS_NAME
+# additionalTables/additionalTablesNew.xml
+#: text - ADD_TAB_CLASS_NAME
+msgid "PHP Class Name"
+msgstr "PHP Class Name"
+
+# additionalTables/additionalTablesNew.xml?ADD_TAB_DESCRIPTION
+# additionalTables/additionalTablesNew.xml
+#: textarea - ADD_TAB_DESCRIPTION
+msgid "[additionalTables/additionalTablesNew.xml?ADD_TAB_DESCRIPTION] Description"
+msgstr "Description"
+
+# additionalTables/additionalTablesNew.xml?TITLE3
+# additionalTables/additionalTablesNew.xml
+#: title - TITLE3
+msgid "Fields"
+msgstr "Fields"
+
+# additionalTables/additionalTablesNew.xml?btnSave
+# additionalTables/additionalTablesNew.xml
+#: button - btnSave
+msgid "[additionalTables/additionalTablesNew.xml?btnSave] Save"
+msgstr "Save"
+
 # additionalTables/additionalTablesOptions.xml?MNU_ADD
 # additionalTables/additionalTablesOptions.xml
 #: link - MNU_ADD
 msgid "[additionalTables/additionalTablesOptions.xml?MNU_ADD] New"
 msgstr "New"
+
+# additionalTables/additionalTablesFields.xml?FLD_NAME
+# additionalTables/additionalTablesFields.xml
+#: text - FLD_NAME
+msgid "[additionalTables/additionalTablesFields.xml?FLD_NAME] Field Name"
+msgstr "Field Name"
+
+# additionalTables/additionalTablesFields.xml?FLD_DESCRIPTION
+# additionalTables/additionalTablesFields.xml
+#: text - FLD_DESCRIPTION
+msgid "Field Label"
+msgstr "Field Label"
+
+# additionalTables/additionalTablesFields.xml?FLD_TYPE
+# additionalTables/additionalTablesFields.xml
+#: dropdown - FLD_TYPE
+msgid "[additionalTables/additionalTablesFields.xml?FLD_TYPE] Type    "
+msgstr "Type    "
+
+# additionalTables/additionalTablesFields.xml?FLD_TYPE-VARCHAR
+# additionalTables/additionalTablesFields.xml
+#: dropdown - FLD_TYPE - VARCHAR
+msgid "[additionalTables/additionalTablesFields.xml?FLD_TYPE-VARCHAR]"
+msgstr "VARCHAR"
+
+# additionalTables/additionalTablesFields.xml?FLD_TYPE-TEXT
+# additionalTables/additionalTablesFields.xml
+#: dropdown - FLD_TYPE - TEXT
+msgid "[additionalTables/additionalTablesFields.xml?FLD_TYPE-TEXT]"
+msgstr "TEXT"
+
+# additionalTables/additionalTablesFields.xml?FLD_TYPE-DATE
+# additionalTables/additionalTablesFields.xml
+#: dropdown - FLD_TYPE - DATE
+msgid "[additionalTables/additionalTablesFields.xml?FLD_TYPE-DATE]"
+msgstr "DATE"
+
+# additionalTables/additionalTablesFields.xml?FLD_TYPE-INT
+# additionalTables/additionalTablesFields.xml
+#: dropdown - FLD_TYPE - INT
+msgid "[additionalTables/additionalTablesFields.xml?FLD_TYPE-INT]"
+msgstr "INT"
+
+# additionalTables/additionalTablesFields.xml?FLD_TYPE-FLOAT
+# additionalTables/additionalTablesFields.xml
+#: dropdown - FLD_TYPE - FLOAT
+msgid "[additionalTables/additionalTablesFields.xml?FLD_TYPE-FLOAT]"
+msgstr "FLOAT"
+
+# additionalTables/additionalTablesFields.xml?FLD_SIZE
+# additionalTables/additionalTablesFields.xml
+#: text - FLD_SIZE
+msgid "[additionalTables/additionalTablesFields.xml?FLD_SIZE] Size"
+msgstr "Size"
+
+# additionalTables/additionalTablesFields.xml?FLD_NULL
+# additionalTables/additionalTablesFields.xml
+#: checkbox - FLD_NULL
+msgid "Null"
+msgstr "Null"
+
+# additionalTables/additionalTablesFields.xml?FLD_KEY
+# additionalTables/additionalTablesFields.xml
+#: checkbox - FLD_KEY
+msgid "Primary Key"
+msgstr "Primary Key"
+
+# additionalTables/additionalTablesData.xml?ADD_TAB_NAME
+# additionalTables/additionalTablesData.xml
+#: text - ADD_TAB_NAME
+msgid "[additionalTables/additionalTablesData.xml?ADD_TAB_NAME] Name"
+msgstr "Name"
+
+# additionalTables/additionalTablesData.xml?ADD_TAB_DESCRIPTION
+# additionalTables/additionalTablesData.xml
+#: text - ADD_TAB_DESCRIPTION
+msgid "[additionalTables/additionalTablesData.xml?ADD_TAB_DESCRIPTION] Description"
+msgstr "Description"
 
 # additionalTables/additionalTablesList.xml?ADD_TAB_NAME
 # additionalTables/additionalTablesList.xml
@@ -6904,20 +7078,20 @@ msgstr "Description"
 # additionalTables/additionalTablesEdit.xml?TITLE1
 # additionalTables/additionalTablesEdit.xml
 #: title - TITLE1
-msgid "Table Information"
+msgid "[additionalTables/additionalTablesEdit.xml?TITLE1] Table Information"
 msgstr "Table Information"
 
 # additionalTables/additionalTablesEdit.xml?ADD_TAB_NAME
 # additionalTables/additionalTablesEdit.xml
 #: text - ADD_TAB_NAME
-msgid "Table Name"
+msgid "[additionalTables/additionalTablesEdit.xml?ADD_TAB_NAME] Table Name"
 msgstr "Table Name"
 
 # additionalTables/additionalTablesEdit.xml?ADD_TAB_CLASS_NAME
 # additionalTables/additionalTablesEdit.xml
 #: text - ADD_TAB_CLASS_NAME
-msgid "Propel Class Name"
-msgstr "Propel Class Name"
+msgid "[additionalTables/additionalTablesEdit.xml?ADD_TAB_CLASS_NAME] PHP Class Name"
+msgstr "PHP Class Name"
 
 # additionalTables/additionalTablesEdit.xml?ADD_TAB_DESCRIPTION
 # additionalTables/additionalTablesEdit.xml
@@ -6925,52 +7099,10 @@ msgstr "Propel Class Name"
 msgid "[additionalTables/additionalTablesEdit.xml?ADD_TAB_DESCRIPTION] Description"
 msgstr "Description"
 
-# additionalTables/additionalTablesEdit.xml?TITLE2
-# additionalTables/additionalTablesEdit.xml
-#: title - TITLE2
-msgid "Log configuration"
-msgstr "Log configuration"
-
-# additionalTables/additionalTablesEdit.xml?ADD_TAB_SDW_LOG_INSERT
-# additionalTables/additionalTablesEdit.xml
-#: checkbox - ADD_TAB_SDW_LOG_INSERT
-msgid "Save log for insert actions"
-msgstr "Save log for insert actions"
-
-# additionalTables/additionalTablesEdit.xml?ADD_TAB_SDW_LOG_UPDATE
-# additionalTables/additionalTablesEdit.xml
-#: checkbox - ADD_TAB_SDW_LOG_UPDATE
-msgid "Save log for update actions"
-msgstr "Save log for update actions"
-
-# additionalTables/additionalTablesEdit.xml?ADD_TAB_SDW_LOG_DELETE
-# additionalTables/additionalTablesEdit.xml
-#: checkbox - ADD_TAB_SDW_LOG_DELETE
-msgid "Save log for delete actions"
-msgstr "Save log for delete actions"
-
-# additionalTables/additionalTablesEdit.xml?ADD_TAB_SDW_LOG_SELECT
-# additionalTables/additionalTablesEdit.xml
-#: checkbox - ADD_TAB_SDW_LOG_SELECT
-msgid "Save log for select actions"
-msgstr "Save log for select actions"
-
-# additionalTables/additionalTablesEdit.xml?ADD_TAB_SDW_MAX_LENGTH
-# additionalTables/additionalTablesEdit.xml
-#: text - ADD_TAB_SDW_MAX_LENGTH
-msgid "Maximun rows to store (-1 for unlimited)"
-msgstr "Maximun rows to store (-1 for unlimited)"
-
-# additionalTables/additionalTablesEdit.xml?ADD_TAB_SDW_AUTO_DELETE
-# additionalTables/additionalTablesEdit.xml
-#: checkbox - ADD_TAB_SDW_AUTO_DELETE
-msgid "Delete log related when table is deleted"
-msgstr "Delete log related when table is deleted"
-
 # additionalTables/additionalTablesEdit.xml?TITLE3
 # additionalTables/additionalTablesEdit.xml
 #: title - TITLE3
-msgid "Fields"
+msgid "[additionalTables/additionalTablesEdit.xml?TITLE3] Fields"
 msgstr "Fields"
 
 # additionalTables/additionalTablesEdit.xml?btnSave
@@ -7930,8 +8062,8 @@ msgstr "<div align=\"center\">Importing Existing Process</div>"
 # processes/processes_ImportExisting.xml?TITLE1
 # processes/processes_ImportExisting.xml
 #: subtitle - TITLE1
-msgid "A process with the same name already exists. Please select one of the following options:"
-msgstr "A process with the same name already exists. Please select one of the following options:"
+msgid "The process you are trying to import already exists. Please select one of the following options to continue:"
+msgstr "The process you are trying to import already exists. Please select one of the following options to continue:"
 
 # processes/processes_ImportExisting.xml?SUBMIT
 # processes/processes_ImportExisting.xml
@@ -10474,7 +10606,7 @@ msgstr "Test"
 # setup/emails.xml?SAVE_CHANGES
 # setup/emails.xml
 #: button - SAVE_CHANGES
-msgid "Save Changes"
+msgid "[setup/emails.xml?SAVE_CHANGES] Save Changes"
 msgstr "Save Changes"
 
 # setup/wsrProcessList.xml?guid
@@ -12652,14 +12784,14 @@ msgstr "Continue"
 # authSources/authSources_SearchUsers.xml?TITLE
 # authSources/authSources_SearchUsers.xml
 #: title - TITLE
-msgid "Sarch for user"
-msgstr "Sarch for user"
+msgid "Search for user"
+msgstr "Search for user"
 
 # authSources/authSources_SearchUsers.xml?KEYWORD
 # authSources/authSources_SearchUsers.xml
 #: text - KEYWORD
-msgid "User's name"
-msgstr "User's name"
+msgid "Keyword"
+msgstr "Keyword"
 
 # authSources/authSources_SearchUsers.xml?btnSearch
 # authSources/authSources_SearchUsers.xml
@@ -12786,6 +12918,12 @@ msgstr "Search User"
 #: password - AUTH_SOURCE_PASSWORD
 msgid "[authSources/ldapEdit.xml?AUTH_SOURCE_PASSWORD] Password"
 msgstr "Password"
+
+# authSources/ldapEdit.xml?AUTH_SOURCE_IDENTIFIER_FOR_USER
+# authSources/ldapEdit.xml
+#: text - AUTH_SOURCE_IDENTIFIER_FOR_USER
+msgid "Identifier for a imported user"
+msgstr "Identifier for a imported user"
 
 # authSources/ldapEdit.xml?AUTH_SOURCE_OBJECT_CLASSES
 # authSources/ldapEdit.xml
@@ -15655,12 +15793,6 @@ msgstr "Re-type Password:"
 msgid "[login/newSite.xml?NW_SUB] Test"
 msgstr "Test"
 
-# login/nologin.xml?subtitle
-# login/nologin.xml
-#: subtitle - subtitle
-msgid "subtitle"
-msgstr "subtitle"
-
 # login/nologin.xml?BSUBMIT
 # login/nologin.xml
 #: submit - BSUBMIT
@@ -15859,6 +15991,30 @@ msgstr "Workspace"
 msgid "[login/sysLogin.xml?BSUBMIT] Login"
 msgstr "Login"
 
+# login/showInfoUpdate.xml?THETITLE1
+# login/showInfoUpdate.xml
+#: title - THETITLE1
+msgid "[login/showInfoUpdate.xml?THETITLE1] Information"
+msgstr "Information"
+
+# login/showInfoUpdate.xml?THETITLE2
+# login/showInfoUpdate.xml
+#: title - THETITLE2
+msgid "Affected Files"
+msgstr "Affected Files"
+
+# login/showInfoUpdate.xml?THETITLE3
+# login/showInfoUpdate.xml
+#: title - THETITLE3
+msgid "Environments Updated"
+msgstr "Environments Updated"
+
+# login/showInfoUpdate.xml?THETITLE4
+# login/showInfoUpdate.xml
+#: title - THETITLE4
+msgid "Errors"
+msgstr "Errors"
+
 # login/noViewPage.xml?title
 # login/noViewPage.xml
 #: title - title
@@ -16050,12 +16206,6 @@ msgstr "Available Triggers"
 #: dropdown - TRI_UID
 msgid "[steps/triggers_Assign.xml?TRI_UID] Triggers"
 msgstr "Triggers"
-
-# steps/triggers_Assign.xml?ST_CONDITION
-# steps/triggers_Assign.xml
-#: textareapm - ST_CONDITION
-msgid "[steps/triggers_Assign.xml?ST_CONDITION] Condition"
-msgstr "Condition"
 
 # steps/triggers_Assign.xml?ASSIGN
 # steps/triggers_Assign.xml
@@ -16380,12 +16530,6 @@ msgstr "Title"
 #: textarea - TRI_DESCRIPTION
 msgid "[triggers/triggers_Edit.xml?TRI_DESCRIPTION] Description"
 msgstr "Description"
-
-# triggers/triggers_Edit.xml?TRI_WEBBOT
-# triggers/triggers_Edit.xml
-#: textareapm - TRI_WEBBOT
-msgid "Script"
-msgstr "Script"
 
 # triggers/triggers_Edit.xml?SAVE
 # triggers/triggers_Edit.xml
