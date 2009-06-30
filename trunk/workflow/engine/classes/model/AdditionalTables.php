@@ -796,11 +796,17 @@ var additionalTablesDataDelete = function(sUID, sKeys) {
       foreach ($aData['FIELDS'] as $aField) {
         eval('$oCriteria->addSelectColumn(' . $sClassPeerName . '::' . $aField['FLD_NAME'] . ');');
       }
-      /*switch () {
-      }*/
-      eval('$oCriteria->add(' . $sClassPeerName . '::' . $aField['FLD_NAME'] . ', \'(º_·_º)\', Criteria::NOT_EQUAL);');
-      //die('$oCriteria->add(' . $sClassPeerName . '::' . $aField['FLD_NAME'] . ', ' . $sClassPeerName . '::' . $aField['FLD_NAME'] . ');');
-      //eval('$oCriteria->add(' . $sClassPeerName . '::' . $aField['FLD_NAME'] . ', ' . $sClassPeerName . '::' . $aField['FLD_NAME'] . ', Criteria::NOT_EQUAL);');
+      switch ($aField['FLD_TYPE']) {
+        case 'VARCHAR':
+        case 'TEXT':
+        case 'DATE':
+          eval('$oCriteria->add(' . $sClassPeerName . '::' . $aField['FLD_NAME'] . ', \'(º_·_º)\', Criteria::NOT_EQUAL);');
+        break;
+        case 'INT';
+        case 'FLOAT':
+          eval('$oCriteria->add(' . $sClassPeerName . '::' . $aField['FLD_NAME'] . ', -99999999999, Criteria::NOT_EQUAL);');
+        break;
+      }
       //eval('$oCriteria->addAscendingOrderByColumn(' . $sClassPeerName . '::PM_UNIQUE_ID);');
       return $oCriteria;
     }
@@ -852,14 +858,30 @@ var additionalTablesDataDelete = function(sUID, sKeys) {
       $sClassName = ($aData['ADD_TAB_CLASS_NAME'] != '' ? $aData['ADD_TAB_CLASS_NAME'] : $this->getPHPName($aData['ADD_TAB_NAME']));
       $oConnection = Propel::getConnection(FieldsPeer::DATABASE_NAME);
       require_once $sPath . $sClassName . '.php';
-      $oClass = new $sClassName;
-      foreach ($aFields as $sKey => $sValue) {
-        eval('$oClass->set' . $this->getPHPName($sKey) . '($aFields["' . $sKey . '"]);');
+      $sKeys = '';
+      foreach ($aData['FIELDS'] as $aField) {
+        if ($aField['FLD_KEY'] == 1) {
+          $vValue = $aFields[$aField['FLD_NAME']];
+          eval('$' . $aField['FLD_NAME'] . ' = $vValue;');
+          $sKeys .= '$' . $aField['FLD_NAME'] . ',';
+        }
       }
-      if ($oClass->validate()) {
-        $oConnection->begin();
-        $iResult = $oClass->save();
-        $oConnection->commit();
+      $sKeys = substr($sKeys, 0, -1);
+      eval('$oClass = ' . $sClassName . 'Peer::retrieveByPK(' . $sKeys . ');');
+      if (is_null($oClass)) {
+        $oClass = new $sClassName;
+        foreach ($aFields as $sKey => $sValue) {
+          eval('$oClass->set' . $this->getPHPName($sKey) . '($aFields["' . $sKey . '"]);');
+        }
+        if ($oClass->validate()) {
+          $oConnection->begin();
+          $iResult = $oClass->save();
+          $oConnection->commit();
+        }
+        return true;
+      }
+      else {
+        return false;
       }
     }
   	catch (Exception $oError) {
