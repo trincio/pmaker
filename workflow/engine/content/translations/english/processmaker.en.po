@@ -2,7 +2,7 @@ msgid ""
 msgstr "" 
 "Project-Id-Version: PM 4.0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-06-29 11:43+0100 \n"
+"PO-Revision-Date: 2009-06-30 16:00+0100 \n"
 "Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
 "Language-Team: Colosa Developers Team <developers@colosa.com>\n"
 "MIME-Version: 1.0\n"
@@ -2886,6 +2886,12 @@ msgstr "Reassign Cases"
 #: LABEL/ID_ALERT_MESSAGE
 msgid "Alert Message"
 msgstr "Alert Message"
+
+# TRANSLATION
+# LABEL/ID_DUPLICATE_ENTRY_PRIMARY_KEY
+#: LABEL/ID_DUPLICATE_ENTRY_PRIMARY_KEY
+msgid "Duplicate entry for primary key"
+msgstr "Duplicate entry for primary key"
 
 # TRANSLATION
 # LABEL/ID_ADDITIONAL_TABLES
