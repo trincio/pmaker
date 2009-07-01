@@ -14,12 +14,13 @@
 </MNU_ASSIGN>
 
 <js type="javascript">
+<![CDATA[
 var assignGroupOrUser = function(sTask, sUser, iType, iRelation) {
   var oRPC = new leimnud.module.rpc.xmlhttp({
     url   : '../users/users_Ajax',
     async : false,
     method: 'POST',
-    args  : 'function=assign&amp;TAS_UID=' + sTask + '&amp;USR_UID=' + sUser + '&amp;TU_TYPE=' + iType + '&amp;TU_RELATION=' + iRelation
+    args  : 'function=assign&TAS_UID=' + sTask + '&USR_UID=' + sUser + '&TU_TYPE=' + iType + '&TU_RELATION=' + iRelation
   });
   oRPC.make();
   currentPopupWindow.remove();
@@ -36,7 +37,7 @@ var ofToAssignGroupOrUser = function(TAS_UID, USR_UID, TU_TYPE, TU_RELATION) {
         url   : '../users/users_Ajax',
         async : false,
         method: 'POST',
-        args  : 'function=ofToAssign&amp;TAS_UID=' + TAS_UID + '&amp;USR_UID=' + USR_UID + '&amp;TU_TYPE=' + TU_TYPE + '&amp;TU_RELATION=' + TU_RELATION
+        args  : 'function=ofToAssign&TAS_UID=' + TAS_UID + '&USR_UID=' + USR_UID + '&TU_TYPE=' + TU_TYPE + '&TU_RELATION=' + TU_RELATION
       });
       oRPC.make();
       Pm.tmp.usersPanel.clearContent();
@@ -48,17 +49,18 @@ var ofToAssignGroupOrUser = function(TAS_UID, USR_UID, TU_TYPE, TU_RELATION) {
 };
 
 var usersGroup = function(GRP_UID, c){
-	var div = document.getElementById('users'+c); 	
-	div.style.display = (div.style.display == 'none') ? 'block' : 'none'; 
-	
+	var div = document.getElementById('users'+c);
+	div.style.display = (div.style.display == 'none') ? 'block' : 'none';
+
 	var oRPC = new leimnud.module.rpc.xmlhttp({
     url   : '../users/users_Ajax',
     async : false,
     method: 'POST',
-    args  : 'function=usersGroup&amp;GRP_UID=' + GRP_UID
+    args  : 'function=usersGroup&GRP_UID=' + GRP_UID
   });
   oRPC.make();
-  div.innerHTML=oRPC.xmlhttp.responseText; 
+  div.innerHTML=oRPC.xmlhttp.responseText;
 }
+]]>
 </js>
 </dynaForm>
