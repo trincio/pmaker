@@ -2588,7 +2588,7 @@ class Cases
 	/**
 	* Obtain all user permits for Dynaforms, Input and output documents
 	*
-	* @function getAllObjectsFrom ($PRO_UID, $APP_UID, $TAS_UID, $USR_UID)
+	* @function getAllObjects ($PRO_UID, $APP_UID, $TAS_UID, $USR_UID)
 	* @author Erik Amaru Ortiz <erik@colosa.com>
 	* @access public
 	* @param  Process ID, Application ID, Task ID and User ID
@@ -2637,18 +2637,15 @@ class Cases
 
 		//permissions per user
 		$oCriteria = new Criteria('workflow');
-		//$oCriteria->add(ObjectPermissionPeer::USR_UID, $USR_UID);
-		$oCriteria->add( $oCriteria->getNewCriterion(ObjectPermissionPeer::USR_UID, $USR_UID)->addOr($oCriteria->getNewCriterion(ObjectPermissionPeer::USR_UID, '')) );
+		$oCriteria->add($oCriteria->getNewCriterion(ObjectPermissionPeer::USR_UID, $USR_UID)->addOr($oCriteria->getNewCriterion(ObjectPermissionPeer::USR_UID, '')));
 		$oCriteria->add(ObjectPermissionPeer::PRO_UID, $PRO_UID);
 		$oCriteria->add(ObjectPermissionPeer::OP_ACTION, $ACTION);
-		$oCriteria->add( $oCriteria->getNewCriterion(ObjectPermissionPeer::TAS_UID, $TAS_UID)->addOr($oCriteria->getNewCriterion(ObjectPermissionPeer::TAS_UID, '')->addOr($oCriteria->getNewCriterion(ObjectPermissionPeer::OP_CASE_STATUS, 'COMPLETED')) ) );
-		//->addOr($oCriteria->getNewCriterion(ObjectPermissionPeer::OP_CASE_STATUS, 'COMPLETED')
+		$oCriteria->add($oCriteria->getNewCriterion(ObjectPermissionPeer::TAS_UID, $TAS_UID)->addOr($oCriteria->getNewCriterion(ObjectPermissionPeer::TAS_UID, '')->addOr($oCriteria->getNewCriterion(ObjectPermissionPeer::OP_CASE_STATUS, ''))->addOr($oCriteria->getNewCriterion(ObjectPermissionPeer::OP_CASE_STATUS, 'ALL'))));
 		$rs = ObjectPermissionPeer::doSelectRS($oCriteria);
 		$rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
     $rs->next();
 		while ($row=$rs->getRow()) {
-			if(($aCase['APP_STATUS']==$row['OP_CASE_STATUS']) || ($row['OP_CASE_STATUS'] == ''))
-			{
+			if ((($aCase['APP_STATUS']==$row['OP_CASE_STATUS']) || ($row['OP_CASE_STATUS'] == '') || ($row['OP_CASE_STATUS'] == 'ALL')) || ($row['OP_CASE_STATUS'] == '')) {
 				array_push($USER_PERMISSIONS, $row);
 			}
 			$rs->next();
@@ -2663,7 +2660,7 @@ class Cases
 			$oCriteria->add(ObjectPermissionPeer::USR_UID, $group);
 			$oCriteria->add(ObjectPermissionPeer::PRO_UID, $PRO_UID);
 			$oCriteria->add(ObjectPermissionPeer::OP_ACTION, $ACTION);
-			$oCriteria->add( $oCriteria->getNewCriterion(ObjectPermissionPeer::TAS_UID, $TAS_UID)->addOr($oCriteria->getNewCriterion(ObjectPermissionPeer::TAS_UID, '')) );
+			$oCriteria->add($oCriteria->getNewCriterion(ObjectPermissionPeer::TAS_UID, $TAS_UID)->addOr($oCriteria->getNewCriterion(ObjectPermissionPeer::TAS_UID, '')->addOr($oCriteria->getNewCriterion(ObjectPermissionPeer::OP_CASE_STATUS, ''))->addOr($oCriteria->getNewCriterion(ObjectPermissionPeer::OP_CASE_STATUS, 'ALL'))));
 			$rs = ObjectPermissionPeer::doSelectRS($oCriteria);
 			$rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
 			while ($rs->next()) {
@@ -3315,7 +3312,7 @@ funcion History messages for case tracker by Everth The Answer
   { //echo $sCase.'<br />'.$sProcess.'<br />'.$sTask.'<br />'.$sCurrentUser.'<br />'.$sSentby.'<br />'.$sLastModFrom.'<br />'.$sLastModTo.'<br />'.$sStatus; die;
   	$sTypeList      = '';
   	$sUIDUserLogged = '';
-  	
+
   	$c = new Criteria('workflow');
     $c->clearSelectColumns();
     $c->addSelectColumn(ApplicationPeer::APP_UID);
@@ -3379,35 +3376,35 @@ funcion History messages for case tracker by Everth The Answer
     $c->addJoinMC($usrConds, Criteria::LEFT_JOIN);
 
     $c->add(TaskPeer::TAS_TYPE, 'SUBPROCESS', Criteria::NOT_EQUAL);
-    
+
     $c->add($c->getNewCriterion(AppThreadPeer::APP_THREAD_STATUS, 'OPEN')->addOr($c->getNewCriterion(ApplicationPeer::APP_STATUS, 'COMPLETED')->addAnd($c->getNewCriterion(AppDelegationPeer::DEL_PREVIOUS,
           0))));
-    
+
       if($sCase!='')
       	$c->add(ApplicationPeer::APP_NUMBER,$sCase);
-      
+
       if($sProcess!='')
       	$c->add(ApplicationPeer::PRO_UID,$sProcess);
-      	
+
       if($sTask!='')
       	$c->add(AppDelegationPeer::TAS_UID,$sTask);
-      	
+
       if($sCurrentUser!='')
       	$c->add(ApplicationPeer::APP_CUR_USER,$sCurrentUser);
-      	
+
       if($sSentby!='')
-      	$c->add('APP_PREV_DEL.USR_UID',$sSentby);			
-      
+      	$c->add('APP_PREV_DEL.USR_UID',$sSentby);
+
       if($sLastModFrom!='0000-00-00' && $sLastModTo!='0000-00-00')
       	$c->add($c->getNewCriterion(ApplicationPeer::APP_UPDATE_DATE, $sLastModFrom.' 00:00:00', Criteria::GREATER_EQUAL)->addAnd($c->getNewCriterion(ApplicationPeer::APP_UPDATE_DATE,  $sLastModTo.' 23:59:59', Criteria::LESS_EQUAL)));
-      
+
       if($sStatus!='')
-       { if($sStatus!='gral')	
-       		$c->add(ApplicationPeer::APP_STATUS,$sStatus);		
-       }	
-          	          
+       { if($sStatus!='gral')
+       		$c->add(ApplicationPeer::APP_STATUS,$sStatus);
+       }
+
     $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
-    
+
     return $c;
   }
 }
