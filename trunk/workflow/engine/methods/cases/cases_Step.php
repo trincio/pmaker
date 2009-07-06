@@ -413,6 +413,7 @@ switch ($_GET['TYPE'])
   case 'ASSIGN_TASK':
     $oDerivation = new Derivation();
     $oProcess    = new Process();
+    $aData       = $oCase->loadCase($_SESSION['APPLICATION']);
     $aFields['PROCESS']              = $oProcess->load($_SESSION['PROCESS']);
     $aFields['PREVIOUS_PAGE']        = $aPreviousStep['PAGE'];
     $aFields['PREVIOUS_PAGE_LABEL']  = G::LoadTranslation('ID_PREVIOUS_STEP');
@@ -443,9 +444,9 @@ switch ($_GET['TYPE'])
       $sPriority = '';//set priority value
       if ($aFields['TASK'][$sKey]['NEXT_TASK']['TAS_PRIORITY_VARIABLE'] != '') {
         //TO DO: review this type of assignment
-        if (isset($oApplication->Fields[ str_replace('@@', '', $aFields['TASK'][$sKey]['NEXT_TASK']['TAS_PRIORITY_VARIABLE'])]) )
+        if (isset($aData['APP_DATA'][str_replace('@@', '', $aFields['TASK'][$sKey]['NEXT_TASK']['TAS_PRIORITY_VARIABLE'])]))
         {
-          $sPriority = $oApplication->Fields[$aFields['TASK'][$sKey]['NEXT_TASK']['TAS_PRIORITY_VARIABLE']];
+          $sPriority = $aData['APP_DATA'][str_replace('@@', '', $aFields['TASK'][$sKey]['NEXT_TASK']['TAS_PRIORITY_VARIABLE'])];
         }
       }//set priority value
 
