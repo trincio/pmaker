@@ -564,7 +564,7 @@ function G()
       mask=invertir(mask);
       num=invertir(num);
     }
-
+    
     var minAdd=-1;
     var minLoss=-1;
     var newCursorPosition=cursor;
@@ -641,6 +641,11 @@ function G()
           i++;r--;
         }
         break;
+      case '(':
+          if (e===false) {out+='';break;}
+          out+=m;
+          if (i<cursor){cursorPosition++;}
+          break;
       case 'd':
         if (e===false) {out+='';break;}
         if ((e==='0')||(e==='1')||(e==='2')||(e==='3')||(e==='4')||(e==='5')||(e==='6')||(e==='7')||(e==='8')||(e==='9')) ok=true; else ok=false;

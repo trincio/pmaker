@@ -463,7 +463,7 @@ class RBAC
     $aAuthSource = $this->getAuthSource($sUID);
     $sAuthType   = strtolower($aAuthSource['AUTH_SOURCE_PROVIDER']);
     foreach ( $this->aRbacPlugins as $sClassName) {
-      if ( $sClassName == $sAuthType ) {
+      if ( strtolower($sClassName) == $sAuthType ) {
         $plugin =  new $sClassName();
         $plugin->sAuthSource = $sUID;
         $plugin->sSystem     = $this->sSystem;
