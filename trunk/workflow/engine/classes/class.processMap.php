@@ -715,7 +715,9 @@ class processMap {
   	  $aBB        = array();
   		$aBB[]      = array('STEP_UID'      => 'char',
   		                    'STEP_TITLE'    => 'char',
-      	                  'STEP_TYPE_OBJ' => 'char');
+      	                  'STEP_TYPE_OBJ' => 'char',
+      	                  'STEP_MODE'     => 'char'
+      	                  );
   	  $sDelimiter = DBAdapter::getStringDelimiter();
   	  $oCriteria  = new Criteria('workflow');
       $oCriteria->addSelectColumn(DynaformPeer::DYN_UID);
@@ -731,11 +733,17 @@ class processMap {
       $oCriteria->add(DynaformPeer::DYN_TYPE, 'xmlform');
       $oDataset  = DynaformPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-      $oDataset->next();
+      $oDataset->next(); $i=0;
       while ($aRow = $oDataset->getRow()) {
+      	$i++;
       	$aBB[] = array('STEP_UID'      => $aRow['DYN_UID'],
                        'STEP_TITLE'    => $aRow['DYN_TITLE'],
-                       'STEP_TYPE_OBJ' => 'DYNAFORM');
+                       'STEP_TYPE_OBJ' => 'DYNAFORM',
+                       'STEP_MODE'     => '<select id="STEP_MODE_'.$aRow['DYN_UID'].'">
+                       											<option value="EDIT">Edit</option>
+                       											<option value="VIEW">View</option>
+                       										 </select>'
+                       );
       	$oDataset->next();
       }
   	  $oCriteria  = new Criteria('workflow');
@@ -755,7 +763,9 @@ class processMap {
       while ($aRow = $oDataset->getRow()) {
       	$aBB[] = array('STEP_UID'      => $aRow['INP_DOC_UID'],
                        'STEP_TITLE'    => $aRow['INP_DOC_TITLE'],
-                       'STEP_TYPE_OBJ' => 'INPUT_DOCUMENT');
+                       'STEP_TYPE_OBJ' => 'INPUT_DOCUMENT',
+                       'STEP_MODE'     => '<input type="hidden" id="STEP_MODE_'.$aRow['INP_DOC_UID'].'">'
+                       );
       	$oDataset->next();
       }
   	  $oCriteria  = new Criteria('workflow');
@@ -775,7 +785,9 @@ class processMap {
       while ($aRow = $oDataset->getRow()) {
       	$aBB[] = array('STEP_UID'      => $aRow['OUT_DOC_UID'],
                        'STEP_TITLE'    => $aRow['OUT_DOC_TITLE'],
-                       'STEP_TYPE_OBJ' => 'OUTPUT_DOCUMENT');
+                       'STEP_TYPE_OBJ' => 'OUTPUT_DOCUMENT',
+                       'STEP_MODE'     => '<input type="hidden" id="STEP_MODE_'.$aRow['OUT_DOC_UID'].'">'
+                       );
       	$oDataset->next();
       }
 
@@ -786,7 +798,9 @@ class processMap {
       	foreach ( $externalSteps as $key => $stepVar ) {
           $aBB[] = array('STEP_UID'      => $stepVar->sStepId,
                          'STEP_TITLE'    => $stepVar->sStepTitle,
-                         'STEP_TYPE_OBJ' => 'EXTERNAL');
+                         'STEP_TYPE_OBJ' => 'EXTERNAL',
+                         'STEP_MODE'     => '<input type="hidden" id="STEP_MODE_'.$stepVar->sStepId.'">'
+                         );
         }
       }
 

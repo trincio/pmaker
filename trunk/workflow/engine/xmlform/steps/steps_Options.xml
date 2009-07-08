@@ -24,36 +24,38 @@
         popupWindow('@G::LoadTranslation(ID_NEW_STEP)', '@G::encryptlink(@#URL_STEPS_EDIT)?PROCESS=@#PROCESS&amp;TASK=@#TASK', 500, 420);
   }
 
-  function stepSave(sProcess, sTask, sType, sUID) {
+  function stepSave(sProcess, sTask, sType, sUID) { //alert(document.getElementById('STEP_MODE_'+sUID).value); return;
+    var sMode = document.getElementById('STEP_MODE_'+sUID).value;
     var oRPC = new leimnud.module.rpc.xmlhttp({
       url   : '../steps/steps_Save',
       async : false,
       method: 'POST',
-      args  : 'sProcess=' + sProcess + '&amp;sTask=' + sTask + '&amp;sType=' + sType + '&amp;sUID=' + sUID
-    });
+      args  : 'sProcess=' + sProcess + '&amp;sTask=' + sTask + '&amp;sType=' + sType + '&amp;sUID=' + sUID + '&amp;sMode=' + sMode
+      });
     oRPC.make();
     currentPopupWindow.remove();
     @#PAGED_TABLE_ID.refresh();
   }
-  function stepUp( uid, stepPos  ){
+  function 
+  stepUp( uid, stepPos  ){
     result = ajax_function('@G::encryptlink(@#URL_STEP_UP)','','STEP_UID='+uid+'&amp;TASK=@#TASK&amp;STEP_POSITION='+stepPos,'POST');
     @#PAGED_TABLE_ID.refresh();
+ 
   }
   function stepDown( uid, stepPos  ){
     result = ajax_function('@G::encryptlink(@#URL_STEP_DOWN)','','STEP_UID='+uid+'&amp;TASK=@#TASK&amp;STEP_POSITION='+stepPos,'POST');
     @#PAGED_TABLE_ID.refresh();
+ 
   }
   function stepDelete( uid, stepPos  ){
-    new leimnud.module.app.confirm().make({
-      label:'@#CONFIRM',
-      action:function()
-      {
-        ajax_function('@G::encryptlink(@#URL_STEP_DELETE)','','STEP_UID='+uid+'&amp;TASK=@#TASK&amp;STEP_POSITION='+stepPos,'POST');
-        @#PAGED_TABLE_ID.refresh();
+    new leimnud.module.app.confirm().make({label:'@#CONFIRM',action:function(){ 
+    ajax_function('@G::encryptlink(@#URL_STEP_DELETE)','','STEP_UID='+uid+'&amp;TASK=@#TASK&amp;STEP_POSITION='+stepPos,'POST'); 
+    @#PAGED_TABLE_ID.refresh();
       }.extend(this)
     });
   }
-  function devolver(result){
+  function 
+  devolver(result){
   //alert(result);
   };
   <![CDATA[

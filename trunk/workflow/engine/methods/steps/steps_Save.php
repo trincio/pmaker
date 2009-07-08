@@ -1,4 +1,4 @@
-<?php
+<?php 
 /**
  * steps_Save.php
  *  
@@ -22,7 +22,7 @@
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
  * 
  */
-try {
+try { 
   global $RBAC;
   switch ($RBAC->userCanAccess('PM_FACTORY')) {
   	case -2:
@@ -42,7 +42,9 @@ try {
   $oStep->update(array('STEP_UID'      => $sStepUID,
                        'STEP_TYPE_OBJ' => $_POST['sType'],
                        'STEP_UID_OBJ'  => $_POST['sUID'],
-                       'STEP_POSITION' => ($oStep->getNextPosition($_POST['sTask']) - 1)));
+                       'STEP_POSITION' => ($oStep->getNextPosition($_POST['sTask']) - 1),
+                       'STEP_MODE'     => (isset($_POST['sMode'])) ? $_POST['sMode'] : ''
+                       ));
   G::LoadClass('processMap');
   $oProcessMap = new ProcessMap();
   $oProcessMap->getStepsCriteria($_POST['sTask']);

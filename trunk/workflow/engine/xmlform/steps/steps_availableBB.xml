@@ -18,7 +18,12 @@
   <option name="EXTERNAL">External Step</option>
   <!--<option name="MESSAGE">Message</option>-->
   </en>
-</STEP_TYPE_OBJ>
+</STEP_TYPE_OBJ>     
+
+<STEP_MODE type="text" colWidth="250"  titleAlign="left" align="left" enableHtml="1">
+  <en>Mode</en>
+</STEP_MODE>
+
 <ASSIGN type="link" colWidth="50" value="@G::LoadTranslation(ID_SELECT)" link="#" onclick="stepSave(@QPROCESS, @QTASK, @QSTEP_TYPE_OBJ, @QSTEP_UID);return false;"/>
 <PAGED_TABLE_ID type="private" showInTable="0"/>
 <JSFILTER type="javascript" replaceTags="1" showInTable="0">

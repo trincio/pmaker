@@ -39,9 +39,9 @@ try {
   G::LoadClass('processMap');
   $oProcessMap = new ProcessMap();
   $G_PUBLISH   = new Publisher();
+  
   $G_PUBLISH->AddContent('propeltable', 'paged-table', 'steps/steps_availableBB', $oProcessMap->getAvailableBBCriteria($_GET['PROCESS'], $_GET['TASK']), $_GET);
-	$G_HEADER->clearScripts();
-  G::RenderPage('publish-raw', 'raw');
+  G::RenderPage('publish-raw', 'raw');  
 }
 catch (Exception $oException) {
 	die($oException->getMessage());
