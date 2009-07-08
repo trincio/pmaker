@@ -812,4 +812,13 @@ function jumping ( $caseId, $delIndex ) {
 	G::header('Location: cases_List');
 }
 
+function PMFgetLabelOption($PROCESS, $DYNAFORM_UID, $FIELD_NAME, $FIELD_SELECTED_ID){
+	$G_FORM = new Form ("{$PROCESS}/{$DYNAFORM_UID}", PATH_DYNAFORM, SYS_LANG, false);
+	if( isset($G_FORM->fields[$FIELD_NAME]->option[$FIELD_SELECTED_ID]) ){
+		return $G_FORM->fields[$FIELD_NAME]->option[$FIELD_SELECTED_ID];
+	} else {
+		return null;
+	}
+}
+
 ?>
