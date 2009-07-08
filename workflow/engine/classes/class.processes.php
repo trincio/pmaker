@@ -1880,6 +1880,9 @@ class Processes {
       $oDataset->next();
       $oTask = new Task();
       while ($aRow = $oDataset->getRow()) {
+        $oCriteria = new Criteria('workflow');
+  	    $oCriteria->add(StepTriggerPeer::TAS_UID, $aRow['TAS_UID']);
+  	    StepTriggerPeer::doDelete($oCriteria);
         if ($oTask->taskExists($aRow['TAS_UID']))
           $oTask->remove($aRow['TAS_UID']);
       	$oDataset->next();
@@ -1937,7 +1940,7 @@ class Processes {
     $oDataset->next();
     while ($aRow = $oDataset->getRow()) {
     	//Delete the steptrigger of process
-    	$oCriteria = new Criteria('workflow');
+    	/*$oCriteria = new Criteria('workflow');
 	  	$oCriteria->add(StepTriggerPeer::STEP_UID, $aRow['STEP_UID']);
 	  	$oDataseti = StepTriggerPeer::doSelectRS($oCriteria);
     	$oDataseti->setFetchmode(ResultSet::FETCHMODE_ASSOC);
@@ -1946,8 +1949,7 @@ class Processes {
     	  if ($oStepTrigger->stepTriggerExists($aRowi['STEP_UID'], $aRowi['TAS_UID'], $aRowi['TRI_UID'], $aRowi['ST_TYPE']))
     		  $oStepTrigger->remove($aRowi['STEP_UID'], $aRowi['TAS_UID'], $aRowi['TRI_UID'], $aRowi['ST_TYPE']);
     		$oDataseti->next();
-    	}
-
+    	}*/
     	$oStep->remove($aRow['STEP_UID']);
     	$oDataset->next();
     }
