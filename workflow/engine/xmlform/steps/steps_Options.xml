@@ -20,49 +20,48 @@
 <dynaformsDelete type="private" defaultValue="../dynaforms/dynaforms_Delete"/>
 
 <js type="javascript" >
+<![CDATA[
   function stepAdd(){
-        popupWindow('@G::LoadTranslation(ID_NEW_STEP)', '@G::encryptlink(@#URL_STEPS_EDIT)?PROCESS=@#PROCESS&amp;TASK=@#TASK', 500, 420);
+        popupWindow('@G::LoadTranslation(ID_NEW_STEP)', '@G::encryptlink(@#URL_STEPS_EDIT)?PROCESS=@#PROCESS&TASK=@#TASK', 500, 420);
   }
 
-  function stepSave(sProcess, sTask, sType, sUID) { //alert(document.getElementById('STEP_MODE_'+sUID).value); return;
-    var sMode = document.getElementById('STEP_MODE_'+sUID).value;
+  function stepSave(sProcess, sTask, sType, sUID) {
     var oRPC = new leimnud.module.rpc.xmlhttp({
       url   : '../steps/steps_Save',
       async : false,
       method: 'POST',
-      args  : 'sProcess=' + sProcess + '&amp;sTask=' + sTask + '&amp;sType=' + sType + '&amp;sUID=' + sUID + '&amp;sMode=' + sMode
+      args  : 'sProcess=' + sProcess + '&sTask=' + sTask + '&sType=' + sType + '&sUID=' + sUID + '&sMode=' + document.getElementById('STEP_MODE_' + sUID).value
       });
     oRPC.make();
     currentPopupWindow.remove();
     @#PAGED_TABLE_ID.refresh();
   }
-  function 
+  function
   stepUp( uid, stepPos  ){
-    result = ajax_function('@G::encryptlink(@#URL_STEP_UP)','','STEP_UID='+uid+'&amp;TASK=@#TASK&amp;STEP_POSITION='+stepPos,'POST');
+    result = ajax_function('@G::encryptlink(@#URL_STEP_UP)','','STEP_UID='+uid+'&TASK=@#TASK&STEP_POSITION='+stepPos,'POST');
     @#PAGED_TABLE_ID.refresh();
- 
+
   }
   function stepDown( uid, stepPos  ){
-    result = ajax_function('@G::encryptlink(@#URL_STEP_DOWN)','','STEP_UID='+uid+'&amp;TASK=@#TASK&amp;STEP_POSITION='+stepPos,'POST');
+    result = ajax_function('@G::encryptlink(@#URL_STEP_DOWN)','','STEP_UID='+uid+'&TASK=@#TASK&STEP_POSITION='+stepPos,'POST');
     @#PAGED_TABLE_ID.refresh();
- 
+
   }
   function stepDelete( uid, stepPos  ){
-    new leimnud.module.app.confirm().make({label:'@#CONFIRM',action:function(){ 
-    ajax_function('@G::encryptlink(@#URL_STEP_DELETE)','','STEP_UID='+uid+'&amp;TASK=@#TASK&amp;STEP_POSITION='+stepPos,'POST'); 
+    new leimnud.module.app.confirm().make({label:'@#CONFIRM',action:function(){
+    ajax_function('@G::encryptlink(@#URL_STEP_DELETE)','','STEP_UID='+uid+'&TASK=@#TASK&STEP_POSITION='+stepPos,'POST');
     @#PAGED_TABLE_ID.refresh();
       }.extend(this)
     });
   }
-  function 
-  devolver(result){
-  //alert(result);
+  function devolver(result){
+    //alert(result);
   };
-  <![CDATA[
+
   function dynaformEdit( uid, pro_uid ){
     window.location.href = "@G::encryptlink(@#dynaformsEditor)?PRO_UID="+pro_uid+"&DYN_UID="+uid;
   }
-
-]]></js>
+]]>
+</js>
 
 </dynaForm>
