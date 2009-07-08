@@ -2528,6 +2528,16 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
+    <column name="STEP_MODE" type="VARCHAR" size="10" required="false" default="EDIT">
+      <vendor type="mysql">
+        <parameter name="Field" value="STEP_UID_OBJ"/>
+        <parameter name="Type" value="varchar(10)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="EDIT"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
     <validator column="STEP_TYPE_OBJ">
       <rule name="validValues" value="DYNAFORM|INPUT_DOCUMENT|MESSAGE|OUTPUT_DOCUMENT|EXTERNAL" message="Please select a valid value for STEP_TYPE_OBJ." />
     </validator>

@@ -24,7 +24,7 @@ abstract class BaseStepPeer {
 	const CLASS_DEFAULT = 'classes.model.Step';
 
 	/** The total number of columns. */
-	const NUM_COLUMNS = 7;
+	const NUM_COLUMNS = 8;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -51,6 +51,9 @@ abstract class BaseStepPeer {
 	/** the column name for the STEP_POSITION field */
 	const STEP_POSITION = 'STEP.STEP_POSITION';
 
+	/** the column name for the STEP_MODE field */
+	const STEP_MODE = 'STEP.STEP_MODE';
+
 	/** The PHP to DB Name Mapping */
 	private static $phpNameMap = null;
 
@@ -62,10 +65,10 @@ abstract class BaseStepPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('StepUid', 'ProUid', 'TasUid', 'StepTypeObj', 'StepUidObj', 'StepCondition', 'StepPosition', ),
-		BasePeer::TYPE_COLNAME => array (StepPeer::STEP_UID, StepPeer::PRO_UID, StepPeer::TAS_UID, StepPeer::STEP_TYPE_OBJ, StepPeer::STEP_UID_OBJ, StepPeer::STEP_CONDITION, StepPeer::STEP_POSITION, ),
-		BasePeer::TYPE_FIELDNAME => array ('STEP_UID', 'PRO_UID', 'TAS_UID', 'STEP_TYPE_OBJ', 'STEP_UID_OBJ', 'STEP_CONDITION', 'STEP_POSITION', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
+		BasePeer::TYPE_PHPNAME => array ('StepUid', 'ProUid', 'TasUid', 'StepTypeObj', 'StepUidObj', 'StepCondition', 'StepPosition', 'StepMode', ),
+		BasePeer::TYPE_COLNAME => array (StepPeer::STEP_UID, StepPeer::PRO_UID, StepPeer::TAS_UID, StepPeer::STEP_TYPE_OBJ, StepPeer::STEP_UID_OBJ, StepPeer::STEP_CONDITION, StepPeer::STEP_POSITION, StepPeer::STEP_MODE, ),
+		BasePeer::TYPE_FIELDNAME => array ('STEP_UID', 'PRO_UID', 'TAS_UID', 'STEP_TYPE_OBJ', 'STEP_UID_OBJ', 'STEP_CONDITION', 'STEP_POSITION', 'STEP_MODE', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
 	);
 
 	/**
@@ -75,10 +78,10 @@ abstract class BaseStepPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('StepUid' => 0, 'ProUid' => 1, 'TasUid' => 2, 'StepTypeObj' => 3, 'StepUidObj' => 4, 'StepCondition' => 5, 'StepPosition' => 6, ),
-		BasePeer::TYPE_COLNAME => array (StepPeer::STEP_UID => 0, StepPeer::PRO_UID => 1, StepPeer::TAS_UID => 2, StepPeer::STEP_TYPE_OBJ => 3, StepPeer::STEP_UID_OBJ => 4, StepPeer::STEP_CONDITION => 5, StepPeer::STEP_POSITION => 6, ),
-		BasePeer::TYPE_FIELDNAME => array ('STEP_UID' => 0, 'PRO_UID' => 1, 'TAS_UID' => 2, 'STEP_TYPE_OBJ' => 3, 'STEP_UID_OBJ' => 4, 'STEP_CONDITION' => 5, 'STEP_POSITION' => 6, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
+		BasePeer::TYPE_PHPNAME => array ('StepUid' => 0, 'ProUid' => 1, 'TasUid' => 2, 'StepTypeObj' => 3, 'StepUidObj' => 4, 'StepCondition' => 5, 'StepPosition' => 6, 'StepMode' => 7, ),
+		BasePeer::TYPE_COLNAME => array (StepPeer::STEP_UID => 0, StepPeer::PRO_UID => 1, StepPeer::TAS_UID => 2, StepPeer::STEP_TYPE_OBJ => 3, StepPeer::STEP_UID_OBJ => 4, StepPeer::STEP_CONDITION => 5, StepPeer::STEP_POSITION => 6, StepPeer::STEP_MODE => 7, ),
+		BasePeer::TYPE_FIELDNAME => array ('STEP_UID' => 0, 'PRO_UID' => 1, 'TAS_UID' => 2, 'STEP_TYPE_OBJ' => 3, 'STEP_UID_OBJ' => 4, 'STEP_CONDITION' => 5, 'STEP_POSITION' => 6, 'STEP_MODE' => 7, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
 	);
 
 	/**
@@ -192,6 +195,8 @@ abstract class BaseStepPeer {
 		$criteria->addSelectColumn(StepPeer::STEP_CONDITION);
 
 		$criteria->addSelectColumn(StepPeer::STEP_POSITION);
+
+		$criteria->addSelectColumn(StepPeer::STEP_MODE);
 
 	}
 

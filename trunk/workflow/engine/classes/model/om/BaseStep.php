@@ -76,6 +76,13 @@ abstract class BaseStep extends BaseObject  implements Persistent {
 	 */
 	protected $step_position = 0;
 
+
+	/**
+	 * The value for the step_mode field.
+	 * @var        string
+	 */
+	protected $step_mode = 'EDIT';
+
 	/**
 	 * Flag to prevent endless save loop, if this object is referenced
 	 * by another object which falls in this transaction.
@@ -165,6 +172,17 @@ abstract class BaseStep extends BaseObject  implements Persistent {
 	{
 
 		return $this->step_position;
+	}
+
+	/**
+	 * Get the [step_mode] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getStepMode()
+	{
+
+		return $this->step_mode;
 	}
 
 	/**
@@ -322,6 +340,28 @@ abstract class BaseStep extends BaseObject  implements Persistent {
 	} // setStepPosition()
 
 	/**
+	 * Set the value of [step_mode] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setStepMode($v)
+	{
+
+		// Since the native PHP type for this column is string,
+		// we will cast the input to a string (if it is not).
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->step_mode !== $v || $v === 'EDIT') {
+			$this->step_mode = $v;
+			$this->modifiedColumns[] = StepPeer::STEP_MODE;
+		}
+
+	} // setStepMode()
+
+	/**
 	 * Hydrates (populates) the object variables with values from the database resultset.
 	 *
 	 * An offset (1-based "start column") is specified so that objects can be hydrated
@@ -352,12 +392,14 @@ abstract class BaseStep extends BaseObject  implements Persistent {
 
 			$this->step_position = $rs->getInt($startcol + 6);
 
+			$this->step_mode = $rs->getString($startcol + 7);
+
 			$this->resetModified();
 
 			$this->setNew(false);
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 7; // 7 = StepPeer::NUM_COLUMNS - StepPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 8; // 8 = StepPeer::NUM_COLUMNS - StepPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Step object", $e);
@@ -581,6 +623,9 @@ abstract class BaseStep extends BaseObject  implements Persistent {
 			case 6:
 				return $this->getStepPosition();
 				break;
+			case 7:
+				return $this->getStepMode();
+				break;
 			default:
 				return null;
 				break;
@@ -608,6 +653,7 @@ abstract class BaseStep extends BaseObject  implements Persistent {
 			$keys[4] => $this->getStepUidObj(),
 			$keys[5] => $this->getStepCondition(),
 			$keys[6] => $this->getStepPosition(),
+			$keys[7] => $this->getStepMode(),
 		);
 		return $result;
 	}
@@ -660,6 +706,9 @@ abstract class BaseStep extends BaseObject  implements Persistent {
 			case 6:
 				$this->setStepPosition($value);
 				break;
+			case 7:
+				$this->setStepMode($value);
+				break;
 		} // switch()
 	}
 
@@ -690,6 +739,7 @@ abstract class BaseStep extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[4], $arr)) $this->setStepUidObj($arr[$keys[4]]);
 		if (array_key_exists($keys[5], $arr)) $this->setStepCondition($arr[$keys[5]]);
 		if (array_key_exists($keys[6], $arr)) $this->setStepPosition($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setStepMode($arr[$keys[7]]);
 	}
 
 	/**
@@ -708,6 +758,7 @@ abstract class BaseStep extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(StepPeer::STEP_UID_OBJ)) $criteria->add(StepPeer::STEP_UID_OBJ, $this->step_uid_obj);
 		if ($this->isColumnModified(StepPeer::STEP_CONDITION)) $criteria->add(StepPeer::STEP_CONDITION, $this->step_condition);
 		if ($this->isColumnModified(StepPeer::STEP_POSITION)) $criteria->add(StepPeer::STEP_POSITION, $this->step_position);
+		if ($this->isColumnModified(StepPeer::STEP_MODE)) $criteria->add(StepPeer::STEP_MODE, $this->step_mode);
 
 		return $criteria;
 	}
@@ -773,6 +824,8 @@ abstract class BaseStep extends BaseObject  implements Persistent {
 		$copyObj->setStepCondition($this->step_condition);
 
 		$copyObj->setStepPosition($this->step_position);
+
+		$copyObj->setStepMode($this->step_mode);
 
 
 		$copyObj->setNew(true);

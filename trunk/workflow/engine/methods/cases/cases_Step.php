@@ -178,6 +178,9 @@ switch ($_GET['TYPE'])
     }
     $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['NEXT_STEP'] = $aNextStep['PAGE'];
 
+    $oStep = new Step();
+    $oStep = $oStep->loadByProcessTaskPosition($_SESSION['PROCESS'], $_SESSION['TASK'], $_GET['POSITION']);
+
     /** Added By erik
      * date: 16-05-08
 	 * Description: this was added for the additional database connections */
@@ -185,7 +188,7 @@ switch ($_GET['TYPE'])
     $oDbConnections = new dbConnections($_SESSION['PROCESS']);
     $oDbConnections->loadAdditionalConnections();
 
-    $G_PUBLISH->AddContent('dynaform', 'xmlform', $_SESSION['PROCESS']. '/' . $_GET['UID'], '', $Fields['APP_DATA'], 'cases_SaveData?UID=' . $_GET['UID']);
+    $G_PUBLISH->AddContent('dynaform', 'xmlform', $_SESSION['PROCESS']. '/' . $_GET['UID'], '', $Fields['APP_DATA'], 'cases_SaveData?UID=' . $_GET['UID'], '', strtolower($oStep->getStepMode()));
     break;
 
   case 'INPUT_DOCUMENT':
