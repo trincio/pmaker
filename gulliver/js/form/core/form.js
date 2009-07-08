@@ -97,16 +97,18 @@
       var fields=[],i,grid='',row=0;
       for(i in me.dependentFields) {
         if (me.dependentFields[i].dependentOf) {
-          var oAux = me.dependentFields[i].dependentOf[0];
-          if (oAux.name.indexOf('][') > -1) {
-            var aAux  = oAux.name.split('][');
-            grid      = aAux[0];
-            row       = aAux[1];
-            eval("var oAux2 = {" + aAux[2] + ":'" + oAux.value() + "'}");
-            fields = fields.concat(oAux2);
-          }
-          else {
-            fields = fields.concat(me.dependentFields[i].dependentOf);
+          for (var j = 0; j < me.dependentFields[i].dependentOf.length; j++) {
+            var oAux = me.dependentFields[i].dependentOf[j];
+            if (oAux.name.indexOf('][') > -1) {
+              var aAux  = oAux.name.split('][');
+              grid      = aAux[0];
+              row       = aAux[1];
+              eval("var oAux2 = {" + aAux[2] + ":'" + oAux.value() + "'}");
+              fields = fields.concat(oAux2);
+            }
+            else {
+              fields = fields.concat(me.dependentFields[i].dependentOf);
+            }
           }
         }
       }
@@ -564,7 +566,7 @@ function G()
       mask=invertir(mask);
       num=invertir(num);
     }
-    
+
     var minAdd=-1;
     var minLoss=-1;
     var newCursorPosition=cursor;

@@ -826,7 +826,7 @@ var additionalTablesDataDelete = function(sUID, sKeys) {
       foreach ($aData['FIELDS'] as $aField) {
         switch ($aField['FLD_TYPE']) {
           case 'VARCHAR':
-            $sXml .= '<' . $aField['FLD_NAME'] . ' type="text" maxlength="' . $aField['FLD_SIZE'] . '" validate="Any" required="' . (($aField['FLD_KEY'] == 1) && ($aField['FLD_AUTO_INCREMENT'] == 0) ? '1' : '0') . '" readonly="0" size="' . (int)($aField['FLD_SIZE'] / 2) . '" mode="' . ($bEnableKeys ? 'edit' : ($aField['FLD_KEY'] == 1 ? 'view' : 'edit')) . '"><' . SYS_LANG . '>' . ($aField['FLD_DESCRIPTION'] != '' ? $aField['FLD_DESCRIPTION'] : $aField['FLD_NAME']) . '</' . SYS_LANG . '></' . $aField['FLD_NAME'] . '>';
+            $sXml .= '<' . $aField['FLD_NAME'] . ' type="text" maxlength="' . $aField['FLD_SIZE'] . '" validate="Any" required="' . (($aField['FLD_KEY'] == 1) && ($aField['FLD_AUTO_INCREMENT'] == 0) ? '1' : '0') . '" readonly="0" size="' . ((int)($aField['FLD_SIZE'] / 2) <= 60 ? (int)($aField['FLD_SIZE'] / 2) : '60') . '" mode="' . ($bEnableKeys ? 'edit' : ($aField['FLD_KEY'] == 1 ? 'view' : 'edit')) . '"><' . SYS_LANG . '>' . ($aField['FLD_DESCRIPTION'] != '' ? $aField['FLD_DESCRIPTION'] : $aField['FLD_NAME']) . '</' . SYS_LANG . '></' . $aField['FLD_NAME'] . '>';
           break;
           case 'TEXT':
             $sXml .= '<' . $aField['FLD_NAME'] . ' type="textarea" required="' . (($aField['FLD_KEY'] == 1) && ($aField['FLD_AUTO_INCREMENT'] == 0) ? '1' : '0') . '" readonly="0" rows="8" cols="45" mode="' . ($bEnableKeys ? 'edit' : ($aField['FLD_KEY'] == 1 ? 'view' : 'edit')) . '"><' . SYS_LANG . '>' . ($aField['FLD_DESCRIPTION'] != '' ? $aField['FLD_DESCRIPTION'] : $aField['FLD_NAME']) . '</' . SYS_LANG . '></' . $aField['FLD_NAME'] . '>';
