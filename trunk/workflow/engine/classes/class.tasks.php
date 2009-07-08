@@ -151,7 +151,7 @@ class Tasks {
   	catch (Exception $oError) {
     	throw($oError);
     }
-  }  
+  }
 
   /*
 	* creates row tasks from an Route Array
@@ -250,7 +250,7 @@ class Tasks {
       $oDataset1->next();
       while ($aRow1 = $oDataset1->getRow()) {
       	//Delete the triggers assigned to step
-      	$oCriteria = new Criteria('workflow');
+      	/*$oCriteria = new Criteria('workflow');
   	    $oCriteria->add(StepTriggerPeer::STEP_UID, $aRow1['STEP_UID']);
   	    $oDataset2 = StepTriggerPeer::doSelectRS($oCriteria);
         $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
@@ -258,10 +258,14 @@ class Tasks {
         while ($aRow2 = $oDataset2->getRow()) {
         	$oStepTrigger->remove($aRow2['STEP_UID'], $aRow2['TAS_UID'], $aRow2['TRI_UID'], $aRow2['ST_TYPE']);
         	$oDataset2->next();
-        }
+        }*/
         $oStep->remove($aRow1['STEP_UID']);
       	$oDataset1->next();
       }
+      //Delete step triggers
+      $oCriteria = new Criteria('workflow');
+  	  $oCriteria->add(StepTriggerPeer::TAS_UID, $sTaskUID);
+  	  StepTriggerPeer::doDelete($oCriteria);
       //Delete permissions
       $oCriteria = new Criteria('workflow');
   	  $oCriteria->add(ObjectPermissionPeer::TAS_UID, $sTaskUID);
@@ -588,15 +592,15 @@ class Tasks {
     	throw($oError);
     }
   }
-  
+
   /*
 	* Get Routes for any Process and any Task
 	* @param string $sProUid, $sTaskUid
 	* @return array
-	* by Everth 
+	* by Everth
 	*/
   public function getRoute($sProUid, $sTaskUid) {
-  	try {  
+  	try {
   	  $aRoutes   = array();
   	  $oCriteria = new Criteria('workflow');
       $oCriteria->add(RoutePeer::PRO_UID,     $sProUid);
@@ -608,7 +612,7 @@ class Tasks {
       	$aRoutes[] = $aRow;
       	$oDataset->next();
       }
-            
+
       return $aRoutes;
     }
   	catch (Exception $oError) {
