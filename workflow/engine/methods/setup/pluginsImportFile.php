@@ -66,16 +66,38 @@ switch ($RBAC->userCanAccess('PM_SETUP_ADVANCE'))
     if ( $val['filename'] == $sClassName . '.php' ) $bMainFile = true;
     if ( $val['filename'] == $sClassName . PATH_SEP . 'class.' . $sClassName . '.php' ) $bClassFile = true;
   }
+
+  $oPluginRegistry =& PMPluginRegistry::getSingleton();
+  $pluginFile = $sClassName . '.php';
+
   if ( $bMainFile && $bClassFile ) {
+    $sAux = $sClassName . 'Plugin';
+    $fVersionOld = 0.0;
+    if (file_exists(PATH_PLUGINS . $pluginFile)) {
+      include PATH_PLUGINS . $pluginFile;
+      $oClass = new $sAux($sClassName);
+      $fVersionOld = $oClass->iVersion;
+      unset($oClass);
+    }
+    $res = $tar->extract ( $path );
+    $sContent = file_get_contents($path . PATH_SEP . $pluginFile);
+    $sContent = str_replace($sAux, $sAux . '_', $sContent);
+    $sContent = str_replace('$oPluginRegistry =& PMPluginRegistry::getSingleton();', '', $sContent);
+    $sContent = str_replace('$oPluginRegistry->registerPlugin(\'plugin_selfservice\', __FILE__);', '', $sContent);
+    file_put_contents($path . PATH_SEP . $pluginFile, $sContent);
+    $sAux = $sAux . '_';
+    include $path . PATH_SEP . $pluginFile;
+    $oClass = new $sAux($sClassName);
+    $fVersionNew = $oClass->iVersion;
+    unset($oClass);
+    if ($fVersionOld > $fVersionNew) {
+      throw new Exception('A recent version of this plugin was already installed.');
+    }
     $res = $tar->extract ( PATH_PLUGINS );
   }
   else
     throw ( new Exception ( "The file $filename doesn't contain class: $sClassName ") ) ;
 
-  //print "change to ENABLED";
-  $oPluginRegistry =& PMPluginRegistry::getSingleton();
-
-  $pluginFile = $sClassName . '.php';
   if ( !file_exists ( PATH_PLUGINS . $sClassName . '.php' ) ) throw ( new Exception( "File '$pluginFile' doesn't exists ") );
 
   require_once ( PATH_PLUGINS . $pluginFile );
