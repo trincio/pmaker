@@ -158,6 +158,7 @@ class RBAC
   
   function checkAutomaticRegister( $strUser, $strPass) {
   	$result = -1; //default return value, 
+  	
     foreach ( $this->aRbacPlugins as $sClassName) {
       $plugin =  new $sClassName();
       if ( method_exists($plugin, 'automaticRegister' ) ) {
@@ -172,11 +173,13 @@ class RBAC
         	$aRow = array_merge ( $aRow, unserialize ( $aRow['AUTH_SOURCE_DATA'] ) );
         	//Check if this authsource is enabled for AutoRegister, if not skip this
         	if ( 1 ) {
+    	krumo ($aRow);
             $plugin->sAuthSource = $aRow['AUTH_SOURCE_UID'];
             $plugin->sSystem     = $this->sSystem;
             //search the usersRolesObj
             //create the users in ProcessMaker
             $res = $plugin->automaticRegister($aRow, $strUser, $strPass);
+    	krumo ($res);
             if ( $res == 1 ) return $res;
         	}
           $oDataset->next();
@@ -196,15 +199,15 @@ class RBAC
     //check if the user's due date is valid
     if ( $aUserFields['USR_DUE_DATE']  < date('Y-m-d') )
       return -4;  //due date
+      
     foreach ( $this->aRbacPlugins as $sClassName) {
       if ( strtolower($sClassName) == strtolower($sAuthType) ) {
         $plugin =  new $sClassName();
         $plugin->sAuthSource = $sAuthSource;
         $plugin->sSystem     = $this->sSystem;
-
         $bValidUser = $plugin->VerifyLogin ( $sAuthUserDn, $strPass );
 
-        if ( $bValidUser == TRUE)
+        if ( $bValidUser === TRUE)
           return ( $aUserFields['USR_UID'] );
         else
           return -2; //wrong password
@@ -240,12 +243,11 @@ class RBAC
     if ( $this->userObj->verifyUser($strUser) == 0 ) {
     	//here we are checking if the automatic user Register is enabled, ioc return -1
     	$res = $this->checkAutomaticRegister( $strUser, $strPass);
-    	if ( $res != 1 )
-    	  return $res;
-    	else
+    	if ( $res == 1 )
     	  $this->userObj->verifyUser($strUser);
+    	else
+    	  return $res;
     }
-
 
     //default values
     $sAuthType = 'mysql';
@@ -256,6 +258,7 @@ class RBAC
       $sAuthSource = $this->userObj->fields['UID_AUTH_SOURCE'];
       $sAuthUserDn = $this->userObj->fields['USR_AUTH_USER_DN'];
       $res = $this->VerifyWithOtherAuthenticationSource( $sAuthType, $sAuthSource, $this->userObj->fields, $sAuthUserDn, $strPass);
+
       return $res;
     }
     else {
