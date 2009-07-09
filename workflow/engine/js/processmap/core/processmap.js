@@ -14,6 +14,9 @@ var processmap=function(){
 			buildingBlocks:{
 				injector:function(lanzado)
 				{
+					Wx = (lanzado=='dynaforms')?700:430;
+					Hx = 460;
+					
 					var bbk = {
 						dynaforms:1,
 						messages:1,
@@ -27,7 +30,7 @@ var processmap=function(){
 						this.panels.buildingBlocks=new leimnud.module.panel();
 						this.panels.buildingBlocks.options={
 							limit	:true,
-							size	:{w:430,h:460},
+							size	:{w:Wx,h:Hx},
 							position:{x:0,y:10,center:true},
 							title	:"",
 							theme	:"processmaker",
