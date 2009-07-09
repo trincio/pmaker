@@ -291,16 +291,17 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
       }
     }
     ///************TimeZone Set***************//
-
-	  if(!defined('TIME_ZONE'))
-	  		define('TIME_ZONE', 'America/La_Paz');
-
-		if (version_compare(phpversion(), "5.1.0", ">=")) {
-			    date_default_timezone_set(TIME_ZONE);
+    if(!defined('TIME_ZONE')) {
+      if (function_exists('date_default_timezone_get')) {
+        define('TIME_ZONE', date_default_timezone_get());
+      }
+      else {
+        define('TIME_ZONE', 'America/La_Paz');
+      }
+    }
+    if (function_exists('date_default_timezone_set')) {
+      date_default_timezone_set(TIME_ZONE);
 		}
-	  else {
-	    // you're not
-	  }
   }
   else {  //when we are in global pages, outside any valid workspace
 
