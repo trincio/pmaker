@@ -177,21 +177,14 @@ class RBAC
             //search the usersRolesObj
             //create the users in ProcessMaker
             $res = $plugin->automaticRegister($aRow, $strUser, $strPass);
-            //return the userId
+            if ( $res == 1 ) return $res;
         	}
           $oDataset->next();
           $aRow = $oDataset->getRow();
         }
-        //$bValidUser = $plugin->VerifyLogin ( $sAuthUserDn, $strPass );
-
-/*        if ( $bValidUser == TRUE)
-          return ( $aUserFields['USR_UID'] );
-        else
-          return -2; //wrong password
-*/
       }
     }
-     die; 
+
   }
 
   function VerifyWithOtherAuthenticationSource( $sAuthType, $sAuthSource, $aUserFields, $sAuthUserDn, $strPass)
@@ -203,13 +196,11 @@ class RBAC
     //check if the user's due date is valid
     if ( $aUserFields['USR_DUE_DATE']  < date('Y-m-d') )
       return -4;  //due date
-
     foreach ( $this->aRbacPlugins as $sClassName) {
-      if ( $sClassName == $sAuthType ) {
+      if ( strtolower($sClassName) == strtolower($sAuthType) ) {
         $plugin =  new $sClassName();
         $plugin->sAuthSource = $sAuthSource;
         $plugin->sSystem     = $this->sSystem;
-        krumo ( $aUserFields );
 
         $bValidUser = $plugin->VerifyLogin ( $sAuthUserDn, $strPass );
 
@@ -245,11 +236,16 @@ class RBAC
   {
     //check if the user exists in the table RB_WORKFLOW.USERS
     $this->initRBAC();
+    //if the user exists, the VerifyUser function will return the user properties
     if ( $this->userObj->verifyUser($strUser) == 0 ) {
     	//here we are checking if the automatic user Register is enabled, ioc return -1
-    	return $this->checkAutomaticRegister( $strUser, $strPass);
+    	$res = $this->checkAutomaticRegister( $strUser, $strPass);
+    	if ( $res != 1 )
+    	  return $res;
+    	else
+    	  $this->userObj->verifyUser($strUser);
     }
-    //if the user exists, the VerifyUser function will return the user properties
+
 
     //default values
     $sAuthType = 'mysql';
