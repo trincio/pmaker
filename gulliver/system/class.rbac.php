@@ -172,14 +172,12 @@ class RBAC
         while ( is_array ( $aRow ) ) {
         	$aRow = array_merge ( $aRow, unserialize ( $aRow['AUTH_SOURCE_DATA'] ) );
         	//Check if this authsource is enabled for AutoRegister, if not skip this
-        	if ( 1 ) {
-    	krumo ($aRow);
+        	if ( $aRow['AUTH_SOURCE_AUTO_REGISTER'] == 1 ) {
             $plugin->sAuthSource = $aRow['AUTH_SOURCE_UID'];
             $plugin->sSystem     = $this->sSystem;
             //search the usersRolesObj
             //create the users in ProcessMaker
             $res = $plugin->automaticRegister($aRow, $strUser, $strPass);
-    	krumo ($res);
             if ( $res == 1 ) return $res;
         	}
           $oDataset->next();
