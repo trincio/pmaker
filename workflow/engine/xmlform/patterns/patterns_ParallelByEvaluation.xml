@@ -116,6 +116,18 @@ Pm.tmp.derivationsPanel.events.remove = function() {
 
 var savePattern = function(oForm)
 {
+	//iRows = Number_Rows_Grid('GRID_PARALLEL_EVALUATION_TYPE', 'ROU_CONDITION'); alert(iRows);return;
+  i = 0;
+	while (i < 3)  
+  {	
+		aux = getGridField('GRID_PARALLEL_EVALUATION_TYPE', (i + 1), 'ROU_CONDITION').value;	  
+	  if(aux=='')
+	   {	alert(G_STRINGS.ID_REQUIRED);
+	   	  return;
+	   }
+	  i++;	  
+  }
+
   var oAux;
   var oType     = getField('ROU_TYPE');
   var oOldType  = getField('ROU_TYPE_OLD');
