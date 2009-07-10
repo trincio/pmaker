@@ -75,6 +75,9 @@ switch ($RBAC->userCanAccess('PM_SETUP_ADVANCE'))
     $fVersionOld = 0.0;
     if (file_exists(PATH_PLUGINS . $pluginFile)) {
       include PATH_PLUGINS . $pluginFile;
+      if (!class_exists($sAux)) {
+        $sAux = $sClassName . 'plugin';
+      }
       $oClass = new $sAux($sClassName);
       $fVersionOld = $oClass->iVersion;
       unset($oClass);
@@ -83,7 +86,7 @@ switch ($RBAC->userCanAccess('PM_SETUP_ADVANCE'))
     $sContent = file_get_contents($path . PATH_SEP . $pluginFile);
     $sContent = str_replace($sAux, $sAux . '_', $sContent);
     $sContent = str_replace('$oPluginRegistry =& PMPluginRegistry::getSingleton();', '', $sContent);
-    $sContent = str_replace('$oPluginRegistry->registerPlugin(\'plugin_selfservice\', __FILE__);', '', $sContent);
+    $sContent = str_replace('$oPluginRegistry->registerPlugin(\'' . $sClassName . '\', __FILE__);', '', $sContent);
     file_put_contents($path . PATH_SEP . $pluginFile, $sContent);
     $sAux = $sAux . '_';
     include $path . PATH_SEP . $pluginFile;
