@@ -92,6 +92,35 @@ switch ($RBAC->userCanAccess('PM_SETUP_ADVANCE'))
     include $path . PATH_SEP . $pluginFile;
     $oClass = new $sAux($sClassName);
     $fVersionNew = $oClass->iVersion;
+    if (!isset($oClass->iPMVersion)) {
+      $oClass->iPMVersion = 0;
+    }
+    if ($oClass->iPMVersion > 0) {
+      if (!defined('PM_VERSION')) {
+        define('PM_VERSION', 0);
+      }
+      if (PM_VERSION > 0) {
+        if ($oClass->iPMVersion > PM_VERSION) {
+          throw new Exception('This plugin needs ' . $oClass->iPMVersion . ' version or higher of ProcessMaker');
+        }
+      }
+    }
+    if (!isset($oClass->aDependences)) {
+      $oClass->aDependences = null;
+    }
+    if (!empty($oClass->aDependences)) {
+      foreach ($oClass->aDependences as $aDependence) {
+        if (file_exists(PATH_PLUGINS . $aDependence['sClassName'] . '.php')) {
+          require_once PATH_PLUGINS . $aDependence['sClassName'] . '.php';
+          if (!$oPluginRegistry->getPluginDetails($aDependence['sClassName'] . '.php')) {
+            throw new Exception('This plugin needs "' . $aDependence['sClassName'] . '" plugin');
+          }
+        }
+        else {
+          throw new Exception('This plugin needs "' . $aDependence['sClassName'] . '" plugin');
+        }
+      }
+    }
     unset($oClass);
     if ($fVersionOld > $fVersionNew) {
       throw new Exception('A recent version of this plugin was already installed.');
