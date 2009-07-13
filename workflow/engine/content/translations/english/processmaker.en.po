@@ -2,7 +2,7 @@ msgid ""
 msgstr "" 
 "Project-Id-Version: PM 4.0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-06-30 16:00+0100 \n"
+"PO-Revision-Date: 2009-07-13 10:20+0100 \n"
 "Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
 "Language-Team: Colosa Developers Team <developers@colosa.com>\n"
 "MIME-Version: 1.0\n"
@@ -2888,6 +2888,12 @@ msgid "Alert Message"
 msgstr "Alert Message"
 
 # TRANSLATION
+# JAVASCRIPT/ID_REQUIRED
+#: JAVASCRIPT/ID_REQUIRED
+msgid "The conditions is required"
+msgstr "The conditions is required"
+
+# TRANSLATION
 # LABEL/ID_DUPLICATE_ENTRY_PRIMARY_KEY
 #: LABEL/ID_DUPLICATE_ENTRY_PRIMARY_KEY
 msgid "Duplicate entry for primary key"
@@ -4500,6 +4506,12 @@ msgstr "Save & Open"
 #: link - MNU_ASSIGN
 msgid "[dynaforms/dynaforms_SupervisorOptions.xml?MNU_ASSIGN] Assign"
 msgstr "Assign"
+
+# dynaforms/dynaforms_ShortList.xml?DYN_UID
+# dynaforms/dynaforms_ShortList.xml
+#: text - DYN_UID
+msgid "[dynaforms/dynaforms_ShortList.xml?DYN_UID] UID"
+msgstr "UID"
 
 # dynaforms/dynaforms_ShortList.xml?DYN_TITLE
 # dynaforms/dynaforms_ShortList.xml
@@ -8574,12 +8586,6 @@ msgstr "Description"
 #: subtitle - subinstallSteps
 msgid "Install Steps"
 msgstr "Install Steps"
-
-# processes/objectpmView.xml?link
-# processes/objectpmView.xml
-#: link - link
-msgid "link"
-msgstr "link"
 
 # processes/processes_Import.xml?TITLE1
 # processes/processes_Import.xml
@@ -12940,8 +12946,8 @@ msgstr "Object Classes"
 # authSources/ldapEdit.xml?AUTH_SOURCE_ATTRIBUTES
 # authSources/ldapEdit.xml
 #: textarea - AUTH_SOURCE_ATTRIBUTES
-msgid "Atributes"
-msgstr "Atributes"
+msgid "Attributes"
+msgstr "Attributes"
 
 # authSources/ldapEdit.xml?btnSave
 # authSources/ldapEdit.xml
@@ -13056,12 +13062,6 @@ msgstr "Manual Assignment"
 #: radiogroup - TAS_ASSIGN_TYPE - EVALUATE
 msgid "[tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_TYPE-EVALUATE]"
 msgstr "Value Based Assignment"
-
-# tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_VARIABLE
-# tasks/tasks_AssignmentRules.xml
-#: textpm - TAS_ASSIGN_VARIABLE
-msgid "Variable for Value Based Assignment"
-msgstr "Variable for Value Based Assignment"
 
 # tasks/tasks_Labels.xml?TAS_DEF_TITLE
 # tasks/tasks_Labels.xml
@@ -13206,12 +13206,6 @@ msgstr "Title"
 #: textarea - TAS_DESCRIPTION
 msgid "[tasks/tasks_Definition.xml?TAS_DESCRIPTION] Description"
 msgstr "Description"
-
-# tasks/tasks_Definition.xml?TAS_PRIORITY_VARIABLE
-# tasks/tasks_Definition.xml
-#: textpm - TAS_PRIORITY_VARIABLE
-msgid "Variable for Case priority"
-msgstr "Variable for Case priority"
 
 # tasks/tasks_Definition.xml?TAS_START
 # tasks/tasks_Definition.xml
@@ -15855,7 +15849,7 @@ msgstr "Error"
 
 # login/showMessage.xml?MESSAGE
 # login/showMessage.xml
-#: text - MESSAGE
+#: caption - MESSAGE
 msgid "[login/showMessage.xml?MESSAGE] The user has cases pending or in progress.  Before deletion, you should reassign the user's cases."
 msgstr "The user has cases pending or in progress.  Before deletion, you should reassign the user's cases."
 
@@ -16110,6 +16104,12 @@ msgstr "Documentation"
 #: dropdown - STEP_TYPE_OBJ - EXTERNAL
 msgid "[steps/steps_availableBB.xml?STEP_TYPE_OBJ-EXTERNAL]"
 msgstr "External Step"
+
+# steps/steps_availableBB.xml?STEP_MODE
+# steps/steps_availableBB.xml
+#: text - STEP_MODE
+msgid "Mode"
+msgstr "Mode"
 
 # steps/conditions_Edit.xml?STEP_CONDITION
 # steps/conditions_Edit.xml
