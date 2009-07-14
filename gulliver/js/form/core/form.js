@@ -998,116 +998,127 @@ function contractExpandSubtitle(subTitle){
   else contractSubtitle(subTitle);
 }
 
+var notValidateThisFields = new Array();
+
 function validateForm(aRequiredFields)
 {
 	//alert(oRequiredFields.junior['type']);
-	//alert(var_dump(aRequiredFields.toJSONString()));
+	//alert(var_dump(aRequiredFields.toJSONString()));	
 	var sMessage = '';
-	for (var i = 0; i < aRequiredFields.length; i++) {
-		 switch(aRequiredFields[i].type) {
-		 	  case 'text':
-		 	    var vtext = new input(getField(aRequiredFields[i].name));
-		 	    if(getField(aRequiredFields[i].name).value=='')
-		 	    	{ sMessage += "- " + aRequiredFields[i].label + "\n";
-		 	    		vtext.failed();
-		 	    	}
-		 	    	else
-		 	    	{
-		 	    	  vtext.passed();
-		 	    	}
-		 	  break;
-
-		 	  case 'dropdown':
-		 	    if(getField(aRequiredFields[i].name).value=='')
-		 	    		sMessage += "- " + aRequiredFields[i].label + "\n";
-		 	  break;
-
-		 	  case 'textarea':
-		 	    if(getField(aRequiredFields[i].name).value=='')
-		 	    		sMessage += "- " + aRequiredFields[i].label + "\n";
-		 	  break;
-
-		 	  case 'password':
-		 	    var vpass = new input(getField(aRequiredFields[i].name));
-		 	    if(getField(aRequiredFields[i].name).value=='')
-		 	    	{ sMessage += "- " + aRequiredFields[i].label + "\n";
-		 	    		vpass.failed();
-		 	    	}
-		 	    	else
-		 	    	{
-		 	    	  vpass.passed();
-		 	    	}
-		 	  break;
-
-		 	  case 'currency':
-		 	    var vcurr = new input(getField(aRequiredFields[i].name));
-		 	    if(getField(aRequiredFields[i].name).value=='')
-		 	    	{ sMessage += "- " + aRequiredFields[i].label + "\n";
-		 	    		vcurr.failed();
-		 	    	}
-		 	    	else
-		 	    	{
-		 	    	  vcurr.passed();
-		 	    	}
-		 	  break;
-
-		 	  case 'percentage':
-		 	    var vper = new input(getField(aRequiredFields[i].name));
-		 	    if(getField(aRequiredFields[i].name).value=='')
-		 	    	{ sMessage += "- " + aRequiredFields[i].label + "\n";
-		 	    		vper.failed();
-		 	    	}
-		 	    	else
-		 	    	{
-		 	    	  vper.passed();
-		 	    	}
-		 	  break;
-
-		 	  case 'yesno':
-		 	    if(getField(aRequiredFields[i].name).value=='')
-		 	    		sMessage += "- " + aRequiredFields[i].label + "\n";
-		 	  break;
-
-		 	  case 'date':
-		 	    if(getField(aRequiredFields[i].name).value=='')
-		 	    		sMessage += "- " + aRequiredFields[i].label + "\n";
-		 	  break;
-
-		 	  case 'file':
-		 	    if(getField(aRequiredFields[i].name).value=='')
-		 	    		sMessage += "- " + aRequiredFields[i].label + "\n";
-		 	  break;
-
-		 	  case 'listbox':
-		 	    var oAux = getField(aRequiredFields[i].name);
-					var bOneSelected = false;
-					for (var j = 0; j < oAux.options.length; j++) {
-					 	if (oAux.options[j].selected) {
-					    bOneSelected = true;
-					    j = oAux.options.length;
-					  }
-					}
-					if(bOneSelected == false)
-		 	    		sMessage += "- " + aRequiredFields[i].label + "\n";
-		 	  break;
-
-		 	  case 'radiogroup':
-		 	  	var x=aRequiredFields[i].name;
-		 	  	var oAux = document.getElementsByName('form['+ x +']');
-					var bOneChecked = false;
-					for (var k = 0; k < oAux.length; k++) {
-					    var r = oAux[k];
-					    if (r.checked) {
-					      bOneChecked = true;
-					    	k = oAux.length;
-					  	}
-					}
-
-					if(bOneChecked == false)
-		 	    	sMessage += "- " + aRequiredFields[i].label + "\n";
-
-		 	  break;
-		 	}
+	for (var i = 0; i < aRequiredFields.length; i++) { 
+		 var sw = 0;			 
+		 for(var j=0; j < notValidateThisFields.length; j++)
+		   { if(aRequiredFields[i].name ==  notValidateThisFields[j])
+		   			sw=1;		   		
+		   }
+		 
+		 if(sw==0)
+		 	{	
+		 		switch(aRequiredFields[i].type) { 
+		 			  case 'text':
+		 			    var vtext = new input(getField(aRequiredFields[i].name));
+		 			    if(getField(aRequiredFields[i].name).value=='')
+		 			    	{ sMessage += "- " + aRequiredFields[i].label + "\n";
+		 			    		vtext.failed();
+		 			    	}
+		 			    	else
+		 			    	{
+		 			    	  vtext.passed();
+		 			    	}
+		 			  break;
+     		
+		 			  case 'dropdown':
+		 			    if(getField(aRequiredFields[i].name).value=='')
+		 			    		sMessage += "- " + aRequiredFields[i].label + "\n";
+		 			  break;
+     		
+		 			  case 'textarea':
+		 			    if(getField(aRequiredFields[i].name).value=='')
+		 			    		sMessage += "- " + aRequiredFields[i].label + "\n";
+		 			  break;
+     		
+		 			  case 'password':
+		 			    var vpass = new input(getField(aRequiredFields[i].name));
+		 			    if(getField(aRequiredFields[i].name).value=='')
+		 			    	{ sMessage += "- " + aRequiredFields[i].label + "\n";
+		 			    		vpass.failed();
+		 			    	}
+		 			    	else
+		 			    	{
+		 			    	  vpass.passed();
+		 			    	}
+		 			  break;
+     		
+		 			  case 'currency':
+		 			    var vcurr = new input(getField(aRequiredFields[i].name));
+		 			    if(getField(aRequiredFields[i].name).value=='')
+		 			    	{ sMessage += "- " + aRequiredFields[i].label + "\n";
+		 			    		vcurr.failed();
+		 			    	}
+		 			    	else
+		 			    	{
+		 			    	  vcurr.passed();
+		 			    	}
+		 			  break;
+     		
+		 			  case 'percentage':
+		 			    var vper = new input(getField(aRequiredFields[i].name));
+		 			    if(getField(aRequiredFields[i].name).value=='')
+		 			    	{ sMessage += "- " + aRequiredFields[i].label + "\n";
+		 			    		vper.failed();
+		 			    	}
+		 			    	else
+		 			    	{
+		 			    	  vper.passed();
+		 			    	}
+		 			  break;
+     		
+		 			  case 'yesno':
+		 			    if(getField(aRequiredFields[i].name).value=='')
+		 			    		sMessage += "- " + aRequiredFields[i].label + "\n";
+		 			  break;
+     		
+		 			  case 'date':
+		 			    if(getField(aRequiredFields[i].name).value=='')
+		 			    		sMessage += "- " + aRequiredFields[i].label + "\n";
+		 			  break;
+     		
+		 			  case 'file':
+		 			    if(getField(aRequiredFields[i].name).value=='')
+		 			    		sMessage += "- " + aRequiredFields[i].label + "\n";
+		 			  break;
+     		
+		 			  case 'listbox':
+		 			    var oAux = getField(aRequiredFields[i].name);
+							var bOneSelected = false;
+							for (var j = 0; j < oAux.options.length; j++) {
+							 	if (oAux.options[j].selected) {
+							    bOneSelected = true;
+							    j = oAux.options.length;
+							  }
+							}
+							if(bOneSelected == false)
+		 			    		sMessage += "- " + aRequiredFields[i].label + "\n";
+		 			  break;
+     		
+		 			  case 'radiogroup':
+		 			  	var x=aRequiredFields[i].name;
+		 			  	var oAux = document.getElementsByName('form['+ x +']');
+							var bOneChecked = false;
+							for (var k = 0; k < oAux.length; k++) {
+							    var r = oAux[k];
+							    if (r.checked) {
+							      bOneChecked = true;
+							    	k = oAux.length;
+							  	}
+							}
+     		
+							if(bOneChecked == false)
+		 			    	sMessage += "- " + aRequiredFields[i].label + "\n";
+     		
+		 			  break;
+		 			}
+		 	}		
 	}
 
 	if (sMessage != '') {
@@ -1150,3 +1161,23 @@ var saveAndRefreshForm = function(oObject) {
     }
   }
 };
+
+var removeRequiredById = function(campo)
+{ //the answer
+	var tam = notValidateThisFields.length;		
+	notValidateThisFields[tam+1] = campo;
+	return;	
+};
+
+var enableRequiredById = function(campo)
+{ var aAux = new Array();
+	for(j=0; j < notValidateThisFields.length; j++)
+		{ 
+			if(notValidateThisFields[j]!=campo)
+				 aAux[j] = notValidateThisFields[j];		
+		}
+		
+	notValidateThisFields = aAux;	
+}
+
+
