@@ -57,7 +57,7 @@
       	$_SESSION['END_POINT'] = $_POST["epr"];
       }
       $defaultEndpoint = 'http://' .$_SERVER['SERVER_NAME'] . ':' .$_SERVER['SERVER_PORT'] .
-              '/sys' .SYS_SYS.'/en/green/services/wsdl';
+              '/sys' .SYS_SYS.'/en/green/services/wsdl2';
 
       $endpoint = isset( $_SESSION['END_POINT'] ) ? $_SESSION['END_POINT'] : $defaultEndpoint;
 
@@ -76,7 +76,8 @@
           }
       	  $G_PUBLISH = new Publisher();
           $fields['status_code'] = $result->status_code;
-          $fields['message']     = $result->message;
+          $fields['message']     = 'ProcessMaker WebService version: ' . $result->version . "\n" . $result->message;
+          $fields['version']     = $result->version;
           $fields['time_stamp']  = $result->timestamp;
           $G_PUBLISH->AddContent('xmlform', 'xmlform', 'setup/wsShowResult',null, $fields );
           G::RenderPage('publish', 'raw');
@@ -85,21 +86,31 @@
           $sessionId = $frm["SESSION_ID"];
           $params = array('sessionId'=>$sessionId );
           $result = $client->__SoapCall('ProcessList', array($params));
-
       	  $G_PUBLISH = new Publisher();
           $rows[] = array ( 'guid' => 'char', 'name' => 'char' );
           if ( isset ( $result->processes ) )
+            if ( is_object( $result->processes) ) {
+           	  if ( $result->processes->guid ) $guid = $result->processes->guid;
+          	  if ( $result->processes->name ) $name = $result->processes->name;
+              $rows[] = array ( 'guid' => $guid, 'name' => $name );
+          	}
+            else 
             foreach ( $result->processes as $key=> $item) {
               if ( isset ($item->item) )
                 foreach ( $item->item as $index=> $val ) {
           	      if ( $val->key == 'guid' ) $guid = $val->value;
           	      if ( $val->key == 'name' ) $name = $val->value;
                 }
-              else
+              else if ( is_array( $item) )
                 foreach ( $item as $index=> $val ) {
               	  if ( $val->key == 'guid' ) $guid = $val->value;
               	  if ( $val->key == 'name' ) $name = $val->value;
                 }
+              else {
+              	  if ( isset($item->guid) ) $guid = $item->guid;
+              	  if ( isset($item->name) ) $name = $item->name;
+                }
+              
               $rows[] = array ( 'guid' => $guid, 'name' => $name );
             }
           if ( isset ($_SESSION['_DBArray']) ) $_DBArray = $_SESSION['_DBArray'];
@@ -120,17 +131,27 @@
       	  $G_PUBLISH = new Publisher();
           $rows[] = array ( 'guid' => 'char', 'name' => 'char' );
           if ( isset ( $result->roles ) )
+            if ( is_object( $result->roles) ) {
+           	  if ( $result->roles->guid ) $guid = $result->roles->guid;
+          	  if ( $result->roles->name ) $name = $result->roles->name;
+              $rows[] = array ( 'guid' => $guid, 'name' => $name );
+          	}
+            else 
             foreach ( $result->roles as $key=> $item) {
               if ( isset ($item->item) )
                 foreach ( $item->item as $index=> $val ) {
           	      if ( $val->key == 'guid' ) $guid = $val->value;
           	      if ( $val->key == 'name' ) $name = $val->value;
                 }
-              else
+              else if ( is_array( $item) ) 
                 foreach ( $item as $index=> $val ) {
           	      if ( $val->key == 'guid' ) $guid = $val->value;
           	      if ( $val->key == 'name' ) $name = $val->value;
                 }
+              else {
+              	  if ( isset($item->guid) ) $guid = $item->guid;
+              	  if ( isset($item->name) ) $name = $item->name;
+              }
 
               $rows[] = array ( 'guid' => $guid, 'name' => $name );
             }
@@ -153,17 +174,27 @@
       	  $G_PUBLISH = new Publisher();
           $rows[] = array ( 'guid' => 'char', 'name' => 'char' );
           if ( isset ( $result->groups ) )
+            if ( is_object( $result->groups) ) {
+           	  if ( $result->groups->guid ) $guid = $result->groups->guid;
+          	  if ( $result->groups->name ) $name = $result->groups->name;
+              $rows[] = array ( 'guid' => $guid, 'name' => $name );
+          	}
+            else 
             foreach ( $result->groups as $key=> $item) {
               if ( isset ($item->item) )
                 foreach ( $item->item as $index=> $val ) {
           	      if ( $val->key == 'guid' ) $guid = $val->value;
           	      if ( $val->key == 'name' ) $name = $val->value;
                 }
-              else
+              else if ( is_array( $item) ) 
                 foreach ( $item as $index=> $val ) {
           	      if ( $val->key == 'guid' ) $guid = $val->value;
           	      if ( $val->key == 'name' ) $name = $val->value;
                 }
+              else {
+              	  if ( isset($item->guid) ) $guid = $item->guid;
+              	  if ( isset($item->name) ) $name = $item->name;
+              }
 
               $rows[] = array ( 'guid' => $guid, 'name' => $name );
             }
@@ -182,24 +213,43 @@
           $sessionId = $frm["SESSION_ID"];
           $params = array('sessionId'=>$sessionId );
           $result = $client->__SoapCall('CaseList', array($params));
-
       	  $G_PUBLISH = new Publisher();
-          $rows[] = array ( 'guid' => 'char', 'name' => 'char' );
+          $rows[] = array ( 'guid' => 'char', 'name' => 'char' , 'status' => 'char' , 'delIndex' => 'char');
 
           if ( isset ( $result->cases ) )
+            if ( is_object( $result->cases) ) {
+            	$name ='';
+           	  if ( $result->cases->guid ) $guid = $result->cases->guid;
+          	  if ( $result->cases->name ) $name = $result->cases->name;
+          	  if ( $result->cases->status )   $status   = $result->cases->status;
+          	  if ( $result->cases->delIndex ) $delIndex = $result->cases->delIndex;
+              $rows[] = array ( 'guid' => $guid, 'name' => $name, 'status' => $status, 'delIndex' => $delIndex );
+          	}
+            else 
             foreach ( $result->cases as $key=> $item) {
               if ( isset ($item->item) )
                 foreach ( $item->item as $index=> $val ) {
           	      if ( $val->key == 'guid' ) $guid = $val->value;
           	      if ( $val->key == 'name' ) $name = $val->value;
+          	      if ( $val->key == 'status' ) $status = $val->value;
+          	      if ( $val->key == 'delIndex' ) $delIndex = $val->value;
                 }
-              else
+              else if ( is_array( $item) ) 
                 foreach ( $item as $index=> $val ) {
           	      if ( $val->key == 'guid' ) $guid = $val->value;
           	      if ( $val->key == 'name' ) $name = $val->value;
+          	      if ( $val->key == 'status' ) $status = $val->value;
+          	      if ( $val->key == 'delIndex' ) $delIndex = $val->value;
                 }
+              else {
+          	      if ( isset($item->guid )    ) $guid     = $item->guid;
+          	      if ( isset($item->name )    ) $name     = $item->name;
+          	      if ( isset($item->status )  ) $status   = $item->status;
+          	      if ( isset($item->delIndex )) $delIndex = $item->delIndex;
+              }
 
-              $rows[] = array ( 'guid' => $guid, 'name' => $name );
+              $rows[] = array ( 'guid' => $guid, 'name' => $name, 'status' => $status, 'delIndex' => $delIndex );
+              
             }
           if ( isset ($_SESSION['_DBArray']) ) $_DBArray = $_SESSION['_DBArray'];
           $_DBArray['case'] = $rows;
@@ -219,17 +269,27 @@
       	  $G_PUBLISH = new Publisher();
           $rows[] = array ( 'guid' => 'char', 'name' => 'char' );
           if ( isset ( $result->users ) )
+            if ( is_object( $result->users) ) {
+           	  if ( $result->users->guid ) $guid = $result->users->guid;
+          	  if ( $result->users->name ) $name = $result->users->name;
+              $rows[] = array ( 'guid' => $guid, 'name' => $name );
+          	}
+            else 
             foreach ( $result->users as $key=> $item) {
               if ( isset ($item->item) )
                 foreach ( $item->item as $index=> $val ) {
           	      if ( $val->key == 'guid' ) $guid = $val->value;
           	      if ( $val->key == 'name' ) $name = $val->value;
                 }
-              else
+              else if ( is_array( $item) ) 
                 foreach ( $item as $index=> $val ) {
           	      if ( $val->key == 'guid' ) $guid = $val->value;
           	      if ( $val->key == 'name' ) $name = $val->value;
                 }
+              else {
+              	  if ( isset($item->guid) ) $guid = $item->guid;
+              	  if ( isset($item->name) ) $name = $item->name;
+              }
 
               $rows[] = array ( 'guid' => $guid, 'name' => $name );
             }
@@ -369,6 +429,7 @@
           $email      = $frm["EMAIL"];
           $role       = $frm["ROLE"];
           $password   = $frm["PASSWORD"];
+
           $params = array('sessionId'=>$sessionId, 'userId'=>$userId, 'firstname'=>$firstname, 'lastname'=>$lastname, 'email'=>$email, 'role'=>$role, 'password'=>$password);
           $result = $client->__SoapCall('CreateUser', array($params));
       	  $G_PUBLISH = new Publisher();
@@ -388,17 +449,27 @@
           $rows[] = array ( 'guid' => 'char', 'name' => 'char' );
 
           if ( isset ( $result->tasks ) )
+            if ( is_object( $result->tasks) ) {
+           	  if ( $result->tasks->guid ) $guid = $result->tasks->guid;
+          	  if ( $result->tasks->name ) $name = $result->tasks->name;
+              $rows[] = array ( 'guid' => $guid, 'name' => $name );
+          	}
+            else 
             foreach ( $result->tasks as $key=> $item) {
               if ( isset ($item->item) )
                 foreach ( $item->item as $index=> $val ) {
           	      if ( $val->key == 'guid' ) $guid = $val->value;
           	      if ( $val->key == 'name' ) $name = $val->value;
                 }
-              else
+              else if ( is_array( $item) ) 
                 foreach ( $item as $index=> $val ) {
           	      if ( $val->key == 'guid' ) $guid = $val->value;
           	      if ( $val->key == 'name' ) $name = $val->value;
                 }
+              else {
+              	  if ( isset($item->guid) ) $guid = $item->guid;
+              	  if ( isset($item->name) ) $name = $item->name;
+              }
 
               $rows[] = array ( 'guid' => $guid, 'name' => $name );
             }
@@ -425,17 +496,27 @@
           $rows[] = array ( 'guid' => 'char', 'name' => 'char' );
 
           if ( isset ( $result->taskCases ) )
+            if ( is_object( $result->taskCases) ) {
+           	  if ( $result->taskCases->guid ) $guid = $result->taskCases->guid;
+          	  if ( $result->taskCases->name ) $name = $result->taskCases->name;
+              $rows[] = array ( 'guid' => $guid, 'name' => $name );
+          	}
+            else 
             foreach ( $result->taskCases as $key=> $item) {
               if ( isset ($item->item) )
                 foreach ( $item->item as $index=> $val ) {
           	      if ( $val->key == 'guid' ) $guid = $val->value;
           	      if ( $val->key == 'name' ) $name = $val->value;
                 }
-              else
+              else if ( is_array( $item) ) 
                 foreach ( $item as $index=> $val ) {
           	      if ( $val->key == 'guid' ) $guid = $val->value;
           	      if ( $val->key == 'name' ) $name = $val->value;
                 }
+              else { print_r ( $item );
+              	  if ( isset($item->guid) ) $guid = $item->guid;
+              	  if ( isset($item->name) ) $name = $item->name;
+              }
 
               $rows[] = array ( 'guid' => $guid, 'name' => $name );
             }
