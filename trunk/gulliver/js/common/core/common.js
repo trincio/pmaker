@@ -137,17 +137,17 @@
     		alert("Error: "+ var_dump(ss));
     	}
   }
-  
+
   /*
-   * Refactoring.......................   
-   * Fixed by checkboxes binary values 
+   * Refactoring.......................
+   * Fixed by checkboxes binary values
    * By Neyek <erik@colosa.com>
    * Date March 27th, 2009 12:20:00 GMT-4
    */
-  
+
   function ajax_getForm( thisform ) {
 	var formdata='';
-	
+
 	// Loop through form fields
 	for (var i=0; i < thisform.length; i++) {
 	  if ( formdata!=='' ) formdata += '&';
@@ -343,7 +343,7 @@ function compareDates(datea, dateB,porDias)
 /****THE ANSWER*****/
 /*diferencia entre 2 fechas*/
 function diff_date(fecha1, fecha2)
-{ var f1 = fecha1.split('-');	
+{ var f1 = fecha1.split('-');
 	fecha1 = new Date();
 	fecha1.setDate(f1[2]);
 	fecha1.setMonth(f1[1]);
@@ -354,7 +354,7 @@ function diff_date(fecha1, fecha2)
 	fecha2.setDate(f2[2]);
 	fecha2.setMonth(f2[1]);
 	fecha2.setYear(f2[0]);
-	
+
 	var dias = Math.floor((fecha1.getTime()-fecha2.getTime())/(3600000*24));
 	return dias;
 }
@@ -987,12 +987,16 @@ function enableById (id) {
 }
 
 function visible (obj) {
-  obj.style.visibility = 'visible';
+  if (obj.style) {
+    obj.style.visibility = 'visible';
+  }
   return;
 }
 
 function hidden (obj) {
-  obj.style.visibility = 'hidden';
+  if (obj.style) {
+    obj.style.visibility = 'hidden';
+  }
   return;
 }
 
@@ -1198,5 +1202,5 @@ var sh=function(a,i)
     }
     lc={d:c,c:i,a:a};
     a.style.color=(c.style.display=='' || c.style.display=='none')?"black":"#666";
-    c.style.display=(!c.style.display || c.style.display=='none')?"block":"none";    
+    c.style.display=(!c.style.display || c.style.display=='none')?"block":"none";
 }
