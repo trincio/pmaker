@@ -970,6 +970,10 @@ function contractSubtitle( subTitle ){
   for(var i=a+1,m=t.rows.length;i<m;i++){
     if (t.rows[i].cells.length==1) break;
     t.rows[i].style.display='none';
+    var aAux = getControlsInTheRow(t.rows[i]);
+    for (var j = 0; j < aAux.length; j++) {
+      removeRequiredById(aAux[j]);
+    }
   }
 }
 function expandSubtitle( subTitle ){
@@ -980,6 +984,10 @@ function expandSubtitle( subTitle ){
   for(var i=a+1,m=t.rows.length;i<m;i++){
     if (t.rows[i].cells.length==1) break;
     t.rows[i].style.display='';
+    var aAux = getControlsInTheRow(t.rows[i]);
+    for (var j = 0; j < aAux.length; j++) {
+      enableRequiredById(aAux[j]);
+    }
   }
 }
 function contractExpandSubtitle(subTitle){
@@ -998,23 +1006,33 @@ function contractExpandSubtitle(subTitle){
   else contractSubtitle(subTitle);
 }
 
-var notValidateThisFields = new Array();
+var getControlsInTheRow = function(oRow) {
+  var aAux1 = [];
+  if (oRow.cells) {
+    var i;
+    var j;
+    var sFieldName;
+    for (i = 0; i < oRow.cells.length; i++) {
+      var aAux2 = oRow.cells[i].getElementsByTagName('input');
+      if (aAux2) {
+        for (j = 0; j < aAux2.length; j++) {
+          sFieldName = aAux2[j].id.replace('form[', '');
+          sFieldName = sFieldName.replace(']', '');
+          aAux1.push(sFieldName);
+        }
+      }
+    }
+  }
+  return aAux1;
+};
 
-function validateForm(aRequiredFields)
-{
-	//alert(oRequiredFields.junior['type']);
-	//alert(var_dump(aRequiredFields.toJSONString()));	
+var notValidateThisFields = [];
+
+var validateForm = function(aRequiredFields) {
 	var sMessage = '';
-	for (var i = 0; i < aRequiredFields.length; i++) { 
-		 var sw = 0;			 
-		 for(var j=0; j < notValidateThisFields.length; j++)
-		   { if(aRequiredFields[i].name ==  notValidateThisFields[j])
-		   			sw=1;		   		
-		   }
-		 
-		 if(sw==0)
-		 	{	
-		 		switch(aRequiredFields[i].type) { 
+	for (var i = 0; i < aRequiredFields.length; i++) {
+		 if (!notValidateThisFields.inArray(aRequiredFields[i].name)) {
+		 		switch(aRequiredFields[i].type) {
 		 			  case 'text':
 		 			    var vtext = new input(getField(aRequiredFields[i].name));
 		 			    if(getField(aRequiredFields[i].name).value=='')
@@ -1026,17 +1044,17 @@ function validateForm(aRequiredFields)
 		 			    	  vtext.passed();
 		 			    	}
 		 			  break;
-     		
+
 		 			  case 'dropdown':
 		 			    if(getField(aRequiredFields[i].name).value=='')
 		 			    		sMessage += "- " + aRequiredFields[i].label + "\n";
 		 			  break;
-     		
+
 		 			  case 'textarea':
 		 			    if(getField(aRequiredFields[i].name).value=='')
 		 			    		sMessage += "- " + aRequiredFields[i].label + "\n";
 		 			  break;
-     		
+
 		 			  case 'password':
 		 			    var vpass = new input(getField(aRequiredFields[i].name));
 		 			    if(getField(aRequiredFields[i].name).value=='')
@@ -1048,7 +1066,7 @@ function validateForm(aRequiredFields)
 		 			    	  vpass.passed();
 		 			    	}
 		 			  break;
-     		
+
 		 			  case 'currency':
 		 			    var vcurr = new input(getField(aRequiredFields[i].name));
 		 			    if(getField(aRequiredFields[i].name).value=='')
@@ -1060,7 +1078,7 @@ function validateForm(aRequiredFields)
 		 			    	  vcurr.passed();
 		 			    	}
 		 			  break;
-     		
+
 		 			  case 'percentage':
 		 			    var vper = new input(getField(aRequiredFields[i].name));
 		 			    if(getField(aRequiredFields[i].name).value=='')
@@ -1072,22 +1090,22 @@ function validateForm(aRequiredFields)
 		 			    	  vper.passed();
 		 			    	}
 		 			  break;
-     		
+
 		 			  case 'yesno':
 		 			    if(getField(aRequiredFields[i].name).value=='')
 		 			    		sMessage += "- " + aRequiredFields[i].label + "\n";
 		 			  break;
-     		
+
 		 			  case 'date':
 		 			    if(getField(aRequiredFields[i].name).value=='')
 		 			    		sMessage += "- " + aRequiredFields[i].label + "\n";
 		 			  break;
-     		
+
 		 			  case 'file':
 		 			    if(getField(aRequiredFields[i].name).value=='')
 		 			    		sMessage += "- " + aRequiredFields[i].label + "\n";
 		 			  break;
-     		
+
 		 			  case 'listbox':
 		 			    var oAux = getField(aRequiredFields[i].name);
 							var bOneSelected = false;
@@ -1100,7 +1118,7 @@ function validateForm(aRequiredFields)
 							if(bOneSelected == false)
 		 			    		sMessage += "- " + aRequiredFields[i].label + "\n";
 		 			  break;
-     		
+
 		 			  case 'radiogroup':
 		 			  	var x=aRequiredFields[i].name;
 		 			  	var oAux = document.getElementsByName('form['+ x +']');
@@ -1112,28 +1130,27 @@ function validateForm(aRequiredFields)
 							    	k = oAux.length;
 							  	}
 							}
-     		
+
 							if(bOneChecked == false)
 		 			    	sMessage += "- " + aRequiredFields[i].label + "\n";
-     		
+
 		 			  break;
 		 			}
-		 	}		
+		 	}
 	}
 
 	if (sMessage != '') {
 		alert(G_STRINGS.ID_REQUIRED_FIELDS + ": \n\n" + sMessage);
-		/*
-		new leimnud.module.app.alert().make({
+		/*new leimnud.module.app.alert().make({
      label:G_STRINGS.ID_REQUIRED_FIELDS + ": <br />" + sMessage
     });
     */
 		return false;
 	}
-	else
-	{	return true;
+	else {
+	  return true;
   }
-}
+};
 
 var getObject = function(sObject) {
   var i;
@@ -1162,22 +1179,21 @@ var saveAndRefreshForm = function(oObject) {
   }
 };
 
-var removeRequiredById = function(campo)
-{ //the answer
-	var tam = notValidateThisFields.length;		
-	notValidateThisFields[tam+1] = campo;
-	return;	
+var removeRequiredById = function(sFieldName) {
+  if (!notValidateThisFields.inArray(sFieldName)) {
+	  notValidateThisFields.push(sFieldName);
+  }
 };
 
-var enableRequiredById = function(campo)
-{ var aAux = new Array();
-	for(j=0; j < notValidateThisFields.length; j++)
-		{ 
-			if(notValidateThisFields[j]!=campo)
-				 aAux[j] = notValidateThisFields[j];		
-		}
-		
-	notValidateThisFields = aAux;	
-}
-
-
+var enableRequiredById = function(sFieldName) {
+  if (notValidateThisFields.inArray(sFieldName)) {
+    var i;
+    var aAux = [];
+	  for(i = 0; i < notValidateThisFields.length; i++) {
+      if(notValidateThisFields[i] != sFieldName) {
+        aAux.push(notValidateThisFields[i]);
+      }
+    }
+	  notValidateThisFields = aAux;
+	}
+};
