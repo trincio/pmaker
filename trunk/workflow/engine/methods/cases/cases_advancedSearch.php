@@ -21,7 +21,7 @@
  * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
  * by The Answer
- */
+ */ 
  
  $G_MAIN_MENU            = 'processmaker';
  $G_SUB_MENU             = 'cases';
@@ -29,6 +29,29 @@
  $G_ID_SUB_MENU_SELECTED = 'CASES_ADVANCEDSEARCH';
  $G_PUBLISH = new Publisher;
  
+ global $RBAC;
+ $permisse   = $RBAC->userCanAccess('PM_ALLCASES');
+ $userlogged = $_SESSION['USER_LOGGED']; 
+ 
+ require_once ( "classes/model/ProcessUser.php" );
+ $oCriteria = new Criteria('workflow');
+ $oCriteria->addSelectColumn(ProcessUserPeer::PU_UID);
+ $oCriteria->addSelectColumn(ProcessUserPeer::PRO_UID);
+ $oCriteria->add(ProcessUserPeer::USR_UID, $userlogged);
+ $oCriteria->add(ProcessUserPeer::PU_TYPE, "SUPERVISOR");
+ 
+ $oDataset = ProcessUserPeer::doSelectRS($oCriteria);
+ $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+ $oDataset->next();
+ 
+ $aSupervisor = array(); 
+ while ($aRow = $oDataset->getRow()) 
+  {
+    	 $aSupervisor[] = array('PRO_UID' => $aRow['PRO_UID']);
+    	 $oDataset->next();
+  }
+  
+   
  G::LoadClass('case');
  $oCases = new Cases();  
  
@@ -43,7 +66,7 @@
   	$fields['LAST_MODIFICATION_T'] = $_POST['form']['LAST_MODIFICATION_T'];
   	$fields['APP_STATUS']          = $_POST['form']['APP_STATUS'];
   	
-  	$Criteria = $oCases->getAdvancedSearch($fields['CASE_NUMBER'], $fields['PROCESS'], $fields['TASKS'], $fields['CURRENT_USER'], $fields['SENT_BY'], $fields['LAST_MODIFICATION_F'], $fields['LAST_MODIFICATION_T'], $fields['APP_STATUS']);  	     	
+  	$Criteria = $oCases->getAdvancedSearch($fields['CASE_NUMBER'], $fields['PROCESS'], $fields['TASKS'], $fields['CURRENT_USER'], $fields['SENT_BY'], $fields['LAST_MODIFICATION_F'], $fields['LAST_MODIFICATION_T'], $fields['APP_STATUS'], $permisse, $userlogged, $aSupervisor);  	     	
   	$G_PUBLISH->AddContent('xmlform', 'xmlform', 'cases/cases_advancedSearchFilter', '', $fields);   	
   }
  else

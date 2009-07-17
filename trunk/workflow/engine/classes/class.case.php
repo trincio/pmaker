@@ -3308,7 +3308,7 @@ funcion History messages for case tracker by Everth The Answer
       return $oCriteria;
   }
 
-	function getAdvancedSearch($sCase, $sProcess, $sTask, $sCurrentUser, $sSentby, $sLastModFrom, $sLastModTo, $sStatus)
+	function getAdvancedSearch($sCase, $sProcess, $sTask, $sCurrentUser, $sSentby, $sLastModFrom, $sLastModTo, $sStatus, $permisse, $userlogged, $aSupervisor)
   { //echo $sCase.'<br />'.$sProcess.'<br />'.$sTask.'<br />'.$sCurrentUser.'<br />'.$sSentby.'<br />'.$sLastModFrom.'<br />'.$sLastModTo.'<br />'.$sStatus; die;
   	$sTypeList      = '';
   	$sUIDUserLogged = '';
@@ -3403,6 +3403,11 @@ funcion History messages for case tracker by Everth The Answer
        		$c->add(ApplicationPeer::APP_STATUS,$sStatus);
        }
 
+      if($permisse!=0)
+       {
+          $c->add($c->getNewCriterion(AppDelegationPeer::USR_UID, $userlogged)->addOr($c->getNewCriterion(AppDelegationPeer::PRO_UID, $aSupervisor, Criteria::IN)));            
+       }       
+       
     $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
 
     return $c;
