@@ -55,7 +55,7 @@
       $pluginTpl = PATH_CORE . 'templates' . PATH_SEP . 'processes' .PATH_SEP . 'webentryPost.tpl';
       $template  = new TemplatePower( $pluginTpl );
       $template->prepare();
-      $template->assign ( 'wsdlUrl', $http . $_SERVER['HTTP_HOST']. '/sys' . SYS_SYS .'/' . SYS_LANG . '/' . SYS_SKIN . '/services/wsdl');
+      $template->assign ( 'wsdlUrl', $http . $_SERVER['HTTP_HOST']. '/sys' . SYS_SYS .'/' . SYS_LANG . '/' . SYS_SKIN . '/services/wsdl2');
       $template->assign ( 'processUid',   $sPRO_UID );
       $template->assign ( 'dynaformUid',  $sDYNAFORM );
       $template->assign ( 'taskUid',      $sTASKS );
@@ -75,7 +75,7 @@
 	  //Show link
 	  $link = $http . $_SERVER['HTTP_HOST']. '/sys' . SYS_SYS .'/' . SYS_LANG . '/' . SYS_SKIN . '/' . $sPRO_UID . '/' . $dynTitle .'.php';
     //print "\n<a href='$link' target='_new' > $link </a>";
-      
+
 	}
 	else {
 	  $G_FORM = new Form($sPRO_UID . '/' . $sDYNAFORM, PATH_DYNAFORM, SYS_LANG, false);

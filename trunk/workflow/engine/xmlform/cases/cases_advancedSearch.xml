@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dynaForm name="cases_List" type="filterform" sqlConnection=""  width="100%">
-<!--<cases_Open type="private" defaultValue="cases_Open" showInTable="0"/>-->
+<cases_Open type="private" defaultValue="cases_Open" showInTable="0"/>
 <APP_UID type="private" showInTable="0"/>
 <DEL_INDEX type="private" showInTable="0"/>
 <MARK type="cellMark" className="cellSelected1" classNameAlt="cellSelected2" condition="&#039;@#DEL_INIT_DATE&#039;==&#039;&#039;"/>

@@ -61,10 +61,15 @@
 		}
 	}
 
+  $defaultEndpoint = 'http://' .$_SERVER['SERVER_NAME'] . ':' .$_SERVER['SERVER_PORT'] .
+              '/sys' .SYS_SYS.'/en/green/services/wsdl2';
+
+  $wsdl = isset( $_SESSION['END_POINT'] ) ? $_SESSION['END_POINT'] : $defaultEndpoint;
+
   $tree = new Tree();
   $tree->name = 'WebServices';
   $tree->nodeType="base";
-  $tree->width="270px";
+  $tree->width="280px";
   $tree->value = '
 	 <div class="boxTopBlue"><div class="a"></div><div class="b"></div><div class="c"></div></div>
 	 <div class="boxContentBlue">
@@ -76,12 +81,12 @@
 	</table>
 	</div>
 	<div class="boxBottomBlue"><div class="a"></div><div class="b"></div><div class="c"></div></div>
-  	<div class="userGroupLink"><a href="#" onclick="webServicesSetup();return false;">'.G::LoadTranslation('ID_SETUP_WEBSERVICES').'</a></div>
-    <div class="boxContentBlue"><b>' . G::LoadTranslation('ID_SESSION') . ': </b><span id="spanWsSessionId">' . $wsSessionId .'</span></div><br>
     <div class="boxContentBlue">
-    	<b>' . G::LoadTranslation('ID_SITE') . ': </b><span id="spanWsSessionId">' . $wsdl .'</span>
-    	<b>' . G::LoadTranslation('ID_WORKSPACE') . ': </b><span id="spanWsSessionId">' . $workspace .'</span>
+    	<b><a href="' . $wsdl . '" target="new">WSDL: </b></a><span id="spanWsSessionId">' . $wsdl .'</span><br>
+    	<b>' . G::LoadTranslation('ID_WORKSPACE') . ': </b><span id="spanWsSessionId">' . $workspace .'</span><br>
+    	<b>' . G::LoadTranslation('ID_SESSION') . ': </b><span id="spanWsSessionId">' . $wsSessionId .'</span><br>
     </div><br>
+  	<div class="userGroupLink"><a href="#" onclick="webServicesSetup();return false;">'.G::LoadTranslation('ID_SETUP_WEBSERVICES').'</a></div>
 	';
 
   $tree->showSign=false;

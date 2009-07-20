@@ -443,14 +443,18 @@ class wsBase
 			}
 
 			$rol=$RBAC->loadById($role);
-			if ( !is_array($rol) ){
+			if ( is_array($rol) ){
+				$strRole = $rol['ROL_CODE'];
+		  }
+		  else {
 				$very_rol = $RBAC->verifyByCode($role);
 				if ( $very_rol==0 ){
 					$result = new wsResponse (6, "Invalid role: $role");
 					return $result;
 				}
+				$strRole = $role;
 			}
-
+			
 			$aData['USR_USERNAME']    = $userId;
 			$aData['USR_PASSWORD']    = md5($password);
 			$aData['USR_FIRSTNAME']   = $firstname;
@@ -461,7 +465,7 @@ class wsBase
 			$aData['USR_UPDATE_DATE'] = date('Y-m-d H:i:s');
 			$aData['USR_STATUS']      = 1;
 
-			$sUserUID                 = $RBAC->createUser($aData,  $role );
+			$sUserUID                 = $RBAC->createUser($aData,  $strRole );
 
 			$aData['USR_UID']         = $sUserUID;
 			$aData['USR_PASSWORD']    = md5($sUserUID);
@@ -475,7 +479,7 @@ class wsBase
 			$aData['USR_POSITION']    = '';
 			$aData['USR_RESUME']      = '';
 			$aData['USR_BIRTHDAY']    = date('Y-m-d');
-			$aData['USR_ROLE']        = $role ;
+			$aData['USR_ROLE']        = $strRole ;
 
 			$oUser = new Users();
 			$oUser->create($aData);
