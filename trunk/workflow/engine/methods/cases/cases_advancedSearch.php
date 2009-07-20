@@ -71,7 +71,8 @@
   }
  else
   { 
-    list($Criteria,$xmlform) = $oCases->getConditionCasesList('gral');  	   
+    //list($Criteria,$xmlform) = $oCases->getConditionCasesList('gral');  	   
+    $Criteria = $oCases->getAdvancedSearch('', '', '', '', '', '', '', '', $permisse, $userlogged, $aSupervisor);  	     	
     $G_PUBLISH->AddContent('xmlform', 'xmlform', 'cases/cases_advancedSearchFilter');   	
   } 
   $G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_advancedSearch', $Criteria);

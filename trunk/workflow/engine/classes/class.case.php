@@ -3401,7 +3401,7 @@ funcion History messages for case tracker by Everth The Answer
       if($sStatus!='')
        { if($sStatus!='gral')
        		$c->add(ApplicationPeer::APP_STATUS,$sStatus);
-       }
+       }      
 
       if($permisse!=0)
        {
