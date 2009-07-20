@@ -712,16 +712,16 @@ class G
     define('PATH_SEPARATOR', ( substr(PHP_OS, 0, 3) == 'WIN' ) ? ';' : ':');
   }
     $path=explode(PATH_SEPARATOR,get_include_path());
-  
+
 
     foreach($path as $possiblePath){
       if(strstr($possiblePath,"plugins")){
-        $baseDir = $possiblePath . 'classes' . PATH_SEP . 'model';        
+        $baseDir = $possiblePath . 'classes' . PATH_SEP . 'model';
         if(file_exists($baseDir)){
-        if ($handle = opendir( $baseDir  )) {         
+        if ($handle = opendir( $baseDir  )) {
           while ( false !== ($file = readdir($handle))) {
             if ( strpos($file, '.php',1) && !strpos($file, 'Peer.php',1) ) {
-              require_once ( $baseDir . PATH_SEP . $file );             
+              require_once ( $baseDir . PATH_SEP . $file );
             }
           }
         }
@@ -1471,7 +1471,7 @@ class G
     $result = $result + G::getSystemConstants();
     $__textoEval="";$u=0;
     //$count=preg_match_all('/\@(?:([\@\%\#\!Qq])([a-zA-Z\_]\w*)|([a-zA-Z\_][\w\-\>\:]*)\(((?:[^\\\\\)]*(?:[\\\\][\w\W])?)*)\))/',$sqlString,$match,PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE);
-    $count=preg_match_all('/\@(?:([\@\%\#\!Qq])([a-zA-Z\_]\w*)|([a-zA-Z\_][\w\-\>\:]*)\(((?:[^\\\\\)]*?)*)\))/',$sqlString,$match,PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE);  
+    $count=preg_match_all('/\@(?:([\@\%\#\!Qq])([a-zA-Z\_]\w*)|([a-zA-Z\_][\w\-\>\:]*)\(((?:[^\\\\\)]*?)*)\))/',$sqlString,$match,PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE);
 
     if ($count)
     {
@@ -2105,7 +2105,10 @@ class G
    * @return int
    */
   function generateUniqueID() {
-    return str_replace('.', '0', uniqid(rand(0, 999999999), true));
+    do {
+      $sUID = str_replace('.', '0', uniqid(rand(0, 999999999), true));
+    } while (strlen($sUID) != 32);
+    return $sUID;
     //return strtoupper(substr(uniqid(rand(0, 9), false),0,14));
   }
 
