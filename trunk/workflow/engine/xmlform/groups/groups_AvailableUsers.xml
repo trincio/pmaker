@@ -22,7 +22,6 @@
 function pagedTableFilter( form ) {
   @#PAGED_TABLE_ID.doFilter( form );
 }
-
-
 </JSFILTER>
+
 </dynaForm>

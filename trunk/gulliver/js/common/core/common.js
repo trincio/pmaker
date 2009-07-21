@@ -44,6 +44,8 @@
         	});
       	callServer.make();
       	response = callServer.xmlhttp.responseText;
+      	var scs = callServer.xmlhttp.responseText.extractScript();
+	  	scs.evalScript();
       	delete callServer;
     	}catch(ss)
     	{
