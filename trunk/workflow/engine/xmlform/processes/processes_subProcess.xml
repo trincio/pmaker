@@ -13,6 +13,10 @@
 
 <INDEX type="hidden" />
 
+<SPROCESS_NAME type="text" size="30">
+<en>SubProcess name</en>
+</SPROCESS_NAME>
+
 <TASKS type="dropdown" style="width:350px" sqlConnection="dbarray" >
   SELECT * FROM NewCase
   <en>Process
@@ -50,9 +54,11 @@
 <![CDATA[
 
 var processes_subProcessSave = function(oForm) {
- var a = getField('TASKS');
+ //var a = getField('TASKS');
+  var a = getField('SPROCESS_NAME');
   ajax_post(oForm.action, oForm, 'POST');
-  Pm.data.db.task[getField('INDEX').value].object.elements.label.innerHTML = a.options[a.selectedIndex].text;
+  //Pm.data.db.task[getField('INDEX').value].object.elements.label.innerHTML = a.options[a.selectedIndex].text;
+  Pm.data.db.task[getField('INDEX').value].object.elements.label.innerHTML = a.value;
   Pm.tmp.subProcessPanel.remove();
 };
 

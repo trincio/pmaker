@@ -70,6 +70,10 @@ $aData = array('SP_UID'          		 => $_POST['form']['SP_UID'],//G::generateUni
                'SP_GRID_IN'          => '');
                     		
 $oOP->update($aData);
+
+require_once 'classes/model/Content.php';
+$lang = defined ( 'SYS_LANG') ? SYS_LANG : 'en';
+$cont = Content::addContent( 'SP_TITLE', '', $_POST['form']['SP_UID'], $lang, $_POST['form']['SPROCESS_NAME'] );
     
 //G::header('location: processes_Map?PRO_UID='. $_POST['form']['PRO_UID']);    
 die;
