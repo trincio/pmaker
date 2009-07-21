@@ -35,8 +35,12 @@ switch ($_POST['action'])
 	  $aFields = $oGroup->load($_POST['sGroupUID']);
 	  global $G_PUBLISH;
   	$G_PUBLISH = new Publisher();
-  	$G_PUBLISH->AddContent('xmlform', 'xmlform', 'groups/groups_UsersListTitle', '', array('GRP_NAME' => $aFields['GRP_TITLE']));
-  	$G_PUBLISH->AddContent('propeltable', 'paged-table', 'groups/groups_UsersList', $oGroups->getUsersGroupCriteria($_POST['sGroupUID']), array('GRP_UID' => $_POST['sGroupUID'], 'GRP_NAME' => $aFields['GRP_TITLE']));
+  	//$G_PUBLISH->AddContent('xmlform', 'xmlform', 'groups/groups_UsersListTitle', '', array('GRP_NAME' => $aFields['GRP_TITLE']));
+  	$G_PUBLISH->AddContent('propeltable', 'groups/paged-table2', 'groups/groups_UsersList', $oGroups->getUsersGroupCriteria($_POST['sGroupUID']), array('GRP_UID' => $_POST['sGroupUID'], 'GRP_NAME' => $aFields['GRP_TITLE']));
+    
+    $oHeadPublisher =& headPublisher::getSingleton();
+    $oHeadPublisher->addScriptCode("groupname='{$aFields["GRP_TITLE"]}';");
+    
     G::RenderPage('publish', 'raw');
 	break;
 
@@ -50,6 +54,7 @@ switch ($_POST['action'])
 	  G::LoadClass('groups');
 	  $oGroup = new Groups();
 	  $aUsers=explode(',', $_POST['aUsers']);
+	  
 	  for($i=0; $i<count($aUsers); $i++)
 	  {
 	  	$oGroup->addUserToGroup($_POST['GRP_UID'], $aUsers[$i]);

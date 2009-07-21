@@ -6,8 +6,8 @@
 <GRP_NAME type="hidden" showInTable="0"/>
 
 <MNU_ADD_EMPLOYE type="link" value="" link="#" onclick="addUserGroup(&#039;@#GRP_UID&#039;, &#039;@#GRP_NAME&#039;); return false;" colAlign="left" colWidth="150">
-  <en>Assign New Member</en>
-<es>Asignar Nuevo Miembro</es>
+  <en>Assign</en>
+  <es>Asignar</es>
 </MNU_ADD_EMPLOYE>
 
 </dynaForm>

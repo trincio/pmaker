@@ -46,6 +46,8 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_USERS"))!=1) return $RBAC_Response;
   $groups_AddUser = G::encryptlink('groups_AddUser');
 ?>
 <script>
+  
+
   var oAux = document.getElementById("publisherContent[0]");
   oAux.id = "publisherContent[666]";
   var currentGroup=false;
@@ -55,10 +57,39 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_USERS"))!=1) return $RBAC_Response;
   }
   function addGroup(){
     popupWindow('' , '<?=$groups_Edit?>' , 500 , 200 );
-//    refreshTree();
   }
   function addUserGroup( uid ){
-    popupWindow('' , '<?=$groups_AddUser?>?UID='+uid, 500 , 520 );
+    //popupWindow('' , '<?=$groups_AddUser?>?UID='+uid, 500 , 520 );
+	  oPanel = new leimnud.module.panel();
+		oPanel.options = {
+		  	size	:{w:400,h:512},
+		  	position:{x:0,y:0,center:true},
+		  	title	: 'Add users to '+groupname+' group',
+		  	theme	:"processmaker",
+		  	statusBar:false,
+		  	control	:{resize:false,roll:false,drag:true},
+		  	fx	:{modal:true,opacity:true,blinkToFront:false,fadeIn:false,drag:true}
+	  	};
+	  	oPanel.events = {
+	  		remove: function() { 
+	  			delete(oPanel);
+	  			resetChecks();
+	  		}.extend(this)
+	  	};
+		oPanel.make();
+		oPanel.loader.show();
+		currentPopupWindow = oPanel;
+		var oRPC = new leimnud.module.rpc.xmlhttp({
+		  	url : '<?=$groups_AddUser?>?UID='+uid,
+		  	args: ''
+	  	});
+	  	oRPC.callback = function(rpc) {
+		  	oPanel.loader.hide();
+		  	var scs=rpc.xmlhttp.responseText.extractScript();
+		  	oPanel.addContent(rpc.xmlhttp.responseText);
+		  	scs.evalScript();
+	  	}.extend(this);
+		oRPC.make();
   }
   function saveGroup( form ) {
     ajax_post( form.action, form, 'POST' );
@@ -77,7 +108,7 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_USERS"))!=1) return $RBAC_Response;
     oRPC.make();
     document.getElementById('spanUsersList').innerHTML = oRPC.xmlhttp.responseText;
     var scs = oRPC.xmlhttp.responseText.extractScript();
-    //scs.evalScript();
+    scs.evalScript();
   }
   function deleteGroup( uid ){
     new leimnud.module.app.confirm().make({
@@ -127,31 +158,50 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_USERS"))!=1) return $RBAC_Response;
   }
 
 
-function selectionX (){
-    //alert(currentGroup);
-		var x=document.getElementsByTagName('input');
-    //alert(x.length);
-    var p=[];
-    for (var i=0; x.length>i; i++)
-    {
-    	if(x[i].type=='checkbox')
-    	{
-    		if(x[i].checked)
-    		{
-    				p.push(x[i].value);
-    		}
-    	}
-    }
-    //alert(p);
+function selectionX(){
+	if( checks_selected_ids.length == 0 ){
+		new leimnud.module.app.alert().make({label: 'you must to select a user at least	'});
+		return 0;
+	}
+	
     var oRPC = new leimnud.module.rpc.xmlhttp({
       url   : '../groups/groups_Ajax',
       async : false,
       method: 'POST',
-      args  : 'action=assignAllUsers&GRP_UID=' + currentGroup + '&aUsers=' + p
+      args  : 'action=assignAllUsers&GRP_UID=' + currentGroup + '&aUsers=' + checks_selected_ids
     });
+    resetChecks();
     oRPC.make();
     currentPopupWindow.remove();
     selectGroup(currentGroup);
 }
+
+function resetChecks(){
+	checks_selected_ids.length = 0;
+}
+
+Array.prototype.walk = function( funcionaplicada ) {
+    for(var i=0, parar=false; i<this.length && !parar; i++ )
+        parar = funcionaplicada( this[i], i);
+    return (this.length==i)? false : (i-1);
+}
+
+Array.prototype.find = function(q) {
+    var dev = this.walk(function(elem) {
+        if( elem==q )
+            return true;
+    } );
+    if( this[dev]==q ) return dev;
+    else return -1;
+}
+
+Array.prototype.drop = function(x) {
+    this.splice(x,1);
+}
+
+Array.prototype.deleteByValue = function(val) {
+    var eindex = this.find(val);
+    this.drop(eindex);
+}  
 
 </script>
