@@ -3404,7 +3404,7 @@ funcion History messages for case tracker by Everth The Answer
        }      
 
       if($permisse!=0)
-       {
+       { 
           $c->add($c->getNewCriterion(AppDelegationPeer::USR_UID, $userlogged)->addOr($c->getNewCriterion(AppDelegationPeer::PRO_UID, $aSupervisor, Criteria::IN)));            
        }       
        
