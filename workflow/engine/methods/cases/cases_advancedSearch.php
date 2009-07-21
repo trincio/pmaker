@@ -47,7 +47,7 @@
  $aSupervisor = array(); 
  while ($aRow = $oDataset->getRow()) 
   {
-    	 $aSupervisor[] = array('PRO_UID' => $aRow['PRO_UID']);
+    	 $aSupervisor[] = $aRow['PRO_UID'];
     	 $oDataset->next();
   }
   
