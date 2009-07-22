@@ -58,8 +58,9 @@
 
   	<!-- START BLOCK : bottomFooter -->
   	<tr>
-      <td class="treeNode" colspan="6" align="right" >
-      	<a  href="">Select all</a>
+      <td class="treeNode2" colspan="6" align="right" >
+      	<a style="color:#2B363E" href="#" onclick="checkAll()">Check All</a>&nbsp/&nbsp
+      	<a style="color:#2B363E" href="#" onclick="uncheckAll()">Uncheck All</a>
       </td>
   	</tr>
   	<tr>
@@ -169,7 +170,27 @@ for(i=0; i<inputs.length; i++){
 	}
 }
 
+function checkAll(){
+	var inputs = document.getElementsByTagName("input");
 
+	for(i=0; i<inputs.length; i++){
+		if( inputs[i].type == "checkbox" ){
+			inputs[i].checked = true;
+			inputs[i].onclick();
+		}
+	}
+}
+
+function uncheckAll(){
+	var inputs = document.getElementsByTagName("input");
+
+	for(i=0; i<inputs.length; i++){
+		if( inputs[i].type == "checkbox" ){
+			inputs[i].checked = false;
+			inputs[i].onclick();
+		}
+	}
+}
 
 </script>
 <!-- END IGNORE -->
