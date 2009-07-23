@@ -170,7 +170,7 @@ class XmlForm_Field {
       }
       $query = G::replaceDataField ( $this->sql, $aAux );
     }
-    
+
     $result = array ();
     if ($this->sqlConnection == 'dbarray') {
       try {
@@ -181,7 +181,7 @@ class XmlForm_Field {
       catch ( Exception $e ) {  //dismiss error because dbarray shouldnt be defined in some contexts.
         return $result;
       }
-    } 
+    }
     else {
       try {
         $con = Propel::getConnection ( $this->sqlConnection );
@@ -190,9 +190,9 @@ class XmlForm_Field {
       }
       catch  ( Exception $e ) {  //dismiss error because dbarray shouldnt be defined in some contexts.
         return $result;
-      }   
+      }
     }
-    
+
     $rs->next ();
     $row = $rs->getRow ();
     while ( is_array ( $row ) ) {
@@ -1349,6 +1349,23 @@ class XmlForm_Field_Link extends XmlForm_Field {
     return '<a class="tableOption" href=\'' . $this->htmlentities ( $link, ENT_QUOTES, 'utf-8' ) . '\'' . 'id="form[' . $this->name . ']" name="form[' . $this->name . ']"' . (($this->onclick) ? ' onclick="' . htmlentities ( $onclick, ENT_QUOTES, 'utf-8' ) . '"' : '') . (($this->target) ? ' target="' . htmlentities ( $target, ENT_QUOTES, 'utf-8' ) . '"' : '') . '>' . $this->htmlentities ( $this->value === '' ? $label : $value, ENT_QUOTES, 'utf-8' ) . '</a>';
   }
 
+  function renderGrid($values = array(), $owner = NULL) {
+    $result = array ();
+    $r = 1;
+    foreach ( $values as $v ) {
+      $_aData_ = (isset($owner->values[$owner->name][$r]) ? $owner->values[$owner->name][$r] : array());
+      $onclick = G::replaceDataField ( $this->onclick, $_aData_ );
+      $link = G::replaceDataField ( $this->link, $_aData_ );
+      $target = G::replaceDataField ( $this->target, $_aData_ );
+      $value = G::replaceDataField ( $this->value, $_aData_ );
+      $label = G::replaceDataField ( $this->label, $_aData_ );
+      $html = '<a class="tableOption" href=\'' . $this->htmlentities ( $link, ENT_QUOTES, 'utf-8' ) . '\'' . 'id="form[' . $owner->name . '][' . $r . '][' . $this->name . ']" name="form[' . $owner->name . '][' . $r . '][' . $this->name . ']"' . (($this->onclick) ? ' onclick="' . htmlentities ( $onclick, ENT_QUOTES, 'utf-8' ) . '"' : '') . (($this->target) ? ' target="' . htmlentities ( $target, ENT_QUOTES, 'utf-8' ) . '"' : '') . '>' . $this->htmlentities ( $this->value === '' ? $label : $value, ENT_QUOTES, 'utf-8' ) . '</a>';
+      $result [] = $html;
+      $r ++;
+    }
+    return $result;
+  }
+
   function renderTable($value = NULL, $owner = NULL) {
     $onclick = $this->htmlentities ( G::replaceDataField ( $this->onclick, $owner->values ), ENT_QUOTES, 'utf-8' );
     $link = $this->htmlentities ( G::replaceDataField ( $this->link, $owner->values ), ENT_QUOTES, 'utf-8' );
@@ -1922,19 +1939,19 @@ class XmlForm_Field_Grid extends XmlForm_Field {
    */
   function renderGrid($values, $owner = NULL, $therow = -1) {
     $this->id = $this->owner->id . $this->name;
-    
+
       $using_template = "grid";
-  
+
 	### added by Erik <erik@colosa.com>
 	### For throw the preview view
 	if( isset($this->owner->visual_frontend) ){
 	 $using_template = "grid_{$this->owner->visual_frontend}";
-	} 
-	
+	}
+
 	if( $this->mode == 'view' ){
 	 $using_template = "grid_view";
-	} 
-	
+	}
+
     $tpl = new xmlformTemplate ( $this, PATH_CORE . "templates/{$using_template}.html" );
     if (! isset ( $values ) || ! is_array ( $values ) || sizeof ( $values ) == 0) {
       $values = array_keys ( $this->fields );

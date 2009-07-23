@@ -24,6 +24,7 @@ class AdditionalTables extends BaseAdditionalTables {
   	      require_once 'classes/model/Fields.php';
           $oCriteria = new Criteria('workflow');
           $oCriteria->addSelectColumn(FieldsPeer::FLD_UID);
+          $oCriteria->addSelectColumn(FieldsPeer::FLD_INDEX);
           $oCriteria->addSelectColumn(FieldsPeer::FLD_NAME);
           $oCriteria->addSelectColumn(FieldsPeer::FLD_DESCRIPTION);
           $oCriteria->addSelectColumn(FieldsPeer::FLD_TYPE);
@@ -402,14 +403,19 @@ class AdditionalTables extends BaseAdditionalTables {
 	 * @return     mixed Formatted date/time value as string or integer unix timestamp (if format is NULL).
 	 * @throws     PropelException - if unable to convert the date/time to timestamp.
 	 */
-	public function get' . $aColumn['phpName'] . '($format = "Y-m-d H:i:s")
+	public function get' . $aColumn['phpName'] . '($format = "Y-m-d")
 	{
 
 		if ($this->' . $aColumn['var'] . ' === null || $this->' . $aColumn['var'] . ' === "") {
 			return null;
 		} elseif (!is_int($this->' . $aColumn['var'] . ')) {
 			// a non-timestamp value was set externally, so we convert it
-			$ts = strtotime($this->' . $aColumn['var'] . ');
+			if (($this->' . $aColumn['var'] . ' == "0000-00-00 00:00:00") || ($this->' . $aColumn['var'] . ' == "0000-00-00")) {
+        $ts = "0";
+      }
+      else {
+			  $ts = strtotime($this->' . $aColumn['var'] . ');
+			}
 			if ($ts === -1 || $ts === false) { // in PHP 5.1 return value changes to FALSE
 				throw new PropelException("Unable to parse value of [' . $aColumn['var'] . '] as date/time value: " . var_export($this->' . $aColumn['var'] . ', true));
 			}
