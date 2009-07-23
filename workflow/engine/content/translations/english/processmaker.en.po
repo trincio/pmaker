@@ -2,7 +2,7 @@ msgid ""
 msgstr "" 
 "Project-Id-Version: PM 4.0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-07-13 10:20+0100 \n"
+"PO-Revision-Date: 2009-07-23 16:40+0100 \n"
 "Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
 "Language-Team: Colosa Developers Team <developers@colosa.com>\n"
 "MIME-Version: 1.0\n"
@@ -2134,8 +2134,8 @@ msgstr "Please select 80 fields at most"
 # TRANSLATION
 # LABEL/ID_UPGRADE_READY
 #: LABEL/ID_UPGRADE_READY
-msgid "System updated to revision: "
-msgstr "System updated to revision: "
+msgid " System updated from revision"
+msgstr " System updated from revision"
 
 # TRANSLATION
 # LABEL/ID_UPGRADE
@@ -2782,8 +2782,8 @@ msgstr "Class already exists"
 # TRANSLATION
 # LABEL/ID_FIELD_KEY_TABLE
 #: LABEL/ID_FIELD_KEY_TABLE
-msgid "Please select the table key(s)"
-msgstr "Please select the table key(s)"
+msgid "Please select one or more fields to be primary keys."
+msgstr "Please select one or more fields to be primary keys."
 
 # TRANSLATION
 # LABEL/ID_FIELD_FOREIGN_TABLE
@@ -2886,6 +2886,12 @@ msgstr "Reassign Cases"
 #: LABEL/ID_ALERT_MESSAGE
 msgid "Alert Message"
 msgstr "Alert Message"
+
+# TRANSLATION
+# LABEL/ID_TO
+#: LABEL/ID_TO
+msgid "to"
+msgstr "to"
 
 # TRANSLATION
 # JAVASCRIPT/ID_REQUIRED
@@ -3886,8 +3892,8 @@ msgstr "@#GRP_NAME"
 # groups/groups_Options.xml?MNU_ADD_EMPLOYE
 # groups/groups_Options.xml
 #: link - MNU_ADD_EMPLOYE
-msgid "Assign New Member"
-msgstr "Assign New Member"
+msgid "[groups/groups_Options.xml?MNU_ADD_EMPLOYE] Assign"
+msgstr "Assign"
 
 # groups/groups_SelectUsers.xml?BTN_SUBMIT
 # groups/groups_SelectUsers.xml
@@ -6961,6 +6967,72 @@ msgstr "Field name"
 msgid "[dynaforms/fields_ShortList.xml?SEARCH] Apply Filter"
 msgstr "Apply Filter"
 
+# additionalTables/additionalTablesFields2.xml?FLD_NAME
+# additionalTables/additionalTablesFields2.xml
+#: text - FLD_NAME
+msgid "[additionalTables/additionalTablesFields2.xml?FLD_NAME] Field Name"
+msgstr "Field Name"
+
+# additionalTables/additionalTablesFields2.xml?FLD_DESCRIPTION
+# additionalTables/additionalTablesFields2.xml
+#: text - FLD_DESCRIPTION
+msgid "Field Label"
+msgstr "Field Label"
+
+# additionalTables/additionalTablesFields2.xml?FLD_TYPE
+# additionalTables/additionalTablesFields2.xml
+#: dropdown - FLD_TYPE
+msgid "[additionalTables/additionalTablesFields2.xml?FLD_TYPE] Type    "
+msgstr "Type    "
+
+# additionalTables/additionalTablesFields2.xml?FLD_TYPE-VARCHAR
+# additionalTables/additionalTablesFields2.xml
+#: dropdown - FLD_TYPE - VARCHAR
+msgid "[additionalTables/additionalTablesFields2.xml?FLD_TYPE-VARCHAR]"
+msgstr "VARCHAR"
+
+# additionalTables/additionalTablesFields2.xml?FLD_TYPE-TEXT
+# additionalTables/additionalTablesFields2.xml
+#: dropdown - FLD_TYPE - TEXT
+msgid "[additionalTables/additionalTablesFields2.xml?FLD_TYPE-TEXT]"
+msgstr "TEXT"
+
+# additionalTables/additionalTablesFields2.xml?FLD_TYPE-DATE
+# additionalTables/additionalTablesFields2.xml
+#: dropdown - FLD_TYPE - DATE
+msgid "[additionalTables/additionalTablesFields2.xml?FLD_TYPE-DATE]"
+msgstr "DATE"
+
+# additionalTables/additionalTablesFields2.xml?FLD_TYPE-INT
+# additionalTables/additionalTablesFields2.xml
+#: dropdown - FLD_TYPE - INT
+msgid "[additionalTables/additionalTablesFields2.xml?FLD_TYPE-INT]"
+msgstr "INT"
+
+# additionalTables/additionalTablesFields2.xml?FLD_TYPE-FLOAT
+# additionalTables/additionalTablesFields2.xml
+#: dropdown - FLD_TYPE - FLOAT
+msgid "[additionalTables/additionalTablesFields2.xml?FLD_TYPE-FLOAT]"
+msgstr "FLOAT"
+
+# additionalTables/additionalTablesFields2.xml?FLD_SIZE
+# additionalTables/additionalTablesFields2.xml
+#: text - FLD_SIZE
+msgid "[additionalTables/additionalTablesFields2.xml?FLD_SIZE] Size"
+msgstr "Size"
+
+# additionalTables/additionalTablesFields2.xml?FLD_NULL
+# additionalTables/additionalTablesFields2.xml
+#: checkbox - FLD_NULL
+msgid "Null"
+msgstr "Null"
+
+# additionalTables/additionalTablesFields2.xml?FLD_KEY
+# additionalTables/additionalTablesFields2.xml
+#: checkbox - FLD_KEY
+msgid "Primary Key"
+msgstr "Primary Key"
+
 # additionalTables/additionalTablesNew.xml?TITLE1
 # additionalTables/additionalTablesNew.xml
 #: title - TITLE1
@@ -7012,7 +7084,7 @@ msgstr "Field Name"
 # additionalTables/additionalTablesFields.xml?FLD_DESCRIPTION
 # additionalTables/additionalTablesFields.xml
 #: text - FLD_DESCRIPTION
-msgid "Field Label"
+msgid "[additionalTables/additionalTablesFields.xml?FLD_DESCRIPTION] Field Label"
 msgstr "Field Label"
 
 # additionalTables/additionalTablesFields.xml?FLD_TYPE
@@ -7060,13 +7132,13 @@ msgstr "Size"
 # additionalTables/additionalTablesFields.xml?FLD_NULL
 # additionalTables/additionalTablesFields.xml
 #: checkbox - FLD_NULL
-msgid "Null"
+msgid "[additionalTables/additionalTablesFields.xml?FLD_NULL] Null"
 msgstr "Null"
 
 # additionalTables/additionalTablesFields.xml?FLD_KEY
 # additionalTables/additionalTablesFields.xml
 #: checkbox - FLD_KEY
-msgid "Primary Key"
+msgid "[additionalTables/additionalTablesFields.xml?FLD_KEY] Primary Key"
 msgstr "Primary Key"
 
 # additionalTables/additionalTablesData.xml?ADD_TAB_NAME
@@ -7566,6 +7638,12 @@ msgstr "Apply Filter"
 #: title - TITLE1
 msgid "Sub-Process"
 msgstr "Sub-Process"
+
+# processes/processes_subProcess.xml?SPROCESS_NAME
+# processes/processes_subProcess.xml
+#: text - SPROCESS_NAME
+msgid "SubProcess name"
+msgstr "SubProcess name"
 
 # processes/processes_subProcess.xml?TASKS
 # processes/processes_subProcess.xml
@@ -8586,6 +8664,12 @@ msgstr "Description"
 #: subtitle - subinstallSteps
 msgid "Install Steps"
 msgstr "Install Steps"
+
+# processes/objectpmView.xml?link
+# processes/objectpmView.xml
+#: link - link
+msgid "link"
+msgstr "link"
 
 # processes/processes_Import.xml?TITLE1
 # processes/processes_Import.xml
@@ -11407,6 +11491,12 @@ msgstr "Name (File)"
 msgid "[setup/pluginList.xml?description] Description"
 msgstr "Description"
 
+# setup/pluginList.xml?version
+# setup/pluginList.xml
+#: text - version
+msgid "[setup/pluginList.xml?version] Version"
+msgstr "Version"
+
 # setup/wsSendVariables.xml?SESSION_ID
 # setup/wsSendVariables.xml
 #: text - SESSION_ID
@@ -13063,6 +13153,12 @@ msgstr "Manual Assignment"
 msgid "[tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_TYPE-EVALUATE]"
 msgstr "Value Based Assignment"
 
+# tasks/tasks_AssignmentRules.xml?TAS_ASSIGN_VARIABLE
+# tasks/tasks_AssignmentRules.xml
+#: textpm - TAS_ASSIGN_VARIABLE
+msgid "Variable for Value Based Assignment"
+msgstr "Variable for Value Based Assignment"
+
 # tasks/tasks_Labels.xml?TAS_DEF_TITLE
 # tasks/tasks_Labels.xml
 #: textareapm - TAS_DEF_TITLE
@@ -13206,6 +13302,12 @@ msgstr "Title"
 #: textarea - TAS_DESCRIPTION
 msgid "[tasks/tasks_Definition.xml?TAS_DESCRIPTION] Description"
 msgstr "Description"
+
+# tasks/tasks_Definition.xml?TAS_PRIORITY_VARIABLE
+# tasks/tasks_Definition.xml
+#: textpm - TAS_PRIORITY_VARIABLE
+msgid "Variable for Case priority"
+msgstr "Variable for Case priority"
 
 # tasks/tasks_Definition.xml?TAS_START
 # tasks/tasks_Definition.xml
@@ -15793,6 +15895,12 @@ msgstr "Re-type Password:"
 msgid "[login/newSite.xml?NW_SUB] Test"
 msgstr "Test"
 
+# login/nologin.xml?subtitle
+# login/nologin.xml
+#: subtitle - subtitle
+msgid "subtitle"
+msgstr "subtitle"
+
 # login/nologin.xml?BSUBMIT
 # login/nologin.xml
 #: submit - BSUBMIT
@@ -16213,6 +16321,12 @@ msgstr "Available Triggers"
 msgid "[steps/triggers_Assign.xml?TRI_UID] Triggers"
 msgstr "Triggers"
 
+# steps/triggers_Assign.xml?ST_CONDITION
+# steps/triggers_Assign.xml
+#: textareapm - ST_CONDITION
+msgid "[steps/triggers_Assign.xml?ST_CONDITION] Condition"
+msgstr "Condition"
+
 # steps/triggers_Assign.xml?ASSIGN
 # steps/triggers_Assign.xml
 #: button - ASSIGN
@@ -16536,6 +16650,12 @@ msgstr "Title"
 #: textarea - TRI_DESCRIPTION
 msgid "[triggers/triggers_Edit.xml?TRI_DESCRIPTION] Description"
 msgstr "Description"
+
+# triggers/triggers_Edit.xml?TRI_WEBBOT
+# triggers/triggers_Edit.xml
+#: textareapm - TRI_WEBBOT
+msgid "Script"
+msgstr "Script"
 
 # triggers/triggers_Edit.xml?SAVE
 # triggers/triggers_Edit.xml
