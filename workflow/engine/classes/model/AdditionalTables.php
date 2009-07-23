@@ -623,7 +623,12 @@ class AdditionalTables extends BaseAdditionalTables {
       }
       $sKeys = substr($sKeys, 0, -2);
       //$sKeys = '$pm_unique_id';
-      $aData['sKeys'] = $sKeys;
+      if ($sKeys != '') {
+        $aData['sKeys'] = $sKeys;
+      }
+      else {
+        $aData['sKeys'] = '$DUMMY';
+      }
       $oTP5->assignGlobal($aData);
       foreach ($aColumns as $iIndex => $aColumn) {
         $oTP5->newBlock('allColumns1');
