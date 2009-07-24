@@ -10,7 +10,7 @@
   <en>Field name</en>
 </XMLNODE_NAME>
 
-<LABEL type="text" maxlength="50" size="50">
+<LABEL type="text" maxlength="255" size="50">
   <en>Label</en>
 </LABEL>
 
