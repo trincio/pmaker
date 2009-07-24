@@ -188,7 +188,7 @@ switch ($_GET['TYPE'])
     $oDbConnections = new dbConnections($_SESSION['PROCESS']);
     $oDbConnections->loadAdditionalConnections();
 
-    $G_PUBLISH->AddContent('dynaform', 'xmlform', $_SESSION['PROCESS']. '/' . $_GET['UID'], '', $Fields['APP_DATA'], 'cases_SaveData?UID=' . $_GET['UID'], '', strtolower($oStep->getStepMode()));
+    $G_PUBLISH->AddContent('dynaform', 'xmlform', $_SESSION['PROCESS']. '/' . $_GET['UID'], '', $Fields['APP_DATA'], 'cases_SaveData?UID=' . $_GET['UID'], '', (strtolower($oStep->getStepMode()) != 'edit' ? strtolower($oStep->getStepMode()) : ''));
     break;
 
   case 'INPUT_DOCUMENT':

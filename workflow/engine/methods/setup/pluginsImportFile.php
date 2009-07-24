@@ -74,7 +74,9 @@ switch ($RBAC->userCanAccess('PM_SETUP_ADVANCE'))
     $sAux = $sClassName . 'Plugin';
     $fVersionOld = 0.0;
     if (file_exists(PATH_PLUGINS . $pluginFile)) {
-      include PATH_PLUGINS . $pluginFile;
+      if (!class_exists($sAux) && !class_exists($sClassName . 'plugin')) {
+        include PATH_PLUGINS . $pluginFile;
+      }
       if (!class_exists($sAux)) {
         $sAux = $sClassName . 'plugin';
       }
