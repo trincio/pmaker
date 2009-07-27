@@ -454,7 +454,7 @@ class wsBase
 				}
 				$strRole = $role;
 			}
-			
+
 			$aData['USR_USERNAME']    = $userId;
 			$aData['USR_PASSWORD']    = md5($password);
 			$aData['USR_FIRSTNAME']   = $firstname;
@@ -1003,8 +1003,7 @@ class wsBase
 			);
 
 			$oDerivation->derivate( $aCurrentDerivation, $nextDelegations );
-			$appFields['APP_STATUS'] = $sStatus;
-      $oCase->updateCase ( $caseId, $appFields );
+      $appFields = $oCase->loadCase($caseId);
 
 			$aTriggers = $oCase->loadTriggers($appdel['TAS_UID'], 'ASSIGN_TASK', -2, 'AFTER' );
       if (count($aTriggers) > 0) {
