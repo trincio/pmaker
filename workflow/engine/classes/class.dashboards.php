@@ -80,6 +80,7 @@ class Dashboards {
 	  $aReports = $oReport->getAvailableReports();
     foreach ($aConfiguration as $aDashboard) {
       if ($aDashboard['class'] == 'PM_Reports') {
+        if (!isset($aDashboard['element'])) $aDashboard['element'] = '';
         foreach ($aReports as $sReport) {
           $bFree = false;
           if (($aDashboard['class'] == 'PM_Reports') && ($aDashboard['element'] == $sReport)) {
