@@ -754,6 +754,10 @@ class AdditionalTables extends BaseAdditionalTables {
   <en>New</en>
 </MNU_ADD>
 
+<MNU_IMPORT_DATA type="link" link="additionalTablesDataImportForm?sUID=@#ADD_TAB_UID" colAlign="left" colWidth="150">
+  <en>Import data (CSV File)</en>
+</MNU_IMPORT_DATA>
+
 <PAGED_TABLE_ID type="private" />
 
 <JS type="javascript" replaceTags="1">

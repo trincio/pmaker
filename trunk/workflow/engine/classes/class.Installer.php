@@ -315,6 +315,7 @@ class Installer
         	}
     	}
     	$report['querys']=count($ret);
+    @mysql_query("SET NAMES 'utf8';");
 		foreach($ret as $qr)
 		{
 			$re = @mysql_query($qr,$connection);
@@ -360,11 +361,11 @@ class Installer
 	public function getDirectoryFiles($dir,$extension){
 	  $filesArray=array();
 	  if (file_exists($dir)){
-  	  if ($handle = opendir($dir)) {         
+  	  if ($handle = opendir($dir)) {
           while (false !== ($file = readdir($handle))) {
               $fileParts=explode(".",$file);
               if($fileParts[count($fileParts)-1]==$extension){
-                $filesArray[]=$file;                
+                $filesArray[]=$file;
               }
           }
           closedir($handle);
@@ -372,8 +373,8 @@ class Installer
     }
     return $filesArray;
 	}
-	
-	
+
+
 	public function check_db_empty($dbName)
 	{
 		$a = @mysql_select_db($dbName,$this->connection_database);
