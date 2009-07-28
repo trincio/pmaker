@@ -89,7 +89,7 @@ class processMap {
     		    $del = DBAdapter::getStringDelimiter();
     		    $oCriteria->add(SubProcessPeer::PRO_PARENT, $aRow1['PRO_UID']);
     	      $oCriteria->add(SubProcessPeer::TAS_PARENT, $aRow1['TAS_UID']);
-    	      
+
     	      $oCriteria->addAsColumn('TAS_TITLE', 'C1.CON_VALUE' );
 						$oCriteria->addAlias("C1",  'CONTENT');
 						$tasTitleConds = array();
@@ -97,7 +97,7 @@ class processMap {
 						$tasTitleConds[] = array( 'C1.CON_CATEGORY' , $del . 'SP_TITLE' . $del );
 						$tasTitleConds[] = array( 'C1.CON_LANG' ,    $del . SYS_LANG . $del );
 						$oCriteria->addJoinMC($tasTitleConds ,    Criteria::LEFT_JOIN);
-    	      
+
     		    $oDatasetX = SubProcessPeer::doSelectRS($oCriteria);
     		    $oDatasetX->setFetchmode(ResultSet::FETCHMODE_ASSOC);
     		    $oDatasetX->next();
@@ -2089,25 +2089,25 @@ class processMap {
   function webEntry($sProcessUID) {
     try {
       global $G_PUBLISH;
-      $G_PUBLISH = new Publisher;      
-      
+      $G_PUBLISH = new Publisher;
+
       if (G::is_https())
       	$http= 'https://';
     	else
    	  	$http= 'http://';
-   	  
+
    	  $link = $http . $_SERVER['HTTP_HOST']. '/sys' . SYS_SYS .'/' . SYS_LANG . '/' . SYS_SKIN . '/' . $sProcessUID . '/';
-      
+
       $row = array();
       $c=0;
-      $row[] = array('W_TITLE' => '');            	                
-      
-      if(is_dir(PATH_DATA ."sites" . PATH_SEP . SYS_SYS . PATH_SEP . "public" . PATH_SEP . $sProcessUID))      
-       {	$dir = opendir(PATH_DATA ."sites" . PATH_SEP . SYS_SYS . PATH_SEP . "public" . PATH_SEP . $sProcessUID); 						
+      $row[] = array('W_TITLE' => '');
+
+      if(is_dir(PATH_DATA ."sites" . PATH_SEP . SYS_SYS . PATH_SEP . "public" . PATH_SEP . $sProcessUID))
+       {	$dir = opendir(PATH_DATA ."sites" . PATH_SEP . SYS_SYS . PATH_SEP . "public" . PATH_SEP . $sProcessUID);
 					while($archivo = readdir($dir))
-							{ 
+							{
 							  if($archivo!='.')
-							   { 
+							   {
 							   	 if($archivo!='..')
 							   	  { $one = 0;
 							   	  	$two = 0;
@@ -2115,24 +2115,24 @@ class processMap {
 							   	  	$alink = $link.$archivo;
 							   	  	$one = count(explode('wsClient.php',$archivo));
 							   	  	$two = count(explode('Post.php',$archivo));
-							   	  	
+
 							   	  	if($one==1 && $two==1)
-							   	  	 {	
+							   	  	 {
 							   	  	 	  $arlink = "<a href='".$alink."' target='blank'><font color='#9999CC'>".$alink."</font></a>";
-							   	  		 	$row[] = array('W_TITLE' => $arlink);							 
-							   	  	 }	 	
-								    }  
-								 }   
+							   	  		 	$row[] = array('W_TITLE' => $arlink);
+							   	  	 }
+								    }
+								 }
 							}
-			 }	
-		
+			 }
+
 			global $_DBArray;
-      $_DBArray['reports']  = $row;      
+      $_DBArray['reports']  = $row;
       $_SESSION['_DBArray'] = $_DBArray;
       G::LoadClass('ArrayPeer');
       $oCriteria = new Criteria('dbarray');
       $oCriteria->setDBArrayTable('reports');
-      
+
       //$G_PUBLISH->AddContent('xmlform', 'xmlform', 'dynaforms/dynaforms_WebEntry', '', array('PRO_UID' => $sProcessUID, 'LANG' => SYS_LANG));
       $G_PUBLISH->AddContent('propeltable', 'paged-table', 'dynaforms/dynaforms_WebEntryList', $oCriteria, array('PRO_UID' => $sProcessUID, 'LANG' => SYS_LANG));
       G::RenderPage('publish', 'raw');
@@ -2144,10 +2144,10 @@ class processMap {
   }
 
 	function webEntry_new($sProcessUID) {
-    try { 
+    try {
       global $G_PUBLISH;
-      $G_PUBLISH = new Publisher;                        
-      $G_PUBLISH->AddContent('xmlform', 'xmlform', 'dynaforms/dynaforms_WebEntry', '', array('PRO_UID' => $sProcessUID, 'LANG' => SYS_LANG));      
+      $G_PUBLISH = new Publisher;
+      $G_PUBLISH->AddContent('xmlform', 'xmlform', 'dynaforms/dynaforms_WebEntry', '', array('PRO_UID' => $sProcessUID, 'LANG' => SYS_LANG));
       G::RenderPage('publish', 'raw');
     	return true;
     }
@@ -2155,7 +2155,7 @@ class processMap {
     	throw($oError);
     }
   }
-  
+
   /*
 	* Return the supervisors dynaforms list criteria object
 	* @param string $sProcessUID
@@ -2350,6 +2350,7 @@ class processMap {
 	  $oCriteria->addSelectColumn(ProcessUserPeer::PU_TYPE);
 	  $oCriteria->addSelectColumn(UsersPeer::USR_FIRSTNAME);
 	  $oCriteria->addSelectColumn(UsersPeer::USR_LASTNAME);
+	  $oCriteria->addSelectColumn(UsersPeer::USR_EMAIL);
 	  $oCriteria->addJoin(ProcessUserPeer::USR_UID, UsersPeer::USR_UID, Criteria::LEFT_JOIN);
 	  $oCriteria->add(ProcessUserPeer::PRO_UID, $sProcessUID);
     return $oCriteria;
@@ -3322,14 +3323,14 @@ function editObjectPermission($sOP_UID)
           $i++;
          }
     	   require_once 'classes/model/SubProcess.php';
-    	   require_once 'classes/model/Content.php';    	            
-         
-    		 $oCriteria = new Criteria('workflow'); 
-    		 $del = DBAdapter::getStringDelimiter();   		 
-    		 $oCriteria->add(SubProcessPeer::PRO_PARENT, $sProcessUID);    		 
+    	   require_once 'classes/model/Content.php';
+
+    		 $oCriteria = new Criteria('workflow');
+    		 $del = DBAdapter::getStringDelimiter();
+    		 $oCriteria->add(SubProcessPeer::PRO_PARENT, $sProcessUID);
     		 $oCriteria->add(SubProcessPeer::PRO_PARENT, $sProcessUID);
     	   $oCriteria->add(SubProcessPeer::TAS_PARENT, $sTaskUID);
-    	   
+
     	   $oCriteria->addAsColumn('TAS_TITLE', 'C1.CON_VALUE' );
 				 $oCriteria->addAlias("C1",  'CONTENT');
 				 $tasTitleConds = array();
@@ -3337,16 +3338,16 @@ function editObjectPermission($sOP_UID)
 				 $tasTitleConds[] = array( 'C1.CON_CATEGORY' , $del . 'SP_TITLE' . $del );
 				 $tasTitleConds[] = array( 'C1.CON_LANG' ,    $del . SYS_LANG . $del );
 				 $oCriteria->addJoinMC($tasTitleConds ,    Criteria::LEFT_JOIN);
-    	   
+
     		 $oDataset = SubProcessPeer::doSelectRS($oCriteria);
     		 $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
     		 $oDataset->next();
     		 $aRow = $oDataset->getRow();
 
-    		 $aRow['TASKS'] = $aRow['TAS_UID'];    		                
-         $aRow['SPROCESS_NAME'] = $aRow['TAS_TITLE']; 
+    		 $aRow['TASKS'] = $aRow['TAS_UID'];
+         $aRow['SPROCESS_NAME'] = $aRow['TAS_TITLE'];
 
-         
+
 		     $SP_VARIABLES_OUT = unserialize($aRow['SP_VARIABLES_OUT']);
 		     if(is_array($SP_VARIABLES_OUT))
          {
@@ -3368,8 +3369,8 @@ function editObjectPermission($sOP_UID)
 		           $j++;
 		         }
          }
-         $aRow['INDEX']=$sIndex;                  
-         
+         $aRow['INDEX']=$sIndex;
+
     	  global $G_PUBLISH;
   	    $G_PUBLISH = new Publisher();
         $G_PUBLISH->AddContent('xmlform', 'xmlform', 'processes/processes_subProcess', '', $aRow, 'processes_subProcessSave');
@@ -3413,4 +3414,4 @@ function editObjectPermission($sOP_UID)
   return $rows;
   }
 } // processMap
-?>   
+?>
