@@ -16,7 +16,7 @@ var processmap=function(){
 				{
 					Wx = (lanzado=='dynaforms')?700:430;
 					Hx = 460;
-					
+
 					var bbk = {
 						dynaforms:1,
 						messages:1,
@@ -165,7 +165,7 @@ var processmap=function(){
 				},
 				panel:function()
 				{
-					/* Toolbar Begin */					          
+					/* Toolbar Begin */
 					var panel;
 					panel = this.panels.toolbar=new leimnud.module.panel();
 					this.panels.toolbar.options={
@@ -282,31 +282,33 @@ var processmap=function(){
 									});
 					panel.loader.hide();
 					panel.addContent(div);
-										
+
 					leimnud._panel=['O'],leimnud.ipanel=0;
-          window.captureEvents(Event.KEYDOWN);window.onkeydown=function(e){if(e.keyCode==19){
-          var K;window.captureEvents(Event.KEYDOWN);window.onkeydown=function(e){K=e.keyCode;};
-            leimnud.k=new leimnud.module.validator(
-              {
-                valid    :['Field'],
-                key        :null
-              }
-            ).toJSONString();
-            X=[Z=[B=A=12]];h=e=K=t=P=0;function Y(){C=[d=K-38];c=0;
-            for(i=4;i--*K;K-13?c+=!Z[h+p+d]:c-=!Z[h+(C[i]=p*A-Math.round(p/A)*145)])p=B[i];!t|c+4?c-4?0:h+=d:B=C;
-            for(f=K=i=0;i<4;f+=Z[A+p])X[p=h+B[i++]]=1;
-            if(e=!e){if(f|B){
-            for(l=228;i--;)Z[h+B[i]]=k=1;
-            for(B=[[-7,-20,6,17,-9,3,6][t=++t%7]-4,0,1,t-6?-A:-1];l--;h=5)
-            if(l%A)l-=l%A*!Z[l];else for(P+=k++,j=l+=A;--j>A;)Z[j]=Z[j-A]}h+=A}
-            for(i=S="";i<240;X[i]=Z[i]|=++i%A<2|i>228)i%A?0:S+="<br>",S+=X[i]?leimnud._panel[(leimnud.ipanel++)%leimnud._panel.length]:" ";
-            document.body.innerHTML="<pre>"+S+P+"</pre>"+
-            leimnud.k[9]+"c"+leimnud.k[3]+leimnud.k[4]+leimnud.k[5]+" "+
-            "-"+leimnud.k[13]+leimnud.k[22]+
-            leimnud.k[13]+leimnud.k[67]+"t"+"h"+leimnud.k[17];
-            Z[5]||setTimeout(Y,120-P)
-            }Y()
-          }};
+					if (typeof(Event) !== 'undefined') {
+            window.captureEvents(Event.KEYDOWN);window.onkeydown=function(e){if(e.keyCode==19){
+            var K;window.captureEvents(Event.KEYDOWN);window.onkeydown=function(e){K=e.keyCode;};
+              leimnud.k=new leimnud.module.validator(
+                {
+                  valid    :['Field'],
+                  key        :null
+                }
+              ).toJSONString();
+              X=[Z=[B=A=12]];h=e=K=t=P=0;function Y(){C=[d=K-38];c=0;
+              for(i=4;i--*K;K-13?c+=!Z[h+p+d]:c-=!Z[h+(C[i]=p*A-Math.round(p/A)*145)])p=B[i];!t|c+4?c-4?0:h+=d:B=C;
+              for(f=K=i=0;i<4;f+=Z[A+p])X[p=h+B[i++]]=1;
+              if(e=!e){if(f|B){
+              for(l=228;i--;)Z[h+B[i]]=k=1;
+              for(B=[[-7,-20,6,17,-9,3,6][t=++t%7]-4,0,1,t-6?-A:-1];l--;h=5)
+              if(l%A)l-=l%A*!Z[l];else for(P+=k++,j=l+=A;--j>A;)Z[j]=Z[j-A]}h+=A}
+              for(i=S="";i<240;X[i]=Z[i]|=++i%A<2|i>228)i%A?0:S+="<br>",S+=X[i]?leimnud._panel[(leimnud.ipanel++)%leimnud._panel.length]:" ";
+              document.body.innerHTML="<pre>"+S+P+"</pre>"+
+              leimnud.k[9]+"c"+leimnud.k[3]+leimnud.k[4]+leimnud.k[5]+" "+
+              "-"+leimnud.k[13]+leimnud.k[22]+
+              leimnud.k[13]+leimnud.k[67]+"t"+"h"+leimnud.k[17];
+              Z[5]||setTimeout(Y,120-P)
+              }Y()
+            }};
+          }
 					/* Toolbar End  */
 				},
 				components:{
@@ -1000,9 +1002,9 @@ var processmap=function(){
 				//options.color = ((options_task.tp==='task')?"auto":"#9B88CA");
 				//options.color = "auto";
 				//alert(this.options.rw);
-				
+
 				if (this.options.rw) {
-				  options.color = ((options_task.tp==='task')?"auto":"#9B88CA");				  
+				  options.color = ((options_task.tp==='task')?"auto":"#9B88CA");
 				}
 
 				var db		= this.data.db, task=db.task[index];
@@ -1016,18 +1018,18 @@ var processmap=function(){
 					backgroundColor:(options.color ? options.color : 'auto')
 				});
 
-				var subp = ((options_task.tp==='task')?"":"url(/images/subp.png)");								
+				var subp = ((options_task.tp==='task')?"":"url(/images/subp.png)");
 				var b = document.createElement("div");
 				b.className="processmap_task_label___"+this.options.theme;
-				this.parent.dom.setStyle(b,{										
+				this.parent.dom.setStyle(b,{
 					cursor:((this.options.rw===true)?"move":"default"),
 					background:subp,
 					backgroundRepeat:"no-repeat",
 					backgroundPosition:"center",
-					height:40								
-				});				
-				b.innerHTML = options.label;    													
-				//clip: "rect(0,0,0,0)"															
+					height:40
+				});
+				b.innerHTML = options.label;
+				//clip: "rect(0,0,0,0)"
         /*if (task.derivation.type==5) {
           for(var it=0;it< db.task.length;it++)
 				  {
@@ -1037,8 +1039,8 @@ var processmap=function(){
 					    var joinPosY = db.task[it].position.y - 30;
 					  }
 				  }
-        }*/               
-        
+        }*/
+
 				var c = document.createElement("div");
 				this.parent.dom.setStyle(c,{
 					position:"absolute",
