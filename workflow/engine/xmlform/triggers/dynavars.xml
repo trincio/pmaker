@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dynaForm
+  sqlConnection=""
+  menu=""
+  width="100%"
+  rowsPerPage="12"
+>
+
+<fieldname type="hidden" showInTable="0"/>
+
+<variable type="text" colWidth="150" titleAlign="left" align="left">
+  <en>Variable</en>
+</variable>
+
+<type type="text" colWidth="100" titleAlign="left" align="left">
+  <en>Type</en>
+</type>
+
+<label type="text" colWidth="350" titleAlign="left" align="left">
+  <en>Label</en>
+</label>
+
+<EDIT type="link" colWidth="40" value="Insert" link="#" onclick="insertFormVar(@@fieldname, @@variable);"/>
+
+</dynaForm>
