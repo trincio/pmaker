@@ -204,5 +204,33 @@ class PMPlugin {
     $oPluginRegistry->registerTrigger ( $this->sNamespace, $sTriggerId, $sTriggerName );
   }
 
+  function delete($sFilename, $bAbsolutePath = false) {
+    if (!$bAbsolutePath) {
+      $sFilename = PATH_PLUGINS . $this->sPluginFolder . PATH_SEP . $sFilename;
+    }
+    @unlink($sFilename);
+  }
 
+  function copy($sSouce, $sTarget, $bSourceAbsolutePath = false, $bTargetAbsolutePath = false) {
+    if (!$bSourceAbsolutePath) {
+      $sSouce = PATH_PLUGINS . $this->sPluginFolder . PATH_SEP . $sSouce;
+    }
+    if (!$bTargetAbsolutePath) {
+      $sTarget = PATH_PLUGINS . $this->sPluginFolder . PATH_SEP . $sTarget;
+    }
+    G::verifyPath(dirname($sTarget));
+    @copy($sSouce, $sTarget);
+  }
+
+  function rename($sSouce, $sTarget, $bSourceAbsolutePath = false, $bTargetAbsolutePath = false) {
+    if (!$bSourceAbsolutePath) {
+      $sSouce = PATH_PLUGINS . $this->sPluginFolder . PATH_SEP . $sSouce;
+    }
+    if (!$bTargetAbsolutePath) {
+      $sTarget = PATH_PLUGINS . $this->sPluginFolder . PATH_SEP . $sTarget;
+    }
+    G::verifyPath(dirname($sTarget));
+    @chmod(dirname($sTarget), 0777);
+    @rename($sSouce, $sTarget);
+  }
 }
