@@ -24,14 +24,21 @@
  */
 G::LoadClass('xmlfield_InputPM');
 $aFields = getDynaformsVars($_POST['sProcess']);
+
 $sHTML   = '<select name="_Var_Form_" id="_Var_Form_" size="' . count($aFields) . '" style="width:100%;' . (!isset($_POST['sNoShowLeyend']) ? 'height:50%;' : '') . '" ondblclick="insertFormVar(\'' . $_POST['sFieldName'] . '\', this.value);">';
 foreach ($aFields as $aField) {
 	$sHTML .= '<option value="' . $_POST['sSymbol'] . $aField['sName'] . '">' . $_POST['sSymbol'] . $aField['sName'] . ' (' . $aField['sType'] . ')</option>';
 }
+	
+$aRows[0] = Array('fieldname'=>'char', 'variable'=>'char', 'type'=>'type', 'label'=>'char');
+foreach ($aFields as $aField) {
+	$aRows[] = Array('fieldname'=>$_POST['sFieldName'], 'variable' => $_POST['sSymbol'].$aField['sName'], 'type'=> $aField['sType'], 'label'=>$aField['sLabel']);
+}
+
 $sHTML .= '</select>';
 if (!isset($_POST['sNoShowLeyend'])) {
-  $sHTML .= '<table width="100%">';
-  $sHTML .= '<tr><td align="center" class="module_app_input___gray" colspan="2">' . G::LoadTranslation('ID_DOCLICK') . '</td></tr>';
+  $sHTML = '<table width="100%">';
+  $sHTML .= '<tr><td align="center" class="module_app_input___gray" colspan="2"><b>Variables cast prefix</b></td></tr>';
   if (isset($_POST['sType'])) {
     $sHTML .= '<tr><td class="module_app_input___gray">' . G::LoadTranslation('ID_ESC') . '</td></tr>';
     $sHTML .= '<tr><td class="module_app_input___gray">' . G::LoadTranslation('ID_NONEC') . '</td></tr>';
@@ -49,7 +56,27 @@ if (!isset($_POST['sNoShowLeyend'])) {
     $sHTML .= '<tr><td class="module_app_input___gray" width="5%">@$</td><td class="module_app_input___gray">' . G::LoadTranslation('ID_SQL_ESCAPE') . '</td></tr>';
     $sHTML .= '<tr><td class="module_app_input___gray" width="5%">@=</td><td class="module_app_input___gray">' . G::LoadTranslation('ID_REPLACE_WITHOUT_CHANGES') . '</td></tr>';
   }
+  $sHTML .= '<tr><td align="center" class="module_app_input___gray" colspan="2">&nbsp;</td></tr>';
+  //$sHTML .= '<tr><td align="center" class="module_app_input___gray" colspan="2">' . G::LoadTranslation('ID_DOCLICK') . '</td></tr>';
   $sHTML .= '</table>';
 }
 echo $sHTML;
+////////////////////////////////////////////////////////
+
+G::LoadClass( 'ArrayPeer');
+
+global $_DBArray;
+$_DBArray['dynavars'] = $aRows;
+$_SESSION['_DBArray'] = $_DBArray;
+
+G::LoadClass( 'ArrayPeer');
+$oCriteria = new Criteria('dbarray');
+$oCriteria->setDBArrayTable('dynavars');
+
+$aFields = array();
+
+$G_PUBLISH = new Publisher();
+$G_PUBLISH->AddContent('propeltable', 'paged-table', 'triggers/dynavars', $oCriteria);
+G::RenderPage('publish', 'raw');
+
 ?>

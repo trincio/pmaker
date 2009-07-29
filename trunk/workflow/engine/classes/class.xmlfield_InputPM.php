@@ -327,38 +327,42 @@ function getDynaformsVars($sProcessUID, $bSystemVars = true) {
 	$aFields = array();
 	$aFieldsNames = array();
 	if ($bSystemVars) {
-	  $aAux = G::getSystemConstants();
-	  foreach ($aAux as $sName => $sValue) {
-		  $aFields[] = array('sName' => $sName, 'sType' => 'system');
-	  }
-  }
+		$aAux = G::getSystemConstants();
+		foreach ($aAux as $sName => $sValue) {
+			$aFields[] = array('sName' => $sName, 'sType' => 'system', 'sLabel'=> 'System variable');
+		}
+	}
 	require_once 'classes/model/Dynaform.php';
 	$oCriteria = new Criteria('workflow');
 	$oCriteria->addSelectColumn(DynaformPeer::DYN_FILENAME);
 	$oCriteria->add(DynaformPeer::PRO_UID, $sProcessUID);
 	$oCriteria->add(DynaformPeer::DYN_TYPE, 'xmlform');
 	$oDataset = DynaformPeer::doSelectRS($oCriteria);
-  $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-  $oDataset->next();
-  while ($aRow = $oDataset->getRow()) {
-    if (file_exists(PATH_DYNAFORM . PATH_SEP . $aRow['DYN_FILENAME'] . '.xml')) {
-  	  $G_FORM  = new Form($aRow['DYN_FILENAME'], PATH_DYNAFORM, SYS_LANG);
-  	  if (($G_FORM->type == 'xmlform') || ($G_FORM->type == '')) {
-  	    foreach($G_FORM->fields as $k => $v) {
-	      	if (($v->type != 'title')  && ($v->type != 'subtitle') && ($v->type != 'link')       &&
-	      	    ($v->type != 'file')   && ($v->type != 'button')   && ($v->type != 'reset')      &&
-	      	    ($v->type != 'submit') && ($v->type != 'listbox')  && ($v->type != 'checkgroup') &&
-	      	    ($v->type != 'grid')   && ($v->type != 'javascript')) {
-	      	  if (!in_array($k, $aFieldsNames)) {
-	      	    $aFields[] = array('sName' => $k, 'sType' => $v->type);
-	      	    $aFieldsNames[] = $k;
-	      	  }
-	        }
-	      }
-	    }
-	  }
-  	$oDataset->next();
-  }
+	$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+	$oDataset->next();
+	while ($aRow = $oDataset->getRow()) {
+		if (file_exists(PATH_DYNAFORM . PATH_SEP . $aRow['DYN_FILENAME'] . '.xml')) {
+			$G_FORM  = new Form($aRow['DYN_FILENAME'], PATH_DYNAFORM, SYS_LANG);
+			if (($G_FORM->type == 'xmlform') || ($G_FORM->type == '')) {
+				foreach($G_FORM->fields as $k => $v) {
+					if (($v->type != 'title')  && ($v->type != 'subtitle') && ($v->type != 'link')       &&
+						($v->type != 'file')   && ($v->type != 'button')   && ($v->type != 'reset')      &&
+						($v->type != 'submit') && ($v->type != 'listbox')  && ($v->type != 'checkgroup') &&
+						($v->type != 'grid')   && ($v->type != 'javascript')) {
+						if (!in_array($k, $aFieldsNames)) {
+							$aFields[] = array(
+								'sName' => $k, 
+								'sType' => $v->type,
+								'sLabel'=> $v->label
+							);
+							$aFieldsNames[] = $k;
+						}
+					}
+				}
+			}
+		}
+		$oDataset->next();
+	}
 	return $aFields;
 }
 

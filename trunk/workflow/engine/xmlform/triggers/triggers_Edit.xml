@@ -37,7 +37,7 @@ var showDynaformsFormVars = function(sFieldName, sAjaxServer, sProcess, sSymbol)
 	_oVarsPanel_ = new leimnud.module.panel();
 	_oVarsPanel_.options = {
     limit    : true,
-    size     : {w:400,h:600},
+    size     : {w:550,h:645},
     position : {x:0,y:0,center:true},
     title    : '',
     theme    : 'processmaker',
@@ -74,6 +74,12 @@ var insertFormVar = function(sFieldName, sValue) {
     var tempStr1   = oAux.value.substring(0,rangeStart);
     var tempStr2   = oAux.value.substring(rangeEnd);
     oAux.value     = tempStr1 + sValue + tempStr2;
+	}
+	else {
+	  if (document.selection) {
+	    oAux.focus();
+      document.selection.createRange().text = sValue;
+	  }
 	}
 	_oVarsPanel_.remove();
 };
