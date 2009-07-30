@@ -433,6 +433,8 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
         $extPart = explode ( '.' , $auxPart[ count($auxPart)-1] );
         $extension = $extPart[ count($extPart)-1 ];
         $phpFile = PATH_DATA_SITE . 'public' . PATH_SEP .  SYS_COLLECTION . PATH_SEP . urldecode ($auxPart[ count($auxPart)-1]);
+        $aAux = explode('?', $phpFile);
+        $phpFile = $aAux[0];
         if ( $extension != 'php' ) {
           G::streamFile ( $phpFile );
           die;
