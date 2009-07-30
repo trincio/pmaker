@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dynaForm sqlConnection="" width="100%" rowsPerPage="10" menu="groups/groups_userSearch" searchBy="USR_FIRSTNAME | USR_LASTNAME">
+<dynaForm sqlConnection="" width="100%" rowsPerPage="11" menu="groups/groups_userSearch" searchBy="USR_FIRSTNAME | USR_LASTNAME">
 
 <USR_UID type="CheckboxTable" colWidth="3" titleAlign="left" align="left" value="@#USR_UID">
   <en/>

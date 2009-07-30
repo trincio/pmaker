@@ -1,4 +1,5 @@
 <!-- START BLOCK : headBlock -->
+<div class="treeBase">
 <table cellpadding="0" cellspacing="0" border="0"><tr><td>
 <div class="boxTop"><div class="a"></div><div class="b"></div><div class="c"></div></div>
 <div class="pagedTableDefault">
@@ -58,18 +59,15 @@
 
   	<!-- START BLOCK : bottomFooter -->
   	<tr>
-      <td class="treeNode2" colspan="6" align="right" >
-      	<a style="color:#2B363E" href="#" onclick="checkAll()">Check All</a>&nbsp/&nbsp
-      	<a style="color:#2B363E" href="#" onclick="uncheckAll()">Uncheck All</a>
+      <td class="treeNode" colspan="6" align="right" >
+      	
+      	<a href="#" onclick="checkAll()">Check All</a>&nbsp/&nbsp
+      	<a href="#" onclick="uncheckAll()">Uncheck All</a>&nbsp/&nbsp
+      	<a href="#" onclick="selectionX()">Assign</a>
+      	<!-- <input style="" class="module_app_button___gray " id="form[BTN_SUBMIT]" name="form[BTN_SUBMIT]" value="Assign" onclick="selectionX();" type="button"> -->
       </td>
   	</tr>
-  	<tr>
-      <td class="FormButton" colspan="6" align="center">
-      	<center>
-      	<input style="" class="module_app_button___gray " id="form[BTN_SUBMIT]" name="form[BTN_SUBMIT]" value="Assign selected users" onclick="selectionX();" type="button">
-      	</center>
-      </td>
-  	</tr>
+  	
     <tr>
       <td nowrap colspan="{columnCount}">
 	      <table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -98,7 +96,7 @@
 </table>
 </div>
 <div class="boxBottom"><div class="a"></div><div class="b"></div><div class="c"></div></div>
-</td></tr></table>
+</td></tr></table></div>
 <!-- END BLOCK : closeBlock -->
 <!-- START IGNORE -->
 
@@ -112,8 +110,7 @@ function toggleMasterDetailGroup(tablename,groupName,imgicon){
 		if(rows[i].id!=""){		
 			currentRowArray=rows[i].id.split(",");
 			sw=false;
-			//alert(groupNameArray);
-			//alert(currentRowArray);
+
 			tempVar=currentRowArray[0].split("_MD_");
 			if(tempVar[0]==""){
 				if(currentRowArray.length>groupNameArray.length){				
@@ -160,7 +157,7 @@ for(i=0; i<inputs.length; i++){
 				checks_selected_ids.deleteByValue(this.value);
 			}
 		}; 
-		//if( inputs[i].checked === true ){
+		
 		for(j=0; j<checks_selected_ids.length; j++){		
 			if( inputs[i].value == checks_selected_ids[j] ){
 				inputs[i].checked = true;
