@@ -164,7 +164,7 @@
     <column name="APP_DATA" type="LONGVARCHAR" required="true">
       <vendor type="mysql">
         <parameter name="Field" value="APP_DATA"/>
-        <parameter name="Type" value="text"/>
+        <parameter name="Type" value="mediumtext"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
@@ -5438,5 +5438,113 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
+  </table>
+  <table name="SHADOW_TABLE">
+    <vendor type="mysql">
+      <parameter name="Name" value="SHADOWN_TABLE"/>
+      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Version" value="10"/>
+      <parameter name="Row_format" value="Dynamic"/>
+      <parameter name="Rows" value="88"/>
+      <parameter name="Avg_row_length" value="311"/>
+      <parameter name="Data_length" value="27984"/>
+      <parameter name="Max_data_length" value="281474976710655"/>
+      <parameter name="Index_length" value="7168"/>
+      <parameter name="Data_free" value="564"/>
+      <parameter name="Auto_increment" value=""/>
+      <parameter name="Create_time" value="2009-07-30 16:55:00"/>
+      <parameter name="Update_time" value="2009-07-30 16:55:00"/>
+      <parameter name="Check_time" value=""/>
+      <parameter name="Collation" value="utf8_general_ci"/>
+      <parameter name="Checksum" value=""/>
+      <parameter name="Create_options" value=""/>
+      <parameter name="Comment" value=""/>
+    </vendor>
+    <column name="SHD_UID" type="VARCHAR" size="32" required="true" primaryKey="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="SHD_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value="PRI"/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="ADD_TAB_UID" type="VARCHAR" size="32" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="ADD_TAB_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="SHD_ACTION" type="VARCHAR" size="10" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="SHD_ACTION"/>
+        <parameter name="Type" value="varchar(10)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="SHD_DETAILS" type="LONGVARCHAR" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="SHD_DETAILS"/>
+        <parameter name="Type" value="text"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="USR_UID" type="VARCHAR" size="32" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="USR_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="APP_UID" type="VARCHAR" size="32" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="APP_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="SHD_DATE" type="TIMESTAMP" required="false">
+      <vendor type="mysql">
+        <parameter name="Field" value="SHD_DATE"/>
+        <parameter name="Type" value="datetime"/>
+        <parameter name="Null" value="YES"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <index name="indexShadowTable">
+      <index-column name="SHD_UID"/>
+      <vendor type="mysql">
+        <parameter name="Table" value="SHD_UID"/>
+        <parameter name="Non_unique" value="1"/>
+        <parameter name="Key_name" value="indexShadowTable"/>
+        <parameter name="Seq_in_index" value="1"/>
+        <parameter name="Column_name" value="SHD_UID"/>
+        <parameter name="Collation" value="A"/>
+        <parameter name="Cardinality" value=""/>
+        <parameter name="Sub_part" value=""/>
+        <parameter name="Packed" value=""/>
+        <parameter name="Null" value=""/>
+        <parameter name="Index_type" value="BTREE"/>
+        <parameter name="Comment" value=""/>
+      </vendor>
+    </index>
   </table>
 </database>
