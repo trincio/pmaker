@@ -1722,6 +1722,36 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
+    <column name="OUT_DOC_TYPE" type="VARCHAR" size="32" required="true" default="HTML">
+      <vendor type="mysql">
+        <parameter name="Field" value="OUT_DOC_TYPE"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="HTML"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="OUT_DOC_CURRENT_REVISION" type="INTEGER" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="OUT_DOC_CURRENT_REVISION"/>
+        <parameter name="Type" value="int(11)"/>
+        <parameter name="Null" value="YES"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="0"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="OUT_DOC_FIELD_MAPPING" type="LONGVARCHAR" required="true">
+      <vendor type="mysql">
+        <parameter name="Field" value="OUT_DOC_FIELD_MAPPING"/>
+        <parameter name="Type" value="text"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>    
     <validator column="OUT_DOC_UID">
       <rule name="maxLength" value="32" message="Output Document UID can be no larger than ${value} in size" />
       <rule name="required" message="Output Document UID is required." />
@@ -1732,6 +1762,9 @@
     </validator>
     <validator column="OUT_DOC_GENERATE">
       <rule name="validValues" value="BOTH|DOC|PDF" message="Please select a outputdocument." />
+    </validator>
+    <validator column="OUT_DOC_TYPE">
+      <rule name="validValues" value="HTML|ITEXT|JRXML|ACROFORM" message="Please select a valid Output Document Type." />
     </validator>
   </table>
   <table name="PROCESS">
