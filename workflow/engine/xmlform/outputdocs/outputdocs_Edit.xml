@@ -3,45 +3,15 @@
   name="outputdocs/outputdocs_Edit"
   type="xmlform"
   width="100%"
+  labelWidth="2px"
 >
 
 <PRO_UID type="hidden"/>
 
 <OUT_DOC_UID type="hidden" showInTable="0"/>
 
-<TITLE type="title" group="1">
-  <en>Output Document Information</en>
-</TITLE>
-
-<OUT_DOC_TITLE type="text" style="width:90%" >
-  <en>Title</en>
-</OUT_DOC_TITLE>
-
-<OUT_DOC_FILENAME type="textpm" size="30" maxlength="100" showVars="1" process="@#PRO_UID" symbol="@#" validate="Field">
-  <en>Filename generated</en>
-</OUT_DOC_FILENAME>
-
-<OUT_DOC_DESCRIPTION type="textarea" rows="3"  style="width:90%;">
-  <en>Description</en>
-</OUT_DOC_DESCRIPTION>
-
-<OUT_DOC_LANDSCAPE type="dropdown"  >
-  <en>Orientation
-  <option name="0">Vertical</option>
-  <option name="1">Horizontal</option>
-  </en>
-</OUT_DOC_LANDSCAPE>
-
-<OUT_DOC_GENERATE type="dropdown"  >
-  <en>OutPut Document to Generate
-  <option name="BOTH">BOTH</option>
-  <option name="DOC">DOC</option>
-  <option name="PDF">PDF</option>
-  </en>
-</OUT_DOC_GENERATE>
-
-<OUT_DOC_TEMPLATE type="html" rows="20" cols="50" defaultValue="&lt;br/&gt;">
-  <en>Template</en>
+<OUT_DOC_TEMPLATE type="html" width = "100%" height="380px" defaultValue="&lt;br/&gt;">
+  <en></en>
 </OUT_DOC_TEMPLATE>
 
 <ACCEPT type="button" onclick="outputdocsSave(this.form);">
