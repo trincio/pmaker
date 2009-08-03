@@ -59,7 +59,7 @@ class AdditionalTables extends BaseAdditionalTables {
     }
   }
 
-  function create($aData) {
+  function create($aData, $aFields = array()) {
     if (!isset($aData['ADD_TAB_UID'])) {
       $aData['ADD_TAB_UID'] = G::generateUniqueID();
     }
@@ -76,6 +76,14 @@ class AdditionalTables extends BaseAdditionalTables {
         $oConnection->begin();
         $iResult = $oAdditionalTables->save();
         $oConnection->commit();
+        require_once 'classes/model/ShadowTable.php';
+        $oShadowTable = new ShadowTable();
+        $oShadowTable->create(array('ADD_TAB_UID' => $aData['ADD_TAB_UID'],
+                                    'SHD_ACTION'  => 'CREATE',
+                                    'SHD_DETAILS' => serialize($aFields),
+                                    'USR_UID'     => (isset($_SESSION['USER_LOGGED']) ? $_SESSION['USER_LOGGED'] : ''),
+                                    'APP_UID'     => '',
+                                    'SHD_DATE'    => date('Y-m-d H:i:s')));
         return $aData['ADD_TAB_UID'];
   	  }
   	  else {
@@ -93,7 +101,7 @@ class AdditionalTables extends BaseAdditionalTables {
     }
   }
 
-  function update($aData) {
+  function update($aData, $aFields = array()) {
     $oConnection = Propel::getConnection(AdditionalTablesPeer::DATABASE_NAME);
   	try {
   	  $oAdditionalTables = AdditionalTablesPeer::retrieveByPK($aData['ADD_TAB_UID']);
@@ -103,6 +111,14 @@ class AdditionalTables extends BaseAdditionalTables {
   	    	$oConnection->begin();
           $iResult = $oAdditionalTables->save();
           $oConnection->commit();
+          require_once 'classes/model/ShadowTable.php';
+          $oShadowTable = new ShadowTable();
+          $oShadowTable->create(array('ADD_TAB_UID' => $aData['ADD_TAB_UID'],
+                                      'SHD_ACTION'  => 'ALTER',
+                                      'SHD_DETAILS' => serialize($aFields),
+                                      'USR_UID'     => (isset($_SESSION['USER_LOGGED']) ? $_SESSION['USER_LOGGED'] : ''),
+                                      'APP_UID'     => '',
+                                      'SHD_DATE'    => date('Y-m-d H:i:s')));
           return $iResult;
   	    }
   	    else {
@@ -129,9 +145,25 @@ class AdditionalTables extends BaseAdditionalTables {
   	try {
   	  $oAdditionalTables = AdditionalTablesPeer::retrieveByPK($sUID);
   	  if (!is_null($oAdditionalTables)) {
+  	    $aAdditionalTables = $oAdditionalTables->toArray(BasePeer::TYPE_FIELDNAME);
   	  	$oConnection->begin();
         $iResult = $oAdditionalTables->delete();
         $oConnection->commit();
+        require_once 'classes/model/ShadowTable.php';
+        if ($aAdditionalTables['ADD_TAB_SDW_AUTO_DELETE'] == 1) {
+          $oCriteria = new Criteria('workflow');
+          $oCriteria->add(ShadowTablePeer::ADD_TAB_UID, $sUID);
+          ShadowTablePeer::doDelete($oCriteria);
+        }
+        else {
+          $oShadowTable = new ShadowTable();
+          $oShadowTable->create(array('ADD_TAB_UID' => $sUID,
+                                      'SHD_ACTION'  => 'DROP',
+                                      'SHD_DETAILS' => '',
+                                      'USR_UID'     => (isset($_SESSION['USER_LOGGED']) ? $_SESSION['USER_LOGGED'] : ''),
+                                      'APP_UID'     => '',
+                                      'SHD_DATE'    => date('Y-m-d H:i:s')));
+        }
         return $iResult;
       }
       else {
@@ -335,7 +367,7 @@ class AdditionalTables extends BaseAdditionalTables {
     }
   }
 
-  function createPropelClasses($sTableName, $sClassName, $aFields) {
+  function createPropelClasses($sTableName, $sClassName, $aFields, $sAddTabUid) {
     try {
       /*$aUID = array('FLD_NAME'           => 'PM_UNIQUE_ID',
                     'FLD_TYPE'           => 'INT',
@@ -368,6 +400,7 @@ class AdditionalTables extends BaseAdditionalTables {
       $aData['pathClasses']    = substr(PATH_DB, 0, -1);
       $aData['tableName']      = $sTableName;
       $aData['className']      = $sClassName;
+      $aData['GUID']           = $sAddTabUid;
       $aData['firstColumn']    = $aFields[1]['FLD_NAME'];
       $aData['totalColumns']   = count($aFields);
       $aData['useIdGenerator'] = 'false';
