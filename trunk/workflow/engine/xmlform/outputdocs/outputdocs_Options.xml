@@ -8,16 +8,20 @@
 <!--<PAGED_TABLE_FAST_SEARCH type="FastSearch" label="@G::LoadTranslation(ID_SEARCH)"/>-->
 <PRO_UID type="private"/>>
 <outputdocs_Edit type="private" defaultValue="../outputdocs/outputdocs_Edit"/>
+<outputdocs_Properties type="private" defaultValue="../outputdocs/outputdocs_Properties"/>
 <outputdocs_Delete type="private" defaultValue="../outputdocs/outputdocs_Delete"/>
 <js type="javascript" replaceTags="1">
 var currentPagedTable = @#PAGED_TABLE_ID;
   function outputdocsAdd(){
-		popupWindow('@G::LoadTranslation(ID_OUTPUT_DOCUMENTS)', '@G::encryptlink(@#outputdocs_Edit)?PRO_UID=@%PRO_UID' , 600, 600);
+		popupWindow('@G::LoadTranslation(ID_OUTPUT_DOCUMENTS)', '@G::encryptlink(@#outputdocs_Edit)?PRO_UID=@%PRO_UID' , 600, 400);
   }
   function outputdocsEdit( uid ) {
-		popupWindow('@G::LoadTranslation(ID_OUTPUT_DOCUMENTS)', '@G::encryptlink(@#outputdocs_Edit)?OUT_DOC_UID='+ uid , 600, 510);
+		popupWindow('@G::LoadTranslation(ID_OUTPUT_DOCUMENTS)', '@G::encryptlink(@#outputdocs_Edit)?OUT_DOC_UID='+ uid , 770, 510);
   }
-  function outputdocsSave( form ) {
+  function outputdocsProperties( uid ) {
+		popupWindow('@G::LoadTranslation(ID_OUTPUT_DOCUMENTS)', '@G::encryptlink(@#outputdocs_Properties)?OUT_DOC_UID='+ uid , 600, 400);
+  }
+  function outputdocsPropertiesSave( form ) {
     var doc = getField("OUT_DOC_FILENAME");    
     if(doc.value=='')
      { alert(G_STRINGS.ID_FILEGENERATED);
@@ -27,6 +31,12 @@ var currentPagedTable = @#PAGED_TABLE_ID;
        currentPopupWindow.remove();
        @#PAGED_TABLE_ID.refresh();
      }  
+  }
+  function outputdocsSave( form ) {
+    ajax_post( form.action, form, 'POST' );
+    currentPopupWindow.remove();
+    @#PAGED_TABLE_ID.refresh();
+      
   }
   function outputdocsDelete( uid ) {
     new leimnud.module.app.confirm().make({
