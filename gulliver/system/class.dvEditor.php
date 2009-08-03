@@ -26,15 +26,19 @@
 class XmlForm_Field_HTML extends XmlForm_Field
 {
   var $toolbarSet = 'smallToolBar';
-  var $width  = '90%';
+  var $width  = '100%';
   var $height = '200' ;
+  
   var $defaultValue='<br/>';
   function render( $value , $owner=NULL ) {
     $value = ($value=='')?'<br/>':$value;
-    return '<div style="width:'.$this->width.';"><input id="form['.$this->name.']" name="form['.$this->name.']" type="hidden" value="'.htmlentities($value,ENT_QUOTES,'UTF-8').'"/></div>';
+    $html = "<div style='width:" . $this->width . ";'>" ;
+    $html .= "<input id='form[" . $this->name . "]' name='form[" . $this->name . "]' type='hidden' value=' " . htmlentities($value,ENT_QUOTES,'UTF-8') . "' />";
+    $html .= "</div>"; 
+    return $html;
   }
   function attachEvents($element) {
-    $html='window._editor'.$this->name.'=new DVEditor(getField("'.$this->name.'").parentNode,getField("'.$this->name.'").value,element,"'.$this->height.'");';
+    $html='window._editor'.$this->name.'=new DVEditor(getField("'.$this->name.'").parentNode,getField("'.$this->name.'").value,element,"' . $this->height . '");';
     $html.='window._editor'.$this->name.'.loadToolBar("/js/dveditor/core/toolbars/'.$this->toolbarSet.'.html");';
     $html.='window._editor'.$this->name.'.syncHidden("window._editor'.$this->name.'");';
     return $html;
