@@ -36,6 +36,7 @@ try {
   	  die;
   	break;
   }
+  
   require_once 'classes/model/OutputDocument.php';
   $ooutputDocument = new OutputDocument();
   if (isset($_GET['OUT_DOC_UID'])) {

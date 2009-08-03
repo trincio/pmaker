@@ -33,7 +33,7 @@
 </OUT_DOC_LANDSCAPE>
 
 <OUT_DOC_GENERATE type="dropdown"  >
-  <en>OutPut Document to Generate
+  <en>Output Document to Generate
   <option name="BOTH">BOTH</option>
   <option name="DOC">DOC</option>
   <option name="PDF">PDF</option>

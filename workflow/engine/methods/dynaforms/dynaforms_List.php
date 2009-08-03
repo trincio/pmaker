@@ -32,7 +32,7 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
 
   $dbc = new DBConnection();
   $ses = new DBSession($dbc);
-
+print "XX";
   //Hardcode: UID of the library by default
   $PRO_UID='746B734DC23311';
   $Fields['PRO_UID'] = $PRO_UID;
