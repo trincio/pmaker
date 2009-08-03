@@ -2383,7 +2383,8 @@ class XmlForm {
       foreach ( $xmlNode as $k => $v ) {
         if (($xmlNode [$k]->type !== 'cdata') && isset ( $xmlNode [$k]->attributes ['type'] )) {
           if (class_exists ( 'XmlForm_Field_' . $xmlNode [$k]->attributes ['type'] )) {
-            $x = '$field = new XmlForm_Field_' . $xmlNode [$k]->attributes ['type'] . '($xmlNode[$k], $language, $this->home, $this);';
+            $x = '$field = new XmlForm_Field_' . $xmlNode [$k]->attributes ['type'] . '( $xmlNode[$k], $language, $this->home, $this);';
+            
             eval ( $x );
           } else
             $field = new XmlForm_Field ( $xmlNode [$k], $language, $this->home, $this );
