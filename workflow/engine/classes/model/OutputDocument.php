@@ -123,7 +123,9 @@ class OutputDocument extends BaseOutputDocument {
           $oOutputDocument->setOutDocDescription($aData['OUT_DOC_DESCRIPTION']);
         }
         $oOutputDocument->setOutDocFilename($aData['OUT_DOC_FILENAME']);
-        $oOutputDocument->setOutDocTemplate($aData['OUT_DOC_TEMPLATE']);
+        if (isset($aData['OUT_DOC_TEMPLATE'])) {
+          $oOutputDocument->setOutDocTemplate($aData['OUT_DOC_TEMPLATE']);
+        }
         $iResult = $oOutputDocument->save();
         $oConnection->commit();
         return $aData['OUT_DOC_UID'];

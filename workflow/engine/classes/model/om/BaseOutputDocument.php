@@ -55,6 +55,27 @@ abstract class BaseOutputDocument extends BaseObject  implements Persistent {
 	 */
 	protected $out_doc_generate = 'BOTH';
 
+
+	/**
+	 * The value for the out_doc_type field.
+	 * @var        string
+	 */
+	protected $out_doc_type = 'HTML';
+
+
+	/**
+	 * The value for the out_doc_current_revision field.
+	 * @var        int
+	 */
+	protected $out_doc_current_revision = 0;
+
+
+	/**
+	 * The value for the out_doc_field_mapping field.
+	 * @var        string
+	 */
+	protected $out_doc_field_mapping;
+
 	/**
 	 * Flag to prevent endless save loop, if this object is referenced
 	 * by another object which falls in this transaction.
@@ -111,6 +132,39 @@ abstract class BaseOutputDocument extends BaseObject  implements Persistent {
 	{
 
 		return $this->out_doc_generate;
+	}
+
+	/**
+	 * Get the [out_doc_type] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getOutDocType()
+	{
+
+		return $this->out_doc_type;
+	}
+
+	/**
+	 * Get the [out_doc_current_revision] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getOutDocCurrentRevision()
+	{
+
+		return $this->out_doc_current_revision;
+	}
+
+	/**
+	 * Get the [out_doc_field_mapping] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getOutDocFieldMapping()
+	{
+
+		return $this->out_doc_field_mapping;
 	}
 
 	/**
@@ -202,6 +256,72 @@ abstract class BaseOutputDocument extends BaseObject  implements Persistent {
 	} // setOutDocGenerate()
 
 	/**
+	 * Set the value of [out_doc_type] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setOutDocType($v)
+	{
+
+		// Since the native PHP type for this column is string,
+		// we will cast the input to a string (if it is not).
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->out_doc_type !== $v || $v === 'HTML') {
+			$this->out_doc_type = $v;
+			$this->modifiedColumns[] = OutputDocumentPeer::OUT_DOC_TYPE;
+		}
+
+	} // setOutDocType()
+
+	/**
+	 * Set the value of [out_doc_current_revision] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     void
+	 */
+	public function setOutDocCurrentRevision($v)
+	{
+
+		// Since the native PHP type for this column is integer,
+		// we will cast the input value to an int (if it is not).
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->out_doc_current_revision !== $v || $v === 0) {
+			$this->out_doc_current_revision = $v;
+			$this->modifiedColumns[] = OutputDocumentPeer::OUT_DOC_CURRENT_REVISION;
+		}
+
+	} // setOutDocCurrentRevision()
+
+	/**
+	 * Set the value of [out_doc_field_mapping] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setOutDocFieldMapping($v)
+	{
+
+		// Since the native PHP type for this column is string,
+		// we will cast the input to a string (if it is not).
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->out_doc_field_mapping !== $v) {
+			$this->out_doc_field_mapping = $v;
+			$this->modifiedColumns[] = OutputDocumentPeer::OUT_DOC_FIELD_MAPPING;
+		}
+
+	} // setOutDocFieldMapping()
+
+	/**
 	 * Hydrates (populates) the object variables with values from the database resultset.
 	 *
 	 * An offset (1-based "start column") is specified so that objects can be hydrated
@@ -226,12 +346,18 @@ abstract class BaseOutputDocument extends BaseObject  implements Persistent {
 
 			$this->out_doc_generate = $rs->getString($startcol + 3);
 
+			$this->out_doc_type = $rs->getString($startcol + 4);
+
+			$this->out_doc_current_revision = $rs->getInt($startcol + 5);
+
+			$this->out_doc_field_mapping = $rs->getString($startcol + 6);
+
 			$this->resetModified();
 
 			$this->setNew(false);
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 4; // 4 = OutputDocumentPeer::NUM_COLUMNS - OutputDocumentPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 7; // 7 = OutputDocumentPeer::NUM_COLUMNS - OutputDocumentPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating OutputDocument object", $e);
@@ -446,6 +572,15 @@ abstract class BaseOutputDocument extends BaseObject  implements Persistent {
 			case 3:
 				return $this->getOutDocGenerate();
 				break;
+			case 4:
+				return $this->getOutDocType();
+				break;
+			case 5:
+				return $this->getOutDocCurrentRevision();
+				break;
+			case 6:
+				return $this->getOutDocFieldMapping();
+				break;
 			default:
 				return null;
 				break;
@@ -470,6 +605,9 @@ abstract class BaseOutputDocument extends BaseObject  implements Persistent {
 			$keys[1] => $this->getProUid(),
 			$keys[2] => $this->getOutDocLandscape(),
 			$keys[3] => $this->getOutDocGenerate(),
+			$keys[4] => $this->getOutDocType(),
+			$keys[5] => $this->getOutDocCurrentRevision(),
+			$keys[6] => $this->getOutDocFieldMapping(),
 		);
 		return $result;
 	}
@@ -513,6 +651,15 @@ abstract class BaseOutputDocument extends BaseObject  implements Persistent {
 			case 3:
 				$this->setOutDocGenerate($value);
 				break;
+			case 4:
+				$this->setOutDocType($value);
+				break;
+			case 5:
+				$this->setOutDocCurrentRevision($value);
+				break;
+			case 6:
+				$this->setOutDocFieldMapping($value);
+				break;
 		} // switch()
 	}
 
@@ -540,6 +687,9 @@ abstract class BaseOutputDocument extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[1], $arr)) $this->setProUid($arr[$keys[1]]);
 		if (array_key_exists($keys[2], $arr)) $this->setOutDocLandscape($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setOutDocGenerate($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setOutDocType($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setOutDocCurrentRevision($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setOutDocFieldMapping($arr[$keys[6]]);
 	}
 
 	/**
@@ -555,6 +705,9 @@ abstract class BaseOutputDocument extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(OutputDocumentPeer::PRO_UID)) $criteria->add(OutputDocumentPeer::PRO_UID, $this->pro_uid);
 		if ($this->isColumnModified(OutputDocumentPeer::OUT_DOC_LANDSCAPE)) $criteria->add(OutputDocumentPeer::OUT_DOC_LANDSCAPE, $this->out_doc_landscape);
 		if ($this->isColumnModified(OutputDocumentPeer::OUT_DOC_GENERATE)) $criteria->add(OutputDocumentPeer::OUT_DOC_GENERATE, $this->out_doc_generate);
+		if ($this->isColumnModified(OutputDocumentPeer::OUT_DOC_TYPE)) $criteria->add(OutputDocumentPeer::OUT_DOC_TYPE, $this->out_doc_type);
+		if ($this->isColumnModified(OutputDocumentPeer::OUT_DOC_CURRENT_REVISION)) $criteria->add(OutputDocumentPeer::OUT_DOC_CURRENT_REVISION, $this->out_doc_current_revision);
+		if ($this->isColumnModified(OutputDocumentPeer::OUT_DOC_FIELD_MAPPING)) $criteria->add(OutputDocumentPeer::OUT_DOC_FIELD_MAPPING, $this->out_doc_field_mapping);
 
 		return $criteria;
 	}
@@ -614,6 +767,12 @@ abstract class BaseOutputDocument extends BaseObject  implements Persistent {
 		$copyObj->setOutDocLandscape($this->out_doc_landscape);
 
 		$copyObj->setOutDocGenerate($this->out_doc_generate);
+
+		$copyObj->setOutDocType($this->out_doc_type);
+
+		$copyObj->setOutDocCurrentRevision($this->out_doc_current_revision);
+
+		$copyObj->setOutDocFieldMapping($this->out_doc_field_mapping);
 
 
 		$copyObj->setNew(true);

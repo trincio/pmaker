@@ -1525,7 +1525,7 @@ class processMap {
 		try {
 			$oProcess = new Process();
   	  $aFields  = $oProcess->load($sProcessUID);
-      global $G_PUBLISH;
+      global $G_PUBLISH; 
       $G_PUBLISH = new Publisher;
       $G_PUBLISH->AddContent('propeltable', 'paged-table', 'outputdocs/outputdocs_ShortList', $this->getOutputDocumentsCriteria($sProcessUID), $aFields);
       G::RenderPage('publish', 'raw');
@@ -1546,6 +1546,7 @@ class processMap {
   	$sDelimiter = DBAdapter::getStringDelimiter();
   	$oCriteria  = new Criteria('workflow');
     $oCriteria->addSelectColumn(OutputDocumentPeer::OUT_DOC_UID);
+    $oCriteria->addSelectColumn(OutputDocumentPeer::OUT_DOC_TYPE);
     $oCriteria->addSelectColumn(OutputDocumentPeer::PRO_UID);
     $oCriteria->addAsColumn('OUT_DOC_TITLE',       'C1.CON_VALUE');
     $oCriteria->addAsColumn('OUT_DOC_DESCRIPTION', 'C2.CON_VALUE');
