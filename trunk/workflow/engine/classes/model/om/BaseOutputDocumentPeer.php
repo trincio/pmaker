@@ -24,7 +24,7 @@ abstract class BaseOutputDocumentPeer {
 	const CLASS_DEFAULT = 'classes.model.OutputDocument';
 
 	/** The total number of columns. */
-	const NUM_COLUMNS = 4;
+	const NUM_COLUMNS = 7;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -42,6 +42,15 @@ abstract class BaseOutputDocumentPeer {
 	/** the column name for the OUT_DOC_GENERATE field */
 	const OUT_DOC_GENERATE = 'OUTPUT_DOCUMENT.OUT_DOC_GENERATE';
 
+	/** the column name for the OUT_DOC_TYPE field */
+	const OUT_DOC_TYPE = 'OUTPUT_DOCUMENT.OUT_DOC_TYPE';
+
+	/** the column name for the OUT_DOC_CURRENT_REVISION field */
+	const OUT_DOC_CURRENT_REVISION = 'OUTPUT_DOCUMENT.OUT_DOC_CURRENT_REVISION';
+
+	/** the column name for the OUT_DOC_FIELD_MAPPING field */
+	const OUT_DOC_FIELD_MAPPING = 'OUTPUT_DOCUMENT.OUT_DOC_FIELD_MAPPING';
+
 	/** The PHP to DB Name Mapping */
 	private static $phpNameMap = null;
 
@@ -53,10 +62,10 @@ abstract class BaseOutputDocumentPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('OutDocUid', 'ProUid', 'OutDocLandscape', 'OutDocGenerate', ),
-		BasePeer::TYPE_COLNAME => array (OutputDocumentPeer::OUT_DOC_UID, OutputDocumentPeer::PRO_UID, OutputDocumentPeer::OUT_DOC_LANDSCAPE, OutputDocumentPeer::OUT_DOC_GENERATE, ),
-		BasePeer::TYPE_FIELDNAME => array ('OUT_DOC_UID', 'PRO_UID', 'OUT_DOC_LANDSCAPE', 'OUT_DOC_GENERATE', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME => array ('OutDocUid', 'ProUid', 'OutDocLandscape', 'OutDocGenerate', 'OutDocType', 'OutDocCurrentRevision', 'OutDocFieldMapping', ),
+		BasePeer::TYPE_COLNAME => array (OutputDocumentPeer::OUT_DOC_UID, OutputDocumentPeer::PRO_UID, OutputDocumentPeer::OUT_DOC_LANDSCAPE, OutputDocumentPeer::OUT_DOC_GENERATE, OutputDocumentPeer::OUT_DOC_TYPE, OutputDocumentPeer::OUT_DOC_CURRENT_REVISION, OutputDocumentPeer::OUT_DOC_FIELD_MAPPING, ),
+		BasePeer::TYPE_FIELDNAME => array ('OUT_DOC_UID', 'PRO_UID', 'OUT_DOC_LANDSCAPE', 'OUT_DOC_GENERATE', 'OUT_DOC_TYPE', 'OUT_DOC_CURRENT_REVISION', 'OUT_DOC_FIELD_MAPPING', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
 	/**
@@ -66,10 +75,10 @@ abstract class BaseOutputDocumentPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('OutDocUid' => 0, 'ProUid' => 1, 'OutDocLandscape' => 2, 'OutDocGenerate' => 3, ),
-		BasePeer::TYPE_COLNAME => array (OutputDocumentPeer::OUT_DOC_UID => 0, OutputDocumentPeer::PRO_UID => 1, OutputDocumentPeer::OUT_DOC_LANDSCAPE => 2, OutputDocumentPeer::OUT_DOC_GENERATE => 3, ),
-		BasePeer::TYPE_FIELDNAME => array ('OUT_DOC_UID' => 0, 'PRO_UID' => 1, 'OUT_DOC_LANDSCAPE' => 2, 'OUT_DOC_GENERATE' => 3, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, )
+		BasePeer::TYPE_PHPNAME => array ('OutDocUid' => 0, 'ProUid' => 1, 'OutDocLandscape' => 2, 'OutDocGenerate' => 3, 'OutDocType' => 4, 'OutDocCurrentRevision' => 5, 'OutDocFieldMapping' => 6, ),
+		BasePeer::TYPE_COLNAME => array (OutputDocumentPeer::OUT_DOC_UID => 0, OutputDocumentPeer::PRO_UID => 1, OutputDocumentPeer::OUT_DOC_LANDSCAPE => 2, OutputDocumentPeer::OUT_DOC_GENERATE => 3, OutputDocumentPeer::OUT_DOC_TYPE => 4, OutputDocumentPeer::OUT_DOC_CURRENT_REVISION => 5, OutputDocumentPeer::OUT_DOC_FIELD_MAPPING => 6, ),
+		BasePeer::TYPE_FIELDNAME => array ('OUT_DOC_UID' => 0, 'PRO_UID' => 1, 'OUT_DOC_LANDSCAPE' => 2, 'OUT_DOC_GENERATE' => 3, 'OUT_DOC_TYPE' => 4, 'OUT_DOC_CURRENT_REVISION' => 5, 'OUT_DOC_FIELD_MAPPING' => 6, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
 	/**
@@ -177,6 +186,12 @@ abstract class BaseOutputDocumentPeer {
 		$criteria->addSelectColumn(OutputDocumentPeer::OUT_DOC_LANDSCAPE);
 
 		$criteria->addSelectColumn(OutputDocumentPeer::OUT_DOC_GENERATE);
+
+		$criteria->addSelectColumn(OutputDocumentPeer::OUT_DOC_TYPE);
+
+		$criteria->addSelectColumn(OutputDocumentPeer::OUT_DOC_CURRENT_REVISION);
+
+		$criteria->addSelectColumn(OutputDocumentPeer::OUT_DOC_FIELD_MAPPING);
 
 	}
 
@@ -516,6 +531,9 @@ abstract class BaseOutputDocumentPeer {
 
 		if ($obj->isNew() || $obj->isColumnModified(OutputDocumentPeer::OUT_DOC_GENERATE))
 			$columns[OutputDocumentPeer::OUT_DOC_GENERATE] = $obj->getOutDocGenerate();
+
+		if ($obj->isNew() || $obj->isColumnModified(OutputDocumentPeer::OUT_DOC_TYPE))
+			$columns[OutputDocumentPeer::OUT_DOC_TYPE] = $obj->getOutDocType();
 
 		}
 
