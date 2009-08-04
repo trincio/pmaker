@@ -323,7 +323,7 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 		  	  foreach($aFields as $key => $val) $aFields[$key]=array(1=>"",2=>"",3=>"",4=>"",5=>"");
 		    }
 		  break;
-		  default: 
+		  default:
 		  	$template='xmlform_' . $G_PUBLISH->publisherId;
 			$aFields = array(
 					'__DYNAFORM_OPTIONS'=> array(

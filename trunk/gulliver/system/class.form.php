@@ -48,7 +48,7 @@ class Form extends XmlForm
   var $nextstepsave = '';
 
   public $visual_frontend;
-  
+
   /**
    * Function setDefaultValues
    * @author David S. Callizaya S. <davidsantos@colosa.com>
@@ -87,7 +87,7 @@ class Form extends XmlForm
   function Form($filename, $home='', $language = '', $forceParse = false, $visual_frontend=null)
   {
     $this->visual_frontend = $visual_frontend;
-     
+
     if ($language=== '') $language = defined('SYS_LANG')? SYS_LANG : 'en';
     if ($home=== '') $home = defined('PATH_XMLFORM')? PATH_XMLFORM :
      (defined('PATH_DYNAFORM')? PATH_DYNAFORM: '');
@@ -157,15 +157,15 @@ class Form extends XmlForm
   function render( $template, &$scriptContent )
   {
     /***
-     * This section was added for store the current used template.   
+     * This section was added for store the current used template.
    */
     $tmp_var = explode('/', $template);
     if( is_array($tmp_var) ){
       $tmp_var = $tmp_var[sizeof($tmp_var)-1];
-      $this->using_template = $tmp_var; 
+      $this->using_template = $tmp_var;
     }
     /***/
-    
+
     $this->template = $template;
     $o = new xmlformTemplate($this, $template);
     $values = $this->values;
@@ -247,7 +247,7 @@ class Form extends XmlForm
    * @return array $_POST['form']
    */
   function validatePost()
-  { 
+  {
     return $_POST['form']=$this->validateArray($_POST['form']);
   }
   /**
@@ -258,13 +258,13 @@ class Form extends XmlForm
    * @return array
    */
   function validateArray($newValues)
-  { 
+  {
     //$values = $this->values;
-    foreach($this->fields as $k => $v){ 
+    foreach($this->fields as $k => $v){
       if (($v->type != 'submit')) {
-        if ($v->type != 'file') { 
-          if ( array_key_exists($k,$newValues) ) { 
-            if ( is_array($newValues[$k]) ) { 
+        if ($v->type != 'file') {
+          if ( array_key_exists($k,$newValues) ) {
+            if ( is_array($newValues[$k]) ) {
               if (($v->type == 'checkgroup') || ($v->type == 'listbox')) {
                 $values[$k] = implode('|', $newValues[$k]);
               }
@@ -280,23 +280,28 @@ class Form extends XmlForm
                 }
                 if (sizeof($values[$k])===0) $values[$k] = '';
               }
-            } else {  
+            } else {
               if ($this->fields[$k]->validateValue($newValues[$k], $this ))
                 $values[$k] = $this->fields[$k]->maskValue( $newValues[$k], $this );
             }
           }
+          if ($v->type == 'dropdown') {
+            if ($v->saveLabel == 1) {
+              $values[$k . '_label'] = $v->option[$newValues[$k]];
+            }
+          }
          else
-          { 
-            if($v->type == 'checkbox')                  
-                $values[$k]=$v->falseValue;            
-          } 
+          {
+            if($v->type == 'checkbox')
+                $values[$k]=$v->falseValue;
+          }
         }
-        else { 
+        else {
           if (isset($_FILES['form']['name'][$k])) {
             $values[$k] = $_FILES['form']['name'][$k];
-          }        
-          
-          $_POST['INPUTS']['input'] = $v->input;          
+          }
+
+          $_POST['INPUTS']['input'] = $v->input;
         }
       }
     }
@@ -304,7 +309,7 @@ class Form extends XmlForm
       if (strpos($k, 'SYS_GRID_AGGREGATE_') !== false) {
         $values[$k] = $v;
       }
-    } 
+    }
     return $values;
   }
   /**

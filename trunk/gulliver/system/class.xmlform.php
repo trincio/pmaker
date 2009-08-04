@@ -1626,6 +1626,7 @@ class XmlForm_Field_Dropdown extends XmlForm_Field {
   var $sqlConnection = 0;
   var $sql = '';
   var $sqlOption = array ();
+  var $saveLabel = 0;
   function validateValue($value, &$owner) {
     /*$this->executeSQL( $owner );
     return isset($value) && ( array_key_exists( $value , $this->options ) );*/
@@ -2384,7 +2385,7 @@ class XmlForm {
         if (($xmlNode [$k]->type !== 'cdata') && isset ( $xmlNode [$k]->attributes ['type'] )) {
           if (class_exists ( 'XmlForm_Field_' . $xmlNode [$k]->attributes ['type'] )) {
             $x = '$field = new XmlForm_Field_' . $xmlNode [$k]->attributes ['type'] . '( $xmlNode[$k], $language, $this->home, $this);';
-            
+
             eval ( $x );
           } else
             $field = new XmlForm_Field ( $xmlNode [$k], $language, $this->home, $this );
