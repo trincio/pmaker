@@ -50,6 +50,15 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
     $_POST['form']['PME_READONLY'] = 0;
   }
 
+  if (isset($_POST['form']['PME_SAVELABEL'])) {
+    if ($_POST['form']['PME_SAVELABEL'] == '') {
+      $_POST['form']['PME_SAVELABEL'] = 0;
+    }
+  }
+  else {
+    $_POST['form']['PME_SAVELABEL'] = 0;
+  }
+
   $file = G::decrypt( $_POST['form']['PME_A'] , URL_KEY );
   define('DB_XMLDB_HOST', PATH_DYNAFORM  . $file . '.xml' );
   define('DB_XMLDB_USER','');
@@ -63,7 +72,7 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
     //TODO: Verify why validatePost removes PME_XMLGRID.
     $isGrid=isset($_POST['form']['PME_XMLGRID']);
     if ($isGrid) $xmlGrid=$_POST['form']['PME_XMLGRID'];
-    $form->validatePost();
+    //$form->validatePost();
     if ($isGrid) $_POST['form']['PME_XMLGRID']=$xmlGrid;
     if ($type==='checkbox') {
       if ($_POST['form']['PME_DEFAULTVALUE']===$form->fields['PME_DEFAULTVALUE']->value) {
