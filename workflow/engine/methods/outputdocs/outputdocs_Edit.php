@@ -46,12 +46,44 @@ try {
   	$aFields            = array();
   	$aFields['PRO_UID'] = $_GET['PRO_UID'];
   }
+  
+  require_once 'classes/model/OutputDocument.php';
+  $ooutputDocument = new OutputDocument();
+  if (isset($_GET['OUT_DOC_UID'])) {
+    $aFields = $ooutputDocument->load($_GET['OUT_DOC_UID']);
+  }
+  else {
+  	$aFields            = array();
+  	$aFields['PRO_UID'] = $_GET['PRO_UID'];
+  }
+
+  krumo ($aFields); 
+  $type = isset ( $aFields['OUT_DOC_TYPE']) ? $aFields['OUT_DOC_TYPE'] : 'HTML';
+  
   G::LoadClass('xmlfield_InputPM');
   $G_PUBLISH = new Publisher();
-  $G_PUBLISH->AddContent('xmlform', 'xmlform', 'outputdocs/outputdocs_Edit', '', $aFields , '../outputdocs/outputdocs_Save');
+  
+  switch ( $type ) {
+  	case 'HTML' : 
+      $G_PUBLISH->AddContent('xmlform', 'xmlform', 'outputdocs/outputdocs_Edit', '', $aFields , '../outputdocs/outputdocs_Save');
+  	     break;
+  	case 'JRXML' : 
+//  	     $G_PUBLISH->AddContent('xmlform', 'xmlform', 'outputdocs/outputdocsDynaformList', '', $aFields , '../outputdocs/outputdocs_Save');
+         require_once 'classes/model/Process.php';
+         G::LoadClass( 'processMap');
+         $sProcessUID = $aFields['PRO_UID'];
+         $oProcess = new Process();
+         $oProcessMap = new ProcessMap();
+         $aFields  = $oProcess->load($sProcessUID);
+         $G_PUBLISH->AddContent('propeltable', 'paged-table', 'dynaforms/dynaforms_ShortList', $oProcessMap->getDynaformsCriteria($sProcessUID), $aFields);
+  	     break;
+  	case 'ACROFORM' : 
+  	     $G_PUBLISH->AddContent('xmlform', 'xmlform', 'outputdocs/outputdocs_Properties', '', $aFields , '../outputdocs/outputdocs_Save');
+  	     break;
+  }
   G::RenderPage('publish', 'raw');
+  
 }
 catch (Exception $oException) {
 	die($oException->getMessage());
 }
-?>

@@ -45,31 +45,35 @@ try {
   	$aFields            = array();
   	$aFields['PRO_UID'] = $_GET['PRO_UID'];
   }
-
-  $type = isset ( $aFields['OUT_DOC_TYPE']) ? $aFields['OUT_DOC_TYPE'] : 'HTML';
+  $aFields['OUT_DOC_TYPE'] = 'HTML';
+  
+  
+  $enabledJavaBridge = false;
+  G::LoadClass ('javaBridgePM');
+  if ( class_exists ( 'javaBridgePM' ) ) {
+    $JBPM = new JavaBridgePM();
+    try {
+      $JBPM->checkJavaExtension();
+      $util = new Java("com.processmaker.util.pmutils");
+      $enabledJavaBridge = true;
+    } catch ( Exception $e ) {
+    	
+    }
+    //$util->setInputPath( JAVATEST_PATH );
+    //$util->setOutputPath( JAVATEST_PATH );
+  }
+  
+  
   
   G::LoadClass('xmlfield_InputPM');
   $G_PUBLISH = new Publisher();
-  switch ( $type ) {
-  	case 'HTML' : 
-  	     $G_PUBLISH->AddContent('xmlform', 'xmlform', 'outputdocs/outputdocs_Properties', '', $aFields , '../outputdocs/outputdocs_Save');
-  	     break;
-  	case 'JRXML' : 
-  	     $G_PUBLISH->AddContent('xmlform', 'xmlform', 'outputdocs/outputdocs_Properties', '', $aFields , '../outputdocs/outputdocs_Save');
-/*
-//  	     $G_PUBLISH->AddContent('xmlform', 'xmlform', 'outputdocs/outputdocsDynaformList', '', $aFields , '../outputdocs/outputdocs_Save');
-      require_once 'classes/model/Process.php';
-      G::LoadClass( 'processMap');
-      $sProcessUID = $aFields['PRO_UID'];
-      $oProcess = new Process();
-      $oProcessMap = new ProcessMap();
-  	  $aFields  = $oProcess->load($sProcessUID);
-  	  $G_PUBLISH->AddContent('propeltable', 'paged-table', 'dynaforms/dynaforms_ShortList', $oProcessMap->getDynaformsCriteria($sProcessUID), $aFields);
-*/
-  	     break;
-  	case 'ACROFORM' : 
-  	     $G_PUBLISH->AddContent('xmlform', 'xmlform', 'outputdocs/outputdocs_Properties', '', $aFields , '../outputdocs/outputdocs_Save');
-  	     break;
+  if ( ! $enabledJavaBridge ) {
+  	$xmlform = 'outputdocs/outputdocs_Properties';
+    $G_PUBLISH->AddContent('xmlform', 'xmlform', $xmlform, '', $aFields , '../outputdocs/outputdocs_Save');
+  }
+  else {
+  	$xmlform = 'outputdocs/outputdocs_New';
+    $G_PUBLISH->AddContent('xmlform', 'xmlform', $xmlform, '', $aFields , '../outputdocs/outputdocs_Save');
   }
   G::RenderPage('publish', 'raw');
 }
