@@ -38,13 +38,11 @@ try {
   	break;
   }*/
   $oJSON   = new Services_JSON();
-  if ( !isset ($_POST['data']) ) {
-    die();
+  if ( isset ($_POST['data']) ) {
+	  $oData   = $oJSON->decode(stripslashes($_POST['data']));
+	  $sOutput = '';
   }
-
-  $oData   = $oJSON->decode(stripslashes($_POST['data']));
-  $sOutput = '';
-
+  
   G::LoadClass('processMap');
   $oProcessMap = new processMap(new DBConnection);
 
@@ -379,8 +377,37 @@ try {
       $oJSON = new Services_JSON();
       echo $oJSON->encode($oResponse);
     break;
-  }
-  die($sOutput);
+    
+    case 'editFile':
+    	//echo $_POST['filename'];
+    	global $G_PUBLISH;
+	  	$G_PUBLISH = new Publisher();
+	  	$sDirectory = PATH_DATA_MAILTEMPLATES . $_POST['pro_uid'] . PATH_SEP . $_POST['filename'];
+	  	
+	  	$fcontent = file_get_contents($sDirectory);
+	  	
+	  	$aData = Array(
+	  		'pro_uid'=>$_POST['pro_uid'],
+	  		'fcontent'=>$fcontent,
+	  		'filename'=>$_POST['filename'],
+	  	);
+	  	$G_PUBLISH->AddContent('xmlform', 'xmlform', 'processes/processes_FileEdit', '', $aData);
+	    G::RenderPage('publish', 'raw');
+    break;
+
+    case 'saveFile':
+    	global $G_PUBLISH;
+	  	$G_PUBLISH = new Publisher();
+	  	$sDirectory = PATH_DATA_MAILTEMPLATES . $_POST['pro_uid'] . PATH_SEP . $_POST['filename'];
+	  	
+	  	$fp = fopen($sDirectory, 'w');
+	  	fwrite($fp, stripslashes($_POST['fcontent']));
+	  	fclose($fp);
+	  	echo 'saved: '. $sDirectory;
+    break;
+  }  
+  if( isset($sOutput) ) 
+  	die($sOutput);
 }
 catch (Exception $oException) {
 	die($oException->getMessage());
