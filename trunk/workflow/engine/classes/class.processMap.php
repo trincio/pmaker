@@ -3179,7 +3179,8 @@ function editObjectPermission($sOP_UID)
     }
     foreach ($aFiles as $aFile) {
       $aTheFiles[] = array('PATH'       => $aFile['FILE'],
-                        'EDIT'          => '',
+                        'EDIT'          => 'Edit',
+      					'EDIT_JS'		=> "editFile('{$sProcessUID}', @@PATH)",
                         'DOWNLOAD_TEXT' => G::LoadTranslation('ID_DOWNLOAD'),
                         'DOWNLOAD_JS'   => 'downloadFile(\'' . $sProcessUID . '\', \'' . $sMainDirectory . '\', \'' . $sCurrentDirectory . '\', \'' . $aFile['FILE'] . '\');',
                         'DELETE_TEXT'   => G::LoadTranslation('ID_DELETE'),
