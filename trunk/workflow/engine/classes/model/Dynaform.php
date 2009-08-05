@@ -328,5 +328,31 @@ class Dynaform extends BaseDynaform {
     	throw($oError);
     }
   }
+  
+  function getDynaformContent( $dynaformUid) {
+  	$content = '';
+    $fields = $this->Load ( $dynaformUid);
+    $filename = PATH_DYNAFORM . $fields['PRO_UID'] . PATH_SEP . $fields['DYN_UID'] . '.xml';
+    if (file_exists( $filename )) {
+    	$content = file_get_contents ( $filename );
+    }
+    
+    return $content;
+  }    
+
+  function getDynaformFields( $dynaformUid) {
+  	$content = '';
+    $fields = $this->Load ( $dynaformUid);
+    $filename = PATH_DYNAFORM . $fields['PRO_UID'] . PATH_SEP . $fields['DYN_UID'] . '.xml';
+    if (file_exists( $filename )) {
+    	$content = file_get_contents ( $filename );
+    }
+    
+    //$G_FORM = new Form ( $Part['File'] , $sPath , SYS_LANG, false );
+    $G_FORM = new xmlform ( $fields['DYN_FILENAME'] , PATH_DYNAFORM );
+    $G_FORM->parseFile( $filename , SYS_LANG, true );
+    
+    return $G_FORM->fields;
+  }    
 
 } // Dynaform

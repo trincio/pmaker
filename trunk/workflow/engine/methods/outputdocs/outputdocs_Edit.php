@@ -57,7 +57,6 @@ try {
   	$aFields['PRO_UID'] = $_GET['PRO_UID'];
   }
 
-  krumo ($aFields); 
   $type = isset ( $aFields['OUT_DOC_TYPE']) ? $aFields['OUT_DOC_TYPE'] : 'HTML';
   
   G::LoadClass('xmlfield_InputPM');
@@ -69,13 +68,15 @@ try {
   	     break;
   	case 'JRXML' : 
 //  	     $G_PUBLISH->AddContent('xmlform', 'xmlform', 'outputdocs/outputdocsDynaformList', '', $aFields , '../outputdocs/outputdocs_Save');
+//  krumo ($aFields); 
          require_once 'classes/model/Process.php';
          G::LoadClass( 'processMap');
          $sProcessUID = $aFields['PRO_UID'];
          $oProcess = new Process();
          $oProcessMap = new ProcessMap();
          $aFields  = $oProcess->load($sProcessUID);
-         $G_PUBLISH->AddContent('propeltable', 'paged-table', 'dynaforms/dynaforms_ShortList', $oProcessMap->getDynaformsCriteria($sProcessUID), $aFields);
+         $G_PUBLISH->AddContent('xmlform', 'xmlform', 'outputdocs/outputdocsDynaformList', '', $aFields );
+//         $G_PUBLISH->AddContent('propeltable', 'paged-table', 'dynaforms/dynaforms_ShortList', $oProcessMap->getDynaformsCriteria($sProcessUID), $aFields);
   	     break;
   	case 'ACROFORM' : 
   	     $G_PUBLISH->AddContent('xmlform', 'xmlform', 'outputdocs/outputdocs_Properties', '', $aFields , '../outputdocs/outputdocs_Save');
