@@ -14,7 +14,7 @@
 <js type="javascript" replaceTags="1">
 var currentPagedTable = @#PAGED_TABLE_ID;
   function outputdocsAdd(){
-		popupWindow('@G::LoadTranslation(ID_OUTPUT_DOCUMENTS)', '@G::encryptlink(@#outputdocs_New)?PRO_UID=@%PRO_UID' , 600, 400);
+		popupWindow('@G::LoadTranslation(ID_OUTPUT_DOCUMENTS)', '@G::encryptlink(@#outputdocs_New)?PRO_UID=@%PRO_UID' , 600, 410);
   }
   function outputdocsEdit( uid ) {
 		popupWindow('@G::LoadTranslation(ID_OUTPUT_DOCUMENTS)', '@G::encryptlink(@#outputdocs_Edit)?OUT_DOC_UID='+ uid , 770, 510);
