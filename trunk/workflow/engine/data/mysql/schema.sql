@@ -26,7 +26,7 @@ CREATE TABLE `APPLICATION`
 	`APP_INIT_DATE` DATETIME  NOT NULL,
 	`APP_FINISH_DATE` DATETIME  NOT NULL,
 	`APP_UPDATE_DATE` DATETIME  NOT NULL,
-	`APP_DATA` MEDIUMTEXT  NOT NULL,
+	`APP_DATA` TEXT  NOT NULL,
 	`APP_PIN` VARCHAR(32) default '',
 	PRIMARY KEY (`APP_UID`),
 	KEY `indexApp`(`PRO_UID`, `APP_UID`)
@@ -147,7 +147,7 @@ CREATE TABLE `CONTENT`
 	`CON_PARENT` VARCHAR(32) default '' NOT NULL,
 	`CON_ID` VARCHAR(100) default '' NOT NULL,
 	`CON_LANG` VARCHAR(10) default '' NOT NULL,
-	`CON_VALUE` MEDIUMTEXT  NOT NULL,
+	`CON_VALUE` TEXT  NOT NULL,
 	PRIMARY KEY (`CON_CATEGORY`,`CON_PARENT`,`CON_ID`,`CON_LANG`),
 	KEY `indexUid`(`CON_ID`)
 )Type=MyISAM  DEFAULT CHARSET='utf8';
@@ -330,6 +330,9 @@ CREATE TABLE `OUTPUT_DOCUMENT`
 	`PRO_UID` VARCHAR(32) default '' NOT NULL,
 	`OUT_DOC_LANDSCAPE` TINYINT default 0 NOT NULL,
 	`OUT_DOC_GENERATE` VARCHAR(10) default 'BOTH' NOT NULL,
+	`OUT_DOC_TYPE` VARCHAR(32) default 'HTML' NOT NULL,
+	`OUT_DOC_CURRENT_REVISION` INTEGER default 0,
+	`OUT_DOC_FIELD_MAPPING` TEXT  NOT NULL,
 	PRIMARY KEY (`OUT_DOC_UID`)
 )Type=MyISAM  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
@@ -923,6 +926,25 @@ CREATE TABLE `FIELDS`
 	`FLD_FOREIGN_KEY` TINYINT default 0 NOT NULL,
 	`FLD_FOREIGN_KEY_TABLE` VARCHAR(32) default '' NOT NULL,
 	PRIMARY KEY (`FLD_UID`)
+)Type=MyISAM  DEFAULT CHARSET='utf8';
+#-----------------------------------------------------------------------------
+#-- SHADOWN_TABLE
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `SHADOWN_TABLE`;
+
+
+CREATE TABLE `SHADOWN_TABLE`
+(
+	`SHD_UID` VARCHAR(32) default '' NOT NULL,
+	`ADD_TAB_UID` VARCHAR(32) default '' NOT NULL,
+	`SHD_ACTION` VARCHAR(10) default '' NOT NULL,
+	`SHD_DETAILS` TEXT default '' NOT NULL,
+	`USR_UID` VARCHAR(32) default '' NOT NULL,
+	`APP_UID` VARCHAR(32) default '' NOT NULL,
+	`SHD_DATE` DATETIME,
+	PRIMARY KEY (`SHD_UID`),
+	KEY `indexShadowTable`(`SHD_UID`)
 )Type=MyISAM  DEFAULT CHARSET='utf8';
 # This restores the fkey checks, after having unset them earlier
 SET FOREIGN_KEY_CHECKS = 1;

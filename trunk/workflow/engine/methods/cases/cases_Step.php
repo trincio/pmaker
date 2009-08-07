@@ -271,33 +271,59 @@
       if (!$aPreviousStep) {
         $aOD['__DYNAFORM_OPTIONS']['PREVIOUS_STEP_LABEL'] = '';
       }
-      else
-      {
+      else {
         $aOD['__DYNAFORM_OPTIONS']['PREVIOUS_STEP'] = $aPreviousStep['PAGE'];
         $aOD['__DYNAFORM_OPTIONS']['PREVIOUS_STEP_LABEL'] = G::loadTranslation("ID_PREVIOUS_STEP");
-      }
-  
+      }  
       $aOD['__DYNAFORM_OPTIONS']['NEXT_STEP'] = $aNextStep['PAGE'];
   
       switch ($_GET['ACTION'])
       {
         case 'GENERATE':
-          /*require_once 'classes/model/Application.php';
-          $oApplication = new Application();
-          $aApplication = $oApplication->load($_SESSION['APPLICATION']);
-          if (!is_array($aApplication['APP_DATA'])) {
-            $aApplication['APP_DATA'] = unserialize($aApplication['APP_DATA']);
-            if (is_null($aApplication['APP_DATA'])) {
-              $aApplication['APP_DATA'] = array();
-            }
-          }
-          $sFilename = G::replaceDataField($aOD['OUT_DOC_FILENAME'], $aApplication['APP_DATA']);*/
           $sFilename = ereg_replace('[^A-Za-z0-9_]', '_', G::replaceDataField($aOD['OUT_DOC_FILENAME'], $Fields['APP_DATA']));
-          if($sFilename=='')
-              $sFilename='_';
+          if ( $sFilename == '' ) $sFilename='_';
           $pathOutput = PATH_DOCUMENT . $_SESSION['APPLICATION'] . PATH_SEP . 'outdocs'. PATH_SEP ;
-          //$oOutputDocument->generate($_GET['UID'], $aApplication['APP_DATA'], PATH_DOCUMENT . $_SESSION['APPLICATION'] . '/outdocs/', $sFilename, $aOD['OUT_DOC_TEMPLATE']);
-          $oOutputDocument->generate($_GET['UID'], $Fields['APP_DATA'], $pathOutput, $sFilename, $aOD['OUT_DOC_TEMPLATE'], (boolean)$aOD['OUT_DOC_LANDSCAPE']);
+          switch ( $aOD['OUT_DOC_TYPE'] ) {
+            case 'HTML' : $oOutputDocument->generate( $_GET['UID'], $Fields['APP_DATA'], $pathOutput, 
+                            $sFilename, $aOD['OUT_DOC_TEMPLATE'], (boolean)$aOD['OUT_DOC_LANDSCAPE'] );
+                          break;
+            case 'JRXML' : 
+              $javaInput  = PATH_C . 'javaBridgePM' . PATH_SEP . 'input'  . PATH_SEP;
+              $javaOutput = PATH_C . 'javaBridgePM' . PATH_SEP . 'output' . PATH_SEP;
+              G::mk_dir ( $javaInput );
+              G::mk_dir ( $javaOutput );
+
+//krumo ( $Fields['APP_DATA'] );
+  $xmlData = "<dynaform>\n";
+  foreach ( $Fields['APP_DATA'] as $key => $val ) {
+    $xmlData .= "  <$key>$val</$key>\n";
+  }
+  $xmlData .= "</dynaform>\n";
+  $iSize = file_put_contents ( $javaOutput .  'addressBook.xml' , $xmlData );
+ 
+  G::LoadClass ('javaBridgePM');
+  $JBPM = new JavaBridgePM();
+  $JBPM->checkJavaExtension();
+  
+  $util = new Java("com.processmaker.util.pmutils");
+  $util->setInputPath( $javaInput );
+  $util->setOutputPath( $javaOutput );
+
+  $content = file_get_contents ( PATH_DYNAFORM . $aOD['PRO_UID'] . PATH_SEP . $aOD['OUT_DOC_UID'] . '.jrxml' );
+  $iSize = file_put_contents ( $javaInput .  $aOD['OUT_DOC_UID'] . '.jrxml', $content );
+
+  $outputFile = $javaOutput . $sFilename . '.pdf' ;
+  print $util->jrxml2pdf( $aOD['OUT_DOC_UID'] . '.jrxml' , basename($outputFile) );
+
+  $content = file_get_contents ( $outputFile );
+  $iSize = file_put_contents ( $pathOutput .  $sFilename . '.pdf' , $content );
+
+                          break;
+            default :
+              throw ( new Exception ('invalid output document' ));
+          }                            
+
+          //save row in AppDocument  ( this code should be moved to AppDocument Class )
           require_once 'classes/model/AppDocument.php';
           $oCriteria = new Criteria('workflow');
           $oCriteria->add(AppDocumentPeer::APP_UID,      $_SESSION['APPLICATION']);
@@ -316,16 +342,6 @@
                              'APP_DOC_TYPE'        => 'OUTPUT',
                              'APP_DOC_CREATE_DATE' => date('Y-m-d H:i:s'),
                              'APP_DOC_FILENAME'    => $sFilename);
-            //Execute after triggers - Start
-            $Fields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], 'OUTPUT_DOCUMENT', $_GET['UID'], 'AFTER', $Fields['APP_DATA'] );
-            $Fields['DEL_INDEX']= $_SESSION['INDEX'];
-            $Fields['TAS_UID']  = $_SESSION['TASK'];
-            //Execute after triggers - End
-  
-            //Save data - Start
-            $oCase->updateCase ( $_SESSION['APPLICATION'], $Fields );
-            //Save data - End
-
             $oAppDocument = new AppDocument();
             $oAppDocument->update($aFields);
             $sDocUID = $aRow['APP_DOC_UID'];
@@ -338,18 +354,19 @@
                              'APP_DOC_TYPE'        => 'OUTPUT',
                              'APP_DOC_CREATE_DATE' => date('Y-m-d H:i:s'),
                              'APP_DOC_FILENAME'    => $sFilename);
-            //Execute after triggers - Start
-            $Fields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], 'OUTPUT_DOCUMENT', $_GET['UID'], 'AFTER', $Fields['APP_DATA'] );
-            $Fields['DEL_INDEX']= $_SESSION['INDEX'];
-            $Fields['TAS_UID']  = $_SESSION['TASK'];
-            //Execute after triggers - End
-  
-            //Save data - Start
-            $oCase->updateCase ( $_SESSION['APPLICATION'], $Fields );
-            //Save data - End
             $oAppDocument = new AppDocument();
             $sDocUID = $oAppDocument->create($aFields);
           }
+
+          //Execute after triggers - Start
+          $Fields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], 'OUTPUT_DOCUMENT', $_GET['UID'], 'AFTER', $Fields['APP_DATA'] );
+          $Fields['DEL_INDEX']= $_SESSION['INDEX'];
+          $Fields['TAS_UID']  = $_SESSION['TASK'];
+          //Execute after triggers - End
+  
+          //Save data - Start
+          $oCase->updateCase ( $_SESSION['APPLICATION'], $Fields );
+          //Save data - End
 
           //Plugin Hook PM_UPLOAD_DOCUMENT for upload document
           $oPluginRegistry =& PMPluginRegistry::getSingleton();
