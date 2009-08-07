@@ -348,7 +348,6 @@ class Dynaform extends BaseDynaform {
     	$content = file_get_contents ( $filename );
     }
     
-    //$G_FORM = new Form ( $Part['File'] , $sPath , SYS_LANG, false );
     $G_FORM = new xmlform ( $fields['DYN_FILENAME'] , PATH_DYNAFORM );
     $G_FORM->parseFile( $filename , SYS_LANG, true );
     
