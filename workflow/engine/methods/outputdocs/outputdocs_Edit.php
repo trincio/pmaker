@@ -67,19 +67,21 @@ try {
       $G_PUBLISH->AddContent('xmlform', 'xmlform', 'outputdocs/outputdocs_Edit', '', $aFields , '../outputdocs/outputdocs_Save');
   	     break;
   	case 'JRXML' : 
-//  	     $G_PUBLISH->AddContent('xmlform', 'xmlform', 'outputdocs/outputdocsDynaformList', '', $aFields , '../outputdocs/outputdocs_Save');
-//  krumo ($aFields); 
-         require_once 'classes/model/Process.php';
-         G::LoadClass( 'processMap');
-         $sProcessUID = $aFields['PRO_UID'];
-         $oProcess = new Process();
-         $oProcessMap = new ProcessMap();
-         $aFields  = $oProcess->load($sProcessUID);
-         $G_PUBLISH->AddContent('xmlform', 'xmlform', 'outputdocs/outputdocsDynaformList', '', $aFields );
-//         $G_PUBLISH->AddContent('propeltable', 'paged-table', 'dynaforms/dynaforms_ShortList', $oProcessMap->getDynaformsCriteria($sProcessUID), $aFields);
-  	     break;
   	case 'ACROFORM' : 
-  	     $G_PUBLISH->AddContent('xmlform', 'xmlform', 'outputdocs/outputdocs_Properties', '', $aFields , '../outputdocs/outputdocs_Save');
+         $type = $aFields['OUT_DOC_TYPE'];
+         if ( $type == 'JRXML') $extension = 'jrxml';
+         if ( $type == 'ACROFORM') $extension = 'pdf';
+         
+         $downFileName = ereg_replace('[^A-Za-z0-9_]', '_', $aFields['OUT_DOC_TITLE'] ) . '.' . $extension;
+         $filename = PATH_DYNAFORM . $aFields['PRO_UID'] . PATH_SEP . $aFields['OUT_DOC_UID'] . '.' . $extension ;
+         if ( file_exists ( $filename) ) 
+           $aFields['FILENAME'] = $downFileName;  
+         else
+           $aFields['FILENAME'] = '';  
+         
+         $aFields['FILELINK'] = '../outputdocs/downloadFile?' . $aFields['OUT_DOC_UID'];  
+         $G_PUBLISH->AddContent('xmlform', 'xmlform', 'outputdocs/outputdocsUploadFile', '', $aFields , '../outputdocs/uploadFile');
+         $G_PUBLISH->AddContent('view', 'outputdocs/editJrxml' );
   	     break;
   }
   G::RenderPage('publish', 'raw');

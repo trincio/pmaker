@@ -36,8 +36,10 @@ try {
   	  die;
   	break;
   }
+
   require_once 'classes/model/OutputDocument.php';
   $oOutputDocument = new OutputDocument();
+
   if ($_POST['form']['OUT_DOC_UID'] == '') {
   	if ( $_POST['form']['OUT_DOC_TYPE'] == 'JRXML' ) {
     	$dynaformUid = $_POST['form']['DYN_UID'];
@@ -47,11 +49,10 @@ try {
     	$jbpm = new JavaBridgePM ();
     	print $jbpm->generateJrxmlFromDynaform ( $outDocUid, $dynaformUid, 'classic' );
 
-  	krumo ( $_POST['form'] ); 
   	}
-  	die;
-
-  	$outDocUid = $oOutputDocument->create($_POST['form']);
+  	else {
+    	$outDocUid = $oOutputDocument->create($_POST['form']);
+    }
   }
   else {
   	$oOutputDocument->update($_POST['form']);
@@ -60,4 +61,3 @@ try {
 catch (Exception $oException) {
 	die($oException->getMessage());
 }
-?>

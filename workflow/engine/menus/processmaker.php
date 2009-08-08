@@ -31,7 +31,7 @@ $G_TMP_MENU->AddIdRawOption('CASES',             'cases/cases_List');
 $G_TMP_MENU->AddIdRawOption('PROCESSES',         'processes/processes_List');
 $G_TMP_MENU->AddIdRawOption('DASHBOARD',         'dashboard/dashboard');
 //$G_TMP_MENU->AddIdRawOption('REPORTS',           'reports/reportsList');
-$G_TMP_MENU->AddIdRawOption('ADDITIONAL_TABLES', 'additionalTables/additionalTablesList');
+//$G_TMP_MENU->AddIdRawOption('ADDITIONAL_TABLES', 'additionalTables/additionalTablesList');
 $G_TMP_MENU->AddIdRawOption('SETUP',             'setup/emails');
 
 
@@ -42,7 +42,7 @@ $G_TMP_MENU->Labels = array(
   G::LoadTranslation('ID_APPLICATIONS'),
   G::LoadTranslation('ID_DASHBOARD'),
   //G::LoadTranslation('ID_REPORTS'),
-  G::LoadTranslation('ID_ADDITIONAL_TABLES'),
+  //G::LoadTranslation('ID_ADDITIONAL_TABLES'),
   G::LoadTranslation('ID_SETUP'),
 );
 
