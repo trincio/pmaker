@@ -6,10 +6,10 @@ ini_set('memory_limit', '80M');
 
 $memAcum = 0;
 function logMemory ($text=''){
-	global $memAcum;
-	$dif = memory_get_usage() - $memAcum;
-	$memAcum = memory_get_usage();
-	$b =  debug_backtrace();
+  global $memAcum;
+  $dif = memory_get_usage() - $memAcum;
+  $memAcum = memory_get_usage();
+  $b =  debug_backtrace();
   $aux = sprintf ( "[ usage:%8.1fK acum:%8.3fM] <b>$text</b> in line <b>%s</b> %s </br>",$dif/1024, memory_get_usage() / 1024 / 1024 , $b[0]["line"], $b[0]["file"]) ;
   return $aux;
 }
@@ -129,7 +129,7 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
 
   if(defined('PATH_C'))
  {
-	  $virtualURITable['/jsform/(*.js)']                 = PATH_C . 'xmlform/';
+    $virtualURITable['/jsform/(*.js)']                 = PATH_C . 'xmlform/';
  }
   /*To sysUnnamed*/
   $virtualURITable['/[a-zA-Z][a-zA-Z0-9]{0,}()'] = 'sysUnnamed';
@@ -137,7 +137,7 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
 
 //************** verify if we need to redirect or stream the file **************
   if ( G::virtualURI($_SERVER['REQUEST_URI'], $virtualURITable , $realPath )) {
-  	// review if the file requested belongs to public_html plugin
+    // review if the file requested belongs to public_html plugin
 
     if ( substr ( $realPath, 0,6) == 'plugin' ) {
       /*
@@ -152,7 +152,7 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
        */
       $forQuery=explode("?",$realPath);
       if(isset($forQuery[1])){
-      	$pathsQuery=$forQuery[1];
+        $pathsQuery=$forQuery[1];
       }
 
       //Get that path in array
@@ -165,30 +165,30 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
       $filePath=implode(PATH_SEP,$paths);
       $pluginFilename = PATH_PLUGINS . $pluginFolder . PATH_SEP . 'public_html'. PATH_SEP . $filePath;
       if ( file_exists ( $pluginFilename ) ) {
-        	G::streamFile ( $pluginFilename );
+          G::streamFile ( $pluginFilename );
       }
 
       die;
-	  }
+    }
 
-  	switch ( $realPath  ) {
+    switch ( $realPath  ) {
     case 'sysUnnamed' :
       require_once('sysUnnamed.php'); die;
-    	break;
+      break;
     case 'sysNamed' :
       header('location : ' . $_SERVER['REQUEST_URI'] . 'en/green/login/login' );
       die;
-	    break;
+      break;
     case 'jsMethod' :
-		  G::parseURI ( getenv( "REQUEST_URI" ) );
-		  $filename = PATH_METHODS . SYS_COLLECTION . '/' . SYS_TARGET . '.js';
-    	G::streamFile ( $filename );
-    	die;
-	    break;
+      G::parseURI ( getenv( "REQUEST_URI" ) );
+      $filename = PATH_METHODS . SYS_COLLECTION . '/' . SYS_TARGET . '.js';
+      G::streamFile ( $filename );
+      die;
+      break;
     default :
       $realPath = explode('?', $realPath);
-    	G::streamFile ( $realPath[0] );
-    	die;
+      G::streamFile ( $realPath[0] );
+      die;
     }
   }
 
@@ -226,18 +226,18 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
   /***************** Installer  ******************************/
   if(!defined('PATH_DATA') || !file_exists(PATH_DATA))
   {
-	  if((SYS_TARGET==='installServer'))
-	  {
-		   $phpFile = G::ExpandPath('methods') ."install/installServer.php";
-		  require_once($phpFile);
-		   die();
-	  }
-	  else
-	  {
-		   $phpFile = G::ExpandPath('methods') ."install/install.php";
-		  require_once($phpFile);
-		   die();
-	  }
+    if((SYS_TARGET==='installServer'))
+    {
+       $phpFile = G::ExpandPath('methods') ."install/installServer.php";
+      require_once($phpFile);
+       die();
+    }
+    else
+    {
+       $phpFile = G::ExpandPath('methods') ."install/install.php";
+      require_once($phpFile);
+       die();
+    }
   }
 
   /***************** Installer  ******************************/
@@ -246,7 +246,7 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
   //if SYS_TEMP exists, the URL has a workspace, now we need to verify if exists their db.php file
   if ( defined('SYS_TEMP') && SYS_TEMP != '')
   {
-	  //this is the default, the workspace db.php file is in /shared/workflow/sites/SYS_SYS
+    //this is the default, the workspace db.php file is in /shared/workflow/sites/SYS_SYS
     if ( file_exists( PATH_DB .  SYS_TEMP . '/db.php' ) ) {
       require_once( PATH_DB .  SYS_TEMP . '/db.php' );
       define ( 'SYS_SYS' , SYS_TEMP );
@@ -301,15 +301,15 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
     }
     if (function_exists('date_default_timezone_set')) {
       date_default_timezone_set(TIME_ZONE);
-		}
+    }
   }
   else {  //when we are in global pages, outside any valid workspace
 
 
     if ((SYS_TARGET==='sysLoginVerify') || (SYS_TARGET==='sysLogin') || (SYS_TARGET==='newSite')) {
-  	  $phpFile = G::ExpandPath('methods') . SYS_COLLECTION . "/" . SYS_TARGET.'.php';
-  	  require_once($phpFile);
-  	  die();
+      $phpFile = G::ExpandPath('methods') . SYS_COLLECTION . "/" . SYS_TARGET.'.php';
+      require_once($phpFile);
+      die();
     }
     else {
       require_once( PATH_METHODS . "login/sysLogin.php" ) ;
@@ -329,7 +329,7 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
 
 
 //***************** Plugins **************************
-	G::LoadClass('plugin');
+  G::LoadClass('plugin');
   //here we are loading all plugins registered
   //the singleton has a list of enabled plugins
 
@@ -404,7 +404,7 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
     //  logPage ( $URL , SYS_CURRENT_PARMS);
 
     //setup plugins
-  $oPluginRegistry->setupPlugins(); //get and setup enabled plugins
+    $oPluginRegistry->setupPlugins(); //get and setup enabled plugins
 
     //*********jump to php file in methods directory *************
     $collectionPlugin = '';
@@ -421,12 +421,12 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
       $phpFile = str_replace ( '.php', 'index.php', $phpFile );
       $phpFile = include ( $phpFile );
     }
-	$bWE = false;
+    $bWE = false;
     if ( substr(SYS_COLLECTION , 0,8) === 'gulliver' ) {
       $phpFile = PATH_GULLIVER_HOME . 'methods/' . substr( SYS_COLLECTION , 8) . SYS_TARGET.'.php';
     }
     else {
-    	//when the file is part of the public directory of any PROCESS
+      //when the file is part of the public directory of any PROCESS
       if (preg_match('/^[0-9][[:alnum:]]+$/', SYS_COLLECTION) == 1)
       { //the pattern is /sysSYS/LANG/SKIN/PRO_UID/file
         $auxPart = explode ( '/' ,  $_SERVER['REQUEST_URI']);
@@ -457,7 +457,7 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
 
 //  ***************** Headers **************************
     if ( ! defined('EXECUTE_BY_CRON') ) {
-      header("Expires: Tue, 19 Jan 1999 04:30:00 GMT");
+      header("Expires: " . gmdate("D, d M Y H:i:s", mktime( 0,0,0,date('m'),date('d'),date('Y') + 1) ) . " GMT");
       header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
       header("Cache-Control: no-store, no-cache, must-revalidate");
       header("Cache-Control: post-check=0, pre-check=0", false);
@@ -506,7 +506,7 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
 
       require_once( $phpFile );
       if ( defined('SKIP_HEADERS') ) {
-	    header("Expires: " . gmdate("D, d M Y H:i:s", mktime( 0,0,0,date('m'),date('d'),date('Y') + 1) ) . " GMT");
+        header("Expires: " . gmdate("D, d M Y H:i:s", mktime( 0,0,0,date('m'),date('d'),date('Y') + 1) ) . " GMT");
         header('Cache-Control: public');
         header('Pragma: ');
       }
