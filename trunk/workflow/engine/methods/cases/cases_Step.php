@@ -277,23 +277,25 @@
       }  
       $aOD['__DYNAFORM_OPTIONS']['NEXT_STEP'] = $aNextStep['PAGE'];
   
+      $javaInput  = PATH_C . 'javaBridgePM' . PATH_SEP . 'input'  . PATH_SEP;
+      $javaOutput = PATH_C . 'javaBridgePM' . PATH_SEP . 'output' . PATH_SEP;
+      G::mk_dir ( $javaInput );
+      G::mk_dir ( $javaOutput );
+
       switch ($_GET['ACTION'])
       {
         case 'GENERATE':
           $sFilename = ereg_replace('[^A-Za-z0-9_]', '_', G::replaceDataField($aOD['OUT_DOC_FILENAME'], $Fields['APP_DATA']));
           if ( $sFilename == '' ) $sFilename='_';
           $pathOutput = PATH_DOCUMENT . $_SESSION['APPLICATION'] . PATH_SEP . 'outdocs'. PATH_SEP ;
+          G::mk_dir ( $pathOutput );
           switch ( $aOD['OUT_DOC_TYPE'] ) {
             case 'HTML' : $oOutputDocument->generate( $_GET['UID'], $Fields['APP_DATA'], $pathOutput, 
                             $sFilename, $aOD['OUT_DOC_TEMPLATE'], (boolean)$aOD['OUT_DOC_LANDSCAPE'] );
                           break;
             case 'JRXML' : 
-              $javaInput  = PATH_C . 'javaBridgePM' . PATH_SEP . 'input'  . PATH_SEP;
-              $javaOutput = PATH_C . 'javaBridgePM' . PATH_SEP . 'output' . PATH_SEP;
-              G::mk_dir ( $javaInput );
-              G::mk_dir ( $javaOutput );
 
-//krumo ( $Fields['APP_DATA'] );
+//creating the xml with the application data;
   $xmlData = "<dynaform>\n";
   foreach ( $Fields['APP_DATA'] as $key => $val ) {
     $xmlData .= "  <$key>$val</$key>\n";
@@ -309,14 +311,43 @@
   $util->setInputPath( $javaInput );
   $util->setOutputPath( $javaOutput );
 
-  $content = file_get_contents ( PATH_DYNAFORM . $aOD['PRO_UID'] . PATH_SEP . $aOD['OUT_DOC_UID'] . '.jrxml' );
-  $iSize = file_put_contents ( $javaInput .  $aOD['OUT_DOC_UID'] . '.jrxml', $content );
+  //$content = file_get_contents ( PATH_DYNAFORM . $aOD['PRO_UID'] . PATH_SEP . $aOD['OUT_DOC_UID'] . '.jrxml' );
+  //$iSize = file_put_contents ( $javaInput .  $aOD['OUT_DOC_UID'] . '.jrxml', $content );
+  copy ( PATH_DYNAFORM . $aOD['PRO_UID'] . PATH_SEP . $aOD['OUT_DOC_UID'] . '.jrxml', $javaInput .  $aOD['OUT_DOC_UID'] . '.jrxml' );
+
 
   $outputFile = $javaOutput . $sFilename . '.pdf' ;
   print $util->jrxml2pdf( $aOD['OUT_DOC_UID'] . '.jrxml' , basename($outputFile) );
 
-  $content = file_get_contents ( $outputFile );
-  $iSize = file_put_contents ( $pathOutput .  $sFilename . '.pdf' , $content );
+  //$content = file_get_contents ( $outputFile );
+  //$iSize = file_put_contents ( $pathOutput .  $sFilename . '.pdf' , $content );
+  copy ( $outputFile, $pathOutput .  $sFilename . '.pdf' );
+//die;
+                          break;
+            case 'ACROFORM' : 
+
+//creating the xml with the application data;
+  $xmlData = "<dynaform>\n";
+  foreach ( $Fields['APP_DATA'] as $key => $val ) {
+    $xmlData .= "  <$key>$val</$key>\n";
+  }
+  $xmlData .= "</dynaform>\n";
+  //$iSize = file_put_contents ( $javaOutput .  'addressBook.xml' , $xmlData );
+ 
+  G::LoadClass ('javaBridgePM');
+  $JBPM = new JavaBridgePM();
+  $JBPM->checkJavaExtension();
+  
+  $util = new Java("com.processmaker.util.pmutils");
+  $util->setInputPath( $javaInput );
+  $util->setOutputPath( $javaOutput );
+
+  copy ( PATH_DYNAFORM . $aOD['PRO_UID'] . PATH_SEP . $aOD['OUT_DOC_UID'] . '.pdf', $javaInput .  $aOD['OUT_DOC_UID'] . '.pdf' );
+
+  $outputFile = $javaOutput . $sFilename . '.pdf' ;
+  print $util->writeVarsToAcroFields( $aOD['OUT_DOC_UID'] . '.pdf' , $xmlData );
+
+  copy ( $javaOutput. $aOD['OUT_DOC_UID'] . '.pdf', $pathOutput .  $sFilename . '.pdf' );
 
                           break;
             default :

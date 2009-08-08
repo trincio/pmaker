@@ -25,6 +25,9 @@
   global $G_TMP_MENU;
   global $RBAC;
 
+  if ($RBAC->userCanAccess('PM_SETUP') == 1) {
+    $G_TMP_MENU->AddIdRawOption('ADDITIONAL_TABLES', 'additionalTables/additionalTablesList', G::LoadTranslation('ID_ADDITIONAL_TABLES'));
+  }
   if ($RBAC->userCanAccess('PM_SETUP_ADVANCE') == 1) {
     $G_TMP_MENU->AddIdRawOption('LANGUAGES',      'setup/languages',   G::LoadTranslation('ID_LANGUAGES'));
     $G_TMP_MENU->AddIdRawOption('PLUGINS',        'setup/pluginsList', 'Plugins');
