@@ -16,7 +16,7 @@
   <en>Type</en>
 </OUT_DOC_TYPE>
 
-<EDIT type="link" colWidth="40" value="@G::LoadTranslation(ID_EDIT)" link="#" onclick="outputdocsEdit(@QOUT_DOC_UID);return false;"/>
+<EDIT type="link" colWidth="40" value="@G::LoadTranslation(ID_EDIT)" link="#" onclick="outputdocsEdit(@QOUT_DOC_UID, @QOUT_DOC_TYPE );return false;"/>
 
 <PROPERTIES type="link" colWidth="40" value="@G::LoadTranslation(ID_PROPERTIES)" link="#" onclick="outputdocsProperties(@QOUT_DOC_UID);return false;"/>
 
