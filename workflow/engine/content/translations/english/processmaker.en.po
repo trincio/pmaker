@@ -2,7 +2,7 @@ msgid ""
 msgstr "" 
 "Project-Id-Version: PM 4.0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-07-23 16:40+0100 \n"
+"PO-Revision-Date: 2009-08-11 09:53+0100 \n"
 "Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
 "Language-Team: Colosa Developers Team <developers@colosa.com>\n"
 "MIME-Version: 1.0\n"
@@ -2894,6 +2894,12 @@ msgid "to"
 msgstr "to"
 
 # TRANSLATION
+# LABEL/ID_LINE
+#: LABEL/ID_LINE
+msgid "Line"
+msgstr "Line"
+
+# TRANSLATION
 # JAVASCRIPT/ID_REQUIRED
 #: JAVASCRIPT/ID_REQUIRED
 msgid "The conditions is required"
@@ -5599,6 +5605,12 @@ msgstr "(none)"
 msgid "[dynaforms/fields/dropdown.xml?PME_DEFAULTVALUE] Default Value"
 msgstr "Default Value"
 
+# dynaforms/fields/dropdown.xml?PME_SAVELABEL
+# dynaforms/fields/dropdown.xml
+#: checkbox - PME_SAVELABEL
+msgid "Save label of selected value in variable"
+msgstr "Save label of selected value in variable"
+
 # dynaforms/fields/dropdown.xml?PME_SUBTITLE
 # dynaforms/fields/dropdown.xml
 #: title - PME_SUBTITLE
@@ -7057,6 +7069,36 @@ msgstr "PHP Class Name"
 msgid "[additionalTables/additionalTablesNew.xml?ADD_TAB_DESCRIPTION] Description"
 msgstr "Description"
 
+# additionalTables/additionalTablesNew.xml?TITLE2
+# additionalTables/additionalTablesNew.xml
+#: title - TITLE2
+msgid "Log configuration"
+msgstr "Log configuration"
+
+# additionalTables/additionalTablesNew.xml?ADD_TAB_SDW_LOG_INSERT
+# additionalTables/additionalTablesNew.xml
+#: checkbox - ADD_TAB_SDW_LOG_INSERT
+msgid "Save log for insert actions"
+msgstr "Save log for insert actions"
+
+# additionalTables/additionalTablesNew.xml?ADD_TAB_SDW_LOG_UPDATE
+# additionalTables/additionalTablesNew.xml
+#: checkbox - ADD_TAB_SDW_LOG_UPDATE
+msgid "Save log for update actions"
+msgstr "Save log for update actions"
+
+# additionalTables/additionalTablesNew.xml?ADD_TAB_SDW_LOG_DELETE
+# additionalTables/additionalTablesNew.xml
+#: checkbox - ADD_TAB_SDW_LOG_DELETE
+msgid "Save log for delete actions"
+msgstr "Save log for delete actions"
+
+# additionalTables/additionalTablesNew.xml?ADD_TAB_SDW_AUTO_DELETE
+# additionalTables/additionalTablesNew.xml
+#: checkbox - ADD_TAB_SDW_AUTO_DELETE
+msgid "Delete log related when table is deleted"
+msgstr "Delete log related when table is deleted"
+
 # additionalTables/additionalTablesNew.xml?TITLE3
 # additionalTables/additionalTablesNew.xml
 #: title - TITLE3
@@ -7067,6 +7109,24 @@ msgstr "Fields"
 # additionalTables/additionalTablesNew.xml
 #: button - btnSave
 msgid "[additionalTables/additionalTablesNew.xml?btnSave] Save"
+msgstr "Save"
+
+# additionalTables/additionalTablesDataImportForm.xml?TITLE
+# additionalTables/additionalTablesDataImportForm.xml
+#: title - TITLE
+msgid "Import Data"
+msgstr "Import Data"
+
+# additionalTables/additionalTablesDataImportForm.xml?CSV_FILE
+# additionalTables/additionalTablesDataImportForm.xml
+#: file - CSV_FILE
+msgid "CSV File"
+msgstr "CSV File"
+
+# additionalTables/additionalTablesDataImportForm.xml?btnSave
+# additionalTables/additionalTablesDataImportForm.xml
+#: submit - btnSave
+msgid "[additionalTables/additionalTablesDataImportForm.xml?btnSave] Save"
 msgstr "Save"
 
 # additionalTables/additionalTablesOptions.xml?MNU_ADD
@@ -7188,6 +7248,36 @@ msgstr "PHP Class Name"
 #: textarea - ADD_TAB_DESCRIPTION
 msgid "[additionalTables/additionalTablesEdit.xml?ADD_TAB_DESCRIPTION] Description"
 msgstr "Description"
+
+# additionalTables/additionalTablesEdit.xml?TITLE2
+# additionalTables/additionalTablesEdit.xml
+#: title - TITLE2
+msgid "[additionalTables/additionalTablesEdit.xml?TITLE2] Log configuration"
+msgstr "Log configuration"
+
+# additionalTables/additionalTablesEdit.xml?ADD_TAB_SDW_LOG_INSERT
+# additionalTables/additionalTablesEdit.xml
+#: checkbox - ADD_TAB_SDW_LOG_INSERT
+msgid "[additionalTables/additionalTablesEdit.xml?ADD_TAB_SDW_LOG_INSERT] Save log for insert actions"
+msgstr "Save log for insert actions"
+
+# additionalTables/additionalTablesEdit.xml?ADD_TAB_SDW_LOG_UPDATE
+# additionalTables/additionalTablesEdit.xml
+#: checkbox - ADD_TAB_SDW_LOG_UPDATE
+msgid "[additionalTables/additionalTablesEdit.xml?ADD_TAB_SDW_LOG_UPDATE] Save log for update actions"
+msgstr "Save log for update actions"
+
+# additionalTables/additionalTablesEdit.xml?ADD_TAB_SDW_LOG_DELETE
+# additionalTables/additionalTablesEdit.xml
+#: checkbox - ADD_TAB_SDW_LOG_DELETE
+msgid "[additionalTables/additionalTablesEdit.xml?ADD_TAB_SDW_LOG_DELETE] Save log for delete actions"
+msgstr "Save log for delete actions"
+
+# additionalTables/additionalTablesEdit.xml?ADD_TAB_SDW_AUTO_DELETE
+# additionalTables/additionalTablesEdit.xml
+#: checkbox - ADD_TAB_SDW_AUTO_DELETE
+msgid "[additionalTables/additionalTablesEdit.xml?ADD_TAB_SDW_AUTO_DELETE] Delete log related when table is deleted"
+msgstr "Delete log related when table is deleted"
 
 # additionalTables/additionalTablesEdit.xml?TITLE3
 # additionalTables/additionalTablesEdit.xml
@@ -7525,83 +7615,47 @@ msgstr "New"
 msgid "[outputdocs/outputdocs_ShortList.xml?OUT_DOC_TITLE] Title"
 msgstr "Title"
 
+# outputdocs/outputdocs_ShortList.xml?OUT_DOC_TYPE
+# outputdocs/outputdocs_ShortList.xml
+#: text - OUT_DOC_TYPE
+msgid "[outputdocs/outputdocs_ShortList.xml?OUT_DOC_TYPE] Type"
+msgstr "Type"
+
 # outputdocs/outputdocs_ShortList.xml?SEARCH
 # outputdocs/outputdocs_ShortList.xml
 #: button - SEARCH
 msgid "[outputdocs/outputdocs_ShortList.xml?SEARCH] Apply Filter"
 msgstr "Apply Filter"
 
-# outputdocs/outputdocs_Edit.xml?TITLE
-# outputdocs/outputdocs_Edit.xml
-#: title - TITLE
-msgid "Output Document Information"
-msgstr "Output Document Information"
+# outputdocs/outputdocsUploadFile.xml?TITLE1
+# outputdocs/outputdocsUploadFile.xml
+#: title - TITLE1
+msgid "[outputdocs/outputdocsUploadFile.xml?TITLE1] Download"
+msgstr "Download"
 
-# outputdocs/outputdocs_Edit.xml?OUT_DOC_TITLE
-# outputdocs/outputdocs_Edit.xml
-#: text - OUT_DOC_TITLE
-msgid "[outputdocs/outputdocs_Edit.xml?OUT_DOC_TITLE] Title"
-msgstr "Title"
+# outputdocs/outputdocsUploadFile.xml?OUT_DOC_LINK
+# outputdocs/outputdocsUploadFile.xml
+#: link - OUT_DOC_LINK
+msgid "Click in the link to download current file"
+msgstr "Click in the link to download current file"
 
-# outputdocs/outputdocs_Edit.xml?OUT_DOC_FILENAME
-# outputdocs/outputdocs_Edit.xml
-#: textpm - OUT_DOC_FILENAME
-msgid "Filename generated"
-msgstr "Filename generated"
+# outputdocs/outputdocsUploadFile.xml?TITLE2
+# outputdocs/outputdocsUploadFile.xml
+#: title - TITLE2
+msgid "[outputdocs/outputdocsUploadFile.xml?TITLE2] Upload"
+msgstr "Upload"
 
-# outputdocs/outputdocs_Edit.xml?OUT_DOC_DESCRIPTION
-# outputdocs/outputdocs_Edit.xml
-#: textarea - OUT_DOC_DESCRIPTION
-msgid "[outputdocs/outputdocs_Edit.xml?OUT_DOC_DESCRIPTION] Description"
-msgstr "Description"
+# outputdocs/outputdocsUploadFile.xml?OUT_DOC_FILE
+# outputdocs/outputdocsUploadFile.xml
+#: file - OUT_DOC_FILE
+msgid "Upload a modified file"
+msgstr "Upload a modified file"
 
-# outputdocs/outputdocs_Edit.xml?OUT_DOC_LANDSCAPE
-# outputdocs/outputdocs_Edit.xml
-#: dropdown - OUT_DOC_LANDSCAPE
-msgid "Orientation  "
-msgstr "Orientation  "
-
-# outputdocs/outputdocs_Edit.xml?OUT_DOC_LANDSCAPE-''
-# outputdocs/outputdocs_Edit.xml
-#: dropdown - OUT_DOC_LANDSCAPE - ''
-msgid "[outputdocs/outputdocs_Edit.xml?OUT_DOC_LANDSCAPE-'']"
-msgstr "Vertical"
-
-# outputdocs/outputdocs_Edit.xml?OUT_DOC_LANDSCAPE-1
-# outputdocs/outputdocs_Edit.xml
-#: dropdown - OUT_DOC_LANDSCAPE - 1
-msgid "[outputdocs/outputdocs_Edit.xml?OUT_DOC_LANDSCAPE-1]"
-msgstr "Horizontal"
-
-# outputdocs/outputdocs_Edit.xml?OUT_DOC_GENERATE
-# outputdocs/outputdocs_Edit.xml
-#: dropdown - OUT_DOC_GENERATE
-msgid "OutPut Document to Generate  "
-msgstr "OutPut Document to Generate  "
-
-# outputdocs/outputdocs_Edit.xml?OUT_DOC_GENERATE-BOTH
-# outputdocs/outputdocs_Edit.xml
-#: dropdown - OUT_DOC_GENERATE - BOTH
-msgid "[outputdocs/outputdocs_Edit.xml?OUT_DOC_GENERATE-BOTH]"
-msgstr "BOTH"
-
-# outputdocs/outputdocs_Edit.xml?OUT_DOC_GENERATE-DOC
-# outputdocs/outputdocs_Edit.xml
-#: dropdown - OUT_DOC_GENERATE - DOC
-msgid "[outputdocs/outputdocs_Edit.xml?OUT_DOC_GENERATE-DOC]"
-msgstr "DOC"
-
-# outputdocs/outputdocs_Edit.xml?OUT_DOC_GENERATE-PDF
-# outputdocs/outputdocs_Edit.xml
-#: dropdown - OUT_DOC_GENERATE - PDF
-msgid "[outputdocs/outputdocs_Edit.xml?OUT_DOC_GENERATE-PDF]"
-msgstr "PDF"
-
-# outputdocs/outputdocs_Edit.xml?OUT_DOC_TEMPLATE
-# outputdocs/outputdocs_Edit.xml
-#: html - OUT_DOC_TEMPLATE
-msgid "Template"
-msgstr "Template"
+# outputdocs/outputdocsUploadFile.xml?BTN
+# outputdocs/outputdocsUploadFile.xml
+#: submit - BTN
+msgid "upload"
+msgstr "upload"
 
 # outputdocs/outputdocs_Edit.xml?ACCEPT
 # outputdocs/outputdocs_Edit.xml
@@ -7632,6 +7686,156 @@ msgstr "Description"
 #: button - SEARCH
 msgid "[outputdocs/outputdocs_List.xml?SEARCH] Apply Filter"
 msgstr "Apply Filter"
+
+# outputdocs/outputdocs_New.xml?TITLE
+# outputdocs/outputdocs_New.xml
+#: title - TITLE
+msgid "Output Document Information"
+msgstr "Output Document Information"
+
+# outputdocs/outputdocs_New.xml?OUT_DOC_TYPE
+# outputdocs/outputdocs_New.xml
+#: radiogroup - OUT_DOC_TYPE
+msgid "Type of Output Document    "
+msgstr "Type of Output Document    "
+
+# outputdocs/outputdocs_New.xml?OUT_DOC_TYPE-HTML
+# outputdocs/outputdocs_New.xml
+#: radiogroup - OUT_DOC_TYPE - HTML
+msgid "[outputdocs/outputdocs_New.xml?OUT_DOC_TYPE-HTML]"
+msgstr "HTML"
+
+# outputdocs/outputdocs_New.xml?OUT_DOC_TYPE-JRXML
+# outputdocs/outputdocs_New.xml
+#: radiogroup - OUT_DOC_TYPE - JRXML
+msgid "[outputdocs/outputdocs_New.xml?OUT_DOC_TYPE-JRXML]"
+msgstr "Dynaform to PDF"
+
+# outputdocs/outputdocs_New.xml?OUT_DOC_TYPE-ACROFORM
+# outputdocs/outputdocs_New.xml
+#: radiogroup - OUT_DOC_TYPE - ACROFORM
+msgid "[outputdocs/outputdocs_New.xml?OUT_DOC_TYPE-ACROFORM]"
+msgstr "Fill Adobe Acroform"
+
+# outputdocs/outputdocs_New.xml?DYN_UID
+# outputdocs/outputdocs_New.xml
+#: dropdown - DYN_UID
+msgid "Dynaform  "
+msgstr "Dynaform  "
+
+# outputdocs/outputdocs_New.xml?OUT_DOC_TITLE
+# outputdocs/outputdocs_New.xml
+#: text - OUT_DOC_TITLE
+msgid "[outputdocs/outputdocs_New.xml?OUT_DOC_TITLE] Title"
+msgstr "Title"
+
+# outputdocs/outputdocs_New.xml?OUT_DOC_FILENAME
+# outputdocs/outputdocs_New.xml
+#: textpm - OUT_DOC_FILENAME
+msgid "Filename generated"
+msgstr "Filename generated"
+
+# outputdocs/outputdocs_New.xml?OUT_DOC_DESCRIPTION
+# outputdocs/outputdocs_New.xml
+#: textarea - OUT_DOC_DESCRIPTION
+msgid "[outputdocs/outputdocs_New.xml?OUT_DOC_DESCRIPTION] Description"
+msgstr "Description"
+
+# outputdocs/outputdocs_New.xml?DYN_TYPE
+# outputdocs/outputdocs_New.xml
+#: dropdown - DYN_TYPE
+msgid "Template  "
+msgstr "Template  "
+
+# outputdocs/outputdocs_New.xml?DYN_TYPE-1
+# outputdocs/outputdocs_New.xml
+#: dropdown - DYN_TYPE - 1
+msgid "[outputdocs/outputdocs_New.xml?DYN_TYPE-1]"
+msgstr "Classic Template"
+
+# outputdocs/outputdocs_New.xml?DYN_TYPE-2
+# outputdocs/outputdocs_New.xml
+#: dropdown - DYN_TYPE - 2
+msgid "[outputdocs/outputdocs_New.xml?DYN_TYPE-2]"
+msgstr "Tabular Template"
+
+# outputdocs/outputdocs_New.xml?ACCEPT
+# outputdocs/outputdocs_New.xml
+#: button - ACCEPT
+msgid "[outputdocs/outputdocs_New.xml?ACCEPT] Save"
+msgstr "Save"
+
+# outputdocs/outputdocs_New.xml?ACCEPT2
+# outputdocs/outputdocs_New.xml
+#: submit - ACCEPT2
+msgid "Save submit"
+msgstr "Save submit"
+
+# outputdocs/outputdocs_Properties.xml?TITLE
+# outputdocs/outputdocs_Properties.xml
+#: title - TITLE
+msgid "[outputdocs/outputdocs_Properties.xml?TITLE] Output Document Information"
+msgstr "Output Document Information"
+
+# outputdocs/outputdocs_Properties.xml?OUT_DOC_TITLE
+# outputdocs/outputdocs_Properties.xml
+#: text - OUT_DOC_TITLE
+msgid "[outputdocs/outputdocs_Properties.xml?OUT_DOC_TITLE] Title"
+msgstr "Title"
+
+# outputdocs/outputdocs_Properties.xml?OUT_DOC_DESCRIPTION
+# outputdocs/outputdocs_Properties.xml
+#: textarea - OUT_DOC_DESCRIPTION
+msgid "[outputdocs/outputdocs_Properties.xml?OUT_DOC_DESCRIPTION] Description"
+msgstr "Description"
+
+# outputdocs/outputdocs_Properties.xml?OUT_DOC_LANDSCAPE
+# outputdocs/outputdocs_Properties.xml
+#: dropdown - OUT_DOC_LANDSCAPE
+msgid "Orientation  "
+msgstr "Orientation  "
+
+# outputdocs/outputdocs_Properties.xml?OUT_DOC_LANDSCAPE-''
+# outputdocs/outputdocs_Properties.xml
+#: dropdown - OUT_DOC_LANDSCAPE - ''
+msgid "[outputdocs/outputdocs_Properties.xml?OUT_DOC_LANDSCAPE-'']"
+msgstr "Portrait"
+
+# outputdocs/outputdocs_Properties.xml?OUT_DOC_LANDSCAPE-1
+# outputdocs/outputdocs_Properties.xml
+#: dropdown - OUT_DOC_LANDSCAPE - 1
+msgid "[outputdocs/outputdocs_Properties.xml?OUT_DOC_LANDSCAPE-1]"
+msgstr "Landscape"
+
+# outputdocs/outputdocs_Properties.xml?OUT_DOC_GENERATE
+# outputdocs/outputdocs_Properties.xml
+#: dropdown - OUT_DOC_GENERATE
+msgid "Output Document to Generate  "
+msgstr "Output Document to Generate  "
+
+# outputdocs/outputdocs_Properties.xml?OUT_DOC_GENERATE-BOTH
+# outputdocs/outputdocs_Properties.xml
+#: dropdown - OUT_DOC_GENERATE - BOTH
+msgid "[outputdocs/outputdocs_Properties.xml?OUT_DOC_GENERATE-BOTH]"
+msgstr "BOTH"
+
+# outputdocs/outputdocs_Properties.xml?OUT_DOC_GENERATE-DOC
+# outputdocs/outputdocs_Properties.xml
+#: dropdown - OUT_DOC_GENERATE - DOC
+msgid "[outputdocs/outputdocs_Properties.xml?OUT_DOC_GENERATE-DOC]"
+msgstr "DOC"
+
+# outputdocs/outputdocs_Properties.xml?OUT_DOC_GENERATE-PDF
+# outputdocs/outputdocs_Properties.xml
+#: dropdown - OUT_DOC_GENERATE - PDF
+msgid "[outputdocs/outputdocs_Properties.xml?OUT_DOC_GENERATE-PDF]"
+msgstr "PDF"
+
+# outputdocs/outputdocs_Properties.xml?ACCEPT
+# outputdocs/outputdocs_Properties.xml
+#: button - ACCEPT
+msgid "[outputdocs/outputdocs_Properties.xml?ACCEPT] Save"
+msgstr "Save"
 
 # processes/processes_subProcess.xml?TITLE1
 # processes/processes_subProcess.xml
@@ -7691,6 +7895,18 @@ msgstr "Variables In"
 # processes/processes_subProcess.xml
 #: button - SAVE
 msgid "[processes/processes_subProcess.xml?SAVE] Save"
+msgstr "Save"
+
+# processes/processes_FileEdit.xml?TITLE
+# processes/processes_FileEdit.xml
+#: title - TITLE
+msgid "<div align=\"center\">Edit @#filename email template</div>"
+msgstr "<div align=\"center\">Edit @#filename email template</div>"
+
+# processes/processes_FileEdit.xml?ACCEPT
+# processes/processes_FileEdit.xml
+#: button - ACCEPT
+msgid "[processes/processes_FileEdit.xml?ACCEPT] Save"
 msgstr "Save"
 
 # processes/processes_EditObjectPermission.xml?TITLE
@@ -8536,7 +8752,7 @@ msgstr "Description"
 # processes/processes_New.xml?PRO_TEMPLATE
 # processes/processes_New.xml
 #: radiogroup - PRO_TEMPLATE
-msgid "[processes/processes_New.xml?PRO_TEMPLATE] Template"
+msgid "Template"
 msgstr "Template"
 
 # processes/processes_New.xml?SUBMIT
@@ -8754,6 +8970,12 @@ msgstr "Please follow these instructions to complete installation"
 #: submit - SUBMIT
 msgid "[processes/processes_ImportSucessful.xml?SUBMIT] Continue"
 msgstr "Continue"
+
+# processes/processes_FilesList.xml?EDIT
+# processes/processes_FilesList.xml
+#: link - EDIT
+msgid "[processes/processes_FilesList.xml?EDIT] Edit"
+msgstr "Edit"
 
 # processes/processes_FilesList.xml?DELETE
 # processes/processes_FilesList.xml
@@ -12865,6 +13087,162 @@ msgstr "The user has cases pending or in progress.  Before deletion, you should 
 msgid "[users/users_ReassignShowInfo.xml?DELETE] Delete"
 msgstr "Delete"
 
+# authSources/ldapAdvancedEdit.xml?TITLE
+# authSources/ldapAdvancedEdit.xml
+#: title - TITLE
+msgid "Authentication Source Information"
+msgstr "Authentication Source Information"
+
+# authSources/ldapAdvancedEdit.xml?AUTH_SOURCE_NAME
+# authSources/ldapAdvancedEdit.xml
+#: text - AUTH_SOURCE_NAME
+msgid "[authSources/ldapAdvancedEdit.xml?AUTH_SOURCE_NAME] Name"
+msgstr "Name"
+
+# authSources/ldapAdvancedEdit.xml?LDAP_TYPE
+# authSources/ldapAdvancedEdit.xml
+#: dropdown - LDAP_TYPE
+msgid "[authSources/ldapAdvancedEdit.xml?LDAP_TYPE] Type    "
+msgstr "Type    "
+
+# authSources/ldapAdvancedEdit.xml?LDAP_TYPE-ldap
+# authSources/ldapAdvancedEdit.xml
+#: dropdown - LDAP_TYPE - ldap
+msgid "[authSources/ldapAdvancedEdit.xml?LDAP_TYPE-ldap]"
+msgstr "LDAP"
+
+# authSources/ldapAdvancedEdit.xml?LDAP_TYPE-ad
+# authSources/ldapAdvancedEdit.xml
+#: dropdown - LDAP_TYPE - ad
+msgid "[authSources/ldapAdvancedEdit.xml?LDAP_TYPE-ad]"
+msgstr "Active Directory"
+
+# authSources/ldapAdvancedEdit.xml?AUTH_SOURCE_AUTO_REGISTER
+# authSources/ldapAdvancedEdit.xml
+#: dropdown - AUTH_SOURCE_AUTO_REGISTER
+msgid "Enabled Automatic Register    "
+msgstr "Enabled Automatic Register    "
+
+# authSources/ldapAdvancedEdit.xml?AUTH_SOURCE_AUTO_REGISTER-''
+# authSources/ldapAdvancedEdit.xml
+#: dropdown - AUTH_SOURCE_AUTO_REGISTER - ''
+msgid "[authSources/ldapAdvancedEdit.xml?AUTH_SOURCE_AUTO_REGISTER-'']"
+msgstr "No"
+
+# authSources/ldapAdvancedEdit.xml?AUTH_SOURCE_AUTO_REGISTER-1
+# authSources/ldapAdvancedEdit.xml
+#: dropdown - AUTH_SOURCE_AUTO_REGISTER - 1
+msgid "[authSources/ldapAdvancedEdit.xml?AUTH_SOURCE_AUTO_REGISTER-1]"
+msgstr "Yes"
+
+# authSources/ldapAdvancedEdit.xml?AUTH_SOURCE_SERVER_NAME
+# authSources/ldapAdvancedEdit.xml
+#: text - AUTH_SOURCE_SERVER_NAME
+msgid "Server Name"
+msgstr "Server Name"
+
+# authSources/ldapAdvancedEdit.xml?AUTH_SOURCE_PORT
+# authSources/ldapAdvancedEdit.xml
+#: text - AUTH_SOURCE_PORT
+msgid "[authSources/ldapAdvancedEdit.xml?AUTH_SOURCE_PORT] Port"
+msgstr "Port"
+
+# authSources/ldapAdvancedEdit.xml?AUTH_SOURCE_ENABLED_TLS
+# authSources/ldapAdvancedEdit.xml
+#: dropdown - AUTH_SOURCE_ENABLED_TLS
+msgid "Enabled TLS    "
+msgstr "Enabled TLS    "
+
+# authSources/ldapAdvancedEdit.xml?AUTH_SOURCE_ENABLED_TLS-''
+# authSources/ldapAdvancedEdit.xml
+#: dropdown - AUTH_SOURCE_ENABLED_TLS - ''
+msgid "[authSources/ldapAdvancedEdit.xml?AUTH_SOURCE_ENABLED_TLS-'']"
+msgstr "No"
+
+# authSources/ldapAdvancedEdit.xml?AUTH_SOURCE_ENABLED_TLS-1
+# authSources/ldapAdvancedEdit.xml
+#: dropdown - AUTH_SOURCE_ENABLED_TLS - 1
+msgid "[authSources/ldapAdvancedEdit.xml?AUTH_SOURCE_ENABLED_TLS-1]"
+msgstr "Yes"
+
+# authSources/ldapAdvancedEdit.xml?AUTH_SOURCE_VERSION
+# authSources/ldapAdvancedEdit.xml
+#: dropdown - AUTH_SOURCE_VERSION
+msgid "Version    "
+msgstr "Version    "
+
+# authSources/ldapAdvancedEdit.xml?AUTH_SOURCE_VERSION-2
+# authSources/ldapAdvancedEdit.xml
+#: dropdown - AUTH_SOURCE_VERSION - 2
+msgid "[authSources/ldapAdvancedEdit.xml?AUTH_SOURCE_VERSION-2]"
+msgstr "2"
+
+# authSources/ldapAdvancedEdit.xml?AUTH_SOURCE_VERSION-3
+# authSources/ldapAdvancedEdit.xml
+#: dropdown - AUTH_SOURCE_VERSION - 3
+msgid "[authSources/ldapAdvancedEdit.xml?AUTH_SOURCE_VERSION-3]"
+msgstr "3"
+
+# authSources/ldapAdvancedEdit.xml?AUTH_SOURCE_BASE_DN
+# authSources/ldapAdvancedEdit.xml
+#: text - AUTH_SOURCE_BASE_DN
+msgid "Base DN"
+msgstr "Base DN"
+
+# authSources/ldapAdvancedEdit.xml?AUTH_ANONYMOUS
+# authSources/ldapAdvancedEdit.xml
+#: dropdown - AUTH_ANONYMOUS
+msgid "Anonymous    "
+msgstr "Anonymous    "
+
+# authSources/ldapAdvancedEdit.xml?AUTH_ANONYMOUS-''
+# authSources/ldapAdvancedEdit.xml
+#: dropdown - AUTH_ANONYMOUS - ''
+msgid "[authSources/ldapAdvancedEdit.xml?AUTH_ANONYMOUS-'']"
+msgstr "No"
+
+# authSources/ldapAdvancedEdit.xml?AUTH_ANONYMOUS-1
+# authSources/ldapAdvancedEdit.xml
+#: dropdown - AUTH_ANONYMOUS - 1
+msgid "[authSources/ldapAdvancedEdit.xml?AUTH_ANONYMOUS-1]"
+msgstr "Yes"
+
+# authSources/ldapAdvancedEdit.xml?AUTH_SOURCE_SEARCH_USER
+# authSources/ldapAdvancedEdit.xml
+#: text - AUTH_SOURCE_SEARCH_USER
+msgid "Search User"
+msgstr "Search User"
+
+# authSources/ldapAdvancedEdit.xml?AUTH_SOURCE_PASSWORD
+# authSources/ldapAdvancedEdit.xml
+#: password - AUTH_SOURCE_PASSWORD
+msgid "[authSources/ldapAdvancedEdit.xml?AUTH_SOURCE_PASSWORD] Password"
+msgstr "Password"
+
+# authSources/ldapAdvancedEdit.xml?AUTH_SOURCE_IDENTIFIER_FOR_USER
+# authSources/ldapAdvancedEdit.xml
+#: text - AUTH_SOURCE_IDENTIFIER_FOR_USER
+msgid "User Identifier"
+msgstr "User Identifier"
+
+# authSources/ldapAdvancedEdit.xml?AUTH_SOURCE_OBJECT_CLASSES
+# authSources/ldapAdvancedEdit.xml
+#: textarea - AUTH_SOURCE_OBJECT_CLASSES
+msgid "Object Classes"
+msgstr "Object Classes"
+
+# authSources/ldapAdvancedEdit.xml?AUTH_SOURCE_ATTRIBUTES
+# authSources/ldapAdvancedEdit.xml
+#: textarea - AUTH_SOURCE_ATTRIBUTES
+msgid "Filter Fields"
+msgstr "Filter Fields"
+
+# authSources/ldapAdvancedEdit.xml?btnSave
+# authSources/ldapAdvancedEdit.xml
+#: submit - btnSave
+msgid "[authSources/ldapAdvancedEdit.xml?btnSave] Save"
+msgstr "Save"
+
 # authSources/authSources_SelectType.xml?TITLE
 # authSources/authSources_SelectType.xml
 #: title - TITLE
@@ -12910,7 +13288,7 @@ msgstr "Import"
 # authSources/ldapEdit.xml?TITLE
 # authSources/ldapEdit.xml
 #: title - TITLE
-msgid "Authentication Source Information"
+msgid "[authSources/ldapEdit.xml?TITLE] Authentication Source Information"
 msgstr "Authentication Source Information"
 
 # authSources/ldapEdit.xml?AUTH_SOURCE_NAME
@@ -12940,7 +13318,7 @@ msgstr "Active Directory"
 # authSources/ldapEdit.xml?AUTH_SOURCE_SERVER_NAME
 # authSources/ldapEdit.xml
 #: text - AUTH_SOURCE_SERVER_NAME
-msgid "Server Name"
+msgid "[authSources/ldapEdit.xml?AUTH_SOURCE_SERVER_NAME] Server Name"
 msgstr "Server Name"
 
 # authSources/ldapEdit.xml?AUTH_SOURCE_PORT
@@ -12952,7 +13330,7 @@ msgstr "Port"
 # authSources/ldapEdit.xml?AUTH_SOURCE_ENABLED_TLS
 # authSources/ldapEdit.xml
 #: dropdown - AUTH_SOURCE_ENABLED_TLS
-msgid "Enabled TLS    "
+msgid "[authSources/ldapEdit.xml?AUTH_SOURCE_ENABLED_TLS] Enabled TLS    "
 msgstr "Enabled TLS    "
 
 # authSources/ldapEdit.xml?AUTH_SOURCE_ENABLED_TLS-''
@@ -12970,7 +13348,7 @@ msgstr "Yes"
 # authSources/ldapEdit.xml?AUTH_SOURCE_VERSION
 # authSources/ldapEdit.xml
 #: dropdown - AUTH_SOURCE_VERSION
-msgid "Version    "
+msgid "[authSources/ldapEdit.xml?AUTH_SOURCE_VERSION] Version    "
 msgstr "Version    "
 
 # authSources/ldapEdit.xml?AUTH_SOURCE_VERSION-2
@@ -12988,13 +13366,13 @@ msgstr "3"
 # authSources/ldapEdit.xml?AUTH_SOURCE_BASE_DN
 # authSources/ldapEdit.xml
 #: text - AUTH_SOURCE_BASE_DN
-msgid "Base DN"
+msgid "[authSources/ldapEdit.xml?AUTH_SOURCE_BASE_DN] Base DN"
 msgstr "Base DN"
 
 # authSources/ldapEdit.xml?AUTH_ANONYMOUS
 # authSources/ldapEdit.xml
 #: dropdown - AUTH_ANONYMOUS
-msgid "Anonymous    "
+msgid "[authSources/ldapEdit.xml?AUTH_ANONYMOUS] Anonymous    "
 msgstr "Anonymous    "
 
 # authSources/ldapEdit.xml?AUTH_ANONYMOUS-''
@@ -13012,7 +13390,7 @@ msgstr "Yes"
 # authSources/ldapEdit.xml?AUTH_SOURCE_SEARCH_USER
 # authSources/ldapEdit.xml
 #: text - AUTH_SOURCE_SEARCH_USER
-msgid "Search User"
+msgid "[authSources/ldapEdit.xml?AUTH_SOURCE_SEARCH_USER] Search User"
 msgstr "Search User"
 
 # authSources/ldapEdit.xml?AUTH_SOURCE_PASSWORD
@@ -13030,7 +13408,7 @@ msgstr "Identifier for a imported user"
 # authSources/ldapEdit.xml?AUTH_SOURCE_OBJECT_CLASSES
 # authSources/ldapEdit.xml
 #: textarea - AUTH_SOURCE_OBJECT_CLASSES
-msgid "Object Classes"
+msgid "[authSources/ldapEdit.xml?AUTH_SOURCE_OBJECT_CLASSES] Object Classes"
 msgstr "Object Classes"
 
 # authSources/ldapEdit.xml?AUTH_SOURCE_ATTRIBUTES
@@ -15895,12 +16273,6 @@ msgstr "Re-type Password:"
 msgid "[login/newSite.xml?NW_SUB] Test"
 msgstr "Test"
 
-# login/nologin.xml?subtitle
-# login/nologin.xml
-#: subtitle - subtitle
-msgid "subtitle"
-msgstr "subtitle"
-
 # login/nologin.xml?BSUBMIT
 # login/nologin.xml
 #: submit - BSUBMIT
@@ -16632,6 +17004,30 @@ msgstr "Apply Filter"
 #: link - MNU_ADD
 msgid "[triggers/triggers_Options.xml?MNU_ADD] New"
 msgstr "New"
+
+# triggers/dynavars.xml?variable
+# triggers/dynavars.xml
+#: text - variable
+msgid "Variable"
+msgstr "Variable"
+
+# triggers/dynavars.xml?type
+# triggers/dynavars.xml
+#: text - type
+msgid "[triggers/dynavars.xml?type] Type"
+msgstr "Type"
+
+# triggers/dynavars.xml?label
+# triggers/dynavars.xml
+#: text - label
+msgid "[triggers/dynavars.xml?label] Label"
+msgstr "Label"
+
+# triggers/dynavars.xml?EDIT
+# triggers/dynavars.xml
+#: link - EDIT
+msgid "[triggers/dynavars.xml?EDIT] Edit"
+msgstr "Edit"
 
 # triggers/triggers_Edit.xml?TITLE
 # triggers/triggers_Edit.xml
