@@ -155,10 +155,10 @@ abstract class BaseUsers extends BaseObject  implements Persistent {
 
 
 	/**
-	 * The value for the usr_department field.
-	 * @var        int
+	 * The value for the dep_uid field.
+	 * @var        string
 	 */
-	protected $usr_department = 0;
+	protected $dep_uid = '';
 
 
 	/**
@@ -461,14 +461,14 @@ abstract class BaseUsers extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Get the [usr_department] column value.
+	 * Get the [dep_uid] column value.
 	 * 
-	 * @return     int
+	 * @return     string
 	 */
-	public function getUsrDepartment()
+	public function getDepUid()
 	{
 
-		return $this->usr_department;
+		return $this->dep_uid;
 	}
 
 	/**
@@ -938,26 +938,26 @@ abstract class BaseUsers extends BaseObject  implements Persistent {
 	} // setUsrZipCode()
 
 	/**
-	 * Set the value of [usr_department] column.
+	 * Set the value of [dep_uid] column.
 	 * 
-	 * @param      int $v new value
+	 * @param      string $v new value
 	 * @return     void
 	 */
-	public function setUsrDepartment($v)
+	public function setDepUid($v)
 	{
 
-		// Since the native PHP type for this column is integer,
-		// we will cast the input value to an int (if it is not).
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
-			$v = (int) $v;
+		// Since the native PHP type for this column is string,
+		// we will cast the input to a string (if it is not).
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
 		}
 
-		if ($this->usr_department !== $v || $v === 0) {
-			$this->usr_department = $v;
-			$this->modifiedColumns[] = UsersPeer::USR_DEPARTMENT;
+		if ($this->dep_uid !== $v || $v === '') {
+			$this->dep_uid = $v;
+			$this->modifiedColumns[] = UsersPeer::DEP_UID;
 		}
 
-	} // setUsrDepartment()
+	} // setDepUid()
 
 	/**
 	 * Set the value of [usr_position] column.
@@ -1102,7 +1102,7 @@ abstract class BaseUsers extends BaseObject  implements Persistent {
 
 			$this->usr_zip_code = $rs->getString($startcol + 17);
 
-			$this->usr_department = $rs->getInt($startcol + 18);
+			$this->dep_uid = $rs->getString($startcol + 18);
 
 			$this->usr_position = $rs->getString($startcol + 19);
 
@@ -1375,7 +1375,7 @@ abstract class BaseUsers extends BaseObject  implements Persistent {
 				return $this->getUsrZipCode();
 				break;
 			case 18:
-				return $this->getUsrDepartment();
+				return $this->getDepUid();
 				break;
 			case 19:
 				return $this->getUsrPosition();
@@ -1427,7 +1427,7 @@ abstract class BaseUsers extends BaseObject  implements Persistent {
 			$keys[15] => $this->getUsrFax(),
 			$keys[16] => $this->getUsrCellular(),
 			$keys[17] => $this->getUsrZipCode(),
-			$keys[18] => $this->getUsrDepartment(),
+			$keys[18] => $this->getDepUid(),
 			$keys[19] => $this->getUsrPosition(),
 			$keys[20] => $this->getUsrResume(),
 			$keys[21] => $this->getUsrBirthday(),
@@ -1518,7 +1518,7 @@ abstract class BaseUsers extends BaseObject  implements Persistent {
 				$this->setUsrZipCode($value);
 				break;
 			case 18:
-				$this->setUsrDepartment($value);
+				$this->setDepUid($value);
 				break;
 			case 19:
 				$this->setUsrPosition($value);
@@ -1573,7 +1573,7 @@ abstract class BaseUsers extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[15], $arr)) $this->setUsrFax($arr[$keys[15]]);
 		if (array_key_exists($keys[16], $arr)) $this->setUsrCellular($arr[$keys[16]]);
 		if (array_key_exists($keys[17], $arr)) $this->setUsrZipCode($arr[$keys[17]]);
-		if (array_key_exists($keys[18], $arr)) $this->setUsrDepartment($arr[$keys[18]]);
+		if (array_key_exists($keys[18], $arr)) $this->setDepUid($arr[$keys[18]]);
 		if (array_key_exists($keys[19], $arr)) $this->setUsrPosition($arr[$keys[19]]);
 		if (array_key_exists($keys[20], $arr)) $this->setUsrResume($arr[$keys[20]]);
 		if (array_key_exists($keys[21], $arr)) $this->setUsrBirthday($arr[$keys[21]]);
@@ -1607,7 +1607,7 @@ abstract class BaseUsers extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(UsersPeer::USR_FAX)) $criteria->add(UsersPeer::USR_FAX, $this->usr_fax);
 		if ($this->isColumnModified(UsersPeer::USR_CELLULAR)) $criteria->add(UsersPeer::USR_CELLULAR, $this->usr_cellular);
 		if ($this->isColumnModified(UsersPeer::USR_ZIP_CODE)) $criteria->add(UsersPeer::USR_ZIP_CODE, $this->usr_zip_code);
-		if ($this->isColumnModified(UsersPeer::USR_DEPARTMENT)) $criteria->add(UsersPeer::USR_DEPARTMENT, $this->usr_department);
+		if ($this->isColumnModified(UsersPeer::DEP_UID)) $criteria->add(UsersPeer::DEP_UID, $this->dep_uid);
 		if ($this->isColumnModified(UsersPeer::USR_POSITION)) $criteria->add(UsersPeer::USR_POSITION, $this->usr_position);
 		if ($this->isColumnModified(UsersPeer::USR_RESUME)) $criteria->add(UsersPeer::USR_RESUME, $this->usr_resume);
 		if ($this->isColumnModified(UsersPeer::USR_BIRTHDAY)) $criteria->add(UsersPeer::USR_BIRTHDAY, $this->usr_birthday);
@@ -1700,7 +1700,7 @@ abstract class BaseUsers extends BaseObject  implements Persistent {
 
 		$copyObj->setUsrZipCode($this->usr_zip_code);
 
-		$copyObj->setUsrDepartment($this->usr_department);
+		$copyObj->setDepUid($this->dep_uid);
 
 		$copyObj->setUsrPosition($this->usr_position);
 

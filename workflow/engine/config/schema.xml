@@ -1751,7 +1751,7 @@
         <parameter name="Default" value=""/>
         <parameter name="Extra" value=""/>
       </vendor>
-    </column>    
+    </column>
     <validator column="OUT_DOC_UID">
       <rule name="maxLength" value="32" message="Output Document UID can be no larger than ${value} in size" />
       <rule name="required" message="Output Document UID is required." />
@@ -3586,13 +3586,13 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="USR_DEPARTMENT" type="INTEGER" required="true" default="0">
+    <column name="DEP_UID" type="VARCHAR" required="true" default="">
       <vendor type="mysql">
-        <parameter name="Field" value="USR_DEPARTMENT"/>
-        <parameter name="Type" value="int(11)"/>
+        <parameter name="Field" value="DEP_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
-        <parameter name="Default" value="0"/>
+        <parameter name="Default" value=""/>
         <parameter name="Extra" value=""/>
       </vendor>
     </column>

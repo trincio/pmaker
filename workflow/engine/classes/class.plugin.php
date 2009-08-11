@@ -218,7 +218,7 @@ class PMPlugin {
     if (!$bTargetAbsolutePath) {
       $sTarget = PATH_PLUGINS . $this->sPluginFolder . PATH_SEP . $sTarget;
     }
-    G::verifyPath(dirname($sTarget));
+    G::verifyPath(dirname($sTarget), true);
     @copy($sSouce, $sTarget);
   }
 
@@ -229,7 +229,7 @@ class PMPlugin {
     if (!$bTargetAbsolutePath) {
       $sTarget = PATH_PLUGINS . $this->sPluginFolder . PATH_SEP . $sTarget;
     }
-    G::verifyPath(dirname($sTarget));
+    G::verifyPath(dirname($sTarget), true);
     @chmod(dirname($sTarget), 0777);
     @rename($sSouce, $sTarget);
   }
