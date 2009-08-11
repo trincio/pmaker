@@ -270,10 +270,10 @@ class Groups
                 $aUIDs[] = $aRow['USR_UID'];
                 $oDataset->next();
             }
-            $oCriteria = new Criteria('workflow');            
+            $oCriteria = new Criteria('workflow');
             $oCriteria->addSelectColumn(UsersPeer::USR_UID);
             $oCriteria->addSelectColumn(UsersPeer::USR_FIRSTNAME);
-            $oCriteria->addSelectColumn(UsersPeer::USR_LASTNAME);            
+            $oCriteria->addSelectColumn(UsersPeer::USR_LASTNAME);
             $oCriteria->add(UsersPeer::USR_UID, $aUIDs, Criteria::NOT_IN);
             $oCriteria->add(UsersPeer::USR_STATUS, 'ACTIVE');
             return $oCriteria;
@@ -282,9 +282,9 @@ class Groups
             throw ($oError);
         }
     }
-    
+
     function verifyUsertoGroup($GrpUid, $UsrUid)
-    {		
+    {
     	  try {
             $oGrp = GroupUserPeer::retrieveByPk($GrpUid, $UsrUid);
             if (get_class($oGrp) == 'GroupUser') {
@@ -297,9 +297,9 @@ class Groups
             throw ($oError);
         }
 	  }
-	  
-	  function verifyGroup($GrpUid)
-    {		
+
+	  function verifyGroup($sGroupUID)
+    {
     	  try {
             $aUsers = array();
             $oCriteria = new Criteria();
@@ -310,10 +310,10 @@ class Groups
             $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
             $oDataset->next();
             $aRow = $oDataset->getRow();
-            if(is_array($aRow))            
+            if(is_array($aRow))
             	return 1;
             else
-            	return 0;	
+            	return 0;
         }
         catch (exception $oError) {
             throw ($oError);
