@@ -2,7 +2,7 @@ msgid ""
 msgstr "" 
 "Project-Id-Version: PM 4.0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-08-11 09:53+0100 \n"
+"PO-Revision-Date: 2009-08-11 18:40+0100 \n"
 "Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
 "Language-Team: Colosa Developers Team <developers@colosa.com>\n"
 "MIME-Version: 1.0\n"
@@ -64,8 +64,8 @@ msgstr "Available Triggers"
 # TRANSLATION
 # LABEL/ID_LOGOUT
 #: LABEL/ID_LOGOUT
-msgid "Log out"
-msgstr "Log out"
+msgid "Logout"
+msgstr "Logout"
 
 # TRANSLATION
 # LABEL/ID_MY_ACCOUNT
@@ -1390,8 +1390,8 @@ msgstr "Are you sure you want to cancel this case?"
 # TRANSLATION
 # LABEL/ID_SETUP
 #: LABEL/ID_SETUP
-msgid "Setup"
-msgstr "Setup"
+msgid "Admin"
+msgstr "Admin"
 
 # TRANSLATION
 # LABEL/ID_PREVIOUS_STEP
