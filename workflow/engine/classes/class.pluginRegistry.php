@@ -332,7 +332,7 @@ class PMPluginRegistry {
   function registerRedirectLogin($sNamespace, $sRole, $sPathMethod ) {
     $found = false;
   	foreach ( $this->_aRedirectLogin as $row=>$detail ) {
-  		if ( $sNamespace == $detail->sNamespace )
+  		 if (( $sNamespace == $detail->sNamespace )&&( $sRole == $detail->sRoleCode )) //Filters based on Workspace and Role Code
   		  $found = true;
   	}
     if ( !$found ) {
