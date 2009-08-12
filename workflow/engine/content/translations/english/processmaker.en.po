@@ -1,5 +1,5 @@
-msgid "" 
-msgstr "" 
+msgid ""
+msgstr ""
 "Project-Id-Version: PM 4.0.1\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: 2009-08-12 11:56+0100 \n"
@@ -16285,12 +16285,6 @@ msgstr "Login"
 msgid "[login/showInfo.xml?TITLE] Information"
 msgstr "Information"
 
-# login/showInfo.xml?MESSAGE
-# login/showInfo.xml
-#: text - MESSAGE
-msgid "[login/showInfo.xml?MESSAGE] The user has cases pending or in progress.  Before deletion, you should reassign the user's cases."
-msgstr "The user has cases pending or in progress.  Before deletion, you should reassign the user's cases."
-
 # login/login.xml?TITLE
 # login/login.xml
 #: title - TITLE
@@ -16326,12 +16320,6 @@ msgstr "Login"
 #: title - TITLE
 msgid "Error"
 msgstr "Error"
-
-# login/showMessage.xml?MESSAGE
-# login/showMessage.xml
-#: caption - MESSAGE
-msgid "[login/showMessage.xml?MESSAGE] The user has cases pending or in progress.  Before deletion, you should reassign the user's cases."
-msgstr "The user has cases pending or in progress.  Before deletion, you should reassign the user's cases."
 
 # login/dbInfo.xml?DYNA_HEADER
 # login/dbInfo.xml

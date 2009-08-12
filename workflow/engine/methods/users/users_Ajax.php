@@ -63,9 +63,9 @@ try {
         $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
         $oDataset->next();
         $aRow = $oDataset->getRow();
-        //print_r($aRow); die;  
-        //if (!$aRow)  
-        if (!is_array($aRow))      
+        //print_r($aRow); die;
+        //if (!$aRow)
+        if (!is_array($aRow))
   	  	{
   	  		echo '0';
   	  	}
@@ -112,44 +112,42 @@ try {
   	break;
 
   	case 'deleteGroup':
-  	  G::LoadClass('groups');
-	  $oGroup = new Groups();
-	  $oGroup->removeUserOfGroup($_POST['GRP_UID'], $_POST['USR_UID']);
-	  $_GET['sUserUID'] = $_POST['USR_UID'];
-	  $G_PUBLISH = new Publisher;
+      G::LoadClass('groups');
+      $oGroup = new Groups();
+      $oGroup->removeUserOfGroup($_POST['GRP_UID'], $_POST['USR_UID']);
+      $_GET['sUserUID'] = $_POST['USR_UID'];
+      $G_PUBLISH = new Publisher;
       $G_PUBLISH->AddContent('view', 'users/users_Tree' );
       G::RenderPage('publish', 'raw');
   	break;
 
   	case 'showUserGroupInterface':
-  	  $_GET['sUserUID'] = $_POST['sUserUID'];
-	  $G_PUBLISH = new Publisher;
-	  $G_PUBLISH->AddContent('view', 'users/users_AssignGroup' );
-	  G::RenderPage('publish', 'raw');
+      $_GET['sUserUID'] = $_POST['sUserUID'];
+      $G_PUBLISH = new Publisher;
+      $G_PUBLISH->AddContent('view', 'users/users_AssignGroup' );
+      G::RenderPage('publish', 'raw');
   	break;
 
   	case 'showUserGroups':
-  	  $_GET['sUserUID'] = $_POST['sUserUID'];
-	  $G_PUBLISH = new Publisher;
-	  $G_PUBLISH->AddContent('view', 'users/users_Tree' );
-	  G::RenderPage('publish', 'raw');
+      $_GET['sUserUID'] = $_POST['sUserUID'];
+      $G_PUBLISH = new Publisher;
+      $G_PUBLISH->AddContent('view', 'users/users_Tree' );
+      G::RenderPage('publish', 'raw');
   	break;
 
   	case 'assignUserToGroup':
-	  G::LoadClass('groups');
-	  $oGroup = new Groups();
-	  $oGroup->addUserToGroup($_POST['GRP_UID'], $_POST['USR_UID']);
-	  echo '<div align="center"><h2><font color="blue">'.G::LoadTranslation('ID_MSG_ASSIGN_DONE').'</font></h2></div>';
+      G::LoadClass('groups');
+      $oGroup = new Groups();
+      $oGroup->addUserToGroup($_POST['GRP_UID'], $_POST['USR_UID']);
+      echo '<div align="center"><h2><font color="blue">'.G::LoadTranslation('ID_MSG_ASSIGN_DONE').'</font></h2></div>';
 	  break;
-	  
+
 	  case 'usersGroup':
-  	  //echo $_POST['GRP_UID'];
   	  G::LoadClass('groups');
 	    $oGroup = new Groups();
   	  $aGroup = $oGroup->getUsersOfGroup($_POST['GRP_UID']);
-  	  //print_r($aGroup);
   	  foreach ($aGroup as $iIndex => $aValues) {
-  				echo $aValues['USR_USERNAME']."<br>\n";
+  				echo $aValues['USR_FIRSTNAME'] . ' ' . $aValues['USR_LASTNAME'] . '<br>';
 			}
   	break;
   }
