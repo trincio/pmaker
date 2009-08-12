@@ -36,7 +36,7 @@ try {
   	  die;
   	break;
   }
-  
+
   require_once 'classes/model/OutputDocument.php';
   $ooutputDocument = new OutputDocument();
   if (isset($_GET['OUT_DOC_UID'])) {
@@ -46,7 +46,7 @@ try {
   	$aFields            = array();
   	$aFields['PRO_UID'] = $_GET['PRO_UID'];
   }
-  
+
   require_once 'classes/model/OutputDocument.php';
   $ooutputDocument = new OutputDocument();
   if (isset($_GET['OUT_DOC_UID'])) {
@@ -58,34 +58,34 @@ try {
   }
 
   $type = isset ( $aFields['OUT_DOC_TYPE']) ? $aFields['OUT_DOC_TYPE'] : 'HTML';
-  
+
   G::LoadClass('xmlfield_InputPM');
   $G_PUBLISH = new Publisher();
-  
+
   switch ( $type ) {
-  	case 'HTML' : 
+  	case 'HTML' :
       $G_PUBLISH->AddContent('xmlform', 'xmlform', 'outputdocs/outputdocs_Edit', '', $aFields , '../outputdocs/outputdocs_Save');
   	     break;
-  	case 'JRXML' : 
-  	case 'ACROFORM' : 
+  	case 'JRXML' :
+  	case 'ACROFORM' :
          $type = $aFields['OUT_DOC_TYPE'];
          if ( $type == 'JRXML') $extension = 'jrxml';
          if ( $type == 'ACROFORM') $extension = 'pdf';
-         
+
          $downFileName = ereg_replace('[^A-Za-z0-9_]', '_', $aFields['OUT_DOC_TITLE'] ) . '.' . $extension;
          $filename = PATH_DYNAFORM . $aFields['PRO_UID'] . PATH_SEP . $aFields['OUT_DOC_UID'] . '.' . $extension ;
-         if ( file_exists ( $filename) ) 
-           $aFields['FILENAME'] = $downFileName;  
+         if ( file_exists ( $filename) )
+           $aFields['FILENAME'] = $downFileName;
          else
-           $aFields['FILENAME'] = '';  
-         
-         $aFields['FILELINK'] = '../outputdocs/downloadFile?' . $aFields['OUT_DOC_UID'];  
+           $aFields['FILENAME'] = '';
+
+         $aFields['FILELINK'] = '../outputdocs/downloadFile?' . $aFields['OUT_DOC_UID'];
          $G_PUBLISH->AddContent('xmlform', 'xmlform', 'outputdocs/outputdocsUploadFile', '', $aFields , '../outputdocs/uploadFile');
          $G_PUBLISH->AddContent('view', 'outputdocs/editJrxml' );
   	     break;
   }
   G::RenderPage('publish', 'raw');
-  
+
 }
 catch (Exception $oException) {
 	die($oException->getMessage());

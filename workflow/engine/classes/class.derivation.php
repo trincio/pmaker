@@ -223,7 +223,7 @@ class Derivation
         $auxFields['USR_COUNTRY']    = $userFields['USR_COUNTRY'];
         $auxFields['USR_CITY']       = $userFields['USR_CITY'];
         $auxFields['USR_LOCATION']   = $userFields['USR_LOCATION'];
-        $auxFields['USR_DEPARTMENT'] = $userFields['USR_DEPARTMENT'];
+        $auxFields['DEP_UID']        = $userFields['DEP_UID'];
         $aUsersData[] = $auxFields;
       }
     }
@@ -244,7 +244,7 @@ class Derivation
       $auxFields['USR_COUNTRY']    = $userFields['USR_COUNTRY'];
       $auxFields['USR_CITY']       = $userFields['USR_CITY'];
       $auxFields['USR_LOCATION']   = $userFields['USR_LOCATION'];
-      $auxFields['USR_DEPARTMENT'] = $userFields['USR_DEPARTMENT'];
+      $auxFields['DEP_UID']        = $userFields['DEP_UID'];
       $aUsersData = $auxFields;
     }
     return $aUsersData;
