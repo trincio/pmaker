@@ -443,7 +443,7 @@ class AdditionalTables extends BaseAdditionalTables {
 			return null;
 		} elseif (!is_int($this->' . $aColumn['var'] . ')) {
 			// a non-timestamp value was set externally, so we convert it
-			if (($this->' . $aColumn['var'] . ' == "0000-00-00 00:00:00") || ($this->' . $aColumn['var'] . ' == "0000-00-00")) {
+			if (($this->' . $aColumn['var'] . ' == "0000-00-00 00:00:00") || ($this->' . $aColumn['var'] . ' == "0000-00-00") || !$this->' . $aColumn['var'] . ') {
         $ts = "0";
       }
       else {

@@ -928,13 +928,13 @@ CREATE TABLE `FIELDS`
 	PRIMARY KEY (`FLD_UID`)
 )Type=MyISAM  DEFAULT CHARSET='utf8';
 #-----------------------------------------------------------------------------
-#-- SHADOWN_TABLE
+#-- SHADOW_TABLE
 #-----------------------------------------------------------------------------
 
-DROP TABLE IF EXISTS `SHADOWN_TABLE`;
+DROP TABLE IF EXISTS `SHADOW_TABLE`;
 
 
-CREATE TABLE `SHADOWN_TABLE`
+CREATE TABLE `SHADOW_TABLE`
 (
 	`SHD_UID` VARCHAR(32) default '' NOT NULL,
 	`ADD_TAB_UID` VARCHAR(32) default '' NOT NULL,
