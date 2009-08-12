@@ -3586,7 +3586,7 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="DEP_UID" type="VARCHAR" required="true" default="">
+    <column name="DEP_UID" type="VARCHAR" size="32" required="true" default="">
       <vendor type="mysql">
         <parameter name="Field" value="DEP_UID"/>
         <parameter name="Type" value="varchar(32)"/>
