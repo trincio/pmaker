@@ -16285,6 +16285,12 @@ msgstr "Login"
 msgid "[login/showInfo.xml?TITLE] Information"
 msgstr "Information"
 
+# login/showInfo.xml?MESSAGE
+# login/showInfo.xml
+#: text - MESSAGE
+msgid "[login/showInfo.xml?MESSAGE]"
+msgstr ""
+
 # login/login.xml?TITLE
 # login/login.xml
 #: title - TITLE
@@ -16320,6 +16326,12 @@ msgstr "Login"
 #: title - TITLE
 msgid "Error"
 msgstr "Error"
+
+# login/showMessage.xml?MESSAGE
+# login/showMessage.xml
+#: caption - MESSAGE
+msgid "[login/showMessage.xml?MESSAGE]"
+msgstr ""
 
 # login/dbInfo.xml?DYNA_HEADER
 # login/dbInfo.xml
