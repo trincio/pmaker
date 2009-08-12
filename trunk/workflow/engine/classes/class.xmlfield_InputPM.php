@@ -351,7 +351,7 @@ function getDynaformsVars($sProcessUID, $bSystemVars = true) {
 						($v->type != 'grid')   && ($v->type != 'javascript')) {
 						if (!in_array($k, $aFieldsNames)) {
 							$aFields[] = array(
-								'sName' => $k, 
+								'sName' => $k,
 								'sType' => $v->type,
 								'sLabel'=> $v->label
 							);
@@ -397,20 +397,20 @@ class XmlForm_Field_CheckBoxTable extends XmlForm_Field_CheckGroup
 {
   /**
    * Function render
-   * @author The Answer 
+   * @author The Answer
    * @access public
    * @parameter string value
    * @parameter string owner
    * @return string
    */
   function render( $value = NULL , $owner = NULL )
-  {   	
+  {
   	//$optionName = $owner->values['USR_UID'];
   	$optionName = $value;
   	$onclick = (($this->onclick)? ' onclick="' . G::replaceDataField( $this->onclick, $owner->values )  . '" ' : '');
-  	
+
     $html ='<input class="FormCheck" id="form['.$this->name.']['.$optionName.']" name="form['.$this->name.
-                ']['.$optionName.']" type=\'checkbox\' value="'. $value . '"' . $onclick . 
+                ']['.$optionName.']" type=\'checkbox\' value="'. $value . '"' . $onclick .
                 '> <span class="FormCheck"></span></input>';
     return $html;
   }
