@@ -1525,7 +1525,7 @@ class processMap {
 		try {
 			$oProcess = new Process();
   	  $aFields  = $oProcess->load($sProcessUID);
-      global $G_PUBLISH; 
+      global $G_PUBLISH;
       $G_PUBLISH = new Publisher;
       $G_PUBLISH->AddContent('propeltable', 'paged-table', 'outputdocs/outputdocs_ShortList', $this->getOutputDocumentsCriteria($sProcessUID), $aFields);
       G::RenderPage('publish', 'raw');
@@ -3179,8 +3179,8 @@ function editObjectPermission($sOP_UID)
     }
     foreach ($aFiles as $aFile) {
       $aTheFiles[] = array('PATH'       => $aFile['FILE'],
-                        'EDIT'          => 'Edit',
-      					'EDIT_JS'		=> "editFile('{$sProcessUID}', @@PATH)",
+                        'EDIT'          => ($sMainDirectory == 'mailTemplates' ? 'Edit' : ''),
+                        'EDIT_JS'       => "editFile('{$sProcessUID}', @@PATH)",
                         'DOWNLOAD_TEXT' => G::LoadTranslation('ID_DOWNLOAD'),
                         'DOWNLOAD_JS'   => 'downloadFile(\'' . $sProcessUID . '\', \'' . $sMainDirectory . '\', \'' . $sCurrentDirectory . '\', \'' . $aFile['FILE'] . '\');',
                         'DELETE_TEXT'   => G::LoadTranslation('ID_DELETE'),
