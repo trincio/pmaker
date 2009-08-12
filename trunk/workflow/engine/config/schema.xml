@@ -5474,7 +5474,7 @@
   </table>
   <table name="SHADOW_TABLE">
     <vendor type="mysql">
-      <parameter name="Name" value="SHADOWN_TABLE"/>
+      <parameter name="Name" value="SHADOW_TABLE"/>
       <parameter name="Engine" value="MyISAM"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
