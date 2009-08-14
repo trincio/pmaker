@@ -2217,7 +2217,7 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
       $html .= "<a title='Show calendar' href='#' onclick=\"return showCalendar('$pID', '$mask', '24', true, '$startDate', '$endDate');\" >
       			  <img src='/controls/Calendar-32x32.png' border='0' width='12' height='14'>
       			</a>
-      			<a title='Reset date field' href='#' onclick=\"document.getElementById('$pID').value='';\"><img src='/controls/TrashIcon.jpg' border='0' width='12' height='15'></a>";
+      			<a title='Reset date field' href='#' onclick=\"document.getElementById('$pID').value=''; return false;\"><img src='/controls/TrashIcon.jpg' border='0' width='12' height='15'></a>";
     } else {
       $html = "<span style='border:1;border-color:#000;width:100px;' name='" . $pID . "'>$value</span>";
     }
