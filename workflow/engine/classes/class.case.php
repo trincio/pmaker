@@ -125,7 +125,7 @@ class Cases
         $row = $rs->getRow();
 
         while (is_array($row)) {
-            $tasks[] = array('TAS_UID' => $row['TAS_UID'], 'PRO_UID' => $row['PRO_UID']);
+            $tasks[] = $row['TAS_UID'];
             $rs->next();
             $row = $rs->getRow();
         }
@@ -151,18 +151,40 @@ class Cases
         $row = $rs->getRow();
 
         while (is_array($row)) {
-            $tasks[] = array('TAS_UID' => $row['TAS_UID'], 'PRO_UID' => $row['PRO_UID']);
+            $tasks[] = $row['TAS_UID'];
             $rs->next();
             $row = $rs->getRow();
         }
 
-        //get content process title
-        foreach ($tasks as $key => $val) {
-            $tasTitle = Content::load('TAS_TITLE', '', $val['TAS_UID'], SYS_LANG);
-            $proTitle = Content::load('PRO_TITLE', '', $val['PRO_UID'], SYS_LANG);
-            $title = " $proTitle ($tasTitle)";
-            $rows[] = array('uid' => $val['TAS_UID'], 'value' => $title, 'pro_uid' => $val['PRO_UID']);
+        $c = new Criteria();
+        $c->addSelectColumn(TaskPeer::TAS_UID);
+        $c->addSelectColumn(TaskPeer::PRO_UID);
+        $c->addAsColumn('TAS_TITLE', 'C1.CON_VALUE');
+        $c->addAsColumn('PRO_TITLE', 'C2.CON_VALUE');
+				$c->addAlias('C1',  'CONTENT');
+				$c->addAlias('C2',  'CONTENT');
+        $aConditions   = array();
+        $aConditions[] = array(TaskPeer::TAS_UID, 'C1.CON_ID');
+        $aConditions[] = array('C1.CON_CATEGORY', DBAdapter::getStringDelimiter() . 'TAS_TITLE' . DBAdapter::getStringDelimiter());
+        $aConditions[] = array('C1.CON_LANG',     DBAdapter::getStringDelimiter() . SYS_LANG . DBAdapter::getStringDelimiter());
+        $c->addJoinMC($aConditions, Criteria::LEFT_JOIN);
+        $aConditions   = array();
+        $aConditions[] = array(TaskPeer::PRO_UID, 'C2.CON_ID');
+        $aConditions[] = array('C2.CON_CATEGORY', DBAdapter::getStringDelimiter() . 'PRO_TITLE' . DBAdapter::getStringDelimiter());
+        $aConditions[] = array('C2.CON_LANG',     DBAdapter::getStringDelimiter() . SYS_LANG . DBAdapter::getStringDelimiter());
+        $c->addJoinMC($aConditions, Criteria::LEFT_JOIN);
+        $c->add(TaskPeer::TAS_UID, $tasks, Criteria::IN);
+        $c->addAscendingOrderByColumn('PRO_TITLE');
+        $c->addAscendingOrderByColumn('TAS_TITLE');
+        $rs = TaskPeer::doSelectRS($c);
+        $rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+        $rs->next();
+        while ($row = $rs->getRow()) {
+          $rows[] = array('uid' => $row['TAS_UID'], 'value' => $row['PRO_TITLE'] . ' (' . $row['TAS_TITLE'] . ')', 'pro_uid' => $row['PRO_UID']);
+          $rs->next();
+          $row = $rs->getRow();
         }
+
         return $rows;
     }
 
@@ -3401,13 +3423,13 @@ funcion History messages for case tracker by Everth The Answer
       if($sStatus!='')
        { if($sStatus!='gral')
        		$c->add(ApplicationPeer::APP_STATUS,$sStatus);
-       }      
+       }
 
       if($permisse!=0)
-       { 
-          $c->add($c->getNewCriterion(AppDelegationPeer::USR_UID, $userlogged)->addOr($c->getNewCriterion(AppDelegationPeer::PRO_UID, $aSupervisor, Criteria::IN)));            
-       }       
-       
+       {
+          $c->add($c->getNewCriterion(AppDelegationPeer::USR_UID, $userlogged)->addOr($c->getNewCriterion(AppDelegationPeer::PRO_UID, $aSupervisor, Criteria::IN)));
+       }
+
     $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
 
     return $c;
