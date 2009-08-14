@@ -143,7 +143,7 @@ class SMTP
      */
     function Authenticate($username, $password) {
         // Start authentication
-        fputs($this->smtp_conn,"AUTH LOGIN" . $this->CRLF);
+        @fputs($this->smtp_conn,"AUTH LOGIN" . $this->CRLF);
 
         $rply = $this->get_lines();
         $code = substr($rply,0,3);
@@ -486,7 +486,7 @@ class SMTP
      * @return bool
      */
     function SendHello($hello, $host) {
-        fputs($this->smtp_conn, $hello . " " . $host . $this->CRLF);
+        @fputs($this->smtp_conn, $hello . " " . $host . $this->CRLF);
 
         $rply = $this->get_lines();
         $code = substr($rply,0,3);
@@ -1021,7 +1021,7 @@ class SMTP
      */
     function get_lines() {
         $data = "";
-        while($str = fgets($this->smtp_conn,515)) {
+        while($str = @fgets($this->smtp_conn,515)) {
             if($this->do_debug >= 4) {
                 echo "SMTP -> get_lines(): \$data was \"$data\"" .
                          $this->CRLF;
