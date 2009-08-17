@@ -652,6 +652,7 @@ class XmlForm_Field_Text extends XmlForm_Field_SimpleText {
   var $formula = '';
   var $function = '';
   var $replaceTags = 0;
+  var $pmfield = '';
 
   /**
    * Function render
@@ -662,11 +663,22 @@ class XmlForm_Field_Text extends XmlForm_Field_SimpleText {
    * @return string
    */
   function render($value = NULL, $owner = NULL) {
-    $this->executeSQL ( $owner );
-    $firstElement = key ( $this->sqlOption );
-    if (isset ( $firstElement ))
-      $value = $firstElement;
-      //NOTE: string functions must be in G class
+    if (($owner->pmtable != '') && ($owner->pmtablekeys != '') && ($this->pmfield != '')) {
+      $value = '';
+      if (defined('PATH_CORE')) {
+        if (file_exists(PATH_CORE . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'AdditionalTables.php')) {
+          require_once PATH_CORE . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'AdditionalTables.php';
+          //
+        }
+      }
+    }
+    else {
+      $this->executeSQL ( $owner );
+      $firstElement = key ( $this->sqlOption );
+      if (isset ( $firstElement ))
+        $value = $firstElement;
+    }
+    //NOTE: string functions must be in G class
     if ($this->strTo === 'UPPER')
       $value = strtoupper ( $value );
     if ($this->strTo === 'LOWER')
