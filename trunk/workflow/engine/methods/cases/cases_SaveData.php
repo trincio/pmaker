@@ -1,4 +1,4 @@
-<? 
+<?
 /**
  * cases_SaveData.php
  *
@@ -61,6 +61,53 @@
 	$Fields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], 'DYNAFORM', $_GET['UID'], 'AFTER', $Fields['APP_DATA'] );
 	//Execute after triggers - End
   }
+
+  //save data in PM Tables if necessary
+  if ($oForm->pmtable != '') {
+    if (defined('PATH_CORE')) {
+      if (file_exists(PATH_CORE . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'AdditionalTables.php')) {
+        $aValues = array();
+        foreach ($_POST['form'] as $sField => $sValue) {
+          if (isset($oForm->fields[$sField]->pmfield)) {
+            if ($oForm->fields[$sField]->pmfield != '') {
+              $aValues[$oForm->fields[$sField]->pmfield] = $sValue;
+            }
+          }
+        }
+        require_once PATH_CORE . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'AdditionalTables.php';
+        $oAdditionalTables = new AdditionalTables();
+        try {
+          $aData = $oAdditionalTables->load($oForm->pmtable, true);
+        }
+        catch (Exception $oError) {
+          $aData = array('FIELDS' => array());
+        }
+        $aKeys   = array();
+        $aAux    = explode('|', $oForm->pmtablekeys);
+        $i       = 0;
+        foreach ($aData['FIELDS'] as $aField) {
+          if ($aField['FLD_KEY'] == '1') {
+            $aKeys[$aField['FLD_NAME']] = (isset($aAux[$i]) ? G::replaceDataField($aAux[$i], $Fields['APP_DATA']) : '');
+            $i++;
+          }
+        }
+        try {
+          $aRow = $oAdditionalTables->getDataTable($oForm->pmtable, $aKeys);
+        }
+        catch (Exception $oError) {
+          $aRow = false;
+        }
+        if ($aRow) {
+          $aValues = array_merge($aValues, $aKeys);
+          $oAdditionalTables->updateDataInTable($oForm->pmtable, $aValues);
+        }
+        else {
+          $oAdditionalTables->saveDataInTable($oForm->pmtable, $aValues);
+        }
+      }
+    }
+  }
+
   //save data
   $aData = array();
   $aData['APP_NUMBER']      = $Fields['APP_NUMBER'];
@@ -74,10 +121,10 @@
   require_once 'classes/model/AppDocument.php';
   if (isset($_FILES['form'])) {
     foreach ($_FILES['form']['name'] as $sFieldName => $vValue) {
-      if ($_FILES['form']['error'][$sFieldName] == 0) {      	      	
+      if ($_FILES['form']['error'][$sFieldName] == 0) {
       	$oAppDocument = new AppDocument();
-      	if($_POST['INPUTS']['input']!='') 
-      	 {     
+      	if($_POST['INPUTS']['input']!='')
+      	 {
       	 	   $aFields = array('APP_UID'             => $_SESSION['APPLICATION'],
                      					'DEL_INDEX'           => $_SESSION['INDEX'],
                      					'USR_UID'             => $_SESSION['USER_LOGGED'],
@@ -89,7 +136,7 @@
                      					'APP_DOC_FILENAME'    => $_FILES['form']['name'][$sFieldName]);
       	 }
       	else
-         {         		
+         {
         		$aFields = array('APP_UID'             => $_SESSION['APPLICATION'],
         		                 'DEL_INDEX'           => $_SESSION['INDEX'],
         		                 'USR_UID'             => $_SESSION['USER_LOGGED'],
@@ -98,10 +145,10 @@
         		                 'APP_DOC_CREATE_DATE' => date('Y-m-d H:i:s'),
         		                 'APP_DOC_COMMENT'     => '',
         		                 'APP_DOC_TITLE'       => '',
-        		                 'APP_DOC_FILENAME'    => $_FILES['form']['name'][$sFieldName]);        		
-         }		
-         
-        $oAppDocument->create($aFields); 
+        		                 'APP_DOC_FILENAME'    => $_FILES['form']['name'][$sFieldName]);
+         }
+
+        $oAppDocument->create($aFields);
         $sAppDocUid = $oAppDocument->getAppDocUid();
         $aInfo      = pathinfo($oAppDocument->getAppDocFilename());
         $sExtension = (isset($aInfo['extension']) ? $aInfo['extension'] : '');
