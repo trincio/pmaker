@@ -668,7 +668,31 @@ class XmlForm_Field_Text extends XmlForm_Field_SimpleText {
       if (defined('PATH_CORE')) {
         if (file_exists(PATH_CORE . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'AdditionalTables.php')) {
           require_once PATH_CORE . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'AdditionalTables.php';
-          //
+          $oAdditionalTables = new AdditionalTables();
+          try {
+            $aData = $oAdditionalTables->load($owner->pmtable, true);
+          }
+          catch (Exception $oError) {
+            $aData = array('FIELDS' => array());
+          }
+          $aKeys   = array();
+          $aValues = explode('|', $owner->pmtablekeys);
+          $i       = 0;
+          foreach ($aData['FIELDS'] as $aField) {
+            if ($aField['FLD_KEY'] == '1') {
+              $aKeys[$aField['FLD_NAME']] = (isset($aValues[$i]) ? G::replaceDataField($aValues[$i], $owner->values) : '');
+              $i++;
+            }
+          }
+          try {
+            $aData = $oAdditionalTables->getDataTable($owner->pmtable, $aKeys);
+          }
+          catch (Exception $oError) {
+            $aData = array();
+          }
+          if (isset($aData[$this->pmfield])) {
+            $value = $aData[$this->pmfield];
+          }
         }
       }
     }
@@ -919,6 +943,7 @@ class XmlForm_Field_Textarea extends XmlForm_Field {
   var $required = false;
   var $readOnly = false;
   var $wrap = 'OFF';
+  var $pmfield = '';
 
   /**
    * Function render
@@ -928,12 +953,46 @@ class XmlForm_Field_Textarea extends XmlForm_Field {
    * @return string
    */
   function render($value = NULL, $owner) {
-    $this->executeSQL ( $owner );
-
-    if (isset ( $this->sqlOption ))
-      $firstElement = key ( $this->sqlOption );
-    if (isset ( $firstElement ))
-      $value = $firstElement;
+    if (($owner->pmtable != '') && ($owner->pmtablekeys != '') && ($this->pmfield != '')) {
+      $value = '';
+      if (defined('PATH_CORE')) {
+        if (file_exists(PATH_CORE . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'AdditionalTables.php')) {
+          require_once PATH_CORE . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'AdditionalTables.php';
+          $oAdditionalTables = new AdditionalTables();
+          try {
+            $aData = $oAdditionalTables->load($owner->pmtable, true);
+          }
+          catch (Exception $oError) {
+            $aData = array('FIELDS' => array());
+          }
+          $aKeys   = array();
+          $aValues = explode('|', $owner->pmtablekeys);
+          $i       = 0;
+          foreach ($aData['FIELDS'] as $aField) {
+            if ($aField['FLD_KEY'] == '1') {
+              $aKeys[$aField['FLD_NAME']] = (isset($aValues[$i]) ? G::replaceDataField($aValues[$i], $owner->values) : '');
+              $i++;
+            }
+          }
+          try {
+            $aData = $oAdditionalTables->getDataTable($owner->pmtable, $aKeys);
+          }
+          catch (Exception $oError) {
+            $aData = array();
+          }
+          if (isset($aData[$this->pmfield])) {
+            $value = $aData[$this->pmfield];
+          }
+        }
+      }
+    }
+    else {
+      $this->executeSQL ( $owner );
+      if (isset ( $this->sqlOption ))
+        $firstElement = key ( $this->sqlOption );
+      if (isset ( $firstElement ))
+        $value = $firstElement;
+    }
     $className = ($this->className) ? (' class="' . $this->className . '"') : '';
     if ($this->mode === 'edit') {
       if ($this->readOnly)
