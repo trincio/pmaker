@@ -663,7 +663,7 @@ class XmlForm_Field_Text extends XmlForm_Field_SimpleText {
    * @return string
    */
   function render($value = NULL, $owner = NULL) {
-    if (($owner->pmtable != '') && ($owner->pmtablekeys != '') && ($this->pmfield != '')) {
+    if (($owner->pmtable != '') && ($this->pmfield != '')) {
       $value = '';
       if (defined('PATH_CORE')) {
         if (file_exists(PATH_CORE . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'AdditionalTables.php')) {
@@ -953,7 +953,7 @@ class XmlForm_Field_Textarea extends XmlForm_Field {
    * @return string
    */
   function render($value = NULL, $owner) {
-    if (($owner->pmtable != '') && ($owner->pmtablekeys != '') && ($this->pmfield != '')) {
+    if (($owner->pmtable != '') && ($this->pmfield != '')) {
       $value = '';
       if (defined('PATH_CORE')) {
         if (file_exists(PATH_CORE . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'AdditionalTables.php')) {
