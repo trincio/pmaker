@@ -46,8 +46,6 @@ class Form extends XmlForm
   var $className="formDefault";
   var $objectRequiredFields = null;
   var $nextstepsave = '';
-  var $pmtable = '';
-  var $pmtablekeys = '';
 
   public $visual_frontend;
 
