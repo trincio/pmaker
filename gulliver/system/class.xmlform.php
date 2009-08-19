@@ -60,6 +60,11 @@ class XmlForm_Field {
   var $dataCompareType = '=';
   var $sql = '';
   var $sqlConnection = '';
+  //Attributes for PM Tables integration (only ProcessMaker for now)
+  var $pmtable = '';
+  var $keys = '';
+  var $pmconnection = '';
+  var $pmfield = '';
 
   /**
    * Function XmlForm_Field
@@ -515,6 +520,43 @@ class XmlForm_Field {
     //return unserialize( serialize( $this ) );//con este cambio los formularios ya no funcionan en php4
     return clone ($this);
   }
+
+  function getPMTableValue($oOwner) {
+    $sValue = '';
+    if (isset($oOwner->fields[$this->pmconnection])) {
+      if (defined('PATH_CORE')) {
+        if (file_exists(PATH_CORE . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'AdditionalTables.php')) {
+          require_once PATH_CORE . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'AdditionalTables.php';
+          $oAdditionalTables = new AdditionalTables();
+          try {
+            $aData = $oAdditionalTables->load($oOwner->fields[$this->pmconnection]->pmtable, true);
+          }
+          catch (Exception $oError) {
+            $aData = array('FIELDS' => array());
+          }
+          $aKeys   = array();
+          $aValues = explode('|', $oOwner->fields[$this->pmconnection]->keys);
+          $i       = 0;
+          foreach ($aData['FIELDS'] as $aField) {
+            if ($aField['FLD_KEY'] == '1') {
+              $aKeys[$aField['FLD_NAME']] = (isset($aValues[$i]) ? G::replaceDataField($aValues[$i], $oOwner->values) : '');
+              $i++;
+            }
+          }
+          try {
+            $aData = $oAdditionalTables->getDataTable($oOwner->fields[$this->pmconnection]->pmtable, $aKeys);
+          }
+          catch (Exception $oError) {
+            $aData = array();
+          }
+          if (isset($aData[$this->pmfield])) {
+            $sValue = $aData[$this->pmfield];
+          }
+        }
+      }
+    }
+    return $sValue;
+  }
 }
 /**
  * Class XmlForm_Field_Title
@@ -587,6 +629,9 @@ class XmlForm_Field_SimpleText extends XmlForm_Field {
    * @return string
    */
   function render($value = NULL, &$owner) {
+    if (($this->pmconnection != '') && ($this->pmfield != '')) {
+      $value = $this->getPMTableValue($owner);
+    }
     $onkeypress = G::replaceDataField ( $this->onkeypress, $owner->values );
     if ($this->mode === 'edit') {
       if ($this->readOnly)
@@ -648,11 +693,10 @@ class XmlForm_Field_Text extends XmlForm_Field_SimpleText {
   var $sqlConnection = 0;
   var $sql = '';
   var $sqlOption = array ();
-  //Atributes only for grids
+  //Attributes only for grids
   var $formula = '';
   var $function = '';
   var $replaceTags = 0;
-  var $pmfield = '';
 
   /**
    * Function render
@@ -663,38 +707,8 @@ class XmlForm_Field_Text extends XmlForm_Field_SimpleText {
    * @return string
    */
   function render($value = NULL, $owner = NULL) {
-    if (($owner->pmtable != '') && ($this->pmfield != '')) {
-      $value = '';
-      if (defined('PATH_CORE')) {
-        if (file_exists(PATH_CORE . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'AdditionalTables.php')) {
-          require_once PATH_CORE . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'AdditionalTables.php';
-          $oAdditionalTables = new AdditionalTables();
-          try {
-            $aData = $oAdditionalTables->load($owner->pmtable, true);
-          }
-          catch (Exception $oError) {
-            $aData = array('FIELDS' => array());
-          }
-          $aKeys   = array();
-          $aValues = explode('|', $owner->pmtablekeys);
-          $i       = 0;
-          foreach ($aData['FIELDS'] as $aField) {
-            if ($aField['FLD_KEY'] == '1') {
-              $aKeys[$aField['FLD_NAME']] = (isset($aValues[$i]) ? G::replaceDataField($aValues[$i], $owner->values) : '');
-              $i++;
-            }
-          }
-          try {
-            $aData = $oAdditionalTables->getDataTable($owner->pmtable, $aKeys);
-          }
-          catch (Exception $oError) {
-            $aData = array();
-          }
-          if (isset($aData[$this->pmfield])) {
-            $value = $aData[$this->pmfield];
-          }
-        }
-      }
+    if (($this->pmconnection != '') && ($this->pmfield != '')) {
+      $value = $this->getPMTableValue($owner);
     }
     else {
       $this->executeSQL ( $owner );
@@ -702,6 +716,7 @@ class XmlForm_Field_Text extends XmlForm_Field_SimpleText {
       if (isset ( $firstElement ))
         $value = $firstElement;
     }
+
     //NOTE: string functions must be in G class
     if ($this->strTo === 'UPPER')
       $value = strtoupper ( $value );
@@ -943,7 +958,6 @@ class XmlForm_Field_Textarea extends XmlForm_Field {
   var $required = false;
   var $readOnly = false;
   var $wrap = 'OFF';
-  var $pmfield = '';
 
   /**
    * Function render
@@ -953,38 +967,8 @@ class XmlForm_Field_Textarea extends XmlForm_Field {
    * @return string
    */
   function render($value = NULL, $owner) {
-    if (($owner->pmtable != '') && ($this->pmfield != '')) {
-      $value = '';
-      if (defined('PATH_CORE')) {
-        if (file_exists(PATH_CORE . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'AdditionalTables.php')) {
-          require_once PATH_CORE . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'AdditionalTables.php';
-          $oAdditionalTables = new AdditionalTables();
-          try {
-            $aData = $oAdditionalTables->load($owner->pmtable, true);
-          }
-          catch (Exception $oError) {
-            $aData = array('FIELDS' => array());
-          }
-          $aKeys   = array();
-          $aValues = explode('|', $owner->pmtablekeys);
-          $i       = 0;
-          foreach ($aData['FIELDS'] as $aField) {
-            if ($aField['FLD_KEY'] == '1') {
-              $aKeys[$aField['FLD_NAME']] = (isset($aValues[$i]) ? G::replaceDataField($aValues[$i], $owner->values) : '');
-              $i++;
-            }
-          }
-          try {
-            $aData = $oAdditionalTables->getDataTable($owner->pmtable, $aKeys);
-          }
-          catch (Exception $oError) {
-            $aData = array();
-          }
-          if (isset($aData[$this->pmfield])) {
-            $value = $aData[$this->pmfield];
-          }
-        }
-      }
+    if (($this->pmconnection != '') && ($this->pmfield != '')) {
+      $value = $this->getPMTableValue($owner);
     }
     else {
       $this->executeSQL ( $owner );
@@ -993,6 +977,7 @@ class XmlForm_Field_Textarea extends XmlForm_Field {
       if (isset ( $firstElement ))
         $value = $firstElement;
     }
+
     $className = ($this->className) ? (' class="' . $this->className . '"') : '';
     if ($this->mode === 'edit') {
       if ($this->readOnly)
@@ -1369,7 +1354,10 @@ class XmlForm_Field_YesNo extends XmlForm_Field {
    * @parameter string value
    * @return string
    */
-  function render($value = NULL) {
+  function render($value = NULL, $owner = NULL) {
+    if (($this->pmconnection != '') && ($this->pmfield != '')) {
+      $value = $this->getPMTableValue($owner);
+    }
     $html = ($this->mode == 'view' ? ($value === '0' ? 'NO' : 'YES') : '') . '<select id="form[' . $this->name . ']" name="form[' . $this->name . ']"' . ($this->mode == 'view' ? ' style="display:none;"' : '') . '>';
     $html .= '<option value="' . '0' . '"' . ($value === '0' ? ' selected' : '') . '>' . 'NO' . '</input>';
     $html .= '<option value="' . '1' . '"' . ($value === '1' ? ' selected' : '') . '>' . 'YES' . '</input>';
@@ -1712,6 +1700,9 @@ class XmlForm_Field_Dropdown extends XmlForm_Field {
    * @return string
    */
   function render($value = NULL, $owner = NULL, $rowId = '', $onlyValue = false, $row = -1, $therow = -1) {
+    if (($this->pmconnection != '') && ($this->pmfield != '')) {
+      $value = $this->getPMTableValue($owner);
+    }
     if ($therow == - 1) {
       $this->executeSQL ( $owner, $row );
     } else {
@@ -1777,6 +1768,9 @@ class XmlForm_Field_Listbox extends XmlForm_Field {
    * @return string
    */
   function render($value = NULL, $owner = NULL) {
+    if (($this->pmconnection != '') && ($this->pmfield != '')) {
+      $value = $this->getPMTableValue($owner);
+    }
     $this->executeSQL ( $owner );
     if (! is_array ( $value ))
       $value = explode ( '|', $value );
