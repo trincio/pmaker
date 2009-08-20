@@ -1496,7 +1496,10 @@ class XmlForm_Field_Checkbox extends XmlForm_Field {
    * @parameter string value
    * @return string
    */
-  function render($value = NULL) {
+  function render($value = NULL, $owner = NULL) {
+    if (($this->pmconnection != '') && ($this->pmfield != '')) {
+      $value = $this->getPMTableValue($owner);
+    }
     $checked = (isset ( $value ) && ($value == $this->value)) ? 'checked' : '';
     if ($this->mode === 'edit') {
       $readOnly = isset ( $this->readOnly ) && $this->readOnly ? 'disabled' : '';
@@ -1653,12 +1656,18 @@ class XmlForm_Field_Hidden extends XmlForm_Field {
    * @return string
    */
   function render($value = NULL, $owner) {
-    $this->executeSQL ( $owner );
-    if (isset ( $this->sqlOption )) {
-      reset ( $this->sqlOption );
-      $firstElement = key ( $this->sqlOption );
-      if (isset ( $firstElement ))
-        $value = $firstElement;
+    if (($this->pmconnection != '') && ($this->pmfield != '')) {
+      $value = $this->getPMTableValue($owner);
+    }
+    else {
+      $this->executeSQL ( $owner );
+
+      if (isset ( $this->sqlOption )) {
+        reset ( $this->sqlOption );
+        $firstElement = key ( $this->sqlOption );
+        if (isset ( $firstElement ))
+          $value = $firstElement;
+      }
     }
     if ($this->mode === 'edit') {
       return '<input class="module_app_input___gray" id="form[' . $this->name . ']" name="form[' . $this->name . ']" type=\'hidden\' value=\'' . $value . '\'/>';
@@ -1823,6 +1832,9 @@ class XmlForm_Field_RadioGroup extends XmlForm_Field {
    * @return string
    */
   function render($value = NULL, $owner) {
+    if (($this->pmconnection != '') && ($this->pmfield != '')) {
+      $value = $this->getPMTableValue($owner);
+    }
     $this->executeSQL ( $owner );
     if ($this->mode === 'edit') {
       $html = '';
@@ -1894,6 +1906,9 @@ class XmlForm_Field_CheckGroup extends XmlForm_Field {
    * @return string
    */
   function render($value = NULL, $owner = NULL) {
+    if (($this->pmconnection != '') && ($this->pmfield != '')) {
+      $value = $this->getPMTableValue($owner);
+    }
     $this->executeSQL ( $owner );
     if (! is_array ( $value ))
       $value = explode ( '|', $value );
@@ -2195,7 +2210,12 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
   }
 
   function render($value = NULL, $owner = NULL) {
-    $value = G::replaceDataField ( $value, $owner->values );
+    if (($this->pmconnection != '') && ($this->pmfield != '')) {
+      $value = $this->getPMTableValue($owner);
+    }
+    else {
+      $value = G::replaceDataField ( $value, $owner->values );
+    }
     //$this->defaultValue = G::replaceDataField( $this->defaultValue, $owner->values);
     $id = "form[$this->name]";
     return $this->__draw_widget ( $id, $value, $owner );
