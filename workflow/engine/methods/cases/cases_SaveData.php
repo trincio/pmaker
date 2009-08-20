@@ -63,46 +63,51 @@
   }
 
   //save data in PM Tables if necessary
-  if ($oForm->pmtable != '') {
-    if (defined('PATH_CORE')) {
-      if (file_exists(PATH_CORE . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'AdditionalTables.php')) {
-        $aValues = array();
-        foreach ($_POST['form'] as $sField => $sValue) {
-          if (isset($oForm->fields[$sField]->pmfield)) {
-            if ($oForm->fields[$sField]->pmfield != '') {
-              $aValues[$oForm->fields[$sField]->pmfield] = $sValue;
+  foreach ($_POST['form'] as $sField => $sAux) {
+    if (isset($oForm->fields[$sField]->pmconnection) && isset($oForm->fields[$sField]->pmfield)) {
+      if (($oForm->fields[$sField]->pmconnection != '') && ($oForm->fields[$sField]->pmfield != '')) {
+        if (isset($oForm->fields[$oForm->fields[$sField]->pmconnection])) {
+          require_once PATH_CORE . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'AdditionalTables.php';
+          $oAdditionalTables = new AdditionalTables();
+          try {
+            $aData = $oAdditionalTables->load($oForm->fields[$oForm->fields[$sField]->pmconnection]->pmtable, true);
+          }
+          catch (Exception $oError) {
+            $aData = array('FIELDS' => array());
+          }
+          $aKeys   = array();
+          $aAux    = explode('|', $oForm->fields[$oForm->fields[$sField]->pmconnection]->keys);
+          $i       = 0;
+          $aValues = array();
+          foreach ($aData['FIELDS'] as $aField) {
+            if ($aField['FLD_KEY'] == '1') {
+              $aKeys[$aField['FLD_NAME']] = (isset($aAux[$i]) ? G::replaceDataField($aAux[$i], $Fields['APP_DATA']) : '');
+              $i++;
+            }
+            if ($aField['FLD_NAME'] == $oForm->fields[$sField]->pmfield) {
+              $aValues[$aField['FLD_NAME']] = $Fields['APP_DATA'][$sField];
+            }
+            else {
+              $aValues[$aField['FLD_NAME']] = '';
             }
           }
-        }
-        require_once PATH_CORE . 'classes' . PATH_SEP . 'model' . PATH_SEP . 'AdditionalTables.php';
-        $oAdditionalTables = new AdditionalTables();
-        try {
-          $aData = $oAdditionalTables->load($oForm->pmtable, true);
-        }
-        catch (Exception $oError) {
-          $aData = array('FIELDS' => array());
-        }
-        $aKeys   = array();
-        $aAux    = explode('|', $oForm->pmtablekeys);
-        $i       = 0;
-        foreach ($aData['FIELDS'] as $aField) {
-          if ($aField['FLD_KEY'] == '1') {
-            $aKeys[$aField['FLD_NAME']] = (isset($aAux[$i]) ? G::replaceDataField($aAux[$i], $Fields['APP_DATA']) : '');
-            $i++;
+          try {
+            $aRow = $oAdditionalTables->getDataTable($oForm->fields[$oForm->fields[$sField]->pmconnection]->pmtable, $aKeys);
           }
-        }
-        try {
-          $aRow = $oAdditionalTables->getDataTable($oForm->pmtable, $aKeys);
-        }
-        catch (Exception $oError) {
-          $aRow = false;
-        }
-        if ($aRow) {
-          $aValues = array_merge($aValues, $aKeys);
-          $oAdditionalTables->updateDataInTable($oForm->pmtable, $aValues);
-        }
-        else {
-          $oAdditionalTables->saveDataInTable($oForm->pmtable, $aValues);
+          catch (Exception $oError) {
+            $aRow = false;
+          }
+          if ($aRow) {
+            foreach ($aValues as $sKey => $sValue) {
+              if ($sKey != $oForm->fields[$sField]->pmfield) {
+                $aValues[$sKey] = $aRow[$sKey];
+              }
+            }
+            $oAdditionalTables->updateDataInTable($oForm->fields[$oForm->fields[$sField]->pmconnection]->pmtable, $aValues);
+          }
+          else {
+            $oAdditionalTables->saveDataInTable($oForm->fields[$oForm->fields[$sField]->pmconnection]->pmtable, $aValues);
+          }
         }
       }
     }

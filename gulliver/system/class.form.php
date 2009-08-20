@@ -284,16 +284,17 @@ class Form extends XmlForm
               if ($this->fields[$k]->validateValue($newValues[$k], $this ))
                 $values[$k] = $this->fields[$k]->maskValue( $newValues[$k], $this );
             }
-          }
-          if ($v->type == 'dropdown') {
-            if ($v->saveLabel == 1) {
-              $values[$k . '_label'] = $v->option[$newValues[$k]];
+            if ($v->type == 'dropdown') {
+              if ($v->saveLabel == 1) {
+                $values[$k . '_label'] = $v->option[$newValues[$k]];
+              }
             }
           }
          else
           {
-            if($v->type == 'checkbox')
-                $values[$k]=$v->falseValue;
+            if($v->type == 'checkbox') {
+              $values[$k]=$v->falseValue;
+            }
           }
         }
         else {
