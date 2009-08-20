@@ -402,6 +402,9 @@
           //Plugin Hook PM_UPLOAD_DOCUMENT for upload document
           $oPluginRegistry =& PMPluginRegistry::getSingleton();
           if ( $oPluginRegistry->existsTrigger ( PM_UPLOAD_DOCUMENT ) && class_exists ('uploadDocumentData' ) ) {
+          	
+          	$sPathName = PATH_DOCUMENT . $_SESSION['APPLICATION'] . PATH_SEP;
+          	
             $oData['APP_UID']   = $_SESSION['APPLICATION'];
             $oData['ATTACHMENT_FOLDER'] = true;
             $documentData = new uploadDocumentData (
@@ -411,9 +414,10 @@
                               $sFilename. '.pdf',
                               $sDocUID
                               );
+            
             $documentData->bUseOutputFolder = true;
-            $oPluginRegistry->executeTriggers ( PM_UPLOAD_DOCUMENT , $documentData );
-            unlink ( $sPathName . $sFileName );
+            $oPluginRegistry->executeTriggers ( PM_UPLOAD_DOCUMENT , $documentData );           
+            unlink ( $pathOutput . $sFilename. '.pdf' );            
           }
   
           $outputNextStep = 'cases_Step?TYPE=OUTPUT_DOCUMENT&UID=' . $_GET['UID'] . '&POSITION=' . $_SESSION['STEP_POSITION'] . '&ACTION=VIEW&DOC=' . $sDocUID;
