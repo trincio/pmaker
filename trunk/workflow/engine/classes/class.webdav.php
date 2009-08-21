@@ -100,7 +100,7 @@
         
       }//path classes
 
-      $pathProcesses = PATH_DB . PATH_SEP . SYS_SYS . PATH_SEP ;
+      $pathProcesses = PATH_DB . SYS_SYS . PATH_SEP ;
       if ( count($paths) == 0 && is_dir( $pathProcesses ) ) {
         $props = array ();
         $props[] = $this->mkprop("displayname",     'Processes' );
@@ -111,6 +111,7 @@
         $files["files"][] = array ( 'path' => 'processes' , 'props' => $props);
       }
       
+      //list all active processes
       if ( count($paths) == 1 && $paths[0] == 'processes' && is_dir( $pathProcesses ) ) {
         // try to get the process directory list 
         G::LoadClass ( 'processMap');
@@ -137,7 +138,7 @@
         }
       }//dir of processes
 
-      //content of any process
+      //content of any process  ( the three major folders of Processes )
     	$pathXmlform = $pathProcesses . 'xmlForms' . PATH_SEP;
       if ( count($paths) == 2 && $paths[0] == 'processes' && is_dir( $pathProcesses ) ) {
         $props = array ();
@@ -166,6 +167,7 @@
         $files["files"][] = array ( 'path' => 'processes/' . $paths[1] . '/public_html' , 'props' => $props);
       }//content of any processes
 
+      //list available xmlforms
       if ( count($paths) == 3 && $paths[0] == 'processes' && $paths[2] == 'xmlforms' && is_dir( $pathXmlform ) ) {
       	$pathXmlform = $pathProcesses . 'xmlForms' . PATH_SEP . $paths[1] . PATH_SEP;
         
@@ -189,32 +191,72 @@
           }
         } 
       }//content of xmlforms
-      
-/*
+
+      //list available mailTemplates
+    	$pathTemplates = $pathProcesses . 'mailTemplates' . PATH_SEP;
+      if ( count($paths) == 3 && $paths[0] == 'processes' && $paths[2] == 'mailTemplates' && is_dir( $pathTemplates ) ) {
+      	$pathTemplates = $pathProcesses . 'mailTemplates' . PATH_SEP . $paths[1] . PATH_SEP;
+        
+        $handle = @opendir($pathTemplates);
+        if ($handle) {
+          while ($filename = readdir($handle)) {
+          	$ext = array_pop ( explode ( '.', $filename) );
+            if ($filename != "." && $filename != ".." && !is_dir($pathTemplates.$filename) /* && ( $ext == 'xml' || $ext == 'html' ) */ ) {
+              $props = array ();
+              $props[] = $this->mkprop("displayname",     $filename );
+              $props[] = $this->mkprop("creationdate",    filectime($pathTemplates.$filename) );
+              $props[] = $this->mkprop("getlastmodified", filemtime($pathTemplates.$filename) );
+              $props[] = $this->mkprop("getetag",         fileatime($pathTemplates.$filename) );              
+              $props[] = $this->mkprop("lastaccessed",    filemtime($pathTemplates.$filename) );
+              $props[] = $this->mkprop("resourcetype",    '' );
+              $props[] = $this->mkprop("getcontenttype",  'text/plain' );
+              $props[] = $this->mkprop("getcontentlength",  filesize($pathTemplates.$filename) );
+              //if ( count( $paths ) == 1 || ( count( $paths ) == 2 && $paths[1] == $filename ) )
+                $files["files"][] = array ( 'path' => 'processes/' . $paths[1] . '/mailTemplates/' . $filename , 'props' => $props);
+            }
+          }
+        } 
+      }//content of mailTemplates
+
+      //list available public_html files
+    	$pathPublic = $pathProcesses . 'public' . PATH_SEP;
+      if ( count($paths) == 3 && $paths[0] == 'processes' && $paths[2] == 'public_html' && is_dir( $pathTemplates ) ) {
+      	$pathPublic = $pathProcesses . 'public' . PATH_SEP . $paths[1] . PATH_SEP;
+        
+        $handle = @opendir($pathPublic);
+        if ($handle) {
+          while ($filename = readdir($handle)) {
+          	$ext = array_pop ( explode ( '.', $filename) );
+            if ($filename != "." && $filename != ".." && !is_dir($pathPublic.$filename) /* && ( $ext == 'xml' || $ext == 'html' ) */ ) {
+              $props = array ();
+              $props[] = $this->mkprop("displayname",     $filename );
+              $props[] = $this->mkprop("creationdate",    filectime($pathPublic.$filename) );
+              $props[] = $this->mkprop("getlastmodified", filemtime($pathPublic.$filename) );
+              $props[] = $this->mkprop("getetag",         fileatime($pathPublic.$filename) );              
+              $props[] = $this->mkprop("lastaccessed",    filemtime($pathPublic.$filename) );
+              $props[] = $this->mkprop("resourcetype",    '' );
+              $props[] = $this->mkprop("getcontenttype",  'text/plain' );
+              $props[] = $this->mkprop("getcontentlength",  filesize($pathPublic.$filename) );
+              //if ( count( $paths ) == 1 || ( count( $paths ) == 2 && $paths[1] == $filename ) )
+                $files["files"][] = array ( 'path' => 'processes/' . $paths[1] . '/public_html/' . $filename , 'props' => $props);
+            }
+          }
+        } 
+      }//content of public_html files
+
+  /*    
       if ( 1 ) {
         $props = array ();
-        $props[] = $this->mkprop("displayname",     print_r ($this->paths, 1) );
+        $props[] = $this->mkprop("displayname",     print_r ($pathPublic, 1) );
         $props[] = $this->mkprop("creationdate",    filectime( PATH_DB ) );
         $props[] = $this->mkprop("getlastmodified", filemtime( PATH_DB ) );
         $props[] = $this->mkprop("resourcetype",    'collection' );
         $props[] = $this->mkprop("getcontenttype",  'httpd/unix-directory' );
         $files["files"][] = array ( 'path' => '/' , 'props' => $props);
-      }
+      } */
 
-/*      
-      $props = array ();
-//      $props[] = $this->mkprop("displayname", $this->_slashify( 'Processes' ) );
-      $props[] = $this->mkprop("displayname", PATH_DB );
-      $props[] = $this->mkprop("creationdate", '1250700162' );
-      $props[] = $this->mkprop("getlastmodified", '1250700162' );
-      $props[] = $this->mkprop("resourcetype", 'collection' );
-      $props[] = $this->mkprop("getcontenttype", 'httpd/unix-directory' );
-      $files["files"][] = array ( 'path' => 'processes' , 'props' => $props);
-
-*/
-
-        // ok, all done
-        return true;
+      // ok, all done
+      return true;
     } 
         
         /**
@@ -346,12 +388,12 @@
           print $content;
           header("Content-Type: "  . mime_content_type($fsFile ) ); 
           header("Last-Modified: " . date("D, j M Y H:m:s ", file_mtime($fsFile )) . "GMT");
-          header("Content-Length: ". filesize($pathClasses. $paths[1]));
+          header("Content-Length: ". filesize($fsFile));
           return true;
         }
       }
 
-      $pathProcesses = PATH_DB . PATH_SEP . SYS_SYS . PATH_SEP;
+      $pathProcesses = PATH_DB . SYS_SYS . PATH_SEP;
       if ( count($paths) > 0 && $paths[0] == 'processes' && is_dir( $pathProcesses ) ) {
       	if ( count($paths) == 4 && $paths[2] == 'xmlforms' ) {
          	$pathXmlform = $pathProcesses . 'xmlForms' . PATH_SEP . $paths[1] . PATH_SEP;
@@ -361,10 +403,37 @@
             print $content;
             header("Content-Type: "  . mime_content_type($fsFile ) ); 
             header("Last-Modified: " . date("D, j M Y H:m:s ", file_mtime($fsFile )) . "GMT");
-            header("Content-Length: ". filesize($pathClasses. $paths[1]));
+            header("Content-Length: ". filesize($fsFile));
             return true;
           }
         }
+        
+      	if ( count($paths) == 4 && $paths[2] == 'mailTemplates' ) {
+        	$pathTemplates = $pathProcesses . 'mailTemplates' . PATH_SEP . $paths[1] . PATH_SEP;
+        	$fsFile = $pathTemplates. $paths[3];
+          if ( count($paths) == 4 && file_exists( $fsFile ) ) {
+            $content = file_get_contents ($fsFile);
+            print $content;
+            header("Content-Type: "  . mime_content_type($fsFile ) ); 
+            header("Last-Modified: " . date("D, j M Y H:m:s ", file_mtime($fsFile )) . "GMT");
+            header("Content-Length: ". filesize($fsFile));
+            return true;
+          }
+        }
+        
+      	if ( count($paths) == 4 && $paths[2] == 'public_html' ) {
+        	$pathPublic = $pathProcesses . 'public' . PATH_SEP . $paths[1] . PATH_SEP;
+        	$fsFile = $pathPublic. $paths[3];
+          if ( count($paths) == 4 && file_exists( $fsFile ) ) {
+            $content = file_get_contents ($fsFile);
+            print $content;
+            header("Content-Type: "  . mime_content_type($fsFile ) ); 
+            header("Last-Modified: " . date("D, j M Y H:m:s ", file_mtime($fsFile )) . "GMT");
+            header("Content-Length: ". filesize($fsFile));
+            return true;
+          }
+        }
+
       }
 
       print_r ( $paths );    	
@@ -522,14 +591,11 @@
     {
     	$paths =  $this->paths;
 
-      $pathClasses = PATH_DB . SYS_SYS . PATH_SEP . 'classes' . PATH_SEP;
+      $pathClasses = PATH_DB . PATH_SEP . 'classes' . PATH_SEP;
       if ( count($paths) > 0 && $paths[0] == 'classes' && is_dir( $pathClasses ) ) {
       	$fsFile = $pathClasses. $paths[1];
         if ( count($paths) == 2 && file_exists( $fsFile ) ) {
-        	
-          $new = ! file_exists($fsFile);
           $fp = fopen($fsFile, "w");
-
           if ( is_resource($fp) && is_resource($options["stream"])) {
             while( !feof($options["stream"])) {
               fwrite($fp, fread($options["stream"], 4096));
@@ -537,11 +603,63 @@
             fclose($fp);
             fclose($options["stream"]);
           }        	
-        	
-          $stat = $new ? "201 Created" : "204 No Content";
-          return $stat . $fsFile;
+          return "201 Created " . $fsFile;
         }
       }
+
+      $pathProcesses = PATH_DB . SYS_SYS . PATH_SEP ;
+      if ( count($paths) > 0 && $paths[0] == 'processes' && is_dir( $pathProcesses ) ) {
+        if ( $paths[2] == 'xmlforms' ) {
+        	$pathTemplates = $pathProcesses . 'xmlForms' . PATH_SEP . $paths[1] . PATH_SEP;
+        	$fsFile = $pathTemplates. $paths[3];
+          if ( count($paths) == 4 && file_exists( $fsFile ) ) {
+            $fp = fopen($fsFile, "w");
+            if ( is_resource($fp) && is_resource($options["stream"])) {
+              while( !feof($options["stream"])) {
+                fwrite($fp, fread($options["stream"], 4096));
+              }
+              fclose($fp);
+              fclose($options["stream"]);
+            }        	
+            return "201 Created " . $fsFile;
+          }
+        }
+
+        if ( $paths[2] == 'mailTemplates' ) {
+        	$pathTemplates = $pathProcesses . 'mailTemplates' . PATH_SEP . $paths[1] . PATH_SEP;
+        	$fsFile = $pathTemplates. $paths[3];
+          if ( count($paths) == 4 && file_exists( $fsFile ) ) {
+            $fp = fopen($fsFile, "w");
+            if ( is_resource($fp) && is_resource($options["stream"])) {
+              while( !feof($options["stream"])) {
+                fwrite($fp, fread($options["stream"], 4096));
+              }
+              fclose($fp);
+              fclose($options["stream"]);
+            }        	
+            return "201 Created " . $fsFile;
+          }
+        }
+        
+
+        if ( $paths[2] == 'public_html' ) {
+        	$pathPublic = $pathProcesses . 'public' . PATH_SEP . $paths[1] . PATH_SEP;
+        	$fsFile = $pathPublic. $paths[3];
+          if ( count($paths) == 4 && file_exists( $fsFile ) ) {
+            $fp = fopen($fsFile, "w");
+            if ( is_resource($fp) && is_resource($options["stream"])) {
+              while( !feof($options["stream"])) {
+                fwrite($fp, fread($options["stream"], 4096));
+              }
+              fclose($fp);
+              fclose($options["stream"]);
+            }        	
+            return "201 Created " . $fsFile;
+          }
+        }
+        
+      }
+
 
       return "409 Conflict";
    
