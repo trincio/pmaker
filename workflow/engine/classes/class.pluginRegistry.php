@@ -486,6 +486,7 @@ class PMPluginRegistry {
           if (PEAR::isError($response) ) {
          	  print $response->getMessage(); 	return;
           }
+         return $response; 
         }
         else
           print "error in call method " . $detail->sTriggerName;
