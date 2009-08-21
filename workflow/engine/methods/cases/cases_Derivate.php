@@ -75,7 +75,7 @@ try {
   $triggers = $oCase->loadTriggers( $_SESSION['TASK'], 'ASSIGN_TASK', -2, 'BEFORE');
 
   $_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] = count($triggers);
-  $_SESSION['TRIGGER_DEBUG']['TIME'] = 'AFTER';
+  $_SESSION['TRIGGER_DEBUG']['TIME'] = 'BEFORE';
   if($_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] != 0){
 	$_SESSION['TRIGGER_DEBUG']['TRIGGERS_NAMES'] = $oCase->getTriggerNames($triggers);
 	$_SESSION['TRIGGER_DEBUG']['TRIGGERS_VALUES'] = $triggers;
@@ -114,10 +114,10 @@ try {
   $cnt2 = count($triggers);
   $_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] = $_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] + $cnt2;
 
-  if( $cnt2 != 0 ) {
-    //Execute triggers before derivation
+  if( $cnt2 != 0) {
+    //Execute triggers after derivation
   	$appFields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], 'ASSIGN_TASK', -2, 'AFTER', $appFields['APP_DATA'] );
-	//Execute after triggers - End
+	  //Execute after triggers - End
   }
   //$appFields['DEL_INDEX'] = $_SESSION['INDEX'];
   //$appFields['TAS_UID']   = $_SESSION['TASK'];
@@ -151,7 +151,7 @@ try {
 	$_SESSION['TRIGGER_DEBUG']['TRIGGERS_VALUES'] = $triggers;
   }
 
-  if( $_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] != 0 ) {
+  if( $_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] != 0 && $trigger_debug_session) {
 	//Execute after triggers - Start
 	$Fields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], 'ASSIGN_TASK', -2, 'AFTER', $appFields['APP_DATA'] );
 	//Execute after triggers - End
