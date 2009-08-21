@@ -2298,7 +2298,7 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
 
     #the validations field was moved to javascript routines ;)
     if ($this->mode == 'edit') {
-      $html = "<input size=15  class='module_app_input___gray' readonly=true type='text' id='" . $pID . "' name='" . $pID . "' value='" . $value . "'>";
+      $html = "<input size=9  class='module_app_input___gray' readonly=true type='text' id='" . $pID . "' name='" . $pID . "' value='" . $value . "'>";
       $html .= "<a title='Show calendar' href='#' onclick=\"return showCalendar('$pID', '$mask', '24', true, '$startDate', '$endDate');\" >
       			  <img src='/controls/Calendar-32x32.png' border='0' width='12' height='14'>
       			</a>
