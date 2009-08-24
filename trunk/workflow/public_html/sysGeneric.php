@@ -418,11 +418,11 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
 
     if ( SYS_COLLECTION == 'services' ) {
     	$targetPlugin = explode( '/', SYS_TARGET );
-    	if ( $targetPlugin[0] = 'webdav' ) {
+    	if ( $targetPlugin[0] == 'webdav' ) {
         $phpFile = G::ExpandPath('methods') . SYS_COLLECTION . PATH_SEP . 'webdav.php';
     	}
     }
-    
+
     //the index.php file, this new feature will allow automatically redirects to valid php file inside the methods directory
     if ( SYS_TARGET == '' ) {
       $phpFile = str_replace ( '.php', 'index.php', $phpFile );
