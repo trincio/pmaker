@@ -86,9 +86,10 @@ switch ($RBAC->userCanAccess('PM_SETUP_ADVANCE'))
     }
     $res = $tar->extract ( $path );
     $sContent = file_get_contents($path . PATH_SEP . $pluginFile);
-    $sContent = str_replace($sAux, $sAux . '_', $sContent);
-    $sContent = str_replace('$oPluginRegistry =& PMPluginRegistry::getSingleton();', '', $sContent);
-    $sContent = str_replace('$oPluginRegistry->registerPlugin(\'' . $sClassName . '\', __FILE__);', '', $sContent);
+    $sContent = str_ireplace($sAux, $sAux . '_', $sContent);
+    $sContent = str_ireplace('$oPluginRegistry =& PMPluginRegistry::getSingleton();', '', $sContent);
+    $sContent = str_ireplace('$oPluginRegistry->registerPlugin(\'' . $sClassName . '\', __FILE__);', '', $sContent);
+    //header('Content-Type: text/plain');var_dump($sClassName, $sContent);die;
     file_put_contents($path . PATH_SEP . $pluginFile, $sContent);
     $sAux = $sAux . '_';
     include $path . PATH_SEP . $pluginFile;
@@ -103,7 +104,7 @@ switch ($RBAC->userCanAccess('PM_SETUP_ADVANCE'))
       }
       if (PM_VERSION > 0) {
         if ($oClass->iPMVersion > PM_VERSION) {
-          throw new Exception('This plugin needs ' . $oClass->iPMVersion . ' version or higher of ProcessMaker');
+          throw new Exception('This plugin needs version ' . $oClass->iPMVersion . ' or higher of ProcessMaker');
         }
       }
     }

@@ -1,9 +1,9 @@
 {if $printTemplate}
 {* this is the xmlform template *}
-<!--This is the preview template 
+<!--This is the preview template
 	Now we can modify just the preview template without to have modify the main template
 	TODO work for web master...-->
-<table cellspacing="0" cellpadding="0" border="0" width="100%">     
+<table cellspacing="0" cellpadding="0" border="0" width="100%">
 <tr>
  <td class='FormTitle' colspan="2" align="center"></td>
 </tr>
@@ -45,6 +45,7 @@
             {elseif ($field->type==='phpvariable')}
             {elseif ($field->type==='private')}
             {elseif ($field->type==='javascript')}
+            {elseif ($field->type==='pmconnection')}
             {elseif ($field->type==='hidden')}
             <tr style="display: none">
               <td colspan="2">{$field->field}</td>
