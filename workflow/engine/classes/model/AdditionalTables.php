@@ -993,9 +993,14 @@ var additionalTablesDataDelete = function(sUID, sKeys) {
       }
       else {
       	$sMessage = '';
-        $aValidationFailures = $oConnection->getValidationFailures();
-        foreach($aValidationFailures as $oValidationFailure) {
-          $sMessage .= $oValidationFailure->getMessage() . '<br />';
+      	if ($oClass) {
+          $aValidationFailures = $oClass->getValidationFailures();
+          foreach($aValidationFailures as $oValidationFailure) {
+            $sMessage .= $oValidationFailure->getMessage() . '<br />';
+          }
+        }
+        else {
+          $sMessage = 'Error, row cannot updated';
         }
         throw(new Exception('The registry cannot be updated!<br />' . $sMessage));
       }

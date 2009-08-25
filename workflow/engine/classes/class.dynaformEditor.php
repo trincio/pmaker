@@ -199,7 +199,7 @@ class dynaformEditor extends WebResource
     	                 'UP'           => 'char',
     	                 'DOWN'         => 'char');
 	  $oSession = new DBSession(new DBConnection(PATH_DYNAFORM  . $this->file . '.xml', '', '', '', 'myxml'));
-	  $oDataset = $oSession->Execute('SELECT * FROM dynaForm WHERE NOT( XMLNODE_NAME = "" )');
+	  $oDataset = $oSession->Execute('SELECT * FROM dynaForm WHERE NOT( XMLNODE_NAME = "" ) AND TYPE <> "pmconnection"');
 	  $iMaximun = $oDataset->count();
 	  while ($aRow = $oDataset->Read()) {
   		$aFields[] = array('XMLNODE_NAME' => $aRow['XMLNODE_NAME'],

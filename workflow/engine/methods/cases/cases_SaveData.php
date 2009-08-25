@@ -103,10 +103,20 @@
                 $aValues[$sKey] = $aRow[$sKey];
               }
             }
-            $oAdditionalTables->updateDataInTable($oForm->fields[$oForm->fields[$sField]->pmconnection]->pmtable, $aValues);
+            try {
+              $oAdditionalTables->updateDataInTable($oForm->fields[$oForm->fields[$sField]->pmconnection]->pmtable, $aValues);
+            }
+            catch (Exception $oError) {
+              //Nothing
+            }
           }
           else {
-            $oAdditionalTables->saveDataInTable($oForm->fields[$oForm->fields[$sField]->pmconnection]->pmtable, $aValues);
+            try {
+              $oAdditionalTables->saveDataInTable($oForm->fields[$oForm->fields[$sField]->pmconnection]->pmtable, $aValues);
+            }
+            catch (Exception $oError) {
+              //Nothing
+            }
           }
         }
       }
