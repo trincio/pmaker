@@ -134,8 +134,10 @@ class dynaformEditor extends WebResource
 			'URL'=> G::encrypt( $this->file , URL_KEY ),
 			'DYN_UID'=> $this->dyn_uid,
 			'PRO_UID'=> $this->pro_uid,
-			'DYNAFORM_NAME'=>$this->dyn_title
+			'DYNAFORM_NAME'=>$this->dyn_title,
+			'FILE'=>$this->file,
 			);
+		$_SESSION['Current_Dynafom']['Parameters'] = $Parameters;
 		$XmlEditor = array(
 			'URL'=> G::encrypt( $this->file , URL_KEY ),
 			'XML'=> ''//$openDoc->getXml()
@@ -174,7 +176,7 @@ class dynaformEditor extends WebResource
 		$G_PUBLISH = new Publisher;
 		$sName='dynaformEditor';
 		$G_PUBLISH->publisherId=$sName;
-    $oHeadPublisher =& headPublisher::getSingleton();
+    	$oHeadPublisher =& headPublisher::getSingleton();
 		$oHeadPublisher->setTitle(G::LoadTranslation('ID_DYNAFORM_EDITOR'). ' - ' . $Properties['DYN_TITLE']);
 
 		$G_PUBLISH->AddContent('blank');
@@ -194,7 +196,7 @@ class dynaformEditor extends WebResource
 		//$G_PUBLISH->AddContent('pagedtable', 'paged-table', 'dynaforms/fields_List', 'display:none', $Parameters , '', SYS_URI.'dynaforms/dynaforms_PagedTableAjax');
 		$i         = 0;
 		$aFields   = array();
-  	$aFields[] = array('XMLNODE_NAME' => 'char',
+  		$aFields[] = array('XMLNODE_NAME' => 'char',
     	                 'TYPE'         => 'char',
     	                 'UP'           => 'char',
     	                 'DOWN'         => 'char');
@@ -209,13 +211,15 @@ class dynaformEditor extends WebResource
       	                 'row__'        => ($i + 1));
       $i++;
 	  }
-	  global $_DBArray;
-    $_DBArray['fields']   = $aFields;
-    $_SESSION['_DBArray'] = $_DBArray;
-    G::LoadClass('ArrayPeer');
-    $oCriteria = new Criteria('dbarray');
-    $oCriteria->setDBArrayTable('fields');
+		global $_DBArray;
+		$_DBArray['fields']   = $aFields;
+		$_SESSION['_DBArray'] = $_DBArray;
+		G::LoadClass('ArrayPeer');
+		$oCriteria = new Criteria('dbarray');
+		$oCriteria->setDBArrayTable('fields');
+    	//echo '<pre>'; print_R($aFields); die;
 		$G_PUBLISH->AddContent('propeltable', 'paged-table', 'dynaforms/fields_List', $oCriteria, $Parameters, '', SYS_URI.'dynaforms/dynaforms_PagedTableAjax');
+		//$G_PUBLISH->AddContent('view', 'dynaforms/fieldsHandler', 'display:none');
 		} catch (Exception $e) {}
 		try
 		{
