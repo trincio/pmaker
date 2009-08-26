@@ -231,7 +231,20 @@ var dynaformEditor={
 		}
 	},
 	refreshFieldsList:function() {
-		fields_List.refresh();
+		//fields_List.refresh(); return;
+		var oRPC = new leimnud.module.rpc.xmlhttp({
+		  	url : 'fieldsHandler',
+		  	args: ''
+	  	});
+		document.getElementById('dynaformEditor[6]').innerHTML = '<center>Loading</center>';
+	  	oRPC.callback = function(rpc) {
+		  	
+		  	var scs=rpc.xmlhttp.responseText.extractScript();
+		  	document.getElementById('dynaformEditor[6]').innerHTML = rpc.xmlhttp.responseText;
+		  	scs.evalScript();
+		  	
+	  	}.extend(this);
+		oRPC.make();
 	},
 	getJSCode:function()
 	{

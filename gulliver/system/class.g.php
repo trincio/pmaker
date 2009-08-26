@@ -2255,6 +2255,100 @@ class G
     }
     return strtr ($string, $ttr);
   }
+  
+  	/*************************************** init **********************************************
+	* Xml parse collection functions
+	* Returns a associative array within the xml structure and data
+	* 
+	* @Author Erik Amaru Ortiz <erik@colosa.com>
+	* @Date   Aug 24th, 2009
+	*/
+	function xmlParser(&$string) {
+	    $parser = xml_parser_create();
+	    xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
+	    xml_parse_into_struct($parser, $string, $vals, $index);
+	
+	    $mnary=array();
+	    $ary=&$mnary;
+	    foreach ($vals as $r) {
+	        $t=$r['tag'];
+	        if ($r['type']=='open') {
+	            if (isset($ary[$t])) {
+	                if (isset($ary[$t][0])) $ary[$t][]=array();
+	                else $ary[$t]=array($ary[$t], array());
+	                $cv=&$ary[$t][count($ary[$t])-1];
+	            } else $cv=&$ary[$t];
+	            if (isset($r['attributes'])) {
+	            	foreach ($r['attributes'] as $k=>$v) $cv['__ATTRIBUTES__'][$k]=$v;
+	            }
+	            $cv['__CONTENT__']=array();
+	            $cv['__CONTENT__']['_p']=&$ary;
+	            $ary=&$cv['__CONTENT__'];
+	
+	        } elseif ($r['type']=='complete') {
+	            if (isset($ary[$t])) { // same as open
+	                if (isset($ary[$t][0])) $ary[$t][]=array();
+	                else $ary[$t]=array($ary[$t], array());
+	                $cv=&$ary[$t][count($ary[$t])-1];
+	            } else $cv=&$ary[$t];
+	            if (isset($r['attributes'])) {
+	            	foreach ($r['attributes'] as $k=>$v) $cv['__ATTRIBUTES__'][$k]=$v;
+	            }
+	            $cv['__VALUE__']=(isset($r['value']) ? $r['value'] : '');
+	
+	        } elseif ($r['type']=='close') {
+	            $ary=&$ary['_p'];
+	        }
+	    }
+	
+	    self::_del_p($mnary);
+	
+		$obj_resp->code = xml_get_error_code($parser);
+		$obj_resp->message = xml_error_string($obj_resp->code);
+		$obj_resp->result = $mnary;
+		xml_parser_free($parser);
+	
+	    return $obj_resp;
+	}
+	
+	// _Internal: Remove recursion in result array
+	function _del_p(&$ary) {
+	    foreach ($ary as $k=>$v) {
+	        if ($k==='_p') unset($ary[$k]);
+	        elseif (is_array($ary[$k])) self::_del_p($ary[$k]);
+	    }
+	}
+	
+	// Array to XML
+	function ary2xml($cary, $d=0, $forcetag='') {
+	    $res=array();
+	    foreach ($cary as $tag=>$r) {
+	        if (isset($r[0])) {
+	            $res[]=self::ary2xml($r, $d, $tag);
+	        } else {
+	            if ($forcetag) $tag=$forcetag;
+	            $sp=str_repeat("\t", $d);
+	            $res[]="$sp<$tag";
+	            if (isset($r['_a'])) {foreach ($r['_a'] as $at=>$av) $res[]=" $at=\"$av\"";}
+	            $res[]=">".((isset($r['_c'])) ? "\n" : '');
+	            if (isset($r['_c'])) $res[]=ary2xml($r['_c'], $d+1);
+	            elseif (isset($r['_v'])) $res[]=$r['_v'];
+	            $res[]=(isset($r['_c']) ? $sp : '')."</$tag>\n";
+	        }
+	
+	    }
+	    return implode('', $res);
+	}
+	
+	// Insert element into array
+	function ins2ary(&$ary, $element, $pos) {
+	    $ar1=array_slice($ary, 0, $pos); $ar1[]=$element;
+	    $ary=array_merge($ar1, array_slice($ary, $pos));
+	}
+	
+	/*
+	* Xml parse collection functions
+	*************************************** end **********************************************/
 
 };
 
