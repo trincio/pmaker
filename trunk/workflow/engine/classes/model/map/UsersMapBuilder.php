@@ -100,7 +100,7 @@ class UsersMapBuilder {
 
 		$tMap->addColumn('USR_ZIP_CODE', 'UsrZipCode', 'string', CreoleTypes::VARCHAR, true, 16);
 
-		$tMap->addColumn('DEP_UID', 'DepUid', 'string', CreoleTypes::VARCHAR, true, null);
+		$tMap->addColumn('DEP_UID', 'DepUid', 'string', CreoleTypes::VARCHAR, true, 32);
 
 		$tMap->addColumn('USR_POSITION', 'UsrPosition', 'string', CreoleTypes::VARCHAR, true, 100);
 
