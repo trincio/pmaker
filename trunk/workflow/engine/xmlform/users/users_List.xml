@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <dynaForm type="pagetable"
   menu="users/users_Options"
-  searchBy="CONCAT(USR_LASTNAME, ' ', USR_FIRSTNAME) | USR_EMAIL"
+  searchBy="USR_USERNAME | CONCAT(USR_LASTNAME, ' ', USR_FIRSTNAME) | USR_EMAIL"
 >
 <USR_UID type="private" showInTable="0" />
 <USR_COMPLETENAME type="text" titlealign="left" align="left" colWidth="200">
@@ -22,18 +22,18 @@
 <USR_VIEW type="link" colWidth="50" value="@#USR_VIEW" link="users_View?USR_UID=@#USR_UID">
   <en></en>
 </USR_VIEW>
-
 <!--<USR_EDIT type="link" colWidth="50" value="@#USR_EDIT" link="users_Edit?USR_UID=@#USR_UID">
   <en></en>
 </USR_EDIT>-->
 <USR_GROUP type="link" colWidth="80" value="@G::LoadTranslation(ID_VIEW_USER_GROUP)" link="#" onclick="viewUserGroups('@#USR_UID');return false;">
   <en></en>
 </USR_GROUP>
-
 <USR_DELETE type="link" colWidth="50" value="@#USR_DELETE" link="#" onclick="deleteUser('@#USR_UID');return false;">
   <en></en>
 </USR_DELETE>
-
+<USR_AUTH type="link" colWidth="50" value="@#USR_AUTH" link="users_AuthSource?USR_UID=@#USR_UID">
+  <en></en>
+</USR_AUTH>
 <!--<USR_STATUS style="background-color:red;" type="link" titlealign="left" align="left" colWidth="60" value="@#USR_STATUS" link="users_ChangeStatus?USR_UID=@#USR_UID">
   <en></en>
 </USR_STATUS>-->
