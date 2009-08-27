@@ -312,7 +312,11 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
       die();
     }
     else {
-      require_once( PATH_METHODS . "login/sysLogin.php" ) ;
+    	if(SYS_TARGET=="dbInfo"){ //Show dbInfo when no SYS_SYS
+      		require_once( PATH_METHODS . "login/dbInfo.php" ) ;
+    	}else{
+    		require_once( PATH_METHODS . "login/sysLogin.php" ) ;
+    	}
       die();
     }
   }

@@ -34,9 +34,10 @@ if(!defined('DB_SYSTEM_INFORMATION')) define('DB_SYSTEM_INFORMATION', 1);
 	  }
 	  $footer = '';
     if (strpos($_SERVER['REQUEST_URI'], '/login/login') !== false) {
-      if ( defined('SYS_SYS') && DB_SYSTEM_INFORMATION==1) {
+      if ( DB_SYSTEM_INFORMATION==1) {
         $footer = "<a href=\"#\" onclick=\"openInfoPanel();return false;\" class=\"FooterLink\">| System Information |</a><br />";
       }
+      
       $footer .= "<br />Copyright © 2003-2008 Colosa, Inc. All rights reserved.";
     }
 
