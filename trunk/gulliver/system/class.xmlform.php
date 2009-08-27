@@ -2059,6 +2059,9 @@ class XmlForm_Field_Grid extends XmlForm_Field {
       }
     }
     $this->values = $values;
+    $this->NewLabel = G::LoadTranslation('ID_NEW');
+    $this->DeleteLabel = G::LoadTranslation('ID_DELETE');
+    
     $tpl->template = $tpl->printTemplate ( $this );
     //In the header
     $oHeadPublisher = & headPublisher::getSingleton ();

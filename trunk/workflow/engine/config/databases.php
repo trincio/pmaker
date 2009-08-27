@@ -24,6 +24,7 @@
  */
 
   global $G_ENVIRONMENTS;
+  if(defined("G_ENVIRONMENT")){ //If we don't have G_ENVIRONMENT defined the only enable dbArray
 //var_dump($G_ENVIRONMENTS[G_ENVIRONMENT]);die;
   if ( isset ( $G_ENVIRONMENTS ) ) {
     $dbfile = $G_ENVIRONMENTS[ G_ENVIRONMENT ][ 'dbfile'];
@@ -75,7 +76,7 @@
 
   $pro ['datasources']['rp']['connection'] = $dsnReport;
   $pro ['datasources']['rp']['adapter'] = DB_ADAPTER;
-
+}
   $pro ['datasources']['dbarray']['connection'] = 'dbarray://user:pass@localhost/pm_os';
   $pro ['datasources']['dbarray']['adapter']    = 'dbarray';
 

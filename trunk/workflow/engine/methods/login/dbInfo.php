@@ -63,7 +63,7 @@ function lookup($target)
     }
 
     $redhat .= " (" . PHP_OS . ")";
-
+if(defined("DB_HOST")){
   G::LoadClass('net');
   G::LoadClass('dbConnections');
   $dbNetView = new NET(DB_HOST);
@@ -82,18 +82,25 @@ function lookup($target)
   catch (Exception $oException) {
     $sMySQLVersion = '?????';
   }
-
+}
   $Fields['SYSTEM']          = $redhat;
-  $Fields['DATABASE']        = $dbNetView->dbName(DB_ADAPTER) . ' (Version ' . $sMySQLVersion .')';
-  $Fields['DATABASE_SERVER'] = DB_HOST;
-  $Fields['DATABASE_NAME']   = DB_NAME;
+  if(defined("DB_HOST")){
+	  $Fields['DATABASE']        = $dbNetView->dbName(DB_ADAPTER) . ' (Version ' . $sMySQLVersion .')';
+	  $Fields['DATABASE_SERVER'] = DB_HOST;
+	  $Fields['DATABASE_NAME']   = DB_NAME;
+	  $Fields['AVAILABLE_DB']    = $availdb;
+  }else{
+  	  $Fields['DATABASE']        = "Not defined";
+	  $Fields['DATABASE_SERVER'] = "Not defined";
+	  $Fields['DATABASE_NAME']   = "Not defined";
+	  $Fields['AVAILABLE_DB']    = "Not defined";
+  }
   $Fields['PHP']             = phpversion();
   $Fields['FLUID']           = PM_VERSION;
   $Fields['IP']              = lookup ($ip);
-  $Fields['ENVIRONMENT']     = SYS_SYS;
+  $Fields['ENVIRONMENT']     = defined("SYS_SYS")?SYS_SYS:"Not defined";
   $Fields['SERVER_SOFTWARE'] = getenv('SERVER_SOFTWARE');
-  $Fields['SERVER_NAME']     = getenv('SERVER_NAME');
-  $Fields['AVAILABLE_DB']    = $availdb;
+  $Fields['SERVER_NAME']     = getenv('SERVER_NAME');  
   $Fields['SERVER_PROTOCOL'] = getenv('SERVER_PROTOCOL');
   $Fields['SERVER_PORT']     = getenv('SERVER_PORT');
   $Fields['REMOTE_HOST']     = getenv('REMOTE_HOST');

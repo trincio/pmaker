@@ -124,39 +124,63 @@ var dynaformEditor={
 	// Change view point functions
 	changeToPreview:function()
 	{
+		//to adecuate the view perspective @Neyek
+		content_div = getElementByPMClass('panel_content___processmaker')
+		content_div.style.overflow='auto';
+		
 		if (this.currentView!="preview")this.refresh_preview();
 		this.currentView="preview";
 	},
 	changeToXmlCode:function()
 	{
+		//to adecuate the view perspective @Neyek
+		content_div = getElementByPMClass('panel_content___processmaker')
+		content_div.style.overflow='auto';
+		
 		this.refresh_xmlcode();
 		this.currentView="xmlcode";
-	  if (this.loadPressLoaded && !XMLCodePress)
-	  {
-		  startXMLCodePress();
-	  }
+		if (this.loadPressLoaded && !XMLCodePress)
+		{
+			startXMLCodePress();
+		}
 	},
 	changeToHtmlCode:function()
 	{
+		//to adecuate the view perspective @Neyek
+		content_div = getElementByPMClass('panel_content___processmaker')
+		content_div.style.overflow='auto';
+		
 		this.refresh_htmlcode();
 		this.currentView="htmlcode";
 	},
 	changeToFieldsList:function()
 	{
+		//to adecuate the view perspective @Neyek
+		content_div = getElementByPMClass('panel_content___processmaker')
+		content_div.style.overflow='visible';
+		
 		this.refreshFieldsList();
 		this.currentView="fieldslist";
 	},
 	changeToJavascripts:function()
 	{
+		//to adecuate the view perspective @Neyek
+		content_div = getElementByPMClass('panel_content___processmaker')
+		content_div.style.overflow='auto';
+		
 		this.currentView="javascripts";
 		this.refreshJavascripts();
-	  if (this.loadPressLoaded && !JSCodePress)
-	  {
-		  startJSCodePress();
-	  }
+		if (this.loadPressLoaded && !JSCodePress)
+		{
+			startJSCodePress();
+		}
 	},
 	changeToProperties:function()
 	{
+		//to adecuate the view perspective @Neyek
+		content_div = getElementByPMClass('panel_content___processmaker')
+		content_div.style.overflow='auto';
+		
 		this.currentView="properties";
 		this.refreshProperties();
 	},
@@ -388,4 +412,15 @@ var dynaformEditor={
 else
 {
   alert("Donde esta esto!!!");
+}
+
+
+function getElementByPMClass(__class){
+	divs = document.getElementsByTagName('div');
+	for(i=0; i<divs.length; i++){
+		if(divs[i].className == __class){
+			return divs[i];
+		}
+	}
+	return false;
 }

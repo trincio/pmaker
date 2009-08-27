@@ -29,7 +29,85 @@ if (isset($_POST['form']['USER_ENV'])) {
   die;
 }
 
+//Required classes for dbArray work
+require_once ( "propel/Propel.php" );
+require_once ( "creole/Creole.php" );
+G::LoadThirdParty("pake","pakeColor.class");
+Propel::init( PATH_CORE . "config/databases.php" );
+Creole::registerDriver('dbarray', 'creole.contrib.DBArrayConnection');
+
+
+function getLangFiles(){
+    $dir=PATH_LANGUAGECONT;
+	  $filesArray=array();
+	  if (file_exists($dir)){
+  	  if ($handle = opendir($dir)) {
+          while (false !== ($file = readdir($handle))) {
+              
+              $fileParts=explode(".",$file);
+              if($fileParts[0]=="translation"){
+                $filesArray[$fileParts[1]]=$file;
+              }
+          }
+          closedir($handle);
+      }
+    }
+    return $filesArray;
+}
+
+$availableLang=getLangFiles();
+
+$langISONames["en"]="English";
+$langISONames["es"]="Spanish";
+
+$availableLangArray = array();
+$availableLangArray[] = array('LANG_ID' => 'char', 'LANG_NAME' => 'char');
+foreach($availableLang as $langKey => $langFile){
+    $aFields = array('LANG_ID' => $langKey, 'LANG_NAME' => isset($langISONames[$langKey])?$langISONames[$langKey]:$langKey);
+    $availableLangArray[] = $aFields;
+}
+
+
+global $_DBArray;
+$_DBArray['langOptions'] = $availableLangArray;
+$_SESSION['_DBArray'] = $_DBArray;
+
+
+
 $G_PUBLISH = new Publisher;
 $G_PUBLISH->AddContent('xmlform', 'xmlform', 'login/sysLogin', '', '', 'sysLogin');
+
 G::RenderPage( "publish" );
+
 ?>
+<script type="text/javascript">
+    var openInfoPanel = function()
+    {
+      var oInfoPanel = new leimnud.module.panel();
+      oInfoPanel.options = {
+        size    :{w:500,h:424},
+        position:{x:0,y:0,center:true},
+        title   :'System Information',
+        theme   :'processmaker',
+        control :{
+          close :true,
+          drag  :false
+        },
+        fx:{
+          modal:true
+        }
+      };
+      oInfoPanel.setStyle = {modal: {
+        backgroundColor: 'white'
+      }};
+      oInfoPanel.make();
+      var oRPC = new leimnud.module.rpc.xmlhttp({
+        url   : '../login/dbInfo',
+        async : false,
+        method: 'POST',
+        args  : ''
+      });
+      oRPC.make();
+      oInfoPanel.addContent(oRPC.xmlhttp.responseText);
+    };
+</script>
