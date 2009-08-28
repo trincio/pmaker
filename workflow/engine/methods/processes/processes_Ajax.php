@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * processes_Ajax.php
  *
@@ -42,7 +42,7 @@ try {
 	  $oData   = $oJSON->decode(stripslashes($_POST['data']));
 	  $sOutput = '';
   }
-  
+
   G::LoadClass('processMap');
   $oProcessMap = new processMap(new DBConnection);
 
@@ -76,9 +76,9 @@ try {
   	case 'webEntry_generate':
   	  include(PATH_METHODS . 'processes/processes_webEntryGenerate.php');
   	break;
-  	case 'webEntry_new': 
+  	case 'webEntry_new':
   	  $oProcessMap->webEntry_new($oData->PRO_UID);
-  	break;  	  	
+  	break;
   	case 'assignProcessUser':
   	  $oProcessMap->assignProcessUser($oData->PRO_UID, $oData->USR_UID);
   	break;
@@ -377,15 +377,15 @@ try {
       $oJSON = new Services_JSON();
       echo $oJSON->encode($oResponse);
     break;
-    
+
     case 'editFile':
     	//echo $_POST['filename'];
     	global $G_PUBLISH;
 	  	$G_PUBLISH = new Publisher();
 	  	$sDirectory = PATH_DATA_MAILTEMPLATES . $_POST['pro_uid'] . PATH_SEP . $_POST['filename'];
-	  	
+
 	  	$fcontent = file_get_contents($sDirectory);
-	  	
+
 	  	$aData = Array(
 	  		'pro_uid'=>$_POST['pro_uid'],
 	  		'fcontent'=>$fcontent,
@@ -394,19 +394,21 @@ try {
 	  	$G_PUBLISH->AddContent('xmlform', 'xmlform', 'processes/processes_FileEdit', '', $aData);
 	    G::RenderPage('publish', 'raw');
     break;
-
     case 'saveFile':
     	global $G_PUBLISH;
 	  	$G_PUBLISH = new Publisher();
 	  	$sDirectory = PATH_DATA_MAILTEMPLATES . $_POST['pro_uid'] . PATH_SEP . $_POST['filename'];
-	  	
+
 	  	$fp = fopen($sDirectory, 'w');
 	  	fwrite($fp, stripslashes($_POST['fcontent']));
 	  	fclose($fp);
 	  	echo 'saved: '. $sDirectory;
     break;
-  }  
-  if( isset($sOutput) ) 
+    case 'alerts':
+      $oProcessMap->alertsList($oData->pro_uid);
+    break;
+  }
+  if( isset($sOutput) )
   	die($sOutput);
 }
 catch (Exception $oException) {
