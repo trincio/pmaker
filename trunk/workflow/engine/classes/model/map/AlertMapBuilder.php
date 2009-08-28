@@ -66,6 +66,8 @@ class AlertMapBuilder {
 
 		$tMap->addPrimaryKey('ALT_UID', 'AltUid', 'string', CreoleTypes::VARCHAR, true, 32);
 
+		$tMap->addColumn('PRO_UID', 'ProUid', 'string', CreoleTypes::VARCHAR, true, 32);
+
 		$tMap->addColumn('TAS_UID', 'TasUid', 'string', CreoleTypes::LONGVARCHAR, true, null);
 
 		$tMap->addColumn('ALT_TYPE', 'AltType', 'string', CreoleTypes::VARCHAR, true, 32);

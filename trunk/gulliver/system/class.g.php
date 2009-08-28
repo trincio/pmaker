@@ -1694,14 +1694,24 @@ class G
    */
   function LoadTranslation( $msgID , $lang = SYS_LANG )
   {
-    global $translation;
-    if ( file_exists (PATH_LANGUAGECONT . 'translation.' . $lang) )
-      require_once( PATH_LANGUAGECONT . 'translation.' . $lang );
-    if ( isset ( $translation[$msgID] ) )
+    global $translation;    
+    if ( file_exists (PATH_LANGUAGECONT . 'translation.' . $lang) ){
+      require_once( PATH_LANGUAGECONT . 'translation.' . $lang );      
+    }elseif((!defined("SHOW_UNTRANSLATED_AS_TAG"))||(SHOW_UNTRANSLATED_AS_TAG==0)){
+      // --Default English --
+      require_once( PATH_LANGUAGECONT . 'translation.' . 'en' );
+    }    
+    if ( isset ( $translation[$msgID] ) ){      
       return $translation[$msgID];
-    else
-      return '**' . $msgID . '**';
-
+    }else{
+        if(defined("UNTRANSLATED_MARK")){
+            $untranslatedMark=strip_tags(UNTRANSLATED_MARK);
+        }else{
+            $untranslatedMark="**";
+        }
+    	return $untranslatedMark . $msgID . $untranslatedMark; 
+    }
+      
   }
   /**
    * Function LoadXml

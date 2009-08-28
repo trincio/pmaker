@@ -663,7 +663,37 @@ var processmap=function(){
 							//Pm.objeto.innerHTML="asdasd";
 						}.extend(this,panel);
 						r.make();
-					}.extend(this)}
+					}.extend(this)},
+					{image:"/images/alerts.gif",text:G_STRINGS.ID_ALERTS,launch:function(event){
+						this.tmp.alertsPanel = panel =new leimnud.module.panel();
+						panel.options={
+							limit	:true,
+							size	:{w:500,h:380},
+							position:{x:50,y:50,center:true},
+							title	:G_STRINGS.ID_ALERTS,
+							theme	:this.options.theme,
+							control	:{close:true,resize:false},fx:{modal:true},
+							statusBar:false,
+							fx	:{shadow:true,modal:true}
+						};
+						panel.make();
+						panel.loader.show();
+						var r = new leimnud.module.rpc.xmlhttp({
+							url:this.options.dataServer,
+							args:"action=alerts&data="+{
+								pro_uid	:this.options.uid
+							}.toJSONString()
+						});
+						r.callback=function(rpc,panel)
+						{
+							panel.loader.hide();
+							var scs = rpc.xmlhttp.responseText.extractScript();
+							panel.addContent(rpc.xmlhttp.responseText);
+							scs.evalScript();
+							//Pm.objeto.innerHTML="asdasd";
+						}.extend(this,panel);
+						r.make();
+					}.extend(this)},
 					]
 				});
 				this.observers.menu.register(this.parent.closure({instance:this.menu,method:this.menu.remove}),this.menu);

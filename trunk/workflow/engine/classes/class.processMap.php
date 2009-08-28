@@ -3415,5 +3415,40 @@ function editObjectPermission($sOP_UID)
         }
   return $rows;
   }
+
+  function alertsList($sProcessUID) {
+    try {
+      global $G_PUBLISH;
+      $G_PUBLISH = new Publisher;
+      $G_PUBLISH->AddContent('propeltable', 'paged-table', 'alerts/alerts_ShortList', $this->getAlertsCriteria($sProcessUID), array());
+      G::RenderPage('publish', 'raw');
+      return true;
+    }
+  	catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
+
+  function getAlertsCriteria($sProcessUID) {
+    try {
+      require_once 'classes/model/Alert.php';
+      require_once 'classes/model/Content.php';
+  	  $sDelimiter = DBAdapter::getStringDelimiter();
+  	  $oCriteria  = new Criteria('workflow');
+      $oCriteria->addSelectColumn(AlertPeer::ALT_UID);
+      $oCriteria->addSelectColumn(AlertPeer::ALT_TYPE);
+      $oCriteria->addAsColumn('ALT_TITLE', ContentPeer::CON_VALUE);
+      $aConditions   = array();
+      $aConditions[] = array(AlertPeer::ALT_UID  , ContentPeer::CON_ID);
+      $aConditions[] = array(ContentPeer::CON_CATEGORY, $sDelimiter . 'ALT_TITLE' . $sDelimiter);
+      $aConditions[] = array(ContentPeer::CON_LANG    , $sDelimiter . SYS_LANG    . $sDelimiter);
+      $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
+      $oCriteria->add(AlertPeer::PRO_UID, $sProcessUID);
+      return $oCriteria;
+    }
+  	catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
 } // processMap
 ?>
