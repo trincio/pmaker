@@ -3420,7 +3420,7 @@ function editObjectPermission($sOP_UID)
     try {
       global $G_PUBLISH;
       $G_PUBLISH = new Publisher;
-      $G_PUBLISH->AddContent('propeltable', 'paged-table', 'alerts/alerts_ShortList', $this->getAlertsCriteria($sProcessUID), array());
+      $G_PUBLISH->AddContent('propeltable', 'paged-table', 'alerts/alerts_ShortList', $this->getAlertsCriteria($sProcessUID), array('PRO_UID' => $sProcessUID));
       G::RenderPage('publish', 'raw');
       return true;
     }

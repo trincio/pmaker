@@ -1,5 +1,6 @@
 <?php
 
+require_once 'classes/model/Content.php';
 require_once 'classes/model/om/BaseAlert.php';
 
 
@@ -63,7 +64,7 @@ class Alert extends BaseAlert {
   	    $aFields = $oAlert->toArray(BasePeer::TYPE_FIELDNAME);
         $this->fromArray($aFields, BasePeer::TYPE_FIELDNAME);
         $this->setNew(false);
-  	    $this->setStgTitle($aFields['ALT_TITLE'] = $this->getAltUid());
+  	    $this->setAltTitle($aFields['ALT_TITLE'] = $this->getAltTitle());
   	    return $aFields;
       }
       else {
@@ -118,7 +119,7 @@ class Alert extends BaseAlert {
   	  	$oAlert->fromArray($aData, BasePeer::TYPE_FIELDNAME);
   	    if ($oAlert->validate()) {
   	    	$oConnection->begin();
-  	    	if (array_key_exists('ALT_TITLE', $aData)) $this->setAltTitle($aData['ALT_TITLE']);
+  	    	if (array_key_exists('ALT_TITLE', $aData)) $oAlert->setAltTitle($aData['ALT_TITLE']);
           $iResult = $oAlert->save();
           $oConnection->commit();
           return $iResult;
@@ -148,7 +149,7 @@ class Alert extends BaseAlert {
   	  $oAlert = AlertPeer::retrieveByPK($sUID);
   	  if (!is_null($oAlert)) {
   	  	$oConnection->begin();
-  	  	Content::removeContent('ALT_TITLE', '', $this->getAltUid());
+  	  	Content::removeContent('ALT_TITLE', '', $oAlert->getAltUid());
         $iResult = $oAlert->delete();
         $oConnection->commit();
         return $iResult;
