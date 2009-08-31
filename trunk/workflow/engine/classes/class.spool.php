@@ -80,9 +80,26 @@
 
 		public function create($aData) {
 		  G::LoadClass('insert');
-      $oInsert = new insert();
-      $sUID    = $oInsert->db_insert($aData);
-      $this->setData($sUID, $aData['app_msg_subject'], $aData['app_msg_from'], $aData['app_msg_to'], $aData['app_msg_body']);
+	      $oInsert = new insert();
+	      $sUID    = $oInsert->db_insert($aData);
+	      
+	      $aData['app_msg_date'] = isset($aData['app_msg_date'])? $aData['app_msg_date']: '';
+	      
+	      if( isset($aData['app_msg_status']) ){
+	      	$this->status = strtolower($aData['app_msg_status']);
+	      }
+	      
+	      $this->setData(
+	      	$sUID, 
+	      	$aData['app_msg_subject'], 
+	      	$aData['app_msg_from'], 
+	      	$aData['app_msg_to'], 
+	      	$aData['app_msg_body'],
+	      	$aData['app_msg_date'],
+	      	$aData['app_msg_cc'],
+	      	$aData['app_msg_bcc'],
+	      	$aData['app_msg_template']
+	      );
 		}
 
 		public function setConfig($aConfig) {
@@ -90,8 +107,8 @@
 		}
 
 		public function setData($sAppMsgUid, $sSubject, $sFrom, $sTo, $sBody, $sDate = '', $sCC = '', $sBCC = '', $sTemplate = '') {
-		  $this->spool_id 		           = $sAppMsgUid;
-			$this->fileData['subject']     = $sSubject;
+		  	$this->spool_id 		         = $sAppMsgUid;
+			$this->fileData['subject']     	 = $sSubject;
 			$this->fileData['from'] 	     = $sFrom;
 			$this->fileData['to'] 		     = $sTo;
 			$this->fileData['body'] 	     = $sBody;
@@ -99,27 +116,28 @@
 			$this->fileData['cc'] 		     = $sCC;
 			$this->fileData['bcc'] 		     = $sBCC;
 			$this->fileData['template'] 	 = $sTemplate;
-			$this->fileData['attachments'] = array();
+			$this->fileData['attachments']   = array();
+			
 			if ($this->config['MESS_ENGINE'] == 'OPENMAIL') {
-			  if ($this->config['MESS_SERVER'] != '') {
-			    if (($sAux = @gethostbyaddr($this->config['MESS_SERVER']))) {
-            $this->fileData['domain'] = $sAux;
-          }
-          else {
-            $this->fileData['domain'] = $this->config['MESS_SERVER'];
-          }
-        }
-        else {
-          $this->fileData['domain'] = gethostbyaddr('127.0.0.1');
-        }
+				if ($this->config['MESS_SERVER'] != '') {
+			    	if (($sAux = @gethostbyaddr($this->config['MESS_SERVER']))) {
+		            	$this->fileData['domain'] = $sAux;
+		          	}
+		          	else {
+		            	$this->fileData['domain'] = $this->config['MESS_SERVER'];
+		          	}
+		        }
+		        else {
+					$this->fileData['domain'] = gethostbyaddr('127.0.0.1');
+		        }
 			}
 		}
 
 		public function sendMail() {
-		  $this->handleFrom();
+			$this->handleFrom();
 			$this->handleEnvelopeTo();
 			$this->handleMail();
-		  $this->updateSpoolStatus();
+			$this->updateSpoolStatus();
 		}
 
 		private function updateSpoolStatus()
@@ -137,11 +155,10 @@
 			{
 				$this->fileData['from_name']  = trim(substr($this->fileData['from'],0,$pos));
 				$this->fileData['from_email'] = trim(substr($this->fileData['from'],$pos));
-        $this->fileData['from_email'] = str_replace('<', '', str_replace('>', '', $this->fileData['from_email']));
-			}
-			else {
-			  $this->fileData['from']       = '<' . $this->fileData['from'] . '>';
-			  $this->fileData['from_name']  = '';
+        		$this->fileData['from_email'] = str_replace('<', '', str_replace('>', '', $this->fileData['from_email']));
+			} else {
+				$this->fileData['from']       = '<' . $this->fileData['from'] . '>';
+				$this->fileData['from_name']  = '';
 				$this->fileData['from_email'] = str_replace('<', '', str_replace('>', '', $this->fileData['from']));
 			}
 

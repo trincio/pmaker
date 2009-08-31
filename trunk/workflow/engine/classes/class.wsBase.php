@@ -294,95 +294,95 @@ class wsBase
 	public function sendMessage($caseId, $sFrom, $sTo, $sCc, $sBcc, $sSubject, $sTemplate, $appFields = null ) {
 		try {
 			G::LoadClass('case');
-      G::LoadClass('spool');
+      		G::LoadClass('spool');
 
-    	$aSetup = getEmailConfiguration();
+    		$aSetup = getEmailConfiguration();
 
-      $oSpool = new spoolRun();
-      $oSpool->setConfig(array('MESS_ENGINE'   => $aSetup['MESS_ENGINE'],
-                               'MESS_SERVER'   => $aSetup['MESS_SERVER'],
-                               'MESS_PORT'     => $aSetup['MESS_PORT'],
-                               'MESS_ACCOUNT'  => $aSetup['MESS_ACCOUNT'],
-                               'MESS_PASSWORD' => $aSetup['MESS_PASSWORD'],
-                               'SMTPAuth'      => $aSetup['MESS_RAUTH'] ));
+			$oSpool = new spoolRun();
+			$oSpool->setConfig(array(
+				'MESS_ENGINE'   => $aSetup['MESS_ENGINE'],
+                'MESS_SERVER'   => $aSetup['MESS_SERVER'],
+				'MESS_PORT'     => $aSetup['MESS_PORT'],
+				'MESS_ACCOUNT'  => $aSetup['MESS_ACCOUNT'],
+				'MESS_PASSWORD' => $aSetup['MESS_PASSWORD'],
+				'SMTPAuth'      => $aSetup['MESS_RAUTH']
+			));
 
 
 			$oCase = new Cases();
-  	  $oldFields = $oCase->loadCase( $caseId );
+			$oldFields = $oCase->loadCase( $caseId );
 
-      $pathEmail = PATH_DATA_SITE . 'mailTemplates' . PATH_SEP . $oldFields['PRO_UID'] . PATH_SEP;
+			$pathEmail = PATH_DATA_SITE . 'mailTemplates' . PATH_SEP . $oldFields['PRO_UID'] . PATH_SEP;
 			$fileTemplate = $pathEmail . $sTemplate;
 			@mkdir( $pathEmail, 0777,true);
 
 			if ( ! file_exists ( $fileTemplate ) ) {
-			  $result = new wsResponse (100, "template file: '$fileTemplate' doesn't exists."  );
-			  return $result;
+				$result = new wsResponse (100, "template file: '$fileTemplate' doesn't exists."  );
+				return $result;
 			}
 
-      if ( $appFields == null ) {
-  			$Fields = $oldFields['APP_DATA'];
-      }
-      else
-        $Fields = $appFields;
+			if ( $appFields == null ) {
+  				$Fields = $oldFields['APP_DATA'];
+			} else {
+				$Fields = $appFields;
+			}
+			$templateContents = file_get_contents ( $fileTemplate );
 
-      $templateContents = file_get_contents ( $fileTemplate );
+			//desde aki
+			//$sContent    = G::unhtmlentities($sContent);
+			$iAux        = 0;
+			$iOcurrences = preg_match_all('/\@(?:([\>])([a-zA-Z\_]\w*)|([a-zA-Z\_][\w\-\>\:]*)\(((?:[^\\\\\)]*(?:[\\\\][\w\W])?)*)\))((?:\s*\[[\'"]?\w+[\'"]?\])+)?/',  $templateContents, $aMatch, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE);
 
-      //desde aki
-      //$sContent    = G::unhtmlentities($sContent);
-  		$iAux        = 0;
-  	  $iOcurrences = preg_match_all('/\@(?:([\>])([a-zA-Z\_]\w*)|([a-zA-Z\_][\w\-\>\:]*)\(((?:[^\\\\\)]*(?:[\\\\][\w\W])?)*)\))((?:\s*\[[\'"]?\w+[\'"]?\])+)?/',  $templateContents, $aMatch, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE);
+			if ($iOcurrences) {
+				for($i = 0; $i < $iOcurrences; $i++) {
+					preg_match_all('/@>' . $aMatch[2][$i][0] . '([\w\W]*)' . '@<' . $aMatch[2][$i][0] . '/', $templateContents, $aMatch2, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE);
+					$sGridName       = $aMatch[2][$i][0];
+					$sStringToRepeat = $aMatch2[1][0][0];
+					if (isset($Fields[$sGridName])) {
+						if (is_array($Fields[$sGridName])) {
+							$sAux = '';
+							foreach ($Fields[$sGridName] as $aRow) {
+								$sAux .= G::replaceDataField($sStringToRepeat, $aRow);
+            				}
+          				}
+        			}
+        			$templateContents = str_replace('@>' . $sGridName . $sStringToRepeat . '@<' . $sGridName, $sAux, $templateContents);
+      			}
+    		}
+			//hata aki
+			$sBody = G::replaceDataField( $templateContents, $Fields);
 
-  	  if ($iOcurrences) {
-  	    for($i = 0; $i < $iOcurrences; $i++) {
-  	      preg_match_all('/@>' . $aMatch[2][$i][0] . '([\w\W]*)' . '@<' . $aMatch[2][$i][0] . '/', $templateContents, $aMatch2, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE);
-  	      $sGridName       = $aMatch[2][$i][0];
-  	      $sStringToRepeat = $aMatch2[1][0][0];
-  	      if (isset($Fields[$sGridName])) {
-  	        if (is_array($Fields[$sGridName])) {
-  	          $sAux = '';
-  	          foreach ($Fields[$sGridName] as $aRow) {
-  	            $sAux .= G::replaceDataField($sStringToRepeat, $aRow);
-  	          }
-  	        }
-  	      }
-  	      $templateContents = str_replace('@>' . $sGridName . $sStringToRepeat . '@<' . $sGridName, $sAux, $templateContents);
-  	    }
-  	  }
-      //hata aki
-      $sBody = G::replaceDataField( $templateContents, $Fields);
+			if ($sFrom != '') {
+				$sFrom = $sFrom . ' <' . $aSetup['MESS_ACCOUNT'] . '>';
+      		} else {
+        		$sFrom = $aSetup['MESS_ACCOUNT'];
+      		}
 
-      if ($sFrom != '') {
-        $sFrom = $sFrom . ' <' . $aSetup['MESS_ACCOUNT'] . '>';
-      }
-      else {
-        $sFrom = $aSetup['MESS_ACCOUNT'];
-      }
+			$messageArray = array(
+				'msg_uid'          => '',
+                'app_uid'          => $caseId,
+                'del_index'        => 0,
+                'app_msg_type'     => 'TRIGGER',
+                'app_msg_subject'  => $sSubject,
+                'app_msg_from'     => $sFrom,
+                'app_msg_to'       => $sTo,
+                'app_msg_body'     => $sBody,
+                'app_msg_cc'       => $sCc,
+                'app_msg_bcc'      => $sBcc,
+                'app_msg_attach'   => '',
+                'app_msg_template' => '',
+                'app_msg_status'   => 'pending'
+			);
 
-      $messageArray = array('msg_uid'          => '',
-                            'app_uid'          => $caseId,
-                            'del_index'        => 0,
-                            'app_msg_type'     => 'TRIGGER',
-                            'app_msg_subject'  => $sSubject,
-                            'app_msg_from'     => $sFrom,
-                            'app_msg_to'       => $sTo,
-                            'app_msg_body'     => $sBody,
-                            'app_msg_cc'       => $sCc,
-                            'app_msg_bcc'      => $sBcc,
-                            'app_msg_attach'   => '',
-                            'app_msg_template' => '',
-                            'app_msg_status'   => 'pending');
+			$oSpool->create( $messageArray );
+			$oSpool->sendMail();
 
-      $oSpool->create( $messageArray );
-
-      $oSpool->sendMail();
-
-      if ( $oSpool->status == 'sent' )
-			  $result = new wsResponse (0, "message sent : $sTo" );
+			if ( $oSpool->status == 'sent' )
+				$result = new wsResponse (0, "message sent : $sTo" );
 			else
-			  $result = new wsResponse (100, $oSpool->status . ' ' . $oSpool->error . print_r ($aSetup ,1 ) );
+			  	$result = new wsResponse (100, $oSpool->status . ' ' . $oSpool->error . print_r ($aSetup ,1 ) );
 			return $result;
-		}
-		catch ( Exception $e ) {
+		} catch ( Exception $e ) {
 			$result = new wsResponse (100, $e->getMessage());
 			return $result;
 		}
