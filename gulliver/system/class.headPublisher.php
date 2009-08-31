@@ -38,20 +38,19 @@ class headPublisher
   var $leimnudLoad  = array();
 
   var $leimnudInitString = '  var leimnud = new maborak();
-  leimnud.make(
-    {
+  leimnud.make({
     zip:true,
     inGulliver:true,
     modules :"dom,abbr,rpc,drag,drop,app,panel,fx,grid,xmlform,validator,dashboard",
     files :"json"
-  }
-  );';
+  });';
   var $headerScript = '
+  try{  
     leimnud.exec(leimnud.fix.memoryLeak);
-    if(leimnud.browser.isIphone)
-  {
-    leimnud.iphone.make();
-  }';
+    if(leimnud.browser.isIphone){
+      leimnud.iphone.make();
+    }
+  }catch(e){}';
   var $disableHeaderScripts = false;
   var $title='';
 
