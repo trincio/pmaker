@@ -68,9 +68,13 @@ class AlertMapBuilder {
 
 		$tMap->addColumn('PRO_UID', 'ProUid', 'string', CreoleTypes::VARCHAR, true, 32);
 
-		$tMap->addColumn('TAS_UID', 'TasUid', 'string', CreoleTypes::LONGVARCHAR, true, null);
+		$tMap->addColumn('TAS_INITIAL', 'TasInitial', 'string', CreoleTypes::VARCHAR, true, 32);
+
+		$tMap->addColumn('TAS_FINAL', 'TasFinal', 'string', CreoleTypes::VARCHAR, false, 32);
 
 		$tMap->addColumn('ALT_TYPE', 'AltType', 'string', CreoleTypes::VARCHAR, true, 32);
+
+		$tMap->addColumn('ALT_DAYS', 'AltDays', 'double', CreoleTypes::DOUBLE, false, null);
 
 		$tMap->addColumn('ALT_MAX_ATTEMPTS', 'AltMaxAttempts', 'int', CreoleTypes::TINYINT, true, null);
 

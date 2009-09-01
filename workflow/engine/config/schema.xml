@@ -5621,10 +5621,20 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="TAS_UID" type="LONGVARCHAR" required="true" default="">
+    <column name="TAS_INITIAL" type="VARCHAR" size="32" required="true" default="">
       <vendor type="mysql">
-        <parameter name="Field" value="TAS_UID"/>
-        <parameter name="Type" value="text"/>
+        <parameter name="Field" value="TAS_INITIAL"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="TAS_FINAL" type="VARCHAR" size="32" required="false" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="TAS_FINAL"/>
+        <parameter name="Type" value="varchar(32)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
@@ -5638,6 +5648,16 @@
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="ALT_DAYS" type="DOUBLE" required="" default="1">
+      <vendor type="mysql">
+        <parameter name="Field" value="ALT_DAYS"/>
+        <parameter name="Type" value="double"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="1"/>
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
