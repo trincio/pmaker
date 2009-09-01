@@ -1615,7 +1615,7 @@ class Cases
                 break;
             case 'completed':
                 $c->add(ApplicationPeer::APP_STATUS, 'COMPLETED');
-                $c->add(AppDelegationPeer::DEL_PREVIOUS, 0);
+                //$c->add(AppDelegationPeer::DEL_PREVIOUS, 0);
                 $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
                 $xmlfile = $filesList[5];
                 break;

@@ -24,32 +24,32 @@
  */
 G::LoadClass('case');
 $oCase = new Cases();
-if ($RBAC->userCanAccess('PM_ALLCASES') < 0) {
-  $oCase->thisIsTheCurrentUser($_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['USER_LOGGED'], 'SHOW_MESSAGE');
+if($RBAC->userCanAccess('PM_ALLCASES') < 0) {
+	$oCase->thisIsTheCurrentUser($_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['USER_LOGGED'], 'SHOW_MESSAGE');
 }
 
-if (($RBAC_Response = $RBAC->userCanAccess("PM_CASES")) != 1)
-    return $RBAC_Response;
-if (isset($_POST['showWindow'])) {
-    if ($_POST['showWindow'] == 'steps') {
-        $fn = 'showSteps();';
-    } elseif ($_POST['showWindow'] == 'information') {
-        $fn = 'showInformation();';
-    } elseif ($_POST['showWindow'] == 'actions') {
-        $fn = 'showActions();';
-    } elseif ($_POST['showWindow'] == 'false') {
-        $fn = '';
-    } else {
-        if ($_POST['showWindow'] != '') {
-            $fn = false;
-        }
-    }
-    $_SESSION['showCasesWindow'] = $fn;
+if(($RBAC_Response = $RBAC->userCanAccess("PM_CASES")) != 1)
+	return $RBAC_Response;
+if(isset($_POST['showWindow'])) {
+	if($_POST['showWindow'] == 'steps') {
+		$fn = 'showSteps();';
+	} elseif($_POST['showWindow'] == 'information') {
+		$fn = 'showInformation();';
+	} elseif($_POST['showWindow'] == 'actions') {
+		$fn = 'showActions();';
+	} elseif($_POST['showWindow'] == 'false') {
+		$fn = '';
+	} else {
+		if($_POST['showWindow'] != '') {
+			$fn = false;
+		}
+	}
+	$_SESSION['showCasesWindow'] = $fn;
 }
-if (!isset($_POST['action'])) {
-    $_POST['action'] = '';
+if(! isset($_POST['action'])) {
+	$_POST['action'] = '';
 }
-switch ($_POST['action']) {
+switch($_POST['action']) {
 	case 'steps':
 		global $G_PUBLISH;
 		$G_PUBLISH = new Publisher();
@@ -71,10 +71,10 @@ switch ($_POST['action']) {
 	case 'showProcessMap':
 		$oTemplatePower = new TemplatePower(PATH_TPL . 'processes/processes_Map.html');
 		$oTemplatePower->prepare();
-		$G_PUBLISH = new Publisher;
+		$G_PUBLISH = new Publisher();
 		$G_PUBLISH->AddContent('template', '', '', '', $oTemplatePower);
-$oHeadPublisher =& headPublisher::getSingleton();
-$oHeadPublisher->addScriptCode('
+		$oHeadPublisher = & headPublisher::getSingleton();
+		$oHeadPublisher->addScriptCode('
 		var pb=leimnud.dom.capture("tag.body 0");
 		Pm=new processmap();
 		Pm.options = {
@@ -97,7 +97,7 @@ $oHeadPublisher->addScriptCode('
 		$aFields['sLabel2'] = G::LoadTranslation('ID_COMPLETED_TASK');
 		$aFields['sLabel3'] = G::LoadTranslation('ID_PENDING_TASK');
 		$aFields['sLabel4'] = G::LoadTranslation('ID_PARALLEL_TASK');
-		$G_PUBLISH = new Publisher;
+		$G_PUBLISH = new Publisher();
 		$G_PUBLISH->AddContent('smarty', 'cases/cases_Leyends', '', '', $aFields);
 		G::RenderPage('publish', 'raw');
 		break;
@@ -108,11 +108,10 @@ $oHeadPublisher->addScriptCode('
 		require_once 'classes/model/Users.php';
 		$oUser = new Users();
 		try {
-		  $aUser = $oUser->load($aFields['PRO_CREATE_USER']);
-		  $aFields['PRO_AUTHOR'] = $aUser['USR_FIRSTNAME'] . ' ' . $aUser['USR_LASTNAME'];
-		}
-		catch (Exception $oError) {
-		  $aFields['PRO_AUTHOR'] = '(USER DELETED)';
+			$aUser = $oUser->load($aFields['PRO_CREATE_USER']);
+			$aFields['PRO_AUTHOR'] = $aUser['USR_FIRSTNAME'] . ' ' . $aUser['USR_LASTNAME'];
+		} catch ( Exception $oError ) {
+			$aFields['PRO_AUTHOR'] = '(USER DELETED)';
 		}
 		$aFields['PRO_CREATE_DATE'] = date('F j, Y', strtotime($aFields['PRO_CREATE_DATE']));
 		global $G_PUBLISH;
@@ -143,9 +142,7 @@ $oHeadPublisher->addScriptCode('
 		$aFields['INIT_DATE'] = ($aDelegation['DEL_INIT_DATE'] != null ? $aDelegation['DEL_INIT_DATE'] : G::LoadTranslation('ID_CASE_NOT_YET_STARTED'));
 		$aFields['DUE_DATE'] = ($aDelegation['DEL_TASK_DUE_DATE'] != null ? $aDelegation['DEL_TASK_DUE_DATE'] : G::LoadTranslation('ID_NOT_FINISHED'));
 		$aFields['FINISH'] = ($aDelegation['DEL_FINISH_DATE'] != null ? $aDelegation['DEL_FINISH_DATE'] : G::LoadTranslation('ID_NOT_FINISHED'));
-		$aFields['DURATION'] = ($aDelegation['DEL_FINISH_DATE'] != null ? (int)($iDiff / 3600) . ' ' . ((int)($iDiff / 3600) == 1 ? G::LoadTranslation('ID_HOUR') : G::LoadTranslation('ID_HOURS')) . ' ' . (int)
-			(($iDiff % 3600) / 60) . ' ' . ((int)(($iDiff % 3600) / 60) == 1 ? G::LoadTranslation('ID_MINUTE') : G::LoadTranslation('ID_MINUTES')) . ' ' . (int)(($iDiff % 3600) % 60) . ' ' . ((int)(($iDiff % 3600) %
-			60) == 1 ? G::LoadTranslation('ID_SECOND') : G::LoadTranslation('ID_SECONDS')) : G::LoadTranslation('ID_NOT_FINISHED'));
+		$aFields['DURATION'] = ($aDelegation['DEL_FINISH_DATE'] != null ? (int) ($iDiff / 3600) . ' ' . ((int) ($iDiff / 3600) == 1 ? G::LoadTranslation('ID_HOUR') : G::LoadTranslation('ID_HOURS')) . ' ' . (int) (($iDiff % 3600) / 60) . ' ' . ((int) (($iDiff % 3600) / 60) == 1 ? G::LoadTranslation('ID_MINUTE') : G::LoadTranslation('ID_MINUTES')) . ' ' . (int) (($iDiff % 3600) % 60) . ' ' . ((int) (($iDiff % 3600) % 60) == 1 ? G::LoadTranslation('ID_SECOND') : G::LoadTranslation('ID_SECONDS')) : G::LoadTranslation('ID_NOT_FINISHED'));
 		global $G_PUBLISH;
 		$G_PUBLISH = new Publisher();
 		$G_PUBLISH->AddContent('xmlform', 'xmlform', 'cases/cases_TaskInformation', '', $aFields);
@@ -180,16 +177,14 @@ $oHeadPublisher->addScriptCode('
 		$aFields['INIT_DATE'] = ($aRow['DEL_INIT_DATE'] != null ? $aRow['DEL_INIT_DATE'] : G::LoadTranslation('ID_CASE_NOT_YET_STARTED'));
 		$aFields['DUE_DATE'] = ($aRow['DEL_TASK_DUE_DATE'] != null ? $aRow['DEL_TASK_DUE_DATE'] : G::LoadTranslation('ID_CASE_NOT_YET_STARTED'));
 		$aFields['FINISH'] = ($aRow['DEL_FINISH_DATE'] != null ? $aRow['DEL_FINISH_DATE'] : G::LoadTranslation('ID_NOT_FINISHED'));
-		$aFields['DURATION'] = ($aRow['DEL_FINISH_DATE'] != null ? (int)($iDiff / 3600) . ' ' . ((int)($iDiff / 3600) == 1 ? G::LoadTranslation('ID_HOUR') : G::LoadTranslation('ID_HOURS')) . ' ' . (int)(($iDiff %
-			3600) / 60) . ' ' . ((int)(($iDiff % 3600) / 60) == 1 ? G::LoadTranslation('ID_MINUTE') : G::LoadTranslation('ID_MINUTES')) . ' ' . (int)(($iDiff % 3600) % 60) . ' ' . ((int)(($iDiff % 3600) % 60) ==
-			1 ? G::LoadTranslation('ID_SECOND') : G::LoadTranslation('ID_SECONDS')) : G::LoadTranslation('ID_NOT_FINISHED'));
+		$aFields['DURATION'] = ($aRow['DEL_FINISH_DATE'] != null ? (int) ($iDiff / 3600) . ' ' . ((int) ($iDiff / 3600) == 1 ? G::LoadTranslation('ID_HOUR') : G::LoadTranslation('ID_HOURS')) . ' ' . (int) (($iDiff % 3600) / 60) . ' ' . ((int) (($iDiff % 3600) / 60) == 1 ? G::LoadTranslation('ID_MINUTE') : G::LoadTranslation('ID_MINUTES')) . ' ' . (int) (($iDiff % 3600) % 60) . ' ' . ((int) (($iDiff % 3600) % 60) == 1 ? G::LoadTranslation('ID_SECOND') : G::LoadTranslation('ID_SECONDS')) : G::LoadTranslation('ID_NOT_FINISHED'));
 		global $G_PUBLISH;
 		$G_PUBLISH = new Publisher();
 		$G_PUBLISH->AddContent('xmlform', 'xmlform', 'cases/cases_TaskDetails', '', $aFields);
 		G::RenderPage('publish', 'raw');
 		break;
 	case 'showUsers':
-		switch ($_POST['TAS_ASSIGN_TYPE']) {
+		switch($_POST['TAS_ASSIGN_TYPE']) {
 			case 'BALANCED':
 				G::LoadClass('user');
 				$oUser = new User(new DBConnection());
@@ -214,7 +209,7 @@ $oHeadPublisher->addScriptCode('
 												TU.TU_TYPE     = 1 AND
 												TU.TU_RELATION = 1 AND
 												U.USR_STATUS   = 1");
-				while ($aRow = $oDataset->Read()) {
+				while($aRow = $oDataset->Read()) {
 					$sAux .= '<option value="' . $aRow['USR_UID'] . '">' . $aRow['USR_FULLNAME'] . '</option>';
 				}
 				$sAux .= '</select>';
@@ -225,12 +220,12 @@ $oHeadPublisher->addScriptCode('
 				$oApplication = new Application(new DBConnection());
 				$oApplication->load($_SESSION['APPLICATION']);
 				$sUser = '';
-				if ($_POST['TAS_ASSIGN_VARIABLE'] != '') {
-					if (isset($oApplication->Fields['APP_DATA'][str_replace('@@', '', $_POST['TAS_ASSIGN_VARIABLE'])])) {
+				if($_POST['TAS_ASSIGN_VARIABLE'] != '') {
+					if(isset($oApplication->Fields['APP_DATA'][str_replace('@@', '', $_POST['TAS_ASSIGN_VARIABLE'])])) {
 						$sUser = $oApplication->Fields['APP_DATA'][str_replace('@@', '', $_POST['TAS_ASSIGN_VARIABLE'])];
 					}
 				}
-				if ($sUser != '') {
+				if($sUser != '') {
 					G::LoadClass('user');
 					$oUser = new User(new DBConnection());
 					$oUser->load($sUser);
@@ -245,86 +240,79 @@ $oHeadPublisher->addScriptCode('
 				break;
 		}
 		break;
-
+	
 	case 'cancelCase':
-		$sApplicationUID = (isset($_POST['sApplicationUID'])) ? $_POST['sApplicationUID']:
-		$_SESSION['APPLICATION'];
-		$iIndex = (isset($_POST['sApplicationUID'])) ? $_POST['iIndex']:
-		$_SESSION['INDEX'];
+		$sApplicationUID = (isset($_POST['sApplicationUID'])) ? $_POST['sApplicationUID'] : $_SESSION['APPLICATION'];
+		$iIndex = (isset($_POST['sApplicationUID'])) ? $_POST['iIndex'] : $_SESSION['INDEX'];
 		$oCase = new Cases();
 		$oCase->cancelCase($sApplicationUID, $iIndex, $_SESSION['USER_LOGGED']);
 		break;
-
+	
 	case 'reactivateCase':
-		$sApplicationUID = isset($_POST['sApplicationUID']) ? $_POST['sApplicationUID']:
-		$_SESSION['APPLICATION'];
-		$iIndex = (isset($_POST['sApplicationUID'])) ? $_POST['iIndex']:
-		$_SESSION['INDEX'];
+		$sApplicationUID = isset($_POST['sApplicationUID']) ? $_POST['sApplicationUID'] : $_SESSION['APPLICATION'];
+		$iIndex = (isset($_POST['sApplicationUID'])) ? $_POST['iIndex'] : $_SESSION['INDEX'];
 		$oCase = new Cases();
 		$oCase->reactivateCase($sApplicationUID, $iIndex, $_SESSION['USER_LOGGED']);
 		break;
 	case 'showPauseCaseInput':
 		//echo '<input type=button onclick="close_pauseCase()" value="Cancel">';
 		$aFields = Array();
-		$G_PUBLISH = new Publisher;
+		$G_PUBLISH = new Publisher();
 		$G_PUBLISH->AddContent('xmlform', 'xmlform', 'cases/cases_UnpauseDateInput', '', $aFields);
-        G::RenderPage('publish', 'raw');
+		G::RenderPage('publish', 'raw');
 		break;
 	case 'pauseCase':
 		$unpausedate = $_POST['unpausedate'];
 		$oCase = new Cases();
-		if (isset($_POST['sApplicationUID'])) {
+		if(isset($_POST['sApplicationUID'])) {
 			$oCase->pauseCase($_POST['sApplicationUID'], $_POST['iIndex'], $_SESSION['USER_LOGGED'], $unpausedate);
 		} else {
 			$oCase->pauseCase($_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['USER_LOGGED'], $unpausedate);
 		}
 		break;
 	case 'unpauseCase':
-		$sApplicationUID = (isset($_POST['sApplicationUID'])) ? $_POST['sApplicationUID']:
-		$_SESSION['APPLICATION'];
-		$iIndex = (isset($_POST['sApplicationUID'])) ? $_POST['iIndex']:
-		$_SESSION['INDEX'];
+		$sApplicationUID = (isset($_POST['sApplicationUID'])) ? $_POST['sApplicationUID'] : $_SESSION['APPLICATION'];
+		$iIndex = (isset($_POST['sApplicationUID'])) ? $_POST['iIndex'] : $_SESSION['INDEX'];
 		$oCase = new Cases();
 		$oCase->unpauseCase($sApplicationUID, $iIndex, $_SESSION['USER_LOGGED']);
 		break;
 	case 'deleteCase':
 		$oCase = new Cases();
-		$sApplicationUID = (isset($_POST['sApplicationUID'])) ? $_POST['sApplicationUID']:
-		$_SESSION['APPLICATION'];
+		$sApplicationUID = (isset($_POST['sApplicationUID'])) ? $_POST['sApplicationUID'] : $_SESSION['APPLICATION'];
 		$oCase->removeCase($sApplicationUID);
 		break;
 	case 'view_reassignCase':
 		G::LoadClass('groups');
 		G::LoadClass('tasks');
-
+		
 		$oTasks = new Tasks();
 		$aAux = $oTasks->getGroupsOfTask($_SESSION['TASK'], 1);
 		$row = array();
-
+		
 		$groups = new Groups();
-		foreach ($aAux as $aGroup) {
+		foreach($aAux as $aGroup) {
 			$aUsers = $groups->getUsersOfGroup($aGroup['GRP_UID']);
-			foreach ($aUsers as $aUser) {
-				if ($aUser['USR_UID'] != $_SESSION['USER_LOGGED']) {
+			foreach($aUsers as $aUser) {
+				if($aUser['USR_UID'] != $_SESSION['USER_LOGGED']) {
 					$row[] = $aUser['USR_UID'];
 				}
 			}
 		}
-
+		
 		$aAux = $oTasks->getUsersOfTask($_SESSION['TASK'], 1);
-		foreach ($aAux as $aUser) {
-			if ($aUser['USR_UID'] != $_SESSION['USER_LOGGED']) {
+		foreach($aAux as $aUser) {
+			if($aUser['USR_UID'] != $_SESSION['USER_LOGGED']) {
 				$row[] = $aUser['USR_UID'];
 			}
 		}
-
+		
 		require_once 'classes/model/Users.php';
 		$c = new Criteria('workflow');
 		$c->addSelectColumn(UsersPeer::USR_UID);
 		$c->addSelectColumn(UsersPeer::USR_FIRSTNAME);
 		$c->addSelectColumn(UsersPeer::USR_LASTNAME);
 		$c->add(UsersPeer::USR_UID, $row, Criteria::IN);
-
+		
 		global $G_PUBLISH;
 		$G_PUBLISH = new Publisher();
 		$G_PUBLISH->AddContent('propeltable', 'paged-table', 'processes/processes_viewreassignCase', $c);
@@ -335,24 +323,23 @@ $oHeadPublisher->addScriptCode('
 		$cases->reassignCase($_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['USER_LOGGED'], $_POST['USR_UID'], $_POST['THETYPE']);
 		break;
 	case 'toRevisePanel':
-			$_GET['APP_UID'] = $_POST['APP_UID'];
-			$_GET['DEL_INDEX'] = $_POST['DEL_INDEX'];
-		  $G_PUBLISH = new Publisher;
-		  $G_PUBLISH->AddContent('view', 'cases/cases_toRevise');
-		  $G_PUBLISH->AddContent('smarty', 'cases/cases_toReviseIn', '', '', array());
-			G::RenderPage('publish', 'raw');
+		$_GET['APP_UID'] = $_POST['APP_UID'];
+		$_GET['DEL_INDEX'] = $_POST['DEL_INDEX'];
+		$G_PUBLISH = new Publisher();
+		$G_PUBLISH->AddContent('view', 'cases/cases_toRevise');
+		$G_PUBLISH->AddContent('smarty', 'cases/cases_toReviseIn', '', '', array());
+		G::RenderPage('publish', 'raw');
 		break;
 	case 'showUploadedDocuments':
 		$oCase = new Cases();
 		global $G_PUBLISH;
 		$G_PUBLISH = new Publisher();
-		if ( $oPluginRegistry->existsTrigger ( PM_CASE_DOCUMENT_LIST ) ) {
-      $folderData = new folderData (null, null, $_SESSION['APPLICATION'], null, $_SESSION['USER_LOGGED'] );
-      $oPluginRegistry =& PMPluginRegistry::getSingleton();
-      $oPluginRegistry->executeTriggers ( PM_CASE_DOCUMENT_LIST , $folderData );
-    }
-    else
-		  $G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_AllInputdocsList', $oCase->getAllUploadedDocumentsCriteria($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['TASK'], $_SESSION['USER_LOGGED']));
+		if($oPluginRegistry->existsTrigger(PM_CASE_DOCUMENT_LIST)) {
+			$folderData = new folderData(null, null, $_SESSION['APPLICATION'], null, $_SESSION['USER_LOGGED']);
+			$oPluginRegistry = & PMPluginRegistry::getSingleton();
+			$oPluginRegistry->executeTriggers(PM_CASE_DOCUMENT_LIST, $folderData);
+		} else
+			$G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_AllInputdocsList', $oCase->getAllUploadedDocumentsCriteria($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['TASK'], $_SESSION['USER_LOGGED']));
 		G::RenderPage('publish', 'raw');
 		break;
 	case 'showUploadedDocument':
@@ -363,54 +350,51 @@ $oHeadPublisher->addScriptCode('
 		$oAppDocument = new AppDocument();
 		$oAppDocument->Fields = $oAppDocument->load($_POST['APP_DOC_UID']);
 		$oInputDocument = new InputDocument();
-		if ($oAppDocument->Fields['DOC_UID'] != -1) {
-		  $Fields = $oInputDocument->load($oAppDocument->Fields['DOC_UID']);
-		}
-		else {
-		  $Fields = array('INP_DOC_FORM_NEEDED' => '', 'FILENAME' => $oAppDocument->Fields['APP_DOC_FILENAME']);
+		if($oAppDocument->Fields['DOC_UID'] != - 1) {
+			$Fields = $oInputDocument->load($oAppDocument->Fields['DOC_UID']);
+		} else {
+			$Fields = array('INP_DOC_FORM_NEEDED'=>'', 'FILENAME'=>$oAppDocument->Fields['APP_DOC_FILENAME']);
 		}
 		$oCriteria = new Criteria('workflow');
 		$oCriteria->add(AppDelegationPeer::APP_UID, $oAppDocument->Fields['APP_UID']);
-    $oCriteria->add(AppDelegationPeer::DEL_INDEX, $oAppDocument->Fields['DEL_INDEX']);
-    $oDataset = AppDelegationPeer::doSelectRS($oCriteria);
-    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-    $oDataset->next();
-    $aRow = $oDataset->getRow();
-    $oTask = new Task();
-    try {
-          $aTask = $oTask->load($aRow['TAS_UID']);
-          $Fields['ORIGIN'] = $aTask['TAS_TITLE'];
-          $oAppDocument->Fields['VIEW'] = G::LoadTranslation('ID_OPEN');
-        }
-    catch (Exception $oException) {
-           $Fields['ORIGIN'] = '(TASK DELETED)';
-        }
-
+		$oCriteria->add(AppDelegationPeer::DEL_INDEX, $oAppDocument->Fields['DEL_INDEX']);
+		$oDataset = AppDelegationPeer::doSelectRS($oCriteria);
+		$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+		$oDataset->next();
+		$aRow = $oDataset->getRow();
+		$oTask = new Task();
+		try {
+			$aTask = $oTask->load($aRow['TAS_UID']);
+			$Fields['ORIGIN'] = $aTask['TAS_TITLE'];
+			$oAppDocument->Fields['VIEW'] = G::LoadTranslation('ID_OPEN');
+		} catch ( Exception $oException ) {
+			$Fields['ORIGIN'] = '(TASK DELETED)';
+		}
+		
 		try {
 			$oUser = new Users();
 			$aUser = $oUser->load($oAppDocument->Fields['USR_UID']);
 			$Fields['CREATOR'] = $aUser['USR_FIRSTNAME'] . ' ' . $aUser['USR_LASTNAME'];
-		} catch (Exception $e){
+		} catch ( Exception $e ) {
 			$Fields['CREATOR'] = '***';
 		}
-		switch ($Fields['INP_DOC_FORM_NEEDED'])
-		{
+		switch($Fields['INP_DOC_FORM_NEEDED']) {
 			case 'REAL':
-			$sXmlForm = 'cases/cases_ViewAnyInputDocument2';
-			break;
+				$sXmlForm = 'cases/cases_ViewAnyInputDocument2';
+				break;
 			case 'VIRTUAL':
-			$sXmlForm = 'cases/cases_ViewAnyInputDocument1';
-			break;
+				$sXmlForm = 'cases/cases_ViewAnyInputDocument1';
+				break;
 			case 'VREAL':
-			$sXmlForm = 'cases/cases_ViewAnyInputDocument3';
-			break;
+				$sXmlForm = 'cases/cases_ViewAnyInputDocument3';
+				break;
 			default:
-			$sXmlForm = 'cases/cases_ViewAnyInputDocument';
-			break;
+				$sXmlForm = 'cases/cases_ViewAnyInputDocument';
+				break;
 		}
 		//$oAppDocument->Fields['VIEW'] = G::LoadTranslation('ID_OPEN');
 		$oAppDocument->Fields['FILE'] = 'cases_ShowDocument?a=' . $_POST['APP_DOC_UID'] . '&r=' . rand();
-		$G_PUBLISH = new Publisher;
+		$G_PUBLISH = new Publisher();
 		$G_PUBLISH->AddContent('xmlform', 'xmlform', $sXmlForm, '', G::array_merges($Fields, $oAppDocument->Fields), '');
 		G::RenderPage('publish', 'raw');
 		break;
@@ -418,13 +402,12 @@ $oHeadPublisher->addScriptCode('
 		$oCase = new Cases();
 		global $G_PUBLISH;
 		$G_PUBLISH = new Publisher();
-		if ( $oPluginRegistry->existsTrigger ( PM_CASE_DOCUMENT_LIST ) ) {
-      $folderData = new folderData (null, null, $_SESSION['APPLICATION'], null, $_SESSION['USER_LOGGED'] );
-      $oPluginRegistry =& PMPluginRegistry::getSingleton();
-      $oPluginRegistry->executeTriggers ( PM_CASE_DOCUMENT_LIST , $folderData );
-    }
-    else
-		  $G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_AllOutputdocsList', $oCase->getAllGeneratedDocumentsCriteria($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['TASK'], $_SESSION['USER_LOGGED']) );
+		if($oPluginRegistry->existsTrigger(PM_CASE_DOCUMENT_LIST)) {
+			$folderData = new folderData(null, null, $_SESSION['APPLICATION'], null, $_SESSION['USER_LOGGED']);
+			$oPluginRegistry = & PMPluginRegistry::getSingleton();
+			$oPluginRegistry->executeTriggers(PM_CASE_DOCUMENT_LIST, $folderData);
+		} else
+			$G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_AllOutputdocsList', $oCase->getAllGeneratedDocumentsCriteria($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['TASK'], $_SESSION['USER_LOGGED']));
 		G::RenderPage('publish', 'raw');
 		break;
 	case 'showGeneratedDocument':
@@ -437,15 +420,15 @@ $oHeadPublisher->addScriptCode('
 		$aOD = $oOutputDocument->load($aFields['DOC_UID']);
 		$oCriteria = new Criteria('workflow');
 		$oCriteria->add(AppDelegationPeer::APP_UID, $aFields['APP_UID']);
-    $oCriteria->add(AppDelegationPeer::DEL_INDEX, $aFields['DEL_INDEX']);
-    $oDataset = AppDelegationPeer::doSelectRS($oCriteria);
-    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-    $oDataset->next();
-    $aRow = $oDataset->getRow();
-    $oTask = new Task();
-    $aTask = $oTask->load($aRow['TAS_UID']);
-    $aFields['ORIGIN'] = $aTask['TAS_TITLE'];
-    require_once 'classes/model/Users.php';
+		$oCriteria->add(AppDelegationPeer::DEL_INDEX, $aFields['DEL_INDEX']);
+		$oDataset = AppDelegationPeer::doSelectRS($oCriteria);
+		$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+		$oDataset->next();
+		$aRow = $oDataset->getRow();
+		$oTask = new Task();
+		$aTask = $oTask->load($aRow['TAS_UID']);
+		$aFields['ORIGIN'] = $aTask['TAS_TITLE'];
+		require_once 'classes/model/Users.php';
 		$oUser = new Users();
 		$aUser = $oUser->load($aFields['USR_UID']);
 		$aFields['CREATOR'] = $aUser['USR_FIRSTNAME'] . ' ' . $aUser['USR_LASTNAME'];
@@ -456,8 +439,7 @@ $oHeadPublisher->addScriptCode('
 		$G_PUBLISH->AddContent('xmlform', 'xmlform', 'cases/cases_ViewAnyOutputDocument', '', G::array_merges($aOD, $aFields), '');
 		G::RenderPage('publish', 'raw');
 		break;
-
-
+	
 	case 'showDynaformList':
 		$oCase = new Cases();
 		global $G_PUBLISH;
@@ -465,19 +447,19 @@ $oHeadPublisher->addScriptCode('
 		$G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_AllDynaformsList', $oCase->getallDynaformsCriteria($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['TASK'], $_SESSION['USER_LOGGED']));
 		G::RenderPage('publish', 'raw');
 		break;
-
+	
 	case 'showDynaform':
-		$G_PUBLISH = new Publisher;
+		$G_PUBLISH = new Publisher();
 		$oCase = new Cases();
-		$Fields = $oCase->loadCase( $_SESSION['APPLICATION'] );
+		$Fields = $oCase->loadCase($_SESSION['APPLICATION']);
 		$Fields['APP_DATA']['__DYNAFORM_OPTIONS']['PREVIOUS_STEP_LABEL'] = '';
 		$Fields['APP_DATA']['__DYNAFORM_OPTIONS']['NEXT_STEP_LABEL'] = '';
 		$Fields['APP_DATA']['__DYNAFORM_OPTIONS']['NEXT_STEP'] = '#';
 		$Fields['APP_DATA']['__DYNAFORM_OPTIONS']['NEXT_ACTION'] = 'return false;';
-		$G_PUBLISH->AddContent('dynaform', 'xmlform', $_SESSION['PROCESS']. '/' . $_POST['DYN_UID'], '', $Fields['APP_DATA'],'','','view');
+		$G_PUBLISH->AddContent('dynaform', 'xmlform', $_SESSION['PROCESS'] . '/' . $_POST['DYN_UID'], '', $Fields['APP_DATA'], '', '', 'view');
 		G::RenderPage('publish', 'raw');
 		break;
-
+	
 	case 'adhocAssignmentUsers':
 		G::LoadClass('groups');
 		G::LoadClass('tasks');
@@ -485,18 +467,18 @@ $oHeadPublisher->addScriptCode('
 		$aAux = $oTasks->getGroupsOfTask($_SESSION['TASK'], 2);
 		$aAdhocUsers = array();
 		$oGroups = new Groups();
-		foreach ($aAux as $aGroup) {
+		foreach($aAux as $aGroup) {
 			$aUsers = $oGroups->getUsersOfGroup($aGroup['GRP_UID']);
-			foreach ($aUsers as $aUser) {
-			if ($aUser['USR_UID'] != $_SESSION['USER_LOGGED']) {
-				$aAdhocUsers[] = $aUser['USR_UID'];
-			}
+			foreach($aUsers as $aUser) {
+				if($aUser['USR_UID'] != $_SESSION['USER_LOGGED']) {
+					$aAdhocUsers[] = $aUser['USR_UID'];
+				}
 			}
 		}
 		$aAux = $oTasks->getUsersOfTask($_SESSION['TASK'], 2);
-		foreach ($aAux as $aUser) {
-			if ($aUser['USR_UID'] != $_SESSION['USER_LOGGED']) {
-			$aAdhocUsers[] = $aUser['USR_UID'];
+		foreach($aAux as $aUser) {
+			if($aUser['USR_UID'] != $_SESSION['USER_LOGGED']) {
+				$aAdhocUsers[] = $aUser['USR_UID'];
 			}
 		}
 		require_once 'classes/model/Users.php';
@@ -505,44 +487,102 @@ $oHeadPublisher->addScriptCode('
 		$oCriteria->addSelectColumn(UsersPeer::USR_FIRSTNAME);
 		$oCriteria->addSelectColumn(UsersPeer::USR_LASTNAME);
 		$oCriteria->add(UsersPeer::USR_UID, $aAdhocUsers, Criteria::IN);
-
+		
 		global $G_PUBLISH;
 		$G_PUBLISH = new Publisher();
-		$G_PUBLISH->AddContent('propeltable', 'paged-table', 'processes/processes_viewreassignCase', $oCriteria, array('THETYPE' => 'ADHOC'));
+		$G_PUBLISH->AddContent('propeltable', 'paged-table', 'processes/processes_viewreassignCase', $oCriteria, array('THETYPE'=>'ADHOC'));
 		G::RenderPage('publish', 'raw');
 		break;
-
-		case 'showHistoryMessages':
+	
+	case 'showHistoryMessages':
 		$oCase = new Cases();
 		global $G_PUBLISH;
 		$G_PUBLISH = new Publisher();
 		$G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_Messages', $oCase->getHistoryMessagesTracker($_SESSION['APPLICATION']));
 		G::RenderPage('publish', 'raw');
 		break;
-
-		case 'showHistoryMessage':
-		$G_PUBLISH = new Publisher;
+	
+	case 'showHistoryMessage':
+		$G_PUBLISH = new Publisher();
 		$oCase = new Cases();
-
+		
 		$G_PUBLISH->AddContent('xmlform', 'xmlform', 'cases/cases_MessagesView', '', $oCase->getHistoryMessagesTrackerView($_POST['APP_UID'], $_POST['APP_MSG_UID']));
 		G::RenderPage('publish', 'raw');
 		break;
-
-		case 'deleteUploadedDocument':
-      require_once 'classes/model/AppDocument.php';
-      $oAppDocument = new AppDocument();
-      $oAppDocument->remove($_POST['DOC']);
-      $oCase = new Cases();
-      $oCase->getAllUploadedDocumentsCriteria($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['TASK'], $_SESSION['USER_LOGGED']);
+	
+	case 'deleteUploadedDocument':
+		require_once 'classes/model/AppDocument.php';
+		$oAppDocument = new AppDocument();
+		$oAppDocument->remove($_POST['DOC']);
+		$oCase = new Cases();
+		$oCase->getAllUploadedDocumentsCriteria($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['TASK'], $_SESSION['USER_LOGGED']);
 		break;
-
-		case 'deleteGeneratedDocument':
-      require_once 'classes/model/AppDocument.php';
-      $oAppDocument = new AppDocument();
-      //$oAppDocument->remove($_POST['DOC']);
-      $oCase = new Cases();
-      $oCase->getAllGeneratedDocumentsCriteria($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['TASK'], $_SESSION['USER_LOGGED']);
+	
+	case 'deleteGeneratedDocument':
+		require_once 'classes/model/AppDocument.php';
+		$oAppDocument = new AppDocument();
+		//$oAppDocument->remove($_POST['DOC']);
+		$oCase = new Cases();
+		$oCase->getAllGeneratedDocumentsCriteria($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['TASK'], $_SESSION['USER_LOGGED']);
 		break;
-
-    default: echo 'default';
+	
+	case 'resendMessage':
+		require_once 'classes/model/Configuration.php';
+		G::LoadClass('spool');
+		
+		$oCase = new Cases();
+		$data = $oCase->getHistoryMessagesTrackerView($_POST['APP_UID'], $_POST['APP_MSG_UID']);
+		//print_r($data);
+		
+		$oConfiguration = new Configuration();
+		$sDelimiter = DBAdapter::getStringDelimiter();
+		$oCriteria = new Criteria('workflow');
+		$oCriteria->add(ConfigurationPeer::CFG_UID, 'Emails');
+		$oCriteria->add(ConfigurationPeer::OBJ_UID, '');
+		$oCriteria->add(ConfigurationPeer::PRO_UID, '');
+		$oCriteria->add(ConfigurationPeer::USR_UID, '');
+		$oCriteria->add(ConfigurationPeer::APP_UID, '');
+		if(ConfigurationPeer::doCount($oCriteria) == 0) {
+			$oConfiguration->create(array('CFG_UID'=>'Emails', 'OBJ_UID'=>'', 'CFG_VALUE'=>'', 'PRO_UID'=>'', 'USR_UID'=>'', 'APP_UID'=>''));
+			$aConfiguration = array();
+		} else {
+			$aConfiguration = $oConfiguration->load('Emails', '', '', '', '');
+			if($aConfiguration['CFG_VALUE'] != '') {
+				$aConfiguration = unserialize($aConfiguration['CFG_VALUE']);
+			} else {
+				$aConfiguration = array();
+			}
+		}
+		
+		$oSpool = new spoolRun();
+		$oSpool->setConfig(array(
+			'MESS_ENGINE'	=>	$aConfiguration['MESS_ENGINE'], 
+			'MESS_SERVER'	=>	$aConfiguration['MESS_SERVER'], 
+			'MESS_PORT'		=>	$aConfiguration['MESS_PORT'], 
+			'MESS_ACCOUNT'	=>	$aConfiguration['MESS_ACCOUNT'], 
+			'MESS_PASSWORD'	=>	$aConfiguration['MESS_PASSWORD'], 
+			'SMTPAuth'		=>	$aConfiguration['MESS_RAUTH']
+		));
+		
+		$oSpool->create(array(
+			'msg_uid'		=>	$data['MSG_UID'], 
+			'app_uid'		=>	$data['APP_UID'], 
+			'del_index'		=>	$data['DEL_INDEX'], 
+			'app_msg_type'	=>	$data['DEL_TYPE'], 
+			'app_msg_subject'=>	$data['APP_MSG_SUBJECT'], 
+			'app_msg_from'	=>	$data['APP_MSG_FROM'], 
+			'app_msg_to'	=>	$data['APP_MSG_TO'], 
+			'app_msg_body'	=>	$data['APP_MSG_BODY'], 
+			'app_msg_cc'	=>	$data['APP_MSG_CC'], 
+			'app_msg_bcc'	=>	$data['APP_MSG_BCC'], 
+			'app_msg_attach'=>	$data['APP_MSG_ATTACH'], 
+			'app_msg_template'=>$data['APP_MSG_TEMPLATE'], 
+			'app_msg_status'=>	'pending'
+		));
+		$oSpool->sendMail();
+		
+		break;
+	
+	default:
+		echo 'default';
 }

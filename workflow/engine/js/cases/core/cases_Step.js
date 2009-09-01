@@ -651,6 +651,7 @@ var showDynaforms = function() {
     oRPC.make();
   }
 
+var messagesListPanel;
 var showHistoryMessages = function()
  {
   oPanel = new leimnud.module.panel();
@@ -679,6 +680,7 @@ var showHistoryMessages = function()
   	scs.evalScript();
   }.extend(this);
   oRPC.make();
+  messagesListPanel = oPanel;
 };
 
 function showHistoryMessage(APP_UID, APP_MSG_UID)
@@ -757,4 +759,44 @@ var deleteGeneratedDocument = function(APP_DOC_UID) {
       oRPC.make();
     }.extend(this)
   });
+};
+
+/**
+ * Resend the message that was sent.
+ * 
+ * @Param Application ID
+ * @Param Message ID
+ * @Author Erik Amaru Ortiz <erik@colosa.com, aortiz.erik@gmail.com>
+ */
+var resendMessage = function(APP_UID, APP_MSG_UID)
+{
+	new leimnud.module.app.confirm().make({
+	    label : G_STRINGS.ID_MSG_CONFIRM_RESENDMSG,
+	    action: function() {
+		  var oRPC = new leimnud.module.rpc.xmlhttp({
+		      url : 'cases_Ajax',
+		      args: 'action=resendMessage&APP_UID='+APP_UID+'&APP_MSG_UID='+APP_MSG_UID
+		  });
+		  oRPC.callback = function(rpc){
+		      //var scs=rpc.xmlhttp.responseText.extractScript();
+		      //alert(rpc.xmlhttp.responseText);
+		      //scs.evalScript();
+			  messagesListPanel.clearContent();
+			  messagesListPanel.loader.show();
+			  var oRPC2 = new leimnud.module.rpc.xmlhttp({
+			  	url : 'cases_Ajax',
+			  	args: 'action=showHistoryMessages'
+			  });
+			  oRPC2.callback = function(rpc){
+				messagesListPanel.loader.hide();
+			  	var scs=rpc.xmlhttp.responseText.extractScript();
+			  	messagesListPanel.addContent(rpc.xmlhttp.responseText);
+			  	scs.evalScript();
+			  }.extend(this);
+			  oRPC2.make();
+			  
+		  }.extend(this);
+		  oRPC.make();
+	    }.extend(this)
+	});
 };

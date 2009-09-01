@@ -212,4 +212,14 @@ class AppDelegation extends BaseAppDelegation {
     }
     return date('Y-m-d H:i:s', $iDueDate);
   }
+
+  function calculateDuration() {
+    try {
+      //
+      die('calculateDuration');
+    }
+    catch (Exception $oError) {
+      //CONTINUE
+    }
+  }
 } // AppDelegation
