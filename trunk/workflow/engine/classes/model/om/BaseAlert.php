@@ -43,10 +43,17 @@ abstract class BaseAlert extends BaseObject  implements Persistent {
 
 
 	/**
-	 * The value for the tas_uid field.
+	 * The value for the tas_initial field.
 	 * @var        string
 	 */
-	protected $tas_uid = '';
+	protected $tas_initial = '';
+
+
+	/**
+	 * The value for the tas_final field.
+	 * @var        string
+	 */
+	protected $tas_final = '';
 
 
 	/**
@@ -54,6 +61,13 @@ abstract class BaseAlert extends BaseObject  implements Persistent {
 	 * @var        string
 	 */
 	protected $alt_type = '';
+
+
+	/**
+	 * The value for the alt_days field.
+	 * @var        double
+	 */
+	protected $alt_days = 1;
 
 
 	/**
@@ -120,14 +134,25 @@ abstract class BaseAlert extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Get the [tas_uid] column value.
+	 * Get the [tas_initial] column value.
 	 * 
 	 * @return     string
 	 */
-	public function getTasUid()
+	public function getTasInitial()
 	{
 
-		return $this->tas_uid;
+		return $this->tas_initial;
+	}
+
+	/**
+	 * Get the [tas_final] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getTasFinal()
+	{
+
+		return $this->tas_final;
 	}
 
 	/**
@@ -139,6 +164,17 @@ abstract class BaseAlert extends BaseObject  implements Persistent {
 	{
 
 		return $this->alt_type;
+	}
+
+	/**
+	 * Get the [alt_days] column value.
+	 * 
+	 * @return     double
+	 */
+	public function getAltDays()
+	{
+
+		return $this->alt_days;
 	}
 
 	/**
@@ -230,12 +266,12 @@ abstract class BaseAlert extends BaseObject  implements Persistent {
 	} // setProUid()
 
 	/**
-	 * Set the value of [tas_uid] column.
+	 * Set the value of [tas_initial] column.
 	 * 
 	 * @param      string $v new value
 	 * @return     void
 	 */
-	public function setTasUid($v)
+	public function setTasInitial($v)
 	{
 
 		// Since the native PHP type for this column is string,
@@ -244,12 +280,34 @@ abstract class BaseAlert extends BaseObject  implements Persistent {
 			$v = (string) $v; 
 		}
 
-		if ($this->tas_uid !== $v || $v === '') {
-			$this->tas_uid = $v;
-			$this->modifiedColumns[] = AlertPeer::TAS_UID;
+		if ($this->tas_initial !== $v || $v === '') {
+			$this->tas_initial = $v;
+			$this->modifiedColumns[] = AlertPeer::TAS_INITIAL;
 		}
 
-	} // setTasUid()
+	} // setTasInitial()
+
+	/**
+	 * Set the value of [tas_final] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setTasFinal($v)
+	{
+
+		// Since the native PHP type for this column is string,
+		// we will cast the input to a string (if it is not).
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->tas_final !== $v || $v === '') {
+			$this->tas_final = $v;
+			$this->modifiedColumns[] = AlertPeer::TAS_FINAL;
+		}
+
+	} // setTasFinal()
 
 	/**
 	 * Set the value of [alt_type] column.
@@ -272,6 +330,22 @@ abstract class BaseAlert extends BaseObject  implements Persistent {
 		}
 
 	} // setAltType()
+
+	/**
+	 * Set the value of [alt_days] column.
+	 * 
+	 * @param      double $v new value
+	 * @return     void
+	 */
+	public function setAltDays($v)
+	{
+
+		if ($this->alt_days !== $v || $v === 1) {
+			$this->alt_days = $v;
+			$this->modifiedColumns[] = AlertPeer::ALT_DAYS;
+		}
+
+	} // setAltDays()
 
 	/**
 	 * Set the value of [alt_max_attempts] column.
@@ -382,24 +456,28 @@ abstract class BaseAlert extends BaseObject  implements Persistent {
 
 			$this->pro_uid = $rs->getString($startcol + 1);
 
-			$this->tas_uid = $rs->getString($startcol + 2);
+			$this->tas_initial = $rs->getString($startcol + 2);
 
-			$this->alt_type = $rs->getString($startcol + 3);
+			$this->tas_final = $rs->getString($startcol + 3);
 
-			$this->alt_max_attempts = $rs->getInt($startcol + 4);
+			$this->alt_type = $rs->getString($startcol + 4);
 
-			$this->alt_template = $rs->getString($startcol + 5);
+			$this->alt_days = $rs->getFloat($startcol + 5);
 
-			$this->alt_digest = $rs->getInt($startcol + 6);
+			$this->alt_max_attempts = $rs->getInt($startcol + 6);
 
-			$this->tri_uid = $rs->getString($startcol + 7);
+			$this->alt_template = $rs->getString($startcol + 7);
+
+			$this->alt_digest = $rs->getInt($startcol + 8);
+
+			$this->tri_uid = $rs->getString($startcol + 9);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 8; // 8 = AlertPeer::NUM_COLUMNS - AlertPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 10; // 10 = AlertPeer::NUM_COLUMNS - AlertPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Alert object", $e);
@@ -609,21 +687,27 @@ abstract class BaseAlert extends BaseObject  implements Persistent {
 				return $this->getProUid();
 				break;
 			case 2:
-				return $this->getTasUid();
+				return $this->getTasInitial();
 				break;
 			case 3:
-				return $this->getAltType();
+				return $this->getTasFinal();
 				break;
 			case 4:
-				return $this->getAltMaxAttempts();
+				return $this->getAltType();
 				break;
 			case 5:
-				return $this->getAltTemplate();
+				return $this->getAltDays();
 				break;
 			case 6:
-				return $this->getAltDigest();
+				return $this->getAltMaxAttempts();
 				break;
 			case 7:
+				return $this->getAltTemplate();
+				break;
+			case 8:
+				return $this->getAltDigest();
+				break;
+			case 9:
 				return $this->getTriUid();
 				break;
 			default:
@@ -648,12 +732,14 @@ abstract class BaseAlert extends BaseObject  implements Persistent {
 		$result = array(
 			$keys[0] => $this->getAltUid(),
 			$keys[1] => $this->getProUid(),
-			$keys[2] => $this->getTasUid(),
-			$keys[3] => $this->getAltType(),
-			$keys[4] => $this->getAltMaxAttempts(),
-			$keys[5] => $this->getAltTemplate(),
-			$keys[6] => $this->getAltDigest(),
-			$keys[7] => $this->getTriUid(),
+			$keys[2] => $this->getTasInitial(),
+			$keys[3] => $this->getTasFinal(),
+			$keys[4] => $this->getAltType(),
+			$keys[5] => $this->getAltDays(),
+			$keys[6] => $this->getAltMaxAttempts(),
+			$keys[7] => $this->getAltTemplate(),
+			$keys[8] => $this->getAltDigest(),
+			$keys[9] => $this->getTriUid(),
 		);
 		return $result;
 	}
@@ -692,21 +778,27 @@ abstract class BaseAlert extends BaseObject  implements Persistent {
 				$this->setProUid($value);
 				break;
 			case 2:
-				$this->setTasUid($value);
+				$this->setTasInitial($value);
 				break;
 			case 3:
-				$this->setAltType($value);
+				$this->setTasFinal($value);
 				break;
 			case 4:
-				$this->setAltMaxAttempts($value);
+				$this->setAltType($value);
 				break;
 			case 5:
-				$this->setAltTemplate($value);
+				$this->setAltDays($value);
 				break;
 			case 6:
-				$this->setAltDigest($value);
+				$this->setAltMaxAttempts($value);
 				break;
 			case 7:
+				$this->setAltTemplate($value);
+				break;
+			case 8:
+				$this->setAltDigest($value);
+				break;
+			case 9:
 				$this->setTriUid($value);
 				break;
 		} // switch()
@@ -734,12 +826,14 @@ abstract class BaseAlert extends BaseObject  implements Persistent {
 
 		if (array_key_exists($keys[0], $arr)) $this->setAltUid($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setProUid($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setTasUid($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setAltType($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setAltMaxAttempts($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setAltTemplate($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setAltDigest($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setTriUid($arr[$keys[7]]);
+		if (array_key_exists($keys[2], $arr)) $this->setTasInitial($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setTasFinal($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setAltType($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setAltDays($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setAltMaxAttempts($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setAltTemplate($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setAltDigest($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setTriUid($arr[$keys[9]]);
 	}
 
 	/**
@@ -753,8 +847,10 @@ abstract class BaseAlert extends BaseObject  implements Persistent {
 
 		if ($this->isColumnModified(AlertPeer::ALT_UID)) $criteria->add(AlertPeer::ALT_UID, $this->alt_uid);
 		if ($this->isColumnModified(AlertPeer::PRO_UID)) $criteria->add(AlertPeer::PRO_UID, $this->pro_uid);
-		if ($this->isColumnModified(AlertPeer::TAS_UID)) $criteria->add(AlertPeer::TAS_UID, $this->tas_uid);
+		if ($this->isColumnModified(AlertPeer::TAS_INITIAL)) $criteria->add(AlertPeer::TAS_INITIAL, $this->tas_initial);
+		if ($this->isColumnModified(AlertPeer::TAS_FINAL)) $criteria->add(AlertPeer::TAS_FINAL, $this->tas_final);
 		if ($this->isColumnModified(AlertPeer::ALT_TYPE)) $criteria->add(AlertPeer::ALT_TYPE, $this->alt_type);
+		if ($this->isColumnModified(AlertPeer::ALT_DAYS)) $criteria->add(AlertPeer::ALT_DAYS, $this->alt_days);
 		if ($this->isColumnModified(AlertPeer::ALT_MAX_ATTEMPTS)) $criteria->add(AlertPeer::ALT_MAX_ATTEMPTS, $this->alt_max_attempts);
 		if ($this->isColumnModified(AlertPeer::ALT_TEMPLATE)) $criteria->add(AlertPeer::ALT_TEMPLATE, $this->alt_template);
 		if ($this->isColumnModified(AlertPeer::ALT_DIGEST)) $criteria->add(AlertPeer::ALT_DIGEST, $this->alt_digest);
@@ -815,9 +911,13 @@ abstract class BaseAlert extends BaseObject  implements Persistent {
 
 		$copyObj->setProUid($this->pro_uid);
 
-		$copyObj->setTasUid($this->tas_uid);
+		$copyObj->setTasInitial($this->tas_initial);
+
+		$copyObj->setTasFinal($this->tas_final);
 
 		$copyObj->setAltType($this->alt_type);
+
+		$copyObj->setAltDays($this->alt_days);
 
 		$copyObj->setAltMaxAttempts($this->alt_max_attempts);
 

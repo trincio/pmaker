@@ -24,7 +24,7 @@ abstract class BaseAlertPeer {
 	const CLASS_DEFAULT = 'classes.model.Alert';
 
 	/** The total number of columns. */
-	const NUM_COLUMNS = 8;
+	const NUM_COLUMNS = 10;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -36,11 +36,17 @@ abstract class BaseAlertPeer {
 	/** the column name for the PRO_UID field */
 	const PRO_UID = 'ALERT.PRO_UID';
 
-	/** the column name for the TAS_UID field */
-	const TAS_UID = 'ALERT.TAS_UID';
+	/** the column name for the TAS_INITIAL field */
+	const TAS_INITIAL = 'ALERT.TAS_INITIAL';
+
+	/** the column name for the TAS_FINAL field */
+	const TAS_FINAL = 'ALERT.TAS_FINAL';
 
 	/** the column name for the ALT_TYPE field */
 	const ALT_TYPE = 'ALERT.ALT_TYPE';
+
+	/** the column name for the ALT_DAYS field */
+	const ALT_DAYS = 'ALERT.ALT_DAYS';
 
 	/** the column name for the ALT_MAX_ATTEMPTS field */
 	const ALT_MAX_ATTEMPTS = 'ALERT.ALT_MAX_ATTEMPTS';
@@ -65,10 +71,10 @@ abstract class BaseAlertPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('AltUid', 'ProUid', 'TasUid', 'AltType', 'AltMaxAttempts', 'AltTemplate', 'AltDigest', 'TriUid', ),
-		BasePeer::TYPE_COLNAME => array (AlertPeer::ALT_UID, AlertPeer::PRO_UID, AlertPeer::TAS_UID, AlertPeer::ALT_TYPE, AlertPeer::ALT_MAX_ATTEMPTS, AlertPeer::ALT_TEMPLATE, AlertPeer::ALT_DIGEST, AlertPeer::TRI_UID, ),
-		BasePeer::TYPE_FIELDNAME => array ('ALT_UID', 'PRO_UID', 'TAS_UID', 'ALT_TYPE', 'ALT_MAX_ATTEMPTS', 'ALT_TEMPLATE', 'ALT_DIGEST', 'TRI_UID', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
+		BasePeer::TYPE_PHPNAME => array ('AltUid', 'ProUid', 'TasInitial', 'TasFinal', 'AltType', 'AltDays', 'AltMaxAttempts', 'AltTemplate', 'AltDigest', 'TriUid', ),
+		BasePeer::TYPE_COLNAME => array (AlertPeer::ALT_UID, AlertPeer::PRO_UID, AlertPeer::TAS_INITIAL, AlertPeer::TAS_FINAL, AlertPeer::ALT_TYPE, AlertPeer::ALT_DAYS, AlertPeer::ALT_MAX_ATTEMPTS, AlertPeer::ALT_TEMPLATE, AlertPeer::ALT_DIGEST, AlertPeer::TRI_UID, ),
+		BasePeer::TYPE_FIELDNAME => array ('ALT_UID', 'PRO_UID', 'TAS_INITIAL', 'TAS_FINAL', 'ALT_TYPE', 'ALT_DAYS', 'ALT_MAX_ATTEMPTS', 'ALT_TEMPLATE', 'ALT_DIGEST', 'TRI_UID', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
 	);
 
 	/**
@@ -78,10 +84,10 @@ abstract class BaseAlertPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('AltUid' => 0, 'ProUid' => 1, 'TasUid' => 2, 'AltType' => 3, 'AltMaxAttempts' => 4, 'AltTemplate' => 5, 'AltDigest' => 6, 'TriUid' => 7, ),
-		BasePeer::TYPE_COLNAME => array (AlertPeer::ALT_UID => 0, AlertPeer::PRO_UID => 1, AlertPeer::TAS_UID => 2, AlertPeer::ALT_TYPE => 3, AlertPeer::ALT_MAX_ATTEMPTS => 4, AlertPeer::ALT_TEMPLATE => 5, AlertPeer::ALT_DIGEST => 6, AlertPeer::TRI_UID => 7, ),
-		BasePeer::TYPE_FIELDNAME => array ('ALT_UID' => 0, 'PRO_UID' => 1, 'TAS_UID' => 2, 'ALT_TYPE' => 3, 'ALT_MAX_ATTEMPTS' => 4, 'ALT_TEMPLATE' => 5, 'ALT_DIGEST' => 6, 'TRI_UID' => 7, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, )
+		BasePeer::TYPE_PHPNAME => array ('AltUid' => 0, 'ProUid' => 1, 'TasInitial' => 2, 'TasFinal' => 3, 'AltType' => 4, 'AltDays' => 5, 'AltMaxAttempts' => 6, 'AltTemplate' => 7, 'AltDigest' => 8, 'TriUid' => 9, ),
+		BasePeer::TYPE_COLNAME => array (AlertPeer::ALT_UID => 0, AlertPeer::PRO_UID => 1, AlertPeer::TAS_INITIAL => 2, AlertPeer::TAS_FINAL => 3, AlertPeer::ALT_TYPE => 4, AlertPeer::ALT_DAYS => 5, AlertPeer::ALT_MAX_ATTEMPTS => 6, AlertPeer::ALT_TEMPLATE => 7, AlertPeer::ALT_DIGEST => 8, AlertPeer::TRI_UID => 9, ),
+		BasePeer::TYPE_FIELDNAME => array ('ALT_UID' => 0, 'PRO_UID' => 1, 'TAS_INITIAL' => 2, 'TAS_FINAL' => 3, 'ALT_TYPE' => 4, 'ALT_DAYS' => 5, 'ALT_MAX_ATTEMPTS' => 6, 'ALT_TEMPLATE' => 7, 'ALT_DIGEST' => 8, 'TRI_UID' => 9, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, )
 	);
 
 	/**
@@ -186,9 +192,13 @@ abstract class BaseAlertPeer {
 
 		$criteria->addSelectColumn(AlertPeer::PRO_UID);
 
-		$criteria->addSelectColumn(AlertPeer::TAS_UID);
+		$criteria->addSelectColumn(AlertPeer::TAS_INITIAL);
+
+		$criteria->addSelectColumn(AlertPeer::TAS_FINAL);
 
 		$criteria->addSelectColumn(AlertPeer::ALT_TYPE);
+
+		$criteria->addSelectColumn(AlertPeer::ALT_DAYS);
 
 		$criteria->addSelectColumn(AlertPeer::ALT_MAX_ATTEMPTS);
 
