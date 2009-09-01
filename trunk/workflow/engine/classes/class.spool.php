@@ -82,18 +82,18 @@
 		  G::LoadClass('insert');
 	      $oInsert = new insert();
 	      $sUID    = $oInsert->db_insert($aData);
-	      
+
 	      $aData['app_msg_date'] = isset($aData['app_msg_date'])? $aData['app_msg_date']: '';
-	      
+
 	      if( isset($aData['app_msg_status']) ){
 	      	$this->status = strtolower($aData['app_msg_status']);
 	      }
-	      
+
 	      $this->setData(
-	      	$sUID, 
-	      	$aData['app_msg_subject'], 
-	      	$aData['app_msg_from'], 
-	      	$aData['app_msg_to'], 
+	      	$sUID,
+	      	$aData['app_msg_subject'],
+	      	$aData['app_msg_from'],
+	      	$aData['app_msg_to'],
 	      	$aData['app_msg_body'],
 	      	$aData['app_msg_date'],
 	      	$aData['app_msg_cc'],
@@ -117,7 +117,7 @@
 			$this->fileData['bcc'] 		     = $sBCC;
 			$this->fileData['template'] 	 = $sTemplate;
 			$this->fileData['attachments']   = array();
-			
+
 			if ($this->config['MESS_ENGINE'] == 'OPENMAIL') {
 				if ($this->config['MESS_SERVER'] != '') {
 			    	if (($sAux = @gethostbyaddr($this->config['MESS_SERVER']))) {
@@ -295,5 +295,42 @@
         }
 			}
 		}
+
+		function resendEmails() {
+		  try {
+        require_once 'classes/model/Configuration.php';
+        $oConfiguration = new Configuration();
+        $sDelimiter     = DBAdapter::getStringDelimiter();
+        $oCriteria      = new Criteria('workflow');
+        $oCriteria->add(ConfigurationPeer::CFG_UID, 'Emails');
+        $oCriteria->add(ConfigurationPeer::OBJ_UID, '');
+        $oCriteria->add(ConfigurationPeer::PRO_UID, '');
+        $oCriteria->add(ConfigurationPeer::USR_UID, '');
+        $oCriteria->add(ConfigurationPeer::APP_UID, '');
+        $aConfiguration = $oConfiguration->load('Emails', '', '', '', '');
+        $aConfiguration = unserialize($aConfiguration['CFG_VALUE']);
+        if ($aConfiguration['MESS_ENABLED'] == '1') {
+          $this->setConfig(array('MESS_ENGINE'   => $aConfiguration['MESS_ENGINE'],
+                                 'MESS_SERVER'   => $aConfiguration['MESS_SERVER'],
+                                 'MESS_PORT'     => $aConfiguration['MESS_PORT'],
+                                 'MESS_ACCOUNT'  => $aConfiguration['MESS_ACCOUNT'],
+                                 'MESS_PASSWORD' => $aConfiguration['MESS_PASSWORD']));
+          require_once 'classes/model/AppMessage.php';
+          $oCriteria = new Criteria('workflow');
+          $oCriteria->add(AppMessagePeer::APP_MSG_STATUS, 'sent', Criteria::NOT_EQUAL);
+          $oDataset = AppMessagePeer::doSelectRS($oCriteria);
+          $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+          $oDataset->next();
+          while ($aRow = $oDataset->getRow()) {
+            $this->setData($aRow['APP_MSG_UID'], $aRow['APP_MSG_SUBJECT'], $aRow['APP_MSG_FROM'], $aRow['APP_MSG_TO'], $aRow['APP_MSG_BODY']);
+            $this->sendMail();
+            $oDataset->next();
+          }
+        }
+      }
+      catch (Exception $oError) {
+        //CONTINUE
+      }
+    }
 	} // end of class
 ?>
