@@ -1,6 +1,6 @@
 {if $printTemplate}
 {* this is the grid template *}
-<div class="grid">
+<div class="pagedTableDefault">
 	<div class="boxTop"><div class="a"></div><div class="b"></div><div class="c"></div></div>
 	<div class="content">
 <table class="FormSubTitle" width="100%" cellpadding="0" cellspacing="0">
@@ -18,11 +18,11 @@
      </tr>
    </table>
 {/if}
-   <table class="tableGrid2" width="100%" name="{$form->name}" id="{$form->name}" cellpadding="0" cellspacing="0" border="0">
+   <table class="pagedTable" width="100%" name="{$form->name}" id="{$form->name}" cellpadding="0" cellspacing="0" border="0">
      <tr>
-      <td> </td>
+      <td class="pagedTableHeader">&nbsp;</td>
 {foreach from=$form->fields item=field}
-      <td style="color:#000; background:#E2F0F9;"><center><b>{$field->label}</b></center></td>
+      <td class="pagedTableHeader" class="height:50px"><img src="/js/maborak/core/images/separatorTable.gif" border="0">&nbsp;&nbsp;{$field->label}</td>
 {/foreach}
      </tr>
 {literal}
