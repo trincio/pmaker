@@ -899,25 +899,25 @@ class Cases
   */
   function GetAllThreads($sAppUid)
   {
-      //('SELECT * FROM APP_DELEGATION WHERE APP_UID="'.$currentDelegation['APP_UID'].'" ');
-      try {
-          $aThreads = array();
-          $c = new Criteria();
-          $c->add(AppThreadPeer::APP_UID, $sAppUid);
-          $rs = AppThreadPeer::doSelectRs($c);
-          $rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    //('SELECT * FROM APP_DELEGATION WHERE APP_UID="'.$currentDelegation['APP_UID'].'" ');
+    try {
+      $aThreads = array();
+      $c = new Criteria();
+      $c->add(AppThreadPeer::APP_UID, $sAppUid);
+      $rs = AppThreadPeer::doSelectRs($c);
+      $rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $rs->next();
+      $row = $rs->getRow();
+      while (is_array($row)) {
+          $aThreads[] = $row;
           $rs->next();
           $row = $rs->getRow();
-          while (is_array($row)) {
-              $aThreads[] = $row;
-              $rs->next();
-              $row = $rs->getRow();
-          }
-          return $aThreads;
       }
-      catch (exception $e) {
-          throw ($e);
-      }
+      return $aThreads;
+    }
+    catch (exception $e) {
+      throw ($e);
+    }
   }
 
 
@@ -930,20 +930,20 @@ class Cases
   */
   function updateAppThread($sAppUid, $iAppThreadIndex, $iNewDelIndex)
   {
-      try {
-          $appThread = new AppThread();
-          $aData = array();
-          $aData['APP_UID'] = $sAppUid;
-          $aData['APP_THREAD_INDEX'] = $iAppThreadIndex;
-          $aData['DEL_INDEX'] = $iNewDelIndex;
+    try {
+      $appThread = new AppThread();
+      $aData = array();
+      $aData['APP_UID'] = $sAppUid;
+      $aData['APP_THREAD_INDEX'] = $iAppThreadIndex;
+      $aData['DEL_INDEX'] = $iNewDelIndex;
 
-          $appThread->update($aData);
-          return $iNewDelIndex;
+      $appThread->update($aData);
+      return $iNewDelIndex;
 
-      }
-      catch (exception $e) {
-          throw ($e);
-      }
+    }
+    catch (exception $e) {
+      throw ($e);
+    }
 
   }
 
@@ -955,20 +955,20 @@ class Cases
   */
   function closeAppThread($sAppUid, $iAppThreadIndex)
   {
-      try {
-          $appThread = new AppThread();
-          $aData = array();
-          $aData['APP_UID'] = $sAppUid;
-          $aData['APP_THREAD_INDEX'] = $iAppThreadIndex;
-          $aData['APP_THREAD_STATUS'] = 'CLOSED';
+    try {
+      $appThread = new AppThread();
+      $aData = array();
+      $aData['APP_UID'] = $sAppUid;
+      $aData['APP_THREAD_INDEX'] = $iAppThreadIndex;
+      $aData['APP_THREAD_STATUS'] = 'CLOSED';
 
-          $appThread->update($aData);
-          return true;
+      $appThread->update($aData);
+      return true;
 
-      }
-      catch (exception $e) {
-          throw ($e);
-      }
+    }
+    catch (exception $e) {
+      throw ($e);
+    }
 
   }
 
@@ -979,27 +979,28 @@ class Cases
   */
   function closeAllThreads($sAppUid)
   {
-      try {
-          //Execute('UPDATE APP_DELEGATION SET DEL_THREAD_STATUS="CLOSED" WHERE APP_UID="$sAppUid" AND DEL_THREAD_STATUS="OPEN"');
-          $c = new Criteria();
-          $c->add(AppThreadPeer::APP_UID, $sAppUid);
-          $c->add(AppThreadPeer::APP_THREAD_STATUS, 'OPEN');
-          $rowObj = AppThreadPeer::doSelect($c);
-          foreach ($rowObj as $appThread) {
-              $appThread->setAppThreadStatus('CLOSED');
-              if ($appThread->Validate()) {
-                  $appThread->Save();
-              } else {
-                  $msg = '';
-                  foreach ($this->getValidationFailures() as $objValidationFailure)
-                      $msg .= $objValidationFailure->getMessage() . "<br/>";
-                  throw (new PropelException('The row cannot be created!', new PropelException($msg)));
-              }
-          }
+    try {
+      //Execute('UPDATE APP_DELEGATION SET DEL_THREAD_STATUS="CLOSED" WHERE APP_UID="$sAppUid" AND DEL_THREAD_STATUS="OPEN"');
+      $c = new Criteria();
+      $c->add(AppThreadPeer::APP_UID, $sAppUid);
+      $c->add(AppThreadPeer::APP_THREAD_STATUS, 'OPEN');
+      $rowObj = AppThreadPeer::doSelect($c);
+      foreach ($rowObj as $appThread) {
+        $appThread->setAppThreadStatus('CLOSED');
+        if ($appThread->Validate()) {
+            $appThread->Save();
+        } 
+        else {
+          $msg = '';
+          foreach ($this->getValidationFailures() as $objValidationFailure)
+              $msg .= $objValidationFailure->getMessage() . "<br/>";
+          throw (new PropelException('The row cannot be created!', new PropelException($msg)));
+        }
       }
-      catch (exception $e) {
-          throw ($e);
-      }
+    }
+    catch (exception $e) {
+        throw ($e);
+    }
   }
 
 
@@ -1013,14 +1014,14 @@ class Cases
   */
   function newAppThread($sAppUid, $iNewDelIndex, $iAppParent)
   {
-      try {
-          $appThread = new AppThread();
-          return $appThread->createAppThread($sAppUid, $iNewDelIndex, $iAppParent);
+    try {
+      $appThread = new AppThread();
+      return $appThread->createAppThread($sAppUid, $iNewDelIndex, $iAppParent);
 
-      }
-      catch (exception $e) {
-          throw ($e);
-      }
+    }
+    catch (exception $e) {
+      throw ($e);
+    }
 
   }
 
@@ -1032,27 +1033,28 @@ class Cases
   */
   function closeAllDelegations($sAppUid)
   {
-      try {
-          //Execute('UPDATE APP_DELEGATION SET DEL_THREAD_STATUS="CLOSED" WHERE APP_UID="$sAppUid" AND DEL_THREAD_STATUS="OPEN"');
-          $c = new Criteria();
-          $c->add(AppDelegationPeer::APP_UID, $sAppUid);
-          $c->add(AppDelegationPeer::DEL_THREAD_STATUS, 'OPEN');
-          $rowObj = AppDelegationPeer::doSelect($c);
-          foreach ($rowObj as $appDel) {
-              $appDel->setDelThreadStatus('CLOSED');
-              if ($appDel->Validate()) {
-                  $appDel->Save();
-              } else {
-                  $msg = '';
-                  foreach ($this->getValidationFailures() as $objValidationFailure)
-                      $msg .= $objValidationFailure->getMessage() . "<br/>";
-                  throw (new PropelException('The row cannot be created!', new PropelException($msg)));
-              }
-          }
+    try {
+      //Execute('UPDATE APP_DELEGATION SET DEL_THREAD_STATUS="CLOSED" WHERE APP_UID="$sAppUid" AND DEL_THREAD_STATUS="OPEN"');
+      $c = new Criteria();
+      $c->add(AppDelegationPeer::APP_UID, $sAppUid);
+      $c->add(AppDelegationPeer::DEL_THREAD_STATUS, 'OPEN');
+      $rowObj = AppDelegationPeer::doSelect($c);
+      foreach ($rowObj as $appDel) {
+        $appDel->setDelThreadStatus('CLOSED');
+        if ($appDel->Validate()) {
+          $appDel->Save();
+        } 
+        else {
+          $msg = '';
+          foreach ($this->getValidationFailures() as $objValidationFailure)
+            $msg .= $objValidationFailure->getMessage() . "<br/>";
+          throw (new PropelException('The row cannot be created!', new PropelException($msg)));
+        }
       }
-      catch (exception $e) {
-          throw ($e);
-      }
+    }
+    catch (exception $e) {
+        throw ($e);
+    }
   }
 
   /*
@@ -1063,31 +1065,32 @@ class Cases
   */
   function CloseCurrentDelegation($sAppUid, $iDelIndex)
   {
-      try {
-          //Execute('UPDATE APP_DELEGATION SET DEL_THREAD_STATUS="CLOSED" WHERE APP_UID="$sAppUid" AND DEL_THREAD_STATUS="OPEN"');
-          $c = new Criteria();
-          $c->add(AppDelegationPeer::APP_UID, $sAppUid);
-          $c->add(AppDelegationPeer::DEL_INDEX, $iDelIndex);
-          $rowObj = AppDelegationPeer::doSelect($c);
-          G::LoadClass('dates');
-          $oDates = new dates();
-          foreach ($rowObj as $appDel) {
-              $appDel->setDelThreadStatus('CLOSED');
-              $appDel->setDelFinishDate('now');
-              $appDel->setDelDuration($oDates->calculateDuration($appDel->getDelInitDate(), $appDel->getDelFinishDate(), null, null, $appDel->getTasUid()));
-              if ($appDel->Validate()) {
-                  $appDel->Save();
-              } else {
-                  $msg = '';
-                  foreach ($this->getValidationFailures() as $objValidationFailure)
-                      $msg .= $objValidationFailure->getMessage() . "<br/>";
-                  throw (new PropelException('The row cannot be created!', new PropelException($msg)));
-              }
-          }
+    try {
+      //Execute('UPDATE APP_DELEGATION SET DEL_THREAD_STATUS="CLOSED" WHERE APP_UID="$sAppUid" AND DEL_THREAD_STATUS="OPEN"');
+      $c = new Criteria();
+      $c->add(AppDelegationPeer::APP_UID, $sAppUid);
+      $c->add(AppDelegationPeer::DEL_INDEX, $iDelIndex);
+      $rowObj = AppDelegationPeer::doSelect($c);
+      G::LoadClass('dates');
+      $oDates = new dates();
+      foreach ($rowObj as $appDel) {
+        $appDel->setDelThreadStatus('CLOSED');
+        $appDel->setDelFinishDate('now');
+        $appDel->setDelDuration($oDates->calculateDuration($appDel->getDelInitDate(), $appDel->getDelFinishDate(), null, null, $appDel->getTasUid()));
+        if ($appDel->Validate()) {
+            $appDel->Save();
+        } 
+        else {
+          $msg = '';
+          foreach ($this->getValidationFailures() as $objValidationFailure)
+            $msg .= $objValidationFailure->getMessage() . "<br/>";
+          throw (new PropelException('The row cannot be created!', new PropelException($msg)));
+        }
       }
-      catch (exception $e) {
-          throw ($e);
-      }
+    }
+    catch (exception $e) {
+      throw ($e);
+    }
   }
 
 
@@ -1101,28 +1104,29 @@ class Cases
   */
   function ReactivateCurrentDelegation($sAppUid, $iDelegation)
   {
-      try {
-          $c = new Criteria();
-          $c->add(AppDelegationPeer::APP_UID, $sAppUid);
-          $c->add(AppDelegationPeer::DEL_INDEX, $iDelegation);
+    try {
+      $c = new Criteria();
+      $c->add(AppDelegationPeer::APP_UID, $sAppUid);
+      $c->add(AppDelegationPeer::DEL_INDEX, $iDelegation);
 
-          $rowObj = AppDelegationPeer::doSelect($c);
-          foreach ($rowObj as $appDel) {
-              $appDel->setDelThreadStatus('OPEN');
-              $appDel->setDelFinishDate(null);
-              if ($appDel->Validate()) {
-                  $appDel->Save();
-              } else {
-                  $msg = '';
-                  foreach ($this->getValidationFailures() as $objValidationFailure)
-                      $msg .= $objValidationFailure->getMessage() . "<br/>";
-                  throw (new PropelException('The row cannot be created!', new PropelException($msg)));
-              }
-          }
+      $rowObj = AppDelegationPeer::doSelect($c);
+      foreach ($rowObj as $appDel) {
+        $appDel->setDelThreadStatus('OPEN');
+        $appDel->setDelFinishDate(null);
+        if ($appDel->Validate()) {
+            $appDel->Save();
+        } 
+        else {
+          $msg = '';
+          foreach ($this->getValidationFailures() as $objValidationFailure)
+            $msg .= $objValidationFailure->getMessage() . "<br/>";
+          throw (new PropelException('The row cannot be created!', new PropelException($msg)));
+        }
       }
-      catch (exception $e) {
-          throw ($e);
-      }
+    }
+    catch (exception $e) {
+        throw ($e);
+    }
   }
 
 
@@ -1135,57 +1139,58 @@ class Cases
   */
   function startCase($sTasUid, $sUsrUid)
   {
-      if ($sTasUid != '' && $sUsrUid != '') {
-          try {
-              $this->Task = new Task;
-              $this->Task->Load($sTasUid);
+    if ($sTasUid != '' && $sUsrUid != '') {
+      try {
+        $this->Task = new Task;
+        $this->Task->Load($sTasUid);
 
-              //Process
-              $sProUid = $this->Task->getProUid();
-              $this->Process = new Process;
-              $proFields = $this->Process->Load($sProUid);
+        //Process
+        $sProUid = $this->Task->getProUid();
+        $this->Process = new Process;
+        $proFields = $this->Process->Load($sProUid);
 
-              //application
-              $Application = new Application;
-              $sAppUid = $Application->create($sProUid, $sUsrUid);
+        //application
+        $Application = new Application;
+        $sAppUid = $Application->create($sProUid, $sUsrUid);
 
-              //appDelegation
-              $AppDelegation = new AppDelegation;
-              $iAppThreadIndex = 1; //start thread
-              $iDelIndex = $AppDelegation->createAppDelegation($sProUid, $sAppUid, $sTasUid, $sUsrUid, $iAppThreadIndex);
+        //appDelegation
+        $AppDelegation = new AppDelegation;
+        $iAppThreadIndex = 1; //start thread
+        $iDelIndex = $AppDelegation->createAppDelegation($sProUid, $sAppUid, $sTasUid, $sUsrUid, $iAppThreadIndex);
 
-              //appThread
-              $AppThread = new AppThread;
-              $iAppThreadIndex = $AppThread->createAppThread($sAppUid, $iDelIndex, 0);
-              //DONE: Al ya existir un delegation, se puede "calcular" el caseTitle.
-              $Fields = $Application->toArray(BasePeer::TYPE_FIELDNAME);
-              $Fields['APP_TITLE'] = self::refreshCaseTitle($sAppUid, G::array_merges(G::getSystemConstants(), unserialize($Fields['APP_DATA'])));
-              $Fields['APP_DESCRIPTION'] = self::refreshCaseDescription($sAppUid, G::array_merges(G::getSystemConstants(), unserialize($Fields['APP_DATA'])));
-              //$Fields['APP_PROC_CODE'] = self::refreshCaseStatusCode($sAppUid, G::array_merges(G::getSystemConstants(), unserialize($Fields['APP_DATA'])));
-              $caseNumber = $Fields['APP_NUMBER'];
-              $Application->update($Fields);
-              //Update the task last assigned (for web entry an web services)
-              G::LoadClass('derivation');
-              $oDerivation = new Derivation();
-              $oDerivation->setTasLastAssigned($sTasUid, $sUsrUid);
+        //appThread
+        $AppThread = new AppThread;
+        $iAppThreadIndex = $AppThread->createAppThread($sAppUid, $iDelIndex, 0);
+        //DONE: Al ya existir un delegation, se puede "calcular" el caseTitle.
+        $Fields = $Application->toArray(BasePeer::TYPE_FIELDNAME);
+        $Fields['APP_TITLE'] = self::refreshCaseTitle($sAppUid, G::array_merges(G::getSystemConstants(), unserialize($Fields['APP_DATA'])));
+        $Fields['APP_DESCRIPTION'] = self::refreshCaseDescription($sAppUid, G::array_merges(G::getSystemConstants(), unserialize($Fields['APP_DATA'])));
+        //$Fields['APP_PROC_CODE'] = self::refreshCaseStatusCode($sAppUid, G::array_merges(G::getSystemConstants(), unserialize($Fields['APP_DATA'])));
+        $caseNumber = $Fields['APP_NUMBER'];
+        $Application->update($Fields);
+        //Update the task last assigned (for web entry an web services)
+        G::LoadClass('derivation');
+        $oDerivation = new Derivation();
+        $oDerivation->setTasLastAssigned($sTasUid, $sUsrUid);
 
-          }
-          catch (exception $e) {
-              throw ($e);
-          }
-      } else {
-          throw (new Exception('You tried to start a new case without send the USER UID or TASK UID!'));
       }
-
-      //call plugin
-      if (class_exists('folderData')) {
-          $folderData = new folderData($sProUid, $proFields['PRO_TITLE'], $sAppUid, $Fields['APP_TITLE'], $sUsrUid);
-          $oPluginRegistry = &PMPluginRegistry::getSingleton();
-          $oPluginRegistry->executeTriggers(PM_CREATE_CASE, $folderData);
+      catch (exception $e) {
+          throw ($e);
       }
-      //end plugin
+    } 
+    else {
+        throw (new Exception('You tried to start a new case without send the USER UID or TASK UID!'));
+    }
 
-      return array('APPLICATION' => $sAppUid, 'INDEX' => $iDelIndex, 'PROCESS' => $sProUid, 'CASE_NUMBER' => $caseNumber);
+    //call plugin
+    if (class_exists('folderData')) {
+      $folderData = new folderData($sProUid, $proFields['PRO_TITLE'], $sAppUid, $Fields['APP_TITLE'], $sUsrUid);
+      $oPluginRegistry = &PMPluginRegistry::getSingleton();
+      $oPluginRegistry->executeTriggers(PM_CREATE_CASE, $folderData);
+    }
+    //end plugin
+
+    return array('APPLICATION' => $sAppUid, 'INDEX' => $iDelIndex, 'PROCESS' => $sProUid, 'CASE_NUMBER' => $caseNumber);
   }
 
   /*
@@ -1198,94 +1203,95 @@ class Cases
   */
   function getNextStep($sProUid = '', $sAppUid = '', $iDelIndex = 0, $iPosition = 0)
   {
-      G::LoadClass('pmScript');
-      $oPMScript = new PMScript();
-      $oApplication = new Application();
-      $aFields = $oApplication->load($sAppUid);
-      if (!is_array($aFields['APP_DATA'])) {
-          $aFields['APP_DATA'] = G::array_merges(G::getSystemConstants(), unserialize($aFields['APP_DATA']));
-      }
-      $oPMScript->setFields($aFields['APP_DATA']);
+    G::LoadClass('pmScript');
+    $oPMScript = new PMScript();
+    $oApplication = new Application();
+    $aFields = $oApplication->load($sAppUid);
+    if (!is_array($aFields['APP_DATA'])) {
+        $aFields['APP_DATA'] = G::array_merges(G::getSystemConstants(), unserialize($aFields['APP_DATA']));
+    }
+    $oPMScript->setFields($aFields['APP_DATA']);
 
-      try {
-          //get the current Delegation, and TaskUID
-          $c = new Criteria('workflow');
-          $c->add(AppDelegationPeer::PRO_UID, $sProUid);
-          $c->add(AppDelegationPeer::APP_UID, $sAppUid);
-          $c->add(AppDelegationPeer::DEL_INDEX, $iDelIndex);
-          $aRow = AppDelegationPeer::doSelect($c);
+    try {
+      //get the current Delegation, and TaskUID
+      $c = new Criteria('workflow');
+      $c->add(AppDelegationPeer::PRO_UID, $sProUid);
+      $c->add(AppDelegationPeer::APP_UID, $sAppUid);
+      $c->add(AppDelegationPeer::DEL_INDEX, $iDelIndex);
+      $aRow = AppDelegationPeer::doSelect($c);
 
-          if (!isset($aRow[0]))
-              return false;
+      if (!isset($aRow[0]))
+          return false;
 
-          $sTaskUid = $aRow[0]->getTasUid();
+      $sTaskUid = $aRow[0]->getTasUid();
 
-          //get max step for this task
-          $c = new Criteria();
-          $c->clearSelectColumns();
-          $c->addSelectColumn('MAX(' . StepPeer::STEP_POSITION . ')');
-          $c->add(StepPeer::PRO_UID, $sProUid);
-          $c->add(StepPeer::TAS_UID, $sTaskUid);
-          $rs = StepPeer::doSelectRS($c);
-          $rs->next();
-          $row = $rs->getRow();
-          $iLastStep = intval($row[0]);
+      //get max step for this task
+      $c = new Criteria();
+      $c->clearSelectColumns();
+      $c->addSelectColumn('MAX(' . StepPeer::STEP_POSITION . ')');
+      $c->add(StepPeer::PRO_UID, $sProUid);
+      $c->add(StepPeer::TAS_UID, $sTaskUid);
+      $rs = StepPeer::doSelectRS($c);
+      $rs->next();
+      $row = $rs->getRow();
+      $iLastStep = intval($row[0]);
 
-          $iPosition += 1;
-          $aNextStep = null;
-          if ($iPosition <= $iLastStep) {
-              //to do:      $oApplication = new Application($this->_dbc);
-              //to do:      $oApplication->load($sApplicationUID);
-              //to do:      G::LoadClass('pmScript');
-              //to do:      $oPMScript = new PMScript();
-              //to do:      $oPMScript->setFields($oApplication->Fields['APP_DATA']);
-              while ($iPosition <= $iLastStep) {
-                  $bAccessStep = false;
-                  //step
-                  $oStep = new Step;
-                  $oStep = $oStep->loadByProcessTaskPosition($sProUid, $sTaskUid, $iPosition);
-                  if ($oStep) {
-                    if ($oStep->getStepCondition() !== '') {
-                        $oPMScript->setScript($oStep->getStepCondition());
-                        $bAccessStep = $oPMScript->evaluate();
-                    } else {
-                        $bAccessStep = true;
-                    }
+      $iPosition += 1;
+      $aNextStep = null;
+      if ($iPosition <= $iLastStep) {
+        //to do:      $oApplication = new Application($this->_dbc);
+        //to do:      $oApplication->load($sApplicationUID);
+        //to do:      G::LoadClass('pmScript');
+        //to do:      $oPMScript = new PMScript();
+        //to do:      $oPMScript->setFields($oApplication->Fields['APP_DATA']);
+        while ($iPosition <= $iLastStep) {
+          $bAccessStep = false;
+          //step
+          $oStep = new Step;
+          $oStep = $oStep->loadByProcessTaskPosition($sProUid, $sTaskUid, $iPosition);
+          if ($oStep) {
+            if ($oStep->getStepCondition() !== '') {
+              $oPMScript->setScript($oStep->getStepCondition());
+              $bAccessStep = $oPMScript->evaluate();
+            } 
+            else {
+              $bAccessStep = true;
+            }
 
-                    if ($bAccessStep) {
-                        switch ($oStep->getStepTypeObj()) {
-                            case 'DYNAFORM':
-                                $sAction = 'EDIT';
-                                break;
-                            case 'OUTPUT_DOCUMENT':
-                                $sAction = 'GENERATE';
-                                break;
-                            case 'INPUT_DOCUMENT':
-                                $sAction = 'ATTACH';
-                                break;
-                            case 'EXTERNAL':
-                                $sAction = 'EDIT';
-                                break;
-                            case 'MESSAGE':
-                                $sAction = '';
-                                break;
-                        }
-                        $aNextStep = array('TYPE' => $oStep->getStepTypeObj(), 'UID' => $oStep->getStepUidObj(), 'POSITION' => $oStep->getStepPosition(), 'PAGE' => 'cases_Step?TYPE=' . $oStep->getStepTypeObj() . '&UID=' . $oStep->
-                            getStepUidObj() . '&POSITION=' . $oStep->getStepPosition() . '&ACTION=' . $sAction);
-                        $iPosition = $iLastStep;
-                    }
-                  }
-                  $iPosition += 1;
+            if ($bAccessStep) {
+              switch ($oStep->getStepTypeObj()) {
+                case 'DYNAFORM':
+                    $sAction = 'EDIT';
+                    break;
+                case 'OUTPUT_DOCUMENT':
+                    $sAction = 'GENERATE';
+                    break;
+                case 'INPUT_DOCUMENT':
+                    $sAction = 'ATTACH';
+                    break;
+                case 'EXTERNAL':
+                    $sAction = 'EDIT';
+                    break;
+                case 'MESSAGE':
+                    $sAction = '';
+                    break;
               }
+              $aNextStep = array('TYPE' => $oStep->getStepTypeObj(), 'UID' => $oStep->getStepUidObj(), 'POSITION' => $oStep->getStepPosition(), 'PAGE' => 'cases_Step?TYPE=' . $oStep->getStepTypeObj() . '&UID=' . $oStep->
+                  getStepUidObj() . '&POSITION=' . $oStep->getStepPosition() . '&ACTION=' . $sAction);
+              $iPosition = $iLastStep;
+            }
           }
-          if (!$aNextStep) {
-              $aNextStep = array('TYPE' => 'DERIVATION', 'UID' => -1, 'POSITION' => ($iLastStep + 1), 'PAGE' => 'cases_Step?TYPE=ASSIGN_TASK&UID=-1&POSITION=10000&ACTION=ASSIGN');
-          }
-          return $aNextStep;
+          $iPosition += 1;
+        }
       }
-      catch (exception $e) {
-          throw ($e);
+      if (!$aNextStep) {
+          $aNextStep = array('TYPE' => 'DERIVATION', 'UID' => -1, 'POSITION' => ($iLastStep + 1), 'PAGE' => 'cases_Step?TYPE=ASSIGN_TASK&UID=-1&POSITION=10000&ACTION=ASSIGN');
       }
+      return $aNextStep;
+    }
+    catch (exception $e) {
+        throw ($e);
+    }
   }
 
   /*
@@ -1298,103 +1304,134 @@ class Cases
   */
   function getPreviousStep($sProUid = '', $sAppUid = '', $iDelIndex = 0, $iPosition = 0)
   {
-      //Note: Depreciated, delete in the future
-      G::LoadClass('pmScript');
-      $oPMScript = new PMScript();
-      $oApplication = new Application();
-      $aFields = $oApplication->load($sAppUid);
-      if (!is_array($aFields['APP_DATA'])) {
-          $aFields['APP_DATA'] = G::array_merges(G::getSystemConstants(), unserialize($aFields['APP_DATA']));
-      }
-      $oPMScript->setFields($aFields['APP_DATA']);
+    //Note: Depreciated, delete in the future
+    G::LoadClass('pmScript');
+    $oPMScript = new PMScript();
+    $oApplication = new Application();
+    $aFields = $oApplication->load($sAppUid);
+    if (!is_array($aFields['APP_DATA'])) {
+      $aFields['APP_DATA'] = G::array_merges(G::getSystemConstants(), unserialize($aFields['APP_DATA']));
+    }
+    $oPMScript->setFields($aFields['APP_DATA']);
 
-      try {
-          //get the current Delegation, and TaskUID
+    try {
+      //get the current Delegation, and TaskUID
+      $c = new Criteria();
+      $c->add(AppDelegationPeer::PRO_UID, $sProUid);
+      $c->add(AppDelegationPeer::APP_UID, $sAppUid);
+      $c->add(AppDelegationPeer::DEL_INDEX, $iDelIndex);
+      $aRow = AppDelegationPeer::doSelect($c);
+
+      $sTaskUid = $aRow[0]->getTasUid();
+      $iFirstStep = 1;
+
+      if ($iPosition == 10000) {
+          //get max step for this task
           $c = new Criteria();
-          $c->add(AppDelegationPeer::PRO_UID, $sProUid);
-          $c->add(AppDelegationPeer::APP_UID, $sAppUid);
-          $c->add(AppDelegationPeer::DEL_INDEX, $iDelIndex);
-          $aRow = AppDelegationPeer::doSelect($c);
+          $c->clearSelectColumns();
+          $c->addSelectColumn('MAX(' . StepPeer::STEP_POSITION . ')');
+          $c->add(StepPeer::PRO_UID, $sProUid);
+          $c->add(StepPeer::TAS_UID, $sTaskUid);
+          $rs = StepPeer::doSelectRS($c);
+          $rs->next();
+          $row = $rs->getRow();
+          $iPosition = intval($row[0]);
+      } 
+      else {
+          $iPosition -= 1;
+      }
 
-          $sTaskUid = $aRow[0]->getTasUid();
-          $iFirstStep = 1;
+      $aPreviousStep = null;
+      if ($iPosition >= 1) {
+        //to do:      G::LoadClass('application');
+        //to do:      $oApplication = new Application($this->_dbc);
+        //to do:      $oApplication->load($sApplicationUID);
+        //to do:      G::LoadClass('pmScript');
+        //to do:      $oPMScript = new PMScript();
+        //to do:      $oPMScript->setFields($oApplication->Fields['APP_DATA']);
 
-          if ($iPosition == 10000) {
-              //get max step for this task
-              $c = new Criteria();
-              $c->clearSelectColumns();
-              $c->addSelectColumn('MAX(' . StepPeer::STEP_POSITION . ')');
-              $c->add(StepPeer::PRO_UID, $sProUid);
-              $c->add(StepPeer::TAS_UID, $sTaskUid);
-              $rs = StepPeer::doSelectRS($c);
-              $rs->next();
-              $row = $rs->getRow();
-              $iPosition = intval($row[0]);
-          } else {
-              $iPosition -= 1;
-          }
-
-          $aPreviousStep = null;
-          if ($iPosition >= 1) {
-              //to do:      G::LoadClass('application');
-              //to do:      $oApplication = new Application($this->_dbc);
-              //to do:      $oApplication->load($sApplicationUID);
-              //to do:      G::LoadClass('pmScript');
-              //to do:      $oPMScript = new PMScript();
-              //to do:      $oPMScript->setFields($oApplication->Fields['APP_DATA']);
-
-              while ($iPosition >= $iFirstStep) {
-                  $bAccessStep = false;
-                  //step
-                  $oStep = new Step;
-                  $oStep = $oStep->loadByProcessTaskPosition($sProUid, $sTaskUid, $iPosition);
-                  if ($oStep) {
-                    if ($oStep->getStepCondition() !== '') {
-                        $oPMScript->setScript($oStep->getStepCondition());
-                        $bAccessStep = $oPMScript->evaluate();
-                    } else {
-                        $bAccessStep = true;
-                    }
-                    if ($bAccessStep) {
-                        switch ($oStep->getStepTypeObj()) {
-                            case 'DYNAFORM':
-                                $sAction = 'EDIT';
-                                break;
-                            case 'OUTPUT_DOCUMENT':
-                                $sAction = 'GENERATE';
-                                break;
-                            case 'INPUT_DOCUMENT':
-                                $sAction = 'ATTACH';
-                                break;
-                            case 'EXTERNAL':
-                                $sAction = 'EDIT';
-                                break;
-                            case 'MESSAGE':
-                                $sAction = '';
-                                break;
-                        }
-                        $aPreviousStep = array('TYPE' => $oStep->getStepTypeObj(), 'UID' => $oStep->getStepUidObj(), 'POSITION' => $oStep->getStepPosition(), 'PAGE' => 'cases_Step?TYPE=' . $oStep->getStepTypeObj() . '&UID=' .
-                            $oStep->getStepUidObj() . '&POSITION=' . $oStep->getStepPosition() . '&ACTION=' . $sAction);
-                        $iPosition = $iFirstStep;
-                    }
-                  }
-                  $iPosition -= 1;
+        while ($iPosition >= $iFirstStep) {
+          $bAccessStep = false;
+          //step
+          $oStep = new Step;
+          $oStep = $oStep->loadByProcessTaskPosition($sProUid, $sTaskUid, $iPosition);
+          if ($oStep) {
+            if ($oStep->getStepCondition() !== '') {
+              $oPMScript->setScript($oStep->getStepCondition());
+              $bAccessStep = $oPMScript->evaluate();
+            } 
+            else {
+              $bAccessStep = true;
+            }
+            if ($bAccessStep) {
+              switch ($oStep->getStepTypeObj()) {
+                  case 'DYNAFORM':
+                      $sAction = 'EDIT';
+                      break;
+                  case 'OUTPUT_DOCUMENT':
+                      $sAction = 'GENERATE';
+                      break;
+                  case 'INPUT_DOCUMENT':
+                      $sAction = 'ATTACH';
+                      break;
+                  case 'EXTERNAL':
+                      $sAction = 'EDIT';
+                      break;
+                  case 'MESSAGE':
+                      $sAction = '';
+                      break;
               }
+              $aPreviousStep = array('TYPE' => $oStep->getStepTypeObj(), 
+                                     'UID' => $oStep->getStepUidObj(), 
+                                     'POSITION' => $oStep->getStepPosition(), 
+                                     'PAGE' => 'cases_Step?TYPE=' . $oStep->getStepTypeObj() . '&UID=' . $oStep->getStepUidObj() . '&POSITION=' . $oStep->getStepPosition() . '&ACTION=' . $sAction 
+                                    );
+              $iPosition = $iFirstStep;
+            }
           }
+          $iPosition -= 1;
+        }
+      }
 
-          if (!$aPreviousStep) {
-              $aPreviousStep = false;
-          }
-          return $aPreviousStep;
+      if (!$aPreviousStep) {
+          $aPreviousStep = false;
       }
-      catch (exception $e) {
-          throw ($e);
-      }
+      return $aPreviousStep;
+    }
+    catch (exception $e) {
+        throw ($e);
+    }
   }
 
   function getNextSupervisorStep($sProcessUID, $iPosition, $sType = 'DYNAFORM')
   {
-      $iPosition += 1;
+    $iPosition += 1;
+    $oCriteria = new Criteria();
+    $oCriteria->add(StepSupervisorPeer::PRO_UID, $sProcessUID);
+    $oCriteria->add(StepSupervisorPeer::STEP_TYPE_OBJ, $sType);
+    $oCriteria->add(StepSupervisorPeer::STEP_POSITION, $iPosition);
+    $oDataset = StepSupervisorPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    $aRow = $oDataset->getRow();
+    if (!$aRow) {
+      $oCriteria = new Criteria();
+      $oCriteria->add(StepSupervisorPeer::PRO_UID, $sProcessUID);
+      $oCriteria->add(StepSupervisorPeer::STEP_TYPE_OBJ, $sType);
+      $oCriteria->add(StepSupervisorPeer::STEP_POSITION, 1);
+      $oDataset = StepSupervisorPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      $aRow = $oDataset->getRow();
+    }
+    $aNextStep = array('UID' => $aRow['STEP_UID_OBJ'], 'POSITION' => $aRow['STEP_POSITION']);
+    return $aNextStep;
+  }
+
+  function getPreviousSupervisorStep($sProcessUID, $iPosition, $sType = 'DYNAFORM')
+  {
+    $iPosition -= 1;
+    if ($iPosition > 0) {
       $oCriteria = new Criteria();
       $oCriteria->add(StepSupervisorPeer::PRO_UID, $sProcessUID);
       $oCriteria->add(StepSupervisorPeer::STEP_TYPE_OBJ, $sType);
@@ -1404,96 +1441,70 @@ class Cases
       $oDataset->next();
       $aRow = $oDataset->getRow();
       if (!$aRow) {
-          $oCriteria = new Criteria();
-          $oCriteria->add(StepSupervisorPeer::PRO_UID, $sProcessUID);
-          $oCriteria->add(StepSupervisorPeer::STEP_TYPE_OBJ, $sType);
-          $oCriteria->add(StepSupervisorPeer::STEP_POSITION, 1);
-          $oDataset = StepSupervisorPeer::doSelectRS($oCriteria);
-          $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-          $oDataset->next();
-          $aRow = $oDataset->getRow();
+        $oCriteria = new Criteria();
+        $oCriteria->add(StepSupervisorPeer::PRO_UID, $sProcessUID);
+        $oCriteria->add(StepSupervisorPeer::STEP_TYPE_OBJ, $sType);
+        $oCriteria->add(StepSupervisorPeer::STEP_POSITION, 1);
+        $oDataset = StepSupervisorPeer::doSelectRS($oCriteria);
+        $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+        $oDataset->next();
+        $aRow = $oDataset->getRow();
       }
       $aNextStep = array('UID' => $aRow['STEP_UID_OBJ'], 'POSITION' => $aRow['STEP_POSITION']);
       return $aNextStep;
-  }
-
-  function getPreviousSupervisorStep($sProcessUID, $iPosition, $sType = 'DYNAFORM')
-  {
-      $iPosition -= 1;
-      if ($iPosition > 0) {
-          $oCriteria = new Criteria();
-          $oCriteria->add(StepSupervisorPeer::PRO_UID, $sProcessUID);
-          $oCriteria->add(StepSupervisorPeer::STEP_TYPE_OBJ, $sType);
-          $oCriteria->add(StepSupervisorPeer::STEP_POSITION, $iPosition);
-          $oDataset = StepSupervisorPeer::doSelectRS($oCriteria);
-          $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-          $oDataset->next();
-          $aRow = $oDataset->getRow();
-          if (!$aRow) {
-              $oCriteria = new Criteria();
-              $oCriteria->add(StepSupervisorPeer::PRO_UID, $sProcessUID);
-              $oCriteria->add(StepSupervisorPeer::STEP_TYPE_OBJ, $sType);
-              $oCriteria->add(StepSupervisorPeer::STEP_POSITION, 1);
-              $oDataset = StepSupervisorPeer::doSelectRS($oCriteria);
-              $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-              $oDataset->next();
-              $aRow = $oDataset->getRow();
-          }
-          $aNextStep = array('UID' => $aRow['STEP_UID_OBJ'], 'POSITION' => $aRow['STEP_POSITION']);
-          return $aNextStep;
-      }
-      else
-      {
-        return false;
-      }
+    }
+    else {
+      return false;
+    }
   }
 
   function getTransferHistoryCriteria($sAppUid)
   {
-      $c = new Criteria('workflow');
-      $c->addAsColumn('TAS_TITLE', 'TAS_TITLE.CON_VALUE');
-      $c->addSelectColumn(UsersPeer::USR_FIRSTNAME);
-      $c->addSelectColumn(UsersPeer::USR_LASTNAME);
-      $c->addSelectColumn(AppDelegationPeer::DEL_DELEGATE_DATE);
-      $c->addAsColumn('USR_NAME', "CONCAT(USR_LASTNAME, ' ', USR_FIRSTNAME)");
-      $c->addSelectColumn(AppDelegationPeer::DEL_INIT_DATE);
-      //$c->addSelectColumn(AppDelegationPeer::DEL_FINISH_DATE);
-      $c->addAsColumn('DEL_FINISH_DATE', "IF (DEL_FINISH_DATE IS NULL, '-', " . AppDelegationPeer::DEL_FINISH_DATE . ") ");
+    $c = new Criteria('workflow');
+    $c->addAsColumn('TAS_TITLE', 'TAS_TITLE.CON_VALUE');
+    $c->addSelectColumn(UsersPeer::USR_FIRSTNAME);
+    $c->addSelectColumn(UsersPeer::USR_LASTNAME);
+    $c->addSelectColumn(AppDelegationPeer::DEL_DELEGATE_DATE);
+    $c->addAsColumn('USR_NAME', "CONCAT(USR_LASTNAME, ' ', USR_FIRSTNAME)");
+    $c->addSelectColumn(AppDelegationPeer::DEL_INIT_DATE);
+    //$c->addSelectColumn(AppDelegationPeer::DEL_FINISH_DATE);
+    $c->addAsColumn('DEL_FINISH_DATE', "IF (DEL_FINISH_DATE IS NULL, '-', " . AppDelegationPeer::DEL_FINISH_DATE . ") ");
 
-      //$c->addSelectColumn(AppDelayPeer::APP_TYPE);
-      $c->addAsColumn('APP_TYPE', "IF (DEL_FINISH_DATE IS NULL, 'IN_PROGRESS', " . AppDelayPeer::APP_TYPE . ") ");
-      $c->addSelectColumn(AppDelayPeer::APP_ENABLE_ACTION_DATE);
-      $c->addSelectColumn(AppDelayPeer::APP_DISABLE_ACTION_DATE);
-      //APP_DELEGATION LEFT JOIN USERS
-      $c->addJoin(AppDelegationPeer::USR_UID, UsersPeer::USR_UID, Criteria::LEFT_JOIN);
+    //$c->addSelectColumn(AppDelayPeer::APP_TYPE);
+    $c->addAsColumn('APP_TYPE', "IF (DEL_FINISH_DATE IS NULL, 'IN_PROGRESS', " . AppDelayPeer::APP_TYPE . ") ");
+    $c->addSelectColumn(AppDelayPeer::APP_ENABLE_ACTION_DATE);
+    $c->addSelectColumn(AppDelayPeer::APP_DISABLE_ACTION_DATE);
+    //APP_DELEGATION LEFT JOIN USERS
+    $c->addJoin(AppDelegationPeer::USR_UID, UsersPeer::USR_UID, Criteria::LEFT_JOIN);
 
-      //APP_DELAY FOR MORE DESCRIPTION
-      //$c->addJoin(AppDelegationPeer::DEL_INDEX, AppDelayPeer::APP_DEL_INDEX, Criteria::LEFT_JOIN);
-      //$c->addJoin(AppDelegationPeer::APP_UID, AppDelayPeer::APP_UID, Criteria::LEFT_JOIN);
-      $del = DBAdapter::getStringDelimiter();
-      $app = array();
-      $app[] = array(AppDelegationPeer::DEL_INDEX, AppDelayPeer::APP_DEL_INDEX);
-      $app[] = array(AppDelegationPeer::APP_UID, AppDelayPeer::APP_UID);
-      $c->addJoinMC($app, Criteria::LEFT_JOIN);
+    //APP_DELAY FOR MORE DESCRIPTION
+    //$c->addJoin(AppDelegationPeer::DEL_INDEX, AppDelayPeer::APP_DEL_INDEX, Criteria::LEFT_JOIN);
+    //$c->addJoin(AppDelegationPeer::APP_UID, AppDelayPeer::APP_UID, Criteria::LEFT_JOIN);
+    $del = DBAdapter::getStringDelimiter();
+    $app = array();
+    $app[] = array(AppDelegationPeer::DEL_INDEX, AppDelayPeer::APP_DEL_INDEX);
+    $app[] = array(AppDelegationPeer::APP_UID, AppDelayPeer::APP_UID);
+    $c->addJoinMC($app, Criteria::LEFT_JOIN);
 
-      //  LEFT JOIN CONTENT TAS_TITLE
-      $c->addAlias("TAS_TITLE", 'CONTENT');
-      $del = DBAdapter::getStringDelimiter();
-      $appTitleConds = array();
-      $appTitleConds[] = array(AppDelegationPeer::TAS_UID, 'TAS_TITLE.CON_ID');
-      $appTitleConds[] = array('TAS_TITLE.CON_CATEGORY', $del . 'TAS_TITLE' . $del);
-      $appTitleConds[] = array('TAS_TITLE.CON_LANG', $del . SYS_LANG . $del);
-      $c->addJoinMC($appTitleConds, Criteria::LEFT_JOIN);
+    //  LEFT JOIN CONTENT TAS_TITLE
+    $c->addAlias("TAS_TITLE", 'CONTENT');
+    $del = DBAdapter::getStringDelimiter();
+    $appTitleConds = array();
+    $appTitleConds[] = array(AppDelegationPeer::TAS_UID, 'TAS_TITLE.CON_ID');
+    $appTitleConds[] = array('TAS_TITLE.CON_CATEGORY', $del . 'TAS_TITLE' . $del);
+    $appTitleConds[] = array('TAS_TITLE.CON_LANG', $del . SYS_LANG . $del);
+    $c->addJoinMC($appTitleConds, Criteria::LEFT_JOIN);
 
-      //WHERE
-      $c->add(AppDelegationPeer::APP_UID, $sAppUid);
+    //WHERE
+    $c->add(AppDelegationPeer::APP_UID, $sAppUid);
 
-      //ORDER BY
-      $c->clearOrderByColumns();
-      $c->addAscendingOrderByColumn(AppDelegationPeer::DEL_DELEGATE_DATE);
+    //ORDER BY
+    $c->clearOrderByColumns();
+    $c->addAscendingOrderByColumn(AppDelegationPeer::DEL_DELEGATE_DATE);
 
-      return $c;
+    return $c;
   }
+  
   /*
   * Get the condition for Cases List
   * @param string $sTypeList
@@ -1503,183 +1514,182 @@ class Cases
 
   function getConditionCasesList($sTypeList = 'all', $sUIDUserLogged = '')
   {
-      $c = new Criteria('workflow');
-      $c->clearSelectColumns();
-      $c->addSelectColumn(ApplicationPeer::APP_UID);
-      $c->addSelectColumn(ApplicationPeer::APP_NUMBER);
-      $c->addSelectColumn(ApplicationPeer::APP_UPDATE_DATE);
-      $c->addSelectColumn(AppDelegationPeer::DEL_PRIORITY);
-      //$c->addSelectColumn(AppDelegationPeer::DEL_TASK_DUE_DATE);
-      $c->addAsColumn('DEL_TASK_DUE_DATE', " IF (" . AppDelegationPeer::DEL_TASK_DUE_DATE . " <= NOW(), CONCAT('<span style=\'color:red\';>', " . AppDelegationPeer::DEL_TASK_DUE_DATE . ", '</span>'), " . AppDelegationPeer::DEL_TASK_DUE_DATE . ") ");
-      $c->addSelectColumn(AppDelegationPeer::DEL_INDEX);
-      $c->addSelectColumn(AppDelegationPeer::TAS_UID);
-      $c->addSelectColumn(AppDelegationPeer::DEL_INIT_DATE);
-      $c->addSelectColumn(AppDelegationPeer::DEL_FINISH_DATE);
-      $c->addSelectColumn(UsersPeer::USR_UID);
-      $c->addAsColumn('APP_CURRENT_USER', "CONCAT(USERS.USR_LASTNAME, ' ', USERS.USR_FIRSTNAME)");
-      $c->addSelectColumn(ApplicationPeer::APP_STATUS);
-      $c->addAsColumn('APP_TITLE', 'APP_TITLE.CON_VALUE');
-      $c->addAsColumn('APP_PRO_TITLE', 'PRO_TITLE.CON_VALUE');
-      $c->addAsColumn('APP_TAS_TITLE', 'TAS_TITLE.CON_VALUE');
-      //$c->addAsColumn('APP_DEL_PREVIOUS_USER', 'APP_LAST_USER.USR_USERNAME');
-      $c->addAsColumn('APP_DEL_PREVIOUS_USER', "CONCAT(APP_LAST_USER.USR_LASTNAME, ' ', APP_LAST_USER.USR_FIRSTNAME)");
+    $c = new Criteria('workflow');
+    $c->clearSelectColumns();
+    $c->addSelectColumn(ApplicationPeer::APP_UID);
+    $c->addSelectColumn(ApplicationPeer::APP_NUMBER);
+    $c->addSelectColumn(ApplicationPeer::APP_UPDATE_DATE);
+    $c->addSelectColumn(AppDelegationPeer::DEL_PRIORITY);
+    //$c->addSelectColumn(AppDelegationPeer::DEL_TASK_DUE_DATE);
+    $c->addAsColumn('DEL_TASK_DUE_DATE', " IF (" . AppDelegationPeer::DEL_TASK_DUE_DATE . " <= NOW(), CONCAT('<span style=\'color:red\';>', " . AppDelegationPeer::DEL_TASK_DUE_DATE . ", '</span>'), " . AppDelegationPeer::DEL_TASK_DUE_DATE . ") ");
+    $c->addSelectColumn(AppDelegationPeer::DEL_INDEX);
+    $c->addSelectColumn(AppDelegationPeer::TAS_UID);
+    $c->addSelectColumn(AppDelegationPeer::DEL_INIT_DATE);
+    $c->addSelectColumn(AppDelegationPeer::DEL_FINISH_DATE);
+    $c->addSelectColumn(UsersPeer::USR_UID);
+    $c->addAsColumn('APP_CURRENT_USER', "CONCAT(USERS.USR_LASTNAME, ' ', USERS.USR_FIRSTNAME)");
+    $c->addSelectColumn(ApplicationPeer::APP_STATUS);
+    $c->addAsColumn('APP_TITLE', 'APP_TITLE.CON_VALUE');
+    $c->addAsColumn('APP_PRO_TITLE', 'PRO_TITLE.CON_VALUE');
+    $c->addAsColumn('APP_TAS_TITLE', 'TAS_TITLE.CON_VALUE');
+    //$c->addAsColumn('APP_DEL_PREVIOUS_USER', 'APP_LAST_USER.USR_USERNAME');
+    $c->addAsColumn('APP_DEL_PREVIOUS_USER', "CONCAT(APP_LAST_USER.USR_LASTNAME, ' ', APP_LAST_USER.USR_FIRSTNAME)");
 
-      $c->addAlias("APP_TITLE", 'CONTENT');
-      $c->addAlias("PRO_TITLE", 'CONTENT');
-      $c->addAlias("TAS_TITLE", 'CONTENT');
-      $c->addAlias("APP_PREV_DEL", 'APP_DELEGATION');
-      $c->addAlias("APP_LAST_USER", 'USERS');
+    $c->addAlias("APP_TITLE", 'CONTENT');
+    $c->addAlias("PRO_TITLE", 'CONTENT');
+    $c->addAlias("TAS_TITLE", 'CONTENT');
+    $c->addAlias("APP_PREV_DEL", 'APP_DELEGATION');
+    $c->addAlias("APP_LAST_USER", 'USERS');
 
-      $c->addJoin(ApplicationPeer::APP_UID, AppDelegationPeer::APP_UID, Criteria::LEFT_JOIN);
-      $c->addJoin(AppDelegationPeer::TAS_UID, TaskPeer::TAS_UID, Criteria::LEFT_JOIN);
-      $appThreadConds[] = array(ApplicationPeer::APP_UID, AppThreadPeer::APP_UID);
-      $appThreadConds[] = array(AppDelegationPeer::DEL_INDEX, AppThreadPeer::DEL_INDEX);
-      $c->addJoinMC($appThreadConds, Criteria::LEFT_JOIN);
-      $c->addJoin(AppDelegationPeer::USR_UID, UsersPeer::USR_UID, Criteria::LEFT_JOIN);
+    $c->addJoin(ApplicationPeer::APP_UID, AppDelegationPeer::APP_UID, Criteria::LEFT_JOIN);
+    $c->addJoin(AppDelegationPeer::TAS_UID, TaskPeer::TAS_UID, Criteria::LEFT_JOIN);
+    $appThreadConds[] = array(ApplicationPeer::APP_UID, AppThreadPeer::APP_UID);
+    $appThreadConds[] = array(AppDelegationPeer::DEL_INDEX, AppThreadPeer::DEL_INDEX);
+    $c->addJoinMC($appThreadConds, Criteria::LEFT_JOIN);
+    $c->addJoin(AppDelegationPeer::USR_UID, UsersPeer::USR_UID, Criteria::LEFT_JOIN);
 
-      $del = DBAdapter::getStringDelimiter();
-      $appTitleConds = array();
-      $appTitleConds[] = array(ApplicationPeer::APP_UID, 'APP_TITLE.CON_ID');
-      $appTitleConds[] = array('APP_TITLE.CON_CATEGORY', $del . 'APP_TITLE' . $del);
-      $appTitleConds[] = array('APP_TITLE.CON_LANG', $del . SYS_LANG . $del);
-      $c->addJoinMC($appTitleConds, Criteria::LEFT_JOIN);
+    $del = DBAdapter::getStringDelimiter();
+    $appTitleConds = array();
+    $appTitleConds[] = array(ApplicationPeer::APP_UID, 'APP_TITLE.CON_ID');
+    $appTitleConds[] = array('APP_TITLE.CON_CATEGORY', $del . 'APP_TITLE' . $del);
+    $appTitleConds[] = array('APP_TITLE.CON_LANG', $del . SYS_LANG . $del);
+    $c->addJoinMC($appTitleConds, Criteria::LEFT_JOIN);
 
-      $proTitleConds = array();
-      $proTitleConds[] = array(ApplicationPeer::PRO_UID, 'PRO_TITLE.CON_ID');
-      $proTitleConds[] = array('PRO_TITLE.CON_CATEGORY', $del . 'PRO_TITLE' . $del);
-      $proTitleConds[] = array('PRO_TITLE.CON_LANG', $del . SYS_LANG . $del);
-      $c->addJoinMC($proTitleConds, Criteria::LEFT_JOIN);
+    $proTitleConds = array();
+    $proTitleConds[] = array(ApplicationPeer::PRO_UID, 'PRO_TITLE.CON_ID');
+    $proTitleConds[] = array('PRO_TITLE.CON_CATEGORY', $del . 'PRO_TITLE' . $del);
+    $proTitleConds[] = array('PRO_TITLE.CON_LANG', $del . SYS_LANG . $del);
+    $c->addJoinMC($proTitleConds, Criteria::LEFT_JOIN);
 
-      $tasTitleConds = array();
-      $tasTitleConds[] = array(AppDelegationPeer::TAS_UID, 'TAS_TITLE.CON_ID');
-      $tasTitleConds[] = array('TAS_TITLE.CON_CATEGORY', $del . 'TAS_TITLE' . $del);
-      $tasTitleConds[] = array('TAS_TITLE.CON_LANG', $del . SYS_LANG . $del);
-      $c->addJoinMC($tasTitleConds, Criteria::LEFT_JOIN);
+    $tasTitleConds = array();
+    $tasTitleConds[] = array(AppDelegationPeer::TAS_UID, 'TAS_TITLE.CON_ID');
+    $tasTitleConds[] = array('TAS_TITLE.CON_CATEGORY', $del . 'TAS_TITLE' . $del);
+    $tasTitleConds[] = array('TAS_TITLE.CON_LANG', $del . SYS_LANG . $del);
+    $c->addJoinMC($tasTitleConds, Criteria::LEFT_JOIN);
 
-      $prevConds = array();
-      $prevConds[] = array(ApplicationPeer::APP_UID, 'APP_PREV_DEL.APP_UID');
-      $prevConds[] = array('APP_PREV_DEL.DEL_INDEX', AppDelegationPeer::DEL_PREVIOUS);
-      $c->addJoinMC($prevConds, Criteria::LEFT_JOIN);
+    $prevConds = array();
+    $prevConds[] = array(ApplicationPeer::APP_UID, 'APP_PREV_DEL.APP_UID');
+    $prevConds[] = array('APP_PREV_DEL.DEL_INDEX', AppDelegationPeer::DEL_PREVIOUS);
+    $c->addJoinMC($prevConds, Criteria::LEFT_JOIN);
 
-      $usrConds = array();
-      $usrConds[] = array('APP_PREV_DEL.USR_UID', 'APP_LAST_USER.USR_UID');
-      $c->addJoinMC($usrConds, Criteria::LEFT_JOIN);
+    $usrConds = array();
+    $usrConds[] = array('APP_PREV_DEL.USR_UID', 'APP_LAST_USER.USR_UID');
+    $c->addJoinMC($usrConds, Criteria::LEFT_JOIN);
 
-      $c->add(TaskPeer::TAS_TYPE, 'SUBPROCESS', Criteria::NOT_EQUAL);
+    $c->add(TaskPeer::TAS_TYPE, 'SUBPROCESS', Criteria::NOT_EQUAL);
 
-      if ($sTypeList != 'gral' && $sTypeList != 'to_revise' && $sTypeList != 'to_reassign') {
-          $c->add(UsersPeer::USR_UID, $sUIDUserLogged);
-      }
+    if ($sTypeList != 'gral' && $sTypeList != 'to_revise' && $sTypeList != 'to_reassign') {
+      $c->add(UsersPeer::USR_UID, $sUIDUserLogged);
+    }
 
-      $filesList = array('cases/cases_ListAll', 'cases/cases_ListTodo', 'cases/cases_ListDraft', 'cases/cases_ListOnHold', 'cases/cases_ListCancelled', 'cases/cases_ListCompleted',
-          'cases/cases_ListToRevise', 'cases/cases_ListAll_Reassign');
-      switch ($sTypeList) {
-          case 'all':
-              $c->add($c->getNewCriterion(AppThreadPeer::APP_THREAD_STATUS, 'OPEN')->addOr($c->getNewCriterion(ApplicationPeer::APP_STATUS, 'COMPLETED')->addAnd($c->getNewCriterion(AppDelegationPeer::DEL_PREVIOUS,
-                  0))));
-              $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
-              $xmlfile = $filesList[0];
-              break;
-          case 'to_do':
-              $c->add(ApplicationPeer::APP_STATUS, 'TO_DO');
-              $c->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
-              $c->add(AppThreadPeer::APP_THREAD_STATUS, 'OPEN');
-              $c->add(AppDelegationPeer::DEL_THREAD_STATUS, 'OPEN');
-              $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
-              $xmlfile = $filesList[1];
-              break;
-          case 'draft':
-              $c->add(ApplicationPeer::APP_STATUS, 'DRAFT');
-              $c->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
-              $c->add(AppDelegationPeer::DEL_THREAD_STATUS, 'OPEN');
-              $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
-              $xmlfile = $filesList[2];
-              break;
-          case 'paused':
-              $appDelayConds[] = array(ApplicationPeer::APP_UID, AppDelayPeer::APP_UID);
-              $appDelayConds[] = array(AppDelegationPeer::DEL_INDEX, AppDelayPeer::APP_DEL_INDEX);
-              $c->addJoinMC($appDelayConds, Criteria::LEFT_JOIN);
-              $c->add(AppDelayPeer::APP_DELAY_UID, null, Criteria::ISNOTNULL);
-              $c->add($c->getNewCriterion(AppDelayPeer::APP_DISABLE_ACTION_USER, null, Criteria::ISNULL)->addOr($c->getNewCriterion(AppDelayPeer::APP_DISABLE_ACTION_USER, 0)));
-              $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
-              $xmlfile = $filesList[3];
-              break;
-          case 'cancelled':
-              $c->add($c->getNewCriterion(AppThreadPeer::APP_THREAD_STATUS, 'OPEN')->addAnd($c->getNewCriterion(ApplicationPeer::APP_STATUS, 'CANCELLED')));
-              $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
-              $xmlfile = $filesList[4];
-              break;
-          case 'completed':
-              $c->add(ApplicationPeer::APP_STATUS, 'COMPLETED');
-              //$c->add(AppDelegationPeer::DEL_PREVIOUS, 0);
-              $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
-              $xmlfile = $filesList[5];
-              break;
-          case 'gral':
-              $c->add($c->getNewCriterion(AppThreadPeer::APP_THREAD_STATUS, 'OPEN')->addOr($c->getNewCriterion(ApplicationPeer::APP_STATUS, 'COMPLETED')->addAnd($c->getNewCriterion(AppDelegationPeer::DEL_PREVIOUS,
-                  0))));
-              $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
-              $xmlfile = $filesList[0];
-              break;
-          case 'to_revise':
-              require_once 'classes/model/ProcessUser.php';
-              $oCriteria = new Criteria('workflow');
-              $oCriteria->add(ProcessUserPeer::USR_UID, $sUIDUserLogged);
-              $oCriteria->add(ProcessUserPeer::PU_TYPE, 'SUPERVISOR');
-              $oDataset = ProcessUserPeer::doSelectRS($oCriteria);
-              $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $filesList = array('cases/cases_ListAll', 'cases/cases_ListTodo', 'cases/cases_ListDraft', 'cases/cases_ListOnHold', 'cases/cases_ListCancelled', 'cases/cases_ListCompleted',
+        'cases/cases_ListToRevise', 'cases/cases_ListAll_Reassign');
+    switch ($sTypeList) {
+      case 'all':
+          $c->add($c->getNewCriterion(AppThreadPeer::APP_THREAD_STATUS, 'OPEN')->addOr($c->getNewCriterion(ApplicationPeer::APP_STATUS, 'COMPLETED')->addAnd($c->getNewCriterion(AppDelegationPeer::DEL_PREVIOUS,
+              0))));
+          $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
+          $xmlfile = $filesList[0];
+          break;
+      case 'to_do':
+          $c->add(ApplicationPeer::APP_STATUS, 'TO_DO');
+          $c->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
+          $c->add(AppThreadPeer::APP_THREAD_STATUS, 'OPEN');
+          $c->add(AppDelegationPeer::DEL_THREAD_STATUS, 'OPEN');
+          $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
+          $xmlfile = $filesList[1];
+          break;
+      case 'draft':
+          $c->add(ApplicationPeer::APP_STATUS, 'DRAFT');
+          $c->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
+          $c->add(AppDelegationPeer::DEL_THREAD_STATUS, 'OPEN');
+          $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
+          $xmlfile = $filesList[2];
+          break;
+      case 'paused':
+          $appDelayConds[] = array(ApplicationPeer::APP_UID, AppDelayPeer::APP_UID);
+          $appDelayConds[] = array(AppDelegationPeer::DEL_INDEX, AppDelayPeer::APP_DEL_INDEX);
+          $c->addJoinMC($appDelayConds, Criteria::LEFT_JOIN);
+          $c->add(AppDelayPeer::APP_DELAY_UID, null, Criteria::ISNOTNULL);
+          $c->add($c->getNewCriterion(AppDelayPeer::APP_DISABLE_ACTION_USER, null, Criteria::ISNULL)->addOr($c->getNewCriterion(AppDelayPeer::APP_DISABLE_ACTION_USER, 0)));
+          $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
+          $xmlfile = $filesList[3];
+          break;
+      case 'cancelled':
+          $c->add($c->getNewCriterion(AppThreadPeer::APP_THREAD_STATUS, 'OPEN')->addAnd($c->getNewCriterion(ApplicationPeer::APP_STATUS, 'CANCELLED')));
+          $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
+          $xmlfile = $filesList[4];
+          break;
+      case 'completed':
+          $c->add(ApplicationPeer::APP_STATUS, 'COMPLETED');
+          //$c->add(AppDelegationPeer::DEL_PREVIOUS, 0);
+          $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
+          $xmlfile = $filesList[5];
+          break;
+      case 'gral':
+          $c->add($c->getNewCriterion(AppThreadPeer::APP_THREAD_STATUS, 'OPEN')->addOr($c->getNewCriterion(ApplicationPeer::APP_STATUS, 'COMPLETED')->addAnd($c->getNewCriterion(AppDelegationPeer::DEL_PREVIOUS,
+              0))));
+          $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
+          $xmlfile = $filesList[0];
+          break;
+      case 'to_revise':
+          require_once 'classes/model/ProcessUser.php';
+          $oCriteria = new Criteria('workflow');
+          $oCriteria->add(ProcessUserPeer::USR_UID, $sUIDUserLogged);
+          $oCriteria->add(ProcessUserPeer::PU_TYPE, 'SUPERVISOR');
+          $oDataset = ProcessUserPeer::doSelectRS($oCriteria);
+          $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+          $oDataset->next();
+          $aProcesses = array();
+          while ($aRow = $oDataset->getRow()) {
+              $aProcesses[] = $aRow['PRO_UID'];
               $oDataset->next();
-              $aProcesses = array();
-              while ($aRow = $oDataset->getRow()) {
-                  $aProcesses[] = $aRow['PRO_UID'];
-                  $oDataset->next();
-              }
-              $c->add(ApplicationPeer::PRO_UID, $aProcesses, Criteria::IN);
-              $c->add(ApplicationPeer::APP_STATUS, 'TO_DO');
-              $c->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
-              $c->add(AppThreadPeer::APP_THREAD_STATUS, 'OPEN');
-              $c->add(AppDelegationPeer::DEL_THREAD_STATUS, 'OPEN');
-              $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
-              $xmlfile = $filesList[6];
-              break;
-          case 'to_reassign':
-              $c->add($c->getNewCriterion(ApplicationPeer::APP_STATUS, 'TO_DO')->addOr($c->getNewCriterion(ApplicationPeer::APP_STATUS, 'DRAFT')));
-              $c->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
-              $c->add(AppThreadPeer::APP_THREAD_STATUS, 'OPEN');
-              $c->add(AppDelegationPeer::DEL_THREAD_STATUS, 'OPEN');
-              $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
-              $xmlfile = $filesList[7];
-              break;
-      }
-      /*
-      * TODO: Revisar y decidir como se eliminaran variables de session xmlfors
-      */
-      //OPCION_1: Limpia de $_SESSION los listados no utilizados (solo listado de casos)
-      foreach ($filesList as $file) {
-          $id = G::createUID('', $file . '.xml');
-          unset($_SESSION['pagedTable[' . $id . ']']);
-          unset($_SESSION[$id]);
-      }
-      //OPCION_2: Limpia de $_SESSION todos los listados y xmlforms
-      $cur = array_keys($_SESSION);
-      foreach ($cur as $key) {
-          if (substr($key, 0, 11) === "pagedTable[") {
-              unset($_SESSION[$key]);
-          } else {
-              $xml = G::getUIDName($key, '');
-              if (strpos($xml, '.xml') !== false)
-                  unset($_SESSION[$key]);
           }
+          $c->add(ApplicationPeer::PRO_UID, $aProcesses, Criteria::IN);
+          $c->add(ApplicationPeer::APP_STATUS, 'TO_DO');
+          $c->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
+          $c->add(AppThreadPeer::APP_THREAD_STATUS, 'OPEN');
+          $c->add(AppDelegationPeer::DEL_THREAD_STATUS, 'OPEN');
+          $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
+          $xmlfile = $filesList[6];
+          break;
+      case 'to_reassign':
+          $c->add($c->getNewCriterion(ApplicationPeer::APP_STATUS, 'TO_DO')->addOr($c->getNewCriterion(ApplicationPeer::APP_STATUS, 'DRAFT')));
+          $c->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
+          $c->add(AppThreadPeer::APP_THREAD_STATUS, 'OPEN');
+          $c->add(AppDelegationPeer::DEL_THREAD_STATUS, 'OPEN');
+          $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
+          $xmlfile = $filesList[7];
+          break;
+    }
+    /*
+    * TODO: Revisar y decidir como se eliminaran variables de session xmlfors
+    */
+    //OPCION_1: Limpia de $_SESSION los listados no utilizados (solo listado de casos)
+    foreach ($filesList as $file) {
+      $id = G::createUID('', $file . '.xml');
+      unset($_SESSION['pagedTable[' . $id . ']']);
+      unset($_SESSION[$id]);
+    }
+    //OPCION_2: Limpia de $_SESSION todos los listados y xmlforms
+    $cur = array_keys($_SESSION);
+    foreach ($cur as $key) {
+      if (substr($key, 0, 11) === "pagedTable[") {
+        unset($_SESSION[$key]);
+      } else {
+        $xml = G::getUIDName($key, '');
+        if (strpos($xml, '.xml') !== false)
+            unset($_SESSION[$key]);
       }
-      return array($c, $xmlfile);
+    }
+    return array($c, $xmlfile);
   }
 
   /**
   *  @Author: erik@colosa.com
     *  @Description: This method set all cases with the APP_DISABLE_ACTION_DATE for today
-  */
-
-    function ThrowUnpauseDaemon()
+  */         
+  function ThrowUnpauseDaemon()
   {
     $today = date('Y-m-d');
     $c = new Criteria('workflow');
@@ -1695,46 +1705,47 @@ class Cases
     }
   }
 
-    /*
-    * Get the application UID by case number
-    * @param integer $iApplicationNumber
-    * @return string
-    */
-    function getApplicationUIDByNumber($iApplicationNumber)
-    {
-        $oCriteria = new Criteria();
-        $oCriteria->add(ApplicationPeer::APP_NUMBER, $iApplicationNumber);
-        $oApplication = ApplicationPeer::doSelectOne($oCriteria);
-        if (!is_null($oApplication)) {
-            return $oApplication->getAppUid();
-        } else {
-            return null;
-        }
+  /*
+  * Get the application UID by case number
+  * @param integer $iApplicationNumber
+  * @return string
+  */
+  function getApplicationUIDByNumber($iApplicationNumber)
+  {
+    $oCriteria = new Criteria();
+    $oCriteria->add(ApplicationPeer::APP_NUMBER, $iApplicationNumber);
+    $oApplication = ApplicationPeer::doSelectOne($oCriteria);
+    if (!is_null($oApplication)) {
+      return $oApplication->getAppUid();
+    } 
+    else {
+      return null;
     }
+  }
 
-    /*
-    * Get the current delegation of a user
-    * @param string $sApplicationUID
-    * @param string $sUserUID
-    * @return integer
-    */
-    function getCurrentDelegation($sApplicationUID = '', $sUserUID = '')
-    {
-        $oSession = new DBSession(new DBConnection());
-        $oDataset = $oSession->Execute('SELECT
-                                    DEL_INDEX
-                                  FROM
-                                    APP_DELEGATION
-                                  WHERE
-                                    APP_UID           = "' . $sApplicationUID . '" AND
-                                    USR_UID           = "' . $sUserUID . '" AND
-                                    DEL_THREAD_STATUS = "OPEN"
-                                  ORDER BY
-                                    DEL_DELEGATE_DATE
-                                  DESC');
-        $aRow = $oDataset->Read();
-        return $aRow['DEL_INDEX'];
-    }
+  /*
+  * Get the current delegation of a user
+  * @param string $sApplicationUID
+  * @param string $sUserUID
+  * @return integer
+  */
+  function getCurrentDelegation($sApplicationUID = '', $sUserUID = '')
+  {
+    $oSession = new DBSession(new DBConnection());
+    $oDataset = $oSession->Execute('SELECT
+                                DEL_INDEX
+                              FROM
+                                APP_DELEGATION
+                              WHERE
+                                APP_UID           = "' . $sApplicationUID . '" AND
+                                USR_UID           = "' . $sUserUID . '" AND
+                                DEL_THREAD_STATUS = "OPEN"
+                              ORDER BY
+                                DEL_DELEGATE_DATE
+                              DESC');
+    $aRow = $oDataset->Read();
+    return $aRow['DEL_INDEX'];
+  }
 
     function loadTriggers($sTasUid, $sStepType, $sStepUidObj, $sTriggerType)
     {
@@ -1820,517 +1831,41 @@ class Cases
         return $triggers_info;
   }
 
-    /*
-    * Return the input documents list criteria object
-    * @param string $sProcessUID
-    * @return object
-    */
-    function getInputDocumentsCriteria($sApplicationUID, $iDelegation, $sDocumentUID)
-    {
-        try {
-            require_once 'classes/model/AppDocument.php';
-            $oAppDocument = new AppDocument();
-            $oCriteria = new Criteria('workflow');
-            $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
-            $oCriteria->add(AppDocumentPeer::DEL_INDEX, $iDelegation);
-            $oCriteria->add(AppDocumentPeer::DOC_UID, $sDocumentUID);
-            $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, 'INPUT');
-            $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
-            $oDataset = AppDocumentPeer::doSelectRS($oCriteria);
-            $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-            $oDataset->next();
-            $aInputDocuments = array();
-            $aInputDocuments[] = array('APP_DOC_UID' => 'char', 'DOC_UID' => 'char', 'APP_DOC_COMMENT' => 'char', 'APP_DOC_FILENAME' => 'char', 'APP_DOC_INDEX' => 'integer');
-            while ($aRow = $oDataset->getRow()) {
-                $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
-                $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' =>
-                    $aAux['APP_DOC_INDEX']);
-                if ($aFields['APP_DOC_FILENAME'] != '') {
-                    $aFields['TITLE'] = $aFields['APP_DOC_FILENAME'];
-                } else {
-                    $aFields['TITLE'] = $aFields['APP_DOC_COMMENT'];
-                }
-                $aFields['POSITION'] = $_SESSION['STEP_POSITION'];
-                $aFields['CONFIRM'] = G::LoadTranslation('ID_CONFIRM_DELETE_ELEMENT');
-                $aInputDocuments[] = $aFields;
-                $oDataset->next();
-            }
-            global $_DBArray;
-            $_DBArray['inputDocuments'] = $aInputDocuments;
-            $_SESSION['_DBArray'] = $_DBArray;
-            G::LoadClass('ArrayPeer');
-            $oCriteria = new Criteria('dbarray');
-            $oCriteria->setDBArrayTable('inputDocuments');
-            $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
-            return $oCriteria;
-        }
-        catch (exception $oException) {
-            throw $oException;
-        }
-    }
-
-    function getInputDocumentsCriteriaToRevise($sApplicationUID)
-    {
-        try {
-            require_once 'classes/model/AppDocument.php';
-            $oAppDocument = new AppDocument();
-            $oCriteria = new Criteria('workflow');
-            $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
-            $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, 'INPUT');
-            $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
-            $oDataset = AppDocumentPeer::doSelectRS($oCriteria);
-            $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-            $oDataset->next();
-            $aInputDocuments = array();
-            $aInputDocuments[] = array('APP_DOC_UID' => 'char', 'DOC_UID' => 'char', 'APP_DOC_COMMENT' => 'char', 'APP_DOC_FILENAME' => 'char', 'APP_DOC_INDEX' => 'integer');
-            while ($aRow = $oDataset->getRow()) {
-
-                $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
-                $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' =>
-                    $aAux['APP_DOC_INDEX']);
-
-                if ($aFields['APP_DOC_FILENAME'] != '') {
-                    $aFields['TITLE'] = $aFields['APP_DOC_FILENAME'];
-                } else {
-                    $aFields['TITLE'] = $aFields['APP_DOC_COMMENT'];
-                }
-                $aFields['CREATE_DATE'] = $aRow['APP_DOC_CREATE_DATE'];
-                $aFields['TYPE'] = $aRow['APP_DOC_TYPE'];
-
-                $aFields['POSITION'] = $_SESSION['STEP_POSITION'];
-                $aFields['CONFIRM'] = G::LoadTranslation('ID_CONFIRM_DELETE_ELEMENT');
-                $aInputDocuments[] = $aFields;
-                $oDataset->next();
-            }
-            global $_DBArray;
-            $_DBArray['inputDocuments'] = $aInputDocuments;
-            $_SESSION['_DBArray'] = $_DBArray;
-            G::LoadClass('ArrayPeer');
-            $oCriteria = new Criteria('dbarray');
-            $oCriteria->setDBArrayTable('inputDocuments');
-            $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
-            return $oCriteria;
-        }
-        catch (exception $oException) {
-            throw $oException;
-        }
-    }
-
-    function getOutputDocumentsCriteriaToRevise($sApplicationUID)
-    {
-        try {
-            require_once 'classes/model/AppDocument.php';
-            $oAppDocument = new AppDocument();
-            $oCriteria = new Criteria('workflow');
-            $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
-            $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, 'OUTPUT');
-            $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
-            $oDataset = AppDocumentPeer::doSelectRS($oCriteria);
-            $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-            $oDataset->next();
-            $aOutputDocuments = array();
-            $aOutputDocuments[] = array('APP_DOC_UID' => 'char', 'DOC_UID' => 'char', 'APP_DOC_COMMENT' => 'char', 'APP_DOC_FILENAME' => 'char', 'APP_DOC_INDEX' => 'integer', 'APP_DOC_CREATE_DATE' => 'char');
-            while ($aRow = $oDataset->getRow()) {
-                $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
-                $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' =>
-                    $aAux['APP_DOC_INDEX'], 'APP_DOC_CREATE_DATE' => $aRow['APP_DOC_CREATE_DATE']);
-                if ($aFields['APP_DOC_FILENAME'] != '') {
-                    $aFields['TITLE'] = $aFields['APP_DOC_FILENAME'];
-                } else {
-                    $aFields['TITLE'] = $aFields['APP_DOC_COMMENT'];
-                }
-                $aOutputDocuments[] = $aFields;
-                $oDataset->next();
-            }
-            global $_DBArray;
-            $_DBArray['outputDocuments'] = $aOutputDocuments;
-            $_SESSION['_DBArray'] = $_DBArray;
-            G::LoadClass('ArrayPeer');
-            $oCriteria = new Criteria('dbarray');
-            $oCriteria->setDBArrayTable('outputDocuments');
-            $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
-            return $oCriteria;
-        }
-        catch (exception $oException) {
-            throw $oException;
-        }
-    }
-
-    function getCriteriaProcessCases($status, $PRO_UID)
-    {
-        $c = new Criteria('workflow');
-
-        $c->add(ApplicationPeer::APP_STATUS, $status);
-        $c->add(ApplicationPeer::PRO_UID, $PRO_UID);
-        return $c;
-    }
-
-    function pauseCase($sApplicationUID, $iDelegation, $sUserUID, $sUnpauseDate = null)
-    {
-        $this->CloseCurrentDelegation($sApplicationUID, $iDelegation);
-        $oApplication = new Application();
-        $aFields = $oApplication->Load($sApplicationUID);
-        $oCriteria = new Criteria('workflow');
-        $oCriteria->clearSelectColumns();
-        $oCriteria->addSelectColumn(AppThreadPeer::APP_THREAD_INDEX);
-        $oCriteria->add(AppThreadPeer::APP_UID, $sApplicationUID);
-        $oCriteria->add(AppThreadPeer::DEL_INDEX, $iDelegation);
-        $oDataset = AppThreadPeer::doSelectRS($oCriteria);
-        $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-        $oDataset->next();
-        $aRow = $oDataset->getRow();
-        $aData['PRO_UID'] = $aFields['PRO_UID'];
-        $aData['APP_UID'] = $sApplicationUID;
-        $aData['APP_THREAD_INDEX'] = $aRow['APP_THREAD_INDEX'];
-        $aData['APP_DEL_INDEX'] = $iDelegation;
-        $aData['APP_TYPE'] = 'PAUSE';
-        $aData['APP_STATUS'] = $aFields['APP_STATUS'];
-        $aData['APP_DELEGATION_USER'] = $sUserUID;
-        $aData['APP_ENABLE_ACTION_USER'] = $sUserUID;
-        $aData['APP_ENABLE_ACTION_DATE'] = date('Y-m-d H:i:s');
-        $aData['APP_DISABLE_ACTION_DATE'] = $sUnpauseDate;
-        $oAppDelay = new AppDelay();
-        $oAppDelay->create($aData);
-    }
-
-    function unpauseCase($sApplicationUID, $iDelegation, $sUserUID)
-    {
-        $oAppDelegation = new AppDelegation();
-        $aFieldsDel = $oAppDelegation->Load($sApplicationUID, $iDelegation);
-        $iIndex = $oAppDelegation->createAppDelegation($aFieldsDel['PRO_UID'], $aFieldsDel['APP_UID'], $aFieldsDel['TAS_UID'], $aFieldsDel['USR_UID'], $aFieldsDel['DEL_THREAD']);
-        $aData = array();
-        $aData['APP_UID'] = $aFieldsDel['APP_UID'];
-        $aData['DEL_INDEX'] = $iIndex;
-        $aData['DEL_PREVIOUS'] = $aFieldsDel['DEL_PREVIOUS'];
-        $aData['DEL_TYPE'] = $aFieldsDel['DEL_TYPE'];
-        $aData['DEL_PRIORITY'] = $aFieldsDel['DEL_PRIORITY'];
-        $aData['DEL_DELEGATE_DATE'] = $aFieldsDel['DEL_DELEGATE_DATE'];
-        $aData['DEL_INIT_DATE'] = date('Y-m-d H:i:s');
-        $aData['DEL_FINISH_DATE'] = null;
-        $oAppDelegation->update($aData);
-        $oCriteria = new Criteria('workflow');
-        $oCriteria->clearSelectColumns();
-        $oCriteria->addSelectColumn(AppDelayPeer::APP_DELAY_UID);
-        $oCriteria->addSelectColumn(AppDelayPeer::APP_THREAD_INDEX);
-        $oCriteria->add(AppDelayPeer::APP_UID, $sApplicationUID);
-        $oCriteria->add(AppDelayPeer::APP_DEL_INDEX, $iDelegation);
-        $oCriteria->add(AppDelayPeer::APP_TYPE, 'PAUSE');
-        $oCriteria->add($oCriteria->getNewCriterion(AppDelayPeer::APP_DISABLE_ACTION_USER, null, Criteria::ISNULL)->addOr($oCriteria->getNewCriterion(AppDelayPeer::APP_DISABLE_ACTION_USER, 0)));
-        $oDataset = AppDelayPeer::doSelectRS($oCriteria);
-        $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-        $oDataset->next();
-        $aRow = $oDataset->getRow();
-        $oAppThread = new AppThread();
-        $oAppThread->update(array('APP_UID' => $sApplicationUID, 'APP_THREAD_INDEX' => $aRow['APP_THREAD_INDEX'], 'DEL_INDEX' => $iIndex));
-        $aData['APP_DELAY_UID'] = $aRow['APP_DELAY_UID'];
-        $aData['APP_DISABLE_ACTION_USER'] = $sUserUID;
-        $aData['APP_DISABLE_ACTION_DATE'] = date('Y-m-d H:i:s');
-        $oAppDelay = new AppDelay();
-        $aFieldsDelay = $oAppDelay->update($aData);
-    }
-
-    function cancelCase($sApplicationUID, $iIndex, $user_logged)
-    {
-        require_once 'classes/model/Application.php';
-        require_once 'classes/model/AppDelegation.php';
-        require_once 'classes/model/AppDelay.php';
-        require_once 'classes/model/AppThread.php';
-        $oApplication = new Application();
-        $aFields = $oApplication->load($sApplicationUID);
-        $oCriteria = new Criteria('workflow');
-        $oCriteria->add(AppDelegationPeer::APP_UID, $sApplicationUID);
-        $oCriteria->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
-        if (AppDelegationPeer::doCount($oCriteria) == 1) {
-          $aFields['APP_STATUS'] = 'CANCELLED';
-          $oApplication->update($aFields);
-        }
-        $this->CloseCurrentDelegation($sApplicationUID, $iIndex);
-        $oAppDel = new AppDelegation();
-        $oAppDel->Load($sApplicationUID, $iIndex);
-        $aAppDel = $oAppDel->toArray(BasePeer::TYPE_FIELDNAME);
-        $this->closeAppThread($sApplicationUID, $aAppDel['DEL_THREAD']);
-
-        $delay = new AppDelay();
-        $array['PRO_UID'] = $aFields['PRO_UID'];
-        $array['APP_UID'] = $sApplicationUID;
-
-        $c = new Criteria('workflow');
-        $c->clearSelectColumns();
-        $c->addSelectColumn(AppThreadPeer::APP_THREAD_INDEX);
-        $c->add(AppThreadPeer::APP_UID, $sApplicationUID);
-        $c->add(AppThreadPeer::DEL_INDEX, $iIndex);
-        $oDataset = AppThreadPeer::doSelectRS($c);
-        $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-        $oDataset->next();
-        $aRow = $oDataset->getRow();
-        $array['APP_THREAD_INDEX'] = $aRow['APP_THREAD_INDEX'];
-        $array['APP_DEL_INDEX'] = $iIndex;
-        $array['APP_TYPE'] = 'CANCEL';
-
-        $c = new Criteria('workflow');
-        $c->clearSelectColumns();
-        $c->addSelectColumn(ApplicationPeer::APP_STATUS);
-        $c->add(ApplicationPeer::APP_UID, $sApplicationUID);
-        $oDataset = ApplicationPeer::doSelectRS($c);
-        $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-        $oDataset->next();
-        $aRow1 = $oDataset->getRow();
-        $array['APP_STATUS'] = $aRow1['APP_STATUS'];
-
-        $array['APP_DELEGATION_USER'] = $user_logged;
-        $array['APP_ENABLE_ACTION_USER'] = $user_logged;
-        $array['APP_ENABLE_ACTION_DATE'] = date('Y-m-d H:i:s');
-        $delay->create($array);
-
-        //Before cancel a case verify if is a child case
-        $oCriteria2 = new Criteria('workflow');
-        $oCriteria2->add(SubApplicationPeer::APP_UID, $sApplicationUID);
-        $oCriteria2->add(SubApplicationPeer::SA_STATUS, 'ACTIVE');
-        if (SubApplicationPeer::doCount($oCriteria2) > 0) {
-          G::LoadClass('derivation');
-          $oDerivation = new Derivation();
-          $oDerivation->verifyIsCaseChild($sApplicationUID);
-        }
-    }
-
-    function reactivateCase($sApplicationUID, $iIndex, $user_logged)
-    {
-        require_once 'classes/model/Application.php';
-        require_once 'classes/model/AppDelay.php';
-        $oApplication = new Application();
-        $aFields = $oApplication->load((isset($_POST['sApplicationUID']) ? $_POST['sApplicationUID'] : $_SESSION['APPLICATION']));
-        $aFields['APP_STATUS'] = 'TO_DO';
-        $oApplication->update($aFields);
-        $this->ReactivateCurrentDelegation($sApplicationUID, $iIndex);
-        $c = new Criteria('workflow');
-        $c->clearSelectColumns();
-        $c->addSelectColumn(AppDelayPeer::APP_DELAY_UID);
-
-        $c->add(AppDelayPeer::APP_UID, $sApplicationUID);
-        $c->add(AppDelayPeer::PRO_UID, $aFields['PRO_UID']);
-        $c->add(AppDelayPeer::APP_DEL_INDEX, $iIndex);
-        $c->add(AppDelayPeer::APP_TYPE, 'CANCEL');
-        $c->add(AppDelayPeer::APP_DISABLE_ACTION_USER, null);
-        $c->add(AppDelayPeer::APP_DISABLE_ACTION_DATE, null);
-
-        $oDataset = AppDelayPeer::doSelectRS($c);
-        $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-        $oDataset->next();
-        $aRow = $oDataset->getRow();
-        //var_dump($aRow);
-        $aFields = array();
-        $aFields['APP_DELAY_UID'] = $aRow['APP_DELAY_UID'];
-        $aFields['APP_DISABLE_ACTION_USER'] = $user_logged;
-        $aFields['APP_DISABLE_ACTION_DATE'] = date('Y-m-d H:i:s');
-        ;
-
-        $delay = new AppDelay();
-        $delay->update($aFields);
-        //$this->ReactivateCurrentDelegation($sApplicationUID);
-    }
-
-    function reassignCase($sApplicationUID, $iDelegation, $sUserUID, $newUserUID, $sType = 'REASSIGN')
-    {
-        $this->CloseCurrentDelegation($sApplicationUID, $iDelegation);
-        $oAppDelegation = new AppDelegation();
-        $aFieldsDel = $oAppDelegation->Load($sApplicationUID, $iDelegation);
-        $iIndex = $oAppDelegation->createAppDelegation($aFieldsDel['PRO_UID'], $aFieldsDel['APP_UID'], $aFieldsDel['TAS_UID'], $aFieldsDel['USR_UID'], $aFieldsDel['DEL_THREAD']);
-        $aData = array();
-        $aData['APP_UID'] = $aFieldsDel['APP_UID'];
-        $aData['DEL_INDEX'] = $iIndex;
-        $aData['DEL_PREVIOUS'] = $aFieldsDel['DEL_PREVIOUS'];
-        $aData['DEL_TYPE'] = $aFieldsDel['DEL_TYPE'];
-        $aData['DEL_PRIORITY'] = $aFieldsDel['DEL_PRIORITY'];
-        $aData['DEL_DELEGATE_DATE'] = $aFieldsDel['DEL_DELEGATE_DATE'];
-        $aData['USR_UID'] = $newUserUID;
-        $aData['DEL_INIT_DATE'] = null;
-        $aData['DEL_FINISH_DATE'] = null;
-        $oAppDelegation->update($aData);
-        $oAppThread = new AppThread();
-        $oAppThread->update(array('APP_UID' => $sApplicationUID, 'APP_THREAD_INDEX' => $aFieldsDel['DEL_THREAD'], 'DEL_INDEX' => $iIndex));
-        //Save in APP_DELAY
-        $oApplication = new Application();
-        $aFields = $oApplication->Load($sApplicationUID);
-        $aData['PRO_UID'] = $aFieldsDel['PRO_UID'];
-        $aData['APP_UID'] = $sApplicationUID;
-        $aData['APP_THREAD_INDEX'] = $aFieldsDel['DEL_THREAD'];
-        $aData['APP_DEL_INDEX'] = $iDelegation;
-        $aData['APP_TYPE'] = ($sType != '' ? $sType : 'REASSIGN');
-        $aData['APP_STATUS'] = $aFields['APP_STATUS'];
-        $aData['APP_DELEGATION_USER'] = $sUserUID;
-        $aData['APP_ENABLE_ACTION_USER'] = $sUserUID;
-        $aData['APP_ENABLE_ACTION_DATE'] = date('Y-m-d H:i:s');
-        $oAppDelay = new AppDelay();
-        $oAppDelay->create($aData);
-    }
-
-    function getAllDynaformsStepsToRevise($APP_UID) {
-        $aCase = $this->loadCase($APP_UID);
-        $oCriteria = new Criteria('workflow');
-        $oCriteria->addSelectColumn(StepSupervisorPeer::STEP_UID);
-        $oCriteria->addSelectColumn(StepSupervisorPeer::PRO_UID);
-        $oCriteria->addSelectColumn(StepSupervisorPeer::STEP_TYPE_OBJ);
-        $oCriteria->addSelectColumn(StepSupervisorPeer::STEP_UID_OBJ);
-        $oCriteria->addSelectColumn(StepSupervisorPeer::STEP_POSITION);
-        $oCriteria->add(StepSupervisorPeer::PRO_UID, $aCase['PRO_UID']);
-        $oCriteria->add(StepSupervisorPeer::STEP_TYPE_OBJ, 'DYNAFORM');
-        $oCriteria->addAscendingOrderByColumn(StepSupervisorPeer::STEP_POSITION);
-        $oDataset = StepSupervisorPeer::doSelectRS($oCriteria);
-        $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-        return $oDataset;
-    }
-
-    function getAllInputsStepsToRevise($APP_UID) {
-        $aCase = $this->loadCase($APP_UID);
-        $oCriteria = new Criteria('workflow');
-        $oCriteria->addSelectColumn(StepSupervisorPeer::STEP_UID);
-        $oCriteria->addSelectColumn(StepSupervisorPeer::PRO_UID);
-        $oCriteria->addSelectColumn(StepSupervisorPeer::STEP_TYPE_OBJ);
-        $oCriteria->addSelectColumn(StepSupervisorPeer::STEP_UID_OBJ);
-        $oCriteria->addSelectColumn(StepSupervisorPeer::STEP_POSITION);
-        $oCriteria->add(StepSupervisorPeer::PRO_UID, $aCase['PRO_UID']);
-        $oCriteria->add(StepSupervisorPeer::STEP_TYPE_OBJ, 'INPUT_DOCUMENT');
-        $oCriteria->addAscendingOrderByColumn(StepSupervisorPeer::STEP_POSITION);
-        $oDataset = StepSupervisorPeer::doSelectRS($oCriteria);
-        $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-        return $oDataset;
-    }
-
-    function getAllUploadedDocumentsCriteria($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID) {
-      //verifica si existe la tabla OBJECT_PERMISSION
-      $this->verifyTable();
-
-      $aObjectPermissions = $this->getAllObjects($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID);
-      if (!is_array($aObjectPermissions)) {
-        $aObjectPermissions = array('DYNAFORMS' => array(-1), 'INPUT_DOCUMENTS' => array(-1), 'OUTPUT_DOCUMENTS' => array(-1));
-      }
-      if (!isset($aObjectPermissions['DYNAFORMS'])) {
-        $aObjectPermissions['DYNAFORMS'] = array(-1);
-      }
-      else {
-        if (!is_array($aObjectPermissions['DYNAFORMS'])) {
-          $aObjectPermissions['DYNAFORMS'] = array(-1);
-        }
-      }
-      if (!isset($aObjectPermissions['INPUT_DOCUMENTS'])) {
-        $aObjectPermissions['INPUT_DOCUMENTS'] = array(-1);
-      }
-      else {
-        if (!is_array($aObjectPermissions['INPUT_DOCUMENTS'])) {
-          $aObjectPermissions['INPUT_DOCUMENTS'] = array(-1);
-        }
-      }
-      if (!isset($aObjectPermissions['OUTPUT_DOCUMENTS'])) {
-        $aObjectPermissions['OUTPUT_DOCUMENTS'] = array(-1);
-      }
-      else {
-        if (!is_array($aObjectPermissions['OUTPUT_DOCUMENTS'])) {
-          $aObjectPermissions['OUTPUT_DOCUMENTS'] = array(-1);
-        }
-      }
-      $aDelete = $this->getAllObjectsFrom($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID, 'DELETE');
+  /*
+  * Return the input documents list criteria object
+  * @param string $sProcessUID
+  * @return object
+  */
+  function getInputDocumentsCriteria($sApplicationUID, $iDelegation, $sDocumentUID)
+  {
+    try {
       require_once 'classes/model/AppDocument.php';
       $oAppDocument = new AppDocument();
       $oCriteria = new Criteria('workflow');
       $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
-      $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, array('INPUT'), Criteria::IN);
-      $oCriteria->add(AppDocumentPeer::APP_DOC_UID, $aObjectPermissions['INPUT_DOCUMENTS'], Criteria::IN);
-      $aConditions   = array();
-      $aConditions[] = array(AppDocumentPeer::APP_UID, AppDelegationPeer::APP_UID);
-      $aConditions[] = array(AppDocumentPeer::DEL_INDEX, AppDelegationPeer::DEL_INDEX);
-      $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
-      $oCriteria->add(AppDelegationPeer::PRO_UID, $sProcessUID);
+      $oCriteria->add(AppDocumentPeer::DEL_INDEX, $iDelegation);
+      $oCriteria->add(AppDocumentPeer::DOC_UID, $sDocumentUID);
+      $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, 'INPUT');
       $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
       $oDataset = AppDocumentPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
       $oDataset->next();
       $aInputDocuments = array();
       $aInputDocuments[] = array('APP_DOC_UID' => 'char', 'DOC_UID' => 'char', 'APP_DOC_COMMENT' => 'char', 'APP_DOC_FILENAME' => 'char', 'APP_DOC_INDEX' => 'integer');
-      $oUser = new Users();
       while ($aRow = $oDataset->getRow()) {
-          $oCriteria2 = new Criteria('workflow');
-          $oCriteria2->add(AppDelegationPeer::APP_UID, $sApplicationUID);
-          $oCriteria2->add(AppDelegationPeer::DEL_INDEX, $aRow['DEL_INDEX']);
-          $oDataset2 = AppDelegationPeer::doSelectRS($oCriteria2);
-          $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-          $oDataset2->next();
-          $aRow2 = $oDataset2->getRow();
-          $oTask = new Task();
-          if ($oTask->taskExists($aRow2['TAS_UID'])) {
-            $aTask = $oTask->load($aRow2['TAS_UID']);
-          }
-          else {
-            $aTask = array('TAS_TITLE' => '(TASK DELETED)');
-          }
-          $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
-          try {
-            $aAux1 = $oUser->load($aAux['USR_UID']);
-            $sUser = $aAux1['USR_FIRSTNAME'] . ' ' . $aAux1['USR_LASTNAME'];
-          }
-          catch (Exception $oException) {
-            $sUser = '(USER DELETED)';
-          }
-          $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' => $aAux['APP_DOC_INDEX'], 'TYPE' => $aAux['APP_DOC_TYPE'], 'ORIGIN' => $aTask['TAS_TITLE'], 'CREATE_DATE' => $aAux['APP_DOC_CREATE_DATE'], 'CREATED_BY' => $sUser);
-          if ($aFields['APP_DOC_FILENAME'] != '') {
-              $aFields['TITLE'] = $aFields['APP_DOC_FILENAME'];
-          } else {
-              $aFields['TITLE'] = $aFields['APP_DOC_COMMENT'];
-          }
-          $aFields['POSITION'] = $_SESSION['STEP_POSITION'];
-          $aFields['CONFIRM'] = G::LoadTranslation('ID_CONFIRM_DELETE_ELEMENT');
-          if (in_array($aRow['APP_DOC_UID'], $aDelete['INPUT_DOCUMENTS'])) {
-            $aFields['ID_DELETE'] = G::LoadTranslation('ID_DELETE');
-          }
-          $aInputDocuments[] = $aFields;
-          $oDataset->next();
-      }
-      $oAppDocument = new AppDocument();
-      $oCriteria = new Criteria('workflow');
-      $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
-      $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, array('ATTACHED'), Criteria::IN);
-      $aConditions   = array();
-      $aConditions[] = array(AppDocumentPeer::APP_UID, AppDelegationPeer::APP_UID);
-      $aConditions[] = array(AppDocumentPeer::DEL_INDEX, AppDelegationPeer::DEL_INDEX);
-      $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
-      $oCriteria->add(AppDelegationPeer::PRO_UID, $sProcessUID);
-      $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
-      $oDataset = AppDocumentPeer::doSelectRS($oCriteria);
-      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-      $oDataset->next();
-      while ($aRow = $oDataset->getRow()) {
-          $oCriteria2 = new Criteria('workflow');
-          $oCriteria2->add(AppDelegationPeer::APP_UID, $sApplicationUID);
-          $oCriteria2->add(AppDelegationPeer::DEL_INDEX, $aRow['DEL_INDEX']);
-          $oDataset2 = AppDelegationPeer::doSelectRS($oCriteria2);
-          $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-          $oDataset2->next();
-          $aRow2 = $oDataset2->getRow();
-          $oTask = new Task();
-          if ($oTask->taskExists($aRow2['TAS_UID'])) {
-            $aTask = $oTask->load($aRow2['TAS_UID']);
-          }
-          else {
-            $aTask = array('TAS_TITLE' => '(TASK DELETED)');
-          }
-          $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
-          try {
-            $aAux1 = $oUser->load($aAux['USR_UID']);
-            $sUser = $aAux1['USR_FIRSTNAME'] . ' ' . $aAux1['USR_LASTNAME'];
-          }
-          catch (Exception $oException) {
-            $sUser = '***';
-          }
-          $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' => $aAux['APP_DOC_INDEX'], 'TYPE' => $aAux['APP_DOC_TYPE'], 'ORIGIN' => $aTask['TAS_TITLE'], 'CREATE_DATE' => $aAux['APP_DOC_CREATE_DATE'], 'CREATED_BY' => $sUser);
-          if ($aFields['APP_DOC_FILENAME'] != '') {
-              $aFields['TITLE'] = $aFields['APP_DOC_FILENAME'];
-          } else {
-              $aFields['TITLE'] = $aFields['APP_DOC_COMMENT'];
-          }
-          $aFields['POSITION'] = $_SESSION['STEP_POSITION'];
-          $aFields['CONFIRM'] = G::LoadTranslation('ID_CONFIRM_DELETE_ELEMENT');
-          $aFields['ID_DELETE'] = G::LoadTranslation('ID_DELETE');
-          $aInputDocuments[] = $aFields;
-          $oDataset->next();
+        $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
+        $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' =>
+            $aAux['APP_DOC_INDEX']);
+        if ($aFields['APP_DOC_FILENAME'] != '') {
+            $aFields['TITLE'] = $aFields['APP_DOC_FILENAME'];
+        } 
+        else {
+            $aFields['TITLE'] = $aFields['APP_DOC_COMMENT'];
+        }
+        $aFields['POSITION'] = $_SESSION['STEP_POSITION'];
+        $aFields['CONFIRM'] = G::LoadTranslation('ID_CONFIRM_DELETE_ELEMENT');
+        $aInputDocuments[] = $aFields;
+        $oDataset->next();
       }
       global $_DBArray;
       $_DBArray['inputDocuments'] = $aInputDocuments;
@@ -2338,97 +1873,87 @@ class Cases
       G::LoadClass('ArrayPeer');
       $oCriteria = new Criteria('dbarray');
       $oCriteria->setDBArrayTable('inputDocuments');
-      $oCriteria->addDescendingOrderByColumn('CREATE_DATE');
+      $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
       return $oCriteria;
     }
+    catch (exception $oException) {
+      throw $oException;
+    }
+  }
 
-    function getAllGeneratedDocumentsCriteria($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID) {
-      //verifica si la tabla OBJECT_PERMISSION
-      $this->verifyTable();
+  function getInputDocumentsCriteriaToRevise($sApplicationUID)
+  {
+    try {
+      require_once 'classes/model/AppDocument.php';
+      $oAppDocument = new AppDocument();
+      $oCriteria = new Criteria('workflow');
+      $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
+      $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, 'INPUT');
+      $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
+      $oDataset = AppDocumentPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      $aInputDocuments = array();
+      $aInputDocuments[] = array('APP_DOC_UID' => 'char', 'DOC_UID' => 'char', 'APP_DOC_COMMENT' => 'char', 'APP_DOC_FILENAME' => 'char', 'APP_DOC_INDEX' => 'integer');
+      while ($aRow = $oDataset->getRow()) {
+        $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
+        $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' =>
+          $aAux['APP_DOC_INDEX']);
 
-      $aObjectPermissions = $this->getAllObjects($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID);
-      if (!is_array($aObjectPermissions)) {
-        $aObjectPermissions = array('DYNAFORMS' => array(-1), 'INPUT_DOCUMENTS' => array(-1), 'OUTPUT_DOCUMENTS' => array(-1));
-      }
-      if (!isset($aObjectPermissions['DYNAFORMS'])) {
-        $aObjectPermissions['DYNAFORMS'] = array(-1);
-      }
-      else {
-        if (!is_array($aObjectPermissions['DYNAFORMS'])) {
-          $aObjectPermissions['DYNAFORMS'] = array(-1);
+        if ($aFields['APP_DOC_FILENAME'] != '') {
+          $aFields['TITLE'] = $aFields['APP_DOC_FILENAME'];
+        } 
+        else {
+          $aFields['TITLE'] = $aFields['APP_DOC_COMMENT'];
         }
+        $aFields['CREATE_DATE'] = $aRow['APP_DOC_CREATE_DATE'];
+        $aFields['TYPE'] = $aRow['APP_DOC_TYPE'];
+
+        $aFields['POSITION'] = $_SESSION['STEP_POSITION'];
+        $aFields['CONFIRM'] = G::LoadTranslation('ID_CONFIRM_DELETE_ELEMENT');
+        $aInputDocuments[] = $aFields;
+        $oDataset->next();
       }
-      if (!isset($aObjectPermissions['INPUT_DOCUMENTS'])) {
-        $aObjectPermissions['INPUT_DOCUMENTS'] = array(-1);
-      }
-      else {
-        if (!is_array($aObjectPermissions['INPUT_DOCUMENTS'])) {
-          $aObjectPermissions['INPUT_DOCUMENTS'] = array(-1);
-        }
-      }
-      if (!isset($aObjectPermissions['OUTPUT_DOCUMENTS'])) {
-        $aObjectPermissions['OUTPUT_DOCUMENTS'] = array(-1);
-      }
-      else {
-        if (!is_array($aObjectPermissions['OUTPUT_DOCUMENTS'])) {
-          $aObjectPermissions['OUTPUT_DOCUMENTS'] = array(-1);
-        }
-      }
-      $aDelete = $this->getAllObjectsFrom($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID, 'DELETE');
+      global $_DBArray;
+      $_DBArray['inputDocuments'] = $aInputDocuments;
+      $_SESSION['_DBArray'] = $_DBArray;
+      G::LoadClass('ArrayPeer');
+      $oCriteria = new Criteria('dbarray');
+      $oCriteria->setDBArrayTable('inputDocuments');
+      $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
+      return $oCriteria;
+    }
+    catch (exception $oException) {
+        throw $oException;
+    }
+  }
+
+  function getOutputDocumentsCriteriaToRevise($sApplicationUID)
+  {
+    try {
       require_once 'classes/model/AppDocument.php';
       $oAppDocument = new AppDocument();
       $oCriteria = new Criteria('workflow');
       $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
       $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, 'OUTPUT');
-      $oCriteria->add(AppDocumentPeer::APP_DOC_UID, $aObjectPermissions['OUTPUT_DOCUMENTS'], Criteria::IN);
-      $aConditions   = array();
-      $aConditions[] = array(AppDocumentPeer::APP_UID, AppDelegationPeer::APP_UID);
-      $aConditions[] = array(AppDocumentPeer::DEL_INDEX, AppDelegationPeer::DEL_INDEX);
-      $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
-      $oCriteria->add(AppDelegationPeer::PRO_UID, $sProcessUID);
       $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
       $oDataset = AppDocumentPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
       $oDataset->next();
       $aOutputDocuments = array();
-      $aOutputDocuments[] = array('APP_DOC_UID' => 'char', 'DOC_UID' => 'char', 'APP_DOC_COMMENT' => 'char', 'APP_DOC_FILENAME' => 'char', 'APP_DOC_INDEX' => 'integer');
-      $oUser = new Users();
+      $aOutputDocuments[] = array('APP_DOC_UID' => 'char', 'DOC_UID' => 'char', 'APP_DOC_COMMENT' => 'char', 'APP_DOC_FILENAME' => 'char', 'APP_DOC_INDEX' => 'integer', 'APP_DOC_CREATE_DATE' => 'char');
       while ($aRow = $oDataset->getRow()) {
-          $oCriteria2 = new Criteria('workflow');
-          $oCriteria2->add(AppDelegationPeer::APP_UID, $sApplicationUID);
-          $oCriteria2->add(AppDelegationPeer::DEL_INDEX, $aRow['DEL_INDEX']);
-          $oDataset2 = AppDelegationPeer::doSelectRS($oCriteria2);
-          $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-          $oDataset2->next();
-          $aRow2 = $oDataset2->getRow();
-          $oTask = new Task();
-          if ($oTask->taskExists($aRow2['TAS_UID'])) {
-            $aTask = $oTask->load($aRow2['TAS_UID']);
-          }
-          else {
-            $aTask = array('TAS_TITLE' => '(TASK DELETED)');
-          }
-          $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
-          try {
-            $aAux1 = $oUser->load($aAux['USR_UID']);
-            $sUser = $aAux1['USR_FIRSTNAME'] . ' ' . $aAux1['USR_LASTNAME'];
-          }
-          catch (Exception $oException) {
-            $sUser = '(USER DELETED)';
-          }
-          $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' => $aAux['APP_DOC_INDEX'], 'ORIGIN' => $aTask['TAS_TITLE'], 'CREATE_DATE' => $aAux['APP_DOC_CREATE_DATE'], 'CREATED_BY' => $sUser);
-          if ($aFields['APP_DOC_FILENAME'] != '') {
-              $aFields['TITLE'] = $aFields['APP_DOC_FILENAME'];
-          } else {
-              $aFields['TITLE'] = $aFields['APP_DOC_COMMENT'];
-          }
-          $aFields['POSITION'] = $_SESSION['STEP_POSITION'];
-          $aFields['CONFIRM'] = G::LoadTranslation('ID_CONFIRM_DELETE_ELEMENT');
-          if (in_array($aRow['APP_DOC_UID'], $aDelete['OUTPUT_DOCUMENTS'])) {
-            $aFields['ID_DELETE'] = G::LoadTranslation('ID_DELETE');
-          }
-          $aOutputDocuments[] = $aFields;
-          $oDataset->next();
+        $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
+        $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' =>
+          $aAux['APP_DOC_INDEX'], 'APP_DOC_CREATE_DATE' => $aRow['APP_DOC_CREATE_DATE']);
+        if ($aFields['APP_DOC_FILENAME'] != '') {
+          $aFields['TITLE'] = $aFields['APP_DOC_FILENAME'];
+        } 
+        else {
+          $aFields['TITLE'] = $aFields['APP_DOC_COMMENT'];
+        }
+        $aOutputDocuments[] = $aFields;
+        $oDataset->next();
       }
       global $_DBArray;
       $_DBArray['outputDocuments'] = $aOutputDocuments;
@@ -2436,172 +1961,657 @@ class Cases
       G::LoadClass('ArrayPeer');
       $oCriteria = new Criteria('dbarray');
       $oCriteria->setDBArrayTable('outputDocuments');
-      $oCriteria->addDescendingOrderByColumn('CREATE_DATE');
+      $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
       return $oCriteria;
     }
+    catch (exception $oException) {
+      throw $oException;
+    }
+  }
 
-    function getallDynaformsCriteria($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID)
-    {
-      //verifica si la tabla OBJECT_PERMISSION
-      $this->verifyTable();
+  function getCriteriaProcessCases($status, $PRO_UID) {
+    $c = new Criteria('workflow');
 
-      $aObjectPermissions = $this->getAllObjects($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID);
-      if (!is_array($aObjectPermissions)) {
-        $aObjectPermissions = array('DYNAFORMS' => array(-1), 'INPUT_DOCUMENTS' => array(-1), 'OUTPUT_DOCUMENTS' => array(-1));
-      }
-      if (!isset($aObjectPermissions['DYNAFORMS'])) {
+    $c->add(ApplicationPeer::APP_STATUS, $status);
+    $c->add(ApplicationPeer::PRO_UID, $PRO_UID);
+    return $c;
+  }
+
+  function pauseCase($sApplicationUID, $iDelegation, $sUserUID, $sUnpauseDate = null)
+  {
+    $this->CloseCurrentDelegation($sApplicationUID, $iDelegation);
+    $oApplication = new Application();
+    $aFields = $oApplication->Load($sApplicationUID);
+    $oCriteria = new Criteria('workflow');
+    $oCriteria->clearSelectColumns();
+    $oCriteria->addSelectColumn(AppThreadPeer::APP_THREAD_INDEX);
+    $oCriteria->add(AppThreadPeer::APP_UID, $sApplicationUID);
+    $oCriteria->add(AppThreadPeer::DEL_INDEX, $iDelegation);
+    $oDataset = AppThreadPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    $aRow = $oDataset->getRow();
+    $aData['PRO_UID'] = $aFields['PRO_UID'];
+    $aData['APP_UID'] = $sApplicationUID;
+    $aData['APP_THREAD_INDEX'] = $aRow['APP_THREAD_INDEX'];
+    $aData['APP_DEL_INDEX'] = $iDelegation;
+    $aData['APP_TYPE'] = 'PAUSE';
+    $aData['APP_STATUS'] = $aFields['APP_STATUS'];
+    $aData['APP_DELEGATION_USER'] = $sUserUID;
+    $aData['APP_ENABLE_ACTION_USER'] = $sUserUID;
+    $aData['APP_ENABLE_ACTION_DATE'] = date('Y-m-d H:i:s');
+    $aData['APP_DISABLE_ACTION_DATE'] = $sUnpauseDate;
+    $oAppDelay = new AppDelay();
+    $oAppDelay->create($aData);
+  }
+
+  function unpauseCase($sApplicationUID, $iDelegation, $sUserUID)
+  {
+    $oAppDelegation = new AppDelegation();
+    $aFieldsDel = $oAppDelegation->Load($sApplicationUID, $iDelegation);
+    $iIndex = $oAppDelegation->createAppDelegation($aFieldsDel['PRO_UID'], $aFieldsDel['APP_UID'], $aFieldsDel['TAS_UID'], $aFieldsDel['USR_UID'], $aFieldsDel['DEL_THREAD']);
+    $aData = array();
+    $aData['APP_UID'] = $aFieldsDel['APP_UID'];
+    $aData['DEL_INDEX'] = $iIndex;
+    $aData['DEL_PREVIOUS'] = $aFieldsDel['DEL_PREVIOUS'];
+    $aData['DEL_TYPE'] = $aFieldsDel['DEL_TYPE'];
+    $aData['DEL_PRIORITY'] = $aFieldsDel['DEL_PRIORITY'];
+    $aData['DEL_DELEGATE_DATE'] = $aFieldsDel['DEL_DELEGATE_DATE'];
+    $aData['DEL_INIT_DATE'] = date('Y-m-d H:i:s');
+    $aData['DEL_FINISH_DATE'] = null;
+    $oAppDelegation->update($aData);
+    $oCriteria = new Criteria('workflow');
+    $oCriteria->clearSelectColumns();
+    $oCriteria->addSelectColumn(AppDelayPeer::APP_DELAY_UID);
+    $oCriteria->addSelectColumn(AppDelayPeer::APP_THREAD_INDEX);
+    $oCriteria->add(AppDelayPeer::APP_UID, $sApplicationUID);
+    $oCriteria->add(AppDelayPeer::APP_DEL_INDEX, $iDelegation);
+    $oCriteria->add(AppDelayPeer::APP_TYPE, 'PAUSE');
+    $oCriteria->add($oCriteria->getNewCriterion(AppDelayPeer::APP_DISABLE_ACTION_USER, null, Criteria::ISNULL)->addOr($oCriteria->getNewCriterion(AppDelayPeer::APP_DISABLE_ACTION_USER, 0)));
+    $oDataset = AppDelayPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    $aRow = $oDataset->getRow();
+    $oAppThread = new AppThread();
+    $oAppThread->update(array('APP_UID' => $sApplicationUID, 'APP_THREAD_INDEX' => $aRow['APP_THREAD_INDEX'], 'DEL_INDEX' => $iIndex));
+    $aData['APP_DELAY_UID'] = $aRow['APP_DELAY_UID'];
+    $aData['APP_DISABLE_ACTION_USER'] = $sUserUID;
+    $aData['APP_DISABLE_ACTION_DATE'] = date('Y-m-d H:i:s');
+    $oAppDelay = new AppDelay();
+    $aFieldsDelay = $oAppDelay->update($aData);
+  }
+
+  function cancelCase($sApplicationUID, $iIndex, $user_logged)
+  {
+    require_once 'classes/model/Application.php';
+    require_once 'classes/model/AppDelegation.php';
+    require_once 'classes/model/AppDelay.php';
+    require_once 'classes/model/AppThread.php';
+    $oApplication = new Application();
+    $aFields = $oApplication->load($sApplicationUID);
+    $oCriteria = new Criteria('workflow');
+    $oCriteria->add(AppDelegationPeer::APP_UID, $sApplicationUID);
+    $oCriteria->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
+    if (AppDelegationPeer::doCount($oCriteria) == 1) {
+      $aFields['APP_STATUS'] = 'CANCELLED';
+      $oApplication->update($aFields);
+    }
+    $this->CloseCurrentDelegation($sApplicationUID, $iIndex);
+    $oAppDel = new AppDelegation();
+    $oAppDel->Load($sApplicationUID, $iIndex);
+    $aAppDel = $oAppDel->toArray(BasePeer::TYPE_FIELDNAME);
+    $this->closeAppThread($sApplicationUID, $aAppDel['DEL_THREAD']);
+
+    $delay = new AppDelay();
+    $array['PRO_UID'] = $aFields['PRO_UID'];
+    $array['APP_UID'] = $sApplicationUID;
+
+    $c = new Criteria('workflow');
+    $c->clearSelectColumns();
+    $c->addSelectColumn(AppThreadPeer::APP_THREAD_INDEX);
+    $c->add(AppThreadPeer::APP_UID, $sApplicationUID);
+    $c->add(AppThreadPeer::DEL_INDEX, $iIndex);
+    $oDataset = AppThreadPeer::doSelectRS($c);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    $aRow = $oDataset->getRow();
+    $array['APP_THREAD_INDEX'] = $aRow['APP_THREAD_INDEX'];
+    $array['APP_DEL_INDEX'] = $iIndex;
+    $array['APP_TYPE'] = 'CANCEL';
+
+    $c = new Criteria('workflow');
+    $c->clearSelectColumns();
+    $c->addSelectColumn(ApplicationPeer::APP_STATUS);
+    $c->add(ApplicationPeer::APP_UID, $sApplicationUID);
+    $oDataset = ApplicationPeer::doSelectRS($c);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    $aRow1 = $oDataset->getRow();
+    $array['APP_STATUS'] = $aRow1['APP_STATUS'];
+
+    $array['APP_DELEGATION_USER'] = $user_logged;
+    $array['APP_ENABLE_ACTION_USER'] = $user_logged;
+    $array['APP_ENABLE_ACTION_DATE'] = date('Y-m-d H:i:s');
+    $delay->create($array);
+
+    //Before cancel a case verify if is a child case
+    $oCriteria2 = new Criteria('workflow');
+    $oCriteria2->add(SubApplicationPeer::APP_UID, $sApplicationUID);
+    $oCriteria2->add(SubApplicationPeer::SA_STATUS, 'ACTIVE');
+    if (SubApplicationPeer::doCount($oCriteria2) > 0) {
+      G::LoadClass('derivation');
+      $oDerivation = new Derivation();
+      $oDerivation->verifyIsCaseChild($sApplicationUID);
+    }
+  }
+
+  function reactivateCase($sApplicationUID, $iIndex, $user_logged)
+  {
+    require_once 'classes/model/Application.php';
+    require_once 'classes/model/AppDelay.php';
+    $oApplication = new Application();
+    $aFields = $oApplication->load((isset($_POST['sApplicationUID']) ? $_POST['sApplicationUID'] : $_SESSION['APPLICATION']));
+    $aFields['APP_STATUS'] = 'TO_DO';
+    $oApplication->update($aFields);
+    $this->ReactivateCurrentDelegation($sApplicationUID, $iIndex);
+    $c = new Criteria('workflow');
+    $c->clearSelectColumns();
+    $c->addSelectColumn(AppDelayPeer::APP_DELAY_UID);
+
+    $c->add(AppDelayPeer::APP_UID, $sApplicationUID);
+    $c->add(AppDelayPeer::PRO_UID, $aFields['PRO_UID']);
+    $c->add(AppDelayPeer::APP_DEL_INDEX, $iIndex);
+    $c->add(AppDelayPeer::APP_TYPE, 'CANCEL');
+    $c->add(AppDelayPeer::APP_DISABLE_ACTION_USER, null);
+    $c->add(AppDelayPeer::APP_DISABLE_ACTION_DATE, null);
+
+    $oDataset = AppDelayPeer::doSelectRS($c);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    $aRow = $oDataset->getRow();
+    //var_dump($aRow);
+    $aFields = array();
+    $aFields['APP_DELAY_UID'] = $aRow['APP_DELAY_UID'];
+    $aFields['APP_DISABLE_ACTION_USER'] = $user_logged;
+    $aFields['APP_DISABLE_ACTION_DATE'] = date('Y-m-d H:i:s');
+
+    $delay = new AppDelay();
+    $delay->update($aFields);
+    //$this->ReactivateCurrentDelegation($sApplicationUID);
+  }
+
+  function reassignCase($sApplicationUID, $iDelegation, $sUserUID, $newUserUID, $sType = 'REASSIGN') {
+    $this->CloseCurrentDelegation($sApplicationUID, $iDelegation);
+    $oAppDelegation = new AppDelegation();
+    $aFieldsDel = $oAppDelegation->Load($sApplicationUID, $iDelegation);
+    $iIndex = $oAppDelegation->createAppDelegation($aFieldsDel['PRO_UID'], $aFieldsDel['APP_UID'], $aFieldsDel['TAS_UID'], $aFieldsDel['USR_UID'], $aFieldsDel['DEL_THREAD']);
+    $aData = array();
+    $aData['APP_UID'] = $aFieldsDel['APP_UID'];
+    $aData['DEL_INDEX'] = $iIndex;
+    $aData['DEL_PREVIOUS'] = $aFieldsDel['DEL_PREVIOUS'];
+    $aData['DEL_TYPE'] = $aFieldsDel['DEL_TYPE'];
+    $aData['DEL_PRIORITY'] = $aFieldsDel['DEL_PRIORITY'];
+    $aData['DEL_DELEGATE_DATE'] = $aFieldsDel['DEL_DELEGATE_DATE'];
+    $aData['USR_UID'] = $newUserUID;
+    $aData['DEL_INIT_DATE'] = null;
+    $aData['DEL_FINISH_DATE'] = null;
+    $oAppDelegation->update($aData);
+    $oAppThread = new AppThread();
+    $oAppThread->update(array('APP_UID' => $sApplicationUID, 'APP_THREAD_INDEX' => $aFieldsDel['DEL_THREAD'], 'DEL_INDEX' => $iIndex));
+    //Save in APP_DELAY
+    $oApplication = new Application();
+    $aFields = $oApplication->Load($sApplicationUID);
+    $aData['PRO_UID'] = $aFieldsDel['PRO_UID'];
+    $aData['APP_UID'] = $sApplicationUID;
+    $aData['APP_THREAD_INDEX'] = $aFieldsDel['DEL_THREAD'];
+    $aData['APP_DEL_INDEX'] = $iDelegation;
+    $aData['APP_TYPE'] = ($sType != '' ? $sType : 'REASSIGN');
+    $aData['APP_STATUS'] = $aFields['APP_STATUS'];
+    $aData['APP_DELEGATION_USER'] = $sUserUID;
+    $aData['APP_ENABLE_ACTION_USER'] = $sUserUID;
+    $aData['APP_ENABLE_ACTION_DATE'] = date('Y-m-d H:i:s');
+    $oAppDelay = new AppDelay();
+    $oAppDelay->create($aData);
+  }
+
+  function getAllDynaformsStepsToRevise($APP_UID) {
+    $aCase = $this->loadCase($APP_UID);
+    $oCriteria = new Criteria('workflow');
+    $oCriteria->addSelectColumn(StepSupervisorPeer::STEP_UID);
+    $oCriteria->addSelectColumn(StepSupervisorPeer::PRO_UID);
+    $oCriteria->addSelectColumn(StepSupervisorPeer::STEP_TYPE_OBJ);
+    $oCriteria->addSelectColumn(StepSupervisorPeer::STEP_UID_OBJ);
+    $oCriteria->addSelectColumn(StepSupervisorPeer::STEP_POSITION);
+    $oCriteria->add(StepSupervisorPeer::PRO_UID, $aCase['PRO_UID']);
+    $oCriteria->add(StepSupervisorPeer::STEP_TYPE_OBJ, 'DYNAFORM');
+    $oCriteria->addAscendingOrderByColumn(StepSupervisorPeer::STEP_POSITION);
+    $oDataset = StepSupervisorPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    return $oDataset;
+  }
+
+  function getAllInputsStepsToRevise($APP_UID) {
+    $aCase = $this->loadCase($APP_UID);
+    $oCriteria = new Criteria('workflow');
+    $oCriteria->addSelectColumn(StepSupervisorPeer::STEP_UID);
+    $oCriteria->addSelectColumn(StepSupervisorPeer::PRO_UID);
+    $oCriteria->addSelectColumn(StepSupervisorPeer::STEP_TYPE_OBJ);
+    $oCriteria->addSelectColumn(StepSupervisorPeer::STEP_UID_OBJ);
+    $oCriteria->addSelectColumn(StepSupervisorPeer::STEP_POSITION);
+    $oCriteria->add(StepSupervisorPeer::PRO_UID, $aCase['PRO_UID']);
+    $oCriteria->add(StepSupervisorPeer::STEP_TYPE_OBJ, 'INPUT_DOCUMENT');
+    $oCriteria->addAscendingOrderByColumn(StepSupervisorPeer::STEP_POSITION);
+    $oDataset = StepSupervisorPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    return $oDataset;
+  }
+
+  function getAllUploadedDocumentsCriteria($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID) {
+    //verifica si existe la tabla OBJECT_PERMISSION
+    $this->verifyTable();
+
+    $aObjectPermissions = $this->getAllObjects($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID);
+    if (!is_array($aObjectPermissions)) {
+      $aObjectPermissions = array('DYNAFORMS' => array(-1), 'INPUT_DOCUMENTS' => array(-1), 'OUTPUT_DOCUMENTS' => array(-1));
+    }
+    if (!isset($aObjectPermissions['DYNAFORMS'])) {
+      $aObjectPermissions['DYNAFORMS'] = array(-1);
+    }
+    else {
+      if (!is_array($aObjectPermissions['DYNAFORMS'])) {
         $aObjectPermissions['DYNAFORMS'] = array(-1);
       }
-      else {
-        if (!is_array($aObjectPermissions['DYNAFORMS'])) {
-          $aObjectPermissions['DYNAFORMS'] = array(-1);
-        }
-      }
-      if (!isset($aObjectPermissions['INPUT_DOCUMENTS'])) {
+    }
+    if (!isset($aObjectPermissions['INPUT_DOCUMENTS'])) {
+      $aObjectPermissions['INPUT_DOCUMENTS'] = array(-1);
+    }
+    else {
+      if (!is_array($aObjectPermissions['INPUT_DOCUMENTS'])) {
         $aObjectPermissions['INPUT_DOCUMENTS'] = array(-1);
       }
-      else {
-        if (!is_array($aObjectPermissions['INPUT_DOCUMENTS'])) {
-          $aObjectPermissions['INPUT_DOCUMENTS'] = array(-1);
-        }
-      }
-      if (!isset($aObjectPermissions['OUTPUT_DOCUMENTS'])) {
+    }
+    if (!isset($aObjectPermissions['OUTPUT_DOCUMENTS'])) {
+      $aObjectPermissions['OUTPUT_DOCUMENTS'] = array(-1);
+    }
+    else {
+      if (!is_array($aObjectPermissions['OUTPUT_DOCUMENTS'])) {
         $aObjectPermissions['OUTPUT_DOCUMENTS'] = array(-1);
       }
-      else {
-        if (!is_array($aObjectPermissions['OUTPUT_DOCUMENTS'])) {
-          $aObjectPermissions['OUTPUT_DOCUMENTS'] = array(-1);
-        }
-      }
-      $oCriteria = new Criteria('workflow');
-      $oCriteria->add(ApplicationPeer::APP_UID, $sApplicationUID);
-      $oCriteria->addJoin(ApplicationPeer::PRO_UID, StepPeer::PRO_UID);
-      $oCriteria->addJoin(StepPeer::STEP_UID_OBJ, DynaformPeer::DYN_UID);
-      $oCriteria->add(StepPeer::STEP_TYPE_OBJ, 'DYNAFORM');
-      $oCriteria->add(StepPeer::STEP_UID_OBJ, $aObjectPermissions['DYNAFORMS'], Criteria::IN);
-      $oCriteria->addAscendingOrderByColumn(StepPeer::STEP_POSITION);
-      $oCriteria->setDistinct();
-      $oDataset = DynaformPeer::doSelectRS($oCriteria);
-      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-      $oDataset->next();
-      $aInputDocuments = array();
-      $aInputDocuments[] = array(
-        'DYN_TITLE' => 'char'
-      );
-
-      while ($aRow = $oDataset->getRow()) {
-          $o = new Dynaform();
-          $o->setDynUid($aRow['DYN_UID']);
-          $aFields['DYN_TITLE'] = $o->getDynTitle();
-          $aFields['DYN_UID'] = $aRow['DYN_UID'];
-          $aFields['EDIT'] = G::LoadTranslation('ID_EDIT');
-          $aInputDocuments[] = $aFields;
-          $oDataset->next();
-      }
-      global $_DBArray;
-      $_DBArray['Dynaforms'] = $aInputDocuments;
-      $_SESSION['_DBArray'] = $_DBArray;
-      G::LoadClass('ArrayPeer');
-      $oCriteria = new Criteria('dbarray');
-      $oCriteria->setDBArrayTable('Dynaforms');
-      //$oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_CREATE_DATE);
-      return $oCriteria;
     }
-
-    function sendNotifications($sCurrentTask, $aTasks, $aFields, $sApplicationUID, $iDelegation, $sFrom = '') {
+    $aDelete = $this->getAllObjectsFrom($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID, 'DELETE');
+    require_once 'classes/model/AppDocument.php';
+    $oAppDocument = new AppDocument();
+    $oCriteria = new Criteria('workflow');
+    $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
+    $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, array('INPUT'), Criteria::IN);
+    $oCriteria->add(AppDocumentPeer::APP_DOC_UID, $aObjectPermissions['INPUT_DOCUMENTS'], Criteria::IN);
+    $aConditions   = array();
+    $aConditions[] = array(AppDocumentPeer::APP_UID, AppDelegationPeer::APP_UID);
+    $aConditions[] = array(AppDocumentPeer::DEL_INDEX, AppDelegationPeer::DEL_INDEX);
+    $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
+    $oCriteria->add(AppDelegationPeer::PRO_UID, $sProcessUID);
+    $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
+    $oDataset = AppDocumentPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    $aInputDocuments = array();
+    $aInputDocuments[] = array('APP_DOC_UID' => 'char', 'DOC_UID' => 'char', 'APP_DOC_COMMENT' => 'char', 'APP_DOC_FILENAME' => 'char', 'APP_DOC_INDEX' => 'integer');
+    $oUser = new Users();
+    while ($aRow = $oDataset->getRow()) {
+      $oCriteria2 = new Criteria('workflow');
+      $oCriteria2->add(AppDelegationPeer::APP_UID, $sApplicationUID);
+      $oCriteria2->add(AppDelegationPeer::DEL_INDEX, $aRow['DEL_INDEX']);
+      $oDataset2 = AppDelegationPeer::doSelectRS($oCriteria2);
+      $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset2->next();
+      $aRow2 = $oDataset2->getRow();
+      $oTask = new Task();
+      if ($oTask->taskExists($aRow2['TAS_UID'])) {
+        $aTask = $oTask->load($aRow2['TAS_UID']);
+      }
+      else {
+        $aTask = array('TAS_TITLE' => '(TASK DELETED)');
+      }
+      $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
       try {
-        require_once 'classes/model/Configuration.php';
-        $oConfiguration = new Configuration();
-        $sDelimiter     = DBAdapter::getStringDelimiter();
-        $oCriteria      = new Criteria('workflow');
-        $oCriteria->add(ConfigurationPeer::CFG_UID, 'Emails');
-        $oCriteria->add(ConfigurationPeer::OBJ_UID, '');
-        $oCriteria->add(ConfigurationPeer::PRO_UID, '');
-        $oCriteria->add(ConfigurationPeer::USR_UID, '');
-        $oCriteria->add(ConfigurationPeer::APP_UID, '');
-        if (ConfigurationPeer::doCount($oCriteria) == 0) {
-          $oConfiguration->create(array('CFG_UID' => 'Emails', 'OBJ_UID' => '', 'CFG_VALUE' => '', 'PRO_UID' => '', 'USR_UID' => '', 'APP_UID' => ''));
-          $aConfiguration = array();
-        }
-        else {
-          $aConfiguration = $oConfiguration->load('Emails', '', '', '', '');
-          if ($aConfiguration['CFG_VALUE'] != '') {
-            $aConfiguration = unserialize($aConfiguration['CFG_VALUE']);
-          }
-          else {
-            $aConfiguration = array();
-          }
-        }
-        if ($aConfiguration['MESS_ENABLED'] == '1') {
-          //Send derivation notification - Start
-          $oTask     = new Task();
-          $aTaskInfo = $oTask->load($sCurrentTask);
-          if ($aTaskInfo['TAS_SEND_LAST_EMAIL'] == 'TRUE') {
-            if ($sFrom == '') {
-              $sFrom = '"ProcessMaker"';
-            }
-            if (($aConfiguration['MESS_ENGINE'] != 'MAIL') && ($aConfiguration['MESS_ACCOUNT'] != '')) {
-              $sFrom .= ' <' . $aConfiguration['MESS_ACCOUNT'] . '>';
-            }
-            else {
-              if (($aConfiguration['MESS_ENGINE'] == 'MAIL')) {
-                $sFrom .= ' <info@' . gethostbyaddr('127.0.0.1') . '>';
-              }
-              else {
-                if ($aConfiguration['MESS_SERVER'] != '') {
-                  if (($sAux = @gethostbyaddr($aConfiguration['MESS_SERVER']))) {
-                    $sFrom .= ' <info@' . $sAux . '>';
-                  }
-                  else {
-                    $sFrom .= ' <info@' . $aConfiguration['MESS_SERVER'] . '>';
-                  }
-                }
-                else {
-                  $sFrom .= ' <info@processmaker.com>';
-                }
-              }
-            }
-            $sSubject = G::LoadTranslation('ID_MESSAGE_SUBJECT_DERIVATION');
-            $sBody    = G::replaceDataField($aTaskInfo['TAS_DEF_MESSAGE'], $aFields);
-            G::LoadClass('spool');
-            $oUser = new Users();
-            foreach ($aTasks as $aTask) {
-              if (isset($aTask['USR_UID'])) {
-                $aUser = $oUser->load($aTask['USR_UID']);
-                $sTo   = ((($aUser['USR_FIRSTNAME'] != '') || ($aUser['USR_LASTNAME'] != '')) ? $aUser['USR_FIRSTNAME'] . ' ' . $aUser['USR_LASTNAME'] . ' ' : '') . '<' . $aUser['USR_EMAIL'] . '>';
-                $oSpool = new spoolRun();
-                $oSpool->setConfig(array('MESS_ENGINE'   => $aConfiguration['MESS_ENGINE'],
-                                         'MESS_SERVER'   => $aConfiguration['MESS_SERVER'],
-                                         'MESS_PORT'     => $aConfiguration['MESS_PORT'],
-                                         'MESS_ACCOUNT'  => $aConfiguration['MESS_ACCOUNT'],
-                                         'MESS_PASSWORD' => $aConfiguration['MESS_PASSWORD'],
-                                         'SMTPAuth'      => $aConfiguration['MESS_RAUTH'] == '1' ? true : false));
-                $oSpool->create(array('msg_uid'          => '',
-                                      'app_uid'          => $sApplicationUID,
-                                      'del_index'        => $iDelegation,
-                                      'app_msg_type'     => 'DERIVATION',
-                                      'app_msg_subject'  => $sSubject,
-                                      'app_msg_from'     => $sFrom,
-                                      'app_msg_to'       => $sTo,
-                                      'app_msg_body'     => $sBody,
-                                      'app_msg_cc'       => '',
-                                      'app_msg_bcc'      => '',
-                                      'app_msg_attach'   => '',
-                                      'app_msg_template' => '',
-                                      'app_msg_status'   => 'pending'));
-                if (($aConfiguration['MESS_BACKGROUND'] == '') || ($aConfiguration['MESS_TRY_SEND_INMEDIATLY'] == '1')) {
-                  $oSpool->sendMail();
-                }
-              }
-            }
-          }
-          //Send derivation notification - End
-        }
+        $aAux1 = $oUser->load($aAux['USR_UID']);
+        $sUser = $aAux1['USR_FIRSTNAME'] . ' ' . $aAux1['USR_LASTNAME'];
       }
       catch (Exception $oException) {
-        throw $oException;
+        $sUser = '(USER DELETED)';
+      }
+      $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' => $aAux['APP_DOC_INDEX'], 'TYPE' => $aAux['APP_DOC_TYPE'], 'ORIGIN' => $aTask['TAS_TITLE'], 'CREATE_DATE' => $aAux['APP_DOC_CREATE_DATE'], 'CREATED_BY' => $sUser);
+      if ($aFields['APP_DOC_FILENAME'] != '') {
+          $aFields['TITLE'] = $aFields['APP_DOC_FILENAME'];
+      } else {
+          $aFields['TITLE'] = $aFields['APP_DOC_COMMENT'];
+      }
+      $aFields['POSITION'] = $_SESSION['STEP_POSITION'];
+      $aFields['CONFIRM'] = G::LoadTranslation('ID_CONFIRM_DELETE_ELEMENT');
+      if (in_array($aRow['APP_DOC_UID'], $aDelete['INPUT_DOCUMENTS'])) {
+        $aFields['ID_DELETE'] = G::LoadTranslation('ID_DELETE');
+      }
+      $aInputDocuments[] = $aFields;
+      $oDataset->next();
+    }
+    $oAppDocument = new AppDocument();
+    $oCriteria = new Criteria('workflow');
+    $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
+    $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, array('ATTACHED'), Criteria::IN);
+    $aConditions   = array();
+    $aConditions[] = array(AppDocumentPeer::APP_UID, AppDelegationPeer::APP_UID);
+    $aConditions[] = array(AppDocumentPeer::DEL_INDEX, AppDelegationPeer::DEL_INDEX);
+    $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
+    $oCriteria->add(AppDelegationPeer::PRO_UID, $sProcessUID);
+    $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
+    $oDataset = AppDocumentPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    while ($aRow = $oDataset->getRow()) {
+        $oCriteria2 = new Criteria('workflow');
+        $oCriteria2->add(AppDelegationPeer::APP_UID, $sApplicationUID);
+        $oCriteria2->add(AppDelegationPeer::DEL_INDEX, $aRow['DEL_INDEX']);
+        $oDataset2 = AppDelegationPeer::doSelectRS($oCriteria2);
+        $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+        $oDataset2->next();
+        $aRow2 = $oDataset2->getRow();
+        $oTask = new Task();
+        if ($oTask->taskExists($aRow2['TAS_UID'])) {
+          $aTask = $oTask->load($aRow2['TAS_UID']);
+        }
+        else {
+          $aTask = array('TAS_TITLE' => '(TASK DELETED)');
+        }
+        $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
+        try {
+          $aAux1 = $oUser->load($aAux['USR_UID']);
+          $sUser = $aAux1['USR_FIRSTNAME'] . ' ' . $aAux1['USR_LASTNAME'];
+        }
+        catch (Exception $oException) {
+          $sUser = '***';
+        }
+        $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' => $aAux['APP_DOC_INDEX'], 'TYPE' => $aAux['APP_DOC_TYPE'], 'ORIGIN' => $aTask['TAS_TITLE'], 'CREATE_DATE' => $aAux['APP_DOC_CREATE_DATE'], 'CREATED_BY' => $sUser);
+        if ($aFields['APP_DOC_FILENAME'] != '') {
+            $aFields['TITLE'] = $aFields['APP_DOC_FILENAME'];
+        } else {
+            $aFields['TITLE'] = $aFields['APP_DOC_COMMENT'];
+        }
+        $aFields['POSITION'] = $_SESSION['STEP_POSITION'];
+        $aFields['CONFIRM'] = G::LoadTranslation('ID_CONFIRM_DELETE_ELEMENT');
+        $aFields['ID_DELETE'] = G::LoadTranslation('ID_DELETE');
+        $aInputDocuments[] = $aFields;
+        $oDataset->next();
+    }
+    global $_DBArray;
+    $_DBArray['inputDocuments'] = $aInputDocuments;
+    $_SESSION['_DBArray'] = $_DBArray;
+    G::LoadClass('ArrayPeer');
+    $oCriteria = new Criteria('dbarray');
+    $oCriteria->setDBArrayTable('inputDocuments');
+    $oCriteria->addDescendingOrderByColumn('CREATE_DATE');
+    return $oCriteria;
+  }
+
+  function getAllGeneratedDocumentsCriteria($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID) {
+    //verifica si la tabla OBJECT_PERMISSION
+    $this->verifyTable();
+
+    $aObjectPermissions = $this->getAllObjects($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID);
+    if (!is_array($aObjectPermissions)) {
+      $aObjectPermissions = array('DYNAFORMS' => array(-1), 'INPUT_DOCUMENTS' => array(-1), 'OUTPUT_DOCUMENTS' => array(-1));
+    }
+    if (!isset($aObjectPermissions['DYNAFORMS'])) {
+      $aObjectPermissions['DYNAFORMS'] = array(-1);
+    }
+    else {
+      if (!is_array($aObjectPermissions['DYNAFORMS'])) {
+        $aObjectPermissions['DYNAFORMS'] = array(-1);
       }
     }
+    if (!isset($aObjectPermissions['INPUT_DOCUMENTS'])) {
+      $aObjectPermissions['INPUT_DOCUMENTS'] = array(-1);
+    }
+    else {
+      if (!is_array($aObjectPermissions['INPUT_DOCUMENTS'])) {
+        $aObjectPermissions['INPUT_DOCUMENTS'] = array(-1);
+      }
+    }
+    if (!isset($aObjectPermissions['OUTPUT_DOCUMENTS'])) {
+      $aObjectPermissions['OUTPUT_DOCUMENTS'] = array(-1);
+    }
+    else {
+      if (!is_array($aObjectPermissions['OUTPUT_DOCUMENTS'])) {
+        $aObjectPermissions['OUTPUT_DOCUMENTS'] = array(-1);
+      }
+    }
+    $aDelete = $this->getAllObjectsFrom($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID, 'DELETE');
+    require_once 'classes/model/AppDocument.php';
+    $oAppDocument = new AppDocument();
+    $oCriteria = new Criteria('workflow');
+    $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
+    $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, 'OUTPUT');
+    $oCriteria->add(AppDocumentPeer::APP_DOC_UID, $aObjectPermissions['OUTPUT_DOCUMENTS'], Criteria::IN);
+    $aConditions   = array();
+    $aConditions[] = array(AppDocumentPeer::APP_UID, AppDelegationPeer::APP_UID);
+    $aConditions[] = array(AppDocumentPeer::DEL_INDEX, AppDelegationPeer::DEL_INDEX);
+    $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
+    $oCriteria->add(AppDelegationPeer::PRO_UID, $sProcessUID);
+    $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
+    $oDataset = AppDocumentPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    $aOutputDocuments = array();
+    $aOutputDocuments[] = array('APP_DOC_UID' => 'char', 'DOC_UID' => 'char', 'APP_DOC_COMMENT' => 'char', 'APP_DOC_FILENAME' => 'char', 'APP_DOC_INDEX' => 'integer');
+    $oUser = new Users();
+    while ($aRow = $oDataset->getRow()) {
+        $oCriteria2 = new Criteria('workflow');
+        $oCriteria2->add(AppDelegationPeer::APP_UID, $sApplicationUID);
+        $oCriteria2->add(AppDelegationPeer::DEL_INDEX, $aRow['DEL_INDEX']);
+        $oDataset2 = AppDelegationPeer::doSelectRS($oCriteria2);
+        $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+        $oDataset2->next();
+        $aRow2 = $oDataset2->getRow();
+        $oTask = new Task();
+        if ($oTask->taskExists($aRow2['TAS_UID'])) {
+          $aTask = $oTask->load($aRow2['TAS_UID']);
+        }
+        else {
+          $aTask = array('TAS_TITLE' => '(TASK DELETED)');
+        }
+        $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
+        try {
+          $aAux1 = $oUser->load($aAux['USR_UID']);
+          $sUser = $aAux1['USR_FIRSTNAME'] . ' ' . $aAux1['USR_LASTNAME'];
+        }
+        catch (Exception $oException) {
+          $sUser = '(USER DELETED)';
+        }
+        $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' => $aAux['APP_DOC_INDEX'], 'ORIGIN' => $aTask['TAS_TITLE'], 'CREATE_DATE' => $aAux['APP_DOC_CREATE_DATE'], 'CREATED_BY' => $sUser);
+        if ($aFields['APP_DOC_FILENAME'] != '') {
+            $aFields['TITLE'] = $aFields['APP_DOC_FILENAME'];
+        } else {
+            $aFields['TITLE'] = $aFields['APP_DOC_COMMENT'];
+        }
+        $aFields['POSITION'] = $_SESSION['STEP_POSITION'];
+        $aFields['CONFIRM'] = G::LoadTranslation('ID_CONFIRM_DELETE_ELEMENT');
+        if (in_array($aRow['APP_DOC_UID'], $aDelete['OUTPUT_DOCUMENTS'])) {
+          $aFields['ID_DELETE'] = G::LoadTranslation('ID_DELETE');
+        }
+        $aOutputDocuments[] = $aFields;
+        $oDataset->next();
+    }
+    global $_DBArray;
+    $_DBArray['outputDocuments'] = $aOutputDocuments;
+    $_SESSION['_DBArray'] = $_DBArray;
+    G::LoadClass('ArrayPeer');
+    $oCriteria = new Criteria('dbarray');
+    $oCriteria->setDBArrayTable('outputDocuments');
+    $oCriteria->addDescendingOrderByColumn('CREATE_DATE');
+    return $oCriteria;
+  }
+
+  function getallDynaformsCriteria($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID)
+  {
+    //verifica si la tabla OBJECT_PERMISSION
+    $this->verifyTable();
+
+    $aObjectPermissions = $this->getAllObjects($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID);
+    if (!is_array($aObjectPermissions)) {
+      $aObjectPermissions = array('DYNAFORMS' => array(-1), 'INPUT_DOCUMENTS' => array(-1), 'OUTPUT_DOCUMENTS' => array(-1));
+    }
+    if (!isset($aObjectPermissions['DYNAFORMS'])) {
+      $aObjectPermissions['DYNAFORMS'] = array(-1);
+    }
+    else {
+      if (!is_array($aObjectPermissions['DYNAFORMS'])) {
+        $aObjectPermissions['DYNAFORMS'] = array(-1);
+      }
+    }
+    if (!isset($aObjectPermissions['INPUT_DOCUMENTS'])) {
+      $aObjectPermissions['INPUT_DOCUMENTS'] = array(-1);
+    }
+    else {
+      if (!is_array($aObjectPermissions['INPUT_DOCUMENTS'])) {
+        $aObjectPermissions['INPUT_DOCUMENTS'] = array(-1);
+      }
+    }
+    if (!isset($aObjectPermissions['OUTPUT_DOCUMENTS'])) {
+      $aObjectPermissions['OUTPUT_DOCUMENTS'] = array(-1);
+    }
+    else {
+      if (!is_array($aObjectPermissions['OUTPUT_DOCUMENTS'])) {
+        $aObjectPermissions['OUTPUT_DOCUMENTS'] = array(-1);
+      }
+    }
+    $oCriteria = new Criteria('workflow');
+    $oCriteria->add(ApplicationPeer::APP_UID, $sApplicationUID);
+    $oCriteria->addJoin(ApplicationPeer::PRO_UID, StepPeer::PRO_UID);
+    $oCriteria->addJoin(StepPeer::STEP_UID_OBJ, DynaformPeer::DYN_UID);
+    $oCriteria->add(StepPeer::STEP_TYPE_OBJ, 'DYNAFORM');
+    $oCriteria->add(StepPeer::STEP_UID_OBJ, $aObjectPermissions['DYNAFORMS'], Criteria::IN);
+    $oCriteria->addAscendingOrderByColumn(StepPeer::STEP_POSITION);
+    $oCriteria->setDistinct();
+    $oDataset = DynaformPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    $aInputDocuments = array();
+    $aInputDocuments[] = array(
+      'DYN_TITLE' => 'char'
+    );
+
+    while ($aRow = $oDataset->getRow()) {
+        $o = new Dynaform();
+        $o->setDynUid($aRow['DYN_UID']);
+        $aFields['DYN_TITLE'] = $o->getDynTitle();
+        $aFields['DYN_UID'] = $aRow['DYN_UID'];
+        $aFields['EDIT'] = G::LoadTranslation('ID_EDIT');
+        $aInputDocuments[] = $aFields;
+        $oDataset->next();
+    }
+    global $_DBArray;
+    $_DBArray['Dynaforms'] = $aInputDocuments;
+    $_SESSION['_DBArray'] = $_DBArray;
+    G::LoadClass('ArrayPeer');
+    $oCriteria = new Criteria('dbarray');
+    $oCriteria->setDBArrayTable('Dynaforms');
+    //$oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_CREATE_DATE);
+    return $oCriteria;
+  }
+
+  function sendNotifications($sCurrentTask, $aTasks, $aFields, $sApplicationUID, $iDelegation, $sFrom = '') {
+    try {
+      require_once 'classes/model/Configuration.php';
+      $oConfiguration = new Configuration();
+      $sDelimiter     = DBAdapter::getStringDelimiter();
+      $oCriteria      = new Criteria('workflow');
+      $oCriteria->add(ConfigurationPeer::CFG_UID, 'Emails');
+      $oCriteria->add(ConfigurationPeer::OBJ_UID, '');
+      $oCriteria->add(ConfigurationPeer::PRO_UID, '');
+      $oCriteria->add(ConfigurationPeer::USR_UID, '');
+      $oCriteria->add(ConfigurationPeer::APP_UID, '');
+      if (ConfigurationPeer::doCount($oCriteria) == 0) {
+        $oConfiguration->create(array('CFG_UID' => 'Emails', 'OBJ_UID' => '', 'CFG_VALUE' => '', 'PRO_UID' => '', 'USR_UID' => '', 'APP_UID' => ''));
+        $aConfiguration = array();
+      }
+      else {
+        $aConfiguration = $oConfiguration->load('Emails', '', '', '', '');
+        if ($aConfiguration['CFG_VALUE'] != '') {
+          $aConfiguration = unserialize($aConfiguration['CFG_VALUE']);
+        }
+        else {
+          $aConfiguration = array();
+        }
+      }
+      if ($aConfiguration['MESS_ENABLED'] == '1') {
+        //Send derivation notification - Start
+        $oTask     = new Task();
+        $aTaskInfo = $oTask->load($sCurrentTask);
+        if ($aTaskInfo['TAS_SEND_LAST_EMAIL'] == 'TRUE') {
+          if ($sFrom == '') {
+            $sFrom = '"ProcessMaker"';
+          }
+          if (($aConfiguration['MESS_ENGINE'] != 'MAIL') && ($aConfiguration['MESS_ACCOUNT'] != '')) {
+            $sFrom .= ' <' . $aConfiguration['MESS_ACCOUNT'] . '>';
+          }
+          else {
+            if (($aConfiguration['MESS_ENGINE'] == 'MAIL')) {
+              $sFrom .= ' <info@' . gethostbyaddr('127.0.0.1') . '>';
+            }
+            else {
+              if ($aConfiguration['MESS_SERVER'] != '') {
+                if (($sAux = @gethostbyaddr($aConfiguration['MESS_SERVER']))) {
+                  $sFrom .= ' <info@' . $sAux . '>';
+                }
+                else {
+                  $sFrom .= ' <info@' . $aConfiguration['MESS_SERVER'] . '>';
+                }
+              }
+              else {
+                $sFrom .= ' <info@processmaker.com>';
+              }
+            }
+          }
+          $sSubject = G::LoadTranslation('ID_MESSAGE_SUBJECT_DERIVATION');
+          $sBody    = G::replaceDataField($aTaskInfo['TAS_DEF_MESSAGE'], $aFields);
+          G::LoadClass('spool');
+          $oUser = new Users();
+          foreach ($aTasks as $aTask) {
+            if (isset($aTask['USR_UID'])) {
+              $aUser = $oUser->load($aTask['USR_UID']);
+              $sTo   = ((($aUser['USR_FIRSTNAME'] != '') || ($aUser['USR_LASTNAME'] != '')) ? $aUser['USR_FIRSTNAME'] . ' ' . $aUser['USR_LASTNAME'] . ' ' : '') . '<' . $aUser['USR_EMAIL'] . '>';
+              $oSpool = new spoolRun();
+              $oSpool->setConfig(array('MESS_ENGINE'   => $aConfiguration['MESS_ENGINE'],
+                                       'MESS_SERVER'   => $aConfiguration['MESS_SERVER'],
+                                       'MESS_PORT'     => $aConfiguration['MESS_PORT'],
+                                       'MESS_ACCOUNT'  => $aConfiguration['MESS_ACCOUNT'],
+                                       'MESS_PASSWORD' => $aConfiguration['MESS_PASSWORD'],
+                                       'SMTPAuth'      => $aConfiguration['MESS_RAUTH'] == '1' ? true : false));
+              $oSpool->create(array('msg_uid'          => '',
+                                    'app_uid'          => $sApplicationUID,
+                                    'del_index'        => $iDelegation,
+                                    'app_msg_type'     => 'DERIVATION',
+                                    'app_msg_subject'  => $sSubject,
+                                    'app_msg_from'     => $sFrom,
+                                    'app_msg_to'       => $sTo,
+                                    'app_msg_body'     => $sBody,
+                                    'app_msg_cc'       => '',
+                                    'app_msg_bcc'      => '',
+                                    'app_msg_attach'   => '',
+                                    'app_msg_template' => '',
+                                    'app_msg_status'   => 'pending'));
+              if (($aConfiguration['MESS_BACKGROUND'] == '') || ($aConfiguration['MESS_TRY_SEND_INMEDIATLY'] == '1')) {
+                $oSpool->sendMail();
+              }
+            }
+          }
+        }
+        //Send derivation notification - End
+      }
+    }
+    catch (Exception $oException) {
+      throw $oException;
+    }
+  }
 
   /**
   * Obtain all user permits for Dynaforms, Input and output documents
@@ -2689,7 +2699,6 @@ class Cases
     $PERMISSIONS = array_merge($USER_PERMISSIONS, $GROUP_PERMISSIONS);
 
     foreach ($PERMISSIONS as $row) {
-
       $USER       = $row['USR_UID'];
       $USER_RELATION  = $row['OP_USER_RELATION'];
       $TASK_SOURCE  = $row['OP_TASK_SOURCE'];
@@ -2701,8 +2710,8 @@ class Cases
 
       // here!,. we should verify $PARTICIPATE
       $sw_participate = false; // must be false for default
-      if(($row['OP_CASE_STATUS']!='COMPLETED') && ($row['OP_CASE_STATUS']!=''))
-      { if($PARTICIPATE == 1){
+      if(($row['OP_CASE_STATUS']!='COMPLETED') && ($row['OP_CASE_STATUS']!='')) { 
+      	if($PARTICIPATE == 1){
           $oCriteriax = new Criteria('workflow');
           $oCriteriax->add(AppDelegationPeer::USR_UID, $USR_UID);
           $oCriteriax->add(AppDelegationPeer::APP_UID, $APP_UID);
@@ -2713,7 +2722,6 @@ class Cases
         }
       }
       if( !$sw_participate ) {
-
         switch( $O_TYPE ) {
           case 'ANY':
             //for dynaforms
@@ -2769,7 +2777,6 @@ class Cases
               }
               $oDataset->next();
             }
-
             break;
 
           case 'DYNAFORM':
@@ -2849,11 +2856,10 @@ class Cases
     return Array("DYNAFORMS"=>$RESULT['DYNAFORM'], "INPUT_DOCUMENTS"=>$RESULT['INPUT'], "OUTPUT_DOCUMENTS"=>$RESULT['OUTPUT']);
   }
 
-/*
-funcion de verificacion para la autenticacion del External User by Everth The Answer
-*/
- function verifyCaseTracker($case, $pin){
-
+  /*
+  funcion de verificacion para la autenticacion del External User by Everth The Answer
+  */
+  function verifyCaseTracker($case, $pin){
     $pin=md5($pin);
 
     $oCriteria = new Criteria('workflow');
@@ -2871,53 +2877,49 @@ funcion de verificacion para la autenticacion del External User by Everth The An
     $aRow = $oDataset->getRow();
 
     $sw=0;
-  if(is_array($aRow))
-  {
-    $PRO_UID=$aRow['PRO_UID'];
-    $APP_UID=$aRow['APP_UID'];
-    $PIN    =$aRow['APP_PIN'];
-  }
-  else
-  {
-    $oCriteria = new Criteria('workflow');
-    $oCriteria->addSelectColumn(ApplicationPeer::APP_UID);
-    $oCriteria->addSelectColumn(ApplicationPeer::APP_PIN);
-    $oCriteria->addSelectColumn(ApplicationPeer::PRO_UID);
-    $oCriteria->addSelectColumn(ApplicationPeer::APP_NUMBER);
-    $oCriteria->addSelectColumn(ApplicationPeer::APP_PROC_CODE);
-    $oCriteria->add(ApplicationPeer::APP_NUMBER, $case);
-
-    $oDataseti = DynaformPeer::doSelectRS($oCriteria);
-    $oDataseti->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-    $oDataseti->next();
-    $aRowi = $oDataseti->getRow();
-
-    if(is_array($aRowi))
-    { $PRO_UID=$aRowi['PRO_UID'];
-      $APP_UID=$aRowi['APP_UID'];
-      $PIN    =$aRowi['APP_PIN'];
+    if(is_array($aRow)) {
+      $PRO_UID=$aRow['PRO_UID'];
+      $APP_UID=$aRow['APP_UID'];
+      $PIN    =$aRow['APP_PIN'];
     }
-    else
-    {
-        $sw=1;
+    else {
+      $oCriteria = new Criteria('workflow');
+      $oCriteria->addSelectColumn(ApplicationPeer::APP_UID);
+      $oCriteria->addSelectColumn(ApplicationPeer::APP_PIN);
+      $oCriteria->addSelectColumn(ApplicationPeer::PRO_UID);
+      $oCriteria->addSelectColumn(ApplicationPeer::APP_NUMBER);
+      $oCriteria->addSelectColumn(ApplicationPeer::APP_PROC_CODE);
+      $oCriteria->add(ApplicationPeer::APP_NUMBER, $case);
+      
+      $oDataseti = DynaformPeer::doSelectRS($oCriteria);
+      $oDataseti->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataseti->next();
+      $aRowi = $oDataseti->getRow();
+      
+      if(is_array($aRowi))
+      { $PRO_UID=$aRowi['PRO_UID'];
+        $APP_UID=$aRowi['APP_UID'];
+        $PIN    =$aRowi['APP_PIN'];
+      }
+      else
+      {
+          $sw=1;
+      }
     }
-  }
 
 
     $s=0;
-    if($sw==1) //no existe el caso
-      {
+    if($sw==1) { //no existe el caso      
         return -1;
-      }
-    else
-      {
+    }
+    else {
          $s++;
-      }
+    }
 
     if($PIN!=$pin) //el pin no es valido
-        return -2;
+      return -2;
     else
-        $s++;
+      $s++;
 
     $res=array();
     $res['PRO_UID']=$PRO_UID;
@@ -2928,10 +2930,10 @@ funcion de verificacion para la autenticacion del External User by Everth The An
 
   }
 
-/*
-funcion permisos, by Everth The Answer
-*/
- function Permisos($PRO_UID){
+  /*                                      
+  funcion permisos, by Everth             
+  */
+  function Permisos($PRO_UID){
     require_once ("classes/model/CaseTracker.php");
     require_once ("classes/model/CaseTrackerObject.php");
     $a=0;
@@ -2941,8 +2943,8 @@ funcion permisos, by Everth The Answer
     $oCaseTracker = new CaseTracker();
     $aCaseTracker = $oCaseTracker->load($PRO_UID);
     //print_r($aCaseTracker); die;
-    if(is_array($aCaseTracker))
-    { if($aCaseTracker['CT_MAP_TYPE']!='NONE')
+    if(is_array($aCaseTracker)) { 
+    	if($aCaseTracker['CT_MAP_TYPE']!='NONE')
          $a=1;
 
       $oCriteria = new Criteria();
@@ -2957,14 +2959,14 @@ funcion permisos, by Everth The Answer
           $d=1;
 
     }
-  return $a.'-'.$b.'-'.$c.'-'.$d;
-}
+    return $a.'-'.$b.'-'.$c.'-'.$d;
+  }
 
 
-/*
-funcion momentanea by Everth The Answer
-*/
- function verifyTable(){
+  /*
+  funcion momentanea by Everth The Answer
+  */
+  function verifyTable(){
     $oCriteria = new Criteria('workflow');
     $del = DBAdapter::getStringDelimiter();
     $sql = "CREATE TABLE IF NOT EXISTS `OBJECT_PERMISSION` (
@@ -2986,163 +2988,161 @@ funcion momentanea by Everth The Answer
     $rs = $stmt->executeQuery();
   }
 
-/*
-funcion input documents for case tracker by Everth The Answer
-*/
-function getAllUploadedDocumentsCriteriaTracker($sProcessUID, $sApplicationUID, $sDocUID) {
-
-      require_once 'classes/model/AppDocument.php';
-      $oAppDocument = new AppDocument();
-      $oCriteria = new Criteria('workflow');
-      $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
-      //$oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, array('INPUT'), Criteria::IN);
-      $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, 'INPUT');
-      $oCriteria->add(AppDocumentPeer::DOC_UID, $sDocUID);
-      $aConditions   = array();
-      $aConditions[] = array(AppDocumentPeer::APP_UID, AppDelegationPeer::APP_UID);
-      $aConditions[] = array(AppDocumentPeer::DEL_INDEX, AppDelegationPeer::DEL_INDEX);
-      $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
-      $oCriteria->add(AppDelegationPeer::PRO_UID, $sProcessUID);
-      $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
-      $oDataset = AppDocumentPeer::doSelectRS($oCriteria);
-      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-      $oDataset->next();
-      $aInputDocuments = array();
-      $aInputDocuments[] = array('APP_DOC_UID' => 'char', 'DOC_UID' => 'char', 'APP_DOC_COMMENT' => 'char', 'APP_DOC_FILENAME' => 'char', 'APP_DOC_INDEX' => 'integer');
-      while ($aRow = $oDataset->getRow()) {
-          $oCriteria2 = new Criteria('workflow');
-          $oCriteria2->add(AppDelegationPeer::APP_UID, $sApplicationUID);
-          $oCriteria2->add(AppDelegationPeer::DEL_INDEX, $aRow['DEL_INDEX']);
-          $oDataset2 = AppDelegationPeer::doSelectRS($oCriteria2);
-          $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-          $oDataset2->next();
-          $aRow2 = $oDataset2->getRow();
-          $oTask = new Task();
-          if ($oTask->taskExists($aRow2['TAS_UID'])) {
-            $aTask = $oTask->load($aRow2['TAS_UID']);
-          }
-          else {
-            $aTask = array('TAS_TITLE' => '(TASK DELETED)');
-          }
-          $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
-          $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' => $aAux['APP_DOC_INDEX'], 'TYPE' => $aAux['APP_DOC_TYPE'], 'ORIGIN' => $aTask['TAS_TITLE']);
-          if ($aFields['APP_DOC_FILENAME'] != '') {
-              $aFields['TITLE'] = $aFields['APP_DOC_FILENAME'];
-          } else {
-              $aFields['TITLE'] = $aFields['APP_DOC_COMMENT'];
-          }
-          //$aFields['POSITION'] = $_SESSION['STEP_POSITION'];
-          $aFields['CONFIRM'] = G::LoadTranslation('ID_CONFIRM_DELETE_ELEMENT');
-          $aInputDocuments[] = $aFields;
-          $oDataset->next();
+  /*
+  funcion input documents for case tracker by Everth The Answer
+  */
+  function getAllUploadedDocumentsCriteriaTracker($sProcessUID, $sApplicationUID, $sDocUID) {
+    require_once 'classes/model/AppDocument.php';
+    $oAppDocument = new AppDocument();
+    $oCriteria = new Criteria('workflow');
+    $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
+    //$oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, array('INPUT'), Criteria::IN);
+    $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, 'INPUT');
+    $oCriteria->add(AppDocumentPeer::DOC_UID, $sDocUID);
+    $aConditions   = array();
+    $aConditions[] = array(AppDocumentPeer::APP_UID, AppDelegationPeer::APP_UID);
+    $aConditions[] = array(AppDocumentPeer::DEL_INDEX, AppDelegationPeer::DEL_INDEX);
+    $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
+    $oCriteria->add(AppDelegationPeer::PRO_UID, $sProcessUID);
+    $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
+    $oDataset = AppDocumentPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    $aInputDocuments = array();
+    $aInputDocuments[] = array('APP_DOC_UID' => 'char', 'DOC_UID' => 'char', 'APP_DOC_COMMENT' => 'char', 'APP_DOC_FILENAME' => 'char', 'APP_DOC_INDEX' => 'integer');
+    while ($aRow = $oDataset->getRow()) {
+      $oCriteria2 = new Criteria('workflow');
+      $oCriteria2->add(AppDelegationPeer::APP_UID, $sApplicationUID);
+      $oCriteria2->add(AppDelegationPeer::DEL_INDEX, $aRow['DEL_INDEX']);
+      $oDataset2 = AppDelegationPeer::doSelectRS($oCriteria2);
+      $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset2->next();
+      $aRow2 = $oDataset2->getRow();
+      $oTask = new Task();
+      if ($oTask->taskExists($aRow2['TAS_UID'])) {
+        $aTask = $oTask->load($aRow2['TAS_UID']);
       }
-      $oAppDocument = new AppDocument();
-      $oCriteria = new Criteria('workflow');
-      $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
-      //$oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, array('ATTACHED'), Criteria::IN);
-      $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, 'ATTACHED');
-      $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
-      $oDataset = AppDocumentPeer::doSelectRS($oCriteria);
-      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-      $oDataset->next();
-      while ($aRow = $oDataset->getRow()) {
-          $oCriteria2 = new Criteria('workflow');
-          $oCriteria2->add(AppDelegationPeer::DEL_INDEX, $aRow['DEL_INDEX']);
-          $oDataset2 = AppDelegationPeer::doSelectRS($oCriteria2);
-          $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-          $oDataset2->next();
-          $aRow2 = $oDataset2->getRow();
-          $oTask = new Task();
-          if ($oTask->taskExists($aRow2['TAS_UID'])) {
-            $aTask = $oTask->load($aRow2['TAS_UID']);
-          }
-          else {
-            $aTask = array('TAS_TITLE' => '(TASK DELETED)');
-          }
-          $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
-          $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' => $aAux['APP_DOC_INDEX'], 'TYPE' => $aAux['APP_DOC_TYPE'], 'ORIGIN' => $aTask['TAS_TITLE']);
-          if ($aFields['APP_DOC_FILENAME'] != '') {
-              $aFields['TITLE'] = $aFields['APP_DOC_FILENAME'];
-          } else {
-              $aFields['TITLE'] = $aFields['APP_DOC_COMMENT'];
-          }
-          //$aFields['POSITION'] = $_SESSION['STEP_POSITION'];
-          $aFields['CONFIRM'] = G::LoadTranslation('ID_CONFIRM_DELETE_ELEMENT');
-          $aInputDocuments[] = $aFields;
-          $oDataset->next();
+      else {
+        $aTask = array('TAS_TITLE' => '(TASK DELETED)');
       }
-      global $_DBArray;
-      $_DBArray['inputDocuments'] = $aInputDocuments;
-      $_SESSION['_DBArray'] = $_DBArray;
-      G::LoadClass('ArrayPeer');
-      $oCriteria = new Criteria('dbarray');
-      $oCriteria->setDBArrayTable('inputDocuments');
-      $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_CREATE_DATE);
-      return $oCriteria;
+      $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
+      $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' => $aAux['APP_DOC_INDEX'], 'TYPE' => $aAux['APP_DOC_TYPE'], 'ORIGIN' => $aTask['TAS_TITLE']);
+      if ($aFields['APP_DOC_FILENAME'] != '') {
+          $aFields['TITLE'] = $aFields['APP_DOC_FILENAME'];
+      } else {
+          $aFields['TITLE'] = $aFields['APP_DOC_COMMENT'];
+      }
+      //$aFields['POSITION'] = $_SESSION['STEP_POSITION'];
+      $aFields['CONFIRM'] = G::LoadTranslation('ID_CONFIRM_DELETE_ELEMENT');
+      $aInputDocuments[] = $aFields;
+      $oDataset->next();
     }
-
-/*
-funcion output documents for case tracker by Everth The Answer
-*/
-function getAllGeneratedDocumentsCriteriaTracker($sProcessUID, $sApplicationUID, $sDocUID) {
-
-      require_once 'classes/model/AppDocument.php';
-      $oAppDocument = new AppDocument();
-      $oCriteria = new Criteria('workflow');
-      $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
-      $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, 'OUTPUT');
-      $oCriteria->add(AppDocumentPeer::DOC_UID, $sDocUID);
-      $aConditions   = array();
-      $aConditions[] = array(AppDocumentPeer::APP_UID, AppDelegationPeer::APP_UID);
-      $aConditions[] = array(AppDocumentPeer::DEL_INDEX, AppDelegationPeer::DEL_INDEX);
-      $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
-      $oCriteria->add(AppDelegationPeer::PRO_UID, $sProcessUID);
-      $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
-      $oDataset = AppDocumentPeer::doSelectRS($oCriteria);
-      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-      $oDataset->next();
-      $aOutputDocuments = array();
-      $aOutputDocuments[] = array('APP_DOC_UID' => 'char', 'DOC_UID' => 'char', 'APP_DOC_COMMENT' => 'char', 'APP_DOC_FILENAME' => 'char', 'APP_DOC_INDEX' => 'integer');
-      while ($aRow = $oDataset->getRow()) {
-          $oCriteria2 = new Criteria('workflow');
-          $oCriteria2->add(AppDelegationPeer::APP_UID, $sApplicationUID);
-          $oCriteria2->add(AppDelegationPeer::DEL_INDEX, $aRow['DEL_INDEX']);
-          $oDataset2 = AppDelegationPeer::doSelectRS($oCriteria2);
-          $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-          $oDataset2->next();
-          $aRow2 = $oDataset2->getRow();
-          $oTask = new Task();
-          if ($oTask->taskExists($aRow2['TAS_UID'])) {
-            $aTask = $oTask->load($aRow2['TAS_UID']);
-          }
-          else {
-            $aTask = array('TAS_TITLE' => '(TASK DELETED)');
-          }
-          $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
-          $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' => $aAux['APP_DOC_INDEX'], 'ORIGIN' => $aTask['TAS_TITLE']);
-          if ($aFields['APP_DOC_FILENAME'] != '') {
-              $aFields['TITLE'] = $aFields['APP_DOC_FILENAME'];
-          } else {
-              $aFields['TITLE'] = $aFields['APP_DOC_COMMENT'];
-          }
-          //$aFields['POSITION'] = $_SESSION['STEP_POSITION'];
-          $aFields['CONFIRM'] = G::LoadTranslation('ID_CONFIRM_DELETE_ELEMENT');
-          $aOutputDocuments[] = $aFields;
-          $oDataset->next();
+    $oAppDocument = new AppDocument();
+    $oCriteria = new Criteria('workflow');
+    $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
+    //$oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, array('ATTACHED'), Criteria::IN);
+    $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, 'ATTACHED');
+    $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
+    $oDataset = AppDocumentPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    while ($aRow = $oDataset->getRow()) {
+      $oCriteria2 = new Criteria('workflow');
+      $oCriteria2->add(AppDelegationPeer::DEL_INDEX, $aRow['DEL_INDEX']);
+      $oDataset2 = AppDelegationPeer::doSelectRS($oCriteria2);
+      $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset2->next();
+      $aRow2 = $oDataset2->getRow();
+      $oTask = new Task();
+      if ($oTask->taskExists($aRow2['TAS_UID'])) {
+        $aTask = $oTask->load($aRow2['TAS_UID']);
       }
-      global $_DBArray;
-      $_DBArray['outputDocuments'] = $aOutputDocuments;
-      $_SESSION['_DBArray'] = $_DBArray;
-      G::LoadClass('ArrayPeer');
-      $oCriteria = new Criteria('dbarray');
-      $oCriteria->setDBArrayTable('outputDocuments');
-      $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_CREATE_DATE);
-      return $oCriteria;
+      else {
+        $aTask = array('TAS_TITLE' => '(TASK DELETED)');
+      }
+      $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
+      $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' => $aAux['APP_DOC_INDEX'], 'TYPE' => $aAux['APP_DOC_TYPE'], 'ORIGIN' => $aTask['TAS_TITLE']);
+      if ($aFields['APP_DOC_FILENAME'] != '') {
+          $aFields['TITLE'] = $aFields['APP_DOC_FILENAME'];
+      } else {
+          $aFields['TITLE'] = $aFields['APP_DOC_COMMENT'];
+      }
+      //$aFields['POSITION'] = $_SESSION['STEP_POSITION'];
+      $aFields['CONFIRM'] = G::LoadTranslation('ID_CONFIRM_DELETE_ELEMENT');
+      $aInputDocuments[] = $aFields;
+      $oDataset->next();
     }
+    global $_DBArray;
+    $_DBArray['inputDocuments'] = $aInputDocuments;
+    $_SESSION['_DBArray'] = $_DBArray;
+    G::LoadClass('ArrayPeer');
+    $oCriteria = new Criteria('dbarray');
+    $oCriteria->setDBArrayTable('inputDocuments');
+    $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_CREATE_DATE);
+    return $oCriteria;
+  }
 
-/*
-funcion History messages for case tracker by Everth The Answer
-*/
+  /*
+  funcion output documents for case tracker by Everth The Answer
+  */
+  function getAllGeneratedDocumentsCriteriaTracker($sProcessUID, $sApplicationUID, $sDocUID) {
+    require_once 'classes/model/AppDocument.php';
+    $oAppDocument = new AppDocument();
+    $oCriteria = new Criteria('workflow');
+    $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
+    $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, 'OUTPUT');
+    $oCriteria->add(AppDocumentPeer::DOC_UID, $sDocUID);
+    $aConditions   = array();
+    $aConditions[] = array(AppDocumentPeer::APP_UID, AppDelegationPeer::APP_UID);
+    $aConditions[] = array(AppDocumentPeer::DEL_INDEX, AppDelegationPeer::DEL_INDEX);
+    $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
+    $oCriteria->add(AppDelegationPeer::PRO_UID, $sProcessUID);
+    $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_INDEX);
+    $oDataset = AppDocumentPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    $aOutputDocuments = array();
+    $aOutputDocuments[] = array('APP_DOC_UID' => 'char', 'DOC_UID' => 'char', 'APP_DOC_COMMENT' => 'char', 'APP_DOC_FILENAME' => 'char', 'APP_DOC_INDEX' => 'integer');
+    while ($aRow = $oDataset->getRow()) {
+      $oCriteria2 = new Criteria('workflow');
+      $oCriteria2->add(AppDelegationPeer::APP_UID, $sApplicationUID);
+      $oCriteria2->add(AppDelegationPeer::DEL_INDEX, $aRow['DEL_INDEX']);
+      $oDataset2 = AppDelegationPeer::doSelectRS($oCriteria2);
+      $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset2->next();
+      $aRow2 = $oDataset2->getRow();
+      $oTask = new Task();
+      if ($oTask->taskExists($aRow2['TAS_UID'])) {
+        $aTask = $oTask->load($aRow2['TAS_UID']);
+      }
+      else {
+        $aTask = array('TAS_TITLE' => '(TASK DELETED)');
+      }
+      $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
+      $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' => $aAux['APP_DOC_INDEX'], 'ORIGIN' => $aTask['TAS_TITLE']);
+      if ($aFields['APP_DOC_FILENAME'] != '') {
+          $aFields['TITLE'] = $aFields['APP_DOC_FILENAME'];
+      } else {
+          $aFields['TITLE'] = $aFields['APP_DOC_COMMENT'];
+      }
+      //$aFields['POSITION'] = $_SESSION['STEP_POSITION'];
+      $aFields['CONFIRM'] = G::LoadTranslation('ID_CONFIRM_DELETE_ELEMENT');
+      $aOutputDocuments[] = $aFields;
+      $oDataset->next();
+    }
+    global $_DBArray;
+    $_DBArray['outputDocuments'] = $aOutputDocuments;
+    $_SESSION['_DBArray'] = $_DBArray;
+    G::LoadClass('ArrayPeer');
+    $oCriteria = new Criteria('dbarray');
+    $oCriteria->setDBArrayTable('outputDocuments');
+    $oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_CREATE_DATE);
+    return $oCriteria;
+  }
+
+  /*
+  funcion History messages for case tracker by Everth 
+  */
   function getHistoryMessagesTracker($sApplicationUID) {
     //die ($sApplicationUID);
     require_once 'classes/model/AppMessage.php';
@@ -3219,38 +3219,36 @@ funcion History messages for case tracker by Everth The Answer
   }
 
 
-  function getAllObjectsFromProcess($PRO_UID, $OBJ_TYPE='%'){
-
-            $RESULT = Array();
-            $oCriteria = new Criteria('workflow');
-            $oCriteria->addSelectColumn(AppDocumentPeer::APP_DOC_UID);
-            $oCriteria->addSelectColumn(AppDocumentPeer::APP_UID);
-            $oCriteria->addSelectColumn(AppDocumentPeer::DEL_INDEX);
-            $oCriteria->addSelectColumn(AppDocumentPeer::DOC_UID);
-            $oCriteria->addSelectColumn(AppDocumentPeer::USR_UID);
-            $oCriteria->addSelectColumn(AppDocumentPeer::APP_DOC_TYPE);
-            $oCriteria->addSelectColumn(AppDocumentPeer::APP_DOC_CREATE_DATE);
-            $oCriteria->addSelectColumn(AppDocumentPeer::APP_DOC_INDEX);
-
-
-            $oCriteria->add(ApplicationPeer::PRO_UID, $PRO_UID);
-            $oCriteria->addJoin(ApplicationPeer::APP_UID, AppDocumentPeer::APP_UID);
-
-            $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, $OBJ_TYPE, Criteria::LIKE);
-
-            $oDataset = DynaformPeer::doSelectRS($oCriteria);
-            $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-            ;
-            while ($oDataset->next()) {
-                 $row = $oDataset->getRow();
-                 $oAppDocument = new AppDocument();
-                 $oAppDocument->Fields = $oAppDocument->load($row['APP_DOC_UID']);
-
-                 $row['APP_DOC_FILENAME'] = $oAppDocument->Fields['APP_DOC_FILENAME'];
-                 array_push($RESULT, $row);
-            }
-            return $RESULT;
-        }
+  function getAllObjectsFromProcess($PRO_UID, $OBJ_TYPE='%') {    
+    $RESULT = Array();
+    $oCriteria = new Criteria('workflow');
+    $oCriteria->addSelectColumn(AppDocumentPeer::APP_DOC_UID);
+    $oCriteria->addSelectColumn(AppDocumentPeer::APP_UID);
+    $oCriteria->addSelectColumn(AppDocumentPeer::DEL_INDEX);
+    $oCriteria->addSelectColumn(AppDocumentPeer::DOC_UID);
+    $oCriteria->addSelectColumn(AppDocumentPeer::USR_UID);
+    $oCriteria->addSelectColumn(AppDocumentPeer::APP_DOC_TYPE);
+    $oCriteria->addSelectColumn(AppDocumentPeer::APP_DOC_CREATE_DATE);
+    $oCriteria->addSelectColumn(AppDocumentPeer::APP_DOC_INDEX);    
+    
+    $oCriteria->add(ApplicationPeer::PRO_UID, $PRO_UID);
+    $oCriteria->addJoin(ApplicationPeer::APP_UID, AppDocumentPeer::APP_UID);
+    
+    $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, $OBJ_TYPE, Criteria::LIKE);
+    
+    $oDataset = DynaformPeer::doSelectRS($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    
+    while ($oDataset->next()) {
+      $row = $oDataset->getRow();
+      $oAppDocument = new AppDocument();
+      $oAppDocument->Fields = $oAppDocument->load($row['APP_DOC_UID']);
+    
+      $row['APP_DOC_FILENAME'] = $oAppDocument->Fields['APP_DOC_FILENAME'];
+      array_push($RESULT, $row);
+    }
+    return $RESULT;
+  }
 
   function executeTriggersAfterExternal($sProcess, $sTask, $sApplication, $iIndex, $iStepPosition, $aNewData = array()) {
     //load the variables
@@ -3318,12 +3316,12 @@ funcion History messages for case tracker by Everth The Answer
   }
 
   function getCriteriaUsersCases($status, $USR_UID) {
-      $oCriteria = new Criteria('workflow');
-      $oCriteria->addJoin(ApplicationPeer::APP_UID, AppDelegationPeer::APP_UID, Criteria::LEFT_JOIN);
-      $oCriteria->add(ApplicationPeer::APP_STATUS, $status);
-      $oCriteria->add(AppDelegationPeer::USR_UID, $USR_UID);
-      $oCriteria->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
-      return $oCriteria;
+    $oCriteria = new Criteria('workflow');
+    $oCriteria->addJoin(ApplicationPeer::APP_UID, AppDelegationPeer::APP_UID, Criteria::LEFT_JOIN);
+    $oCriteria->add(ApplicationPeer::APP_STATUS, $status);
+    $oCriteria->add(AppDelegationPeer::USR_UID, $USR_UID);
+    $oCriteria->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
+    return $oCriteria;
   }
 
   function getAdvancedSearch($sCase, $sProcess, $sTask, $sCurrentUser, $sSentby, $sLastModFrom, $sLastModTo, $sStatus, $permisse, $userlogged, $aSupervisor)
