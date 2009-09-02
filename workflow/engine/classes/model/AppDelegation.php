@@ -82,9 +82,8 @@ class AppDelegation extends BaseAppDelegation {
     $this->setDelThreadStatus ( 'OPEN' );
     $this->setDelDelegateDate ( 'now' );
     $this->setDelTaskDueDate  ( $this->calculateDueDate() );
-    if ( $delIndex == 1 )  //the first delegation, init date this should be now for draft applications
+    if ( $delIndex == 1 )  //the first delegation, init date this should be now for draft applications, in other cases, should be null.
       $this->setDelInitDate     ('now' );
-//    $this->setDelFinishDate   (isset($aData['DEL_FINISH_DATE'])  ? $aData['DEL_FINISH_DATE']  : 'now' );
 
     if ($this->validate() ) {
       try {
@@ -102,7 +101,8 @@ class AppDelegation extends BaseAppDelegation {
         $msg .= $objValidationFailure->getMessage() . "<br/>";
       }
       throw ( new Exception ( 'Failed Data validation. ' . $msg ) );
-     }
+    }
+    
     return $this->getDelIndex();
   }
 
@@ -185,31 +185,22 @@ class AppDelegation extends BaseAppDelegation {
     }
   }
 
+  // TasTypeDay = 1  => working days
+  // TasTypeDay = 2  => calendar days
   function calculateDueDate()
   {
-//	  print_r("aaaaaaaaaaaaaaaa");
-//	  die();
-    //Fatal error: Call to undefined method Task::getUsrUid() in /opt/processmaker/trunk/workflow/engine/classes/model/AppDelegation.php on line 190
-    //return 'tomorrow'; //Sample
-
-    $dates = new dates();
-    //Get TasDuration
+    //Get Task properties
     $task = TaskPeer::retrieveByPK( $this->getTasUid() );
-    if (strcasecmp($task->getTasTimeUnit(),"days")==0)
-    {
-      if ($task->getTasTypeDay()==1)
-      {
-        $iDueDate=$dates->calculateDate( $this->getDelDelegateDate() , $task->getTasDuration() , $this->getUsrUid() , $task->getProUid() );
-      }
-      else
-      {
-        $iDueDate=strtotime($task->getTasDuration().' '.strtolower($task->getTasTimeUnit()) , strtotime($this->getDelDelegateDate()) );
-      }
-    }
-    else
-    {
-      $iDueDate=strtotime($task->getTasDuration().' '.strtolower($task->getTasTimeUnit()) , strtotime($this->getDelDelegateDate()) );
-    }
+
+    //use the dates class to calculate dates
+    $dates = new dates();
+    $iDueDate = $dates->calculateDate( $this->getDelDelegateDate(), 
+                                       $task->getTasDuration(), 
+                                       $task->getTasTimeUnit(),   //hours or days, ( we only accept this two types or maybe weeks
+                                       $task->getTasTypeDay(), //working or calendar days
+                                       $this->getUsrUid(), 
+                                       $task->getProUid(),
+                                       $this->getTasUid() );
     return date('Y-m-d H:i:s', $iDueDate);
   }
 
