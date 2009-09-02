@@ -656,7 +656,7 @@ var showHistoryMessages = function()
  {
   oPanel = new leimnud.module.panel();
   oPanel.options = {
-  	size	:{w:700,h:400},
+  	size	:{w:800,h:420},
   	position:{x:0,y:0,center:true},
   	title	:G_STRINGS.ID_HISTORY_MESSAGE_CASE,
   	theme	:'processmaker',

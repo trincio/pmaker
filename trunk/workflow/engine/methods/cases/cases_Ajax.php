@@ -568,7 +568,7 @@ switch($_POST['action']) {
 			'msg_uid'		=>	$data['MSG_UID'], 
 			'app_uid'		=>	$data['APP_UID'], 
 			'del_index'		=>	$data['DEL_INDEX'], 
-			'app_msg_type'	=>	$data['DEL_TYPE'], 
+			'app_msg_type'	=>	$data['APP_MSG_TYPE'], 
 			'app_msg_subject'=>	$data['APP_MSG_SUBJECT'], 
 			'app_msg_from'	=>	$data['APP_MSG_FROM'], 
 			'app_msg_to'	=>	$data['APP_MSG_TO'], 
