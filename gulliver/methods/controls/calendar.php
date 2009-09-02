@@ -137,7 +137,7 @@
 </tr>
 </table></td></tr>
 <tr>
-<?
+<?php
 	// print weekdays titles
 	for ($n=0; $n<7; $n++)
   	print "<td bgcolor='#87cefa' align='center'><font color='#ffffff'>" . $ARR_WEEKDAYS[ ($NUM_WEEKSTART+$n)%7] . "</font></td>";
