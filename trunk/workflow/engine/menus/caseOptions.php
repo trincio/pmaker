@@ -39,4 +39,8 @@ else {
   $G_TMP_MENU->AddIdOption('INFO'  , G::LoadTranslation('ID_INFORMATION'), 'javascript:showInformation();', 'absolute');
 }
 
+if( $_SESSION['TRIGGER_DEBUG']['ISSET'] ){
+    $G_TMP_MENU->AddIdOption('DEBUG'  , G::LoadTranslation('ID_DEBUG'), 'javascript:showdebug();', 'absolute');
+}
+  
 ?>

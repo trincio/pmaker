@@ -30,23 +30,6 @@
  * @LastModification 30/05/2008
  */
 
-	G::LoadClass('tree');
-
-  $tree = new Tree();
-
-	$tree->name = 'debug';
-	$tree->nodeType = "base";
-	$tree->width = "100%";
-	$tree->value = '
-	<div class="boxTopBlue"><div class="a"></div><div class="b"></div><div class="c"></div></div>
-	<div class="boxContentBlue">
-  		<table width="100%" style="margin:0px;" cellspacing="0" cellpadding="0">
-  			<tr>
-	  			<td class="userGroupTitle">Triggers Debug option is activated</td>
-  			</tr>
-		</table>
-	</div>
-	<div class="boxBottomBlue"><div class="a"></div><div class="b"></div><div class="c"></div></div>';
 
 	$triggers_names = '';
 
@@ -67,28 +50,29 @@
 		$triggers_onfly = " No triggers found <font color='#641213'><b>".strtolower($_SESSION['TRIGGER_DEBUG']['TIME'])."</b></font>";
 	}
 
-	$html = "[Triggers]<br><br>
+	$html = '<div class="ui-widget-header ui-corner-all" width="100%" align="center">Processmaker - Debugger</div>'.
+	"<div style='font-size:11px; font-weight:bold' align='left'>[Triggers]</div><br/>
 	<table width='100%' cellspacing='0' cellpadding='0' border='1' style='border:0px;'>
 		<tr>
 		<td width='410px' class='treeNode' style='border:0px;background-color:transparent;'>
-			<fieldset class='userGroupTitle'>
+			
 				<font color='#0B58B6'> $triggers_onfly ...</font><br/>
 				 $triggers_names
-			</fieldset>
+			
 		</td>
 		<td width='60px' class='treeNode' style='border:0px;background-color:transparent;'>
 			<div id='status_'></div>
 		</td>
 		</tr>
 	</table>";
-	$ch = &$tree->addChild(0, $html, array('nodeType' => 'child'));
+
 
 	$tree->showSign = false;
 	$DEBUG_POST = $_SESSION['TRIGGER_DEBUG']['ERRORS'];
 	for($i=0; $i<count($DEBUG_POST); $i++) {
 		try{
 			if(isset($DEBUG_POST[$i]['SINTAX']) and $DEBUG_POST[$i]['SINTAX'] != '') {
-				$html = "
+				$html .= "
 				<table width='100%' cellspacing='0' cellpadding='0' border='1' style='border:0px;'>
 					<tr>
 					<td width='410px' class='treeNode' style='border:0px;background-color:transparent;'>
@@ -106,7 +90,7 @@
 				//$ch->point = '<img src="/images/iconoenlace.png" />';
 			}
 			if(isset($DEBUG_POST[$i]['FATAL']) and $DEBUG_POST[$i]['FATAL'] != '') {
-				$html = "
+				$html .= "
 				<table width='100%' cellspacing='0' cellpadding='0' border='1' style='border:0px;'>
 					<tr>
 					<td width='410px' class='treeNode' style='border:0px;background-color:transparent;'>
@@ -139,12 +123,12 @@
 	$aKeys1 = array_keys($vars_acum);
 	//var_dump($aKeys1); echo"<hr>";
 	G::LoadClass('case');
-  $oApp= new Cases();
-  $aFields = $oApp->loadCase($_SESSION['APPLICATION']);
+ 	$oApp= new Cases();
+  	$aFields = $oApp->loadCase($_SESSION['APPLICATION']);
 
-  $aKeys2 = array_keys($aFields['APP_DATA']);
-  //var_dump($aKeys2); die;
-  $x = array_merge($aFields['APP_DATA'], $vars_acum);
+  	$aKeys2 = array_keys($aFields['APP_DATA']);
+  	//var_dump($aKeys2); die;
+  	$x = array_merge($aFields['APP_DATA'], $vars_acum);
 	foreach($x as $key => $value)
 	{ //var_dump($x[$key]); echo "<br>";
 		if (!in_array($key, $aKeys2))
@@ -177,19 +161,19 @@
 	$oo1 = ob_get_contents();
 	ob_end_clean();
 
-	$html = "
-	<table width='100%' cellspacing='0' cellpadding='0' border='1' style='border:0px;'>
+	$html .= "
+	<table width='100%' cellspacing='0' cellpadding='0' border='0' style='border:0px;'>
 		<tr>
-			<td width='*' class='treeNode' style='border:0px;background-color:transparent;'>
-			<div id='action'><font color=black>[Variables involved in the triggers]</font><br>".$oo1."</div>
+			<td >
+			<div id='action'>
+			<div style='font-size:11px; font-weight:bold' align='left'>[Dynaform variables]</div>
+			".$oo1."</div>
 			</td>
 		</tr>
 	</table>";
 
-	$ch = &$tree->addChild(0, $html, array('nodeType' => 'child'));
-	//$ch->point = '<img src="/images/btnGreen.gif" />';
-
-	print ($tree->render());
+	echo $html;
+	
 
 	if(isset($_POST['NextStep'])){
 		print('<input type="button" value="Continue" class="module_app_button___gray" onclick="javascript:location.href=\''.$_POST['NextStep'].'\'">');
