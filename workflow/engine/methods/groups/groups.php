@@ -160,7 +160,7 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_USERS"))!=1) return $RBAC_Response;
 
 function selectionX(){
 	if( checks_selected_ids.length == 0 ){
-		new leimnud.module.app.alert().make({label: 'you must to select a user at least	'});
+		new leimnud.module.app.alert().make({label: 'At least one user must be selected'});
 		return 0;
 	}
 	

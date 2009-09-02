@@ -172,7 +172,21 @@
 		</tr>
 	</table>";
 
-	echo $html;
+	$width_content = isset($_POST['NextStep'])?'50%':'95%';
+	
+	echo '<div class="grid" style="width:'.$width_content.'">
+	<div class="boxTop"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+	<div class="content" style="">
+		  <table width="99%">
+	      <tbody><tr>
+	        <td valign="top">
+	           '.$html.'
+	        </td>
+	      </tr>
+	    </tbody></table>
+	</div>
+	<div class="boxBottom"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+	</div>'; 
 	
 
 	if(isset($_POST['NextStep'])){
@@ -184,7 +198,21 @@
 		return preg_replace("/(\r\n)+|(\n|\r)+/", "<br />", $string);
 	}
 
-?>
+?> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <style type="text/css">
 	#nyk_tooltip{
 		background-color:#EEE;

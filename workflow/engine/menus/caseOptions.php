@@ -39,7 +39,7 @@ else {
   $G_TMP_MENU->AddIdOption('INFO'  , G::LoadTranslation('ID_INFORMATION'), 'javascript:showInformation();', 'absolute');
 }
 
-if( $_SESSION['TRIGGER_DEBUG']['ISSET'] ){
+if( $_SESSION['TRIGGER_DEBUG']['ISSET'] && !isset($_GET['breakpoint'])){
     $G_TMP_MENU->AddIdOption('DEBUG'  , G::LoadTranslation('ID_DEBUG'), 'javascript:showdebug();', 'absolute');
 }
   

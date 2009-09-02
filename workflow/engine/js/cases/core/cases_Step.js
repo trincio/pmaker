@@ -801,13 +801,16 @@ var resendMessage = function(APP_UID, APP_MSG_UID)
 	});
 };
 
-
+var oDebuggerPanel = null;
 function showdebug(){
+	var screenX = WindowSize();
+	wW = screenX[0];
+	wH = screenX[1];
 	
 	 oPanel = new leimnud.module.panel();
 	  oPanel.options = {
-	  	size	:{w:400,h:350},
-	  	position:{x:screen.width-410,y:100,center:false},
+	  	size	:{w:(wW/100)*25,h:350},
+	  	position:{x:((wW/100)*75)-10,y:100,center:false},
 	  	title	: "",
 	  	theme	:'processmaker',
 	  	statusBar:true,
@@ -815,7 +818,10 @@ function showdebug(){
 	  	fx	:{modal:false,opacity:true,blinkToFront:true,fadeIn:false}
 	  };
 	  oPanel.events = {
-	  	remove: function() { delete(oPanel); }.extend(this)
+	  	remove: function() { 
+		  	delete(oPanel);
+		  	oPanelPanel = null;
+	  	}.extend(this)
 	  };
 	  oPanel.make();
 	  oPanel.loader.show();
@@ -831,4 +837,32 @@ function showdebug(){
 	  }.extend(this);
 	  oRPC.make();
 	  messagesListPanel = oPanel;
+	  oDebuggerPanel = oPanel;
+}
+
+function WindowSize() {
+  var wSize = [0, 0];
+  if (typeof window.innerWidth != 'undefined')
+  {
+	  wSize = [
+        window.innerWidth,
+        window.innerHeight
+    ];
+  }
+  else if (typeof document.documentElement != 'undefined'
+      && typeof document.documentElement.clientWidth !=
+      'undefined' && document.documentElement.clientWidth != 0)
+  {
+	  wSize = [
+        document.documentElement.clientWidth,
+        document.documentElement.clientHeight
+    ];
+  }
+  else   {
+	  wSize = [
+        document.getElementsByTagName('body')[0].clientWidth,
+        document.getElementsByTagName('body')[0].clientHeight
+    ];
+  }
+  return wSize;
 }

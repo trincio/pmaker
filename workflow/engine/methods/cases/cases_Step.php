@@ -133,11 +133,8 @@
   /**
    * Here we throw the debug view
    */
-  if( $_SESSION['TRIGGER_DEBUG']['ISSET'] ){
-    //$G_PUBLISH->AddContent('view', 'cases/showDebugFrame');
-  }
-
   if ( isset($_GET['breakpoint']) ) {
+  	$G_PUBLISH->AddContent('view', 'cases/showDebugFrame');
     G::RenderPage('publish');
     exit();
   }
@@ -634,5 +631,7 @@
   G::RenderPage('publish');
   
   if( $_SESSION['TRIGGER_DEBUG']['ISSET'] ){
-    echo '<script>showdebug()</script>';
+    G::evalJScript('showdebug()');
   }
+
+  

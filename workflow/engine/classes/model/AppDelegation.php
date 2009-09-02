@@ -216,7 +216,7 @@ class AppDelegation extends BaseAppDelegation {
   function calculateDuration() {
     try {
       //
-      die('calculateDuration');
+      //die('calculateDuration');
     }
     catch (Exception $oError) {
       //CONTINUE
