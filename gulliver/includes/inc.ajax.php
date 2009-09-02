@@ -1,4 +1,4 @@
-<?
+<?php
 /**
  * inc.ajax.php
  *  
