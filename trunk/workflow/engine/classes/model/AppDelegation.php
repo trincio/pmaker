@@ -205,9 +205,11 @@ class AppDelegation extends BaseAppDelegation {
   }
 
   function calculateDuration() {
-    try {
+  	krumo ( 'seleccionar initdate igual a NULL' ); //toma el valor de delegate
+  	krumo ( 'recorrer todos los finished y actualizar los flags' );
+    try { 
       //
-      //die('calculateDuration');
+      die('calculateDuration');
     }
     catch (Exception $oError) {
       //CONTINUE
