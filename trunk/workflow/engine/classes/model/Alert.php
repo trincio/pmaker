@@ -246,18 +246,15 @@ class Alert extends BaseAlert {
               break;
             }
             $oAppAlert = new AppAlert();
-            //$oAppAlert->create
-            var_dump(array('APP_UID'                     => $aData['APP_UID'],
+            $oAppAlert->create(array('APP_UID'                     => $aData['APP_UID'],
                                      'DEL_INDEX'                   => $aData['DEL_INDEX'],
                                      'ALT_UID'                     => $aAlert['ALT_UID'],
                                      'APP_ALT_ACTION_DATE'         => $sActionDate,
-                                     'APP_ALT_ATTEMPTS'            => $aAlert['ALT_MAX_ATTEMPTS']));echo '<br /><br />';
+                                     'APP_ALT_ATTEMPTS'            => $aAlert['ALT_MAX_ATTEMPTS']));
           }
         }
         $oDataset->next();
       }
-      //header('Content-Type: text/plain;');var_dump($aAlerts);
-      die('');
     }
     catch (Exception $oError) {
       //CONTINUE
