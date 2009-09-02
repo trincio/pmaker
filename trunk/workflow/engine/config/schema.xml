@@ -371,6 +371,66 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
+    <column name="DEL_QUEUE_DURATION" type="DOUBLE" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="DEL_QUEUE_DURATION"/>
+        <parameter name="Type" value="double"/>
+        <parameter name="Null" value="YES"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="0"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="DEL_DELAY_DURATION" type="DOUBLE" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="DEL_DELAY_DURATION"/>
+        <parameter name="Type" value="double"/>
+        <parameter name="Null" value="YES"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="0"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="DEL_STARTED" type="TINYINT" required="false" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="DEL_STARTED"/>
+        <parameter name="Type" value="tinyint(1)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="0"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="DEL_FINISHED" type="TINYINT" required="false" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="DEL_FINISHED"/>
+        <parameter name="Type" value="tinyint(1)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="0"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="DEL_DELAYED" type="TINYINT" required="false" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="DEL_DELAYED"/>
+        <parameter name="Type" value="tinyint(1)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="0"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="DEL_DATA" type="LONGVARCHAR" required="true">
+      <vendor type="mysql">
+        <parameter name="Field" value="DEL_DATA"/>
+        <parameter name="Type" value="mediumtext"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
 
     <validator column="DEL_TYPE">
       <rule name="validValues" value="NORMAL|PARALLEL" message="Please select a valid status." />
@@ -5638,6 +5698,16 @@
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="ALT_TAS_DURATION" type="DOUBLE" required="false" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="TAS_DURATION"/>
+        <parameter name="Type" value="double"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="0"/>
         <parameter name="Extra" value=""/>
       </vendor>
     </column>

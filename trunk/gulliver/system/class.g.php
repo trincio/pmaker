@@ -2360,6 +2360,10 @@ class G
 	* Xml parse collection functions
 	*************************************** end **********************************************/
 
+	
+	function evalJScript($c){
+		print("<script languaje=\"javascript\">{$c}</script>");
+	}
 };
 
 

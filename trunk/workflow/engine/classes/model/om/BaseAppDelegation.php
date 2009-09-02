@@ -132,6 +132,48 @@ abstract class BaseAppDelegation extends BaseObject  implements Persistent {
 	 */
 	protected $del_duration = 0;
 
+
+	/**
+	 * The value for the del_queue_duration field.
+	 * @var        double
+	 */
+	protected $del_queue_duration = 0;
+
+
+	/**
+	 * The value for the del_delay_duration field.
+	 * @var        double
+	 */
+	protected $del_delay_duration = 0;
+
+
+	/**
+	 * The value for the del_started field.
+	 * @var        int
+	 */
+	protected $del_started = 0;
+
+
+	/**
+	 * The value for the del_finished field.
+	 * @var        int
+	 */
+	protected $del_finished = 0;
+
+
+	/**
+	 * The value for the del_delayed field.
+	 * @var        int
+	 */
+	protected $del_delayed = 0;
+
+
+	/**
+	 * The value for the del_data field.
+	 * @var        string
+	 */
+	protected $del_data;
+
 	/**
 	 * Flag to prevent endless save loop, if this object is referenced
 	 * by another object which falls in this transaction.
@@ -389,6 +431,72 @@ abstract class BaseAppDelegation extends BaseObject  implements Persistent {
 	{
 
 		return $this->del_duration;
+	}
+
+	/**
+	 * Get the [del_queue_duration] column value.
+	 * 
+	 * @return     double
+	 */
+	public function getDelQueueDuration()
+	{
+
+		return $this->del_queue_duration;
+	}
+
+	/**
+	 * Get the [del_delay_duration] column value.
+	 * 
+	 * @return     double
+	 */
+	public function getDelDelayDuration()
+	{
+
+		return $this->del_delay_duration;
+	}
+
+	/**
+	 * Get the [del_started] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getDelStarted()
+	{
+
+		return $this->del_started;
+	}
+
+	/**
+	 * Get the [del_finished] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getDelFinished()
+	{
+
+		return $this->del_finished;
+	}
+
+	/**
+	 * Get the [del_delayed] column value.
+	 * 
+	 * @return     int
+	 */
+	public function getDelDelayed()
+	{
+
+		return $this->del_delayed;
+	}
+
+	/**
+	 * Get the [del_data] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getDelData()
+	{
+
+		return $this->del_data;
 	}
 
 	/**
@@ -724,6 +832,126 @@ abstract class BaseAppDelegation extends BaseObject  implements Persistent {
 	} // setDelDuration()
 
 	/**
+	 * Set the value of [del_queue_duration] column.
+	 * 
+	 * @param      double $v new value
+	 * @return     void
+	 */
+	public function setDelQueueDuration($v)
+	{
+
+		if ($this->del_queue_duration !== $v || $v === 0) {
+			$this->del_queue_duration = $v;
+			$this->modifiedColumns[] = AppDelegationPeer::DEL_QUEUE_DURATION;
+		}
+
+	} // setDelQueueDuration()
+
+	/**
+	 * Set the value of [del_delay_duration] column.
+	 * 
+	 * @param      double $v new value
+	 * @return     void
+	 */
+	public function setDelDelayDuration($v)
+	{
+
+		if ($this->del_delay_duration !== $v || $v === 0) {
+			$this->del_delay_duration = $v;
+			$this->modifiedColumns[] = AppDelegationPeer::DEL_DELAY_DURATION;
+		}
+
+	} // setDelDelayDuration()
+
+	/**
+	 * Set the value of [del_started] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     void
+	 */
+	public function setDelStarted($v)
+	{
+
+		// Since the native PHP type for this column is integer,
+		// we will cast the input value to an int (if it is not).
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->del_started !== $v || $v === 0) {
+			$this->del_started = $v;
+			$this->modifiedColumns[] = AppDelegationPeer::DEL_STARTED;
+		}
+
+	} // setDelStarted()
+
+	/**
+	 * Set the value of [del_finished] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     void
+	 */
+	public function setDelFinished($v)
+	{
+
+		// Since the native PHP type for this column is integer,
+		// we will cast the input value to an int (if it is not).
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->del_finished !== $v || $v === 0) {
+			$this->del_finished = $v;
+			$this->modifiedColumns[] = AppDelegationPeer::DEL_FINISHED;
+		}
+
+	} // setDelFinished()
+
+	/**
+	 * Set the value of [del_delayed] column.
+	 * 
+	 * @param      int $v new value
+	 * @return     void
+	 */
+	public function setDelDelayed($v)
+	{
+
+		// Since the native PHP type for this column is integer,
+		// we will cast the input value to an int (if it is not).
+		if ($v !== null && !is_int($v) && is_numeric($v)) {
+			$v = (int) $v;
+		}
+
+		if ($this->del_delayed !== $v || $v === 0) {
+			$this->del_delayed = $v;
+			$this->modifiedColumns[] = AppDelegationPeer::DEL_DELAYED;
+		}
+
+	} // setDelDelayed()
+
+	/**
+	 * Set the value of [del_data] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setDelData($v)
+	{
+
+		// Since the native PHP type for this column is string,
+		// we will cast the input to a string (if it is not).
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->del_data !== $v) {
+			$this->del_data = $v;
+			$this->modifiedColumns[] = AppDelegationPeer::DEL_DATA;
+		}
+
+	} // setDelData()
+
+	/**
 	 * Hydrates (populates) the object variables with values from the database resultset.
 	 *
 	 * An offset (1-based "start column") is specified so that objects can be hydrated
@@ -770,12 +998,24 @@ abstract class BaseAppDelegation extends BaseObject  implements Persistent {
 
 			$this->del_duration = $rs->getFloat($startcol + 14);
 
+			$this->del_queue_duration = $rs->getFloat($startcol + 15);
+
+			$this->del_delay_duration = $rs->getFloat($startcol + 16);
+
+			$this->del_started = $rs->getInt($startcol + 17);
+
+			$this->del_finished = $rs->getInt($startcol + 18);
+
+			$this->del_delayed = $rs->getInt($startcol + 19);
+
+			$this->del_data = $rs->getString($startcol + 20);
+
 			$this->resetModified();
 
 			$this->setNew(false);
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 15; // 15 = AppDelegationPeer::NUM_COLUMNS - AppDelegationPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 21; // 21 = AppDelegationPeer::NUM_COLUMNS - AppDelegationPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating AppDelegation object", $e);
@@ -1023,6 +1263,24 @@ abstract class BaseAppDelegation extends BaseObject  implements Persistent {
 			case 14:
 				return $this->getDelDuration();
 				break;
+			case 15:
+				return $this->getDelQueueDuration();
+				break;
+			case 16:
+				return $this->getDelDelayDuration();
+				break;
+			case 17:
+				return $this->getDelStarted();
+				break;
+			case 18:
+				return $this->getDelFinished();
+				break;
+			case 19:
+				return $this->getDelDelayed();
+				break;
+			case 20:
+				return $this->getDelData();
+				break;
 			default:
 				return null;
 				break;
@@ -1058,6 +1316,12 @@ abstract class BaseAppDelegation extends BaseObject  implements Persistent {
 			$keys[12] => $this->getDelTaskDueDate(),
 			$keys[13] => $this->getDelFinishDate(),
 			$keys[14] => $this->getDelDuration(),
+			$keys[15] => $this->getDelQueueDuration(),
+			$keys[16] => $this->getDelDelayDuration(),
+			$keys[17] => $this->getDelStarted(),
+			$keys[18] => $this->getDelFinished(),
+			$keys[19] => $this->getDelDelayed(),
+			$keys[20] => $this->getDelData(),
 		);
 		return $result;
 	}
@@ -1134,6 +1398,24 @@ abstract class BaseAppDelegation extends BaseObject  implements Persistent {
 			case 14:
 				$this->setDelDuration($value);
 				break;
+			case 15:
+				$this->setDelQueueDuration($value);
+				break;
+			case 16:
+				$this->setDelDelayDuration($value);
+				break;
+			case 17:
+				$this->setDelStarted($value);
+				break;
+			case 18:
+				$this->setDelFinished($value);
+				break;
+			case 19:
+				$this->setDelDelayed($value);
+				break;
+			case 20:
+				$this->setDelData($value);
+				break;
 		} // switch()
 	}
 
@@ -1172,6 +1454,12 @@ abstract class BaseAppDelegation extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[12], $arr)) $this->setDelTaskDueDate($arr[$keys[12]]);
 		if (array_key_exists($keys[13], $arr)) $this->setDelFinishDate($arr[$keys[13]]);
 		if (array_key_exists($keys[14], $arr)) $this->setDelDuration($arr[$keys[14]]);
+		if (array_key_exists($keys[15], $arr)) $this->setDelQueueDuration($arr[$keys[15]]);
+		if (array_key_exists($keys[16], $arr)) $this->setDelDelayDuration($arr[$keys[16]]);
+		if (array_key_exists($keys[17], $arr)) $this->setDelStarted($arr[$keys[17]]);
+		if (array_key_exists($keys[18], $arr)) $this->setDelFinished($arr[$keys[18]]);
+		if (array_key_exists($keys[19], $arr)) $this->setDelDelayed($arr[$keys[19]]);
+		if (array_key_exists($keys[20], $arr)) $this->setDelData($arr[$keys[20]]);
 	}
 
 	/**
@@ -1198,6 +1486,12 @@ abstract class BaseAppDelegation extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(AppDelegationPeer::DEL_TASK_DUE_DATE)) $criteria->add(AppDelegationPeer::DEL_TASK_DUE_DATE, $this->del_task_due_date);
 		if ($this->isColumnModified(AppDelegationPeer::DEL_FINISH_DATE)) $criteria->add(AppDelegationPeer::DEL_FINISH_DATE, $this->del_finish_date);
 		if ($this->isColumnModified(AppDelegationPeer::DEL_DURATION)) $criteria->add(AppDelegationPeer::DEL_DURATION, $this->del_duration);
+		if ($this->isColumnModified(AppDelegationPeer::DEL_QUEUE_DURATION)) $criteria->add(AppDelegationPeer::DEL_QUEUE_DURATION, $this->del_queue_duration);
+		if ($this->isColumnModified(AppDelegationPeer::DEL_DELAY_DURATION)) $criteria->add(AppDelegationPeer::DEL_DELAY_DURATION, $this->del_delay_duration);
+		if ($this->isColumnModified(AppDelegationPeer::DEL_STARTED)) $criteria->add(AppDelegationPeer::DEL_STARTED, $this->del_started);
+		if ($this->isColumnModified(AppDelegationPeer::DEL_FINISHED)) $criteria->add(AppDelegationPeer::DEL_FINISHED, $this->del_finished);
+		if ($this->isColumnModified(AppDelegationPeer::DEL_DELAYED)) $criteria->add(AppDelegationPeer::DEL_DELAYED, $this->del_delayed);
+		if ($this->isColumnModified(AppDelegationPeer::DEL_DATA)) $criteria->add(AppDelegationPeer::DEL_DATA, $this->del_data);
 
 		return $criteria;
 	}
@@ -1289,6 +1583,18 @@ abstract class BaseAppDelegation extends BaseObject  implements Persistent {
 		$copyObj->setDelFinishDate($this->del_finish_date);
 
 		$copyObj->setDelDuration($this->del_duration);
+
+		$copyObj->setDelQueueDuration($this->del_queue_duration);
+
+		$copyObj->setDelDelayDuration($this->del_delay_duration);
+
+		$copyObj->setDelStarted($this->del_started);
+
+		$copyObj->setDelFinished($this->del_finished);
+
+		$copyObj->setDelDelayed($this->del_delayed);
+
+		$copyObj->setDelData($this->del_data);
 
 
 		$copyObj->setNew(true);

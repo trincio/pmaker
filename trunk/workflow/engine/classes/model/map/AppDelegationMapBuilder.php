@@ -94,6 +94,18 @@ class AppDelegationMapBuilder {
 
 		$tMap->addColumn('DEL_DURATION', 'DelDuration', 'double', CreoleTypes::DOUBLE, false, null);
 
+		$tMap->addColumn('DEL_QUEUE_DURATION', 'DelQueueDuration', 'double', CreoleTypes::DOUBLE, false, null);
+
+		$tMap->addColumn('DEL_DELAY_DURATION', 'DelDelayDuration', 'double', CreoleTypes::DOUBLE, false, null);
+
+		$tMap->addColumn('DEL_STARTED', 'DelStarted', 'int', CreoleTypes::TINYINT, false, null);
+
+		$tMap->addColumn('DEL_FINISHED', 'DelFinished', 'int', CreoleTypes::TINYINT, false, null);
+
+		$tMap->addColumn('DEL_DELAYED', 'DelDelayed', 'int', CreoleTypes::TINYINT, false, null);
+
+		$tMap->addColumn('DEL_DATA', 'DelData', 'string', CreoleTypes::LONGVARCHAR, true, null);
+
 		$tMap->addValidator('DEL_TYPE', 'validValues', 'propel.validator.ValidValuesValidator', 'NORMAL|PARALLEL', 'Please select a valid status.');
 
 		$tMap->addValidator('DEL_PRIORITY', 'validValues', 'propel.validator.ValidValuesValidator', '1|2|3|4|5', 'Please select a valid Priority.');

@@ -27,24 +27,24 @@ class spoolRun {
 	private $spool_id;
 	public $status;
 	public $error;
-	
+
 	function __construct() {
 		$this->config = array();
 		$this->fileData = array();
 		$this->spool_id = '';
 		$this->status = 'pending';
 		$this->error = '';
-		
+
 	//$this->getSpoolFilesList();
 	}
-	
+
 	public function getSpoolFilesList() {
 		$sql = "SELECT * FROM APP_MESSAGE WHERE APP_MSG_STATUS ='pending'";
-		
+
 		$con = Propel::getConnection("workflow");
 		$stmt = $con->prepareStatement($sql);
 		$rs = $stmt->executeQuery();
-		
+
 		while($rs->next()) {
 			$this->spool_id = $rs->getString('APP_MSG_UID');
 			$this->fileData['subject'] = $rs->getString('APP_MSG_SUBJECT');
@@ -70,25 +70,25 @@ class spoolRun {
 			$this->sendMail();
 		}
 	}
-	
+
 	public function create($aData) {
 		G::LoadClass('insert');
 		$oInsert = new insert();
 		$sUID = $oInsert->db_insert($aData);
-		
+
 		$aData['app_msg_date'] = isset($aData['app_msg_date']) ? $aData['app_msg_date'] : '';
-		
+
 		if(isset($aData['app_msg_status'])) {
 			$this->status = strtolower($aData['app_msg_status']);
 		}
-		
+
 		$this->setData($sUID, $aData['app_msg_subject'], $aData['app_msg_from'], $aData['app_msg_to'], $aData['app_msg_body'], $aData['app_msg_date'], $aData['app_msg_cc'], $aData['app_msg_bcc'], $aData['app_msg_template']);
 	}
-	
+
 	public function setConfig($aConfig) {
 		$this->config = $aConfig;
 	}
-	
+
 	public function setData($sAppMsgUid, $sSubject, $sFrom, $sTo, $sBody, $sDate = '', $sCC = '', $sBCC = '', $sTemplate = '') {
 		$this->spool_id = $sAppMsgUid;
 		$this->fileData['subject'] = $sSubject;
@@ -100,7 +100,7 @@ class spoolRun {
 		$this->fileData['bcc'] = $sBCC;
 		$this->fileData['template'] = $sTemplate;
 		$this->fileData['attachments'] = array();
-		
+
 		if($this->config['MESS_ENGINE'] == 'OPENMAIL') {
 			if($this->config['MESS_SERVER'] != '') {
 				if(($sAux = @gethostbyaddr($this->config['MESS_SERVER']))) {
@@ -113,22 +113,22 @@ class spoolRun {
 			}
 		}
 	}
-	
+
 	public function sendMail() {
 		$this->handleFrom();
 		$this->handleEnvelopeTo();
 		$this->handleMail();
 		$this->updateSpoolStatus();
 	}
-	
+
 	private function updateSpoolStatus() {
 		$oAppMessage = AppMessagePeer::retrieveByPK($this->spool_id);
 		$oAppMessage->setappMsgstatus($this->status);
 		$oAppMessage->setappMsgsenddate(date('Y-m-d H:i:s'));
 		$oAppMessage->save();
-	
+
 	}
-	
+
 	private function handleFrom() {
 		if(false !== ($pos = strpos($this->fileData['from'], '<'))) {
 			$this->fileData['from_name'] = trim(substr($this->fileData['from'], 0, $pos));
@@ -139,23 +139,23 @@ class spoolRun {
 			$this->fileData['from_name'] = '';
 			$this->fileData['from_email'] = str_replace('<', '', str_replace('>', '', $this->fileData['from']));
 		}
-	
+
 	}
-	
+
 	private function handleEnvelopeTo() {
 		$hold = array();
 		$text = trim($this->fileData['to']);
 		if(isset($this->fileData['cc']) && trim($this->fileData['cc']) != '') {
 			$text .= ',' . trim($this->fileData['cc']);
 		}
-		
+
 		if(isset($this->fileData['bcc']) && trim($this->fileData['bcc']) != '') {
 			$text .= ',' . trim($this->fileData['bcc']);
 		}
-		
+
 		if(false !== (strpos($text, ','))) {
 			$hold = explode(',', $text);
-			
+
 			foreach($hold as $val) {
 				if(strlen($val) > 0) {
 					$this->fileData['envelope_to'][] = "$val";
@@ -165,7 +165,7 @@ class spoolRun {
 			$this->fileData['envelope_to'][] = "$text";
 		}
 	}
-	
+
 	private function handleMail() {
 		if(count($this->fileData['envelope_to']) > 0) {
 			switch($this->config['MESS_ENGINE']) {
@@ -262,7 +262,7 @@ class spoolRun {
 			}
 		}
 	}
-	
+
 	function resendEmails() {
 		try {
 			require_once 'classes/model/Configuration.php';
