@@ -1161,18 +1161,19 @@ class Cases
         //appThread
         $AppThread = new AppThread;
         $iAppThreadIndex = $AppThread->createAppThread($sAppUid, $iDelIndex, 0);
+
         //DONE: Al ya existir un delegation, se puede "calcular" el caseTitle.
         $Fields = $Application->toArray(BasePeer::TYPE_FIELDNAME);
-        $Fields['APP_TITLE'] = self::refreshCaseTitle($sAppUid, G::array_merges(G::getSystemConstants(), unserialize($Fields['APP_DATA'])));
+        $Fields['APP_TITLE']       = self::refreshCaseTitle      ($sAppUid, G::array_merges(G::getSystemConstants(), unserialize($Fields['APP_DATA'])));
         $Fields['APP_DESCRIPTION'] = self::refreshCaseDescription($sAppUid, G::array_merges(G::getSystemConstants(), unserialize($Fields['APP_DATA'])));
-        //$Fields['APP_PROC_CODE'] = self::refreshCaseStatusCode($sAppUid, G::array_merges(G::getSystemConstants(), unserialize($Fields['APP_DATA'])));
+        //$Fields['APP_PROC_CODE'] = self::refreshCaseStatusCode ($sAppUid, G::array_merges(G::getSystemConstants(), unserialize($Fields['APP_DATA'])));
         $caseNumber = $Fields['APP_NUMBER'];
         $Application->update($Fields);
-        //Update the task last assigned (for web entry an web services)
+        
+        //Update the task last assigned (for web entry and web services)
         G::LoadClass('derivation');
         $oDerivation = new Derivation();
         $oDerivation->setTasLastAssigned($sTasUid, $sUsrUid);
-
       }
       catch (exception $e) {
           throw ($e);
