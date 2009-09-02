@@ -130,8 +130,11 @@
     $_POST['NextStep'] = $_SESSION['TRIGGER_DEBUG']['BREAKPAGE'];
   }
 
+  /**
+   * Here we throw the debug view
+   */
   if( $_SESSION['TRIGGER_DEBUG']['ISSET'] ){
-    $G_PUBLISH->AddContent('view', 'cases/showDebugFrame');
+    //$G_PUBLISH->AddContent('view', 'cases/showDebugFrame');
   }
 
   if ( isset($_GET['breakpoint']) ) {
@@ -629,3 +632,7 @@
   ');
   
   G::RenderPage('publish');
+  
+  if( $_SESSION['TRIGGER_DEBUG']['ISSET'] ){
+    echo '<script>showdebug()</script>';
+  }

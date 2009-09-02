@@ -1611,3 +1611,14 @@ table.tableGrid_view td
 	padding: 0px;
 	
 }
+
+.ui-widget-header {
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	background:#5C9CCC url(/images/ui-bg_gloss-wave_55_5c9ccc_500x100.png) repeat-x scroll 50% 50%;
+	border:1px solid #4297D7;
+	color:#FFFFFF;
+	font-weight:bold;
+	font-size: 11px;
+}

@@ -582,6 +582,13 @@ switch($_POST['action']) {
 		$oSpool->sendMail();
 		
 		break;
+		
+	case 'showdebug':
+				
+		$G_PUBLISH = new Publisher();
+		$G_PUBLISH->AddContent('view', 'cases/showDebugFrame');
+		G::RenderPage('publish', 'raw');
+		break;
 	
 	default:
 		echo 'default';

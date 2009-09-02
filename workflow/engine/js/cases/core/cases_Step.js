@@ -800,3 +800,35 @@ var resendMessage = function(APP_UID, APP_MSG_UID)
 	    }.extend(this)
 	});
 };
+
+
+function showdebug(){
+	
+	 oPanel = new leimnud.module.panel();
+	  oPanel.options = {
+	  	size	:{w:400,h:350},
+	  	position:{x:screen.width-410,y:100,center:false},
+	  	title	: "",
+	  	theme	:'processmaker',
+	  	statusBar:true,
+	  	control	:{resize:true,roll:true},
+	  	fx	:{modal:false,opacity:true,blinkToFront:true,fadeIn:false}
+	  };
+	  oPanel.events = {
+	  	remove: function() { delete(oPanel); }.extend(this)
+	  };
+	  oPanel.make();
+	  oPanel.loader.show();
+	  var oRPC = new leimnud.module.rpc.xmlhttp({
+	  	url : 'cases_Ajax',
+	  	args: 'action=showdebug'
+	  });
+	  oRPC.callback = function(rpc){
+	  	oPanel.loader.hide();
+	  	var scs=rpc.xmlhttp.responseText.extractScript();
+	  	oPanel.addContent(rpc.xmlhttp.responseText);
+	  	scs.evalScript();
+	  }.extend(this);
+	  oRPC.make();
+	  messagesListPanel = oPanel;
+}
