@@ -272,16 +272,21 @@ var G_Grid = function(oForm, sGridName)
   	if (this.oGrid.rows.length == 3)
     {
       new leimnud.module.app.alert().make({
-        label: 'Can\'t delete the first row!'
+        label: G_STRINGS.ID_MSG_NODELETE_GRID_ITEM
       });
       return false;
     }
     new leimnud.module.app.confirm().make({
-      label : 'Are you sure you want to delete this row?',
+      label : G_STRINGS.ID_MSG_DELETE_GRID_ITEM,
       action: function() {
+    	
       	sRow    = sRow.replace('[', '');
         sRow    = sRow.replace(']', '');
         iRow    = Number(sRow);
+        
+        /* delete the respective session row grid variables from Dynaform  - by Nyeke <erik@colosa.com */
+    	deleteRowOnDybaform(this, iRow); 
+    	
         iRowAux = iRow + 1;
         while (iRowAux <= (this.oGrid.rows.length - 2))
         {
@@ -545,3 +550,43 @@ var G_Grid = function(oForm, sGridName)
   	}
   };
 };
+
+/**
+ * Delete the respective session row grid variables from Dynaform
+ * 
+ * @Param grid [object: grid]
+ * @Param sRow [integer: row index]
+ * @author Erik Amaru Ortiz <erik@colosa.com, aortiz.erik@mail.com>
+ */
+function deleteRowOnDybaform(grid, sRow){
+	//alert(grid.sGridName + ' ' + sRow);
+	var oRPC = new leimnud.module.rpc.xmlhttp({
+	  	url : '../gulliver/genericAjax',
+	  	args: 'request=deleteGridRowOnDynaform&gridname='+grid.sGridName+'&rowpos='+sRow
+  	});
+  	oRPC.callback = function(rpc) {
+	  	oPanel.loader.hide();
+	  	scs = rpc.xmlhttp.responseText.extractScript();
+	  	scs.evalScript();
+	  	
+	  	/**
+	  	 * We verify if the debug panel is open, if it is-> update its content 
+	  	 */
+	  	if(oDebuggerPanel != null){
+	  		oDebuggerPanel.clearContent();
+	  		oDebuggerPanel.loader.show();
+	  	  var oRPC = new leimnud.module.rpc.xmlhttp({
+	  	  	  url : 'cases_Ajax',
+		  	  	args: 'action=showdebug'
+		  	  });
+		  	  oRPC.callback = function(rpc){
+		  		oDebuggerPanel.loader.hide();
+		  	  	var scs=rpc.xmlhttp.responseText.extractScript();
+		  	    oDebuggerPanel.addContent(rpc.xmlhttp.responseText);
+		  	  	scs.evalScript();
+		  	  }.extend(this);
+		  	  oRPC.make();
+	  	}
+  	}.extend(this);
+	oRPC.make();
+}
