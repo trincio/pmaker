@@ -2,8 +2,13 @@
 /*** enable display_error On to caught even fatal errors ***/
 ini_set('display_errors','On');
 ini_set('error_reporting', E_ALL  );
+ini_set('short_open_tag', 'on');
+ini_set('asp_tags', 'on');
 ini_set('memory_limit', '80M');
-
+ini_set('register_globals', 'off');
+ini_set("default_charset", "UTF-8");
+ini_set("soap.wsdl_cache_enabled", "0");
+ 
 $memAcum = 0;
 function logMemory ($text=''){
   global $memAcum;
