@@ -205,14 +205,104 @@ class AppDelegation extends BaseAppDelegation {
   }
 
   function calculateDuration() {
-  	krumo ( 'seleccionar initdate igual a NULL' ); //toma el valor de delegate
-  	krumo ( 'recorrer todos los finished y actualizar los flags' );
-    try { 
-      //
-      die('calculateDuration');
+    try {
+    	//patch the rows with initdate is null and have a date in finish_date
+      $c = new Criteria();
+      $c->clearSelectColumns();
+      $c->addSelectColumn(AppDelegationPeer::APP_UID );
+      $c->addSelectColumn(AppDelegationPeer::DEL_INDEX  );
+      $c->addSelectColumn(AppDelegationPeer::DEL_DELEGATE_DATE);
+      $c->add(AppDelegationPeer::DEL_INIT_DATE, NULL, Criteria::ISNULL);
+      $c->add(AppDelegationPeer::DEL_FINISH_DATE, NULL, Criteria::ISNOTNULL);
+      //$c->add(AppDelegationPeer::DEL_INDEX, 1);
+   
+      $rs = AppDelegationPeer::doSelectRS($c);
+      $rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $rs->next();
+      $row = $rs->getRow();
+   
+      while (is_array($row)) {
+        $oAppDel = AppDelegationPeer::retrieveByPk($row['APP_UID'], $row['DEL_INDEX'] );
+        $oAppDel->setDelInitDate($row['DEL_DELEGATE_DATE']);
+        $oAppDel->save();
+
+        $rs->next();
+        $row = $rs->getRow();
+      }
+   
+    	//walk in all rows with DEL_STARTED = 0 or DEL_FINISHED = 0
+    	
+      $c = new Criteria();
+      $c->clearSelectColumns();
+      $c->addSelectColumn(AppDelegationPeer::APP_UID );
+      $c->addSelectColumn(AppDelegationPeer::DEL_INDEX  );
+      $c->addSelectColumn(AppDelegationPeer::DEL_DELEGATE_DATE);
+      $c->addSelectColumn(AppDelegationPeer::DEL_INIT_DATE);
+      $c->addSelectColumn(AppDelegationPeer::DEL_TASK_DUE_DATE);
+      $c->addSelectColumn(AppDelegationPeer::DEL_FINISH_DATE);
+      $c->addSelectColumn(AppDelegationPeer::DEL_DURATION);
+      $c->addSelectColumn(AppDelegationPeer::DEL_QUEUE_DURATION);
+      $c->addSelectColumn(AppDelegationPeer::DEL_STARTED);
+      $c->addSelectColumn(AppDelegationPeer::DEL_FINISHED);
+      $c->addSelectColumn(TaskPeer::TAS_DURATION);
+      $c->addSelectColumn(TaskPeer::TAS_TIMEUNIT);
+      $c->addSelectColumn(TaskPeer::TAS_TYPE_DAY);
+      $c->addJoin(AppDelegationPeer::TAS_UID, TaskPeer::TAS_UID, Criteria::JOIN );
+      $cton1 = $c->getNewCriterion(AppDelegationPeer::DEL_STARTED,  0);
+      $cton2 = $c->getNewCriterion(AppDelegationPeer::DEL_FINISHED, 0);
+      $cton1->addOr($cton2);
+      $c->add($cton1);
+      //$c->add(AppDelegationPeer::DEL_STARTED, 0 );
+   
+      $rs = AppDelegationPeer::doSelectRS($c);
+      $rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $rs->next();
+      $row = $rs->getRow();
+   
+      while (is_array($row)) {
+      	$iDelegateDate = strtotime ( $row['DEL_DELEGATE_DATE'] );
+      	$iInitDate     = strtotime ( $row['DEL_INIT_DATE'] );
+      	$iDueDate      = strtotime ( $row['DEL_TASK_DUE_DATE'] );
+      	$iFinishDate   = strtotime ( $row['DEL_FINISH_DATE'] );
+      	$isStarted     = intval ( $row['DEL_STARTED'] );
+      	$isFinished    = intval ( $row['DEL_FINISHED'] );
+
+        //get the object, and then field by field change if correspond...
+        $oAppDel = AppDelegationPeer::retrieveByPk($row['APP_UID'], $row['DEL_INDEX'] );
+
+      	if ( $isStarted == 0 ) {
+        	if ( $iInitDate != NULL ) {
+            $oAppDel->setDelStarted(1);
+          	$queueDuration = ($iInitDate - $iDelegateDate ) / 3600;
+            $oAppDel->setDelQueueDuration( $queueDuration);
+      	  }
+      	  else {
+        	  $queueDuration = ( strtotime( 'now' ) - $iDelegateDate ) / 3600;
+            $oAppDel->setDelQueueDuration( $queueDuration);
+      	  }
+        }
+        
+      	if ( $isFinished == 0 ) {
+        	if ( $iFinishDate != NULL ) {
+            $oAppDel->setDelFinished(1);
+        	  $delDuration = ($iFinishDate - $iInitDate ) / 3600;
+            $oAppDel->setDelDuration( $delDuration);
+      	  }
+      	  //else {
+        	//  $queueDuration = ( strtotime( 'now' ) - $iDelegateDate ) / 3600;
+          //  $oAppDel->setDelQueueDuration( $queueDuration);
+          //}
+      	}
+        //and finally save the record
+        $oAppDel->save();
+        //krumo ( $row );
+      	
+        $rs->next();
+        $row = $rs->getRow();
+      }
     }
-    catch (Exception $oError) {
-      //CONTINUE
+    catch ( Exception $oError) {
+      krumo ( $oError->getMessage() );
     }
   }
 } // AppDelegation
