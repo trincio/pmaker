@@ -7,13 +7,15 @@ if( !isset($request) ){
 if( isset($request) ){
 	switch($request){
 		case 'deleteGridRowOnDynaform':
-			G::LoadClass('case');
-		 	$oApp= new Cases();
-		  	$aFields = $oApp->loadCase($_SESSION['APPLICATION']);
-		  	
-		  	unset($aFields['APP_DATA'][$_POST['gridname']][$_POST['rowpos']]);
-		  	
-		  	$oApp->updateCase($_SESSION['APPLICATION'], $aFields);
+			
+			if( isset($_SESSION['APPLICATION']) ){
+				G::LoadClass('case');
+			 	$oApp= new Cases();
+			  	$aFields = $oApp->loadCase($_SESSION['APPLICATION']);
+			  	unset($aFields['APP_DATA'][$_POST['gridname']][$_POST['rowpos']]);
+			  	$oApp->updateCase($_SESSION['APPLICATION'], $aFields);
+			}
+			
 		break;
 	}	
 }
