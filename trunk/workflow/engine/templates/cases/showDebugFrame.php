@@ -104,7 +104,7 @@
 					</td>
 					</tr>
 				</table>";
-				$ch = &$tree->addChild(0, $html, array('nodeType' => 'child'));
+				
 				//$ch->point = '<img src="/images/iconoenlace.png" />';
 			}
 		} catch(Exception $e) {

@@ -1004,9 +1004,9 @@ class XmlForm_Field_Textarea extends XmlForm_Field {
     foreach ( $values as $v ) {
       if ($this->mode === 'edit') {
         if ($this->readOnly)
-          $result [] = '<input class="module_app_input___gray" id="form[' . $owner->name . '][' . $r . '][' . $this->name . ']" name="form[' . $owner->name . '][' . $r . '][' . $this->name . ']" type ="text" size="' . $this->size . '" maxlength="' . $this->maxLength . '" value=\'' . $this->htmlentities ( $v, ENT_COMPAT, 'utf-8' ) . '\' readOnly="readOnly"/>';
+          $result [] = '<textarea class="module_app_input___gray" id="form[' . $owner->name . '][' . $r . '][' . $this->name . ']" name="form[' . $owner->name . '][' . $r . '][' . $this->name . ']"  rows="' . $this->rows . '"cols="'.$this->cols.'" readOnly="readOnly">'.$this->htmlentities ( $v, ENT_COMPAT, 'utf-8' ).'</textarea>';
         else
-          $result [] = '<input class="module_app_input___gray" id="form[' . $owner->name . '][' . $r . '][' . $this->name . ']" name="form[' . $owner->name . '][' . $r . '][' . $this->name . ']" type ="text" size="' . $this->size . '" maxlength="' . $this->maxLength . '" value=\'' . $this->htmlentities ( $v, ENT_COMPAT, 'utf-8' ) . '\' />';
+          $result [] = '<textarea class="module_app_input___gray" id="form[' . $owner->name . '][' . $r . '][' . $this->name . ']" name="form[' . $owner->name . '][' . $r . '][' . $this->name . ']"  rows="' . $this->rows . '"clos="'.$this->cols.'" >'.$this->htmlentities ( $v, ENT_COMPAT, 'utf-8' ).'</textarea>';
       } elseif ($this->mode === 'view') {
         if (stristr ( $_SERVER ['HTTP_USER_AGENT'], 'iPhone' )) {
           //$result[] = '<div style="overflow:hidden;height:25px;padding:0px;margin:0px;">'.$this->htmlentities( $v , ENT_COMPAT, 'utf-8').'</div>';
@@ -1676,6 +1676,17 @@ class XmlForm_Field_Hidden extends XmlForm_Field {
     } else {
       return $this->htmlentities ( $value, ENT_COMPAT, 'utf-8' );
     }
+  }
+  
+  function renderGrid($values = NULL, $owner) {
+    $result = array ();
+    $r = 1;
+    foreach ( $values as $v ) {
+       $result [] = '<input type="hidden" value="'.$this->htmlentities ( $v, ENT_COMPAT, 'utf-8' ).'" id="form[' . $owner->name . '][' . $r . '][' . $this->name . ']" name="form[' . $owner->name . '][' . $r . '][' . $this->name . ']" />';
+    }
+    $r ++;
+    
+    return $result;
   }
 }
 /**
