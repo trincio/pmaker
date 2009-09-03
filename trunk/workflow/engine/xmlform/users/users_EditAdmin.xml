@@ -182,9 +182,9 @@ var verifyUserInformation = function(oForm)
 		bContinue = false;
 	}
 	oAux1 = oForm.elements['form[USR_NEW_PASS]'];
+	oAux2 = oForm.elements['form[USR_CNF_PASS]'];
 	if (oAux1.value != '')
 	{
-		oAux2 = oForm.elements['form[USR_CNF_PASS]'];
 		if (oAux1.value != oAux2.value)
 		{
 		  new leimnud.module.app.alert().make({
