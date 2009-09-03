@@ -809,8 +809,8 @@ function showdebug(){
 	
 	 oPanel = new leimnud.module.panel();
 	  oPanel.options = {
-	  	size	:{w:(wW/100)*25,h:350},
-	  	position:{x:((wW/100)*75)-10,y:100,center:false},
+	  	size	:{w:(wW/100)*25,h:(wH/100)*80},
+	  	position:{x:((wW/100)*75)-10,y:80,center:false},
 	  	title	: "",
 	  	theme	:'processmaker',
 	  	statusBar:true,
@@ -836,7 +836,6 @@ function showdebug(){
 	  	scs.evalScript();
 	  }.extend(this);
 	  oRPC.make();
-	  messagesListPanel = oPanel;
 	  oDebuggerPanel = oPanel;
 }
 
