@@ -21,9 +21,9 @@
 <!--<password type="toolButton" onclick="fieldsAdd('password')" file="images/dynamicForm/password.gif" fileAlt="images/dynamicForm/hover.gif" home="public_html" style="height:25px;width:25px;" buttonStyle="">
   <en>password</en>
 </password>-->
-<!--<textarea type="toolButton" onclick="fieldsAdd('textarea')" file="images/dynamicForm/textarea.gif" fileAlt="images/dynamicForm/hover.gif" home="public_html" style="height:25px;width:25px;" buttonStyle="">
+<textarea type="toolButton" onclick="fieldsAdd('textarea')" file="images/dynamicForm/textarea.gif" fileAlt="images/dynamicForm/hover.gif" home="public_html" style="height:25px;width:25px;" buttonStyle="">
   <en>textarea</en>
-</textarea>-->
+</textarea>
 <!--.-->
 <separator5 type="toolButton" file="images/dynamicForm/separator.jpg" home="public_html" style="height:25px;" buttonStyle=""/>
 <dropdown type="toolButton" onclick="fieldsAdd('dropdown')" file="images/dynamicForm/dropdown.gif" fileAlt="images/dynamicForm/hover.gif" home="public_html" style="height:25px;width:25px;" buttonStyle="">
@@ -42,9 +42,9 @@
 <date type="toolButton" onclick="fieldsAdd('date')" file="images/dynamicForm/date.gif" fileAlt="images/dynamicForm/hover.gif" home="public_html" style="height:25px;width:25px;" buttonStyle="">
   <en>date</en>
 </date>
-<!--<hidden type="toolButton" onclick="fieldsAdd('hidden')" file="images/dynamicForm/hidden.gif" fileAlt="images/dynamicForm/hover.gif" home="public_html" style="height:25px;width:25px;" buttonStyle="">
+<hidden type="toolButton" onclick="fieldsAdd('hidden')" file="images/dynamicForm/hidden.gif" fileAlt="images/dynamicForm/hover.gif" home="public_html" style="height:25px;width:25px;" buttonStyle="">
   <en>hidden</en>
-</hidden>-->
+</hidden>
 <link type="toolButton" onclick="fieldsAdd('link')" file="images/dynamicForm/link.gif" fileAlt="images/dynamicForm/hover.gif" home="public_html" style="height:25px;width:25px;" buttonStyle="">
   <en>link</en>
 </link>

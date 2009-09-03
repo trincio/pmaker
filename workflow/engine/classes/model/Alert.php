@@ -230,16 +230,16 @@ class Alert extends BaseAlert {
             else {
               $sDueDate = $aData['DEL_TASK_DUE_DATE'];
             }
-            //echo date('Y-m-d H:i:s', $oDates->calculateDate($sDueDate, -1)) . ' | ' . $sDueDate . ' | ' . date('Y-m-d H:i:s', $oDates->calculateDate($sDueDate, 1)) . '<br />';
+            //echo date('Y-m-d H:i:s', $oDates->calculateDate($sDueDate, -1, 'days', 1)) . ' | ' . $sDueDate . ' | ' . date('Y-m-d H:i:s', $oDates->calculateDate($sDueDate, 1, 'days', 1)) . '<br />';
             switch ($aAlert['ALT_TYPE']) {
               case 'BEFORE':
-                $sActionDate = date('Y-m-d H:i:s', $oDates->calculateDate($sDueDate, (-1) * $aAlert['ALT_DAYS']));
+                $sActionDate = date('Y-m-d H:i:s', $oDates->calculateDate($sDueDate, (-1) * $aAlert['ALT_DAYS'], 'days', 1));
               break;
               case 'ON':
                 $sActionDate = $sDueDate;
               break;
               case 'AFTER':
-                $sActionDate = date('Y-m-d H:i:s', $oDates->calculateDate($sDueDate, $aAlert['ALT_DAYS']));
+                $sActionDate = date('Y-m-d H:i:s', $oDates->calculateDate($sDueDate, $aAlert['ALT_DAYS'], 'days', 1));
               break;
               case 'RECURRENT':
                 $sActionDate = date('Y-m-d H:i:s');

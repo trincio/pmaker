@@ -108,4 +108,36 @@ class AppAlert extends BaseAppAlert {
       throw($oError);
     }
   }
+
+  function sendAlerts($sLastExecution) {
+    try {
+      $oCriteria = new Criteria('workflow');
+      $oCriteria->addSelectColumn(AppAlertPeer::APP_UID);
+      $oCriteria->addSelectColumn(AppAlertPeer::DEL_INDEX);
+      $oCriteria->addSelectColumn(AppAlertPeer::ALT_UID);
+      $oCriteria->addSelectColumn(AppAlertPeer::APP_ALT_ACTION_DATE);
+      $oCriteria->addSelectColumn(AppAlertPeer::APP_ALT_ATTEMPTS);
+      $oCriteria->addSelectColumn(AppAlertPeer::APP_ALT_LAST_EXECUTION_DATE);
+      $oCriteria->addSelectColumn(AppAlertPeer::APP_ALT_STATUS);
+      $oCriteria->addSelectColumn(AlertPeer::ALT_TEMPLATE);
+      $oCriteria->addSelectColumn(AlertPeer::ALT_DIGEST);
+      $oCriteria->addSelectColumn(AlertPeer::TRI_UID);
+      $oCriteria->addJoin(AppAlertPeer::ALT_UID, AlertPeer::ALT_UID, Criteria::LEFT_JOIN);
+      $oCriteria->add(AppAlertPeer::APP_ALT_ATTEMPTS, 0, Criteria::GREATER_THAN);
+      $oCriteria->add(AppAlertPeer::APP_ALT_STATUS, 'OPEN');
+      if ($sLastExecution != '') {
+        $oCriteria->add(AppAlertPeer::APP_ALT_ACTION_DATE, $sLastExecution, Criteria::GREATER_EQUAL);
+      }
+      $oDataset = AppAlertPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      while ($aRow = $oDataset->getRow()) {
+        var_dump($aRow);echo '<br /><br />';
+        $oDataset->next();
+      }die;
+    }
+    catch (Exception $oError) {
+      //CONTINUE
+    }
+  }
 } // AppAlert
