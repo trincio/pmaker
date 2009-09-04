@@ -214,6 +214,30 @@ function setRowClass (theRow, thePointerClass)
         return false;
     }
 
-    theRow.className = thePointerClass;
+    if(globalRowSelected == null || globalRowSelected.id != theRow.id){
+    	globalRowSelectedClass = theRow.className;
+    	theRow.className = thePointerClass;
+	}
+    return true;
+}
+
+var globalRowSelected = null;
+var globalRowSelectedClass;
+
+function focusRow(o, className){
+	if (className == '' || typeof(o.className) == 'undefined') {
+        return false;
+    }
+	
+	/* restore its previous class at the other object*/
+	if( globalRowSelected != null ){
+		globalRowSelected.className = globalRowSelectedClass;
+	}
+	
+	globalRowSelected = o;
+	//globalRowSelectedClass = o.className;
+	
+	o.className = className;
+	
     return true;
 }

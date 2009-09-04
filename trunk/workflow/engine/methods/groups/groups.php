@@ -35,6 +35,9 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_USERS"))!=1) return $RBAC_Response;
   $Fields['WHERE'] = '';
 
   $G_PUBLISH = new Publisher;
+  $oHeadPublisher =& headPublisher::getSingleton();
+  $oHeadPublisher->addScriptFile('/jscore/groups/groups.js');
+  
   $G_PUBLISH->AddContent('view', 'groups/groups_Tree' );
   $G_PUBLISH->AddContent('smarty', 'groups/groups_usersList', '', '', array());
 
@@ -143,65 +146,5 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_USERS"))!=1) return $RBAC_Response;
       }.extend(this)
     });
   };
-
-  function saveUserGroup(sUser) {
-
-    var oRPC = new leimnud.module.rpc.xmlhttp({
-      url   : '../groups/groups_Ajax',
-      async : false,
-      method: 'POST',
-      args  : 'action=assignUser&GRP_UID=' + currentGroup + '&USR_UID=' + sUser
-    });
-    oRPC.make();
-    currentPopupWindow.remove();
-    selectGroup(currentGroup);
-  }
-
-
-function selectionX(){
-	if( checks_selected_ids.length == 0 ){
-		new leimnud.module.app.alert().make({label: G_STRINGS.ID_MSG_GROUPS_ADDCONFIRM});
-		return 0;
-	}
-	
-    var oRPC = new leimnud.module.rpc.xmlhttp({
-      url   : '../groups/groups_Ajax',
-      async : false,
-      method: 'POST',
-      args  : 'action=assignAllUsers&GRP_UID=' + currentGroup + '&aUsers=' + checks_selected_ids
-    });
-    resetChecks();
-    oRPC.make();
-    currentPopupWindow.remove();
-    selectGroup(currentGroup);
-}
-
-function resetChecks(){
-	checks_selected_ids.length = 0;
-}
-
-Array.prototype.walk = function( funcionaplicada ) {
-    for(var i=0, parar=false; i<this.length && !parar; i++ )
-        parar = funcionaplicada( this[i], i);
-    return (this.length==i)? false : (i-1);
-}
-
-Array.prototype.find = function(q) {
-    var dev = this.walk(function(elem) {
-        if( elem==q )
-            return true;
-    } );
-    if( this[dev]==q ) return dev;
-    else return -1;
-}
-
-Array.prototype.drop = function(x) {
-    this.splice(x,1);
-}
-
-Array.prototype.deleteByValue = function(val) {
-    var eindex = this.find(val);
-    this.drop(eindex);
-}  
 
 </script>

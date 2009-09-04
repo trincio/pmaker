@@ -40,9 +40,11 @@
  */
 
 function __autoload($sClassName) {
-  $sPath  = PATH_DB . SYS_SYS . PATH_SEP . 'classes' . PATH_SEP;
-  if (file_exists($sPath . $sClassName . '.php')) {
-    require_once $sPath . $sClassName . '.php';
+  if (defined('SYS_SYS')) {
+    $sPath  = PATH_DB . SYS_SYS . PATH_SEP . 'classes' . PATH_SEP;
+    if (file_exists($sPath . $sClassName . '.php')) {
+      require_once $sPath . $sClassName . '.php';
+    }
   }
 }
 

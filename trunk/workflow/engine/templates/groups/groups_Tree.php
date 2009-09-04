@@ -26,32 +26,21 @@
   //G::genericForceLogin( 'WF_MYINFO' , 'login/noViewPage', $urlLogin = 'login/login' );
 
   //G::LoadClass('group');
+
+  $WIDTH_PANEL = 400;
+
   G::LoadClass('groups');
   G::LoadClass('tree');
 
   $groups = new Groups();
 
-  $tree = new Tree();
-  $tree->name = 'Groups';
-  $tree->nodeType="base";
-  $tree->width="350px";
-  $tree->value = '
-	 <div class="boxTopBlue"><div class="a"></div><div class="b"></div><div class="c"></div></div>
-	 <div class="boxContentBlue">
-
-	  <table width="100%" style="margin:0px;" cellspacing="0" cellpadding="0">
-	  <tr>
-		  <td class="userGroupTitle">'.G::loadTranslation("ID_GROUPS").'</td>
-	  </tr>
-	</table>
-	</div>
-	<div class="boxBottomBlue"><div class="a"></div><div class="b"></div><div class="c"></div></div>
-  	<div class="userGroupLink"><a href="#" onclick="addGroup();return false;">'.G::LoadTranslation('ID_NEW_GROUP').'</a></div>
-	';
-  $tree->showSign=false;
-
   $allGroups= $groups->getAllGroups();
+  $xVar = 1;
+  $html = '';
   foreach($allGroups as $group) {
+  	
+  	$RowClass = ($xVar%2==0)? 'Row1': 'Row2';
+  	$xVar++;
     $ID_EDIT     = G::LoadTranslation('ID_EDIT');
     $ID_MEMBERS  = G::LoadTranslation('ID_MEMBERS');
     $ID_DELETE   = G::LoadTranslation('ID_DELETE');
@@ -59,8 +48,9 @@
     //$GROUP_TITLE = htmlentities($group->getGrpTitle());
     $GROUP_TITLE = strip_tags($group->getGrpTitle());
     $htmlGroup   = <<<GHTML
-      <table cellspacing='0' cellpadding='0' border='1' style='border:0px;'>
-        <tr>
+      <table class="pagedTable" cellspacing='0' cellpadding='0' border='0' style='border:0px;'>
+        <tr id="{$xVar}" onclick="focusRow(this, 'Selected')" onmouseout="setRowClass(this, '{$RowClass}')" onmouseover="setRowClass(this, 'RowPointer' )" class="{$RowClass}">
+          <td><img src="/images/users.png" border="0" width="20" height="20"/></td>
           <td width='250px' class='treeNode' style='border:0px;background-color:transparent;'>{$GROUP_TITLE}</td>
           <td class='treeNode' style='border:0px;background-color:transparent;'>[<a href="#" onclick="editGroup('{$UID}');return false;">{$ID_EDIT}</a>]</td>
           <td class='treeNode' style='border:0px;background-color:transparent;'>[<a href="#" onclick="selectGroup('{$UID}');return false;">{$ID_MEMBERS}</a>]</td>
@@ -68,8 +58,43 @@
         </tr>
       </table>
 GHTML;
-    $ch =& $tree->addChild($group->getGrpUid(), $htmlGroup, array('nodeType'=>'child'));
-    $ch->point = '<img src="/images/users.png" />';
+
+    $html .= '<table class="pagedTableDefault"><tr><td>'.$htmlGroup.'</td></tr></table>';
+  
   }
-  print( $tree->render() );
-  //
+  
+  echo '<div class="grid treeBase" style="width:'.($WIDTH_PANEL).'px">
+	<div class="boxTop"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+	<div class="content" style="">
+		  <table width="99%">
+	      <tbody><tr>
+	        <td valign="top">
+	           <div class="boxTopBlue"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+				 <div class="boxContentBlue">
+			
+				  <table width="100%" style="margin:0px;" cellspacing="0" cellpadding="0">
+				  <tr>
+					  <td class="userGroupTitle">'.G::loadTranslation("ID_GROUPS").'</td>
+				  </tr>
+				</table>
+				</div>
+				<div class="boxBottomBlue"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+			  	<div class="userGroupLink"><a href="#" onclick="addGroup();return false;">'.G::LoadTranslation('ID_NEW_GROUP').'</a></div>
+
+			  	<div id="groupsListDiv" style="height:'.$WIDTH_PANEL.'px; width: 375px; overflow:auto">' . $html . '</div>
+	        </td>
+	      </tr>
+	    </tbody></table>
+	</div>
+	<div class="boxBottom"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+	</div>'; 
+  
+
+  ?>
+  <script>
+  var screenX = WindowSize();
+	wW = screenX[0];
+	wH = screenX[1];
+
+	document.getElementById('groupsListDiv').style.height = (wH/100)*70; 
+  </script>
