@@ -44,4 +44,3 @@
       	$G_PUBLISH->RenderContent( $npcount );
     }
   }
-?>

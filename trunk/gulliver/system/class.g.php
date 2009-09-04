@@ -582,8 +582,20 @@ class G
       global $G_SUB_MENU;
       $G_MAIN_MENU = '';
       $G_SUB_MENU = '';
-      $G_PUBLISH          = new Publisher;
-      $G_PUBLISH->AddContent('xmlform', 'xmlform', 'login/showMessage', '', $aMessage );
+      //$G_PUBLISH          = new Publisher;
+
+      //remove the login.js script      
+      global $oHeadPublisher;
+      if ( count ( $G_PUBLISH->Parts ) == 1 )
+        array_shift ( $G_PUBLISH->Parts );
+      $leimnudInitString = $oHeadPublisher->leimnudInitString;
+      //restart the oHeadPublisher
+      $oHeadPublisher->clearScripts();
+      //add the missing components, and go on.
+      $oHeadPublisher->leimnudInitString = $leimnudInitString;
+      $oHeadPublisher->addScriptFile("/js/maborak/core/maborak.js");
+
+      $G_PUBLISH->AddContent('xmlform', 'xmlform', 'login/showMessage', null, $aMessage );
       G::LoadSkin( 'green' );
       die;
     }
@@ -618,40 +630,6 @@ class G
       }
     }
 
-// quitar todo este codigo
-/*
-    $aux = explode ('-', $strSkinName);
-    $skinName = $aux[0];
-    $tmp = $skinName . ".php";
-    $styleFile = PATH_HTML . 'skins/styles/' . $aux[0] . '/style.css';
-    $file = G::ExpandPath( "skins" ) . $tmp;
-
-    //when we are using a normal skin
-    if (file_exists ($file) ) {
-      print $file;
-      require_once( $file );
-      return;
-    }
-    //if the file exists in styles directory, we are using the styles.php file
-    //when we are using a style with the generic skin styles.php
-    if (file_exists ( $styleFile) ) {
-      define ( 'STYLE_CSS', $skinName );
-      $file = G::ExpandPath( "skins" ) . 'styles.php';
-      require_once( $file );
-      return;
-    }
-
-    if (file_exists ( PATH_HTML . 'errors/error703.php') ) {
-      header ( 'location: /errors/error703.php' );
-      die;
-    }
-    else   {
-      $text = "The Skin $file is not exist, please review the Skin Definition";
-      trigger_error ( $text , E_USER_WARNING);
-      die;
-    }
-*/
-// quitar hasta aqui.
 
   }
 
