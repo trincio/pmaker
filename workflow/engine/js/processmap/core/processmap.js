@@ -693,7 +693,7 @@ var processmap=function(){
 							//Pm.objeto.innerHTML="asdasd";
 						}.extend(this,panel);
 						r.make();
-					}.extend(this)},
+					}.extend(this)}
 					]
 				});
 				this.observers.menu.register(this.parent.closure({instance:this.menu,method:this.menu.remove}),this.menu);
