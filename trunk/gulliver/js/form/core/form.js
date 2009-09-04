@@ -1182,6 +1182,10 @@ var saveAndRefreshForm = function(oObject) {
 var removeRequiredById = function(sFieldName) {
   if (!notValidateThisFields.inArray(sFieldName)) {
 	  notValidateThisFields.push(sFieldName);
+	  var oAux = document.getElementById('__notValidateThisFields__');
+	  if (oAux) {
+	    oAux.value = notValidateThisFields.toJSONString();
+	  }
   }
 };
 
@@ -1195,5 +1199,9 @@ var enableRequiredById = function(sFieldName) {
       }
     }
 	  notValidateThisFields = aAux;
+	  var oAux = document.getElementById('__notValidateThisFields__');
+	  if (oAux) {
+	    oAux.value = notValidateThisFields.toJSONString();
+	  }
 	}
 };

@@ -5,7 +5,7 @@
 		<div class="content" style="height:{$form->height};" >
 	  <table width="99%">
       <tr>
-        <td valign='top'>
+        <td valign='top'><input type="hidden" name="__notValidateThisFields__" id="__notValidateThisFields__" value="" />
            <table cellspacing="0" cellpadding="0" border="0" width="100%">
           {foreach from=$form->fields item=field}
             {if ($field->type==='title')}
