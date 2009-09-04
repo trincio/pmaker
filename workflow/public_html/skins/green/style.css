@@ -759,6 +759,10 @@ form.formSearch .Record
 {
 	background-color:#EEE;
 }
+tr.Selected
+{
+	background-color:#D8DDFF;
+}
 .pagedTableDefault .pagedTable .RowPointer
 {
 	background-color:#E0EAEF;

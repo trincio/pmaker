@@ -124,6 +124,7 @@ class AppAlert extends BaseAppAlert {
       $oCriteria->addSelectColumn(AlertPeer::ALT_DIGEST);
       $oCriteria->addSelectColumn(AlertPeer::TRI_UID);
       $oCriteria->addSelectColumn(AppDelegationPeer::USR_UID);
+      $oCriteria->addSelectColumn(AppDelegationPeer::DEL_TASK_DUE_DATE);
       $oCriteria->addAsColumn('TAS_TITLE', ContentPeer::CON_VALUE);
       $oCriteria->addJoin(AppAlertPeer::ALT_UID, AlertPeer::ALT_UID, Criteria::LEFT_JOIN);
       $aConditions   = array();
@@ -191,8 +192,9 @@ class AppAlert extends BaseAppAlert {
 	        $oDatasetu->setFetchmode(ResultSet::FETCHMODE_ASSOC);
 	        $oDatasetu->next();
 	        $aRowUser = $oDatasetu->getRow();
-          $aFields  = $oCase->loadCase($aRow['APP_UID']);
+          $aFields = $oCase->loadCase($aRow['APP_UID']);
           $aFields['TAS_TITLE'] = $aRow['TAS_TITLE'];
+          $aFields['DEL_TASK_DUE_DATE'] = $aRow['DEL_TASK_DUE_DATE'];
           $oSpool->create(array('msg_uid'          => '',
                                 'app_uid'          => $aRow['APP_UID'],
                                 'del_index'        => $aRow['DEL_INDEX'],

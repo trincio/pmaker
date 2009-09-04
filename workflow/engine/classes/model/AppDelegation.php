@@ -102,7 +102,7 @@ class AppDelegation extends BaseAppDelegation {
       }
       throw ( new Exception ( 'Failed Data validation. ' . $msg ) );
     }
-    
+
     return $this->getDelIndex();
   }
 
@@ -194,11 +194,11 @@ class AppDelegation extends BaseAppDelegation {
 
     //use the dates class to calculate dates
     $dates = new dates();
-    $iDueDate = $dates->calculateDate( $this->getDelDelegateDate(), 
-                                       $task->getTasDuration(), 
+    $iDueDate = $dates->calculateDate( $this->getDelDelegateDate(),
+                                       $task->getTasDuration(),
                                        $task->getTasTimeUnit(),   //hours or days, ( we only accept this two types or maybe weeks
                                        $task->getTasTypeDay(), //working or calendar days
-                                       $this->getUsrUid(), 
+                                       $this->getUsrUid(),
                                        $task->getProUid(),
                                        $this->getTasUid() );
     return date('Y-m-d H:i:s', $iDueDate);
@@ -215,12 +215,12 @@ class AppDelegation extends BaseAppDelegation {
       $c->add(AppDelegationPeer::DEL_INIT_DATE, NULL, Criteria::ISNULL);
       $c->add(AppDelegationPeer::DEL_FINISH_DATE, NULL, Criteria::ISNOTNULL);
       //$c->add(AppDelegationPeer::DEL_INDEX, 1);
-   
+
       $rs = AppDelegationPeer::doSelectRS($c);
       $rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
       $rs->next();
       $row = $rs->getRow();
-   
+
       while (is_array($row)) {
         $oAppDel = AppDelegationPeer::retrieveByPk($row['APP_UID'], $row['DEL_INDEX'] );
         $oAppDel->setDelInitDate($row['DEL_DELEGATE_DATE']);
@@ -229,9 +229,9 @@ class AppDelegation extends BaseAppDelegation {
         $rs->next();
         $row = $rs->getRow();
       }
-   
+
     	//walk in all rows with DEL_STARTED = 0 or DEL_FINISHED = 0
-    	
+
       $c = new Criteria();
       $c->clearSelectColumns();
       $c->addSelectColumn(AppDelegationPeer::APP_UID );
@@ -253,12 +253,12 @@ class AppDelegation extends BaseAppDelegation {
       $cton1->addOr($cton2);
       $c->add($cton1);
       //$c->add(AppDelegationPeer::DEL_STARTED, 0 );
-   
+
       $rs = AppDelegationPeer::doSelectRS($c);
       $rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
       $rs->next();
       $row = $rs->getRow();
-   
+
       while (is_array($row)) {
       	$iDelegateDate = strtotime ( $row['DEL_DELEGATE_DATE'] );
       	$iInitDate     = strtotime ( $row['DEL_INIT_DATE'] );
@@ -281,7 +281,7 @@ class AppDelegation extends BaseAppDelegation {
             $oAppDel->setDelQueueDuration( $queueDuration);
       	  }
         }
-        
+
       	if ( $isFinished == 0 ) {
         	if ( $iFinishDate != NULL ) {
             $oAppDel->setDelFinished(1);
@@ -296,13 +296,13 @@ class AppDelegation extends BaseAppDelegation {
         //and finally save the record
         $oAppDel->save();
         //krumo ( $row );
-      	
+
         $rs->next();
         $row = $rs->getRow();
       }
     }
     catch ( Exception $oError) {
-      krumo ( $oError->getMessage() );
+      //krumo ( $oError->getMessage() );
     }
   }
 } // AppDelegation
