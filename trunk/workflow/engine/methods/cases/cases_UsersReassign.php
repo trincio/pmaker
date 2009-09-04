@@ -58,7 +58,7 @@ try {
   foreach ($aCases as $sKey => $sCase) {
     $aCase  = $oCase->loadCase($sCase);
     $aUser  = $oUser->load($aUsers[$sKey]);
-    $sText .= $aCase['TITLE'] . ' => ' . $aUser['USR_FIRSTNAME'] . ' ' . $aUser['USR_LASTNAME'] . ' (' . $aUser['USR_USERNAME'] . ')' . '<br />';
+    $sText .= '(' . $aCase['APP_NUMBER'] . ') ' . $aCase['TITLE'] . ' => ' . $aUser['USR_FIRSTNAME'] . ' ' . $aUser['USR_LASTNAME'] . ' (' . $aUser['USR_USERNAME'] . ')' . '<br />';
   }
   $G_MAIN_MENU            = 'processmaker';
   $G_SUB_MENU             = 'cases';
@@ -73,4 +73,3 @@ try {
 catch (Exception $oException) {
 	die($oException->getMessage());
 }
-?>

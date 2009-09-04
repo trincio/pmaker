@@ -1076,7 +1076,7 @@ class Cases
       foreach ($rowObj as $appDel) {
         $appDel->setDelThreadStatus('CLOSED');
         $appDel->setDelFinishDate('now');
-        $appDel->setDelDuration($oDates->calculateDuration($appDel->getDelInitDate(), $appDel->getDelFinishDate(), null, null, $appDel->getTasUid()));
+        //$appDel->setDelDuration($oDates->calculateDuration($appDel->getDelInitDate(), $appDel->getDelFinishDate(), null, null, $appDel->getTasUid()));
         if ($appDel->Validate()) {
             $appDel->Save();
         } 
