@@ -344,7 +344,7 @@ class Form extends XmlForm
    * @access public
    * @return array/false
    */
-  function validateRequiredFields($values)
+  function validateRequiredFields($values, $aNoRequiredByJS = array())
   {
     $rFields = Array();
     $missingFields = Array();
@@ -352,7 +352,9 @@ class Form extends XmlForm
     foreach ($this->fields as $o) {
       if(property_exists(get_class($o), 'required')) {
         if( $o->required == 1) {
-          array_push($rFields, $o->name);
+          if (!in_array($o->name, $aNoRequiredByJS)) {
+            array_push($rFields, $o->name);
+          }
         }
       }
     }

@@ -201,7 +201,9 @@
   }
 
   $oForm->validatePost();
-  if( $missing_req_values = $oForm->validateRequiredFields($_POST['form']) ) {
+  $oJSON = new Services_JSON();
+
+  if( $missing_req_values = $oForm->validateRequiredFields($_POST['form'], $oJSON->decode(stripslashes($_POST['__notValidateThisFields__'])))) {
 	  $_POST['next_step'] = $aNextStep;
 	  $_POST['previous_step'] = $oCase->getPreviousStep($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['STEP_POSITION']);
 	  $_POST['req_val'] = $missing_req_values;
