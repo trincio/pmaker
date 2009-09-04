@@ -225,7 +225,7 @@ class Alert extends BaseAlert {
           $oCriteria2->add(AppAlertPeer::APP_ALT_STATUS, 'OPEN');
           if (AppDelegationPeer::doCount($oCriteria2) == 0) {
             if ($aAlert['TAS_FINAL'] != '') {
-              $sDueDate = date('Y-m-d H:i:s', $oDates->calculateDate($aData['DEL_INIT_DATE'], $aAlert['TAS_DURATION']));
+              $sDueDate = date('Y-m-d H:i:s', $oDates->calculateDate($aData['DEL_INIT_DATE'], $aAlert['TAS_DURATION'], 'hours', 1));
             }
             else {
               $sDueDate = $aData['DEL_TASK_DUE_DATE'];
