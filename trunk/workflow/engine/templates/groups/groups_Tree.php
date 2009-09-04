@@ -27,16 +27,16 @@
 
   //G::LoadClass('group');
 
-  $WIDTH_PANEL = 400;
+  $WIDTH_PANEL = 350;
 
   G::LoadClass('groups');
-  G::LoadClass('tree');
 
   $groups = new Groups();
 
   $allGroups= $groups->getAllGroups();
   $xVar = 1;
   $html = '';
+  $htmlGroup = "<table width=\"100%\" class=\"pagedTable\" cellspacing='0' cellpadding='0' border='0' style='border:0px;'>";
   foreach($allGroups as $group) {
   	
   	$RowClass = ($xVar%2==0)? 'Row1': 'Row2';
@@ -47,49 +47,46 @@
     $UID         = htmlentities($group->getGrpUid());
     //$GROUP_TITLE = htmlentities($group->getGrpTitle());
     $GROUP_TITLE = strip_tags($group->getGrpTitle());
-    $htmlGroup   = <<<GHTML
-      <table class="pagedTable" cellspacing='0' cellpadding='0' border='0' style='border:0px;'>
-        <tr id="{$xVar}" onclick="focusRow(this, 'Selected')" onmouseout="setRowClass(this, '{$RowClass}')" onmouseover="setRowClass(this, 'RowPointer' )" class="{$RowClass}">
-          <td><img src="/images/users.png" border="0" width="20" height="20"/></td>
-          <td width='250px' class='treeNode' style='border:0px;background-color:transparent;'>{$GROUP_TITLE}</td>
-          <td class='treeNode' style='border:0px;background-color:transparent;'>[<a href="#" onclick="editGroup('{$UID}');return false;">{$ID_EDIT}</a>]</td>
-          <td class='treeNode' style='border:0px;background-color:transparent;'>[<a href="#" onclick="selectGroup('{$UID}');return false;">{$ID_MEMBERS}</a>]</td>
-          <td class='treeNode' style='border:0px;background-color:transparent;'>[<a href="#" onclick="deleteGroup('{$UID}');return false;">{$ID_DELETE}</a>]</td>
-        </tr>
-      </table>
-GHTML;
-
-    $html .= '<table class="pagedTableDefault"><tr><td>'.$htmlGroup.'</td></tr></table>';
-  
+    $htmlGroup   .="
+        <tr id=\"{$xVar}\" onclick=\"focusRow(this, 'Selected')\" onmouseout=\"setRowClass(this, '{$RowClass}')\" onmouseover=\"setRowClass(this, 'RowPointer' )\" class=\"{$RowClass}\">
+          <td><img src=\"/images/users.png\" border=\"0\" width=\"20\" height=\"20\"/></td>
+          <td>{$GROUP_TITLE}</td>
+          <td>[<a class=\"normal\" href=\"#\" onclick=\"editGroup('{$UID}');return false;\">{$ID_EDIT}</a>]</td>
+          <td>[<a class=\"normal\" href=\"#\" onclick=\"selectGroup('{$UID}');return false;\">{$ID_MEMBERS}</a>]</td>
+          <td>[<a  href=\"#\" onclick=\"deleteGroup('{$UID}');return false;\">{$ID_DELETE}</a>]</td>
+        </tr>";
   }
+  $htmlGroup .= "</table>";  
   
-  echo '<div class="grid treeBase" style="width:'.($WIDTH_PANEL).'px">
-	<div class="boxTop"><div class="a"></div><div class="b"></div><div class="c"></div></div>
-	<div class="content" style="">
-		  <table width="99%">
-	      <tbody><tr>
-	        <td valign="top">
-	           <div class="boxTopBlue"><div class="a"></div><div class="b"></div><div class="c"></div></div>
-				 <div class="boxContentBlue">
-			
-				  <table width="100%" style="margin:0px;" cellspacing="0" cellpadding="0">
-				  <tr>
-					  <td class="userGroupTitle">'.G::loadTranslation("ID_GROUPS").'</td>
-				  </tr>
-				</table>
-				</div>
-				<div class="boxBottomBlue"><div class="a"></div><div class="b"></div><div class="c"></div></div>
-			  	<div class="userGroupLink"><a href="#" onclick="addGroup();return false;">'.G::LoadTranslation('ID_NEW_GROUP').'</a></div>
-
-			  	<div id="groupsListDiv" style="height:'.$WIDTH_PANEL.'px; width: 375px; overflow:auto">' . $html . '</div>
-	        </td>
-	      </tr>
-	    </tbody></table>
-	</div>
-	<div class="boxBottom"><div class="a"></div><div class="b"></div><div class="c"></div></div>
-	</div>'; 
-  
-
+  echo '<div class="treeBase" style="width:'.($WIDTH_PANEL).'px">
+			<div class="boxTop"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+			<div class="content">
+			  <table class="treeNode">
+		        <tr>
+		          <td valign="top">
+		            <div class="boxTopBlue"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+					<div class="boxContentBlue">
+					  <table width="95%" style="margin:0px;" cellspacing="0" cellpadding="0">
+					    <tr>
+						  <td class="userGroupTitle">'.G::loadTranslation("ID_GROUPS").'</td>
+						</tr>
+					  </table>
+					</div>
+					<div class="boxBottomBlue"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+					
+				  	<div class="userGroupLink"><a href="#" onclick="addGroup();return false;">'.G::LoadTranslation('ID_NEW_GROUP').'</a></div>
+				  	
+				  	<div id="groupsListDiv" style="height:350px; width:'.($WIDTH_PANEL-20).'px; overflow:auto">
+				  	  <table class="pagedTableDefault"><tr><td>' 
+  					  .$htmlGroup.
+				  	 '</td></tr></table>
+				  	</div>
+		          </td>
+		        </tr>
+		      </table>
+			</div>
+			<div class="boxBottom"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+		</div>';
   ?>
   <script>
   var screenX = WindowSize();
