@@ -22,7 +22,7 @@ SELECT LAN_ID, LAN_NAME FROM LANGUAGE WHERE LAN_ENABLED = '1' ORDER BY LAN_WEIGH
 var panel;
 var dynaformOnload = function()
 {
-
+    setFocus (getField ('USR_USERNAME'));  
 	var oRPC = new leimnud.module.rpc.xmlhttp({
     url   : '../login/login_Ajax',
     async : false,
