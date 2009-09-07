@@ -26,4 +26,12 @@ SELECT LANG_ID, LANG_NAME FROM langOptions
 <BSUBMIT type="submit" style="font-weight:bold;color:black;" className="module_app_button___gray">
   <en>Login</en>
 <es>Registrarse</es></BSUBMIT>
+
+<JS type="javascript">
+<![CDATA[
+
+setFocus (getField ('USR_USERNAME'));
+
+]]>
+</JS>
 </dynaForm>
