@@ -45,10 +45,10 @@
       	callServer.make();
       	response = callServer.xmlhttp.responseText;
       	var scs = callServer.xmlhttp.responseText.extractScript();
+      	
 	  	scs.evalScript();
       	delete callServer;
-    	}catch(ss)
-    	{
+    	} catch(ss){
     		alert("Error: "+ss.message+var_dump(ss));
     	}
       return response;//objetus.responseText;
