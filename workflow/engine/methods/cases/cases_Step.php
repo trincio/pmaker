@@ -644,7 +644,7 @@
   
   G::RenderPage('publish');
   
-  if( $_SESSION['TRIGGER_DEBUG']['ISSET'] ){
+  if( isset($has_submit_button) && $has_submit_button == false ){
   	$msg = G::LoadTranslation('ID_DYNAFORM_HASNOSUBMITBTN');
     G::evalJScript('new leimnud.module.app.alert().make({label: \''.$msg.'\'});');
   }
