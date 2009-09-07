@@ -342,7 +342,7 @@ class propelTable
       $this->style[$r]['onsort'] = $this->id . '.doSort("'.G::createUID('',$this->fields[$r]['Name']).'" , "' . $sortOrder.'");return false;';
 
       if (isset($this->style[$r]['href']))       $this->tpl->assign( "href" ,    $this->style[$r]['href']);
-      if (isset($this->style[$r]['onsort']))     $this->tpl->assign( "onclick" , htmlentities( $this->style[$r]['onsort'] , ENT_QUOTES, 'UTF-8' ) );
+      if (isset($this->style[$r]['onclick']))    $this->tpl->assign( "onclick" , htmlentities( $this->style[$r]['onclick'] , ENT_QUOTES, 'UTF-8' ) );
       if (isset($this->style[$r]['colWidth']))   $this->tpl->assign( "width" ,   $this->style[$r]['colWidth'] );
       if (isset($this->style[$r]['colWidth']))   $this->tpl->assign( "widthPercent" , ($this->style[$r]['colWidth']*100 / $this->totalWidth) . "%" );
       if (isset($this->style[$r]['titleAlign'])) $this->tpl->assign( "align" , 'text-align:'.$this->style[$r]['titleAlign'].';');
