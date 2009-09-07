@@ -144,28 +144,36 @@ function $(id){
 
 if (typeof(checks_selected_ids) == "undefined"){
 	var checks_selected_ids = new Array();
+	
 } 
 
-var inputs = document.getElementsByTagName("input");
-
-for(i=0; i<inputs.length; i++){
-	if( inputs[i].type == "checkbox" ){
-		inputs[i].onclick = function(){
-			if(this.checked){
-				checks_selected_ids.push(this.value);
-			} else {
-				checks_selected_ids.deleteByValue(this.value);
-			}
-		}; 
-		
-		for(j=0; j<checks_selected_ids.length; j++){		
-			if( inputs[i].value == checks_selected_ids[j] ){
-				inputs[i].checked = true;
-			}
+function catchSelectedItems(){
+	var inputs = document.getElementsByTagName("input");
+	
+	for(i=0; i<inputs.length; i++){
+		if( inputs[i].type == "checkbox" ){
+			try{
+				
+				inputs[i].onclick = function(){
+					
+					if(this.checked){
+						checks_selected_ids.push(this.value);
+					} else {
+						checks_selected_ids.deleteByValue(this.value);
+					}
+				};
+				
+				for(j=0; j<checks_selected_ids.length; j++){		
+					if( inputs[i].value == checks_selected_ids[j] ){
+						inputs[i].checked = true;
+					}
+				}
+			}catch(e){alert(e)}
 		}
-		
-	}
+	}	
 }
+setTimeout('catchSelectedItems()', 1000);
+
 
 function checkAll(){
 	var inputs = document.getElementsByTagName("input");

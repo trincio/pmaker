@@ -187,6 +187,20 @@
       $oDbConnections = new dbConnections($_SESSION['PROCESS']);
       $oDbConnections->loadAdditionalConnections();
   
+      /**
+       * Verification routine for to see if the dynaform has a submit button, if not thows a alert message
+       * By Neyek <erik@colosa.com, aortiz.erik@gmail.com>
+       */
+      $has_submit_button = false;
+      $G_FORM = new Form ("{$_SESSION['PROCESS']}/{$_GET['UID']}", PATH_DYNAFORM, SYS_LANG, false);
+      foreach($G_FORM->fields as $dynafield){
+      	if($dynafield->type == 'submit'){
+      	  $has_submit_button = true;
+      	  break;
+      	}
+      }
+      /* end Verification routine */
+      
       $G_PUBLISH->AddContent('dynaform', 'xmlform', $_SESSION['PROCESS']. '/' . $_GET['UID'], '', $Fields['APP_DATA'], 'cases_SaveData?UID=' . $_GET['UID'], '', (strtolower($oStep->getStepMode()) != 'edit' ? strtolower($oStep->getStepMode()) : ''));
       break;
   
@@ -629,6 +643,11 @@
   ');
   
   G::RenderPage('publish');
+  
+  if( $_SESSION['TRIGGER_DEBUG']['ISSET'] ){
+  	$msg = G::LoadTranslation('ID_DYNAFORM_HASNOSUBMITBTN');
+    G::evalJScript('new leimnud.module.app.alert().make({label: \''.$msg.'\'});');
+  }
   
   if( $_SESSION['TRIGGER_DEBUG']['ISSET'] ){
     G::evalJScript('showdebug()');
