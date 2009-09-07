@@ -162,8 +162,10 @@ class RbacUsers extends BaseRbacUsers {
   function create($aData) {
     $oConnection = Propel::getConnection(RbacUsersPeer::DATABASE_NAME);
     try {
-      $aData['USR_UID'] = G::generateUniqueID();
-      $oRBACUsers       = new RbacUsers();
+      $oRBACUsers = new RbacUsers();
+      do {
+        $aData['USR_UID'] = G::generateUniqueID();
+      } while ($oRBACUsers->load($aData['USR_UID']));
       $oRBACUsers->fromArray($aData, BasePeer::TYPE_FIELDNAME);
       //if ($oRBACUsers->validate()) {
         //$oConnection->begin();
