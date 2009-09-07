@@ -41,7 +41,7 @@ G::LoadSystem('testTools');
 require_once(PATH_CORE . 'classes/model/OutputDocument.php');
 
 $obj = new OutputDocument();
-$t   = new lime_test(13, new lime_output_color());
+$t   = new lime_test(21, new lime_output_color());
 
 $t->diag('Class OutputDocument');
 

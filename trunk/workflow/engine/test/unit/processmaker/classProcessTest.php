@@ -138,9 +138,10 @@
   //#21
     $t->isa_ok( $proUid,      'string',   'create(), creates a new Process' );
   //#22
-    $t->is ( strlen($proUid),      14,   'create(), creates a new Process, Guid lenth=14 chars' );
-
-    $res = $obj->load( $proUid ); 
+    //$t->is ( strlen($proUid),      14,   'create(), creates a new Process, Guid lenth=14 chars' );
+    $t->diag ( "strlen($proUid),      14,   'create(), creates a new Process, Guid lenth=14 chars' " );
+    $t->is ( strlen($proUid),      32,   'create(), creates a new Process, Guid lenth=32 chars' );
+    $res = $obj->load( $proUid );
   //#23
     $t->isa_ok( $res,      'array',   'load(), loads a new Process' );
   //#24
@@ -151,17 +152,17 @@
     $t->like ( $res['PRO_TITLE'],      '%Default Process%',   'load(), loads a new Process, valid PRO_TITLE' );
   //#27
     $t->is ( $res['PRO_DESCRIPTION'],      'Default Process Description',   'load(), loads a new Process, valid PRO_DESCRIPTION' );
-    
-  } 
+
+  }
   catch ( Exception $e ) {
     $t->like ( $e->getMessage(),      "%Unable to execute INSERT statement%",   'create() return Error in getAppTitle, the APP_UID cant be blank' );
   }
 
   //update with empty
   try {
-    $obj = new Process (); 
+    $obj = new Process ();
     $res = $obj->update( NULL );
-  } 
+  }
   catch ( Exception $e ) {
   //#28
     $t->isa_ok( $e,      'Exception',   'update() returns error when PRO_UID is not defined' );

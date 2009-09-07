@@ -104,7 +104,8 @@ class ContentTest extends unitTest
 
 
   $obj = new Content();
-  $t   = new lime_test( 5, new lime_output_color() );
+  //$t   = new lime_test( 5, new lime_output_color() );
+  $t   = new lime_test( 12, new lime_output_color() );
  
   $t->diag('class Content' );
   $t->isa_ok( $obj  , 'Content',  'class Content created');
