@@ -41,7 +41,7 @@ G::LoadSystem('testTools');
 require_once(PATH_CORE . 'classes/model/Route.php');
 
 $obj = new Route();
-$t   = new lime_test(5, new lime_output_color());
+$t   = new lime_test(13, new lime_output_color());
 
 $t->diag('Class Route');
 

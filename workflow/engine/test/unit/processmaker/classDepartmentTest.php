@@ -20,14 +20,14 @@
  * 
  * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
   $unitFilename = $_SERVER['PWD'] . '/test/bootstrap/unit.php' ;
   require_once( $unitFilename );
 
   require_once( PATH_THIRDPARTY . '/lime/lime.php');
   require_once( PATH_THIRDPARTY.'lime/yaml.class.php');
- 
+
   G::LoadThirdParty('smarty/libs','Smarty.class');
   G::LoadSystem ( 'error');
   G::LoadSystem ( 'xmlform');
@@ -37,15 +37,15 @@
   G::LoadSystem ( 'dbsession');
   G::LoadSystem ( 'dbrecordset');
   G::LoadSystem ( 'dbtable');
-  G::LoadClass ( 'pmObject');
-  G::LoadClass ( 'department');
+  G::LoadClass  ( 'pmObject');
+  G::LoadClass  ( 'department'); 
 
-  require_once (  PATH_CORE . "config/databases.php");  
+  require_once (  PATH_CORE . "config/databases.php");
 
-  $dbc = new DBConnection(); 
+  $dbc = new DBConnection();
   $ses = new DBSession( $dbc);
- 
-  $obj = new Department ($dbc); 
+
+  $obj = new Department ($dbc);
   $t   = new lime_test( 8, new lime_output_color() );
  
   $t->diag('class Department' );

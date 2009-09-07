@@ -41,7 +41,7 @@ G::LoadSystem('testTools');
 require_once(PATH_CORE . 'classes/model/AppDocument.php');
 
 $obj = new AppDocument();
-$t   = new lime_test(11, new lime_output_color());
+$t   = new lime_test(19, new lime_output_color());
 
 $t->diag('Class AppDocument');
 
@@ -77,7 +77,6 @@ $t->can_ok($obj, 'getAppDocFilename', 'getAppDocFilename() is callable!');
 
 //method setAppDocFilename
 $t->can_ok($obj, 'setAppDocFilename', 'setAppDocFilename() is callable!');
-
 /*****   TEST CLASS APPDOCUMENT   *****/
 ///////// INITIAL VALUES /////////
 define('SYS_LANG', 'en');

@@ -85,5 +85,5 @@
 //  $t->isa_ok( $result,      'NULL',   'call to method evaluate ');
 
 
-
-  $t->fail(  'review all pendings methods in this class');
+ // $t->fail(  'review all pendings methods in this class');
+$t->todo ( "review all pendings methods in this class" );
