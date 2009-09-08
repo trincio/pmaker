@@ -83,7 +83,8 @@
 
       $scriptCode = '';
       $scriptCode = $G_FORM->render(PATH_CORE . 'templates/'  . 'xmlform' . '.html', $scriptCode);
-      $scriptCode = str_replace('/controls/cal.gif', $http . $_SERVER['HTTP_HOST'] . '/controls/cal.gif', $scriptCode);
+      $scriptCode = str_replace('/controls/', $http . $_SERVER['HTTP_HOST'] . '/controls/', $scriptCode);
+      $scriptCode = str_replace('/js/maborak/core/images/', $http . $_SERVER['HTTP_HOST'] . '/js/maborak/core/images/', $scriptCode);
 
       //render the template
       $pluginTpl = PATH_CORE . 'templates' . PATH_SEP . 'processes' .PATH_SEP . 'webentry.tpl';
