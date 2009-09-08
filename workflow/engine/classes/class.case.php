@@ -1647,21 +1647,23 @@ class Cases
 			      $d->next();
 			    }
 			    
-			    $field_names = Array();
-			    foreach($aRows[0] as $k=>$v){
-			    	$field_names[$k] = 'char';	
+			    if( sizeof($aRows) > 0){
+				    $field_names = Array();
+				    foreach($aRows[0] as $k=>$v){
+				    	$field_names[$k] = 'char';	
+				    }
+					
+					$aRows = array_merge(Array($field_names), $aRows);
+					//echo '<pre>'; print_r($aRows);
+				    
+					global $_DBArray;
+					$_DBArray['virtual_pmtable'] = $aRows;
+					$_SESSION['_DBArray'] = $_DBArray;
+					G::LoadClass('ArrayPeer');
+					$c = null;
+					$c = new Criteria('dbarray');
+					$c->setDBArrayTable('virtual_pmtable');
 			    }
-				
-				$aRows = array_merge(Array($field_names), $aRows);
-				//echo '<pre>'; print_r($aRows);
-			    
-				global $_DBArray;
-				$_DBArray['virtual_pmtable'] = $aRows;
-				$_SESSION['_DBArray'] = $_DBArray;
-				G::LoadClass('ArrayPeer');
-				$c = null;
-				$c = new Criteria('dbarray');
-				$c->setDBArrayTable('virtual_pmtable');
 		    }
             $xmlfile = $filesList[5];
             
