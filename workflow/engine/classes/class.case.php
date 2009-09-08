@@ -1523,6 +1523,12 @@ class Cases
     $c->addSelectColumn(AppDelegationPeer::DEL_PRIORITY);
     //$c->addSelectColumn(AppDelegationPeer::DEL_TASK_DUE_DATE);
     $c->addAsColumn('DEL_TASK_DUE_DATE', " IF (" . AppDelegationPeer::DEL_TASK_DUE_DATE . " <= NOW(), CONCAT('<span style=\'color:red\';>', " . AppDelegationPeer::DEL_TASK_DUE_DATE . ", '</span>'), " . AppDelegationPeer::DEL_TASK_DUE_DATE . ") ");
+    
+    global $RBAC;
+	if ($sTypeList == "completed" && $RBAC->userCanAccess('PM_SUPERVISOR') == 1){
+    	$c->addAsColumn("DEL_LINK", "CONCAT('".G::LoadTranslation('ID_DELETE')."')");
+	}
+    
     $c->addSelectColumn(AppDelegationPeer::DEL_INDEX);
     $c->addSelectColumn(AppDelegationPeer::TAS_UID);
     $c->addSelectColumn(AppDelegationPeer::DEL_INIT_DATE);
@@ -1630,47 +1636,12 @@ class Cases
           	$c->addGroupByColumn(ApplicationPeer::APP_UID);
           
          	$c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
-          
-         	/* We verify the user permissions for to see if this user can delete the completed cases*/
-         	//echo '<pre>'; print_r($_SESSION);
-         	
-         	global $RBAC;
-		    if ($RBAC->userCanAccess('PM_SUPERVISOR') == 1){
-         	
-	          	$d = AppDelayPeer::doSelectRS($c);
-			    $d->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-			    $d->next();
-			    $aRows = Array();
-			    while ($aRow = $d->getRow()) {
-			      $aRow['DEL_LINK'] = @G::LoadTranslation(ID_DELETE);
-			      $aRows[] = $aRow;
-			      $d->next();
-			    }
-			    
-			    if( sizeof($aRows) > 0){
-				    $field_names = Array();
-				    foreach($aRows[0] as $k=>$v){
-				    	$field_names[$k] = 'char';	
-				    }
-					
-					$aRows = array_merge(Array($field_names), $aRows);
-					//echo '<pre>'; print_r($aRows);
-				    
-					global $_DBArray;
-					$_DBArray['virtual_pmtable'] = $aRows;
-					$_SESSION['_DBArray'] = $_DBArray;
-					G::LoadClass('ArrayPeer');
-					$c = null;
-					$c = new Criteria('dbarray');
-					$c->setDBArrayTable('virtual_pmtable');
-			    }
-		    }
+         	    
             $xmlfile = $filesList[5];
             
           break;
       case 'gral':
-          $c->add($c->getNewCriterion(AppThreadPeer::APP_THREAD_STATUS, 'OPEN')->addOr($c->getNewCriterion(ApplicationPeer::APP_STATUS, 'COMPLETED')->addAnd($c->getNewCriterion(AppDelegationPeer::DEL_PREVIOUS,
-              0))));
+          $c->add($c->getNewCriterion(AppThreadPeer::APP_THREAD_STATUS, 'OPEN')->addOr($c->getNewCriterion(ApplicationPeer::APP_STATUS, 'COMPLETED')->addAnd($c->getNewCriterion(AppDelegationPeer::DEL_PREVIOUS, 0))));
           $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
           $xmlfile = $filesList[0];
           break;
