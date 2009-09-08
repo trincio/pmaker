@@ -40,11 +40,14 @@ try {
 
 
   $aData = get_object_vars($oJSON->decode($_POST['oData']));
+  $aData['TAS_TITLE'] = str_replace('@amp@', '&', $aData['TAS_TITLE']);
+  $aData['TAS_DESCRIPTION'] = str_replace('@amp@', '&', $aData['TAS_DESCRIPTION']);
+  
   switch ($_POST['function']) {
   	case 'saveTaskData':
   	  require_once 'classes/model/Task.php';
   	  $oTask = new Task();
-  	  $aData['TAS_DEF_TITLE'] = strip_tags($aData['TAS_DEF_TITLE'],'<p><b><font><strong><u><i>');
+  	 // $aData['TAS_DEF_TITLE'] = strip_tags($aData['TAS_DEF_TITLE'],'<p><b><font><strong><u><i>');
   	       	    	  	  
   	  if (isset($aData['SEND_EMAIL'])) {
 	      if( $aData['SEND_EMAIL'] == 'TRUE' ) {
