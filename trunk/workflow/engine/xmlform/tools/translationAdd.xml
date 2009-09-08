@@ -13,11 +13,11 @@
   </en>
 </trn_category>
 
-<trn_id     type="text" size='25' >
+<trn_id     type="text" size='45' >
   <en>Id </en>
 </trn_id>
 
-<trn_value     type="text" size='45'>
+<trn_value     type="text" size='45' maxlength="200">
   <en>value </en>
 </trn_value>
 
