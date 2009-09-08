@@ -3,17 +3,21 @@ var aTaskFlag = [false,false,false,false,false,false];
 var iLastTab   = -1;
 var oTaskData  = {};
 
+var re = /&/g;
+var re2 = /@amp@/g;
+
 var saveDataTaskTemporal = function(iForm)
 {
   oAux = getField('TAS_UID');
+  
   if (oAux)
   {
     switch (iLastTab)
     {
       case 1:
       case '1':
-        oTaskData.TAS_TITLE       = getField('TAS_TITLE').value;
-        oTaskData.TAS_DESCRIPTION = getField('TAS_DESCRIPTION').value;
+        oTaskData.TAS_TITLE       = getField('TAS_TITLE').value.replace(re, "@amp@");
+        oTaskData.TAS_DESCRIPTION = getField('TAS_DESCRIPTION').value.replace(re, "@amp@");
         oTaskData.TAS_START       = (getField('TAS_START').checked ? 'TRUE' : 'FALSE');
         oTaskData.TAS_PRIORITY_VARIABLE = getField('TAS_PRIORITY_VARIABLE').value;
       break;
@@ -91,7 +95,7 @@ var saveTaskData = function(oForm, iForm, iType)
   oRPC.make();
   if (oTaskData.TAS_TITLE)
   {
-    Pm.data.db.task[getField('INDEX').value].label = Pm.data.db.task[getField('INDEX').value].object.elements.label.innerHTML = oTaskData.TAS_TITLE;
+    Pm.data.db.task[getField('INDEX').value].label = Pm.data.db.task[getField('INDEX').value].object.elements.label.innerHTML = oTaskData.TAS_TITLE.replace(re2, "&amp;");
   }
   if (oTaskData.TAS_START)
   {

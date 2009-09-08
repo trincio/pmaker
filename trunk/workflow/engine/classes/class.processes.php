@@ -2177,7 +2177,7 @@ class Processes {
     $endpoint = PML_WSDL_URL;
     $sessionId = '';
     ini_set("soap.wsdl_cache_enabled", "0"); // enabling WSDL cache
-    $client = new SoapClient( $endpoint );
+    $client = @new SoapClient( $endpoint );
 
     return 1;
   }

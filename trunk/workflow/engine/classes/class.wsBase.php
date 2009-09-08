@@ -484,8 +484,12 @@ class wsBase
       $oUser = new Users();
       $oUser->create($aData);
 
-      $result = new wsResponse (0, "User $firstname $lastname [$userId] created sucessful.");
-
+      $res = new wsResponse (0, "User $firstname $lastname [$userId] created sucessful.");
+      $result = array('status_code' => $res->status_code ,
+                      'message'     => $res->message,
+                      'userUID'     => $sUserUID,
+                      'timestamp'   => $res->timestamp );
+      
       return $result;
     }
     catch ( Exception $e ) {
