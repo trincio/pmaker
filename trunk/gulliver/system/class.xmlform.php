@@ -1677,7 +1677,7 @@ class XmlForm_Field_Hidden extends XmlForm_Field {
       return $this->htmlentities ( $value, ENT_COMPAT, 'utf-8' );
     }
   }
-  
+
   function renderGrid($values = NULL, $owner) {
     $result = array ();
     $r = 1;
@@ -1685,7 +1685,7 @@ class XmlForm_Field_Hidden extends XmlForm_Field {
        $result [] = '<input type="hidden" value="'.$this->htmlentities ( $v, ENT_COMPAT, 'utf-8' ).'" id="form[' . $owner->name . '][' . $r . '][' . $this->name . ']" name="form[' . $owner->name . '][' . $r . '][' . $this->name . ']" />';
     }
     $r ++;
-    
+
     return $result;
   }
 }
@@ -1899,6 +1899,7 @@ class XmlForm_Field_RadioGroupView extends XmlForm_Field {
  * @dependencies XmlForm_Field
  */
 class XmlForm_Field_CheckGroup extends XmlForm_Field {
+  var $required = false;
   var $option = array ();
   var $sqlConnection = 0;
   var $sql = '';
@@ -1926,13 +1927,13 @@ class XmlForm_Field_CheckGroup extends XmlForm_Field {
     if ($this->mode === 'edit') {
       $html = '';
       foreach ( $this->options as $optionName => $option ) {
-        $html .= '<input id="form[' . $this->name . '][' . $optionName . ']" name="form[' . $this->name . '][' . $optionName . ']" type=\'checkbox\' value="' . $optionName . '"' . (in_array ( $optionName, $value ) ? 'checked' : '') . '><span class="FormCheck">' . $option . '</span></input><br>';
+        $html .= '<input id="form[' . $this->name . '][' . $optionName . ']" name="form[' . $this->name . '][]" type=\'checkbox\' value="' . $optionName . '"' . (in_array ( $optionName, $value ) ? 'checked' : '') . '><span class="FormCheck">' . $option . '</span></input><br>';
       }
       return $html;
     } elseif ($this->mode === 'view') {
       $html = '';
       foreach ( $this->options as $optionName => $option ) {
-        $html .= '<input class="FormCheck" id="form[' . $this->name . '][' . $optionName . ']" name="form[' . $this->name . '][' . $optionName . ']" type=\'checkbox\' value="' . $optionName . '"' . (in_array ( $optionName, $value ) ? 'checked' : '') . ' disabled><span class="FormCheck">' . $option . '</span></input><br>';
+        $html .= '<input class="FormCheck" id="form[' . $this->name . '][' . $optionName . ']" name="form[' . $this->name . '][]" type=\'checkbox\' value="' . $optionName . '"' . (in_array ( $optionName, $value ) ? 'checked' : '') . ' disabled><span class="FormCheck">' . $option . '</span></input><br>';
       }
       return $html;
     } else {
@@ -2072,7 +2073,7 @@ class XmlForm_Field_Grid extends XmlForm_Field {
     $this->values = $values;
     $this->NewLabel = G::LoadTranslation('ID_NEW');
     $this->DeleteLabel = G::LoadTranslation('ID_DELETE');
-    
+
     $tpl->template = $tpl->printTemplate ( $this );
     //In the header
     $oHeadPublisher = & headPublisher::getSingleton ();

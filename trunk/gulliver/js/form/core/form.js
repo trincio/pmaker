@@ -1135,6 +1135,20 @@ var validateForm = function(aRequiredFields) {
 		 			    	sMessage += "- " + aRequiredFields[i].label + "\n";
 
 		 			  break;
+
+		 			  case 'checkgroup':
+		 			    var bOneChecked = false;
+		 			    var aAux = document.getElementsByName('form[' + aRequiredFields[i].name + '][]');
+		 			    for (var k = 0; k < aAux.length; k++) {
+							  if (aAux[k].checked) {
+							    bOneChecked = true;
+							    k = aAux.length;
+							  }
+							}
+		 			    if(!bOneChecked) {
+		 			      sMessage += '- ' + aRequiredFields[i].label + "\n";
+		 			    }
+		 			  break;
 		 			}
 		 	}
 	}
