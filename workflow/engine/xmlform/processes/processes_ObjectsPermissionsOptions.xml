@@ -41,6 +41,35 @@ var newObjectPermission = function(PRO_UID) {
   oRPC.make();
 };
 
+var editObjectPermission = function(OP_UID) {
+  oPanel = new leimnud.module.panel();
+  oPanel.options = {
+  	size	:{w:500,h:300},
+  	position:{x:0,y:0,center:true},
+  	title	:'',
+  	theme	:'processmaker',
+  	statusBar:false,
+  	control	:{resize:false,roll:false},
+  	fx	:{modal:true,opacity:true,blinkToFront:true,fadeIn:false}
+  };
+  oPanel.events = {
+  	remove: function() { delete(oPanel); }.extend(this)
+  };
+  oPanel.make();
+  oPanel.loader.show();
+  var oRPC = new leimnud.module.rpc.xmlhttp({
+  	url : 'processes_Ajax',
+  	args: 'action=editObjectPermission&data=' + {op_uid:OP_UID}.toJSONString()
+  });
+  oRPC.callback = function(rpc){
+  	oPanel.loader.hide();
+  	var scs = rpc.xmlhttp.responseText.extractScript();
+  	oPanel.addContent(rpc.xmlhttp.responseText);
+  	scs.evalScript();
+  }.extend(this);
+  oRPC.make();
+};
+
 var saveObjectPermission = function(form) {
   /*if (getField('GROUP_USER').value == '') {
     new leimnud.module.app.alert().make({
