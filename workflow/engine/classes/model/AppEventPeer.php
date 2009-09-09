@@ -1,14 +1,14 @@
 <?php
 
   // include base peer class
-  require_once 'classes/model/om/BaseAppAlertPeer.php';
+  require_once 'classes/model/om/BaseAppEventPeer.php';
 
   // include object class
-  include_once 'classes/model/AppAlert.php';
+  include_once 'classes/model/AppEvent.php';
 
 
 /**
- * Skeleton subclass for performing query and update operations on the 'APP_ALERT' table.
+ * Skeleton subclass for performing query and update operations on the 'APP_EVENT' table.
  *
  * 
  *
@@ -18,6 +18,6 @@
  *
  * @package    classes.model
  */
-class AppAlertPeer extends BaseAppAlertPeer {
+class AppEventPeer extends BaseAppEventPeer {
 
-} // AppAlertPeer
+} // AppEventPeer

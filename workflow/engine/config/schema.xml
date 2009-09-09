@@ -5640,9 +5640,10 @@
       </vendor>
     </index>
   </table>
-  <table name="ALERT">
+  <!--.-->
+  <table name="EVENT">
     <vendor type="mysql">
-      <parameter name="Name" value="ALERT"/>
+      <parameter name="Name" value="EVENT"/>
       <parameter name="Engine" value="MyISAM"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
@@ -5661,9 +5662,9 @@
       <parameter name="Create_options" value=""/>
       <parameter name="Comment" value=""/>
     </vendor>
-    <column name="ALT_UID" type="VARCHAR" size="32" required="true" primaryKey="true" default="">
+    <column name="EVN_UID" type="VARCHAR" size="32" required="true" primaryKey="true" default="">
       <vendor type="mysql">
-        <parameter name="Field" value="ALT_UID"/>
+        <parameter name="Field" value="EVN_UID"/>
         <parameter name="Type" value="varchar(32)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value="PRI"/>
@@ -5681,9 +5682,9 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="TAS_INITIAL" type="VARCHAR" size="32" required="true" default="">
+    <column name="TAS_UID" type="VARCHAR" size="32" required="true" default="">
       <vendor type="mysql">
-        <parameter name="Field" value="TAS_INITIAL"/>
+        <parameter name="Field" value="TAS_UID"/>
         <parameter name="Type" value="varchar(32)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
@@ -5691,9 +5692,9 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="TAS_FINAL" type="VARCHAR" size="32" required="false" default="">
+    <column name="EVN_TAS_UID_TO" type="VARCHAR" size="32" required="false" default="">
       <vendor type="mysql">
-        <parameter name="Field" value="TAS_FINAL"/>
+        <parameter name="Field" value="EVN_TAS_UID_TO"/>
         <parameter name="Type" value="varchar(32)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
@@ -5701,9 +5702,9 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="ALT_TAS_DURATION" type="DOUBLE" required="false" default="0">
+    <column name="EVN_TAS_STIMATED_DURATION" type="DOUBLE" required="false" default="0">
       <vendor type="mysql">
-        <parameter name="Field" value="TAS_DURATION"/>
+        <parameter name="Field" value="EVN_TAS_STIMATED_DURATION"/>
         <parameter name="Type" value="double"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
@@ -5711,29 +5712,19 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="ALT_TYPE" type="VARCHAR" size="32" required="true" default="">
+    <column name="EVN_WHEN" type="DOUBLE" required="false" default="0">
       <vendor type="mysql">
-        <parameter name="Field" value="ALT_TYPE"/>
-        <parameter name="Type" value="varchar(32)"/>
-        <parameter name="Null" value="NO"/>
-        <parameter name="Key" value=""/>
-        <parameter name="Default" value=""/>
-        <parameter name="Extra" value=""/>
-      </vendor>
-    </column>
-    <column name="ALT_DAYS" type="DOUBLE" required="" default="1">
-      <vendor type="mysql">
-        <parameter name="Field" value="ALT_DAYS"/>
+        <parameter name="Field" value="EVN_WHEN"/>
         <parameter name="Type" value="double"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
-        <parameter name="Default" value="1"/>
+        <parameter name="Default" value="0"/>
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="ALT_MAX_ATTEMPTS" type="TINYINT" required="true" default="3">
+    <column name="EVN_MAX_ATTEMPTS" type="TINYINT" required="true" default="3">
       <vendor type="mysql">
-        <parameter name="Field" value="ALT_MAX_ATTEMPTS"/>
+        <parameter name="Field" value="EVN_MAX_ATTEMPTS"/>
         <parameter name="Type" value="tinyint(2)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
@@ -5741,9 +5732,19 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="ALT_TEMPLATE" type="VARCHAR" size="100" required="true" default="">
+    <column name="EVN_ACTION" type="VARCHAR" size="50" required="true" default="">
       <vendor type="mysql">
-        <parameter name="Field" value="ALT_TEMPLATE"/>
+        <parameter name="Field" value="EVN_ACTION"/>
+        <parameter name="Type" value="varchar(50)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="EVN_TEMPLATE" type="VARCHAR" size="100" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="EVN_TEMPLATE"/>
         <parameter name="Type" value="varchar(100)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
@@ -5751,9 +5752,9 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="ALT_DIGEST" type="TINYINT" required="true" default="1">
+    <column name="EVN_DIGEST" type="TINYINT" required="true" default="1">
       <vendor type="mysql">
-        <parameter name="Field" value="ALT_DIGEST"/>
+        <parameter name="Field" value="EVN_DIGEST"/>
         <parameter name="Type" value="tinyint(1)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
@@ -5771,14 +5772,14 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <index name="indexAlertTable">
-      <index-column name="SHD_UID"/>
+    <index name="indexEventTable">
+      <index-column name="EVN_UID"/>
       <vendor type="mysql">
-        <parameter name="Table" value="ALT_UID"/>
+        <parameter name="Table" value="EVN_UID"/>
         <parameter name="Non_unique" value="1"/>
-        <parameter name="Key_name" value="indexAlertTable"/>
+        <parameter name="Key_name" value="indexEventTable"/>
         <parameter name="Seq_in_index" value="1"/>
-        <parameter name="Column_name" value="ALT_UID"/>
+        <parameter name="Column_name" value="EVN_UID"/>
         <parameter name="Collation" value="A"/>
         <parameter name="Cardinality" value=""/>
         <parameter name="Sub_part" value=""/>
@@ -5789,9 +5790,9 @@
       </vendor>
     </index>
   </table>
-  <table name="APP_ALERT">
+  <table name="APP_EVENT">
     <vendor type="mysql">
-      <parameter name="Name" value="APP_ALERT"/>
+      <parameter name="Name" value="APP_EVENT"/>
       <parameter name="Engine" value="MyISAM"/>
       <parameter name="Version" value="10"/>
       <parameter name="Row_format" value="Dynamic"/>
@@ -5830,9 +5831,9 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="ALT_UID" type="VARCHAR" size="32" required="true" default="">
+    <column name="EVN_UID" type="VARCHAR" size="32" required="true" default="">
       <vendor type="mysql">
-        <parameter name="Field" value="ALT_UID"/>
+        <parameter name="Field" value="EVN_UID"/>
         <parameter name="Type" value="varchar(32)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
@@ -5840,18 +5841,18 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="APP_ALT_ACTION_DATE" type="TIMESTAMP" required="true">
+    <column name="APP_EVN_ACTION_DATE" type="TIMESTAMP" required="true">
       <vendor type="mysql">
-        <parameter name="Field" value="APP_ALT_ACTION_DATE"/>
+        <parameter name="Field" value="APP_EVN_ACTION_DATE"/>
         <parameter name="Type" value="datetime"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="APP_ALT_ATTEMPTS" type="TINYINT" required="true" default="0">
+    <column name="APP_EVN_ATTEMPTS" type="TINYINT" required="true" default="0">
       <vendor type="mysql">
-        <parameter name="Field" value="APP_ALT_ATTEMPTS"/>
+        <parameter name="Field" value="APP_EVN_ATTEMPTS"/>
         <parameter name="Type" value="tinyint(2)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
@@ -5859,18 +5860,18 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="APP_ALT_LAST_EXECUTION_DATE" type="TIMESTAMP" required="false">
+    <column name="APP_EVN_LAST_EXECUTION_DATE" type="TIMESTAMP" required="false">
       <vendor type="mysql">
-        <parameter name="Field" value="APP_ALT_LAST_EXECUTION_DATE"/>
+        <parameter name="Field" value="APP_EVN_LAST_EXECUTION_DATE"/>
         <parameter name="Type" value="datetime"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="APP_ALT_STATUS" type="VARCHAR" size="10" required="true" default="OPEN">
+    <column name="APP_EVN_STATUS" type="VARCHAR" size="10" required="true" default="OPEN">
       <vendor type="mysql">
-        <parameter name="Field" value="APP_ALT_STATUS"/>
+        <parameter name="Field" value="APP_EVN_STATUS"/>
         <parameter name="Type" value="varchar(10)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>

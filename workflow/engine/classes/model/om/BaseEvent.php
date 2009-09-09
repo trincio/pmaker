@@ -7,74 +7,102 @@ require_once 'propel/om/Persistent.php';
 
 include_once 'propel/util/Criteria.php';
 
-include_once 'classes/model/AppAlertPeer.php';
+include_once 'classes/model/EventPeer.php';
 
 /**
- * Base class that represents a row from the 'APP_ALERT' table.
+ * Base class that represents a row from the 'EVENT' table.
  *
  * 
  *
  * @package    classes.model.om
  */
-abstract class BaseAppAlert extends BaseObject  implements Persistent {
+abstract class BaseEvent extends BaseObject  implements Persistent {
 
 
 	/**
 	 * The Peer class.
 	 * Instance provides a convenient way of calling static methods on a class
 	 * that calling code may not be able to identify.
-	 * @var        AppAlertPeer
+	 * @var        EventPeer
 	 */
 	protected static $peer;
 
 
 	/**
-	 * The value for the app_uid field.
+	 * The value for the evn_uid field.
 	 * @var        string
 	 */
-	protected $app_uid = '';
+	protected $evn_uid = '';
 
 
 	/**
-	 * The value for the del_index field.
-	 * @var        int
-	 */
-	protected $del_index = 0;
-
-
-	/**
-	 * The value for the alt_uid field.
+	 * The value for the pro_uid field.
 	 * @var        string
 	 */
-	protected $alt_uid = '';
+	protected $pro_uid = '';
 
 
 	/**
-	 * The value for the app_alt_action_date field.
-	 * @var        int
-	 */
-	protected $app_alt_action_date;
-
-
-	/**
-	 * The value for the app_alt_attempts field.
-	 * @var        int
-	 */
-	protected $app_alt_attempts = 0;
-
-
-	/**
-	 * The value for the app_alt_last_execution_date field.
-	 * @var        int
-	 */
-	protected $app_alt_last_execution_date;
-
-
-	/**
-	 * The value for the app_alt_status field.
+	 * The value for the tas_uid field.
 	 * @var        string
 	 */
-	protected $app_alt_status = 'OPEN';
+	protected $tas_uid = '';
+
+
+	/**
+	 * The value for the evn_tas_uid_to field.
+	 * @var        string
+	 */
+	protected $evn_tas_uid_to = '';
+
+
+	/**
+	 * The value for the evn_tas_stimated_duration field.
+	 * @var        double
+	 */
+	protected $evn_tas_stimated_duration = 0;
+
+
+	/**
+	 * The value for the evn_when field.
+	 * @var        double
+	 */
+	protected $evn_when = 0;
+
+
+	/**
+	 * The value for the evn_max_attempts field.
+	 * @var        int
+	 */
+	protected $evn_max_attempts = 3;
+
+
+	/**
+	 * The value for the evn_action field.
+	 * @var        string
+	 */
+	protected $evn_action = '';
+
+
+	/**
+	 * The value for the evn_template field.
+	 * @var        string
+	 */
+	protected $evn_template = '';
+
+
+	/**
+	 * The value for the evn_digest field.
+	 * @var        int
+	 */
+	protected $evn_digest = 1;
+
+
+	/**
+	 * The value for the tri_uid field.
+	 * @var        string
+	 */
+	protected $tri_uid = '';
 
 	/**
 	 * Flag to prevent endless save loop, if this object is referenced
@@ -91,129 +119,133 @@ abstract class BaseAppAlert extends BaseObject  implements Persistent {
 	protected $alreadyInValidation = false;
 
 	/**
-	 * Get the [app_uid] column value.
+	 * Get the [evn_uid] column value.
 	 * 
 	 * @return     string
 	 */
-	public function getAppUid()
+	public function getEvnUid()
 	{
 
-		return $this->app_uid;
+		return $this->evn_uid;
 	}
 
 	/**
-	 * Get the [del_index] column value.
+	 * Get the [pro_uid] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getProUid()
+	{
+
+		return $this->pro_uid;
+	}
+
+	/**
+	 * Get the [tas_uid] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getTasUid()
+	{
+
+		return $this->tas_uid;
+	}
+
+	/**
+	 * Get the [evn_tas_uid_to] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getEvnTasUidTo()
+	{
+
+		return $this->evn_tas_uid_to;
+	}
+
+	/**
+	 * Get the [evn_tas_stimated_duration] column value.
+	 * 
+	 * @return     double
+	 */
+	public function getEvnTasStimatedDuration()
+	{
+
+		return $this->evn_tas_stimated_duration;
+	}
+
+	/**
+	 * Get the [evn_when] column value.
+	 * 
+	 * @return     double
+	 */
+	public function getEvnWhen()
+	{
+
+		return $this->evn_when;
+	}
+
+	/**
+	 * Get the [evn_max_attempts] column value.
 	 * 
 	 * @return     int
 	 */
-	public function getDelIndex()
+	public function getEvnMaxAttempts()
 	{
 
-		return $this->del_index;
+		return $this->evn_max_attempts;
 	}
 
 	/**
-	 * Get the [alt_uid] column value.
+	 * Get the [evn_action] column value.
 	 * 
 	 * @return     string
 	 */
-	public function getAltUid()
+	public function getEvnAction()
 	{
 
-		return $this->alt_uid;
+		return $this->evn_action;
 	}
 
 	/**
-	 * Get the [optionally formatted] [app_alt_action_date] column value.
+	 * Get the [evn_template] column value.
 	 * 
-	 * @param      string $format The date/time format string (either date()-style or strftime()-style).
-	 *							If format is NULL, then the integer unix timestamp will be returned.
-	 * @return     mixed Formatted date/time value as string or integer unix timestamp (if format is NULL).
-	 * @throws     PropelException - if unable to convert the date/time to timestamp.
+	 * @return     string
 	 */
-	public function getAppAltActionDate($format = 'Y-m-d H:i:s')
+	public function getEvnTemplate()
 	{
 
-		if ($this->app_alt_action_date === null || $this->app_alt_action_date === '') {
-			return null;
-		} elseif (!is_int($this->app_alt_action_date)) {
-			// a non-timestamp value was set externally, so we convert it
-			$ts = strtotime($this->app_alt_action_date);
-			if ($ts === -1 || $ts === false) { // in PHP 5.1 return value changes to FALSE
-				throw new PropelException("Unable to parse value of [app_alt_action_date] as date/time value: " . var_export($this->app_alt_action_date, true));
-			}
-		} else {
-			$ts = $this->app_alt_action_date;
-		}
-		if ($format === null) {
-			return $ts;
-		} elseif (strpos($format, '%') !== false) {
-			return strftime($format, $ts);
-		} else {
-			return date($format, $ts);
-		}
+		return $this->evn_template;
 	}
 
 	/**
-	 * Get the [app_alt_attempts] column value.
+	 * Get the [evn_digest] column value.
 	 * 
 	 * @return     int
 	 */
-	public function getAppAltAttempts()
+	public function getEvnDigest()
 	{
 
-		return $this->app_alt_attempts;
+		return $this->evn_digest;
 	}
 
 	/**
-	 * Get the [optionally formatted] [app_alt_last_execution_date] column value.
-	 * 
-	 * @param      string $format The date/time format string (either date()-style or strftime()-style).
-	 *							If format is NULL, then the integer unix timestamp will be returned.
-	 * @return     mixed Formatted date/time value as string or integer unix timestamp (if format is NULL).
-	 * @throws     PropelException - if unable to convert the date/time to timestamp.
-	 */
-	public function getAppAltLastExecutionDate($format = 'Y-m-d H:i:s')
-	{
-
-		if ($this->app_alt_last_execution_date === null || $this->app_alt_last_execution_date === '') {
-			return null;
-		} elseif (!is_int($this->app_alt_last_execution_date)) {
-			// a non-timestamp value was set externally, so we convert it
-			$ts = strtotime($this->app_alt_last_execution_date);
-			if ($ts === -1 || $ts === false) { // in PHP 5.1 return value changes to FALSE
-				throw new PropelException("Unable to parse value of [app_alt_last_execution_date] as date/time value: " . var_export($this->app_alt_last_execution_date, true));
-			}
-		} else {
-			$ts = $this->app_alt_last_execution_date;
-		}
-		if ($format === null) {
-			return $ts;
-		} elseif (strpos($format, '%') !== false) {
-			return strftime($format, $ts);
-		} else {
-			return date($format, $ts);
-		}
-	}
-
-	/**
-	 * Get the [app_alt_status] column value.
+	 * Get the [tri_uid] column value.
 	 * 
 	 * @return     string
 	 */
-	public function getAppAltStatus()
+	public function getTriUid()
 	{
 
-		return $this->app_alt_status;
+		return $this->tri_uid;
 	}
 
 	/**
-	 * Set the value of [app_uid] column.
+	 * Set the value of [evn_uid] column.
 	 * 
 	 * @param      string $v new value
 	 * @return     void
 	 */
-	public function setAppUid($v)
+	public function setEvnUid($v)
 	{
 
 		// Since the native PHP type for this column is string,
@@ -222,20 +254,118 @@ abstract class BaseAppAlert extends BaseObject  implements Persistent {
 			$v = (string) $v; 
 		}
 
-		if ($this->app_uid !== $v || $v === '') {
-			$this->app_uid = $v;
-			$this->modifiedColumns[] = AppAlertPeer::APP_UID;
+		if ($this->evn_uid !== $v || $v === '') {
+			$this->evn_uid = $v;
+			$this->modifiedColumns[] = EventPeer::EVN_UID;
 		}
 
-	} // setAppUid()
+	} // setEvnUid()
 
 	/**
-	 * Set the value of [del_index] column.
+	 * Set the value of [pro_uid] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setProUid($v)
+	{
+
+		// Since the native PHP type for this column is string,
+		// we will cast the input to a string (if it is not).
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->pro_uid !== $v || $v === '') {
+			$this->pro_uid = $v;
+			$this->modifiedColumns[] = EventPeer::PRO_UID;
+		}
+
+	} // setProUid()
+
+	/**
+	 * Set the value of [tas_uid] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setTasUid($v)
+	{
+
+		// Since the native PHP type for this column is string,
+		// we will cast the input to a string (if it is not).
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->tas_uid !== $v || $v === '') {
+			$this->tas_uid = $v;
+			$this->modifiedColumns[] = EventPeer::TAS_UID;
+		}
+
+	} // setTasUid()
+
+	/**
+	 * Set the value of [evn_tas_uid_to] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setEvnTasUidTo($v)
+	{
+
+		// Since the native PHP type for this column is string,
+		// we will cast the input to a string (if it is not).
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->evn_tas_uid_to !== $v || $v === '') {
+			$this->evn_tas_uid_to = $v;
+			$this->modifiedColumns[] = EventPeer::EVN_TAS_UID_TO;
+		}
+
+	} // setEvnTasUidTo()
+
+	/**
+	 * Set the value of [evn_tas_stimated_duration] column.
+	 * 
+	 * @param      double $v new value
+	 * @return     void
+	 */
+	public function setEvnTasStimatedDuration($v)
+	{
+
+		if ($this->evn_tas_stimated_duration !== $v || $v === 0) {
+			$this->evn_tas_stimated_duration = $v;
+			$this->modifiedColumns[] = EventPeer::EVN_TAS_STIMATED_DURATION;
+		}
+
+	} // setEvnTasStimatedDuration()
+
+	/**
+	 * Set the value of [evn_when] column.
+	 * 
+	 * @param      double $v new value
+	 * @return     void
+	 */
+	public function setEvnWhen($v)
+	{
+
+		if ($this->evn_when !== $v || $v === 0) {
+			$this->evn_when = $v;
+			$this->modifiedColumns[] = EventPeer::EVN_WHEN;
+		}
+
+	} // setEvnWhen()
+
+	/**
+	 * Set the value of [evn_max_attempts] column.
 	 * 
 	 * @param      int $v new value
 	 * @return     void
 	 */
-	public function setDelIndex($v)
+	public function setEvnMaxAttempts($v)
 	{
 
 		// Since the native PHP type for this column is integer,
@@ -244,20 +374,20 @@ abstract class BaseAppAlert extends BaseObject  implements Persistent {
 			$v = (int) $v;
 		}
 
-		if ($this->del_index !== $v || $v === 0) {
-			$this->del_index = $v;
-			$this->modifiedColumns[] = AppAlertPeer::DEL_INDEX;
+		if ($this->evn_max_attempts !== $v || $v === 3) {
+			$this->evn_max_attempts = $v;
+			$this->modifiedColumns[] = EventPeer::EVN_MAX_ATTEMPTS;
 		}
 
-	} // setDelIndex()
+	} // setEvnMaxAttempts()
 
 	/**
-	 * Set the value of [alt_uid] column.
+	 * Set the value of [evn_action] column.
 	 * 
 	 * @param      string $v new value
 	 * @return     void
 	 */
-	public function setAltUid($v)
+	public function setEvnAction($v)
 	{
 
 		// Since the native PHP type for this column is string,
@@ -266,44 +396,42 @@ abstract class BaseAppAlert extends BaseObject  implements Persistent {
 			$v = (string) $v; 
 		}
 
-		if ($this->alt_uid !== $v || $v === '') {
-			$this->alt_uid = $v;
-			$this->modifiedColumns[] = AppAlertPeer::ALT_UID;
+		if ($this->evn_action !== $v || $v === '') {
+			$this->evn_action = $v;
+			$this->modifiedColumns[] = EventPeer::EVN_ACTION;
 		}
 
-	} // setAltUid()
+	} // setEvnAction()
 
 	/**
-	 * Set the value of [app_alt_action_date] column.
+	 * Set the value of [evn_template] column.
 	 * 
-	 * @param      int $v new value
+	 * @param      string $v new value
 	 * @return     void
 	 */
-	public function setAppAltActionDate($v)
+	public function setEvnTemplate($v)
 	{
 
-		if ($v !== null && !is_int($v)) {
-			$ts = strtotime($v);
-			if ($ts === -1 || $ts === false) { // in PHP 5.1 return value changes to FALSE
-				throw new PropelException("Unable to parse date/time value for [app_alt_action_date] from input: " . var_export($v, true));
-			}
-		} else {
-			$ts = $v;
-		}
-		if ($this->app_alt_action_date !== $ts) {
-			$this->app_alt_action_date = $ts;
-			$this->modifiedColumns[] = AppAlertPeer::APP_ALT_ACTION_DATE;
+		// Since the native PHP type for this column is string,
+		// we will cast the input to a string (if it is not).
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
 		}
 
-	} // setAppAltActionDate()
+		if ($this->evn_template !== $v || $v === '') {
+			$this->evn_template = $v;
+			$this->modifiedColumns[] = EventPeer::EVN_TEMPLATE;
+		}
+
+	} // setEvnTemplate()
 
 	/**
-	 * Set the value of [app_alt_attempts] column.
+	 * Set the value of [evn_digest] column.
 	 * 
 	 * @param      int $v new value
 	 * @return     void
 	 */
-	public function setAppAltAttempts($v)
+	public function setEvnDigest($v)
 	{
 
 		// Since the native PHP type for this column is integer,
@@ -312,44 +440,20 @@ abstract class BaseAppAlert extends BaseObject  implements Persistent {
 			$v = (int) $v;
 		}
 
-		if ($this->app_alt_attempts !== $v || $v === 0) {
-			$this->app_alt_attempts = $v;
-			$this->modifiedColumns[] = AppAlertPeer::APP_ALT_ATTEMPTS;
+		if ($this->evn_digest !== $v || $v === 1) {
+			$this->evn_digest = $v;
+			$this->modifiedColumns[] = EventPeer::EVN_DIGEST;
 		}
 
-	} // setAppAltAttempts()
+	} // setEvnDigest()
 
 	/**
-	 * Set the value of [app_alt_last_execution_date] column.
-	 * 
-	 * @param      int $v new value
-	 * @return     void
-	 */
-	public function setAppAltLastExecutionDate($v)
-	{
-
-		if ($v !== null && !is_int($v)) {
-			$ts = strtotime($v);
-			if ($ts === -1 || $ts === false) { // in PHP 5.1 return value changes to FALSE
-				throw new PropelException("Unable to parse date/time value for [app_alt_last_execution_date] from input: " . var_export($v, true));
-			}
-		} else {
-			$ts = $v;
-		}
-		if ($this->app_alt_last_execution_date !== $ts) {
-			$this->app_alt_last_execution_date = $ts;
-			$this->modifiedColumns[] = AppAlertPeer::APP_ALT_LAST_EXECUTION_DATE;
-		}
-
-	} // setAppAltLastExecutionDate()
-
-	/**
-	 * Set the value of [app_alt_status] column.
+	 * Set the value of [tri_uid] column.
 	 * 
 	 * @param      string $v new value
 	 * @return     void
 	 */
-	public function setAppAltStatus($v)
+	public function setTriUid($v)
 	{
 
 		// Since the native PHP type for this column is string,
@@ -358,12 +462,12 @@ abstract class BaseAppAlert extends BaseObject  implements Persistent {
 			$v = (string) $v; 
 		}
 
-		if ($this->app_alt_status !== $v || $v === 'OPEN') {
-			$this->app_alt_status = $v;
-			$this->modifiedColumns[] = AppAlertPeer::APP_ALT_STATUS;
+		if ($this->tri_uid !== $v || $v === '') {
+			$this->tri_uid = $v;
+			$this->modifiedColumns[] = EventPeer::TRI_UID;
 		}
 
-	} // setAppAltStatus()
+	} // setTriUid()
 
 	/**
 	 * Hydrates (populates) the object variables with values from the database resultset.
@@ -382,29 +486,37 @@ abstract class BaseAppAlert extends BaseObject  implements Persistent {
 	{
 		try {
 
-			$this->app_uid = $rs->getString($startcol + 0);
+			$this->evn_uid = $rs->getString($startcol + 0);
 
-			$this->del_index = $rs->getInt($startcol + 1);
+			$this->pro_uid = $rs->getString($startcol + 1);
 
-			$this->alt_uid = $rs->getString($startcol + 2);
+			$this->tas_uid = $rs->getString($startcol + 2);
 
-			$this->app_alt_action_date = $rs->getTimestamp($startcol + 3, null);
+			$this->evn_tas_uid_to = $rs->getString($startcol + 3);
 
-			$this->app_alt_attempts = $rs->getInt($startcol + 4);
+			$this->evn_tas_stimated_duration = $rs->getFloat($startcol + 4);
 
-			$this->app_alt_last_execution_date = $rs->getTimestamp($startcol + 5, null);
+			$this->evn_when = $rs->getFloat($startcol + 5);
 
-			$this->app_alt_status = $rs->getString($startcol + 6);
+			$this->evn_max_attempts = $rs->getInt($startcol + 6);
+
+			$this->evn_action = $rs->getString($startcol + 7);
+
+			$this->evn_template = $rs->getString($startcol + 8);
+
+			$this->evn_digest = $rs->getInt($startcol + 9);
+
+			$this->tri_uid = $rs->getString($startcol + 10);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 7; // 7 = AppAlertPeer::NUM_COLUMNS - AppAlertPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 11; // 11 = EventPeer::NUM_COLUMNS - EventPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
-			throw new PropelException("Error populating AppAlert object", $e);
+			throw new PropelException("Error populating Event object", $e);
 		}
 	}
 
@@ -424,12 +536,12 @@ abstract class BaseAppAlert extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(AppAlertPeer::DATABASE_NAME);
+			$con = Propel::getConnection(EventPeer::DATABASE_NAME);
 		}
 
 		try {
 			$con->begin();
-			AppAlertPeer::doDelete($this, $con);
+			EventPeer::doDelete($this, $con);
 			$this->setDeleted(true);
 			$con->commit();
 		} catch (PropelException $e) {
@@ -455,7 +567,7 @@ abstract class BaseAppAlert extends BaseObject  implements Persistent {
 		}
 
 		if ($con === null) {
-			$con = Propel::getConnection(AppAlertPeer::DATABASE_NAME);
+			$con = Propel::getConnection(EventPeer::DATABASE_NAME);
 		}
 
 		try {
@@ -490,14 +602,14 @@ abstract class BaseAppAlert extends BaseObject  implements Persistent {
 			// If this object has been modified, then save it to the database.
 			if ($this->isModified()) {
 				if ($this->isNew()) {
-					$pk = AppAlertPeer::doInsert($this, $con);
+					$pk = EventPeer::doInsert($this, $con);
 					$affectedRows += 1; // we are assuming that there is only 1 row per doInsert() which
 										 // should always be true here (even though technically
 										 // BasePeer::doInsert() can insert multiple rows).
 
 					$this->setNew(false);
 				} else {
-					$affectedRows += AppAlertPeer::doUpdate($this, $con);
+					$affectedRows += EventPeer::doUpdate($this, $con);
 				}
 				$this->resetModified(); // [HL] After being saved an object is no longer 'modified'
 			}
@@ -567,7 +679,7 @@ abstract class BaseAppAlert extends BaseObject  implements Persistent {
 			$failureMap = array();
 
 
-			if (($retval = AppAlertPeer::doValidate($this, $columns)) !== true) {
+			if (($retval = EventPeer::doValidate($this, $columns)) !== true) {
 				$failureMap = array_merge($failureMap, $retval);
 			}
 
@@ -590,7 +702,7 @@ abstract class BaseAppAlert extends BaseObject  implements Persistent {
 	 */
 	public function getByName($name, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = AppAlertPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = EventPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		return $this->getByPosition($pos);
 	}
 
@@ -605,25 +717,37 @@ abstract class BaseAppAlert extends BaseObject  implements Persistent {
 	{
 		switch($pos) {
 			case 0:
-				return $this->getAppUid();
+				return $this->getEvnUid();
 				break;
 			case 1:
-				return $this->getDelIndex();
+				return $this->getProUid();
 				break;
 			case 2:
-				return $this->getAltUid();
+				return $this->getTasUid();
 				break;
 			case 3:
-				return $this->getAppAltActionDate();
+				return $this->getEvnTasUidTo();
 				break;
 			case 4:
-				return $this->getAppAltAttempts();
+				return $this->getEvnTasStimatedDuration();
 				break;
 			case 5:
-				return $this->getAppAltLastExecutionDate();
+				return $this->getEvnWhen();
 				break;
 			case 6:
-				return $this->getAppAltStatus();
+				return $this->getEvnMaxAttempts();
+				break;
+			case 7:
+				return $this->getEvnAction();
+				break;
+			case 8:
+				return $this->getEvnTemplate();
+				break;
+			case 9:
+				return $this->getEvnDigest();
+				break;
+			case 10:
+				return $this->getTriUid();
 				break;
 			default:
 				return null;
@@ -643,15 +767,19 @@ abstract class BaseAppAlert extends BaseObject  implements Persistent {
 	 */
 	public function toArray($keyType = BasePeer::TYPE_PHPNAME)
 	{
-		$keys = AppAlertPeer::getFieldNames($keyType);
+		$keys = EventPeer::getFieldNames($keyType);
 		$result = array(
-			$keys[0] => $this->getAppUid(),
-			$keys[1] => $this->getDelIndex(),
-			$keys[2] => $this->getAltUid(),
-			$keys[3] => $this->getAppAltActionDate(),
-			$keys[4] => $this->getAppAltAttempts(),
-			$keys[5] => $this->getAppAltLastExecutionDate(),
-			$keys[6] => $this->getAppAltStatus(),
+			$keys[0] => $this->getEvnUid(),
+			$keys[1] => $this->getProUid(),
+			$keys[2] => $this->getTasUid(),
+			$keys[3] => $this->getEvnTasUidTo(),
+			$keys[4] => $this->getEvnTasStimatedDuration(),
+			$keys[5] => $this->getEvnWhen(),
+			$keys[6] => $this->getEvnMaxAttempts(),
+			$keys[7] => $this->getEvnAction(),
+			$keys[8] => $this->getEvnTemplate(),
+			$keys[9] => $this->getEvnDigest(),
+			$keys[10] => $this->getTriUid(),
 		);
 		return $result;
 	}
@@ -668,7 +796,7 @@ abstract class BaseAppAlert extends BaseObject  implements Persistent {
 	 */
 	public function setByName($name, $value, $type = BasePeer::TYPE_PHPNAME)
 	{
-		$pos = AppAlertPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
+		$pos = EventPeer::translateFieldName($name, $type, BasePeer::TYPE_NUM);
 		return $this->setByPosition($pos, $value);
 	}
 
@@ -684,25 +812,37 @@ abstract class BaseAppAlert extends BaseObject  implements Persistent {
 	{
 		switch($pos) {
 			case 0:
-				$this->setAppUid($value);
+				$this->setEvnUid($value);
 				break;
 			case 1:
-				$this->setDelIndex($value);
+				$this->setProUid($value);
 				break;
 			case 2:
-				$this->setAltUid($value);
+				$this->setTasUid($value);
 				break;
 			case 3:
-				$this->setAppAltActionDate($value);
+				$this->setEvnTasUidTo($value);
 				break;
 			case 4:
-				$this->setAppAltAttempts($value);
+				$this->setEvnTasStimatedDuration($value);
 				break;
 			case 5:
-				$this->setAppAltLastExecutionDate($value);
+				$this->setEvnWhen($value);
 				break;
 			case 6:
-				$this->setAppAltStatus($value);
+				$this->setEvnMaxAttempts($value);
+				break;
+			case 7:
+				$this->setEvnAction($value);
+				break;
+			case 8:
+				$this->setEvnTemplate($value);
+				break;
+			case 9:
+				$this->setEvnDigest($value);
+				break;
+			case 10:
+				$this->setTriUid($value);
 				break;
 		} // switch()
 	}
@@ -725,15 +865,19 @@ abstract class BaseAppAlert extends BaseObject  implements Persistent {
 	 */
 	public function fromArray($arr, $keyType = BasePeer::TYPE_PHPNAME)
 	{
-		$keys = AppAlertPeer::getFieldNames($keyType);
+		$keys = EventPeer::getFieldNames($keyType);
 
-		if (array_key_exists($keys[0], $arr)) $this->setAppUid($arr[$keys[0]]);
-		if (array_key_exists($keys[1], $arr)) $this->setDelIndex($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setAltUid($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setAppAltActionDate($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setAppAltAttempts($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setAppAltLastExecutionDate($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setAppAltStatus($arr[$keys[6]]);
+		if (array_key_exists($keys[0], $arr)) $this->setEvnUid($arr[$keys[0]]);
+		if (array_key_exists($keys[1], $arr)) $this->setProUid($arr[$keys[1]]);
+		if (array_key_exists($keys[2], $arr)) $this->setTasUid($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setEvnTasUidTo($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setEvnTasStimatedDuration($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setEvnWhen($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setEvnMaxAttempts($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setEvnAction($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setEvnTemplate($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setEvnDigest($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setTriUid($arr[$keys[10]]);
 	}
 
 	/**
@@ -743,15 +887,19 @@ abstract class BaseAppAlert extends BaseObject  implements Persistent {
 	 */
 	public function buildCriteria()
 	{
-		$criteria = new Criteria(AppAlertPeer::DATABASE_NAME);
+		$criteria = new Criteria(EventPeer::DATABASE_NAME);
 
-		if ($this->isColumnModified(AppAlertPeer::APP_UID)) $criteria->add(AppAlertPeer::APP_UID, $this->app_uid);
-		if ($this->isColumnModified(AppAlertPeer::DEL_INDEX)) $criteria->add(AppAlertPeer::DEL_INDEX, $this->del_index);
-		if ($this->isColumnModified(AppAlertPeer::ALT_UID)) $criteria->add(AppAlertPeer::ALT_UID, $this->alt_uid);
-		if ($this->isColumnModified(AppAlertPeer::APP_ALT_ACTION_DATE)) $criteria->add(AppAlertPeer::APP_ALT_ACTION_DATE, $this->app_alt_action_date);
-		if ($this->isColumnModified(AppAlertPeer::APP_ALT_ATTEMPTS)) $criteria->add(AppAlertPeer::APP_ALT_ATTEMPTS, $this->app_alt_attempts);
-		if ($this->isColumnModified(AppAlertPeer::APP_ALT_LAST_EXECUTION_DATE)) $criteria->add(AppAlertPeer::APP_ALT_LAST_EXECUTION_DATE, $this->app_alt_last_execution_date);
-		if ($this->isColumnModified(AppAlertPeer::APP_ALT_STATUS)) $criteria->add(AppAlertPeer::APP_ALT_STATUS, $this->app_alt_status);
+		if ($this->isColumnModified(EventPeer::EVN_UID)) $criteria->add(EventPeer::EVN_UID, $this->evn_uid);
+		if ($this->isColumnModified(EventPeer::PRO_UID)) $criteria->add(EventPeer::PRO_UID, $this->pro_uid);
+		if ($this->isColumnModified(EventPeer::TAS_UID)) $criteria->add(EventPeer::TAS_UID, $this->tas_uid);
+		if ($this->isColumnModified(EventPeer::EVN_TAS_UID_TO)) $criteria->add(EventPeer::EVN_TAS_UID_TO, $this->evn_tas_uid_to);
+		if ($this->isColumnModified(EventPeer::EVN_TAS_STIMATED_DURATION)) $criteria->add(EventPeer::EVN_TAS_STIMATED_DURATION, $this->evn_tas_stimated_duration);
+		if ($this->isColumnModified(EventPeer::EVN_WHEN)) $criteria->add(EventPeer::EVN_WHEN, $this->evn_when);
+		if ($this->isColumnModified(EventPeer::EVN_MAX_ATTEMPTS)) $criteria->add(EventPeer::EVN_MAX_ATTEMPTS, $this->evn_max_attempts);
+		if ($this->isColumnModified(EventPeer::EVN_ACTION)) $criteria->add(EventPeer::EVN_ACTION, $this->evn_action);
+		if ($this->isColumnModified(EventPeer::EVN_TEMPLATE)) $criteria->add(EventPeer::EVN_TEMPLATE, $this->evn_template);
+		if ($this->isColumnModified(EventPeer::EVN_DIGEST)) $criteria->add(EventPeer::EVN_DIGEST, $this->evn_digest);
+		if ($this->isColumnModified(EventPeer::TRI_UID)) $criteria->add(EventPeer::TRI_UID, $this->tri_uid);
 
 		return $criteria;
 	}
@@ -766,43 +914,31 @@ abstract class BaseAppAlert extends BaseObject  implements Persistent {
 	 */
 	public function buildPkeyCriteria()
 	{
-		$criteria = new Criteria(AppAlertPeer::DATABASE_NAME);
+		$criteria = new Criteria(EventPeer::DATABASE_NAME);
 
-		$criteria->add(AppAlertPeer::APP_UID, $this->app_uid);
-		$criteria->add(AppAlertPeer::DEL_INDEX, $this->del_index);
+		$criteria->add(EventPeer::EVN_UID, $this->evn_uid);
 
 		return $criteria;
 	}
 
 	/**
-	 * Returns the composite primary key for this object.
-	 * The array elements will be in same order as specified in XML.
-	 * @return     array
+	 * Returns the primary key for this object (row).
+	 * @return     string
 	 */
 	public function getPrimaryKey()
 	{
-		$pks = array();
-
-		$pks[0] = $this->getAppUid();
-
-		$pks[1] = $this->getDelIndex();
-
-		return $pks;
+		return $this->getEvnUid();
 	}
 
 	/**
-	 * Set the [composite] primary key.
+	 * Generic method to set the primary key (evn_uid column).
 	 *
-	 * @param      array $keys The elements of the composite key (order must match the order in XML file).
+	 * @param      string $key Primary key.
 	 * @return     void
 	 */
-	public function setPrimaryKey($keys)
+	public function setPrimaryKey($key)
 	{
-
-		$this->setAppUid($keys[0]);
-
-		$this->setDelIndex($keys[1]);
-
+		$this->setEvnUid($key);
 	}
 
 	/**
@@ -811,29 +947,37 @@ abstract class BaseAppAlert extends BaseObject  implements Persistent {
 	 * If desired, this method can also make copies of all associated (fkey referrers)
 	 * objects.
 	 *
-	 * @param      object $copyObj An object of AppAlert (or compatible) type.
+	 * @param      object $copyObj An object of Event (or compatible) type.
 	 * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
 	 * @throws     PropelException
 	 */
 	public function copyInto($copyObj, $deepCopy = false)
 	{
 
-		$copyObj->setAltUid($this->alt_uid);
+		$copyObj->setProUid($this->pro_uid);
 
-		$copyObj->setAppAltActionDate($this->app_alt_action_date);
+		$copyObj->setTasUid($this->tas_uid);
 
-		$copyObj->setAppAltAttempts($this->app_alt_attempts);
+		$copyObj->setEvnTasUidTo($this->evn_tas_uid_to);
 
-		$copyObj->setAppAltLastExecutionDate($this->app_alt_last_execution_date);
+		$copyObj->setEvnTasStimatedDuration($this->evn_tas_stimated_duration);
 
-		$copyObj->setAppAltStatus($this->app_alt_status);
+		$copyObj->setEvnWhen($this->evn_when);
+
+		$copyObj->setEvnMaxAttempts($this->evn_max_attempts);
+
+		$copyObj->setEvnAction($this->evn_action);
+
+		$copyObj->setEvnTemplate($this->evn_template);
+
+		$copyObj->setEvnDigest($this->evn_digest);
+
+		$copyObj->setTriUid($this->tri_uid);
 
 
 		$copyObj->setNew(true);
 
-		$copyObj->setAppUid(''); // this is a pkey column, so set to default value
-
-		$copyObj->setDelIndex('0'); // this is a pkey column, so set to default value
+		$copyObj->setEvnUid(''); // this is a pkey column, so set to default value
 
 	}
 
@@ -846,7 +990,7 @@ abstract class BaseAppAlert extends BaseObject  implements Persistent {
 	 * objects.
 	 *
 	 * @param      boolean $deepCopy Whether to also copy all rows that refer (by fkey) to the current row.
-	 * @return     AppAlert Clone of current object.
+	 * @return     Event Clone of current object.
 	 * @throws     PropelException
 	 */
 	public function copy($deepCopy = false)
@@ -865,14 +1009,14 @@ abstract class BaseAppAlert extends BaseObject  implements Persistent {
 	 * same instance for all member of this class. The method could therefore
 	 * be static, but this would prevent one from overriding the behavior.
 	 *
-	 * @return     AppAlertPeer
+	 * @return     EventPeer
 	 */
 	public function getPeer()
 	{
 		if (self::$peer === null) {
-			self::$peer = new AppAlertPeer();
+			self::$peer = new EventPeer();
 		}
 		return self::$peer;
 	}
 
-} // BaseAppAlert
+} // BaseEvent

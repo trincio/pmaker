@@ -5,7 +5,7 @@ include_once 'creole/CreoleTypes.php';
 
 
 /**
- * This class adds structure of 'APP_ALERT' table to 'workflow' DatabaseMap object.
+ * This class adds structure of 'APP_EVENT' table to 'workflow' DatabaseMap object.
  *
  *
  *
@@ -16,12 +16,12 @@ include_once 'creole/CreoleTypes.php';
  *
  * @package    classes.model.map
  */
-class AppAlertMapBuilder {
+class AppEventMapBuilder {
 
 	/**
 	 * The (dot-path) name of this class
 	 */
-	const CLASS_NAME = 'classes.model.map.AppAlertMapBuilder';
+	const CLASS_NAME = 'classes.model.map.AppEventMapBuilder';
 
 	/**
 	 * The database map.
@@ -59,8 +59,8 @@ class AppAlertMapBuilder {
 	{
 		$this->dbMap = Propel::getDatabaseMap('workflow');
 
-		$tMap = $this->dbMap->addTable('APP_ALERT');
-		$tMap->setPhpName('AppAlert');
+		$tMap = $this->dbMap->addTable('APP_EVENT');
+		$tMap->setPhpName('AppEvent');
 
 		$tMap->setUseIdGenerator(false);
 
@@ -68,16 +68,16 @@ class AppAlertMapBuilder {
 
 		$tMap->addPrimaryKey('DEL_INDEX', 'DelIndex', 'int', CreoleTypes::INTEGER, true, null);
 
-		$tMap->addColumn('ALT_UID', 'AltUid', 'string', CreoleTypes::VARCHAR, true, 32);
+		$tMap->addColumn('EVN_UID', 'EvnUid', 'string', CreoleTypes::VARCHAR, true, 32);
 
-		$tMap->addColumn('APP_ALT_ACTION_DATE', 'AppAltActionDate', 'int', CreoleTypes::TIMESTAMP, true, null);
+		$tMap->addColumn('APP_EVN_ACTION_DATE', 'AppEvnActionDate', 'int', CreoleTypes::TIMESTAMP, true, null);
 
-		$tMap->addColumn('APP_ALT_ATTEMPTS', 'AppAltAttempts', 'int', CreoleTypes::TINYINT, true, null);
+		$tMap->addColumn('APP_EVN_ATTEMPTS', 'AppEvnAttempts', 'int', CreoleTypes::TINYINT, true, null);
 
-		$tMap->addColumn('APP_ALT_LAST_EXECUTION_DATE', 'AppAltLastExecutionDate', 'int', CreoleTypes::TIMESTAMP, false, null);
+		$tMap->addColumn('APP_EVN_LAST_EXECUTION_DATE', 'AppEvnLastExecutionDate', 'int', CreoleTypes::TIMESTAMP, false, null);
 
-		$tMap->addColumn('APP_ALT_STATUS', 'AppAltStatus', 'string', CreoleTypes::VARCHAR, true, 10);
+		$tMap->addColumn('APP_EVN_STATUS', 'AppEvnStatus', 'string', CreoleTypes::VARCHAR, true, 10);
 
 	} // doBuild()
 
-} // AppAlertMapBuilder
+} // AppEventMapBuilder
