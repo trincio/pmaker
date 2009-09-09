@@ -2,26 +2,26 @@
 
 require_once 'propel/util/BasePeer.php';
 // The object class -- needed for instanceof checks in this class.
-// actual class may be a subclass -- as returned by AlertPeer::getOMClass()
-include_once 'classes/model/Alert.php';
+// actual class may be a subclass -- as returned by EventPeer::getOMClass()
+include_once 'classes/model/Event.php';
 
 /**
- * Base static class for performing query and update operations on the 'ALERT' table.
+ * Base static class for performing query and update operations on the 'EVENT' table.
  *
  * 
  *
  * @package    classes.model.om
  */
-abstract class BaseAlertPeer {
+abstract class BaseEventPeer {
 
 	/** the default database name for this class */
 	const DATABASE_NAME = 'workflow';
 
 	/** the table name for this class */
-	const TABLE_NAME = 'ALERT';
+	const TABLE_NAME = 'EVENT';
 
 	/** A class that can be returned by this peer. */
-	const CLASS_DEFAULT = 'classes.model.Alert';
+	const CLASS_DEFAULT = 'classes.model.Event';
 
 	/** The total number of columns. */
 	const NUM_COLUMNS = 11;
@@ -30,38 +30,38 @@ abstract class BaseAlertPeer {
 	const NUM_LAZY_LOAD_COLUMNS = 0;
 
 
-	/** the column name for the ALT_UID field */
-	const ALT_UID = 'ALERT.ALT_UID';
+	/** the column name for the EVN_UID field */
+	const EVN_UID = 'EVENT.EVN_UID';
 
 	/** the column name for the PRO_UID field */
-	const PRO_UID = 'ALERT.PRO_UID';
+	const PRO_UID = 'EVENT.PRO_UID';
 
-	/** the column name for the TAS_INITIAL field */
-	const TAS_INITIAL = 'ALERT.TAS_INITIAL';
+	/** the column name for the TAS_UID field */
+	const TAS_UID = 'EVENT.TAS_UID';
 
-	/** the column name for the TAS_FINAL field */
-	const TAS_FINAL = 'ALERT.TAS_FINAL';
+	/** the column name for the EVN_TAS_UID_TO field */
+	const EVN_TAS_UID_TO = 'EVENT.EVN_TAS_UID_TO';
 
-	/** the column name for the ALT_TAS_DURATION field */
-	const ALT_TAS_DURATION = 'ALERT.ALT_TAS_DURATION';
+	/** the column name for the EVN_TAS_STIMATED_DURATION field */
+	const EVN_TAS_STIMATED_DURATION = 'EVENT.EVN_TAS_STIMATED_DURATION';
 
-	/** the column name for the ALT_TYPE field */
-	const ALT_TYPE = 'ALERT.ALT_TYPE';
+	/** the column name for the EVN_WHEN field */
+	const EVN_WHEN = 'EVENT.EVN_WHEN';
 
-	/** the column name for the ALT_DAYS field */
-	const ALT_DAYS = 'ALERT.ALT_DAYS';
+	/** the column name for the EVN_MAX_ATTEMPTS field */
+	const EVN_MAX_ATTEMPTS = 'EVENT.EVN_MAX_ATTEMPTS';
 
-	/** the column name for the ALT_MAX_ATTEMPTS field */
-	const ALT_MAX_ATTEMPTS = 'ALERT.ALT_MAX_ATTEMPTS';
+	/** the column name for the EVN_ACTION field */
+	const EVN_ACTION = 'EVENT.EVN_ACTION';
 
-	/** the column name for the ALT_TEMPLATE field */
-	const ALT_TEMPLATE = 'ALERT.ALT_TEMPLATE';
+	/** the column name for the EVN_TEMPLATE field */
+	const EVN_TEMPLATE = 'EVENT.EVN_TEMPLATE';
 
-	/** the column name for the ALT_DIGEST field */
-	const ALT_DIGEST = 'ALERT.ALT_DIGEST';
+	/** the column name for the EVN_DIGEST field */
+	const EVN_DIGEST = 'EVENT.EVN_DIGEST';
 
 	/** the column name for the TRI_UID field */
-	const TRI_UID = 'ALERT.TRI_UID';
+	const TRI_UID = 'EVENT.TRI_UID';
 
 	/** The PHP to DB Name Mapping */
 	private static $phpNameMap = null;
@@ -74,9 +74,9 @@ abstract class BaseAlertPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('AltUid', 'ProUid', 'TasInitial', 'TasFinal', 'AltTasDuration', 'AltType', 'AltDays', 'AltMaxAttempts', 'AltTemplate', 'AltDigest', 'TriUid', ),
-		BasePeer::TYPE_COLNAME => array (AlertPeer::ALT_UID, AlertPeer::PRO_UID, AlertPeer::TAS_INITIAL, AlertPeer::TAS_FINAL, AlertPeer::ALT_TAS_DURATION, AlertPeer::ALT_TYPE, AlertPeer::ALT_DAYS, AlertPeer::ALT_MAX_ATTEMPTS, AlertPeer::ALT_TEMPLATE, AlertPeer::ALT_DIGEST, AlertPeer::TRI_UID, ),
-		BasePeer::TYPE_FIELDNAME => array ('ALT_UID', 'PRO_UID', 'TAS_INITIAL', 'TAS_FINAL', 'ALT_TAS_DURATION', 'ALT_TYPE', 'ALT_DAYS', 'ALT_MAX_ATTEMPTS', 'ALT_TEMPLATE', 'ALT_DIGEST', 'TRI_UID', ),
+		BasePeer::TYPE_PHPNAME => array ('EvnUid', 'ProUid', 'TasUid', 'EvnTasUidTo', 'EvnTasStimatedDuration', 'EvnWhen', 'EvnMaxAttempts', 'EvnAction', 'EvnTemplate', 'EvnDigest', 'TriUid', ),
+		BasePeer::TYPE_COLNAME => array (EventPeer::EVN_UID, EventPeer::PRO_UID, EventPeer::TAS_UID, EventPeer::EVN_TAS_UID_TO, EventPeer::EVN_TAS_STIMATED_DURATION, EventPeer::EVN_WHEN, EventPeer::EVN_MAX_ATTEMPTS, EventPeer::EVN_ACTION, EventPeer::EVN_TEMPLATE, EventPeer::EVN_DIGEST, EventPeer::TRI_UID, ),
+		BasePeer::TYPE_FIELDNAME => array ('EVN_UID', 'PRO_UID', 'TAS_UID', 'EVN_TAS_UID_TO', 'EVN_TAS_STIMATED_DURATION', 'EVN_WHEN', 'EVN_MAX_ATTEMPTS', 'EVN_ACTION', 'EVN_TEMPLATE', 'EVN_DIGEST', 'TRI_UID', ),
 		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
 	);
 
@@ -87,9 +87,9 @@ abstract class BaseAlertPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('AltUid' => 0, 'ProUid' => 1, 'TasInitial' => 2, 'TasFinal' => 3, 'AltTasDuration' => 4, 'AltType' => 5, 'AltDays' => 6, 'AltMaxAttempts' => 7, 'AltTemplate' => 8, 'AltDigest' => 9, 'TriUid' => 10, ),
-		BasePeer::TYPE_COLNAME => array (AlertPeer::ALT_UID => 0, AlertPeer::PRO_UID => 1, AlertPeer::TAS_INITIAL => 2, AlertPeer::TAS_FINAL => 3, AlertPeer::ALT_TAS_DURATION => 4, AlertPeer::ALT_TYPE => 5, AlertPeer::ALT_DAYS => 6, AlertPeer::ALT_MAX_ATTEMPTS => 7, AlertPeer::ALT_TEMPLATE => 8, AlertPeer::ALT_DIGEST => 9, AlertPeer::TRI_UID => 10, ),
-		BasePeer::TYPE_FIELDNAME => array ('ALT_UID' => 0, 'PRO_UID' => 1, 'TAS_INITIAL' => 2, 'TAS_FINAL' => 3, 'ALT_TAS_DURATION' => 4, 'ALT_TYPE' => 5, 'ALT_DAYS' => 6, 'ALT_MAX_ATTEMPTS' => 7, 'ALT_TEMPLATE' => 8, 'ALT_DIGEST' => 9, 'TRI_UID' => 10, ),
+		BasePeer::TYPE_PHPNAME => array ('EvnUid' => 0, 'ProUid' => 1, 'TasUid' => 2, 'EvnTasUidTo' => 3, 'EvnTasStimatedDuration' => 4, 'EvnWhen' => 5, 'EvnMaxAttempts' => 6, 'EvnAction' => 7, 'EvnTemplate' => 8, 'EvnDigest' => 9, 'TriUid' => 10, ),
+		BasePeer::TYPE_COLNAME => array (EventPeer::EVN_UID => 0, EventPeer::PRO_UID => 1, EventPeer::TAS_UID => 2, EventPeer::EVN_TAS_UID_TO => 3, EventPeer::EVN_TAS_STIMATED_DURATION => 4, EventPeer::EVN_WHEN => 5, EventPeer::EVN_MAX_ATTEMPTS => 6, EventPeer::EVN_ACTION => 7, EventPeer::EVN_TEMPLATE => 8, EventPeer::EVN_DIGEST => 9, EventPeer::TRI_UID => 10, ),
+		BasePeer::TYPE_FIELDNAME => array ('EVN_UID' => 0, 'PRO_UID' => 1, 'TAS_UID' => 2, 'EVN_TAS_UID_TO' => 3, 'EVN_TAS_STIMATED_DURATION' => 4, 'EVN_WHEN' => 5, 'EVN_MAX_ATTEMPTS' => 6, 'EVN_ACTION' => 7, 'EVN_TEMPLATE' => 8, 'EVN_DIGEST' => 9, 'TRI_UID' => 10, ),
 		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, )
 	);
 
@@ -100,8 +100,8 @@ abstract class BaseAlertPeer {
 	 */
 	public static function getMapBuilder()
 	{
-		include_once 'classes/model/map/AlertMapBuilder.php';
-		return BasePeer::getMapBuilder('classes.model.map.AlertMapBuilder');
+		include_once 'classes/model/map/EventMapBuilder.php';
+		return BasePeer::getMapBuilder('classes.model.map.EventMapBuilder');
 	}
 	/**
 	 * Gets a map (hash) of PHP names to DB column names.
@@ -114,7 +114,7 @@ abstract class BaseAlertPeer {
 	public static function getPhpNameMap()
 	{
 		if (self::$phpNameMap === null) {
-			$map = AlertPeer::getTableMap();
+			$map = EventPeer::getTableMap();
 			$columns = $map->getColumns();
 			$nameMap = array();
 			foreach ($columns as $column) {
@@ -169,12 +169,12 @@ abstract class BaseAlertPeer {
 	 *		$c->addJoin(TablePeer::alias("alias1", TablePeer::PRIMARY_KEY_COLUMN), TablePeer::PRIMARY_KEY_COLUMN);
 	 * </code>
 	 * @param      string $alias The alias for the current table.
-	 * @param      string $column The column name for current table. (i.e. AlertPeer::COLUMN_NAME).
+	 * @param      string $column The column name for current table. (i.e. EventPeer::COLUMN_NAME).
 	 * @return     string
 	 */
 	public static function alias($alias, $column)
 	{
-		return str_replace(AlertPeer::TABLE_NAME.'.', $alias.'.', $column);
+		return str_replace(EventPeer::TABLE_NAME.'.', $alias.'.', $column);
 	}
 
 	/**
@@ -191,32 +191,32 @@ abstract class BaseAlertPeer {
 	public static function addSelectColumns(Criteria $criteria)
 	{
 
-		$criteria->addSelectColumn(AlertPeer::ALT_UID);
+		$criteria->addSelectColumn(EventPeer::EVN_UID);
 
-		$criteria->addSelectColumn(AlertPeer::PRO_UID);
+		$criteria->addSelectColumn(EventPeer::PRO_UID);
 
-		$criteria->addSelectColumn(AlertPeer::TAS_INITIAL);
+		$criteria->addSelectColumn(EventPeer::TAS_UID);
 
-		$criteria->addSelectColumn(AlertPeer::TAS_FINAL);
+		$criteria->addSelectColumn(EventPeer::EVN_TAS_UID_TO);
 
-		$criteria->addSelectColumn(AlertPeer::ALT_TAS_DURATION);
+		$criteria->addSelectColumn(EventPeer::EVN_TAS_STIMATED_DURATION);
 
-		$criteria->addSelectColumn(AlertPeer::ALT_TYPE);
+		$criteria->addSelectColumn(EventPeer::EVN_WHEN);
 
-		$criteria->addSelectColumn(AlertPeer::ALT_DAYS);
+		$criteria->addSelectColumn(EventPeer::EVN_MAX_ATTEMPTS);
 
-		$criteria->addSelectColumn(AlertPeer::ALT_MAX_ATTEMPTS);
+		$criteria->addSelectColumn(EventPeer::EVN_ACTION);
 
-		$criteria->addSelectColumn(AlertPeer::ALT_TEMPLATE);
+		$criteria->addSelectColumn(EventPeer::EVN_TEMPLATE);
 
-		$criteria->addSelectColumn(AlertPeer::ALT_DIGEST);
+		$criteria->addSelectColumn(EventPeer::EVN_DIGEST);
 
-		$criteria->addSelectColumn(AlertPeer::TRI_UID);
+		$criteria->addSelectColumn(EventPeer::TRI_UID);
 
 	}
 
-	const COUNT = 'COUNT(ALERT.ALT_UID)';
-	const COUNT_DISTINCT = 'COUNT(DISTINCT ALERT.ALT_UID)';
+	const COUNT = 'COUNT(EVENT.EVN_UID)';
+	const COUNT_DISTINCT = 'COUNT(DISTINCT EVENT.EVN_UID)';
 
 	/**
 	 * Returns the number of rows matching criteria.
@@ -234,9 +234,9 @@ abstract class BaseAlertPeer {
 		// clear out anything that might confuse the ORDER BY clause
 		$criteria->clearSelectColumns()->clearOrderByColumns();
 		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(AlertPeer::COUNT_DISTINCT);
+			$criteria->addSelectColumn(EventPeer::COUNT_DISTINCT);
 		} else {
-			$criteria->addSelectColumn(AlertPeer::COUNT);
+			$criteria->addSelectColumn(EventPeer::COUNT);
 		}
 
 		// just in case we're grouping: add those columns to the select statement
@@ -245,7 +245,7 @@ abstract class BaseAlertPeer {
 			$criteria->addSelectColumn($column);
 		}
 
-		$rs = AlertPeer::doSelectRS($criteria, $con);
+		$rs = EventPeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
 			return $rs->getInt(1);
 		} else {
@@ -258,7 +258,7 @@ abstract class BaseAlertPeer {
 	 *
 	 * @param      Criteria $criteria object used to create the SELECT statement.
 	 * @param      Connection $con
-	 * @return     Alert
+	 * @return     Event
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -266,7 +266,7 @@ abstract class BaseAlertPeer {
 	{
 		$critcopy = clone $criteria;
 		$critcopy->setLimit(1);
-		$objects = AlertPeer::doSelect($critcopy, $con);
+		$objects = EventPeer::doSelect($critcopy, $con);
 		if ($objects) {
 			return $objects[0];
 		}
@@ -283,7 +283,7 @@ abstract class BaseAlertPeer {
 	 */
 	public static function doSelect(Criteria $criteria, $con = null)
 	{
-		return AlertPeer::populateObjects(AlertPeer::doSelectRS($criteria, $con));
+		return EventPeer::populateObjects(EventPeer::doSelectRS($criteria, $con));
 	}
 	/**
 	 * Prepares the Criteria object and uses the parent doSelect()
@@ -307,7 +307,7 @@ abstract class BaseAlertPeer {
 
 		if (!$criteria->getSelectColumns()) {
 			$criteria = clone $criteria;
-			AlertPeer::addSelectColumns($criteria);
+			EventPeer::addSelectColumns($criteria);
 		}
 
 		// Set the correct dbName
@@ -329,7 +329,7 @@ abstract class BaseAlertPeer {
 		$results = array();
 	
 		// set the class once to avoid overhead in the loop
-		$cls = AlertPeer::getOMClass();
+		$cls = EventPeer::getOMClass();
 		$cls = Propel::import($cls);
 		// populate the object(s)
 		while($rs->next()) {
@@ -364,13 +364,13 @@ abstract class BaseAlertPeer {
 	 */
 	public static function getOMClass()
 	{
-		return AlertPeer::CLASS_DEFAULT;
+		return EventPeer::CLASS_DEFAULT;
 	}
 
 	/**
-	 * Method perform an INSERT on the database, given a Alert or Criteria object.
+	 * Method perform an INSERT on the database, given a Event or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or Alert object containing data that is used to create the INSERT statement.
+	 * @param      mixed $values Criteria or Event object containing data that is used to create the INSERT statement.
 	 * @param      Connection $con the connection to use
 	 * @return     mixed The new primary key.
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -385,7 +385,7 @@ abstract class BaseAlertPeer {
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 		} else {
-			$criteria = $values->buildCriteria(); // build Criteria from Alert object
+			$criteria = $values->buildCriteria(); // build Criteria from Event object
 		}
 
 
@@ -407,9 +407,9 @@ abstract class BaseAlertPeer {
 	}
 
 	/**
-	 * Method perform an UPDATE on the database, given a Alert or Criteria object.
+	 * Method perform an UPDATE on the database, given a Event or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or Alert object containing data that is used to create the UPDATE statement.
+	 * @param      mixed $values Criteria or Event object containing data that is used to create the UPDATE statement.
 	 * @param      Connection $con The connection to use (specify Connection object to exert more control over transactions).
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -426,10 +426,10 @@ abstract class BaseAlertPeer {
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 
-			$comparison = $criteria->getComparison(AlertPeer::ALT_UID);
-			$selectCriteria->add(AlertPeer::ALT_UID, $criteria->remove(AlertPeer::ALT_UID), $comparison);
+			$comparison = $criteria->getComparison(EventPeer::EVN_UID);
+			$selectCriteria->add(EventPeer::EVN_UID, $criteria->remove(EventPeer::EVN_UID), $comparison);
 
-		} else { // $values is Alert object
+		} else { // $values is Event object
 			$criteria = $values->buildCriteria(); // gets full criteria
 			$selectCriteria = $values->buildPkeyCriteria(); // gets criteria w/ primary key(s)
 		}
@@ -441,7 +441,7 @@ abstract class BaseAlertPeer {
 	}
 
 	/**
-	 * Method to DELETE all rows from the ALERT table.
+	 * Method to DELETE all rows from the EVENT table.
 	 *
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 */
@@ -455,7 +455,7 @@ abstract class BaseAlertPeer {
 			// use transaction because $criteria could contain info
 			// for more than one table or we could emulating ON DELETE CASCADE, etc.
 			$con->begin();
-			$affectedRows += BasePeer::doDeleteAll(AlertPeer::TABLE_NAME, $con);
+			$affectedRows += BasePeer::doDeleteAll(EventPeer::TABLE_NAME, $con);
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {
@@ -465,9 +465,9 @@ abstract class BaseAlertPeer {
 	}
 
 	/**
-	 * Method perform a DELETE on the database, given a Alert or Criteria object OR a primary key value.
+	 * Method perform a DELETE on the database, given a Event or Criteria object OR a primary key value.
 	 *
-	 * @param      mixed $values Criteria or Alert object or primary key or array of primary keys
+	 * @param      mixed $values Criteria or Event object or primary key or array of primary keys
 	 *              which is used to create the DELETE statement
 	 * @param      Connection $con the connection to use
 	 * @return     int 	The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -478,18 +478,18 @@ abstract class BaseAlertPeer {
 	 public static function doDelete($values, $con = null)
 	 {
 		if ($con === null) {
-			$con = Propel::getConnection(AlertPeer::DATABASE_NAME);
+			$con = Propel::getConnection(EventPeer::DATABASE_NAME);
 		}
 
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
-		} elseif ($values instanceof Alert) {
+		} elseif ($values instanceof Event) {
 
 			$criteria = $values->buildPkeyCriteria();
 		} else {
 			// it must be the primary key
 			$criteria = new Criteria(self::DATABASE_NAME);
-			$criteria->add(AlertPeer::ALT_UID, (array) $values, Criteria::IN);
+			$criteria->add(EventPeer::EVN_UID, (array) $values, Criteria::IN);
 		}
 
 		// Set the correct dbName
@@ -512,24 +512,24 @@ abstract class BaseAlertPeer {
 	}
 
 	/**
-	 * Validates all modified columns of given Alert object.
+	 * Validates all modified columns of given Event object.
 	 * If parameter $columns is either a single column name or an array of column names
 	 * than only those columns are validated.
 	 *
 	 * NOTICE: This does not apply to primary or foreign keys for now.
 	 *
-	 * @param      Alert $obj The object to validate.
+	 * @param      Event $obj The object to validate.
 	 * @param      mixed $cols Column name or array of column names.
 	 *
 	 * @return     mixed TRUE if all columns are valid or the error message of the first invalid column.
 	 */
-	public static function doValidate(Alert $obj, $cols = null)
+	public static function doValidate(Event $obj, $cols = null)
 	{
 		$columns = array();
 
 		if ($cols) {
-			$dbMap = Propel::getDatabaseMap(AlertPeer::DATABASE_NAME);
-			$tableMap = $dbMap->getTable(AlertPeer::TABLE_NAME);
+			$dbMap = Propel::getDatabaseMap(EventPeer::DATABASE_NAME);
+			$tableMap = $dbMap->getTable(EventPeer::TABLE_NAME);
 
 			if (! is_array($cols)) {
 				$cols = array($cols);
@@ -545,7 +545,7 @@ abstract class BaseAlertPeer {
 
 		}
 
-		return BasePeer::doValidate(AlertPeer::DATABASE_NAME, AlertPeer::TABLE_NAME, $columns);
+		return BasePeer::doValidate(EventPeer::DATABASE_NAME, EventPeer::TABLE_NAME, $columns);
 	}
 
 	/**
@@ -553,7 +553,7 @@ abstract class BaseAlertPeer {
 	 *
 	 * @param      mixed $pk the primary key.
 	 * @param      Connection $con the connection to use
-	 * @return     Alert
+	 * @return     Event
 	 */
 	public static function retrieveByPK($pk, $con = null)
 	{
@@ -561,12 +561,12 @@ abstract class BaseAlertPeer {
 			$con = Propel::getConnection(self::DATABASE_NAME);
 		}
 
-		$criteria = new Criteria(AlertPeer::DATABASE_NAME);
+		$criteria = new Criteria(EventPeer::DATABASE_NAME);
 
-		$criteria->add(AlertPeer::ALT_UID, $pk);
+		$criteria->add(EventPeer::EVN_UID, $pk);
 
 
-		$v = AlertPeer::doSelect($criteria, $con);
+		$v = EventPeer::doSelect($criteria, $con);
 
 		return !empty($v) > 0 ? $v[0] : null;
 	}
@@ -590,26 +590,26 @@ abstract class BaseAlertPeer {
 			$objs = array();
 		} else {
 			$criteria = new Criteria();
-			$criteria->add(AlertPeer::ALT_UID, $pks, Criteria::IN);
-			$objs = AlertPeer::doSelect($criteria, $con);
+			$criteria->add(EventPeer::EVN_UID, $pks, Criteria::IN);
+			$objs = EventPeer::doSelect($criteria, $con);
 		}
 		return $objs;
 	}
 
-} // BaseAlertPeer
+} // BaseEventPeer
 
 // static code to register the map builder for this Peer with the main Propel class
 if (Propel::isInit()) {
 	// the MapBuilder classes register themselves with Propel during initialization
 	// so we need to load them here.
 	try {
-		BaseAlertPeer::getMapBuilder();
+		BaseEventPeer::getMapBuilder();
 	} catch (Exception $e) {
 		Propel::log('Could not initialize Peer: ' . $e->getMessage(), Propel::LOG_ERR);
 	}
 } else {
 	// even if Propel is not yet initialized, the map builder class can be registered
 	// now and then it will be loaded when Propel initializes.
-	require_once 'classes/model/map/AlertMapBuilder.php';
-	Propel::registerMapBuilder('classes.model.map.AlertMapBuilder');
+	require_once 'classes/model/map/EventMapBuilder.php';
+	Propel::registerMapBuilder('classes.model.map.EventMapBuilder');
 }

@@ -5,7 +5,7 @@ include_once 'creole/CreoleTypes.php';
 
 
 /**
- * This class adds structure of 'ALERT' table to 'workflow' DatabaseMap object.
+ * This class adds structure of 'EVENT' table to 'workflow' DatabaseMap object.
  *
  *
  *
@@ -16,12 +16,12 @@ include_once 'creole/CreoleTypes.php';
  *
  * @package    classes.model.map
  */
-class AlertMapBuilder {
+class EventMapBuilder {
 
 	/**
 	 * The (dot-path) name of this class
 	 */
-	const CLASS_NAME = 'classes.model.map.AlertMapBuilder';
+	const CLASS_NAME = 'classes.model.map.EventMapBuilder';
 
 	/**
 	 * The database map.
@@ -59,33 +59,33 @@ class AlertMapBuilder {
 	{
 		$this->dbMap = Propel::getDatabaseMap('workflow');
 
-		$tMap = $this->dbMap->addTable('ALERT');
-		$tMap->setPhpName('Alert');
+		$tMap = $this->dbMap->addTable('EVENT');
+		$tMap->setPhpName('Event');
 
 		$tMap->setUseIdGenerator(false);
 
-		$tMap->addPrimaryKey('ALT_UID', 'AltUid', 'string', CreoleTypes::VARCHAR, true, 32);
+		$tMap->addPrimaryKey('EVN_UID', 'EvnUid', 'string', CreoleTypes::VARCHAR, true, 32);
 
 		$tMap->addColumn('PRO_UID', 'ProUid', 'string', CreoleTypes::VARCHAR, true, 32);
 
-		$tMap->addColumn('TAS_INITIAL', 'TasInitial', 'string', CreoleTypes::VARCHAR, true, 32);
+		$tMap->addColumn('TAS_UID', 'TasUid', 'string', CreoleTypes::VARCHAR, true, 32);
 
-		$tMap->addColumn('TAS_FINAL', 'TasFinal', 'string', CreoleTypes::VARCHAR, false, 32);
+		$tMap->addColumn('EVN_TAS_UID_TO', 'EvnTasUidTo', 'string', CreoleTypes::VARCHAR, false, 32);
 
-		$tMap->addColumn('ALT_TAS_DURATION', 'AltTasDuration', 'double', CreoleTypes::DOUBLE, false, null);
+		$tMap->addColumn('EVN_TAS_STIMATED_DURATION', 'EvnTasStimatedDuration', 'double', CreoleTypes::DOUBLE, false, null);
 
-		$tMap->addColumn('ALT_TYPE', 'AltType', 'string', CreoleTypes::VARCHAR, true, 32);
+		$tMap->addColumn('EVN_WHEN', 'EvnWhen', 'double', CreoleTypes::DOUBLE, false, null);
 
-		$tMap->addColumn('ALT_DAYS', 'AltDays', 'double', CreoleTypes::DOUBLE, false, null);
+		$tMap->addColumn('EVN_MAX_ATTEMPTS', 'EvnMaxAttempts', 'int', CreoleTypes::TINYINT, true, null);
 
-		$tMap->addColumn('ALT_MAX_ATTEMPTS', 'AltMaxAttempts', 'int', CreoleTypes::TINYINT, true, null);
+		$tMap->addColumn('EVN_ACTION', 'EvnAction', 'string', CreoleTypes::VARCHAR, true, 50);
 
-		$tMap->addColumn('ALT_TEMPLATE', 'AltTemplate', 'string', CreoleTypes::VARCHAR, true, 100);
+		$tMap->addColumn('EVN_TEMPLATE', 'EvnTemplate', 'string', CreoleTypes::VARCHAR, true, 100);
 
-		$tMap->addColumn('ALT_DIGEST', 'AltDigest', 'int', CreoleTypes::TINYINT, true, null);
+		$tMap->addColumn('EVN_DIGEST', 'EvnDigest', 'int', CreoleTypes::TINYINT, true, null);
 
 		$tMap->addColumn('TRI_UID', 'TriUid', 'string', CreoleTypes::VARCHAR, true, 32);
 
 	} // doBuild()
 
-} // AlertMapBuilder
+} // EventMapBuilder

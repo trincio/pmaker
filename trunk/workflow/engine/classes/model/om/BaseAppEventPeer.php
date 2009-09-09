@@ -2,26 +2,26 @@
 
 require_once 'propel/util/BasePeer.php';
 // The object class -- needed for instanceof checks in this class.
-// actual class may be a subclass -- as returned by AppAlertPeer::getOMClass()
-include_once 'classes/model/AppAlert.php';
+// actual class may be a subclass -- as returned by AppEventPeer::getOMClass()
+include_once 'classes/model/AppEvent.php';
 
 /**
- * Base static class for performing query and update operations on the 'APP_ALERT' table.
+ * Base static class for performing query and update operations on the 'APP_EVENT' table.
  *
  * 
  *
  * @package    classes.model.om
  */
-abstract class BaseAppAlertPeer {
+abstract class BaseAppEventPeer {
 
 	/** the default database name for this class */
 	const DATABASE_NAME = 'workflow';
 
 	/** the table name for this class */
-	const TABLE_NAME = 'APP_ALERT';
+	const TABLE_NAME = 'APP_EVENT';
 
 	/** A class that can be returned by this peer. */
-	const CLASS_DEFAULT = 'classes.model.AppAlert';
+	const CLASS_DEFAULT = 'classes.model.AppEvent';
 
 	/** The total number of columns. */
 	const NUM_COLUMNS = 7;
@@ -31,25 +31,25 @@ abstract class BaseAppAlertPeer {
 
 
 	/** the column name for the APP_UID field */
-	const APP_UID = 'APP_ALERT.APP_UID';
+	const APP_UID = 'APP_EVENT.APP_UID';
 
 	/** the column name for the DEL_INDEX field */
-	const DEL_INDEX = 'APP_ALERT.DEL_INDEX';
+	const DEL_INDEX = 'APP_EVENT.DEL_INDEX';
 
-	/** the column name for the ALT_UID field */
-	const ALT_UID = 'APP_ALERT.ALT_UID';
+	/** the column name for the EVN_UID field */
+	const EVN_UID = 'APP_EVENT.EVN_UID';
 
-	/** the column name for the APP_ALT_ACTION_DATE field */
-	const APP_ALT_ACTION_DATE = 'APP_ALERT.APP_ALT_ACTION_DATE';
+	/** the column name for the APP_EVN_ACTION_DATE field */
+	const APP_EVN_ACTION_DATE = 'APP_EVENT.APP_EVN_ACTION_DATE';
 
-	/** the column name for the APP_ALT_ATTEMPTS field */
-	const APP_ALT_ATTEMPTS = 'APP_ALERT.APP_ALT_ATTEMPTS';
+	/** the column name for the APP_EVN_ATTEMPTS field */
+	const APP_EVN_ATTEMPTS = 'APP_EVENT.APP_EVN_ATTEMPTS';
 
-	/** the column name for the APP_ALT_LAST_EXECUTION_DATE field */
-	const APP_ALT_LAST_EXECUTION_DATE = 'APP_ALERT.APP_ALT_LAST_EXECUTION_DATE';
+	/** the column name for the APP_EVN_LAST_EXECUTION_DATE field */
+	const APP_EVN_LAST_EXECUTION_DATE = 'APP_EVENT.APP_EVN_LAST_EXECUTION_DATE';
 
-	/** the column name for the APP_ALT_STATUS field */
-	const APP_ALT_STATUS = 'APP_ALERT.APP_ALT_STATUS';
+	/** the column name for the APP_EVN_STATUS field */
+	const APP_EVN_STATUS = 'APP_EVENT.APP_EVN_STATUS';
 
 	/** The PHP to DB Name Mapping */
 	private static $phpNameMap = null;
@@ -62,9 +62,9 @@ abstract class BaseAppAlertPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('AppUid', 'DelIndex', 'AltUid', 'AppAltActionDate', 'AppAltAttempts', 'AppAltLastExecutionDate', 'AppAltStatus', ),
-		BasePeer::TYPE_COLNAME => array (AppAlertPeer::APP_UID, AppAlertPeer::DEL_INDEX, AppAlertPeer::ALT_UID, AppAlertPeer::APP_ALT_ACTION_DATE, AppAlertPeer::APP_ALT_ATTEMPTS, AppAlertPeer::APP_ALT_LAST_EXECUTION_DATE, AppAlertPeer::APP_ALT_STATUS, ),
-		BasePeer::TYPE_FIELDNAME => array ('APP_UID', 'DEL_INDEX', 'ALT_UID', 'APP_ALT_ACTION_DATE', 'APP_ALT_ATTEMPTS', 'APP_ALT_LAST_EXECUTION_DATE', 'APP_ALT_STATUS', ),
+		BasePeer::TYPE_PHPNAME => array ('AppUid', 'DelIndex', 'EvnUid', 'AppEvnActionDate', 'AppEvnAttempts', 'AppEvnLastExecutionDate', 'AppEvnStatus', ),
+		BasePeer::TYPE_COLNAME => array (AppEventPeer::APP_UID, AppEventPeer::DEL_INDEX, AppEventPeer::EVN_UID, AppEventPeer::APP_EVN_ACTION_DATE, AppEventPeer::APP_EVN_ATTEMPTS, AppEventPeer::APP_EVN_LAST_EXECUTION_DATE, AppEventPeer::APP_EVN_STATUS, ),
+		BasePeer::TYPE_FIELDNAME => array ('APP_UID', 'DEL_INDEX', 'EVN_UID', 'APP_EVN_ACTION_DATE', 'APP_EVN_ATTEMPTS', 'APP_EVN_LAST_EXECUTION_DATE', 'APP_EVN_STATUS', ),
 		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
@@ -75,9 +75,9 @@ abstract class BaseAppAlertPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('AppUid' => 0, 'DelIndex' => 1, 'AltUid' => 2, 'AppAltActionDate' => 3, 'AppAltAttempts' => 4, 'AppAltLastExecutionDate' => 5, 'AppAltStatus' => 6, ),
-		BasePeer::TYPE_COLNAME => array (AppAlertPeer::APP_UID => 0, AppAlertPeer::DEL_INDEX => 1, AppAlertPeer::ALT_UID => 2, AppAlertPeer::APP_ALT_ACTION_DATE => 3, AppAlertPeer::APP_ALT_ATTEMPTS => 4, AppAlertPeer::APP_ALT_LAST_EXECUTION_DATE => 5, AppAlertPeer::APP_ALT_STATUS => 6, ),
-		BasePeer::TYPE_FIELDNAME => array ('APP_UID' => 0, 'DEL_INDEX' => 1, 'ALT_UID' => 2, 'APP_ALT_ACTION_DATE' => 3, 'APP_ALT_ATTEMPTS' => 4, 'APP_ALT_LAST_EXECUTION_DATE' => 5, 'APP_ALT_STATUS' => 6, ),
+		BasePeer::TYPE_PHPNAME => array ('AppUid' => 0, 'DelIndex' => 1, 'EvnUid' => 2, 'AppEvnActionDate' => 3, 'AppEvnAttempts' => 4, 'AppEvnLastExecutionDate' => 5, 'AppEvnStatus' => 6, ),
+		BasePeer::TYPE_COLNAME => array (AppEventPeer::APP_UID => 0, AppEventPeer::DEL_INDEX => 1, AppEventPeer::EVN_UID => 2, AppEventPeer::APP_EVN_ACTION_DATE => 3, AppEventPeer::APP_EVN_ATTEMPTS => 4, AppEventPeer::APP_EVN_LAST_EXECUTION_DATE => 5, AppEventPeer::APP_EVN_STATUS => 6, ),
+		BasePeer::TYPE_FIELDNAME => array ('APP_UID' => 0, 'DEL_INDEX' => 1, 'EVN_UID' => 2, 'APP_EVN_ACTION_DATE' => 3, 'APP_EVN_ATTEMPTS' => 4, 'APP_EVN_LAST_EXECUTION_DATE' => 5, 'APP_EVN_STATUS' => 6, ),
 		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, 6, )
 	);
 
@@ -88,8 +88,8 @@ abstract class BaseAppAlertPeer {
 	 */
 	public static function getMapBuilder()
 	{
-		include_once 'classes/model/map/AppAlertMapBuilder.php';
-		return BasePeer::getMapBuilder('classes.model.map.AppAlertMapBuilder');
+		include_once 'classes/model/map/AppEventMapBuilder.php';
+		return BasePeer::getMapBuilder('classes.model.map.AppEventMapBuilder');
 	}
 	/**
 	 * Gets a map (hash) of PHP names to DB column names.
@@ -102,7 +102,7 @@ abstract class BaseAppAlertPeer {
 	public static function getPhpNameMap()
 	{
 		if (self::$phpNameMap === null) {
-			$map = AppAlertPeer::getTableMap();
+			$map = AppEventPeer::getTableMap();
 			$columns = $map->getColumns();
 			$nameMap = array();
 			foreach ($columns as $column) {
@@ -157,12 +157,12 @@ abstract class BaseAppAlertPeer {
 	 *		$c->addJoin(TablePeer::alias("alias1", TablePeer::PRIMARY_KEY_COLUMN), TablePeer::PRIMARY_KEY_COLUMN);
 	 * </code>
 	 * @param      string $alias The alias for the current table.
-	 * @param      string $column The column name for current table. (i.e. AppAlertPeer::COLUMN_NAME).
+	 * @param      string $column The column name for current table. (i.e. AppEventPeer::COLUMN_NAME).
 	 * @return     string
 	 */
 	public static function alias($alias, $column)
 	{
-		return str_replace(AppAlertPeer::TABLE_NAME.'.', $alias.'.', $column);
+		return str_replace(AppEventPeer::TABLE_NAME.'.', $alias.'.', $column);
 	}
 
 	/**
@@ -179,24 +179,24 @@ abstract class BaseAppAlertPeer {
 	public static function addSelectColumns(Criteria $criteria)
 	{
 
-		$criteria->addSelectColumn(AppAlertPeer::APP_UID);
+		$criteria->addSelectColumn(AppEventPeer::APP_UID);
 
-		$criteria->addSelectColumn(AppAlertPeer::DEL_INDEX);
+		$criteria->addSelectColumn(AppEventPeer::DEL_INDEX);
 
-		$criteria->addSelectColumn(AppAlertPeer::ALT_UID);
+		$criteria->addSelectColumn(AppEventPeer::EVN_UID);
 
-		$criteria->addSelectColumn(AppAlertPeer::APP_ALT_ACTION_DATE);
+		$criteria->addSelectColumn(AppEventPeer::APP_EVN_ACTION_DATE);
 
-		$criteria->addSelectColumn(AppAlertPeer::APP_ALT_ATTEMPTS);
+		$criteria->addSelectColumn(AppEventPeer::APP_EVN_ATTEMPTS);
 
-		$criteria->addSelectColumn(AppAlertPeer::APP_ALT_LAST_EXECUTION_DATE);
+		$criteria->addSelectColumn(AppEventPeer::APP_EVN_LAST_EXECUTION_DATE);
 
-		$criteria->addSelectColumn(AppAlertPeer::APP_ALT_STATUS);
+		$criteria->addSelectColumn(AppEventPeer::APP_EVN_STATUS);
 
 	}
 
-	const COUNT = 'COUNT(APP_ALERT.APP_UID)';
-	const COUNT_DISTINCT = 'COUNT(DISTINCT APP_ALERT.APP_UID)';
+	const COUNT = 'COUNT(APP_EVENT.APP_UID)';
+	const COUNT_DISTINCT = 'COUNT(DISTINCT APP_EVENT.APP_UID)';
 
 	/**
 	 * Returns the number of rows matching criteria.
@@ -214,9 +214,9 @@ abstract class BaseAppAlertPeer {
 		// clear out anything that might confuse the ORDER BY clause
 		$criteria->clearSelectColumns()->clearOrderByColumns();
 		if ($distinct || in_array(Criteria::DISTINCT, $criteria->getSelectModifiers())) {
-			$criteria->addSelectColumn(AppAlertPeer::COUNT_DISTINCT);
+			$criteria->addSelectColumn(AppEventPeer::COUNT_DISTINCT);
 		} else {
-			$criteria->addSelectColumn(AppAlertPeer::COUNT);
+			$criteria->addSelectColumn(AppEventPeer::COUNT);
 		}
 
 		// just in case we're grouping: add those columns to the select statement
@@ -225,7 +225,7 @@ abstract class BaseAppAlertPeer {
 			$criteria->addSelectColumn($column);
 		}
 
-		$rs = AppAlertPeer::doSelectRS($criteria, $con);
+		$rs = AppEventPeer::doSelectRS($criteria, $con);
 		if ($rs->next()) {
 			return $rs->getInt(1);
 		} else {
@@ -238,7 +238,7 @@ abstract class BaseAppAlertPeer {
 	 *
 	 * @param      Criteria $criteria object used to create the SELECT statement.
 	 * @param      Connection $con
-	 * @return     AppAlert
+	 * @return     AppEvent
 	 * @throws     PropelException Any exceptions caught during processing will be
 	 *		 rethrown wrapped into a PropelException.
 	 */
@@ -246,7 +246,7 @@ abstract class BaseAppAlertPeer {
 	{
 		$critcopy = clone $criteria;
 		$critcopy->setLimit(1);
-		$objects = AppAlertPeer::doSelect($critcopy, $con);
+		$objects = AppEventPeer::doSelect($critcopy, $con);
 		if ($objects) {
 			return $objects[0];
 		}
@@ -263,7 +263,7 @@ abstract class BaseAppAlertPeer {
 	 */
 	public static function doSelect(Criteria $criteria, $con = null)
 	{
-		return AppAlertPeer::populateObjects(AppAlertPeer::doSelectRS($criteria, $con));
+		return AppEventPeer::populateObjects(AppEventPeer::doSelectRS($criteria, $con));
 	}
 	/**
 	 * Prepares the Criteria object and uses the parent doSelect()
@@ -287,7 +287,7 @@ abstract class BaseAppAlertPeer {
 
 		if (!$criteria->getSelectColumns()) {
 			$criteria = clone $criteria;
-			AppAlertPeer::addSelectColumns($criteria);
+			AppEventPeer::addSelectColumns($criteria);
 		}
 
 		// Set the correct dbName
@@ -309,7 +309,7 @@ abstract class BaseAppAlertPeer {
 		$results = array();
 	
 		// set the class once to avoid overhead in the loop
-		$cls = AppAlertPeer::getOMClass();
+		$cls = AppEventPeer::getOMClass();
 		$cls = Propel::import($cls);
 		// populate the object(s)
 		while($rs->next()) {
@@ -344,13 +344,13 @@ abstract class BaseAppAlertPeer {
 	 */
 	public static function getOMClass()
 	{
-		return AppAlertPeer::CLASS_DEFAULT;
+		return AppEventPeer::CLASS_DEFAULT;
 	}
 
 	/**
-	 * Method perform an INSERT on the database, given a AppAlert or Criteria object.
+	 * Method perform an INSERT on the database, given a AppEvent or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or AppAlert object containing data that is used to create the INSERT statement.
+	 * @param      mixed $values Criteria or AppEvent object containing data that is used to create the INSERT statement.
 	 * @param      Connection $con the connection to use
 	 * @return     mixed The new primary key.
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -365,7 +365,7 @@ abstract class BaseAppAlertPeer {
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 		} else {
-			$criteria = $values->buildCriteria(); // build Criteria from AppAlert object
+			$criteria = $values->buildCriteria(); // build Criteria from AppEvent object
 		}
 
 
@@ -387,9 +387,9 @@ abstract class BaseAppAlertPeer {
 	}
 
 	/**
-	 * Method perform an UPDATE on the database, given a AppAlert or Criteria object.
+	 * Method perform an UPDATE on the database, given a AppEvent or Criteria object.
 	 *
-	 * @param      mixed $values Criteria or AppAlert object containing data that is used to create the UPDATE statement.
+	 * @param      mixed $values Criteria or AppEvent object containing data that is used to create the UPDATE statement.
 	 * @param      Connection $con The connection to use (specify Connection object to exert more control over transactions).
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 * @throws     PropelException Any exceptions caught during processing will be
@@ -406,13 +406,13 @@ abstract class BaseAppAlertPeer {
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
 
-			$comparison = $criteria->getComparison(AppAlertPeer::APP_UID);
-			$selectCriteria->add(AppAlertPeer::APP_UID, $criteria->remove(AppAlertPeer::APP_UID), $comparison);
+			$comparison = $criteria->getComparison(AppEventPeer::APP_UID);
+			$selectCriteria->add(AppEventPeer::APP_UID, $criteria->remove(AppEventPeer::APP_UID), $comparison);
 
-			$comparison = $criteria->getComparison(AppAlertPeer::DEL_INDEX);
-			$selectCriteria->add(AppAlertPeer::DEL_INDEX, $criteria->remove(AppAlertPeer::DEL_INDEX), $comparison);
+			$comparison = $criteria->getComparison(AppEventPeer::DEL_INDEX);
+			$selectCriteria->add(AppEventPeer::DEL_INDEX, $criteria->remove(AppEventPeer::DEL_INDEX), $comparison);
 
-		} else { // $values is AppAlert object
+		} else { // $values is AppEvent object
 			$criteria = $values->buildCriteria(); // gets full criteria
 			$selectCriteria = $values->buildPkeyCriteria(); // gets criteria w/ primary key(s)
 		}
@@ -424,7 +424,7 @@ abstract class BaseAppAlertPeer {
 	}
 
 	/**
-	 * Method to DELETE all rows from the APP_ALERT table.
+	 * Method to DELETE all rows from the APP_EVENT table.
 	 *
 	 * @return     int The number of affected rows (if supported by underlying database driver).
 	 */
@@ -438,7 +438,7 @@ abstract class BaseAppAlertPeer {
 			// use transaction because $criteria could contain info
 			// for more than one table or we could emulating ON DELETE CASCADE, etc.
 			$con->begin();
-			$affectedRows += BasePeer::doDeleteAll(AppAlertPeer::TABLE_NAME, $con);
+			$affectedRows += BasePeer::doDeleteAll(AppEventPeer::TABLE_NAME, $con);
 			$con->commit();
 			return $affectedRows;
 		} catch (PropelException $e) {
@@ -448,9 +448,9 @@ abstract class BaseAppAlertPeer {
 	}
 
 	/**
-	 * Method perform a DELETE on the database, given a AppAlert or Criteria object OR a primary key value.
+	 * Method perform a DELETE on the database, given a AppEvent or Criteria object OR a primary key value.
 	 *
-	 * @param      mixed $values Criteria or AppAlert object or primary key or array of primary keys
+	 * @param      mixed $values Criteria or AppEvent object or primary key or array of primary keys
 	 *              which is used to create the DELETE statement
 	 * @param      Connection $con the connection to use
 	 * @return     int 	The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -461,12 +461,12 @@ abstract class BaseAppAlertPeer {
 	 public static function doDelete($values, $con = null)
 	 {
 		if ($con === null) {
-			$con = Propel::getConnection(AppAlertPeer::DATABASE_NAME);
+			$con = Propel::getConnection(AppEventPeer::DATABASE_NAME);
 		}
 
 		if ($values instanceof Criteria) {
 			$criteria = clone $values; // rename for clarity
-		} elseif ($values instanceof AppAlert) {
+		} elseif ($values instanceof AppEvent) {
 
 			$criteria = $values->buildPkeyCriteria();
 		} else {
@@ -488,8 +488,8 @@ abstract class BaseAppAlertPeer {
 				$vals[1][] = $value[1];
 			}
 
-			$criteria->add(AppAlertPeer::APP_UID, $vals[0], Criteria::IN);
-			$criteria->add(AppAlertPeer::DEL_INDEX, $vals[1], Criteria::IN);
+			$criteria->add(AppEventPeer::APP_UID, $vals[0], Criteria::IN);
+			$criteria->add(AppEventPeer::DEL_INDEX, $vals[1], Criteria::IN);
 		}
 
 		// Set the correct dbName
@@ -512,24 +512,24 @@ abstract class BaseAppAlertPeer {
 	}
 
 	/**
-	 * Validates all modified columns of given AppAlert object.
+	 * Validates all modified columns of given AppEvent object.
 	 * If parameter $columns is either a single column name or an array of column names
 	 * than only those columns are validated.
 	 *
 	 * NOTICE: This does not apply to primary or foreign keys for now.
 	 *
-	 * @param      AppAlert $obj The object to validate.
+	 * @param      AppEvent $obj The object to validate.
 	 * @param      mixed $cols Column name or array of column names.
 	 *
 	 * @return     mixed TRUE if all columns are valid or the error message of the first invalid column.
 	 */
-	public static function doValidate(AppAlert $obj, $cols = null)
+	public static function doValidate(AppEvent $obj, $cols = null)
 	{
 		$columns = array();
 
 		if ($cols) {
-			$dbMap = Propel::getDatabaseMap(AppAlertPeer::DATABASE_NAME);
-			$tableMap = $dbMap->getTable(AppAlertPeer::TABLE_NAME);
+			$dbMap = Propel::getDatabaseMap(AppEventPeer::DATABASE_NAME);
+			$tableMap = $dbMap->getTable(AppEventPeer::TABLE_NAME);
 
 			if (! is_array($cols)) {
 				$cols = array($cols);
@@ -545,7 +545,7 @@ abstract class BaseAppAlertPeer {
 
 		}
 
-		return BasePeer::doValidate(AppAlertPeer::DATABASE_NAME, AppAlertPeer::TABLE_NAME, $columns);
+		return BasePeer::doValidate(AppEventPeer::DATABASE_NAME, AppEventPeer::TABLE_NAME, $columns);
 	}
 
 	/**
@@ -554,33 +554,33 @@ abstract class BaseAppAlertPeer {
 	   @param int $del_index
 	   
 	 * @param      Connection $con
-	 * @return     AppAlert
+	 * @return     AppEvent
 	 */
 	public static function retrieveByPK( $app_uid, $del_index, $con = null) {
 		if ($con === null) {
 			$con = Propel::getConnection(self::DATABASE_NAME);
 		}
 		$criteria = new Criteria();
-		$criteria->add(AppAlertPeer::APP_UID, $app_uid);
-		$criteria->add(AppAlertPeer::DEL_INDEX, $del_index);
-		$v = AppAlertPeer::doSelect($criteria, $con);
+		$criteria->add(AppEventPeer::APP_UID, $app_uid);
+		$criteria->add(AppEventPeer::DEL_INDEX, $del_index);
+		$v = AppEventPeer::doSelect($criteria, $con);
 
 		return !empty($v) ? $v[0] : null;
 	}
-} // BaseAppAlertPeer
+} // BaseAppEventPeer
 
 // static code to register the map builder for this Peer with the main Propel class
 if (Propel::isInit()) {
 	// the MapBuilder classes register themselves with Propel during initialization
 	// so we need to load them here.
 	try {
-		BaseAppAlertPeer::getMapBuilder();
+		BaseAppEventPeer::getMapBuilder();
 	} catch (Exception $e) {
 		Propel::log('Could not initialize Peer: ' . $e->getMessage(), Propel::LOG_ERR);
 	}
 } else {
 	// even if Propel is not yet initialized, the map builder class can be registered
 	// now and then it will be loaded when Propel initializes.
-	require_once 'classes/model/map/AppAlertMapBuilder.php';
-	Propel::registerMapBuilder('classes.model.map.AppAlertMapBuilder');
+	require_once 'classes/model/map/AppEventMapBuilder.php';
+	Propel::registerMapBuilder('classes.model.map.AppEventMapBuilder');
 }
