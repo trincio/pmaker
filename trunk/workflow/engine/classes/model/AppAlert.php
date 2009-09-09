@@ -109,7 +109,7 @@ class AppAlert extends BaseAppAlert {
     }
   }
 
-  function sendAlerts($sLastExecution) {
+  function sendAlerts($sLastExecution, $sNow) {
     try {
       $oCriteria = new Criteria('workflow');
       $oCriteria->addSelectColumn(AppAlertPeer::APP_UID);
@@ -125,6 +125,7 @@ class AppAlert extends BaseAppAlert {
       $oCriteria->addSelectColumn(AlertPeer::TRI_UID);
       $oCriteria->addSelectColumn(AppDelegationPeer::USR_UID);
       $oCriteria->addSelectColumn(AppDelegationPeer::DEL_TASK_DUE_DATE);
+      $oCriteria->addSelectColumn(AppDelegationPeer::DEL_FINISH_DATE);
       $oCriteria->addAsColumn('TAS_TITLE', ContentPeer::CON_VALUE);
       $oCriteria->addJoin(AppAlertPeer::ALT_UID, AlertPeer::ALT_UID, Criteria::LEFT_JOIN);
       $aConditions   = array();
@@ -139,6 +140,7 @@ class AppAlert extends BaseAppAlert {
       $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
       $oCriteria->add(AppAlertPeer::APP_ALT_ATTEMPTS, 0, Criteria::GREATER_THAN);
       $oCriteria->add(AppAlertPeer::APP_ALT_STATUS, 'OPEN');
+      $oCriteria->add(AppAlertPeer::APP_ALT_ACTION_DATE, $sNow, Criteria::LESS_EQUAL);
       if ($sLastExecution != '') {
         $oCriteria->add(AppAlertPeer::APP_ALT_ACTION_DATE, $sLastExecution, Criteria::GREATER_EQUAL);
       }
@@ -176,7 +178,7 @@ class AppAlert extends BaseAppAlert {
                                'MESS_PASSWORD' => $aConfiguration['MESS_PASSWORD'],
                                'SMTPAuth'      => $aConfiguration['MESS_RAUTH']));
       G::LoadClass('spool');
-      $oCase = new Cases();
+      $oCase = new Cases();header('Content-Type: text/plain;');
       while ($aRow = $oDataset->getRow()) {
         $sContent = '';
         if ($aRow['ALT_TEMPLATE'] != '') {
@@ -185,7 +187,7 @@ class AppAlert extends BaseAppAlert {
         else {
           $sContent = file_get_contents(PATH_HOME. 'engine' . PATH_SEP . 'templates' . PATH_SEP . 'mails' . PATH_SEP . 'alert_message.html');
         }
-        if ($sContent != '') {
+        if (($sContent != '') && ($aRow['DEL_FINISH_DATE'] == null)) {
           $oCriteria = new Criteria('workflow');
 	        $oCriteria->add(UsersPeer::USR_UID, $aRow['USR_UID']);
     	    $oDatasetu = UsersPeer::doSelectRS($oCriteria);

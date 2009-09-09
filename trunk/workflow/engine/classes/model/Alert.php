@@ -206,12 +206,12 @@ class Alert extends BaseAlert {
       $oCriteria->addSelectColumn(AppDelegationPeer::PRO_UID);
       $oCriteria->addSelectColumn(AppDelegationPeer::DEL_INIT_DATE);
       $oCriteria->addSelectColumn(AppDelegationPeer::DEL_TASK_DUE_DATE);
-      $aConditions   = array();
-      $aConditions[] = array(AppDelegationPeer::APP_UID, AppAlertPeer::APP_UID);
-      $aConditions[] = array(AppDelegationPeer::DEL_INDEX, AppAlertPeer::DEL_INDEX);
+      //$aConditions   = array();
+      //$aConditions[] = array(AppDelegationPeer::APP_UID, AppAlertPeer::APP_UID);
+      //$aConditions[] = array(AppDelegationPeer::DEL_INDEX, AppAlertPeer::DEL_INDEX);
       //$oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
       $oCriteria->add(AppDelegationPeer::PRO_UID, $aProcesses, Criteria::IN);
-      $oCriteria->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNOTNULL);
+      $oCriteria->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
       //$oCriteria->add(AppAlertPeer::ALT_UID, null, Criteria::ISNULL);
       $oDataset = AppDelegationPeer::doSelectRs($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
@@ -230,7 +230,6 @@ class Alert extends BaseAlert {
             else {
               $sDueDate = $aData['DEL_TASK_DUE_DATE'];
             }
-            //echo date('Y-m-d H:i:s', $oDates->calculateDate($sDueDate, -1, 'days', 1)) . ' | ' . $sDueDate . ' | ' . date('Y-m-d H:i:s', $oDates->calculateDate($sDueDate, 1, 'days', 1)) . '<br />';
             switch ($aAlert['ALT_TYPE']) {
               case 'BEFORE':
                 $sActionDate = date('Y-m-d H:i:s', $oDates->calculateDate($sDueDate, (-1) * $aAlert['ALT_DAYS'], 'days', 1));
@@ -241,9 +240,9 @@ class Alert extends BaseAlert {
               case 'AFTER':
                 $sActionDate = date('Y-m-d H:i:s', $oDates->calculateDate($sDueDate, $aAlert['ALT_DAYS'], 'days', 1));
               break;
-              case 'RECURRENT':
+              /*case 'RECURRENT':
                 $sActionDate = date('Y-m-d H:i:s');
-              break;
+              break;*/
             }
             $oAppAlert = new AppAlert();
             $oAppAlert->create(array('APP_UID'                     => $aData['APP_UID'],
