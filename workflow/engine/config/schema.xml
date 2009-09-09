@@ -5712,7 +5712,7 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="EVN_WHEN" type="DOUBLE" required="false" default="0">
+    <column name="EVN_WHEN" type="DOUBLE" required="true" default="0">
       <vendor type="mysql">
         <parameter name="Field" value="EVN_WHEN"/>
         <parameter name="Type" value="double"/>
@@ -5742,7 +5742,7 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="EVN_TEMPLATE" type="VARCHAR" size="100" required="true" default="">
+    <column name="EVN_TEMPLATE" type="VARCHAR" size="100" required="false" default="">
       <vendor type="mysql">
         <parameter name="Field" value="EVN_TEMPLATE"/>
         <parameter name="Type" value="varchar(100)"/>
@@ -5752,7 +5752,7 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="EVN_DIGEST" type="TINYINT" required="true" default="1">
+    <column name="EVN_DIGEST" type="TINYINT" required="false" default="1">
       <vendor type="mysql">
         <parameter name="Field" value="EVN_DIGEST"/>
         <parameter name="Type" value="tinyint(1)"/>
@@ -5762,7 +5762,7 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="TRI_UID" type="VARCHAR" size="32" required="true" default="">
+    <column name="TRI_UID" type="VARCHAR" size="32" required="false" default="">
       <vendor type="mysql">
         <parameter name="Field" value="TRI_UID"/>
         <parameter name="Type" value="varchar(32)"/>
