@@ -74,17 +74,17 @@ class EventMapBuilder {
 
 		$tMap->addColumn('EVN_TAS_STIMATED_DURATION', 'EvnTasStimatedDuration', 'double', CreoleTypes::DOUBLE, false, null);
 
-		$tMap->addColumn('EVN_WHEN', 'EvnWhen', 'double', CreoleTypes::DOUBLE, false, null);
+		$tMap->addColumn('EVN_WHEN', 'EvnWhen', 'double', CreoleTypes::DOUBLE, true, null);
 
 		$tMap->addColumn('EVN_MAX_ATTEMPTS', 'EvnMaxAttempts', 'int', CreoleTypes::TINYINT, true, null);
 
 		$tMap->addColumn('EVN_ACTION', 'EvnAction', 'string', CreoleTypes::VARCHAR, true, 50);
 
-		$tMap->addColumn('EVN_TEMPLATE', 'EvnTemplate', 'string', CreoleTypes::VARCHAR, true, 100);
+		$tMap->addColumn('EVN_TEMPLATE', 'EvnTemplate', 'string', CreoleTypes::VARCHAR, false, 100);
 
-		$tMap->addColumn('EVN_DIGEST', 'EvnDigest', 'int', CreoleTypes::TINYINT, true, null);
+		$tMap->addColumn('EVN_DIGEST', 'EvnDigest', 'int', CreoleTypes::TINYINT, false, null);
 
-		$tMap->addColumn('TRI_UID', 'TriUid', 'string', CreoleTypes::VARCHAR, true, 32);
+		$tMap->addColumn('TRI_UID', 'TriUid', 'string', CreoleTypes::VARCHAR, false, 32);
 
 	} // doBuild()
 
