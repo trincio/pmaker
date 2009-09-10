@@ -123,12 +123,11 @@
 </form>
 {/if}
 </div>
-{literal} 
+
 <script languaje="javascript">
-	
-	document.getElementById('btnContinue').onclick = function(){
-		document.getElementById('btnContinue').disabled = true;
-		document.getElementById('btnContinue').value = "Processing...";
-	}
+{literal}leimnud.event.add(document.getElementById('btnContinue'), 'click', function() { {/literal}
+		setNestedProperty(this, Array('disabled'), 'true');
+		setNestedProperty(this, Array('value'), '{$PROCESSING_MESSAGE}');
+{literal} }.extend(document.getElementById('btnContinue'))); {/literal}
 </script>
-{/literal} 
+ 
