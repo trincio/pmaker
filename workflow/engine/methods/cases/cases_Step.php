@@ -560,6 +560,8 @@
         $aFields['TASK'][$sKey]['NEXT_TASK']['TAS_PARENT']        = '<input type="hidden" name="' . $hiddenName . '[TAS_PARENT]"        id="' . $hiddenName . '[TAS_PARENT]"        value="' . $aValues['NEXT_TASK']['TAS_PARENT'] . '">';
       }
   
+      $aFields['PROCESSING_MESSAGE'] = G::loadTranslation('ID_PROCESSING');
+      
       $G_PUBLISH->AddContent('smarty', 'cases/cases_ScreenDerivation', '', '', $aFields);
       break;
     case 'EXTERNAL':

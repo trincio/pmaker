@@ -1208,7 +1208,16 @@ var sh=function(a,i)
 }
 
 /** 
- * ***************** Misc Functions by Neyek *********************
+ * ********************************* Misc Functions by Neyek ****************************************
+ */
+
+/**
+ * get the htmlentities from a string
+ *  
+ * @Author Erik Amaru Ortiz 
+ * @Param (string) string within the htmlentities to parse 
+ * @Param (string) quote_style it can be (ENT_QUOTES or ENT_NOQUOTES)
+ * @Return (string) the parsed string with htmlentities at the string passed such as parameter
  */
 function htmlentities (string, quote_style) {
  
@@ -1368,3 +1377,27 @@ function get_html_translation_table (table, quote_style) {
     
     return hash_map;
 }
+
+/**
+ * This function sets netsted properties to dom elements
+ *  
+ * @Author Erik Amaru Ortiz 
+ * @Param (object) dom element refered by ID
+ * @Param (array) nested array properties
+ * @Param (object) value to set
+ * @Return <none>
+ * 
+ * Example:
+ * 		setNestedProperty(document, ['body','style','backgroundColor'], 'black');
+ */
+function setNestedProperty(obj, propertyName, propertyValue){
+	var oTarget = obj;
+	for (var i=0; i<propertyName.length; i++){
+		if (i == (propertyName.length - 1)){
+			oTarget[propertyName[i]] = propertyValue;
+			return;
+		}
+		oTarget = oTarget[propertyName[i]];	
+	}
+}
+
