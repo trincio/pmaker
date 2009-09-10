@@ -56,7 +56,7 @@
   $t->isa_ok( $obj  , 'Task',  'class Task created');
 
   //method load
-  $t->can_ok( $obj,      'load',   'load() is callable' );
+  $t->can_ok( $obj,      'load',   'load() is callable' ); 
   //method save
   $t->can_ok( $obj,      'update',   'update() is callable' );
   //method delete

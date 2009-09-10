@@ -57,14 +57,13 @@ G::LoadSystem ( 'dbsession');
 G::LoadSystem ( 'dbrecordset');
 G::LoadSystem ( 'dbtable');
 
-
 //$dbc = new DBConnection();
 //$ses = new DBSession( $dbc);
 //$obj = new DBTable ( $dbc, "APPLICATION" , array ( 'APP_UID' ) );
 
-$obj = new headPublisher ();
+@$obj = new headPublisher ();
 $t = new lime_test(10, new lime_output_color());
- 
+
 $t->diag('class headPublisher' );
 $t->isa_ok( $obj  , 'headPublisher',  'class headPublisher created');
 

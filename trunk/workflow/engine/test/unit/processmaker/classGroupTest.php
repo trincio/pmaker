@@ -1,10 +1,10 @@
 <?php
 /**
  * classGroupTest.php
- *  
+ *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -14,13 +14,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
   $unitFilename = $_SERVER['PWD'] . '/test/bootstrap/unit.php' ;
   require_once( $unitFilename );
@@ -30,7 +30,7 @@
   require_once( 'propel/Propel.php' );
   Propel::init(  PATH_CORE . "config/databases.php");
 
- 
+
   G::LoadThirdParty('smarty/libs','Smarty.class');
   G::LoadSystem ( 'error');
   G::LoadSystem ( 'xmlform');
@@ -40,7 +40,7 @@
 
   require_once( PATH_CORE.'/classes/model/Groupwf.php');
 
-  $obj = new Groupwf (); 
+  $obj = new Groupwf ();
   $t   = new lime_test( 25, new lime_output_color() );
 
   $t->diag('class Groupwf' );
@@ -61,14 +61,14 @@
   $t->can_ok( $obj,      'remove',   'remove() is callable' );
 
   //getGrpUid
-  //#8 
+  //#8
   $t->is( $obj->getGrpUid(),      '',   'getGrpUid() return empty, when the instance doesnt have any row' );
-  
+
   //getGrpTitle
   try {
-    $obj = new Groupwf (); 
+    $obj = new Groupwf ();
     $res = $obj->getGrpTitle();
-  } 
+  }
   catch ( Exception $e ) {
   //#9
     $t->isa_ok( $e,      'Exception',   'getGrpTitle() return error when GRP_UID is not defined' );
@@ -76,12 +76,12 @@
     $t->is ( $e->getMessage(),      "Error in getGrpTitle, the GRP_UID can't be blank",   'getGrpTitle() return Error in getGrpTitle, the GRP_UID cant be blank' );
   }
 
-  
+
   //create new row
   try {
-    $obj = new Groupwf (); 
+    $obj = new Groupwf ();
     $res = $obj->create();
-  } 
+  }
   catch ( Exception $e ) {
   //#xx
     $t->isa_ok( $e,      'PropelException',   'create() return error when GRP_UID is not defined' );
@@ -93,31 +93,32 @@
   try {
     //$Fields['USR_UID'] = '1';  // we need a valid user
     $Fields['GRP_TITLE'] = 'My Group Title';
-    $obj = new Groupwf (); 
+    $obj = new Groupwf ();
     $proUid = $obj->create( $Fields );
   //#11
     $t->isa_ok( $proUid,      'string',   'create(), creates a new Groupwf' );
   //#12
-    $t->is ( strlen($proUid),      14,   'create(), creates a new Groupwf, Guid lenth=14 chars' );
+    //$t->is ( strlen($proUid),      14,   'create(), creates a new Groupwf, Guid lenth=14 chars' );
+    $t->is ( strlen($proUid),      32,   'create(), creates a new Groupwf, Guid lenth=32 chars' );
 
-    $res = $obj->load( $proUid ); 
+    $res = $obj->load( $proUid );
   //#13
     $t->isa_ok( $res,      'array',   'load(), loads a new Groupwf' );
   //#14
     $t->is ( $res['GRP_UID'],      $proUid,   'load(), loads a new Groupwf, valid GRP_UID' );
   //#15
     $t->is ( $res['GRP_TITLE'],    'My Group Title',   'load(), loads a new Groupwf, valid PRO_DESCRIPTION' );
-    
-  } 
+
+  }
   catch ( Exception $e ) {
     $t->like ( $e->getMessage(),      "%Unable to execute INSERT statement%",   'create() return Error in getAppTitle, the APP_UID cant be blank' );
   }
 
   //update with empty
   try {
-    $obj = new Groupwf (); 
+    $obj = new Groupwf ();
     $res = $obj->update( NULL );
-  } 
+  }
   catch ( Exception $e ) {
   //#16
     $t->isa_ok( $e,      'Exception',   'update() returns error when GRP_UID is not defined' );
@@ -133,7 +134,7 @@
   $Fields['GRP_TITLE'] = $newTitle;
   $Fields['GRP_STATUS'] = 'INACTIVE';
   try {
-    $obj = new Groupwf (); 
+    $obj = new Groupwf ();
     $res = $obj->update( $Fields);
   //#18
     $t->is ( $res,   1,   "update() update 1 row" );
@@ -144,7 +145,7 @@
     $t->is ( $obj->getGrpTitle(),   $newTitle,   "update() getAppTitle" );
   //#21
     $t->is ( $Fields['GRP_TITLE'],   $newTitle,   "update() PRO_TITLE= ". $newTitle );
-  } 
+  }
   catch ( Exception $e ) {
   //#14
     $t->isa_ok( $e,      'PropelException',   'update() return error ' . $e->getMessage() );
@@ -153,9 +154,9 @@
 
 //remove with empty
   try {
-    $obj = new Groupwf (); 
+    $obj = new Groupwf ();
     $res = $obj->remove( NULL );
-  } 
+  }
   catch ( Exception $e ) {
   //#30
     $t->isa_ok( $e,      'Exception',   'remove() returns error when UID is not defined' );
@@ -166,25 +167,25 @@
   //remove with $fields
   $Fields['GRP_UID'] = $proUid;
   try {
-    $obj = new Groupwf (); 
+    $obj = new Groupwf ();
     $res = $obj->remove( $Fields );
   //#32
     $t->is ( $res,   NULL,   "remove() remove row $proUid" );
-  } 
+  }
   catch ( Exception $e ) {
   //#14
     $t->isa_ok( $e,      'PropelException',   'remove() return error ' . $e->getMessage() );
   }
 
   //remove with $proUid
-  $obj = new Groupwf (); 
+  $obj = new Groupwf ();
   $proUid = $obj->create( '1' );
   try {
-    $obj = new Groupwf (); 
+    $obj = new Groupwf ();
     $res = $obj->remove ($proUid );
   //#33
     $t->is ( $res,   NULL,   "remove() remove row $proUid" );
-  } 
+  }
   catch ( Exception $e ) {
   //#14
     $t->isa_ok( $e,      'PropelException',   'remove() return error ' . $e->getMessage() );

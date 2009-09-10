@@ -37,14 +37,14 @@
   G::LoadSystem ( 'dbsession');
   G::LoadSystem ( 'dbrecordset');
   G::LoadSystem ( 'dbtable');
-  G::LoadClass ( 'message');
+  G::LoadClass  ( 'message');
 
   require_once (  PATH_CORE . "config/databases.php");  
 
   $dbc = new DBConnection(); 
   $ses = new DBSession( $dbc);
  
-  $obj = new Message ($dbc); 
+  $obj = new Message ($dbc);
   $t   = new lime_test( 6, new lime_output_color() );
  
   $t->diag('class Message' );
