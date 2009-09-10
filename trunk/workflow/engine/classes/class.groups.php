@@ -29,7 +29,7 @@ require_once 'classes/model/Users.php';
 /**
  * Groups - Groups class
  * @package ProcessMaker
- * @author Julio Cesar Laura AvendaÃ±o
+ * @author Julio Cesar Laura Avendaño
  * @copyright 2007 COLOSA
  */
 
@@ -149,7 +149,7 @@ class Groups
         }
     }
 
-	function getUserGroups($sUserUID)
+  function getUserGroups($sUserUID)
     {
         try {
             $criteria = new Criteria();
@@ -209,7 +209,7 @@ class Groups
         }
     }
 
-	/*
+  /*
     * Get a criteria object of all groups from user
     * @param string $sGroupUID
     * @return array
@@ -240,14 +240,14 @@ class Groups
             $allGroups = $this->getUserGroups($sUserUID);
             $cnt = 0;
             foreach ($allGroups as $group) {
-            	$cnt++;
-			}
-			return $cnt;
+              $cnt++;
+      }
+      return $cnt;
         }
         catch (exception $oError) {
             print_r($oError);
         }
-	  }
+    }
 
     /*
     * Return the available users list criteria object
@@ -285,7 +285,7 @@ class Groups
 
     function verifyUsertoGroup($GrpUid, $UsrUid)
     {
-    	  try {
+        try {
             $oGrp = GroupUserPeer::retrieveByPk($GrpUid, $UsrUid);
             if (get_class($oGrp) == 'GroupUser') {
                 return 1;
@@ -296,28 +296,28 @@ class Groups
         catch (exception $oError) {
             throw ($oError);
         }
-	  }
+    }
 
-	  function verifyGroup($sGroupUID)
+    function verifyGroup($sGroupUID)
     {
-    	  try {
+        try {
             $aUsers = array();
             $oCriteria = new Criteria();
-            $oCriteria->addJoin(UsersPeer::USR_UID, GroupUserPeer::USR_UID, Criteria::LEFT_JOIN);
-            $oCriteria->add(GroupUserPeer::GRP_UID, $sGroupUID);
-            $oCriteria->add(UsersPeer::USR_STATUS, 'ACTIVE');
-            $oDataset = UsersPeer::doSelectRS($oCriteria);
+            //$oCriteria->addJoin(UsersPeer::USR_UID, GroupUserPeer::USR_UID, Criteria::LEFT_JOIN);
+            $oCriteria->add(GroupwfPeer::GRP_UID, $sGroupUID);
+            //$oCriteria->add(UsersPeer::USR_STATUS, 'ACTIVE');
+            $oDataset = GroupwfPeer::doSelectRS($oCriteria);
             $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
             $oDataset->next();
             $aRow = $oDataset->getRow();
             if(is_array($aRow))
-            	return 1;
+              return 1;
             else
-            	return 0;
+              return 0;
         }
         catch (exception $oError) {
             throw ($oError);
         }
-	  }
+    }
 }
 ?>

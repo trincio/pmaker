@@ -2172,6 +2172,7 @@ class Cases
     $oAppDelegation->update($aData);
     $oAppThread = new AppThread();
     $oAppThread->update(array('APP_UID' => $sApplicationUID, 'APP_THREAD_INDEX' => $aFieldsDel['DEL_THREAD'], 'DEL_INDEX' => $iIndex));
+
     //Save in APP_DELAY
     $oApplication = new Application();
     $aFields = $oApplication->Load($sApplicationUID);
@@ -2186,6 +2187,7 @@ class Cases
     $aData['APP_ENABLE_ACTION_DATE'] = date('Y-m-d H:i:s');
     $oAppDelay = new AppDelay();
     $oAppDelay->create($aData);
+    return true;    
   }
 
   function getAllDynaformsStepsToRevise($APP_UID) {

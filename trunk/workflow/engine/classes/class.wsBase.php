@@ -258,6 +258,39 @@ class wsBase
     }
   }
 
+  public function triggerList( ) {
+    try {
+      $del = DBAdapter::getStringDelimiter();
+
+      $result  = array();
+      $oCriteria = new Criteria('workflow');
+      $oCriteria->addSelectColumn(TriggersPeer::TRI_UID);
+      $oCriteria->addSelectColumn(TriggersPeer::PRO_UID);
+      $oCriteria->addAsColumn('TITLE', 'C1.CON_VALUE' );
+      $oCriteria->addAlias("C1",  'CONTENT');
+
+      $caseTitleConds = array();
+      $caseTitleConds[] = array( TriggersPeer::TRI_UID ,  'C1.CON_ID'  );
+      $caseTitleConds[] = array( 'C1.CON_CATEGORY' , $del . 'TRI_TITLE' . $del );
+      $caseTitleConds[] = array( 'C1.CON_LANG' ,    $del . SYS_LANG . $del );
+      $oCriteria->addJoinMC($caseTitleConds ,    Criteria::LEFT_JOIN);
+      //$oCriteria->add(TriggersPeer::USR_STATUS ,  'ACTIVE' );
+      $oDataset = TriggersPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+
+      while ($aRow = $oDataset->getRow()) {
+        $result[] = array ( 'guid' => $aRow['TRI_UID'], 'name' => $aRow['TITLE'], 'processId' => $aRow['PRO_UID'] );
+        $oDataset->next();
+      }
+      return $result;
+    }
+    catch ( Exception $e ) {
+      $result[] = array ( 'guid' => $e->getMessage(), 'name' => $e->getMessage() );
+      return $result;
+    }
+  }
+
   public function taskList( $userId ) {
     try {
       $result  = array();
@@ -402,12 +435,77 @@ class wsBase
 //        return $result;
 //      }
 
+      $oProcess = new Process();
+      try {
+        $uFields = $oProcess->load($aRows['PRO_UID']);
+        $processName = $uFields['PRO_TITLE'];
+      }
+      catch ( Exception $e ) {
+      	$processName = '';
+      }
       $result = new wsResponse (0, "case found" );
-      $result->caseId = $aRows['APP_UID'];
-      $result->caseNumber = $aRows['APP_NUMBER'];
-      $result->caseStatus = $aRows['APP_STATUS'];
-      $result->caseParalell = $aRows['APP_PARALLEL'];
-      $result->caseCurrentUser = $aRows['APP_CUR_USER'];
+      $result->caseId              = $aRows['APP_UID'];
+      $result->caseNumber          = $aRows['APP_NUMBER'];
+      $result->caseName            = $aRows['TITLE'];
+      $result->caseStatus          = $aRows['APP_STATUS'];
+      $result->caseParalell        = $aRows['APP_PARALLEL'];
+      $result->caseCreatorUser     = $aRows['APP_INIT_USER'];
+      $result->caseCreatorUserName = $aRows['CREATOR'];
+      $result->processId           = $aRows['PRO_UID'];
+      $result->processName         = $processName;
+      $result->createDate          = $aRows['CREATE_DATE'];
+
+      //now fill the array of AppDelegationPeer
+      $oCriteria = new Criteria('workflow');
+      $oCriteria->addSelectColumn(AppDelegationPeer::DEL_INDEX);
+      $oCriteria->addSelectColumn(AppDelegationPeer::USR_UID);
+      $oCriteria->addSelectColumn(AppDelegationPeer::TAS_UID);
+      $oCriteria->addSelectColumn(AppDelegationPeer::DEL_THREAD);
+      $oCriteria->addSelectColumn(AppDelegationPeer::DEL_THREAD_STATUS);
+      $oCriteria->addSelectColumn(AppDelegationPeer::DEL_FINISH_DATE);
+      $oCriteria->add(AppDelegationPeer::APP_UID, $caseId);
+      $oCriteria->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL );
+
+      $oCriteria->addAscendingOrderByColumn(AppDelegationPeer::DEL_INDEX);
+      $oDataset = AppDelegationPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+
+      $aCurrentUsers = array();
+      while($oDataset->next()) {
+        $aAppDel = $oDataset->getRow();
+
+        $oUser = new Users();
+        try {
+          $oUser->load($aAppDel['USR_UID']);
+          $uFields = $oUser->toArray(BasePeer::TYPE_FIELDNAME);
+          $currentUserName = $oUser->getUsrFirstname() . ' ' . $oUser->getUsrLastname();
+        }
+        catch ( Exception $e ) {
+        	$currentUserName = '';
+        }
+
+        $oTask = new Task();
+        try {
+          $uFields = $oTask->load($aAppDel['TAS_UID']);
+          $taskName = $uFields['TAS_TITLE'];
+        }
+        catch ( Exception $e ) {
+        	$taskName = '';
+        }
+
+        $currentUser = new stdClass();
+        $currentUser->userId    = $aAppDel['USR_UID'];
+        $currentUser->userName  = $currentUserName;
+        $currentUser->taskId    = $aAppDel['TAS_UID'];
+        $currentUser->taskName  = $taskName;
+        $currentUser->delIndex  = $aAppDel['DEL_INDEX'];
+        $currentUser->delThread = $aAppDel['DEL_THREAD'];
+        $currentUser->delThreadStatus = $aAppDel['DEL_THREAD_STATUS'];
+        $aCurrentUsers[] = $currentUser;
+      }
+            
+      $result->currentUsers     = $aCurrentUsers;
+
       return $result;
     }
     catch ( Exception $e ) {
@@ -419,17 +517,17 @@ class wsBase
   public function createUser( $userId, $firstname, $lastname, $email, $role, $password) {
     try {
       if($userId=='')
-      {  $result = new wsResponse (20, "User ID is required");
+      {  $result = new wsCreateUserResponse (20, "User ID is required");
          return $result;
       }
 
       if($password=='')
-      {  $result = new wsResponse (21, "Password is required");
+      {  $result = new wsCreateUserResponse (21, "Password is required");
          return $result;
       }
 
       if($firstname=='')
-      {  $result = new wsResponse (22, "Firstname is required");
+      {  $result = new wsCreateUserResponse (22, "Firstname is required");
          return $result;
       }
 
@@ -438,7 +536,7 @@ class wsBase
 
       $user = $RBAC->verifyUser($userId);
       if ( $user == 1){
-        $result = new wsResponse (7, "User ID: $userId already exist!!!");
+        $result = new wsCreateUserResponse (7, "User ID: $userId already exist!!!", '' ) ;
         return $result;
       }
 
@@ -493,7 +591,7 @@ class wsBase
       return $result;
     }
     catch ( Exception $e ) {
-      $result = new wsResponse (100, $e->getMessage());
+      $result = wsCreateUserResponse (100 , $e->getMessage(), '' );
       return $result;
     }
   }
@@ -510,8 +608,8 @@ class wsBase
 
       G::LoadClass('groups');
       $groups = new Groups;
-      $very_group=$groups->verifyGroup( $groupId );
-      if($very_group==0){
+      $very_group = $groups->verifyGroup( $groupId );
+      if ( $very_group==0 ) {
         $result = new wsResponse (23, "Group not registered in the system");
         return $result;
       }
@@ -561,19 +659,19 @@ class wsBase
       $oDataset = AppDelegationPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
 
-                        $cnt = 0;
-                        while($oDataset->next()) {
-                          $aRow = $oDataset->getRow();
-                            if($aRow['DEL_FINISH_DATE']==NULL)
-                            {
-                                $cnt++;
-                            }
-                        }
+      $cnt = 0;
+      while($oDataset->next()) {
+        $aRow = $oDataset->getRow();
+          if($aRow['DEL_FINISH_DATE']==NULL)
+          {
+              $cnt++;
+          }
+      }
 
-                        if($cnt == 0){
-                            $result = new wsResponse (18, 'This case is already closed');
-                            return $result;
-                        }
+      if($cnt == 0){
+          $result = new wsResponse (18, 'This case is already closed');
+          return $result;
+      }
       if(is_array($variables)) {
         $cant = count ( $variables );
         if($cant > 0) {
@@ -1276,12 +1374,40 @@ class wsBase
           return $result;
       }
 
-      $result = new wsResponse (1, 'Succesful......!');
+      $result = new wsResponse (0, 'Succesful reassigned');
 
       return $result;
     }
     catch ( Exception $e ) {
       $result[] = array ( 'guid' => $e->getMessage(), 'name' => $e->getMessage() );
+      return $result;
+    }
+  }
+
+  public function systemInformation() {
+    try {
+      define ( 'SKIP_RENDER_SYSTEM_INFORMATION', true );
+      require_once ( PATH_METHODS . 'login' . PATH_SEP . 'dbInfo.php' );
+			$result->status_code        = 0;
+			$result->message            = 'Sucessful';
+			$result->timestamp          = date ( 'Y-m-d H:i:s');
+  		$result->version            = PM_VERSION;
+	  	$result->operatingSystem    = $redhat;
+	  	$result->webServer          = getenv('SERVER_SOFTWARE');
+	  	$result->serverName         = getenv('SERVER_NAME');
+	  	$result->serverIp           = $Fields['IP']; //lookup ($ip);
+	  	$result->phpVersion         = phpversion();
+	  	$result->databaseVersion    = $Fields['DATABASE'];
+	  	$result->databaseServerIp   = $Fields['DATABASE_SERVER'];
+	  	$result->databaseName       = $Fields['DATABASE_NAME'];
+	  	$result->availableDatabases = $Fields['AVAILABLE_DB'];
+	  	$result->userBrowser        = $Fields['HTTP_USER_AGENT'];
+	  	$result->userIp             = $Fields['IP'];
+            
+      return $result;
+    }
+    catch ( Exception $e ) {
+      $result = new wsResponse (100, $e->getMessage());
       return $result;
     }
   }

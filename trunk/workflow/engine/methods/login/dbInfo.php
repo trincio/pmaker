@@ -58,7 +58,7 @@ function lookup($target)
     if ( file_exists ( '/etc/redhat-release' ) ) {
       $fnewsize = filesize( '/etc/redhat-release'  );
       $fp = fopen( '/etc/redhat-release' , 'r' );
-      $redhat = fread( $fp, $fnewsize );
+      $redhat = trim( fread( $fp, $fnewsize ));
       fclose( $fp );
     }
 
@@ -107,7 +107,8 @@ if(defined("DB_HOST")){
   $Fields['SERVER_ADDR']     = getenv('SERVER_ADDR');
   $Fields['HTTP_USER_AGENT'] = getenv('HTTP_USER_AGENT');
 
-  $G_PUBLISH = new Publisher;
-  $G_PUBLISH->AddContent('xmlform', 'xmlform', 'login/dbInfo', '', $Fields, 'appNew2');
-  G::RenderPage('publish', 'raw');
-?>
+  if ( !defined ( 'SKIP_RENDER_SYSTEM_INFORMATION' ) ) {
+    $G_PUBLISH = new Publisher;
+    $G_PUBLISH->AddContent('xmlform', 'xmlform', 'login/dbInfo', '', $Fields, 'appNew2');
+    G::RenderPage('publish', 'raw');
+  }
