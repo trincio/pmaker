@@ -5682,9 +5682,29 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
+    <column name="EVN_RELATED_TO" type="VARCHAR" size="10" required="false" default="SINGLE">
+      <vendor type="mysql">
+        <parameter name="Field" value="EVN_RELATED_TO"/>
+        <parameter name="Type" value="varchar(10)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="SINGLE"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
     <column name="TAS_UID" type="VARCHAR" size="32" required="true" default="">
       <vendor type="mysql">
         <parameter name="Field" value="TAS_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="EVN_TAS_UID_FROM" type="VARCHAR" size="32" required="false" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="EVN_TAS_UID_FROM"/>
         <parameter name="Type" value="varchar(32)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>

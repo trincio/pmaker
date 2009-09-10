@@ -3416,11 +3416,11 @@ function editObjectPermission($sOP_UID)
   return $rows;
   }
 
-  function alertsList($sProcessUID) {
+  function eventsList($sProcessUID) {
     try {
       global $G_PUBLISH;
       $G_PUBLISH = new Publisher;
-      $G_PUBLISH->AddContent('propeltable', 'paged-table', 'alerts/alerts_ShortList', $this->getAlertsCriteria($sProcessUID), array('PRO_UID' => $sProcessUID));
+      $G_PUBLISH->AddContent('propeltable', 'paged-table', 'events/events_ShortList', $this->getEventsCriteria($sProcessUID), array('PRO_UID' => $sProcessUID));
       G::RenderPage('publish', 'raw');
       return true;
     }
@@ -3429,21 +3429,21 @@ function editObjectPermission($sOP_UID)
     }
   }
 
-  function getAlertsCriteria($sProcessUID) {
+  function getEventsCriteria($sProcessUID) {
     try {
-      require_once 'classes/model/Alert.php';
+      require_once 'classes/model/Event.php';
       require_once 'classes/model/Content.php';
   	  $sDelimiter = DBAdapter::getStringDelimiter();
   	  $oCriteria  = new Criteria('workflow');
-      $oCriteria->addSelectColumn(AlertPeer::ALT_UID);
-      $oCriteria->addSelectColumn(AlertPeer::ALT_TYPE);
-      $oCriteria->addAsColumn('ALT_TITLE', ContentPeer::CON_VALUE);
+      $oCriteria->addSelectColumn(EventPeer::EVN_UID);
+      $oCriteria->addSelectColumn(EventPeer::EVN_ACTION);
+      $oCriteria->addAsColumn('EVN_DESCRIPTION', ContentPeer::CON_VALUE);
       $aConditions   = array();
-      $aConditions[] = array(AlertPeer::ALT_UID  , ContentPeer::CON_ID);
-      $aConditions[] = array(ContentPeer::CON_CATEGORY, $sDelimiter . 'ALT_TITLE' . $sDelimiter);
+      $aConditions[] = array(EventPeer::EVN_UID  , ContentPeer::CON_ID);
+      $aConditions[] = array(ContentPeer::CON_CATEGORY, $sDelimiter . 'EVN_DESCRIPTION' . $sDelimiter);
       $aConditions[] = array(ContentPeer::CON_LANG    , $sDelimiter . SYS_LANG    . $sDelimiter);
       $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
-      $oCriteria->add(AlertPeer::PRO_UID, $sProcessUID);
+      $oCriteria->add(EventPeer::PRO_UID, $sProcessUID);
       return $oCriteria;
     }
   	catch (Exception $oError) {

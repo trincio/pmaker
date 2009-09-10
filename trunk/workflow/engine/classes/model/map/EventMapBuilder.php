@@ -68,7 +68,11 @@ class EventMapBuilder {
 
 		$tMap->addColumn('PRO_UID', 'ProUid', 'string', CreoleTypes::VARCHAR, true, 32);
 
+		$tMap->addColumn('EVN_RELATED_TO', 'EvnRelatedTo', 'string', CreoleTypes::VARCHAR, false, 10);
+
 		$tMap->addColumn('TAS_UID', 'TasUid', 'string', CreoleTypes::VARCHAR, true, 32);
+
+		$tMap->addColumn('EVN_TAS_UID_FROM', 'EvnTasUidFrom', 'string', CreoleTypes::VARCHAR, false, 32);
 
 		$tMap->addColumn('EVN_TAS_UID_TO', 'EvnTasUidTo', 'string', CreoleTypes::VARCHAR, false, 32);
 

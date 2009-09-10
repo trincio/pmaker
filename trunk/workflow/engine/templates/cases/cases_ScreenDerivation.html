@@ -124,10 +124,15 @@
 {/if}
 </div>
 
-<script languaje="javascript">
+<script>
+
 {literal}leimnud.event.add(document.getElementById('btnContinue'), 'click', function() { {/literal}
-		setNestedProperty(this, Array('disabled'), 'true');
-		setNestedProperty(this, Array('value'), '{$PROCESSING_MESSAGE}');
+	setNestedProperty(this, Array('disabled'), 'true');
+	setNestedProperty(this, Array('value'), '{$PROCESSING_MESSAGE}');
+	
+	{literal}	if (navigator.appName == "Microsoft Internet Explorer"){ {/literal}
+		document.frmDerivation.submit();
+ 	}
 {literal} }.extend(document.getElementById('btnContinue'))); {/literal}
 </script>
- 
+
