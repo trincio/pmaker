@@ -664,13 +664,13 @@ var processmap=function(){
 						}.extend(this,panel);
 						r.make();
 					}.extend(this)},
-					{image:"/images/alerts.gif",text:G_STRINGS.ID_ALERTS,launch:function(event){
-						this.tmp.alertsPanel = panel =new leimnud.module.panel();
+					{image:"/images/events.gif",text:G_STRINGS.ID_EVENTS,launch:function(event){
+						this.tmp.eventsPanel = panel =new leimnud.module.panel();
 						panel.options={
 							limit	:true,
-							size	:{w:500,h:380},
+							size	:{w:600,h:380},
 							position:{x:50,y:50,center:true},
-							title	:G_STRINGS.ID_ALERTS,
+							title	:G_STRINGS.ID_EVENTS,
 							theme	:this.options.theme,
 							control	:{close:true,resize:false},fx:{modal:true},
 							statusBar:false,
@@ -680,7 +680,7 @@ var processmap=function(){
 						panel.loader.show();
 						var r = new leimnud.module.rpc.xmlhttp({
 							url:this.options.dataServer,
-							args:"action=alerts&data="+{
+							args:"action=events&data="+{
 								pro_uid	:this.options.uid
 							}.toJSONString()
 						});

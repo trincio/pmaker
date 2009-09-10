@@ -1395,7 +1395,7 @@ function setNestedProperty(obj, propertyName, propertyValue){
 	for (var i=0; i<propertyName.length; i++){
 		if (i == (propertyName.length - 1)){
 			oTarget[propertyName[i]] = propertyValue;
-			return;
+			return false;
 		}
 		oTarget = oTarget[propertyName[i]];	
 	}
