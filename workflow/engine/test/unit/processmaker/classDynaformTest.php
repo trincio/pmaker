@@ -4,7 +4,7 @@
  *  
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
- * 
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
  * published by the Free Software Foundation, either version 3 of the
@@ -14,13 +14,13 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Affero General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- * 
- * For more information, contact Colosa Inc, 2566 Le Jeune Rd., 
+ *
+ * For more information, contact Colosa Inc, 2566 Le Jeune Rd.,
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
- * 
+ *
  */
   $unitFilename = $_SERVER['PWD'] . '/test/bootstrap/unit.php' ;
   require_once( $unitFilename );
@@ -30,7 +30,7 @@
   require_once( 'propel/Propel.php' );
   Propel::init(  PATH_CORE . "config/databases.php");
 
- 
+
   G::LoadThirdParty('smarty/libs','Smarty.class');
   G::LoadSystem ( 'error');
   G::LoadSystem ( 'xmlform');
@@ -40,7 +40,7 @@
 
   require_once( PATH_CORE.'/classes/model/Dynaform.php');
 
-  $obj = new Dynaform (); 
+  $obj = new Dynaform ();
   $t   = new lime_test( 36, new lime_output_color() );
 
   $t->diag('class Dynaform' );
@@ -116,48 +116,48 @@
     $t->is ( $e->getMessage(),      "Error in setDynDescription, the DYN_UID can't be blank",   'setAppDescription() return Error in getAppDescription, the APP_UID cant be blank' );
   }
   
-  
-  
+
+
   //create new row
   try {
-    $obj = new Dynaform (); 
+    $obj = new Dynaform ();
     $res = $obj->create();
-  } 
+  }
   catch ( Exception $e ) {
   //#19
     $t->isa_ok( $e,      'PropelException',   'create() return error when PRO_UID is not defined' );
   //#20
     $t->like ( $e->getMessage(),      "%The dynaform cannot be created. The PRO_UID is empty.%",   'create() return The dynaform cannot be created. The USR_UID is empty.' );
   }
-
   //create
   try {
+
     $Fields['PRO_UID'] = '1';  // we need a valid process id
-    $obj = new Dynaform (); 
+    $obj = new Dynaform ();
     $proUid = $obj->create( $Fields );
   //#21
     $t->isa_ok( $proUid,      'string',   'create(), creates a new Dynaform' );
   //#22
-    $t->is ( strlen($proUid),      14,   'create(), creates a new Dynaform, Guid lenth=14 chars' );
-
-    $res = $obj->load( $proUid ); 
+  //$t->is ( strlen($proUid),      14,   'create(), creates a new Dynaform, Guid lenth=14 chars' );
+    $t->is ( strlen($proUid),      32,   'create(), creates a new Dynaform, Guid lenth=32 chars' );
+    $res = $obj->load( $proUid );
   //#23
     $t->isa_ok( $res,      'array',   'load(), loads a new Dynaform' );
   //#24
     $t->is ( $res['DYN_UID'],      $proUid,   'load(), loads a new Dynaform, valid DYN_UID' );
   //#25
     $t->is ( $res['DYN_DESCRIPTION'],      'Default Dynaform Description',   'load(), loads a new Dynaform, valid DYN_DESCRIPTION' );
-    
-  } 
+
+  }
   catch ( Exception $e ) {
     $t->like ( $e->getMessage(),      "%Unable to execute INSERT statement%",   'create() return Error in getAppTitle, the APP_UID cant be blank' );
   }
 
   //update with empty
   try {
-    $obj = new Dynaform (); 
+    $obj = new Dynaform ();
     $res = $obj->update( NULL );
-  } 
+  }
   catch ( Exception $e ) {
   //#26
     $t->isa_ok( $e,      'Exception',   'update() returns error when DYN_UID is not defined' );
@@ -173,7 +173,7 @@
   $Fields['DYN_TITLE']    = $newTitle;
   $Fields['DYN_FILENAME'] = $newFilename;
   try {
-    $obj = new Dynaform (); 
+    $obj = new Dynaform ();
     $res = $obj->update( $Fields);
   //#28
     $t->is ( $res,   1,   "update() update 1 row" );
@@ -186,7 +186,7 @@
     $t->is ( $Fields['DYN_TITLE'],   $newTitle,   "update() DYN_TITLE= ". $newTitle );
   //#32
     $t->is ( $Fields['DYN_FILENAME'], $newFilename, "update() DYN_FILENAME = $newFilename" );
-  } 
+  }
   catch ( Exception $e ) {
   //#14
     $t->isa_ok( $e,      'PropelException',   'update() return error ' . $e->getMessage() );
@@ -194,10 +194,11 @@
   }
 
 //remove with empty
+
   try {
-    $obj = new Dynaform (); 
+    $obj = new Dynaform ();
     $res = $obj->remove( NULL );
-  } 
+  }
   catch ( Exception $e ) {
   //#33
     $t->isa_ok( $e,      'Exception',   'remove() returns error when UID is not defined' );
@@ -208,25 +209,25 @@
   //remove with $fields
   $Fields['DYN_UID'] = $proUid;
   try {
-    $obj = new Dynaform (); 
+    $obj = new Dynaform ();
     $res = $obj->remove( $Fields );
   //#35
     $t->is ( $res,   NULL,   "remove() remove row $proUid" );
-  } 
+  }
   catch ( Exception $e ) {
   //#14
     $t->isa_ok( $e,      'PropelException',   'remove() return error ' . $e->getMessage() );
   }
 
   //remove with $proUid
-  $obj = new Dynaform (); 
+  $obj = new Dynaform ();
   $proUid = $obj->create( '1' );
   try {
-    $obj = new Dynaform (); 
+    $obj = new Dynaform ();
     $res = $obj->remove ($proUid );
   //#36
     $t->is ( $res,   NULL,   "remove() remove row $proUid" );
-  } 
+  }
   catch ( Exception $e ) {
   //#14
     $t->isa_ok( $e,      'PropelException',   'remove() return error ' . $e->getMessage() );

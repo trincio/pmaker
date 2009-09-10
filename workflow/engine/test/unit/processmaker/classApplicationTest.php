@@ -40,7 +40,7 @@
 
   require_once( PATH_CORE.'/classes/model/Application.php');
 
-  $obj = new Application ();
+  $obj = new Application ();  
   $t   = new lime_test( 35, new lime_output_color() );
 
   $t->diag('class Application' );

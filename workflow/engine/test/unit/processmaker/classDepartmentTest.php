@@ -38,9 +38,9 @@
   G::LoadSystem ( 'dbrecordset');
   G::LoadSystem ( 'dbtable');
   G::LoadClass  ( 'pmObject');
-  G::LoadClass  ( 'department'); 
+  G::LoadClass  ( 'department');
 
-  require_once (  PATH_CORE . "config/databases.php");
+  require_once (  PATH_CORE . "config/databases.php" );
 
   $dbc = new DBConnection();
   $ses = new DBSession( $dbc);
