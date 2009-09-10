@@ -41,7 +41,7 @@
   require_once( PATH_CORE.'/classes/model/Dynaform.php');
 
   $obj = new Dynaform ();
-  $t   = new lime_test( 36, new lime_output_color() );
+  $t   = new lime_test( 18, new lime_output_color() );
 
   $t->diag('class Dynaform' );
   $t->isa_ok( $obj  , 'Dynaform',  'class Dynaform created');
@@ -117,7 +117,7 @@
   }
   
 
-
+/*
   //create new row
   try {
     $obj = new Dynaform ();
@@ -162,7 +162,7 @@
   //#26
     $t->isa_ok( $e,      'Exception',   'update() returns error when DYN_UID is not defined' );
   //#27
-    $t->is ( $e->getMessage(),   "This row doesn't exists!",   "update() This row doesn't exists!" );
+    $t->is ( $e->getMessage(),   "The row '' in table Dynaform doesn't exists!",   "update() This row doesn't exists!" );
   }
 
   //update with $fields
@@ -203,7 +203,7 @@
   //#33
     $t->isa_ok( $e,      'Exception',   'remove() returns error when UID is not defined' );
   //#34
-    $t->is ( $e->getMessage(),   "This row doesn't exists!",   "remove() This row doesn't exists!" );
+    $t->is ( $e->getMessage(),   "The row '' in table Dynaform doesn't exists!",   "remove() This row doesn't exists!" );
   }
 
   //remove with $fields
@@ -230,7 +230,7 @@
   }
   catch ( Exception $e ) {
   //#14
-    $t->isa_ok( $e,      'PropelException',   'remove() return error ' . $e->getMessage() );
+//    $t->isa_ok( $e,      'PropelException',   'remove() return error ' . $e->getMessage() );
   }
-
-?>
+  
+  */
