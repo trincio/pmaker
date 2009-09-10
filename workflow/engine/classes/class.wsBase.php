@@ -699,14 +699,14 @@ class wsBase
   }
 
   public function getVariables($caseId, $variables) {
-    //delegation where app uid (caseId) y usruid(session) ordenar delindes descendente y agaarr el primero
-    //delfinishdate != null error
     try {
+    	/* getVariables should be enable for all cases, open and closed cases.
+      //get last delegation where app_uid (caseId) and userUid(session) and delfinishdate != null error
       require_once ("classes/model/AppDelegation.php");
       $oCriteria = new Criteria('workflow');
       $oCriteria->addSelectColumn(AppDelegationPeer::DEL_FINISH_DATE);
       $oCriteria->add(AppDelegationPeer::APP_UID, $caseId);
-
+      $oCriteria->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL );
       $oCriteria->addDescendingOrderByColumn(AppDelegationPeer::DEL_INDEX);
       $oDataset = AppDelegationPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
@@ -714,21 +714,19 @@ class wsBase
       $cnt = 0;
       while($oDataset->next()) {
         $aRow = $oDataset->getRow();
-          if($aRow['DEL_FINISH_DATE']==NULL)
-          {
-              $cnt++;
-          }
+        $cnt++;
       }
 
       if($cnt == 0){
           $result = new wsResponse (18, 'This case is already closed');
           return $result;
       }
-
-      if(is_array($variables)) {
+      */
+      
+      G::LoadClass('case');
+      if ( is_array($variables) ) {
         $cant = count ( $variables );
         if($cant > 0) {
-          G::LoadClass('case');
           $oCase = new Cases();
 
           $caseFields = $oCase->loadCase( $caseId );
@@ -736,27 +734,27 @@ class wsBase
           $resFields = array();
           foreach ( $variables as $key => $val ) {
             //$resFields[ $val ] =  $oldFields[ $val ] ;
-            if ( isset ( $oldFields[ $val ] ) )
-              $resFields[ $val ] =  $oldFields[ $val ] ;
+            if ( isset ( $oldFields[ $val->name ] ) )
+              $resFields[ $val->name ] =  $oldFields[ $val->name ] ;
           }
-          //$cant = count ( $resFields );
-          //$result = new wsResponse (0, "$cant variables received." . print_r ($resFields, 1) );
+          $result = new wsGetVariableResponse (100, count($resFields) . " variables received." , $resFields );
           return $resFields;
         }
         else {
-          $result = new wsResponse (100, "The variables param length is zero");
+          $result = new wsGetVariableResponse (100, "The variables param length is zero", null);
           return $result;
         }
       }
       else {
-        $result = new wsResponse (100, "The variables param is not a array!");
+        $result = new wsGetVariableResponse (100, "The variables param is not a array!" . print_r ($variables, 1), null);
         return $result;
       }
     }
     catch ( Exception $e ) {
-      $result = new wsResponse (100, $e->getMessage());
+      $result = new wsGetVariableResponse (100, $e->getMessage(), NULL );
       return $result;
     }
+
   }
 
   public function newCase($processId, $userId, $taskId, $variables) {

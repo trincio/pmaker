@@ -41,3 +41,19 @@ class wsCreateUserResponse
 	}
 	
 }
+
+class wsGetVariableResponse
+{
+	public $status_code = 0;
+	public $message = '';
+	public $variables = null;
+	public $timestamp = '';
+	
+	function __construct( $status, $message, $variables ) {
+		$this->status_code = $status;
+		$this->message     = $message;
+		$this->variables   = $variables;
+		$this->timestamp   = date('Y-m-d H:i:s');
+	}
+	
+}
