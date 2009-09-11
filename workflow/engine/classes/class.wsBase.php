@@ -3,7 +3,7 @@
  * class.wsBase.php
  *
  * ProcessMaker Open Source Edition
- * Copyright (C) 2004 - 2008 Colosa Inc.23
+ * Copyright (C) 2004 - 2008 Colosa Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -38,6 +38,7 @@
 
 require_once ( "classes/model/Application.php" );
 require_once ( "classes/model/AppDelegation.php" );
+require_once ( "classes/model/AppDelay.php");
 require_once ( "classes/model/AppThread.php" );
 require_once ( "classes/model/Dynaform.php" );
 require_once ( "classes/model/Groupwf.php" );
@@ -47,6 +48,7 @@ require_once ( "classes/model/OutputDocument.php" );
 require_once ( "classes/model/Process.php" );
 require_once ( "classes/model/ReportTable.php");
 require_once ( "classes/model/ReportVar.php");
+require_once ( "classes/model/Route.php");
 require_once ( "classes/model/Step.php" );
 require_once ( "classes/model/StepTrigger.php" );
 require_once ( "classes/model/Task.php" );
@@ -55,10 +57,19 @@ require_once ( "classes/model/Triggers.php" );
 require_once ( "classes/model/Users.php" );
 require_once ( "classes/model/Session.php" );
 require_once ( "classes/model/Content.php" );
-G::LoadClass('pmScript');
-G::LoadClass('wsResponse');
-G::LoadClass('case');
+G::LoadClass( "ArrayPeer" );
+G::LoadClass( "BasePeer" );
+G::LoadClass( 'case');
+G::LoadClass( 'derivation');
+G::LoadClass( 'groups');
+G::LoadClass( 'sessions');
+G::LoadClass( 'processes');
+G::LoadClass( 'pmScript');
+G::LoadClass( 'spool');
+G::LoadClass( 'tasks');
+G::LoadClass( 'wsResponse');
 
+      
 class wsBase
 {
   function __construct() {
@@ -93,10 +104,10 @@ class wsBase
       $res = $RBAC->userCanAccess("PM_LOGIN");
 
       if ($res != 1 ) {
-        if ($res == -2)
-          $wsResponse = new wsResponse (1, G::loadTranslation ('ID_USER_HAVENT_RIGHTS_SYSTEM'));
-        else
-          $wsResponse = new wsResponse (2, G::loadTranslation ('ID_USER_HAVENT_RIGHTS_SYSTEM'));
+        //if ($res == -2)
+        //  $wsResponse = new wsResponse (1, G::loadTranslation ('ID_USER_HAVENT_RIGHTS_SYSTEM'));
+        //else
+        $wsResponse = new wsResponse (2, G::loadTranslation ('ID_USER_HAVENT_RIGHTS_SYSTEM'));
         throw ( new Exception ( serialize ( $wsResponse ) ));
       }
 
@@ -124,7 +135,6 @@ class wsBase
 
   public function processList( ) {
     try {
-
       $result  = array();
       $oCriteria = new Criteria('workflow');
       //$oCriteria->add(ProcessPeer::PRO_STATUS ,  'ACTIVE' );
@@ -151,8 +161,6 @@ class wsBase
   public function roleList( ) {
     try {
       $result  = array();
-      G::LoadClass("BasePeer" );
-      G::LoadClass("ArrayPeer" );
 
       $RBAC =& RBAC::getSingleton();
       $RBAC->initRBAC();
@@ -326,15 +334,12 @@ class wsBase
 
   public function sendMessage($caseId, $sFrom, $sTo, $sCc, $sBcc, $sSubject, $sTemplate, $appFields = null ) {
     try {
-      G::LoadClass('case');
-          G::LoadClass('spool');
-
-        $aSetup = getEmailConfiguration();
+      $aSetup = getEmailConfiguration();
 
       $oSpool = new spoolRun();
       $oSpool->setConfig(array(
         'MESS_ENGINE'   => $aSetup['MESS_ENGINE'],
-                'MESS_SERVER'   => $aSetup['MESS_SERVER'],
+        'MESS_SERVER'   => $aSetup['MESS_SERVER'],
         'MESS_PORT'     => $aSetup['MESS_PORT'],
         'MESS_ACCOUNT'  => $aSetup['MESS_ACCOUNT'],
         'MESS_PASSWORD' => $aSetup['MESS_PASSWORD'],
@@ -350,7 +355,7 @@ class wsBase
       @mkdir( $pathEmail, 0777,true);
 
       if ( ! file_exists ( $fileTemplate ) ) {
-        $result = new wsResponse (100, "template file: '$fileTemplate' doesn't exists."  );
+        $result = new wsResponse (28, "template file: '$fileTemplate' doesn't exists."  );
         return $result;
       }
 
@@ -361,7 +366,6 @@ class wsBase
       }
       $templateContents = file_get_contents ( $fileTemplate );
 
-      //desde aki
       //$sContent    = G::unhtmlentities($sContent);
       $iAux        = 0;
       $iOcurrences = preg_match_all('/\@(?:([\>])([a-zA-Z\_]\w*)|([a-zA-Z\_][\w\-\>\:]*)\(((?:[^\\\\\)]*(?:[\\\\][\w\W])?)*)\))((?:\s*\[[\'"]?\w+[\'"]?\])+)?/',  $templateContents, $aMatch, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE);
@@ -376,35 +380,36 @@ class wsBase
               $sAux = '';
               foreach ($Fields[$sGridName] as $aRow) {
                 $sAux .= G::replaceDataField($sStringToRepeat, $aRow);
-                    }
-                  }
               }
-              $templateContents = str_replace('@>' . $sGridName . $sStringToRepeat . '@<' . $sGridName, $sAux, $templateContents);
             }
+          }
+          $templateContents = str_replace('@>' . $sGridName . $sStringToRepeat . '@<' . $sGridName, $sAux, $templateContents);
         }
-      //hata aki
+      }
+
       $sBody = G::replaceDataField( $templateContents, $Fields);
 
       if ($sFrom != '') {
         $sFrom = $sFrom . ' <' . $aSetup['MESS_ACCOUNT'] . '>';
-          } else {
-            $sFrom = $aSetup['MESS_ACCOUNT'];
-          }
+      } 
+      else {
+        $sFrom = $aSetup['MESS_ACCOUNT'];
+      }
 
       $messageArray = array(
         'msg_uid'          => '',
-                'app_uid'          => $caseId,
-                'del_index'        => 0,
-                'app_msg_type'     => 'TRIGGER',
-                'app_msg_subject'  => $sSubject,
-                'app_msg_from'     => $sFrom,
-                'app_msg_to'       => $sTo,
-                'app_msg_body'     => $sBody,
-                'app_msg_cc'       => $sCc,
-                'app_msg_bcc'      => $sBcc,
-                'app_msg_attach'   => '',
-                'app_msg_template' => '',
-                'app_msg_status'   => 'pending'
+        'app_uid'          => $caseId,
+        'del_index'        => 0,
+        'app_msg_type'     => 'TRIGGER',
+        'app_msg_subject'  => $sSubject,
+        'app_msg_from'     => $sFrom,
+        'app_msg_to'       => $sTo,
+        'app_msg_body'     => $sBody,
+        'app_msg_cc'       => $sCc,
+        'app_msg_bcc'      => $sBcc,
+        'app_msg_attach'   => '',
+        'app_msg_template' => '',
+        'app_msg_status'   => 'pending'
       );
 
       $oSpool->create( $messageArray );
@@ -413,9 +418,10 @@ class wsBase
       if ( $oSpool->status == 'sent' )
         $result = new wsResponse (0, "message sent : $sTo" );
       else
-          $result = new wsResponse (100, $oSpool->status . ' ' . $oSpool->error . print_r ($aSetup ,1 ) );
+        $result = new wsResponse (29, $oSpool->status . ' ' . $oSpool->error . print_r ($aSetup ,1 ) );
       return $result;
-    } catch ( Exception $e ) {
+    } 
+    catch ( Exception $e ) {
       $result = new wsResponse (100, $e->getMessage());
       return $result;
     }
@@ -423,17 +429,12 @@ class wsBase
 
   public function getCaseInfo($caseId, $iDelIndex ) {
     try {
-      G::LoadClass('case');
       $oCase = new Cases();
       $aRows = $oCase->loadCase( $caseId, $iDelIndex );
       if ( count($aRows) == 0 ) {
-        $result = new wsResponse (27, "Case $caseNumber doesn't exists." );
+        $result = new wsResponse (16, "Case $caseNumber doesn't exists." );
         return $result;
       }
-//      if ( count($aRows) > 1 ) {
-//        $result = new wsResponse (27, "There are more than one case with the same CaseNumber $caseNumber." );
-//        return $result;
-//      }
 
       $oProcess = new Process();
       try {
@@ -441,7 +442,7 @@ class wsBase
         $processName = $uFields['PRO_TITLE'];
       }
       catch ( Exception $e ) {
-      	$processName = '';
+        $processName = '';
       }
       $result = new wsResponse (0, "case found" );
       $result->caseId              = $aRows['APP_UID'];
@@ -481,7 +482,7 @@ class wsBase
           $currentUserName = $oUser->getUsrFirstname() . ' ' . $oUser->getUsrLastname();
         }
         catch ( Exception $e ) {
-        	$currentUserName = '';
+          $currentUserName = '';
         }
 
         $oTask = new Task();
@@ -490,7 +491,7 @@ class wsBase
           $taskName = $uFields['TAS_TITLE'];
         }
         catch ( Exception $e ) {
-        	$taskName = '';
+          $taskName = '';
         }
 
         $currentUser = new stdClass();
@@ -517,17 +518,17 @@ class wsBase
   public function createUser( $userId, $firstname, $lastname, $email, $role, $password) {
     try {
       if($userId=='')
-      {  $result = new wsCreateUserResponse (20, "User ID is required");
+      {  $result = new wsCreateUserResponse (25, "User ID is required");
          return $result;
       }
 
       if($password=='')
-      {  $result = new wsCreateUserResponse (21, "Password is required");
+      {  $result = new wsCreateUserResponse (26, "Password is required");
          return $result;
       }
 
       if($firstname=='')
-      {  $result = new wsCreateUserResponse (22, "Firstname is required");
+      {  $result = new wsCreateUserResponse (27, "Firstname is required");
          return $result;
       }
 
@@ -536,7 +537,7 @@ class wsBase
 
       $user = $RBAC->verifyUser($userId);
       if ( $user == 1){
-        $result = new wsCreateUserResponse (7, "User ID: $userId already exist!!!", '' ) ;
+        $result = new wsCreateUserResponse (7, "User ID: $userId already exist", '' ) ;
         return $result;
       }
 
@@ -606,32 +607,14 @@ class wsBase
         return $result;
       }
 
-      G::LoadClass('groups');
       $groups = new Groups;
       $very_group = $groups->verifyGroup( $groupId );
       if ( $very_group==0 ) {
-        $result = new wsResponse (23, "Group not registered in the system");
+        $result = new wsResponse (9, "Group not registered in the system");
         return $result;
       }
 
-      /*  this code is unnecesary because the restriccions is over the user is calling this method, not over the user we are changing group.
-      $oRBAC = RBAC::getSingleton();
-      $oRBAC->loadUserRolePermission($oRBAC->sSystem, $userId);
-      $aPermissions = $oRBAC->aUserInfo[$oRBAC->sSystem]['PERMISSIONS'];
-      foreach ($aPermissions as $aPermission) {
-        if ($aPermission['PER_CODE'] == 'PM_FACTORY')
-        {
-          exit;
-        }
-        else
-        {
-          $result = new wsResponse (24, "You do not have privileges");
-          return $result;
-        }
-      }
-      */
-
-      $very_user=$groups->verifyUsertoGroup( $groupId, $userId);
+      $very_user = $groups->verifyUsertoGroup( $groupId, $userId);
       if($very_user==1){
         $result = new wsResponse (8, "User exist in the group");
         return $result;
@@ -650,10 +633,10 @@ class wsBase
     //delegation where app uid (caseId) y usruid(session) ordenar delindes descendente y agaarr el primero
     //delfinishdate != null error
     try {
-      require_once ("classes/model/AppDelegation.php");
       $oCriteria = new Criteria('workflow');
       $oCriteria->addSelectColumn(AppDelegationPeer::DEL_FINISH_DATE);
       $oCriteria->add(AppDelegationPeer::APP_UID, $caseId);
+      $oCriteria->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL );
 
       $oCriteria->addDescendingOrderByColumn(AppDelegationPeer::DEL_INDEX);
       $oDataset = AppDelegationPeer::doSelectRS($oCriteria);
@@ -662,33 +645,30 @@ class wsBase
       $cnt = 0;
       while($oDataset->next()) {
         $aRow = $oDataset->getRow();
-          if($aRow['DEL_FINISH_DATE']==NULL)
-          {
-              $cnt++;
-          }
+        $cnt++;
       }
 
-      if($cnt == 0){
-          $result = new wsResponse (18, 'This case is already closed');
-          return $result;
+      if ($cnt == 0){
+        $result = new wsResponse (18, 'This case is already closed');
+        return $result;
       }
-      if(is_array($variables)) {
+      if ( is_array($variables)) {
         $cant = count ( $variables );
-        if($cant > 0) {
-          G::LoadClass('case');
-          $oCase = new Cases();
 
+        if($cant > 0) {
+          $oCase = new Cases();
           $oldFields = $oCase->loadCase( $caseId );
           $oldFields['APP_DATA'] = array_merge( $oldFields['APP_DATA'], $variables );
           $up_case = $oCase->updateCase($caseId, $oldFields);
-          $result = new wsResponse (0, "$cant variables received.");
+          $result = new wsResponse (0, "$cant variables received" );
           return $result;
-        } else {
-          $result = new wsResponse (100, "The variables param length is zero");
+        } 
+        else {
+          $result = new wsResponse (23, "The variables param length is zero");
           return $result;
         }
       } else {
-        $result = new wsResponse (100, "The variables param is not a array!");
+        $result = new wsResponse (24, "The variables param is not a array");
         return $result;
       }
     }
@@ -700,53 +680,33 @@ class wsBase
 
   public function getVariables($caseId, $variables) {
     try {
-    	/* getVariables should be enable for all cases, open and closed cases.
-      //get last delegation where app_uid (caseId) and userUid(session) and delfinishdate != null error
-      require_once ("classes/model/AppDelegation.php");
-      $oCriteria = new Criteria('workflow');
-      $oCriteria->addSelectColumn(AppDelegationPeer::DEL_FINISH_DATE);
-      $oCriteria->add(AppDelegationPeer::APP_UID, $caseId);
-      $oCriteria->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL );
-      $oCriteria->addDescendingOrderByColumn(AppDelegationPeer::DEL_INDEX);
-      $oDataset = AppDelegationPeer::doSelectRS($oCriteria);
-      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-
-      $cnt = 0;
-      while($oDataset->next()) {
-        $aRow = $oDataset->getRow();
-        $cnt++;
-      }
-
-      if($cnt == 0){
-          $result = new wsResponse (18, 'This case is already closed');
-          return $result;
-      }
-      */
-      
-      G::LoadClass('case');
       if ( is_array($variables) ) {
         $cant = count ( $variables );
         if($cant > 0) {
           $oCase = new Cases();
 
           $caseFields = $oCase->loadCase( $caseId );
-          $oldFields = $caseFields['APP_DATA'];
-          $resFields = array();
+          $oldFields  = $caseFields['APP_DATA'];
+          $resFields  = array();
           foreach ( $variables as $key => $val ) {
-            //$resFields[ $val ] =  $oldFields[ $val ] ;
-            if ( isset ( $oldFields[ $val->name ] ) )
-              $resFields[ $val->name ] =  $oldFields[ $val->name ] ;
+            $a .= $val->name . ', ';
+            if ( isset ( $oldFields[ $val->name ] ) ) {
+              $node = new stdClass();
+              $node->name  = $val->name ;
+              $node->value = $oldFields[ $val->name ] ;
+              $resFields[ ] = $node;
+            }
           }
-          $result = new wsGetVariableResponse (100, count($resFields) . " variables received." , $resFields );
-          return $resFields;
+          $result = new wsGetVariableResponse (0, count($resFields) . " variables sent" , $resFields );
+          return $result;
         }
         else {
-          $result = new wsGetVariableResponse (100, "The variables param length is zero", null);
+          $result = new wsGetVariableResponse (23, "The variables param length is zero", null);
           return $result;
         }
       }
       else {
-        $result = new wsGetVariableResponse (100, "The variables param is not a array!" . print_r ($variables, 1), null);
+        $result = new wsGetVariableResponse (24, "The variables param is not a array", null);
         return $result;
       }
     }
@@ -760,72 +720,59 @@ class wsBase
   public function newCase($processId, $userId, $taskId, $variables) {
     try {
       $Fields = array();
-      if( is_array($variables) ) {
-        if( count($variables)>0 ){
-          $c=count($variables);
-
-          $Fields = $variables;
-          if($c == 0) { //Si no tenenmos ninguna variables en el array variables.
-            $result = new wsResponse (10, "Array of variables is empty");
-            return $result;
-          }
-        }
+      if ( is_array($variables) && count($variables)>0 ) {
+        $Fields = $variables;
       }
-      G::LoadClass('processes');
       $oProcesses = new Processes();
       $pro = $oProcesses->processExists($processId);
-
-      if(!$pro)
-      {  $result = new wsResponse (11, "Invalid process $processId!!");
-      return $result;
+      if( !$pro ) {  
+      	$result = new wsResponse (11, "Invalid process $processId");
+        return $result;
       }
 
-      G::LoadClass('case');
       $oCase = new Cases();
-        G::LoadClass('tasks');
-        $oTask = new Tasks();
-        $startingTasks = $oCase->getStartCases($userId);
-        array_shift ($startingTasks); //remove the first row, the header row
-        $founded = '';
-        $tasksInThisProcess = 0;
-        $validTaskId = $taskId;
-        foreach ( $startingTasks as $key=> $val ) {
-          if ( $val['pro_uid'] == $processId ) { $tasksInThisProcess ++; $validTaskId = $val['uid']; }
-          if ( $val['uid'] == $taskId ) $founded = $val['value'];
-        }
+      $oTask = new Tasks();
+      $startingTasks = $oCase->getStartCases($userId);
+      array_shift ($startingTasks); //remove the first row, the header row
+      $founded = '';
+      $tasksInThisProcess = 0;
+      $validTaskId = $taskId;
+      foreach ( $startingTasks as $key=> $val ) {
+        if ( $val['pro_uid'] == $processId ) { $tasksInThisProcess ++; $validTaskId = $val['uid']; }
+        if ( $val['uid'] == $taskId ) $founded = $val['value'];
+      }
 
-        if ( $taskId == '' ) {
-          if ( $tasksInThisProcess == 1 ) {
-            $founded = $validTaskId;
-            $taskId = $validTaskId;
-          }
-          if ( $tasksInThisProcess > 1 ) {
-            $result = new wsResponse (13, "Multiple starting task ");
-            return $result;
-          }
+      if ( $taskId == '' ) {
+        if ( $tasksInThisProcess == 1 ) {
+          $founded = $validTaskId;
+          $taskId = $validTaskId;
         }
-
-        if( $founded == '')
-        {
-          $result = new wsResponse (16, "Task invalid or the user is not assigned to the task");
+        if ( $tasksInThisProcess > 1 ) {
+          $result = new wsResponse (13, "Multiple starting task ");
           return $result;
         }
+      }
 
-        $case   = $oCase->startCase($taskId, $userId);
-        $caseId = $case['APPLICATION'];
-        $caseNr = $case['CASE_NUMBER'];
-
-        $oldFields = $oCase->loadCase( $caseId );
-
-        $oldFields['APP_DATA'] = array_merge( $oldFields['APP_DATA'], $Fields);
-
-        $up_case = $oCase->updateCase($caseId, $oldFields);
-        //$result = new wsResponse (0, "Sucessful\ncase uid = $caseId \ncase number = $caseNr ");
-        $result = new wsResponse (0, "Sucessful");
-        $result->caseId = $caseId;
-        $result->caseNumber = $caseNr;
-
+      if( $founded == '') {
+        $result = new wsResponse (14, "Task invalid or the user is not assigned to the task");
         return $result;
+      }
+
+      $case   = $oCase->startCase($taskId, $userId);
+      $caseId = $case['APPLICATION'];
+      $caseNr = $case['CASE_NUMBER'];
+
+      $oldFields = $oCase->loadCase( $caseId );
+
+      $oldFields['APP_DATA'] = array_merge( $oldFields['APP_DATA'], $Fields);
+
+      $up_case = $oCase->updateCase($caseId, $oldFields);
+
+      $result = new wsResponse (0, "Sucessful");
+      $result->caseId = $caseId;
+      $result->caseNumber = $caseNr;
+
+      return $result;
     }
     catch ( Exception $e ) {
       $result = new wsResponse (100, $e->getMessage());
@@ -845,11 +792,10 @@ class wsBase
           }
         }
       } else {
-        $result = new wsResponse (100, "The variables param is not a array!");
+        $result = new wsResponse (10, "The variables param is not a array");
         return $result;
       }
 
-      G::LoadClass('processes');
       $oProcesses = new Processes();
       $pro = $oProcesses->processExists($processId);
 
@@ -858,7 +804,6 @@ class wsBase
         return $result;
       }
 
-      G::LoadClass('case');
       $oCase = new Cases();
 
       $tasks  = $oProcesses->getStartingTaskForUser($processId, $userId);
@@ -866,8 +811,6 @@ class wsBase
 
       if($numTasks==1)
       {
-
-        G::LoadClass('tasks');
         $oTask = new Tasks();
         $very = $oTask->verifyUsertoTask($userId, $tasks[0]['TAS_UID']);
         if(is_array($very))
@@ -876,13 +819,13 @@ class wsBase
            {
              $group=$groups->getUsersOfGroup( $tasks[0]['TAS_UID'] );
              if(!is_array($group))
-             { $result = new wsResponse (16, "The user is not assigned to the task");
+             { $result = new wsResponse (14, "The user is not assigned to the task");
                return $result;
              }
            }
         }
         else
-        { $result = new wsResponse (16, "The user is not assigned to the task");
+        { $result = new wsResponse (14, "The user is not assigned to the task");
           return $result;
         }
 
@@ -899,7 +842,7 @@ class wsBase
       }
       else {
         if($numTasks==0) {
-          $result = new wsResponse (12, "No staring task defined");
+          $result = new wsResponse (12, "No starting task defined");
           return $result;
         }
         if($numTasks > 1){
@@ -915,13 +858,8 @@ class wsBase
   }
 
   public function derivateCase($userId, $caseId, $delIndex, $bExecuteTriggersBeforeAssignment = false) {
-    try { $sStatus = 'TO_DO';
-      require_once ("classes/model/AppDelegation.php");
-      require_once ("classes/model/Route.php");
-      require_once ("classes/model/AppDelay.php");
-      G::LoadClass('case');
-      G::LoadClass('derivation');
-      G::LoadClass('sessions');
+    try { 
+    	$sStatus = 'TO_DO';
 
       $varResponse = '';
       $varTriggers = "\n";
@@ -932,7 +870,7 @@ class wsBase
         $oCriteria->add(AppDelegationPeer::APP_UID, $caseId);
         $oCriteria->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
         if (AppDelegationPeer::doCount($oCriteria) > 1) {
-          $result = new wsResponse (20, 'Please specify the delegation index!');
+          $result = new wsResponse (20, 'Please specify the delegation index');
           return $result;
         }
         $oDataset = AppDelegationPeer::doSelectRS($oCriteria);
@@ -970,8 +908,8 @@ class wsBase
 
       if(is_array($aRow))
       {
-        if(isset($aRow['APP_DISABLE_ACTION_USER']) && $aRow['APP_DISABLE_ACTION_USER']!=0 && 
-          isset($aRow['APP_DISABLE_ACTION_DATE']) && $aRow['APP_DISABLE_ACTION_DATE']!='' ) {
+        if ( isset($aRow['APP_DISABLE_ACTION_USER']) && $aRow['APP_DISABLE_ACTION_USER']!=0 && 
+             isset($aRow['APP_DISABLE_ACTION_DATE']) && $aRow['APP_DISABLE_ACTION_DATE']!='' ) {
             $result = new wsResponse (19, "This case is in status". $aRow['APP_TYPE']);
             return $result;
           }
@@ -1005,9 +943,6 @@ class wsBase
               $varTriggers .= "Before Assignment ----------\n" . $aTrigger['TRI_WEBBOT'] . "\n";
               //$appFields = $oCase->loadCase( $caseId );
               $appFields['APP_DATA'] = $oPMScript->aFields;
-              //$appFields['APP_DATA']['APPLICATION'] = $caseId;
-//$var  Triggers .= "proccode " . $appFields['APP_PROC_CODE'] . "\n";
-//$var  Triggers .= "pin " . $appFields['APP_DATA']['PIN'] . "\n";
               $oCase->updateCase ( $caseId, $appFields );
             }
           }
@@ -1034,8 +969,6 @@ class wsBase
             //$appFields = $oCase->loadCase( $caseId );
             $appFields['APP_DATA'] = $oPMScript->aFields;
             //$appFields['APP_DATA']['APPLICATION'] = $caseId;
-//$varTriggers .= "proccode " . $appFields['APP_PROC_CODE'] . "\n";
-//$varTriggers .= "pin " . $appFields['APP_DATA']['PIN'] . "\n";
             $oCase->updateCase ( $caseId, $appFields );
           }
         }
@@ -1050,7 +983,7 @@ class wsBase
         }
       }
       else {
-        $result = new wsResponse (22, 'Task does not have derivation rule, check process definition');
+        $result = new wsResponse (22, 'Task does not has derivation rule, check process definition');
         return $result;
       }
       foreach ( $derive as $key=>$val ) {
@@ -1142,7 +1075,55 @@ class wsBase
       $result = new wsResponse (0, $varResponse . $varTriggers );
       $res = $result->getPayloadArray ();
 
-      $res['derivation'] = $oDerivation->getDerivatedCases( $caseId, $delIndex);
+      //now fill the array of AppDelegationPeer
+      $oCriteria = new Criteria('workflow');
+      $oCriteria->addSelectColumn(AppDelegationPeer::DEL_INDEX);
+      $oCriteria->addSelectColumn(AppDelegationPeer::USR_UID);
+      $oCriteria->addSelectColumn(AppDelegationPeer::TAS_UID);
+      $oCriteria->addSelectColumn(AppDelegationPeer::DEL_THREAD);
+      $oCriteria->addSelectColumn(AppDelegationPeer::DEL_THREAD_STATUS);
+      $oCriteria->addSelectColumn(AppDelegationPeer::DEL_FINISH_DATE);
+      $oCriteria->add(AppDelegationPeer::APP_UID, $caseId);
+      $oCriteria->add(AppDelegationPeer::DEL_PREVIOUS, $delIndex );
+      $oCriteria->addAscendingOrderByColumn(AppDelegationPeer::DEL_INDEX);
+      $oDataset = AppDelegationPeer::doSelectRS($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+
+      $aCurrentUsers = array();
+      while($oDataset->next()) {
+        $aAppDel = $oDataset->getRow();
+
+        $oUser = new Users();
+        try {
+          $oUser->load($aAppDel['USR_UID']);
+          $uFields = $oUser->toArray(BasePeer::TYPE_FIELDNAME);
+          $currentUserName = $oUser->getUsrFirstname() . ' ' . $oUser->getUsrLastname();
+        }
+        catch ( Exception $e ) {
+          $currentUserName = '';
+        }
+
+        $oTask = new Task();
+        try {
+          $uFields = $oTask->load($aAppDel['TAS_UID']);
+          $taskName = $uFields['TAS_TITLE'];
+        }
+        catch ( Exception $e ) {
+          $taskName = '';
+        }
+
+        $currentUser = new stdClass();
+        $currentUser->userId    = $aAppDel['USR_UID'];
+        $currentUser->userName  = $currentUserName;
+        $currentUser->taskId    = $aAppDel['TAS_UID'];
+        $currentUser->taskName  = $taskName;
+        $currentUser->delIndex  = $aAppDel['DEL_INDEX'];
+        $currentUser->delThread = $aAppDel['DEL_THREAD'];
+        $currentUser->delThreadStatus = $aAppDel['DEL_THREAD_STATUS'];
+        $aCurrentUsers[] = $currentUser;
+      }
+            
+      $res['routing'] = $aCurrentUsers;
       return $res;
     }
     catch ( Exception $e ) {
@@ -1153,12 +1134,6 @@ class wsBase
 
   public function executeTrigger($userId, $caseId, $triggerIndex, $delIndex) {
     try {
-      require_once ("classes/model/AppDelegation.php");
-      require_once ("classes/model/Route.php");
-      require_once ("classes/model/AppDelay.php");
-      G::LoadClass('case');
-      G::LoadClass('sessions');
-
       $oAppDel = new AppDelegation();
       $appdel  = $oAppDel->Load($caseId, $delIndex);
 
@@ -1170,7 +1145,7 @@ class wsBase
 
       if($appdel['DEL_FINISH_DATE']!=NULL)
       {
-        $result = new wsResponse (18, 'This delegation already closed');
+        $result = new wsResponse (18, 'This delegation already closed or not exists');
         return $result;
       }
 
@@ -1290,7 +1265,6 @@ class wsBase
 
   public function reassignCase( $sessionId, $caseId, $delIndex, $userIdSource, $userIdTarget ){
     try {
-      G::LoadClass('derivation');
       if ( $userIdTarget == $userIdSource ) {
         $result = new wsResponse (30, "Target and Origin user are the same" );
         return $result;
@@ -1315,7 +1289,7 @@ class wsBase
       $rows = $oCase->loadCase($caseId);
       if(!is_array($aRow))
       {
-          $result = new wsResponse (32, "This case is not open." );
+          $result = new wsResponse (32, "This case is not open" );
           return $result;
       }
 
@@ -1386,21 +1360,21 @@ class wsBase
     try {
       define ( 'SKIP_RENDER_SYSTEM_INFORMATION', true );
       require_once ( PATH_METHODS . 'login' . PATH_SEP . 'dbInfo.php' );
-			$result->status_code        = 0;
-			$result->message            = 'Sucessful';
-			$result->timestamp          = date ( 'Y-m-d H:i:s');
-  		$result->version            = PM_VERSION;
-	  	$result->operatingSystem    = $redhat;
-	  	$result->webServer          = getenv('SERVER_SOFTWARE');
-	  	$result->serverName         = getenv('SERVER_NAME');
-	  	$result->serverIp           = $Fields['IP']; //lookup ($ip);
-	  	$result->phpVersion         = phpversion();
-	  	$result->databaseVersion    = $Fields['DATABASE'];
-	  	$result->databaseServerIp   = $Fields['DATABASE_SERVER'];
-	  	$result->databaseName       = $Fields['DATABASE_NAME'];
-	  	$result->availableDatabases = $Fields['AVAILABLE_DB'];
-	  	$result->userBrowser        = $Fields['HTTP_USER_AGENT'];
-	  	$result->userIp             = $Fields['IP'];
+      $result->status_code        = 0;
+      $result->message            = 'Sucessful';
+      $result->timestamp          = date ( 'Y-m-d H:i:s');
+      $result->version            = PM_VERSION;
+      $result->operatingSystem    = $redhat;
+      $result->webServer          = getenv('SERVER_SOFTWARE');
+      $result->serverName         = getenv('SERVER_NAME');
+      $result->serverIp           = $Fields['IP']; //lookup ($ip);
+      $result->phpVersion         = phpversion();
+      $result->databaseVersion    = $Fields['DATABASE'];
+      $result->databaseServerIp   = $Fields['DATABASE_SERVER'];
+      $result->databaseName       = $Fields['DATABASE_NAME'];
+      $result->availableDatabases = $Fields['AVAILABLE_DB'];
+      $result->userBrowser        = $Fields['HTTP_USER_AGENT'];
+      $result->userIp             = $Fields['IP'];
             
       return $result;
     }
