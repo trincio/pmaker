@@ -668,7 +668,7 @@ var processmap=function(){
 						this.tmp.eventsPanel = panel =new leimnud.module.panel();
 						panel.options={
 							limit	:true,
-							size	:{w:600,h:380},
+							size	:{w:640,h:380},
 							position:{x:50,y:50,center:true},
 							title	:G_STRINGS.ID_EVENTS,
 							theme	:this.options.theme,
@@ -1085,8 +1085,15 @@ var processmap=function(){
 					zIndex:9
 				});
 				if (this.options.rw===true) {
-				  c.onclick=this.patternPanel.args(index);
-			  }
+					/******************************neyek**************************************
+					 * Compativility for IE 7, 8
+					 */
+					if (navigator.appName == "Microsoft Internet Explorer"){ 
+						c.onclick=this.patternPanel.args(1, index, null);
+					} else {
+						c.onclick=this.patternPanel.args(index);
+					}
+			    }
 				var d = document.createElement("div");
 				this.parent.dom.setStyle(d,{
 					position:"absolute",
@@ -1943,10 +1950,11 @@ var processmap=function(){
 		}*/
 	}.expand(this,true);
 	this.patternPanel=function(event,index,din){
-
+		
 		var options 	= this.data.db.task[index];
 		var db		= this.data.db, task=db.task[index];
 		var derivation 	= task.derivation.to;
+		
 		var vars	= {
 			tas_uid:task.uid,
 			pro_uid:this.options.uid
@@ -1957,6 +1965,7 @@ var processmap=function(){
 		/*
 		* Aca se definen  TASK inicio y TASK a la que se deriva.
 		*/
+		
 		if (event)
 		{
 			if (typeof(this.data.db.task[index].derivation.type) == 'undefined')
@@ -1995,6 +2004,8 @@ var processmap=function(){
 				  iHeight = 205;
 				break;
 			}
+			
+			
 		  this.tmp.derivationsPanel = panel =new leimnud.module.panel();
 		  panel.options={
 		  	limit	:true,
@@ -2025,11 +2036,11 @@ var processmap=function(){
 		  if ((this.data.db.task[index].derivation.type != vars.type) && (typeof(this.data.db.task[index].derivation.type) != 'undefined'))
 		  {
 			  if (typeof(this.data.db.task[index].derivation.type) != 'undefined')
-			  {
+			  { 
 			  	new leimnud.module.app.confirm().make({
-  	        label:  G_STRINGS.ID_PROCESSMAP_CONFIRM_WORKFLOW_PATTERN_CHANGE,
-  	        action: function() {
-  	        	var aData = {};
+		  	        label:  G_STRINGS.ID_PROCESSMAP_CONFIRM_WORKFLOW_PATTERN_CHANGE,
+		  	        action: function() {
+			  		var aData = {};
 			        aData.type    = Number(vars.type);
 			        aData.tas_uid = vars.tas_uid;
 			        aData.data    = [];

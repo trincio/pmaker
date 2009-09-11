@@ -168,15 +168,11 @@ function run_generate_unit_test_class ( $task, $args)
   G::LoadSystem ( 'xmlform');
   G::LoadSystem ( 'xmlDocument');
   G::LoadSystem ( 'form');
-  G::LoadSystem ( 'dbconnection');
-  G::LoadSystem ( 'dbsession');
-  G::LoadSystem ( 'dbrecordset');
-  G::LoadSystem ( 'dbtable');
-  G::LoadClass ( 'application');
+  G::LoadClass  ( 'application');
 
   require_once ( $classFilename );
 
-  $unitFilename = PATH_GULLIVER_HOME . 'bin' . PATH_SEP . 'tasks' . PATH_SEP . 'unitTest.tpl';
+  $unitFilename = PATH_GULLIVER_HOME . 'bin' . PATH_SEP . 'tasks' . PATH_SEP . 'templates' . PATH_SEP . 'unitTest.tpl';
     
   $smarty = new Smarty();
   
@@ -193,8 +189,6 @@ function run_generate_unit_test_class ( $task, $args)
   //get the method list
   $reflect = new ReflectionClass( $class );
   $methods = array();
-  
-	$method = array ( );
 	$testItems = 0;
   foreach($reflect->getMethods() as $reflectmethod) {
   	$params = '';
@@ -205,9 +199,12 @@ function run_generate_unit_test_class ( $task, $args)
  		$testItems++;
   	$methods[ $reflectmethod->getName() ] = $params;
   }
-  $smarty->assign('methods', $methods );
-  $smarty->assign('testItems', ( count($methods)*2) + 2 );
 
+  $smarty->assign('methods', $methods );
+  $smarty->assign('testItems',   ( count($methods)*2) + 3 );
+  $smarty->assign('cantMethods', count($methods) );
+//  $smarty->assign('llave', '{' );
+  
   // fetch smarty output
   $content = $smarty->fetch( $unitFilename );
 
