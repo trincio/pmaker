@@ -400,12 +400,14 @@ try {
 	  	$sDirectory = PATH_DATA_MAILTEMPLATES . $_POST['pro_uid'] . PATH_SEP . $_POST['filename'];
 
 	  	$fp = fopen($sDirectory, 'w');
-	  	fwrite($fp, stripslashes($_POST['fcontent']));
+	  	$content = stripslashes($_POST['fcontent']);
+	  	$content = str_replace("@amp@", "&", $content);
+	  	fwrite($fp, $content);
 	  	fclose($fp);
 	  	echo 'saved: '. $sDirectory;
     break;
-    case 'alerts':
-      $oProcessMap->alertsList($oData->pro_uid);
+    case 'events':
+      $oProcessMap->eventsList($oData->pro_uid);
     break;
   }
   if( isset($sOutput) )
