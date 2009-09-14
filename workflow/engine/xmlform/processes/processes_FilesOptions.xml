@@ -32,6 +32,7 @@ var uploadFilesScreen = function(PRO_UID, MAIN_DIRECTORY, CURRENT_DIRECTORY) {
 	oIFrame.src          = 'processes_UploadFilesForm?PRO_UID=' + PRO_UID + '&MAIN_DIRECTORY=' + MAIN_DIRECTORY + '&CURRENT_DIRECTORY=' + CURRENT_DIRECTORY;
 	oUploadFilesPanel.addContent(oIFrame);
 };
+
 var oPanel;
 function editFile(pro_uid, fileName){
 	oPanel = new leimnud.module.panel();
@@ -52,9 +53,10 @@ function editFile(pro_uid, fileName){
   	oPanel.loader.show();
   	oRPC.callback = function(rpc) {
 	  	oPanel.loader.hide();
+	  	oPanel.addContent(rpc.xmlhttp.responseText);
 	  	var scs=rpc.xmlhttp.responseText.extractScript();
 	  	scs.evalScript();
-	  	oPanel.addContent(rpc.xmlhttp.responseText);
+	  	
   	}.extend(this);
 	oRPC.make();
 }
