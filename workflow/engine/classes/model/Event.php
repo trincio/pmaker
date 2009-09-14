@@ -162,4 +162,92 @@ class Event extends BaseEvent {
       throw($oError);
     }
   }
+
+  function calculateEventsExecutionDate() {
+    try {
+      require_once 'classes/model/AppDelegation.php';
+      require_once 'classes/model/AppEvent.php';
+      G::LoadClass('dates');
+      $oDates = new dates();
+      $aProcesses = $aEvents = array();
+      $oCriteria = new Criteria('workflow');
+      $oCriteria->addSelectColumn(EventPeer::PRO_UID);
+      $oCriteria->addGroupByColumn(EventPeer::PRO_UID);
+      $oDataset = EventPeer::doSelectRs($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      while ($aData = $oDataset->getRow()) {
+        $aProcesses[] = $aData['PRO_UID'];
+        $oDataset->next();
+      }
+      $oCriteria = new Criteria('workflow');
+      $oCriteria->addSelectColumn(EventPeer::EVN_UID);
+      $oCriteria->addSelectColumn(EventPeer::PRO_UID);
+      $oCriteria->addSelectColumn(EventPeer::EVN_RELATED_TO);
+      $oCriteria->addSelectColumn(EventPeer::TAS_UID);
+      $oCriteria->addSelectColumn(EventPeer::EVN_TAS_UID_FROM);
+      $oCriteria->addSelectColumn(EventPeer::EVN_TAS_UID_TO);
+      $oCriteria->addSelectColumn(EventPeer::EVN_TAS_STIMATED_DURATION);
+      $oCriteria->addSelectColumn(EventPeer::EVN_WHEN);
+      $oCriteria->addSelectColumn(EventPeer::EVN_MAX_ATTEMPTS);
+      $oCriteria->addSelectColumn(EventPeer::EVN_ACTION);
+      $oCriteria->addSelectColumn(EventPeer::EVN_TEMPLATE);
+      $oCriteria->addSelectColumn(EventPeer::EVN_DIGEST);
+      $oCriteria->addSelectColumn(EventPeer::TRI_UID);
+      $oCriteria->add(EventPeer::PRO_UID, $aProcesses, Criteria::IN);
+      $oDataset = EventPeer::doSelectRs($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      while ($aData = $oDataset->getRow()) {
+        $aData['EVN_TAS_STIMATED_DURATION'] = (float)$aData['EVN_TAS_STIMATED_DURATION'];
+        $aData['EVN_WHEN'] = (float)$aData['EVN_WHEN'];
+        $aEvents[$aData['PRO_UID']][$aData['EVN_UID']] = $aData;
+        $oDataset->next();
+      }
+      $oCriteria = new Criteria('workflow');
+      $oCriteria->addSelectColumn(AppDelegationPeer::APP_UID);
+      $oCriteria->addSelectColumn(AppDelegationPeer::DEL_INDEX);
+      $oCriteria->addSelectColumn(AppDelegationPeer::PRO_UID);
+      $oCriteria->addSelectColumn(AppDelegationPeer::DEL_INIT_DATE);
+      $oCriteria->addSelectColumn(AppDelegationPeer::DEL_TASK_DUE_DATE);
+      $oCriteria->add(AppDelegationPeer::PRO_UID, $aProcesses, Criteria::IN);
+      $oCriteria->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
+      $oDataset = AppDelegationPeer::doSelectRs($oCriteria);
+      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset->next();
+      while ($aData = $oDataset->getRow()) {
+        foreach ($aEvents[$aData['PRO_UID']] as $aEvent) {
+          $oCriteria2 = new Criteria('workflow');
+          $oCriteria2->add(AppEventPeer::APP_UID, $aData['APP_UID']);
+          $oCriteria2->add(AppEventPeer::DEL_INDEX, $aData['DEL_INDEX']);
+          $oCriteria2->add(AppEventPeer::EVN_UID, $aEvent['EVN_UID']);
+          $oCriteria2->add(AppEventPeer::APP_EVN_STATUS, 'OPEN');
+          if (AppDelegationPeer::doCount($oCriteria2) == 0) {
+            if ($aEvent['EVN_RELATED_TO'] != 'SINGLE') {
+              $sDueDate = date('Y-m-d H:i:s', $oDates->calculateDate($aData['DEL_INIT_DATE'], $aEvent['EVN_RELATED_TO'], 'hours', 1));
+            }
+            else {
+              $sDueDate = $aData['DEL_TASK_DUE_DATE'];
+            }
+            if ($aEvent['EVN_WHEN'] != 0) {
+              $sActionDate = date('Y-m-d H:i:s', $oDates->calculateDate($sDueDate, $aEvent['EVN_WHEN'], 'days', 1));
+            }
+            else {
+              $sActionDate = $sDueDate;
+            }
+            $oAppEvent = new AppEvent();
+            $oAppEvent->create(array('APP_UID'                     => $aData['APP_UID'],
+                                     'DEL_INDEX'                   => $aData['DEL_INDEX'],
+                                     'EVN_UID'                     => $aEvent['EVN_UID'],
+                                     'APP_EVN_ACTION_DATE'         => $sActionDate,
+                                     'APP_EVN_ATTEMPTS'            => $aEvent['EVN_MAX_ATTEMPTS']));
+          }
+        }
+        $oDataset->next();
+      }
+    }
+    catch (Exception $oError) {
+      //CONTINUE
+    }
+  }
 } // Event

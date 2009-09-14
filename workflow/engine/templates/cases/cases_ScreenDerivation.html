@@ -129,10 +129,11 @@
 {literal}leimnud.event.add(document.getElementById('btnContinue'), 'click', function() { {/literal}
 	setNestedProperty(this, Array('disabled'), 'true');
 	setNestedProperty(this, Array('value'), '{$PROCESSING_MESSAGE}');
-	
-	{literal}	if (navigator.appName == "Microsoft Internet Explorer"){ {/literal}
+	var client = getBrowserClient();
+	{literal} if (client.browser == "msie" || client.browser == "safari"){ {/literal}
 		document.frmDerivation.submit();
- 	}
+	{literal} } {/literal}
 {literal} }.extend(document.getElementById('btnContinue'))); {/literal}
+
 </script>
 
