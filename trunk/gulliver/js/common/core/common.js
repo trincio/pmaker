@@ -1401,3 +1401,25 @@ function setNestedProperty(obj, propertyName, propertyValue){
 	}
 }
 
+/**
+ * This function gets the user client browser and its version
+ *  
+ * @Author Erik Amaru Ortiz 
+ * @Param <none>
+ * @Return (objeect) {browser:sBrowser, version:sVersion}
+ */
+function getBrowserClient(){
+
+    var aBrowFull = new Array("opera", "msie", "firefox", "opera", "safari");
+    var sInfo = navigator.userAgent.toLowerCase();
+    sBrowser = "";
+    for (var i = 0; i < aBrowFull.length; i++){
+     if ((sBrowser == "") && (sInfo.indexOf(aBrowFull[i]) != -1)){
+      sBrowser = aBrowFull[i];
+      sVersion = String(parseFloat(sInfo.substr(sInfo.indexOf(aBrowFull[i]) + aBrowFull[i].length + 1)));
+      return {browser:sBrowser, version:sVersion}
+      
+     }
+    }
+    return false;
+}
