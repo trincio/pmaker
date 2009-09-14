@@ -23,6 +23,7 @@
  *
  */
 
+
   /* Permissions */
   if (($RBAC_Response = $RBAC->userCanAccess("PM_CASES"))!=1) return $RBAC_Response;
 
@@ -70,8 +71,8 @@
   }
 
   /* Prepare page before to show */
-
   list($Criteria,$xmlfile) = $oCases->getConditionCasesList( $sTypeList, $sUIDUserLogged);
+
 
   /* Render page */
   $G_PUBLISH = new Publisher;
@@ -80,3 +81,7 @@
   }
   $G_PUBLISH->AddContent('propeltable', 'paged-table', $xmlfile, $Criteria);
   G::RenderPage('publish');
+
+  
+  
+
