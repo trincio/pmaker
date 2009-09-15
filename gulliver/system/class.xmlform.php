@@ -1796,14 +1796,20 @@ class XmlForm_Field_Listbox extends XmlForm_Field {
       $value = explode ( '|', $value );
     if ($this->mode === 'edit') {
       $html = '<select multiple="multiple" id="form[' . $this->name . ']" name="form[' . $this->name . '][]" size="' . $this->size . '">';
-      foreach ( $this->options as $optionName => $option ) {
+      foreach ( $this->option as $optionName => $option ) {
+        $html .= '<option value="' . $optionName . '" ' . ((in_array ( $optionName, $value )) ? 'selected' : '') . '>' . $option . '</option>';
+      }
+      foreach ( $this->sqlOption as $optionName => $option ) {
         $html .= '<option value="' . $optionName . '" ' . ((in_array ( $optionName, $value )) ? 'selected' : '') . '>' . $option . '</option>';
       }
       $html .= '</select>';
       return $html;
     } elseif ($this->mode === 'view') {
       $html = '<select multiple id="form[' . $this->name . ']" name="form[' . $this->name . '][]" size="' . $this->size . '" disabled>';
-      foreach ( $this->options as $optionName => $option ) {
+      foreach ( $this->option as $optionName => $option ) {
+        $html .= '<option value="' . $optionName . '" ' . ((in_array ( $optionName, $value )) ? 'selected' : '') . '>' . $option . '</option>';
+      }
+      foreach ( $this->sqlOption as $optionName => $option ) {
         $html .= '<option value="' . $optionName . '" ' . ((in_array ( $optionName, $value )) ? 'selected' : '') . '>' . $option . '</option>';
       }
       $html .= '</select>';
