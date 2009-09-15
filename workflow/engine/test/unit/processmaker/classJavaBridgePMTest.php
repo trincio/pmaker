@@ -1,14 +1,23 @@
 <?php
+  $unitFilename = $_SERVER['PWD'] . '/test/bootstrap/unit.php' ;
+  require_once( $unitFilename );
+
   require_once( PATH_THIRDPARTY . '/lime/lime.php');
   require_once( PATH_THIRDPARTY.'lime/yaml.class.php');
-  
+  require_once( 'propel/Propel.php' );
+  require_once ( "creole/Creole.php" );
+  Propel::init(  PATH_CORE . "config/databases.php");
+
+
   G::LoadThirdParty('smarty/libs','Smarty.class');
+  G::LoadSystem ( 'error');
   G::LoadSystem ( 'xmlform');
   G::LoadSystem ( 'xmlDocument');
   G::LoadSystem ( 'form');
-  G::LoadClass ( 'javaBridgePM');
 
   require_once (  PATH_CORE . "config/databases.php");  
+
+  G::LoadClass ( 'javaBridgePM');
 
   $obj = new JavaBridgePM ($dbc); 
   $t   = new lime_test( 9, new lime_output_color() );

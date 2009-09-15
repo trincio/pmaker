@@ -35,21 +35,28 @@
   G::LoadSystem ( 'error');
   G::LoadSystem ( 'xmlform');
   G::LoadSystem ( 'xmlDocument');
-  G::LoadSystem ( 'form');
   G::LoadSystem ( 'dbconnection');
   G::LoadSystem ( 'dbsession');
-  G::LoadSystem ( 'dbrecordset');
-  G::LoadSystem ( 'dbtable');
+  G::LoadSystem ( 'form');
   G::LoadClass ( 'xmlDb');
+
   $dbc = new DBConnection(); 
   $ses = new DBSession( $dbc);
- 
   $obj = new XmlDb ($dbc); 
-  $t   = new lime_test( 4, new lime_output_color() );
+  $t   = new lime_test( 5, new lime_output_color() );
+
+//--------
+  $className = "XmlDb";
+  $reflect = new ReflectionClass( $className );
+	$method = array ( );
+	$testItems = 0;
+//-------
  
   $t->diag('class XmlDb' );
   $t->isa_ok( $obj  , 'XMLDB',  'class XmlDb created');
-
+//---- 
+  $t->is( count($reflect->getMethods() ) , 2,  "class $className currenlty have " . count($reflect->getMethods()) . ' methods.' );
+//----
   //method connect
   $t->can_ok( $obj,      'connect',   'connect() is callable' );
 
