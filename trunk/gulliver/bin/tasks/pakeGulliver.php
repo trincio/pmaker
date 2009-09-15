@@ -169,6 +169,7 @@ function run_generate_unit_test_class ( $task, $args)
   G::LoadSystem ( 'xmlDocument');
   G::LoadSystem ( 'form');
   G::LoadClass  ( 'application');
+  require_once( 'propel/Propel.php' );
 
   require_once ( $classFilename );
 

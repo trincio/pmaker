@@ -1,14 +1,23 @@
 <?php
+  $unitFilename = $_SERVER['PWD'] . '/test/bootstrap/unit.php' ;
+  require_once( $unitFilename );
+
   require_once( PATH_THIRDPARTY . '/lime/lime.php');
   require_once( PATH_THIRDPARTY.'lime/yaml.class.php');
-  
+  require_once( 'propel/Propel.php' );
+  require_once ( "creole/Creole.php" );
+  Propel::init(  PATH_CORE . "config/databases.php");
+
+
   G::LoadThirdParty('smarty/libs','Smarty.class');
+  G::LoadSystem ( 'error');
   G::LoadSystem ( 'xmlform');
   G::LoadSystem ( 'xmlDocument');
   G::LoadSystem ( 'form');
-  G::LoadClass ( 'package');
 
   require_once (  PATH_CORE . "config/databases.php");  
+
+  G::LoadClass ( 'package');
 
   $obj = new Package ($dbc); 
   $t   = new lime_test( 19, new lime_output_color() );
