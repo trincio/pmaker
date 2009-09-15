@@ -5762,9 +5762,29 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="EVN_TEMPLATE" type="VARCHAR" size="100" required="false" default="">
+    <column name="EVN_MESSAGE_SUBJECT" type="VARCHAR" size="255" required="false" default="">
       <vendor type="mysql">
-        <parameter name="Field" value="EVN_TEMPLATE"/>
+        <parameter name="Field" value="EVN_MESSAGE_SUBJECT"/>
+        <parameter name="Type" value="varchar(255)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="EVN_MESSAGE_TO" type="LONGVARCHAR" required="false">
+      <vendor type="mysql">
+        <parameter name="Field" value="EVN_MESSAGE_TO"/>
+        <parameter name="Type" value="text"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="EVN_MESSAGE_TEMPLATE" type="VARCHAR" size="100" required="false" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="EVN_MESSAGE_TEMPLATE"/>
         <parameter name="Type" value="varchar(100)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
@@ -5772,9 +5792,9 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="EVN_DIGEST" type="TINYINT" required="false" default="1">
+    <column name="EVN_MESSAGE_DIGEST" type="TINYINT" required="false" default="1">
       <vendor type="mysql">
-        <parameter name="Field" value="EVN_DIGEST"/>
+        <parameter name="Field" value="EVN_MESSAGE_DIGEST"/>
         <parameter name="Type" value="tinyint(1)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>

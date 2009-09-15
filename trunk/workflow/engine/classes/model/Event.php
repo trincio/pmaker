@@ -64,6 +64,7 @@ class Event extends BaseEvent {
         $this->fromArray($aFields, BasePeer::TYPE_FIELDNAME);
         $this->setNew(false);
   	    $this->setEvnDescription($aFields['EVN_DESCRIPTION'] = $this->getEvnDescription());
+  	    $aFields['EVN_MESSAGE_TO'] = unserialize($aFields['EVN_MESSAGE_TO']);
   	    return $aFields;
       }
       else {
@@ -83,6 +84,9 @@ class Event extends BaseEvent {
       if ($aData['EVN_UID'] == '') {
         $aData['EVN_UID'] = G::generateUniqueID();
       }
+    }
+    if (is_array($aData['EVN_MESSAGE_TO'])) {
+      $aData['EVN_MESSAGE_TO'] = serialize($aData['EVN_MESSAGE_TO']);
     }
     $oConnection = Propel::getConnection(EventPeer::DATABASE_NAME);
   	try {
@@ -111,6 +115,9 @@ class Event extends BaseEvent {
   }
 
   function update($aData) {
+    if (is_array($aData['EVN_MESSAGE_TO'])) {
+      $aData['EVN_MESSAGE_TO'] = serialize($aData['EVN_MESSAGE_TO']);
+    }
     $oConnection = Propel::getConnection(EventPeer::DATABASE_NAME);
   	try {
   	  $oEvent = EventPeer::retrieveByPK($aData['EVN_UID']);
@@ -191,8 +198,10 @@ class Event extends BaseEvent {
       $oCriteria->addSelectColumn(EventPeer::EVN_WHEN);
       $oCriteria->addSelectColumn(EventPeer::EVN_MAX_ATTEMPTS);
       $oCriteria->addSelectColumn(EventPeer::EVN_ACTION);
-      $oCriteria->addSelectColumn(EventPeer::EVN_TEMPLATE);
-      $oCriteria->addSelectColumn(EventPeer::EVN_DIGEST);
+      $oCriteria->addSelectColumn(EventPeer::EVN_MESSAGE_SUBJECT);
+      $oCriteria->addSelectColumn(EventPeer::EVN_MESSAGE_TO);
+      $oCriteria->addSelectColumn(EventPeer::EVN_MESSAGE_TEMPLATE);
+      $oCriteria->addSelectColumn(EventPeer::EVN_MESSAGE_DIGEST);
       $oCriteria->addSelectColumn(EventPeer::TRI_UID);
       $oCriteria->add(EventPeer::PRO_UID, $aProcesses, Criteria::IN);
       $oDataset = EventPeer::doSelectRs($oCriteria);

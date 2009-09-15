@@ -99,17 +99,31 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 
 	/**
-	 * The value for the evn_template field.
+	 * The value for the evn_message_subject field.
 	 * @var        string
 	 */
-	protected $evn_template = '';
+	protected $evn_message_subject = '';
 
 
 	/**
-	 * The value for the evn_digest field.
+	 * The value for the evn_message_to field.
+	 * @var        string
+	 */
+	protected $evn_message_to;
+
+
+	/**
+	 * The value for the evn_message_template field.
+	 * @var        string
+	 */
+	protected $evn_message_template = '';
+
+
+	/**
+	 * The value for the evn_message_digest field.
 	 * @var        int
 	 */
-	protected $evn_digest = 1;
+	protected $evn_message_digest = 1;
 
 
 	/**
@@ -243,25 +257,47 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Get the [evn_template] column value.
+	 * Get the [evn_message_subject] column value.
 	 * 
 	 * @return     string
 	 */
-	public function getEvnTemplate()
+	public function getEvnMessageSubject()
 	{
 
-		return $this->evn_template;
+		return $this->evn_message_subject;
 	}
 
 	/**
-	 * Get the [evn_digest] column value.
+	 * Get the [evn_message_to] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getEvnMessageTo()
+	{
+
+		return $this->evn_message_to;
+	}
+
+	/**
+	 * Get the [evn_message_template] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getEvnMessageTemplate()
+	{
+
+		return $this->evn_message_template;
+	}
+
+	/**
+	 * Get the [evn_message_digest] column value.
 	 * 
 	 * @return     int
 	 */
-	public function getEvnDigest()
+	public function getEvnMessageDigest()
 	{
 
-		return $this->evn_digest;
+		return $this->evn_message_digest;
 	}
 
 	/**
@@ -484,12 +520,12 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 	} // setEvnAction()
 
 	/**
-	 * Set the value of [evn_template] column.
+	 * Set the value of [evn_message_subject] column.
 	 * 
 	 * @param      string $v new value
 	 * @return     void
 	 */
-	public function setEvnTemplate($v)
+	public function setEvnMessageSubject($v)
 	{
 
 		// Since the native PHP type for this column is string,
@@ -498,20 +534,64 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 			$v = (string) $v; 
 		}
 
-		if ($this->evn_template !== $v || $v === '') {
-			$this->evn_template = $v;
-			$this->modifiedColumns[] = EventPeer::EVN_TEMPLATE;
+		if ($this->evn_message_subject !== $v || $v === '') {
+			$this->evn_message_subject = $v;
+			$this->modifiedColumns[] = EventPeer::EVN_MESSAGE_SUBJECT;
 		}
 
-	} // setEvnTemplate()
+	} // setEvnMessageSubject()
 
 	/**
-	 * Set the value of [evn_digest] column.
+	 * Set the value of [evn_message_to] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setEvnMessageTo($v)
+	{
+
+		// Since the native PHP type for this column is string,
+		// we will cast the input to a string (if it is not).
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->evn_message_to !== $v) {
+			$this->evn_message_to = $v;
+			$this->modifiedColumns[] = EventPeer::EVN_MESSAGE_TO;
+		}
+
+	} // setEvnMessageTo()
+
+	/**
+	 * Set the value of [evn_message_template] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setEvnMessageTemplate($v)
+	{
+
+		// Since the native PHP type for this column is string,
+		// we will cast the input to a string (if it is not).
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->evn_message_template !== $v || $v === '') {
+			$this->evn_message_template = $v;
+			$this->modifiedColumns[] = EventPeer::EVN_MESSAGE_TEMPLATE;
+		}
+
+	} // setEvnMessageTemplate()
+
+	/**
+	 * Set the value of [evn_message_digest] column.
 	 * 
 	 * @param      int $v new value
 	 * @return     void
 	 */
-	public function setEvnDigest($v)
+	public function setEvnMessageDigest($v)
 	{
 
 		// Since the native PHP type for this column is integer,
@@ -520,12 +600,12 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 			$v = (int) $v;
 		}
 
-		if ($this->evn_digest !== $v || $v === 1) {
-			$this->evn_digest = $v;
-			$this->modifiedColumns[] = EventPeer::EVN_DIGEST;
+		if ($this->evn_message_digest !== $v || $v === 1) {
+			$this->evn_message_digest = $v;
+			$this->modifiedColumns[] = EventPeer::EVN_MESSAGE_DIGEST;
 		}
 
-	} // setEvnDigest()
+	} // setEvnMessageDigest()
 
 	/**
 	 * Set the value of [tri_uid] column.
@@ -586,18 +666,22 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 			$this->evn_action = $rs->getString($startcol + 9);
 
-			$this->evn_template = $rs->getString($startcol + 10);
+			$this->evn_message_subject = $rs->getString($startcol + 10);
 
-			$this->evn_digest = $rs->getInt($startcol + 11);
+			$this->evn_message_to = $rs->getString($startcol + 11);
 
-			$this->tri_uid = $rs->getString($startcol + 12);
+			$this->evn_message_template = $rs->getString($startcol + 12);
+
+			$this->evn_message_digest = $rs->getInt($startcol + 13);
+
+			$this->tri_uid = $rs->getString($startcol + 14);
 
 			$this->resetModified();
 
 			$this->setNew(false);
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 13; // 13 = EventPeer::NUM_COLUMNS - EventPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 15; // 15 = EventPeer::NUM_COLUMNS - EventPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Event object", $e);
@@ -831,12 +915,18 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 				return $this->getEvnAction();
 				break;
 			case 10:
-				return $this->getEvnTemplate();
+				return $this->getEvnMessageSubject();
 				break;
 			case 11:
-				return $this->getEvnDigest();
+				return $this->getEvnMessageTo();
 				break;
 			case 12:
+				return $this->getEvnMessageTemplate();
+				break;
+			case 13:
+				return $this->getEvnMessageDigest();
+				break;
+			case 14:
 				return $this->getTriUid();
 				break;
 			default:
@@ -869,9 +959,11 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 			$keys[7] => $this->getEvnWhen(),
 			$keys[8] => $this->getEvnMaxAttempts(),
 			$keys[9] => $this->getEvnAction(),
-			$keys[10] => $this->getEvnTemplate(),
-			$keys[11] => $this->getEvnDigest(),
-			$keys[12] => $this->getTriUid(),
+			$keys[10] => $this->getEvnMessageSubject(),
+			$keys[11] => $this->getEvnMessageTo(),
+			$keys[12] => $this->getEvnMessageTemplate(),
+			$keys[13] => $this->getEvnMessageDigest(),
+			$keys[14] => $this->getTriUid(),
 		);
 		return $result;
 	}
@@ -934,12 +1026,18 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 				$this->setEvnAction($value);
 				break;
 			case 10:
-				$this->setEvnTemplate($value);
+				$this->setEvnMessageSubject($value);
 				break;
 			case 11:
-				$this->setEvnDigest($value);
+				$this->setEvnMessageTo($value);
 				break;
 			case 12:
+				$this->setEvnMessageTemplate($value);
+				break;
+			case 13:
+				$this->setEvnMessageDigest($value);
+				break;
+			case 14:
 				$this->setTriUid($value);
 				break;
 		} // switch()
@@ -975,9 +1073,11 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[7], $arr)) $this->setEvnWhen($arr[$keys[7]]);
 		if (array_key_exists($keys[8], $arr)) $this->setEvnMaxAttempts($arr[$keys[8]]);
 		if (array_key_exists($keys[9], $arr)) $this->setEvnAction($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setEvnTemplate($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setEvnDigest($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setTriUid($arr[$keys[12]]);
+		if (array_key_exists($keys[10], $arr)) $this->setEvnMessageSubject($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setEvnMessageTo($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setEvnMessageTemplate($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setEvnMessageDigest($arr[$keys[13]]);
+		if (array_key_exists($keys[14], $arr)) $this->setTriUid($arr[$keys[14]]);
 	}
 
 	/**
@@ -999,8 +1099,10 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(EventPeer::EVN_WHEN)) $criteria->add(EventPeer::EVN_WHEN, $this->evn_when);
 		if ($this->isColumnModified(EventPeer::EVN_MAX_ATTEMPTS)) $criteria->add(EventPeer::EVN_MAX_ATTEMPTS, $this->evn_max_attempts);
 		if ($this->isColumnModified(EventPeer::EVN_ACTION)) $criteria->add(EventPeer::EVN_ACTION, $this->evn_action);
-		if ($this->isColumnModified(EventPeer::EVN_TEMPLATE)) $criteria->add(EventPeer::EVN_TEMPLATE, $this->evn_template);
-		if ($this->isColumnModified(EventPeer::EVN_DIGEST)) $criteria->add(EventPeer::EVN_DIGEST, $this->evn_digest);
+		if ($this->isColumnModified(EventPeer::EVN_MESSAGE_SUBJECT)) $criteria->add(EventPeer::EVN_MESSAGE_SUBJECT, $this->evn_message_subject);
+		if ($this->isColumnModified(EventPeer::EVN_MESSAGE_TO)) $criteria->add(EventPeer::EVN_MESSAGE_TO, $this->evn_message_to);
+		if ($this->isColumnModified(EventPeer::EVN_MESSAGE_TEMPLATE)) $criteria->add(EventPeer::EVN_MESSAGE_TEMPLATE, $this->evn_message_template);
+		if ($this->isColumnModified(EventPeer::EVN_MESSAGE_DIGEST)) $criteria->add(EventPeer::EVN_MESSAGE_DIGEST, $this->evn_message_digest);
 		if ($this->isColumnModified(EventPeer::TRI_UID)) $criteria->add(EventPeer::TRI_UID, $this->tri_uid);
 
 		return $criteria;
@@ -1074,9 +1176,13 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 		$copyObj->setEvnAction($this->evn_action);
 
-		$copyObj->setEvnTemplate($this->evn_template);
+		$copyObj->setEvnMessageSubject($this->evn_message_subject);
 
-		$copyObj->setEvnDigest($this->evn_digest);
+		$copyObj->setEvnMessageTo($this->evn_message_to);
+
+		$copyObj->setEvnMessageTemplate($this->evn_message_template);
+
+		$copyObj->setEvnMessageDigest($this->evn_message_digest);
 
 		$copyObj->setTriUid($this->tri_uid);
 

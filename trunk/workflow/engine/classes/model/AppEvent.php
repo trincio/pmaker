@@ -110,27 +110,30 @@ class AppEvent extends BaseAppEvent {
   }
 
   function executeEvents($sLastExecution, $sNow) {
-    try {die('executeEvents');
+    try {
       $oCriteria = new Criteria('workflow');
-      $oCriteria->addSelectColumn(AppAlertPeer::APP_UID);
-      $oCriteria->addSelectColumn(AppAlertPeer::DEL_INDEX);
-      $oCriteria->addSelectColumn(AppAlertPeer::ALT_UID);
-      $oCriteria->addSelectColumn(AppAlertPeer::APP_ALT_ACTION_DATE);
-      $oCriteria->addSelectColumn(AppAlertPeer::APP_ALT_ATTEMPTS);
-      $oCriteria->addSelectColumn(AppAlertPeer::APP_ALT_LAST_EXECUTION_DATE);
-      $oCriteria->addSelectColumn(AppAlertPeer::APP_ALT_STATUS);
-      $oCriteria->addSelectColumn(AlertPeer::PRO_UID);
-      $oCriteria->addSelectColumn(AlertPeer::ALT_TEMPLATE);
-      $oCriteria->addSelectColumn(AlertPeer::ALT_DIGEST);
-      $oCriteria->addSelectColumn(AlertPeer::TRI_UID);
+      $oCriteria->addSelectColumn(AppEventPeer::APP_UID);
+      $oCriteria->addSelectColumn(AppEventPeer::DEL_INDEX);
+      $oCriteria->addSelectColumn(AppEventPeer::EVN_UID);
+      $oCriteria->addSelectColumn(AppEventPeer::APP_EVN_ACTION_DATE);
+      $oCriteria->addSelectColumn(AppEventPeer::APP_EVN_ATTEMPTS);
+      $oCriteria->addSelectColumn(AppEventPeer::APP_EVN_LAST_EXECUTION_DATE);
+      $oCriteria->addSelectColumn(AppEventPeer::APP_EVN_STATUS);
+      $oCriteria->addSelectColumn(EventPeer::PRO_UID);
+      $oCriteria->addSelectColumn(EventPeer::EVN_ACTION);
+      $oCriteria->addSelectColumn(EventPeer::EVN_MESSAGE_SUBJECT);
+      $oCriteria->addSelectColumn(EventPeer::EVN_MESSAGE_TO);
+      $oCriteria->addSelectColumn(EventPeer::EVN_MESSAGE_TEMPLATE);
+      $oCriteria->addSelectColumn(EventPeer::EVN_MESSAGE_DIGEST);
+      $oCriteria->addSelectColumn(EventPeer::TRI_UID);
       $oCriteria->addSelectColumn(AppDelegationPeer::USR_UID);
       $oCriteria->addSelectColumn(AppDelegationPeer::DEL_TASK_DUE_DATE);
       $oCriteria->addSelectColumn(AppDelegationPeer::DEL_FINISH_DATE);
       $oCriteria->addAsColumn('TAS_TITLE', ContentPeer::CON_VALUE);
-      $oCriteria->addJoin(AppAlertPeer::ALT_UID, AlertPeer::ALT_UID, Criteria::LEFT_JOIN);
+      $oCriteria->addJoin(AppEventPeer::EVN_UID, EventPeer::EVN_UID, Criteria::LEFT_JOIN);
       $aConditions   = array();
-      $aConditions[] = array(AppAlertPeer::APP_UID, AppDelegationPeer::APP_UID);
-      $aConditions[] = array(AppAlertPeer::DEL_INDEX, AppDelegationPeer::DEL_INDEX);
+      $aConditions[] = array(AppEventPeer::APP_UID, AppDelegationPeer::APP_UID);
+      $aConditions[] = array(AppEventPeer::DEL_INDEX, AppDelegationPeer::DEL_INDEX);
       $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
       $del = DBAdapter::getStringDelimiter();
       $aConditions   = array();
@@ -138,13 +141,13 @@ class AppEvent extends BaseAppEvent {
       $aConditions[] = array(ContentPeer::CON_CATEGORY, $del . 'TAS_TITLE' . $del);
       $aConditions[] = array(ContentPeer::CON_LANG, $del . SYS_LANG . $del);
       $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
-      $oCriteria->add(AppAlertPeer::APP_ALT_ATTEMPTS, 0, Criteria::GREATER_THAN);
-      $oCriteria->add(AppAlertPeer::APP_ALT_STATUS, 'OPEN');
-      $oCriteria->add(AppAlertPeer::APP_ALT_ACTION_DATE, $sNow, Criteria::LESS_EQUAL);
+      $oCriteria->add(AppEventPeer::APP_EVN_ATTEMPTS, 0, Criteria::GREATER_THAN);
+      $oCriteria->add(AppEventPeer::APP_EVN_STATUS, 'OPEN');
+      $oCriteria->add(AppEventPeer::APP_EVN_ACTION_DATE, $sNow, Criteria::LESS_EQUAL);
       if ($sLastExecution != '') {
-        $oCriteria->add(AppAlertPeer::APP_ALT_ACTION_DATE, $sLastExecution, Criteria::GREATER_EQUAL);
+        $oCriteria->add(AppEventPeer::APP_EVN_ACTION_DATE, $sLastExecution, Criteria::GREATER_EQUAL);
       }
-      $oDataset = AppAlertPeer::doSelectRS($oCriteria);
+      $oDataset = AppEventPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
       $oDataset->next();
       require_once 'classes/model/Configuration.php';
@@ -177,47 +180,107 @@ class AppEvent extends BaseAppEvent {
                                'MESS_ACCOUNT'  => $aConfiguration['MESS_ACCOUNT'],
                                'MESS_PASSWORD' => $aConfiguration['MESS_PASSWORD'],
                                'SMTPAuth'      => $aConfiguration['MESS_RAUTH']));
-      G::LoadClass('spool');
+      G::LoadClass('case');
       $oCase = new Cases();
       while ($aRow = $oDataset->getRow()) {
-        $sContent = '';
-        if ($aRow['ALT_TEMPLATE'] != '') {
-          $sContent = file_get_contents(PATH_DATA_SITE . 'mailTemplates' . PATH_SEP . $aRow['PRO_UID'] . PATH_SEP . $aRow['ALT_TEMPLATE']);
-        }
-        else {
-          $sContent = file_get_contents(PATH_HOME. 'engine' . PATH_SEP . 'templates' . PATH_SEP . 'mails' . PATH_SEP . 'alert_message.html');
-        }
-        if (($sContent != '') && ($aRow['DEL_FINISH_DATE'] == null)) {
-          $oCriteria = new Criteria('workflow');
-	        $oCriteria->add(UsersPeer::USR_UID, $aRow['USR_UID']);
-    	    $oDatasetu = UsersPeer::doSelectRS($oCriteria);
-	        $oDatasetu->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-	        $oDatasetu->next();
-	        $aRowUser = $oDatasetu->getRow();
-          $aFields = $oCase->loadCase($aRow['APP_UID']);
-          $aFields['TAS_TITLE'] = $aRow['TAS_TITLE'];
-          $aFields['DEL_TASK_DUE_DATE'] = $aRow['DEL_TASK_DUE_DATE'];
-          $oSpool->create(array('msg_uid'          => '',
-                                'app_uid'          => $aRow['APP_UID'],
-                                'del_index'        => $aRow['DEL_INDEX'],
-                                'app_msg_type'     => 'ALERT',
-                                'app_msg_subject'  => G::LoadTranslation('ID_ALERT_MESSAGE'),
-                                'app_msg_from'     => 'ProcessMaker <' . $aConfiguration['MESS_ACCOUNT'] . '>',
-                                'app_msg_to'       => $aRowUser['USR_EMAIL'],
-                                'app_msg_body'     => G::replaceDataField($sContent, $aFields),
-                                'app_msg_cc'       => '',
-                                'app_msg_bcc'      => '',
-                                'app_msg_attach'   => '',
-                                'app_msg_template' => '',
-                                'app_msg_status'   => 'pending'));
-          $oSpool->sendMail();
-          $oAppAlert = AppAlertPeer::retrieveByPK($aRow['APP_UID'], $aRow['DEL_INDEX']);
-          $oAppAlert->setAppAltAttempts($oAppAlert->getAppAltAttempts() - 1);
-          $oAppAlert->setAppAltLastExecutionDate(date('Y-m-d H:i:s'));
-          if ($oSpool->status != 'pending') {
-            $oAppAlert->setAppAltStatus('CLOSE');
-          }
-          $oAppAlert->save();
+        switch ($aRow['EVN_ACTION']) {
+          case 'SEND_MESSAGE':
+            $sContent = '';
+            if ($aRow['EVN_MESSAGE_TEMPLATE'] != '') {
+              $sContent = file_get_contents(PATH_DATA_SITE . 'mailTemplates' . PATH_SEP . $aRow['PRO_UID'] . PATH_SEP . $aRow['EVN_MESSAGE_TEMPLATE']);
+            }
+            else {
+              $sContent = file_get_contents(PATH_HOME. 'engine' . PATH_SEP . 'templates' . PATH_SEP . 'mails' . PATH_SEP . 'alert_message.html');
+            }
+            if (($sContent != '') && ($aRow['DEL_FINISH_DATE'] == null)) {
+              $aRow['EVN_MESSAGE_TO'] = unserialize($aRow['EVN_MESSAGE_TO']);
+              if (is_array($aRow['EVN_MESSAGE_TO']['TO'])) {
+                foreach ($aRow['EVN_MESSAGE_TO']['TO'] as $iKey => $sEmail) {
+                  if ($sEmail == '-1') {
+                    $oCriteria = new Criteria('workflow');
+	                  $oCriteria->add(UsersPeer::USR_UID, $aRow['USR_UID']);
+    	              $oDatasetu = UsersPeer::doSelectRS($oCriteria);
+	                  $oDatasetu->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+	                  $oDatasetu->next();
+	                  $aRowUser = $oDatasetu->getRow();
+	                  $aRow['EVN_MESSAGE_TO']['TO'][$iKey] = $aRowUser['USR_EMAIL'];
+                  }
+                }
+              }
+              else {
+                $aRow['EVN_MESSAGE_TO']['TO'] = array();
+              }
+              if (is_array($aRow['EVN_MESSAGE_TO']['CC'])) {
+                foreach ($aRow['EVN_MESSAGE_TO']['CC'] as $iKey => $sEmail) {
+                  if ($sEmail == '-1') {
+                    $oCriteria = new Criteria('workflow');
+	                  $oCriteria->add(UsersPeer::USR_UID, $aRow['USR_UID']);
+    	              $oDatasetu = UsersPeer::doSelectRS($oCriteria);
+	                  $oDatasetu->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+	                  $oDatasetu->next();
+	                  $aRowUser = $oDatasetu->getRow();
+	                  $aRow['EVN_MESSAGE_TO']['CC'][$iKey] = $aRowUser['USR_EMAIL'];
+                  }
+                }
+              }
+              else {
+                $aRow['EVN_MESSAGE_TO']['CC'] = array();
+              }
+              if (is_array($aRow['EVN_MESSAGE_TO']['BCC'])) {
+                foreach ($aRow['EVN_MESSAGE_TO']['BCC'] as $iKey => $sEmail) {
+                  if ($sEmail == '-1') {
+                    $oCriteria = new Criteria('workflow');
+	                  $oCriteria->add(UsersPeer::USR_UID, $aRow['USR_UID']);
+    	              $oDatasetu = UsersPeer::doSelectRS($oCriteria);
+	                  $oDatasetu->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+	                  $oDatasetu->next();
+	                  $aRowUser = $oDatasetu->getRow();
+	                  $aRow['EVN_MESSAGE_TO']['BCC'][$iKey] = $aRowUser['USR_EMAIL'];
+                  }
+                }
+              }
+              else {
+                $aRow['EVN_MESSAGE_TO']['BCC'] = array();
+              }
+              $aFields = $oCase->loadCase($aRow['APP_UID']);
+              $aFields['TAS_TITLE'] = $aRow['TAS_TITLE'];
+              $aFields['DEL_TASK_DUE_DATE'] = $aRow['DEL_TASK_DUE_DATE'];
+              $oSpool->create(array('msg_uid'          => '',
+                                    'app_uid'          => $aRow['APP_UID'],
+                                    'del_index'        => $aRow['DEL_INDEX'],
+                                    'app_msg_type'     => 'EVENT',
+                                    'app_msg_subject'  => $aRow['EVN_MESSAGE_SUBJECT'],
+                                    'app_msg_from'     => 'ProcessMaker <' . $aConfiguration['MESS_ACCOUNT'] . '>',
+                                    'app_msg_to'       => implode(',', $aRow['EVN_MESSAGE_TO']['TO']),
+                                    'app_msg_body'     => G::replaceDataField($sContent, $aFields),
+                                    'app_msg_cc'       => implode(',', $aRow['EVN_MESSAGE_TO']['CC']),
+                                    'app_msg_bcc'      => implode(',', $aRow['EVN_MESSAGE_TO']['BCC']),
+                                    'app_msg_attach'   => '',
+                                    'app_msg_template' => '',
+                                    'app_msg_status'   => 'pending'));
+              $oSpool->sendMail();
+              $oAppEvent = AppEventPeer::retrieveByPK($aRow['APP_UID'], $aRow['DEL_INDEX']);
+              $oAppEvent->setAppEvnAttempts($oAppEvent->getAppEvnAttempts() - 1);
+              $oAppEvent->setAppEvnLastExecutionDate(date('Y-m-d H:i:s'));
+              if ($oSpool->status != 'pending') {
+                $oAppEvent->setAppEvnStatus('CLOSE');
+              }
+              $oAppEvent->save();
+            }
+          break;
+          case 'EXECUTE_TRIGGER':
+            if ($aRow['TRI_UID'] != '') {
+              $oTrigger = new Triggers();
+              $aTrigger = $oTrigger->load($aRow['TRI_UID']);
+              $aFields = $oCase->loadCase($aRow['APP_UID']);
+              $oPMScript = new PMScript();
+              $oPMScript->setFields($aFields['APP_DATA']);
+              $oPMScript->setScript($aTrigger['TRI_WEBBOT']);
+              $oPMScript->execute();
+              $aFields['APP_DATA'] = $oPMScript->aFields;
+              $oCase->updateCase($aRow['TRI_UID'], $aFields);
+            }
+          break;
         }
         $oDataset->next();
       }
