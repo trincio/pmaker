@@ -109,18 +109,17 @@ leimnud.event.add(document.getElementById('form[BSUBMIT]'), 'click', function() 
    	setNestedProperty(this, Array('disabled'), 'true');
    	setNestedProperty(this, Array('value'), @@LOGIN_VERIFY_MSG);
    	lang = getField('USER_LANG').value;
-   	createCookie('pmos_generik', '{"lang":"'+lang+'"}');
+   	createCookie('pmos_generik', '{"lang":"'+lang+'"}', 365);
    	
    	var client = getBrowserClient();
    	if (client.browser == "msie" || client.browser == "safari"){ 
-   		//document.frmDerivation.submit();
+   		document.login.submit();
    	} 
 }.extend(document.getElementById('form[BSUBMIT]'))); 
   
 try{
 	c = new String(readCookie('pmos_generik'));
 	o = eval("("+c+")");
-	
 	if( o != null){
 		getField('USER_LANG').value = o.lang; 
 	}
