@@ -36,13 +36,15 @@
  		$testItems++;
   	$methods[ $reflectmethod->getName() ] = $params;
   }
- 
+  //To change the case only the first letter of each word, TIA
+  $className = ucwords($className);
   $t->diag("class $className" );
+
   $t->isa_ok( $obj  , $className,  "class $className created");
 
   $t->is( count($methods) , 114,  "class $className have " . 114 . ' methods.' );
 
-  //checking method 'changeStatus'
+   //checking method 'changeStatus'
   $t->can_ok( $obj,      'changeStatus',   'changeStatus() is callable' );
 
   //$result = $obj->changeStatus ( $sProUid);
@@ -955,4 +957,4 @@
 
 
 
-  $t->todo (  'review all pendings methods in this class');
+  $t->todo (  'review all pendings methods in this class');
