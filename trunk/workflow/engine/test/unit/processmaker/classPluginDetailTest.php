@@ -13,22 +13,22 @@
   require_once ( "creole/Creole.php" );
   require_once (  PATH_CORE . "config/databases.php");  
 
-  G::LoadClass ( 'xmlDb');
+  G::LoadClass ( 'pluginRegistry');
 
 
-  $obj = new XmlDb ($dbc); 
-  $t   = new lime_test( 7, new lime_output_color() );
+  //$obj = new PluginDetail ($dbc);
+  $t   = new lime_test( 4, new lime_output_color() );
 
-  $className = XmlDb;
+  $className = PluginDetail;
   $className = strtolower ( substr ($className, 0,1) ) . substr ($className, 1 );
-  
+
   $reflect = new ReflectionClass( $className );
 	$method = array ( );
 	$testItems = 0;
- 
-  foreach ( $reflect->getMethods() as $reflectmethod )  {  
+
+  foreach ( $reflect->getMethods() as $reflectmethod )  {
   	$params = '';
-  	foreach ( $reflectmethod->getParameters() as $key => $row )   {  
+  	foreach ( $reflectmethod->getParameters() as $key => $row )   {
   	  if ( $params != '' ) $params .= ', ';
   	  $params .= '$' . $row->name;
   	}
@@ -40,24 +40,17 @@
   $className = ucwords($className);
   $t->diag("class $className" );
 
-  $t->isa_ok( $obj  , "XMLDB",  "class $className created");
+  //$t->isa_ok( $obj  , $className,  "class $className created");
 
-  $t->is( count($methods) , 2,  "class $className have " . 2 . ' methods.' );
+  $t->is( count($methods) , 1,  "class $className have " . 1 . ' methods.' );
+  // Methods
+  $aMethods = array_keys ( $methods );
+   //checking method '__construct'
+  $t->is ( $aMethods[0],      '__construct',   '__construct() is callable' );
 
-   //checking method 'connect'
-  $t->can_ok( $obj,      'connect',   'connect() is callable' );
-
-  //$result = $obj->connect ( $dsn, $options);
-  //$t->isa_ok( $result,      'NULL',   'call to method connect ');
-  $t->todo( "call to method connect using $dsn, $options ");
-
-
-  //checking method 'isError'
-  $t->can_ok( $obj,      'isError',   'isError() is callable' );
-
-  //$result = $obj->isError ( $result);
-  //$t->isa_ok( $result,      'NULL',   'call to method isError ');
-  $t->todo( "call to method isError using $result ");
+  //$result = $obj->__construct ( $sNamespace, $sClassName, $sFilename, $sFriendlyName, $sPluginFolder, $sDescription, $sSetupPage, $iVersion);
+  //$t->isa_ok( $result,      'NULL',   'call to method __construct ');
+  $t->todo( "call to method __construct using $sNamespace, $sClassName, $sFilename, $sFriendlyName, $sPluginFolder, $sDescription, $sSetupPage, $iVersion ");
 
 
 

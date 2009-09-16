@@ -13,13 +13,13 @@
   require_once ( "creole/Creole.php" );
   require_once (  PATH_CORE . "config/databases.php");  
 
-  G::LoadClass ( 'sessions');
+  G::LoadClass ( 'languages');
 
 
-  $obj = new Sessions ($dbc); 
-  $t   = new lime_test( 7, new lime_output_color() );
+  $obj = new Languages ($dbc); 
+  $t   = new lime_test( 5, new lime_output_color() );
 
-  $className = Sessions;
+  $className = Languages;
   $className = strtolower ( substr ($className, 0,1) ) . substr ($className, 1 );
   
   $reflect = new ReflectionClass( $className );
@@ -40,25 +40,17 @@
   $className = ucwords($className);
   $t->diag("class $className" );
 
-  $t->isa_ok( $obj  , $className,  "class $className created");
+  $t->isa_ok( $obj  , "languages",  "class $className created");
 
-  $t->is( count($methods) , 2,  "class $className have " . 2 . ' methods.' );
+  $t->is( count($methods) , 1,  "class $className have " . 1 . ' methods.' );
 
-   //checking method 'getSessionUser'
-  $t->can_ok( $obj,      'getSessionUser',   'getSessionUser() is callable' );
+   //checking method 'importLanguage'
+  $t->can_ok( $obj,      'importLanguage',   'importLanguage() is callable' );
 
-  //$result = $obj->getSessionUser ( $sSessionId);
-  //$t->isa_ok( $result,      'NULL',   'call to method getSessionUser ');
-  $t->todo( "call to method getSessionUser using $sSessionId ");
-
-
-  //checking method 'verifySession'
-  $t->can_ok( $obj,      'verifySession',   'verifySession() is callable' );
-
-  //$result = $obj->verifySession ( $sSessionId);
-  //$t->isa_ok( $result,      'NULL',   'call to method verifySession ');
-  $t->todo( "call to method verifySession using $sSessionId ");
+  //$result = $obj->importLanguage ( $sLanguageFile, $bXml);
+  //$t->isa_ok( $result,      'NULL',   'call to method importLanguage ');
+  $t->todo( "call to method importLanguage using $sLanguageFile, $bXml ");
 
 
 
-  $t->todo (  'review all pendings methods in this class');
+  $t->todo (  'review all pendings methods in this class');

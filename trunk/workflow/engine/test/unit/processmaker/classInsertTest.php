@@ -13,13 +13,13 @@
   require_once ( "creole/Creole.php" );
   require_once (  PATH_CORE . "config/databases.php");  
 
-  G::LoadClass ( 'sessions');
+  G::LoadClass ( 'insert');
 
 
-  $obj = new Sessions ($dbc); 
-  $t   = new lime_test( 7, new lime_output_color() );
+  $obj = new Insert ($dbc); 
+  $t   = new lime_test( 9, new lime_output_color() );
 
-  $className = Sessions;
+  $className = Insert;
   $className = strtolower ( substr ($className, 0,1) ) . substr ($className, 1 );
   
   $reflect = new ReflectionClass( $className );
@@ -37,28 +37,36 @@
   	$methods[ $reflectmethod->getName() ] = $params;
   }
   //To change the case only the first letter of each word, TIA
-  $className = ucwords($className);
+  //$className = ucwords($className);
   $t->diag("class $className" );
 
   $t->isa_ok( $obj  , $className,  "class $className created");
 
-  $t->is( count($methods) , 2,  "class $className have " . 2 . ' methods.' );
+  $t->is( count($methods) , 3,  "class $className have " . 3 . ' methods.' );
 
-   //checking method 'getSessionUser'
-  $t->can_ok( $obj,      'getSessionUser',   'getSessionUser() is callable' );
+   //checking method '__construct'
+  $t->can_ok( $obj,      '__construct',   '__construct() is callable' );
 
-  //$result = $obj->getSessionUser ( $sSessionId);
-  //$t->isa_ok( $result,      'NULL',   'call to method getSessionUser ');
-  $t->todo( "call to method getSessionUser using $sSessionId ");
-
-
-  //checking method 'verifySession'
-  $t->can_ok( $obj,      'verifySession',   'verifySession() is callable' );
-
-  //$result = $obj->verifySession ( $sSessionId);
-  //$t->isa_ok( $result,      'NULL',   'call to method verifySession ');
-  $t->todo( "call to method verifySession using $sSessionId ");
+  //$result = $obj->__construct ( $db_spool);
+  //$t->isa_ok( $result,      'NULL',   'call to method __construct ');
+  $t->todo( "call to method __construct using $db_spool ");
 
 
+  //checking method 'returnStatus'
+  $t->can_ok( $obj,      'returnStatus',   'returnStatus() is callable' );
 
-  $t->todo (  'review all pendings methods in this class');
+  //$result = $obj->returnStatus ( );
+  //$t->isa_ok( $result,      'NULL',   'call to method returnStatus ');
+  $t->todo( "call to method returnStatus using  ");
+
+
+  //checking method 'db_insert'
+  $t->can_ok( $obj,      'db_insert',   'db_insert() is callable' );
+
+  //$result = $obj->db_insert ( $db_spool);
+  //$t->isa_ok( $result,      'NULL',   'call to method db_insert ');
+  $t->todo( "call to method db_insert using $db_spool ");
+
+
+
+  $t->todo (  'review all pendings methods in this class');
