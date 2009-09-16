@@ -44,10 +44,23 @@
    exit (201);
 
   require_once( PATH_GULLIVER . 'class.dbconnection.php');
-  $obj = new DBConnection(); 
-  $t = new lime_test(12, new lime_output_color());
- 
+  $obj = new DBConnection();
+          //
+          $method = array ( );
+          $testItems = 0;
+          $class_methods = get_class_methods('DBConnection');
+          foreach ($class_methods as $method_name) {
+          //echo "$method_name\n";
+          $methods[ $testItems ] = $method_name;
+          $testItems++;
+          }
+          //print_r( $testItems );print_r( $methods );die();
+
+$t = new lime_test(13, new lime_output_color());
+
 $t->diag('class DBConnection' );
+          //
+          $t->is(  $testItems , 8,  "class DBConnection " . 8 . " methods." );
 $t->isa_ok( $obj  , 'DBConnection',  'class DBConnection created');
 
 $t->is( DB_ERROR_NO_SHOW_AND_CONTINUE,      'bDh5aTBaUG5vNkxwMnByWjJxT2EzNVk___',   'createUID() normal');

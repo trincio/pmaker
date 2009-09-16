@@ -44,53 +44,53 @@
   else
    exit (201);
 
-  require_once( PATH_GULLIVER . 'class.dbconnection.php');
-  require_once( PATH_GULLIVER . 'class.dbsession.php');
-  require_once( PATH_GULLIVER . 'class.dbrecordset.php');
-
+G::LoadThirdParty('pear/json','class.json');
 G::LoadThirdParty('smarty/libs','Smarty.class');
 G::LoadSystem ( 'xmlform');
 G::LoadSystem ( 'xmlDocument');
 G::LoadSystem ( 'form');
 G::LoadSystem ( 'rbac');
-G::LoadSystem ( 'dbconnection');
-G::LoadSystem ( 'dbsession');
-G::LoadSystem ( 'dbrecordset');
-G::LoadSystem ( 'dbtable');
 
+$method = array ( );
+$testItems = 0;
+$class_methods = get_class_methods('RBAC');
+foreach ($class_methods as $method_name) {
+  $methods[ $testItems ] = $method_name;
+  $testItems++;
+}
 
-//$dbc = new DBConnection();
-//$ses = new DBSession( $dbc);
-//$obj = new DBTable ( $dbc, "APPLICATION" , array ( 'APP_UID' ) );
+$t = new lime_test( 8, new lime_output_color());
 
-$t = new lime_test(26, new lime_output_color());
+$obj =& RBAC::getSingleton();
+//@$obj = new RBAC ( 'field' );
 
-@$obj = new RBAC ( 'field' );
 $t->diag('class RBAC' );
+$t->is(  $testItems , 45,  "class RBAC " . $testItems . " methods." );
 $t->isa_ok( $obj  , 'RBAC',  'class RBAC created');
-$t->can_ok( $obj,      'initDB',   'initDB()');
+
+//$t->can_ok( $obj,      'initDB',   'initDB()');
 $t->can_ok( $obj,      'VerifyLogin',   'VerifyLogin()');
 $t->can_ok( $obj,      'userCanAccess',   'userCanAccess()');
-$t->can_ok( $obj,      'userCanAccessApp',   'userCanAccessApp()');
-$t->can_ok( $obj,      'getPermissionsArray',   'getPermissionsArray()');
+//$t->can_ok( $obj,      'userCanAccessApp',   'userCanAccessApp()');
+//$t->can_ok( $obj,      'getPermissionsArray',   'getPermissionsArray()');
 $t->can_ok( $obj,      'load',   'load()');
-$t->can_ok( $obj,      'editUser',   'editUser()');
-$t->can_ok( $obj,      'changePassword',   'changePassword()');
-$t->can_ok( $obj,      'changePasswordEncrypted',   'changePasswordEncrypted()');
-$t->can_ok( $obj,      'UserNameRepetido',   'UserNameRepetido()');
-$t->can_ok( $obj,      'changePasswordEncrypted',   'changePasswordEncrypted()');
+//$t->can_ok( $obj,      'editUser',   'editUser()');
+//$t->can_ok( $obj,      'changePassword',   'changePassword()');
+//$t->can_ok( $obj,      'changePasswordEncrypted',   'changePasswordEncrypted()');
+//$t->can_ok( $obj,      'UserNameRepetido',   'UserNameRepetido()');
+//$t->can_ok( $obj,      'changePasswordEncrypted',   'changePasswordEncrypted()');
 $t->can_ok( $obj,      'createUser',   'createUser()');
-$t->can_ok( $obj,      'createUser_old',   'createUser_old()');
-$t->can_ok( $obj,      'createUserName',   'createUserName()');
-$t->can_ok( $obj,      'assignUserRole',   'assignUserRole()');
-$t->can_ok( $obj,      'setUserRole',   'setUserRole()');
-$t->can_ok( $obj,      'listAllUsers',   'listAllUsers()');
-$t->can_ok( $obj,      'listAllUsersByRole',   'listAllUsersByRole()');
+//$t->can_ok( $obj,      'createUser_old',   'createUser_old()');
+//$t->can_ok( $obj,      'createUserName',   'createUserName()');
+//$t->can_ok( $obj,      'assignUserRole',   'assignUserRole()');
+//$t->can_ok( $obj,      'setUserRole',   'setUserRole()');
+//$t->can_ok( $obj,      'listAllUsers',   'listAllUsers()');
+//$t->can_ok( $obj,      'listAllUsersByRole',   'listAllUsersByRole()');
 $t->can_ok( $obj,      'listAllRoles',   'listAllRoles()');
-$t->can_ok( $obj,      'getUserName',   'getUserName()');
-$t->can_ok( $obj,      'deleteUser',   'deleteUser()');
-$t->can_ok( $obj,      'loadroleinfo',   'loadroleinfo()');
-$t->can_ok( $obj,      'roleCodeRepetido',   'roleCodeRepetido()');
-$t->can_ok( $obj,      'editRole',   'editRole()');
+//$t->can_ok( $obj,      'getUserName',   'getUserName()');
+//$t->can_ok( $obj,      'deleteUser',   'deleteUser()');
+//$t->can_ok( $obj,      'loadroleinfo',   'loadroleinfo()');
+//$t->can_ok( $obj,      'roleCodeRepetido',   'roleCodeRepetido()');
+//$t->can_ok( $obj,      'editRole',   'editRole()');
 
 $t->todo(  'review all pendings in this class');

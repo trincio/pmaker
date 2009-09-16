@@ -22,6 +22,8 @@
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
  *
  */
+ 
+ 
   if ( !defined ('PATH_THIRDPARTY') ) {
     require_once(  $_SERVER['PWD']. '/test/bootstrap/unit.php');
   }
@@ -29,6 +31,8 @@
   require_once( PATH_THIRDPARTY . 'lime/lime.php');
   define ( 'G_ENVIRONMENT', G_TEST_ENV);
   require_once( PATH_CORE . 'config' . PATH_SEP . 'environments.php');
+
+  $t = new lime_test(11, new lime_output_color());
 
   global $G_ENVIRONMENTS;
   if ( isset ( $G_ENVIRONMENTS ) ) {
@@ -43,28 +47,28 @@
   else
    exit (201);
 
-  require_once( PATH_GULLIVER . 'class.dbconnection.php');
-  require_once( PATH_GULLIVER . 'class.dbsession.php');
-  require_once( PATH_GULLIVER . 'class.dbrecordset.php');
 
+G::LoadThirdParty('pear/json','class.json');
 G::LoadThirdParty('smarty/libs','Smarty.class');
 G::LoadSystem ( 'xmlform');
 G::LoadSystem ( 'xmlDocument');
 G::LoadSystem ( 'form');
 G::LoadSystem ( 'headPublisher');
-G::LoadSystem ( 'dbconnection');
-G::LoadSystem ( 'dbsession');
-G::LoadSystem ( 'dbrecordset');
-G::LoadSystem ( 'dbtable');
 
-//$dbc = new DBConnection();
-//$ses = new DBSession( $dbc);
-//$obj = new DBTable ( $dbc, "APPLICATION" , array ( 'APP_UID' ) );
 
-@$obj = new headPublisher ();
-$t = new lime_test(10, new lime_output_color());
+  $obj =& headPublisher::getSingleton();
+//$obj = new headPublisher ();
+  $method = array ( );
+  $testItems = 0;
+  $class_methods = get_class_methods('headPublisher');
+  foreach ($class_methods as $method_name) {
+      $methods[ $testItems ] = $method_name;
+      $testItems++;
+  }
+
 
 $t->diag('class headPublisher' );
+$t->is(  $testItems , 10,  "class headPublisher " . $testItems . " methods." );
 $t->isa_ok( $obj  , 'headPublisher',  'class headPublisher created');
 
 $t->can_ok( $obj,      'setTitle',   'setTitle()');

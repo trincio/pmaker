@@ -50,10 +50,18 @@
 $dbc = new DBConnection(); 
 $ses = new DBSession( $dbc);
 $dset = $ses->Execute ( "SELECT * from APPLICATION" );
- 
-$t = new lime_test(6, new lime_output_color());
- 
+$method = array( );
+$testItems = 0;
+$class_methods = get_class_methods('DBSession');
+foreach ($class_methods as $method_name) {
+    $methods[ $testItems ] = $method_name;
+    $testItems++;
+}
+
+$t = new lime_test(7, new lime_output_color());
+
 $t->diag('class DBSession' );
+$t->is(  $testItems , 5,  "class G " . 5 . " methods." );
 $t->isa_ok( $ses  , 'DBSession',  'class DBSession created');
 
 $t->can_ok( $ses,      'SetTo',   'SetTo()');

@@ -44,29 +44,26 @@
   else
    exit (201);
 
-  require_once( PATH_GULLIVER . 'class.dbconnection.php');
-  require_once( PATH_GULLIVER . 'class.dbsession.php');
-  require_once( PATH_GULLIVER . 'class.dbrecordset.php');
-
+G::LoadThirdParty('pear/json','class.json');
 G::LoadThirdParty('smarty/libs','Smarty.class');
 G::LoadSystem ( 'xmlform');
 G::LoadSystem ( 'xmlDocument');
 G::LoadSystem ( 'form');
 G::LoadSystem ( 'xmlMenu');
-G::LoadSystem ( 'dbconnection');
-G::LoadSystem ( 'dbsession');
-G::LoadSystem ( 'dbrecordset');
-G::LoadSystem ( 'dbtable');
 
+$t = new lime_test(4, new lime_output_color());
 
-//$dbc = new DBConnection(); 
-//$ses = new DBSession( $dbc);
-//$obj = new DBTable ( $dbc, "APPLICATION" , array ( 'APP_UID' ) );
- 
-$t = new lime_test(3, new lime_output_color());
- 
-$obj = new xmlMenu( 'login/login' ); 
+$obj = new xmlMenu( 'login/login' );
+
+$method = array ( );
+$testItems = 0;
+$class_methods = get_class_methods('xmlMenu');
+foreach ($class_methods as $method_name) {
+  $methods[ $testItems ] = $method_name;
+  $testItems++;
+}
 $t->diag('class xmlMenu' );
+$t->is(  $testItems , 13,  "class xmlMenu " . $testItems . " methods." );
 $t->isa_ok( $obj  , 'xmlMenu',  'class xmlMenu created');
 $t->can_ok( $obj,      'render',   'render()');
 
