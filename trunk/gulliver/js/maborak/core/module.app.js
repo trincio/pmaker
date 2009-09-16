@@ -1367,7 +1367,10 @@ leimnud.Package.Public({
 					{value:label.cancel}
 					],
 					position:{center:true},
-					size:{w:350,h:100},
+					size:{
+						w:(typeof(options.width) != 'undefined')? options.width: 350,
+						h: (typeof(options.height) != 'undefined')? options.height: 100
+					},
 					control:{
 						close	:true,
 						resize	:false

@@ -3336,7 +3336,7 @@ funcion History messages for case tracker by Everth The Answer
     $oCriteria->addJoin(ApplicationPeer::APP_UID, AppDelegationPeer::APP_UID, Criteria::LEFT_JOIN);
     $oCriteria->add(ApplicationPeer::APP_STATUS, $status);
     $oCriteria->add(AppDelegationPeer::USR_UID, $USR_UID);
-    $oCriteria->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
+    
     return $oCriteria;
   }
 

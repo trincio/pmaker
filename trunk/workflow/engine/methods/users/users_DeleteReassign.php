@@ -62,8 +62,9 @@ try {
     $USR_UID=$_GET['USR_UID'];
     list($oCriteriaToDo,$sXMLFile)  = $oCases->getConditionCasesList('to_do', $_GET['USR_UID']);
     list($oCriteriaDraft,$sXMLFile) = $oCases->getConditionCasesList('draft', $_GET['USR_UID']);    
+    
     if(ApplicationPeer::doCount($oCriteriaToDo)==0 && ApplicationPeer::doCount($oCriteriaDraft)==0);
-    		G::header('location: users_Delete?USR_UID='.$USR_UID);
+    	G::header('location: users_Delete?USR_UID='.$USR_UID);
     
     $oDataset = ApplicationPeer::doSelectRS($oCriteriaToDo);
     $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
