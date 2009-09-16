@@ -1,6 +1,6 @@
 <?php
 /**
- * upgrade_System.php
+ * upgrade_RBAC.php
  *
  * ProcessMaker Open Source Edition
  * Copyright (C) 2004 - 2008 Colosa Inc.23
@@ -22,7 +22,6 @@
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
  *
  */
-global $RBAC;
 $aRequiredPermissions = array('PM_LOGIN',
                               'PM_SETUP',
                               'PM_USERS',
@@ -35,10 +34,3 @@ $aRequiredPermissions = array('PM_LOGIN',
                               'PM_SETUP_ADVANCE',
                               'PM_DASHBOARD',
                               'PM_WEBDAV');
-foreach ($aRequiredPermissions as $sCode) {
-  if (!$RBAC->loadPermissionByCode($sCode)) {
-    $sPermissionUID = $RBAC->createPermision($sCode);
-    $aRoleInfo = $RBAC->loadRoleByCode('PROCESSMAKER_ADMIN');
-    $RBAC->assignPermissionToRole($aRoleInfo['ROL_UID'], $sPermissionUID);
-  }
-}
