@@ -51,10 +51,19 @@
 $dbc = new DBConnection(); 
 $ses = new DBSession( $dbc);
 $obj = new DBTable ( $dbc, "APPLICATION" , array ( 'APP_UID' ) );
- 
-$t = new lime_test(12, new lime_output_color());
- 
+$method = array ( );
+$testItems = 0;
+$class_methods = get_class_methods('DBTable');
+foreach ($class_methods as $method_name) {
+    $methods[ $testItems ] = $method_name;
+    $testItems++;
+}
+
+$t = new lime_test(13, new lime_output_color());
+
 $t->diag('class DBTable' );
+     //
+     $t->is(  $testItems , 11,  "class DBTable " . 11 . " methods." );
 $t->isa_ok( $obj  , 'DBTable',  'class DBTable created');
 
 $t->can_ok( $obj,      'SetTo',   'SetTo()');

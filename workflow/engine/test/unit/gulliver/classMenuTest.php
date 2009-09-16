@@ -43,29 +43,26 @@
   else
    exit (201);
 
-  require_once( PATH_GULLIVER . 'class.dbconnection.php');
-  require_once( PATH_GULLIVER . 'class.dbsession.php');
-  require_once( PATH_GULLIVER . 'class.dbrecordset.php');
 
+G::LoadThirdParty('pear/json','class.json');
 G::LoadThirdParty('smarty/libs','Smarty.class');
 G::LoadSystem ( 'xmlform');
 G::LoadSystem ( 'xmlDocument');
 G::LoadSystem ( 'form');
 G::LoadSystem ( 'menu');
-G::LoadSystem ( 'dbconnection');
-G::LoadSystem ( 'dbsession');
-G::LoadSystem ( 'dbrecordset');
-G::LoadSystem ( 'dbtable');
-
-
-//$dbc = new DBConnection(); 
-//$ses = new DBSession( $dbc);
-//$obj = new DBTable ( $dbc, "APPLICATION" , array ( 'APP_UID' ) );
  
-$obj = new Menu (); 
-$t = new lime_test(11, new lime_output_color());
- 
+$obj = new Menu ();
+$method = array ( );
+$testItems = 0;
+$class_methods = get_class_methods('Menu');
+foreach ($class_methods as $method_name) {
+    $methods[ $testItems ] = $method_name;
+    $testItems++;
+}
+$t = new lime_test(12, new lime_output_color());
+
 $t->diag('class Menu' );
+$t->is(  $testItems , 11,  "class Menu " . $testItems . " methods." );
 $t->isa_ok( $obj  , 'Menu',  'class Menu created');
 
 $t->can_ok( $obj,      'SetClass',   'SetClass()');

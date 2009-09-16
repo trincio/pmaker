@@ -44,29 +44,27 @@
   else
    exit (201);
 
-  require_once( PATH_GULLIVER . 'class.dbconnection.php');
-  require_once( PATH_GULLIVER . 'class.dbsession.php');
-  require_once( PATH_GULLIVER . 'class.dbrecordset.php');
 
+G::LoadThirdParty('pear/json','class.json');
 G::LoadThirdParty('smarty/libs','Smarty.class');
 G::LoadSystem ( 'xmlform');
 G::LoadSystem ( 'xmlDocument');
 G::LoadSystem ( 'form');
 G::LoadSystem ( 'publisher');
-G::LoadSystem ( 'dbconnection');
-G::LoadSystem ( 'dbsession');
-G::LoadSystem ( 'dbrecordset');
-G::LoadSystem ( 'dbtable');
 
+$method = array ( );
+$testItems = 0;
+$class_methods = get_class_methods('publisher');
+foreach ($class_methods as $method_name) {
+    $methods[ $testItems ] = $method_name;
+    $testItems++;
+}
 
-//$dbc = new DBConnection();
-//$ses = new DBSession( $dbc);
-//$obj = new DBTable ( $dbc, "APPLICATION" , array ( 'APP_UID' ) );
-
-$t = new lime_test(6, new lime_output_color());
+$t = new lime_test( 7, new lime_output_color());
 
 $obj = new Publisher ( 'field' );
 $t->diag('class Publisher' );
+$t->is(  $testItems , 3,  "class publisher " . $testItems . " methods." );
 $t->isa_ok( $obj ,      'Publisher'     ,  'class Publisher created');
 $t->can_ok( $obj ,      'AddContent'    ,   'AddContent()');
 //$t->can_ok( $obj ,      'SetTo'         ,   'SetTo()');

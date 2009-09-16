@@ -30,11 +30,25 @@
   require_once( PATH_THIRDPARTY.'lime/yaml.class.php');
   require_once( PATH_GULLIVER .'class.g.php');
 
-$obj = new G(); 
+$obj = new G();
+//
+$method = array ( );
+$testItems = 0;
 
-$t = new lime_test( 121, new lime_output_color());
- 
+$class_methods = get_class_methods('G');
+foreach ($class_methods as $method_name) {
+    //echo "$method_name\n";
+    $methods[ $testItems ] = $method_name;
+    $testItems++;
+}
+//print_r( $testItems );print_r( $methods );die();
+
+$t = new lime_test( 122, new lime_output_color());
+
 $t->diag('class G' );
+  //
+  $t->is(  $testItems , 88,  "class G " . 88 . " methods." );
+
 $t->isa_ok( $obj  , 'G',  'class G created');
 
 $t->todo(  'review which PHP version is the minimum for Gulliver');

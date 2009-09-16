@@ -47,15 +47,23 @@
   require_once( PATH_GULLIVER . 'class.dbsession.php');
   require_once( PATH_GULLIVER . 'class.dbrecordset.php');
 
-$dbc = new DBConnection(); 
+$dbc = new DBConnection();
 $ses = new DBSession( $dbc);
 $dset = $ses->Execute ( "SELECT * from APPLICATION" );
- 
-$t = new lime_test(7, new lime_output_color());
- 
-$t->diag('class DBRecordset' );
-$t->isa_ok( $dset  , 'DBRecordSet',  'class DBRecordset created');
+$method = array ( );
+$testItems = 0;
+$class_methods = get_class_methods('DBRecordSet');
+foreach ($class_methods as $method_name) {
+    $methods[ $testItems ] = $method_name;
+    $testItems++;
+}
 
+$t = new lime_test( 8, new lime_output_color());
+
+$t->diag('class DBRecordset' );
+//
+$t->is(  $testItems , 6,  "class G " . $testItems . " methods." );
+$t->isa_ok( $dset  , 'DBRecordSet',  'class DBRecordset created');
 $t->can_ok( $dset,      'SetTo',   'SetTo()');
 $t->can_ok( $dset,      'Free',   'Free()');
 $t->can_ok( $dset,      'Count',   'Count()');

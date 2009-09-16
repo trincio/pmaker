@@ -47,10 +47,19 @@
   require_once( PATH_GULLIVER . 'class.error.php');
 
 $obj = new G_Error(); 
+$method = array ( );
+$testItems = 0;
+$class_methods = get_class_methods('G_Error');
+foreach ($class_methods as $method_name) {
+    $methods[ $testItems ] = $method_name;
+    $testItems++;
+}
 
-$t = new lime_test(10, new lime_output_color());
- 
+$t = new lime_test(11, new lime_output_color());
+
 $t->diag('class error' );
+     //
+     $t->is(  $testItems , 13,  "class G_Error " . 13 . " methods." );
 $t->isa_ok( $obj  , 'G_Error',  'class G_Error created');
 $t->is( G_ERROR , -100,         'G_ERROR constant defined');
 $t->is( G_ERROR_ALREADY_ASSIGNED , -118,         'G_ERROR_ALREADY_ASSIGNED defined');
