@@ -17,7 +17,7 @@
   <en>Id </en>
 </trn_id>
 
-<trn_value     type="text" size='45' maxlength="200">
+<trn_value     type="textarea" rows="3" cols="43" maxlength="200">
   <en>value </en>
 </trn_value>
 
