@@ -1429,7 +1429,10 @@ leimnud.Package.Public({
 					],
 					target:this.options.target,
 					position:{center:true},
-					size:{w:300,h:110},
+					size:{
+						w:(typeof(options.width) != 'undefined')? options.width: 300,
+						h: (typeof(options.height) != 'undefined')? options.height: 110
+					},
 					control:{
 						close	:true,
 						resize	:false
