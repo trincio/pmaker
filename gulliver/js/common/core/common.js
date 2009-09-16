@@ -1378,6 +1378,25 @@ function get_html_translation_table (table, quote_style) {
     return hash_map;
 }
 
+function stripslashes (str) {
+    return (str+'').replace(/\\(.?)/g, function (s, n1) {
+        switch (n1) {
+            case '\\':
+                return '\\';
+            case '0':
+                return '\0';
+            case '':
+                return '';
+            default:
+                return n1;
+        }
+    });
+}
+
+function addslashes (str) {
+    return (str+'').replace(/([\\"'])/g, "\\$1").replace(/\u0000/g, "\\0");
+}
+
 /**
  * This function sets netsted properties to dom elements
  *  
