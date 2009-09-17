@@ -69,17 +69,28 @@
   if( $sTypeList === 'to_do' or $sTypeList === 'draft' or $sTypeList === 'paused') {
 	$oCases->ThrowUnpauseDaemon();
   }
-
+      
   /* Prepare page before to show */
-  list($Criteria,$xmlfile) = $oCases->getConditionCasesList( $sTypeList, $sUIDUserLogged);
 
+  switch ( $sTypeList ) {
+  	case 'to_do' :  
+  	     if ( defined(  'ENABLE_CASE_LIST_OPTIMIZATION' ) ) {
+  	       $aCriteria = $oCases->prepareCriteriaForToDo($sUIDUserLogged);
+  	       $xmlfile  = 'cases/cases_ListTodoNew';
+  	     }
+  	     else
+           list($aCriteria,$xmlfile) = $oCases->getConditionCasesList( $sTypeList, $sUIDUserLogged);      	     
+  	     break;
+    default : 
+      list($aCriteria,$xmlfile) = $oCases->getConditionCasesList( $sTypeList, $sUIDUserLogged);    
+  }
 
   /* Render page */
   $G_PUBLISH = new Publisher;
   if ($sTypeList == 'to_reassign') {
     $G_PUBLISH->AddContent( 'xmlform', 'xmlform', 'cases/cases_ReassignBy', '', array('REASSIGN_BY' => 1));
   }
-  $G_PUBLISH->AddContent('propeltable', 'paged-table', $xmlfile, $Criteria);
+  $G_PUBLISH->AddContent('propeltable', 'paged-table', $xmlfile, $aCriteria, null);
   G::RenderPage('publish');
 
   

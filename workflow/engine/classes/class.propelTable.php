@@ -3,7 +3,7 @@
  * class.propelTable.php
  *
  * ProcessMaker Open Source Edition
- * Copyright (C) 2004 - 2008 Colosa Inc.23
+ * Copyright (C) 2004 - 2008 Colosa Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as
@@ -108,96 +108,87 @@ class propelTable
    * @access public
    * @return string
    */
-  function prepareQuery( $limitPage = false )
-  {
-      /*
-       * QuickSearch
-       */
-      if ($this->searchBy!=='') {
-        $aSB=explode('|',$this->searchBy);
-        $subFilter='';
-        foreach($aSB as $sBy) {
-          $subFilter.=($subFilter!=='')?' OR ':'';
-          //TODO: Get DATABASE type from Criteria
-          $subFilter.=$sBy . ' LIKE "%'.
-            G::sqlEscape($this->fastSearch /*,$this->dbc->type*/ ).'%"';
-        }
-        if ($subFilter!=='') {
-          //Get the first defined table in Criteria.
-          $aCurrentTables = $this->criteria->getTables();
-          //var_dump($aCurrentTables, $this->criteria->getDBArrayTable() );
-          //var_dump($this->criteria->getJoins());
-          //print nl2br(print_r(get_class_methods($this->criteria),1));
-          //$aCurrentTables[0]="PROCESS";
-          if (isset($aCurrentTables[0])) $this->criteria->add ( $aCurrentTables[0].".*", '('.$subFilter.')' , Criteria::CUSTOM );
+  function prepareQuery( $limitPage = false ) {
+    // process the QuickSearch string and add the fields and expression needed to run the search
+    if ( $this->searchBy !== '' && $this->fastSearch !== '' ) {
+      $aSB = explode('|', $this->searchBy);  //fields are separated by pipes
+//subfilter 
+      $subFilter='';
+      foreach($aSB as $sBy) {
+        $subFilter .= ($subFilter !== '') ? ' OR ' : '';
+        //TODO: Get DATABASE type from Criteria, I think sql delimeter is needed too
+        $subFilter .= $sBy . ' LIKE "%'.
+        G::sqlEscape($this->fastSearch ).'%"';
+      }
+      if ($subFilter !=='' ) {
+        //Get the first defined table in Criteria.
+        $aCurrentTables = $this->criteria->getTables();
+        if ( isset($aCurrentTables[0]))  {
+          $this->criteria->add ( $aCurrentTables[0] . ".*", '('. $subFilter. ')' , Criteria::CUSTOM );  
         }
       }
+    }
 
-      //Merge sort array defined by USER with the array defined by SQL
-      parse_str($this->order,   $orderFields);
-      parse_str($this->orderBy, $orderFields2);
-      //User sort is more important (first in merge).
-      $orderFields3 = array_merge($orderFields2, $orderFields);
-      //User sort is overwrites XMLs definition.
-      $orderFields = array_merge($orderFields3, $orderFields2);
-      //Order (BY SQL DEFINITION AND USER'S DEFINITION)
-      $this->aOrder = array();
-      $order='';
-      foreach ($orderFields as $field => $fieldOrder) {
-        $field = G::getUIDName($field,'');
+    //Merge sort array defined by USER with the array defined by SQL
+    parse_str($this->order,   $orderFields);
+    parse_str($this->orderBy, $orderFields2);
+    //User sort is more important (first in merge).
+    $orderFields3 = array_merge($orderFields2, $orderFields);
+    //User sort is overwrites XMLs definition.
+    $orderFields = array_merge($orderFields3, $orderFields2);
+    //Order (BY SQL DEFINITION AND USER'S DEFINITION)
+    $this->aOrder = array();
+    $order='';
+    foreach ($orderFields as $field => $fieldOrder) {
+      $field = G::getUIDName($field,'');
 
-        $fieldOrder = strtoupper($fieldOrder);
-        if ($fieldOrder==='A')  $fieldOrder = 'ASC';
-        if ($fieldOrder==='D')  $fieldOrder = 'DESC';
-        switch ( $fieldOrder ) {
-          case 'ASC':
-          case 'DESC':
-            if ( $order !== '' )
-              $order.=', ';
-            $order .= $field . ' '. $fieldOrder;
-            $this->aOrder[$field] = $fieldOrder;
-        }
+      $fieldOrder = strtoupper($fieldOrder);
+      if ($fieldOrder==='A')  $fieldOrder = 'ASC';
+      if ($fieldOrder==='D')  $fieldOrder = 'DESC';
+      switch ( $fieldOrder ) {
+        case 'ASC':
+        case 'DESC':
+          if ( $order !== '' )
+            $order.=', ';
+          $order .= $field . ' '. $fieldOrder;
+          $this->aOrder[$field] = $fieldOrder;
       }
+    }
+    //master detail :O
+    if(count($this->masterdetail) > 0){
+      $this->criteria->clearOrderByColumns();
+      foreach($this->masterdetail as $idMasterDetail => $fieldMasterDetail){
+        $this->criteria->addAscendingOrderByColumn( $fieldMasterDetail );
+      }
+    }
 
-      if(count($this->masterdetail) > 0){
-	      $this->criteria->clearOrderByColumns();
-	      foreach($this->masterdetail as $idMasterDetail => $fieldMasterDetail){
-		      $this->criteria->addAscendingOrderByColumn( $fieldMasterDetail );
-	      }
+    if (!empty($this->aOrder)) {
+      if(count($this->masterdetail) <= 0) {
+        $this->criteria->clearOrderByColumns();
       }
+      foreach ($this->aOrder as $field => $ascending ) {
+        if ( $ascending == 'ASC' )
+          $this->criteria->addAscendingOrderByColumn ( $field );
+        else
+          $this->criteria->addDescendingOrderByColumn( $field );
+      }
+    }
 
-      if (!empty($this->aOrder)) {
-	      if(count($this->masterdetail) <= 0){
-		      $this->criteria->clearOrderByColumns();
-	      }
-        foreach ($this->aOrder as $field => $ascending ) {
-          //echo( $field  );
-          if ( $ascending == 'ASC' )
-            $this->criteria->addAscendingOrderByColumn ( $field );
-          else
-            $this->criteria->addDescendingOrderByColumn( $field );
-        }
-      }
-      //krumo($this->criteria->getOrderByColumns());
-
-      /*
-       * Add limits
-       */
-      $this->criteria->setLimit( 0 );
-      $this->criteria->setOffset( 0 );
-      if ( $this->criteria->getDbName() == 'dbarray' ) {
-        $this->totRows = ArrayBasePeer::doCount( $this->criteria );
-      }
-      else {
-        $this->totRows = GulliverBasePeer::doCount( $this->criteria );
-      }
-      $this->totPages = ceil( $this->totRows / $this->rowsPerPage);
-      if ($limitPage)
-      {
-        $this->criteria->setLimit( $this->rowsPerPage );
-        $this->criteria->setOffset( ($this->currentPage-1) * $this->rowsPerPage );
-      }
-      return;
+    /** Add limits */
+    $this->criteria->setLimit( 0 );
+    $this->criteria->setOffset( 0 );
+    if ( $this->criteria->getDbName() == 'dbarray' ) {
+      $this->totRows = ArrayBasePeer::doCount( $this->criteria );
+    }
+    else {
+      $this->totRows = GulliverBasePeer::doCount( $this->criteria );
+    }
+    $this->totPages = ceil( $this->totRows / $this->rowsPerPage);
+    if ( $limitPage ) {
+      $this->criteria->setLimit ( $this->rowsPerPage );
+      $this->criteria->setOffset( ($this->currentPage-1) * $this->rowsPerPage );
+    }
+    return;
   }
 
   /**
@@ -209,8 +200,7 @@ class propelTable
    * @parameter string xmlForm
    * @return string
    */
-  function setupFromXmlform($xmlForm)
-  {
+  function setupFromXmlform($xmlForm)   {
     $this->xmlForm = $xmlForm;
     //Config
     $this->name = $xmlForm->name;
@@ -233,26 +223,25 @@ class propelTable
     // Config attributes from XMLFORM file
     $myAttributes = get_class_vars(get_class($this));
     foreach ($this->xmlForm->xmlform->tree->attribute as $atrib => $value)
-    if (array_key_exists( $atrib, $myAttributes))
-    {
+    if (array_key_exists( $atrib, $myAttributes)) {
       eval('settype($value, gettype($this->' . $atrib.'));');
       if ($value !== '') eval( '$this->' . $atrib . '=$value;');
     }
-    //krumo($this);
+    
     if($this->masterdetail!=""){
-	    $this->masterdetail=explode(",",$this->masterdetail);
-	    foreach($this->masterdetail as $keyMasterDetail => $valueMasterDetail){
-		    $this->masterdetail[$keyMasterDetail]=trim($valueMasterDetail);
-	    }
-    }else{
-	    $this->masterdetail=array();
+      $this->masterdetail=explode(",",$this->masterdetail);
+      foreach($this->masterdetail as $keyMasterDetail => $valueMasterDetail){
+        $this->masterdetail[$keyMasterDetail]=trim($valueMasterDetail);
+      }
+    }
+    else{
+      $this->masterdetail=array();
     }
 
     //Prepare the fields
     $this->style=array();$this->gridWidth="";$this->gridFields="";
     $this->fieldsType=array();
-    foreach ($this->xmlForm->fields as $f => $v)
-    {
+    foreach ($this->xmlForm->fields as $f => $v) {
       $r=$f;
       $this->fields[$r]['Name'] =$this->xmlForm->fields[$f]->name;
       $this->fields[$r]['Type'] =$this->xmlForm->fields[$f]->type;
@@ -432,14 +421,11 @@ class propelTable
    */
   function defaultStyle()
   {
-//    for($r=1;$r<=sizeof($this->fields);$r++)
-    foreach($this->fields as $r => $rval)
-    {
+    foreach($this->fields as $r => $rval) {
       $this->style[$r]=array( 'showInTable' => '1',
-                'titleVisibility' => '1',
-                'colWidth' => '150','onclick' => '',
-                'event' => ''
-              );
+             'titleVisibility' => '1',
+             'colWidth' => '150','onclick' => '',
+             'event' => ''   );
       //Some widths
       if (!(strpos('  date linknew ',  ' ' . $this->fields[$r]['Type']. ' ')===FALSE))
         $this->style[$r]['colWidth']='70';
@@ -460,34 +446,36 @@ class propelTable
         }
       }
       //Hidden titles
-      if (!(strpos('  linknew button endgrid2 ',  ' ' . $this->fields[$r]['Type']. ' ')===FALSE))
-      {
+      if (!(strpos('  linknew button endgrid2 ',  ' ' . $this->fields[$r]['Type']. ' ')===FALSE)) {
         $this->style[$r]['titleVisibility']='0';
       }
       //Align titles
       $this->style[$r]['titleAlign']='center';
       //Align fields
-      if (isset($_SESSION['SET_DIRECTION']) && (strcasecmp($_SESSION['SET_DIRECTION'],'rtl')===0))  $this->style[$r]['align']='right';
-      else $this->style[$r]['align']='left';
-      if (!(strpos(' linknew date ',  ' ' . $this->fields[$r]['Type']. ' ')===FALSE))
-      {
+      if (isset($_SESSION['SET_DIRECTION']) && (strcasecmp($_SESSION['SET_DIRECTION'],'rtl')===0))  
+        $this->style[$r]['align']='right';
+      else 
+        $this->style[$r]['align']='left';
+        
+      if (!(strpos(' linknew date ',  ' ' . $this->fields[$r]['Type']. ' ')===FALSE)) {
         $this->style[$r]['align']='center';
       }
     }
+    
     // Adjust the columns width to prevent overflow the page width
     //Render headers
     $totalWidth=0;
     foreach($this->fields as $r => $rval)
-    if ($this->style[$r]['showInTable']!='0')
-      $totalWidth += $this->style[$r]['colWidth'];
+      if ($this->style[$r]['showInTable']!='0')
+        $totalWidth += $this->style[$r]['colWidth'];
     $this->totalWidth = $totalWidth;
     $maxWidth=1800;
     $proportion=$totalWidth/$maxWidth;
     if ($proportion>1) $this->totalWidth = 1800;
     if ($proportion>1)
       foreach($this->fields as $r => $rval)
-      if ($this->style[$r]['showInTable']!='0')
-        $this->style[$r]['colWidth']=$this->style[$r]['colWidth']/$proportion;
+        if ($this->style[$r]['showInTable']!='0')
+          $this->style[$r]['colWidth']=$this->style[$r]['colWidth']/$proportion;
 
   }
 
@@ -500,12 +488,12 @@ class propelTable
    */
   function renderTable( $block = '', $fields = '' )
   {
-
-    $t1 = G::microtime_float();
     $oHeadPublisher =& headPublisher::getSingleton();
     $oHeadPublisher->addInstanceModule('leimnud', 'panel');
 
+$time_start = microtime(true);
     $this->prepareQuery( true );
+$time_end = microtime(true);  $time = $time_end - $time_start;
 
     // verify if there are templates folders registered, template and method folders are the same
     $folderTemplate = explode ( '/',$this->template );
@@ -518,16 +506,11 @@ class propelTable
     // Prepare the template
     $this->tpl = new TemplatePower( $templateFile );
     $this->tpl->prepare();
-
-    //$block = '' ;
-    if(is_array($fields))
-    {
-    	foreach ( $fields as $key =>$val ) {
-      	$this->tpl->assign( $key , $val );
-    	}
+    if(is_array($fields)) {
+      foreach ( $fields as $key =>$val ) {
+        $this->tpl->assign( $key , $val );
+      }
     }
-
-    //$this->tpl->newBlock('headerBlock');
 
     /********** HEAD BLOCK ***************/
     if (($block ==='') || ($block==='head')) {
@@ -590,52 +573,42 @@ class propelTable
       $this->tpl->assign('pagedTable_Name', $this->name );
       $this->tpl->assign("pagedTable_JS" , "{$this->id}.element=document.getElementById('pagedtable[{$this->id}]');");
       $this->renderTitle();
-      //Render rows
-    if ( $this->criteria->getDbName() == 'dbarray' ) {
-      $rs = ArrayBasePeer::doSelectRs ( $this->criteria);
-    }
-    else {
-      $rs = GulliverBasePeer::doSelectRs ( $this->criteria);
-    }
-    $rs->setFetchmode (ResultSet::FETCHMODE_ASSOC);
 
-/*
-    print "<div class='pagedTableDefault'><table  class='default'>";
-    $rs->next();
-    $row = $rs->getRow();
-    while ( is_array ( $row ) ) {
-      print "<tr  class='Row1'>";
-      foreach ( $row as $k=>$v ) print "<td>$v</td>";
-      print "</tr>";
+      //Render rows
+      if ( $this->criteria->getDbName() == 'dbarray' ) {
+        $rs = ArrayBasePeer::doSelectRs ( $this->criteria);
+      }
+      else {
+        $rs = GulliverBasePeer::doSelectRs ( $this->criteria);
+      }
+      $rs->setFetchmode (ResultSet::FETCHMODE_ASSOC);
+
+      /*
+      print "<div class='pagedTableDefault'><table  class='default'>";
       $rs->next();
       $row = $rs->getRow();
-    }
-    print "</table></div>";
+      while ( is_array ( $row ) ) {
+        print "<tr  class='Row1'>";
+        foreach ( $row as $k=>$v ) print "<td>$v</td>";
+        print "</tr>";
+        $rs->next();
+        $row = $rs->getRow();
+      }
+      print "</table></div>";  die;*/
 
-die;*/
-//      krumo ( G::microtime_float() - $t1);
       $gridRows=0;
       $rs->next();
 
 
       //Initialize the array of breakFields for Master Detail View
       foreach($this->masterdetail as $keyMasterDetail => $fieldMasterDetail){
-	      $breakField[$fieldMasterDetail]="novaluehere";
+        $breakField[$fieldMasterDetail]="novaluehere";
       }
       $breakFieldKeys=array_flip($this->masterdetail);
 
-
-      for($j=0;$j< $rs->getRecordCount() ;$j++)
-      {
+      for($j=0;$j< $rs->getRecordCount() ;$j++) {
         $result = $rs->getRow();
-	      $rs->next();
-
-
-
-
-
-
-
+        $rs->next();
 
         $gridRows++;
         $this->tpl->newBlock( "row" );
@@ -643,50 +616,45 @@ die;*/
         $this->tdStyle='';
         $this->tdClass='';
 
-
-	//Start Master Detail: This enable the MasterDEtail view. By JHL November 2008
-	if(count($this->masterdetail)>0){
-		//TODO: Validate if there is a Field that not exists
-		//TODO: Style
-		//TODO: Improve Collapse function....
-
-		foreach($this->masterdetail as $keyMasterDetail => $fieldMasterDetail){
-			if($breakField[$fieldMasterDetail]!=$result[$fieldMasterDetail]){
-				$this->tpl->newBlock( "rowMaster" );
-				$this->tpl->newBlock( "fieldMaster" );
-				$this->tpl->assign( "alignAttr" , " colspan=".(count($this->fields)*2));
-				$this->tpl->assign( "value" , $this->fields[$fieldMasterDetail]['Label'].": ".$this->xmlForm->fields[ $fieldMasterDetail ]->renderTable( $result[$fieldMasterDetail], $this->xmlForm, true ));
-
-				$breakField[$fieldMasterDetail]=$result[$fieldMasterDetail];
-
-				for($i=$breakFieldKeys[$fieldMasterDetail]+1;$i<count($breakField);$i++){
-					$breakField[$this->masterdetail[$i]]="novaluehere";
-
-				}
-				$rowName=array();
-				foreach($breakField as $key => $value){
-					if($value!="novaluehere"){
-						$rowName[$key]=$key."_".$value;
-					}
-				}
-				$this->tpl->assign( "masterRowName" , implode(",",$rowName));
-				$this->tpl->assign( 'pagedTable_Name' , $this->name );
-				$many="";
-				$this->tpl->assign( "value1" ,str_pad($many, count($rowName)-1 , "-") );
-				$this->tpl->gotoblock("rowMaster");
-				$this->tpl->assign( "masterRowName" , "_MD_".implode(",",$rowName));
-				$this->tpl->assign( "masterRowClass" , $keyMasterDetail==0?"masterDetailMain":"masterDetailOther");
-
-
-			}
-		}
-		$this->tpl->gotoblock("row");
-		$this->tpl->assign( "rowName" , implode(",",$rowName));
-	}
-	//End Master Detail: This enable the MasterDEtail view
+        //Start Master Detail: This enable the MasterDEtail view. By JHL November 2008
+        if(count($this->masterdetail)>0){
+          //TODO: Validate if there is a Field that not exists
+          //TODO: Style
+          //TODO: Improve Collapse function....      
+          foreach($this->masterdetail as $keyMasterDetail => $fieldMasterDetail){
+            if($breakField[$fieldMasterDetail]!=$result[$fieldMasterDetail]){
+              $this->tpl->newBlock( "rowMaster" );
+              $this->tpl->newBlock( "fieldMaster" );
+              $this->tpl->assign( "alignAttr" , " colspan=".(count($this->fields)*2));
+              $this->tpl->assign( "value" , $this->fields[$fieldMasterDetail]['Label'].": ".$this->xmlForm->fields[ $fieldMasterDetail ]->renderTable( $result[$fieldMasterDetail], $this->xmlForm, true ));
+      
+              $breakField[$fieldMasterDetail]=$result[$fieldMasterDetail];
+      
+              for($i=$breakFieldKeys[$fieldMasterDetail]+1;$i<count($breakField);$i++){
+                $breakField[$this->masterdetail[$i]]="novaluehere";      
+              }
+              $rowName=array();
+              foreach($breakField as $key => $value){
+                if($value!="novaluehere"){
+                  $rowName[$key]=$key."_".$value;
+                }
+              }
+              $this->tpl->assign( "masterRowName" , implode(",",$rowName));
+              $this->tpl->assign( 'pagedTable_Name' , $this->name );
+              $many="";
+              $this->tpl->assign( "value1" ,str_pad($many, count($rowName)-1 , "-") );
+              $this->tpl->gotoblock("rowMaster");
+              $this->tpl->assign( "masterRowName" , "_MD_".implode(",",$rowName));
+              $this->tpl->assign( "masterRowClass" , $keyMasterDetail==0?"masterDetailMain":"masterDetailOther");   
+            }
+          }
+          $this->tpl->gotoblock("row");
+          $this->tpl->assign( "rowName" , implode(",",$rowName));
+        }
+        //End Master Detail: This enable the MasterDEtail view
 
 
-       //Merge $result with $xmlForm values (for default valuesSettings)
+        //Merge $result with $xmlForm values (for default valuesSettings)
         if ( is_array ( $this->xmlForm->values ) )
         $result = array_merge($this->xmlForm->values, $result);
         foreach($this->fields as $r => $rval)
@@ -704,15 +672,12 @@ die;*/
           elseif ($this->style[$r]['showInTable'] != '0' )
           {
             if (($this->style[$r]['showInTable'] != '0' )&&(!(in_array($this->fields[$r]['Name'],$this->masterdetail))))
-	    //if (($this->style[$r]['showInTable'] != '0' ))
             $this->renderField($j+1,$r,$result);
-
-
-
 
           }
         }
       }
+      
       $this->tpl->assign('_ROOT.gridRows','='. $gridRows);  //number of rows in the current page
       $this->tpl->newBlock('rowTag');
       $this->tpl->assign('rowId','insertAtLast');
@@ -794,7 +759,6 @@ die;*/
         $this->tpl->assign("pagesEnum", $pagesEnum);
     }
 
-
 ?>
 
 <script language='JavaScript' >
@@ -830,8 +794,8 @@ var popupHeight<?='='.$this->popupHeight?>;
 
     $this->tpl->printToScreen();
     unset($this->tpl);
-    unset($this->dbc);
-    unset($this->ses);
+    //unset($this->dbc);
+    //unset($this->ses);
 
     $_SESSION['pagedTable['.$this->id.']']= serialize($this);
     return;
@@ -839,8 +803,6 @@ var popupHeight<?='='.$this->popupHeight?>;
 
   function printForm($filename,$data=array())
   {
-//    $G_FORM = new Form($filename, PATH_XMLFORM);
-//    echo $G_FORM->render(PATH_TPL . 'xmlform.html', $scriptContent);
     global $G_PUBLISH;
     $G_PUBLISH = new Publisher();
     $G_PUBLISH->AddContent('xmlform', 'xmlform', $filename, '', $data , $this->popupSubmit);

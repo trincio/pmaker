@@ -1507,6 +1507,92 @@ class Cases
   }
   
   /*
+  * Get the Criteria for To Do Cases List
+  * @param string $sUIDUserLogged
+  * @return array ( 'where' => Criteria, 'group' => Criteria )
+  * description: Listado de casos que se encuentran en estado TO_DO que pertenezcan al usuario actual
+  * 
+  * Query: 
+  * SELECT APPLICATION.APP_UID,   
+  *   APPLICATION.APP_NUMBER,
+  *   APPLICATION.APP_UPDATE_DATE,
+  *   APP_DELEGATION.DEL_PRIORITY,
+  *   APP_DELEGATION.DEL_INDEX,
+  *   APP_DELEGATION.TAS_UID,
+  *   APP_DELEGATION.DEL_INIT_DATE,
+  *   APP_DELEGATION.DEL_FINISH_DATE,
+  *   USERS.USR_UID,
+  *   APPLICATION.APP_STATUS,
+  *   IF (APP_DELEGATION.DEL_TASK_DUE_DATE <= NOW(),  CONCAT('',  APP_DELEGATION.DEL_TASK_DUE_DATE,  ''),
+  *   APP_DELEGATION.DEL_TASK_DUE_DATE) AS DEL_TASK_DUE_DATE,
+  *   CONCAT(USERS.USR_LASTNAME,  ' ',  USERS.USR_FIRSTNAME) AS APP_CURRENT_USER,
+  *   APP_TITLE.CON_VALUE AS APP_TITLE,
+  *   PRO_TITLE.CON_VALUE AS APP_PRO_TITLE,
+  *   TAS_TITLE.CON_VALUE AS APP_TAS_TITLE,
+  *   CONCAT(APP_LAST_USER.USR_LASTNAME,  ' ',  APP_LAST_USER.USR_FIRSTNAME) AS APP_DEL_PREVIOUS_USER 
+  * FROM 
+  *   APPLICATION LEFT JOIN APP_DELEGATION ON (APPLICATION.APP_UID=APP_DELEGATION.APP_UID) LEFT JOIN TASK ON (APP_DELEGATION.TAS_UID=TASK.TAS_UID) LEFT JOIN USERS ON (APP_DELEGATION.USR_UID=USERS.USR_UID) LEFT JOIN APP_THREAD ON (APPLICATION.APP_UID=APP_THREAD.APP_UID AND APP_DELEGATION.DEL_INDEX=APP_THREAD.DEL_INDEX) LEFT JOIN CONTENT APP_TITLE ON (APPLICATION.APP_UID=APP_TITLE.CON_ID AND APP_TITLE.CON_CATEGORY='APP_TITLE' AND APP_TITLE.CON_LANG='en') 
+  *   LEFT  JOIN CONTENT PRO_TITLE ON (APPLICATION.PRO_UID=PRO_TITLE.CON_ID AND PRO_TITLE.CON_CATEGORY='PRO_TITLE' AND PRO_TITLE.CON_LANG='en') 
+  *   LEFT  JOIN CONTENT TAS_TITLE ON (APP_DELEGATION.TAS_UID=TAS_TITLE.CON_ID AND TAS_TITLE.CON_CATEGORY='TAS_TITLE' AND TAS_TITLE.CON_LANG='en') 
+  *   LEFT  JOIN APP_DELEGATION APP_PREV_DEL ON (APPLICATION.APP_UID=APP_PREV_DEL.APP_UID AND APP_PREV_DEL.DEL_INDEX=APP_DELEGATION.DEL_PREVIOUS) 
+  *   LEFT  JOIN USERS APP_LAST_USER ON (APP_PREV_DEL.USR_UID=APP_LAST_USER.USR_UID) 
+  * WHERE 
+  *   TASK.TAS_TYPE<>'SUBPROCESS' 
+  *   AND USERS.USR_UID='69726522248da554d01a9d1053079479' 
+  *   AND APPLICATION.APP_STATUS='TO_DO' 
+  *   AND APP_DELEGATION.DEL_FINISH_DATE IS NULL 
+  *   AND APP_THREAD.APP_THREAD_STATUS='OPEN' 
+  *   AND APP_DELEGATION.DEL_THREAD_STATUS='OPEN' 
+  *   AND (APPLICATION.APP_NUMBER LIKE "%%" OR APP_TITLE.CON_VALUE LIKE "%%" OR TAS_TITLE.CON_VALUE LIKE "%%" OR PRO_TITLE.CON_VALUE LIKE "%%") 
+  *   ORDER BY APPLICATION.APP_NUMBER DESC
+  */
+  function prepareCriteriaForToDo($sUIDUserLogged) {
+    require_once ("classes/model/AppCacheView.php");
+// NEW QUERY
+    $c = new Criteria('workflow');
+    //$gf->clearSelectColumns();DEL_INIT_DATE
+    $c->addSelectColumn(AppCacheViewPeer::APP_UID  );
+    $c->addSelectColumn(AppCacheViewPeer::DEL_INDEX  );
+    $c->addSelectColumn(AppCacheViewPeer::APP_NUMBER  );
+    $c->addSelectColumn(AppCacheViewPeer::APP_STATUS  );
+    $c->addSelectColumn(AppCacheViewPeer::USR_UID  );
+    $c->addSelectColumn(AppCacheViewPeer::PREVIOUS_USR_UID  );
+    $c->addSelectColumn(AppCacheViewPeer::TAS_UID  );
+    $c->addSelectColumn(AppCacheViewPeer::PRO_UID  );
+    $c->addSelectColumn(AppCacheViewPeer::DEL_DELEGATE_DATE  );
+    $c->addSelectColumn(AppCacheViewPeer::DEL_INIT_DATE  );
+    //$c->addSelectColumn(AppCacheViewPeer::DEL_TASK_DUE_DATE  );
+    $c->addAsColumn('DEL_TASK_DUE_DATE', " IF (" . AppCacheViewPeer::DEL_TASK_DUE_DATE . " <= NOW(), CONCAT('<span style=\'color:red\';>', " . AppCacheViewPeer::DEL_TASK_DUE_DATE . ", '</span>'), " . AppCacheViewPeer::DEL_TASK_DUE_DATE . ") ");
+    $c->addSelectColumn(AppCacheViewPeer::DEL_FINISH_DATE  );
+    $c->addSelectColumn(AppCacheViewPeer::DEL_THREAD_STATUS  );
+    $c->addSelectColumn(AppCacheViewPeer::APP_THREAD_STATUS  );
+    $c->addSelectColumn(AppCacheViewPeer::APP_TITLE  );
+    $c->addSelectColumn(AppCacheViewPeer::APP_PRO_TITLE  );
+    $c->addSelectColumn(AppCacheViewPeer::APP_TAS_TITLE  );
+    $c->addSelectColumn(AppCacheViewPeer::APP_CURRENT_USER  );
+    $c->addSelectColumn(AppCacheViewPeer::APP_DEL_PREVIOUS_USER  );
+    $c->addSelectColumn(AppCacheViewPeer::DEL_PRIORITY  );
+    $c->addSelectColumn(AppCacheViewPeer::DEL_DURATION  );
+    $c->addSelectColumn(AppCacheViewPeer::DEL_QUEUE_DURATION  );
+    $c->addSelectColumn(AppCacheViewPeer::DEL_DELAY_DURATION  );
+    $c->addSelectColumn(AppCacheViewPeer::DEL_STARTED  );
+    $c->addSelectColumn(AppCacheViewPeer::DEL_FINISHED  );
+    $c->addSelectColumn(AppCacheViewPeer::DEL_DELAYED  );
+    $c->addSelectColumn(AppCacheViewPeer::APP_CREATE_DATE  );
+    $c->addSelectColumn(AppCacheViewPeer::APP_FINISH_DATE  );
+    $c->addSelectColumn(AppCacheViewPeer::APP_UPDATE_DATE  );
+
+	  $c->add(AppCacheViewPeer::USR_UID, $sUIDUserLogged );
+    $c->add(AppCacheViewPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
+    $c->add(AppCacheViewPeer::APP_STATUS, 'TO_DO');
+    $c->add(AppCacheViewPeer::APP_THREAD_STATUS, 'OPEN');
+
+    //call cleanup session vars 
+    return $c;
+    //return array ( 'where' => $cf, 'whereFilter' => $cf, 'group' => $g , 'groupFilter' => $gf );
+  }
+  
+  /*
   * Get the condition for Cases List
   * @param string $sTypeList
   * @param string $sUIDUserLogged
@@ -1525,9 +1611,9 @@ class Cases
     $c->addAsColumn('DEL_TASK_DUE_DATE', " IF (" . AppDelegationPeer::DEL_TASK_DUE_DATE . " <= NOW(), CONCAT('<span style=\'color:red\';>', " . AppDelegationPeer::DEL_TASK_DUE_DATE . ", '</span>'), " . AppDelegationPeer::DEL_TASK_DUE_DATE . ") ");
     
     global $RBAC;
-	if ($sTypeList == "completed" && $RBAC->userCanAccess('PM_SUPERVISOR') == 1){
-    	$c->addAsColumn("DEL_LINK", "CONCAT('".G::LoadTranslation('ID_DELETE')."')");
-	}
+    if ($sTypeList == "completed" && $RBAC->userCanAccess('PM_SUPERVISOR') == 1){
+      $c->addAsColumn("DEL_LINK", "CONCAT('".G::LoadTranslation('ID_DELETE')."')");
+    }
     
     $c->addSelectColumn(AppDelegationPeer::DEL_INDEX);
     $c->addSelectColumn(AppDelegationPeer::TAS_UID);
@@ -1675,9 +1761,7 @@ class Cases
           $xmlfile = $filesList[7];
           break;
     }
-    /*
-    * TODO: Revisar y decidir como se eliminaran variables de session xmlfors
-    */
+
     //OPCION_1: Limpia de $_SESSION los listados no utilizados (solo listado de casos)
     foreach ($filesList as $file) {
       $id = G::createUID('', $file . '.xml');
@@ -3336,7 +3420,7 @@ funcion History messages for case tracker by Everth The Answer
     $oCriteria->addJoin(ApplicationPeer::APP_UID, AppDelegationPeer::APP_UID, Criteria::LEFT_JOIN);
     $oCriteria->add(ApplicationPeer::APP_STATUS, $status);
     $oCriteria->add(AppDelegationPeer::USR_UID, $USR_UID);
-    
+    $oCriteria->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
     return $oCriteria;
   }
 
