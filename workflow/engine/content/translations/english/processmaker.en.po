@@ -1,8 +1,8 @@
-msgid ""
-msgstr ""
+msgid "" 
+msgstr "" 
 "Project-Id-Version: PM 4.0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-08-12 11:56+0100 \n"
+"PO-Revision-Date: 2009-09-17 16:55+0100 \n"
 "Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
 "Language-Team: Colosa Developers Team <developers@colosa.com>\n"
 "MIME-Version: 1.0\n"
@@ -916,8 +916,8 @@ msgstr "Users & User Groups"
 # TRANSLATION
 # JAVASCRIPT/ID_PROCESSMAP_WORKFLOW_PATTERNS
 #: JAVASCRIPT/ID_PROCESSMAP_WORKFLOW_PATTERNS
-msgid "Derivation Rules"
-msgstr "Derivation Rules"
+msgid "Routing rule"
+msgstr "Routing rule"
 
 # TRANSLATION
 # JAVASCRIPT/ID_PROCESSMAP_DELETE_TASK
@@ -1012,8 +1012,8 @@ msgstr "Change to: "
 # TRANSLATION
 # JAVASCRIPT/ID_PROCESSMAP_CONFIRM_WORKFLOW_PATTERN_CHANGE
 #: JAVASCRIPT/ID_PROCESSMAP_CONFIRM_WORKFLOW_PATTERN_CHANGE
-msgid "Are you sure you want to change the derivation rule?"
-msgstr "Are you sure you want to change the derivation rule?"
+msgid "Are you sure you want to change the routing rule?"
+msgstr "Are you sure you want to change the routing rule?"
 
 # TRANSLATION
 # JAVASCRIPT/ID_PROCESSMAP_NEW_TASK
@@ -1066,8 +1066,8 @@ msgstr "The user doesn't have a resume."
 # TRANSLATION
 # LABEL/ID_NO_DERIVATION_RULE
 #: LABEL/ID_NO_DERIVATION_RULE
-msgid "Task does not have derivation rule, check process definition"
-msgstr "Task does not have derivation rule, check process definition"
+msgid "Process definition error: Task doesn't have a derivation rule assigned. "
+msgstr "Process definition error: Task doesn't have a derivation rule assigned. "
 
 # TRANSLATION
 # LABEL/ID_NO_USERS
@@ -1174,26 +1174,26 @@ msgstr "Edit step conditions"
 # TRANSLATION
 # LABEL/ID_SAVE_DERIVATION_RULES_BEFORE_CLOSING
 #: LABEL/ID_SAVE_DERIVATION_RULES_BEFORE_CLOSING
-msgid "Save changes to the derivation rules before closing?"
-msgstr "Save changes to the derivation rules before closing?"
+msgid "Save changes to the routing rules before closing?"
+msgstr "Save changes to the routing rules before closing?"
 
 # TRANSLATION
 # JAVASCRIPT/ID_SAVE_DERIVATION_RULES_BEFORE_CLOSING
 #: JAVASCRIPT/ID_SAVE_DERIVATION_RULES_BEFORE_CLOSING
-msgid "[JAVASCRIPT/ID_SAVE_DERIVATION_RULES_BEFORE_CLOSING] Save changes to the derivation rules before closing?"
-msgstr "Save changes to the derivation rules before closing?"
+msgid "[JAVASCRIPT/ID_SAVE_DERIVATION_RULES_BEFORE_CLOSING] Save changes to the routing rules before closing?"
+msgstr "Save changes to the routing rules before closing?"
 
 # TRANSLATION
 # JAVASCRIPT/ID_PROCESSMAP_WORKFLOW_DELETE_PATTERNS
 #: JAVASCRIPT/ID_PROCESSMAP_WORKFLOW_DELETE_PATTERNS
-msgid "Delete Derivation Rules"
-msgstr "Delete Derivation Rules"
+msgid "Delete Routing rule"
+msgstr "Delete Routing rule"
 
 # TRANSLATION
 # JAVASCRIPT/ID_PROCESSMAP_WORKFLOW_CONFIRM_DELETE_PATTERNS
 #: JAVASCRIPT/ID_PROCESSMAP_WORKFLOW_CONFIRM_DELETE_PATTERNS
-msgid "Are you sure you want to delete the derivation rules? "
-msgstr "Are you sure you want to delete the derivation rules? "
+msgid "Are you sure you want to delete the routing rules?"
+msgstr "Are you sure you want to delete the routing rules?"
 
 # TRANSLATION
 # JAVASCRIPT/ID_END_OF_PROCESS
@@ -1264,8 +1264,8 @@ msgstr "HTML"
 # TRANSLATION
 # LABEL/ID_FIELDS_LIST
 #: LABEL/ID_FIELDS_LIST
-msgid "Fields List"
-msgstr "Fields List"
+msgid "Fields handler"
+msgstr "Fields handler"
 
 # TRANSLATION
 # LABEL/ID_JAVASCRIPTS
@@ -1714,8 +1714,8 @@ msgstr "The 'To' field is required"
 # TRANSLATION
 # LABEL/ID_MESS_SEND_MAX_REQUIRED
 #: LABEL/ID_MESS_SEND_MAX_REQUIRED
-msgid "The number of mails sended by attempt is required"
-msgstr "The number of mails sended by attempt is required"
+msgid "The number of mails sent by attempt is required"
+msgstr "The number of mails sent by attempt is required"
 
 # TRANSLATION
 # JAVASCRIPT/ID_MESS_EXECUTE_EVERY_REQUIRED
@@ -2188,8 +2188,8 @@ msgstr "Number of cases per executing user"
 # TRANSLATION
 # JAVASCRIPT/ID_PROCESSMAP_USERS_AND_GROUPS_ADHOC
 #: JAVASCRIPT/ID_PROCESSMAP_USERS_AND_GROUPS_ADHOC
-msgid "Users & User Groups (Adhoc)"
-msgstr "Users & User Groups (Adhoc)"
+msgid "Users & User Groups (Ad hoc)"
+msgstr "Users & User Groups (Ad hoc)"
 
 # TRANSLATION
 # LABEL/ID_SETUP_WEBSERVICES
@@ -2638,8 +2638,8 @@ msgstr "Next Task"
 # TRANSLATION
 # LABEL/ID_PERMISSIONS_FOR_THE_ROL
 #: LABEL/ID_PERMISSIONS_FOR_THE_ROL
-msgid "Permissions for the rol"
-msgstr "Permissions for the rol"
+msgid "Permissions for the role"
+msgstr "Permissions for the role"
 
 # TRANSLATION
 # LABEL/ID_BACK_TO_USERS_LIST
@@ -2886,6 +2886,122 @@ msgstr "Reassign Cases"
 #: LABEL/ID_ALERT_MESSAGE
 msgid "Alert Message"
 msgstr "Alert Message"
+
+# TRANSLATION
+# JAVASCRIPT/USERS_DELETE_WITH_HISTORY
+#: JAVASCRIPT/USERS_DELETE_WITH_HISTORY
+msgid "The user has some completed or cancelled tasks such as historical records, do you want to delete this user anyway?"
+msgstr "The user has some completed or cancelled tasks such as historical records, do you want to delete this user anyway?"
+
+# TRANSLATION
+# JAVASCRIPT/USERS_REASSIGN
+#: JAVASCRIPT/USERS_REASSIGN
+msgid "You can't to delete this user because has some pending tasks, reassign the pending tasks first. <br/><br/> 
+Do you want to reassign these tasks now?"
+msgstr "You can't to delete this user because has some pending tasks, reassign the pending tasks first. <br/><br/> 
+Do you want to reassign these tasks now?"
+
+# TRANSLATION
+# LABEL/LOGIN_VERIFY_MSG
+#: LABEL/LOGIN_VERIFY_MSG
+msgid "Verifying..."
+msgstr "Verifying..."
+
+# TRANSLATION
+# LABEL/ID_ACTION
+#: LABEL/ID_ACTION
+msgid "Action"
+msgstr "Action"
+
+# TRANSLATION
+# LABEL/ID_EDIT_ACTION
+#: LABEL/ID_EDIT_ACTION
+msgid "Edit Action"
+msgstr "Edit Action"
+
+# TRANSLATION
+# LABEL/ID_PROCESSING
+#: LABEL/ID_PROCESSING
+msgid "Processing your request, wait please..."
+msgstr "Processing your request, wait please..."
+
+# TRANSLATION
+# LABEL/ID_FIELD_CANNOT_BE_PRIMARY_KEY
+#: LABEL/ID_FIELD_CANNOT_BE_PRIMARY_KEY
+msgid "The type of field 'TEXT' can't be primary key"
+msgstr "The type of field 'TEXT' can't be primary key"
+
+# TRANSLATION
+# LABEL/ID_DYNAFORM_HASNOSUBMITBTN
+#: LABEL/ID_DYNAFORM_HASNOSUBMITBTN
+msgid "Warning: This DynaForm does not include a "Submit" button so save any entered data."
+msgstr "Warning: This DynaForm does not include a "Submit" button so save any entered data."
+
+# TRANSLATION
+# LABEL/ID_UPLOAD_VALID_CSV_FILE
+#: LABEL/ID_UPLOAD_VALID_CSV_FILE
+msgid "Please upload a valid CSV file"
+msgstr "Please upload a valid CSV file"
+
+# TRANSLATION
+# JAVASCRIPT/ID_MSG_DELETE_GRID_ITEM
+#: JAVASCRIPT/ID_MSG_DELETE_GRID_ITEM
+msgid "Are you sure you want to delete this row?"
+msgstr "Are you sure you want to delete this row?"
+
+# TRANSLATION
+# JAVASCRIPT/ID_MSG_NODELETE_GRID_ITEM
+#: JAVASCRIPT/ID_MSG_NODELETE_GRID_ITEM
+msgid "Can't delete the first row!"
+msgstr "Can't delete the first row!"
+
+# TRANSLATION
+# JAVASCRIPT/ID_MSG_GROUPS_ADDCONFIRM
+#: JAVASCRIPT/ID_MSG_GROUPS_ADDCONFIRM
+msgid "You must to select a user at least."
+msgstr "You must to select a user at least."
+
+# TRANSLATION
+# LABEL/ID_DEBUG
+#: LABEL/ID_DEBUG
+msgid "Debugger"
+msgstr "Debugger"
+
+# TRANSLATION
+# LABEL/ID_MSG_CONFIRM_DELETE_EVENT
+#: LABEL/ID_MSG_CONFIRM_DELETE_EVENT
+msgid "Do you want to delete this event?"
+msgstr "Do you want to delete this event?"
+
+# TRANSLATION
+# JAVASCRIPT/ID_MSG_CONFIRM_RESENDMSG
+#: JAVASCRIPT/ID_MSG_CONFIRM_RESENDMSG
+msgid "do you want resend this message, are you sure?"
+msgstr "do you want resend this message, are you sure?"
+
+# TRANSLATION
+# LABEL/ID_RESEND
+#: LABEL/ID_RESEND
+msgid "Resend"
+msgstr "Resend"
+
+# TRANSLATION
+# LABEL/ID_EDIT_EVENT
+#: LABEL/ID_EDIT_EVENT
+msgid "Edit Event"
+msgstr "Edit Event"
+
+# TRANSLATION
+# LABEL/ID_NEW_EVENT
+#: LABEL/ID_NEW_EVENT
+msgid "New Event"
+msgstr "New Event"
+
+# TRANSLATION
+# JAVASCRIPT/ID_EVENTS
+#: JAVASCRIPT/ID_EVENTS
+msgid "Events"
+msgstr "Events"
 
 # TRANSLATION
 # LABEL/ID_TO
@@ -3219,7 +3335,7 @@ msgstr "Id "
 
 # tools/translationAdd.xml?trn_value
 # tools/translationAdd.xml
-#: text - trn_value
+#: textarea - trn_value
 msgid "value "
 msgstr "value "
 
@@ -4579,17 +4695,17 @@ msgstr "Initial Dynaform "
 msgid "Method    "
 msgstr "Method    "
 
-# dynaforms/dynaforms_WebEntry.xml?WE_TYPE-SINGLE
-# dynaforms/dynaforms_WebEntry.xml
-#: dropdown - WE_TYPE - SINGLE
-msgid "[dynaforms/dynaforms_WebEntry.xml?WE_TYPE-SINGLE]"
-msgstr "Single HTML "
-
 # dynaforms/dynaforms_WebEntry.xml?WE_TYPE-WS
 # dynaforms/dynaforms_WebEntry.xml
 #: dropdown - WE_TYPE - WS
 msgid "[dynaforms/dynaforms_WebEntry.xml?WE_TYPE-WS]"
 msgstr "PHP pages with Web Services"
+
+# dynaforms/dynaforms_WebEntry.xml?WE_TYPE-SINGLE
+# dynaforms/dynaforms_WebEntry.xml
+#: dropdown - WE_TYPE - SINGLE
+msgid "[dynaforms/dynaforms_WebEntry.xml?WE_TYPE-SINGLE]"
+msgstr "Single HTML "
 
 # dynaforms/dynaforms_WebEntry.xml?subtitle2
 # dynaforms/dynaforms_WebEntry.xml
@@ -5797,17 +5913,17 @@ msgstr "Validate    "
 msgid "[dynaforms/fields/text.xml?PME_VALIDATE-Any]"
 msgstr "Any"
 
-# dynaforms/fields/text.xml?PME_VALIDATE-Alfa
+# dynaforms/fields/text.xml?PME_VALIDATE-Alpha
 # dynaforms/fields/text.xml
-#: dropdown - PME_VALIDATE - Alfa
-msgid "[dynaforms/fields/text.xml?PME_VALIDATE-Alfa]"
-msgstr "Alfa"
+#: dropdown - PME_VALIDATE - Alpha
+msgid "[dynaforms/fields/text.xml?PME_VALIDATE-Alpha]"
+msgstr "Alpha"
 
-# dynaforms/fields/text.xml?PME_VALIDATE-AlfaNum
+# dynaforms/fields/text.xml?PME_VALIDATE-AlphaNum
 # dynaforms/fields/text.xml
-#: dropdown - PME_VALIDATE - AlfaNum
-msgid "[dynaforms/fields/text.xml?PME_VALIDATE-AlfaNum]"
-msgstr "AlfaNum"
+#: dropdown - PME_VALIDATE - AlphaNum
+msgid "[dynaforms/fields/text.xml?PME_VALIDATE-AlphaNum]"
+msgstr "AlphaNum"
 
 # dynaforms/fields/text.xml?PME_VALIDATE-Int
 # dynaforms/fields/text.xml
@@ -7096,8 +7212,8 @@ msgstr "Save log for delete actions"
 # additionalTables/additionalTablesNew.xml?ADD_TAB_SDW_AUTO_DELETE
 # additionalTables/additionalTablesNew.xml
 #: checkbox - ADD_TAB_SDW_AUTO_DELETE
-msgid "Delete log related when table is deleted"
-msgstr "Delete log related when table is deleted"
+msgid "Delete related log when table is deleted"
+msgstr "Delete related log when table is deleted"
 
 # additionalTables/additionalTablesNew.xml?TITLE3
 # additionalTables/additionalTablesNew.xml
@@ -7128,6 +7244,12 @@ msgstr "CSV File"
 #: submit - btnSave
 msgid "[additionalTables/additionalTablesDataImportForm.xml?btnSave] Save"
 msgstr "Save"
+
+# additionalTables/additionalTablesTitle.xml?TITLE
+# additionalTables/additionalTablesTitle.xml
+#: title - TITLE
+msgid "@#ADD_TAB_NAME"
+msgstr "@#ADD_TAB_NAME"
 
 # additionalTables/additionalTablesOptions.xml?MNU_ADD
 # additionalTables/additionalTablesOptions.xml
@@ -7276,7 +7398,7 @@ msgstr "Save log for delete actions"
 # additionalTables/additionalTablesEdit.xml?ADD_TAB_SDW_AUTO_DELETE
 # additionalTables/additionalTablesEdit.xml
 #: checkbox - ADD_TAB_SDW_AUTO_DELETE
-msgid "[additionalTables/additionalTablesEdit.xml?ADD_TAB_SDW_AUTO_DELETE] Delete log related when table is deleted"
+msgid "Delete log related when table is deleted"
 msgstr "Delete log related when table is deleted"
 
 # additionalTables/additionalTablesEdit.xml?TITLE3
@@ -7627,6 +7749,36 @@ msgstr "Type"
 msgid "[outputdocs/outputdocs_ShortList.xml?SEARCH] Apply Filter"
 msgstr "Apply Filter"
 
+# outputdocs/outputdocsDynaformList.xml?DYN_UID
+# outputdocs/outputdocsDynaformList.xml
+#: dropdown - DYN_UID
+msgid "Dynaform  "
+msgstr "Dynaform  "
+
+# outputdocs/outputdocsDynaformList.xml?DYN_TYPE
+# outputdocs/outputdocsDynaformList.xml
+#: dropdown - DYN_TYPE
+msgid "Template  "
+msgstr "Template  "
+
+# outputdocs/outputdocsDynaformList.xml?DYN_TYPE-1
+# outputdocs/outputdocsDynaformList.xml
+#: dropdown - DYN_TYPE - 1
+msgid "[outputdocs/outputdocsDynaformList.xml?DYN_TYPE-1]"
+msgstr "Classic Template"
+
+# outputdocs/outputdocsDynaformList.xml?DYN_TYPE-2
+# outputdocs/outputdocsDynaformList.xml
+#: dropdown - DYN_TYPE - 2
+msgid "[outputdocs/outputdocsDynaformList.xml?DYN_TYPE-2]"
+msgstr "Tabular Template"
+
+# outputdocs/outputdocsDynaformList.xml?ACCEPT
+# outputdocs/outputdocsDynaformList.xml
+#: button - ACCEPT
+msgid "[outputdocs/outputdocsDynaformList.xml?ACCEPT] Save"
+msgstr "Save"
+
 # outputdocs/outputdocsUploadFile.xml?TITLE1
 # outputdocs/outputdocsUploadFile.xml
 #: title - TITLE1
@@ -7720,7 +7872,7 @@ msgstr "Fill Adobe Acroform"
 # outputdocs/outputdocs_New.xml?DYN_UID
 # outputdocs/outputdocs_New.xml
 #: dropdown - DYN_UID
-msgid "Dynaform  "
+msgid "[outputdocs/outputdocs_New.xml?DYN_UID] Dynaform  "
 msgstr "Dynaform  "
 
 # outputdocs/outputdocs_New.xml?OUT_DOC_TITLE
@@ -7744,7 +7896,7 @@ msgstr "Description"
 # outputdocs/outputdocs_New.xml?DYN_TYPE
 # outputdocs/outputdocs_New.xml
 #: dropdown - DYN_TYPE
-msgid "Template  "
+msgid "[outputdocs/outputdocs_New.xml?DYN_TYPE] Template  "
 msgstr "Template  "
 
 # outputdocs/outputdocs_New.xml?DYN_TYPE-1
@@ -7782,6 +7934,12 @@ msgstr "Output Document Information"
 #: text - OUT_DOC_TITLE
 msgid "[outputdocs/outputdocs_Properties.xml?OUT_DOC_TITLE] Title"
 msgstr "Title"
+
+# outputdocs/outputdocs_Properties.xml?OUT_DOC_FILENAME
+# outputdocs/outputdocs_Properties.xml
+#: textpm - OUT_DOC_FILENAME
+msgid "[outputdocs/outputdocs_Properties.xml?OUT_DOC_FILENAME] Filename generated"
+msgstr "Filename generated"
 
 # outputdocs/outputdocs_Properties.xml?OUT_DOC_DESCRIPTION
 # outputdocs/outputdocs_Properties.xml
@@ -12892,8 +13050,8 @@ msgstr "Save"
 # users/users_DeleteAssign.xml?MESSAGE
 # users/users_DeleteAssign.xml
 #: title - MESSAGE
-msgid "The user has cases pending or in progress.  Before deletion, you should reassign the user's cases."
-msgstr "The user has cases pending or in progress.  Before deletion, you should reassign the user's cases."
+msgid "<center>User cases summary</center>"
+msgstr "<center>User cases summary</center>"
 
 # users/users_DeleteAssign.xml?TO_DO
 # users/users_DeleteAssign.xml
@@ -12901,17 +13059,17 @@ msgstr "The user has cases pending or in progress.  Before deletion, you should 
 msgid "[users/users_DeleteAssign.xml?TO_DO] To Do"
 msgstr "To Do"
 
-# users/users_DeleteAssign.xml?COMPLETED
-# users/users_DeleteAssign.xml
-#: text - COMPLETED
-msgid "[users/users_DeleteAssign.xml?COMPLETED] Completed"
-msgstr "Completed"
-
 # users/users_DeleteAssign.xml?DRAFT
 # users/users_DeleteAssign.xml
 #: text - DRAFT
 msgid "[users/users_DeleteAssign.xml?DRAFT] Draft"
 msgstr "Draft"
+
+# users/users_DeleteAssign.xml?COMPLETED
+# users/users_DeleteAssign.xml
+#: text - COMPLETED
+msgid "[users/users_DeleteAssign.xml?COMPLETED] Completed"
+msgstr "Completed"
 
 # users/users_DeleteAssign.xml?CANCELLED
 # users/users_DeleteAssign.xml
@@ -13057,12 +13215,6 @@ msgstr "Confirm Password "
 msgid "[users/users_View.xml?TITLEADD] Additional Information"
 msgstr "Additional Information"
 
-# users/users_View.xml?USR_PHOTO
-# users/users_View.xml
-#: image - USR_PHOTO
-msgid "[users/users_View.xml?USR_PHOTO] Photo"
-msgstr "Photo"
-
 # users/users_View.xml?USR_RESUME
 # users/users_View.xml
 #: link - USR_RESUME
@@ -13078,8 +13230,8 @@ msgstr "Information"
 # users/users_ReassignShowInfo.xml?MESSAGE
 # users/users_ReassignShowInfo.xml
 #: text - MESSAGE
-msgid "[users/users_ReassignShowInfo.xml?MESSAGE] The user has cases pending or in progress.  Before deletion, you should reassign the user's cases."
-msgstr "The user has cases pending or in progress.  Before deletion, you should reassign the user's cases."
+msgid "[users/users_ReassignShowInfo.xml?MESSAGE] <center>User cases summary</center>"
+msgstr "<center>User cases summary</center>"
 
 # users/users_ReassignShowInfo.xml?DELETE
 # users/users_ReassignShowInfo.xml
@@ -13465,6 +13617,12 @@ msgstr "Delete"
 msgid "[authSources/authSources_Options.xml?MNU_ADD] New"
 msgstr "New"
 
+# authSources/ldapSearchResults.xml?Checkbox
+# authSources/ldapSearchResults.xml
+#: text - Checkbox
+msgid "<span onclick=\"selectAll();\">[SELECT-ALL]</span>"
+msgstr "<span onclick=\"selectAll();\">[SELECT-ALL]</span>"
+
 # authSources/ldapSearchResults.xml?FullName
 # authSources/ldapSearchResults.xml
 #: text - FullName
@@ -13498,8 +13656,8 @@ msgstr "Allow arbitrary transfer (Ad hoc)"
 # tasks/tasks_Notifications.xml?SEND_EMAIL
 # tasks/tasks_Notifications.xml
 #: checkbox - SEND_EMAIL
-msgid "After derivation notify to each next user"
-msgstr "After derivation notify to each next user"
+msgid "After routing notify the next assigned user(s)."
+msgstr "After routing notify the next assigned user(s)."
 
 # tasks/tasks_Notifications.xml?TAS_DEF_MESSAGE
 # tasks/tasks_Notifications.xml
@@ -13632,12 +13790,6 @@ msgstr "Task duration"
 #: dropdown - TAS_TIMEUNIT
 msgid "Unit time    "
 msgstr "Unit time    "
-
-# tasks/tasks_TimingControl.xml?TAS_TIMEUNIT-MINUTES
-# tasks/tasks_TimingControl.xml
-#: dropdown - TAS_TIMEUNIT - MINUTES
-msgid "[tasks/tasks_TimingControl.xml?TAS_TIMEUNIT-MINUTES]"
-msgstr "Minutes"
 
 # tasks/tasks_TimingControl.xml?TAS_TIMEUNIT-HOURS
 # tasks/tasks_TimingControl.xml
@@ -13963,11 +14115,11 @@ msgstr "Task"
 msgid "[cases/cases_ListCompleted.xml?APP_PRO_TITLE] Process"
 msgstr "Process"
 
-# cases/cases_ListCompleted.xml?APP_DEL_PREVIOUS_USER
+# cases/cases_ListCompleted.xml?APP_CURRENT_USER
 # cases/cases_ListCompleted.xml
-#: text - APP_DEL_PREVIOUS_USER
-msgid "[cases/cases_ListCompleted.xml?APP_DEL_PREVIOUS_USER] Sent by"
-msgstr "Sent by"
+#: text - APP_CURRENT_USER
+msgid "Completed by user"
+msgstr "Completed by user"
 
 # cases/cases_ListCompleted.xml?DEL_TASK_DUE_DATE
 # cases/cases_ListCompleted.xml
@@ -13992,6 +14144,12 @@ msgstr "Start Date"
 #: date - DEL_FINISH_DATE
 msgid "[cases/cases_ListCompleted.xml?DEL_FINISH_DATE] Finish Date"
 msgstr "Finish Date"
+
+# cases/cases_ListCompleted.xml?DELETE
+# cases/cases_ListCompleted.xml
+#: link - DELETE
+msgid "[cases/cases_ListCompleted.xml?DELETE] Delete"
+msgstr "Delete"
 
 # cases/cases_ListCompleted.xml?SEARCH
 # cases/cases_ListCompleted.xml
@@ -14100,6 +14258,96 @@ msgstr "Completed"
 #: submit - FILTER
 msgid "[cases/cases_advancedSearchFilter.xml?FILTER] Filter"
 msgstr "Filter"
+
+# cases/cases_ListTodoNew.xml?APP_NUMBER
+# cases/cases_ListTodoNew.xml
+#: text - APP_NUMBER
+msgid "[cases/cases_ListTodoNew.xml?APP_NUMBER] #"
+msgstr "#"
+
+# cases/cases_ListTodoNew.xml?APP_TITLE
+# cases/cases_ListTodoNew.xml
+#: text - APP_TITLE
+msgid "[cases/cases_ListTodoNew.xml?APP_TITLE] Case"
+msgstr "Case"
+
+# cases/cases_ListTodoNew.xml?APP_TAS_TITLE
+# cases/cases_ListTodoNew.xml
+#: text - APP_TAS_TITLE
+msgid "[cases/cases_ListTodoNew.xml?APP_TAS_TITLE] Task"
+msgstr "Task"
+
+# cases/cases_ListTodoNew.xml?APP_PRO_TITLE
+# cases/cases_ListTodoNew.xml
+#: text - APP_PRO_TITLE
+msgid "[cases/cases_ListTodoNew.xml?APP_PRO_TITLE] Process"
+msgstr "Process"
+
+# cases/cases_ListTodoNew.xml?APP_DEL_PREVIOUS_USER
+# cases/cases_ListTodoNew.xml
+#: text - APP_DEL_PREVIOUS_USER
+msgid "[cases/cases_ListTodoNew.xml?APP_DEL_PREVIOUS_USER] Sent by"
+msgstr "Sent by"
+
+# cases/cases_ListTodoNew.xml?DEL_TASK_DUE_DATE
+# cases/cases_ListTodoNew.xml
+#: date - DEL_TASK_DUE_DATE
+msgid "[cases/cases_ListTodoNew.xml?DEL_TASK_DUE_DATE] Due Date"
+msgstr "Due Date"
+
+# cases/cases_ListTodoNew.xml?APP_UPDATE_DATE
+# cases/cases_ListTodoNew.xml
+#: date - APP_UPDATE_DATE
+msgid "[cases/cases_ListTodoNew.xml?APP_UPDATE_DATE] Last Modification"
+msgstr "Last Modification"
+
+# cases/cases_ListTodoNew.xml?DEL_PRIORITY
+# cases/cases_ListTodoNew.xml
+#: dropdown - DEL_PRIORITY
+msgid "[cases/cases_ListTodoNew.xml?DEL_PRIORITY] Priority        "
+msgstr "Priority        "
+
+# cases/cases_ListTodoNew.xml?DEL_PRIORITY-1
+# cases/cases_ListTodoNew.xml
+#: dropdown - DEL_PRIORITY - 1
+msgid "[cases/cases_ListTodoNew.xml?DEL_PRIORITY-1]"
+msgstr "Very High"
+
+# cases/cases_ListTodoNew.xml?DEL_PRIORITY-2
+# cases/cases_ListTodoNew.xml
+#: dropdown - DEL_PRIORITY - 2
+msgid "[cases/cases_ListTodoNew.xml?DEL_PRIORITY-2]"
+msgstr "High"
+
+# cases/cases_ListTodoNew.xml?DEL_PRIORITY-3
+# cases/cases_ListTodoNew.xml
+#: dropdown - DEL_PRIORITY - 3
+msgid "[cases/cases_ListTodoNew.xml?DEL_PRIORITY-3]"
+msgstr "Normal"
+
+# cases/cases_ListTodoNew.xml?DEL_PRIORITY-4
+# cases/cases_ListTodoNew.xml
+#: dropdown - DEL_PRIORITY - 4
+msgid "[cases/cases_ListTodoNew.xml?DEL_PRIORITY-4]"
+msgstr "Low"
+
+# cases/cases_ListTodoNew.xml?DEL_PRIORITY-5
+# cases/cases_ListTodoNew.xml
+#: dropdown - DEL_PRIORITY - 5
+msgid "[cases/cases_ListTodoNew.xml?DEL_PRIORITY-5]"
+msgstr "Very Low"
+
+# cases/cases_ListTodoNew.xml?DEL_INIT_DATE
+# cases/cases_ListTodoNew.xml
+#: date - DEL_INIT_DATE
+msgid "[cases/cases_ListTodoNew.xml?DEL_INIT_DATE] Start Date"
+msgstr "Start Date"
+
+# cases/cases_ListTodoNew.xml?SEARCH
+# cases/cases_ListTodoNew.xml
+#: button - SEARCH
+msgid "[cases/cases_ListTodoNew.xml?SEARCH] Apply Filter"
+msgstr "Apply Filter"
 
 # cases/cases_ViewInputDocumentToRevise.xml?APP_DOC_TITLE
 # cases/cases_ViewInputDocumentToRevise.xml
@@ -15409,29 +15657,41 @@ msgstr "File (.pdf)"
 msgid "[cases/cases_ViewOutputDocumentToRevise.xml?BACK] Back"
 msgstr "Back"
 
+# cases/cases_Messages.xml?APP_MSG_TYPE
+# cases/cases_Messages.xml
+#: text - APP_MSG_TYPE
+msgid "[cases/cases_Messages.xml?APP_MSG_TYPE] Type"
+msgstr "Type"
+
 # cases/cases_Messages.xml?APP_MSG_DATE
 # cases/cases_Messages.xml
 #: text - APP_MSG_DATE
-msgid "[cases/cases_Messages.xml?APP_MSG_DATE] DATE"
-msgstr "DATE"
+msgid "[cases/cases_Messages.xml?APP_MSG_DATE] Date"
+msgstr "Date"
 
 # cases/cases_Messages.xml?APP_MSG_SUBJECT
 # cases/cases_Messages.xml
 #: text - APP_MSG_SUBJECT
-msgid "[cases/cases_Messages.xml?APP_MSG_SUBJECT] SUBJECT"
-msgstr "SUBJECT"
+msgid "Subject"
+msgstr "Subject"
 
 # cases/cases_Messages.xml?APP_MSG_FROM
 # cases/cases_Messages.xml
 #: text - APP_MSG_FROM
-msgid "[cases/cases_Messages.xml?APP_MSG_FROM] FROM"
-msgstr "FROM"
+msgid "From"
+msgstr "From"
 
 # cases/cases_Messages.xml?APP_MSG_TO
 # cases/cases_Messages.xml
 #: text - APP_MSG_TO
-msgid "[cases/cases_Messages.xml?APP_MSG_TO] TO"
-msgstr "TO"
+msgid "To"
+msgstr "To"
+
+# cases/cases_Messages.xml?APP_MSG_STATUS
+# cases/cases_Messages.xml
+#: text - APP_MSG_STATUS
+msgid "[cases/cases_Messages.xml?APP_MSG_STATUS] Status"
+msgstr "Status"
 
 # cases/cases_ViewAnyInputDocument3.xml?INP_DOC_TITLE
 # cases/cases_ViewAnyInputDocument3.xml
@@ -15886,14 +16146,14 @@ msgstr "Apply Filter"
 # cases/cases_ReassignShowInfo.xml?TITLE
 # cases/cases_ReassignShowInfo.xml
 #: title - TITLE
-msgid "[cases/cases_ReassignShowInfo.xml?TITLE] Information"
-msgstr "Information"
+msgid "Reassigned Cases"
+msgstr "Reassigned Cases"
 
 # cases/cases_ReassignShowInfo.xml?MESSAGE
 # cases/cases_ReassignShowInfo.xml
 #: text - MESSAGE
-msgid "[cases/cases_ReassignShowInfo.xml?MESSAGE] The user has cases pending or in progress.  Before deletion, you should reassign the user's cases."
-msgstr "The user has cases pending or in progress.  Before deletion, you should reassign the user's cases."
+msgid "[cases/cases_ReassignShowInfo.xml?MESSAGE] <center>User cases summary</center>"
+msgstr "<center>User cases summary</center>"
 
 # cases/cases_ReassignShowInfo.xml?BACK
 # cases/cases_ReassignShowInfo.xml
@@ -16273,6 +16533,12 @@ msgstr "Re-type Password:"
 msgid "[login/newSite.xml?NW_SUB] Test"
 msgstr "Test"
 
+# login/nologin.xml?subtitle
+# login/nologin.xml
+#: subtitle - subtitle
+msgid "subtitle"
+msgstr "subtitle"
+
 # login/nologin.xml?BSUBMIT
 # login/nologin.xml
 #: submit - BSUBMIT
@@ -16288,8 +16554,8 @@ msgstr "Information"
 # login/showInfo.xml?MESSAGE
 # login/showInfo.xml
 #: text - MESSAGE
-msgid "[login/showInfo.xml?MESSAGE]"
-msgstr ""
+msgid "[login/showInfo.xml?MESSAGE] <center>User cases summary</center>"
+msgstr "<center>User cases summary</center>"
 
 # login/login.xml?TITLE
 # login/login.xml
@@ -16330,8 +16596,8 @@ msgstr "Error"
 # login/showMessage.xml?MESSAGE
 # login/showMessage.xml
 #: caption - MESSAGE
-msgid "[login/showMessage.xml?MESSAGE]"
-msgstr ""
+msgid "[login/showMessage.xml?MESSAGE] <center>User cases summary</center>"
+msgstr "<center>User cases summary</center>"
 
 # login/dbInfo.xml?DYNA_HEADER
 # login/dbInfo.xml
@@ -16464,6 +16730,12 @@ msgstr "Password"
 #: text - USER_ENV
 msgid "[login/sysLogin.xml?USER_ENV] Workspace"
 msgstr "Workspace"
+
+# login/sysLogin.xml?USER_LANG
+# login/sysLogin.xml
+#: dropdown - USER_LANG
+msgid "[login/sysLogin.xml?USER_LANG] Language"
+msgstr "Language"
 
 # login/sysLogin.xml?BSUBMIT
 # login/sysLogin.xml
@@ -17047,15 +17319,267 @@ msgstr "Title"
 msgid "[triggers/triggers_Edit.xml?TRI_DESCRIPTION] Description"
 msgstr "Description"
 
-# triggers/triggers_Edit.xml?TRI_WEBBOT
-# triggers/triggers_Edit.xml
-#: textareapm - TRI_WEBBOT
-msgid "Script"
-msgstr "Script"
-
 # triggers/triggers_Edit.xml?SAVE
 # triggers/triggers_Edit.xml
 #: button - SAVE
 msgid "[triggers/triggers_Edit.xml?SAVE] Save"
 msgstr "Save"
+
+# events/events_New.xml?EVN_DESCRIPTION
+# events/events_New.xml
+#: text - EVN_DESCRIPTION
+msgid "[events/events_New.xml?EVN_DESCRIPTION] Description"
+msgstr "Description"
+
+# events/events_New.xml?EVN_RELATED_TO
+# events/events_New.xml
+#: dropdown - EVN_RELATED_TO
+msgid "Related to    "
+msgstr "Related to    "
+
+# events/events_New.xml?EVN_RELATED_TO-SINGLE
+# events/events_New.xml
+#: dropdown - EVN_RELATED_TO - SINGLE
+msgid "[events/events_New.xml?EVN_RELATED_TO-SINGLE]"
+msgstr "Single Task"
+
+# events/events_New.xml?EVN_RELATED_TO-MULTIPLE
+# events/events_New.xml
+#: dropdown - EVN_RELATED_TO - MULTIPLE
+msgid "[events/events_New.xml?EVN_RELATED_TO-MULTIPLE]"
+msgstr "Multiple Tasks"
+
+# events/events_New.xml?TAS_UID
+# events/events_New.xml
+#: dropdown - TAS_UID
+msgid "[events/events_New.xml?TAS_UID] Task"
+msgstr "Task"
+
+# events/events_New.xml?EVN_TAS_UID_FROM
+# events/events_New.xml
+#: dropdown - EVN_TAS_UID_FROM
+msgid "[events/events_New.xml?EVN_TAS_UID_FROM] From"
+msgstr "From"
+
+# events/events_New.xml?EVN_TAS_UID_TO
+# events/events_New.xml
+#: dropdown - EVN_TAS_UID_TO
+msgid "[events/events_New.xml?EVN_TAS_UID_TO] To"
+msgstr "To"
+
+# events/events_New.xml?EVN_TAS_STIMATED_DURATION
+# events/events_New.xml
+#: text - EVN_TAS_STIMATED_DURATION
+msgid "Estimated duration (days)"
+msgstr "Estimated duration (days)"
+
+# events/events_New.xml?EVN_WHEN
+# events/events_New.xml
+#: text - EVN_WHEN
+msgid "When (days)"
+msgstr "When (days)"
+
+# events/events_New.xml?EVN_ACTION
+# events/events_New.xml
+#: dropdown - EVN_ACTION
+msgid "Action    "
+msgstr "Action    "
+
+# events/events_New.xml?EVN_ACTION-SEND_MESSAGE
+# events/events_New.xml
+#: dropdown - EVN_ACTION - SEND_MESSAGE
+msgid "[events/events_New.xml?EVN_ACTION-SEND_MESSAGE]"
+msgstr "Send Message"
+
+# events/events_New.xml?EVN_ACTION-EXECUTE_TRIGGER
+# events/events_New.xml
+#: dropdown - EVN_ACTION - EXECUTE_TRIGGER
+msgid "[events/events_New.xml?EVN_ACTION-EXECUTE_TRIGGER]"
+msgstr "Execute Trigger"
+
+# events/events_New.xml?CONTINUE
+# events/events_New.xml
+#: button - CONTINUE
+msgid "[events/events_New.xml?CONTINUE] Continue"
+msgstr "Continue"
+
+# events/events_New.xml?NOTE
+# events/events_New.xml
+#: subtitle - NOTE
+msgid "Note .- Events execution is related to the due date of the cases or the estimated duration if you select \"Multiple Tasks\""
+msgstr "Note .- Events execution is related to the due date of the cases or the estimated duration if you select \"Multiple Tasks\""
+
+# events/events_EditAction.xml?EVN_MESSAGE_SUBJECT
+# events/events_EditAction.xml
+#: text - EVN_MESSAGE_SUBJECT
+msgid "[events/events_EditAction.xml?EVN_MESSAGE_SUBJECT] Subject"
+msgstr "Subject"
+
+# events/events_EditAction.xml?EVN_MESSAGE_TO_TO
+# events/events_EditAction.xml
+#: listbox - EVN_MESSAGE_TO_TO
+msgid "To  "
+msgstr "To  "
+
+# events/events_EditAction.xml?EVN_MESSAGE_TO_TO--1
+# events/events_EditAction.xml
+#: listbox - EVN_MESSAGE_TO_TO - -1
+msgid "[events/events_EditAction.xml?EVN_MESSAGE_TO_TO--1]"
+msgstr "-- Current task user --"
+
+# events/events_EditAction.xml?EVN_MESSAGE_TO_CC
+# events/events_EditAction.xml
+#: listbox - EVN_MESSAGE_TO_CC
+msgid "CC  "
+msgstr "CC  "
+
+# events/events_EditAction.xml?EVN_MESSAGE_TO_CC--1
+# events/events_EditAction.xml
+#: listbox - EVN_MESSAGE_TO_CC - -1
+msgid "[events/events_EditAction.xml?EVN_MESSAGE_TO_CC--1]"
+msgstr "-- Current task user --"
+
+# events/events_EditAction.xml?EVN_MESSAGE_TO_BCC
+# events/events_EditAction.xml
+#: listbox - EVN_MESSAGE_TO_BCC
+msgid "BCC  "
+msgstr "BCC  "
+
+# events/events_EditAction.xml?EVN_MESSAGE_TO_BCC--1
+# events/events_EditAction.xml
+#: listbox - EVN_MESSAGE_TO_BCC - -1
+msgid "[events/events_EditAction.xml?EVN_MESSAGE_TO_BCC--1]"
+msgstr "-- Current task user --"
+
+# events/events_EditAction.xml?EVN_MESSAGE_TEMPLATE
+# events/events_EditAction.xml
+#: dropdown - EVN_MESSAGE_TEMPLATE
+msgid "E-Mail Template  "
+msgstr "E-Mail Template  "
+
+# events/events_EditAction.xml?EVN_MESSAGE_TEMPLATE-''
+# events/events_EditAction.xml
+#: dropdown - EVN_MESSAGE_TEMPLATE - ''
+msgid "[events/events_EditAction.xml?EVN_MESSAGE_TEMPLATE-'']"
+msgstr "-- Default --"
+
+# events/events_EditAction.xml?TRI_UID
+# events/events_EditAction.xml
+#: dropdown - TRI_UID
+msgid "Trigger  "
+msgstr "Trigger  "
+
+# events/events_EditAction.xml?TRI_UID-''
+# events/events_EditAction.xml
+#: dropdown - TRI_UID - ''
+msgid "[events/events_EditAction.xml?TRI_UID-'']"
+msgstr "-- Select --"
+
+# events/events_EditAction.xml?SAVE
+# events/events_EditAction.xml
+#: button - SAVE
+msgid "[events/events_EditAction.xml?SAVE] Save"
+msgstr "Save"
+
+# events/events_Options.xml?MNU_ADD
+# events/events_Options.xml
+#: link - MNU_ADD
+msgid "[events/events_Options.xml?MNU_ADD] New"
+msgstr "New"
+
+# events/events_Edit.xml?EVN_DESCRIPTION
+# events/events_Edit.xml
+#: text - EVN_DESCRIPTION
+msgid "[events/events_Edit.xml?EVN_DESCRIPTION] Description"
+msgstr "Description"
+
+# events/events_Edit.xml?EVN_RELATED_TO
+# events/events_Edit.xml
+#: dropdown - EVN_RELATED_TO
+msgid "[events/events_Edit.xml?EVN_RELATED_TO] Related to    "
+msgstr "Related to    "
+
+# events/events_Edit.xml?EVN_RELATED_TO-SINGLE
+# events/events_Edit.xml
+#: dropdown - EVN_RELATED_TO - SINGLE
+msgid "[events/events_Edit.xml?EVN_RELATED_TO-SINGLE]"
+msgstr "Single Task"
+
+# events/events_Edit.xml?EVN_RELATED_TO-MULTIPLE
+# events/events_Edit.xml
+#: dropdown - EVN_RELATED_TO - MULTIPLE
+msgid "[events/events_Edit.xml?EVN_RELATED_TO-MULTIPLE]"
+msgstr "Multiple Tasks"
+
+# events/events_Edit.xml?TAS_UID
+# events/events_Edit.xml
+#: dropdown - TAS_UID
+msgid "[events/events_Edit.xml?TAS_UID] Task"
+msgstr "Task"
+
+# events/events_Edit.xml?EVN_TAS_UID_FROM
+# events/events_Edit.xml
+#: dropdown - EVN_TAS_UID_FROM
+msgid "[events/events_Edit.xml?EVN_TAS_UID_FROM] From"
+msgstr "From"
+
+# events/events_Edit.xml?EVN_TAS_UID_TO
+# events/events_Edit.xml
+#: dropdown - EVN_TAS_UID_TO
+msgid "[events/events_Edit.xml?EVN_TAS_UID_TO] To"
+msgstr "To"
+
+# events/events_Edit.xml?EVN_TAS_STIMATED_DURATION
+# events/events_Edit.xml
+#: text - EVN_TAS_STIMATED_DURATION
+msgid "Stimated duration"
+msgstr "Stimated duration"
+
+# events/events_Edit.xml?EVN_WHEN
+# events/events_Edit.xml
+#: text - EVN_WHEN
+msgid "[events/events_Edit.xml?EVN_WHEN] When (days)"
+msgstr "When (days)"
+
+# events/events_Edit.xml?CONTINUE
+# events/events_Edit.xml
+#: button - CONTINUE
+msgid "[events/events_Edit.xml?CONTINUE] Continue"
+msgstr "Continue"
+
+# events/events_Edit.xml?NOTE
+# events/events_Edit.xml
+#: subtitle - NOTE
+msgid "[events/events_Edit.xml?NOTE] Note .- Events execution is related to the due date of the cases or the estimated duration if you select \"Multiple Tasks\""
+msgstr "Note .- Events execution is related to the due date of the cases or the estimated duration if you select \"Multiple Tasks\""
+
+# events/events_ShortList.xml?EVN_DESCRIPTION
+# events/events_ShortList.xml
+#: text - EVN_DESCRIPTION
+msgid "[events/events_ShortList.xml?EVN_DESCRIPTION] Description"
+msgstr "Description"
+
+# events/events_ShortList.xml?EVN_ACTION
+# events/events_ShortList.xml
+#: dropdown - EVN_ACTION
+msgid "[events/events_ShortList.xml?EVN_ACTION] Action  "
+msgstr "Action  "
+
+# events/events_ShortList.xml?EVN_ACTION-SEND_MESSAGE
+# events/events_ShortList.xml
+#: dropdown - EVN_ACTION - SEND_MESSAGE
+msgid "[events/events_ShortList.xml?EVN_ACTION-SEND_MESSAGE]"
+msgstr "Send Message"
+
+# events/events_ShortList.xml?EVN_ACTION-EXECUTE_TRIGGER
+# events/events_ShortList.xml
+#: dropdown - EVN_ACTION - EXECUTE_TRIGGER
+msgid "[events/events_ShortList.xml?EVN_ACTION-EXECUTE_TRIGGER]"
+msgstr "Execute Trigger"
+
+# events/events_ShortList.xml?DELETE
+# events/events_ShortList.xml
+#: link - DELETE
+msgid "[events/events_ShortList.xml?DELETE] Delete"
+msgstr "Delete"
 
