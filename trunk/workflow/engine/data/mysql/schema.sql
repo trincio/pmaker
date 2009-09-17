@@ -26,7 +26,7 @@ CREATE TABLE `APPLICATION`
 	`APP_INIT_DATE` DATETIME  NOT NULL,
 	`APP_FINISH_DATE` DATETIME  NOT NULL,
 	`APP_UPDATE_DATE` DATETIME  NOT NULL,
-	`APP_DATA` MEDIUMTEXT  NOT NULL,
+	`APP_DATA` TEXT  NOT NULL,
 	`APP_PIN` VARCHAR(32) default '',
 	PRIMARY KEY (`APP_UID`),
 	KEY `indexApp`(`PRO_UID`, `APP_UID`)
@@ -55,6 +55,12 @@ CREATE TABLE `APP_DELEGATION`
 	`DEL_TASK_DUE_DATE` DATETIME,
 	`DEL_FINISH_DATE` DATETIME,
 	`DEL_DURATION` DOUBLE default 0,
+	`DEL_QUEUE_DURATION` DOUBLE default 0,
+	`DEL_DELAY_DURATION` DOUBLE default 0,
+	`DEL_STARTED` TINYINT default 0,
+	`DEL_FINISHED` TINYINT default 0,
+	`DEL_DELAYED` TINYINT default 0,
+	`DEL_DATA` TEXT  NOT NULL,
 	PRIMARY KEY (`APP_UID`,`DEL_INDEX`)
 )Type=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Delegation a task to user';
 #-----------------------------------------------------------------------------
@@ -147,7 +153,7 @@ CREATE TABLE `CONTENT`
 	`CON_PARENT` VARCHAR(32) default '' NOT NULL,
 	`CON_ID` VARCHAR(100) default '' NOT NULL,
 	`CON_LANG` VARCHAR(10) default '' NOT NULL,
-	`CON_VALUE` MEDIUMTEXT  NOT NULL,
+	`CON_VALUE` TEXT  NOT NULL,
 	PRIMARY KEY (`CON_CATEGORY`,`CON_PARENT`,`CON_ID`,`CON_LANG`),
 	KEY `indexUid`(`CON_ID`)
 )Type=MyISAM  DEFAULT CHARSET='utf8';
@@ -946,5 +952,92 @@ CREATE TABLE `SHADOW_TABLE`
 	PRIMARY KEY (`SHD_UID`),
 	KEY `indexShadowTable`(`SHD_UID`)
 )Type=MyISAM  DEFAULT CHARSET='utf8';
+#-----------------------------------------------------------------------------
+#-- EVENT
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `EVENT`;
+
+
+CREATE TABLE `EVENT`
+(
+	`EVN_UID` VARCHAR(32) default '' NOT NULL,
+	`PRO_UID` VARCHAR(32) default '' NOT NULL,
+	`EVN_RELATED_TO` VARCHAR(10) default 'SINGLE',
+	`TAS_UID` VARCHAR(32) default '' NOT NULL,
+	`EVN_TAS_UID_FROM` VARCHAR(32) default '',
+	`EVN_TAS_UID_TO` VARCHAR(32) default '',
+	`EVN_TAS_STIMATED_DURATION` DOUBLE default 0,
+	`EVN_WHEN` DOUBLE default 0 NOT NULL,
+	`EVN_MAX_ATTEMPTS` TINYINT default 3 NOT NULL,
+	`EVN_ACTION` VARCHAR(50) default '' NOT NULL,
+	`EVN_MESSAGE_SUBJECT` VARCHAR(255) default '',
+	`EVN_MESSAGE_TO` TEXT,
+	`EVN_MESSAGE_TEMPLATE` VARCHAR(100) default '',
+	`EVN_MESSAGE_DIGEST` TINYINT default 1,
+	`TRI_UID` VARCHAR(32) default '',
+	PRIMARY KEY (`EVN_UID`),
+	KEY `indexEventTable`(`EVN_UID`)
+)Type=MyISAM  DEFAULT CHARSET='utf8';
+#-----------------------------------------------------------------------------
+#-- APP_EVENT
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `APP_EVENT`;
+
+
+CREATE TABLE `APP_EVENT`
+(
+	`APP_UID` VARCHAR(32) default '' NOT NULL,
+	`DEL_INDEX` INTEGER default 0 NOT NULL,
+	`EVN_UID` VARCHAR(32) default '' NOT NULL,
+	`APP_EVN_ACTION_DATE` DATETIME  NOT NULL,
+	`APP_EVN_ATTEMPTS` TINYINT default 0 NOT NULL,
+	`APP_EVN_LAST_EXECUTION_DATE` DATETIME,
+	`APP_EVN_STATUS` VARCHAR(10) default 'OPEN' NOT NULL,
+	PRIMARY KEY (`APP_UID`,`DEL_INDEX`)
+)Type=MyISAM  DEFAULT CHARSET='utf8';
+#-----------------------------------------------------------------------------
+#-- APP_CACHE_VIEW
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `APP_CACHE_VIEW`;
+
+
+CREATE TABLE `APP_CACHE_VIEW`
+(
+	`APP_UID` VARCHAR(32) default '' NOT NULL,
+	`DEL_INDEX` INTEGER default 0 NOT NULL,
+	`APP_NUMBER` INTEGER default 0 NOT NULL,
+	`APP_STATUS` VARCHAR(32) default '' NOT NULL,
+	`USR_UID` VARCHAR(32) default '' NOT NULL,
+	`PREVIOUS_USR_UID` VARCHAR(32) default '' NOT NULL,
+	`TAS_UID` VARCHAR(32) default '' NOT NULL,
+	`PRO_UID` VARCHAR(32) default '' NOT NULL,
+	`DEL_DELEGATE_DATE` DATETIME  NOT NULL,
+	`DEL_INIT_DATE` DATETIME,
+	`DEL_TASK_DUE_DATE` DATETIME,
+	`DEL_FINISH_DATE` DATETIME,
+	`DEL_THREAD_STATUS` VARCHAR(32) default 'OPEN' NOT NULL,
+	`APP_THREAD_STATUS` VARCHAR(32) default 'OPEN' NOT NULL,
+	`APP_TITLE` VARCHAR(255) default '' NOT NULL,
+	`APP_PRO_TITLE` VARCHAR(255) default '' NOT NULL,
+	`APP_TAS_TITLE` VARCHAR(255) default '' NOT NULL,
+	`APP_CURRENT_USER` VARCHAR(128) default '' NOT NULL,
+	`APP_DEL_PREVIOUS_USER` VARCHAR(128) default '' NOT NULL,
+	`DEL_PRIORITY` VARCHAR(32) default '3' NOT NULL,
+	`DEL_DURATION` DOUBLE default 0,
+	`DEL_QUEUE_DURATION` DOUBLE default 0,
+	`DEL_DELAY_DURATION` DOUBLE default 0,
+	`DEL_STARTED` TINYINT default 0,
+	`DEL_FINISHED` TINYINT default 0,
+	`DEL_DELAYED` TINYINT default 0,
+	`APP_CREATE_DATE` DATETIME  NOT NULL,
+	`APP_FINISH_DATE` DATETIME  NOT NULL,
+	`APP_UPDATE_DATE` DATETIME  NOT NULL,
+	PRIMARY KEY (`APP_UID`,`DEL_INDEX`),
+	KEY `indexAppNumber`(`APP_NUMBER`),
+	KEY `indexAppUser`(`USR_UID`, `APP_STATUS`)
+)Type=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Delegation a task to user';
 # This restores the fkey checks, after having unset them earlier
 SET FOREIGN_KEY_CHECKS = 1;

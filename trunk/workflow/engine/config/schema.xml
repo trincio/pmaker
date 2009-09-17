@@ -5920,4 +5920,332 @@
       </vendor>
     </column>
   </table>
+  
+  
+  <table name="APP_CACHE_VIEW">
+    <vendor type="mysql">
+      <parameter name="Name" value="APP_CACHE_VIEW"/>
+      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Version" value="10"/>
+      <parameter name="Row_format" value="Dynamic"/>
+      <parameter name="Rows" value="129"/>
+      <parameter name="Avg_row_length" value="115"/>
+      <parameter name="Data_length" value="14860"/>
+      <parameter name="Max_data_length" value="281474976710655"/>
+      <parameter name="Index_length" value="5120"/>
+      <parameter name="Data_free" value="0"/>
+      <parameter name="Auto_increment" value=""/>
+      <parameter name="Create_time" value="2007-12-06 07:22:27"/>
+      <parameter name="Update_time" value="2007-12-09 14:08:22"/>
+      <parameter name="Check_time" value=""/>
+      <parameter name="Collation" value="utf8_general_ci"/>
+      <parameter name="Checksum" value=""/>
+      <parameter name="Create_options" value=""/>
+      <parameter name="Comment" value="Delegation a task to user"/>
+    </vendor>
+    <column name="APP_UID" type="VARCHAR" size="32" required="true" primaryKey="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="APP_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value="PRI"/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="DEL_INDEX" type="INTEGER" required="true" primaryKey="true" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="DEL_INDEX"/>
+        <parameter name="Type" value="int(11)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value="PRI"/>
+        <parameter name="Default" value="0"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="APP_NUMBER" type="INTEGER" required="true" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="APP_NUMBER"/>
+        <parameter name="Type" value="int(11)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="0"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="APP_STATUS" type="VARCHAR" size="32" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="APP_STATUS"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="USR_UID" type="VARCHAR" size="32" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="USR_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="PREVIOUS_USR_UID" type="VARCHAR" size="32" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="PREVIOUS_USR_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="TAS_UID" type="VARCHAR" size="32" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="TAS_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="PRO_UID" type="VARCHAR" size="32" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="PRO_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="DEL_DELEGATE_DATE" type="TIMESTAMP" required="true">
+      <vendor type="mysql">
+        <parameter name="Field" value="DEL_DELEGATE_DATE"/>
+        <parameter name="Type" value="datetime"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="DEL_INIT_DATE" type="TIMESTAMP" required="false" >
+      <vendor type="mysql">
+        <parameter name="Field" value="DEL_INIT_DATE"/>
+        <parameter name="Type" value="datetime"/>
+        <parameter name="Null" value="YES"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="DEL_TASK_DUE_DATE" type="TIMESTAMP" required="false" >
+      <vendor type="mysql">
+        <parameter name="Field" value="DEL_TASK_DUE_DATE"/>
+        <parameter name="Type" value="datetime"/>
+        <parameter name="Null" value="YES"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+     <column name="DEL_FINISH_DATE" type="TIMESTAMP" required="false" >
+      <vendor type="mysql">
+        <parameter name="Field" value="DEL_FINISH_DATE"/>
+        <parameter name="Type" value="datetime"/>
+        <parameter name="Null" value="YES"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+   <column name="DEL_THREAD_STATUS" type="VARCHAR" size="32" required="true" default="OPEN">
+      <vendor type="mysql">
+        <parameter name="Field" value="DEL_THREAD_STATUS"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="OPEN"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+   <column name="APP_THREAD_STATUS" type="VARCHAR" size="32" required="true" default="OPEN">
+      <vendor type="mysql">
+        <parameter name="Field" value="APP_THREAD_STATUS"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="OPEN"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="APP_TITLE" type="VARCHAR" size="255" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="APP_TITLE"/>
+        <parameter name="Type" value="varchar(255)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="APP_PRO_TITLE" type="VARCHAR" size="255" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="APP_PRO_TITLE"/>
+        <parameter name="Type" value="varchar(255)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="APP_TAS_TITLE" type="VARCHAR" size="255" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="APP_TAS_TITLE"/>
+        <parameter name="Type" value="varchar(255)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="APP_CURRENT_USER" type="VARCHAR" size="128" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="APP_CURRENT_USER"/>
+        <parameter name="Type" value="varchar(128)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="APP_DEL_PREVIOUS_USER" type="VARCHAR" size="128" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="APP_DEL_PREVIOUS_USER"/>
+        <parameter name="Type" value="varchar(128)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="DEL_PRIORITY" type="VARCHAR" size="32" required="true" default="3">
+      <vendor type="mysql">
+        <parameter name="Field" value="DEL_PRIORITY"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="3"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="DEL_DURATION" type="DOUBLE" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="DEL_DURATION"/>
+        <parameter name="Type" value="double"/>
+        <parameter name="Null" value="YES"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="0"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="DEL_QUEUE_DURATION" type="DOUBLE" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="DEL_QUEUE_DURATION"/>
+        <parameter name="Type" value="double"/>
+        <parameter name="Null" value="YES"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="0"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="DEL_DELAY_DURATION" type="DOUBLE" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="DEL_DELAY_DURATION"/>
+        <parameter name="Type" value="double"/>
+        <parameter name="Null" value="YES"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="0"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="DEL_STARTED" type="TINYINT" required="false" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="DEL_STARTED"/>
+        <parameter name="Type" value="tinyint(1)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="0"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="DEL_FINISHED" type="TINYINT" required="false" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="DEL_FINISHED"/>
+        <parameter name="Type" value="tinyint(1)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="0"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="DEL_DELAYED" type="TINYINT" required="false" default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="DEL_DELAYED"/>
+        <parameter name="Type" value="tinyint(1)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="0"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="APP_CREATE_DATE" type="TIMESTAMP" required="true">
+      <vendor type="mysql">
+        <parameter name="Field" value="APP_CREATE_DATE"/>
+        <parameter name="Type" value="datetime"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="APP_FINISH_DATE" type="TIMESTAMP" required="true">
+      <vendor type="mysql">
+        <parameter name="Field" value="APP_FINISH_DATE"/>
+        <parameter name="Type" value="datetime"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="APP_UPDATE_DATE" type="TIMESTAMP" required="true">
+      <vendor type="mysql">
+        <parameter name="Field" value="APP_UPDATE_DATE"/>
+        <parameter name="Type" value="datetime"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <index name="indexAppNumber">
+      <index-column name="APP_NUMBER"/>
+      <vendor type="mysql">
+        <parameter name="Table" value="APP_CACHE_VIEW"/>
+        <parameter name="Non_unique" value="1"/>
+        <parameter name="Key_name" value="indexAppNumber"/>
+        <parameter name="Seq_in_index" value="1"/>        
+      </vendor>
+    </index>
+    <index name="indexAppUser">
+      <index-column name="USR_UID"/>
+      <index-column name="APP_STATUS"/>
+      <vendor type="mysql">
+        <parameter name="Table" value="APP_CACHE_VIEW"/>
+        <parameter name="Non_unique" value="1"/>
+        <parameter name="Key_name" value="indexAppUser"/>
+        <parameter name="Seq_in_index" value="1"/>        
+      </vendor>
+    </index>
+
+  </table>
+  
 </database>
