@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dynaForm name="cases_List" type="filterform" sqlConnection="" menu="cases/cases_Options" filterForm="cases/cases_List" searchBy="APPLICATION.APP_NUMBER | APP_TITLE.CON_VALUE | TAS_TITLE.CON_VALUE | PRO_TITLE.CON_VALUE " width="100%">
+<dynaForm name="cases_List" sqlConnection="" menu="cases/cases_Options" searchBy="APP_TITLE | APP_PRO_TITLE | APP_TAS_TITLE " width="100%">
 <cases_Open type="private" defaultValue="cases_Open" showInTable="0"/>
 <APP_UID type="private" showInTable="0"/>
 <DEL_INDEX type="private" showInTable="0"/>
@@ -9,19 +9,19 @@
   <en>#</en>
 <es>#</es><pt>#</pt></APP_NUMBER>
 
-<APP_TITLE type="text" value="@#APP_TITLE" link="@G::encryptlink(@#cases_Open)?APP_UID=@#APP_UID&amp;DEL_INDEX=@#DEL_INDEX" colWidth="100" titleAlign="left" align="left" dataCompareField="APP_TITLE.CON_VALUE" dataCompareType="contains" enableHtml="1">
+<APP_TITLE type="text" value="@#APP_TITLE" colWidth="200" titleAlign="left" align="left" link="@G::encryptlink(@#cases_Open)?APP_UID=@#APP_UID&amp;DEL_INDEX=@#DEL_INDEX" dataCompareField="APP_TITLE.CON_VALUE" dataCompareType="contains" enableHtml="1">
   <en>Case</en>
 <es>Caso</es><pt>Caso</pt></APP_TITLE>
 
-<APP_TAS_TITLE type="text" value="@#APP_TAS_TITLE" link="@G::encryptlink(@#cases_Open)?APP_UID=@#APP_UID&amp;DEL_INDEX=@#DEL_INDEX" colWidth="130" titleAlign="left" align="left" dataCompareField="TAS_TITLE.CON_VALUE" dataCompareType="contains">
+<APP_TAS_TITLE type="text" colWidth="150" titleAlign="left" align="left" value="@#APP_TAS_TITLE" link="@G::encryptlink(@#cases_Open)?APP_UID=@#APP_UID&amp;DEL_INDEX=@#DEL_INDEX" dataCompareField="TAS_TITLE.CON_VALUE" dataCompareType="contains">
   <en>Task</en>
-<es>Tarea</es><pt>Tarefa</pt></APP_TAS_TITLE>
+<es>Tarea</es><pt>Tarea</pt></APP_TAS_TITLE>
 
-<APP_PRO_TITLE type="text" colWidth="180" titleAlign="left" align="left" dataCompareField="PRO_TITLE.CON_VALUE" dataCompareType="contains">
+<APP_PRO_TITLE type="text" colWidth="200" titleAlign="left" align="left" dataCompareField="PRO_TITLE.CON_VALUE" dataCompareType="contains">
   <en>Process</en>
 <es>Proceso</es><pt>Processo</pt></APP_PRO_TITLE>
 
-<APP_DEL_PREVIOUS_USER type="text" colWidth="120" titleAlign="left" align="left" dataCompareField="APP_LAST_USER.USR_USERNAME" dataCompareType="contains">
+<APP_DEL_PREVIOUS_USER type="text" colWidth="150" titleAlign="left" align="left" dataCompareField="APP_LAST_USER.USR_USERNAME" dataCompareType="contains">
   <en>Sent by</en>
 <es>Enviado por</es><pt>Enviado por</pt></APP_DEL_PREVIOUS_USER>
 
@@ -43,9 +43,9 @@
   </en>
 <es>Prioridad<option name="1">Muy alto</option><option name="2">Alto</option><option name="3">Normal</option><option name="4">Bajo</option><option name="5">Muy bajo</option></es><pt>Prioridade<option name="1">Muito Alta</option><option name="2">Alta</option><option name="3">Normal</option><option name="4">Baixa</option><option name="5">Muito Baixa</option></pt></DEL_PRIORITY>
 
-<DEL_INIT_DATE type="date" rows="3" cols="32" colWidth="90" titleAlign="left" align="left" dataCompareField="APPLICATION.APP_UPDATE_DATE" dataCompareType="contains" showInTable="0">
+<DEL_INIT_DATE type="date" colWidth="120" titleAlign="left" align="left" dataCompareField="APPLICATION.APP_UPDATE_DATE" dataCompareType="contains" showInTable="1">
   <en>Start Date</en>
-<es>Fechas inicial del caso</es><pt>Data Inicial</pt></DEL_INIT_DATE>
+<es>Fecha inicial del caso</es><pt>Data Inicial</pt></DEL_INIT_DATE>
 
 <APP_STATUS type="private" showInTable="0"/>
 
