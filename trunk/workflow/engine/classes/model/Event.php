@@ -233,7 +233,7 @@ class Event extends BaseEvent {
           $oCriteria2->add(AppEventPeer::APP_EVN_STATUS, 'OPEN');
           if (AppDelegationPeer::doCount($oCriteria2) == 0) {
             if ($aEvent['EVN_RELATED_TO'] != 'SINGLE') {
-              $sDueDate = date('Y-m-d H:i:s', $oDates->calculateDate($aData['DEL_INIT_DATE'], $aEvent['EVN_RELATED_TO'], 'hours', 1));
+              $sDueDate = date('Y-m-d H:i:s', $oDates->calculateDate($aData['DEL_INIT_DATE'], $aEvent['EVN_TAS_STIMATED_DURATION'], 'days', 1));
             }
             else {
               $sDueDate = $aData['DEL_TASK_DUE_DATE'];

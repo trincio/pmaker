@@ -143,9 +143,11 @@ class AppEvent extends BaseAppEvent {
       $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
       $oCriteria->add(AppEventPeer::APP_EVN_ATTEMPTS, 0, Criteria::GREATER_THAN);
       $oCriteria->add(AppEventPeer::APP_EVN_STATUS, 'OPEN');
-      $oCriteria->add(AppEventPeer::APP_EVN_ACTION_DATE, $sNow, Criteria::LESS_EQUAL);
-      if ($sLastExecution != '') {
-        $oCriteria->add(AppEventPeer::APP_EVN_ACTION_DATE, $sLastExecution, Criteria::GREATER_EQUAL);
+      if ($sLastExecution == '') {
+        $oCriteria->add(AppEventPeer::APP_EVN_ACTION_DATE, $sNow, Criteria::LESS_EQUAL);
+      }
+      else {
+        $oCriteria->add($oCriteria->getNewCriterion(AppEventPeer::APP_EVN_ACTION_DATE, $sLastExecution, Criteria::GREATER_EQUAL)->addAnd($oCriteria->getNewCriterion(AppEventPeer::APP_EVN_ACTION_DATE, $sNow, Criteria::LESS_EQUAL)));
       }
       $oDataset = AppEventPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
