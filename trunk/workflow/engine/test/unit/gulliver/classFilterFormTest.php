@@ -22,34 +22,20 @@
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
  *
  */
+  $unitFilename = $_SERVER['PWD'] . '/test/bootstrap/unit.php' ;
+  require_once( $unitFilename );
 
-  if ( !defined ('PATH_THIRDPARTY') ) {
-    require_once(  $_SERVER['PWD']. '/test/bootstrap/unit.php');
-  }
-
-  require_once( PATH_THIRDPARTY . 'lime/lime.php');
-  define ( 'G_ENVIRONMENT', G_TEST_ENV);
-  require_once( PATH_CORE . 'config' . PATH_SEP . 'environments.php');
-
-  global $G_ENVIRONMENTS;
-  if ( isset ( $G_ENVIRONMENTS ) ) {
-    $dbfile = $G_ENVIRONMENTS[ G_TEST_ENV ][ 'dbfile'];
-    if ( !file_exists ( $dbfile ) ) {
-      printf("%s \n", pakeColor::colorize( "dbfile $dbfile doesn't exist for environment " . G_ENVIRONMENT  , 'ERROR'));
-      exit (200);
-    }
-    else
-     include ( $dbfile );
-  }
-  else
-   exit (201);
-
-G::LoadThirdParty('smarty/libs','Smarty.class');
-G::LoadSystem ( 'xmlform');
-G::LoadSystem ( 'xmlDocument');
-G::LoadSystem ( 'form');
-G::LoadSystem ( 'filterForm');
-
+  require_once( PATH_THIRDPARTY . '/lime/lime.php');
+  require_once( PATH_THIRDPARTY.'lime/yaml.class.php');
+ 
+  G::LoadThirdParty('smarty/libs','Smarty.class');
+  G::LoadSystem ( 'xmlform');
+  G::LoadSystem ( 'xmlDocument');
+  G::LoadSystem ( 'form');
+  G::LoadSystem ( 'filterForm');
+  require_once( 'propel/Propel.php' );
+  require_once ( "creole/Creole.php" );
+  require_once (  PATH_CORE . "config/databases.php");  
 
 $obj = new filterForm ( 'login/login');
 $method = array ( );

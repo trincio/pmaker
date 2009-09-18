@@ -17,7 +17,7 @@
 
 
   //$obj = new Cases ($dbc);
-  $t   = new lime_test( 142, new lime_output_color() );
+  $t   = new lime_test( 144, new lime_output_color() );
 
   $className = "Cases";
   $className = strtolower ( substr ($className, 0,1) ) . substr ($className, 1 );
@@ -42,7 +42,7 @@
 
   //$t->isa_ok( $obj  , $className,  "class $className created");
 
-  $t->is( count($methods) , 70,  "class $className have " . 70 . ' methods.' );
+  $t->is( count($methods) , 71,  "class $className have " . 70 . ' methods.' );
    // Methods
   $aMethods = array_keys ( $methods );
    //checking method 'canStartCase'
@@ -60,7 +60,6 @@
   //$result = $obj->getStartCases ( $sUIDUser);
   //$t->isa_ok( $result,      'NULL',   'call to method getStartCases ');
   $t->todo( "call to method getStartCases using $sUIDUser ");
-
 
   //checking method 'loadCase'
   $t->is ( $aMethods[2],      'loadCase',   'loadCase() is callable' );
@@ -317,9 +316,16 @@
   //$t->isa_ok( $result,      'NULL',   'call to method getTransferHistoryCriteria ');
   $t->todo( "call to method getTransferHistoryCriteria using $sAppUid ");
 
+  //checking method 'prepareCriteriaForToDo'
+  $t->is ( $aMethods[34],      'prepareCriteriaForToDo',   'prepareCriteriaForToDo() is callable' );
+
+  //$result = $obj->getConditionCasesList ( $sTypeList, $sUIDUserLogged);
+  //$t->isa_ok( $result,      'NULL',   'call to method getConditionCasesList ');
+  $t->todo( "call to method prepareCriteriaForToDo using $sTypeList, $sUIDUserLogged ");
+
 
   //checking method 'getConditionCasesList'
-  $t->is ( $aMethods[34],      'getConditionCasesList',   'getConditionCasesList() is callable' );
+  $t->is ( $aMethods[35],      'getConditionCasesList',   'getConditionCasesList() is callable' );
 
   //$result = $obj->getConditionCasesList ( $sTypeList, $sUIDUserLogged);
   //$t->isa_ok( $result,      'NULL',   'call to method getConditionCasesList ');
@@ -327,7 +333,7 @@
 
 
   //checking method 'ThrowUnpauseDaemon'
-  $t->is ( $aMethods[35],      'ThrowUnpauseDaemon',   'ThrowUnpauseDaemon() is callable' );
+  $t->is ( $aMethods[36],      'ThrowUnpauseDaemon',   'ThrowUnpauseDaemon() is callable' );
 
   //$result = $obj->ThrowUnpauseDaemon ( );
   //$t->isa_ok( $result,      'NULL',   'call to method ThrowUnpauseDaemon ');
@@ -335,7 +341,7 @@
 
 
   //checking method 'getApplicationUIDByNumber'
-  $t->is ( $aMethods[36],      'getApplicationUIDByNumber',   'getApplicationUIDByNumber() is callable' );
+  $t->is ( $aMethods[37],      'getApplicationUIDByNumber',   'getApplicationUIDByNumber() is callable' );
 
   //$result = $obj->getApplicationUIDByNumber ( $iApplicationNumber);
   //$t->isa_ok( $result,      'NULL',   'call to method getApplicationUIDByNumber ');
@@ -343,7 +349,7 @@
 
 
   //checking method 'getCurrentDelegation'
-  $t->is ( $aMethods[37],      'getCurrentDelegation',   'getCurrentDelegation() is callable' );
+  $t->is ( $aMethods[38],      'getCurrentDelegation',   'getCurrentDelegation() is callable' );
 
   //$result = $obj->getCurrentDelegation ( $sApplicationUID, $sUserUID);
   //$t->isa_ok( $result,      'NULL',   'call to method getCurrentDelegation ');
@@ -351,7 +357,7 @@
 
 
   //checking method 'loadTriggers'
-  $t->is ( $aMethods[38],      'loadTriggers',   'loadTriggers() is callable' );
+  $t->is ( $aMethods[39],      'loadTriggers',   'loadTriggers() is callable' );
 
   //$result = $obj->loadTriggers ( $sTasUid, $sStepType, $sStepUidObj, $sTriggerType);
   //$t->isa_ok( $result,      'NULL',   'call to method loadTriggers ');
@@ -359,7 +365,7 @@
 
 
   //checking method 'executeTriggers'
-  $t->is ( $aMethods[39],      'executeTriggers',   'executeTriggers() is callable' );
+  $t->is ( $aMethods[40],      'executeTriggers',   'executeTriggers() is callable' );
 
   //$result = $obj->executeTriggers ( $sTasUid, $sStepType, $sStepUidObj, $sTriggerType, $aFields);
   //$t->isa_ok( $result,      'NULL',   'call to method executeTriggers ');
@@ -367,7 +373,7 @@
 
 
   //checking method 'getTriggerNames'
-  $t->is ( $aMethods[40],      'getTriggerNames',   'getTriggerNames() is callable' );
+  $t->is ( $aMethods[41],      'getTriggerNames',   'getTriggerNames() is callable' );
 
   //$result = $obj->getTriggerNames ( $triggers);
   //$t->isa_ok( $result,      'NULL',   'call to method getTriggerNames ');
@@ -375,15 +381,14 @@
 
 
   //checking method 'getInputDocumentsCriteria'
-  $t->is ( $aMethods[41],      'getInputDocumentsCriteria',   'getInputDocumentsCriteria() is callable' );
+  $t->is ( $aMethods[42],      'getInputDocumentsCriteria',   'getInputDocumentsCriteria() is callable' );
 
   //$result = $obj->getInputDocumentsCriteria ( $sApplicationUID, $iDelegation, $sDocumentUID);
   //$t->isa_ok( $result,      'NULL',   'call to method getInputDocumentsCriteria ');
   $t->todo( "call to method getInputDocumentsCriteria using $sApplicationUID, $iDelegation, $sDocumentUID ");
 
-
   //checking method 'getInputDocumentsCriteriaToRevise'
-  $t->is ( $aMethods[42],      'getInputDocumentsCriteriaToRevise',   'getInputDocumentsCriteriaToRevise() is callable' );
+  $t->is ( $aMethods[43],      'getInputDocumentsCriteriaToRevise',   'getInputDocumentsCriteriaToRevise() is callable' );
 
   //$result = $obj->getInputDocumentsCriteriaToRevise ( $sApplicationUID);
   //$t->isa_ok( $result,      'NULL',   'call to method getInputDocumentsCriteriaToRevise ');
@@ -391,7 +396,7 @@
 
 
   //checking method 'getOutputDocumentsCriteriaToRevise'
-  $t->is ( $aMethods[43],      'getOutputDocumentsCriteriaToRevise',   'getOutputDocumentsCriteriaToRevise() is callable' );
+  $t->is ( $aMethods[44],      'getOutputDocumentsCriteriaToRevise',   'getOutputDocumentsCriteriaToRevise() is callable' );
 
   //$result = $obj->getOutputDocumentsCriteriaToRevise ( $sApplicationUID);
   //$t->isa_ok( $result,      'NULL',   'call to method getOutputDocumentsCriteriaToRevise ');
@@ -399,7 +404,7 @@
 
 
   //checking method 'getCriteriaProcessCases'
-  $t->is ( $aMethods[44],      'getCriteriaProcessCases',   'getCriteriaProcessCases() is callable' );
+  $t->is ( $aMethods[45],      'getCriteriaProcessCases',   'getCriteriaProcessCases() is callable' );
 
   //$result = $obj->getCriteriaProcessCases ( $status, $PRO_UID);
   //$t->isa_ok( $result,      'NULL',   'call to method getCriteriaProcessCases ');
@@ -407,7 +412,7 @@
 
 
   //checking method 'pauseCase'
-  $t->is ( $aMethods[45],      'pauseCase',   'pauseCase() is callable' );
+  $t->is ( $aMethods[46],      'pauseCase',   'pauseCase() is callable' );
 
   //$result = $obj->pauseCase ( $sApplicationUID, $iDelegation, $sUserUID, $sUnpauseDate);
   //$t->isa_ok( $result,      'NULL',   'call to method pauseCase ');
@@ -415,7 +420,7 @@
 
 
   //checking method 'unpauseCase'
-  $t->is ( $aMethods[46],      'unpauseCase',   'unpauseCase() is callable' );
+  $t->is ( $aMethods[47],      'unpauseCase',   'unpauseCase() is callable' );
 
   //$result = $obj->unpauseCase ( $sApplicationUID, $iDelegation, $sUserUID);
   //$t->isa_ok( $result,      'NULL',   'call to method unpauseCase ');
@@ -423,7 +428,7 @@
 
 
   //checking method 'cancelCase'
-  $t->is ( $aMethods[47],      'cancelCase',   'cancelCase() is callable' );
+  $t->is ( $aMethods[48],      'cancelCase',   'cancelCase() is callable' );
 
   //$result = $obj->cancelCase ( $sApplicationUID, $iIndex, $user_logged);
   //$t->isa_ok( $result,      'NULL',   'call to method cancelCase ');
@@ -431,7 +436,7 @@
 
 
   //checking method 'reactivateCase'
-  $t->is ( $aMethods[48],      'reactivateCase',   'reactivateCase() is callable' );
+  $t->is ( $aMethods[49],      'reactivateCase',   'reactivateCase() is callable' );
 
   //$result = $obj->reactivateCase ( $sApplicationUID, $iIndex, $user_logged);
   //$t->isa_ok( $result,      'NULL',   'call to method reactivateCase ');
@@ -439,7 +444,7 @@
 
 
   //checking method 'reassignCase'
-  $t->is ( $aMethods[49],      'reassignCase',   'reassignCase() is callable' );
+  $t->is ( $aMethods[50],      'reassignCase',   'reassignCase() is callable' );
 
   //$result = $obj->reassignCase ( $sApplicationUID, $iDelegation, $sUserUID, $newUserUID, $sType);
   //$t->isa_ok( $result,      'NULL',   'call to method reassignCase ');
@@ -447,7 +452,7 @@
 
 
   //checking method 'getAllDynaformsStepsToRevise'
-  $t->is ( $aMethods[50],      'getAllDynaformsStepsToRevise',   'getAllDynaformsStepsToRevise() is callable' );
+  $t->is ( $aMethods[51],      'getAllDynaformsStepsToRevise',   'getAllDynaformsStepsToRevise() is callable' );
 
   //$result = $obj->getAllDynaformsStepsToRevise ( $APP_UID);
   //$t->isa_ok( $result,      'NULL',   'call to method getAllDynaformsStepsToRevise ');
@@ -455,7 +460,7 @@
 
 
   //checking method 'getAllInputsStepsToRevise'
-  $t->is ( $aMethods[51],      'getAllInputsStepsToRevise',   'getAllInputsStepsToRevise() is callable' );
+  $t->is ( $aMethods[52],      'getAllInputsStepsToRevise',   'getAllInputsStepsToRevise() is callable' );
 
   //$result = $obj->getAllInputsStepsToRevise ( $APP_UID);
   //$t->isa_ok( $result,      'NULL',   'call to method getAllInputsStepsToRevise ');
@@ -463,7 +468,7 @@
 
 
   //checking method 'getAllUploadedDocumentsCriteria'
-  $t->is ( $aMethods[52],      'getAllUploadedDocumentsCriteria',   'getAllUploadedDocumentsCriteria() is callable' );
+  $t->is ( $aMethods[53],      'getAllUploadedDocumentsCriteria',   'getAllUploadedDocumentsCriteria() is callable' );
 
   //$result = $obj->getAllUploadedDocumentsCriteria ( $sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID);
   //$t->isa_ok( $result,      'NULL',   'call to method getAllUploadedDocumentsCriteria ');
@@ -471,7 +476,7 @@
 
 
   //checking method 'getAllGeneratedDocumentsCriteria'
-  $t->is ( $aMethods[53],      'getAllGeneratedDocumentsCriteria',   'getAllGeneratedDocumentsCriteria() is callable' );
+  $t->is ( $aMethods[54],      'getAllGeneratedDocumentsCriteria',   'getAllGeneratedDocumentsCriteria() is callable' );
 
   //$result = $obj->getAllGeneratedDocumentsCriteria ( $sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID);
   //$t->isa_ok( $result,      'NULL',   'call to method getAllGeneratedDocumentsCriteria ');
@@ -479,7 +484,7 @@
 
 
   //checking method 'getallDynaformsCriteria'
-  $t->is ( $aMethods[54],      'getallDynaformsCriteria',   'getallDynaformsCriteria() is callable' );
+  $t->is ( $aMethods[55],      'getallDynaformsCriteria',   'getallDynaformsCriteria() is callable' );
 
   //$result = $obj->getallDynaformsCriteria ( $sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID);
   //$t->isa_ok( $result,      'NULL',   'call to method getallDynaformsCriteria ');
@@ -487,7 +492,7 @@
 
 
   //checking method 'sendNotifications'
-  $t->is ( $aMethods[55],      'sendNotifications',   'sendNotifications() is callable' );
+  $t->is ( $aMethods[56],      'sendNotifications',   'sendNotifications() is callable' );
 
   //$result = $obj->sendNotifications ( $sCurrentTask, $aTasks, $aFields, $sApplicationUID, $iDelegation, $sFrom);
   //$t->isa_ok( $result,      'NULL',   'call to method sendNotifications ');
@@ -495,7 +500,7 @@
 
 
   //checking method 'getAllObjects'
-  $t->is ( $aMethods[56],      'getAllObjects',   'getAllObjects() is callable' );
+  $t->is ( $aMethods[57],      'getAllObjects',   'getAllObjects() is callable' );
 
   //$result = $obj->getAllObjects ( $PRO_UID, $APP_UID, $TAS_UID, $USR_UID);
   //$t->isa_ok( $result,      'NULL',   'call to method getAllObjects ');
@@ -503,7 +508,7 @@
 
 
   //checking method 'getAllObjectsFrom'
-  $t->is ( $aMethods[57],      'getAllObjectsFrom',   'getAllObjectsFrom() is callable' );
+  $t->is ( $aMethods[58],      'getAllObjectsFrom',   'getAllObjectsFrom() is callable' );
 
   //$result = $obj->getAllObjectsFrom ( $PRO_UID, $APP_UID, $TAS_UID, $USR_UID, $ACTION);
   //$t->isa_ok( $result,      'NULL',   'call to method getAllObjectsFrom ');
@@ -511,7 +516,7 @@
 
 
   //checking method 'verifyCaseTracker'
-  $t->is ( $aMethods[58],      'verifyCaseTracker',   'verifyCaseTracker() is callable' );
+  $t->is ( $aMethods[59],      'verifyCaseTracker',   'verifyCaseTracker() is callable' );
 
   //$result = $obj->verifyCaseTracker ( $case, $pin);
   //$t->isa_ok( $result,      'NULL',   'call to method verifyCaseTracker ');
@@ -519,7 +524,7 @@
 
 
   //checking method 'Permisos'
-  $t->is ( $aMethods[59],      'Permisos',   'Permisos() is callable' );
+  $t->is ( $aMethods[60],      'Permisos',   'Permisos() is callable' );
 
   //$result = $obj->Permisos ( $PRO_UID);
   //$t->isa_ok( $result,      'NULL',   'call to method Permisos ');
@@ -527,7 +532,7 @@
 
 
   //checking method 'verifyTable'
-  $t->is ( $aMethods[60],      'verifyTable',   'verifyTable() is callable' );
+  $t->is ( $aMethods[61],      'verifyTable',   'verifyTable() is callable' );
 
   //$result = $obj->verifyTable ( );
   //$t->isa_ok( $result,      'NULL',   'call to method verifyTable ');
@@ -535,7 +540,7 @@
 
 
   //checking method 'getAllUploadedDocumentsCriteriaTracker'
-  $t->is ( $aMethods[61],      'getAllUploadedDocumentsCriteriaTracker',   'getAllUploadedDocumentsCriteriaTracker() is callable' );
+  $t->is ( $aMethods[62],      'getAllUploadedDocumentsCriteriaTracker',   'getAllUploadedDocumentsCriteriaTracker() is callable' );
 
   //$result = $obj->getAllUploadedDocumentsCriteriaTracker ( $sProcessUID, $sApplicationUID, $sDocUID);
   //$t->isa_ok( $result,      'NULL',   'call to method getAllUploadedDocumentsCriteriaTracker ');
@@ -543,7 +548,7 @@
 
 
   //checking method 'getAllGeneratedDocumentsCriteriaTracker'
-  $t->is ( $aMethods[62],      'getAllGeneratedDocumentsCriteriaTracker',   'getAllGeneratedDocumentsCriteriaTracker() is callable' );
+  $t->is ( $aMethods[63],      'getAllGeneratedDocumentsCriteriaTracker',   'getAllGeneratedDocumentsCriteriaTracker() is callable' );
 
   //$result = $obj->getAllGeneratedDocumentsCriteriaTracker ( $sProcessUID, $sApplicationUID, $sDocUID);
   //$t->isa_ok( $result,      'NULL',   'call to method getAllGeneratedDocumentsCriteriaTracker ');
@@ -551,7 +556,7 @@
 
 
   //checking method 'getHistoryMessagesTracker'
-  $t->is ( $aMethods[63],      'getHistoryMessagesTracker',   'getHistoryMessagesTracker() is callable' );
+  $t->is ( $aMethods[64],      'getHistoryMessagesTracker',   'getHistoryMessagesTracker() is callable' );
 
   //$result = $obj->getHistoryMessagesTracker ( $sApplicationUID);
   //$t->isa_ok( $result,      'NULL',   'call to method getHistoryMessagesTracker ');
@@ -559,7 +564,7 @@
 
 
   //checking method 'getHistoryMessagesTrackerView'
-  $t->is ( $aMethods[64],      'getHistoryMessagesTrackerView',   'getHistoryMessagesTrackerView() is callable' );
+  $t->is ( $aMethods[65],      'getHistoryMessagesTrackerView',   'getHistoryMessagesTrackerView() is callable' );
 
   //$result = $obj->getHistoryMessagesTrackerView ( $sApplicationUID, $Msg_UID);
   //$t->isa_ok( $result,      'NULL',   'call to method getHistoryMessagesTrackerView ');
@@ -567,7 +572,7 @@
 
 
   //checking method 'getAllObjectsFromProcess'
-  $t->is ( $aMethods[65],      'getAllObjectsFromProcess',   'getAllObjectsFromProcess() is callable' );
+  $t->is ( $aMethods[66],      'getAllObjectsFromProcess',   'getAllObjectsFromProcess() is callable' );
 
   //$result = $obj->getAllObjectsFromProcess ( $PRO_UID, $OBJ_TYPE);
   //$t->isa_ok( $result,      'NULL',   'call to method getAllObjectsFromProcess ');
@@ -575,7 +580,7 @@
 
 
   //checking method 'executeTriggersAfterExternal'
-  $t->is ( $aMethods[66],      'executeTriggersAfterExternal',   'executeTriggersAfterExternal() is callable' );
+  $t->is ( $aMethods[67],      'executeTriggersAfterExternal',   'executeTriggersAfterExternal() is callable' );
 
   //$result = $obj->executeTriggersAfterExternal ( $sProcess, $sTask, $sApplication, $iIndex, $iStepPosition, $aNewData);
   //$t->isa_ok( $result,      'NULL',   'call to method executeTriggersAfterExternal ');
@@ -583,7 +588,7 @@
 
 
   //checking method 'thisIsTheCurrentUser'
-  $t->is ( $aMethods[67],      'thisIsTheCurrentUser',   'thisIsTheCurrentUser() is callable' );
+  $t->is ( $aMethods[68],      'thisIsTheCurrentUser',   'thisIsTheCurrentUser() is callable' );
 
   //$result = $obj->thisIsTheCurrentUser ( $sApplicationUID, $iIndex, $sUserUID, $sAction, $sURL);
   //$t->isa_ok( $result,      'NULL',   'call to method thisIsTheCurrentUser ');
@@ -591,7 +596,7 @@
 
 
   //checking method 'getCriteriaUsersCases'
-  $t->is ( $aMethods[68],      'getCriteriaUsersCases',   'getCriteriaUsersCases() is callable' );
+  $t->is ( $aMethods[69],      'getCriteriaUsersCases',   'getCriteriaUsersCases() is callable' );
 
   //$result = $obj->getCriteriaUsersCases ( $status, $USR_UID);
   //$t->isa_ok( $result,      'NULL',   'call to method getCriteriaUsersCases ');
@@ -599,7 +604,7 @@
 
 
   //checking method 'getAdvancedSearch'
-  $t->is ( $aMethods[69],      'getAdvancedSearch',   'getAdvancedSearch() is callable' );
+  $t->is ( $aMethods[70],      'getAdvancedSearch',   'getAdvancedSearch() is callable' );
 
   //$result = $obj->getAdvancedSearch ( $sCase, $sProcess, $sTask, $sCurrentUser, $sSentby, $sLastModFrom, $sLastModTo, $sStatus, $permisse, $userlogged, $aSupervisor);
   //$t->isa_ok( $result,      'NULL',   'call to method getAdvancedSearch ');
