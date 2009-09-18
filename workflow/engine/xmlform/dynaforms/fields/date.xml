@@ -3,13 +3,14 @@
   name="date"
   type="xmlform"
   width="100%"
+  labelWidth="120"
 >
 <PME_A type="hidden" />
 <PME_TYPE type="hidden" />
 <PME_TITLE type="title" enableHTML="1">
   <en>Properties</en>
 </PME_TITLE>
-<PME_XMLNODE_NAME type="text" size="32" maxlength="64" validate="NodeName" dependentFields="PME_VALIDATE_NAME" required="1">
+<PME_XMLNODE_NAME type="text" size="40" maxlength="64" validate="NodeName" dependentFields="PME_VALIDATE_NAME" required="1">
   <en>Field Name</en>
 </PME_XMLNODE_NAME>
 <PME_XMLNODE_NAME_OLD type="hidden" />
@@ -17,7 +18,7 @@
 SELECT XMLNODE_NAME, TYPE FROM dynaForm WHERE XMLNODE_NAME = @@PME_XMLNODE_NAME
 </PME_VALIDATE_NAME>
 
-<PME_LABEL type="text" maxlength="255" size="50">
+<PME_LABEL type="text" maxlength="255" size="40">
   <en>Label</en>
 </PME_LABEL>
 
@@ -76,8 +77,17 @@ select XMLNODE_NAME, XMLNODE_NAME AS NAME FROM dynaForm WHERE XMLNODE_NAME &lt;&
   <option name="">(none)</option>
   </en>
 </PME_DEPENDENTFIELDS>
-<PME_DEFAULTVALUE type="text" maxlength="50" size="30" defaultvalue="" >
-  <en>Default Value</en>
+
+<PME_DEFAULTVALUE_SEL type="dropdown" maxlength="50" size="30" defaultvalue="" >
+  <en>Default
+  	<option name="empty">Empty</option>
+  	<option name="today">Today</option>
+  	<option name="val">Value</option>
+  </en>
+</PME_DEFAULTVALUE_SEL>
+
+<PME_DEFAULTVALUE type="date" beforedate="-10y" afterdate="10y">
+  <en></en>
 </PME_DEFAULTVALUE>
 
 <PME_SUBTITLE type="title" enableHTML="1">
@@ -114,6 +124,10 @@ select XMLNODE_NAME, XMLNODE_NAME AS NAME FROM dynaForm WHERE XMLNODE_NAME &lt;&
 </PME_ACCEPT>
 
 <PME_JS type="javascript"><![CDATA[
+
+if(getField('PME_DEFAULTVALUE_SEL').value != 'val'){
+	hideRowById('PME_DEFAULTVALUE');
+}
 var fieldForm="date";
 var fieldName=getField("PME_XMLNODE_NAME",fieldForm);
 var savedFieldName=fieldName.value;
@@ -137,5 +151,23 @@ function verifyFieldName1(){
   pme_validating=false;
   return valid;
 }
+
+leimnud.event.add(getField('PME_DEFAULTVALUE_SEL'), 'change', function() {
+  switch (this.value) {
+    case 'val':
+    	getField('PME_DEFAULTVALUE').value = '';
+		showRowById('PME_DEFAULTVALUE');
+    break;
+    case 'empty':
+    	getField('PME_DEFAULTVALUE').value = '';
+    	hideRowById('PME_DEFAULTVALUE');
+    break;
+    case 'today':
+    	getField('PME_DEFAULTVALUE').value = 'today';
+    	hideRowById('PME_DEFAULTVALUE');
+    break;
+  }
+}.extend(getField('PME_DEFAULTVALUE_SEL')));
+
 ]]></PME_JS>
 </dynaForm>
