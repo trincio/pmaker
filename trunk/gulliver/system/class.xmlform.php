@@ -2306,10 +2306,20 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
     } else {
       $mask = '%Y-%m-%d';
     }
-
+    //echo '---->'.$value;
+	$tmp = str_replace("%", "", $mask);
     if ( trim ($value) == '' or $value == NULL ) {
-      $tmp = str_replace("%", "", $mask);
       $value = ''; //date ($tmp);
+    } else {
+    	switch(strtolower($value)){
+    		case 'today':
+    			$value = date($tmp); 
+    		break;
+    		default:
+    			if(!$this->verifyDateFormat($value))
+    				$value='';
+    		break;
+    	}
     }
 
     /*for old mask definitions...*/
