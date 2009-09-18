@@ -103,7 +103,7 @@ function showUserGroups(sUserUID){
 		url   : '../users/users_Ajax',
 		async : false,
 		method: 'POST',
-		args  : 'function=showUserGroups'+ '&amp;sUserUID=' + sUserUID
+		args  : 'function=showUserGroups'+ '&sUserUID=' + sUserUID
     });
     oRPC.make();
     currentPopupWindow.clearContent();
@@ -119,7 +119,7 @@ function deleteGroup(sGroup, sUser){
 				url   : '../users/users_Ajax',
 				async : false,
 				method: 'POST',
-				args  : 'function=deleteGroup&amp;GRP_UID=' + sGroup + '&amp;USR_UID=' + sUser
+				args  : 'function=deleteGroup&GRP_UID=' + sGroup + '&USR_UID=' + sUser
 	        });
 	        oRPC.make();
 	        currentPopupWindow.clearContent();
@@ -134,7 +134,7 @@ function showUserGroupInterface(sUserUID){
 		url   : '../users/users_Ajax',
 		async : false,
 		method: 'POST',
-		args  : 'function=showUserGroupInterface'+ '&amp;sUserUID=' + sUserUID
+		args  : 'function=showUserGroupInterface'+ '&sUserUID=' + sUserUID
     });
     oRPC.make();
     currentPopupWindow.clearContent();
@@ -148,7 +148,7 @@ function saveUserGroup(sGroup, sUser){
       url   : '../users/users_Ajax',
       async : false,
       method: 'POST',
-      args  : 'function=assignUserToGroup&amp;GRP_UID=' + sGroup + '&amp;USR_UID=' + sUser
+      args  : 'function=assignUserToGroup&GRP_UID=' + sGroup + '&USR_UID=' + sUser
     });
     oRPC.make();
     currentPopupWindow.clearContent();
