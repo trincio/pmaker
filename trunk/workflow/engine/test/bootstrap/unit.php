@@ -22,10 +22,15 @@
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
  * 
  */
+  ini_set('short_open_tag', 'on');
+  ini_set('asp_tags', 'on');
+  ini_set('memory_limit', '80M');
+
     if ( PHP_OS == 'WINNT' ) 
       define('PATH_SEP', '\\');
     else
       define('PATH_SEP', '/');
+
       
     //***************** Defining the Home Directory *********************************
     $docuroot =  explode ( PATH_SEP , $_SERVER['PWD'] );

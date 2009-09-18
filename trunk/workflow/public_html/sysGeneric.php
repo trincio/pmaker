@@ -361,7 +361,7 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
       'dbfile' => PATH_DB . SYS_SYS . PATH_SEP . 'db.php',
       'datasource' => 'workflow',
       'cache' => 0,
-      'debug' => 0,  //<--- change this value to 1, to have a detailed sql log in PATH_DATA . 'log' . PATH_SEP . 'workflow.log'
+      'debug' => 1,  //<--- change this value to 1, to have a detailed sql log in PATH_DATA . 'log' . PATH_SEP . 'workflow.log'
     ) ,
     G_TEST_ENV => array (
       'dbfile' => PATH_DB . 'test' . PATH_SEP . 'db.php' ,
@@ -396,6 +396,13 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
       $logger = Log::singleton('file', $logFile, 'rbac ' . SYS_SYS, null, PEAR_LOG_INFO);
       Propel::setLogger($logger);
       $con = Propel::getConnection('rbac');
+      if ($con instanceof DebugConnection) $con->setLogger($logger);
+
+      //log file for report database
+      $logFile = PATH_DATA . 'log' . PATH_SEP . 'report.log';
+      $logger = Log::singleton('file', $logFile, 'rp ' . SYS_SYS, null, PEAR_LOG_INFO);
+      Propel::setLogger($logger);
+      $con = Propel::getConnection('rp');
       if ($con instanceof DebugConnection) $con->setLogger($logger);
     }
     else
