@@ -81,7 +81,7 @@ class dates {
   }
 
   function calculateDuration( $sInitDate, $sEndDate = '', $UsrUid = NULL, $ProUid = NULL, $TasUid = NULL) {
-    list( $this->holidays, $this->weekends ) = $this->prepareInformation($UsrUid, $ProUid, $TasUid);
+    $this->prepareInformation($UsrUid, $ProUid, $TasUid);
     if ((string)$sEndDate == '') {
       $sEndDate = date('Y-m-d H:i:s');
     }
