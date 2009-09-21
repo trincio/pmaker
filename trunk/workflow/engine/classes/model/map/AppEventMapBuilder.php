@@ -76,7 +76,7 @@ class AppEventMapBuilder {
 
 		$tMap->addColumn('APP_EVN_LAST_EXECUTION_DATE', 'AppEvnLastExecutionDate', 'int', CreoleTypes::TIMESTAMP, false, null);
 
-		$tMap->addColumn('APP_EVN_STATUS', 'AppEvnStatus', 'string', CreoleTypes::VARCHAR, true, 10);
+		$tMap->addColumn('APP_EVN_STATUS', 'AppEvnStatus', 'string', CreoleTypes::VARCHAR, true, 32);
 
 	} // doBuild()
 

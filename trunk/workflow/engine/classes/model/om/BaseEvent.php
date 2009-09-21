@@ -43,6 +43,20 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 
 	/**
+	 * The value for the evn_status field.
+	 * @var        string
+	 */
+	protected $evn_status = 'OPEN';
+
+
+	/**
+	 * The value for the evn_when_occurs field.
+	 * @var        string
+	 */
+	protected $evn_when_occurs = 'SINGLE';
+
+
+	/**
 	 * The value for the evn_related_to field.
 	 * @var        string
 	 */
@@ -71,10 +85,10 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 
 	/**
-	 * The value for the evn_tas_stimated_duration field.
+	 * The value for the evn_tas_estimated_duration field.
 	 * @var        double
 	 */
-	protected $evn_tas_stimated_duration = 0;
+	protected $evn_tas_estimated_duration = 0;
 
 
 	/**
@@ -99,31 +113,17 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 
 	/**
-	 * The value for the evn_message_subject field.
+	 * The value for the evn_conditions field.
 	 * @var        string
 	 */
-	protected $evn_message_subject = '';
+	protected $evn_conditions;
 
 
 	/**
-	 * The value for the evn_message_to field.
+	 * The value for the evn_action_parameters field.
 	 * @var        string
 	 */
-	protected $evn_message_to;
-
-
-	/**
-	 * The value for the evn_message_template field.
-	 * @var        string
-	 */
-	protected $evn_message_template = '';
-
-
-	/**
-	 * The value for the evn_message_digest field.
-	 * @var        int
-	 */
-	protected $evn_message_digest = 1;
+	protected $evn_action_parameters;
 
 
 	/**
@@ -166,6 +166,28 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 	{
 
 		return $this->pro_uid;
+	}
+
+	/**
+	 * Get the [evn_status] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getEvnStatus()
+	{
+
+		return $this->evn_status;
+	}
+
+	/**
+	 * Get the [evn_when_occurs] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getEvnWhenOccurs()
+	{
+
+		return $this->evn_when_occurs;
 	}
 
 	/**
@@ -213,14 +235,14 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Get the [evn_tas_stimated_duration] column value.
+	 * Get the [evn_tas_estimated_duration] column value.
 	 * 
 	 * @return     double
 	 */
-	public function getEvnTasStimatedDuration()
+	public function getEvnTasEstimatedDuration()
 	{
 
-		return $this->evn_tas_stimated_duration;
+		return $this->evn_tas_estimated_duration;
 	}
 
 	/**
@@ -257,47 +279,25 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 	}
 
 	/**
-	 * Get the [evn_message_subject] column value.
+	 * Get the [evn_conditions] column value.
 	 * 
 	 * @return     string
 	 */
-	public function getEvnMessageSubject()
+	public function getEvnConditions()
 	{
 
-		return $this->evn_message_subject;
+		return $this->evn_conditions;
 	}
 
 	/**
-	 * Get the [evn_message_to] column value.
+	 * Get the [evn_action_parameters] column value.
 	 * 
 	 * @return     string
 	 */
-	public function getEvnMessageTo()
+	public function getEvnActionParameters()
 	{
 
-		return $this->evn_message_to;
-	}
-
-	/**
-	 * Get the [evn_message_template] column value.
-	 * 
-	 * @return     string
-	 */
-	public function getEvnMessageTemplate()
-	{
-
-		return $this->evn_message_template;
-	}
-
-	/**
-	 * Get the [evn_message_digest] column value.
-	 * 
-	 * @return     int
-	 */
-	public function getEvnMessageDigest()
-	{
-
-		return $this->evn_message_digest;
+		return $this->evn_action_parameters;
 	}
 
 	/**
@@ -354,6 +354,50 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 		}
 
 	} // setProUid()
+
+	/**
+	 * Set the value of [evn_status] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setEvnStatus($v)
+	{
+
+		// Since the native PHP type for this column is string,
+		// we will cast the input to a string (if it is not).
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->evn_status !== $v || $v === 'OPEN') {
+			$this->evn_status = $v;
+			$this->modifiedColumns[] = EventPeer::EVN_STATUS;
+		}
+
+	} // setEvnStatus()
+
+	/**
+	 * Set the value of [evn_when_occurs] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setEvnWhenOccurs($v)
+	{
+
+		// Since the native PHP type for this column is string,
+		// we will cast the input to a string (if it is not).
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->evn_when_occurs !== $v || $v === 'SINGLE') {
+			$this->evn_when_occurs = $v;
+			$this->modifiedColumns[] = EventPeer::EVN_WHEN_OCCURS;
+		}
+
+	} // setEvnWhenOccurs()
 
 	/**
 	 * Set the value of [evn_related_to] column.
@@ -444,20 +488,20 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 	} // setEvnTasUidTo()
 
 	/**
-	 * Set the value of [evn_tas_stimated_duration] column.
+	 * Set the value of [evn_tas_estimated_duration] column.
 	 * 
 	 * @param      double $v new value
 	 * @return     void
 	 */
-	public function setEvnTasStimatedDuration($v)
+	public function setEvnTasEstimatedDuration($v)
 	{
 
-		if ($this->evn_tas_stimated_duration !== $v || $v === 0) {
-			$this->evn_tas_stimated_duration = $v;
-			$this->modifiedColumns[] = EventPeer::EVN_TAS_STIMATED_DURATION;
+		if ($this->evn_tas_estimated_duration !== $v || $v === 0) {
+			$this->evn_tas_estimated_duration = $v;
+			$this->modifiedColumns[] = EventPeer::EVN_TAS_ESTIMATED_DURATION;
 		}
 
-	} // setEvnTasStimatedDuration()
+	} // setEvnTasEstimatedDuration()
 
 	/**
 	 * Set the value of [evn_when] column.
@@ -520,12 +564,12 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 	} // setEvnAction()
 
 	/**
-	 * Set the value of [evn_message_subject] column.
+	 * Set the value of [evn_conditions] column.
 	 * 
 	 * @param      string $v new value
 	 * @return     void
 	 */
-	public function setEvnMessageSubject($v)
+	public function setEvnConditions($v)
 	{
 
 		// Since the native PHP type for this column is string,
@@ -534,20 +578,20 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 			$v = (string) $v; 
 		}
 
-		if ($this->evn_message_subject !== $v || $v === '') {
-			$this->evn_message_subject = $v;
-			$this->modifiedColumns[] = EventPeer::EVN_MESSAGE_SUBJECT;
+		if ($this->evn_conditions !== $v) {
+			$this->evn_conditions = $v;
+			$this->modifiedColumns[] = EventPeer::EVN_CONDITIONS;
 		}
 
-	} // setEvnMessageSubject()
+	} // setEvnConditions()
 
 	/**
-	 * Set the value of [evn_message_to] column.
+	 * Set the value of [evn_action_parameters] column.
 	 * 
 	 * @param      string $v new value
 	 * @return     void
 	 */
-	public function setEvnMessageTo($v)
+	public function setEvnActionParameters($v)
 	{
 
 		// Since the native PHP type for this column is string,
@@ -556,56 +600,12 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 			$v = (string) $v; 
 		}
 
-		if ($this->evn_message_to !== $v) {
-			$this->evn_message_to = $v;
-			$this->modifiedColumns[] = EventPeer::EVN_MESSAGE_TO;
+		if ($this->evn_action_parameters !== $v) {
+			$this->evn_action_parameters = $v;
+			$this->modifiedColumns[] = EventPeer::EVN_ACTION_PARAMETERS;
 		}
 
-	} // setEvnMessageTo()
-
-	/**
-	 * Set the value of [evn_message_template] column.
-	 * 
-	 * @param      string $v new value
-	 * @return     void
-	 */
-	public function setEvnMessageTemplate($v)
-	{
-
-		// Since the native PHP type for this column is string,
-		// we will cast the input to a string (if it is not).
-		if ($v !== null && !is_string($v)) {
-			$v = (string) $v; 
-		}
-
-		if ($this->evn_message_template !== $v || $v === '') {
-			$this->evn_message_template = $v;
-			$this->modifiedColumns[] = EventPeer::EVN_MESSAGE_TEMPLATE;
-		}
-
-	} // setEvnMessageTemplate()
-
-	/**
-	 * Set the value of [evn_message_digest] column.
-	 * 
-	 * @param      int $v new value
-	 * @return     void
-	 */
-	public function setEvnMessageDigest($v)
-	{
-
-		// Since the native PHP type for this column is integer,
-		// we will cast the input value to an int (if it is not).
-		if ($v !== null && !is_int($v) && is_numeric($v)) {
-			$v = (int) $v;
-		}
-
-		if ($this->evn_message_digest !== $v || $v === 1) {
-			$this->evn_message_digest = $v;
-			$this->modifiedColumns[] = EventPeer::EVN_MESSAGE_DIGEST;
-		}
-
-	} // setEvnMessageDigest()
+	} // setEvnActionParameters()
 
 	/**
 	 * Set the value of [tri_uid] column.
@@ -650,29 +650,29 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 			$this->pro_uid = $rs->getString($startcol + 1);
 
-			$this->evn_related_to = $rs->getString($startcol + 2);
+			$this->evn_status = $rs->getString($startcol + 2);
 
-			$this->tas_uid = $rs->getString($startcol + 3);
+			$this->evn_when_occurs = $rs->getString($startcol + 3);
 
-			$this->evn_tas_uid_from = $rs->getString($startcol + 4);
+			$this->evn_related_to = $rs->getString($startcol + 4);
 
-			$this->evn_tas_uid_to = $rs->getString($startcol + 5);
+			$this->tas_uid = $rs->getString($startcol + 5);
 
-			$this->evn_tas_stimated_duration = $rs->getFloat($startcol + 6);
+			$this->evn_tas_uid_from = $rs->getString($startcol + 6);
 
-			$this->evn_when = $rs->getFloat($startcol + 7);
+			$this->evn_tas_uid_to = $rs->getString($startcol + 7);
 
-			$this->evn_max_attempts = $rs->getInt($startcol + 8);
+			$this->evn_tas_estimated_duration = $rs->getFloat($startcol + 8);
 
-			$this->evn_action = $rs->getString($startcol + 9);
+			$this->evn_when = $rs->getFloat($startcol + 9);
 
-			$this->evn_message_subject = $rs->getString($startcol + 10);
+			$this->evn_max_attempts = $rs->getInt($startcol + 10);
 
-			$this->evn_message_to = $rs->getString($startcol + 11);
+			$this->evn_action = $rs->getString($startcol + 11);
 
-			$this->evn_message_template = $rs->getString($startcol + 12);
+			$this->evn_conditions = $rs->getString($startcol + 12);
 
-			$this->evn_message_digest = $rs->getInt($startcol + 13);
+			$this->evn_action_parameters = $rs->getString($startcol + 13);
 
 			$this->tri_uid = $rs->getString($startcol + 14);
 
@@ -891,40 +891,40 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 				return $this->getProUid();
 				break;
 			case 2:
-				return $this->getEvnRelatedTo();
+				return $this->getEvnStatus();
 				break;
 			case 3:
-				return $this->getTasUid();
+				return $this->getEvnWhenOccurs();
 				break;
 			case 4:
-				return $this->getEvnTasUidFrom();
+				return $this->getEvnRelatedTo();
 				break;
 			case 5:
-				return $this->getEvnTasUidTo();
+				return $this->getTasUid();
 				break;
 			case 6:
-				return $this->getEvnTasStimatedDuration();
+				return $this->getEvnTasUidFrom();
 				break;
 			case 7:
-				return $this->getEvnWhen();
+				return $this->getEvnTasUidTo();
 				break;
 			case 8:
-				return $this->getEvnMaxAttempts();
+				return $this->getEvnTasEstimatedDuration();
 				break;
 			case 9:
-				return $this->getEvnAction();
+				return $this->getEvnWhen();
 				break;
 			case 10:
-				return $this->getEvnMessageSubject();
+				return $this->getEvnMaxAttempts();
 				break;
 			case 11:
-				return $this->getEvnMessageTo();
+				return $this->getEvnAction();
 				break;
 			case 12:
-				return $this->getEvnMessageTemplate();
+				return $this->getEvnConditions();
 				break;
 			case 13:
-				return $this->getEvnMessageDigest();
+				return $this->getEvnActionParameters();
 				break;
 			case 14:
 				return $this->getTriUid();
@@ -951,18 +951,18 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 		$result = array(
 			$keys[0] => $this->getEvnUid(),
 			$keys[1] => $this->getProUid(),
-			$keys[2] => $this->getEvnRelatedTo(),
-			$keys[3] => $this->getTasUid(),
-			$keys[4] => $this->getEvnTasUidFrom(),
-			$keys[5] => $this->getEvnTasUidTo(),
-			$keys[6] => $this->getEvnTasStimatedDuration(),
-			$keys[7] => $this->getEvnWhen(),
-			$keys[8] => $this->getEvnMaxAttempts(),
-			$keys[9] => $this->getEvnAction(),
-			$keys[10] => $this->getEvnMessageSubject(),
-			$keys[11] => $this->getEvnMessageTo(),
-			$keys[12] => $this->getEvnMessageTemplate(),
-			$keys[13] => $this->getEvnMessageDigest(),
+			$keys[2] => $this->getEvnStatus(),
+			$keys[3] => $this->getEvnWhenOccurs(),
+			$keys[4] => $this->getEvnRelatedTo(),
+			$keys[5] => $this->getTasUid(),
+			$keys[6] => $this->getEvnTasUidFrom(),
+			$keys[7] => $this->getEvnTasUidTo(),
+			$keys[8] => $this->getEvnTasEstimatedDuration(),
+			$keys[9] => $this->getEvnWhen(),
+			$keys[10] => $this->getEvnMaxAttempts(),
+			$keys[11] => $this->getEvnAction(),
+			$keys[12] => $this->getEvnConditions(),
+			$keys[13] => $this->getEvnActionParameters(),
 			$keys[14] => $this->getTriUid(),
 		);
 		return $result;
@@ -1002,40 +1002,40 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 				$this->setProUid($value);
 				break;
 			case 2:
-				$this->setEvnRelatedTo($value);
+				$this->setEvnStatus($value);
 				break;
 			case 3:
-				$this->setTasUid($value);
+				$this->setEvnWhenOccurs($value);
 				break;
 			case 4:
-				$this->setEvnTasUidFrom($value);
+				$this->setEvnRelatedTo($value);
 				break;
 			case 5:
-				$this->setEvnTasUidTo($value);
+				$this->setTasUid($value);
 				break;
 			case 6:
-				$this->setEvnTasStimatedDuration($value);
+				$this->setEvnTasUidFrom($value);
 				break;
 			case 7:
-				$this->setEvnWhen($value);
+				$this->setEvnTasUidTo($value);
 				break;
 			case 8:
-				$this->setEvnMaxAttempts($value);
+				$this->setEvnTasEstimatedDuration($value);
 				break;
 			case 9:
-				$this->setEvnAction($value);
+				$this->setEvnWhen($value);
 				break;
 			case 10:
-				$this->setEvnMessageSubject($value);
+				$this->setEvnMaxAttempts($value);
 				break;
 			case 11:
-				$this->setEvnMessageTo($value);
+				$this->setEvnAction($value);
 				break;
 			case 12:
-				$this->setEvnMessageTemplate($value);
+				$this->setEvnConditions($value);
 				break;
 			case 13:
-				$this->setEvnMessageDigest($value);
+				$this->setEvnActionParameters($value);
 				break;
 			case 14:
 				$this->setTriUid($value);
@@ -1065,18 +1065,18 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 		if (array_key_exists($keys[0], $arr)) $this->setEvnUid($arr[$keys[0]]);
 		if (array_key_exists($keys[1], $arr)) $this->setProUid($arr[$keys[1]]);
-		if (array_key_exists($keys[2], $arr)) $this->setEvnRelatedTo($arr[$keys[2]]);
-		if (array_key_exists($keys[3], $arr)) $this->setTasUid($arr[$keys[3]]);
-		if (array_key_exists($keys[4], $arr)) $this->setEvnTasUidFrom($arr[$keys[4]]);
-		if (array_key_exists($keys[5], $arr)) $this->setEvnTasUidTo($arr[$keys[5]]);
-		if (array_key_exists($keys[6], $arr)) $this->setEvnTasStimatedDuration($arr[$keys[6]]);
-		if (array_key_exists($keys[7], $arr)) $this->setEvnWhen($arr[$keys[7]]);
-		if (array_key_exists($keys[8], $arr)) $this->setEvnMaxAttempts($arr[$keys[8]]);
-		if (array_key_exists($keys[9], $arr)) $this->setEvnAction($arr[$keys[9]]);
-		if (array_key_exists($keys[10], $arr)) $this->setEvnMessageSubject($arr[$keys[10]]);
-		if (array_key_exists($keys[11], $arr)) $this->setEvnMessageTo($arr[$keys[11]]);
-		if (array_key_exists($keys[12], $arr)) $this->setEvnMessageTemplate($arr[$keys[12]]);
-		if (array_key_exists($keys[13], $arr)) $this->setEvnMessageDigest($arr[$keys[13]]);
+		if (array_key_exists($keys[2], $arr)) $this->setEvnStatus($arr[$keys[2]]);
+		if (array_key_exists($keys[3], $arr)) $this->setEvnWhenOccurs($arr[$keys[3]]);
+		if (array_key_exists($keys[4], $arr)) $this->setEvnRelatedTo($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setTasUid($arr[$keys[5]]);
+		if (array_key_exists($keys[6], $arr)) $this->setEvnTasUidFrom($arr[$keys[6]]);
+		if (array_key_exists($keys[7], $arr)) $this->setEvnTasUidTo($arr[$keys[7]]);
+		if (array_key_exists($keys[8], $arr)) $this->setEvnTasEstimatedDuration($arr[$keys[8]]);
+		if (array_key_exists($keys[9], $arr)) $this->setEvnWhen($arr[$keys[9]]);
+		if (array_key_exists($keys[10], $arr)) $this->setEvnMaxAttempts($arr[$keys[10]]);
+		if (array_key_exists($keys[11], $arr)) $this->setEvnAction($arr[$keys[11]]);
+		if (array_key_exists($keys[12], $arr)) $this->setEvnConditions($arr[$keys[12]]);
+		if (array_key_exists($keys[13], $arr)) $this->setEvnActionParameters($arr[$keys[13]]);
 		if (array_key_exists($keys[14], $arr)) $this->setTriUid($arr[$keys[14]]);
 	}
 
@@ -1091,18 +1091,18 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 		if ($this->isColumnModified(EventPeer::EVN_UID)) $criteria->add(EventPeer::EVN_UID, $this->evn_uid);
 		if ($this->isColumnModified(EventPeer::PRO_UID)) $criteria->add(EventPeer::PRO_UID, $this->pro_uid);
+		if ($this->isColumnModified(EventPeer::EVN_STATUS)) $criteria->add(EventPeer::EVN_STATUS, $this->evn_status);
+		if ($this->isColumnModified(EventPeer::EVN_WHEN_OCCURS)) $criteria->add(EventPeer::EVN_WHEN_OCCURS, $this->evn_when_occurs);
 		if ($this->isColumnModified(EventPeer::EVN_RELATED_TO)) $criteria->add(EventPeer::EVN_RELATED_TO, $this->evn_related_to);
 		if ($this->isColumnModified(EventPeer::TAS_UID)) $criteria->add(EventPeer::TAS_UID, $this->tas_uid);
 		if ($this->isColumnModified(EventPeer::EVN_TAS_UID_FROM)) $criteria->add(EventPeer::EVN_TAS_UID_FROM, $this->evn_tas_uid_from);
 		if ($this->isColumnModified(EventPeer::EVN_TAS_UID_TO)) $criteria->add(EventPeer::EVN_TAS_UID_TO, $this->evn_tas_uid_to);
-		if ($this->isColumnModified(EventPeer::EVN_TAS_STIMATED_DURATION)) $criteria->add(EventPeer::EVN_TAS_STIMATED_DURATION, $this->evn_tas_stimated_duration);
+		if ($this->isColumnModified(EventPeer::EVN_TAS_ESTIMATED_DURATION)) $criteria->add(EventPeer::EVN_TAS_ESTIMATED_DURATION, $this->evn_tas_estimated_duration);
 		if ($this->isColumnModified(EventPeer::EVN_WHEN)) $criteria->add(EventPeer::EVN_WHEN, $this->evn_when);
 		if ($this->isColumnModified(EventPeer::EVN_MAX_ATTEMPTS)) $criteria->add(EventPeer::EVN_MAX_ATTEMPTS, $this->evn_max_attempts);
 		if ($this->isColumnModified(EventPeer::EVN_ACTION)) $criteria->add(EventPeer::EVN_ACTION, $this->evn_action);
-		if ($this->isColumnModified(EventPeer::EVN_MESSAGE_SUBJECT)) $criteria->add(EventPeer::EVN_MESSAGE_SUBJECT, $this->evn_message_subject);
-		if ($this->isColumnModified(EventPeer::EVN_MESSAGE_TO)) $criteria->add(EventPeer::EVN_MESSAGE_TO, $this->evn_message_to);
-		if ($this->isColumnModified(EventPeer::EVN_MESSAGE_TEMPLATE)) $criteria->add(EventPeer::EVN_MESSAGE_TEMPLATE, $this->evn_message_template);
-		if ($this->isColumnModified(EventPeer::EVN_MESSAGE_DIGEST)) $criteria->add(EventPeer::EVN_MESSAGE_DIGEST, $this->evn_message_digest);
+		if ($this->isColumnModified(EventPeer::EVN_CONDITIONS)) $criteria->add(EventPeer::EVN_CONDITIONS, $this->evn_conditions);
+		if ($this->isColumnModified(EventPeer::EVN_ACTION_PARAMETERS)) $criteria->add(EventPeer::EVN_ACTION_PARAMETERS, $this->evn_action_parameters);
 		if ($this->isColumnModified(EventPeer::TRI_UID)) $criteria->add(EventPeer::TRI_UID, $this->tri_uid);
 
 		return $criteria;
@@ -1160,6 +1160,10 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 		$copyObj->setProUid($this->pro_uid);
 
+		$copyObj->setEvnStatus($this->evn_status);
+
+		$copyObj->setEvnWhenOccurs($this->evn_when_occurs);
+
 		$copyObj->setEvnRelatedTo($this->evn_related_to);
 
 		$copyObj->setTasUid($this->tas_uid);
@@ -1168,7 +1172,7 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 		$copyObj->setEvnTasUidTo($this->evn_tas_uid_to);
 
-		$copyObj->setEvnTasStimatedDuration($this->evn_tas_stimated_duration);
+		$copyObj->setEvnTasEstimatedDuration($this->evn_tas_estimated_duration);
 
 		$copyObj->setEvnWhen($this->evn_when);
 
@@ -1176,13 +1180,9 @@ abstract class BaseEvent extends BaseObject  implements Persistent {
 
 		$copyObj->setEvnAction($this->evn_action);
 
-		$copyObj->setEvnMessageSubject($this->evn_message_subject);
+		$copyObj->setEvnConditions($this->evn_conditions);
 
-		$copyObj->setEvnMessageTo($this->evn_message_to);
-
-		$copyObj->setEvnMessageTemplate($this->evn_message_template);
-
-		$copyObj->setEvnMessageDigest($this->evn_message_digest);
+		$copyObj->setEvnActionParameters($this->evn_action_parameters);
 
 		$copyObj->setTriUid($this->tri_uid);
 

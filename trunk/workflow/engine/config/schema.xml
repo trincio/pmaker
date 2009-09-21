@@ -5641,6 +5641,7 @@
     </index>
   </table>
   <!--.-->
+
   <table name="EVENT">
     <vendor type="mysql">
       <parameter name="Name" value="EVENT"/>
@@ -5682,10 +5683,30 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="EVN_RELATED_TO" type="VARCHAR" size="10" required="false" default="SINGLE">
+    <column name="EVN_STATUS" type="VARCHAR" size="16" required="true" default="OPEN">
+      <vendor type="mysql">
+        <parameter name="Field" value="EVN_STATUS"/>
+        <parameter name="Type" value="varchar(16)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="ACTIVE"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="EVN_WHEN_OCCURS" type="VARCHAR" size="32" required="false" default="SINGLE">
+      <vendor type="mysql">
+        <parameter name="Field" value="EVN_WHEN_OCCURS"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="AFTER_TIME"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="EVN_RELATED_TO" type="VARCHAR" size="16" required="false" default="SINGLE">
       <vendor type="mysql">
         <parameter name="Field" value="EVN_RELATED_TO"/>
-        <parameter name="Type" value="varchar(10)"/>
+        <parameter name="Type" value="varchar(16)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value="SINGLE"/>
@@ -5722,9 +5743,9 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="EVN_TAS_STIMATED_DURATION" type="DOUBLE" required="false" default="0">
+    <column name="EVN_TAS_ESTIMATED_DURATION" type="DOUBLE" required="false" default="0">
       <vendor type="mysql">
-        <parameter name="Field" value="EVN_TAS_STIMATED_DURATION"/>
+        <parameter name="Field" value="EVN_TAS_ESTIMATED_DURATION"/>
         <parameter name="Type" value="double"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
@@ -5762,19 +5783,9 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="EVN_MESSAGE_SUBJECT" type="VARCHAR" size="255" required="false" default="">
+    <column name="EVN_CONDITIONS" type="LONGVARCHAR" required="false">
       <vendor type="mysql">
-        <parameter name="Field" value="EVN_MESSAGE_SUBJECT"/>
-        <parameter name="Type" value="varchar(255)"/>
-        <parameter name="Null" value="NO"/>
-        <parameter name="Key" value=""/>
-        <parameter name="Default" value=""/>
-        <parameter name="Extra" value=""/>
-      </vendor>
-    </column>
-    <column name="EVN_MESSAGE_TO" type="LONGVARCHAR" required="false">
-      <vendor type="mysql">
-        <parameter name="Field" value="EVN_MESSAGE_TO"/>
+        <parameter name="Field" value="EVN_CONDITIONS"/>
         <parameter name="Type" value="text"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
@@ -5782,23 +5793,13 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="EVN_MESSAGE_TEMPLATE" type="VARCHAR" size="100" required="false" default="">
+    <column name="EVN_ACTION_PARAMETERS" type="LONGVARCHAR" required="false">
       <vendor type="mysql">
-        <parameter name="Field" value="EVN_MESSAGE_TEMPLATE"/>
-        <parameter name="Type" value="varchar(100)"/>
+        <parameter name="Field" value="EVN_ACTION_PARAMETERS"/>
+        <parameter name="Type" value="text"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value=""/>
-        <parameter name="Extra" value=""/>
-      </vendor>
-    </column>
-    <column name="EVN_MESSAGE_DIGEST" type="TINYINT" required="false" default="1">
-      <vendor type="mysql">
-        <parameter name="Field" value="EVN_MESSAGE_DIGEST"/>
-        <parameter name="Type" value="tinyint(1)"/>
-        <parameter name="Null" value="NO"/>
-        <parameter name="Key" value=""/>
-        <parameter name="Default" value="1"/>
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
@@ -5830,6 +5831,7 @@
       </vendor>
     </index>
   </table>
+  
   <table name="APP_EVENT">
     <vendor type="mysql">
       <parameter name="Name" value="APP_EVENT"/>
@@ -5909,10 +5911,10 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="APP_EVN_STATUS" type="VARCHAR" size="10" required="true" default="OPEN">
+    <column name="APP_EVN_STATUS" type="VARCHAR" size="32" required="true" default="OPEN">
       <vendor type="mysql">
         <parameter name="Field" value="APP_EVN_STATUS"/>
-        <parameter name="Type" value="varchar(10)"/>
+        <parameter name="Type" value="varchar(32)"/>
         <parameter name="Null" value="NO"/>
         <parameter name="Key" value=""/>
         <parameter name="Default" value="OPEN"/>

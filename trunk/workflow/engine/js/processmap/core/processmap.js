@@ -668,7 +668,7 @@ var processmap=function(){
 						this.tmp.eventsPanel = panel =new leimnud.module.panel();
 						panel.options={
 							limit	:true,
-							size	:{w:640,h:380},
+							size	:{w:700,h:380},
 							position:{x:50,y:50,center:true},
 							title	:G_STRINGS.ID_EVENTS,
 							theme	:this.options.theme,

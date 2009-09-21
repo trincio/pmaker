@@ -68,7 +68,11 @@ class EventMapBuilder {
 
 		$tMap->addColumn('PRO_UID', 'ProUid', 'string', CreoleTypes::VARCHAR, true, 32);
 
-		$tMap->addColumn('EVN_RELATED_TO', 'EvnRelatedTo', 'string', CreoleTypes::VARCHAR, false, 10);
+		$tMap->addColumn('EVN_STATUS', 'EvnStatus', 'string', CreoleTypes::VARCHAR, true, 16);
+
+		$tMap->addColumn('EVN_WHEN_OCCURS', 'EvnWhenOccurs', 'string', CreoleTypes::VARCHAR, false, 32);
+
+		$tMap->addColumn('EVN_RELATED_TO', 'EvnRelatedTo', 'string', CreoleTypes::VARCHAR, false, 16);
 
 		$tMap->addColumn('TAS_UID', 'TasUid', 'string', CreoleTypes::VARCHAR, true, 32);
 
@@ -76,7 +80,7 @@ class EventMapBuilder {
 
 		$tMap->addColumn('EVN_TAS_UID_TO', 'EvnTasUidTo', 'string', CreoleTypes::VARCHAR, false, 32);
 
-		$tMap->addColumn('EVN_TAS_STIMATED_DURATION', 'EvnTasStimatedDuration', 'double', CreoleTypes::DOUBLE, false, null);
+		$tMap->addColumn('EVN_TAS_ESTIMATED_DURATION', 'EvnTasEstimatedDuration', 'double', CreoleTypes::DOUBLE, false, null);
 
 		$tMap->addColumn('EVN_WHEN', 'EvnWhen', 'double', CreoleTypes::DOUBLE, true, null);
 
@@ -84,13 +88,9 @@ class EventMapBuilder {
 
 		$tMap->addColumn('EVN_ACTION', 'EvnAction', 'string', CreoleTypes::VARCHAR, true, 50);
 
-		$tMap->addColumn('EVN_MESSAGE_SUBJECT', 'EvnMessageSubject', 'string', CreoleTypes::VARCHAR, false, 255);
+		$tMap->addColumn('EVN_CONDITIONS', 'EvnConditions', 'string', CreoleTypes::LONGVARCHAR, false, null);
 
-		$tMap->addColumn('EVN_MESSAGE_TO', 'EvnMessageTo', 'string', CreoleTypes::LONGVARCHAR, false, null);
-
-		$tMap->addColumn('EVN_MESSAGE_TEMPLATE', 'EvnMessageTemplate', 'string', CreoleTypes::VARCHAR, false, 100);
-
-		$tMap->addColumn('EVN_MESSAGE_DIGEST', 'EvnMessageDigest', 'int', CreoleTypes::TINYINT, false, null);
+		$tMap->addColumn('EVN_ACTION_PARAMETERS', 'EvnActionParameters', 'string', CreoleTypes::LONGVARCHAR, false, null);
 
 		$tMap->addColumn('TRI_UID', 'TriUid', 'string', CreoleTypes::VARCHAR, false, 32);
 
