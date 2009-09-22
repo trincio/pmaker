@@ -373,7 +373,6 @@ function RenderContent0( $intPos = 0, $showXMLFormName = false)
       else
         $G_FORM->ajaxServer  = $Part['ajaxServer'];
 
-      //$G_FORM->setValues ($Part['Data']);
       if (isset($_SESSION)) $_SESSION[$G_FORM->id] = $G_FORM->values;
 
       G::LoadClass('propelTable');

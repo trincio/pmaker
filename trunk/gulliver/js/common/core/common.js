@@ -1207,6 +1207,32 @@ var sh=function(a,i)
     c.style.display=(!c.style.display || c.style.display=='none')?"block":"none";
 }
 
+/**
+ * Set focus to first field from a dynaform
+ * 
+ * @Author Erik Amaru Ortiz <erik@colosa.com, aortiz.erik@gmail.com>
+ * @return false
+ */
+function dynaformSetFocus(){
+	
+	/* looking for the inputs fields */
+	var inputs = document.getElementsByTagName('input');
+	for(i in inputs) {
+		type = inputs[i].type;
+		if(type == "text" || type == "radio" || type == "checkbox" || type == "file" || type == "password"){
+			inputs[i].focus();
+			return false;
+		}
+	}
+	/* if there is no inputs fields, maybe it has a textarea field */
+	var ta = document.getElementsByTagName('textarea');
+	if(ta.length > 0){
+		inputs[0].focus();
+		return false;
+	}
+	return false;
+}
+
 /** 
  * ********************************* Misc Functions by Neyek ****************************************
  */
@@ -1214,7 +1240,7 @@ var sh=function(a,i)
 /**
  * get the htmlentities from a string
  *  
- * @Author Erik Amaru Ortiz 
+ * @Author Erik Amaru Ortiz <erik@colosa.com, aortiz.erik@gmail.com>
  * @Param (string) string within the htmlentities to parse 
  * @Param (string) quote_style it can be (ENT_QUOTES or ENT_NOQUOTES)
  * @Return (string) the parsed string with htmlentities at the string passed such as parameter
@@ -1400,10 +1426,10 @@ function addslashes (str) {
 /**
  * This function sets netsted properties to dom elements
  *  
- * @Author Erik Amaru Ortiz 
+ * @Author Erik Amaru Ortiz <erik@colosa.com, aortiz.erik@gmail.com>
  * @Param (object) dom element refered by ID
- * @Param (array) nested array properties
- * @Param (object) value to set
+ * @Param (array) nested array of properties strings
+ * @Param (string) value to set
  * @Return <none>
  * 
  * Example:
@@ -1423,7 +1449,7 @@ function setNestedProperty(obj, propertyName, propertyValue){
 /**
  * This function gets the user client browser and its version
  *  
- * @Author Erik Amaru Ortiz 
+ * @Author Erik Amaru Ortiz <erik@colosa.com, aortiz.erik@gmail.com>
  * @Param <none>
  * @Return (objeect) {browser:sBrowser, version:sVersion}
  */
@@ -1442,7 +1468,15 @@ function getBrowserClient(){
     return false;
 }
 
-
+/**
+ * Create and send cookie 
+ *  
+ * @Author Erik Amaru Ortiz <erik@colosa.com, aortiz.erik@gmail.com>
+ * @Param (string) cookie name
+ * @Param (string) cookie value
+ * @Param (int) cookie number of days for expires
+ * @Return <none>
+ */
 function createCookie(name, value, days){
 	if (days) {
 		var date = new Date();
@@ -1452,6 +1486,13 @@ function createCookie(name, value, days){
 	document.cookie = name+"="+value+expires+"; path=/";
 }
 
+/**
+ * read a cookie 
+ *  
+ * @Author Erik Amaru Ortiz <erik@colosa.com, aortiz.erik@gmail.com>
+ * @Param cookie name
+ * @Return (string) cookie content
+ */
 function readCookie(name){
 	var ca = document.cookie.split(';');
 	var nameEQ = name + "=";
@@ -1463,6 +1504,13 @@ function readCookie(name){
 	return null;
 }
 
+/**
+ * delete a cookie
+ *  
+ * @Author Erik Amaru Ortiz <erik@colosa.com, aortiz.erik@gmail.com>
+ * @Param cookie name
+ * @Return <none>
+ */
 function eraseCookie(name){
 	createCookie(name, "", -1);
 }

@@ -2,7 +2,7 @@ msgid ""
 msgstr "" 
 "Project-Id-Version: PM 4.0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-09-17 16:55+0100 \n"
+"PO-Revision-Date: 2009-09-22 18:01+0100 \n"
 "Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
 "Language-Team: Colosa Developers Team <developers@colosa.com>\n"
 "MIME-Version: 1.0\n"
@@ -2888,6 +2888,12 @@ msgid "Alert Message"
 msgstr "Alert Message"
 
 # TRANSLATION
+# LABEL/ID_PENDING
+#: LABEL/ID_PENDING
+msgid "Pending"
+msgstr "Pending"
+
+# TRANSLATION
 # JAVASCRIPT/USERS_DELETE_WITH_HISTORY
 #: JAVASCRIPT/USERS_DELETE_WITH_HISTORY
 msgid "The user has some completed or cancelled tasks such as historical records, do you want to delete this user anyway?"
@@ -2958,8 +2964,10 @@ msgstr "Can't delete the first row!"
 # TRANSLATION
 # JAVASCRIPT/ID_MSG_GROUPS_ADDCONFIRM
 #: JAVASCRIPT/ID_MSG_GROUPS_ADDCONFIRM
-msgid "You must to select a user at least."
-msgstr "You must to select a user at least."
+msgid "At least one user must be selected.
+"
+msgstr "At least one user must be selected.
+"
 
 # TRANSLATION
 # LABEL/ID_DEBUG
@@ -6573,9 +6581,33 @@ msgstr "Dependent Fields  "
 msgid "[dynaforms/fields/date.xml?PME_DEPENDENTFIELDS-'']"
 msgstr "(none)"
 
+# dynaforms/fields/date.xml?PME_DEFAULTVALUE_SEL
+# dynaforms/fields/date.xml
+#: dropdown - PME_DEFAULTVALUE_SEL
+msgid "Default  	"
+msgstr "Default  	"
+
+# dynaforms/fields/date.xml?PME_DEFAULTVALUE_SEL-empty
+# dynaforms/fields/date.xml
+#: dropdown - PME_DEFAULTVALUE_SEL - empty
+msgid "[dynaforms/fields/date.xml?PME_DEFAULTVALUE_SEL-empty]"
+msgstr "Empty"
+
+# dynaforms/fields/date.xml?PME_DEFAULTVALUE_SEL-today
+# dynaforms/fields/date.xml
+#: dropdown - PME_DEFAULTVALUE_SEL - today
+msgid "[dynaforms/fields/date.xml?PME_DEFAULTVALUE_SEL-today]"
+msgstr "Today"
+
+# dynaforms/fields/date.xml?PME_DEFAULTVALUE_SEL-val
+# dynaforms/fields/date.xml
+#: dropdown - PME_DEFAULTVALUE_SEL - val
+msgid "[dynaforms/fields/date.xml?PME_DEFAULTVALUE_SEL-val]"
+msgstr "Value"
+
 # dynaforms/fields/date.xml?PME_DEFAULTVALUE
 # dynaforms/fields/date.xml
-#: text - PME_DEFAULTVALUE
+#: date - PME_DEFAULTVALUE
 msgid "[dynaforms/fields/date.xml?PME_DEFAULTVALUE] Default Value"
 msgstr "Default Value"
 
@@ -13215,6 +13247,12 @@ msgstr "Confirm Password "
 msgid "[users/users_View.xml?TITLEADD] Additional Information"
 msgstr "Additional Information"
 
+# users/users_View.xml?USR_PHOTO
+# users/users_View.xml
+#: image - USR_PHOTO
+msgid "[users/users_View.xml?USR_PHOTO] Photo"
+msgstr "Photo"
+
 # users/users_View.xml?USR_RESUME
 # users/users_View.xml
 #: link - USR_RESUME
@@ -17319,267 +17357,459 @@ msgstr "Title"
 msgid "[triggers/triggers_Edit.xml?TRI_DESCRIPTION] Description"
 msgstr "Description"
 
+# triggers/triggers_Edit.xml?TRI_WEBBOT
+# triggers/triggers_Edit.xml
+#: textareapm - TRI_WEBBOT
+msgid "Script"
+msgstr "Script"
+
 # triggers/triggers_Edit.xml?SAVE
 # triggers/triggers_Edit.xml
 #: button - SAVE
 msgid "[triggers/triggers_Edit.xml?SAVE] Save"
 msgstr "Save"
 
-# events/events_New.xml?EVN_DESCRIPTION
-# events/events_New.xml
+# events/eventsEdit.xml?TITLE
+# events/eventsEdit.xml
+#: title - TITLE
+msgid "Events properties"
+msgstr "Events properties"
+
+# events/eventsEdit.xml?NOTE
+# events/eventsEdit.xml
+#: subtitle - NOTE
+msgid "Events execution is related to the due date of the cases or the estimated duration if you select \"Multiple Tasks\""
+msgstr "Events execution is related to the due date of the cases or the estimated duration if you select \"Multiple Tasks\""
+
+# events/eventsEdit.xml?EVN_DESCRIPTION
+# events/eventsEdit.xml
 #: text - EVN_DESCRIPTION
-msgid "[events/events_New.xml?EVN_DESCRIPTION] Description"
+msgid "[events/eventsEdit.xml?EVN_DESCRIPTION] Description"
 msgstr "Description"
 
-# events/events_New.xml?EVN_RELATED_TO
-# events/events_New.xml
+# events/eventsEdit.xml?EVN_STATUS
+# events/eventsEdit.xml
+#: dropdown - EVN_STATUS
+msgid "[events/eventsEdit.xml?EVN_STATUS] Status    "
+msgstr "Status    "
+
+# events/eventsEdit.xml?EVN_STATUS-ACTIVE
+# events/eventsEdit.xml
+#: dropdown - EVN_STATUS - ACTIVE
+msgid "[events/eventsEdit.xml?EVN_STATUS-ACTIVE]"
+msgstr "Active"
+
+# events/eventsEdit.xml?EVN_STATUS-INACTIVE
+# events/eventsEdit.xml
+#: dropdown - EVN_STATUS - INACTIVE
+msgid "[events/eventsEdit.xml?EVN_STATUS-INACTIVE]"
+msgstr "Inactive"
+
+# events/eventsEdit.xml?EVN_WHEN_OCCURS
+# events/eventsEdit.xml
+#: dropdown - EVN_WHEN_OCCURS
+msgid "When occurs    "
+msgstr "When occurs    "
+
+# events/eventsEdit.xml?EVN_WHEN_OCCURS-AFTER_TIME
+# events/eventsEdit.xml
+#: dropdown - EVN_WHEN_OCCURS - AFTER_TIME
+msgid "[events/eventsEdit.xml?EVN_WHEN_OCCURS-AFTER_TIME]"
+msgstr "After time elapses"
+
+# events/eventsEdit.xml?EVN_WHEN_OCCURS-TASK_STARTED
+# events/eventsEdit.xml
+#: dropdown - EVN_WHEN_OCCURS - TASK_STARTED
+msgid "[events/eventsEdit.xml?EVN_WHEN_OCCURS-TASK_STARTED]"
+msgstr "After task started"
+
+# events/eventsEdit.xml?EVN_RELATED_TO
+# events/eventsEdit.xml
 #: dropdown - EVN_RELATED_TO
 msgid "Related to    "
 msgstr "Related to    "
 
-# events/events_New.xml?EVN_RELATED_TO-SINGLE
-# events/events_New.xml
+# events/eventsEdit.xml?EVN_RELATED_TO-SINGLE
+# events/eventsEdit.xml
 #: dropdown - EVN_RELATED_TO - SINGLE
-msgid "[events/events_New.xml?EVN_RELATED_TO-SINGLE]"
+msgid "[events/eventsEdit.xml?EVN_RELATED_TO-SINGLE]"
 msgstr "Single Task"
 
-# events/events_New.xml?EVN_RELATED_TO-MULTIPLE
-# events/events_New.xml
+# events/eventsEdit.xml?EVN_RELATED_TO-MULTIPLE
+# events/eventsEdit.xml
 #: dropdown - EVN_RELATED_TO - MULTIPLE
-msgid "[events/events_New.xml?EVN_RELATED_TO-MULTIPLE]"
+msgid "[events/eventsEdit.xml?EVN_RELATED_TO-MULTIPLE]"
 msgstr "Multiple Tasks"
 
-# events/events_New.xml?TAS_UID
-# events/events_New.xml
+# events/eventsEdit.xml?TAS_UID
+# events/eventsEdit.xml
 #: dropdown - TAS_UID
-msgid "[events/events_New.xml?TAS_UID] Task"
+msgid "[events/eventsEdit.xml?TAS_UID] Task"
 msgstr "Task"
 
-# events/events_New.xml?EVN_TAS_UID_FROM
-# events/events_New.xml
+# events/eventsEdit.xml?EVN_TAS_UID_FROM
+# events/eventsEdit.xml
 #: dropdown - EVN_TAS_UID_FROM
-msgid "[events/events_New.xml?EVN_TAS_UID_FROM] From"
-msgstr "From"
+msgid "Tasks From"
+msgstr "Tasks From"
 
-# events/events_New.xml?EVN_TAS_UID_TO
-# events/events_New.xml
+# events/eventsEdit.xml?EVN_TAS_UID_TO
+# events/eventsEdit.xml
 #: dropdown - EVN_TAS_UID_TO
-msgid "[events/events_New.xml?EVN_TAS_UID_TO] To"
+msgid "[events/eventsEdit.xml?EVN_TAS_UID_TO] To"
 msgstr "To"
 
-# events/events_New.xml?EVN_TAS_STIMATED_DURATION
-# events/events_New.xml
-#: text - EVN_TAS_STIMATED_DURATION
-msgid "Estimated duration (days)"
-msgstr "Estimated duration (days)"
+# events/eventsEdit.xml?EVN_TAS_ESTIMATED_DURATION
+# events/eventsEdit.xml
+#: text - EVN_TAS_ESTIMATED_DURATION
+msgid "Estimated duration"
+msgstr "Estimated duration"
 
-# events/events_New.xml?EVN_WHEN
-# events/events_New.xml
+# events/eventsEdit.xml?EVN_WHEN
+# events/eventsEdit.xml
 #: text - EVN_WHEN
-msgid "When (days)"
-msgstr "When (days)"
+msgid "days"
+msgstr "days"
 
-# events/events_New.xml?EVN_ACTION
-# events/events_New.xml
+# events/eventsEdit.xml?CONTINUE
+# events/eventsEdit.xml
+#: button - CONTINUE
+msgid "[events/eventsEdit.xml?CONTINUE] Continue"
+msgstr "Continue"
+
+# events/eventsOptions.xml?MNU_ADD
+# events/eventsOptions.xml
+#: link - MNU_ADD
+msgid "[events/eventsOptions.xml?MNU_ADD] New"
+msgstr "New"
+
+# events/eventsOptions.xml?MNU_PENDING
+# events/eventsOptions.xml
+#: link - MNU_PENDING
+msgid "[events/eventsOptions.xml?MNU_PENDING] Pending"
+msgstr "Pending"
+
+# events/eventsOptions.xml?MNU_COMPLETED
+# events/eventsOptions.xml
+#: link - MNU_COMPLETED
+msgid "[events/eventsOptions.xml?MNU_COMPLETED] Completed"
+msgstr "Completed"
+
+# events/eventsNew.xml?TITLE
+# events/eventsNew.xml
+#: title - TITLE
+msgid "[events/eventsNew.xml?TITLE] Events properties"
+msgstr "Events properties"
+
+# events/eventsNew.xml?NOTE
+# events/eventsNew.xml
+#: subtitle - NOTE
+msgid "[events/eventsNew.xml?NOTE] Events execution is related to the due date of the cases or the estimated duration if you select \"Multiple Tasks\""
+msgstr "Events execution is related to the due date of the cases or the estimated duration if you select \"Multiple Tasks\""
+
+# events/eventsNew.xml?EVN_DESCRIPTION
+# events/eventsNew.xml
+#: text - EVN_DESCRIPTION
+msgid "[events/eventsNew.xml?EVN_DESCRIPTION] Description"
+msgstr "Description"
+
+# events/eventsNew.xml?EVN_STATUS
+# events/eventsNew.xml
+#: dropdown - EVN_STATUS
+msgid "[events/eventsNew.xml?EVN_STATUS] Status    "
+msgstr "Status    "
+
+# events/eventsNew.xml?EVN_STATUS-ACTIVE
+# events/eventsNew.xml
+#: dropdown - EVN_STATUS - ACTIVE
+msgid "[events/eventsNew.xml?EVN_STATUS-ACTIVE]"
+msgstr "Active"
+
+# events/eventsNew.xml?EVN_STATUS-INACTIVE
+# events/eventsNew.xml
+#: dropdown - EVN_STATUS - INACTIVE
+msgid "[events/eventsNew.xml?EVN_STATUS-INACTIVE]"
+msgstr "Inactive"
+
+# events/eventsNew.xml?EVN_WHEN_OCCURS
+# events/eventsNew.xml
+#: dropdown - EVN_WHEN_OCCURS
+msgid "[events/eventsNew.xml?EVN_WHEN_OCCURS] When occurs    "
+msgstr "When occurs    "
+
+# events/eventsNew.xml?EVN_WHEN_OCCURS-AFTER_TIME
+# events/eventsNew.xml
+#: dropdown - EVN_WHEN_OCCURS - AFTER_TIME
+msgid "[events/eventsNew.xml?EVN_WHEN_OCCURS-AFTER_TIME]"
+msgstr "After time elapses"
+
+# events/eventsNew.xml?EVN_WHEN_OCCURS-TASK_STARTED
+# events/eventsNew.xml
+#: dropdown - EVN_WHEN_OCCURS - TASK_STARTED
+msgid "[events/eventsNew.xml?EVN_WHEN_OCCURS-TASK_STARTED]"
+msgstr "After task started"
+
+# events/eventsNew.xml?EVN_RELATED_TO
+# events/eventsNew.xml
+#: dropdown - EVN_RELATED_TO
+msgid "[events/eventsNew.xml?EVN_RELATED_TO] Related to    "
+msgstr "Related to    "
+
+# events/eventsNew.xml?EVN_RELATED_TO-SINGLE
+# events/eventsNew.xml
+#: dropdown - EVN_RELATED_TO - SINGLE
+msgid "[events/eventsNew.xml?EVN_RELATED_TO-SINGLE]"
+msgstr "Single Task"
+
+# events/eventsNew.xml?EVN_RELATED_TO-MULTIPLE
+# events/eventsNew.xml
+#: dropdown - EVN_RELATED_TO - MULTIPLE
+msgid "[events/eventsNew.xml?EVN_RELATED_TO-MULTIPLE]"
+msgstr "Multiple Tasks"
+
+# events/eventsNew.xml?TAS_UID
+# events/eventsNew.xml
+#: dropdown - TAS_UID
+msgid "[events/eventsNew.xml?TAS_UID] Task"
+msgstr "Task"
+
+# events/eventsNew.xml?EVN_TAS_UID_FROM
+# events/eventsNew.xml
+#: dropdown - EVN_TAS_UID_FROM
+msgid "[events/eventsNew.xml?EVN_TAS_UID_FROM] Tasks From"
+msgstr "Tasks From"
+
+# events/eventsNew.xml?EVN_TAS_UID_TO
+# events/eventsNew.xml
+#: dropdown - EVN_TAS_UID_TO
+msgid "[events/eventsNew.xml?EVN_TAS_UID_TO] To"
+msgstr "To"
+
+# events/eventsNew.xml?EVN_TAS_ESTIMATED_DURATION
+# events/eventsNew.xml
+#: text - EVN_TAS_ESTIMATED_DURATION
+msgid "[events/eventsNew.xml?EVN_TAS_ESTIMATED_DURATION] Estimated duration"
+msgstr "Estimated duration"
+
+# events/eventsNew.xml?EVN_WHEN
+# events/eventsNew.xml
+#: text - EVN_WHEN
+msgid "[events/eventsNew.xml?EVN_WHEN] days"
+msgstr "days"
+
+# events/eventsNew.xml?EVN_ACTION
+# events/eventsNew.xml
 #: dropdown - EVN_ACTION
 msgid "Action    "
 msgstr "Action    "
 
-# events/events_New.xml?EVN_ACTION-SEND_MESSAGE
-# events/events_New.xml
+# events/eventsNew.xml?EVN_ACTION-SEND_MESSAGE
+# events/eventsNew.xml
 #: dropdown - EVN_ACTION - SEND_MESSAGE
-msgid "[events/events_New.xml?EVN_ACTION-SEND_MESSAGE]"
+msgid "[events/eventsNew.xml?EVN_ACTION-SEND_MESSAGE]"
 msgstr "Send Message"
 
-# events/events_New.xml?EVN_ACTION-EXECUTE_TRIGGER
-# events/events_New.xml
+# events/eventsNew.xml?EVN_ACTION-EXECUTE_TRIGGER
+# events/eventsNew.xml
 #: dropdown - EVN_ACTION - EXECUTE_TRIGGER
-msgid "[events/events_New.xml?EVN_ACTION-EXECUTE_TRIGGER]"
+msgid "[events/eventsNew.xml?EVN_ACTION-EXECUTE_TRIGGER]"
 msgstr "Execute Trigger"
 
-# events/events_New.xml?CONTINUE
-# events/events_New.xml
+# events/eventsNew.xml?CONTINUE
+# events/eventsNew.xml
 #: button - CONTINUE
-msgid "[events/events_New.xml?CONTINUE] Continue"
+msgid "[events/eventsNew.xml?CONTINUE] Continue"
 msgstr "Continue"
 
-# events/events_New.xml?NOTE
-# events/events_New.xml
-#: subtitle - NOTE
-msgid "Note .- Events execution is related to the due date of the cases or the estimated duration if you select \"Multiple Tasks\""
-msgstr "Note .- Events execution is related to the due date of the cases or the estimated duration if you select \"Multiple Tasks\""
+# events/eventsShortList.xml?EVN_DESCRIPTION
+# events/eventsShortList.xml
+#: text - EVN_DESCRIPTION
+msgid "[events/eventsShortList.xml?EVN_DESCRIPTION] Description"
+msgstr "Description"
 
-# events/events_EditAction.xml?EVN_MESSAGE_SUBJECT
-# events/events_EditAction.xml
+# events/eventsShortList.xml?EVN_WHEN_OCCURS
+# events/eventsShortList.xml
+#: dropdown - EVN_WHEN_OCCURS
+msgid "[events/eventsShortList.xml?EVN_WHEN_OCCURS] When occurs    "
+msgstr "When occurs    "
+
+# events/eventsShortList.xml?EVN_WHEN_OCCURS-AFTER_TIME
+# events/eventsShortList.xml
+#: dropdown - EVN_WHEN_OCCURS - AFTER_TIME
+msgid "[events/eventsShortList.xml?EVN_WHEN_OCCURS-AFTER_TIME]"
+msgstr "After time elapses"
+
+# events/eventsShortList.xml?EVN_WHEN_OCCURS-TASK_STARTED
+# events/eventsShortList.xml
+#: dropdown - EVN_WHEN_OCCURS - TASK_STARTED
+msgid "[events/eventsShortList.xml?EVN_WHEN_OCCURS-TASK_STARTED]"
+msgstr "After task started"
+
+# events/eventsShortList.xml?EVN_ACTION
+# events/eventsShortList.xml
+#: dropdown - EVN_ACTION
+msgid "[events/eventsShortList.xml?EVN_ACTION] Action  "
+msgstr "Action  "
+
+# events/eventsShortList.xml?EVN_ACTION-SEND_MESSAGE
+# events/eventsShortList.xml
+#: dropdown - EVN_ACTION - SEND_MESSAGE
+msgid "[events/eventsShortList.xml?EVN_ACTION-SEND_MESSAGE]"
+msgstr "Send Message"
+
+# events/eventsShortList.xml?EVN_ACTION-EXECUTE_TRIGGER
+# events/eventsShortList.xml
+#: dropdown - EVN_ACTION - EXECUTE_TRIGGER
+msgid "[events/eventsShortList.xml?EVN_ACTION-EXECUTE_TRIGGER]"
+msgstr "Execute Trigger"
+
+# events/eventsShortList.xml?EVN_STATUS
+# events/eventsShortList.xml
+#: dropdown - EVN_STATUS
+msgid "[events/eventsShortList.xml?EVN_STATUS] Status    "
+msgstr "Status    "
+
+# events/eventsShortList.xml?EVN_STATUS-ACTIVE
+# events/eventsShortList.xml
+#: dropdown - EVN_STATUS - ACTIVE
+msgid "[events/eventsShortList.xml?EVN_STATUS-ACTIVE]"
+msgstr "Active"
+
+# events/eventsShortList.xml?EVN_STATUS-INACTIVE
+# events/eventsShortList.xml
+#: dropdown - EVN_STATUS - INACTIVE
+msgid "[events/eventsShortList.xml?EVN_STATUS-INACTIVE]"
+msgstr "Inactive"
+
+# events/eventsShortList.xml?DELETE
+# events/eventsShortList.xml
+#: link - DELETE
+msgid "[events/eventsShortList.xml?DELETE] Delete"
+msgstr "Delete"
+
+# events/appEventsList.xml?APP_EVN_ACTION_DATE
+# events/appEventsList.xml
+#: text - APP_EVN_ACTION_DATE
+msgid "Action date"
+msgstr "Action date"
+
+# events/appEventsList.xml?EVN_DESCRIPTION
+# events/appEventsList.xml
+#: text - EVN_DESCRIPTION
+msgid "[events/appEventsList.xml?EVN_DESCRIPTION] Description"
+msgstr "Description"
+
+# events/appEventsList.xml?EVN_WHEN_OCCURS
+# events/appEventsList.xml
+#: dropdown - EVN_WHEN_OCCURS
+msgid "[events/appEventsList.xml?EVN_WHEN_OCCURS] When occurs    "
+msgstr "When occurs    "
+
+# events/appEventsList.xml?EVN_WHEN_OCCURS-AFTER_TIME
+# events/appEventsList.xml
+#: dropdown - EVN_WHEN_OCCURS - AFTER_TIME
+msgid "[events/appEventsList.xml?EVN_WHEN_OCCURS-AFTER_TIME]"
+msgstr "After time elapses"
+
+# events/appEventsList.xml?EVN_WHEN_OCCURS-TASK_STARTED
+# events/appEventsList.xml
+#: dropdown - EVN_WHEN_OCCURS - TASK_STARTED
+msgid "[events/appEventsList.xml?EVN_WHEN_OCCURS-TASK_STARTED]"
+msgstr "After task started"
+
+# events/appEventsList.xml?EVN_ACTION
+# events/appEventsList.xml
+#: dropdown - EVN_ACTION
+msgid "[events/appEventsList.xml?EVN_ACTION] Action  "
+msgstr "Action  "
+
+# events/appEventsList.xml?EVN_ACTION-SEND_MESSAGE
+# events/appEventsList.xml
+#: dropdown - EVN_ACTION - SEND_MESSAGE
+msgid "[events/appEventsList.xml?EVN_ACTION-SEND_MESSAGE]"
+msgstr "Send Message"
+
+# events/appEventsList.xml?EVN_ACTION-EXECUTE_TRIGGER
+# events/appEventsList.xml
+#: dropdown - EVN_ACTION - EXECUTE_TRIGGER
+msgid "[events/appEventsList.xml?EVN_ACTION-EXECUTE_TRIGGER]"
+msgstr "Execute Trigger"
+
+# events/appEventsList.xml?TAS_TITLE
+# events/appEventsList.xml
+#: text - TAS_TITLE
+msgid "[events/appEventsList.xml?TAS_TITLE] Task"
+msgstr "Task"
+
+# events/eventsEditAction.xml?EVN_MESSAGE_SUBJECT
+# events/eventsEditAction.xml
 #: text - EVN_MESSAGE_SUBJECT
-msgid "[events/events_EditAction.xml?EVN_MESSAGE_SUBJECT] Subject"
+msgid "[events/eventsEditAction.xml?EVN_MESSAGE_SUBJECT] Subject"
 msgstr "Subject"
 
-# events/events_EditAction.xml?EVN_MESSAGE_TO_TO
-# events/events_EditAction.xml
+# events/eventsEditAction.xml?EVN_MESSAGE_TO_TO
+# events/eventsEditAction.xml
 #: listbox - EVN_MESSAGE_TO_TO
 msgid "To  "
 msgstr "To  "
 
-# events/events_EditAction.xml?EVN_MESSAGE_TO_TO--1
-# events/events_EditAction.xml
+# events/eventsEditAction.xml?EVN_MESSAGE_TO_TO--1
+# events/eventsEditAction.xml
 #: listbox - EVN_MESSAGE_TO_TO - -1
-msgid "[events/events_EditAction.xml?EVN_MESSAGE_TO_TO--1]"
+msgid "[events/eventsEditAction.xml?EVN_MESSAGE_TO_TO--1]"
 msgstr "-- Current task user --"
 
-# events/events_EditAction.xml?EVN_MESSAGE_TO_CC
-# events/events_EditAction.xml
+# events/eventsEditAction.xml?EVN_MESSAGE_TO_CC
+# events/eventsEditAction.xml
 #: listbox - EVN_MESSAGE_TO_CC
 msgid "CC  "
 msgstr "CC  "
 
-# events/events_EditAction.xml?EVN_MESSAGE_TO_CC--1
-# events/events_EditAction.xml
+# events/eventsEditAction.xml?EVN_MESSAGE_TO_CC--1
+# events/eventsEditAction.xml
 #: listbox - EVN_MESSAGE_TO_CC - -1
-msgid "[events/events_EditAction.xml?EVN_MESSAGE_TO_CC--1]"
+msgid "[events/eventsEditAction.xml?EVN_MESSAGE_TO_CC--1]"
 msgstr "-- Current task user --"
 
-# events/events_EditAction.xml?EVN_MESSAGE_TO_BCC
-# events/events_EditAction.xml
+# events/eventsEditAction.xml?EVN_MESSAGE_TO_BCC
+# events/eventsEditAction.xml
 #: listbox - EVN_MESSAGE_TO_BCC
 msgid "BCC  "
 msgstr "BCC  "
 
-# events/events_EditAction.xml?EVN_MESSAGE_TO_BCC--1
-# events/events_EditAction.xml
+# events/eventsEditAction.xml?EVN_MESSAGE_TO_BCC--1
+# events/eventsEditAction.xml
 #: listbox - EVN_MESSAGE_TO_BCC - -1
-msgid "[events/events_EditAction.xml?EVN_MESSAGE_TO_BCC--1]"
+msgid "[events/eventsEditAction.xml?EVN_MESSAGE_TO_BCC--1]"
 msgstr "-- Current task user --"
 
-# events/events_EditAction.xml?EVN_MESSAGE_TEMPLATE
-# events/events_EditAction.xml
+# events/eventsEditAction.xml?EVN_MESSAGE_TEMPLATE
+# events/eventsEditAction.xml
 #: dropdown - EVN_MESSAGE_TEMPLATE
 msgid "E-Mail Template  "
 msgstr "E-Mail Template  "
 
-# events/events_EditAction.xml?EVN_MESSAGE_TEMPLATE-''
-# events/events_EditAction.xml
-#: dropdown - EVN_MESSAGE_TEMPLATE - ''
-msgid "[events/events_EditAction.xml?EVN_MESSAGE_TEMPLATE-'']"
+# events/eventsEditAction.xml?EVN_MESSAGE_TEMPLATE-alert_message.html
+# events/eventsEditAction.xml
+#: dropdown - EVN_MESSAGE_TEMPLATE - alert_message.html
+msgid "[events/eventsEditAction.xml?EVN_MESSAGE_TEMPLATE-alert_message.html]"
 msgstr "-- Default --"
 
-# events/events_EditAction.xml?TRI_UID
-# events/events_EditAction.xml
+# events/eventsEditAction.xml?TRI_UID
+# events/eventsEditAction.xml
 #: dropdown - TRI_UID
 msgid "Trigger  "
 msgstr "Trigger  "
 
-# events/events_EditAction.xml?TRI_UID-''
-# events/events_EditAction.xml
+# events/eventsEditAction.xml?TRI_UID-''
+# events/eventsEditAction.xml
 #: dropdown - TRI_UID - ''
-msgid "[events/events_EditAction.xml?TRI_UID-'']"
+msgid "[events/eventsEditAction.xml?TRI_UID-'']"
 msgstr "-- Select --"
 
-# events/events_EditAction.xml?SAVE
-# events/events_EditAction.xml
+# events/eventsEditAction.xml?SAVE
+# events/eventsEditAction.xml
 #: button - SAVE
-msgid "[events/events_EditAction.xml?SAVE] Save"
+msgid "[events/eventsEditAction.xml?SAVE] Save"
 msgstr "Save"
-
-# events/events_Options.xml?MNU_ADD
-# events/events_Options.xml
-#: link - MNU_ADD
-msgid "[events/events_Options.xml?MNU_ADD] New"
-msgstr "New"
-
-# events/events_Edit.xml?EVN_DESCRIPTION
-# events/events_Edit.xml
-#: text - EVN_DESCRIPTION
-msgid "[events/events_Edit.xml?EVN_DESCRIPTION] Description"
-msgstr "Description"
-
-# events/events_Edit.xml?EVN_RELATED_TO
-# events/events_Edit.xml
-#: dropdown - EVN_RELATED_TO
-msgid "[events/events_Edit.xml?EVN_RELATED_TO] Related to    "
-msgstr "Related to    "
-
-# events/events_Edit.xml?EVN_RELATED_TO-SINGLE
-# events/events_Edit.xml
-#: dropdown - EVN_RELATED_TO - SINGLE
-msgid "[events/events_Edit.xml?EVN_RELATED_TO-SINGLE]"
-msgstr "Single Task"
-
-# events/events_Edit.xml?EVN_RELATED_TO-MULTIPLE
-# events/events_Edit.xml
-#: dropdown - EVN_RELATED_TO - MULTIPLE
-msgid "[events/events_Edit.xml?EVN_RELATED_TO-MULTIPLE]"
-msgstr "Multiple Tasks"
-
-# events/events_Edit.xml?TAS_UID
-# events/events_Edit.xml
-#: dropdown - TAS_UID
-msgid "[events/events_Edit.xml?TAS_UID] Task"
-msgstr "Task"
-
-# events/events_Edit.xml?EVN_TAS_UID_FROM
-# events/events_Edit.xml
-#: dropdown - EVN_TAS_UID_FROM
-msgid "[events/events_Edit.xml?EVN_TAS_UID_FROM] From"
-msgstr "From"
-
-# events/events_Edit.xml?EVN_TAS_UID_TO
-# events/events_Edit.xml
-#: dropdown - EVN_TAS_UID_TO
-msgid "[events/events_Edit.xml?EVN_TAS_UID_TO] To"
-msgstr "To"
-
-# events/events_Edit.xml?EVN_TAS_STIMATED_DURATION
-# events/events_Edit.xml
-#: text - EVN_TAS_STIMATED_DURATION
-msgid "Stimated duration"
-msgstr "Stimated duration"
-
-# events/events_Edit.xml?EVN_WHEN
-# events/events_Edit.xml
-#: text - EVN_WHEN
-msgid "[events/events_Edit.xml?EVN_WHEN] When (days)"
-msgstr "When (days)"
-
-# events/events_Edit.xml?CONTINUE
-# events/events_Edit.xml
-#: button - CONTINUE
-msgid "[events/events_Edit.xml?CONTINUE] Continue"
-msgstr "Continue"
-
-# events/events_Edit.xml?NOTE
-# events/events_Edit.xml
-#: subtitle - NOTE
-msgid "[events/events_Edit.xml?NOTE] Note .- Events execution is related to the due date of the cases or the estimated duration if you select \"Multiple Tasks\""
-msgstr "Note .- Events execution is related to the due date of the cases or the estimated duration if you select \"Multiple Tasks\""
-
-# events/events_ShortList.xml?EVN_DESCRIPTION
-# events/events_ShortList.xml
-#: text - EVN_DESCRIPTION
-msgid "[events/events_ShortList.xml?EVN_DESCRIPTION] Description"
-msgstr "Description"
-
-# events/events_ShortList.xml?EVN_ACTION
-# events/events_ShortList.xml
-#: dropdown - EVN_ACTION
-msgid "[events/events_ShortList.xml?EVN_ACTION] Action  "
-msgstr "Action  "
-
-# events/events_ShortList.xml?EVN_ACTION-SEND_MESSAGE
-# events/events_ShortList.xml
-#: dropdown - EVN_ACTION - SEND_MESSAGE
-msgid "[events/events_ShortList.xml?EVN_ACTION-SEND_MESSAGE]"
-msgstr "Send Message"
-
-# events/events_ShortList.xml?EVN_ACTION-EXECUTE_TRIGGER
-# events/events_ShortList.xml
-#: dropdown - EVN_ACTION - EXECUTE_TRIGGER
-msgid "[events/events_ShortList.xml?EVN_ACTION-EXECUTE_TRIGGER]"
-msgstr "Execute Trigger"
-
-# events/events_ShortList.xml?DELETE
-# events/events_ShortList.xml
-#: link - DELETE
-msgid "[events/events_ShortList.xml?DELETE] Delete"
-msgstr "Delete"
 
