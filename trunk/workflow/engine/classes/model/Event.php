@@ -224,90 +224,97 @@ class Event extends BaseEvent {
 
   function calculateEventsExecutionDate() {
     try {
+    	$rowsCreated = 0;
       G::LoadClass('dates');
       $oDates = new dates();
 
-      $aProcesses = $aEvents = array();
-      $oCriteria = new Criteria('workflow');
-      $oCriteria->addSelectColumn(EventPeer::PRO_UID);
-      $oCriteria->addGroupByColumn(EventPeer::PRO_UID);
-      $oDataset = EventPeer::doSelectRs($oCriteria);
-      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-      $oDataset->next();
-      while ($aData = $oDataset->getRow()) {
-        $aProcesses[] = $aData['PRO_UID'];
-        $oDataset->next();
-      }
-      krumo ( $aProcesses);
-      
+      //SELECT
+      //  EVENT.PRO_UID,
+      //  EVENT.TAS_UID ,
+      //  EVENT.EVN_TAS_ESTIMATED_DURATION ,
+      //  EVENT.EVN_WHEN,
+      //  APP_DELEGATION.APP_UID  ,
+      //  APP_DELEGATION.DEL_INDEX  ,
+      //  APP_DELEGATION.TAS_UID  ,
+      //  APP_DELEGATION.DEL_DELEGATE_DATE  ,
+      //  APP_DELEGATION.DEL_INIT_DATE  ,
+      //  APP_DELEGATION.DEL_TASK_DUE_DATE  ,
+      //  APP_DELEGATION.DEL_FINISH_DATE
+      //from APP_DELEGATION
+      //  JOIN EVENT ON ( APP_DELEGATION.TAS_UID = EVENT.TAS_UID AND APP_DELEGATION.DEL_FINISH_DATE IS NULL  )
+      //  LEFT JOIN APP_EVENT ON ( APP_EVENT.APP_UID = APP_DELEGATION.APP_UID AND APP_EVENT.DEL_INDEX = APP_DELEGATION.DEL_INDEX )
+      // WHERE
+      //   APP_EVENT.APP_UID IS NULL
+      //   and EVN_STATUS = 'ACTIVE'
+      //   AND EVN_RELATED_TO = 'SINGLE'
+      //   and DEL_FINISH_DATE IS NULL
+      //--  and   APP_DELEGATION.DEL_DELEGATE_DATE > "2009-01-01 12:00:00"
+      //ORDER BY    APP_DELEGATION.DEL_DELEGATE_DATE
+
+      //get info about the Event and the APP_DELEGATION to process
       $oCriteria = new Criteria('workflow');
       $oCriteria->addSelectColumn(EventPeer::EVN_UID);
       $oCriteria->addSelectColumn(EventPeer::PRO_UID);
-      $oCriteria->addSelectColumn(EventPeer::EVN_RELATED_TO);
       $oCriteria->addSelectColumn(EventPeer::TAS_UID);
-      $oCriteria->addSelectColumn(EventPeer::EVN_TAS_UID_FROM);
-      $oCriteria->addSelectColumn(EventPeer::EVN_TAS_UID_TO);
       $oCriteria->addSelectColumn(EventPeer::EVN_TAS_ESTIMATED_DURATION);
       $oCriteria->addSelectColumn(EventPeer::EVN_WHEN);
-      $oCriteria->addSelectColumn(EventPeer::EVN_MAX_ATTEMPTS);
-      $oCriteria->addSelectColumn(EventPeer::EVN_ACTION);
-      $oCriteria->addSelectColumn(EventPeer::TRI_UID);
-      $oCriteria->add(EventPeer::PRO_UID, $aProcesses, Criteria::IN);
+      $oCriteria->addSelectColumn(EventPeer::EVN_WHEN_OCCURS);      
+      $oCriteria->addSelectColumn(EventPeer::EVN_RELATED_TO);
+      $oCriteria->addSelectColumn(AppDelegationPeer::APP_UID);
+      $oCriteria->addSelectColumn(AppDelegationPeer::DEL_INDEX);
+      $oCriteria->addSelectColumn(AppDelegationPeer::TAS_UID);
+      $oCriteria->addSelectColumn(AppDelegationPeer::DEL_DELEGATE_DATE);
+      $oCriteria->addSelectColumn(AppDelegationPeer::DEL_INIT_DATE);
+      $oCriteria->addSelectColumn(AppDelegationPeer::DEL_TASK_DUE_DATE);
+      $oCriteria->addSelectColumn(AppDelegationPeer::DEL_FINISH_DATE);
+
+      $aConditions   = array();
+      $aConditions[] = array(AppDelegationPeer::TAS_UID, EventPeer::TAS_UID);
+      //$aConditions[] = array(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::IS_NULL );
+      $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
+
+      $aConditions   = array();
+      $aConditions[] = array(AppDelegationPeer::APP_UID, AppEventPeer::APP_UID);
+      $aConditions[] = array(AppDelegationPeer::DEL_INDEX, AppEventPeer::DEL_INDEX);
+      $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
+
+      $oCriteria->add(AppEventPeer::APP_UID, null, Criteria::ISNULL );
+      $oCriteria->add(EventPeer::EVN_STATUS, 'ACTIVE' );
+      $oCriteria->add(EventPeer::EVN_RELATED_TO, 'SINGLE' );
+      $oCriteria->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL );
+      $oCriteria->add(AppDelegationPeer::DEL_DELEGATE_DATE, date('Y-m-d') , Criteria::GREATER_THAN );
       $oDataset = EventPeer::doSelectRs($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
       $oDataset->next();
+
       while ($aData = $oDataset->getRow()) {
-        $aData['EVN_TAS_ESTIMATED_DURATION'] = (float)$aData['EVN_TAS_ESTIMATED_DURATION'];
-        $aData['EVN_WHEN'] = (float)$aData['EVN_WHEN'];
-        $aEvents[$aData['PRO_UID']][$aData['EVN_UID']] = $aData;
-        $oDataset->next();
-      }
-      krumo ( $aEvents);
-      
-      $oCriteria = new Criteria('workflow');
-      $oCriteria->addSelectColumn(AppDelegationPeer::APP_UID);
-      $oCriteria->addSelectColumn(AppDelegationPeer::DEL_INDEX);
-      $oCriteria->addSelectColumn(AppDelegationPeer::PRO_UID);
-      $oCriteria->addSelectColumn(AppDelegationPeer::DEL_INIT_DATE);
-      $oCriteria->addSelectColumn(AppDelegationPeer::DEL_TASK_DUE_DATE);
-      $oCriteria->add(AppDelegationPeer::PRO_UID, $aProcesses, Criteria::IN);
-      $oCriteria->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
-      $oDataset = AppDelegationPeer::doSelectRs($oCriteria);
-      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-      $oDataset->next();
-      while ($aData = $oDataset->getRow()) {
-        foreach ($aEvents[$aData['PRO_UID']] as $aEvent) {
-          $oCriteria2 = new Criteria('workflow');
-          $oCriteria2->add(AppEventPeer::APP_UID, $aData['APP_UID']);
-          $oCriteria2->add(AppEventPeer::DEL_INDEX, $aData['DEL_INDEX']);
-          $oCriteria2->add(AppEventPeer::EVN_UID, $aEvent['EVN_UID']);
-          $oCriteria2->add(AppEventPeer::APP_EVN_STATUS, 'OPEN');
-          if (AppDelegationPeer::doCount($oCriteria2) == 0) {
-            if ($aEvent['EVN_RELATED_TO'] != 'SINGLE') {
-              $sDueDate = date('Y-m-d H:i:s', $oDates->calculateDate($aData['DEL_INIT_DATE'], $aEvent['EVN_TAS_STIMATED_DURATION'], 'days', 1));
-            }
-            else {
-              $sDueDate = $aData['DEL_TASK_DUE_DATE'];
-            }
-            if ($aEvent['EVN_WHEN'] != 0) {
-              $sActionDate = date('Y-m-d H:i:s', $oDates->calculateDate($sDueDate, $aEvent['EVN_WHEN'], 'days', 1));
-            }
-            else {
-              $sActionDate = $sDueDate;
-            }
-            $oAppEvent = new AppEvent();
-            $oAppEvent->create(array('APP_UID'                     => $aData['APP_UID'],
-                                     'DEL_INDEX'                   => $aData['DEL_INDEX'],
-                                     'EVN_UID'                     => $aEvent['EVN_UID'],
-                                     'APP_EVN_ACTION_DATE'         => $sActionDate,
-                                     'APP_EVN_ATTEMPTS'            => $aEvent['EVN_MAX_ATTEMPTS']));
-          }
+      	$estimatedDuration = (float)$aData['EVN_TAS_ESTIMATED_DURATION'];
+      	$when              = (float)$aData['EVN_WHEN'];
+      	$whenOccurs        =        $aData['EVN_WHEN_OCCURS'];
+
+        if ( $whenOccurs == 'AFTER_TIME' ) {
+          //for multiple $sDueDate = date('Y-m-d H:i:s', $oDates->calculateDate($aData['DEL_DELEGATE_DATE'], $estimatedDuration, 'days', 1));
+          $sDueDate    = $aData['DEL_TASK_DUE_DATE'];
+          $sActionDate = date('Y-m-d H:i:s', $oDates->calculateDate( $sDueDate, $when, 'days', 1));
         }
+        else {
+          $sDueDate    = $aData['DEL_DELEGATE_DATE'];
+          $sActionDate = date('Y-m-d H:i:s', $oDates->calculateDate( $sDueDate, $when, 'days', 1));
+        }
+        $aData['APP_EVN_ACTION_DATE'] = $sActionDate;
+
+        if ( 1 ) {
+        	$rowsCreated++ ;
+          $oAppEvent = new AppEvent();
+          $oAppEvent->create( $aData );        
+        }
+
         $oDataset->next();
       }
+      return "Created $rowsCreated in APP_EVENT "; 
     }
     catch (Exception $oError) {
-      //CONTINUE
+      throw new Exception ( $oError->getMessage() );
     }
   }
 } // Event

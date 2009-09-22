@@ -5873,12 +5873,12 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
-    <column name="EVN_UID" type="VARCHAR" size="32" required="true" default="">
+    <column name="EVN_UID" type="VARCHAR" size="32" required="true" primaryKey="true" default="">
       <vendor type="mysql">
         <parameter name="Field" value="EVN_UID"/>
         <parameter name="Type" value="varchar(32)"/>
         <parameter name="Null" value="NO"/>
-        <parameter name="Key" value=""/>
+        <parameter name="Key" value="PRI"/>
         <parameter name="Default" value=""/>
         <parameter name="Extra" value=""/>
       </vendor>
