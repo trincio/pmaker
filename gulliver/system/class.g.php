@@ -599,7 +599,6 @@ class G
       G::LoadSkin( 'green' );
       die;
     }
-
   }
 
 /**
