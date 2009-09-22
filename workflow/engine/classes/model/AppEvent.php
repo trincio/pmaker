@@ -109,6 +109,61 @@ class AppEvent extends BaseAppEvent {
     }
   }
 
+  function getAppEventsCriteria($sProcessUid, $sStatus = '') {
+    try {
+      require_once 'classes/model/Event.php';
+      $oCriteria = new Criteria('workflow');
+      $oCriteria->addSelectColumn(AppEventPeer::APP_UID);
+      $oCriteria->addSelectColumn(AppEventPeer::DEL_INDEX);
+      $oCriteria->addSelectColumn(AppEventPeer::EVN_UID);
+      $oCriteria->addSelectColumn(AppEventPeer::APP_EVN_ACTION_DATE);
+      $oCriteria->addSelectColumn(AppEventPeer::APP_EVN_ATTEMPTS);
+      $oCriteria->addSelectColumn(AppEventPeer::APP_EVN_LAST_EXECUTION_DATE);
+      $oCriteria->addSelectColumn(AppEventPeer::APP_EVN_STATUS);
+      $oCriteria->addSelectColumn(EventPeer::PRO_UID);
+      $oCriteria->addSelectColumn(EventPeer::EVN_WHEN_OCCURS);
+      $oCriteria->addSelectColumn(EventPeer::EVN_ACTION);
+      $oCriteria->addAsColumn('EVN_DESCRIPTION', 'C1.CON_VALUE');
+      $oCriteria->addAsColumn('TAS_TITLE', 'C2.CON_VALUE');
+      $oCriteria->addAlias('C1', 'CONTENT');
+      $oCriteria->addAlias('C2', 'CONTENT');
+      $oCriteria->addJoin(AppEventPeer::EVN_UID, EventPeer::EVN_UID, Criteria::LEFT_JOIN);
+      $del = DBAdapter::getStringDelimiter();
+      $aConditions   = array();
+      $aConditions[] = array(EventPeer::EVN_UID, 'C1.CON_ID');
+      $aConditions[] = array('C1.CON_CATEGORY', $del . 'EVN_DESCRIPTION' . $del);
+      $aConditions[] = array('C1.CON_LANG', $del . SYS_LANG . $del);
+      $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
+      $aConditions   = array();
+      $aConditions[] = array(AppEventPeer::APP_UID, AppDelegationPeer::APP_UID);
+      $aConditions[] = array(AppEventPeer::DEL_INDEX, AppDelegationPeer::DEL_INDEX);
+      $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
+      $aConditions   = array();
+      $aConditions[] = array(AppDelegationPeer::TAS_UID, 'C2.CON_ID');
+      $aConditions[] = array('C2.CON_CATEGORY', $del . 'TAS_TITLE' . $del);
+      $aConditions[] = array('C2.CON_LANG', $del . SYS_LANG . $del);
+      $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
+      $oCriteria->add(AppEventPeer::EVN_UID, '', Criteria::NOT_EQUAL);
+      $oCriteria->add(EventPeer::PRO_UID, $sProcessUid);
+      switch ($sStatus) {
+        case '':
+          //Nothing
+        break;
+        case 'PENDING':
+          $oCriteria->add(AppEventPeer::APP_EVN_STATUS, 'OPEN');
+        break;
+        case 'COMPLETED':
+          $oCriteria->add(AppEventPeer::APP_EVN_STATUS, 'CLOSE');
+        break;
+      }
+      $oCriteria->addDescendingOrderByColumn(AppEventPeer::APP_EVN_ACTION_DATE);
+      return $oCriteria;
+    }
+    catch (Exception $oError) {
+      throw($oError);
+    }
+  }
+
   function executeEvents($sLastExecution, $sNow) {
     try {
       $oCriteria = new Criteria('workflow');
@@ -121,10 +176,12 @@ class AppEvent extends BaseAppEvent {
       $oCriteria->addSelectColumn(AppEventPeer::APP_EVN_STATUS);
       $oCriteria->addSelectColumn(EventPeer::PRO_UID);
       $oCriteria->addSelectColumn(EventPeer::EVN_ACTION);
+/*
       $oCriteria->addSelectColumn(EventPeer::EVN_MESSAGE_SUBJECT);
       $oCriteria->addSelectColumn(EventPeer::EVN_MESSAGE_TO);
       $oCriteria->addSelectColumn(EventPeer::EVN_MESSAGE_TEMPLATE);
       $oCriteria->addSelectColumn(EventPeer::EVN_MESSAGE_DIGEST);
+*/
       $oCriteria->addSelectColumn(EventPeer::TRI_UID);
       $oCriteria->addSelectColumn(AppDelegationPeer::USR_UID);
       $oCriteria->addSelectColumn(AppDelegationPeer::DEL_TASK_DUE_DATE);
