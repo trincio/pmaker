@@ -770,6 +770,7 @@ abstract class BaseAppEvent extends BaseObject  implements Persistent {
 
 		$criteria->add(AppEventPeer::APP_UID, $this->app_uid);
 		$criteria->add(AppEventPeer::DEL_INDEX, $this->del_index);
+		$criteria->add(AppEventPeer::EVN_UID, $this->evn_uid);
 
 		return $criteria;
 	}
@@ -787,6 +788,8 @@ abstract class BaseAppEvent extends BaseObject  implements Persistent {
 
 		$pks[1] = $this->getDelIndex();
 
+		$pks[2] = $this->getEvnUid();
+
 		return $pks;
 	}
 
@@ -803,6 +806,8 @@ abstract class BaseAppEvent extends BaseObject  implements Persistent {
 
 		$this->setDelIndex($keys[1]);
 
+		$this->setEvnUid($keys[2]);
+
 	}
 
 	/**
@@ -818,8 +823,6 @@ abstract class BaseAppEvent extends BaseObject  implements Persistent {
 	public function copyInto($copyObj, $deepCopy = false)
 	{
 
-		$copyObj->setEvnUid($this->evn_uid);
-
 		$copyObj->setAppEvnActionDate($this->app_evn_action_date);
 
 		$copyObj->setAppEvnAttempts($this->app_evn_attempts);
@@ -834,6 +837,8 @@ abstract class BaseAppEvent extends BaseObject  implements Persistent {
 		$copyObj->setAppUid(''); // this is a pkey column, so set to default value
 
 		$copyObj->setDelIndex('0'); // this is a pkey column, so set to default value
+
+		$copyObj->setEvnUid(''); // this is a pkey column, so set to default value
 
 	}
 

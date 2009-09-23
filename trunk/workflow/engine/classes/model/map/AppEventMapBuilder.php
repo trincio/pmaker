@@ -68,7 +68,7 @@ class AppEventMapBuilder {
 
 		$tMap->addPrimaryKey('DEL_INDEX', 'DelIndex', 'int', CreoleTypes::INTEGER, true, null);
 
-		$tMap->addColumn('EVN_UID', 'EvnUid', 'string', CreoleTypes::VARCHAR, true, 32);
+		$tMap->addPrimaryKey('EVN_UID', 'EvnUid', 'string', CreoleTypes::VARCHAR, true, 32);
 
 		$tMap->addColumn('APP_EVN_ACTION_DATE', 'AppEvnActionDate', 'int', CreoleTypes::TIMESTAMP, true, null);
 

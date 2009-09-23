@@ -16,85 +16,85 @@ require_once 'classes/model/om/BaseAppEvent.php';
  */
 class AppEvent extends BaseAppEvent {
     public function load($sApplicationUID, $iDelegation) {
-  	try {
-  	  $oAppEvent = AppEventPeer::retrieveByPK($sApplicationUID, $iDelegation);
-  	  if (!is_null($oAppEvent)) {
-  	    $aFields = $oAppEvent->toArray(BasePeer::TYPE_FIELDNAME);
+    try {
+      $oAppEvent = AppEventPeer::retrieveByPK($sApplicationUID, $iDelegation);
+      if (!is_null($oAppEvent)) {
+        $aFields = $oAppEvent->toArray(BasePeer::TYPE_FIELDNAME);
         $this->fromArray($aFields, BasePeer::TYPE_FIELDNAME);
-  	    return $aFields;
+        return $aFields;
       }
       else {
         throw(new Exception('This row doesn\'t exists!'));
       }
     }
     catch (Exception $oError) {
-    	throw($oError);
+      throw($oError);
     }
   }
 
   function create($aData) {
     $oConnection = Propel::getConnection(AppEventPeer::DATABASE_NAME);
-  	try {
-  	  $oAppEvent = new AppEvent();
-  	  $oAppEvent->fromArray($aData, BasePeer::TYPE_FIELDNAME);
-  	  if ($oAppEvent->validate()) {
+    try {
+      $oAppEvent = new AppEvent();
+      $oAppEvent->fromArray($aData, BasePeer::TYPE_FIELDNAME);
+      if ($oAppEvent->validate()) {
         $oConnection->begin();
         $iResult = $oAppEvent->save();
         $oConnection->commit();
         return true;
-  	  }
-  	  else {
-  	  	$sMessage = '';
-  	    $aValidationFailures = $oAppEvent->getValidationFailures();
-  	    foreach($aValidationFailures as $oValidationFailure) {
+      }
+      else {
+        $sMessage = '';
+        $aValidationFailures = $oAppEvent->getValidationFailures();
+        foreach($aValidationFailures as $oValidationFailure) {
           $sMessage .= $oValidationFailure->getMessage() . '<br />';
         }
         throw(new Exception('The registry cannot be created!<br />' . $sMessage));
-  	  }
-  	}
+      }
+    }
     catch (Exception $oError) {
       $oConnection->rollback();
-    	throw($oError);
+      throw($oError);
     }
   }
 
   function update($aData) {
     $oConnection = Propel::getConnection(AppEventPeer::DATABASE_NAME);
-  	try {
-  	  $oAppEvent = AppEventPeer::retrieveByPK($aData['APP_UID'], $aData['DEL_INDEX']);
-  	  if (!is_null($oAppEvent)) {
-  	  	$oAppEvent->fromArray($aData, BasePeer::TYPE_FIELDNAME);
-  	    if ($oAppEvent->validate()) {
-  	    	$oConnection->begin();
+    try {
+      $oAppEvent = AppEventPeer::retrieveByPK($aData['APP_UID'], $aData['DEL_INDEX']);
+      if (!is_null($oAppEvent)) {
+        $oAppEvent->fromArray($aData, BasePeer::TYPE_FIELDNAME);
+        if ($oAppEvent->validate()) {
+          $oConnection->begin();
           $iResult = $oAppEvent->save();
           $oConnection->commit();
           return $iResult;
-  	    }
-  	    else {
-  	    	$sMessage = '';
-  	      $aValidationFailures = $oAppEvent->getValidationFailures();
-  	      foreach($aValidationFailures as $oValidationFailure) {
+        }
+        else {
+          $sMessage = '';
+          $aValidationFailures = $oAppEvent->getValidationFailures();
+          foreach($aValidationFailures as $oValidationFailure) {
             $sMessage .= $oValidationFailure->getMessage() . '<br />';
           }
           throw(new Exception('The registry cannot be updated!<br />'.$sMessage));
-  	    }
+        }
       }
       else {
         throw(new Exception('This row doesn\'t exists!'));
       }
     }
     catch (Exception $oError) {
-    	$oConnection->rollback();
-    	throw($oError);
+      $oConnection->rollback();
+      throw($oError);
     }
   }
 
-  function remove($sApplicationUID, $iDelegation) {
+  function remove($sApplicationUID, $iDelegation, $sEvnUid) {
     $oConnection = Propel::getConnection(AppEventPeer::DATABASE_NAME);
-  	try {
-  	  $oAppEvent = AppEventPeer::retrieveByPK($sApplicationUID, $iDelegation);
-  	  if (!is_null($oAppEvent)) {
-  	  	$oConnection->begin();
+    try {
+      $oAppEvent = AppEventPeer::retrieveByPK($sApplicationUID, $iDelegation, $sEvnUid);
+      if (!is_null($oAppEvent)) {
+        $oConnection->begin();
         $iResult = $oAppEvent->delete();
         $oConnection->commit();
         return $iResult;
@@ -104,7 +104,7 @@ class AppEvent extends BaseAppEvent {
       }
     }
     catch (Exception $oError) {
-    	$oConnection->rollback();
+      $oConnection->rollback();
       throw($oError);
     }
   }
@@ -171,44 +171,64 @@ class AppEvent extends BaseAppEvent {
       $oCriteria->addSelectColumn(AppEventPeer::DEL_INDEX);
       $oCriteria->addSelectColumn(AppEventPeer::EVN_UID);
       $oCriteria->addSelectColumn(AppEventPeer::APP_EVN_ACTION_DATE);
-      $oCriteria->addSelectColumn(AppEventPeer::APP_EVN_ATTEMPTS);
       $oCriteria->addSelectColumn(AppEventPeer::APP_EVN_LAST_EXECUTION_DATE);
       $oCriteria->addSelectColumn(AppEventPeer::APP_EVN_STATUS);
       $oCriteria->addSelectColumn(EventPeer::PRO_UID);
       $oCriteria->addSelectColumn(EventPeer::EVN_ACTION);
-/*
-      $oCriteria->addSelectColumn(EventPeer::EVN_MESSAGE_SUBJECT);
-      $oCriteria->addSelectColumn(EventPeer::EVN_MESSAGE_TO);
-      $oCriteria->addSelectColumn(EventPeer::EVN_MESSAGE_TEMPLATE);
-      $oCriteria->addSelectColumn(EventPeer::EVN_MESSAGE_DIGEST);
-*/
       $oCriteria->addSelectColumn(EventPeer::TRI_UID);
+
       $oCriteria->addSelectColumn(AppDelegationPeer::USR_UID);
       $oCriteria->addSelectColumn(AppDelegationPeer::DEL_TASK_DUE_DATE);
       $oCriteria->addSelectColumn(AppDelegationPeer::DEL_FINISH_DATE);
-      $oCriteria->addAsColumn('TAS_TITLE', ContentPeer::CON_VALUE);
-      $oCriteria->addJoin(AppEventPeer::EVN_UID, EventPeer::EVN_UID, Criteria::LEFT_JOIN);
+
+      //$oCriteria->addAsColumn('TAS_TITLE', ContentPeer::CON_VALUE);
+
+      $oCriteria->addJoin(AppEventPeer::EVN_UID, EventPeer::EVN_UID, Criteria::JOIN);
       $aConditions   = array();
-      $aConditions[] = array(AppEventPeer::APP_UID, AppDelegationPeer::APP_UID);
+      $aConditions[] = array(AppEventPeer::APP_UID,   AppDelegationPeer::APP_UID);
       $aConditions[] = array(AppEventPeer::DEL_INDEX, AppDelegationPeer::DEL_INDEX);
       $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
-      $del = DBAdapter::getStringDelimiter();
-      $aConditions   = array();
-      $aConditions[] = array(AppDelegationPeer::TAS_UID, ContentPeer::CON_ID);
-      $aConditions[] = array(ContentPeer::CON_CATEGORY, $del . 'TAS_TITLE' . $del);
-      $aConditions[] = array(ContentPeer::CON_LANG, $del . SYS_LANG . $del);
-      $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
+
       $oCriteria->add(AppEventPeer::APP_EVN_ATTEMPTS, 0, Criteria::GREATER_THAN);
       $oCriteria->add(AppEventPeer::APP_EVN_STATUS, 'OPEN');
-      if ($sLastExecution == '') {
+/*      if ($sLastExecution == '') {
         $oCriteria->add(AppEventPeer::APP_EVN_ACTION_DATE, $sNow, Criteria::LESS_EQUAL);
       }
       else {
         $oCriteria->add($oCriteria->getNewCriterion(AppEventPeer::APP_EVN_ACTION_DATE, $sLastExecution, Criteria::GREATER_EQUAL)->addAnd($oCriteria->getNewCriterion(AppEventPeer::APP_EVN_ACTION_DATE, $sNow, Criteria::LESS_EQUAL)));
       }
+*/
+      G::LoadClass('case');
+      $oCase = new Cases();
+
       $oDataset = AppEventPeer::doSelectRS($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
       $oDataset->next();
+      while ($aRow = $oDataset->getRow()) {
+        $oTrigger = new Triggers();
+        $aTrigger = $oTrigger->load($aRow['TRI_UID']);
+        $aFields = $oCase->loadCase($aRow['APP_UID']);
+        $oPMScript = new PMScript();
+        $oPMScript->setFields($aFields['APP_DATA']);
+        $oPMScript->setScript($aTrigger['TRI_WEBBOT']);
+        $oPMScript->execute();
+        $aFields['APP_DATA'] = $oPMScript->aFields;
+        $oCase->updateCase($aRow['APP_UID'], $aFields);
+
+        //update the appevent record.
+        $oAppEvent = AppEventPeer::retrieveByPK($aRow['APP_UID'], $aRow['DEL_INDEX'], $aRow['EVN_UID']);
+        if ( $oAppEvent->getAppEvnAttempts() >= 1 ) 
+          $oAppEvent->setAppEvnAttempts($oAppEvent->getAppEvnAttempts() - 1);
+        else
+          $oAppEvent->setAppEvnAttempts( 0 );
+          
+        $oAppEvent->setAppEvnLastExecutionDate(date('Y-m-d H:i:s'));
+        $oAppEvent->setAppEvnStatus('CLOSE');
+        $oAppEvent->save();
+        
+        $oDataset->next();
+      }
+/*          
       require_once 'classes/model/Configuration.php';
       $oConfiguration = new Configuration();
       $sDelimiter     = DBAdapter::getStringDelimiter();
@@ -257,12 +277,12 @@ class AppEvent extends BaseAppEvent {
                 foreach ($aRow['EVN_MESSAGE_TO']['TO'] as $iKey => $sEmail) {
                   if ($sEmail == '-1') {
                     $oCriteria = new Criteria('workflow');
-	                  $oCriteria->add(UsersPeer::USR_UID, $aRow['USR_UID']);
-    	              $oDatasetu = UsersPeer::doSelectRS($oCriteria);
-	                  $oDatasetu->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-	                  $oDatasetu->next();
-	                  $aRowUser = $oDatasetu->getRow();
-	                  $aRow['EVN_MESSAGE_TO']['TO'][$iKey] = $aRowUser['USR_EMAIL'];
+                    $oCriteria->add(UsersPeer::USR_UID, $aRow['USR_UID']);
+                    $oDatasetu = UsersPeer::doSelectRS($oCriteria);
+                    $oDatasetu->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+                    $oDatasetu->next();
+                    $aRowUser = $oDatasetu->getRow();
+                    $aRow['EVN_MESSAGE_TO']['TO'][$iKey] = $aRowUser['USR_EMAIL'];
                   }
                 }
               }
@@ -273,12 +293,12 @@ class AppEvent extends BaseAppEvent {
                 foreach ($aRow['EVN_MESSAGE_TO']['CC'] as $iKey => $sEmail) {
                   if ($sEmail == '-1') {
                     $oCriteria = new Criteria('workflow');
-	                  $oCriteria->add(UsersPeer::USR_UID, $aRow['USR_UID']);
-    	              $oDatasetu = UsersPeer::doSelectRS($oCriteria);
-	                  $oDatasetu->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-	                  $oDatasetu->next();
-	                  $aRowUser = $oDatasetu->getRow();
-	                  $aRow['EVN_MESSAGE_TO']['CC'][$iKey] = $aRowUser['USR_EMAIL'];
+                    $oCriteria->add(UsersPeer::USR_UID, $aRow['USR_UID']);
+                    $oDatasetu = UsersPeer::doSelectRS($oCriteria);
+                    $oDatasetu->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+                    $oDatasetu->next();
+                    $aRowUser = $oDatasetu->getRow();
+                    $aRow['EVN_MESSAGE_TO']['CC'][$iKey] = $aRowUser['USR_EMAIL'];
                   }
                 }
               }
@@ -289,12 +309,12 @@ class AppEvent extends BaseAppEvent {
                 foreach ($aRow['EVN_MESSAGE_TO']['BCC'] as $iKey => $sEmail) {
                   if ($sEmail == '-1') {
                     $oCriteria = new Criteria('workflow');
-	                  $oCriteria->add(UsersPeer::USR_UID, $aRow['USR_UID']);
-    	              $oDatasetu = UsersPeer::doSelectRS($oCriteria);
-	                  $oDatasetu->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-	                  $oDatasetu->next();
-	                  $aRowUser = $oDatasetu->getRow();
-	                  $aRow['EVN_MESSAGE_TO']['BCC'][$iKey] = $aRowUser['USR_EMAIL'];
+                    $oCriteria->add(UsersPeer::USR_UID, $aRow['USR_UID']);
+                    $oDatasetu = UsersPeer::doSelectRS($oCriteria);
+                    $oDatasetu->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+                    $oDatasetu->next();
+                    $aRowUser = $oDatasetu->getRow();
+                    $aRow['EVN_MESSAGE_TO']['BCC'][$iKey] = $aRowUser['USR_EMAIL'];
                   }
                 }
               }
@@ -343,9 +363,10 @@ class AppEvent extends BaseAppEvent {
         }
         $oDataset->next();
       }
+*/
     }
     catch (Exception $oError) {
-      //CONTINUE
+      return  $oError->getMessage();
     }
   }
 } // AppEvent

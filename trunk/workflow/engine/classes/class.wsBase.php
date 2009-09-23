@@ -691,10 +691,28 @@ class wsBase
           foreach ( $variables as $key => $val ) {
             $a .= $val->name . ', ';
             if ( isset ( $oldFields[ $val->name ] ) ) {
-              $node = new stdClass();
-              $node->name  = $val->name ;
-              $node->value = $oldFields[ $val->name ] ;
-              $resFields[ ] = $node;
+            	if ( !is_array ( $oldFields[ $val->name ] ) ) {
+	              $node = new stdClass();
+	              $node->name  = $val->name ;
+	              $node->value = $oldFields[ $val->name ] ;
+	              $resFields[ ] = $node;
+            	}else{
+	            	foreach($oldFields[ $val->name ] as $gridKey => $gridRow){//Spècial Variables like grids or checkgroups
+			            if(is_array($gridRow)){//Grids
+			                foreach($gridRow as $col => $colValue){
+			                    $node = new stdClass();
+			                    $node->name = $key."][".$gridKey."][".$col;
+			                    $node->value =$colValue;
+			                    $resFields[] = $node;
+			                }               
+			            }else{//Checkgroups, Radiogroups
+			                $node = new stdClass();
+			                $node->name = $key;
+			                $node->value =implode("|",$val);
+			                $resFields[] = $node;
+			            }            
+			        }
+            	}
             }
           }
           $result = new wsGetVariableResponse (0, count($resFields) . " variables sent" , $resFields );

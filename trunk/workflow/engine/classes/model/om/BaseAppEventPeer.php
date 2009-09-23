@@ -412,6 +412,9 @@ abstract class BaseAppEventPeer {
 			$comparison = $criteria->getComparison(AppEventPeer::DEL_INDEX);
 			$selectCriteria->add(AppEventPeer::DEL_INDEX, $criteria->remove(AppEventPeer::DEL_INDEX), $comparison);
 
+			$comparison = $criteria->getComparison(AppEventPeer::EVN_UID);
+			$selectCriteria->add(AppEventPeer::EVN_UID, $criteria->remove(AppEventPeer::EVN_UID), $comparison);
+
 		} else { // $values is AppEvent object
 			$criteria = $values->buildCriteria(); // gets full criteria
 			$selectCriteria = $values->buildPkeyCriteria(); // gets criteria w/ primary key(s)
@@ -486,10 +489,12 @@ abstract class BaseAppEventPeer {
 
 				$vals[0][] = $value[0];
 				$vals[1][] = $value[1];
+				$vals[2][] = $value[2];
 			}
 
 			$criteria->add(AppEventPeer::APP_UID, $vals[0], Criteria::IN);
 			$criteria->add(AppEventPeer::DEL_INDEX, $vals[1], Criteria::IN);
+			$criteria->add(AppEventPeer::EVN_UID, $vals[2], Criteria::IN);
 		}
 
 		// Set the correct dbName
@@ -552,17 +557,19 @@ abstract class BaseAppEventPeer {
 	 * Retrieve object using using composite pkey values.
 	 * @param string $app_uid
 	   @param int $del_index
+	   @param string $evn_uid
 	   
 	 * @param      Connection $con
 	 * @return     AppEvent
 	 */
-	public static function retrieveByPK( $app_uid, $del_index, $con = null) {
+	public static function retrieveByPK( $app_uid, $del_index, $evn_uid, $con = null) {
 		if ($con === null) {
 			$con = Propel::getConnection(self::DATABASE_NAME);
 		}
 		$criteria = new Criteria();
 		$criteria->add(AppEventPeer::APP_UID, $app_uid);
 		$criteria->add(AppEventPeer::DEL_INDEX, $del_index);
+		$criteria->add(AppEventPeer::EVN_UID, $evn_uid);
 		$v = AppEventPeer::doSelect($criteria, $con);
 
 		return !empty($v) ? $v[0] : null;

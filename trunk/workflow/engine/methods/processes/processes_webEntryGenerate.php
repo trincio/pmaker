@@ -67,7 +67,8 @@
       //creating the third file, only if this wsClient.php file doesn't exists.
       $fileName = $pathProcess . 'wsClient.php';
       if ( ! file_exists ($fileName) ) {
-        $pluginTpl = PATH_CORE . 'templates' . PATH_SEP . 'processes' .PATH_SEP . 'wsClient.tpl';
+        //$pluginTpl = PATH_CORE . 'templates' . PATH_SEP . 'processes' .PATH_SEP . 'wsClient.tpl';
+        $pluginTpl = PATH_CORE . 'test' . PATH_SEP . 'unit' .PATH_SEP . 'ws' .PATH_SEP . 'wsClient.php';
         $template  = new TemplatePower( $pluginTpl );
         $template->prepare();
         file_put_contents ( $fileName, $template->getOutputContent() );
