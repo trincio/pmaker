@@ -222,6 +222,7 @@ class Triggers extends BaseTriggers {
     $con = Propel::getConnection(TriggersPeer::DATABASE_NAME);
     try
     {
+    	$result = false;
       $con->begin();  
   	  $oTri = TriggersPeer::retrieveByPK( $TriUid );
   	  if (!is_null($oTri)) {

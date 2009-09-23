@@ -171,9 +171,73 @@ class Event extends BaseEvent {
         $oEvent->setEvnStatus( $aData['EVN_STATUS'] );
         $oEvent->setEvnWhen( $aData['EVN_WHEN'] );
         if ( isset ($aData['EVN_ACTION'] ) )      $oEvent->setEvnAction( $aData['EVN_ACTION'] );
-        if ( isset ($aData['ENV_MAX_ATTEMPTS'] )) $oEvent->setEvnMaxAttempts( 3 );
+        //if ( isset ($aData['ENV_MAX_ATTEMPTS'] )) $oEvent->setEvnMaxAttempts( 3 );
         if ( isset ($aData['EVN_CONDITIONS'] ))   $oEvent->setEvnConditions( '' );
-        if ( isset ($aData['EVN_ACTION_PARAMETERS'] ))   $oEvent->setEvnActionParameters((is_array($aData['EVN_ACTION_PARAMETERS']) ? serialize($aData['EVN_ACTION_PARAMETERS']) : $aData['EVN_ACTION_PARAMETERS']));
+        if (isset($aData['EVN_ACTION_PARAMETERS'])) {
+          $aTO = $aCC = $aBCC = array();
+          $bTO = $bCC = $bBCC = false;
+          foreach ($aData['EVN_ACTION_PARAMETERS']['TO'] as $iIndex => $sEmail) {
+            if ($sEmail != '-1') {
+              $aTO[] = $sEmail;
+            }
+            else {
+              $bTO = true;
+            }
+          }
+          foreach ($aData['EVN_ACTION_PARAMETERS']['CC'] as $iIndex => $sEmail) {
+            if ($sEmail != '-1') {
+              $aCC[] = $sEmail;
+            }
+            else {
+              $bCC = true;
+            }
+          }
+          foreach ($aData['EVN_ACTION_PARAMETERS']['BCC'] as $iIndex => $sEmail) {
+            if ($sEmail != '-1') {
+              $aBCC[] = $sEmail;
+            }
+            else {
+              $bBCC = true;
+            }
+          }
+          $sTrigger  = "\$toUA = \$ccUA = \$bccUA = '';\n";
+          if ($bTO) {
+            $sTrigger .= "if (isset(\$aRow['USR_UID'])) {\n";
+            $sTrigger .= "  \$aAux = userInfo(\$aRow['USR_UID']);\n";
+            $sTrigger .= "  \$toUA = \$aAux['mail'];\n";
+            $sTrigger .= "}\n";
+          }
+          if ($bCC) {
+            $sTrigger .= "if (isset(\$aRow['USR_UID'])) {\n";
+            $sTrigger .= "  \$aAux = userInfo(\$aRow['USR_UID']);\n";
+            $sTrigger .= "  \$ccUA = \$aAux['mail'];\n";
+            $sTrigger .= "}\n";
+          }
+          if ($bBCC) {
+            $sTrigger .= "if (isset(\$aRow['USR_UID'])) {\n";
+            $sTrigger .= "  \$aAux = userInfo(\$aRow['USR_UID']);\n";
+            $sTrigger .= "  \$bccUA = \$aAux['mail'];\n";
+            $sTrigger .= "}\n";
+          }
+          $sTrigger .= "\$subject = '" . addslashes($aData['EVN_ACTION_PARAMETERS']['SUBJECT']) . "';\n";
+          $sTrigger .= "\$from    = 'info@processmaker.com';\n";
+          $sTrigger .= "\$to      = (\$toUA  != '' ? \$toUA  . ',' : '') . '" . implode(',', $aTO)  . "';\n";
+          $sTrigger .= "\$cc      = (\$ccUA  != '' ? \$ccUA  . ',' : '') . '" . implode(',', $aCC)  . "';\n";
+          $sTrigger .= "\$bcc     = (\$bccUA != '' ? \$bccUA . ',' : '') . '" . implode(',', $aBCC) . "';\n";
+          $sTrigger .= "PMFSendMessage(@@APPLICATION, \$from, \$to, \$cc, \$bcc, \$subject, '" . $aData['EVN_ACTION_PARAMETERS']['TEMPLATE'] . "');";
+          $oTrigger               = new Triggers();
+          $aTrigger               = $oTrigger->load($oEvent->getTriUid());
+          $aTrigger['TRI_WEBBOT'] = $sTrigger;
+          $oTrigger->update($aTrigger);
+          $oParameters           = new StdClass();
+          $oParameters->hash     = md5($sTrigger);
+          $oParameters->SUBJECT  = $aData['EVN_ACTION_PARAMETERS']['SUBJECT'];
+          $oParameters->TO       = $aData['EVN_ACTION_PARAMETERS']['TO'];
+          $oParameters->CC       = $aData['EVN_ACTION_PARAMETERS']['CC'];
+          $oParameters->BCC      = $aData['EVN_ACTION_PARAMETERS']['BCC'];
+          $oParameters->TEMPLATE = $aData['EVN_ACTION_PARAMETERS']['TEMPLATE'];
+          $oEvent->setEvnActionParameters(serialize($oParameters));
+        }
 
         if ($oEvent->validate()) {
           //start the transaction
@@ -208,7 +272,28 @@ class Event extends BaseEvent {
       $oEvent = EventPeer::retrieveByPK($sUID);
       if (!is_null($oEvent)) {
         $oConnection->begin();
+        $oTrigger = new Triggers();
+        $oAppEvent = new AppEvent();
+
+        $oCriteria = new Criteria('workflow');
+        $oCriteria->clearSelectColumns();
+        $oCriteria->addSelectColumn( AppEventPeer::EVN_UID );
+        $oCriteria->addSelectColumn( EventPeer::TRI_UID );
+        $oCriteria->addSelectColumn( AppEventPeer::APP_UID );
+        $oCriteria->addSelectColumn( AppEventPeer::DEL_INDEX );
+        $oCriteria->add(AppEventPeer::EVN_UID, $sUID );
+        $oCriteria->addJoin(EventPeer::EVN_UID, AppEventPeer::EVN_UID, Criteria::JOIN);
+        $oDataset = AppEventPeer::doSelectRs($oCriteria);
+        $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+        $oDataset->next();
+
+        while ($row = $oDataset->getRow()) {
+          $oTrigger->remove($row['TRI_UID']);
+          $oAppEvent->remove( $row['APP_UID'], $row['DEL_INDEX'], $sUID );
+          $oDataset->next();
+        }
         Content::removeContent('EVN_DESCRIPTION', '', $oEvent->getEvnUid());
+
         $iResult = $oEvent->delete();
         $oConnection->commit();
         return $iResult;
@@ -230,7 +315,7 @@ class Event extends BaseEvent {
   	$line2 = $this->calculateExecutionDateMultiple();
   	return $line1 . "<br>\n" . $line2;
   }
-  
+
   function calculateExecutionDateSingle() {
     try {
     	$rowsCreated  = 0;
@@ -307,12 +392,12 @@ class Event extends BaseEvent {
           //for multiple $sDueDate = date('Y-m-d H:i:s', $oDates->calculateDate($aData['DEL_DELEGATE_DATE'], $estimatedDuration, 'days', 1));
           $sDueDate    = $aData['DEL_TASK_DUE_DATE'];
           $sActionDate = date('Y-m-d H:i:s', $oDates->calculateDate( $sDueDate, $when, 'days', 1));
-          $validStartDate = ( $sActionDate >= $aData['DEL_DELEGATE_DATE'] );            
+          $validStartDate = ( $sActionDate >= $aData['DEL_DELEGATE_DATE'] );
         }
         else {
           $sDueDate    = $aData['DEL_DELEGATE_DATE'];
           $sActionDate = date('Y-m-d H:i:s', $oDates->calculateDate( $sDueDate, $when, 'days', 1));
-          $validStartDate = ( $sActionDate >= $aData['DEL_DELEGATE_DATE'] );            
+          $validStartDate = ( $sActionDate >= $aData['DEL_DELEGATE_DATE'] );
         }
         $aData['APP_EVN_ACTION_DATE'] = $sActionDate;
 
@@ -343,23 +428,23 @@ class Event extends BaseEvent {
     	$rowsRejected = 0;
       G::LoadClass('dates');
       $oDates = new dates();
-      // SELECT TASK2.* , 
-      //   EVENT.EVN_UID, EVENT.PRO_UID, EVENT.EVN_TAS_UID_FROM, 
-      //   EVENT.EVN_TAS_ESTIMATED_DURATION, EVENT.EVN_WHEN, 
-      //   EVENT.EVN_WHEN_OCCURS, EVENT.EVN_RELATED_TO, APP_DELEGATION.APP_UID, APP_DELEGATION.DEL_INDEX, APP_DELEGATION.TAS_UID, 
-      //   APP_DELEGATION.DEL_DELEGATE_DATE, APP_DELEGATION.DEL_INIT_DATE, APP_DELEGATION.DEL_TASK_DUE_DATE, 
-      //   APP_DELEGATION.DEL_FINISH_DATE 
-      // FROM 
-      //   APP_DELEGATION 
-      //   LEFT JOIN EVENT ON (APP_DELEGATION.TAS_UID=EVENT.EVN_TAS_UID_FROM) 
-      //   LEFT JOIN APP_EVENT ON (APP_DELEGATION.APP_UID=APP_EVENT.APP_UID AND APP_DELEGATION.DEL_INDEX=APP_EVENT.DEL_INDEX) 
-      //   LEFT JOIN APP_DELEGATION AS TASK2 ON (TASK2.TAS_UID = EVENT.EVN_TAS_UID_TO AND TASK2.APP_UID = APP_DELEGATION.APP_UID ) 
-      // 
-      // WHERE 
-      //   APP_EVENT.APP_UID IS NULL  
-      //   AND EVENT.EVN_STATUS='ACTIVE' 
-      //   AND EVENT.EVN_RELATED_TO='MULTIPLE' 
-      //   AND TASK2.DEL_FINISH_DATE IS NULL 
+      // SELECT TASK2.* ,
+      //   EVENT.EVN_UID, EVENT.PRO_UID, EVENT.EVN_TAS_UID_FROM,
+      //   EVENT.EVN_TAS_ESTIMATED_DURATION, EVENT.EVN_WHEN,
+      //   EVENT.EVN_WHEN_OCCURS, EVENT.EVN_RELATED_TO, APP_DELEGATION.APP_UID, APP_DELEGATION.DEL_INDEX, APP_DELEGATION.TAS_UID,
+      //   APP_DELEGATION.DEL_DELEGATE_DATE, APP_DELEGATION.DEL_INIT_DATE, APP_DELEGATION.DEL_TASK_DUE_DATE,
+      //   APP_DELEGATION.DEL_FINISH_DATE
+      // FROM
+      //   APP_DELEGATION
+      //   LEFT JOIN EVENT ON (APP_DELEGATION.TAS_UID=EVENT.EVN_TAS_UID_FROM)
+      //   LEFT JOIN APP_EVENT ON (APP_DELEGATION.APP_UID=APP_EVENT.APP_UID AND APP_DELEGATION.DEL_INDEX=APP_EVENT.DEL_INDEX)
+      //   LEFT JOIN APP_DELEGATION AS TASK2 ON (TASK2.TAS_UID = EVENT.EVN_TAS_UID_TO AND TASK2.APP_UID = APP_DELEGATION.APP_UID )
+      //
+      // WHERE
+      //   APP_EVENT.APP_UID IS NULL
+      //   AND EVENT.EVN_STATUS='ACTIVE'
+      //   AND EVENT.EVN_RELATED_TO='MULTIPLE'
+      //   AND TASK2.DEL_FINISH_DATE IS NULL
       //get info about the Event and the APP_DELEGATION to process
       $oCriteria = new Criteria('workflow');
       $oCriteria->addSelectColumn(EventPeer::EVN_UID);
@@ -413,12 +498,12 @@ class Event extends BaseEvent {
           //for multiple $sDueDate = date('Y-m-d H:i:s', $oDates->calculateDate($aData['DEL_DELEGATE_DATE'], $estimatedDuration, 'days', 1));
           $sDueDate    = $aData['DEL_TASK_DUE_DATE'];
           $sActionDate = date('Y-m-d H:i:s', $oDates->calculateDate( $sDueDate, $when, 'days', 1));
-          $validStartDate = ( $sActionDate >= $aData['DEL_DELEGATE_DATE'] );            
+          $validStartDate = ( $sActionDate >= $aData['DEL_DELEGATE_DATE'] );
         }
         else {
           $sDueDate    = $aData['DEL_DELEGATE_DATE'];
           $sActionDate = date('Y-m-d H:i:s', $oDates->calculateDate( $sDueDate, $when, 'days', 1));
-          $validStartDate = ( $sActionDate >= $aData['DEL_DELEGATE_DATE'] );            
+          $validStartDate = ( $sActionDate >= $aData['DEL_DELEGATE_DATE'] );
         }
         $aData['APP_EVN_ACTION_DATE'] = $sActionDate;
 
