@@ -55,6 +55,26 @@ function getLangFiles(){
     return $filesArray;
 }
 
+function getWorkspacesAvailable(){
+    $dir=PATH_DB;
+	  $filesArray=array();
+	  if (file_exists($dir)){
+  	  if ($handle = opendir($dir)) {
+          while (false !== ($file = readdir($handle))) {
+              if(($file!=".")&&($file!="..")){
+              	if(file_exists(PATH_DB .  $file . '/db.php')){
+                	$filesArray[]=$file;
+              	}
+              }
+          }
+          closedir($handle);
+      }
+    }
+    sort($filesArray,SORT_STRING );
+    return $filesArray;
+}
+$availableWorkspace=getWorkspacesAvailable();
+
 $availableLang=getLangFiles();
 
 $langISONames["en"]="English";
@@ -67,10 +87,20 @@ foreach($availableLang as $langKey => $langFile){
     $availableLangArray[] = $aFields;
 }
 
+$availableWorkspaceArray = array();
+$availableWorkspaceArray[] = array('ENV_ID' => 'char', 'ENV_NAME' => 'char');
+foreach($availableWorkspace as $envKey => $envName){
+    $aFields = array('ENV_ID' => $envName, 'ENV_NAME' => $envName);
+    $availableWorkspaceArray[] = $aFields;
+}
 
 global $_DBArray;
+
 $_DBArray['langOptions'] = $availableLangArray;
+$_DBArray['availableWorkspace'] = $availableWorkspaceArray;
+
 $_SESSION['_DBArray'] = $_DBArray;
+
 
 
 

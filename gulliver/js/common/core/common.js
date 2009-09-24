@@ -45,7 +45,7 @@
       	callServer.make();
       	response = callServer.xmlhttp.responseText;
       	var scs = callServer.xmlhttp.responseText.extractScript();
-      	
+
 	  	scs.evalScript();
       	delete callServer;
     	} catch(ss){
@@ -167,7 +167,7 @@
 	  } else if(thisform.elements[i].type == "select-multiple") { //Handle list box
 		  for(var j=0; j<thisform.elements[i].options.length ;j++) {
 			  if ( j!==0 ) formdata += '&';
-			  formdata += ( (thisform.elements[i].options[j].selected)? thisform.elements[i].name + "=" + encodeURIComponent(thisform.elements[i].options[j].value): '');
+			  formdata += ( (thisform.elements[i].options[j].selected)? thisform.elements[i].name.replace('[]', '[' + j + ']') + "=" + encodeURIComponent(thisform.elements[i].options[j].value): '');
 		  }
 	  } else {
 		  //finally, this should theoretically this is a select box.
@@ -1209,12 +1209,12 @@ var sh=function(a,i)
 
 /**
  * Set focus to first field from a dynaform
- * 
+ *
  * @Author Erik Amaru Ortiz <erik@colosa.com, aortiz.erik@gmail.com>
  * @return false
  */
 function dynaformSetFocus(){
-	
+
 	/* looking for the inputs fields */
 	var inputs = document.getElementsByTagName('input');
 	for(i in inputs) {
@@ -1233,23 +1233,23 @@ function dynaformSetFocus(){
 	return false;
 }
 
-/** 
+/**
  * ********************************* Misc Functions by Neyek ****************************************
  */
 
 /**
  * get the htmlentities from a string
- *  
+ *
  * @Author Erik Amaru Ortiz <erik@colosa.com, aortiz.erik@gmail.com>
- * @Param (string) string within the htmlentities to parse 
+ * @Param (string) string within the htmlentities to parse
  * @Param (string) quote_style it can be (ENT_QUOTES or ENT_NOQUOTES)
  * @Return (string) the parsed string with htmlentities at the string passed such as parameter
  */
 function htmlentities (string, quote_style) {
- 
+
     var hash_map = {}, symbol = '', tmp_str = '', entity = '';
     tmp_str = string.toString();
-    
+
     if (false === (hash_map = this.get_html_translation_table('HTML_ENTITIES', quote_style))) {
         return false;
     }
@@ -1258,33 +1258,33 @@ function htmlentities (string, quote_style) {
         entity = hash_map[symbol];
         tmp_str = tmp_str.split(symbol).join(entity);
     }
-    
+
     return tmp_str;
 }
 
 function get_html_translation_table (table, quote_style) {
     //example 1: get_html_translation_table('HTML_SPECIALCHARS');
     //returns 1: {'"': '&quot;', '&': '&amp;', '<': '&lt;', '>': '&gt;'}
-    
+
     var entities = {}, hash_map = {}, decimal = 0, symbol = '';
     var constMappingTable = {}, constMappingQuoteStyle = {};
     var useTable = {}, useQuoteStyle = {};
-    
+
     // Translate arguments
     constMappingTable[0]      = 'HTML_SPECIALCHARS';
     constMappingTable[1]      = 'HTML_ENTITIES';
     constMappingQuoteStyle[0] = 'ENT_NOQUOTES';
     constMappingQuoteStyle[2] = 'ENT_COMPAT';
     constMappingQuoteStyle[3] = 'ENT_QUOTES';
- 
+
     useTable       = !isNaN(table) ? constMappingTable[table] : table ? table.toUpperCase() : 'HTML_SPECIALCHARS';
     useQuoteStyle = !isNaN(quote_style) ? constMappingQuoteStyle[quote_style] : quote_style ? quote_style.toUpperCase() : 'ENT_COMPAT';
- 
+
     if (useTable !== 'HTML_SPECIALCHARS' && useTable !== 'HTML_ENTITIES') {
         throw new Error("Table: "+useTable+' not supported');
         // return false;
     }
- 
+
     entities['38'] = '&amp;';
     if (useTable === 'HTML_ENTITIES') {
         entities['160'] = '&nbsp;';
@@ -1384,7 +1384,7 @@ function get_html_translation_table (table, quote_style) {
         entities['254'] = '&thorn;';
         entities['255'] = '&yuml;';
     }
- 
+
     if (useQuoteStyle !== 'ENT_NOQUOTES') {
         entities['34'] = '&quot;';
     }
@@ -1393,14 +1393,14 @@ function get_html_translation_table (table, quote_style) {
     }
     entities['60'] = '&lt;';
     entities['62'] = '&gt;';
- 
- 
+
+
     // ascii decimals to real symbols
     for (decimal in entities) {
         symbol = String.fromCharCode(decimal);
         hash_map[symbol] = entities[decimal];
     }
-    
+
     return hash_map;
 }
 
@@ -1425,13 +1425,13 @@ function addslashes (str) {
 
 /**
  * This function sets netsted properties to dom elements
- *  
+ *
  * @Author Erik Amaru Ortiz <erik@colosa.com, aortiz.erik@gmail.com>
  * @Param (object) dom element refered by ID
  * @Param (array) nested array of properties strings
  * @Param (string) value to set
  * @Return <none>
- * 
+ *
  * Example:
  * 		setNestedProperty(document, ['body','style','backgroundColor'], 'black');
  */
@@ -1442,13 +1442,13 @@ function setNestedProperty(obj, propertyName, propertyValue){
 			oTarget[propertyName[i]] = propertyValue;
 			return false;
 		}
-		oTarget = oTarget[propertyName[i]];	
+		oTarget = oTarget[propertyName[i]];
 	}
 }
 
 /**
  * This function gets the user client browser and its version
- *  
+ *
  * @Author Erik Amaru Ortiz <erik@colosa.com, aortiz.erik@gmail.com>
  * @Param <none>
  * @Return (objeect) {browser:sBrowser, version:sVersion}
@@ -1469,8 +1469,8 @@ function getBrowserClient(){
 }
 
 /**
- * Create and send cookie 
- *  
+ * Create and send cookie
+ *
  * @Author Erik Amaru Ortiz <erik@colosa.com, aortiz.erik@gmail.com>
  * @Param (string) cookie name
  * @Param (string) cookie value
@@ -1487,8 +1487,8 @@ function createCookie(name, value, days){
 }
 
 /**
- * read a cookie 
- *  
+ * read a cookie
+ *
  * @Author Erik Amaru Ortiz <erik@colosa.com, aortiz.erik@gmail.com>
  * @Param cookie name
  * @Return (string) cookie content
@@ -1506,7 +1506,7 @@ function readCookie(name){
 
 /**
  * delete a cookie
- *  
+ *
  * @Author Erik Amaru Ortiz <erik@colosa.com, aortiz.erik@gmail.com>
  * @Param cookie name
  * @Return <none>

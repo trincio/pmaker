@@ -125,8 +125,10 @@ class AppEvent extends BaseAppEvent {
       $oCriteria->addSelectColumn(EventPeer::EVN_ACTION);
       $oCriteria->addAsColumn('EVN_DESCRIPTION', 'C1.CON_VALUE');
       $oCriteria->addAsColumn('TAS_TITLE', 'C2.CON_VALUE');
+      $oCriteria->addAsColumn('APP_TITLE', 'C3.CON_VALUE');
       $oCriteria->addAlias('C1', 'CONTENT');
       $oCriteria->addAlias('C2', 'CONTENT');
+      $oCriteria->addAlias('C3', 'CONTENT');
       $oCriteria->addJoin(AppEventPeer::EVN_UID, EventPeer::EVN_UID, Criteria::LEFT_JOIN);
       $del = DBAdapter::getStringDelimiter();
       $aConditions   = array();
@@ -142,6 +144,11 @@ class AppEvent extends BaseAppEvent {
       $aConditions[] = array(AppDelegationPeer::TAS_UID, 'C2.CON_ID');
       $aConditions[] = array('C2.CON_CATEGORY', $del . 'TAS_TITLE' . $del);
       $aConditions[] = array('C2.CON_LANG', $del . SYS_LANG . $del);
+      $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
+      $aConditions   = array();
+      $aConditions[] = array(AppDelegationPeer::APP_UID, 'C3.CON_ID');
+      $aConditions[] = array('C3.CON_CATEGORY', $del . 'APP_TITLE' . $del);
+      $aConditions[] = array('C3.CON_LANG', $del . SYS_LANG . $del);
       $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
       $oCriteria->add(AppEventPeer::EVN_UID, '', Criteria::NOT_EQUAL);
       $oCriteria->add(EventPeer::PRO_UID, $sProcessUid);
@@ -189,7 +196,7 @@ class AppEvent extends BaseAppEvent {
       $aConditions[] = array(AppEventPeer::DEL_INDEX, AppDelegationPeer::DEL_INDEX);
       $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
 
-      $oCriteria->add(AppEventPeer::APP_EVN_ATTEMPTS, 0, Criteria::GREATER_THAN);
+//      $oCriteria->add(AppEventPeer::APP_EVN_ATTEMPTS, 0, Criteria::GREATER_THAN);
       $oCriteria->add(AppEventPeer::APP_EVN_STATUS, 'OPEN');
 /*      if ($sLastExecution == '') {
         $oCriteria->add(AppEventPeer::APP_EVN_ACTION_DATE, $sNow, Criteria::LESS_EQUAL);
@@ -205,6 +212,7 @@ class AppEvent extends BaseAppEvent {
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
       $oDataset->next();
       while ($aRow = $oDataset->getRow()) {
+      	krumo ($aRow);
         $oTrigger = new Triggers();
         $aTrigger = $oTrigger->load($aRow['TRI_UID']);
         $aFields = $oCase->loadCase($aRow['APP_UID']);
@@ -217,18 +225,18 @@ class AppEvent extends BaseAppEvent {
 
         //update the appevent record.
         $oAppEvent = AppEventPeer::retrieveByPK($aRow['APP_UID'], $aRow['DEL_INDEX'], $aRow['EVN_UID']);
-        if ( $oAppEvent->getAppEvnAttempts() >= 1 ) 
+        if ( $oAppEvent->getAppEvnAttempts() >= 1 )
           $oAppEvent->setAppEvnAttempts($oAppEvent->getAppEvnAttempts() - 1);
         else
           $oAppEvent->setAppEvnAttempts( 0 );
-          
+
         $oAppEvent->setAppEvnLastExecutionDate(date('Y-m-d H:i:s'));
         $oAppEvent->setAppEvnStatus('CLOSE');
         $oAppEvent->save();
-        
+
         $oDataset->next();
       }
-/*          
+/*
       require_once 'classes/model/Configuration.php';
       $oConfiguration = new Configuration();
       $sDelimiter     = DBAdapter::getStringDelimiter();

@@ -12,9 +12,11 @@
   <en>Password</en>
 <es><![CDATA[Contraseña]]></es></USR_PASSWORD>
 
-<USER_ENV type="text" size="30" maxlength="32" validate="AlphaNum">
-  <en>Workspace</en>
-<es>Espacio de trabajo</es></USER_ENV>
+<USER_ENV type="dropdown" sqlconnection="dbarray">
+SELECT ENV_ID, ENV_NAME FROM availableWorkspace
+<en>Workspace</en>
+<es>Espacio de trabajo</es>
+</USER_ENV>
 
 <USER_LANG type="dropdown" sqlconnection="dbarray">
 SELECT LANG_ID, LANG_NAME FROM langOptions

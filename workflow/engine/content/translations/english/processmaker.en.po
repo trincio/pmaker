@@ -2,7 +2,7 @@ msgid ""
 msgstr "" 
 "Project-Id-Version: PM 4.0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-09-22 18:01+0100 \n"
+"PO-Revision-Date: 2009-09-24 12:01+0100 \n"
 "Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
 "Language-Team: Colosa Developers Team <developers@colosa.com>\n"
 "MIME-Version: 1.0\n"
@@ -2886,6 +2886,12 @@ msgstr "Reassign Cases"
 #: LABEL/ID_ALERT_MESSAGE
 msgid "Alert Message"
 msgstr "Alert Message"
+
+# TRANSLATION
+# JAVASCRIPT/EVENT_EMAILEXISTS
+#: JAVASCRIPT/EVENT_EMAILEXISTS
+msgid "The user or group is already on the list!"
+msgstr "The user or group is already on the list!"
 
 # TRANSLATION
 # LABEL/ID_PENDING
@@ -17003,12 +17009,6 @@ msgstr "Available Triggers"
 msgid "[steps/triggers_Assign.xml?TRI_UID] Triggers"
 msgstr "Triggers"
 
-# steps/triggers_Assign.xml?ST_CONDITION
-# steps/triggers_Assign.xml
-#: textareapm - ST_CONDITION
-msgid "[steps/triggers_Assign.xml?ST_CONDITION] Condition"
-msgstr "Condition"
-
 # steps/triggers_Assign.xml?ASSIGN
 # steps/triggers_Assign.xml
 #: button - ASSIGN
@@ -17285,6 +17285,18 @@ msgstr "Evaluation"
 msgid "[patterns/patterns_Evaluate.xml?SAVE] Save"
 msgstr "Save"
 
+# triggers/triggersNarrowEdit.xml?TITLE
+# triggers/triggersNarrowEdit.xml
+#: title - TITLE
+msgid "Trigger Script"
+msgstr "Trigger Script"
+
+# triggers/triggersNarrowEdit.xml?SAVE
+# triggers/triggersNarrowEdit.xml
+#: button - SAVE
+msgid "[triggers/triggersNarrowEdit.xml?SAVE] Save"
+msgstr "Save"
+
 # triggers/triggers_ShortList.xml?TRI_TITLE
 # triggers/triggers_ShortList.xml
 #: text - TRI_TITLE
@@ -17356,12 +17368,6 @@ msgstr "Title"
 #: textarea - TRI_DESCRIPTION
 msgid "[triggers/triggers_Edit.xml?TRI_DESCRIPTION] Description"
 msgstr "Description"
-
-# triggers/triggers_Edit.xml?TRI_WEBBOT
-# triggers/triggers_Edit.xml
-#: textareapm - TRI_WEBBOT
-msgid "Script"
-msgstr "Script"
 
 # triggers/triggers_Edit.xml?SAVE
 # triggers/triggers_Edit.xml
@@ -17495,6 +17501,48 @@ msgstr "Pending"
 msgid "[events/eventsOptions.xml?MNU_COMPLETED] Completed"
 msgstr "Completed"
 
+# events/appEventsListCompleted.xml?APP_TITLE
+# events/appEventsListCompleted.xml
+#: text - APP_TITLE
+msgid "[events/appEventsListCompleted.xml?APP_TITLE] Case"
+msgstr "Case"
+
+# events/appEventsListCompleted.xml?APP_EVN_ACTION_DATE
+# events/appEventsListCompleted.xml
+#: text - APP_EVN_ACTION_DATE
+msgid "Action date"
+msgstr "Action date"
+
+# events/appEventsListCompleted.xml?APP_EVN_LAST_EXECUTION_DATE
+# events/appEventsListCompleted.xml
+#: text - APP_EVN_LAST_EXECUTION_DATE
+msgid "Last Execution"
+msgstr "Last Execution"
+
+# events/appEventsListCompleted.xml?EVN_DESCRIPTION
+# events/appEventsListCompleted.xml
+#: text - EVN_DESCRIPTION
+msgid "[events/appEventsListCompleted.xml?EVN_DESCRIPTION] Description"
+msgstr "Description"
+
+# events/appEventsListCompleted.xml?EVN_ACTION
+# events/appEventsListCompleted.xml
+#: dropdown - EVN_ACTION
+msgid "[events/appEventsListCompleted.xml?EVN_ACTION] Action  "
+msgstr "Action  "
+
+# events/appEventsListCompleted.xml?EVN_ACTION-SEND_MESSAGE
+# events/appEventsListCompleted.xml
+#: dropdown - EVN_ACTION - SEND_MESSAGE
+msgid "[events/appEventsListCompleted.xml?EVN_ACTION-SEND_MESSAGE]"
+msgstr "Send Message"
+
+# events/appEventsListCompleted.xml?EVN_ACTION-EXECUTE_TRIGGER
+# events/appEventsListCompleted.xml
+#: dropdown - EVN_ACTION - EXECUTE_TRIGGER
+msgid "[events/appEventsListCompleted.xml?EVN_ACTION-EXECUTE_TRIGGER]"
+msgstr "Execute Trigger"
+
 # events/eventsNew.xml?TITLE
 # events/eventsNew.xml
 #: title - TITLE
@@ -17531,23 +17579,29 @@ msgstr "Active"
 msgid "[events/eventsNew.xml?EVN_STATUS-INACTIVE]"
 msgstr "Inactive"
 
+# events/eventsNew.xml?SUBTITLE1
+# events/eventsNew.xml
+#: subtitle - SUBTITLE1
+msgid "Set Interval"
+msgstr "Set Interval"
+
 # events/eventsNew.xml?EVN_WHEN_OCCURS
 # events/eventsNew.xml
 #: dropdown - EVN_WHEN_OCCURS
-msgid "[events/eventsNew.xml?EVN_WHEN_OCCURS] When occurs    "
-msgstr "When occurs    "
+msgid "Timer    "
+msgstr "Timer    "
 
 # events/eventsNew.xml?EVN_WHEN_OCCURS-AFTER_TIME
 # events/eventsNew.xml
 #: dropdown - EVN_WHEN_OCCURS - AFTER_TIME
 msgid "[events/eventsNew.xml?EVN_WHEN_OCCURS-AFTER_TIME]"
-msgstr "After time elapses"
+msgstr "After interval ends"
 
 # events/eventsNew.xml?EVN_WHEN_OCCURS-TASK_STARTED
 # events/eventsNew.xml
 #: dropdown - EVN_WHEN_OCCURS - TASK_STARTED
 msgid "[events/eventsNew.xml?EVN_WHEN_OCCURS-TASK_STARTED]"
-msgstr "After task started"
+msgstr "After interval starts"
 
 # events/eventsNew.xml?EVN_RELATED_TO
 # events/eventsNew.xml
@@ -17570,14 +17624,14 @@ msgstr "Multiple Tasks"
 # events/eventsNew.xml?TAS_UID
 # events/eventsNew.xml
 #: dropdown - TAS_UID
-msgid "[events/eventsNew.xml?TAS_UID] Task"
-msgstr "Task"
+msgid "Interval "
+msgstr "Interval "
 
 # events/eventsNew.xml?EVN_TAS_UID_FROM
 # events/eventsNew.xml
 #: dropdown - EVN_TAS_UID_FROM
-msgid "[events/eventsNew.xml?EVN_TAS_UID_FROM] Tasks From"
-msgstr "Tasks From"
+msgid "Interval"
+msgstr "Interval"
 
 # events/eventsNew.xml?EVN_TAS_UID_TO
 # events/eventsNew.xml
@@ -17588,8 +17642,8 @@ msgstr "To"
 # events/eventsNew.xml?EVN_TAS_ESTIMATED_DURATION
 # events/eventsNew.xml
 #: text - EVN_TAS_ESTIMATED_DURATION
-msgid "[events/eventsNew.xml?EVN_TAS_ESTIMATED_DURATION] Estimated duration"
-msgstr "Estimated duration"
+msgid "Interval Time"
+msgstr "Interval Time"
 
 # events/eventsNew.xml?EVN_WHEN
 # events/eventsNew.xml
@@ -17620,6 +17674,12 @@ msgstr "Execute Trigger"
 #: button - CONTINUE
 msgid "[events/eventsNew.xml?CONTINUE] Continue"
 msgstr "Continue"
+
+# events/groupmailList.xml?GROUP_TITLE
+# events/groupmailList.xml
+#: text - GROUP_TITLE
+msgid "Group name"
+msgstr "Group name"
 
 # events/eventsShortList.xml?EVN_DESCRIPTION
 # events/eventsShortList.xml
@@ -17687,10 +17747,16 @@ msgstr "Inactive"
 msgid "[events/eventsShortList.xml?DELETE] Delete"
 msgstr "Delete"
 
+# events/appEventsList.xml?APP_TITLE
+# events/appEventsList.xml
+#: text - APP_TITLE
+msgid "[events/appEventsList.xml?APP_TITLE] Case"
+msgstr "Case"
+
 # events/appEventsList.xml?APP_EVN_ACTION_DATE
 # events/appEventsList.xml
 #: text - APP_EVN_ACTION_DATE
-msgid "Action date"
+msgid "[events/appEventsList.xml?APP_EVN_ACTION_DATE] Action date"
 msgstr "Action date"
 
 # events/appEventsList.xml?EVN_DESCRIPTION
@@ -17698,24 +17764,6 @@ msgstr "Action date"
 #: text - EVN_DESCRIPTION
 msgid "[events/appEventsList.xml?EVN_DESCRIPTION] Description"
 msgstr "Description"
-
-# events/appEventsList.xml?EVN_WHEN_OCCURS
-# events/appEventsList.xml
-#: dropdown - EVN_WHEN_OCCURS
-msgid "[events/appEventsList.xml?EVN_WHEN_OCCURS] When occurs    "
-msgstr "When occurs    "
-
-# events/appEventsList.xml?EVN_WHEN_OCCURS-AFTER_TIME
-# events/appEventsList.xml
-#: dropdown - EVN_WHEN_OCCURS - AFTER_TIME
-msgid "[events/appEventsList.xml?EVN_WHEN_OCCURS-AFTER_TIME]"
-msgstr "After time elapses"
-
-# events/appEventsList.xml?EVN_WHEN_OCCURS-TASK_STARTED
-# events/appEventsList.xml
-#: dropdown - EVN_WHEN_OCCURS - TASK_STARTED
-msgid "[events/appEventsList.xml?EVN_WHEN_OCCURS-TASK_STARTED]"
-msgstr "After task started"
 
 # events/appEventsList.xml?EVN_ACTION
 # events/appEventsList.xml
@@ -17747,17 +17795,29 @@ msgstr "Task"
 msgid "[events/eventsEditAction.xml?EVN_MESSAGE_SUBJECT] Subject"
 msgstr "Subject"
 
+# events/eventsEditAction.xml?title1
+# events/eventsEditAction.xml
+#: title - title1
+msgid "Send to"
+msgstr "Send to"
+
 # events/eventsEditAction.xml?EVN_MESSAGE_TO_TO
 # events/eventsEditAction.xml
 #: listbox - EVN_MESSAGE_TO_TO
-msgid "To  "
-msgstr "To  "
+msgid "TO  "
+msgstr "TO  "
 
-# events/eventsEditAction.xml?EVN_MESSAGE_TO_TO--1
+# events/eventsEditAction.xml?EVN_MESSAGE_TO_TO-usr|-1
 # events/eventsEditAction.xml
-#: listbox - EVN_MESSAGE_TO_TO - -1
-msgid "[events/eventsEditAction.xml?EVN_MESSAGE_TO_TO--1]"
-msgstr "-- Current task user --"
+#: listbox - EVN_MESSAGE_TO_TO - usr|-1
+msgid "[events/eventsEditAction.xml?EVN_MESSAGE_TO_TO-usr|-1]"
+msgstr " (Current Task User) "
+
+# events/eventsEditAction.xml?title2
+# events/eventsEditAction.xml
+#: title - title2
+msgid "Carbon Copy"
+msgstr "Carbon Copy"
 
 # events/eventsEditAction.xml?EVN_MESSAGE_TO_CC
 # events/eventsEditAction.xml
@@ -17765,23 +17825,17 @@ msgstr "-- Current task user --"
 msgid "CC  "
 msgstr "CC  "
 
-# events/eventsEditAction.xml?EVN_MESSAGE_TO_CC--1
+# events/eventsEditAction.xml?title3
 # events/eventsEditAction.xml
-#: listbox - EVN_MESSAGE_TO_CC - -1
-msgid "[events/eventsEditAction.xml?EVN_MESSAGE_TO_CC--1]"
-msgstr "-- Current task user --"
+#: title - title3
+msgid "Blind Carbon Copy"
+msgstr "Blind Carbon Copy"
 
 # events/eventsEditAction.xml?EVN_MESSAGE_TO_BCC
 # events/eventsEditAction.xml
 #: listbox - EVN_MESSAGE_TO_BCC
 msgid "BCC  "
 msgstr "BCC  "
-
-# events/eventsEditAction.xml?EVN_MESSAGE_TO_BCC--1
-# events/eventsEditAction.xml
-#: listbox - EVN_MESSAGE_TO_BCC - -1
-msgid "[events/eventsEditAction.xml?EVN_MESSAGE_TO_BCC--1]"
-msgstr "-- Current task user --"
 
 # events/eventsEditAction.xml?EVN_MESSAGE_TEMPLATE
 # events/eventsEditAction.xml
@@ -17812,4 +17866,16 @@ msgstr "-- Select --"
 #: button - SAVE
 msgid "[events/eventsEditAction.xml?SAVE] Save"
 msgstr "Save"
+
+# events/usermailList.xml?USR_FULLNAME
+# events/usermailList.xml
+#: text - USR_FULLNAME
+msgid "Fullname"
+msgstr "Fullname"
+
+# events/usermailList.xml?USR_EMAIL
+# events/usermailList.xml
+#: text - USR_EMAIL
+msgid "email"
+msgstr "email"
 

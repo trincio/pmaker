@@ -174,57 +174,37 @@ class Event extends BaseEvent {
         //if ( isset ($aData['ENV_MAX_ATTEMPTS'] )) $oEvent->setEvnMaxAttempts( 3 );
         if ( isset ($aData['EVN_CONDITIONS'] ))   $oEvent->setEvnConditions( '' );
         if (isset($aData['EVN_ACTION_PARAMETERS'])) {
-          $aTO = $aCC = $aBCC = array();
-          $bTO = $bCC = $bBCC = false;
-          foreach ($aData['EVN_ACTION_PARAMETERS']['TO'] as $iIndex => $sEmail) {
-            if ($sEmail != '-1') {
-              $aTO[] = $sEmail;
-            }
-            else {
-              $bTO = true;
-            }
-          }
-          foreach ($aData['EVN_ACTION_PARAMETERS']['CC'] as $iIndex => $sEmail) {
-            if ($sEmail != '-1') {
-              $aCC[] = $sEmail;
-            }
-            else {
-              $bCC = true;
+          $oTP  = new TemplatePower(PATH_TPL . 'events' . PATH_SEP . 'sendMessage.tpl');
+          $oTP->prepare();
+          $sTO_UIDs  = "\$aTO_UIDs  = array('ext' => array(), 'usr' => array(), 'grp' => array());\n";
+          $sCC_UIDs  = "\$aCC_UIDs  = array('ext' => array(), 'usr' => array(), 'grp' => array());\n";
+          $sBCC_UIDs = "\$aBCC_UIDs = array('ext' => array(), 'usr' => array(), 'grp' => array());\n";
+          foreach ($aData['EVN_ACTION_PARAMETERS']['TO'] as $vValue) {
+            $aAux = explode('|', $vValue);
+            if (isset($aAux[1])) {
+              $sTO_UIDs .= "\$aTO_UIDs['" . $aAux[0] . "'][] = '" . $aAux[1] . "';\n";
             }
           }
-          foreach ($aData['EVN_ACTION_PARAMETERS']['BCC'] as $iIndex => $sEmail) {
-            if ($sEmail != '-1') {
-              $aBCC[] = $sEmail;
-            }
-            else {
-              $bBCC = true;
+          foreach ($aData['EVN_ACTION_PARAMETERS']['CC'] as $vValue) {
+            $aAux = explode('|', $vValue);
+            if (isset($aAux[1])) {
+              $sCC_UIDs .= "\$aCC_UIDs['" . $aAux[0] . "'][] = '" . $aAux[1] . "';\n";
             }
           }
-          $sTrigger  = "\$toUA = \$ccUA = \$bccUA = '';\n";
-          if ($bTO) {
-            $sTrigger .= "if (isset(\$aRow['USR_UID'])) {\n";
-            $sTrigger .= "  \$aAux = userInfo(\$aRow['USR_UID']);\n";
-            $sTrigger .= "  \$toUA = \$aAux['mail'];\n";
-            $sTrigger .= "}\n";
+          foreach ($aData['EVN_ACTION_PARAMETERS']['BCC'] as $vValue) {
+            $aAux = explode('|', $vValue);
+            if (isset($aAux[1])) {
+              $sBCC_UIDs .= "\$aBCC_UIDs['" . $aAux[0] . "'][] = '" . $aAux[1] . "';\n";
+            }
           }
-          if ($bCC) {
-            $sTrigger .= "if (isset(\$aRow['USR_UID'])) {\n";
-            $sTrigger .= "  \$aAux = userInfo(\$aRow['USR_UID']);\n";
-            $sTrigger .= "  \$ccUA = \$aAux['mail'];\n";
-            $sTrigger .= "}\n";
-          }
-          if ($bBCC) {
-            $sTrigger .= "if (isset(\$aRow['USR_UID'])) {\n";
-            $sTrigger .= "  \$aAux = userInfo(\$aRow['USR_UID']);\n";
-            $sTrigger .= "  \$bccUA = \$aAux['mail'];\n";
-            $sTrigger .= "}\n";
-          }
-          $sTrigger .= "\$subject = '" . addslashes($aData['EVN_ACTION_PARAMETERS']['SUBJECT']) . "';\n";
-          $sTrigger .= "\$from    = 'info@processmaker.com';\n";
-          $sTrigger .= "\$to      = (\$toUA  != '' ? \$toUA  . ',' : '') . '" . implode(',', $aTO)  . "';\n";
-          $sTrigger .= "\$cc      = (\$ccUA  != '' ? \$ccUA  . ',' : '') . '" . implode(',', $aCC)  . "';\n";
-          $sTrigger .= "\$bcc     = (\$bccUA != '' ? \$bccUA . ',' : '') . '" . implode(',', $aBCC) . "';\n";
-          $sTrigger .= "PMFSendMessage(@@APPLICATION, \$from, \$to, \$cc, \$bcc, \$subject, '" . $aData['EVN_ACTION_PARAMETERS']['TEMPLATE'] . "');";
+          $oTP->assign('from', 'info@processmaker.com');
+          $oTP->assign('TO_UIDs', $sTO_UIDs);
+          $oTP->assign('CC_UIDs', $sCC_UIDs);
+          $oTP->assign('BCC_UIDs', $sBCC_UIDs);
+          $oTP->assign('subject', addslashes($aData['EVN_ACTION_PARAMETERS']['SUBJECT']));
+          $oTP->assign('template', $aData['EVN_ACTION_PARAMETERS']['TEMPLATE']);
+          $sTrigger = $oTP->getOutputContent();
+
           $oTrigger               = new Triggers();
           $aTrigger               = $oTrigger->load($oEvent->getTriUid());
           $aTrigger['TRI_WEBBOT'] = $sTrigger;
@@ -355,6 +335,7 @@ class Event extends BaseEvent {
       $oCriteria->addSelectColumn(EventPeer::EVN_WHEN);
       $oCriteria->addSelectColumn(EventPeer::EVN_WHEN_OCCURS);
       $oCriteria->addSelectColumn(EventPeer::EVN_RELATED_TO);
+      $oCriteria->addSelectColumn(EventPeer::EVN_MAX_ATTEMPTS);
       $oCriteria->addSelectColumn(AppDelegationPeer::APP_UID);
       $oCriteria->addSelectColumn(AppDelegationPeer::DEL_INDEX);
       $oCriteria->addSelectColumn(AppDelegationPeer::TAS_UID);
@@ -400,6 +381,7 @@ class Event extends BaseEvent {
           $validStartDate = ( $sActionDate >= $aData['DEL_DELEGATE_DATE'] );
         }
         $aData['APP_EVN_ACTION_DATE'] = $sActionDate;
+        $aData['APP_EVN_ATTEMPTS'] = $aData['EVN_MAX_ATTEMPTS'];
 
         if ( $validStartDate ) {
         	$rowsCreated++ ;
