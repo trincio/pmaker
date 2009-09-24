@@ -37,8 +37,8 @@ if(!defined('DB_SYSTEM_INFORMATION')) define('DB_SYSTEM_INFORMATION', 1);
       if ( DB_SYSTEM_INFORMATION==1) {
         $footer = "<a href=\"#\" onclick=\"openInfoPanel();return false;\" class=\"FooterLink\">| System Information |</a><br />";
       }
-      
-      $footer .= "<br />Copyright © 2003-2008 Colosa, Inc. All rights reserved.";
+
+      $footer .= "<br />Copyright © 2003-" . date('Y') . " <a href=\"http://www.colosa.com\" alt=\"Colosa, Inc.\" target=\"_blank\">Colosa, Inc.</a> All rights reserved.<br /><br /><a href=\"http://www.processmaker.com\" alt=\"Powered by ProcessMaker - Open Source Workflow & Business Process Management (BPM) Management Software\" title=\"Powered by ProcessMaker\" target=\"_blank\"><img src=\"/images/PowerdbyProcessMaker.png\" border=\"0\" /></a>";
     }
 
     //menu
@@ -52,23 +52,23 @@ if(!defined('DB_SYSTEM_INFORMATION')) define('DB_SYSTEM_INFORMATION', 1);
  	  $oMenu = new Menu();
  	  $menus = $oMenu->generateArrayForTemplate ( $G_MAIN_MENU,'SelectedMenu', 'mainMenu',$G_MENU_SELECTED, $G_ID_MENU_SELECTED );
 	  $smarty->assign('menus', $menus  );
-	          
+
  	  $oSubMenu = new Menu();
  	  $subMenus = $oSubMenu->generateArrayForTemplate ( $G_SUB_MENU,'selectedSubMenu', 'subMenu',$G_SUB_MENU_SELECTED, $G_ID_SUB_MENU_SELECTED );
 	  $smarty->assign('subMenus', $subMenus  );
- 
+
 	  if (!defined('NO_DISPLAY_USERNAME')) {
 	    define('NO_DISPLAY_USERNAME', 0);
 	  }
 	  if (NO_DISPLAY_USERNAME == 0) {
 	    $smarty->assign('user',   isset($_SESSION['USR_USERNAME']) ? $_SESSION['USR_USERNAME'] : '');
-	    $smarty->assign('pipe',   isset($_SESSION['USR_USERNAME']) ? ' | ' : '');	    
+	    $smarty->assign('pipe',   isset($_SESSION['USR_USERNAME']) ? ' | ' : '');
 	    $smarty->assign('logout', G::LoadTranslation('ID_LOGOUT'));
 	  }
 	  if(defined('SYS_SYS'))
     	$logout='/sys'.SYS_SYS.'/'.SYS_LANG.'/'.SYS_SKIN.'/login/login';
     else
-    	$logout='/sys/'.SYS_LANG.'/'.SYS_SKIN.'/login/login';	
+    	$logout='/sys/'.SYS_LANG.'/'.SYS_SKIN.'/login/login';
     $smarty->assign('linklogout', $logout );
   	$smarty->assign('header', $header );
   	$smarty->assign('footer', $footer);
