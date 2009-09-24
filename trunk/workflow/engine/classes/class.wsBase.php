@@ -701,7 +701,7 @@ class wsBase
 			            if(is_array($gridRow)){//Grids
 			                foreach($gridRow as $col => $colValue){
 			                    $node = new stdClass();
-			                    $node->name = $key."][".$gridKey."][".$col;
+			                    $node->name = $val->name."][".$gridKey."][".$col;
 			                    $node->value =$colValue;
 			                    $resFields[] = $node;
 			                }               

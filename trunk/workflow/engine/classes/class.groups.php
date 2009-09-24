@@ -29,7 +29,7 @@ require_once 'classes/model/Users.php';
 /**
  * Groups - Groups class
  * @package ProcessMaker
- * @author Julio Cesar Laura Avendaño
+ * @author Julio Cesar Laura Avendaï¿½o
  * @copyright 2007 COLOSA
  */
 
@@ -319,5 +319,22 @@ class Groups
             throw ($oError);
         }
     }
+    
+	public function load($GrpUid){
+	 try {
+            $criteria = new Criteria();
+            $criteria->add(GroupwfPeer::GRP_UID, $GrpUid, Criteria::EQUAL);
+            $con = Propel::getConnection(GroupwfPeer::DATABASE_NAME);
+            $objects = GroupwfPeer::doSelect($criteria, $con);
+            if(is_array($objects) && count($objects)>0){
+            	return $objects[0];
+            } else {
+            	return false;
+            }
+        }
+        catch (exception $e) {
+            throw $e;
+        }
+	}
 }
 ?>
