@@ -212,7 +212,7 @@ class AppEvent extends BaseAppEvent {
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
       $oDataset->next();
       while ($aRow = $oDataset->getRow()) {
-      	krumo ($aRow);
+      	$_SESSION['__aRow__'] = $aRow;
         $oTrigger = new Triggers();
         $aTrigger = $oTrigger->load($aRow['TRI_UID']);
         $aFields = $oCase->loadCase($aRow['APP_UID']);
@@ -233,7 +233,7 @@ class AppEvent extends BaseAppEvent {
         $oAppEvent->setAppEvnLastExecutionDate(date('Y-m-d H:i:s'));
         $oAppEvent->setAppEvnStatus('CLOSE');
         $oAppEvent->save();
-
+        unset($_SESSION['__aRow__']);
         $oDataset->next();
       }
 /*

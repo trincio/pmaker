@@ -110,7 +110,7 @@ class propelTable
    */
   function prepareQuery( $limitPage = false ) {
     // process the QuickSearch string and add the fields and expression needed to run the search
-    if ( $this->searchBy !== '' && $this->fastSearch !== '' ) {
+    if ( $this->searchBy !== '' ) {
       $aSB = explode('|', $this->searchBy);  //fields are separated by pipes
 //subfilter 
       $subFilter='';
