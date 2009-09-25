@@ -1785,7 +1785,8 @@ class Processes {
               		  }
               		}
               		#here we verify if is adynaform or a html
-              		$ext = (substr(trim($XmlContent),0,5) == '<?xml')?'.xml':'.html';
+              		$aAux = explode(' ', $XmlContent);
+                  $ext = (strpos($aAux[0], '<?xml') !== false ? '.xml' : '.html');
 
               		$sFileName = $path . $newXmlGuid . $ext;
               		$bytesSaved = @file_put_contents ( $sFileName, $XmlContent );
