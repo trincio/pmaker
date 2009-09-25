@@ -989,7 +989,7 @@ class Cases
         $appThread->setAppThreadStatus('CLOSED');
         if ($appThread->Validate()) {
             $appThread->Save();
-        } 
+        }
         else {
           $msg = '';
           foreach ($this->getValidationFailures() as $objValidationFailure)
@@ -1043,7 +1043,7 @@ class Cases
         $appDel->setDelThreadStatus('CLOSED');
         if ($appDel->Validate()) {
           $appDel->Save();
-        } 
+        }
         else {
           $msg = '';
           foreach ($this->getValidationFailures() as $objValidationFailure)
@@ -1079,7 +1079,7 @@ class Cases
         //$appDel->setDelDuration($oDates->calculateDuration($appDel->getDelInitDate(), $appDel->getDelFinishDate(), null, null, $appDel->getTasUid()));
         if ($appDel->Validate()) {
             $appDel->Save();
-        } 
+        }
         else {
           $msg = '';
           foreach ($this->getValidationFailures() as $objValidationFailure)
@@ -1115,7 +1115,7 @@ class Cases
         $appDel->setDelFinishDate(null);
         if ($appDel->Validate()) {
             $appDel->Save();
-        } 
+        }
         else {
           $msg = '';
           foreach ($this->getValidationFailures() as $objValidationFailure)
@@ -1169,7 +1169,7 @@ class Cases
         //$Fields['APP_PROC_CODE'] = self::refreshCaseStatusCode ($sAppUid, G::array_merges(G::getSystemConstants(), unserialize($Fields['APP_DATA'])));
         $caseNumber = $Fields['APP_NUMBER'];
         $Application->update($Fields);
-        
+
         //Update the task last assigned (for web entry and web services)
         G::LoadClass('derivation');
         $oDerivation = new Derivation();
@@ -1178,7 +1178,7 @@ class Cases
       catch (exception $e) {
           throw ($e);
       }
-    } 
+    }
     else {
         throw (new Exception('You tried to start a new case without send the USER UID or TASK UID!'));
     }
@@ -1254,7 +1254,7 @@ class Cases
             if ($oStep->getStepCondition() !== '') {
               $oPMScript->setScript($oStep->getStepCondition());
               $bAccessStep = $oPMScript->evaluate();
-            } 
+            }
             else {
               $bAccessStep = true;
             }
@@ -1337,7 +1337,7 @@ class Cases
           $rs->next();
           $row = $rs->getRow();
           $iPosition = intval($row[0]);
-      } 
+      }
       else {
           $iPosition -= 1;
       }
@@ -1360,7 +1360,7 @@ class Cases
             if ($oStep->getStepCondition() !== '') {
               $oPMScript->setScript($oStep->getStepCondition());
               $bAccessStep = $oPMScript->evaluate();
-            } 
+            }
             else {
               $bAccessStep = true;
             }
@@ -1382,10 +1382,10 @@ class Cases
                       $sAction = '';
                       break;
               }
-              $aPreviousStep = array('TYPE' => $oStep->getStepTypeObj(), 
-                                     'UID' => $oStep->getStepUidObj(), 
-                                     'POSITION' => $oStep->getStepPosition(), 
-                                     'PAGE' => 'cases_Step?TYPE=' . $oStep->getStepTypeObj() . '&UID=' . $oStep->getStepUidObj() . '&POSITION=' . $oStep->getStepPosition() . '&ACTION=' . $sAction 
+              $aPreviousStep = array('TYPE' => $oStep->getStepTypeObj(),
+                                     'UID' => $oStep->getStepUidObj(),
+                                     'POSITION' => $oStep->getStepPosition(),
+                                     'PAGE' => 'cases_Step?TYPE=' . $oStep->getStepTypeObj() . '&UID=' . $oStep->getStepUidObj() . '&POSITION=' . $oStep->getStepPosition() . '&ACTION=' . $sAction
                                     );
               $iPosition = $iFirstStep;
             }
@@ -1505,15 +1505,15 @@ class Cases
 
     return $c;
   }
-  
+
   /*
   * Get the Criteria for To Do Cases List
   * @param string $sUIDUserLogged
   * @return array ( 'where' => Criteria, 'group' => Criteria )
   * description: Listado de casos que se encuentran en estado TO_DO que pertenezcan al usuario actual
-  * 
-  * Query: 
-  * SELECT APPLICATION.APP_UID,   
+  *
+  * Query:
+  * SELECT APPLICATION.APP_UID,
   *   APPLICATION.APP_NUMBER,
   *   APPLICATION.APP_UPDATE_DATE,
   *   APP_DELEGATION.DEL_PRIORITY,
@@ -1529,21 +1529,21 @@ class Cases
   *   APP_TITLE.CON_VALUE AS APP_TITLE,
   *   PRO_TITLE.CON_VALUE AS APP_PRO_TITLE,
   *   TAS_TITLE.CON_VALUE AS APP_TAS_TITLE,
-  *   CONCAT(APP_LAST_USER.USR_LASTNAME,  ' ',  APP_LAST_USER.USR_FIRSTNAME) AS APP_DEL_PREVIOUS_USER 
-  * FROM 
-  *   APPLICATION LEFT JOIN APP_DELEGATION ON (APPLICATION.APP_UID=APP_DELEGATION.APP_UID) LEFT JOIN TASK ON (APP_DELEGATION.TAS_UID=TASK.TAS_UID) LEFT JOIN USERS ON (APP_DELEGATION.USR_UID=USERS.USR_UID) LEFT JOIN APP_THREAD ON (APPLICATION.APP_UID=APP_THREAD.APP_UID AND APP_DELEGATION.DEL_INDEX=APP_THREAD.DEL_INDEX) LEFT JOIN CONTENT APP_TITLE ON (APPLICATION.APP_UID=APP_TITLE.CON_ID AND APP_TITLE.CON_CATEGORY='APP_TITLE' AND APP_TITLE.CON_LANG='en') 
-  *   LEFT  JOIN CONTENT PRO_TITLE ON (APPLICATION.PRO_UID=PRO_TITLE.CON_ID AND PRO_TITLE.CON_CATEGORY='PRO_TITLE' AND PRO_TITLE.CON_LANG='en') 
-  *   LEFT  JOIN CONTENT TAS_TITLE ON (APP_DELEGATION.TAS_UID=TAS_TITLE.CON_ID AND TAS_TITLE.CON_CATEGORY='TAS_TITLE' AND TAS_TITLE.CON_LANG='en') 
-  *   LEFT  JOIN APP_DELEGATION APP_PREV_DEL ON (APPLICATION.APP_UID=APP_PREV_DEL.APP_UID AND APP_PREV_DEL.DEL_INDEX=APP_DELEGATION.DEL_PREVIOUS) 
-  *   LEFT  JOIN USERS APP_LAST_USER ON (APP_PREV_DEL.USR_UID=APP_LAST_USER.USR_UID) 
-  * WHERE 
-  *   TASK.TAS_TYPE<>'SUBPROCESS' 
-  *   AND USERS.USR_UID='69726522248da554d01a9d1053079479' 
-  *   AND APPLICATION.APP_STATUS='TO_DO' 
-  *   AND APP_DELEGATION.DEL_FINISH_DATE IS NULL 
-  *   AND APP_THREAD.APP_THREAD_STATUS='OPEN' 
-  *   AND APP_DELEGATION.DEL_THREAD_STATUS='OPEN' 
-  *   AND (APPLICATION.APP_NUMBER LIKE "%%" OR APP_TITLE.CON_VALUE LIKE "%%" OR TAS_TITLE.CON_VALUE LIKE "%%" OR PRO_TITLE.CON_VALUE LIKE "%%") 
+  *   CONCAT(APP_LAST_USER.USR_LASTNAME,  ' ',  APP_LAST_USER.USR_FIRSTNAME) AS APP_DEL_PREVIOUS_USER
+  * FROM
+  *   APPLICATION LEFT JOIN APP_DELEGATION ON (APPLICATION.APP_UID=APP_DELEGATION.APP_UID) LEFT JOIN TASK ON (APP_DELEGATION.TAS_UID=TASK.TAS_UID) LEFT JOIN USERS ON (APP_DELEGATION.USR_UID=USERS.USR_UID) LEFT JOIN APP_THREAD ON (APPLICATION.APP_UID=APP_THREAD.APP_UID AND APP_DELEGATION.DEL_INDEX=APP_THREAD.DEL_INDEX) LEFT JOIN CONTENT APP_TITLE ON (APPLICATION.APP_UID=APP_TITLE.CON_ID AND APP_TITLE.CON_CATEGORY='APP_TITLE' AND APP_TITLE.CON_LANG='en')
+  *   LEFT  JOIN CONTENT PRO_TITLE ON (APPLICATION.PRO_UID=PRO_TITLE.CON_ID AND PRO_TITLE.CON_CATEGORY='PRO_TITLE' AND PRO_TITLE.CON_LANG='en')
+  *   LEFT  JOIN CONTENT TAS_TITLE ON (APP_DELEGATION.TAS_UID=TAS_TITLE.CON_ID AND TAS_TITLE.CON_CATEGORY='TAS_TITLE' AND TAS_TITLE.CON_LANG='en')
+  *   LEFT  JOIN APP_DELEGATION APP_PREV_DEL ON (APPLICATION.APP_UID=APP_PREV_DEL.APP_UID AND APP_PREV_DEL.DEL_INDEX=APP_DELEGATION.DEL_PREVIOUS)
+  *   LEFT  JOIN USERS APP_LAST_USER ON (APP_PREV_DEL.USR_UID=APP_LAST_USER.USR_UID)
+  * WHERE
+  *   TASK.TAS_TYPE<>'SUBPROCESS'
+  *   AND USERS.USR_UID='69726522248da554d01a9d1053079479'
+  *   AND APPLICATION.APP_STATUS='TO_DO'
+  *   AND APP_DELEGATION.DEL_FINISH_DATE IS NULL
+  *   AND APP_THREAD.APP_THREAD_STATUS='OPEN'
+  *   AND APP_DELEGATION.DEL_THREAD_STATUS='OPEN'
+  *   AND (APPLICATION.APP_NUMBER LIKE "%%" OR APP_TITLE.CON_VALUE LIKE "%%" OR TAS_TITLE.CON_VALUE LIKE "%%" OR PRO_TITLE.CON_VALUE LIKE "%%")
   *   ORDER BY APPLICATION.APP_NUMBER DESC
   */
   function prepareCriteriaForToDo($sUIDUserLogged) {
@@ -1587,11 +1587,11 @@ class Cases
     $c->add(AppCacheViewPeer::APP_STATUS, 'TO_DO');
     $c->add(AppCacheViewPeer::APP_THREAD_STATUS, 'OPEN');
 
-    //call cleanup session vars 
+    //call cleanup session vars
     return $c;
     //return array ( 'where' => $cf, 'whereFilter' => $cf, 'group' => $g , 'groupFilter' => $gf );
   }
-  
+
   /*
   * Get the condition for Cases List
   * @param string $sTypeList
@@ -1609,12 +1609,12 @@ class Cases
     $c->addSelectColumn(AppDelegationPeer::DEL_PRIORITY);
     //$c->addSelectColumn(AppDelegationPeer::DEL_TASK_DUE_DATE);
     $c->addAsColumn('DEL_TASK_DUE_DATE', " IF (" . AppDelegationPeer::DEL_TASK_DUE_DATE . " <= NOW(), CONCAT('<span style=\'color:red\';>', " . AppDelegationPeer::DEL_TASK_DUE_DATE . ", '</span>'), " . AppDelegationPeer::DEL_TASK_DUE_DATE . ") ");
-    
+
     global $RBAC;
     if ($sTypeList == "completed" && $RBAC->userCanAccess('PM_SUPERVISOR') == 1){
       $c->addAsColumn("DEL_LINK", "CONCAT('".G::LoadTranslation('ID_DELETE')."')");
     }
-    
+
     $c->addSelectColumn(AppDelegationPeer::DEL_INDEX);
     $c->addSelectColumn(AppDelegationPeer::TAS_UID);
     $c->addSelectColumn(AppDelegationPeer::DEL_INIT_DATE);
@@ -1714,17 +1714,17 @@ class Cases
           $xmlfile = $filesList[4];
           break;
       case 'completed':
-     	  
+
       	  	$c->add(ApplicationPeer::APP_STATUS, 'COMPLETED');
       	  	//$c->add(AppDelegationPeer::DEL_PREVIOUS, '0', Criteria::NOT_EQUAL);
-          
+
       	  	$c->addAsColumn('DEL_FINISH_DATE', 'max('.AppDelegationPeer::DEL_FINISH_DATE.')');
           	$c->addGroupByColumn(ApplicationPeer::APP_UID);
-          
+
          	$c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
-         	    
+
             $xmlfile = $filesList[5];
-            
+
           break;
       case 'gral':
           $c->add($c->getNewCriterion(AppThreadPeer::APP_THREAD_STATUS, 'OPEN')->addOr($c->getNewCriterion(ApplicationPeer::APP_STATUS, 'COMPLETED')->addAnd($c->getNewCriterion(AppDelegationPeer::DEL_PREVIOUS, 0))));
@@ -1779,14 +1779,14 @@ class Cases
             unset($_SESSION[$key]);
       }
     }
-    
+
     return array($c, $xmlfile);
   }
 
   /**
   *  @Author: erik@colosa.com
     *  @Description: This method set all cases with the APP_DISABLE_ACTION_DATE for today
-  */         
+  */
   function ThrowUnpauseDaemon()
   {
     $today = date('Y-m-d');
@@ -1815,7 +1815,7 @@ class Cases
     $oApplication = ApplicationPeer::doSelectOne($oCriteria);
     if (!is_null($oApplication)) {
       return $oApplication->getAppUid();
-    } 
+    }
     else {
       return null;
     }
@@ -1956,7 +1956,7 @@ class Cases
             $aAux['APP_DOC_INDEX']);
         if ($aFields['APP_DOC_FILENAME'] != '') {
             $aFields['TITLE'] = $aFields['APP_DOC_FILENAME'];
-        } 
+        }
         else {
             $aFields['TITLE'] = $aFields['APP_DOC_COMMENT'];
         }
@@ -2000,7 +2000,7 @@ class Cases
 
         if ($aFields['APP_DOC_FILENAME'] != '') {
           $aFields['TITLE'] = $aFields['APP_DOC_FILENAME'];
-        } 
+        }
         else {
           $aFields['TITLE'] = $aFields['APP_DOC_COMMENT'];
         }
@@ -2046,7 +2046,7 @@ class Cases
           $aAux['APP_DOC_INDEX'], 'APP_DOC_CREATE_DATE' => $aRow['APP_DOC_CREATE_DATE']);
         if ($aFields['APP_DOC_FILENAME'] != '') {
           $aFields['TITLE'] = $aFields['APP_DOC_FILENAME'];
-        } 
+        }
         else {
           $aFields['TITLE'] = $aFields['APP_DOC_COMMENT'];
         }
@@ -2271,7 +2271,7 @@ class Cases
     $aData['APP_ENABLE_ACTION_DATE'] = date('Y-m-d H:i:s');
     $oAppDelay = new AppDelay();
     $oAppDelay->create($aData);
-    return true;    
+    return true;
   }
 
   function getAllDynaformsStepsToRevise($APP_UID) {
@@ -2838,7 +2838,7 @@ class Cases
 
       // here!,. we should verify $PARTICIPATE
       $sw_participate = false; // must be false for default
-      if(($row['OP_CASE_STATUS']!='COMPLETED') && ($row['OP_CASE_STATUS']!='')) { 
+      if(($row['OP_CASE_STATUS']!='COMPLETED') && ($row['OP_CASE_STATUS']!='')) {
       	if($PARTICIPATE == 1){
           $oCriteriax = new Criteria('workflow');
           $oCriteriax->add(AppDelegationPeer::USR_UID, $USR_UID);
@@ -3018,12 +3018,12 @@ class Cases
       $oCriteria->addSelectColumn(ApplicationPeer::APP_NUMBER);
       $oCriteria->addSelectColumn(ApplicationPeer::APP_PROC_CODE);
       $oCriteria->add(ApplicationPeer::APP_NUMBER, $case);
-      
+
       $oDataseti = DynaformPeer::doSelectRS($oCriteria);
       $oDataseti->setFetchmode(ResultSet::FETCHMODE_ASSOC);
       $oDataseti->next();
       $aRowi = $oDataseti->getRow();
-      
+
       if(is_array($aRowi))
       { $PRO_UID=$aRowi['PRO_UID'];
         $APP_UID=$aRowi['APP_UID'];
@@ -3037,7 +3037,7 @@ class Cases
 
 
     $s=0;
-    if($sw==1) { //no existe el caso      
+    if($sw==1) { //no existe el caso
         return -1;
     }
     else {
@@ -3058,8 +3058,8 @@ class Cases
 
   }
 
-  /*                                      
-  funcion permisos, by Everth             
+  /*
+  funcion permisos, by Everth
   */
   function Permisos($PRO_UID){
     require_once ("classes/model/CaseTracker.php");
@@ -3071,7 +3071,7 @@ class Cases
     $oCaseTracker = new CaseTracker();
     $aCaseTracker = $oCaseTracker->load($PRO_UID);
     //print_r($aCaseTracker); die;
-    if(is_array($aCaseTracker)) { 
+    if(is_array($aCaseTracker)) {
     	if($aCaseTracker['CT_MAP_TYPE']!='NONE')
          $a=1;
 
@@ -3269,7 +3269,7 @@ class Cases
   }
 
   /*
-  funcion History messages for case tracker by Everth 
+  funcion History messages for case tracker by Everth
   */
   function getHistoryMessagesTracker($sApplicationUID) {
     //die ($sApplicationUID);
@@ -3347,7 +3347,7 @@ funcion History messages for case tracker by Everth The Answer
   }
 
 
-  function getAllObjectsFromProcess($PRO_UID, $OBJ_TYPE='%') {    
+  function getAllObjectsFromProcess($PRO_UID, $OBJ_TYPE='%') {
     $RESULT = Array();
     $oCriteria = new Criteria('workflow');
     $oCriteria->addSelectColumn(AppDocumentPeer::APP_DOC_UID);
@@ -3357,21 +3357,21 @@ funcion History messages for case tracker by Everth The Answer
     $oCriteria->addSelectColumn(AppDocumentPeer::USR_UID);
     $oCriteria->addSelectColumn(AppDocumentPeer::APP_DOC_TYPE);
     $oCriteria->addSelectColumn(AppDocumentPeer::APP_DOC_CREATE_DATE);
-    $oCriteria->addSelectColumn(AppDocumentPeer::APP_DOC_INDEX);    
-    
+    $oCriteria->addSelectColumn(AppDocumentPeer::APP_DOC_INDEX);
+
     $oCriteria->add(ApplicationPeer::PRO_UID, $PRO_UID);
     $oCriteria->addJoin(ApplicationPeer::APP_UID, AppDocumentPeer::APP_UID);
-    
+
     $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, $OBJ_TYPE, Criteria::LIKE);
-    
+
     $oDataset = DynaformPeer::doSelectRS($oCriteria);
     $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-    
+
     while ($oDataset->next()) {
       $row = $oDataset->getRow();
       $oAppDocument = new AppDocument();
       $oAppDocument->Fields = $oAppDocument->load($row['APP_DOC_UID']);
-    
+
       $row['APP_DOC_FILENAME'] = $oAppDocument->Fields['APP_DOC_FILENAME'];
       array_push($RESULT, $row);
     }
@@ -3423,6 +3423,14 @@ funcion History messages for case tracker by Everth The Answer
           G::header('Location: ' . $sURL);
           die;
         }
+        else {
+          $oCriteria->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
+          if (!(boolean)AppDelegationPeer::doCount($oCriteria)) {
+            G::SendMessageText(G::LoadTranslation('ID_CASE_ALREADY_DERIVATED'), 'error');
+            G::header('Location: ' . $sURL);
+            die;
+          }
+        }
       break;
       case 'SHOW_MESSAGE':
         if (!(boolean)AppDelegationPeer::doCount($oCriteria)) {
@@ -3437,7 +3445,13 @@ funcion History messages for case tracker by Everth The Answer
           $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
           $oDataset->next();
           $aData = $oDataset->getRow();
-          die('<strong>' . G::LoadTranslation('ID_CASE_IS_CURRENTLY_WITH_ANOTHER_USER') . ': ' . $aData['USR_FIRSTNAME'] . ' ' . $aData['USR_LASTNAME'] . ' (' . $aData['USR_USERNAME'] . ')</strong>');
+          die('<strong>' . G::LoadTranslation('ID_CASE_ALREADY_DERIVATED') . ': ' . $aData['USR_FIRSTNAME'] . ' ' . $aData['USR_LASTNAME'] . ' (' . $aData['USR_USERNAME'] . ')</strong>');
+        }
+        else {
+          $oCriteria->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
+          if (!(boolean)AppDelegationPeer::doCount($oCriteria)) {
+            die('<strong>' . G::LoadTranslation('ID_CASE_ALREADY_DERIVATED') . '</strong>');
+          }
         }
       break;
     }
