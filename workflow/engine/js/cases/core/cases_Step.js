@@ -536,7 +536,7 @@ var showGeneratedDocuments = function()
 {
   oPanel = new leimnud.module.panel();
   oPanel.options = {
-  	size	:{w:600,h:350},
+  	size	:{w:700,h:350},
   	position:{x:0,y:0,center:true},
   	title	:G_STRINGS.ID_GENERATED_DOCUMENTS,
   	theme	:'processmaker',

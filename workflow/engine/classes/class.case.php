@@ -2503,7 +2503,7 @@ class Cases
     $aOutputDocuments = array();
     $aOutputDocuments[] = array('APP_DOC_UID' => 'char', 'DOC_UID' => 'char', 'APP_DOC_COMMENT' => 'char', 'APP_DOC_FILENAME' => 'char', 'APP_DOC_INDEX' => 'integer');
     $oUser = new Users();
-    while ($aRow = $oDataset->getRow()) {
+    while ($aRow = $oDataset->getRow()) {    	
         $oCriteria2 = new Criteria('workflow');
         $oCriteria2->add(AppDelegationPeer::APP_UID, $sApplicationUID);
         $oCriteria2->add(AppDelegationPeer::DEL_INDEX, $aRow['DEL_INDEX']);
@@ -2519,6 +2519,34 @@ class Cases
           $aTask = array('TAS_TITLE' => '(TASK DELETED)');
         }
         $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
+        //Get output Document information
+        $oOutputDocument = new OutputDocument();
+        $aGields = $oOutputDocument->load($aRow['DOC_UID']);     
+        //OUTPUTDOCUMENT
+        $outDocTitle=$aGields['OUT_DOC_TITLE'];   
+        switch($aGields['OUT_DOC_GENERATE']){
+        	//G::LoadTranslation(ID_DOWNLOAD)
+        	case "PDF":
+        		$fileDoc = 'javascript:alert("NO DOC")';
+        		$fileDocLabel=" ";
+  				$filePdf = 'cases_ShowOutputDocument?a=' . $aRow['APP_DOC_UID'] . '&ext=pdf&random=' . rand();
+  				$filePdfLabel=".pdf";
+        	break;
+        	case "DOC":
+        		$fileDoc = 'cases_ShowOutputDocument?a=' . $aRow['APP_DOC_UID'] . '&ext=doc&random=' . rand();
+        		$fileDocLabel=".doc";
+  				$filePdf = 'javascript:alert("NO PDF")';
+  				$filePdfLabel=" ";
+        	break;
+        	case "BOTH":
+        		$fileDoc = 'cases_ShowOutputDocument?a=' . $aRow['APP_DOC_UID'] . '&ext=doc&random=' . rand();
+        		$fileDocLabel=".doc";
+  				$filePdf = 'cases_ShowOutputDocument?a=' . $aRow['APP_DOC_UID'] . '&ext=pdf&random=' . rand();
+  				$filePdfLabel=".pdf";
+        	break;
+        }
+        
+  		
         try {
           $aAux1 = $oUser->load($aAux['USR_UID']);
           $sUser = $aAux1['USR_FIRSTNAME'] . ' ' . $aAux1['USR_LASTNAME'];
@@ -2526,7 +2554,7 @@ class Cases
         catch (Exception $oException) {
           $sUser = '(USER DELETED)';
         }
-        $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' => $aAux['APP_DOC_INDEX'], 'ORIGIN' => $aTask['TAS_TITLE'], 'CREATE_DATE' => $aAux['APP_DOC_CREATE_DATE'], 'CREATED_BY' => $sUser);
+        $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' => $aAux['APP_DOC_INDEX'], 'ORIGIN' => $aTask['TAS_TITLE'], 'CREATE_DATE' => $aAux['APP_DOC_CREATE_DATE'], 'CREATED_BY' => $sUser, 'FILEDOC' => $fileDoc, 'FILEPDF' => $filePdf, 'FILEDOCLABEL' => $fileDocLabel, 'FILEPDFLABEL' => $filePdfLabel, 'OUTDOCTITLE' => $outDocTitle);
         if ($aFields['APP_DOC_FILENAME'] != '') {
             $aFields['TITLE'] = $aFields['APP_DOC_FILENAME'];
         } else {
