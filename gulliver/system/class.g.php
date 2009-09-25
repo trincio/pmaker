@@ -943,8 +943,12 @@ class G
           break;
       }
     }
-    else {
-      throw new Exception ( "file '$file' doesn't exists. " );
+    else {        
+        G::SendMessageText("File '$downloadFileName' doesn't exists. It should be saved by a plugin to a different place. <br>Please review the configuration ", "ERROR");        
+        $backUrlObj=explode("sys".SYS_SYS,$_SERVER['HTTP_REFERER']);        
+        G::header("location: "."/sys".SYS_SYS.$backUrlObj[1]);
+        
+        //throw new Exception ( "file '$file' doesn't exists. " );
     }
 
     switch ( strtolower($typefile ) ) {
