@@ -2697,6 +2697,7 @@ class xmlformTemplate extends Smarty {
     $this->assign ( 'printTemplate', true );
     $this->assign ( 'printJSFile', false );
     $this->assign ( 'printJavaScript', false );
+    $this->assign ( 'dynaformSetFocus', "try {literal}{{/literal} dynaformSetFocus();}catch(e){literal}{{/literal}}" );
     return $this->fetch ( $this->templateFile );
   }
   /**
