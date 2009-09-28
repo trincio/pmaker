@@ -64,7 +64,8 @@ function editFile(pro_uid, fileName){
 function saveFile(pro_uid, fileName){
 	fc = getField('fcontent').value;
 	fc = fc.replace(/&amp;/g, "@amp@");
-	fc = addslashes(fc);
+	//fc = addslashes(fc);
+	fc = fc.replace(/\+/g, '%2B');
 	var oRPC = new leimnud.module.rpc.xmlhttp({
 	  	url : 'processes_Ajax',
 	  	args: 'action=saveFile&filename='+fileName+'&pro_uid='+pro_uid+'&fcontent='+addslashes(fc)
