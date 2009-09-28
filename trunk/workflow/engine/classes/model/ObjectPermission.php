@@ -67,12 +67,12 @@ class ObjectPermission extends BaseObjectPermission {
 
 	function remove($Uid)
 	{
-		$con = Propel::getConnection(ObjectPermissionPeer::DATABASE_NAME);		
-		try { 
+		$con = Propel::getConnection(ObjectPermissionPeer::DATABASE_NAME);
+		try {
   	  $oObjPer = ObjectPermissionPeer::retrieveByPK($Uid);
   	  if (get_class($oObjPer) == 'ObjectPermission')
-  	  { 
-  	  	$con->begin();          	  	
+  	  {
+  	  	$con->begin();
         $iResult = $oObjPer->delete();
         $con->commit();
         return $iResult;
@@ -80,14 +80,14 @@ class ObjectPermission extends BaseObjectPermission {
       else {
         throw( new Exception( "The row '" . $Uid . "' in table CaseTrackerObject doesn't exists!" ));
       }
-    }	
+    }
 		catch (exception $e) {
 			$con->rollback();
 			throw ($e);
 		}
 	}
 
-  function update($aFields) { 
+  function update($aFields) {
     $oConnection = Propel::getConnection(ObjectPermissionPeer::DATABASE_NAME);
     try {
       $oConnection->begin();
@@ -105,6 +105,18 @@ class ObjectPermission extends BaseObjectPermission {
     }
     catch(Exception $e) {
       $oConnection->rollback();
+      throw($e);
+    }
+  }
+
+  function removeByObject($sType, $sObjUid) {
+    try {
+      $oCriteria = new Criteria('workflow');
+      $oCriteria->add(ObjectPermissionPeer::OP_OBJ_TYPE, $sType);
+      $oCriteria->add(ObjectPermissionPeer::OP_OBJ_UID, $sObjUid);
+      ObjectPermissionPeer::doDelete($oCriteria);
+    }
+    catch(Exception $e) {
       throw($e);
     }
   }
