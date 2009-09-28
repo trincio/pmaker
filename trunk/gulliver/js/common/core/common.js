@@ -1514,3 +1514,8 @@ function readCookie(name){
 function eraseCookie(name){
 	createCookie(name, "", -1);
 }
+
+
+function highlightRow(o, color){
+	o.style.background = color
+}

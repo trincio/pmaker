@@ -260,6 +260,7 @@ class Form extends XmlForm
   function validateArray($newValues)
   {
     //$values = $this->values;
+    $values = array();
     foreach($this->fields as $k => $v){
       if (($v->type != 'submit')) {
         if ($v->type != 'file') {

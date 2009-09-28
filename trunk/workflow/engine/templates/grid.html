@@ -28,9 +28,9 @@
 {literal}
 {section name=row loop=$form_rows}
 {if ($smarty.section.row.index==0)}
-     <tr id="firstRow_{$form_name}">
+     <tr id="firstRow_{$form_name}" onmouseout="highlightRow(this, '#fff')" onmouseover="highlightRow(this, '#D9E8FF')">
 {else}
-     <tr>
+     <tr onmouseout="highlightRow(this, '#fff')" onmouseover="highlightRow(this, '#D9E8FF')">
 {/if}
       <td class='GridLabel'> {$smarty.section.row.index+1} </td>
 {/literal}
