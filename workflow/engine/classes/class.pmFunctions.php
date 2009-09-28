@@ -821,4 +821,51 @@ function PMFgetLabelOption($PROCESS, $DYNAFORM_UID, $FIELD_NAME, $FIELD_SELECTED
 	}
 }
 
-?>
+function PMFRedirectToStep($sApplicationUID, $iDelegation, $sStepType, $sStepUid) {
+  require_once 'classes/model/AppDelegation.php';
+  $oCriteria = new Criteria('workflow');
+  $oCriteria->addSelectColumn(AppDelegationPeer::TAS_UID);
+  $oCriteria->add(AppDelegationPeer::APP_UID, $sApplicationUID);
+  $oCriteria->add(AppDelegationPeer::DEL_INDEX, $iDelegation);
+  $oDataset = AppDelegationPeer::doSelectRS($oCriteria);
+  $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+  $oDataset->next();
+  $aRow = $oDataset->getRow();
+  if ($aRow) {
+    require_once 'classes/model/Step.php';
+    $oStep = new Step();
+    $oTheStep = $oStep->loadByType($aRow['TAS_UID'], $sStepType, $sStepUid);
+    $bContinue = true;
+    if ($oTheStep->getStepCondition() != '') {
+      G::LoadClass('case');
+      $oCase   = new Cases();
+      $aFields = $oCase->loadCase($sApplicationUID);
+      G::LoadClass('pmScript');
+      $oPMScript = new PMScript();
+      $oPMScript->setFields($aFields['APP_DATA']);
+      $oPMScript->setScript($oTheStep->getStepCondition());
+      $bContinue = $oPMScript->evaluate();
+    }
+    if ($bContinue) {
+      switch ($oTheStep->getStepTypeObj()) {
+        case 'DYNAFORM':
+          $sAction = 'EDIT';
+        break;
+        case 'OUTPUT_DOCUMENT':
+          $sAction = 'GENERATE';
+        break;
+        case 'INPUT_DOCUMENT':
+          $sAction = 'ATTACH';
+        break;
+        case 'EXTERNAL':
+          $sAction = 'EDIT';
+        break;
+        case 'MESSAGE':
+          $sAction = '';
+        break;
+      }
+      G::header('Location: ' . 'cases_Step?TYPE=' . $sStepType . '&UID=' . $sStepUid . '&POSITION=' . $oTheStep->getStepPosition() . '&ACTION=' . $sAction);
+      die;
+    }
+  }
+}

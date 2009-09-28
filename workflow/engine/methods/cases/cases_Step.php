@@ -98,27 +98,27 @@
 
   if( isset($oProcessFieds['PRO_DEBUG']) && $oProcessFieds['PRO_DEBUG'] ) { #here we must verify if is a debugg session
     $_SESSION['TRIGGER_DEBUG']['ISSET'] = 1;
-  } 
+  }
   else {
     $_SESSION['TRIGGER_DEBUG']['ISSET'] = 0;
   }
-  
+
   //cleaning debug variables
   if( !isset($_GET['breakpoint']) ) {
     $_SESSION['TRIGGER_DEBUG']['ERRORS'] = Array();
     $_SESSION['TRIGGER_DEBUG']['DATA'] = Array();
     $_SESSION['TRIGGER_DEBUG']['TRIGGERS_NAMES'] = Array();
     $_SESSION['TRIGGER_DEBUG']['TRIGGERS_VALUES'] = Array();
-    
+
     $triggers = $oCase->loadTriggers( $_SESSION['TASK'], $_GET['TYPE'], $_GET['UID'], 'BEFORE');
-    
+
     $_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] = count($triggers);
     $_SESSION['TRIGGER_DEBUG']['TIME'] = 'BEFORE';
     if($_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] != 0) {
       $_SESSION['TRIGGER_DEBUG']['TRIGGERS_NAMES'] = $oCase->getTriggerNames($triggers);
       $_SESSION['TRIGGER_DEBUG']['TRIGGERS_VALUES'] = $triggers;
     }
-    
+
     //Execute before triggers - Start
     $Fields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], $_GET['TYPE'], $_GET['UID'], 'BEFORE', $Fields['APP_DATA'] );
     $Fields['DEL_INDEX']= $_SESSION['INDEX'];
@@ -164,7 +164,7 @@
   $array['CASE'] = G::LoadTranslation('ID_CASE');
   $array['TITLE'] = G::LoadTranslation('ID_TITLE');
   $G_PUBLISH->AddContent('smarty', 'cases/cases_title', '', '', $array);
-  
+
   switch ($_GET['TYPE'])
   {
     case 'DYNAFORM':
@@ -177,16 +177,16 @@
         $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['PREVIOUS_STEP_LABEL'] = G::loadTranslation("ID_PREVIOUS_STEP");
       }
       $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['NEXT_STEP'] = $aNextStep['PAGE'];
-   
+
       $oStep = new Step();
       $oStep = $oStep->loadByProcessTaskPosition($_SESSION['PROCESS'], $_SESSION['TASK'], $_GET['POSITION']);
-  
+
       /** Added By erik  16-05-08
       * Description: this was added for the additional database connections */
       G::LoadClass ('dbConnections');
       $oDbConnections = new dbConnections($_SESSION['PROCESS']);
       $oDbConnections->loadAdditionalConnections();
-  
+
       /**
        * Verification routine for to see if the dynaform has a submit button, if not thows a alert message
        * By Neyek <erik@colosa.com, aortiz.erik@gmail.com>
@@ -194,16 +194,16 @@
       $has_submit_button = false;
       $G_FORM = new Form ("{$_SESSION['PROCESS']}/{$_GET['UID']}", PATH_DYNAFORM, SYS_LANG, false);
       foreach($G_FORM->fields as $dynafield){
-      	if($dynafield->type == 'submit'){
+      	if(($dynafield->type == 'submit') || ($dynafield->type == 'button')){
       	  $has_submit_button = true;
       	  break;
       	}
       }
       /* end Verification routine */
-      
+
       $G_PUBLISH->AddContent('dynaform', 'xmlform', $_SESSION['PROCESS']. '/' . $_GET['UID'], '', $Fields['APP_DATA'], 'cases_SaveData?UID=' . $_GET['UID'], '', (strtolower($oStep->getStepMode()) != 'edit' ? strtolower($oStep->getStepMode()) : ''));
       break;
-  
+
     case 'INPUT_DOCUMENT':
       $oInputDocument = new InputDocument();
       $Fields = $oInputDocument->load($_GET['UID']);
@@ -235,9 +235,9 @@
           }
           $Fields['MESSAGE1'] = G::LoadTranslation('ID_PLEASE_ENTER_COMMENTS');
           $Fields['MESSAGE2'] = G::LoadTranslation('ID_PLEASE_SELECT_FILE');
-  
+
           $G_PUBLISH->AddContent('xmlform', 'xmlform', $sXmlForm, '', $Fields, 'cases_SaveDocument?UID=' . $_GET['UID']);
-  
+
           //call plugin
           if ( $oPluginRegistry->existsTrigger ( PM_CASE_DOCUMENT_LIST ) ) {
             $folderData = new folderData (null, null, $_SESSION['APPLICATION'], null, $_SESSION['USER_LOGGED'] );
@@ -247,9 +247,9 @@
           else
             $G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_InputdocsList', $oCase->getInputDocumentsCriteria($_SESSION['APPLICATION'], $_SESSION['INDEX'], $_GET['UID']), '');//$aFields
           //end plugin
-  
+
           break;
-          
+
         case 'VIEW':
           require_once 'classes/model/AppDocument.php';
           require_once 'classes/model/Users.php';
@@ -277,8 +277,8 @@
         break;
       }
     break;
-  
-    case 'OUTPUT_DOCUMENT': 
+
+    case 'OUTPUT_DOCUMENT':
       require_once 'classes/model/OutputDocument.php';
       $oOutputDocument = new OutputDocument();
       $aOD = $oOutputDocument->load($_GET['UID']);
@@ -288,9 +288,9 @@
       else {
         $aOD['__DYNAFORM_OPTIONS']['PREVIOUS_STEP'] = $aPreviousStep['PAGE'];
         $aOD['__DYNAFORM_OPTIONS']['PREVIOUS_STEP_LABEL'] = G::loadTranslation("ID_PREVIOUS_STEP");
-      }  
+      }
       $aOD['__DYNAFORM_OPTIONS']['NEXT_STEP'] = $aNextStep['PAGE'];
-  
+
       $javaInput  = PATH_C . 'javaBridgePM' . PATH_SEP . 'input'  . PATH_SEP;
       $javaOutput = PATH_C . 'javaBridgePM' . PATH_SEP . 'output' . PATH_SEP;
       G::mk_dir ( $javaInput );
@@ -304,10 +304,10 @@
           $pathOutput = PATH_DOCUMENT . $_SESSION['APPLICATION'] . PATH_SEP . 'outdocs'. PATH_SEP ;
           G::mk_dir ( $pathOutput );
           switch ( $aOD['OUT_DOC_TYPE'] ) {
-            case 'HTML' : $oOutputDocument->generate( $_GET['UID'], $Fields['APP_DATA'], $pathOutput, 
+            case 'HTML' : $oOutputDocument->generate( $_GET['UID'], $Fields['APP_DATA'], $pathOutput,
                             $sFilename, $aOD['OUT_DOC_TEMPLATE'], (boolean)$aOD['OUT_DOC_LANDSCAPE'] );
                           break;
-            case 'JRXML' : 
+            case 'JRXML' :
 
 //creating the xml with the application data;
   $xmlData = "<dynaform>\n";
@@ -316,11 +316,11 @@
   }
   $xmlData .= "</dynaform>\n";
   $iSize = file_put_contents ( $javaOutput .  'addressBook.xml' , $xmlData );
- 
+
   G::LoadClass ('javaBridgePM');
   $JBPM = new JavaBridgePM();
   $JBPM->checkJavaExtension();
-  
+
   $util = new Java("com.processmaker.util.pmutils");
   $util->setInputPath( $javaInput );
   $util->setOutputPath( $javaOutput );
@@ -338,7 +338,7 @@
   copy ( $outputFile, $pathOutput .  $sFilename . '.pdf' );
 //die;
                           break;
-            case 'ACROFORM' : 
+            case 'ACROFORM' :
 
 //creating the xml with the application data;
   $xmlData = "<dynaform>\n";
@@ -347,11 +347,11 @@
   }
   $xmlData .= "</dynaform>\n";
   //$iSize = file_put_contents ( $javaOutput .  'addressBook.xml' , $xmlData );
- 
+
   G::LoadClass ('javaBridgePM');
   $JBPM = new JavaBridgePM();
   $JBPM->checkJavaExtension();
-  
+
   $util = new Java("com.processmaker.util.pmutils");
   $util->setInputPath( $javaInput );
   $util->setOutputPath( $javaOutput );
@@ -366,7 +366,7 @@
                           break;
             default :
               throw ( new Exception ('invalid output document' ));
-          }                            
+          }
 
           //save row in AppDocument  ( this code should be moved to AppDocument Class )
           require_once 'classes/model/AppDocument.php';
@@ -408,7 +408,7 @@
           $Fields['DEL_INDEX']= $_SESSION['INDEX'];
           $Fields['TAS_UID']  = $_SESSION['TASK'];
           //Execute after triggers - End
-  
+
           //Save data - Start
           $oCase->updateCase ( $_SESSION['APPLICATION'], $Fields );
           //Save data - End
@@ -416,9 +416,9 @@
           //Plugin Hook PM_UPLOAD_DOCUMENT for upload document
           $oPluginRegistry =& PMPluginRegistry::getSingleton();
           if ( $oPluginRegistry->existsTrigger ( PM_UPLOAD_DOCUMENT ) && class_exists ('uploadDocumentData' ) ) {
-          	
+
           	$sPathName = PATH_DOCUMENT . $_SESSION['APPLICATION'] . PATH_SEP;
-          	
+
             $oData['APP_UID']   = $_SESSION['APPLICATION'];
             $oData['ATTACHMENT_FOLDER'] = true;
             $documentData = new uploadDocumentData (
@@ -428,41 +428,41 @@
                               $sFilename. '.pdf',
                               $sDocUID
                               );
-            
+
             $documentData->bUseOutputFolder = true;
-            $oPluginRegistry->executeTriggers ( PM_UPLOAD_DOCUMENT , $documentData );           
-            unlink ( $pathOutput . $sFilename. '.pdf' );            
+            $oPluginRegistry->executeTriggers ( PM_UPLOAD_DOCUMENT , $documentData );
+            unlink ( $pathOutput . $sFilename. '.pdf' );
           }
-  
+
           $outputNextStep = 'cases_Step?TYPE=OUTPUT_DOCUMENT&UID=' . $_GET['UID'] . '&POSITION=' . $_SESSION['STEP_POSITION'] . '&ACTION=VIEW&DOC=' . $sDocUID;
-  
+
           G::header('location: '.$outputNextStep);
-  
+
           break;
         case 'VIEW':
           require_once 'classes/model/AppDocument.php';
           $oAppDocument = new AppDocument();
           $aFields = $oAppDocument->load($_GET['DOC']);
-  
+
           require_once 'classes/model/OutputDocument.php';
           $oOutputDocument = new OutputDocument();
           $aGields = $oOutputDocument->load($aFields['DOC_UID']);
-  
+
           $aFields['VIEW'] = G::LoadTranslation('ID_OPEN');
-  
+
           $aFields['FILE1'] = 'cases_ShowOutputDocument?a=' . $aFields['APP_DOC_UID'] . '&ext=doc&random=' . rand();
-  
+
           $aFields['FILE2'] = 'cases_ShowOutputDocument?a=' . $aFields['APP_DOC_UID'] . '&ext=pdf&random=' . rand();
-  
+
           if(($aGields['OUT_DOC_GENERATE']=='BOTH')||($aGields['OUT_DOC_GENERATE']==''))
               $G_PUBLISH->AddContent('xmlform', 'xmlform', 'cases/cases_ViewOutputDocument1', '', G::array_merges($aOD, $aFields), '');
-  
+
           if($aGields['OUT_DOC_GENERATE']=='DOC')
               $G_PUBLISH->AddContent('xmlform', 'xmlform', 'cases/cases_ViewOutputDocument2', '', G::array_merges($aOD, $aFields), '');
-  
+
           if($aGields['OUT_DOC_GENERATE']=='PDF')
               $G_PUBLISH->AddContent('xmlform', 'xmlform', 'cases/cases_ViewOutputDocument3', '', G::array_merges($aOD, $aFields), '');
-  
+
           //call plugin
           if ( $oPluginRegistry->existsTrigger ( PM_CASE_DOCUMENT_LIST ) ) {
             $folderData = new folderData (null, null, $_SESSION['APPLICATION'], null, $_SESSION['USER_LOGGED'] );
@@ -476,7 +476,7 @@
           break;
         }
       break;
-  
+
     case 'ASSIGN_TASK':
       $oDerivation = new Derivation();
       $oProcess    = new Process();
@@ -501,11 +501,11 @@
       if ( empty($aFields['TASK']) )  {
         throw ( new Exception ( G::LoadTranslation ( 'ID_NO_DERIVATION_RULE')  ) );
       }
-  
+
       //take the first derivation rule as the task derivation rule type.
       $aFields['PROCESS']['ROU_TYPE'] = $aFields['TASK'][1]['ROU_TYPE'];
       $aFields['PROCESS']['ROU_FINISH_FLAG'] = false;
-  
+
       foreach ( $aFields['TASK'] as $sKey => &$aValues)
       {
         $sPriority = '';//set priority value
@@ -516,9 +516,9 @@
             $sPriority = $aData['APP_DATA'][str_replace('@@', '', $aFields['TASK'][$sKey]['NEXT_TASK']['TAS_PRIORITY_VARIABLE'])];
           }
         }//set priority value
-  
+
         $sTask = $aFields['TASK'][$sKey]['NEXT_TASK']['TAS_UID'];
-  
+
         //TAS_UID has a hidden field to store the TAS_UID
         $hiddenName = "form[TASKS][" . $sKey . "][TAS_UID]";
         $hiddenField = '<input type="hidden" name="' . $hiddenName . '" id="' . $hiddenName . '" value="' . $aValues['NEXT_TASK']['TAS_UID'] . '">';
@@ -543,7 +543,7 @@
                 $sAux .= '<option value="' . $key . '">' . $value . '</option>';
               }
               $sAux .= '</select>';
-  
+
               $aFields['TASK'][$sKey]['NEXT_TASK']['USR_UID'] = $sAux;
               break;
           case '':  //when this task is the Finish process
@@ -559,15 +559,15 @@
         $aFields['TASK'][$sKey]['NEXT_TASK']['DEL_PRIORITY']      = '<input type="hidden" name="' . $hiddenName . '[DEL_PRIORITY]"      id="' . $hiddenName . '[DEL_PRIORITY]"      value="' . $sPriority . '">';
         $aFields['TASK'][$sKey]['NEXT_TASK']['TAS_PARENT']        = '<input type="hidden" name="' . $hiddenName . '[TAS_PARENT]"        id="' . $hiddenName . '[TAS_PARENT]"        value="' . $aValues['NEXT_TASK']['TAS_PARENT'] . '">';
       }
-  
+
       $aFields['PROCESSING_MESSAGE'] = G::loadTranslation('ID_PROCESSING');
-      
+
       $G_PUBLISH->AddContent('smarty', 'cases/cases_ScreenDerivation', '', '', $aFields);
       break;
     case 'EXTERNAL':
       $oPluginRegistry = &PMPluginRegistry::getSingleton();
       $externalSteps   = $oPluginRegistry->getSteps();
-  
+
       $sNamespace = '';
       $sStepName  = '';
       foreach ( $externalSteps as $key=>$val ) {
@@ -584,7 +584,7 @@
         $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['PREVIOUS_STEP_LABEL'] = G::loadTranslation("ID_PREVIOUS_STEP");
       }
       $Fields['APP_DATA']['__DYNAFORM_OPTIONS']['NEXT_STEP'] = $aNextStep['PAGE'];
-  
+
       /** Added By erik date: 16-05-08
       * Description: this was added for the additional database connections */
       G::LoadClass ('dbConnections');
@@ -593,7 +593,7 @@
       $stepFilename = "$sNamespace/$sStepName";
       $G_PUBLISH->AddContent('content', $stepFilename );
       break;
-  
+
     }
   //Add content content step - End
   }
@@ -604,7 +604,7 @@
       $G_PUBLISH->AddContent('xmlform', 'xmlform', 'login/showMessage', '', $aMessage );
       G::RenderPage( 'publish' );
   }
-  
+
   /* Render page */
   $oHeadPublisher =& headPublisher::getSingleton();
   $oHeadPublisher->addScriptCode('
@@ -622,8 +622,8 @@
           theme      : "processmaker",
           images_dir :leimnud.path_root + "cases/core/images/"
         }
-        Cse.make(); 
-      } 
+        Cse.make();
+      }
       else
       {
         Cse.panels.step.elements.title.innerHTML = "Steps";
@@ -643,16 +643,16 @@
       }
     };
   ');
-  
+
   G::RenderPage('publish');
-  
+
   if( isset($has_submit_button) && $has_submit_button == false ){
   	$msg = G::LoadTranslation('ID_DYNAFORM_HASNOSUBMITBTN');
-    G::evalJScript('new leimnud.module.app.alert().make({label: \''.$msg.'\'});');
+    G::evalJScript('new leimnud.module.app.alert().make({label: "'.$msg.'"});');
   }
-  
+
   if( $_SESSION['TRIGGER_DEBUG']['ISSET'] ){
     G::evalJScript('showdebug()');
   }
 
-  
+

@@ -123,6 +123,14 @@ var G_Grid = function(oForm, sGridName) {
 		var aCells = oRow.getElementsByTagName('td');
 		var oNewRow = this.oGrid.insertRow(this.oGrid.rows.length - 1);
 		
+		oNewRow.onmouseout  = function(){
+			this.style.background =  '#fff';
+		};
+		
+		oNewRow.onmouseover = function(){
+			this.style.background =  '#D9E8FF';
+		};
+		
 		for (i = 0; i < aCells.length; i++) {
 			oNewRow.appendChild(aCells[i].cloneNode(true));
 			
