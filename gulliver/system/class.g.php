@@ -2345,6 +2345,47 @@ class G
 	function evalJScript($c){
 		print("<script languaje=\"javascript\">{$c}</script>");
 	}
+	
+	
+	/**
+	 *  Inflects a string with accented characters and other characteres not suitable for file names, by defaul replace with undescore
+	 *  
+	 *  @Author Erik Amaru Ortiz <erik@colosa.com, aortiz.erik@gamil.com>
+	 *  @Param (string) string to convert
+	 *  @Param (string) character for replace
+	 *  @Param (array) additional characteres map
+	 *  
+	 */
+	function inflect($string, $replacement = '_', $map = array()) {
+		if (is_array($replacement)) {
+			$map = $replacement;
+			$replacement = '_';
+		}
+
+		$quotedReplacement = preg_quote($replacement, '/');
+
+		$default = array(
+			'/à|á|å|â/' => 'a',
+			'/è|é|ê|ẽ|ë/' => 'e',
+			'/ì|í|î/' => 'i',
+			'/ò|ó|ô|ø/' => 'o',
+			'/ù|ú|ů|û/' => 'u',
+			'/ç/' => 'c',
+			'/ñ/' => 'n',
+			'/ä|æ/' => 'ae',
+			'/ö/' => 'oe',
+			'/ü/' => 'ue',
+			'/Ä/' => 'Ae',
+			'/Ü/' => 'Ue',
+			'/Ö/' => 'Oe',
+			'/ß/' => 'ss',
+			'/\.|\,|\:|\-|\\|\//' =>  " ",
+			'/\\s+/' => $replacement
+		);
+
+		$map = array_merge($default, $map);
+		return preg_replace(array_keys($map), array_values($map), $string);
+	}
 };
 
 

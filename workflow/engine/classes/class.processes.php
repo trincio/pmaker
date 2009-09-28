@@ -1495,7 +1495,7 @@ class Processes {
     if ( !is_dir($path) ) {
       	G::verifyPath($path, true);
     }
-    $proTitle = G::capitalizeWords($data->process['PRO_TITLE']);
+    $proTitle = (substr(G::inflect($data->process['PRO_TITLE']), 0, 30));
 
     $index = '';
 
@@ -1513,6 +1513,7 @@ class Processes {
 
 
     $proTitle .= $lastIndex;
+    
     $filenameOnly = $proTitle . '.pm';
 
     $fp = fopen( $filename.'tpm', "wb");
