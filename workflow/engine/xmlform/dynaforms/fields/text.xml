@@ -33,10 +33,10 @@ SELECT XMLNODE_NAME, TYPE FROM dynaForm WHERE XMLNODE_NAME = @@PME_XMLNODE_NAME
 <PME_VALIDATE type="dropdown" defaultvalue="Any" >
   <en>Validate
     <option name="Any">Any</option>
-    <option name="Alpha">Alpha</option>
-    <option name="AlphaNum">AlphaNum</option>
-    <option name="Int">Int</option>
-    <option name="Real">Real</option>
+    <option name="Alpha">Alphabetic</option>
+    <option name="AlphaNum">Alphanumeric</option>
+    <option name="Int">Integer</option>
+    <option name="Real">Real Number</option>
     <option name="Email">Email</option>
     <option name="Login">Login</option>
   </en>
