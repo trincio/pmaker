@@ -25,7 +25,7 @@
 //
 // It works with the table CONFIGURATION in a WF dataBase
 //
-// Copyright (C) 2007 COLOSA
+// Copyright (C) 2009 COLOSA
 //
 // License: LGPL, see LICENSE
 ////////////////////////////////////////////////////
@@ -355,7 +355,7 @@ class wsBase
       @mkdir( $pathEmail, 0777,true);
 
       if ( ! file_exists ( $fileTemplate ) ) {
-        $result = new wsResponse (28, "template file: '$fileTemplate' doesn't exists."  );
+        $result = new wsResponse (28, "Template file '$fileTemplate' does not exist."  );
         return $result;
       }
 
@@ -432,7 +432,7 @@ class wsBase
       $oCase = new Cases();
       $aRows = $oCase->loadCase( $caseId, $iDelIndex );
       if ( count($aRows) == 0 ) {
-        $result = new wsResponse (16, "Case $caseNumber doesn't exists." );
+        $result = new wsResponse (16, "Case $caseNumber does not exist" );
         return $result;
       }
 
@@ -444,7 +444,7 @@ class wsBase
       catch ( Exception $e ) {
         $processName = '';
       }
-      $result = new wsResponse (0, "case found" );
+      $result = new wsResponse (0, "Command executed successfully" );
       $result->caseId              = $aRows['APP_UID'];
       $result->caseNumber          = $aRows['APP_NUMBER'];
       $result->caseName            = $aRows['TITLE'];
@@ -518,7 +518,7 @@ class wsBase
   public function createUser( $userId, $firstname, $lastname, $email, $role, $password) {
     try {
       if($userId=='')
-      {  $result = new wsCreateUserResponse (25, "User ID is required");
+      {  $result = new wsCreateUserResponse (25, "Username is required");
          return $result;
       }
 
@@ -528,7 +528,7 @@ class wsBase
       }
 
       if($firstname=='')
-      {  $result = new wsCreateUserResponse (27, "Firstname is required");
+      {  $result = new wsCreateUserResponse (27, "First Name is required");
          return $result;
       }
 
@@ -537,7 +537,7 @@ class wsBase
 
       $user = $RBAC->verifyUser($userId);
       if ( $user == 1){
-        $result = new wsCreateUserResponse (7, "User ID: $userId already exist", '' ) ;
+        $result = new wsCreateUserResponse (7, "Username '$userId' already exists", '' ) ;
         return $result;
       }
 
@@ -548,7 +548,7 @@ class wsBase
       else {
         $very_rol = $RBAC->verifyByCode($role);
         if ( $very_rol==0 ){
-          $result = new wsResponse (6, "Invalid role: $role");
+          $result = new wsResponse (6, "Invalid role '$role'");
           return $result;
         }
         $strRole = $role;
@@ -583,7 +583,7 @@ class wsBase
       $oUser = new Users();
       $oUser->create($aData);
 
-      $res = new wsResponse (0, "User $firstname $lastname [$userId] created sucessful.");
+      $res = new wsResponse (0, "User $firstname $lastname [$userId] created successfully");
       $result = array('status_code' => $res->status_code ,
                       'message'     => $res->message,
                       'userUID'     => $sUserUID,
@@ -616,11 +616,11 @@ class wsBase
 
       $very_user = $groups->verifyUsertoGroup( $groupId, $userId);
       if($very_user==1){
-        $result = new wsResponse (8, "User exist in the group");
+        $result = new wsResponse (8, "User already exists in the group");
         return $result;
       }
       $groups->addUserToGroup( $groupId, $userId);
-      $result = new wsResponse (0, "User assigned to group sucessful");
+      $result = new wsResponse (0, "command executed successfuly");
       return $result;
     }
     catch ( Exception $e ) {
@@ -649,7 +649,7 @@ class wsBase
       }
 
       if ($cnt == 0){
-        $result = new wsResponse (18, 'This case is already closed');
+        $result = new wsResponse (18, 'This case delegation is already closed or does not exist');
         return $result;
       }
       if ( is_array($variables)) {
@@ -668,7 +668,7 @@ class wsBase
           return $result;
         }
       } else {
-        $result = new wsResponse (24, "The variables param is not a array");
+        $result = new wsResponse (24, "The variables param is not an array");
         return $result;
       }
     }
@@ -766,7 +766,7 @@ class wsBase
           $taskId = $validTaskId;
         }
         if ( $tasksInThisProcess > 1 ) {
-          $result = new wsResponse (13, "Multiple starting task ");
+          $result = new wsResponse (13, "Multiple starting tasks in the process");
           return $result;
         }
       }
@@ -786,7 +786,7 @@ class wsBase
 
       $up_case = $oCase->updateCase($caseId, $oldFields);
 
-      $result = new wsResponse (0, "Sucessful");
+      $result = new wsResponse (0, "Command executed successfully");
       $result->caseId = $caseId;
       $result->caseNumber = $caseNr;
 
@@ -810,7 +810,7 @@ class wsBase
           }
         }
       } else {
-        $result = new wsResponse (10, "The variables param is not a array");
+        $result = new wsResponse (10, "The variables param is not an array");
         return $result;
       }
 
@@ -855,7 +855,7 @@ class wsBase
         $oldFields['APP_DATA'] = array_merge( $oldFields['APP_DATA'], $Fields);
 
         $up_case = $oCase->updateCase($caseId, $oldFields);
-        $result = new wsResponse (0, "Sucessful");
+        $result = new wsResponse (0, "Command executed successfully");
         return $result;
       }
       else {
@@ -864,7 +864,7 @@ class wsBase
           return $result;
         }
         if($numTasks > 1){
-          $result = new wsResponse (13, "Multiple starting task");
+          $result = new wsResponse (13, "Multiple starting tasks in the process");
           return $result;
         }
       }
@@ -909,7 +909,7 @@ class wsBase
 
       if($appdel['DEL_FINISH_DATE']!=NULL)
       {
-        $result = new wsResponse (18, 'This delegation already closed or not exists');
+        $result = new wsResponse (18, 'This case delegation is already closed or does not exist');
         return $result;
       }
 
@@ -928,7 +928,7 @@ class wsBase
       {
         if ( isset($aRow['APP_DISABLE_ACTION_USER']) && $aRow['APP_DISABLE_ACTION_USER']!=0 && 
              isset($aRow['APP_DISABLE_ACTION_DATE']) && $aRow['APP_DISABLE_ACTION_DATE']!='' ) {
-            $result = new wsResponse (19, "This case is in status". $aRow['APP_TYPE']);
+            $result = new wsResponse (19, "This case is in status ". $aRow['APP_TYPE']);
             return $result;
           }
       }
@@ -996,12 +996,12 @@ class wsBase
       $derive  = $oDerivation->prepareInformation($aData);
       if (isset($derive[1])) {
         if ($derive[1]['ROU_TYPE'] == 'SELECT') {
-          $result = new wsResponse (21, 'Cannot derivate a "Manual" derivation using webservices.');
+          $result = new wsResponse (21, 'Can not route a case with Manual Assignment using webservices');
           return $result;
         }
       }
       else {
-        $result = new wsResponse (22, 'Task does not has derivation rule, check process definition');
+        $result = new wsResponse (22, 'Task does not have a routing rule; check process definition');
         return $result;
       }
       foreach ( $derive as $key=>$val ) {
@@ -1163,7 +1163,7 @@ class wsBase
 
       if($appdel['DEL_FINISH_DATE']!=NULL)
       {
-        $result = new wsResponse (18, 'This delegation already closed or not exists');
+        $result = new wsResponse (18, 'This case delegation is already closed or does not exist');
         return $result;
       }
 
@@ -1182,7 +1182,7 @@ class wsBase
       {
           if($aRow['APP_DISABLE_ACTION_USER']!=0 && $aRow['APP_DISABLE_ACTION_DATE']!='')
           {
-              $result = new wsResponse (19, "This case is in status". $aRow['APP_TYPE']);
+              $result = new wsResponse (19, "This case is in status ". $aRow['APP_TYPE']);
               return $result;
           }
       }
@@ -1328,14 +1328,14 @@ class wsBase
       $aRow = $oDataset->getRow();
       if(!is_array($aRow))
       {
-          $result = new wsResponse (33, "Invalid delindex for this user" );
+          $result = new wsResponse (33, "Invalid Case Delegation index for this user" );
           return $result;
       }
       $tasUid = $aRow['TAS_UID'];
       $derivation = new Derivation ();
       $userList = $derivation->getAllUsersFromAnyTask( $tasUid );
       if ( ! in_array ( $userIdTarget, $userList ) ) {
-        $result = new wsResponse (34, "The userTarget has not rights to execute the task" );
+        $result = new wsResponse (34, "The target user does not have rights to execute the task " );
         return $result;
       }
 
@@ -1350,7 +1350,7 @@ class wsBase
       $aRow = $oDataset->getRow();
       if(!is_array($aRow))
       {
-          $result = new wsResponse (35, "The user destination is invalid" );
+          $result = new wsResponse (35, "The target user destination is invalid" );
           return $result;
       }
 
@@ -1364,7 +1364,7 @@ class wsBase
           return $result;
       }
 
-      $result = new wsResponse (0, 'Succesful reassigned');
+      $result = new wsResponse (0, 'Command executed successfully');
 
       return $result;
     }
