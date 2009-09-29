@@ -42,7 +42,7 @@
 
   $t->isa_ok( $obj  , $className,  "class $className created");
 
-  $t->is( count($methods) , 13,  "class $className have " . 13 . ' methods.' );
+  $t->is( count($methods) , 14,  "class $className have " . 14 . ' methods.' );
 
    //checking method 'getUsersOfGroup'
   $t->can_ok( $obj,      'getUsersOfGroup',   'getUsersOfGroup() is callable' );
@@ -149,4 +149,4 @@
 
 
 
-  $t->todo (  'review all pendings methods in this class');
+  $t->todo (  'review all pendings methods in this class');
