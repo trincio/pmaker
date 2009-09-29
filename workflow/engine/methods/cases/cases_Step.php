@@ -305,7 +305,7 @@
           G::mk_dir ( $pathOutput );
           switch ( $aOD['OUT_DOC_TYPE'] ) {
             case 'HTML' : $oOutputDocument->generate( $_GET['UID'], $Fields['APP_DATA'], $pathOutput,
-                            $sFilename, $aOD['OUT_DOC_TEMPLATE'], (boolean)$aOD['OUT_DOC_LANDSCAPE'] );
+                            $sFilename, $aOD['OUT_DOC_TEMPLATE'], (boolean)$aOD['OUT_DOC_LANDSCAPE'] );                            
                           break;
             case 'JRXML' :
 
@@ -421,17 +421,62 @@
 
             $oData['APP_UID']   = $_SESSION['APPLICATION'];
             $oData['ATTACHMENT_FOLDER'] = true;
-            $documentData = new uploadDocumentData (
-                              $_SESSION['APPLICATION'],
-                              $_SESSION['USER_LOGGED'],
-                              $pathOutput . $sFilename . '.pdf',
-                              $sFilename. '.pdf',
-                              $sDocUID
-                              );
-
-            $documentData->bUseOutputFolder = true;
-            $oPluginRegistry->executeTriggers ( PM_UPLOAD_DOCUMENT , $documentData );
-            unlink ( $pathOutput . $sFilename. '.pdf' );
+            switch($aOD['OUT_DOC_GENERATE']){
+                case "BOTH":
+                    $documentData = new uploadDocumentData (
+                                  $_SESSION['APPLICATION'],
+                                  $_SESSION['USER_LOGGED'],
+                                  $pathOutput . $sFilename . '.pdf',
+                                  $sFilename. '.pdf',
+                                  $sDocUID
+                                  );
+                
+                    $documentData->bUseOutputFolder = true;
+                    $oPluginRegistry->executeTriggers ( PM_UPLOAD_DOCUMENT , $documentData );           
+                    unlink ( $pathOutput . $sFilename. '.pdf' ); 
+                    
+                    
+                    $documentData = new uploadDocumentData (
+                                  $_SESSION['APPLICATION'],
+                                  $_SESSION['USER_LOGGED'],
+                                  $pathOutput . $sFilename . '.doc',
+                                  $sFilename. '.doc',
+                                  $sDocUID
+                                  );
+                
+                    $documentData->bUseOutputFolder = true;
+                    $oPluginRegistry->executeTriggers ( PM_UPLOAD_DOCUMENT , $documentData );           
+                    unlink ( $pathOutput . $sFilename. '.doc' ); 
+                    
+                break;
+                case "PDF":
+                    $documentData = new uploadDocumentData (
+                                  $_SESSION['APPLICATION'],
+                                  $_SESSION['USER_LOGGED'],
+                                  $pathOutput . $sFilename . '.pdf',
+                                  $sFilename. '.pdf',
+                                  $sDocUID
+                                  );
+                
+                    $documentData->bUseOutputFolder = true;
+                    $oPluginRegistry->executeTriggers ( PM_UPLOAD_DOCUMENT , $documentData );           
+                    unlink ( $pathOutput . $sFilename. '.pdf' ); 
+                break;
+                case "DOC":
+                    $documentData = new uploadDocumentData (
+                                  $_SESSION['APPLICATION'],
+                                  $_SESSION['USER_LOGGED'],
+                                  $pathOutput . $sFilename . '.doc',
+                                  $sFilename. '.doc',
+                                  $sDocUID
+                                  );
+                
+                    $documentData->bUseOutputFolder = true;
+                    $oPluginRegistry->executeTriggers ( PM_UPLOAD_DOCUMENT , $documentData );           
+                    unlink ( $pathOutput . $sFilename. '.doc' ); 
+                break;
+            }
+                      
           }
 
           $outputNextStep = 'cases_Step?TYPE=OUTPUT_DOCUMENT&UID=' . $_GET['UID'] . '&POSITION=' . $_SESSION['STEP_POSITION'] . '&ACTION=VIEW&DOC=' . $sDocUID;
