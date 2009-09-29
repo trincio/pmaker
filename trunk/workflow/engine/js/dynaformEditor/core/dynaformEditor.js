@@ -333,6 +333,13 @@ var dynaformEditor={
 		var field=getField("JS_LIST","dynaforms_JSEditor");
 		this.currentJS=field.value;
 		var res=this.ajax.get_javascripts(this.A,field.value);
+		if(field.value == ''){
+			if( typeof(res.aOptions[0]) !== "undefined" ){
+				res = this.ajax.get_javascripts(this.A,res.aOptions[0].value);
+				this.currentJS = res.aOptions[0].value;
+			}
+		}
+		
 		if (typeof(res["*message"])==="undefined")
 		{
 			while(field.options.length>0) field.remove(0);
