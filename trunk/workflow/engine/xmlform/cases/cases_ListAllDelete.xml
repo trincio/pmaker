@@ -62,6 +62,7 @@
 <OPEN type="link" value="@G::LoadTranslation(ID_OPEN)" link="@G::encryptlink(@#cases_Open)?APP_UID=@#APP_UID&amp;DEL_INDEX=@#DEL_INDEX" colWidth="40" titleAlign="left" align="left" dataCompareField="APP_TITLE.CON_VALUE" dataCompareType="contains">
   <en/>
 </OPEN>
+<DELETE type="link" colWidth="40" value="@G::LoadTranslation(ID_DELETE)" link="#" onclick="new leimnud.module.app.confirm().make({label:&#039;@G::LoadTranslation(ID_MSG_CONFIRM_DELETE_CASES)&#039;,action:function(){casesDelete(@QAPP_UID);}});return false;"><pt>Eliminar</pt></DELETE>
 
 <SEARCH type="button" onclick="pagedTableFilter( this.form );" showInTable="0">
   <en>Apply Filter</en>

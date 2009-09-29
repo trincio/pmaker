@@ -1676,13 +1676,13 @@ class Cases
     }
 
     $filesList = array('cases/cases_ListAll', 'cases/cases_ListTodo', 'cases/cases_ListDraft', 'cases/cases_ListOnHold', 'cases/cases_ListCancelled', 'cases/cases_ListCompleted',
-        'cases/cases_ListToRevise', 'cases/cases_ListAll_Reassign', 'cases/cases_ListStarted');
+        'cases/cases_ListToRevise', 'cases/cases_ListAll_Reassign', 'cases/cases_ListStarted', 'cases/cases_ListAllDelete');
     switch ($sTypeList) {
       case 'all':
           $c->add($c->getNewCriterion(AppThreadPeer::APP_THREAD_STATUS, 'OPEN')->addOr($c->getNewCriterion(ApplicationPeer::APP_STATUS, 'COMPLETED')->addAnd($c->getNewCriterion(AppDelegationPeer::DEL_PREVIOUS,
               0))));
           $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
-          $xmlfile = $filesList[0];
+          $xmlfile = $filesList[0];          
           break;
       case 'my_started':
               	$c->add($c->getNewCriterion(ApplicationPeer::APP_INIT_USER, $sUIDUserLogged));
@@ -1735,7 +1735,13 @@ class Cases
       case 'gral':
           $c->add($c->getNewCriterion(AppThreadPeer::APP_THREAD_STATUS, 'OPEN')->addOr($c->getNewCriterion(ApplicationPeer::APP_STATUS, 'COMPLETED')->addAnd($c->getNewCriterion(AppDelegationPeer::DEL_PREVIOUS, 0))));
           $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
-          $xmlfile = $filesList[0];
+          if ($RBAC->userCanAccess('PM_DELETECASE') == 1) {
+              $xmlfile = $filesList[9];    
+          }else{
+              $xmlfile = $filesList[0];    
+          }
+          
+          
           break;
       case 'to_revise':
           require_once 'classes/model/ProcessUser.php';
