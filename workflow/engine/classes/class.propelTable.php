@@ -406,7 +406,7 @@ class propelTable
     //var_dump($fieldName, $fieldClass );echo '<br /><br />';
 
     if ( array_search( 'renderTable', get_class_methods( $fieldClass ) )!== FALSE ) {
-      $htmlField = $this->xmlForm->fields[ $fieldName ]->renderTable( $value, $this->xmlForm, true );
+      $htmlField = $this->xmlForm->fields[ $fieldName ]->renderTable( $value, $this->xmlForm, true );    
       $this->tpl->assign( "value" , $htmlField );
     }
 

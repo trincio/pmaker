@@ -29,6 +29,7 @@ $G_TMP_MENU->AddIdRawOption('CASES_DRAFT', 'cases/cases_List?l=draft', G::LoadTr
 $G_TMP_MENU->AddIdRawOption('CASES_PAUSED', 'cases/cases_List?l=paused', G::LoadTranslation('ID_PAUSED'));
 $G_TMP_MENU->AddIdRawOption('CASES_CANCELLED', 'cases/cases_List?l=cancelled', G::LoadTranslation('ID_CANCELLED'));
 $G_TMP_MENU->AddIdRawOption('CASES_COMPLETED', 'cases/cases_List?l=completed', G::LoadTranslation('ID_COMPLETED'));
+$G_TMP_MENU->AddIdRawOption('CASES_MY_STARTED', 'cases/cases_List?l=my_started', G::LoadTranslation('ID_STARTED_CASES'));
 $G_TMP_MENU->AddIdRawOption('CASES_ALL', 'cases/cases_List?l=all', G::LoadTranslation('ID_ALL'));
 if($RBAC->userCanAccess('PM_ALLCASES') == 1) {
   $G_TMP_MENU->AddIdRawOption('CASES_GRAL', 'cases/cases_List?l=gral', G::LoadTranslation('ID_GENERAL'));
