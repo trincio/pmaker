@@ -26,7 +26,7 @@
   <en>Status</en>
 <es>Estado</es></OP_CASE_STATUS>
 
-<EDIT type="link" titleAlign="center" colWidth="50" link="#" onclick="editObjectPermission(@@OP_UID);return false;">
+<EDIT type="link" titleAlign="center" colWidth="50" link="#" onclick="editObjectPermission('@#OP_UID');return false;">
   <en>Edit</en>
 <es>Editar</es>
 </EDIT>
