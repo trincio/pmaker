@@ -71,7 +71,6 @@
   }
       
   /* Prepare page before to show */
-
   switch ( $sTypeList ) {
   	case 'to_do' :  
   	     if ( defined(  'ENABLE_CASE_LIST_OPTIMIZATION' ) ) {

@@ -1671,12 +1671,12 @@ class Cases
 
     $c->add(TaskPeer::TAS_TYPE, 'SUBPROCESS', Criteria::NOT_EQUAL);
 
-    if ($sTypeList != 'gral' && $sTypeList != 'to_revise' && $sTypeList != 'to_reassign') {
+    if ($sTypeList != 'gral' && $sTypeList != 'to_revise' && $sTypeList != 'to_reassign' && $sTypeList != 'my_started') {
       $c->add(UsersPeer::USR_UID, $sUIDUserLogged);
     }
 
     $filesList = array('cases/cases_ListAll', 'cases/cases_ListTodo', 'cases/cases_ListDraft', 'cases/cases_ListOnHold', 'cases/cases_ListCancelled', 'cases/cases_ListCompleted',
-        'cases/cases_ListToRevise', 'cases/cases_ListAll_Reassign');
+        'cases/cases_ListToRevise', 'cases/cases_ListAll_Reassign', 'cases/cases_ListStarted');
     switch ($sTypeList) {
       case 'all':
           $c->add($c->getNewCriterion(AppThreadPeer::APP_THREAD_STATUS, 'OPEN')->addOr($c->getNewCriterion(ApplicationPeer::APP_STATUS, 'COMPLETED')->addAnd($c->getNewCriterion(AppDelegationPeer::DEL_PREVIOUS,
@@ -1684,6 +1684,12 @@ class Cases
           $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
           $xmlfile = $filesList[0];
           break;
+      case 'my_started':
+              	$c->add($c->getNewCriterion(ApplicationPeer::APP_INIT_USER, $sUIDUserLogged));
+                $c->add($c->getNewCriterion(AppThreadPeer::APP_THREAD_STATUS, 'OPEN')->addOr($c->getNewCriterion(ApplicationPeer::APP_STATUS, 'COMPLETED')->addAnd($c->getNewCriterion(AppDelegationPeer::DEL_PREVIOUS, 0))));
+                $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);                
+                $xmlfile = $filesList[8];
+      break;
       case 'to_do':
           $c->add(ApplicationPeer::APP_STATUS, 'TO_DO');
           $c->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);

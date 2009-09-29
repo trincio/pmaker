@@ -290,8 +290,8 @@ class XmlForm_Field {
     return $result;
   }
   function renderTable($values = '', $owner = NULL, $onlyValue = false) {
-    $r = 1;
-    $result = $this->render ( $values, $owner, '[' . $owner->name . '][' . $r . ']', $onlyValue );
+    $r = 1;    
+    $result = $this->render ( $values, $owner, '[' . $owner->name . '][' . $r . ']', $onlyValue );    
     return $result;
   }
 
@@ -2191,8 +2191,9 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
   public $mask = '%Y-%m-%d';
   public $dependentFields = '';
 
-  function verifyDateFormat($date) {
-    $aux = explode ( '-', $date );
+  function verifyDateFormat($date) {      
+    $dateTime=explode(" ",$date); //To accept the Hour part
+    $aux = explode ( '-', $dateTime[0] );
     if (count ( $aux ) != 3)
       return false;
     if (! (is_numeric ( $aux [0] ) && is_numeric ( $aux [1] ) && is_numeric ( $aux [2] )))
@@ -2315,9 +2316,9 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
     		case 'today':
     			$value = date($tmp); 
     		break;
-    		default:
+    		default:    		
     			if(!$this->verifyDateFormat($value))
-    				$value='';
+    				$value='';    				
     		break;
     	}
     }
