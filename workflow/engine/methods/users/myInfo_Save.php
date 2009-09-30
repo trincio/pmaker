@@ -139,6 +139,7 @@ try {ini_set('display_errors','1');
 	if ($_FILES['form']['tmp_name']['USR_RESUME'] != '') {
 		G::uploadFile($_FILES['form']['tmp_name']['USR_RESUME'], PATH_IMAGES_ENVIRONMENT_FILES . $aData['USR_UID'] . '/', $_FILES['form']['name']['USR_RESUME']);
 	}
+	G::SendTemporalMessage('ID_CHANGES_SAVED', 'info', 'labels');
 	G::header('location: myInfo');
 }
 catch (Exception $oException) {

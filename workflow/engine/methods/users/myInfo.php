@@ -55,7 +55,12 @@ try {
   $G_ID_MENU_SELECTED       = 'MY_ACCOUNT';
   $G_PUBLISH                = new Publisher;
   $G_PUBLISH->AddContent('xmlform', 'xmlform', 'users/myInfoView.xml', '', $aFields);
-  $G_PUBLISH->AddContent('xmlform', 'xmlform', 'users/myInfo.xml', 'display:none', $aFields, 'myInfo_Save');
+  if ($RBAC->userCanAccess('PM_EDITPERSONALINFO') != 1) {
+    $G_PUBLISH->AddContent('xmlform', 'xmlform', 'users/myInfo2.xml', 'display:none', $aFields, 'myInfo_Save');
+  }
+  else {
+    $G_PUBLISH->AddContent('xmlform', 'xmlform', 'users/myInfo.xml', 'display:none', $aFields, 'myInfo_Save');
+  }
   G::RenderPage('publish');
 }
 catch (Exception $oException) {
