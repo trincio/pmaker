@@ -449,8 +449,8 @@ class RBAC
   function getRolePermissions($ROL_UID){
   return $this->rolesObj->getRolePermissions($ROL_UID);
   }
-  function getAllPermissions($ROL_UID){
-  return $this->rolesObj->getAllPermissions($ROL_UID);
+  function getAllPermissions($ROL_UID,$PER_SYSTEM=""){      
+      return $this->rolesObj->getAllPermissions($ROL_UID,$PER_SYSTEM);
   }
   function  assignPermissionRole($sData){
   return $this->rolesObj->assignPermissionRole($sData);

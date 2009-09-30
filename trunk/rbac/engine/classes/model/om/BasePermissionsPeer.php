@@ -24,7 +24,7 @@ abstract class BasePermissionsPeer {
 	const CLASS_DEFAULT = 'classes.model.Permissions';
 
 	/** The total number of columns. */
-	const NUM_COLUMNS = 5;
+	const NUM_COLUMNS = 6;
 
 	/** The number of lazy-loaded columns. */
 	const NUM_LAZY_LOAD_COLUMNS = 0;
@@ -45,6 +45,9 @@ abstract class BasePermissionsPeer {
 	/** the column name for the PER_STATUS field */
 	const PER_STATUS = 'PERMISSIONS.PER_STATUS';
 
+	/** the column name for the PER_SYSTEM field */
+	const PER_SYSTEM = 'PERMISSIONS.PER_SYSTEM';
+
 	/** The PHP to DB Name Mapping */
 	private static $phpNameMap = null;
 
@@ -56,10 +59,10 @@ abstract class BasePermissionsPeer {
 	 * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
 	 */
 	private static $fieldNames = array (
-		BasePeer::TYPE_PHPNAME => array ('PerUid', 'PerCode', 'PerCreateDate', 'PerUpdateDate', 'PerStatus', ),
-		BasePeer::TYPE_COLNAME => array (PermissionsPeer::PER_UID, PermissionsPeer::PER_CODE, PermissionsPeer::PER_CREATE_DATE, PermissionsPeer::PER_UPDATE_DATE, PermissionsPeer::PER_STATUS, ),
-		BasePeer::TYPE_FIELDNAME => array ('PER_UID', 'PER_CODE', 'PER_CREATE_DATE', 'PER_UPDATE_DATE', 'PER_STATUS', ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME => array ('PerUid', 'PerCode', 'PerCreateDate', 'PerUpdateDate', 'PerStatus', 'PerSystem', ),
+		BasePeer::TYPE_COLNAME => array (PermissionsPeer::PER_UID, PermissionsPeer::PER_CODE, PermissionsPeer::PER_CREATE_DATE, PermissionsPeer::PER_UPDATE_DATE, PermissionsPeer::PER_STATUS, PermissionsPeer::PER_SYSTEM, ),
+		BasePeer::TYPE_FIELDNAME => array ('PER_UID', 'PER_CODE', 'PER_CREATE_DATE', 'PER_UPDATE_DATE', 'PER_STATUS', 'PER_SYSTEM', ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
 	);
 
 	/**
@@ -69,10 +72,10 @@ abstract class BasePermissionsPeer {
 	 * e.g. self::$fieldNames[BasePeer::TYPE_PHPNAME]['Id'] = 0
 	 */
 	private static $fieldKeys = array (
-		BasePeer::TYPE_PHPNAME => array ('PerUid' => 0, 'PerCode' => 1, 'PerCreateDate' => 2, 'PerUpdateDate' => 3, 'PerStatus' => 4, ),
-		BasePeer::TYPE_COLNAME => array (PermissionsPeer::PER_UID => 0, PermissionsPeer::PER_CODE => 1, PermissionsPeer::PER_CREATE_DATE => 2, PermissionsPeer::PER_UPDATE_DATE => 3, PermissionsPeer::PER_STATUS => 4, ),
-		BasePeer::TYPE_FIELDNAME => array ('PER_UID' => 0, 'PER_CODE' => 1, 'PER_CREATE_DATE' => 2, 'PER_UPDATE_DATE' => 3, 'PER_STATUS' => 4, ),
-		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, )
+		BasePeer::TYPE_PHPNAME => array ('PerUid' => 0, 'PerCode' => 1, 'PerCreateDate' => 2, 'PerUpdateDate' => 3, 'PerStatus' => 4, 'PerSystem' => 5, ),
+		BasePeer::TYPE_COLNAME => array (PermissionsPeer::PER_UID => 0, PermissionsPeer::PER_CODE => 1, PermissionsPeer::PER_CREATE_DATE => 2, PermissionsPeer::PER_UPDATE_DATE => 3, PermissionsPeer::PER_STATUS => 4, PermissionsPeer::PER_SYSTEM => 5, ),
+		BasePeer::TYPE_FIELDNAME => array ('PER_UID' => 0, 'PER_CODE' => 1, 'PER_CREATE_DATE' => 2, 'PER_UPDATE_DATE' => 3, 'PER_STATUS' => 4, 'PER_SYSTEM' => 5, ),
+		BasePeer::TYPE_NUM => array (0, 1, 2, 3, 4, 5, )
 	);
 
 	/**
@@ -182,6 +185,8 @@ abstract class BasePermissionsPeer {
 		$criteria->addSelectColumn(PermissionsPeer::PER_UPDATE_DATE);
 
 		$criteria->addSelectColumn(PermissionsPeer::PER_STATUS);
+
+		$criteria->addSelectColumn(PermissionsPeer::PER_SYSTEM);
 
 	}
 

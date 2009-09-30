@@ -415,8 +415,8 @@ class Roles extends BaseRoles
     }
     
     
-    function getAllPermissions($ROL_UID)
-    {
+    function getAllPermissions($ROL_UID,$PER_SYSTEM="")
+    {        
       try {
         $c = new Criteria();
         $c->addSelectColumn(PermissionsPeer::PER_UID);
@@ -440,7 +440,17 @@ class Roles extends BaseRoles
         $criteria->addSelectColumn(PermissionsPeer::PER_CREATE_DATE);
         $criteria->addSelectColumn(PermissionsPeer::PER_UPDATE_DATE);
         $criteria->addSelectColumn(PermissionsPeer::PER_STATUS);
+        $criteria->addSelectColumn(PermissionsPeer::PER_SYSTEM);
+        $criteria->addSelectColumn(SystemsPeer::SYS_CODE);
         $criteria->add(PermissionsPeer::PER_UID, $a, Criteria::NOT_IN);
+        if($PER_SYSTEM!=""){        
+            $criteria->add(SystemsPeer::SYS_CODE, $PER_SYSTEM );
+        }
+        $criteria->addJoin(PermissionsPeer::PER_SYSTEM, SystemsPeer::SYS_UID);     
+        
+        
+        
+        
         
         $oDataset = PermissionsPeer::doSelectRS($criteria);
         $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);

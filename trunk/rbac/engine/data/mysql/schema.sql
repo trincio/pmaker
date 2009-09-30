@@ -17,6 +17,7 @@ CREATE TABLE `PERMISSIONS`
 	`PER_CREATE_DATE` DATETIME default '0000-00-00 00:00:00' NOT NULL,
 	`PER_UPDATE_DATE` DATETIME default '0000-00-00 00:00:00' NOT NULL,
 	`PER_STATUS` INTEGER default 1 NOT NULL,
+	`PER_SYSTEM` VARCHAR(32) default '00000000000000000000000000000002' NOT NULL,
 	PRIMARY KEY (`PER_UID`)
 )Type=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Permissions';
 #-----------------------------------------------------------------------------
@@ -67,7 +68,7 @@ CREATE TABLE `SYSTEMS`
 	PRIMARY KEY (`SYS_UID`)
 )Type=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Systems';
 #-----------------------------------------------------------------------------
-#-- RBAC_USERS
+#-- USERS
 #-----------------------------------------------------------------------------
 
 DROP TABLE IF EXISTS `USERS`;

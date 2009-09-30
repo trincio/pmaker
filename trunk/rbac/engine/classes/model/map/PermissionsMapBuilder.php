@@ -74,6 +74,8 @@ class PermissionsMapBuilder {
 
 		$tMap->addColumn('PER_STATUS', 'PerStatus', 'int', CreoleTypes::INTEGER, true, null);
 
+		$tMap->addColumn('PER_SYSTEM', 'PerSystem', 'string', CreoleTypes::VARCHAR, true, 32);
+
 	} // doBuild()
 
 } // PermissionsMapBuilder
