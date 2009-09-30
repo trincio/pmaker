@@ -221,8 +221,8 @@ foreach ($aLabels as $aLabel) {
 	fwrite($oFile, $aLabel[0] . "\n");
 	fwrite($oFile, $aLabel[1] . "\n");
   fwrite($oFile, $aLabel[2] . "\n");
-	fwrite($oFile, $aLabel[3] . "\n");
-	fwrite($oFile, $aLabel[4] . "\n\n");
+	fwrite($oFile, str_replace("\n", '', $aLabel[3]) . "\n");
+	fwrite($oFile, str_replace("\n", '', $aLabel[4]) . "\n\n");
 }
 fclose($oFile);
 G::streamFile($sPOFile, true);

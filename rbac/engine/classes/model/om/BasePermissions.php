@@ -62,6 +62,13 @@ abstract class BasePermissions extends BaseObject  implements Persistent {
 	 */
 	protected $per_status = 1;
 
+
+	/**
+	 * The value for the per_system field.
+	 * @var        string
+	 */
+	protected $per_system = '00000000000000000000000000000002';
+
 	/**
 	 * Flag to prevent endless save loop, if this object is referenced
 	 * by another object which falls in this transaction.
@@ -169,6 +176,17 @@ abstract class BasePermissions extends BaseObject  implements Persistent {
 	{
 
 		return $this->per_status;
+	}
+
+	/**
+	 * Get the [per_system] column value.
+	 * 
+	 * @return     string
+	 */
+	public function getPerSystem()
+	{
+
+		return $this->per_system;
 	}
 
 	/**
@@ -286,6 +304,28 @@ abstract class BasePermissions extends BaseObject  implements Persistent {
 	} // setPerStatus()
 
 	/**
+	 * Set the value of [per_system] column.
+	 * 
+	 * @param      string $v new value
+	 * @return     void
+	 */
+	public function setPerSystem($v)
+	{
+
+		// Since the native PHP type for this column is string,
+		// we will cast the input to a string (if it is not).
+		if ($v !== null && !is_string($v)) {
+			$v = (string) $v; 
+		}
+
+		if ($this->per_system !== $v || $v === '00000000000000000000000000000002') {
+			$this->per_system = $v;
+			$this->modifiedColumns[] = PermissionsPeer::PER_SYSTEM;
+		}
+
+	} // setPerSystem()
+
+	/**
 	 * Hydrates (populates) the object variables with values from the database resultset.
 	 *
 	 * An offset (1-based "start column") is specified so that objects can be hydrated
@@ -312,12 +352,14 @@ abstract class BasePermissions extends BaseObject  implements Persistent {
 
 			$this->per_status = $rs->getInt($startcol + 4);
 
+			$this->per_system = $rs->getString($startcol + 5);
+
 			$this->resetModified();
 
 			$this->setNew(false);
 
 			// FIXME - using NUM_COLUMNS may be clearer.
-			return $startcol + 5; // 5 = PermissionsPeer::NUM_COLUMNS - PermissionsPeer::NUM_LAZY_LOAD_COLUMNS).
+			return $startcol + 6; // 6 = PermissionsPeer::NUM_COLUMNS - PermissionsPeer::NUM_LAZY_LOAD_COLUMNS).
 
 		} catch (Exception $e) {
 			throw new PropelException("Error populating Permissions object", $e);
@@ -535,6 +577,9 @@ abstract class BasePermissions extends BaseObject  implements Persistent {
 			case 4:
 				return $this->getPerStatus();
 				break;
+			case 5:
+				return $this->getPerSystem();
+				break;
 			default:
 				return null;
 				break;
@@ -560,6 +605,7 @@ abstract class BasePermissions extends BaseObject  implements Persistent {
 			$keys[2] => $this->getPerCreateDate(),
 			$keys[3] => $this->getPerUpdateDate(),
 			$keys[4] => $this->getPerStatus(),
+			$keys[5] => $this->getPerSystem(),
 		);
 		return $result;
 	}
@@ -606,6 +652,9 @@ abstract class BasePermissions extends BaseObject  implements Persistent {
 			case 4:
 				$this->setPerStatus($value);
 				break;
+			case 5:
+				$this->setPerSystem($value);
+				break;
 		} // switch()
 	}
 
@@ -634,6 +683,7 @@ abstract class BasePermissions extends BaseObject  implements Persistent {
 		if (array_key_exists($keys[2], $arr)) $this->setPerCreateDate($arr[$keys[2]]);
 		if (array_key_exists($keys[3], $arr)) $this->setPerUpdateDate($arr[$keys[3]]);
 		if (array_key_exists($keys[4], $arr)) $this->setPerStatus($arr[$keys[4]]);
+		if (array_key_exists($keys[5], $arr)) $this->setPerSystem($arr[$keys[5]]);
 	}
 
 	/**
@@ -650,6 +700,7 @@ abstract class BasePermissions extends BaseObject  implements Persistent {
 		if ($this->isColumnModified(PermissionsPeer::PER_CREATE_DATE)) $criteria->add(PermissionsPeer::PER_CREATE_DATE, $this->per_create_date);
 		if ($this->isColumnModified(PermissionsPeer::PER_UPDATE_DATE)) $criteria->add(PermissionsPeer::PER_UPDATE_DATE, $this->per_update_date);
 		if ($this->isColumnModified(PermissionsPeer::PER_STATUS)) $criteria->add(PermissionsPeer::PER_STATUS, $this->per_status);
+		if ($this->isColumnModified(PermissionsPeer::PER_SYSTEM)) $criteria->add(PermissionsPeer::PER_SYSTEM, $this->per_system);
 
 		return $criteria;
 	}
@@ -711,6 +762,8 @@ abstract class BasePermissions extends BaseObject  implements Persistent {
 		$copyObj->setPerUpdateDate($this->per_update_date);
 
 		$copyObj->setPerStatus($this->per_status);
+
+		$copyObj->setPerSystem($this->per_system);
 
 
 		$copyObj->setNew(true);

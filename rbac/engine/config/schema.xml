@@ -71,6 +71,16 @@
         <parameter name="Extra" value=""/>
       </vendor>
     </column>
+    <column name="PER_SYSTEM" type="VARCHAR" size="32" required="true" default="00000000000000000000000000000002">
+      <vendor type="mysql">
+        <parameter name="Field" value="PER_SYSTEM"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="00000000000000000000000000000002"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
   </table>
   <table name="ROLES">
     <vendor type="mysql">
