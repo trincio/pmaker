@@ -1402,4 +1402,59 @@ class wsBase
     }
   }
 
+ public function importProcessFromLibrary ( $processId, $version = '', $importOption = '', $usernameLibrary = '', $passwordLibrary = '' ) {
+    try {
+      //$versionReq = $_GET['v'];
+      //. (isset($_GET['s']) ? '&s=' . $_GET['s'] : '')
+      $ipaddress = $_SERVER['REMOTE_ADDR'];
+
+      //downloading the file
+      $localPath     = PATH_DOCUMENT . 'input' . PATH_SEP ;
+      G::mk_dir($localPath);
+      $newfilename = G::GenerateUniqueId() . '.pm';
+
+      $downloadUrl = PML_DOWNLOAD_URL . '?id=' . $processId ;
+
+      G::LoadClass('processes');
+      $oProcess = new Processes();
+      $oProcess->downloadFile( $downloadUrl, $localPath, $newfilename);
+
+      //getting the ProUid from the file recently downloaded
+      $oData = $oProcess->getProcessData ( $localPath . $newfilename  );
+      if ( is_null($oData)) {
+        throw new Exception('Error the url is invalid or the process is invalid');
+      }
+
+      $sProUid = $oData->process['PRO_UID'];
+      $oData->process['PRO_UID_OLD'] = $sProUid;
+
+      //if the process exists, we need to check the $importOption to and re-import if the user wants,
+      if ( $oProcess->processExists ( $sProUid ) ) {
+        throw new Exception('The process is already in the System.');
+      }
+
+      //creating the process
+      $oProcess->createProcessFromData ($oData, $localPath . $newfilename );
+
+      //show the info after the imported process
+      $oProcess = new Processes();
+      $oProcess->ws_open_public ();
+      $processData = $oProcess->ws_processGetData ( $processId  );
+
+      $result->status_code        = 0;
+      $result->message            = 'Sucessful';
+      $result->timestamp          = date ( 'Y-m-d H:i:s');
+      $result->processId          = $processId;
+      $result->processTitle       = $processData->title;
+      $result->category           = (isset($processData->category) ? $processData->category : '');
+      $result->version            = $processData->version;
+            
+      return $result;
+    }
+    catch ( Exception $e ) {
+      $result = new wsResponse (100, $e->getMessage());
+      return $result;
+    }
+  }
+
 }
