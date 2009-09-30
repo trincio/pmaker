@@ -33,4 +33,6 @@ $aRequiredPermissions = array('PM_LOGIN',
                               'PM_SUPERVISOR',
                               'PM_SETUP_ADVANCE',
                               'PM_DASHBOARD',
-                              'PM_WEBDAV');
+                              'PM_WEBDAV',
+                              'PM_DELETECASE',
+                              'PM_EDITPERSONALINFO');

@@ -2420,7 +2420,7 @@ class processMap {
     $oDataset->next();
     while ($aRow = $oDataset->getRow()) {
       //Obtain task target
-      if ($aRow['TAS_UID'] != '') {
+      if (($aRow['TAS_UID'] != '') && ($aRow['TAS_UID'] != '0')) {
         try {
           $oTask       = new Task();
           $aFields     = $oTask->load($aRow['TAS_UID']);
@@ -2455,7 +2455,7 @@ class processMap {
         }
       }
       //Obtain task source
-      if ($aRow['OP_TASK_SOURCE'] != '') {
+      if (($aRow['OP_TASK_SOURCE'] != '') && ($aRow['OP_TASK_SOURCE'] != '0')) {
         try {
               $oTask       = new Task();
               $aFields     = $oTask->load($aRow['OP_TASK_SOURCE']);
@@ -2488,7 +2488,7 @@ class processMap {
         break;*/
         case 'DYNAFORM':
           $sObjectType = G::LoadTranslation('ID_DYNAFORM');
-          if ($aRow['OP_OBJ_UID'] != '') {
+          if (($aRow['OP_OBJ_UID'] != '') && ($aRow['OP_OBJ_UID'] != '0')) {
             $oDynaform = new Dynaform();
             $aFields   = $oDynaform->load($aRow['OP_OBJ_UID']);
             $sObject     = $aFields['DYN_TITLE'];
@@ -2499,7 +2499,7 @@ class processMap {
         break;
         case 'INPUT':
           $sObjectType = G::LoadTranslation('ID_INPUT_DOCUMENT');
-          if ($aRow['OP_OBJ_UID'] != '') {
+          if (($aRow['OP_OBJ_UID'] != '') && ($aRow['OP_OBJ_UID'] != '0')) {
             $oInputDocument = new InputDocument();
             $aFields        = $oInputDocument->load($aRow['OP_OBJ_UID']);
             $sObject        = $aFields['INP_DOC_TITLE'];
@@ -2510,7 +2510,7 @@ class processMap {
         break;
         case 'OUTPUT':
           $sObjectType = G::LoadTranslation('ID_OUTPUT_DOCUMENT');
-          if ($aRow['OP_OBJ_UID'] != '') {
+          if (($aRow['OP_OBJ_UID'] != '') && ($aRow['OP_OBJ_UID'] != '0')) {
             $oOutputDocument = new OutputDocument();
             $aFields         = $oOutputDocument->load($aRow['OP_OBJ_UID']);
             $sObject         = $aFields['OUT_DOC_TITLE'];
@@ -3377,7 +3377,7 @@ function editObjectPermission($sOP_UID)
       $oCriteria->addSelectColumn(EventPeer::EVN_ACTION);
       $oCriteria->addSelectColumn(EventPeer::EVN_STATUS);
       $oCriteria->addSelectColumn(EventPeer::EVN_WHEN_OCCURS);
-      
+
       $oCriteria->addAsColumn('EVN_DESCRIPTION', ContentPeer::CON_VALUE );
       $aConditions   = array();
       $aConditions[] = array(EventPeer::EVN_UID  , ContentPeer::CON_ID);

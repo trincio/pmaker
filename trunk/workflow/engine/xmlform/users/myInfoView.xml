@@ -30,7 +30,7 @@
   <en>Email</en>
 </USR_EMAIL>
 
-<USR_ADDRESS type="text" size="35" maxlength="35"  defaultvalue="" required="0" group="1" dependentfields="" linkfield="" strto="" readonly="0" noshowingrid="0" readonlyingrid="0" totalizeable="0" sqlconnection="">
+<USR_ADDRESS type="textarea" rows="3" cols="50" defaultvalue="" required="0" group="1" dependentfields="" linkfield="" strto="" readonly="0" noshowingrid="0" readonlyingrid="0" totalizeable="0" sqlconnection="">
   <en>Address</en>
 </USR_ADDRESS>
 
