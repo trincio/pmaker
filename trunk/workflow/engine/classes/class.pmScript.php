@@ -33,7 +33,7 @@
 /**
  * PMScript - PMScript class
  * @package ProcessMaker
- * @author Julio Cesar Laura Avendaño
+ * @author Julio Cesar Laura Avendaño <juliocesar@colosa.com>
  * @last modify 2008.08.13 by Erik Amaru Ortiz <erik@colosa.com>
  * @last modify comment was added and adapted the catch errors
  * @copyright 2007 COLOSA
@@ -47,9 +47,6 @@ function __autoload($sClassName) {
     }
   }
 }
-
-$Err=""; //global var
-
 
 //Start - Custom functions
 G::LoadClass('pmFunctions');
@@ -90,10 +87,13 @@ class PMScript
    */
   var $bError = false;
 
+  /**
+   * Affected fields
+   */
   var $affected_fields;
 
   function PMScript(){
-	$this->aFields['__ERROR__'] = 'none';
+	  $this->aFields['__ERROR__'] = 'none';
   }
 	/*
 	* Set the fields to use
@@ -115,7 +115,6 @@ class PMScript
 	*/
 	function setScript($sScript = '')
 	{
-		//validate?
 		$this->sScript = $sScript;
 	}
 
@@ -130,58 +129,13 @@ class PMScript
 	}
 
 
-	function executeAndCatchErrors($code) {
-		global $Err;
-		$originalHandler = set_error_handler('minimalErrorCheck',E_USER_ERROR);
-
-		// Send any output to buffer
-		ob_start();
-
-		// Do eval()
-		$check = eval($code);
-
-		$output = ob_get_contents();
-		ob_end_clean();
-		// Send output or report errors
-		$response = new errObject();
-
-		if ($check===false) {
-			#the fatal errors was passed
-			#then we verify the errors with minus consecuence
-			$response->errEval = false;
-			$output = explode(" in ",$output);
-			$response->errMsg = $output[0];
-		} else {
-			$response->errEval = true;
-		}
-
-		if($response->errEval) {
-			$this->bError = false;
-			return true;
-		} else {
-			if($Err != "") { //Syntax error
-				//extracting prat of code for show
-				$ii = strpos($code,'{');
-				$jj = strpos($code,'}');
-				$xcode = substr($code, $ii, $ii+10);
-				$_SESSION['TRIGGER_DEBUG']['ERRORS'][]['SINTAX'] = $Err .'<br/>From: '.$xcode;
-				$this->bError = false;
-				return false;
-			}
-			if($response->errMsg) { //Fatal error
-				//echo $r->errMsg;
-				$ii = strpos($code,'{');
-				$jj = strpos($code,'}');
-				$jj = $jj-$ii;
-				$xcode = substr($code, $ii+1, $jj-1);
-				$xcode = str_replace('$this->aFields', '', $xcode);
-				$response->errMsg = str_replace("unexpected '}'", "expected ';'", $response->errMsg);
-				$_SESSION['TRIGGER_DEBUG']['ERRORS'][]['FATAL'] = $response->errMsg.'<br/>From: '.$xcode;
-				$this->bError = false;
-				return false;
-			}
-		}
-		restore_error_handler();
+	function executeAndCatchErrors($sScript, $sCode) {
+	  ob_start('handleFatalErrors');
+    set_error_handler('handleErrors');
+    $_SESSION['_CODE_'] = $sCode;
+		eval($sScript);
+		unset($_SESSION['_CODE_']);
+		ob_end_flush();
 	}
 
 	/*
@@ -190,7 +144,7 @@ class PMScript
 	 */
 	function execute()
 	{
-		$sScript = "try {\n";
+		$sScript = "";
 		$iAux    = 0;
 		$bEqual  = false;
 		$iOcurrences = preg_match_all('/\@(?:([\@\%\#\?\$\=])([a-zA-Z\_]\w*)|([a-zA-Z\_][\w\-\>\:]*)\(((?:[^\\\\\)]*(?:[\\\\][\w\W])?)*)\))((?:\s*\[[\'"]?\w+[\'"]?\])+)?/', $this->sScript, $aMatch, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE);
@@ -356,9 +310,10 @@ class PMScript
 			}
 		}
 		$sScript .= substr($this->sScript, $iAux);
-		$sScript .= "\n} catch (Exception \$oException) {\n  \$this->aFields['__ERROR__'] = utf8_encode(\$oException->getMessage());\n}";
+		$sCode    = $sScript;
+		$sScript  = "try {\n" . $sScript . "\n} catch (Exception \$oException) {\n  \$this->aFields['__ERROR__'] = utf8_encode(\$oException->getMessage());\n}";
 		//echo '<pre>-->'; print_r($this->aFields); echo '<---</pre>';
-		$this->executeAndCatchErrors($sScript);
+		$this->executeAndCatchErrors($sScript, $sCode);
 		for($i=0; $i<count($this->affected_fields); $i++){
 			$_SESSION['TRIGGER_DEBUG']['DATA'][$i]['key']   = $this->affected_fields[$i];
 			$_SESSION['TRIGGER_DEBUG']['DATA'][$i]['value'] = isset($this->aFields[$this->affected_fields[$i]]) ? $this->aFields[$this->affected_fields[$i]] : '';
@@ -600,22 +555,34 @@ function pmSqlEscape($vValue)
 
 
 /***************************************************************************
-* @Check Sintax error handler
-* @author: Erik Amaru Ortiz <erik@colosa.com>
-* @datetime: 01.07.2008 17:29:37
+* Error handler
+* @author: Julio Cesar Laura Avendaño <juliocesar@colosa.com>
+* @date: 2009-10-01
 ***************************************************************************/
 
-
-function minimalErrorCheck($errno, $errstr, $errfile, $errline)
-{
-	global $Err;
-	$Err =  "<font color=red><b>Parse error: </b></font>$errstr<br>";
+function handleErrors($errno, $errstr, $errfile, $errline) {
+  if (($errno != 8) && ($errno != 2048)) {
+    $sCode = $_SESSION['_CODE_'];
+    unset($_SESSION['_CODE_']);
+    registerError(1, $errstr, $errline - 1, $sCode);
+  }
 }
 
-class errObject
-{
-	public $errEval;
-	public $errMsg;
+function handleFatalErrors($buffer) {
+  if (ereg('(error</b>:)(.+)(<br)', $buffer, $regs)) {
+    $err = preg_replace('/<.*?>/', '', $regs[2]);
+    $aAux = explode(' in ', $err);
+    $sCode = $_SESSION['_CODE_'];
+    unset($_SESSION['_CODE_']);
+    registerError(2, $aAux[0], 0, $sCode);
+    $_SESSION['_NO_EXECUTE_TRIGGERS_BEFORE_'] = 1;
+    G::header('Location: ' . $_SERVER['REQUEST_URI']);
+    die;
+  }
+  return $buffer;
 }
 
-?>
+function registerError($iType, $sError, $iLine, $sCode) {
+  $sType = ($iType == 1 ? 'ERROR' : 'FATAL');
+  $_SESSION['TRIGGER_DEBUG']['ERRORS'][][$sType] = $sError . ($iLine > 0 ? ' (line ' . $iLine .  ')' : '') . ':<br /><br />' . $sCode;
+}

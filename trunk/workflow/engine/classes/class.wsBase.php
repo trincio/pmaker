@@ -1404,25 +1404,42 @@ class wsBase
 
  public function importProcessFromLibrary ( $processId, $version = '', $importOption = '', $usernameLibrary = '', $passwordLibrary = '' ) {
     try {
+      G::LoadClass('processes');
       //$versionReq = $_GET['v'];
       //. (isset($_GET['s']) ? '&s=' . $_GET['s'] : '')
       $ipaddress = $_SERVER['REMOTE_ADDR'];
+	  	$oProcesses = new Processes();
+	  	$oProcesses->ws_open_public();
+	  	$oProcess = $oProcesses->ws_processGetData($processId);
+	  	if ( $oProcess->status_code != 0 ) {
+	  		throw ( new Exception ( $oProcess->message ) );
+	  	}
+
+      $privacy = $oProcess->privacy;
+
+      $strSession = '';
+      if ( $privacy != 'FREE' ) {      	  	
+      	global $sessionId;
+      	$antSession = $sessionId;
+        $oProcesses->ws_open ($usernameLibrary, $passwordLibrary );
+        $strSession = "&s=" . $sessionId;
+      	$sessionId = $antSession;
+      }        
 
       //downloading the file
       $localPath     = PATH_DOCUMENT . 'input' . PATH_SEP ;
       G::mk_dir($localPath);
       $newfilename = G::GenerateUniqueId() . '.pm';
 
-      $downloadUrl = PML_DOWNLOAD_URL . '?id=' . $processId ;
+      $downloadUrl = PML_DOWNLOAD_URL . '?id=' . $processId . $strSession;
 
-      G::LoadClass('processes');
       $oProcess = new Processes();
       $oProcess->downloadFile( $downloadUrl, $localPath, $newfilename);
 
       //getting the ProUid from the file recently downloaded
       $oData = $oProcess->getProcessData ( $localPath . $newfilename  );
       if ( is_null($oData)) {
-        throw new Exception('Error the url is invalid or the process is invalid');
+        throw new Exception('Error the url ' . $downloadUrl . ' is invalid or the process in '. $localPath . $newfilename. ' is invalid');
       }
 
       $sProUid = $oData->process['PRO_UID'];
@@ -1430,19 +1447,61 @@ class wsBase
 
       //if the process exists, we need to check the $importOption to and re-import if the user wants,
       if ( $oProcess->processExists ( $sProUid ) ) {
-        throw new Exception('The process is already in the System.');
+      	
+        //Update the current Process, overwriting all tasks and steps
+        if ( $importOption == 1 ) {
+          $oProcess->updateProcessFromData ($oData, $localPath . $newfilename );
+          //delete the xmlform cache
+          if (file_exists(PATH_OUTTRUNK . 'compiled' . PATH_SEP . 'xmlform' . PATH_SEP . $sProUid)) {
+            $oDirectory = dir(PATH_OUTTRUNK . 'compiled' . PATH_SEP . 'xmlform' . PATH_SEP . $sProUid);
+            while($sObjectName = $oDirectory->read()) {
+              if (($sObjectName != '.') && ($sObjectName != '..')) {
+                unlink(PATH_OUTTRUNK . 'compiled' . PATH_SEP . 'xmlform' . PATH_SEP . $sProUid . PATH_SEP .  $sObjectName);
+              }
+            }
+            $oDirectory->close();
+          }
+          $sNewProUid = $sProUid;
+        }
+      
+        //Disable current Process and create a new version of the Process
+        if ( $importOption == 2 ) {
+          $oProcess->disablePreviousProcesses( $sProUid );
+          $sNewProUid = $oProcess->getUnusedProcessGUID() ;
+          $oProcess->setProcessGuid ( $oData, $sNewProUid );
+          $oProcess->setProcessParent( $oData, $sProUid );
+          $oData->process['PRO_TITLE'] = "New - " . $oData->process['PRO_TITLE'] . ' - ' . date ( 'M d, H:i' );
+          $oProcess->renewAll ( $oData );
+          $oProcess->createProcessFromData ($oData, $localPath . $newfilename );
+        }
+      
+        //Create a completely new Process without change the current Process
+        if ( $importOption == 3 ) {
+          //krumo ($oData); die;
+          $sNewProUid = $oProcess->getUnusedProcessGUID() ;
+          $oProcess->setProcessGuid ( $oData, $sNewProUid );
+          $oData->process['PRO_TITLE'] = "Copy of  - " . $oData->process['PRO_TITLE'] . ' - ' . date ( 'M d, H:i' );
+          $oProcess->renewAll ( $oData );
+          $oProcess->createProcessFromData ($oData, $localPath . $newfilename );
+        }
+
+        if ( $importOption != 1 && $importOption != 2 && $importOption != 3   ) {
+          throw new Exception('The process is already in the System and the value for importOption is not specified.');
+        }
       }
 
-      //creating the process
-      $oProcess->createProcessFromData ($oData, $localPath . $newfilename );
-
+      //finally, creating the process if the process does not exists
+      if ( ! $oProcess->processExists ( $processId ) ) {
+        $oProcess->createProcessFromData ($oData, $localPath . $newfilename );
+      }
+      
       //show the info after the imported process
       $oProcess = new Processes();
       $oProcess->ws_open_public ();
       $processData = $oProcess->ws_processGetData ( $processId  );
 
       $result->status_code        = 0;
-      $result->message            = 'Sucessful';
+      $result->message            = 'Command executed successfully';
       $result->timestamp          = date ( 'Y-m-d H:i:s');
       $result->processId          = $processId;
       $result->processTitle       = $processData->title;

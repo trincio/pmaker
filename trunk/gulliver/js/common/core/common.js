@@ -1515,7 +1515,31 @@ function eraseCookie(name){
 	createCookie(name, "", -1);
 }
 
-
+/**
+ * highlightRow a html element (setting background)
+ *
+ * @Author Erik Amaru Ortiz <erik@colosa.com, aortiz.erik@gmail.com>
+ * @Param (object) html element
+ * @Param (string) some color in hexadecimal format
+ * @Return <none>
+ */
 function highlightRow(o, color){
 	o.style.background = color
 }
+
+/**
+ * left and right delete the blank characteres (String prototype)
+ *
+ * Example: 
+ *	var str = String("  some_string_with_spaces "); 
+ *  str.trim(); //clean the blank characteres
+ *
+ * @Author Erik Amaru Ortiz <erik@colosa.com, aortiz.erik@gmail.com>
+ * @Param <none>
+ * @Return <none>
+ */
+String.prototype.trim = function() {
+	return this.replace(/^\s+|\s+get/g,"");
+}
+
+

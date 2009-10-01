@@ -66,21 +66,7 @@
     $oProcess->setProcessGuid ( $oData, $sNewProUid );
     $oProcess->setProcessParent( $oData, $sProUid );
     $oData->process['PRO_TITLE'] = "New - " . $oData->process['PRO_TITLE'] . ' - ' . date ( 'M d, H:i' );
-    $oProcess->renewAllTaskGuid ( $oData );
-    $oProcess->renewAllDynaformGuid ( $oData );
-    $oProcess->renewAllInputGuid ( $oData );
-    $oProcess->renewAllOutputGuid ( $oData );
-    $oProcess->renewAllStepGuid ( $oData );
-    $oProcess->renewAllTriggerGuid ( $oData );
-    $oProcess->renewAllSubProcessGuid ( $oData );
-    $oProcess->renewAllCaseTrackerObjectGuid ( $oData );
-    $oProcess->renewAllDBSourceGuid ( $oData );
-    $oProcess->renewAllObjectPermissionGuid ( $oData );
-    $oProcess->renewAllRouteGuid ( $oData );
-    $oProcess->renewAllStageGuid ( $oData );
-    $oProcess->renewAllSwimlanesElementsGuid ( $oData );
-    $oProcess->renewAllReportTableGuid ( $oData );
-    $oProcess->renewAllReportVarGuid ( $oData );
+    $oProcess->renewAll ( $oData );
     $oProcess->createProcessFromData ($oData, $path . $filename );
   }
 
@@ -90,21 +76,7 @@
     $sNewProUid = $oProcess->getUnusedProcessGUID() ;
     $oProcess->setProcessGuid ( $oData, $sNewProUid );
     $oData->process['PRO_TITLE'] = "Copy of  - " . $oData->process['PRO_TITLE'] . ' - ' . date ( 'M d, H:i' );
-    $oProcess->renewAllTaskGuid ( $oData );
-    $oProcess->renewAllDynaformGuid ( $oData );
-    $oProcess->renewAllInputGuid ( $oData );
-    $oProcess->renewAllOutputGuid ( $oData );
-    $oProcess->renewAllStepGuid ( $oData );
-    $oProcess->renewAllTriggerGuid ( $oData );
-    $oProcess->renewAllSubProcessGuid ( $oData );
-    $oProcess->renewAllCaseTrackerObjectGuid ( $oData );
-    $oProcess->renewAllDBSourceGuid ( $oData );
-    $oProcess->renewAllObjectPermissionGuid ( $oData );
-    $oProcess->renewAllRouteGuid ( $oData );
-    $oProcess->renewAllStageGuid ( $oData );
-    $oProcess->renewAllSwimlanesElementsGuid ( $oData );
-    $oProcess->renewAllReportTableGuid ( $oData );
-    $oProcess->renewAllReportVarGuid ( $oData );
+    $oProcess->renewAll ( $oData );
     $oProcess->createProcessFromData ($oData, $path . $filename );
   }
   G::header('Location: processes_Map?PRO_UID=' . $sNewProUid);

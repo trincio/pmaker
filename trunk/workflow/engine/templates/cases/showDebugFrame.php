@@ -55,10 +55,10 @@
 	<table width='100%' cellspacing='0' cellpadding='0' border='1' style='border:0px;'>
 		<tr>
 		<td width='410px' class='treeNode' style='border:0px;background-color:transparent;'>
-			
+
 				<font color='#0B58B6'> $triggers_onfly ...</font><br/>
 				 $triggers_names
-			
+
 		</td>
 		<td width='60px' class='treeNode' style='border:0px;background-color:transparent;'>
 			<div id='status_'></div>
@@ -71,14 +71,14 @@
 	$DEBUG_POST = $_SESSION['TRIGGER_DEBUG']['ERRORS'];
 	for($i=0; $i<count($DEBUG_POST); $i++) {
 		try{
-			if(isset($DEBUG_POST[$i]['SINTAX']) and $DEBUG_POST[$i]['SINTAX'] != '') {
+			if(isset($DEBUG_POST[$i]['ERROR']) and $DEBUG_POST[$i]['ERROR'] != '') {
 				$html .= "
 				<table width='100%' cellspacing='0' cellpadding='0' border='1' style='border:0px;'>
 					<tr>
 					<td width='410px' class='treeNode' style='border:0px;background-color:transparent;'>
 						<fieldset>
 							<legend><font color='#9CBDFF'>Some trigger throws an error</font></legend>
-							".$DEBUG_POST[$i]['SINTAX']."
+							".$DEBUG_POST[$i]['ERROR']."
 						</fieldset>
 					</td>
 					<td width='60px' class='treeNode' style='border:0px;background-color:transparent;'>
@@ -86,7 +86,7 @@
 					</td>
 					</tr>
 				</table>";
-				$ch = &$tree->addChild(0, $html, array('nodeType' => 'child'));
+				//$ch = &$tree->addChild(0, $html, array('nodeType' => 'child'));
 				//$ch->point = '<img src="/images/iconoenlace.png" />';
 			}
 			if(isset($DEBUG_POST[$i]['FATAL']) and $DEBUG_POST[$i]['FATAL'] != '') {
@@ -95,7 +95,7 @@
 					<tr>
 					<td width='410px' class='treeNode' style='border:0px;background-color:transparent;'>
 						<fieldset style='width:103%'>
-							<legend><font color='red'>Some trigger throws an error</font></legend>
+							<legend><font color='red'>Some trigger throws an fatal error</font></legend>
 							".trim($DEBUG_POST[$i]['FATAL'])."
 						</fieldset>
 					</td>
@@ -104,7 +104,7 @@
 					</td>
 					</tr>
 				</table>";
-				
+
 				//$ch->point = '<img src="/images/iconoenlace.png" />';
 			}
 		} catch(Exception $e) {
@@ -173,7 +173,7 @@
 	</table>";
 
 	$width_content = isset($_POST['NextStep'])?'50%':'95%';
-	
+
 	echo '<div class="grid" style="width:'.$width_content.'">
 	<div class="boxTop"><div class="a"></div><div class="b"></div><div class="c"></div></div>
 	<div class="content" style="">
@@ -186,8 +186,8 @@
 	    </tbody></table>
 	</div>
 	<div class="boxBottom"><div class="a"></div><div class="b"></div><div class="c"></div></div>
-	</div>'; 
-	
+	</div>';
+
 
 	if(isset($_POST['NextStep'])){
 		print('<input type="button" value="Continue" class="module_app_button___gray" onclick="javascript:location.href=\''.$_POST['NextStep'].'\'">');
@@ -198,7 +198,7 @@
 		return preg_replace("/(\r\n)+|(\n|\r)+/", "<br />", $string);
 	}
 
-?> 
+?>
 
 
 
