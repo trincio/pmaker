@@ -1002,6 +1002,24 @@ class Processes {
     }
   }
 
+  function renewAll( &$oData ) {
+    $this->renewAllTaskGuid ( $oData );
+    $this->renewAllDynaformGuid ( $oData );
+    $this->renewAllInputGuid ( $oData );
+    $this->renewAllOutputGuid ( $oData );
+    $this->renewAllStepGuid ( $oData );
+    $this->renewAllTriggerGuid ( $oData );
+    $this->renewAllSubProcessGuid ( $oData );
+    $this->renewAllCaseTrackerObjectGuid ( $oData );
+    $this->renewAllDBSourceGuid ( $oData );
+    $this->renewAllObjectPermissionGuid ( $oData );
+    $this->renewAllRouteGuid ( $oData );
+    $this->renewAllStageGuid ( $oData );
+    $this->renewAllSwimlanesElementsGuid ( $oData );
+    $this->renewAllReportTableGuid ( $oData );
+    $this->renewAllReportVarGuid ( $oData );
+  }
+
   function getStepRows ($sProUid ){
     try {
       $aStep   = array();

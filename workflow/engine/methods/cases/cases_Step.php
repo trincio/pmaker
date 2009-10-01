@@ -105,7 +105,9 @@
 
   //cleaning debug variables
   if( !isset($_GET['breakpoint']) ) {
-    $_SESSION['TRIGGER_DEBUG']['ERRORS'] = Array();
+    if (!isset($_SESSION['_NO_EXECUTE_TRIGGERS_BEFORE_'])) {
+      $_SESSION['TRIGGER_DEBUG']['ERRORS'] = Array();
+    }
     $_SESSION['TRIGGER_DEBUG']['DATA'] = Array();
     $_SESSION['TRIGGER_DEBUG']['TRIGGERS_NAMES'] = Array();
     $_SESSION['TRIGGER_DEBUG']['TRIGGERS_VALUES'] = Array();
@@ -119,11 +121,18 @@
       $_SESSION['TRIGGER_DEBUG']['TRIGGERS_VALUES'] = $triggers;
     }
 
-    //Execute before triggers - Start
-    $Fields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], $_GET['TYPE'], $_GET['UID'], 'BEFORE', $Fields['APP_DATA'] );
-    $Fields['DEL_INDEX']= $_SESSION['INDEX'];
-    $Fields['TAS_UID']  = $_SESSION['TASK'];
-    //Execute before triggers - End
+    if (!isset($_SESSION['_NO_EXECUTE_TRIGGERS_BEFORE_'])) {
+      //Execute before triggers - Start
+      $Fields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], $_GET['TYPE'], $_GET['UID'], 'BEFORE', $Fields['APP_DATA'] );
+      $Fields['DEL_INDEX']= $_SESSION['INDEX'];
+      $Fields['TAS_UID']  = $_SESSION['TASK'];
+      //Execute before triggers - End
+    }
+    else {
+      unset($_SESSION['_NO_EXECUTE_TRIGGERS_BEFORE_']);
+      $Fields['DEL_INDEX']= $_SESSION['INDEX'];
+      $Fields['TAS_UID']  = $_SESSION['TASK'];
+    }
   }
 
   if( isset($_GET['breakpoint']) ) {
@@ -305,7 +314,7 @@
           G::mk_dir ( $pathOutput );
           switch ( $aOD['OUT_DOC_TYPE'] ) {
             case 'HTML' : $oOutputDocument->generate( $_GET['UID'], $Fields['APP_DATA'], $pathOutput,
-                            $sFilename, $aOD['OUT_DOC_TEMPLATE'], (boolean)$aOD['OUT_DOC_LANDSCAPE'] );                            
+                            $sFilename, $aOD['OUT_DOC_TEMPLATE'], (boolean)$aOD['OUT_DOC_LANDSCAPE'] );
                           break;
             case 'JRXML' :
 
@@ -430,12 +439,12 @@
                                   $sFilename. '.pdf',
                                   $sDocUID
                                   );
-                
+
                     $documentData->bUseOutputFolder = true;
-                    $oPluginRegistry->executeTriggers ( PM_UPLOAD_DOCUMENT , $documentData );           
-                    unlink ( $pathOutput . $sFilename. '.pdf' ); 
-                    
-                    
+                    $oPluginRegistry->executeTriggers ( PM_UPLOAD_DOCUMENT , $documentData );
+                    unlink ( $pathOutput . $sFilename. '.pdf' );
+
+
                     $documentData = new uploadDocumentData (
                                   $_SESSION['APPLICATION'],
                                   $_SESSION['USER_LOGGED'],
@@ -443,11 +452,11 @@
                                   $sFilename. '.doc',
                                   $sDocUID
                                   );
-                
+
                     $documentData->bUseOutputFolder = true;
-                    $oPluginRegistry->executeTriggers ( PM_UPLOAD_DOCUMENT , $documentData );           
-                    unlink ( $pathOutput . $sFilename. '.doc' ); 
-                    
+                    $oPluginRegistry->executeTriggers ( PM_UPLOAD_DOCUMENT , $documentData );
+                    unlink ( $pathOutput . $sFilename. '.doc' );
+
                 break;
                 case "PDF":
                     $documentData = new uploadDocumentData (
@@ -457,10 +466,10 @@
                                   $sFilename. '.pdf',
                                   $sDocUID
                                   );
-                
+
                     $documentData->bUseOutputFolder = true;
-                    $oPluginRegistry->executeTriggers ( PM_UPLOAD_DOCUMENT , $documentData );           
-                    unlink ( $pathOutput . $sFilename. '.pdf' ); 
+                    $oPluginRegistry->executeTriggers ( PM_UPLOAD_DOCUMENT , $documentData );
+                    unlink ( $pathOutput . $sFilename. '.pdf' );
                 break;
                 case "DOC":
                     $documentData = new uploadDocumentData (
@@ -470,13 +479,13 @@
                                   $sFilename. '.doc',
                                   $sDocUID
                                   );
-                
+
                     $documentData->bUseOutputFolder = true;
-                    $oPluginRegistry->executeTriggers ( PM_UPLOAD_DOCUMENT , $documentData );           
-                    unlink ( $pathOutput . $sFilename. '.doc' ); 
+                    $oPluginRegistry->executeTriggers ( PM_UPLOAD_DOCUMENT , $documentData );
+                    unlink ( $pathOutput . $sFilename. '.doc' );
                 break;
             }
-                      
+
           }
 
           $outputNextStep = 'cases_Step?TYPE=OUTPUT_DOCUMENT&UID=' . $_GET['UID'] . '&POSITION=' . $_SESSION['STEP_POSITION'] . '&ACTION=VIEW&DOC=' . $sDocUID;
