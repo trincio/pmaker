@@ -6249,5 +6249,119 @@
     </index>
 
   </table>
-  
+  <table name="APP_HISTORY">
+    <vendor type="mysql">
+      <parameter name="Name" value="APP_HISTORY"/>
+      <parameter name="Engine" value="MyISAM"/>
+      <parameter name="Version" value="10"/>
+      <parameter name="Row_format" value="Dynamic"/>
+      <parameter name="Rows" value="129"/>
+      <parameter name="Avg_row_length" value="115"/>
+      <parameter name="Data_length" value="14860"/>
+      <parameter name="Max_data_length" value="281474976710655"/>
+      <parameter name="Index_length" value="5120"/>
+      <parameter name="Data_free" value="0"/>
+      <parameter name="Auto_increment" value=""/>
+      <parameter name="Create_time" value="2007-12-06 07:22:27"/>
+      <parameter name="Update_time" value="2007-12-09 14:08:22"/>
+      <parameter name="Check_time" value=""/>
+      <parameter name="Collation" value="utf8_general_ci"/>
+      <parameter name="Checksum" value=""/>
+      <parameter name="Create_options" value=""/>
+      <parameter name="Comment" value="History table for Dynaforms"/>
+    </vendor>
+    <column name="APP_UID" type="VARCHAR" size="32" required="true"  default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="APP_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="DEL_INDEX" type="INTEGER" required="true"  default="0">
+      <vendor type="mysql">
+        <parameter name="Field" value="DEL_INDEX"/>
+        <parameter name="Type" value="int(11)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value="0"/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="PRO_UID" type="VARCHAR" size="32" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="PRO_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    
+    
+    
+    
+    <column name="TAS_UID" type="VARCHAR" size="32" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="TAS_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="DYN_UID" type="VARCHAR" size="32" required="true"  default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="DYN_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="USR_UID" type="VARCHAR" size="32" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="USR_UID"/>
+        <parameter name="Type" value="varchar(32)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="APP_STATUS" type="VARCHAR" size="100" required="true" default="">
+      <vendor type="mysql">
+        <parameter name="Field" value="APP_STATUS"/>
+        <parameter name="Type" value="varchar(100)"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="HISTORY_DATE" type="TIMESTAMP" required="false" >
+      <vendor type="mysql">
+        <parameter name="Field" value="HISTORY_DATE"/>
+        <parameter name="Type" value="datetime"/>
+        <parameter name="Null" value="YES"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>
+    <column name="HISTORY_DATA" type="LONGVARCHAR" required="true">
+      <vendor type="mysql">
+        <parameter name="Field" value="HISTORY_DATA"/>
+        <parameter name="Type" value="mediumtext"/>
+        <parameter name="Null" value="NO"/>
+        <parameter name="Key" value=""/>
+        <parameter name="Default" value=""/>
+        <parameter name="Extra" value=""/>
+      </vendor>
+    </column>    
+  </table>
 </database>
