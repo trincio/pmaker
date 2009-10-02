@@ -310,10 +310,9 @@ class PMScript
 			}
 		}
 		$sScript .= substr($this->sScript, $iAux);
-		$sCode    = $sScript;
 		$sScript  = "try {\n" . $sScript . "\n} catch (Exception \$oException) {\n  \$this->aFields['__ERROR__'] = utf8_encode(\$oException->getMessage());\n}";
 		//echo '<pre>-->'; print_r($this->aFields); echo '<---</pre>';
-		$this->executeAndCatchErrors($sScript, $sCode);
+		$this->executeAndCatchErrors($sScript, $this->sScript);
 		for($i=0; $i<count($this->affected_fields); $i++){
 			$_SESSION['TRIGGER_DEBUG']['DATA'][$i]['key']   = $this->affected_fields[$i];
 			$_SESSION['TRIGGER_DEBUG']['DATA'][$i]['value'] = isset($this->aFields[$this->affected_fields[$i]]) ? $this->aFields[$this->affected_fields[$i]] : '';
