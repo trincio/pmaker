@@ -293,8 +293,11 @@ class Form extends XmlForm
           }
          else
           {
-            if($v->type == 'checkbox') {
+            if ($v->type == 'checkbox') {
               $values[$k]=$v->falseValue;
+            }
+            else {
+              $values[$k] = null;
             }
           }
         }
