@@ -25,23 +25,23 @@
   <en>Sent by</en>
 <es>Enviado por</es><pt>Enviado por</pt></APP_DEL_PREVIOUS_USER>
 
-<APP_UPDATE_DATE type="date" rows="3" cols="32" colWidth="120" titleAlign="left" align="left" dataCompareField="APPLICATION.APP_UPDATE_DATE" dataCompareType="contains">
+<APP_UPDATE_DATE type="text" rows="3" cols="32" colWidth="120" titleAlign="left" align="left" dataCompareField="APPLICATION.APP_UPDATE_DATE" dataCompareType="contains" enableHtml="1">
   <en>Last Modification</en>
 <en>Last Modification</en>
 <es><![CDATA[Última modificación]]></es><pt><![CDATA[Última Alteração]]></pt></APP_UPDATE_DATE>
 
-<DEL_TASK_DUE_DATE type="date" showInTable="0" rows="3" cols="32" colWidth="120" titleAlign="left" align="left" dataCompareField="APP_DELEGATION.DEL_TASK_DUE_DATE" dataCompareType="contains">
+<DEL_TASK_DUE_DATE type="text" showInTable="0" rows="3" cols="32" colWidth="120" titleAlign="left" align="left" dataCompareField="APP_DELEGATION.DEL_TASK_DUE_DATE" dataCompareType="contains" enableHtml="1">
   <en>Due Date</en>
 <es>Fecha de vencimiento</es><pt>Data-limite</pt></DEL_TASK_DUE_DATE>
 
-<APP_UPDATE_DATE type="date" rows="3" cols="32" colWidth="120" titleAlign="left" align="left" dataCompareField="APPLICATION.APP_UPDATE_DATE" dataCompareType="contains">
+<APP_UPDATE_DATE type="text" rows="3" cols="32" colWidth="120" titleAlign="left" align="left" dataCompareField="APPLICATION.APP_UPDATE_DATE" dataCompareType="contains" enableHtml="1">
   </APP_UPDATE_DATE>
 
-<DEL_INIT_DATE type="date" showInTable="0" rows="3" cols="32" colWidth="90" titleAlign="left" align="left" dataCompareField="APPLICATION.APP_UPDATE_DATE" dataCompareType="contains">
+<DEL_INIT_DATE type="text" showInTable="0" rows="3" cols="32" colWidth="90" titleAlign="left" align="left" dataCompareField="APPLICATION.APP_UPDATE_DATE" dataCompareType="contains" enableHtml="1">
   <en>Start Date</en>
 <es>Fechas inicial del caso</es><pt>Data Inicial</pt></DEL_INIT_DATE>
 
-<DEL_FINISH_DATE type="date" showInTable="0" rows="3" cols="32" colWidth="90" titleAlign="left" align="left" dataCompareField="APPLICATION.APP_UPDATE_DATE" dataCompareType="contains">
+<DEL_FINISH_DATE type="text" showInTable="0" rows="3" cols="32" colWidth="90" titleAlign="left" align="left" dataCompareField="APPLICATION.APP_UPDATE_DATE" dataCompareType="contains" enableHtml="1">
   <en>Finish Date</en>
 <es>Fecha final</es><pt>Data Final</pt></DEL_FINISH_DATE>
 

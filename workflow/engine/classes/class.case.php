@@ -1703,12 +1703,12 @@ class Cases
           $c->add($c->getNewCriterion(AppThreadPeer::APP_THREAD_STATUS, 'OPEN')->addOr($c->getNewCriterion(ApplicationPeer::APP_STATUS, 'COMPLETED')->addAnd($c->getNewCriterion(AppDelegationPeer::DEL_PREVIOUS,
               0))));
           $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
-          $xmlfile = $filesList[0];          
+          $xmlfile = $filesList[0];
           break;
       case 'my_started':
               	$c->add($c->getNewCriterion(ApplicationPeer::APP_INIT_USER, $sUIDUserLogged));
                 $c->add($c->getNewCriterion(AppThreadPeer::APP_THREAD_STATUS, 'OPEN')->addOr($c->getNewCriterion(ApplicationPeer::APP_STATUS, 'COMPLETED')->addAnd($c->getNewCriterion(AppDelegationPeer::DEL_PREVIOUS, 0))));
-                $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);                
+                $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
                 $xmlfile = $filesList[8];
       break;
       case 'to_do':
@@ -1757,12 +1757,12 @@ class Cases
           $c->add($c->getNewCriterion(AppThreadPeer::APP_THREAD_STATUS, 'OPEN')->addOr($c->getNewCriterion(ApplicationPeer::APP_STATUS, 'COMPLETED')->addAnd($c->getNewCriterion(AppDelegationPeer::DEL_PREVIOUS, 0))));
           $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
           if ($RBAC->userCanAccess('PM_DELETECASE') == 1) {
-              $xmlfile = $filesList[9];    
+              $xmlfile = $filesList[9];
           }else{
-              $xmlfile = $filesList[0];    
+              $xmlfile = $filesList[0];
           }
-          
-          
+
+
           break;
       case 'to_revise':
           require_once 'classes/model/ProcessUser.php';
@@ -2536,7 +2536,7 @@ class Cases
     $aOutputDocuments = array();
     $aOutputDocuments[] = array('APP_DOC_UID' => 'char', 'DOC_UID' => 'char', 'APP_DOC_COMMENT' => 'char', 'APP_DOC_FILENAME' => 'char', 'APP_DOC_INDEX' => 'integer');
     $oUser = new Users();
-    while ($aRow = $oDataset->getRow()) {    	
+    while ($aRow = $oDataset->getRow()) {
         $oCriteria2 = new Criteria('workflow');
         $oCriteria2->add(AppDelegationPeer::APP_UID, $sApplicationUID);
         $oCriteria2->add(AppDelegationPeer::DEL_INDEX, $aRow['DEL_INDEX']);
@@ -2554,9 +2554,9 @@ class Cases
         $aAux = $oAppDocument->load($aRow['APP_DOC_UID']);
         //Get output Document information
         $oOutputDocument = new OutputDocument();
-        $aGields = $oOutputDocument->load($aRow['DOC_UID']);     
+        $aGields = $oOutputDocument->load($aRow['DOC_UID']);
         //OUTPUTDOCUMENT
-        $outDocTitle=$aGields['OUT_DOC_TITLE'];   
+        $outDocTitle=$aGields['OUT_DOC_TITLE'];
         switch($aGields['OUT_DOC_GENERATE']){
         	//G::LoadTranslation(ID_DOWNLOAD)
         	case "PDF":
@@ -2578,8 +2578,8 @@ class Cases
   				$filePdfLabel=".pdf";
         	break;
         }
-        
-  		
+
+
         try {
           $aAux1 = $oUser->load($aAux['USR_UID']);
           $sUser = $aAux1['USR_FIRSTNAME'] . ' ' . $aAux1['USR_LASTNAME'];

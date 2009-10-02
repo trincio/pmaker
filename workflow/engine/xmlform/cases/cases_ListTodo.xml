@@ -25,16 +25,16 @@
   <en>Sent by</en>
 <es>Enviado por</es><pt>Enviado por</pt></APP_DEL_PREVIOUS_USER>
 
-<DEL_TASK_DUE_DATE type="date" rows="3" cols="32" colWidth="120" titleAlign="left" align="left" dataCompareField="APP_DELEGATION.DEL_TASK_DUE_DATE" dataCompareType="contains">
+<DEL_TASK_DUE_DATE type="text" rows="3" cols="32" colWidth="120" titleAlign="left" align="left" dataCompareField="APP_DELEGATION.DEL_TASK_DUE_DATE" dataCompareType="contains" enableHtml="1">
   <en>Due Date</en>
 <es>Fecha de vencimiento</es><pt>Data-limite</pt></DEL_TASK_DUE_DATE>
 
-<APP_UPDATE_DATE type="date" rows="3" cols="32" colWidth="120" titleAlign="left" align="left" dataCompareField="APPLICATION.APP_UPDATE_DATE" dataCompareType="contains">
+<APP_UPDATE_DATE type="text" rows="3" cols="32" colWidth="120" titleAlign="left" align="left" dataCompareField="APPLICATION.APP_UPDATE_DATE" dataCompareType="contains" enableHtml="1">
   <en>Last Modification</en>
 <es><![CDATA[Última Modificación]]></es><pt><![CDATA[Última Alteração]]></pt></APP_UPDATE_DATE>
 
 <DEL_PRIORITY type="dropdown" value="" link="" colWidth="60" titleAlign="left" align="left" dataCompareField="APP_DELEGATION.DEL_PRIORITY" dataCompareType="contains">
-  <en>Priority  
+  <en>Priority
       <option name="1">Very High</option>
       <option name="2">High</option>
       <option name="3">Normal</option>
@@ -43,7 +43,7 @@
   </en>
 <es>Prioridad<option name="1">Muy alto</option><option name="2">Alto</option><option name="3">Normal</option><option name="4">Bajo</option><option name="5">Muy bajo</option></es><pt>Prioridade<option name="1">Muito Alta</option><option name="2">Alta</option><option name="3">Normal</option><option name="4">Baixa</option><option name="5">Muito Baixa</option></pt></DEL_PRIORITY>
 
-<DEL_INIT_DATE type="date" rows="3" cols="32" colWidth="90" titleAlign="left" align="left" dataCompareField="APPLICATION.APP_UPDATE_DATE" dataCompareType="contains" showInTable="0">
+<DEL_INIT_DATE type="text" rows="3" cols="32" colWidth="90" titleAlign="left" align="left" dataCompareField="APPLICATION.APP_UPDATE_DATE" dataCompareType="contains" showInTable="0" enableHtml="1">
   <en>Start Date</en>
 <es>Fechas inicial del caso</es><pt>Data Inicial</pt></DEL_INIT_DATE>
 

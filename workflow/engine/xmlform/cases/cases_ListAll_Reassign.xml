@@ -30,19 +30,19 @@
   <en>Sent by</en>
 <es>Enviado por</es></APP_DEL_PREVIOUS_USER>
 
-<DEL_TASK_DUE_DATE type="date" showInTable="0" rows="3" cols="32" colWidth="120" titleAlign="left" align="left" dataCompareField="APP_DELEGATION.DEL_TASK_DUE_DATE" dataCompareType="contains">
+<DEL_TASK_DUE_DATE type="text" showInTable="0" rows="3" cols="32" colWidth="120" titleAlign="left" align="left" dataCompareField="APP_DELEGATION.DEL_TASK_DUE_DATE" dataCompareType="contains" enableHtml="1">
   <en>Due Date</en>
 <es><![CDATA[Fecha Límite]]></es></DEL_TASK_DUE_DATE>
 
-<APP_UPDATE_DATE type="date" rows="3" cols="32" colWidth="120" titleAlign="left" align="left" dataCompareField="APPLICATION.APP_UPDATE_DATE" dataCompareType="contains">
+<APP_UPDATE_DATE type="text" rows="3" cols="32" colWidth="120" titleAlign="left" align="left" dataCompareField="APPLICATION.APP_UPDATE_DATE" dataCompareType="contains" enableHtml="1">
   <en>Last Modification</en>
 <es><![CDATA[Última modificación]]></es></APP_UPDATE_DATE>
 
-<DEL_INIT_DATE type="date" showInTable="0" rows="3" cols="32" colWidth="120" titleAlign="left" align="left" dataCompareField="APPLICATION.APP_UPDATE_DATE" dataCompareType="contains">
+<DEL_INIT_DATE type="text" showInTable="0" rows="3" cols="32" colWidth="120" titleAlign="left" align="left" dataCompareField="APPLICATION.APP_UPDATE_DATE" dataCompareType="contains" enableHtml="1">
   <en>Start Date</en>
 <es>Fecha inicial</es></DEL_INIT_DATE>
 
-<DEL_FINISH_DATE type="date" showInTable="0" rows="3" cols="32" colWidth="120" titleAlign="left" align="left" dataCompareField="APPLICATION.APP_UPDATE_DATE" dataCompareType="contains">
+<DEL_FINISH_DATE type="text" showInTable="0" rows="3" cols="32" colWidth="120" titleAlign="left" align="left" dataCompareField="APPLICATION.APP_UPDATE_DATE" dataCompareType="contains" enableHtml="1">
  <en>Finish Date</en>
 <es>Finalizar fecha</es></DEL_FINISH_DATE>
 
