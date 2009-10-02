@@ -48,6 +48,7 @@ require_once ("classes/model/Task.php");
 require_once ("classes/model/TaskUser.php");
 require_once ("classes/model/Triggers.php");
 require_once ("classes/model/Users.php");
+require_once ("classes/model/AppHistory.php");
 
 G::LoadClass('pmScript');
 
@@ -346,6 +347,8 @@ class Cases
   */
   function updateCase($sAppUid, $Fields = array())
   {
+  
+  
     try {
       $aApplicationFields = $Fields['APP_DATA'];
       $oApp = new Application;
@@ -355,6 +358,22 @@ class Cases
       $Fields['APP_TITLE'] = self::refreshCaseTitle($sAppUid, $aApplicationFields);
       $Fields['APP_DESCRIPTION'] = self::refreshCaseDescription($sAppUid, $aApplicationFields);
       //$Fields['APP_PROC_CODE'] = self::refreshCaseStatusCode($sAppUid, $aApplicationFields);
+
+      //Start: Save History --By JHL
+      
+      $FieldsBefore = $this->loadCase( $_SESSION['APPLICATION'] );      
+      $FieldsDifference=array_diff($FieldsBefore['APP_DATA'],$aApplicationFields);
+      
+      if((is_array($FieldsDifference))&&(count($FieldsDifference)>0)){//There are changes
+          $appHistory = new AppHistory();
+          $aFieldsHistory=$Fields;
+          $aFieldsHistory['APP_DATA'] = serialize($FieldsDifference);
+          
+          $appHistory->insertHistory($aFieldsHistory);
+      }
+      //End Save History
+      
+      
       $oApp->update($Fields);
 
       $DEL_INDEX = isset($Fields['DEL_INDEX']) ? $Fields['DEL_INDEX'] : '';
@@ -365,7 +384,7 @@ class Cases
       $oReportTables = new ReportTables();
       $oReportTables->updateTables($aFields['PRO_UID'], $sAppUid, $Fields['APP_NUMBER'], $aApplicationFields);
 
-      if ($DEL_INDEX != '' && $TAS_UID != '') {
+      if ($DEL_INDEX != '' && $TAS_UID != '') {          
         $oTask = new Task;
         $array = $oTask->load($TAS_UID);
 
@@ -374,6 +393,7 @@ class Cases
         $x = unserialize($Fields['APP_DATA']);
         if (isset($x[$VAR_PRI])) {
           if ($x[$VAR_PRI] != '') {
+              krumo($x[$VAR_PRI]);
             $oDel = new AppDelegation;
             $array = array();
             $array['APP_UID'] = $sAppUid;
@@ -384,6 +404,7 @@ class Cases
           }
         }
       }
+      
       return $Fields;
     }
     catch (exception $e) {

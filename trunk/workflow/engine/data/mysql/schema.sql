@@ -1039,5 +1039,24 @@ CREATE TABLE `APP_CACHE_VIEW`
 	KEY `indexAppNumber`(`APP_NUMBER`),
 	KEY `indexAppUser`(`USR_UID`, `APP_STATUS`)
 )Type=MyISAM  DEFAULT CHARSET='utf8' COMMENT='Delegation a task to user';
+#-----------------------------------------------------------------------------
+#-- APP_HISTORY
+#-----------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `APP_HISTORY`;
+
+
+CREATE TABLE `APP_HISTORY`
+(
+	`APP_UID` VARCHAR(32) default '' NOT NULL,
+	`DEL_INDEX` INTEGER default 0 NOT NULL,
+	`PRO_UID` VARCHAR(32) default '' NOT NULL,
+	`TAS_UID` VARCHAR(32) default '' NOT NULL,
+	`DYN_UID` VARCHAR(32) default '' NOT NULL,
+	`USR_UID` VARCHAR(32) default '' NOT NULL,
+	`APP_STATUS` VARCHAR(100) default '' NOT NULL,
+	`HISTORY_DATE` DATETIME,
+	`HISTORY_DATA` TEXT  NOT NULL
+)Type=MyISAM  DEFAULT CHARSET='utf8' COMMENT='History table for Dynaforms';
 # This restores the fkey checks, after having unset them earlier
 SET FOREIGN_KEY_CHECKS = 1;

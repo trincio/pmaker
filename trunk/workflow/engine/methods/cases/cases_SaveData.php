@@ -130,6 +130,9 @@
   $aData['APP_DATA']        = $Fields['APP_DATA'];
   $aData['DEL_INDEX']       = $_SESSION['INDEX'];
   $aData['TAS_UID']         = $_SESSION['TASK'];
+  $aData['CURRENT_DYNAFORM']= $_GET['UID'];
+  $aData['USER_UID']=$_SESSION['USER_LOGGED'];
+  $aData['APP_STATUS'] = $Fields['APP_STATUS'];
   //$Fields = $oCase->loadCase( $_SESSION['APPLICATION'] );
   $oCase->updateCase( $_SESSION['APPLICATION'], $aData );
   //save files
