@@ -49,4 +49,7 @@
   <en>Disable Action</en>
 </APP_DISABLE_ACTION_DATE>
 
+
+<CASE_HISTORY type="link" colWidth="25" value="@G::LoadTranslation(ID_DYNAFORM_HISTORY)" link="javascript:dynaformHistory('@#PRO_UID','@#APP_UID','@#TAS_UID');"/>
+
 </dynaForm>
