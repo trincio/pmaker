@@ -1493,7 +1493,9 @@ class Cases
     $c->addSelectColumn(UsersPeer::USR_FIRSTNAME);
     $c->addSelectColumn(UsersPeer::USR_LASTNAME);
     $c->addSelectColumn(AppDelegationPeer::DEL_DELEGATE_DATE);
+    $c->addSelectColumn(AppDelegationPeer::PRO_UID);
     $c->addSelectColumn(AppDelegationPeer::TAS_UID);
+    $c->addSelectColumn(AppDelegationPeer::APP_UID);
     $c->addSelectColumn(AppDelegationPeer::DEL_INDEX);
     $c->addAsColumn('USR_NAME', "CONCAT(USR_LASTNAME, ' ', USR_FIRSTNAME)");
     $c->addSelectColumn(AppDelegationPeer::DEL_INIT_DATE);

@@ -133,6 +133,7 @@
   $aData['CURRENT_DYNAFORM']= $_GET['UID'];
   $aData['USER_UID']=$_SESSION['USER_LOGGED'];
   $aData['APP_STATUS'] = $Fields['APP_STATUS'];
+  $aData['PRO_UID'] = $_SESSION['PROCESS'];
   //$Fields = $oCase->loadCase( $_SESSION['APPLICATION'] );
   $oCase->updateCase( $_SESSION['APPLICATION'], $aData );
   //save files
