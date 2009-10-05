@@ -359,17 +359,23 @@ class Cases
       $Fields['APP_DESCRIPTION'] = self::refreshCaseDescription($sAppUid, $aApplicationFields);
       //$Fields['APP_PROC_CODE'] = self::refreshCaseStatusCode($sAppUid, $aApplicationFields);
 
-      //Start: Save History --By JHL
-      
-      $FieldsBefore = $this->loadCase( $_SESSION['APPLICATION'] );      
-      $FieldsDifference=array_diff($FieldsBefore['APP_DATA'],$aApplicationFields);
-      
-      if((is_array($FieldsDifference))&&(count($FieldsDifference)>0)){//There are changes
-          $appHistory = new AppHistory();
-          $aFieldsHistory=$Fields;
-          $aFieldsHistory['APP_DATA'] = serialize($FieldsDifference);
-          
-          $appHistory->insertHistory($aFieldsHistory);
+      //Start: Save History --By JHL      
+      if(isset($Fields['CURRENT_DYNAFORM'])){//only when that variable is set.. from Save
+          $FieldsBefore = $this->loadCase( $_SESSION['APPLICATION'] );      
+          $FieldsDifference=array_diff_assoc($FieldsBefore['APP_DATA'],$aApplicationFields);
+          $fieldsOnBoth=array_intersect_assoc($FieldsBefore['APP_DATA'],$aApplicationFields);
+          //Add fields that weren't in previous version
+          foreach($aApplicationFields as $key => $value){
+              if(!(isset($fieldsOnBoth[$key]))){      
+                  $FieldsDifference[$key]=$value;              
+              }
+          }
+          if((is_array($FieldsDifference))&&(count($FieldsDifference)>0)){//There are changes
+              $appHistory = new AppHistory();
+              $aFieldsHistory=$Fields;
+              $aFieldsHistory['APP_DATA'] = serialize($FieldsDifference);          
+              $appHistory->insertHistory($aFieldsHistory);
+          }
       }
       //End Save History
       
@@ -1487,6 +1493,8 @@ class Cases
     $c->addSelectColumn(UsersPeer::USR_FIRSTNAME);
     $c->addSelectColumn(UsersPeer::USR_LASTNAME);
     $c->addSelectColumn(AppDelegationPeer::DEL_DELEGATE_DATE);
+    $c->addSelectColumn(AppDelegationPeer::TAS_UID);
+    $c->addSelectColumn(AppDelegationPeer::DEL_INDEX);
     $c->addAsColumn('USR_NAME', "CONCAT(USR_LASTNAME, ' ', USR_FIRSTNAME)");
     $c->addSelectColumn(AppDelegationPeer::DEL_INIT_DATE);
     //$c->addSelectColumn(AppDelegationPeer::DEL_FINISH_DATE);
@@ -1508,7 +1516,7 @@ class Cases
     $app[] = array(AppDelegationPeer::APP_UID, AppDelayPeer::APP_UID);
     $c->addJoinMC($app, Criteria::LEFT_JOIN);
 
-    //  LEFT JOIN CONTENT TAS_TITLE
+    //LEFT JOIN CONTENT TAS_TITLE
     $c->addAlias("TAS_TITLE", 'CONTENT');
     $del = DBAdapter::getStringDelimiter();
     $appTitleConds = array();
