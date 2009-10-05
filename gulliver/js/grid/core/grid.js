@@ -186,6 +186,19 @@ var G_Grid = function(oForm, sGridName) {
 								}
 							}
 						}
+						
+						/*for new calendar field*/
+						aObjects = oNewRow.getElementsByTagName('td')[i].getElementsByTagName('div');
+						if (aObjects) {
+							if (aObjects[0]) {
+								aObjects[0].id = aObjects[0].id.replace(/\[1\]/g, '\[' + (this.oGrid.rows.length - 2) + '\]');
+								if (aObjects[0].onclick) {
+									sAux = new String(aObjects[0].onclick);
+									eval('aObjects[0].onclick = ' + sAux.replace(/\[1\]/g, '\[' + (this.oGrid.rows.length - 2) + '\]') + ';');
+								}
+							}
+				
+						}
 						aObjects = oNewRow.getElementsByTagName('td')[i].getElementsByTagName('span');
 						if (aObjects) {
 							if (aObjects[0]) {
@@ -205,6 +218,53 @@ var G_Grid = function(oForm, sGridName) {
 							}
 						}
 						break;
+						
+					case 'table': // for nuw calendar field
+						
+						aObjects = oNewRow.getElementsByTagName('td')[i].getElementsByTagName('table');
+						if (aObjects) {
+							//aObjects[0].name = aObjects[0].name.replace(/\[1\]/g, '\[' + (this.oGrid.rows.length - 2) + '\]');
+							aObjects[0].id = aObjects[0].id.replace(/\[1\]/g, '\[' + (this.oGrid.rows.length - 2) + '\]');
+							
+							/** verify if is date element, then it has a two <a> elements, so we need to change its onclick references */
+							aElement = oNewRow.getElementsByTagName('td')[i].getElementsByTagName('div');
+							if(aElement.length > 0){
+								aElement[0].id = aObjects[0].id.replace(/\[1\]/g, '\[' + (this.oGrid.rows.length - 2) + '\]');
+								sAux = new String(aElement[0].onclick);
+								eval('aElement[0].onclick = ' + sAux.replace(/\[1\]/g, '\[' + (this.oGrid.rows.length - 2) + '\]') + ';');
+							}
+							
+							if (aObjects[0].type != 'checkbox') {
+								aObjects[0].value = '';
+							} else {
+								aObjects[0].checked = false;
+							}
+							if (aObjects[1]) {
+								if (aObjects[1].onclick) {
+									sAux = new String(aObjects[1].onclick);
+									eval('aObjects[1].onclick = ' + sAux.replace(/\[1\]/g, '\[' + (this.oGrid.rows.length - 2) + '\]') + ';');
+								}
+							}
+						}
+						aObjects = oNewRow.getElementsByTagName('td')[i].getElementsByTagName('input');
+						if (aObjects) {
+							if (aObjects[0]) {
+								aObjects[0].name = aObjects[0].name.replace(/\[1\]/g, '\[' + (this.oGrid.rows.length - 2) + '\]');
+								aObjects[0].id = aObjects[0].id.replace(/\[1\]/g, '\[' + (this.oGrid.rows.length - 2) + '\]');
+								
+								// aObjects[0].name =
+								// aObjects[0].name.replace(/\[1\]/g, '\[' +
+								// (this.oGrid.rows.length - 2) + '\]');
+								aObjects[0].id = aObjects[0].id.replace(/\[1\]/g, '\[' + (this.oGrid.rows.length - 2) + '\]');
+								if (aObjects[0].onclick) {
+									sAux = new String(aObjects[0].onclick);
+									eval('aObjects[0].onclick = ' + sAux.replace(/\[1\]/g, '\[' + (this.oGrid.rows.length - 2) + '\]') + ';');
+								}
+							}
+							
+						}
+						break;
+						
 					case 'select':
 						aObjects = oNewRow.getElementsByTagName('td')[i].getElementsByTagName('select');
 						if (aObjects) {
@@ -247,7 +307,8 @@ var G_Grid = function(oForm, sGridName) {
 						break;
 						
 					default:
-						oNewRow.getElementsByTagName('td')[i].innerHTML = '&nbsp;';
+						oNewRow.getElementsByTagName('td')[i].innerHTML = '';
+					
 						break;
 					}
 					aObjects = null;
