@@ -1543,3 +1543,54 @@ String.prototype.trim = function() {
 }
 
 
+
+function clearCalendar(id){
+	document.getElementById(id).value='';
+	document.getElementById(id+'[div]').innerHTML = '';
+	setTimeout('enableCalendar()', 350);
+}
+
+function lockCalendar(){
+	G_CALENDAR_MEM_OFFSET = 'lock';
+	
+	//G_CALENDAR_CURRENT_OBJ.hide();
+}
+
+function enableCalendar(){
+	G_CALENDAR_MEM_OFFSET = 'enable';
+}
+
+function parseDateFromMask (inputArray, mask){
+	/* inputArray is an associative array with properties
+	year, month, day, hour, minute 	*/
+	
+	/* format mask
+	 * Y 	-> 2009
+	 * y	-> 09
+	 * m	-> 02
+	 * d	-> 01
+	 * 
+	 * h	-> 12
+	 * i	-> 59
+	 * 
+	 * d/m/y -> 01/02/09
+	 * d/m/Y -> 01/02/2009
+	 * Y-m-d -> 2009-02-01
+	 * 
+	 * Y-m-d h:m -> 2009-02-01 12:59
+	 * 
+	 */
+	
+	result = mask;
+	result = result.replace("Y", inputArray.year);
+	
+	year = new String(inputArray.year);
+	result = result.replace("y", year.substr(2,3));
+	result = result.replace("m", inputArray.month);
+	result = result.replace("d", inputArray.day);
+	result = result.replace("h", inputArray.hour);
+	result = result.replace("i", inputArray.minute);
+	
+	return result;
+	
+}

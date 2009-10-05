@@ -2171,7 +2171,7 @@ class XmlForm_Field_JavaScript extends XmlForm_Field {
  * @Last Modification 2008-07-29
  * @Modification 2008-07-29 Comment Working for after and before date attributes
  */
-class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
+class XmlForm_Field_Date3 extends XmlForm_Field_SimpleText {
   public $required = false;
   public $readOnly = false;
 
@@ -2339,6 +2339,260 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
       $html = "<span style='border:1;border-color:#000;width:100px;' name='" . $pID . "'>$value</span>";
     }
     return $html;
+  }
+}
+
+
+
+/**
+ * @Description   Calendar Widget with Javascript Routines
+ * @Author      Erik amaru Ortiz <erik@colosa.com>
+ * @creation date   2008-07-25
+ * @Last Modification 2008-07-29
+ * @Modification 2008-07-29 Comment Working for after and before date attributes
+ */
+class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
+  public $required = false;
+  public $readOnly = false;
+
+  public $startDate = '';
+  public $endDate = '';
+  /*
+  * for dinamically dates,   beforeDate << currentDate << afterDate
+  * beforeDate='1y' means one year before,  beforeDate='3m' means 3 months before
+  * afterDate='5y' means five year after,  afterDate='15d' means 15 days after
+  * startDate and endDate have priority over beforeDate and AfterDate
+  */
+  public $afterDate = '';
+  public $beforeDate = '';
+  public $defaultValue = NULL;
+  public $format = '%Y-%m-%d';
+
+  public $mask = '%Y-%m-%d';
+  public $dependentFields = '';
+  
+  public $showtime;
+
+  function verifyDateFormat($date) {      
+    $dateTime=explode(" ",$date); //To accept the Hour part
+    $aux = explode ( '-', $dateTime[0] );
+    if (count ( $aux ) != 3)
+      return false;
+    if (! (is_numeric ( $aux [0] ) && is_numeric ( $aux [1] ) && is_numeric ( $aux [2] )))
+      return false;
+    if ($aux [0] < 1900 || $aux [0] > 2100)
+      return false;
+    return true;
+  }
+
+  function isvalidBeforeFormat($date) {
+    $part1 = substr ( $date, 0, strlen ( $date ) - 1 );
+    $part2 = substr ( $date, strlen ( $date ) - 1 );
+    if ($part2 != 'd' && $part2 != 'm' && $part2 != 'y')
+      return false;
+    if (! is_numeric ( $part1 ))
+      return false;
+    return true;
+  }
+
+  function calculateBeforeFormat($date, $sign) {
+    $part1 = $sign * substr ( $date, 0, strlen ( $date ) - 1 );
+    $part2 = substr ( $date, strlen ( $date ) - 1 );
+    switch ($part2) {
+      case 'd' :
+        $res = date ( 'Y-m-d', mktime ( 0, 0, 0, date ( 'm' ), date ( 'd' ) + $part1, date ( 'Y' ) ) );
+        break;
+      case 'm' :
+        $res = date ( 'Y-m-d', mktime ( 0, 0, 0, date ( 'm' ) + $part1, date ( 'd' ), date ( 'Y' ) ) );
+        break;
+      case 'y' :
+        $res = date ( 'Y-m-d', mktime ( 0, 0, 0, date ( 'm' ), date ( 'd' ), date ( 'Y' ) + $part1 ) );
+        break;
+
+    }
+    return $res;
+  }
+
+  function render($value = NULL, $owner = NULL) {
+    if (($this->pmconnection != '') && ($this->pmfield != '')) {
+      $value = $this->getPMTableValue($owner);
+    }
+    else {
+      $value = G::replaceDataField ( $value, $owner->values );
+    }
+    //$this->defaultValue = G::replaceDataField( $this->defaultValue, $owner->values);
+    $id = "form[$this->name]";
+    return $this->__draw_widget ( $id, $value, $owner );
+  }
+
+  function renderGrid($values = NULL, $owner = NULL, $onlyValue = false) {
+    $result = array ();
+    $r = 1;
+    foreach ( $values as $v ) {
+      $v = G::replaceDataField ( $v, $owner->values );
+      if (! $onlyValue) {
+        $id = 'form[' . $owner->name . '][' . $r . '][' . $this->name . ']';
+        $html = $this->__draw_widget ( $id, $v, $owner );
+      } else {
+        $html = $v;
+      }
+      $result [] = $html;
+      $r ++;
+    }
+    return $result;
+  }
+
+  function __draw_widget($pID, $value, $owner = '') {
+  	
+    $startDate = G::replaceDataField ( $this->startDate, $owner->values );
+    $endDate = G::replaceDataField ( $this->endDate, $owner->values );
+
+    $beforeDate = G::replaceDataField ( $this->beforeDate, $owner->values );
+    $afterDate = G::replaceDataField ( $this->afterDate, $owner->values );
+
+    if ($startDate != '') {
+      if (! $this->verifyDateFormat ( $startDate ))
+        $startDate = '';
+    }
+    if (isset ( $beforeDate ) && $beforeDate != '') {
+      if ($this->isvalidBeforeFormat ( $beforeDate ))
+        $startDate = $this->calculateBeforeFormat ( $beforeDate, 1 );
+    }
+
+    if ($startDate == '' && isset ( $this->size ) && is_numeric ( $this->size ) && $this->size >= 1900 && $this->size <= 2100) {
+      $startDate = $this->size . '-01-01';
+    }
+
+    if ($startDate == '') {
+      //$startDate = date ( 'Y-m-d' ); // the default is the current date
+    }
+
+    if ($endDate != '') {
+      if (! $this->verifyDateFormat ( $endDate ))
+        $endDate = '';
+    }
+
+    if (isset ( $afterDate ) && $afterDate != '') {
+      if ($this->isvalidBeforeFormat ( $afterDate ))
+        $endDate = $this->calculateBeforeFormat ( $afterDate, + 1 );
+    }
+
+    if (isset ( $this->maxlength ) && is_numeric ( $this->maxlength ) && $this->maxlength >= 1900 && $this->maxlength <= 2100) {
+      $endDate = $this->maxlength . '-01-01';
+    }
+    if ($endDate == '') {
+      //$this->endDate = mktime ( 0,0,0,date('m'),date('d'),date('y') );  // the default is the current date + 2 years
+      $endDate = date ( 'Y-m-d', mktime ( 0, 0, 0, date ( 'm' ), date ( 'd' ), date ( 'Y' ) + 2 ) ); // the default is the current date + 2 years
+    }
+
+    if( isset($this->mask) && $this->mask != '' ){
+      $mask = $this->mask;
+    } else {
+      $mask = '%Y-%m-%d';
+    }
+    //echo '---->'.$value;
+	$tmp = str_replace("%", "", $mask);
+    if ( trim ($value) == '' or $value == NULL ) {
+      $value = ''; //date ($tmp);
+    } else {
+    	switch(strtolower($value)){
+    		case 'today':
+    			$value = date($tmp); 
+    		break;
+    		default:    		
+    			if(!$this->verifyDateFormat($value))
+    				$value='';    				
+    		break;
+    	}
+    }
+
+    /*for old mask definitions...*/
+    if($mask == 'yyyy-mm-dd'){
+      $mask = '%Y-%m-%d';
+    }
+    
+    /* modeled for new mask*/
+  	$mask = str_replace('%', '', $mask);
+  	
+  	if( $value == ''){
+  		$valueDate = Array(date('Y'), date('m'), date('d'));
+  	} else {
+  		$valueDate = $this->getSplitDate($value, $mask);
+  	}
+  	
+  	
+    $startDate = $this->getSplitDate($startDate, 'Y-m-d');
+	$endDate = $this->getSplitDate($endDate, 'Y-m-d');
+	
+	if(isset($this->showtime) && $this->showtime){
+		$mask .= ' h:i';
+		$cClass = 'calendar_picker';
+	} else {
+		$cClass = 'calendar_picker_min';
+	}
+	
+	
+	
+    #the validations field was moved to javascript routines ;)
+    if ($this->mode == 'edit') {
+      $html = '<input type="hidden" id="'.$pID.'" name="'.$pID.'" value="'.$value.'"/>
+      <div id="'.$pID.'[div]" 
+      		name="'.$pID.'[div]" 
+      		onclick="var oc=new NeyekCalendar(\''.$pID.'\'); 
+      			oc.picker(
+      				{year:'.$valueDate[0].',month:'.$valueDate[1].',day:'.$valueDate[2].'},
+	    			\''.$mask.'\',
+	    			\''.SYS_LANG.'\',
+	    			{year:'.$startDate[0].',month:'.$startDate[1].',day:'.$startDate[2].'},
+	    			{year:'.$endDate[0].',month:'.$endDate[1].',day:'.$endDate[2].'}
+	    		); 
+	    		return false;" 
+      		class="'.$cClass.'"
+      >'.$value.'</div>';
+    } else {
+      $html = "<span style='border:1;border-color:#000;width:100px;' name='" . $pID . "'>$value</span>";
+    }
+    return $html;
+  }
+  
+  function getSplitDate($date, $mask){
+	$sw1 = false;
+	for($i=0; $i<3; $i++){
+		$item = substr($mask, $i*2, 1);
+		switch($item){
+			case 'Y':
+				switch($i){
+					case 0: $d1 = substr($date, 0, 4); break;
+					case 1: $d1 = substr($date, 3, 4); break;
+					case 2: $d1 = substr($date, 6, 4); break;
+				}
+				$sw1 = true;
+			break;
+			case 'y':
+				switch($i){
+					case 0: $d1 = substr($date, 0, 2); break;
+					case 1: $d1 = substr($date, 3, 2); break;
+					case 2: $d1 = substr($date, 6, 2); break;
+				}
+			break;	
+			case 'm':
+				switch($i){
+					
+					case 0: $d2 = substr($date, 0, 2); break;
+					case 1: $d2 = ($sw1)? substr($date, 5, 2): substr($date, 3, 2); break;
+					case 2: $d2 = ($sw1)? substr($date, 8, 2): substr($date, 5, 2); break;
+				}
+			break;	
+			case 'd':
+				switch($i){
+					case 0: $d3 = substr($date, 0, 2); break;
+					case 1: $d3 = ($sw1)? substr($date, 5, 2): substr($date, 3, 2); break;
+					case 2: $d3 = ($sw1)? substr($date, 8, 2): substr($date, 5, 2); break;
+				}
+			break;	
+		}
+	}
+	return Array($d1, $d2, $d3);
   }
 }
 

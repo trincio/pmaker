@@ -50,27 +50,28 @@ SELECT XMLNODE_NAME, TYPE FROM dynaForm WHERE XMLNODE_NAME = @@PME_XMLNODE_NAME
   <en>End Relative Date</en>
 </PME_AFTERDATE>
 
-
-<PME_SUBTITLE3b type="title" enableHTML="1">
-  <en>Behaviour</en>
-</PME_SUBTITLE3b>
 <!-- <PME_FORMAT type="text" maxlength="50" size="30" defaultvalue="Y-m-d" >
 
   <en>Format</en>
 </PME_FORMAT>-->
 <PME_SUBTITLE3x type="subtitle" enableHTML="1">
-  <en><![CDATA[<b>Mask Sufixes: </b>%Y=Year, %m=Month, %d=Day]]></en>
+  <en><![CDATA[<b>Mask<br/> Sufixes: </b>Y=Year, y=year (the two last digits at year), m=Month, d=Day]]></en>
 </PME_SUBTITLE3x>
-<PME_MASK type="text" maxlength="50" size="30" defaultvalue="%Y-%m-%d" >
+<PME_MASK type="text" maxlength="50" size="30" defaultvalue="Y-m-d" >
   <en>Mask</en>
 </PME_MASK>
+<PME_SUBTITLE3b type="title" enableHTML="1">
+  <en>Behaviour</en>
+</PME_SUBTITLE3b>
 <PME_REQUIRED type="checkbox" falseValue="0" value="1" defaultvalue="0" labelOnRight="0">
   <en>Required</en>
 </PME_REQUIRED>
 <PME_READONLY type="checkbox" falseValue="0" value="1" defaultvalue="0" labelOnRight="0">
-
   <en>Read Only</en>
 </PME_READONLY>
+<PME_SHOWTIME type="checkbox" falseValue="0" value="1" defaultvalue="0" labelOnRight="0">
+  <en>Show time</en>
+</PME_SHOWTIME>
 <PME_DEPENDENTFIELDS type="listbox" defaultvalue="" sqlconnection="XMLDB">
 select XMLNODE_NAME, XMLNODE_NAME AS NAME FROM dynaForm WHERE XMLNODE_NAME &lt;&gt; @@PME_XMLNODE_NAME AND XMLNODE_NAME &lt;&gt; ""	AND ( TYPE="text" or TYPE="textarea" or TYPE="dropdown" or TYPE="listbox" or TYPE="hidden" )
   <en>Dependent Fields

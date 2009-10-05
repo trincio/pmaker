@@ -172,7 +172,15 @@ class headPublisher
       $this->addScriptFile( '/jscore/' . $jslabel , 1 );
     }
     if ($this->disableHeaderScripts) return '';
-  $this->addScriptFile("/js/widgets/jscalendar/lang/calendar-".SYS_LANG.".js");
+  //$this->addScriptFile("/js/widgets/jscalendar/lang/calendar-".SYS_LANG.".js");
+	
+	$this->addScriptFile("/js/widgets/calendar/dhtmlSuite-common.js");
+	$this->addScriptFile("/js/widgets/calendar/dhtmlSuite-calendar.js");
+	$this->addScriptFile("/js/widgets/calendar/dhtmlSuite-dragDropSimple.js");
+	
+		
+	$this->addScriptFile("/js/widgets/calendar/neyek-abstractionCalendar.js");
+	
     $head = '';
     $head .= '<TITLE>'.$this->title . "</TITLE>\n";
     foreach($this->scriptFiles as $file)
