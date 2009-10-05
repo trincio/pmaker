@@ -53,7 +53,10 @@ require_once ( 'classes/class.xmlfield_InputPM.php' );
 
 
   $fastSearch = get_ajax_value('fastSearch');
-  if (isset($fastSearch)) $ntable->fastSearch= urldecode($fastSearch);
+  if (isset($fastSearch)) {
+    $ntable->fastSearch= urldecode($fastSearch);
+    $page = 1;
+  }
 
   //order by
   $orderBy = get_ajax_value('order');
