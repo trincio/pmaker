@@ -1258,3 +1258,29 @@ var enableRequiredById = function(sFieldName) {
 	  }
 	}
 };
+
+
+function dynaformVerifyFieldName(){
+	pme_validating = true;
+	setTimeout('verifyFieldName1();',0);
+	return true;
+}
+
+function verifyFieldName1(){
+  var newFieldName=fieldName.value;
+  var validatedFieldName=getField("PME_VALIDATE_NAME",fieldForm).value;
+  var dField = new input(getField('PME_XMLNODE_NAME'));
+  
+  var valid=(newFieldName!=='')&&(((newFieldName!==savedFieldName)&&(validatedFieldName===''))||((newFieldName===savedFieldName)));
+  if (valid){
+    dField.passed();
+    getField("PME_ACCEPT",fieldForm).disabled=false;
+  }else{
+    getField("PME_ACCEPT",fieldForm).disabled=true;
+    dField.failed();
+    new leimnud.module.app.alert().make({label: G_STRINGS.DYNAFIELD_ALREADY_EXIST});
+    dField.focus();
+  }
+  pme_validating=false;
+  return valid;
+}
