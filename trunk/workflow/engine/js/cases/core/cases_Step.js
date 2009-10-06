@@ -234,8 +234,9 @@ var showTransferHistory = function()
   oRPC.make();
 };
 
-function dynaformHistory(PRO_UID,APP_UID,TAS_UID)
+function dynaformHistory(PRO_UID,APP_UID,TAS_UID, DYN_UID)
 {
+  if(!DYN_UID) DYN_UID="";
   oPanel2 = new leimnud.module.panel();
   oPanel2.options = {
       size    :{w:650,h:400},
@@ -253,7 +254,7 @@ function dynaformHistory(PRO_UID,APP_UID,TAS_UID)
   oPanel2.loader.show();
   var oRPC = new leimnud.module.rpc.xmlhttp({
       url : 'cases_Ajax',
-      args: 'action=showDynaformListHistory&PRO_UID='+PRO_UID+'&APP_UID='+APP_UID+'&TAS_UID='+TAS_UID
+      args: 'action=showDynaformListHistory&PRO_UID='+PRO_UID+'&APP_UID='+APP_UID+'&TAS_UID='+TAS_UID+'&DYN_UID='+DYN_UID
   });
   oRPC.callback = function(rpc){
       oPanel2.loader.hide();

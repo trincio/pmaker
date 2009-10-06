@@ -126,10 +126,10 @@ switch($_POST['action']) {
 		$G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_TransferHistory', $c, array());
 		G::RenderPage('publish', 'raw');
 		break;
-	case 'showDynaformListHistory':	    
+	case 'showDynaformListHistory':      
 	    require_once 'classes/model/AppHistory.php';
 	    $appHistory = new AppHistory();
-	    $c=$appHistory->getDynaformHistory($_REQUEST['PRO_UID'],$_REQUEST['TAS_UID'],$_REQUEST['APP_UID']);
+	    $c=$appHistory->getDynaformHistory($_REQUEST['PRO_UID'],$_REQUEST['TAS_UID'],$_REQUEST['APP_UID'],$_REQUEST['DYN_UID']);
 	    $G_PUBLISH = new Publisher();
 		$G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_DynaformHistory', $c, array());
 		G::RenderPage('publish', 'raw');
