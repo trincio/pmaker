@@ -2386,6 +2386,18 @@ class G
 		$map = array_merge($default, $map);
 		return preg_replace(array_keys($map), array_values($map), $string);
 	}
+	
+	function pr($var){
+		print("<pre>");
+		print_r($var);
+		print("</pre>");
+	}
+	
+	function dump($var){
+		print("<pre>");
+		var_dump($var);
+		print("</pre>");
+	}
 };
 
 
