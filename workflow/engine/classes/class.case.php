@@ -339,6 +339,28 @@ class Cases
     return $this->refreshCaseLabel($sAppUid, $aAppData, "ProcCode");
   }
 
+  
+  
+function arrayRecursiveDiff($aArray1, $aArray2) {
+    $aReturn = array();
+  
+    foreach ($aArray1 as $mKey => $mValue) {
+        if (array_key_exists($mKey, $aArray2)) {
+            if (is_array($mValue)) {
+                $aRecursiveDiff = $this->arrayRecursiveDiff($mValue, $aArray2[$mKey]);
+                if (count($aRecursiveDiff)) { $aReturn[$mKey] = $aRecursiveDiff; }
+            } else {
+                if ($mValue != $aArray2[$mKey]) {
+                    $aReturn[$mKey] = $aArray2[$mKey];
+                }
+            }
+        } else {
+            $aReturn[$mKey] = $aArray2[$mKey];
+        }
+    }
+  
+    return $aReturn;
+} 
   /*
   * Update an existing case, this info is used in CaseResume
   * @param string  $sAppUid
@@ -361,8 +383,8 @@ class Cases
 
       //Start: Save History --By JHL      
       if(isset($Fields['CURRENT_DYNAFORM'])){//only when that variable is set.. from Save
-          $FieldsBefore = $this->loadCase( $_SESSION['APPLICATION'] );      
-          $FieldsDifference=array_diff_assoc($FieldsBefore['APP_DATA'],$aApplicationFields);
+          $FieldsBefore = $this->loadCase( $_SESSION['APPLICATION'] );
+          $FieldsDifference=$this->arrayRecursiveDiff($FieldsBefore['APP_DATA'],$aApplicationFields);
           $fieldsOnBoth=array_intersect_assoc($FieldsBefore['APP_DATA'],$aApplicationFields);
           //Add fields that weren't in previous version
           foreach($aApplicationFields as $key => $value){

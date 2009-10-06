@@ -13,7 +13,10 @@
 <HISTORY_DATE type="date" colWidth="122" colAlign="center" titleAlign="center">
   <en>Update Date</en>
 </HISTORY_DATE>
-<FIELDS type="text" colWidth="200" showInTable="1" enablehtml="1">
+<USR_NAME type="text" colWidth="140">
+  <en>User</en>
+</USR_NAME>
+<FIELDS type="text" colWidth="350" showInTable="1" enablehtml="1">
   <en>Fields</en>
 </FIELDS>
 </dynaForm>

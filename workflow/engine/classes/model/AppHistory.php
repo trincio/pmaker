@@ -62,6 +62,10 @@ class AppHistory extends BaseAppHistory {
         $c->addSelectColumn(AppHistoryPeer::APP_STATUS);
         $c->addSelectColumn(AppHistoryPeer::HISTORY_DATE);
         $c->addSelectColumn(AppHistoryPeer::HISTORY_DATA);
+        $c->addSelectColumn(UsersPeer::USR_FIRSTNAME);
+        $c->addSelectColumn(UsersPeer::USR_LASTNAME);
+        $c->addAsColumn('USR_NAME', "CONCAT(USR_LASTNAME, ' ', USR_FIRSTNAME)");
+        $c->addJoin(AppHistoryPeer::USR_UID, UsersPeer::USR_UID, Criteria::LEFT_JOIN);
         
         //WHERE
         $c->add(AppHistoryPeer::PRO_UID, $PRO_UID);
@@ -73,7 +77,7 @@ class AppHistory extends BaseAppHistory {
         
         //ORDER BY
         $c->clearOrderByColumns();
-        $c->addAscendingOrderByColumn(AppHistoryPeer::HISTORY_DATE);
+        $c->addDescendingOrderByColumn(AppHistoryPeer::HISTORY_DATE);
         
         
         //Execute
@@ -95,15 +99,45 @@ class AppHistory extends BaseAppHistory {
             $html="<table border='0' cellpadding='0' cellspacing='0'>";
             $sw_add=false;
             foreach($changedValues as $key =>$value){
-                if($value!=NULL){
+                if(($value!=NULL)&&(!is_array($value))){
                     $sw_add=true;
                     $html.="<tr>";
                     $html.="<td><b>$key:</b> </td>";
                     $html.="<td>$value</td>";
                     $html.="</tr>";
+                }
+                if(is_array($value)){                    
+                    $html.="<tr>";
+                    $html.="<td><b>$key (grid):</b> </td>";    
+                    $html.="<td>";
+                    $html.="<table>";
+                    foreach($value as $key1 =>$value1){                        
+                        $html.="<tr>";
+                        $html.="<td><b>$key1</b></td>";
+                        $html.="<td>";
+                        if(is_array($value1)){
+                            $sw_add=true;
+                            $html.="<table>";
+                            foreach($value1 as $key2 =>$value2){
+                                $html.="<tr>";
+                                $html.="<td><b>$key2</b></td>";
+                                $html.="<td>$value2</td>";
+                                $html.="</tr>";
+                            }
+                            $html.="</table>";
+                        }
+                        $html.="</td>";
+                        $html.="</tr>";
+                        
+                    }
+                    $html.="</table>";
+                    $html.="</td>";
+                    $html.="</tr>";                    
+                    $html.="</td>";
                 }            
             }
             $html.="</table>";
+            
             $aRow['FIELDS']    = $html;
                        
             if($sw_add){
@@ -118,7 +152,7 @@ class AppHistory extends BaseAppHistory {
         G::LoadClass('ArrayPeer');
         $oCriteria = new Criteria('dbarray');
         $oCriteria->setDBArrayTable('DynaformsHistory');
-        //$oCriteria->addAscendingOrderByColumn(AppDocumentPeer::APP_DOC_CREATE_DATE);
+        $oCriteria->addDescendingOrderByColumn(AppHistoryPeer::HISTORY_DATE);
         return $oCriteria;
     
     }
