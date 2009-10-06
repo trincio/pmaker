@@ -192,6 +192,7 @@ var G_Grid = function(oForm, sGridName) {
 						if (aObjects) {
 							if (aObjects[0]) {
 								aObjects[0].id = aObjects[0].id.replace(/\[1\]/g, '\[' + (this.oGrid.rows.length - 2) + '\]');
+								
 								if (aObjects[0].onclick) {
 									sAux = new String(aObjects[0].onclick);
 									eval('aObjects[0].onclick = ' + sAux.replace(/\[1\]/g, '\[' + (this.oGrid.rows.length - 2) + '\]') + ';');
