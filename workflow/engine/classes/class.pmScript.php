@@ -574,9 +574,38 @@ function handleFatalErrors($buffer) {
     $sCode = $_SESSION['_CODE_'];
     unset($_SESSION['_CODE_']);
     registerError(2, $aAux[0], 0, $sCode);
-    $_SESSION['_NO_EXECUTE_TRIGGERS_BEFORE_'] = 1;
-    G::header('Location: ' . $_SERVER['REQUEST_URI']);
-    die;
+    if (strpos($_SERVER['REQUEST_URI'], '/cases/cases_Step') !== false) {
+      if (strpos($_SERVER['REQUEST_URI'], '&ACTION=GENERATE') !== false) {
+        G::LoadClass('case');
+        $oCase = new Cases();
+        $aNextStep = $oCase->getNextStep($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['STEP_POSITION']);
+        if($_SESSION['TRIGGER_DEBUG']['ISSET']) {
+          $_SESSION['TRIGGER_DEBUG']['TIME'] = 'AFTER';
+	        $_SESSION['TRIGGER_DEBUG']['BREAKPAGE'] = $aNextStep['PAGE'];
+	        $aNextStep['PAGE'] = $aNextStep['PAGE'].'&breakpoint=triggerdebug';
+        }
+        G::header('Location: ' . $aNextStep['PAGE']);
+        die;
+      }
+      $_SESSION['_NO_EXECUTE_TRIGGERS_'] = 1;
+      G::header('Location: ' . $_SERVER['REQUEST_URI']);
+      die;
+    }
+    else {
+      G::LoadClass('case');
+      $oCase = new Cases();
+      $aNextStep = $oCase->getNextStep($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['STEP_POSITION']);
+      if($_SESSION['TRIGGER_DEBUG']['ISSET']) {
+        $_SESSION['TRIGGER_DEBUG']['TIME'] = 'AFTER';
+	      $_SESSION['TRIGGER_DEBUG']['BREAKPAGE'] = $aNextStep['PAGE'];
+	      $aNextStep['PAGE'] = $aNextStep['PAGE'].'&breakpoint=triggerdebug';
+      }
+      if (strpos($aNextStep['PAGE'], 'TYPE=ASSIGN_TASK&UID=-1') !== false) {
+        G::SendMessageText('Fatal error in trigger', 'error');
+      }
+      G::header('Location: ' . $aNextStep['PAGE']);
+      die;
+    }
   }
   return $buffer;
 }

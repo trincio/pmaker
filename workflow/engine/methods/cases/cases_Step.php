@@ -105,7 +105,7 @@
 
   //cleaning debug variables
   if( !isset($_GET['breakpoint']) ) {
-    if (!isset($_SESSION['_NO_EXECUTE_TRIGGERS_BEFORE_'])) {
+    if (!isset($_SESSION['_NO_EXECUTE_TRIGGERS_'])) {
       $_SESSION['TRIGGER_DEBUG']['ERRORS'] = Array();
     }
     $_SESSION['TRIGGER_DEBUG']['DATA'] = Array();
@@ -121,7 +121,7 @@
       $_SESSION['TRIGGER_DEBUG']['TRIGGERS_VALUES'] = $triggers;
     }
 
-    if (!isset($_SESSION['_NO_EXECUTE_TRIGGERS_BEFORE_'])) {
+    if (!isset($_SESSION['_NO_EXECUTE_TRIGGERS_'])) {
       //Execute before triggers - Start
       $Fields['APP_DATA'] = $oCase->ExecuteTriggers ( $_SESSION['TASK'], $_GET['TYPE'], $_GET['UID'], 'BEFORE', $Fields['APP_DATA'] );
       $Fields['DEL_INDEX']= $_SESSION['INDEX'];
@@ -129,7 +129,7 @@
       //Execute before triggers - End
     }
     else {
-      unset($_SESSION['_NO_EXECUTE_TRIGGERS_BEFORE_']);
+      unset($_SESSION['_NO_EXECUTE_TRIGGERS_']);
       $Fields['DEL_INDEX']= $_SESSION['INDEX'];
       $Fields['TAS_UID']  = $_SESSION['TASK'];
     }

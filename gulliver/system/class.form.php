@@ -297,7 +297,9 @@ class Form extends XmlForm
               $values[$k]=$v->falseValue;
             }
             else {
-              $values[$k] = null;
+              if ($v->type != 'javascript') {
+                $values[$k] = null;
+              }
             }
           }
         }

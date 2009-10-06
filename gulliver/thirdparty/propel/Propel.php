@@ -520,7 +520,8 @@ class Propel {
 			$name = self::getDefaultDB();
 		}
 		if (!isset(self::$adapterMap[$name])) {
-			throw new PropelException("Unable to load DBAdapter for database '" . var_export($name, true) . "' (check your runtime properties file!)");
+			//throw new PropelException("Unable to load DBAdapter for database '" . var_export($name, true) . "' (check your runtime properties file!)");
+			throw new PropelException("Unable to load DBAdapter for database '' (check your runtime properties file!)");
 		}
 		return self::$adapterMap[$name];
 	}
