@@ -128,7 +128,8 @@ switch($_POST['action']) {
 		break;
 	case 'showDynaformListHistory':      
 	    require_once 'classes/model/AppHistory.php';
-	    $appHistory = new AppHistory();
+	    //TODO: Improve the List view of changes 
+	    $appHistory = new AppHistory();	    
 	    $c=$appHistory->getDynaformHistory($_REQUEST['PRO_UID'],$_REQUEST['TAS_UID'],$_REQUEST['APP_UID'],$_REQUEST['DYN_UID']);
 	    $G_PUBLISH = new Publisher();
 		$G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_DynaformHistory', $c, array());
