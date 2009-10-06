@@ -222,7 +222,10 @@ class UsersProperties extends BaseUsersProperties {
       return '/sys' .  SYS_SYS . '/' . $sLanguage . '/' . SYS_SKIN . '/' . 'users/users_List';
     }
     if ($RBAC->userCanAccess('PM_SETUP') == 1) {
-      return '/sys' .  SYS_SYS . '/' . $sLanguage . '/' . SYS_SKIN . '/' . 'setup/pluginsList';
+      return '/sys' .  SYS_SYS . '/' . $sLanguage . '/' . SYS_SKIN . '/' . 'setup/emails';
+    }
+    if ($RBAC->userCanAccess('PM_DASHBOARD') == 1) {
+      return '/sys' .  SYS_SYS . '/' . $sLanguage . '/' . SYS_SKIN . '/' . 'dashboard/dashboard';
     }
     return '/sys' .  SYS_SYS . '/' . $sLanguage . '/' . SYS_SKIN . '/' . 'users/myInfo';
   }

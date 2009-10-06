@@ -51,10 +51,10 @@ if ( file_exists ( PATH_CORE . 'menus/plugin.php' ) ) {
 }
 
 
-if ($RBAC->userCanAccess('PM_LOGIN') != 1)
+/*if ($RBAC->userCanAccess('PM_LOGIN') != 1)
 {
   $G_TMP_MENU->DisableOptionId('MY_ACCOUNT');
-}
+}*/
 
 if ($RBAC->userCanAccess('PM_USERS') != 1)
 {
@@ -76,7 +76,7 @@ if ($RBAC->userCanAccess('PM_SETUP') != 1)
   $G_TMP_MENU->DisableOptionId('SETUP');
 }
 
-if ($RBAC->userCanAccess('PM_REPORTS') != 1)
+/*if ($RBAC->userCanAccess('PM_REPORTS') != 1)
 {
   $G_TMP_MENU->DisableOptionId('REPORTS');
 }
@@ -84,7 +84,7 @@ if ($RBAC->userCanAccess('PM_REPORTS') != 1)
 if ($RBAC->userCanAccess('PM_SETUP') != 1)
 {
   $G_TMP_MENU->DisableOptionId('ADDITIONAL_TABLES');
-}
+}*/
 
 if ($RBAC->userCanAccess('PM_DASHBOARD') != 1)
 {
