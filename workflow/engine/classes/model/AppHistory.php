@@ -52,6 +52,45 @@ class AppHistory extends BaseAppHistory {
     }
     
     function getDynaformHistory($PRO_UID,$TAS_UID,$APP_UID,$DYN_UID=""){
+        G::LoadClass('case');
+        $oCase = new Cases();
+        
+        $oCase->verifyTable();
+    
+        $aObjectPermissions = $oCase->getAllObjects($PRO_UID, $APP_UID, $TAS_UID, $_SESSION['USER_LOGGED']);
+        
+        if (!is_array($aObjectPermissions)) {
+          $aObjectPermissions = array('DYNAFORMS' => array(-1), 'INPUT_DOCUMENTS' => array(-1), 'OUTPUT_DOCUMENTS' => array(-1));
+        }
+        if (!isset($aObjectPermissions['DYNAFORMS'])) {
+          $aObjectPermissions['DYNAFORMS'] = array(-1);
+        }
+        else {
+          if (!is_array($aObjectPermissions['DYNAFORMS'])) {
+            $aObjectPermissions['DYNAFORMS'] = array(-1);
+          }
+        }
+        if (!isset($aObjectPermissions['INPUT_DOCUMENTS'])) {
+          $aObjectPermissions['INPUT_DOCUMENTS'] = array(-1);
+        }
+        else {
+          if (!is_array($aObjectPermissions['INPUT_DOCUMENTS'])) {
+            $aObjectPermissions['INPUT_DOCUMENTS'] = array(-1);
+          }
+        }
+        if (!isset($aObjectPermissions['OUTPUT_DOCUMENTS'])) {
+          $aObjectPermissions['OUTPUT_DOCUMENTS'] = array(-1);
+        }
+        else {
+          if (!is_array($aObjectPermissions['OUTPUT_DOCUMENTS'])) {
+            $aObjectPermissions['OUTPUT_DOCUMENTS'] = array(-1);
+          }
+        }
+        
+        
+        
+        
+        
         $c = new Criteria('workflow');       
         $c->addSelectColumn(AppHistoryPeer::APP_UID);        
         $c->addSelectColumn(AppHistoryPeer::DEL_INDEX);
@@ -68,11 +107,12 @@ class AppHistory extends BaseAppHistory {
         $c->addJoin(AppHistoryPeer::USR_UID, UsersPeer::USR_UID, Criteria::LEFT_JOIN);
         
         //WHERE
+        $c->add(AppHistoryPeer::DYN_UID, $aObjectPermissions['DYNAFORMS'], Criteria::IN);
         $c->add(AppHistoryPeer::PRO_UID, $PRO_UID);
         $c->add(AppHistoryPeer::TAS_UID, $TAS_UID);
         $c->add(AppHistoryPeer::APP_UID, $APP_UID);
         if((isset($DYN_UID))&&($DYN_UID!="")){
-            $c->add(AppHistoryPeer::$DYN_UID, $DYN_UID);
+            $c->add(AppHistoryPeer::DYN_UID, $DYN_UID);
         }
         
         //ORDER BY

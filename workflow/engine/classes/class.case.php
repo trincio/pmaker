@@ -2698,6 +2698,13 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
         $aFields['DYN_TITLE'] = $o->getDynTitle();
         $aFields['DYN_UID'] = $aRow['DYN_UID'];
         $aFields['EDIT'] = G::LoadTranslation('ID_EDIT');
+        
+        $aFields['PRO_UID'] = $sProcessUID;
+        $aFields['APP_UID'] = $sApplicationUID;
+        $aFields['TAS_UID'] = $sTasKUID;
+        
+        
+        
         $aInputDocuments[] = $aFields;
         $oDataset->next();
     }

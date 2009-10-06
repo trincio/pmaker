@@ -11,5 +11,5 @@
 </DYN_TITLE>
 
 <VIEW type="link" colWidth="25" value="@G::LoadTranslation(ID_VIEW)" link="javascript:showDynaform('@#DYN_UID');"/>
-
+<DINAFORM_HISTORY type="link" colWidth="25" value="@G::LoadTranslation(ID_DYNAFORM_HISTORY)" link="javascript:dynaformHistory('@#PRO_UID','@#APP_UID','@#TAS_UID','@#DYN_UID');"/>
 </dynaForm>
