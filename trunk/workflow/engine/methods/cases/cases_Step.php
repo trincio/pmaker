@@ -440,6 +440,7 @@
                                   $sDocUID
                                   );
 
+                    $documentData->sFileType = "PDF";
                     $documentData->bUseOutputFolder = true;
                     $oPluginRegistry->executeTriggers ( PM_UPLOAD_DOCUMENT , $documentData );
                     unlink ( $pathOutput . $sFilename. '.pdf' );
@@ -453,6 +454,7 @@
                                   $sDocUID
                                   );
 
+                    $documentData->sFileType = "DOC";
                     $documentData->bUseOutputFolder = true;
                     $oPluginRegistry->executeTriggers ( PM_UPLOAD_DOCUMENT , $documentData );
                     unlink ( $pathOutput . $sFilename. '.doc' );
@@ -467,6 +469,8 @@
                                   $sDocUID
                                   );
 
+                    
+                    $documentData->sFileType = "PDF";              
                     $documentData->bUseOutputFolder = true;
                     $oPluginRegistry->executeTriggers ( PM_UPLOAD_DOCUMENT , $documentData );
                     unlink ( $pathOutput . $sFilename. '.pdf' );
@@ -480,6 +484,7 @@
                                   $sDocUID
                                   );
 
+                    $documentData->sFileType = "DOC";
                     $documentData->bUseOutputFolder = true;
                     $oPluginRegistry->executeTriggers ( PM_UPLOAD_DOCUMENT , $documentData );
                     unlink ( $pathOutput . $sFilename. '.doc' );

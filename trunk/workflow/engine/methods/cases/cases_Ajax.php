@@ -346,6 +346,7 @@ switch($_POST['action']) {
 		$G_PUBLISH = new Publisher();
 		if($oPluginRegistry->existsTrigger(PM_CASE_DOCUMENT_LIST)) {
 			$folderData = new folderData(null, null, $_SESSION['APPLICATION'], null, $_SESSION['USER_LOGGED']);
+			$folderData->PMType = "INPUT";
 			$oPluginRegistry = & PMPluginRegistry::getSingleton();
 			$oPluginRegistry->executeTriggers(PM_CASE_DOCUMENT_LIST, $folderData);
 		} else
@@ -414,6 +415,7 @@ switch($_POST['action']) {
 		$G_PUBLISH = new Publisher();
 		if($oPluginRegistry->existsTrigger(PM_CASE_DOCUMENT_LIST)) {
 			$folderData = new folderData(null, null, $_SESSION['APPLICATION'], null, $_SESSION['USER_LOGGED']);
+			$folderData->PMType = "OUTPUT";
 			$oPluginRegistry = & PMPluginRegistry::getSingleton();
 			$oPluginRegistry->executeTriggers(PM_CASE_DOCUMENT_LIST, $folderData);
 		} else
