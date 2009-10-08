@@ -235,29 +235,6 @@ class Process extends BaseProcess {
 
   function load ( $ProUid ) {
   	
-	#verification PRO_DEBUG field routines
-	$con = Propel::getConnection("workflow");
-	$stmt = $con->prepareStatement("SHOW COLUMNS FROM PROCESS");
-	$rs = $stmt->executeQuery();
-	$rs->next();
-	
-	while($rs->next()) {
-		$row = $rs->getRow();
-		$fields[] = $row['Field'];
-  	}
-  
-  	if (in_array ('PRO_DEBUG', $fields)) {
-    	$SW_DEBUG = false;
-	} else {
-		$SW_DEBUG = true;
-	}
-  	
-  	if($SW_DEBUG) { # if PRO_DEBUG filed doesn't exist! build it!
-		$stmt = $con->prepareStatement("ALTER TABLE PROCESS ADD PRO_DEBUG INT(1) DEFAULT '0';");
-		$rs = $stmt->executeQuery();
-	}
-  	########
-  	
   	$con = Propel::getConnection(ProcessPeer::DATABASE_NAME);
     try {
       $oPro = ProcessPeer::retrieveByPk( $ProUid );

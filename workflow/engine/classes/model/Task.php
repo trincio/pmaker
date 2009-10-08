@@ -353,12 +353,55 @@ class Task extends BaseTask {
         $aFields = $oRow->toArray( BasePeer::TYPE_FIELDNAME );
         $this->fromArray($aFields, BasePeer::TYPE_FIELDNAME);
         $this->setNew(false);
-        $this->setTasTitle($aFields["TAS_TITLE"]=$this->getTasTitle());
-        $this->setTasDescription($aFields["TAS_DESCRIPTION"]=$this->getTasDescription());
-        $this->setTasDefTitle($aFields["TAS_DEF_TITLE"]=$this->getTasDefTitle());
-        $this->setTasDefDescription($aFields["TAS_DEF_DESCRIPTION"]=$this->getTasDefDescription());
-        $this->setTasDefProcCode($aFields["TAS_DEF_PROC_CODE"]=$this->getTasDefProcCode());
-        $this->setTasDefMessage($aFields["TAS_DEF_MESSAGE"]=$this->getTasDefMessage());
+        $lang = defined ( 'SYS_LANG') ? SYS_LANG : 'en';        
+        //SELECT CONTENT.CON_CATEGORY, CONTENT.CON_VALUE FROM CONTENT WHERE CONTENT.CON_ID='63515150649b03231c3b020026243292' AND CONTENT.CON_LANG='es' 
+        $c = new Criteria();
+        $c->clearSelectColumns();
+        $c->addSelectColumn(ContentPeer::CON_CATEGORY);
+        $c->addSelectColumn(ContentPeer::CON_VALUE);
+        $c->add(ContentPeer::CON_ID, $TasUid );
+        $c->add(ContentPeer::CON_LANG, $lang );
+        $rs = TaskPeer::doSelectRS($c);
+        $rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+        $rs->next();
+        $row = $rs->getRow();
+
+        while (is_array($row)) {
+          switch ( $row['CON_CATEGORY'] ) {
+          	case 'TAS_TITLE' : $aFields['TAS_TITLE'] = $row['CON_VALUE'];
+                      $this->tas_title = $row['CON_VALUE'];
+                      if ( $row['CON_VALUE'] !== '' )
+                        $this->setTasTitle($aFields['TAS_TITLE']);
+          	          break;
+          	case 'TAS_DESCRIPTION' : $aFields['TAS_DESCRIPTION'] = $row['CON_VALUE'];
+                      $this->tas_description = $row['CON_VALUE'];
+                      if ( $row['CON_VALUE'] !== '' )
+                        $this->setTasDescription($aFields['TAS_DESCRIPTION']);
+          	          break;
+          	case 'TAS_DEF_TITLE' : $aFields['TAS_DEF_TITLE'] = $row['CON_VALUE'];
+                      $this->tas_def_title = $row['CON_VALUE'];
+                      if ( $row['CON_VALUE'] !== '' )
+                        $this->setTasDefTitle($aFields['TAS_DEF_TITLE']);
+          	          break;
+          	case 'TAS_DEF_DESCRIPTION' : $aFields['TAS_DEF_DESCRIPTION'] = $row['CON_VALUE'];
+                      $this->tas_def_description = $row['CON_VALUE'];
+                      if ( $row['CON_VALUE'] !== '' )
+                        $this->setTasDefDescription($aFields['TAS_DEF_DESCRIPTION']);
+          	          break;
+          	case 'TAS_DEF_PROC_CODE' : $aFields['TAS_DEF_PROC_CODE'] = $row['CON_VALUE'];
+                      $this->tas_def_proc_code = $row['CON_VALUE'];
+                      if ( $row['CON_VALUE'] !== '' )
+                        $this->setTasDefProcCode($aFields['TAS_DEF_PROC_CODE']);
+          	          break;
+          	case 'TAS_DEF_MESSAGE' : $aFields['TAS_DEF_MESSAGE'] = $row['CON_VALUE'];
+                      $this->tas_def_message = $row['CON_VALUE'];
+                      if ( $row['CON_VALUE'] !== '' )
+                        $this->setTasDefMessage($aFields["TAS_DEF_MESSAGE"]);
+          	          break;
+          }
+          $rs->next();
+          $row = $rs->getRow();
+        }
         return $aFields;
       }
       else {
