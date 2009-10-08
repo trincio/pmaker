@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<dynaForm type="pagetable">
+
+<!--<CHECKBOX type="text" colWidth="120" titleAlign="left" align="left" enableHtml="1">
+  <en></en>
+</CHECKBOX>-->
+
+<PROCESS type="text" colWidth="250" titleAlign="left" align="left">
+  <en>Process</en>
+</PROCESS>
+
+<CANTITY type="text" colWidth="50" titleAlign="left" align="left">
+  <en>Number of cases</en>
+</CANTITY>
+
+<USERS type="text" colWidth="200" titleAlign="left" align="left" enableHtml="1">
+  <en>Reassign to</en>
+</USERS>
+
+</dynaForm>
