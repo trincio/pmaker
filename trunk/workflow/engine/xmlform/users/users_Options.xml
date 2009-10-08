@@ -161,7 +161,7 @@ var reassignCases = function(sUser) {
 };
 
 var reassignCases2 = function(USR_UID) {
-	popupWindow('' , 'users_ReassignCases?USR_UID=' + USR_UID + '&iStep=1' , 600, 400);
+	popupWindow('' , 'users_ReassignCases?USR_UID=' + USR_UID + '&iStep=1' , 600, 300);
 };
 ]]>
 </JS>
