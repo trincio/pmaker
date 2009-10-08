@@ -29,7 +29,7 @@ var simpleUserDelete = function(sUser) {
 
 var panel;
 var gUSER_UID;
-var deleteUser=function(sUser){ 
+var deleteUser=function(sUser){
   gUSER_UID = sUser;
   panel =new leimnud.module.panel();
   panel.options={
@@ -50,7 +50,7 @@ var deleteUser=function(sUser){
   	var draftCount = parseInt(getField('DRAFT').value);
   	var cancelledCount = parseInt(getField('CANCELLED').value);
   	var completedCount = parseInt(getField('COMPLETED').value);
-  	
+
   	if(todoCount== 0 && draftCount==0){
   		if(cancelledCount== 0 && completedCount==0){
   			location.href = "users_Delete?USR_UID="+gUSER_UID;
@@ -75,9 +75,9 @@ var deleteUser=function(sUser){
 	  	});
   	}
   };
-  panel.elements.statusBarButtons[1].onmouseup=panel.remove;  
+  panel.elements.statusBarButtons[1].onmouseup=panel.remove;
   panel.loader.show();
-  
+
   var r = new leimnud.module.rpc.xmlhttp({
   	url:"users_DeleteAssign.php",
   	method:"GET",
@@ -158,6 +158,10 @@ function saveUserGroup(sGroup, sUser){
 
 var reassignCases = function(sUser) {
   window.location = 'users_ReassignCases?sUser=' + sUser;
+};
+
+var reassignCases2 = function(USR_UID) {
+	popupWindow('' , 'users_ReassignCases?USR_UID=' + USR_UID + '&iStep=1' , 600, 400);
 };
 ]]>
 </JS>
