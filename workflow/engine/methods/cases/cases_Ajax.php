@@ -127,14 +127,10 @@ switch($_POST['action']) {
 		G::RenderPage('publish', 'raw');
 		break;
 	case 'showDynaformListHistory':      
-	    require_once 'classes/model/AppHistory.php';
-	    //TODO: Improve the List view of changes 
-	    $appHistory = new AppHistory();	    
-	    $c=$appHistory->getDynaformHistory($_REQUEST['PRO_UID'],$_REQUEST['TAS_UID'],$_REQUEST['APP_UID'],$_REQUEST['DYN_UID']);
-	    $G_PUBLISH = new Publisher();
-		$G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_DynaformHistory', $c, array());
-		G::RenderPage('publish', 'raw');
-	    
+	    require_once 'classes/model/AppHistory.php';	    
+	    $G_PUBLISH = new Publisher();		
+	    $G_PUBLISH->AddContent('view', 'cases/cases_DynaformHistory');
+	    G::RenderPage('publish', 'raw');	    
 	    break;
 	case 'showTaskInformation':
 		require_once 'classes/model/AppDelegation.php';
@@ -351,6 +347,7 @@ switch($_POST['action']) {
 			$oPluginRegistry->executeTriggers(PM_CASE_DOCUMENT_LIST, $folderData);
 		} else
 			$G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_AllInputdocsList', $oCase->getAllUploadedDocumentsCriteria($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['TASK'], $_SESSION['USER_LOGGED']));
+		
 		G::RenderPage('publish', 'raw');
 		break;
 	case 'showUploadedDocument':
@@ -420,6 +417,7 @@ switch($_POST['action']) {
 			$oPluginRegistry->executeTriggers(PM_CASE_DOCUMENT_LIST, $folderData);
 		} else
 			$G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_AllOutputdocsList', $oCase->getAllGeneratedDocumentsCriteria($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['TASK'], $_SESSION['USER_LOGGED']));
+		
 		G::RenderPage('publish', 'raw');
 		break;
 	case 'showGeneratedDocument':
@@ -464,6 +462,17 @@ switch($_POST['action']) {
 		$G_PUBLISH = new Publisher();
 		$oCase = new Cases();
 		$Fields = $oCase->loadCase($_SESSION['APPLICATION']);
+		$Fields['APP_DATA']['__DYNAFORM_OPTIONS']['PREVIOUS_STEP_LABEL'] = '';
+		$Fields['APP_DATA']['__DYNAFORM_OPTIONS']['NEXT_STEP_LABEL'] = '';
+		$Fields['APP_DATA']['__DYNAFORM_OPTIONS']['NEXT_STEP'] = '#';
+		$Fields['APP_DATA']['__DYNAFORM_OPTIONS']['NEXT_ACTION'] = 'return false;';
+		$G_PUBLISH->AddContent('dynaform', 'xmlform', $_SESSION['PROCESS'] . '/' . $_POST['DYN_UID'], '', $Fields['APP_DATA'], '', '', 'view');
+		G::RenderPage('publish', 'raw');
+		break;
+	case 'showDynaformHistory':
+		$G_PUBLISH = new Publisher();		
+		$FieldsHistory=unserialize($_SESSION['HISTORY_DATA']);
+		$Fields['APP_DATA'] = $FieldsHistory[$_POST['HISTORY_ID']];
 		$Fields['APP_DATA']['__DYNAFORM_OPTIONS']['PREVIOUS_STEP_LABEL'] = '';
 		$Fields['APP_DATA']['__DYNAFORM_OPTIONS']['NEXT_STEP_LABEL'] = '';
 		$Fields['APP_DATA']['__DYNAFORM_OPTIONS']['NEXT_STEP'] = '#';

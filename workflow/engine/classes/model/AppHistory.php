@@ -102,9 +102,10 @@ class AppHistory extends BaseAppHistory {
         $c->addSelectColumn(AppHistoryPeer::HISTORY_DATE);
         $c->addSelectColumn(AppHistoryPeer::HISTORY_DATA);
         $c->addSelectColumn(UsersPeer::USR_FIRSTNAME);
-        $c->addSelectColumn(UsersPeer::USR_LASTNAME);
+        $c->addSelectColumn(UsersPeer::USR_LASTNAME);        
         $c->addAsColumn('USR_NAME', "CONCAT(USR_LASTNAME, ' ', USR_FIRSTNAME)");
         $c->addJoin(AppHistoryPeer::USR_UID, UsersPeer::USR_UID, Criteria::LEFT_JOIN);
+        
         
         //WHERE
         $c->add(AppHistoryPeer::DYN_UID, $aObjectPermissions['DYNAFORMS'], Criteria::IN);
