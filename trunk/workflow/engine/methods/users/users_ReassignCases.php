@@ -44,6 +44,7 @@ try {
           $oCriteria = new Criteria('workflow');
           $oCriteria->addSelectColumn(UsersPeer::USR_UID);
           $oCriteria->addAsColumn('USR_COMPLETENAME', "CONCAT(USR_LASTNAME, ' ', USR_FIRSTNAME, ' (', USR_USERNAME, ')')");
+          $oCriteria->add(UsersPeer::USR_UID, $_POST['USR_UID'], Criteria::NOT_EQUAL);
           $oCriteria->add(UsersPeer::USR_STATUS, array('CLOSED'), Criteria::NOT_IN);
           $oDataset = UsersPeer::doSelectRS($oCriteria);
           $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
@@ -88,7 +89,7 @@ try {
           G::LoadClass('ArrayPeer');
           $oCriteria = new Criteria('dbarray');
           $oCriteria->setDBArrayTable('processesToReassign');
-          $G_PUBLISH->AddContent('propeltable', 'paged-table', 'users/users_ReassignCases', $oCriteria, '');
+          $G_PUBLISH->AddContent('propeltable', 'cases/paged-table-reassign', 'users/users_ReassignCases', $oCriteria, $_POST);
         break;
       }
     break;
