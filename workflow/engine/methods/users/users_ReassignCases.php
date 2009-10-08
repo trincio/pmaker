@@ -40,8 +40,55 @@ try {
     case 3:
       switch ($_POST['SUB_TYPE']) {
         case 'PROCESS':
-          //
-          //$G_PUBLISH->AddContent('propeltable', 'paged-table', 'users/users_', $oCriteria, '');
+          require_once 'classes/model/Users.php';
+          $oCriteria = new Criteria('workflow');
+          $oCriteria->addSelectColumn(UsersPeer::USR_UID);
+          $oCriteria->addAsColumn('USR_COMPLETENAME', "CONCAT(USR_LASTNAME, ' ', USR_FIRSTNAME, ' (', USR_USERNAME, ')')");
+          $oCriteria->add(UsersPeer::USR_STATUS, array('CLOSED'), Criteria::NOT_IN);
+          $oDataset = UsersPeer::doSelectRS($oCriteria);
+          $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+          $oDataset->next();
+          $sUsers = '<option value=""> - ' . G::LoadTranslation('ID_NO_REASSIGN') . ' - </option>';
+          while ($aRow = $oDataset->getRow()) {
+            $sUsers .= '<option value="' . $aRow['USR_UID'] . '">' . $aRow['USR_COMPLETENAME'] . '</option>';
+            $oDataset->next();
+          }
+          $aProcesses   = array();
+          $aProcesses[] = array('CHECKBOX' => 'char',
+                                'PROCESS'  => 'char',
+                                'CANTITY'  => 'char',
+                                'USERS'    => 'char');
+          $del = DBAdapter::getStringDelimiter();
+          require_once 'classes/model/AppDelegation.php';
+          $oCriteria = new Criteria('workflow');
+          $oCriteria->addSelectColumn(AppDelegationPeer::PRO_UID);
+          $oCriteria->addSelectColumn('COUNT(' . AppDelegationPeer::PRO_UID . ') AS CANTITY');
+          $oCriteria->addAsColumn('PRO_TITLE', ContentPeer::CON_VALUE);
+          $aConditions = array();
+          $aConditions[] = array(AppDelegationPeer::PRO_UID, ContentPeer::CON_ID);
+          $aConditions[] = array(ContentPeer::CON_CATEGORY, $del . 'PRO_TITLE' . $del);
+          $aConditions[] = array(ContentPeer::CON_LANG, $del . SYS_LANG . $del);
+          $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
+          $oCriteria->add(AppDelegationPeer::USR_UID, $_POST['USR_UID']);
+          $oCriteria->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
+          $oCriteria->addGroupByColumn(AppDelegationPeer::PRO_UID);
+          $oDataset = AppDelegationPeer::doSelectRS($oCriteria);
+          $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+          $oDataset->next();
+          while ($aRow = $oDataset->getRow()) {
+            $aProcesses[] = array('CHECKBOX' => '<input type="checkbox" name="PROCESS[' . $aRow['PRO_UID'] . ']" id="PROCESS[' . $aRow['PRO_UID'] . ']" />',
+                                  'PROCESS'  => $aRow['PRO_TITLE'],
+                                  'CANTITY'  => $aRow['CANTITY'],
+                                  'USERS'    => '<select name="USER[' . $aRow['PRO_UID'] . ']" id="USER[' . $aRow['PRO_UID'] . ']">' . $sUsers . '</select>');
+            $oDataset->next();
+          }
+          global $_DBArray;
+          $_DBArray['processesToReassign'] = $aProcesses;
+          $_SESSION['_DBArray'] = $_DBArray;
+          G::LoadClass('ArrayPeer');
+          $oCriteria = new Criteria('dbarray');
+          $oCriteria->setDBArrayTable('processesToReassign');
+          $G_PUBLISH->AddContent('propeltable', 'paged-table', 'users/users_ReassignCases', $oCriteria, '');
         break;
       }
     break;
