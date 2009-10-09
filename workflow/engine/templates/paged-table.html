@@ -20,19 +20,19 @@
 		<!-- START BLOCK : headers -->
 		<td class="pagedTableHeader"><img style="{displaySeparator}" src="/js/maborak/core/images/separatorTable.gif" /></td>
 		<td width="{width}" style="{align}" class="pagedTableHeader" >
-			<a href="{href}" onclick="{onclick}">{header}</a>
+			<a href="{href}" onclick="{onclick}{onsort}">{header}</a>
 		</td>
   	<!-- END BLOCK : headers -->
     </tr>
 
 
 
- <!-- START BLOCK : row --> 
+ <!-- START BLOCK : row -->
 
  <!-- START BLOCK : rowMaster -->
 	<tr class='{masterRowClass}' id="{masterRowName}">
     <!-- START BLOCK : fieldMaster -->
-      <td class="pagedTableHeader1"><a href="#" ><img src="/images/minus.gif" onClick="toggleMasterDetailGroup('table[{pagedTable_Name}]','{masterRowName}',this);return false;" border="0"></a><b>{value1}</b></td><td class="pagedTableHeader1" {alignAttr}><b>{value}</b>&nbsp;</td>
+      <td class="pagedTableHeader1"><a href="#" ><img src="/images/minus.gif" onclick="toggleMasterDetailGroup('table[{pagedTable_Name}]','{masterRowName}',this);return false;" border="0"></a><b>{value1}</b></td><td class="pagedTableHeader1" {alignAttr}><b>{value}</b>&nbsp;</td>
     <!-- END BLOCK : fieldMaster -->
     </tr>
 <!-- END BLOCK : rowMaster -->
@@ -92,34 +92,34 @@
 <script type="text/javascript">
 
 function toggleMasterDetailGroup(tablename,groupName,imgicon){
-	
+
 groupNameArray=groupName.split(",");
 table=getElementByName(tablename);
 
 var rows = table.getElementsByTagName('tr');
 for(i=0;i<rows.length;i++){
-	if(rows[i].id!=""){		
+	if(rows[i].id!=""){
 		currentRowArray=rows[i].id.split(",");
 		sw=false;
 		//alert(groupNameArray);
 		//alert(currentRowArray);
-		
+
 		tempVar=currentRowArray[0].split("_MD_");
 		if(tempVar[0]==""){
-			if(currentRowArray.length>groupNameArray.length){				
+			if(currentRowArray.length>groupNameArray.length){
 				currentRowArray[0]=tempVar[1];
 			}
 		}
-		
-		
-		for(j=0;j<groupNameArray.length;j++){			
+
+
+		for(j=0;j<groupNameArray.length;j++){
 			if(currentRowArray[j]==groupNameArray[j]){
 				sw=true;
 			}else{
 				sw=false;
 			}
 		}
-		
+
 		//alert(sw);
 		if(sw){
 			if (rows[i].style.display == '') {
@@ -130,8 +130,8 @@ for(i=0;i<rows.length;i++){
 				imgicon.src="/images/minus.gif";
 			}
 		}
-		
-		
+
+
 	}
 }
 

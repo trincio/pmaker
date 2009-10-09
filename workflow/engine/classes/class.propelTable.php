@@ -112,7 +112,7 @@ class propelTable
     // process the QuickSearch string and add the fields and expression needed to run the search
     if ( $this->searchBy !== '' ) {
       $aSB = explode('|', $this->searchBy);  //fields are separated by pipes
-//subfilter 
+//subfilter
       $subFilter='';
       foreach($aSB as $sBy) {
         $subFilter .= ($subFilter !== '') ? ' OR ' : '';
@@ -124,7 +124,7 @@ class propelTable
         //Get the first defined table in Criteria.
         $aCurrentTables = $this->criteria->getTables();
         if ( isset($aCurrentTables[0]))  {
-          $this->criteria->add ( $aCurrentTables[0] . ".*", '('. $subFilter. ')' , Criteria::CUSTOM );  
+          $this->criteria->add ( $aCurrentTables[0] . ".*", '('. $subFilter. ')' , Criteria::CUSTOM );
         }
       }
     }
@@ -227,7 +227,7 @@ class propelTable
       eval('settype($value, gettype($this->' . $atrib.'));');
       if ($value !== '') eval( '$this->' . $atrib . '=$value;');
     }
-    
+
     if($this->masterdetail!=""){
       $this->masterdetail=explode(",",$this->masterdetail);
       foreach($this->masterdetail as $keyMasterDetail => $valueMasterDetail){
@@ -331,6 +331,7 @@ class propelTable
       $this->style[$r]['onsort'] = $this->id . '.doSort("'.G::createUID('',$this->fields[$r]['Name']).'" , "' . $sortOrder.'");return false;';
 
       if (isset($this->style[$r]['href']))       $this->tpl->assign( "href" ,    $this->style[$r]['href']);
+      if (isset($this->style[$r]['onsort']))     $this->tpl->assign( "onsort" , htmlentities( $this->style[$r]['onsort'] , ENT_QUOTES, 'UTF-8' ) );
       if (isset($this->style[$r]['onclick']))    $this->tpl->assign( "onclick" , htmlentities( $this->style[$r]['onclick'] , ENT_QUOTES, 'UTF-8' ) );
       if (isset($this->style[$r]['colWidth']))   $this->tpl->assign( "width" ,   $this->style[$r]['colWidth'] );
       if (isset($this->style[$r]['colWidth']))   $this->tpl->assign( "widthPercent" , ($this->style[$r]['colWidth']*100 / $this->totalWidth) . "%" );
@@ -406,7 +407,7 @@ class propelTable
     //var_dump($fieldName, $fieldClass );echo '<br /><br />';
 
     if ( array_search( 'renderTable', get_class_methods( $fieldClass ) )!== FALSE ) {
-      $htmlField = $this->xmlForm->fields[ $fieldName ]->renderTable( $value, $this->xmlForm, true );    
+      $htmlField = $this->xmlForm->fields[ $fieldName ]->renderTable( $value, $this->xmlForm, true );
       $this->tpl->assign( "value" , $htmlField );
     }
 
@@ -452,16 +453,16 @@ class propelTable
       //Align titles
       $this->style[$r]['titleAlign']='center';
       //Align fields
-      if (isset($_SESSION['SET_DIRECTION']) && (strcasecmp($_SESSION['SET_DIRECTION'],'rtl')===0))  
+      if (isset($_SESSION['SET_DIRECTION']) && (strcasecmp($_SESSION['SET_DIRECTION'],'rtl')===0))
         $this->style[$r]['align']='right';
-      else 
+      else
         $this->style[$r]['align']='left';
-        
+
       if (!(strpos(' linknew date ',  ' ' . $this->fields[$r]['Type']. ' ')===FALSE)) {
         $this->style[$r]['align']='center';
       }
     }
-    
+
     // Adjust the columns width to prevent overflow the page width
     //Render headers
     $totalWidth=0;
@@ -620,18 +621,18 @@ $time_end = microtime(true);  $time = $time_end - $time_start;
         if(count($this->masterdetail)>0){
           //TODO: Validate if there is a Field that not exists
           //TODO: Style
-          //TODO: Improve Collapse function....      
+          //TODO: Improve Collapse function....
           foreach($this->masterdetail as $keyMasterDetail => $fieldMasterDetail){
             if($breakField[$fieldMasterDetail]!=$result[$fieldMasterDetail]){
               $this->tpl->newBlock( "rowMaster" );
               $this->tpl->newBlock( "fieldMaster" );
               $this->tpl->assign( "alignAttr" , " colspan=".(count($this->fields)*2));
               $this->tpl->assign( "value" , $this->fields[$fieldMasterDetail]['Label'].": ".$this->xmlForm->fields[ $fieldMasterDetail ]->renderTable( $result[$fieldMasterDetail], $this->xmlForm, true ));
-      
+
               $breakField[$fieldMasterDetail]=$result[$fieldMasterDetail];
-      
+
               for($i=$breakFieldKeys[$fieldMasterDetail]+1;$i<count($breakField);$i++){
-                $breakField[$this->masterdetail[$i]]="novaluehere";      
+                $breakField[$this->masterdetail[$i]]="novaluehere";
               }
               $rowName=array();
               foreach($breakField as $key => $value){
@@ -645,7 +646,7 @@ $time_end = microtime(true);  $time = $time_end - $time_start;
               $this->tpl->assign( "value1" ,str_pad($many, count($rowName)-1 , "-") );
               $this->tpl->gotoblock("rowMaster");
               $this->tpl->assign( "masterRowName" , "_MD_".implode(",",$rowName));
-              $this->tpl->assign( "masterRowClass" , $keyMasterDetail==0?"masterDetailMain":"masterDetailOther");   
+              $this->tpl->assign( "masterRowClass" , $keyMasterDetail==0?"masterDetailMain":"masterDetailOther");
             }
           }
           $this->tpl->gotoblock("row");
@@ -677,7 +678,7 @@ $time_end = microtime(true);  $time = $time_end - $time_start;
           }
         }
       }
-      
+
       $this->tpl->assign('_ROOT.gridRows','='. $gridRows);  //number of rows in the current page
       $this->tpl->newBlock('rowTag');
       $this->tpl->assign('rowId','insertAtLast');
