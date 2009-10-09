@@ -52,8 +52,8 @@ while ($aRow1 = $oDataset->getRow()) {
 	$aLabels[] = array(0 => '# TRANSLATION',
                      1 => '# ' . $aRow1['TRN_CATEGORY'] . '/' . $aRow1['TRN_ID'],
                      2 => '#: ' . $aRow1['TRN_CATEGORY'] . '/' . $aRow1['TRN_ID'],
-                     3 => 'msgid "' . $msgid . '"',
-                     4 => 'msgstr "' . ($aRow2 ? ($aRow2['TRN_VALUE'] != '' ? $aRow2['TRN_VALUE'] : $aRow1['TRN_VALUE']) : $aRow1['TRN_VALUE']) . '"');
+                     3 => 'msgid "' . str_replace('"', '\"', $msgid) . '"',
+                     4 => 'msgstr "' . str_replace('"', '\"', ($aRow2 ? ($aRow2['TRN_VALUE'] != '' ? $aRow2['TRN_VALUE'] : $aRow1['TRN_VALUE']) : $aRow1['TRN_VALUE'])) . '"');
   $aMsgids[] = $msgid;
 	$oDataset->next();
 }
