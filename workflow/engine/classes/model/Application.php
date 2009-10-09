@@ -244,9 +244,14 @@ class Application extends BaseApplication {
         $res = $this->save();
 
         //to do: ID_CASE in translation       $this->setAppTitle ( G::LoadTranslation ( 'ID_CASE') . $maxNumber );
-        $this->setAppTitle (  '#' . $maxNumber );
-        $this->setAppDescription ( '' );
-        $this->setAppProcCode ( '' );
+        $lang = defined ( 'SYS_LANG') ? SYS_LANG : 'en';
+   	    Content::insertContent( 'APP_TITLE',       '', $this->getAppUid(), $lang,  '#' . $maxNumber  );
+   	    Content::insertContent( 'APP_DESCRIPTION', '', $this->getAppUid(), $lang,  '' );
+   	    Content::insertContent( 'APP_PROC_CODE',   '', $this->getAppUid(), $lang,  '' );
+
+        //$this->setAppTitle (  '#' . $maxNumber );
+        //$this->setAppDescription ( '' );
+        //$this->setAppProcCode ( '' );
         $con->commit();
         return $this->getAppUid();
       }

@@ -241,15 +241,40 @@ class Process extends BaseProcess {
   	  if ( get_class ($oPro) == 'Process' ) {
   	    $aFields = $oPro->toArray(BasePeer::TYPE_FIELDNAME);
   	    $this->fromArray ($aFields, BasePeer::TYPE_FIELDNAME );
-  	    $aFields['PRO_TITLE']       = $oPro->getProTitle();
-  	    $aFields['PRO_DESCRIPTION'] = $oPro->getProDescription();
-  	    $this->pro_title = $aFields['PRO_TITLE'];
-  	    $this->pro_description = $aFields['PRO_DESCRIPTION'];
-  	    
   	    //optimized to avoid double and multiple execution of the same query
-  	    //$this->setProTitle (  $aFields['PRO_TITLE'] );
-  	    //$this->setProDescription (  $aFields['PRO_DESCRIPTION'] );
+//  	    $aFields['PRO_TITLE']       = $oPro->getProTitle();
+//  	    $aFields['PRO_DESCRIPTION'] = $oPro->getProDescription();
+//  	    $this->pro_title = $aFields['PRO_TITLE'];
+//  	    $this->pro_description = $aFields['PRO_DESCRIPTION'];
   	    
+        $lang = defined ( 'SYS_LANG') ? SYS_LANG : 'en';        
+        $c = new Criteria();
+        $c->clearSelectColumns();
+        $c->addSelectColumn(ContentPeer::CON_CATEGORY);
+        $c->addSelectColumn(ContentPeer::CON_VALUE);
+        $c->add(ContentPeer::CON_ID, $ProUid );
+        $c->add(ContentPeer::CON_LANG, $lang );
+        $rs = ProcessPeer::doSelectRS($c);
+        $rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+        $rs->next();
+        $row = $rs->getRow();
+
+        while (is_array($row)) {
+          switch ( $row['CON_CATEGORY'] ) {
+          	case 'PRO_TITLE' : $aFields['PRO_TITLE'] = $row['CON_VALUE'];
+                      $this->pro_title = $row['CON_VALUE'];
+                      if ( $row['CON_VALUE'] !== '' )
+                        $this->setProTitle($aFields['PRO_TITLE']);
+          	          break;
+          	case 'PRO_DESCRIPTION' : $aFields['PRO_DESCRIPTION'] = $row['CON_VALUE'];
+                      $this->pro_description = $row['CON_VALUE'];
+                      if ( $row['CON_VALUE'] !== '' )
+                        $this->setProDescription($aFields['PRO_DESCRIPTION']);
+          	          break;
+          }
+          $rs->next();
+          $row = $rs->getRow();
+        }
   	    //the following code is to copy the parent in old process, when the parent was empty.
   	    if ( $oPro->getProParent() == '' ) {
           $oPro->setProParent ( $oPro->getProUid() );

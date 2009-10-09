@@ -293,8 +293,10 @@ class Log_file extends Log
        $backTrace = $this->_getBacktraceVars( 5 );
        $trace = " [ $backTrace[3] ]";
         /* Build the string containing the complete log line. */
+        $t = microtime(true);
+        $micro = date('H:i:s.') . sprintf("%03d",($t - floor($t)) * 1000);
         $line = $this->_format($this->_lineFormat,
-                               strftime($this->_timeFormat) . ' ' . getenv('REMOTE_ADDR'),
+                               $micro . ' ' . getenv('REMOTE_ADDR'),
                                $priority, $message . $trace ) . $this->_eol;
 
         /* If locking is enabled, acquire an exclusive lock on the file. */

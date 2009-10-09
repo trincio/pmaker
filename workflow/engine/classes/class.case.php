@@ -195,8 +195,8 @@ class Cases
   function loadCase($sAppUid, $iDelIndex = 0) {
     try {
       $oApp = new Application;
-      $oApp->Load($sAppUid);
-      $aFields = $oApp->toArray(BasePeer::TYPE_FIELDNAME);
+      $aFields = $oApp->Load($sAppUid);
+      //$aFields = $oApp->toArray(BasePeer::TYPE_FIELDNAME);
       $aFields['APP_DATA'] = G::array_merges(G::getSystemConstants(), unserialize($aFields['APP_DATA']));
       switch ($oApp->getAppStatus()) {
         case 'COMPLETED':
@@ -219,8 +219,9 @@ class Cases
       try {
         $oUser->load($oApp->getAppInitUser());
         $uFields = $oUser->toArray(BasePeer::TYPE_FIELDNAME);
-        $aFields['TITLE'] = $oApp->getAppTitle();
-        $aFields['CREATOR'] = $oUser->getUsrFirstname() . ' ' . $oUser->getUsrLastname();
+        //$aFields['TITLE'] = $oApp->getAppTitle();
+        $aFields['TITLE']       = $aFields['APP_TITLE'] ;
+        $aFields['CREATOR']     = $oUser->getUsrFirstname() . ' ' . $oUser->getUsrLastname();
         $aFields['CREATE_DATE'] = $oApp->getAppCreateDate();
         $aFields['UPDATE_DATE'] = $oApp->getAppUpdateDate();
       }
@@ -324,6 +325,71 @@ class Cases
     return $appLabel;
   }
 
+  function refreshCaseTitleAndDescription($sAppUid, $aAppData)
+  {
+    $res['APP_TITLE']       = null;
+    $res['APP_DESCRIPTION'] = null;
+    //$res['APP_PROC_CODE']   = null;
+
+    $oApplication = new Application;
+    try {
+      $fields = $oApplication->load( $sAppUid );
+    }
+    catch ( Exception $e ) {
+      return $res;
+    }
+
+    $res['APP_TITLE']       = $fields['APP_TITLE']; // $oApplication->$getAppLabel();
+    $res['APP_DESCRIPTION'] = $fields['APP_DESCRIPTION'];
+
+    $lang = defined ( 'SYS_LANG') ? SYS_LANG : 'en';        
+    $bUpdatedDefTitle        = false;
+    $bUpdatedDefDescription  = false;
+    $cri = new Criteria;
+    $cri->add(AppDelegationPeer::APP_UID, $sAppUid);
+    $cri->add(AppDelegationPeer::DEL_THREAD_STATUS, "OPEN");
+    $currentDelegations = AppDelegationPeer::doSelect($cri);
+    for ($r = count($currentDelegations) - 1; $r >= 0; $r--) {
+ 	    //load only the tas_def fields, because these three or two values are needed
+      //SELECT CONTENT.CON_CATEGORY, CONTENT.CON_VALUE FROM CONTENT WHERE CONTENT.CON_ID='63515150649b03231c3b020026243292' AND CONTENT.CON_LANG='es' 
+      $c = new Criteria();
+      $c->clearSelectColumns();
+      $c->addSelectColumn(ContentPeer::CON_CATEGORY);
+      $c->addSelectColumn(ContentPeer::CON_VALUE);
+      $c->add(ContentPeer::CON_ID, $currentDelegations[$r]->getTasUid()  );
+      $c->add(ContentPeer::CON_LANG, $lang );
+      $rs = TaskPeer::doSelectRS($c);
+      $rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $rs->next();
+      $row = $rs->getRow();
+
+      while (is_array($row)) {
+        switch ( $row['CON_CATEGORY'] ) {
+        	case 'TAS_DEF_TITLE' : 
+        	     $tasDefTitle = $row['CON_VALUE'];
+               if ($tasDefTitle != '' && !$bUpdatedDefTitle) {
+                 $res['APP_TITLE'] = G::replaceDataField($tasDefTitle, $aAppData);
+                 $bUpdatedDefTitle = true;
+               }
+     	         break;
+        	case 'TAS_DEF_DESCRIPTION' : $tasDefDescription = $row['CON_VALUE'];
+        	     $tasDefDescription = $row['CON_VALUE'];
+               if ($tasDefDescription != '' && !$bUpdatedDefDescription) {
+                 $res['APP_DESCRIPTION'] = G::replaceDataField($tasDefDescription, $aAppData);
+                 $bUpdatedDefDescription = true;
+               }
+     	         break;
+        	//case 'TAS_DEF_PROC_CODE' :   $tasDefProcCode = $row['CON_VALUE'];
+          //	          break;
+        }
+        $rs->next();
+        $row = $rs->getRow();
+      }
+    }
+
+    return $res;
+  }
+  
   function refreshCaseTitle($sAppUid, $aAppData)
   {
     return $this->refreshCaseLabel($sAppUid, $aAppData, "Title");
@@ -377,8 +443,9 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
       $Fields['APP_UID'] = $sAppUid;
       $Fields['APP_UPDATE_DATE'] = 'now';
       $Fields['APP_DATA'] = serialize($Fields['APP_DATA']);
-      $Fields['APP_TITLE'] = self::refreshCaseTitle($sAppUid, $aApplicationFields);
-      $Fields['APP_DESCRIPTION'] = self::refreshCaseDescription($sAppUid, $aApplicationFields);
+      $aux = self::refreshCaseTitleAndDescription($sAppUid, $aApplicationFields);
+      $Fields['APP_TITLE']       = $aux['APP_TITLE'];       //self::refreshCaseTitle($sAppUid, $aApplicationFields);
+      $Fields['APP_DESCRIPTION'] = $aux['APP_DESCRIPTION']; //self::refreshCaseDescription($sAppUid, $aApplicationFields);
       //$Fields['APP_PROC_CODE'] = self::refreshCaseStatusCode($sAppUid, $aApplicationFields);
 
       //Start: Save History --By JHL      
@@ -1213,8 +1280,11 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
 
         //DONE: Al ya existir un delegation, se puede "calcular" el caseTitle.
         $Fields = $Application->toArray(BasePeer::TYPE_FIELDNAME);
-        $Fields['APP_TITLE']       = self::refreshCaseTitle      ($sAppUid, G::array_merges(G::getSystemConstants(), unserialize($Fields['APP_DATA'])));
-        $Fields['APP_DESCRIPTION'] = self::refreshCaseDescription($sAppUid, G::array_merges(G::getSystemConstants(), unserialize($Fields['APP_DATA'])));
+        $aux = self::refreshCaseTitleAndDescription($sAppUid, $aApplicationFields);
+        $Fields['APP_TITLE']       = $aux['APP_TITLE'];       //self::refreshCaseTitle($sAppUid, $aApplicationFields);
+        $Fields['APP_DESCRIPTION'] = $aux['APP_DESCRIPTION']; //self::refreshCaseDescription($sAppUid, $aApplicationFields);
+        //$Fields['APP_TITLE']       = self::refreshCaseTitle      ($sAppUid, $aApplicationFields );
+        //$Fields['APP_DESCRIPTION'] = self::refreshCaseDescription($sAppUid, G::array_merges(G::getSystemConstants(), unserialize($Fields['APP_DATA'])));
         //$Fields['APP_PROC_CODE'] = self::refreshCaseStatusCode ($sAppUid, G::array_merges(G::getSystemConstants(), unserialize($Fields['APP_DATA'])));
         $caseNumber = $Fields['APP_NUMBER'];
         $Application->update($Fields);
@@ -1256,7 +1326,9 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
     G::LoadClass('pmScript');
     $oPMScript = new PMScript();
     $oApplication = new Application();
-    $aFields = $oApplication->load($sAppUid);
+    //$aFields = $oApplication->load($sAppUid);
+    $oApplication = ApplicationPeer::retrieveByPk( $sAppUid );
+  	$aFields = $oApplication->toArray(BasePeer::TYPE_FIELDNAME);
     if (!is_array($aFields['APP_DATA'])) {
         $aFields['APP_DATA'] = G::array_merges(G::getSystemConstants(), unserialize($aFields['APP_DATA']));
     }
@@ -1977,6 +2049,33 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
 
   function getTriggerNames($triggers)
   {
+  	$aTriggers = array();
+  	foreach ( $triggers as $key => $val ) {
+  		$aTriggers[] = $val['TRI_UID'];
+  	}
+    $lang = defined ( 'SYS_LANG') ? SYS_LANG : 'en';        
+    $c = new Criteria();
+    $c->clearSelectColumns();
+    $c->addSelectColumn(ContentPeer::CON_ID);
+    $c->addSelectColumn(ContentPeer::CON_VALUE);
+    $c->add(ContentPeer::CON_ID, $aTriggers, Criteria::IN );
+    $c->add(ContentPeer::CON_CATEGORY,'TRI_TITLE' );
+    $c->add(ContentPeer::CON_VALUE, "", Criteria::NOT_EQUAL);
+    $c->add(ContentPeer::CON_LANG, $lang );
+    $rs = TriggersPeer::doSelectRS($c);
+    $rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $rs->next();
+    $row = $rs->getRow();
+    while ( is_array( $row ) ) {
+      $info[ $row['CON_ID'] ] = $row['CON_VALUE'];
+      $rs->next();
+      $row = $rs->getRow();
+    }
+    
+  	foreach ( $triggers as $key => $val ) {
+      $triggers_info[] = $info[ $val['TRI_UID'] ];
+  	}
+/*
     for($i=0; $i<count($triggers); $i++) {
       $c = new Criteria();
       $c->clearSelectColumns();
@@ -1991,7 +2090,8 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
 
       $triggers_info[] = $row['CON_VALUE'];
     }
-        return $triggers_info;
+*/
+    return $triggers_info;
   }
 
   /*

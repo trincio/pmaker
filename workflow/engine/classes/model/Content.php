@@ -137,9 +137,40 @@ class Content extends BaseContent {
     }
   }
 
-
   /*
   * Insert a content row  
+  * @param string $ConCategory
+  * @param string $ConParent
+  * @param string $ConId
+  * @param string $ConLang
+  * @param string $ConValue 
+  * @return variant
+  */
+  function insertContent($ConCategory, $ConParent, $ConId, $ConLang, $ConValue )
+  {
+    try {
+      $con = new Content();
+      $con->setConCategory( $ConCategory );
+      $con->setConParent( $ConParent );
+      $con->setConId( $ConId );
+      $con->setConLang( $ConLang );
+      $con->setConValue( $ConValue );
+      if ($con->validate() ) {
+        $res = $con->save();
+        return $res;
+      }
+      else {
+        $e = new Exception( "Error in addcontent, the row $ConCategory, $ConParent, $ConId, $ConLang is not Valid"); 
+        throw ( $e );
+      }
+    }
+    catch ( Exception $e ) { 
+      throw ( $e );
+    }
+  }
+
+  /*
+  * remove a content row  
   * @param string $ConCategory
   * @param string $ConParent
   * @param string $ConId
