@@ -393,7 +393,7 @@ function getGridsVars($sProcessUID) {
 	return $aFields;
 }
 
-class XmlForm_Field_CheckBoxTable extends XmlForm_Field_CheckGroup
+class XmlForm_Field_CheckBoxTable extends XmlForm_Field_Checkbox
 {
   /**
    * Function render

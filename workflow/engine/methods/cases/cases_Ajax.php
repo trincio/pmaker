@@ -339,15 +339,8 @@ switch($_POST['action']) {
 	case 'showUploadedDocuments':
 		$oCase = new Cases();
 		global $G_PUBLISH;
-		$G_PUBLISH = new Publisher();
-		if($oPluginRegistry->existsTrigger(PM_CASE_DOCUMENT_LIST)) {
-			$folderData = new folderData(null, null, $_SESSION['APPLICATION'], null, $_SESSION['USER_LOGGED']);
-			$folderData->PMType = "INPUT";
-			$oPluginRegistry = & PMPluginRegistry::getSingleton();
-			$oPluginRegistry->executeTriggers(PM_CASE_DOCUMENT_LIST, $folderData);
-		} else
-			$G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_AllInputdocsList', $oCase->getAllUploadedDocumentsCriteria($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['TASK'], $_SESSION['USER_LOGGED']));
-		
+		$G_PUBLISH = new Publisher();		
+		$G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_AllInputdocsList', $oCase->getAllUploadedDocumentsCriteria($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['TASK'], $_SESSION['USER_LOGGED']));
 		G::RenderPage('publish', 'raw');
 		break;
 	case 'showUploadedDocument':
@@ -409,15 +402,8 @@ switch($_POST['action']) {
 	case 'showGeneratedDocuments':
 		$oCase = new Cases();
 		global $G_PUBLISH;
-		$G_PUBLISH = new Publisher();
-		if($oPluginRegistry->existsTrigger(PM_CASE_DOCUMENT_LIST)) {
-			$folderData = new folderData(null, null, $_SESSION['APPLICATION'], null, $_SESSION['USER_LOGGED']);
-			$folderData->PMType = "OUTPUT";
-			$oPluginRegistry = & PMPluginRegistry::getSingleton();
-			$oPluginRegistry->executeTriggers(PM_CASE_DOCUMENT_LIST, $folderData);
-		} else
-			$G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_AllOutputdocsList', $oCase->getAllGeneratedDocumentsCriteria($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['TASK'], $_SESSION['USER_LOGGED']));
-		
+		$G_PUBLISH = new Publisher();		
+		$G_PUBLISH->AddContent('propeltable', 'paged-table', 'cases/cases_AllOutputdocsList', $oCase->getAllGeneratedDocumentsCriteria($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['TASK'], $_SESSION['USER_LOGGED']));
 		G::RenderPage('publish', 'raw');
 		break;
 	case 'showGeneratedDocument':

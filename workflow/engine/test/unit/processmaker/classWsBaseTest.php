@@ -42,7 +42,7 @@
 
   $t->isa_ok( $obj  , "wsBase",  "class $className created");
 
-  $t->is( count($methods) , 23,  "class $className have " . 23 . ' methods.' );
+  $t->is( count($methods) , 24,  "class $className have " . 24 . ' methods.' );
 
    //checking method '__construct'
   $t->can_ok( $obj,      '__construct',   '__construct() is callable' );
