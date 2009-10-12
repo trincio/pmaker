@@ -523,7 +523,6 @@ $time_end = microtime(true);  $time = $time_end - $time_start;
         $filterForm = new filterForm( $this->filterForm , $this->xmlForm->home );
         if ($this->menu==='') $this->menu= 'gulliver/pagedTable_Options';
       }
-
       if (file_exists($this->xmlForm->home . $this->menu . '.xml')) {
         $menu = new xmlMenu( $this->menu , $this->xmlForm->home );
         $this->tpl->newBlock('headerBlock');

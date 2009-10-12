@@ -26,17 +26,34 @@
 	G::LoadSystem('pagedTable');
 	G::LoadClass('propelTable');
 	G::LoadInclude('ajax');
-  G::LoadAllModelClasses();
-  G::LoadAllPluginModelClasses();
-require_once ( 'classes/class.xmlfield_InputPM.php' );
+    G::LoadAllModelClasses();
+    G::LoadAllPluginModelClasses();
+    require_once ( 'classes/class.xmlfield_InputPM.php' );
 	$id = get_ajax_value('ptID');
 	$ntable= unserialize($_SESSION['pagedTable['.$id.']']);
 	$page     = get_ajax_value('page');
 	$function = get_ajax_value('function');
 
-  //THIS BLOCK SET THE FILTER VARIABLES
-  if (isset($ntable->filterForm_Id) && ($ntable->filterForm_Id!=='')) {
-    $filterForm=new filterForm(G::getUIDName( $ntable->filterForm_Id ));
+    //THIS BLOCK SET THE FILTER VARIABLES
+    if (isset($ntable->filterForm_Id) && ($ntable->filterForm_Id!=='')) {
+      
+      $sPath = PATH_XMLFORM;      
+       //if the xmlform file doesn't exists, then try with the plugins folders
+      if ( !is_file ( $sPath . G::getUIDName( $ntable->filterForm_Id ) ) ) {
+        $aux = explode ( PATH_SEP, G::getUIDName( $ntable->filterForm_Id ) );
+        //check if G_PLUGIN_CLASS is defined, because publisher can be called without an environment
+        if ( count($aux) == 2 && defined ( 'G_PLUGIN_CLASS' ) ) {
+          $oPluginRegistry =& PMPluginRegistry::getSingleton();
+          if ( $oPluginRegistry->isRegisteredFolder($aux[0]) ) {
+            $sPath = PATH_PLUGINS;
+          }
+        }
+      }
+      
+    $filterForm=new filterForm(G::getUIDName( $ntable->filterForm_Id ),$sPath);
+    
+    
+    
     $filterForm->values=$_SESSION[$filterForm->id];
     parse_str( urldecode(get_ajax_value('filter')) , $newValues);
     if (isset($newValues['form'])) {
