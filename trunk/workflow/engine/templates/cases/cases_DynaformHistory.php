@@ -89,6 +89,7 @@ $oDataset = ArrayBasePeer::doSelectRs ( $c);
 $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
 $oDataset->next();
 $changeCount=0;
+
 while ($aRow = $oDataset->getRow()) {
     $changeCount++;
    
@@ -153,8 +154,14 @@ while ($aRow = $oDataset->getRow()) {
     $oDataset->next();
 
 }
+if(!isset($changedValues)){
+    $tpl->newBlock( "NORESULTS" );
+    $tpl->assign( "noResults" , G::LoadTranslation("ID_NO_RECORDS_FOUND"));
+}
+
   $_SESSION['HISTORY_DATA']=serialize($historyData);
   $tpl->gotoBlock( "_ROOT" );
+  
 	$tpl->printToScreen();
 
 ?>
