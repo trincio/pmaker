@@ -1594,3 +1594,27 @@ function parseDateFromMask (inputArray, mask){
 	return result;
 	
 }
+
+Array.prototype.walk = function( funcionaplicada ) {
+    for(var i=0, parar=false; i<this.length && !parar; i++ )
+        parar = funcionaplicada( this[i], i);
+    return (this.length==i)? false : (i-1);
+}
+
+Array.prototype.find = function(q) {
+    var dev = this.walk(function(elem) {
+        if( elem==q )
+            return true;
+    } );
+    if( this[dev]==q ) return dev;
+    else return -1;
+}
+
+Array.prototype.drop = function(x) {
+    this.splice(x,1);
+}
+
+Array.prototype.deleteByValue = function(val) {
+    var eindex = this.find(val);
+    this.drop(eindex);
+} 

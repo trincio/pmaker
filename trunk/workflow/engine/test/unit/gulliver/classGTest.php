@@ -47,7 +47,7 @@ $t = new lime_test( 122, new lime_output_color());
 
 $t->diag('class G' );
   //
-  $t->is(  $testItems , 88,  "class G " . 88 . " methods." );
+  $t->is(  $testItems , 91,  "class G " . 91 . " methods." );
 
 $t->isa_ok( $obj  , 'G',  'class G created');
 

@@ -8,6 +8,8 @@
 <APP_DOC_UID type="hidden" showInTable="0"/>
 
 <CONFIRM type="hidden" showInTable="0"/>
+<DOWNLOAD_LABEL type="hidden" showInTable="0"/>
+
 
 <TITLE type="text" colWidth="200" titleAlign="left" align="left">
   <en>Filename/Comments</en>
@@ -36,6 +38,6 @@
 
 <DELETE type="link" colWidth="" value="@#ID_DELETE" link="#" onclick="deleteUploadedDocument(@QAPP_DOC_UID);"/>
 
-<DOWNLOAD type="link" colWidth="25" value="@G::LoadTranslation(ID_DOWNLOAD)" link="cases_ShowDocument?a=@#APP_DOC_UID"/>
+<DOWNLOAD type="link" colWidth="25" value="@#DOWNLOAD_LABEL" link="@#DOWNLOAD_LINK"/>
 
 </dynaForm>

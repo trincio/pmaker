@@ -1484,6 +1484,41 @@ class XmlForm_Field_BasicFormView extends XmlForm_Field
   }
 }
 */
+
+class XmlForm_Field_Checkboxpt extends XmlForm_Field {
+  var $required = false;
+  var $value = 'on';
+  var $falseValue = 'off';
+  var $labelOnRight = true;
+
+  function render($value = NULL, $owner = NULL) {
+   if (($this->pmconnection != '') && ($this->pmfield != '')) {
+      $value = $this->getPMTableValue($owner);
+    }
+    $checked = (isset ( $value ) && ($value == $this->value)) ? 'checked' : '';
+    $res = "<input id='form[" . $this->name . "][{$this->value}]' value='{$this->value}' name='form[" . $this->name . "][{$this->value}]' type='checkbox' />";
+    return $res;
+  }
+
+  function renderGrid($values = array(), $owner) {
+    $result = array ();
+    $r = 1;
+    foreach ( $values as $v ) {
+      $checked = (($v == $this->value) ? 'checked="checked"' : '');
+      $disabled = (($this->value == 'view') ? 'disabled="disabled"' : '');
+      $html = $res = "<input id='form[" . $owner->name . "][" . $r . "][" . $this->name . "]' value='{$this->value}' name='form[" . $owner->name . "][" . $r . "][" . $this->name . "]' type='checkbox' $checked $disabled />";
+      $result [] = $html;
+      $r ++;
+    }
+    return $result;
+  }
+  /* Used in Form::validatePost
+   */
+  function maskValue($value, &$owner) {
+    return ($value === $this->value) ? $value : $this->falseValue;
+  }
+}
+
 class XmlForm_Field_Checkbox extends XmlForm_Field {
   var $required = false;
   var $value = 'on';
@@ -2346,10 +2381,8 @@ class XmlForm_Field_Date3 extends XmlForm_Field_SimpleText {
 
 /**
  * @Description   Calendar Widget with Javascript Routines
- * @Author      Erik amaru Ortiz <erik@colosa.com>
- * @creation date   2008-07-25
- * @Last Modification 2008-07-29
- * @Modification 2008-07-29 Comment Working for after and before date attributes
+ * @Author      Erik amaru Ortiz <aortiz@gmail.com, erik@colosa.com>
+ * @creation date   Oct 5th, 2009
  */
 class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
   public $required = false;
@@ -2397,19 +2430,33 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
 
   function calculateBeforeFormat($date, $sign) {
     $part1 = $sign * substr ( $date, 0, strlen ( $date ) - 1 );
+    
     $part2 = substr ( $date, strlen ( $date ) - 1 );
+    
+    #FIXED
+    # Erik Amaru Ortiz
+    /*
+     * Because mktime has the restriccion for:
+     * The number of the year, may be a two or four digit value, with values between 0-69 mapping to 2000-2069 and 70-100 to 1970-2000. 
+     * On systems where time_t is a 32bit signed integer, as most common today, the valid range for year  is somewhere 
+     * between 1901 and 2038. However, before PHP 5.1.0 this range was limited from 1970 to 2038 on some systems (e.g. Windows). */
+    #has been changed to more simple parsing.. 
+    
     switch ($part2) {
       case 'd' :
-        $res = date ( 'Y-m-d', mktime ( 0, 0, 0, date ( 'm' ), date ( 'd' ) + $part1, date ( 'Y' ) ) );
+        //$res = date ( 'Y-m-d', mktime ( 0, 0, 0, date ( 'm' ), date ( 'd' ) + $part1, date ( 'Y' ) ) );
+        $res = date('Y')."-".date ('m')."-".(date('d')+$part1);
         break;
       case 'm' :
-        $res = date ( 'Y-m-d', mktime ( 0, 0, 0, date ( 'm' ) + $part1, date ( 'd' ), date ( 'Y' ) ) );
+        //$res = date ( 'Y-m-d', mktime ( 0, 0, 0, date ( 'm' ) + $part1, date ( 'd' ), date ( 'Y' ) ) );
+        $res = date('Y')."-".(date ('m')+$part1)."-".date('d');
         break;
       case 'y' :
-        $res = date ( 'Y-m-d', mktime ( 0, 0, 0, date ( 'm' ), date ( 'd' ), date ( 'Y' ) + $part1 ) );
+        //$res = date ( 'Y-m-d', mktime ( 0, 0, 0, date ( 'm' ), date ( 'd' ), date ( 'Y' ) + $part1) );
+        $res = (date('Y')+$part1)."-".date ('m')."-".date('d');
         break;
-
     }
+    
     return $res;
   }
 
@@ -2476,7 +2523,7 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
       if ($this->isvalidBeforeFormat ( $afterDate ))
         $endDate = $this->calculateBeforeFormat ( $afterDate, + 1 );
     }
-
+	
     if (isset ( $this->maxlength ) && is_numeric ( $this->maxlength ) && $this->maxlength >= 1900 && $this->maxlength <= 2100) {
       $endDate = $this->maxlength . '-01-01';
     }
@@ -2484,7 +2531,7 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
       //$this->endDate = mktime ( 0,0,0,date('m'),date('d'),date('y') );  // the default is the current date + 2 years
       $endDate = date ( 'Y-m-d', mktime ( 0, 0, 0, date ( 'm' ), date ( 'd' ), date ( 'Y' ) + 2 ) ); // the default is the current date + 2 years
     }
-
+    
     if( isset($this->mask) && $this->mask != '' ){
       $mask = $this->mask;
     } else {
@@ -2527,8 +2574,10 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
 	if(isset($this->showtime) && $this->showtime){
 		$mask .= ' h:i';
 		$cClass = 'calendar_picker';
+		$showTime = 'true';
 	} else {
 		$cClass = 'calendar_picker_min';
+		$showTime = 'false';
 	}
 	
 	
@@ -2540,15 +2589,16 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
       		name="'.$pID.'[div]" 
       		onclick="var oc=new NeyekCalendar(\''.$pID.'\'); 
       			oc.picker(
-      				{year:'.$valueDate[0].',month:'.$valueDate[1].',day:'.$valueDate[2].'},
+      				{\'year\':\''.$valueDate[0].'\',\'month\':\''.$valueDate[1].'\',\'day\':\''.$valueDate[2].'\'},
 	    			\''.$mask.'\',
 	    			\''.SYS_LANG.'\',
-	    			{year:'.$startDate[0].',month:'.$startDate[1].',day:'.$startDate[2].'},
-	    			{year:'.$endDate[0].',month:'.$endDate[1].',day:'.$endDate[2].'}
+	    			{\'year\':\''.$startDate[0].'\',\'month\':\''.$startDate[1].'\',\'day\':\''.$startDate[2].'\'},
+	    			{\'year\':\''.$endDate[0].'\',\'month\':\''.$endDate[1].'\',\'day\':\''.$endDate[2].'\'},
+	    			'.$showTime.'
 	    		); 
 	    		return false;" 
       		class="'.$cClass.'"
-      >'.$value.'</div>';
+      >&nbsp;'.$value.'</div>';
     } else {
       $html = "<span style='border:1;border-color:#000;width:100px;' name='" . $pID . "'>$value</span>";
     }

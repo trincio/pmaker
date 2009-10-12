@@ -58,6 +58,38 @@ class AdditionalTables extends BaseAdditionalTables {
     	throw($oError);
     }
   }
+  
+public function loadByName($name) {
+  	try {
+          $oCriteria = new Criteria('workflow');
+          $oCriteria->addSelectColumn(AdditionalTablesPeer::ADD_TAB_UID);
+          $oCriteria->addSelectColumn(AdditionalTablesPeer::ADD_TAB_NAME);
+          $oCriteria->addSelectColumn(AdditionalTablesPeer::ADD_TAB_CLASS_NAME);
+          $oCriteria->addSelectColumn(AdditionalTablesPeer::ADD_TAB_DESCRIPTION);
+          $oCriteria->addSelectColumn(AdditionalTablesPeer::ADD_TAB_SDW_LOG_INSERT);
+          $oCriteria->addSelectColumn(AdditionalTablesPeer::ADD_TAB_SDW_LOG_UPDATE);
+          $oCriteria->addSelectColumn(AdditionalTablesPeer::ADD_TAB_SDW_LOG_DELETE);
+          $oCriteria->addSelectColumn(AdditionalTablesPeer::ADD_TAB_SDW_LOG_SELECT);
+          $oCriteria->addSelectColumn(AdditionalTablesPeer::ADD_TAB_SDW_MAX_LENGTH);
+          $oCriteria->addSelectColumn(AdditionalTablesPeer::ADD_TAB_SDW_AUTO_DELETE);
+          $oCriteria->addSelectColumn(AdditionalTablesPeer::ADD_TAB_PLG_UID);
+          $oCriteria->addSelectColumn(AdditionalTablesPeer::DBS_UID);
+          $oCriteria->add(AdditionalTablesPeer::ADD_TAB_NAME, $name, Criteria::LIKE);
+          
+          $oDataset = FieldsPeer::doSelectRS($oCriteria);
+          $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+          
+          $aRows = Array();
+          while( $oDataset->next() ){
+          	$aRows[] = $oDataset->getRow();
+          }
+          
+          return (sizeof($aRows) > 0)? $aRows: false;
+    }
+    catch (Exception $oError) {
+    	throw($oError);
+    }
+  }
 
   function create($aData, $aFields = array()) {
     if (!isset($aData['ADD_TAB_UID'])) {
@@ -783,12 +815,12 @@ class AdditionalTables extends BaseAdditionalTables {
 
 <ADD_TAB_UID type="private" showInTable="0" />
 
-<MNU_ADD type="link" link="additionalTablesDataNew?sUID=@#ADD_TAB_UID" colAlign="left" colWidth="35">
+<MNU_ADD type="link" link="additionalTablesDataNew?sUID=@#ADD_TAB_UID" colAlign="left" colWidth="100">
   <en>New</en>
 </MNU_ADD>
 
-<MNU_IMPORT_DATA type="link" link="additionalTablesDataImportForm?sUID=@#ADD_TAB_UID" colAlign="left" colWidth="150">
-  <en>Import data (CSV File)</en>
+<MNU_IMPORT_DATA type="link" link="additionalTablesDataImportForm?sUID=@#ADD_TAB_UID" colAlign="left" colWidth="100">
+  <en>Import</en>
 </MNU_IMPORT_DATA>
 
 <PAGED_TABLE_ID type="private" />

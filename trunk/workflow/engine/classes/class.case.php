@@ -2474,6 +2474,18 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
   function getAllUploadedDocumentsCriteria($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID) {
     //verifica si existe la tabla OBJECT_PERMISSION
     $this->verifyTable();
+    $listing=false;
+    $oPluginRegistry = & PMPluginRegistry::getSingleton();
+    if($oPluginRegistry->existsTrigger(PM_CASE_DOCUMENT_LIST)) {
+		$folderData = new folderData(null, null, $_SESSION['APPLICATION'], null, $_SESSION['USER_LOGGED']);
+		$folderData->PMType = "INPUT";
+		$folderData->returnList = true;
+		//$oPluginRegistry = & PMPluginRegistry::getSingleton();
+		$listing=$oPluginRegistry->executeTriggers(PM_CASE_DOCUMENT_LIST, $folderData);		
+	}
+    
+    
+    
 
     $aObjectPermissions = $this->getAllObjects($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID);
     if (!is_array($aObjectPermissions)) {
@@ -2522,7 +2534,7 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
     $aInputDocuments = array();
     $aInputDocuments[] = array('APP_DOC_UID' => 'char', 'DOC_UID' => 'char', 'APP_DOC_COMMENT' => 'char', 'APP_DOC_FILENAME' => 'char', 'APP_DOC_INDEX' => 'integer');
     $oUser = new Users();
-    while ($aRow = $oDataset->getRow()) {
+    while ($aRow = $oDataset->getRow()) {        
       $oCriteria2 = new Criteria('workflow');
       $oCriteria2->add(AppDelegationPeer::APP_UID, $sApplicationUID);
       $oCriteria2->add(AppDelegationPeer::DEL_INDEX, $aRow['DEL_INDEX']);
@@ -2556,6 +2568,19 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
       if (in_array($aRow['APP_DOC_UID'], $aDelete['INPUT_DOCUMENTS'])) {
         $aFields['ID_DELETE'] = G::LoadTranslation('ID_DELETE');
       }
+      
+      $aFields['DOWNLOAD_LABEL'] = G::LoadTranslation('ID_DOWNLOAD');
+      $aFields['DOWNLOAD_LINK'] = "cases_ShowDocument?a=".$aRow['APP_DOC_UID'];
+      
+      if ( is_array ($listing) )      
+        foreach($listing as $folderitem) {            
+            if($folderitem->filename==$aRow['APP_DOC_UID']){
+                $aFields['DOWNLOAD_LABEL'] = G::LoadTranslation('ID_GET_EXTERNAL_FILE');
+                $aFields['DOWNLOAD_LINK'] = $folderitem->downloadScript;
+                continue;
+            }
+        }
+      
       $aInputDocuments[] = $aFields;
       $oDataset->next();
     }
@@ -2604,9 +2629,15 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
         $aFields['POSITION'] = $_SESSION['STEP_POSITION'];
         $aFields['CONFIRM'] = G::LoadTranslation('ID_CONFIRM_DELETE_ELEMENT');
         $aFields['ID_DELETE'] = G::LoadTranslation('ID_DELETE');
+        
+        $aFields['DOWNLOAD_LABEL'] = G::LoadTranslation('ID_DOWNLOAD');
+        $aFields['DOWNLOAD_LINK'] = "cases_ShowDocument?a=".$aRow['APP_DOC_UID'];
+        
+        
         $aInputDocuments[] = $aFields;
+        
         $oDataset->next();
-    }
+    }    
     global $_DBArray;
     $_DBArray['inputDocuments'] = $aInputDocuments;
     $_SESSION['_DBArray'] = $_DBArray;
@@ -2620,6 +2651,16 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
   function getAllGeneratedDocumentsCriteria($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID) {
     //verifica si la tabla OBJECT_PERMISSION
     $this->verifyTable();
+    
+    $listing=false;
+    $oPluginRegistry = & PMPluginRegistry::getSingleton();
+    if($oPluginRegistry->existsTrigger(PM_CASE_DOCUMENT_LIST)) {
+		$folderData = new folderData(null, null, $_SESSION['APPLICATION'], null, $_SESSION['USER_LOGGED']);
+		$folderData->PMType = "OUTPUT";
+		$folderData->returnList = true;
+		//$oPluginRegistry = & PMPluginRegistry::getSingleton();
+		$listing=$oPluginRegistry->executeTriggers(PM_CASE_DOCUMENT_LIST, $folderData);				
+	}
 
     $aObjectPermissions = $this->getAllObjects($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID);
     if (!is_array($aObjectPermissions)) {
@@ -2696,18 +2737,61 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
         		$fileDocLabel=" ";
   				$filePdf = 'cases_ShowOutputDocument?a=' . $aRow['APP_DOC_UID'] . '&ext=pdf&random=' . rand();
   				$filePdfLabel=".pdf";
+                if ( is_array ($listing) )      
+                  foreach($listing as $folderitem) {            
+                    if(($folderitem->filename==$aRow['APP_DOC_UID'])&&($folderitem->type=="PDF")){
+                        $filePdfLabel = G::LoadTranslation('ID_GET_EXTERNAL_FILE')." .pdf";
+                        $filePdf = $folderitem->downloadScript;
+                        continue;
+                    }
+                }
+  				
+  				
+  				
+  				
         	break;
         	case "DOC":
         		$fileDoc = 'cases_ShowOutputDocument?a=' . $aRow['APP_DOC_UID'] . '&ext=doc&random=' . rand();
         		$fileDocLabel=".doc";
   				$filePdf = 'javascript:alert("NO PDF")';
   				$filePdfLabel=" ";
+  				
+                if ( is_array ($listing) )      
+                foreach($listing as $folderitem) {            
+                    if(($folderitem->filename==$aRow['APP_DOC_UID'])&&($folderitem->type=="DOC")){
+                        $fileDocLabel = G::LoadTranslation('ID_GET_EXTERNAL_FILE')." .doc";
+                        $fileDoc = $folderitem->downloadScript;
+                        continue;
+                    }
+                }
         	break;
         	case "BOTH":
         		$fileDoc = 'cases_ShowOutputDocument?a=' . $aRow['APP_DOC_UID'] . '&ext=doc&random=' . rand();
         		$fileDocLabel=".doc";
-  				$filePdf = 'cases_ShowOutputDocument?a=' . $aRow['APP_DOC_UID'] . '&ext=pdf&random=' . rand();
+  				
+             
+              if ( is_array ($listing) )      
+                foreach($listing as $folderitem) {            
+                    if(($folderitem->filename==$aRow['APP_DOC_UID'])&&($folderitem->type=="DOC")){
+                        $fileDocLabel = G::LoadTranslation('ID_GET_EXTERNAL_FILE')." .doc";
+                        $fileDoc = $folderitem->downloadScript;
+                        continue;
+                    }
+                }
+        		
+        		
+        		
+        		$filePdf = 'cases_ShowOutputDocument?a=' . $aRow['APP_DOC_UID'] . '&ext=pdf&random=' . rand();
   				$filePdfLabel=".pdf";
+  				
+                if ( is_array ($listing) )      
+                  foreach($listing as $folderitem) {            
+                    if(($folderitem->filename==$aRow['APP_DOC_UID'])&&($folderitem->type=="PDF")){
+                        $filePdfLabel = G::LoadTranslation('ID_GET_EXTERNAL_FILE')." .pdf";
+                        $filePdf = $folderitem->downloadScript;
+                        continue;
+                    }
+                }
         	break;
         }
 
@@ -2730,6 +2814,12 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
         if (in_array($aRow['APP_DOC_UID'], $aDelete['OUTPUT_DOCUMENTS'])) {
           $aFields['ID_DELETE'] = G::LoadTranslation('ID_DELETE');
         }
+        
+        
+        
+    
+        
+        
         $aOutputDocuments[] = $aFields;
         $oDataset->next();
     }
