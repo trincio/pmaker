@@ -32,7 +32,7 @@
 <table width="100%" cellpadding="5" cellspacing="0" border="0">
 <?php
   if (isset($_SESSION['G_MESSAGE_TYPE']) && isset($_SESSION['G_MESSAGE'])) {
-    echo('<tr><td class="temporalMessage" align="center"><strong>' . G::capitalize($_SESSION['G_MESSAGE_TYPE']) . '</strong> : ' . $_SESSION['G_MESSAGE'] . '</td></tr>');
+    echo('<tr><td class="temporalMessage" align="center"><div id="temporalMessage"><strong>' . G::capitalize($_SESSION['G_MESSAGE_TYPE']) . '</strong> : ' . $_SESSION['G_MESSAGE'] . '</div></td></tr>');
     unset($_SESSION['G_MESSAGE_TYPE']);
     unset($_SESSION['G_MESSAGE']);
   }

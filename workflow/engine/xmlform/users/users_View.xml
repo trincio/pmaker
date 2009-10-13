@@ -1,9 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dynaForm name="myInfo" width="500px" labelWidth="200px"  mode="view" enableTemplate="0">
+<dynaForm name="myInfo" width="70%" labelWidth="300px"  mode="view" enableTemplate="0">
 
 <menuUser type="xmlmenu" xmlfile="users/users_ViewOptions">
   <en></en>
 </menuUser>
+
+<TITLEADD type="title" group="1">
+  <en>Profile</en>
+</TITLEADD>
+
+<RANDOM type="private" />
+
+<USR_PHOTO type="image" group="1"  file="users/users_ViewPhoto?@#RANDOM" home="methods" style="height:96">
+  <en>Photo</en>
+</USR_PHOTO>
+
+<USR_RESUME type="link" group="1" link="#" onclick="showResume();return false;">
+  <en>Resume</en>
+</USR_RESUME>
 
 <TITLE9689 type="title" group="1">
   <en>Personal Information</en>
@@ -90,19 +104,6 @@ SELECT ROL_CODE AS USR_ROLE, ROL_CODE AS CODE FROM ROLES WHERE ROL_SYSTEM = '000
   <en>Confirm Password </en>
 </USR_CNF_PASS>
 
-<TITLEADD type="title" group="1">
-  <en>Additional Information</en>
-</TITLEADD>
-
-<RANDOM type="private" />
-
-<USR_PHOTO type="image" group="1"  file="users/users_ViewPhoto?@#RANDOM" home="methods" style="height:96">
-  <en>Photo</en>
-</USR_PHOTO>
-
-<USR_RESUME type="link" group="1" link="#" onclick="showResume();return false;">
-  <en>Resume</en>
-</USR_RESUME>
 
 <NO_RESUME type="private" />
 

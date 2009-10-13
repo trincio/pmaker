@@ -219,6 +219,13 @@ try {
 	  	G::SendTemporalMessage ('ID_FILE_TOO_BIG', 'error');
 	  }
 	}
+	
+	if($_SESSION['USER_LOGGED'] == $_POST['form']['USR_UID']){
+		/*UPDATING SESSION VARIABLES*/
+		$aUser = $RBAC->userObj->load($_SESSION['USER_LOGGED']);
+		$_SESSION['USR_FULLNAME'] = $aUser['USR_FIRSTNAME'] . ' ' . $aUser['USR_LASTNAME'];
+	}
+	
 	G::header('location: users_List');
 }
 catch (Exception $oException) {

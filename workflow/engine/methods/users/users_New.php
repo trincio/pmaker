@@ -41,6 +41,8 @@ try {
   $aFields['MESSAGE1']   = G::LoadTranslation('ID_MSG_ERROR_USR_USERNAME');
   $aFields['MESSAGE2']   = G::LoadTranslation('ID_MSG_ERROR_DUE_DATE');
   $aFields['MESSAGE3']   = G::LoadTranslation('ID_NEW_PASS_SAME_OLD_PASS');
+  $aFields['MESSAGE4']      = G::LoadTranslation('ID_MSG_ERROR_USR_FIRSTNAME');
+  $aFields['MESSAGE5']      = G::LoadTranslation('ID_MSG_ERROR_USR_LASTNAME');
   $aFields['START_DATE'] = date('Y-m-d');
   $aFields['END_DATE']   = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d'), date('Y') + 5));
   $aFields['USR_DUE_DATE']= date('Y-m-d', mktime(0, 0, 0, date('m'), date('d'), date('Y') + 1));

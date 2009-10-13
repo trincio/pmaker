@@ -1593,6 +1593,12 @@ div.autosuggest ul em
 	color: red;
 }
 
+.textBlue{
+	font:normal 8pt Tahoma,sans-serif,MiscFixed;
+	color:#006699;
+	text-decoration:none;
+}
+
 /**************************** End -> Suggest Widget by Erik Amaru Ortiz <erik@colosa.com>  *********************************/
 
 .tableGrid_view

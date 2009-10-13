@@ -1,9 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dynaForm name="myInfoView" width="500px" labelWidth="200px"  mode="view"  enableTemplate="0">
+<dynaForm name="myInfoView" width="70%" labelWidth="300px"  mode="view"  enableTemplate="0">
 
 <menuUser type="xmlmenu" xmlfile="users/myInfoOptions">
   <en></en>
 </menuUser>
+
+<TITLEADD type="title" group="1">
+  <en>Profile</en>
+</TITLEADD>
+
+<RANDOM type="private" />
+
+<USR_PHOTO type="image" group="1"  file="users/users_ViewPhoto?@#RANDOM" home="methods" style="height:96">
+  <en>Photo</en>
+</USR_PHOTO>
+
+<USR_RESUME type="link" group="1" link="#" onclick="showResume();return false;">
+  <en>Resume</en>
+</USR_RESUME>
 
 <TITLE9689 type="title" group="1">
   <en>Personal Information</en>
@@ -90,19 +104,19 @@ SELECT ROL_CODE AS USR_ROLE, ROL_CODE AS CODE FROM ROLES WHERE ROL_SYSTEM = '000
   <en>Confirm Password </en>
 </USR_CNF_PASS>
 
-<TITLEADD type="title" group="1">
-  <en>Additional Information</en>
-</TITLEADD>
+<TITLEPREF type="title" group="1">
+  <en>Preferences</en>
+</TITLEPREF>
 
-<RANDOM type="private" />
+<PREF_DEFAULT_LANG type="dropdown">
+  <![CDATA[SELECT LAN_ID, LAN_NAME FROM LANGUAGE WHERE LAN_ENABLED = '1' ORDER BY LAN_WEIGHT DESC]]>
+  <en>Default languaje</en>
+</PREF_DEFAULT_LANG>
 
-<USR_PHOTO type="image" group="1"  file="users/users_ViewPhoto?@#RANDOM" home="methods" style="height:96">
-  <en>Photo</en>
-</USR_PHOTO>
-
-<USR_RESUME type="link" group="1" link="#" onclick="showResume();return false;">
-  <en>Resume</en>
-</USR_RESUME>
+<PREF_DEFAULT_MENUSELECTED type="dropdown" sqlconnection = "dbarray">
+  SELECT * FROM menutab
+  <en>Default menu option</en>
+</PREF_DEFAULT_MENUSELECTED>
 
 <SUBMIT3 type="button" onclick="verifyUserInformation(this.form);" group="1">
   <en>Save</en>
@@ -121,6 +135,11 @@ var showResume = function() {
   	});
 	}
 };
+
+hideRowById('SUBMIT3');
+
+clearTemporalMessage();
+
 </JS>
 
 </dynaForm>

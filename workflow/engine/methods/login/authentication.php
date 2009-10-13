@@ -97,6 +97,9 @@ try {
 
 	$_SESSION['USER_LOGGED']  = $uid;
 	$_SESSION['USR_USERNAME'] = $usr;
+	$aUser = $RBAC->userObj->load($_SESSION['USER_LOGGED']);
+	$_SESSION['USR_FULLNAME'] = $aUser['USR_FIRSTNAME'] . ' ' . $aUser['USR_LASTNAME']; 
+	
 	unset($_SESSION['FAILED_LOGINS']);
 
   // Asign the uid of user to userloggedobj

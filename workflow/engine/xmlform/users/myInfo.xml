@@ -1,19 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dynaForm name="myInfo" width="500px" labelWidth="200px" mode="" enableTemplate="0">
+<dynaForm name="myInfo" width="70%" labelWidth="300px" mode="" enableTemplate="0">
 
 <menuUser type="xmlmenu" xmlfile="users/myInfoOptionsView">
 </menuUser>
 
 <USR_UID type="hidden"/>
 
+<TITLEADD type="title" group="1">
+  <en>Profile</en>
+<es><![CDATA[Información adicional]]></es><pt><![CDATA[Informações Adicionais]]></pt></TITLEADD>
+
+<USR_PHOTO type="file" group="1">
+  <en>Photo</en>
+<es>Foto</es><pt>Fotografia</pt></USR_PHOTO>
+
+<USR_RESUME type="file" group="1">
+  <en>Resume</en>
+<es>Hoja de vida</es><pt>Retomar</pt></USR_RESUME>
+
 <TITLE9689 type="title" group="1">
   <en>Personal Information</en>
 <es><![CDATA[Información personal]]></es><pt><![CDATA[Informações Pessoais]]></pt></TITLE9689>
 
-<USR_FIRSTNAME type="text" size="30" maxlength="32" defaultvalue="" required="0" group="1" dependentfields="" linkfield="" strto="" readonly="0" noshowingrid="0" readonlyingrid="0" totalizeable="0" sqlconnection="">
+<USR_FIRSTNAME type="text" size="30" maxlength="32" defaultvalue="" required="1" group="1" dependentfields="" linkfield="" strto="" readonly="0" noshowingrid="0" readonlyingrid="0" totalizeable="0" sqlconnection="">
   <en>First Name</en>
 <es>Nombres</es><pt>Nome</pt></USR_FIRSTNAME>
-<USR_LASTNAME type="text" size="30" maxlength="32" defaultvalue="" required="0" group="1" dependentfields="" linkfield="" strto="" readonly="0" noshowingrid="0" readonlyingrid="0" totalizeable="0" sqlconnection="">
+
+<USR_LASTNAME type="text" size="30" maxlength="32" defaultvalue="" required="1" group="1" dependentfields="" linkfield="" strto="" readonly="0" noshowingrid="0" readonlyingrid="0" totalizeable="0" sqlconnection="">
   <en>Last Name</en>
 <es>Apellidos</es><pt>Sobrenome</pt></USR_LASTNAME>
 <USR_USERNAME type="text" size="15" maxlength="50" validate="" defaultvalue="" required="1" group="1" dependentfields="" linkfield="" strto="" readonly="0" noshowingrid="0" readonlyingrid="0" totalizeable="0" onchange="">
@@ -78,29 +91,30 @@ SELECT ROL_CODE AS USR_ROLE, ROL_CODE AS CODE FROM ROLES WHERE ROL_SYSTEM = '000
   <en>Confirm Password </en>
 <es><![CDATA[Confirmar contraseña]]></es><pt>Confirmar Senha</pt></USR_CNF_PASS>
 
-<TITLEADD type="title" group="1">
-  <en>Additional Information</en>
-<es><![CDATA[Información adicional]]></es><pt><![CDATA[Informações Adicionais]]></pt></TITLEADD>
+<TITLEPREF type="title" group="1">
+  <en>Preferences</en>
+</TITLEPREF>
 
-<USR_PHOTO type="file" group="1">
-  <en>Photo</en>
-<es>Foto</es><pt>Fotografia</pt></USR_PHOTO>
+<PREF_DEFAULT_LANG type="dropdown">
+  <![CDATA[SELECT LAN_ID, LAN_NAME FROM LANGUAGE WHERE LAN_ENABLED = '1' ORDER BY LAN_WEIGHT DESC]]>
+  <en>Default languaje</en>
+</PREF_DEFAULT_LANG>
 
-<USR_RESUME type="file" group="1">
-  <en>Resume</en>
-<es>Hoja de vida</es><pt>Retomar</pt></USR_RESUME>
+<PREF_DEFAULT_MENUSELECTED type="dropdown" sqlconnection = "dbarray">
+  SELECT * FROM menutab
+  <en>Default menu option</en>
+</PREF_DEFAULT_MENUSELECTED>
 
 <SUBMIT3 type="button" onclick="verifyUserInformation(this.form);" group="1">
   <en>Save</en>
 <es>Guardar</es><pt>Salvar</pt></SUBMIT3>
 
 <MESSAGE0 type="phpvariable"/>
-
 <MESSAGE1 type="phpvariable"/>
-
 <MESSAGE2 type="phpvariable"/>
-
 <MESSAGE3 type="phpvariable"/>
+<MESSAGE4 type="phpvariable"/>
+<MESSAGE5 type="phpvariable"/>
 
 <JS type="javascript" replacetags="1"><![CDATA[
 var sUsername;
@@ -150,6 +164,29 @@ var verifyUserInformation = function(oForm)
 {
 	var oAux1, oAux2;
 	var bContinue = true;
+	
+	oAux1 = oForm.elements['form[USR_FIRSTNAME]'];
+	if (oAux1.value == '')
+	{
+		new leimnud.module.app.alert().make({
+	    label: "@#MESSAGE4"
+  	});
+		oAux1.focus();
+		bContinue = false;
+		return false;
+	}
+	
+	oAux1 = oForm.elements['form[USR_LASTNAME]'];
+	if (oAux1.value == '')
+	{
+		new leimnud.module.app.alert().make({
+	    label: "@#MESSAGE5"
+  	});
+		oAux1.focus();
+		bContinue = false;
+		return false;
+	}
+	
 	oAux1 = oForm.elements['form[USR_USERNAME]'];
 	if (oAux1.value == '')
 	{
@@ -158,6 +195,7 @@ var verifyUserInformation = function(oForm)
   	});
 		oAux1.focus();
 		bContinue = false;
+		return false;
 	}
 	oAux1 = oForm.elements['form[USR_DUE_DATE]'];
 	if (oAux1.value == '')
@@ -167,6 +205,7 @@ var verifyUserInformation = function(oForm)
   	});
 		oAux1.focus();
 		bContinue = false;
+		return false;
 	}
 	oAux1 = oForm.elements['form[USR_NEW_PASS]'];
 	if (oAux1.value != '')
@@ -179,6 +218,7 @@ var verifyUserInformation = function(oForm)
   	  });
 		  oAux1.focus();
 		  bContinue = false;
+		  return false;
 	  }
 	}
 	if (bContinue)
