@@ -2433,27 +2433,24 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
 
     $part2 = substr ( $date, strlen ( $date ) - 1 );
 
-    #FIXED
-    # Erik Amaru Ortiz
+    #TODO
+    # neyek
     /*
      * Because mktime has the restriccion for:
      * The number of the year, may be a two or four digit value, with values between 0-69 mapping to 2000-2069 and 70-100 to 1970-2000.
      * On systems where time_t is a 32bit signed integer, as most common today, the valid range for year  is somewhere
      * between 1901 and 2038. However, before PHP 5.1.0 this range was limited from 1970 to 2038 on some systems (e.g. Windows). */
-    #has been changed to more simple parsing..
+    # improving required
 
     switch ($part2) {
       case 'd' :
-        //$res = date ( 'Y-m-d', mktime ( 0, 0, 0, date ( 'm' ), date ( 'd' ) + $part1, date ( 'Y' ) ) );
-        $res = date('Y')."-".date ('m')."-".(date('d')+$part1);
+        $res = date ( 'Y-m-d', mktime ( 0, 0, 0, date ( 'm' ), date ( 'd' ) + $part1, date ( 'Y' ) ) );
         break;
       case 'm' :
-        //$res = date ( 'Y-m-d', mktime ( 0, 0, 0, date ( 'm' ) + $part1, date ( 'd' ), date ( 'Y' ) ) );
-        $res = date('Y')."-".(date ('m')+$part1)."-".date('d');
+        $res = date ( 'Y-m-d', mktime ( 0, 0, 0, date ( 'm' ) + $part1, date ( 'd' ), date ( 'Y' ) ) );
         break;
       case 'y' :
-        //$res = date ( 'Y-m-d', mktime ( 0, 0, 0, date ( 'm' ), date ( 'd' ), date ( 'Y' ) + $part1) );
-        $res = (date('Y')+$part1)."-".date ('m')."-".date('d');
+        $res = date ( 'Y-m-d', mktime ( 0, 0, 0, date ( 'm' ), date ( 'd' ), date ( 'Y' ) + $part1) );
         break;
     }
 
