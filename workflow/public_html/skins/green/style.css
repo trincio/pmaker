@@ -2007,7 +2007,7 @@ table.tableGrid_view td
 	background-image:url(/images/btncal_min.png); 
 	float:left; width:96px; height:23px;
 	/*font-weight: bold;*/
-	color:#fff;
+	color:#000;
 	font-size: 11px;
 }
 .calendar_picker{
@@ -2015,6 +2015,6 @@ table.tableGrid_view td
 	background-image:url(/images/btncal.png); 
 	float:left; width:121px; height:23px;
 	/*font-weight: bold;*/
-	color:#fff;
+	color:#000;
 	font-size: 11px;
 }
