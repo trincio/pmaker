@@ -342,7 +342,7 @@ class Cases
     $res['APP_TITLE']       = $fields['APP_TITLE']; // $oApplication->$getAppLabel();
     $res['APP_DESCRIPTION'] = $fields['APP_DESCRIPTION'];
 
-    $lang = defined ( 'SYS_LANG') ? SYS_LANG : 'en';        
+    $lang = defined ( 'SYS_LANG') ? SYS_LANG : 'en';
     $bUpdatedDefTitle        = false;
     $bUpdatedDefDescription  = false;
     $cri = new Criteria;
@@ -351,7 +351,7 @@ class Cases
     $currentDelegations = AppDelegationPeer::doSelect($cri);
     for ($r = count($currentDelegations) - 1; $r >= 0; $r--) {
  	    //load only the tas_def fields, because these three or two values are needed
-      //SELECT CONTENT.CON_CATEGORY, CONTENT.CON_VALUE FROM CONTENT WHERE CONTENT.CON_ID='63515150649b03231c3b020026243292' AND CONTENT.CON_LANG='es' 
+      //SELECT CONTENT.CON_CATEGORY, CONTENT.CON_VALUE FROM CONTENT WHERE CONTENT.CON_ID='63515150649b03231c3b020026243292' AND CONTENT.CON_LANG='es'
       $c = new Criteria();
       $c->clearSelectColumns();
       $c->addSelectColumn(ContentPeer::CON_CATEGORY);
@@ -365,7 +365,7 @@ class Cases
 
       while (is_array($row)) {
         switch ( $row['CON_CATEGORY'] ) {
-        	case 'TAS_DEF_TITLE' : 
+        	case 'TAS_DEF_TITLE' :
         	     $tasDefTitle = $row['CON_VALUE'];
                if ($tasDefTitle != '' && !$bUpdatedDefTitle) {
                  $res['APP_TITLE'] = G::replaceDataField($tasDefTitle, $aAppData);
@@ -389,7 +389,7 @@ class Cases
 
     return $res;
   }
-  
+
   function refreshCaseTitle($sAppUid, $aAppData)
   {
     return $this->refreshCaseLabel($sAppUid, $aAppData, "Title");
@@ -405,11 +405,11 @@ class Cases
     return $this->refreshCaseLabel($sAppUid, $aAppData, "ProcCode");
   }
 
-  
-  
+
+
 function arrayRecursiveDiff($aArray1, $aArray2) {
     $aReturn = array();
-  
+
     foreach ($aArray1 as $mKey => $mValue) {
         if (array_key_exists($mKey, $aArray2)) {
             if (is_array($mValue)) {
@@ -424,9 +424,9 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
             $aReturn[$mKey] = $aArray2[$mKey];
         }
     }
-  
+
     return $aReturn;
-} 
+}
   /*
   * Update an existing case, this info is used in CaseResume
   * @param string  $sAppUid
@@ -435,8 +435,8 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
   */
   function updateCase($sAppUid, $Fields = array())
   {
-  
-  
+
+
     try {
       $aApplicationFields = $Fields['APP_DATA'];
       $oApp = new Application;
@@ -448,27 +448,27 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
       $Fields['APP_DESCRIPTION'] = $aux['APP_DESCRIPTION']; //self::refreshCaseDescription($sAppUid, $aApplicationFields);
       //$Fields['APP_PROC_CODE'] = self::refreshCaseStatusCode($sAppUid, $aApplicationFields);
 
-      //Start: Save History --By JHL      
+      //Start: Save History --By JHL
       if(isset($Fields['CURRENT_DYNAFORM'])){//only when that variable is set.. from Save
           $FieldsBefore = $this->loadCase( $_SESSION['APPLICATION'] );
           $FieldsDifference=$this->arrayRecursiveDiff($FieldsBefore['APP_DATA'],$aApplicationFields);
           $fieldsOnBoth=array_intersect_assoc($FieldsBefore['APP_DATA'],$aApplicationFields);
           //Add fields that weren't in previous version
           foreach($aApplicationFields as $key => $value){
-              if(!(isset($fieldsOnBoth[$key]))){      
-                  $FieldsDifference[$key]=$value;              
+              if(!(isset($fieldsOnBoth[$key]))){
+                  $FieldsDifference[$key]=$value;
               }
           }
           if((is_array($FieldsDifference))&&(count($FieldsDifference)>0)){//There are changes
               $appHistory = new AppHistory();
               $aFieldsHistory=$Fields;
-              $aFieldsHistory['APP_DATA'] = serialize($FieldsDifference);          
+              $aFieldsHistory['APP_DATA'] = serialize($FieldsDifference);
               $appHistory->insertHistory($aFieldsHistory);
           }
       }
       //End Save History
-      
-      
+
+
       $oApp->update($Fields);
 
       $DEL_INDEX = isset($Fields['DEL_INDEX']) ? $Fields['DEL_INDEX'] : '';
@@ -479,7 +479,7 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
       $oReportTables = new ReportTables();
       $oReportTables->updateTables($aFields['PRO_UID'], $sAppUid, $Fields['APP_NUMBER'], $aApplicationFields);
 
-      if ($DEL_INDEX != '' && $TAS_UID != '') {          
+      if ($DEL_INDEX != '' && $TAS_UID != '') {
         $oTask = new Task;
         $array = $oTask->load($TAS_UID);
 
@@ -499,7 +499,7 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
           }
         }
       }
-      
+
       return $Fields;
     }
     catch (exception $e) {
@@ -2053,7 +2053,7 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
   	foreach ( $triggers as $key => $val ) {
   		$aTriggers[] = $val['TRI_UID'];
   	}
-    $lang = defined ( 'SYS_LANG') ? SYS_LANG : 'en';        
+    $lang = defined ( 'SYS_LANG') ? SYS_LANG : 'en';
     $c = new Criteria();
     $c->clearSelectColumns();
     $c->addSelectColumn(ContentPeer::CON_ID);
@@ -2071,9 +2071,11 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
       $rs->next();
       $row = $rs->getRow();
     }
-    
+
   	foreach ( $triggers as $key => $val ) {
-      $triggers_info[] = $info[ $val['TRI_UID'] ];
+  	  if (isset($info[$val['TRI_UID']])) {
+        $triggers_info[] = $info[$val['TRI_UID']];
+      }
   	}
 /*
     for($i=0; $i<count($triggers); $i++) {
@@ -2888,13 +2890,13 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
         $aFields['DYN_TITLE'] = $o->getDynTitle();
         $aFields['DYN_UID'] = $aRow['DYN_UID'];
         $aFields['EDIT'] = G::LoadTranslation('ID_EDIT');
-        
+
         $aFields['PRO_UID'] = $sProcessUID;
         $aFields['APP_UID'] = $sApplicationUID;
         $aFields['TAS_UID'] = $sTasKUID;
-        
-        
-        
+
+
+
         $aInputDocuments[] = $aFields;
         $oDataset->next();
     }

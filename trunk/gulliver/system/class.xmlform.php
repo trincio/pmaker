@@ -290,8 +290,8 @@ class XmlForm_Field {
     return $result;
   }
   function renderTable($values = '', $owner = NULL, $onlyValue = false) {
-    $r = 1;    
-    $result = $this->render ( $values, $owner, '[' . $owner->name . '][' . $r . ']', $onlyValue );    
+    $r = 1;
+    $result = $this->render ( $values, $owner, '[' . $owner->name . '][' . $r . ']', $onlyValue );
     return $result;
   }
 
@@ -729,13 +729,13 @@ class XmlForm_Field_Text extends XmlForm_Field_SimpleText {
     }
     if ($this->mode === 'edit') {
       if ($this->readOnly)
-        return '<input class="module_app_input___gray" id="form[' . $this->name . ']" name="form[' . $this->name . ']" type ="text" size="' . $this->size . '" maxlength="' . $this->maxLength . '" value=\'' . $this->htmlentities ( $value, ENT_COMPAT, 'utf-8' ) . '\' readOnly="readOnly" style="' . htmlentities ( $this->style, ENT_COMPAT, 'utf-8' ) . '" onkeypress="' . htmlentities ( $onkeypress, ENT_COMPAT, 'utf-8' ) . '"/>';
+        return '<input class="module_app_input___gray" id="form[' . $this->name . ']" name="form[' . $this->name . ']" type ="text" size="' . $this->size . '" maxlength="' . $this->maxLength . '" value=\'' . $this->htmlentities ( $value, ENT_QUOTES, 'utf-8' ) . '\' readOnly="readOnly" style="' . htmlentities ( $this->style, ENT_COMPAT, 'utf-8' ) . '" onkeypress="' . htmlentities ( $onkeypress, ENT_COMPAT, 'utf-8' ) . '"/>';
       else
-        return '<input class="module_app_input___gray" id="form[' . $this->name . ']" name="form[' . $this->name . ']" type ="text" size="' . $this->size . '" maxlength="' . $this->maxLength . '" value=\'' . $this->htmlentities ( $value, ENT_COMPAT, 'utf-8' ) . '\' style="' . htmlentities ( $this->style, ENT_COMPAT, 'utf-8' ) . '" onkeypress="' . htmlentities ( $onkeypress, ENT_COMPAT, 'utf-8' ) . '"/>';
+        return '<input class="module_app_input___gray" id="form[' . $this->name . ']" name="form[' . $this->name . ']" type ="text" size="' . $this->size . '" maxlength="' . $this->maxLength . '" value=\'' . $this->htmlentities ( $value, ENT_QUOTES, 'utf-8' ) . '\' style="' . htmlentities ( $this->style, ENT_COMPAT, 'utf-8' ) . '" onkeypress="' . htmlentities ( $onkeypress, ENT_COMPAT, 'utf-8' ) . '"/>';
     } elseif ($this->mode === 'view') {
-      return '<input class="module_app_input___gray" id="form[' . $this->name . ']" name="form[' . $this->name . ']" type ="text" size="' . $this->size . '" maxlength="' . $this->maxLength . '" value=\'' . $this->htmlentities ( $value, ENT_COMPAT, 'utf-8' ) . '\' style="display:none;' . htmlentities ( $this->style, ENT_COMPAT, 'utf-8' ) . '" onkeypress="' . htmlentities ( $onkeypress, ENT_COMPAT, 'utf-8' ) . '"/>' . $this->htmlentities ( $value, ENT_COMPAT, 'utf-8' );
+      return '<input class="module_app_input___gray" id="form[' . $this->name . ']" name="form[' . $this->name . ']" type ="text" size="' . $this->size . '" maxlength="' . $this->maxLength . '" value=\'' . $this->htmlentities ( $value, ENT_QUOTES, 'utf-8' ) . '\' style="display:none;' . htmlentities ( $this->style, ENT_COMPAT, 'utf-8' ) . '" onkeypress="' . htmlentities ( $onkeypress, ENT_COMPAT, 'utf-8' ) . '"/>' . $this->htmlentities ( $value, ENT_COMPAT, 'utf-8' );
     } else {
-      return $this->htmlentities ( $value, ENT_COMPAT, 'utf-8' );
+      return $this->htmlentities ( $value, ENT_QUOTES, 'utf-8' );
     }
   }
   /**
@@ -2226,7 +2226,7 @@ class XmlForm_Field_Date3 extends XmlForm_Field_SimpleText {
   public $mask = '%Y-%m-%d';
   public $dependentFields = '';
 
-  function verifyDateFormat($date) {      
+  function verifyDateFormat($date) {
     $dateTime=explode(" ",$date); //To accept the Hour part
     $aux = explode ( '-', $dateTime[0] );
     if (count ( $aux ) != 3)
@@ -2349,11 +2349,11 @@ class XmlForm_Field_Date3 extends XmlForm_Field_SimpleText {
     } else {
     	switch(strtolower($value)){
     		case 'today':
-    			$value = date($tmp); 
+    			$value = date($tmp);
     		break;
-    		default:    		
+    		default:
     			if(!$this->verifyDateFormat($value))
-    				$value='';    				
+    				$value='';
     		break;
     	}
     }
@@ -2403,10 +2403,10 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
 
   public $mask = '%Y-%m-%d';
   public $dependentFields = '';
-  
+
   public $showtime;
 
-  function verifyDateFormat($date) {      
+  function verifyDateFormat($date) {
     $dateTime=explode(" ",$date); //To accept the Hour part
     $aux = explode ( '-', $dateTime[0] );
     if (count ( $aux ) != 3)
@@ -2430,18 +2430,18 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
 
   function calculateBeforeFormat($date, $sign) {
     $part1 = $sign * substr ( $date, 0, strlen ( $date ) - 1 );
-    
+
     $part2 = substr ( $date, strlen ( $date ) - 1 );
-    
+
     #FIXED
     # Erik Amaru Ortiz
     /*
      * Because mktime has the restriccion for:
-     * The number of the year, may be a two or four digit value, with values between 0-69 mapping to 2000-2069 and 70-100 to 1970-2000. 
-     * On systems where time_t is a 32bit signed integer, as most common today, the valid range for year  is somewhere 
+     * The number of the year, may be a two or four digit value, with values between 0-69 mapping to 2000-2069 and 70-100 to 1970-2000.
+     * On systems where time_t is a 32bit signed integer, as most common today, the valid range for year  is somewhere
      * between 1901 and 2038. However, before PHP 5.1.0 this range was limited from 1970 to 2038 on some systems (e.g. Windows). */
-    #has been changed to more simple parsing.. 
-    
+    #has been changed to more simple parsing..
+
     switch ($part2) {
       case 'd' :
         //$res = date ( 'Y-m-d', mktime ( 0, 0, 0, date ( 'm' ), date ( 'd' ) + $part1, date ( 'Y' ) ) );
@@ -2456,7 +2456,7 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
         $res = (date('Y')+$part1)."-".date ('m')."-".date('d');
         break;
     }
-    
+
     return $res;
   }
 
@@ -2490,7 +2490,7 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
   }
 
   function __draw_widget($pID, $value, $owner = '') {
-  	
+
     $startDate = G::replaceDataField ( $this->startDate, $owner->values );
     $endDate = G::replaceDataField ( $this->endDate, $owner->values );
 
@@ -2523,7 +2523,7 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
       if ($this->isvalidBeforeFormat ( $afterDate ))
         $endDate = $this->calculateBeforeFormat ( $afterDate, + 1 );
     }
-	
+
     if (isset ( $this->maxlength ) && is_numeric ( $this->maxlength ) && $this->maxlength >= 1900 && $this->maxlength <= 2100) {
       $endDate = $this->maxlength . '-01-01';
     }
@@ -2531,7 +2531,7 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
       //$this->endDate = mktime ( 0,0,0,date('m'),date('d'),date('y') );  // the default is the current date + 2 years
       $endDate = date ( 'Y-m-d', mktime ( 0, 0, 0, date ( 'm' ), date ( 'd' ), date ( 'Y' ) + 2 ) ); // the default is the current date + 2 years
     }
-    
+
     if( isset($this->mask) && $this->mask != '' ){
       $mask = $this->mask;
     } else {
@@ -2544,11 +2544,11 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
     } else {
     	switch(strtolower($value)){
     		case 'today':
-    			$value = date($tmp); 
+    			$value = date($tmp);
     		break;
-    		default:    		
+    		default:
     			if(!$this->verifyDateFormat($value))
-    				$value='';    				
+    				$value='';
     		break;
     	}
     }
@@ -2557,20 +2557,20 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
     if($mask == 'yyyy-mm-dd'){
       $mask = '%Y-%m-%d';
     }
-    
+
     /* modeled for new mask*/
   	$mask = str_replace('%', '', $mask);
-  	
+
   	if( $value == ''){
   		$valueDate = Array(date('Y'), date('m'), date('d'));
   	} else {
   		$valueDate = $this->getSplitDate($value, $mask);
   	}
-  	
-  	
+
+
     $startDate = $this->getSplitDate($startDate, 'Y-m-d');
 	$endDate = $this->getSplitDate($endDate, 'Y-m-d');
-	
+
 	if(isset($this->showtime) && $this->showtime){
 		$mask .= ' h:i';
 		$cClass = 'calendar_picker';
@@ -2579,15 +2579,15 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
 		$cClass = 'calendar_picker_min';
 		$showTime = 'false';
 	}
-	
-	
-	
+
+
+
     #the validations field was moved to javascript routines ;)
     if ($this->mode == 'edit') {
       $html = '<input type="hidden" id="'.$pID.'" name="'.$pID.'" value="'.$value.'"/>
-      <div id="'.$pID.'[div]" 
-      		name="'.$pID.'[div]" 
-      		onclick="var oc=new NeyekCalendar(\''.$pID.'\'); 
+      <div id="'.$pID.'[div]"
+      		name="'.$pID.'[div]"
+      		onclick="var oc=new NeyekCalendar(\''.$pID.'\');
       			oc.picker(
       				{\'year\':\''.$valueDate[0].'\',\'month\':\''.$valueDate[1].'\',\'day\':\''.$valueDate[2].'\'},
 	    			\''.$mask.'\',
@@ -2595,8 +2595,8 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
 	    			{\'year\':\''.$startDate[0].'\',\'month\':\''.$startDate[1].'\',\'day\':\''.$startDate[2].'\'},
 	    			{\'year\':\''.$endDate[0].'\',\'month\':\''.$endDate[1].'\',\'day\':\''.$endDate[2].'\'},
 	    			'.$showTime.'
-	    		); 
-	    		return false;" 
+	    		);
+	    		return false;"
       		class="'.$cClass.'"
       >&nbsp;'.$value.'</div>';
     } else {
@@ -2604,7 +2604,7 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
     }
     return $html;
   }
-  
+
   function getSplitDate($date, $mask){
 	$sw1 = false;
 	for($i=0; $i<3; $i++){
@@ -2624,22 +2624,22 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
 					case 1: $d1 = substr($date, 3, 2); break;
 					case 2: $d1 = substr($date, 6, 2); break;
 				}
-			break;	
+			break;
 			case 'm':
 				switch($i){
-					
+
 					case 0: $d2 = substr($date, 0, 2); break;
 					case 1: $d2 = ($sw1)? substr($date, 5, 2): substr($date, 3, 2); break;
 					case 2: $d2 = ($sw1)? substr($date, 8, 2): substr($date, 5, 2); break;
 				}
-			break;	
+			break;
 			case 'd':
 				switch($i){
 					case 0: $d3 = substr($date, 0, 2); break;
 					case 1: $d3 = ($sw1)? substr($date, 5, 2): substr($date, 3, 2); break;
 					case 2: $d3 = ($sw1)? substr($date, 8, 2): substr($date, 5, 2); break;
 				}
-			break;	
+			break;
 		}
 	}
 	return Array($d1, $d2, $d3);
