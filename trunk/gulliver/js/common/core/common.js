@@ -1542,8 +1542,6 @@ String.prototype.trim = function() {
 	return this.replace(/^\s+|\s+get/g,"");
 }
 
-
-
 function clearCalendar(id){
 	document.getElementById(id).value='';
 	document.getElementById(id+'[div]').innerHTML = '';
@@ -1618,3 +1616,26 @@ Array.prototype.deleteByValue = function(val) {
     var eindex = this.find(val);
     this.drop(eindex);
 } 
+
+/**
+ * schedule a action js callback
+ *
+ * @Author Erik Amaru Ortiz <erik@colosa.com, aortiz.erik@gmail.com>
+ * @Param (string) function name
+ * @Param (int) time in seconds
+ * @Return <none>
+ */
+function Timer(functionName, time) {
+	setTimeout(functionName, time*1000);
+}
+
+function clearTemporalMessage(){
+	Timer(function(){
+		try{
+				document.getElementById('temporalMessage').innerHTML = '';
+		}catch(e){}}, 
+		2
+	);
+}
+
+

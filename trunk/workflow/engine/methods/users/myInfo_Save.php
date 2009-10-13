@@ -139,6 +139,27 @@ try {ini_set('display_errors','1');
 	if ($_FILES['form']['tmp_name']['USR_RESUME'] != '') {
 		G::uploadFile($_FILES['form']['tmp_name']['USR_RESUME'], PATH_IMAGES_ENVIRONMENT_FILES . $aData['USR_UID'] . '/', $_FILES['form']['name']['USR_RESUME']);
 	}
+	
+	/* Saving preferences */
+	$def_lang = $_POST['form']['PREF_DEFAULT_LANG'];
+	$def_menu = $_POST['form']['PREF_DEFAULT_MENUSELECTED'];
+	
+	G::loadClass('configuration');
+	
+	$oConf = new Configurations;
+	$aConf = Array(
+		'DEFAULT_LANG'=>$def_lang,
+		'DEFAULT_MENU'=>$def_menu
+	);
+	
+	/*UPDATING SESSION VARIABLES*/
+	$aUser = $RBAC->userObj->load($_SESSION['USER_LOGGED']);
+	$_SESSION['USR_FULLNAME'] = $aUser['USR_FIRSTNAME'] . ' ' . $aUser['USR_LASTNAME']; 
+	
+	
+	$oConf->aConfig = $aConf;
+	$oConf->saveConfig('USER_PREFERENCES', '', '',$_SESSION['USER_LOGGED']);
+	
 	G::SendTemporalMessage('ID_CHANGES_SAVED', 'info', 'labels');
 	G::header('location: myInfo');
 }

@@ -167,7 +167,7 @@ class UsersProperties extends BaseUsersProperties {
       }
     }
     if (PPP_SPECIAL_CHARACTER_REQUIRED == 1) {
-      if (preg_match_all('/[ºª\\!|"@·#$~%€&¬\/()=\'?¡¿*+\-_.:,;]/', $sPassword, $aMatch, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE) == 0) {
+      if (preg_match_all('/[ï¿½ï¿½\\!|"@ï¿½#$~%ï¿½&ï¿½\/()=\'?ï¿½ï¿½*+\-_.:,;]/', $sPassword, $aMatch, PREG_PATTERN_ORDER | PREG_OFFSET_CAPTURE) == 0) {
         $aErrors[] = 'ID_PPP_SPECIAL_CHARACTER_REQUIRED';
       }
     }
@@ -209,6 +209,49 @@ class UsersProperties extends BaseUsersProperties {
       }
     }
     //end plugin
+    
+    #New feature by Neyek <aortiz.erik@gmail.com, erik@colosa.com>
+    #get user preferences for default redirect
+    #verifying if it has any preferences on the configurations table
+	G::loadClass('configuration');
+	$oConf = new Configurations; 
+	$oConf->loadConfig($x, 'USER_PREFERENCES','','',$_SESSION['USER_LOGGED'],'');
+	
+	//echo $RBAC->aUserInfo['PROCESSMAKER']['ROLE']['ROL_CODE'];
+	//G::pr($oConf->aConfig); die;
+	
+	if( sizeof($oConf->aConfig) > 0){ #this user has a configuration record
+		
+		switch($oConf->aConfig['DEFAULT_MENU']){
+			case 'PM_USERS':	
+				if ($RBAC->userCanAccess('PM_USERS') == 1) {
+			    	return '/sys' .  SYS_SYS . '/' . $sLanguage . '/' . SYS_SKIN . '/' . 'users/users_List';
+			    } 
+			break;
+			case 'PM_CASES':	
+				if ($RBAC->userCanAccess('PM_CASES') == 1) {
+			    	return '/sys' .  SYS_SYS . '/' . $sLanguage . '/' . SYS_SKIN . '/' . 'cases/cases_List';
+			    } 
+			break;
+			case 'PM_FACTORY':	
+				if ($RBAC->userCanAccess('PM_FACTORY') == 1) {
+			    	return '/sys' .  SYS_SYS . '/' . $sLanguage . '/' . SYS_SKIN . '/' . 'processes/processes_List';
+			    } 
+			break;
+			case 'PM_DASHBOARD':	
+				if ($RBAC->userCanAccess('PM_DASHBOARD') == 1) {
+			    	return '/sys' .  SYS_SYS . '/' . $sLanguage . '/' . SYS_SKIN . '/' . 'dashboard/dashboard';
+			    } 
+			break;
+			case 'PM_SETUP':	
+				if ($RBAC->userCanAccess('PM_SETUP') == 1) {
+			    	return '/sys' .  SYS_SYS . '/' . $sLanguage . '/' . SYS_SKIN . '/' . 'setup/emails';
+			    } 
+			break;
+		}
+	}
+	
+    
     if ($RBAC->userCanAccess('PM_FACTORY') == 1) {
       return '/sys' .  SYS_SYS . '/' . $sLanguage . '/' . SYS_SKIN . '/' . 'processes/processes_List';
     }

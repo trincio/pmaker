@@ -1215,111 +1215,81 @@ class G
 
   function getformatedDate($date, $format='yyyy-mm-dd', $lang='')
   {
-    /********************************************************************************************************
-    * if the year is 2008 and the format is yy  then -> 08
-  * if the year is 2008 and the format is yyyy  then -> 2008
-  *
-  * if the month is 05 and the format is mm  then -> 05
-  * if the month is 05 and the format is m and the month is less than 10 then -> 5 else digit normal
-  * if the month is 05 and the format is MM or M then -> May
-  *
-  * if the day is 5 and the format is dd  then -> 05
-  * if the day is 5 and the format is d and the day is less than 10 then -> 5 else digit normal
-  * if the day is 5 and the format is DD or D then -> five
-  *********************************************************************************************************/
+	  /********************************************************************************************************
+	  * if the year is 2008 and the format is yy  then -> 08
+	  * if the year is 2008 and the format is yyyy  then -> 2008
+	  *
+	  * if the month is 05 and the format is mm  then -> 05
+	  * if the month is 05 and the format is m and the month is less than 10 then -> 5 else digit normal
+	  * if the month is 05 and the format is MM or M then -> May
+	  *
+	  * if the day is 5 and the format is dd  then -> 05
+	  * if the day is 5 and the format is d and the day is less than 10 then -> 5 else digit normal
+	  * if the day is 5 and the format is DD or D then -> five
+	  *********************************************************************************************************/
+	
+	  //scape the literal
+	  switch($lang)
+	  {
+	      case 'es':
+	       $format = str_replace(' de ', '[of]', $format);
+	    break;
+	  }
+	
+	  //first we must formatted the string
+	  $format = str_replace('yyyy', '{YEAR}', $format);
+	  $format = str_replace('yy', '{year}', $format);
+	
+	  $format = str_replace('mm', '{YONTH}', $format);
+	  $format = str_replace('m', '{month}', $format);
+	  $format = str_replace('M', '{XONTH}', $format);
+	
+	  $format = str_replace('dd', '{DAY}', $format);
+	  $format = str_replace('d', '{day}', $format);
 
-    //scape the literal
-  switch($lang)
-  {
-      case 'es':
-       $format = str_replace(' de ', '[of]', $format);
-    break;
-  }
+	  if ($lang==='') $lang=defined(SYS_LANG)?SYS_LANG:'en';
 
-  //first we must formatted the string
-    $format = str_replace('yyyy', '{YEAR}', $format);
-  $format = str_replace('yy', '{year}', $format);
+      $aux  = explode (' ', $date);  //para dividir la fecha del dia
+      $date = explode ('-', isset ( $aux[0] ) ? $aux[0] : '00-00-00' );   //para obtener los dias, el mes, y el año.
+      $time = explode (':', isset ( $aux[1] ) ? $aux[1] : '00:00:00' );   //para obtener las horas, minutos, segundos.
 
-    $format = str_replace('mm', '{YONTH}', $format);
-  $format = str_replace('m', '{month}', $format);
-  $format = str_replace('M', '{XONTH}', $format);
+      $year = (int)((isset($date[0]))?$date[0]:'0'); //year
+      $month  = (int)((isset($date[1]))?$date[1]:'0'); //month
+      $day  = (int)((isset($date[2]))?$date[2]:'0'); //day
 
-    $format = str_replace('dd', '{DAY}', $format);
-  $format = str_replace('d', '{day}', $format);
+      $time[0]=(int)((isset($time[0]))?$time[0]:'0'); //hour
+      $time[1]=(int)((isset($time[1]))?$time[1]:'0'); //minute
+      $time[2]=(int)((isset($time[2]))?$time[2]:'0'); //second
 
+ 	  $MONTHS = Array();
+	  for($i=1; $i<=12; $i++){
+	      $MONTHS[$i] =   G::LoadTranslation("ID_MONTH_$i", $lang);
+	  }
 
+      $d = (int)$day;
+  	  $dd = G::complete_field($day, 2, 1);
 
-    if ($lang==='') $lang=defined(SYS_LANG)?SYS_LANG:'en';
+      //missing D
 
-    $aux  = explode (' ', $date);  //para dividir la fecha del dia
-    $date = explode ('-', isset ( $aux[0] ) ? $aux[0] : '00-00-00' );   //para obtener los dias, el mes, y el año.
-    $time = explode (':', isset ( $aux[1] ) ? $aux[1] : '00:00:00' );   //para obtener las horas, minutos, segundos.
-
-    $year = (int)((isset($date[0]))?$date[0]:'0'); //year
-    $month  = (int)((isset($date[1]))?$date[1]:'0'); //month
-    $day  = (int)((isset($date[2]))?$date[2]:'0'); //day
-
-    $time[0]=(int)((isset($time[0]))?$time[0]:'0'); //hour
-    $time[1]=(int)((isset($time[1]))?$time[1]:'0'); //minute
-    $time[2]=(int)((isset($time[2]))?$time[2]:'0'); //second
-
-  /*witch($lang)
-  {
-    case 'es':
-      // Spanish months
-      $MONTHS = array ("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
-      // Spanish days
-        $WEEKDAYS['es'] = array("Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado");
-      $number='latin';
-    break;
-    case 'fa':
-      // mouths in persian calendar
-      $MONTHS = array('فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر','آبان','آذر','دی','بهمن','اسفند');
-      // Persian days
-        $WEEKDAYS['fa'] = array('یک شنبه','دوشنبه','سه شنبه','چهارشنبه','پنج شنبه','جمعه','شنبه');
-      $number='persian';
-
-    break;
-
-    default:
-      case 'en':
-      // English months
-      $MONTHS = array("January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December");
-      // English days
-        $WEEKDAYS['en'] = array("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday");
-      $number='latin';
-    break;
-  }*/
-    $MONTHS = Array();
-  for($i=1; $i<=12; $i++){
-      $MONTHS[$i] =   G::LoadTranslation("ID_MONTH_$i", $lang);
-  }
-
-    $d = (int)$day;
-  $dd = G::complete_field($day, 2, 1);
-
-  //missing D
-
-    $M = $MONTHS[$month];
-  $m = (int)$month;
-  $mm = G::complete_field($month, 2, 1);
+      $M = $MONTHS[$month];
+      $m = (int)$month;
+      $mm = G::complete_field($month, 2, 1);
 
 
-    $yy = substr($year,strlen($year)-2,2);
-  $yyyy = $year;
+      $yy = substr($year,strlen($year)-2,2);
+      $yyyy = $year;
 
-    $names=array('{day}', '{DAY}', '{month}', '{YONTH}', '{XONTH}', '{year}', '{YEAR}');
-    $values=array($d, $dd, $m, $mm, $M, $yy, $yyyy);
+      $names=array('{day}', '{DAY}', '{month}', '{YONTH}', '{XONTH}', '{year}', '{YEAR}');
+      $values=array($d, $dd, $m, $mm, $M, $yy, $yyyy);
 
-    $ret = str_replace( $names, $values, $format );
+      $ret = str_replace( $names, $values, $format );
 
-  //recovering the original literal
-  switch($lang)
-  {
-      case 'es':
-       $ret = str_replace('[of]', ' de ', $ret);
-    break;
-  }
+      //recovering the original literal
+      switch($lang){
+         case 'es':
+            $ret = str_replace('[of]', ' de ', $ret);
+         break;
+      }
 
     return $ret;
   }

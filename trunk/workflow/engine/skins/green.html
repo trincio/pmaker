@@ -15,7 +15,16 @@
      <td width="50%" height="16" align="right" valign="top">      
       <!--<div align="right" class="logout"><small>{php}if ((int)$_SESSION['USER_LOGGED'] != 0) {{/php}<a href="../users/myInfo">{$user}</a> | <a href="../login/login" class="tableOption">{php}echo G::LoadTranslation('ID_LOGOUT');{/php}</a>{php}}{/php}</small> &nbsp; &nbsp;</div>
       -->
-      <div align="right" class="logout"><small>{php}if ((int)$_SESSION['USER_LOGGED'] != 0) {{/php}<a href="../users/myInfo">{$user}</a> | <a href="{$linklogout}" class="tableOption">{php}echo G::LoadTranslation('ID_LOGOUT');{/php}</a>{php}}{/php}</small> &nbsp; &nbsp;</div>      
+      <div align="right" class="logout">
+      	<small>
+      	  {php}if ((int)$_SESSION['USER_LOGGED'] != 0) {{/php}
+      	  <!-- <a href="../users/myInfo">{$user}</a> -->
+      	  <label class="textBlue">{php}echo '<b><i>'.$_SESSION['USR_FULLNAME'].'</i></b> '.G::LoadTranslation('ID_LOGGED') .' '.strtoupper(SYS_SYS).' - '.G::getformatedDate(date('Y-m-d'), 'M d, yyyy', SYS_LANG) {/php}</label> |
+      	  <a href="../users/myInfo">{php}echo G::LoadTranslation('ID_OPTIONS');{/php}</a> |
+      	  <a href="{$linklogout}" class="tableOption">{php}echo G::LoadTranslation('ID_LOGOUT');{/php}</a>{php}}
+      	  {/php}
+      	</small> &nbsp; &nbsp;
+      </div>      
      </td>
     </tr>
     <tr>
