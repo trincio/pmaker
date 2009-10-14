@@ -1634,7 +1634,7 @@ function clearTemporalMessage(){
 		try{
 				document.getElementById('temporalMessage').innerHTML = '';
 		}catch(e){}}, 
-		2
+		3
 	);
 }
 

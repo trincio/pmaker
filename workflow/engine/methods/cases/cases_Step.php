@@ -208,6 +208,10 @@
       	  break;
       	}
       }
+      
+	  if( isset($has_submit_button) && $has_submit_button == false ){
+	  	G::SendTemporalMessage('ID_DYNAFORM_HASNOSUBMITBTN', 'Warning');
+	  }
       /* end Verification routine */
 
       $G_PUBLISH->AddContent('dynaform', 'xmlform', $_SESSION['PROCESS']. '/' . $_GET['UID'], '', $Fields['APP_DATA'], 'cases_SaveData?UID=' . $_GET['UID'], '', (strtolower($oStep->getStepMode()) != 'edit' ? strtolower($oStep->getStepMode()) : ''));
@@ -706,8 +710,7 @@
   G::RenderPage('publish');
 
   if( isset($has_submit_button) && $has_submit_button == false ){
-  	$msg = G::LoadTranslation('ID_DYNAFORM_HASNOSUBMITBTN');
-    G::evalJScript('new leimnud.module.app.alert().make({label: "'.$msg.'"});');
+  	G::evalJScript("clearTemporalMessage()");
   }
 
   if( $_SESSION['TRIGGER_DEBUG']['ISSET'] ){
