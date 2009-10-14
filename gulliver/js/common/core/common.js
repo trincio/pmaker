@@ -17,7 +17,7 @@
   }
   /* ajax_function
    * Envia una solicitud GET a ajax_server con la variables "function" y las definidas en parameters.
-   * @author       David Callizaya <calidavidx21@hotmail.com>
+   * @author       Julio Cesar Laura Avendaño <juliocesar@colosa.com, julces2000@gmail.com>
    * @version 1.0
    * @package ajax
    * @param string ajax_server  url de la pagina servidor
@@ -55,7 +55,7 @@
   }
   /* ajax_message
    * Envia una solicitud GET a ajax_server con la variables "function" y las definidas en parameters.
-   * @author       David Callizaya <calidavidx21@hotmail.com>
+   * @author       Julio Cesar Laura Avendaño <juliocesar@colosa.com, julces2000@gmail.com>
    * @version 1.0
    * @package ajax
    * @param string ajax_server  url de la pagina servidor
@@ -93,7 +93,7 @@
   /* ajax_post
    * Envia una solicitud GET/POST a ajax_server con los parametros definidos
    * o los campos de un formulario
-   * @author       David Callizaya <calidavidx21@hotmail.com>
+   * @author       Julio Cesar Laura Avendaño <juliocesar@colosa.com, julces2000@gmail.com>
    * @version 1.0
    * @package ajax
    * @param string ajax_server  url de la pagina servidor
@@ -362,7 +362,7 @@ function diff_date(fecha1, fecha2)
 }
 
 /*
- * author <calidavidx21@hotmail.com>
+ * author <julces2000@gmail.com>
  */
 function getField( fieldName , formId )
 {
@@ -391,7 +391,7 @@ function getField( fieldName , formId )
 }
 
 /*
- * author <calidavidx21@hotmail.com>
+ * author <julces2000@gmail.com>
  */
 function getElementByName( fieldName )
 {
@@ -1220,7 +1220,11 @@ function dynaformSetFocus(){
 	for(i in inputs) {
 		type = inputs[i].type;
 		if(type == "text" || type == "radio" || type == "checkbox" || type == "file" || type == "password"){
-			inputs[i].focus();
+			try {
+	      inputs[i].focus();
+	    } catch (e) {
+	      //nothing
+	    }
 			return false;
 		}
 	}
@@ -1530,8 +1534,8 @@ function highlightRow(o, color){
 /**
  * left and right delete the blank characteres (String prototype)
  *
- * Example: 
- *	var str = String("  some_string_with_spaces "); 
+ * Example:
+ *	var str = String("  some_string_with_spaces ");
  *  str.trim(); //clean the blank characteres
  *
  * @Author Erik Amaru Ortiz <erik@colosa.com, aortiz.erik@gmail.com>
@@ -1550,7 +1554,7 @@ function clearCalendar(id){
 
 function lockCalendar(){
 	G_CALENDAR_MEM_OFFSET = 'lock';
-	
+
 	//G_CALENDAR_CURRENT_OBJ.hide();
 }
 
@@ -1561,36 +1565,36 @@ function enableCalendar(){
 function parseDateFromMask (inputArray, mask){
 	/* inputArray is an associative array with properties
 	year, month, day, hour, minute 	*/
-	
+
 	/* format mask
 	 * Y 	-> 2009
 	 * y	-> 09
 	 * m	-> 02
 	 * d	-> 01
-	 * 
+	 *
 	 * h	-> 12
 	 * i	-> 59
-	 * 
+	 *
 	 * d/m/y -> 01/02/09
 	 * d/m/Y -> 01/02/2009
 	 * Y-m-d -> 2009-02-01
-	 * 
+	 *
 	 * Y-m-d h:m -> 2009-02-01 12:59
-	 * 
+	 *
 	 */
-	
+
 	result = mask;
 	result = result.replace("Y", inputArray.year);
-	
+
 	year = new String(inputArray.year);
 	result = result.replace("y", year.substr(2,3));
 	result = result.replace("m", inputArray.month);
 	result = result.replace("d", inputArray.day);
 	result = result.replace("h", inputArray.hour);
 	result = result.replace("i", inputArray.minute);
-	
+
 	return result;
-	
+
 }
 
 Array.prototype.walk = function( funcionaplicada ) {
@@ -1615,7 +1619,7 @@ Array.prototype.drop = function(x) {
 Array.prototype.deleteByValue = function(val) {
     var eindex = this.find(val);
     this.drop(eindex);
-} 
+}
 
 /**
  * schedule a action js callback
@@ -1633,7 +1637,7 @@ function clearTemporalMessage(){
 	Timer(function(){
 		try{
 				document.getElementById('temporalMessage').innerHTML = '';
-		}catch(e){}}, 
+		}catch(e){}},
 		3
 	);
 }
