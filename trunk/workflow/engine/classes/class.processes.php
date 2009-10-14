@@ -1514,6 +1514,8 @@ class Processes {
         G::verifyPath($path, true);
     }
     $proTitle = (substr(G::inflect($data->process['PRO_TITLE']), 0, 30));
+    $proTitle = ereg_replace("[^A-Za-z0-9_]", "", $proTitle);
+    
 
     $index = '';
 
