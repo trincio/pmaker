@@ -172,7 +172,7 @@ class headPublisher
       $this->addScriptFile( '/jscore/' . $jslabel , 1 );
     }
     if ($this->disableHeaderScripts) return '';
-  //$this->addScriptFile("/js/widgets/jscalendar/lang/calendar-".SYS_LANG.".js");
+    $this->addScriptFile("/js/widgets/jscalendar/lang/calendar-".SYS_LANG.".js");
 	
 	$this->addScriptFile("/js/widgets/calendar/dhtmlSuite-common.js");
 	$this->addScriptFile("/js/widgets/calendar/dhtmlSuite-calendar.js");
