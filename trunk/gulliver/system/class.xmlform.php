@@ -2450,7 +2450,9 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
         $res = date ( 'Y-m-d', mktime ( 0, 0, 0, date ( 'm' ) + $part1, date ( 'd' ), date ( 'Y' ) ) );
         break;
       case 'y' :
-        $res = date ( 'Y-m-d', mktime ( 0, 0, 0, date ( 'm' ), date ( 'd' ), date ( 'Y' ) + $part1) );
+        //$res = date ( 'Y-m-d', mktime ( 0, 0, 0, date ( 'm' ), date ( 'd' ), date ( 'Y' ) + $part1) );
+        //hook
+        $res = (intVal(date ( 'Y' )) + $part1) . '-' . date ( 'm' ) . '-' . date ( 'd' );
         break;
     }
 
