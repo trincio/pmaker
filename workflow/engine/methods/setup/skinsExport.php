@@ -120,7 +120,7 @@ switch ($RBAC->userCanAccess('PM_SETUP'))
   //get the current process
   if (file_exists(PATH_METHODS . 'login/version-pmos.php'))
   {
-    include('version-pmos.php');
+    include(PATH_METHODS . 'login/version-pmos.php');
   }
   else {
     define('PM_VERSION', '1.2.2740');

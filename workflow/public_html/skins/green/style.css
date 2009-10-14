@@ -270,6 +270,8 @@ TD.mainMenu {
 	height: 25px;
 	left: 46px;
 	top: 72px;
+	direction: ltr;
+	text-align: left;
 }
 
 A.mainMenu {
