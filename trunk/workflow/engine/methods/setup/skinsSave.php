@@ -63,7 +63,7 @@ switch ($RBAC->userCanAccess('PM_SETUP'))
     define('PM_VERSION', '1.2.2740');
   } 
 
-  $id   = $_POST['form']['NAME'];
+  $id   = strip_tags ( str_replace ( ' ', '_', trim ($_POST['form']['NAME']) ) );
   $desc = $_POST['form']['DESCRIPTION'];
   
   $fileObj = PATH_SKINS . $id . '.cnf';
