@@ -38,9 +38,12 @@ if ((($sStatus == 'DRAFT') || ($sStatus == 'TO_DO')) && ($_SESSION['TASK'] != -1
 else {
   $G_TMP_MENU->AddIdOption('INFO'  , G::LoadTranslation('ID_INFORMATION'), 'javascript:showInformation();', 'absolute');
 }
+require_once 'classes/model/Process.php';
+$oProcess = new Process();
+$aProcess = $oProcess->Load($_SESSION['PROCESS']);
 
-if( isset($_SESSION['TRIGGER_DEBUG']['ISSET']) && !isset($_GET['breakpoint'])){
+if( isset($_SESSION['TRIGGER_DEBUG']['ISSET']) && !isset($_GET['breakpoint']) && $aProcess['PRO_DEBUG']){
     $G_TMP_MENU->AddIdOption('DEBUG'  , G::LoadTranslation('ID_DEBUG'), 'javascript:showdebug();', 'absolute');
 }
-  
+
 ?>

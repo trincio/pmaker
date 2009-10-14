@@ -40,7 +40,7 @@ if(!defined('DB_SYSTEM_INFORMATION')) define('DB_SYSTEM_INFORMATION', 1);
 
       $freeOfChargeText = "";
       if ( !defined ( 'SKIP_FREE_OF_CHARGE_TEXT' ) )
-        $freeOfChargeText = "Supplied free of charge with no support, no certification, no maintenance, no warranty <br/>and no indemnity by Colosa or its Certified Partners.";
+        $freeOfChargeText = "Supplied free of charge with no support, certification, warranty, <br>maintenance nor indemnity by Colosa and its Certified Partners.";
       $footer .= "<br />Copyright &copy; 2003-" . date('Y') . " <a href=\"http://www.colosa.com\" alt=\"Colosa, Inc.\" target=\"_blank\">Colosa, Inc.</a> All rights reserved.<br /> $freeOfChargeText "
               .  "<br><br/><a href=\"http://www.processmaker.com\" alt=\"Powered by ProcessMaker - Open Source Workflow & Business Process Management (BPM) Management Software\" title=\"Powered by ProcessMaker\" target=\"_blank\"><img src=\"/images/PowerdbyProcessMaker.png\" border=\"0\" /></a>";
     }
@@ -89,4 +89,3 @@ if(!defined('DB_SYSTEM_INFORMATION')) define('DB_SYSTEM_INFORMATION', 1);
 	  $smarty->assign('logo_company', $sCompanyLogo );
     $smarty->display('rtl.html');
   }
-
