@@ -2,7 +2,7 @@ msgid ""
 msgstr "" 
 "Project-Id-Version: PM 4.0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-10-12 11:43+0100 \n"
+"PO-Revision-Date: 2009-10-15 09:28+0100 \n"
 "Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
 "Language-Team: Colosa Developers Team <developers@colosa.com>\n"
 "MIME-Version: 1.0\n"
@@ -2936,10 +2936,34 @@ msgid "Alert Message"
 msgstr "Alert Message"
 
 # TRANSLATION
+# LABEL/ID_MSG_ERROR_USR_LASTNAME
+#: LABEL/ID_MSG_ERROR_USR_LASTNAME
+msgid "Last name is required"
+msgstr "Last name is required"
+
+# TRANSLATION
+# LABEL/ID_MSG_ERROR_USR_FIRSTNAME
+#: LABEL/ID_MSG_ERROR_USR_FIRSTNAME
+msgid "First name is required"
+msgstr "First name is required"
+
+# TRANSLATION
 # LABEL/ID_STARTED_CASES
 #: LABEL/ID_STARTED_CASES
 msgid "My Started Cases"
 msgstr "My Started Cases"
+
+# TRANSLATION
+# LABEL/ID_LOGGED
+#: LABEL/ID_LOGGED
+msgid "Logged on"
+msgstr "Logged on"
+
+# TRANSLATION
+# LABEL/ID_OPTIONS
+#: LABEL/ID_OPTIONS
+msgid "Options"
+msgstr "Options"
 
 # TRANSLATION
 # LABEL/ID_SKINS
@@ -3082,8 +3106,8 @@ msgstr "The type of field 'TEXT' can't be primary key"
 # TRANSLATION
 # LABEL/ID_DYNAFORM_HASNOSUBMITBTN
 #: LABEL/ID_DYNAFORM_HASNOSUBMITBTN
-msgid "Warning: This DynaForm does not include a 'Submit' or 'Button' field so save any entered data."
-msgstr "Warning: This DynaForm does not include a 'Submit' or 'Button' field so save any entered data."
+msgid "This DynaForm does not include a 'Submit' or 'Button' field to save any entered data."
+msgstr "This DynaForm does not include a 'Submit' or 'Button' field to save any entered data."
 
 # TRANSLATION
 # LABEL/ID_UPLOAD_VALID_CSV_FILE
@@ -9337,12 +9361,6 @@ msgstr "Description"
 msgid "Install Steps"
 msgstr "Install Steps"
 
-# processes/objectpmView.xml?link
-# processes/objectpmView.xml
-#: link - link
-msgid "link"
-msgstr "link"
-
 # processes/processes_Import.xml?TITLE1
 # processes/processes_Import.xml
 #: title - TITLE1
@@ -12481,6 +12499,24 @@ msgstr "DN"
 msgid "[users/users_AuthSource.xml?btnSave] Save"
 msgstr "Save"
 
+# users/users_New.xml?TITLE3
+# users/users_New.xml
+#: title - TITLE3
+msgid "Profile"
+msgstr "Profile"
+
+# users/users_New.xml?USR_PHOTO
+# users/users_New.xml
+#: file - USR_PHOTO
+msgid "Photo"
+msgstr "Photo"
+
+# users/users_New.xml?USR_RESUME
+# users/users_New.xml
+#: file - USR_RESUME
+msgid "[users/users_New.xml?USR_RESUME] Resume"
+msgstr "Resume"
+
 # users/users_New.xml?TITLE1
 # users/users_New.xml
 #: title - TITLE1
@@ -12613,29 +12649,29 @@ msgstr "New Password "
 msgid "Confirm Password "
 msgstr "Confirm Password "
 
-# users/users_New.xml?TITLE3
-# users/users_New.xml
-#: title - TITLE3
-msgid "Additional Information"
-msgstr "Additional Information"
-
-# users/users_New.xml?USR_PHOTO
-# users/users_New.xml
-#: file - USR_PHOTO
-msgid "Photo"
-msgstr "Photo"
-
-# users/users_New.xml?USR_RESUME
-# users/users_New.xml
-#: file - USR_RESUME
-msgid "[users/users_New.xml?USR_RESUME] Resume"
-msgstr "Resume"
-
 # users/users_New.xml?SUBMIT
 # users/users_New.xml
 #: submit - SUBMIT
 msgid "[users/users_New.xml?SUBMIT] Save"
 msgstr "Save"
+
+# users/myInfoView.xml?TITLEADD
+# users/myInfoView.xml
+#: title - TITLEADD
+msgid "[users/myInfoView.xml?TITLEADD] Profile"
+msgstr "Profile"
+
+# users/myInfoView.xml?USR_PHOTO
+# users/myInfoView.xml
+#: image - USR_PHOTO
+msgid "[users/myInfoView.xml?USR_PHOTO] Photo"
+msgstr "Photo"
+
+# users/myInfoView.xml?USR_RESUME
+# users/myInfoView.xml
+#: link - USR_RESUME
+msgid "[users/myInfoView.xml?USR_RESUME] Resume"
+msgstr "Resume"
 
 # users/myInfoView.xml?TITLE9689
 # users/myInfoView.xml
@@ -12769,23 +12805,23 @@ msgstr "New Password "
 msgid "[users/myInfoView.xml?USR_CNF_PASS] Confirm Password "
 msgstr "Confirm Password "
 
-# users/myInfoView.xml?TITLEADD
+# users/myInfoView.xml?TITLEPREF
 # users/myInfoView.xml
-#: title - TITLEADD
-msgid "[users/myInfoView.xml?TITLEADD] Additional Information"
-msgstr "Additional Information"
+#: title - TITLEPREF
+msgid "Preferences"
+msgstr "Preferences"
 
-# users/myInfoView.xml?USR_PHOTO
+# users/myInfoView.xml?PREF_DEFAULT_LANG
 # users/myInfoView.xml
-#: image - USR_PHOTO
-msgid "[users/myInfoView.xml?USR_PHOTO] Photo"
-msgstr "Photo"
+#: dropdown - PREF_DEFAULT_LANG
+msgid "Default languaje"
+msgstr "Default languaje"
 
-# users/myInfoView.xml?USR_RESUME
+# users/myInfoView.xml?PREF_DEFAULT_MENUSELECTED
 # users/myInfoView.xml
-#: link - USR_RESUME
-msgid "[users/myInfoView.xml?USR_RESUME] Resume"
-msgstr "Resume"
+#: dropdown - PREF_DEFAULT_MENUSELECTED
+msgid "Default menu option"
+msgstr "Default menu option"
 
 # users/myInfoView.xml?SUBMIT3
 # users/myInfoView.xml
@@ -12937,6 +12973,24 @@ msgstr "View Users for \"Adhoc\""
 msgid "[users/users_ShortList.xml?LABEL] Group or User"
 msgstr "Group or User"
 
+# users/users_Edit.xml?TITLE3
+# users/users_Edit.xml
+#: title - TITLE3
+msgid "[users/users_Edit.xml?TITLE3] Profile"
+msgstr "Profile"
+
+# users/users_Edit.xml?USR_PHOTO
+# users/users_Edit.xml
+#: file - USR_PHOTO
+msgid "[users/users_Edit.xml?USR_PHOTO] Photo"
+msgstr "Photo"
+
+# users/users_Edit.xml?USR_RESUME
+# users/users_Edit.xml
+#: file - USR_RESUME
+msgid "[users/users_Edit.xml?USR_RESUME] Resume"
+msgstr "Resume"
+
 # users/users_Edit.xml?TITLE1
 # users/users_Edit.xml
 #: title - TITLE1
@@ -13068,24 +13122,6 @@ msgstr "New Password "
 #: password - USR_CNF_PASS
 msgid "[users/users_Edit.xml?USR_CNF_PASS] Confirm Password "
 msgstr "Confirm Password "
-
-# users/users_Edit.xml?TITLE3
-# users/users_Edit.xml
-#: title - TITLE3
-msgid "[users/users_Edit.xml?TITLE3] Additional Information"
-msgstr "Additional Information"
-
-# users/users_Edit.xml?USR_PHOTO
-# users/users_Edit.xml
-#: file - USR_PHOTO
-msgid "[users/users_Edit.xml?USR_PHOTO] Photo"
-msgstr "Photo"
-
-# users/users_Edit.xml?USR_RESUME
-# users/users_Edit.xml
-#: file - USR_RESUME
-msgid "[users/users_Edit.xml?USR_RESUME] Resume"
-msgstr "Resume"
 
 # users/users_Edit.xml?SUBMIT
 # users/users_Edit.xml
@@ -13228,7 +13264,7 @@ msgstr "Confirm Password "
 # users/users_EditAdmin.xml?TITLE3
 # users/users_EditAdmin.xml
 #: title - TITLE3
-msgid "[users/users_EditAdmin.xml?TITLE3] Additional Information"
+msgid "Additional Information"
 msgstr "Additional Information"
 
 # users/users_EditAdmin.xml?USR_PHOTO
@@ -13248,6 +13284,24 @@ msgstr "Resume"
 #: button - SUBMIT
 msgid "[users/users_EditAdmin.xml?SUBMIT] Save"
 msgstr "Save"
+
+# users/myInfo2.xml?TITLEADD
+# users/myInfo2.xml
+#: title - TITLEADD
+msgid "[users/myInfo2.xml?TITLEADD] Profile"
+msgstr "Profile"
+
+# users/myInfo2.xml?USR_PHOTO
+# users/myInfo2.xml
+#: image - USR_PHOTO
+msgid "[users/myInfo2.xml?USR_PHOTO] Photo"
+msgstr "Photo"
+
+# users/myInfo2.xml?USR_RESUME
+# users/myInfo2.xml
+#: link - USR_RESUME
+msgid "[users/myInfo2.xml?USR_RESUME] Resume"
+msgstr "Resume"
 
 # users/myInfo2.xml?TITLE9689
 # users/myInfo2.xml
@@ -13381,23 +13435,23 @@ msgstr "New Password "
 msgid "[users/myInfo2.xml?USR_CNF_PASS] Confirm Password "
 msgstr "Confirm Password "
 
-# users/myInfo2.xml?TITLEADD
+# users/myInfo2.xml?TITLEPREF
 # users/myInfo2.xml
-#: title - TITLEADD
-msgid "[users/myInfo2.xml?TITLEADD] Additional Information"
-msgstr "Additional Information"
+#: title - TITLEPREF
+msgid "[users/myInfo2.xml?TITLEPREF] Preferences"
+msgstr "Preferences"
 
-# users/myInfo2.xml?USR_PHOTO
+# users/myInfo2.xml?PREF_DEFAULT_LANG
 # users/myInfo2.xml
-#: image - USR_PHOTO
-msgid "[users/myInfo2.xml?USR_PHOTO] Photo"
-msgstr "Photo"
+#: dropdown - PREF_DEFAULT_LANG
+msgid "[users/myInfo2.xml?PREF_DEFAULT_LANG] Default languaje"
+msgstr "Default languaje"
 
-# users/myInfo2.xml?USR_RESUME
+# users/myInfo2.xml?PREF_DEFAULT_MENUSELECTED
 # users/myInfo2.xml
-#: link - USR_RESUME
-msgid "[users/myInfo2.xml?USR_RESUME] Resume"
-msgstr "Resume"
+#: dropdown - PREF_DEFAULT_MENUSELECTED
+msgid "[users/myInfo2.xml?PREF_DEFAULT_MENUSELECTED] Default menu option"
+msgstr "Default menu option"
 
 # users/myInfo2.xml?SUBMIT3
 # users/myInfo2.xml
@@ -13476,6 +13530,24 @@ msgstr "Any user"
 #: button - CONTINUE
 msgid "[users/users_ReassignSelectType.xml?CONTINUE] Continue"
 msgstr "Continue"
+
+# users/myInfo.xml?TITLEADD
+# users/myInfo.xml
+#: title - TITLEADD
+msgid "[users/myInfo.xml?TITLEADD] Profile"
+msgstr "Profile"
+
+# users/myInfo.xml?USR_PHOTO
+# users/myInfo.xml
+#: file - USR_PHOTO
+msgid "[users/myInfo.xml?USR_PHOTO] Photo"
+msgstr "Photo"
+
+# users/myInfo.xml?USR_RESUME
+# users/myInfo.xml
+#: file - USR_RESUME
+msgid "[users/myInfo.xml?USR_RESUME] Resume"
+msgstr "Resume"
 
 # users/myInfo.xml?TITLE9689
 # users/myInfo.xml
@@ -13609,23 +13681,23 @@ msgstr "New Password "
 msgid "[users/myInfo.xml?USR_CNF_PASS] Confirm Password "
 msgstr "Confirm Password "
 
-# users/myInfo.xml?TITLEADD
+# users/myInfo.xml?TITLEPREF
 # users/myInfo.xml
-#: title - TITLEADD
-msgid "[users/myInfo.xml?TITLEADD] Additional Information"
-msgstr "Additional Information"
+#: title - TITLEPREF
+msgid "[users/myInfo.xml?TITLEPREF] Preferences"
+msgstr "Preferences"
 
-# users/myInfo.xml?USR_PHOTO
+# users/myInfo.xml?PREF_DEFAULT_LANG
 # users/myInfo.xml
-#: file - USR_PHOTO
-msgid "[users/myInfo.xml?USR_PHOTO] Photo"
-msgstr "Photo"
+#: dropdown - PREF_DEFAULT_LANG
+msgid "[users/myInfo.xml?PREF_DEFAULT_LANG] Default languaje"
+msgstr "Default languaje"
 
-# users/myInfo.xml?USR_RESUME
+# users/myInfo.xml?PREF_DEFAULT_MENUSELECTED
 # users/myInfo.xml
-#: file - USR_RESUME
-msgid "[users/myInfo.xml?USR_RESUME] Resume"
-msgstr "Resume"
+#: dropdown - PREF_DEFAULT_MENUSELECTED
+msgid "[users/myInfo.xml?PREF_DEFAULT_MENUSELECTED] Default menu option"
+msgstr "Default menu option"
 
 # users/myInfo.xml?SUBMIT3
 # users/myInfo.xml
@@ -13662,6 +13734,24 @@ msgstr "Completed"
 #: text - CANCELLED
 msgid "[users/users_DeleteAssign.xml?CANCELLED] Cancelled"
 msgstr "Cancelled"
+
+# users/users_View.xml?TITLEADD
+# users/users_View.xml
+#: title - TITLEADD
+msgid "[users/users_View.xml?TITLEADD] Profile"
+msgstr "Profile"
+
+# users/users_View.xml?USR_PHOTO
+# users/users_View.xml
+#: image - USR_PHOTO
+msgid "[users/users_View.xml?USR_PHOTO] Photo"
+msgstr "Photo"
+
+# users/users_View.xml?USR_RESUME
+# users/users_View.xml
+#: link - USR_RESUME
+msgid "[users/users_View.xml?USR_RESUME] Resume"
+msgstr "Resume"
 
 # users/users_View.xml?TITLE9689
 # users/users_View.xml
@@ -13794,24 +13884,6 @@ msgstr "New Password "
 #: password - USR_CNF_PASS
 msgid "[users/users_View.xml?USR_CNF_PASS] Confirm Password "
 msgstr "Confirm Password "
-
-# users/users_View.xml?TITLEADD
-# users/users_View.xml
-#: title - TITLEADD
-msgid "[users/users_View.xml?TITLEADD] Additional Information"
-msgstr "Additional Information"
-
-# users/users_View.xml?USR_PHOTO
-# users/users_View.xml
-#: image - USR_PHOTO
-msgid "[users/users_View.xml?USR_PHOTO] Photo"
-msgstr "Photo"
-
-# users/users_View.xml?USR_RESUME
-# users/users_View.xml
-#: link - USR_RESUME
-msgid "[users/users_View.xml?USR_RESUME] Resume"
-msgstr "Resume"
 
 # users/users_ReassignShowInfo.xml?TITLE
 # users/users_ReassignShowInfo.xml
@@ -17208,12 +17280,6 @@ msgstr "Re-type Password:"
 #: submit - NW_SUB
 msgid "[login/newSite.xml?NW_SUB] Test"
 msgstr "Test"
-
-# login/nologin.xml?subtitle
-# login/nologin.xml
-#: subtitle - subtitle
-msgid "subtitle"
-msgstr "subtitle"
 
 # login/nologin.xml?BSUBMIT
 # login/nologin.xml
