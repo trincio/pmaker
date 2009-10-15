@@ -127,6 +127,13 @@ var G_Grid = function(oForm, sGridName) {
 		var oRow = document.getElementById('firstRow_' + this.sGridName);
 		var aCells = oRow.getElementsByTagName('td');
 		var oNewRow = this.oGrid.insertRow(this.oGrid.rows.length - 1);
+		oNewRow.onmouseover=function(){
+			highlightRow(this, '#D9E8FF');
+		}
+		oNewRow.onmouseout=function(){
+			highlightRow(this, '#fff');
+		}
+		
 		for (i = 0; i < aCells.length; i++) {
 			oNewRow.appendChild(aCells[i].cloneNode(true));
 			if (i == 0) {
