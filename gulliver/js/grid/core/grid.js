@@ -188,7 +188,7 @@ var G_Grid = function(oForm, sGridName) {
 						aObjects = oNewRow.getElementsByTagName('td')[i].getElementsByTagName('div');
 						
 						if (aObjects.length > 0) {
-							alert(aObjects.length);	
+							
 							if (aObjects[0]) {
 								aObjects[0].id = aObjects[0].id.replace(/\[1\]/g, '\[' + (this.oGrid.rows.length - 2) + '\]');
 								aObjects[0].name = aObjects[0].id.replace(/\[1\]/g, '\[' + (this.oGrid.rows.length - 2) + '\]');
