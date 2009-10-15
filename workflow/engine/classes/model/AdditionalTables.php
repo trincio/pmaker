@@ -11,7 +11,7 @@ require_once 'classes/model/om/BaseAdditionalTables.php';
  * You should add additional methods to this class to meet the
  * application requirements.  This class will only be generated as
  * long as it does not already exist in the output directory.
- *
+ * <juliocesar@colosa.com, julces2000@gmail.com>
  * @package    classes.model
  */
 class AdditionalTables extends BaseAdditionalTables {
@@ -58,7 +58,7 @@ class AdditionalTables extends BaseAdditionalTables {
     	throw($oError);
     }
   }
-  
+
 public function loadByName($name) {
   	try {
           $oCriteria = new Criteria('workflow');
@@ -75,15 +75,15 @@ public function loadByName($name) {
           $oCriteria->addSelectColumn(AdditionalTablesPeer::ADD_TAB_PLG_UID);
           $oCriteria->addSelectColumn(AdditionalTablesPeer::DBS_UID);
           $oCriteria->add(AdditionalTablesPeer::ADD_TAB_NAME, $name, Criteria::LIKE);
-          
+
           $oDataset = FieldsPeer::doSelectRS($oCriteria);
           $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-          
+
           $aRows = Array();
           while( $oDataset->next() ){
           	$aRows[] = $oDataset->getRow();
           }
-          
+
           return (sizeof($aRows) > 0)? $aRows: false;
     }
     catch (Exception $oError) {
