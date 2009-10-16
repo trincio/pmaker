@@ -51,10 +51,12 @@
 
  /* Prepare page before to show */
   $oCase = new Cases();
-  if ($RBAC->userCanAccess('PM_ALLCASES') < 0) {
-    $oCase->thisIsTheCurrentUser($_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['USER_LOGGED'], 'SHOW_MESSAGE');
-  }
   $Fields = $oCase->loadCase( $_SESSION['APPLICATION'], $_SESSION['INDEX'] );
+  if ($RBAC->userCanAccess('PM_ALLCASES') < 0) {
+    if (strtoupper($Fields['APP_STATUS']) != 'COMPLETED') {
+      $oCase->thisIsTheCurrentUser($_SESSION['APPLICATION'], $_SESSION['INDEX'], $_SESSION['USER_LOGGED'], 'SHOW_MESSAGE');
+    }
+  }
   if (isset($aRow['APP_TYPE'])) {
     switch ($aRow['APP_TYPE']) {
       case 'PAUSE':
