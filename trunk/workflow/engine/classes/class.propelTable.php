@@ -101,6 +101,8 @@ class propelTable
 
   //Variable for MasterDetail feature
   var $masterdetail='';
+  
+  var $title;
 
   /**
    * Function prepareQuery
@@ -303,18 +305,6 @@ class propelTable
    */
   function renderTitle()
   {
-    //Render Title
-    $thereisnotitle=true;
-    foreach($this->fields as $r => $rval)
-    if ($this->fields[$r]['Type']==='title')
-    {
-      $this->tpl->assign( "title", $this->fields[$r]['Label']);
-      $thereisnotitle=false;
-    }
-    if ($thereisnotitle)
-    {
-      $this->tpl->assign( "title", '  ');
-    }
     //Render headers
     $this->colCount=0;
     $this->shownFields='[';
@@ -489,6 +479,21 @@ class propelTable
    */
   function renderTable( $block = '', $fields = '' )
   {
+  	
+      //Render Title
+    $thereisnotitle=true;
+    foreach($this->fields as $r => $rval)
+    if ($this->fields[$r]['Type']==='title')
+    {
+      $this->title = $this->fields[$r]['Label'];
+      unset($this->fields[$r]);
+      $thereisnotitle=false;
+    }
+    if ($thereisnotitle)
+    {
+      $this->title = '';
+    }
+    
     $oHeadPublisher =& headPublisher::getSingleton();
     $oHeadPublisher->addInstanceModule('leimnud', 'panel');
 
@@ -519,6 +524,8 @@ $time_end = microtime(true);  $time = $time_end - $time_start;
       $this->tpl->assign( 'pagedTable_Id' , $this->id );
       $this->tpl->assign( 'pagedTable_Name' , $this->name );
       $this->tpl->assign( 'pagedTable_Height' , $this->xmlForm->height );
+      $this->tpl->assign( "title", $this->title);
+      
       if (file_exists($this->xmlForm->home . $this->filterForm . '.xml')) {
         $filterForm = new filterForm( $this->filterForm , $this->xmlForm->home );
         if ($this->menu==='') $this->menu= 'gulliver/pagedTable_Options';
