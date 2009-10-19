@@ -923,6 +923,7 @@ var additionalTablesDataDelete = function(sUID, sKeys) {
         }
       }
       $sXml .= '<btnSave type="submit"><' . SYS_LANG . '>' . G::LoadTranslation('ID_SAVE_CHANGES') . '</' . SYS_LANG . '></btnSave>';
+      $sXml .= '<btnBack type="button" onclick="history.back()"><' . SYS_LANG . '>' . G::LoadTranslation('ID_CANCEL') . '</' . SYS_LANG . '></btnBack>';
       $sXml .= '</dynaForm>';
       file_put_contents($sPath . $sUID . 'Edit.xml', $sXml);
     }
