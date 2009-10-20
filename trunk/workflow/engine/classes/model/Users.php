@@ -176,8 +176,11 @@ class Users extends BaseUsers {
 		$aRet['fax'] 		= $aFields['USR_FAX'];
 		$aRet['cellular'] 	= $aFields['USR_CELLULAR'];
 		$aRet['birthday'] 	= $aFields['USR_BIRTHDAY'];
+		$aRet['position']   	= $aFields['USR_POSITION'];
+		$aRet['duedate']   	= $aFields['USR_DUE_DATE'];
 		$aRet['country']   	= $Crow['IC_NAME'];
 		$aRet['city']   	= $Srow['IS_NAME'];
+		
 
 		return $aRet;
 	}
