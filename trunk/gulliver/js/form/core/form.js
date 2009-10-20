@@ -264,6 +264,7 @@
       var keyCode= window.event ? event.keyCode : event.which ;
       me.mask = typeof(me.mask)==='undefined'?'':me.mask;
       if (me.mask !=='' ) {
+      	if((keyCode===118 || keyCode===86) && event.ctrlKey) return false;
         if (event.ctrlKey) return true;
         if (event.altKey) return true;
         if (event.shiftKey) return true;
