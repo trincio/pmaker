@@ -842,10 +842,18 @@ var additionalTablesDataDelete = function(sUID, sKeys) {
 </dynaForm>');
       $sKeys = '';
       $sXml  = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
-      $sXml .= '<dynaForm width="100%" menu="xmlLists/additionalTablesDataOptions">' . "\n";
+      $sXml .= '<dynaForm width="100%" menu="xmlLists/additionalTablesDataOptions">' . "\n".
+			      '<xtitle type="title">
+				     <en><![CDATA[<center><b>Table: '.$aData['ADD_TAB_NAME'].'</b></center>]]></en>
+			       </xtitle>';
+      
       //$sXml .= '<PM_UNIQUE_ID type="private" showInTable="0" />' . "\n";
       foreach ($aData['FIELDS'] as $aField) {
-        $sXml .= '<' . $aField['FLD_NAME'] . ' type="text" colWidth="100" titleAlign="left" align="left">' . "\n";
+      	
+      	$fZise = $aField['FLD_SIZE'] > (1024/sizeof($aData['FIELDS'])) ? $aField['FLD_SIZE']: 1024/sizeof($aData['FIELDS']);
+      	
+      	
+        $sXml .= '<' . $aField['FLD_NAME'] . ' type="text" colWidth="'.$fZise.'px" titleAlign="left" align="left">' . "\n";
         $sXml .= '<' . SYS_LANG . '>' . ($aField['FLD_DESCRIPTION'] != '' ? $aField['FLD_DESCRIPTION'] : $aField['FLD_NAME']) . '</' . SYS_LANG . '>' . "\n";
         $sXml .= '</' . $aField['FLD_NAME'] . '>' . "\n";
         if ($aField['FLD_KEY'] == 1) {

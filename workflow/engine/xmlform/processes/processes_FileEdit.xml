@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dynaForm name="outputdocs/outputdocs_Edit" type="xmlform" width="100%" labelWidth="0">	
-	<pro_uid type="hidden" defaultValue=""/>
-	
+<dynaForm name="processes_FileEdit" type="xmlform" width="100%" enableTemplate="1">
+<pro_uid type="hidden" defaultValue=""/>
+
 	<filename type="hidden" defaultValue=""/>
-	
+
 	<TITLE type="title" enableHTML="1">
 	  <en><![CDATA[<div align="center">Edit @#filename email template</div>]]></en>
 	</TITLE>
-	
-	<fcontent type="html" rows="20" cols="150" defaultValue="">
+
+	<fcontent type="html" height="420" width="100%" defaultValue="">
 	  <en></en>
 	</fcontent>
-	
+
 	<ACCEPT type="button" onclick="saveFile(@@pro_uid, @@filename);">
 	  <en>Save</en>
 	</ACCEPT>
