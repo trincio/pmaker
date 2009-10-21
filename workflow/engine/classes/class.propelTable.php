@@ -398,7 +398,7 @@ class propelTable
 
     if ( array_search( 'renderTable', get_class_methods( $fieldClass ) )!== FALSE ) {
       $htmlField = $this->xmlForm->fields[ $fieldName ]->renderTable( htmlentities($value), $this->xmlForm, true );
-      $this->tpl->assign( "value" , (strlen($value))? str_ireplace(" ","&nbsp;",$htmlField):$htmlField );
+      $this->tpl->assign( "value" , $htmlField );
     }
 
     return $this->fields[$r]['Type'];
