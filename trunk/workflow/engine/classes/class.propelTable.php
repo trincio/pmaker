@@ -396,9 +396,10 @@ class propelTable
     $this->xmlForm->setValues( $result );
     //var_dump($fieldName, $fieldClass );echo '<br /><br />';
 
+
     if ( array_search( 'renderTable', get_class_methods( $fieldClass ) )!== FALSE ) {
-      $htmlField = $this->xmlForm->fields[ $fieldName ]->renderTable( htmlentities($value), $this->xmlForm, true );
-      $this->tpl->assign( "value" , $htmlField );
+      $htmlField = $this->xmlForm->fields[ $fieldName ]->renderTable( $value, $this->xmlForm, true );
+      $this->tpl->assign( "value" , (eregi('^[[:space:]]', $value) && (substr($fieldName,0,3)!="PRO"))? str_ireplace(" ","&nbsp;",$htmlField):$htmlField );
     }
 
     return $this->fields[$r]['Type'];
