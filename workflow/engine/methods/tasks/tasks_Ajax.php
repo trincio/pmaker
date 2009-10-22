@@ -23,45 +23,60 @@
  *
  */
 try {
-  global $RBAC;
-  switch ($RBAC->userCanAccess('PM_FACTORY')) {
-  	case -2:
-  	  G::SendTemporalMessage('ID_USER_HAVENT_RIGHTS_SYSTEM', 'error', 'labels');
-  	  G::header('location: ../login/login');
-  	  die;
-  	break;
-  	case -1:
-  	  G::SendTemporalMessage('ID_USER_HAVENT_RIGHTS_PAGE', 'error', 'labels');
-  	  G::header('location: ../login/login');
-  	  die;
-  	break;
-  }
-  $oJSON = new Services_JSON();
+	global $RBAC;
+	switch ($RBAC->userCanAccess('PM_FACTORY')) {
+		case -2:
+			G::SendTemporalMessage('ID_USER_HAVENT_RIGHTS_SYSTEM', 'error', 'labels');
+			G::header('location: ../login/login');
+			die;
+			break;
+		case -1:
+			G::SendTemporalMessage('ID_USER_HAVENT_RIGHTS_PAGE', 'error', 'labels');
+			G::header('location: ../login/login');
+			die;
+			break;
+	}
+	$oJSON = new Services_JSON();
 
 
-  $aData = get_object_vars($oJSON->decode($_POST['oData']));
-  $aData['TAS_TITLE'] = str_replace('@amp@', '&', $aData['TAS_TITLE']);
-  $aData['TAS_DESCRIPTION'] = str_replace('@amp@', '&', $aData['TAS_DESCRIPTION']);
-  
-  switch ($_POST['function']) {
-  	case 'saveTaskData':
-  	  require_once 'classes/model/Task.php';
-  	  $oTask = new Task();
-  	 // $aData['TAS_DEF_TITLE'] = strip_tags($aData['TAS_DEF_TITLE'],'<p><b><font><strong><u><i>');
-  	       	    	  	  
-  	  if (isset($aData['SEND_EMAIL'])) {
-	      if( $aData['SEND_EMAIL'] == 'TRUE' ) {
-		      $aData['TAS_SEND_LAST_EMAIL'] = 'TRUE';
-	      } else {
-		      $aData['TAS_SEND_LAST_EMAIL'] = 'FALSE';
-	      }
-	    }
-	    else {
-	      $aData['TAS_SEND_LAST_EMAIL'] = 'FALSE';
-	    }
-  	  $oTask->update($aData);
-  	break;
-  }
+	$aData = get_object_vars($oJSON->decode($_POST['oData']));
+	
+	switch ($_POST['function']) {
+		case 'saveTaskData':
+			require_once 'classes/model/Task.php';
+			$oTask = new Task();
+			
+			/*
+			 * Fixed: October 22th, 2009
+			 * 
+			 * NOTE By Neyek <erik@colosa.com>
+			 * This replacing is because the ampersand characters were replaced with JS routines for @amp@
+			 * this solve the problem when the task labels have a character & that cause that the url passed by POST or GET broke
+			 * 
+			 * Involved lines: 52 to 58	
+			 */ 
+			
+			if( isset($aData['TAS_TITLE']) ){
+				$aData['TAS_TITLE'] = str_replace('@amp@', '&', $aData['TAS_TITLE']);	
+			}
+			
+			if( isset($aData['TAS_DESCRIPTION']) ){
+				$aData['TAS_DESCRIPTION'] = str_replace('@amp@', '&', $aData['TAS_DESCRIPTION']);
+			}
+				
+			if (isset($aData['SEND_EMAIL'])) {
+				if( $aData['SEND_EMAIL'] == 'TRUE' ) {
+					$aData['TAS_SEND_LAST_EMAIL'] = 'TRUE';
+				} else {
+					$aData['TAS_SEND_LAST_EMAIL'] = 'FALSE';
+				}
+			}
+			else {
+				$aData['TAS_SEND_LAST_EMAIL'] = 'FALSE';
+			}
+			$oTask->update($aData);
+			break;
+	}
 }
 catch (Exception $oException) {
 	die($oException->getMessage());
