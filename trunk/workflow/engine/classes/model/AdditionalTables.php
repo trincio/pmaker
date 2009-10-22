@@ -908,25 +908,32 @@ var additionalTablesDataDelete = function(sUID, sKeys) {
       $aData = $this->load($sUID, true);
       $sPath = PATH_DYNAFORM . 'xmlLists' . PATH_SEP;
       $sXml  = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
-      $sXml .= '<dynaForm name="xmlLists/' . $sUID . 'Edit" type="xmlform" width="50%" mode="">';
+      $sXml .= '<dynaForm name="xmlLists/' . $sUID . 'Edit" type="xmlform" width="700" mode="">';
       //$sXml .= '<PM_UNIQUE_ID type="hidden" />';
       $sXml .= '<TITLE type="title" label="' . $aData['ADD_TAB_NAME'] . '" />';
       foreach ($aData['FIELDS'] as $aField) {
         switch ($aField['FLD_TYPE']) {
           case 'VARCHAR':
-            $sXml .= '<' . $aField['FLD_NAME'] . ' type="text" maxlength="' . $aField['FLD_SIZE'] . '" validate="Any" required="' . (($aField['FLD_KEY'] == 1) && ($aField['FLD_AUTO_INCREMENT'] == 0) ? '1' : '0') . '" readonly="0" size="' . ((int)($aField['FLD_SIZE'] / 2) <= 60 ? (int)($aField['FLD_SIZE'] / 2) : '60') . '" mode="' . ($bEnableKeys ? 'edit' : ($aField['FLD_KEY'] == 1 ? 'view' : 'edit')) . '"><' . SYS_LANG . '>' . ($aField['FLD_DESCRIPTION'] != '' ? $aField['FLD_DESCRIPTION'] : $aField['FLD_NAME']) . '</' . SYS_LANG . '></' . $aField['FLD_NAME'] . '>';
+          	if( intVal($aField['FLD_SIZE'])  <= 100){
+          		$vCharType = 'text';
+          		$vCharAtt = 'size="' . $aField['FLD_SIZE'] . '" maxlength="' . $aField['FLD_SIZE'] . '" validate="Any"'; 
+          	} else {
+          		$vCharType = 'textarea';
+          		$vCharAtt = 'rows="3" cols="90"';
+          	}
+            $sXml .= '<' . $aField['FLD_NAME'] . ' type="'.$vCharType.'"  '. $vCharAtt .' required="' . (($aField['FLD_KEY'] == 1) && ($aField['FLD_AUTO_INCREMENT'] == 0) ? '1' : '0') . '" readonly="0" mode="' . ($bEnableKeys ? 'edit' : ($aField['FLD_KEY'] == 1 ? 'view' : 'edit')) . '"><' . SYS_LANG . '>' . ($aField['FLD_DESCRIPTION'] != '' ? $aField['FLD_DESCRIPTION'] : $aField['FLD_NAME']) . '</' . SYS_LANG . '></' . $aField['FLD_NAME'] . '>';
           break;
           case 'TEXT':
-            $sXml .= '<' . $aField['FLD_NAME'] . ' type="textarea" required="' . (($aField['FLD_KEY'] == 1) && ($aField['FLD_AUTO_INCREMENT'] == 0) ? '1' : '0') . '" readonly="0" rows="8" cols="45" mode="' . ($bEnableKeys ? 'edit' : ($aField['FLD_KEY'] == 1 ? 'view' : 'edit')) . '"><' . SYS_LANG . '>' . ($aField['FLD_DESCRIPTION'] != '' ? $aField['FLD_DESCRIPTION'] : $aField['FLD_NAME']) . '</' . SYS_LANG . '></' . $aField['FLD_NAME'] . '>';
+            $sXml .= '<' . $aField['FLD_NAME'] . ' type="textarea" required="' . (($aField['FLD_KEY'] == 1) && ($aField['FLD_AUTO_INCREMENT'] == 0) ? '1' : '0') . '" readonly="0" rows="8" cols="90" mode="' . ($bEnableKeys ? 'edit' : ($aField['FLD_KEY'] == 1 ? 'view' : 'edit')) . '"><' . SYS_LANG . '>' . ($aField['FLD_DESCRIPTION'] != '' ? $aField['FLD_DESCRIPTION'] : $aField['FLD_NAME']) . '</' . SYS_LANG . '></' . $aField['FLD_NAME'] . '>';
           break;
           case 'DATE':
             $sXml .= '<' . $aField['FLD_NAME'] . ' type="date" beforedate="-100y" afterdate="100y" mask="Y-m-d" required="' . (($aField['FLD_KEY'] == 1) && ($aField['FLD_AUTO_INCREMENT'] == 0) ? '1' : '0') . '" readonly="0" size="15" mode="' . ($bEnableKeys ? 'edit' : ($aField['FLD_KEY'] == 1 ? 'view' : 'edit')) . '"><' . SYS_LANG . '>' . ($aField['FLD_DESCRIPTION'] != '' ? $aField['FLD_DESCRIPTION'] : $aField['FLD_NAME']) . '</' . SYS_LANG . '></' . $aField['FLD_NAME'] . '>';
           break;
           case 'INT':
-            $sXml .= '<' . $aField['FLD_NAME'] . ' type="text" maxlength="' . $aField['FLD_SIZE'] . '" validate="Int" required="' . (($aField['FLD_KEY'] == 1) && ($aField['FLD_AUTO_INCREMENT'] == 0) ? '1' : '0') . '" readonly="0" size="' . (int)($aField['FLD_SIZE'] / 2) . '" mode="' . ($bEnableKeys ? 'edit' : ($aField['FLD_KEY'] == 1 ? 'view' : 'edit')) . '"><' . SYS_LANG . '>' . ($aField['FLD_DESCRIPTION'] != '' ? $aField['FLD_DESCRIPTION'] : $aField['FLD_NAME']) . '</' . SYS_LANG . '></' . $aField['FLD_NAME'] . '>';
+            $sXml .= '<' . $aField['FLD_NAME'] . ' type="text" maxlength="' . $aField['FLD_SIZE'] . '" validate="Int" required="' . (($aField['FLD_KEY'] == 1) && ($aField['FLD_AUTO_INCREMENT'] == 0) ? '1' : '0') . '" readonly="0" size="' .($aField['FLD_SIZE']<=100?$aField['FLD_SIZE']:100). '" mode="' . ($bEnableKeys ? 'edit' : ($aField['FLD_KEY'] == 1 ? 'view' : 'edit')) . '"><' . SYS_LANG . '>' . ($aField['FLD_DESCRIPTION'] != '' ? $aField['FLD_DESCRIPTION'] : $aField['FLD_NAME']) . '</' . SYS_LANG . '></' . $aField['FLD_NAME'] . '>';
           break;
           case 'FLOAT':
-            $sXml .= '<' . $aField['FLD_NAME'] . ' type="text" maxlength="' . $aField['FLD_SIZE'] . '" validate="Real" required="' . (($aField['FLD_KEY'] == 1) && ($aField['FLD_AUTO_INCREMENT'] == 0) ? '1' : '0') . '" readonly="0" size="' . (int)($aField['FLD_SIZE'] / 2) . '" mode="' . ($bEnableKeys ? 'edit' : ($aField['FLD_KEY'] == 1 ? 'view' : 'edit')) . '"><' . SYS_LANG . '>' . ($aField['FLD_DESCRIPTION'] != '' ? $aField['FLD_DESCRIPTION'] : $aField['FLD_NAME']) . '</' . SYS_LANG . '></' . $aField['FLD_NAME'] . '>';
+            $sXml .= '<' . $aField['FLD_NAME'] . ' type="text" maxlength="' . $aField['FLD_SIZE'] . '" validate="Real" required="' . (($aField['FLD_KEY'] == 1) && ($aField['FLD_AUTO_INCREMENT'] == 0) ? '1' : '0') . '" readonly="0" size="' . ($aField['FLD_SIZE']<=100?$aField['FLD_SIZE']:100) . '" mode="' . ($bEnableKeys ? 'edit' : ($aField['FLD_KEY'] == 1 ? 'view' : 'edit')) . '"><' . SYS_LANG . '>' . ($aField['FLD_DESCRIPTION'] != '' ? $aField['FLD_DESCRIPTION'] : $aField['FLD_NAME']) . '</' . SYS_LANG . '></' . $aField['FLD_NAME'] . '>';
           break;
         }
       }
