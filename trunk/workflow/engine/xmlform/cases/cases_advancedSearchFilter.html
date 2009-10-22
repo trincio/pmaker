@@ -28,7 +28,17 @@
               
               <tr>
               <td class='FormLabel' width="{$form_labelWidth}">{$LAST_MODIFICATION_F}</td>
-              <td class='FormFieldContent' >From {$form.LAST_MODIFICATION_F} To {$form.LAST_MODIFICATION_T}</td>
+              <!--td class='FormFieldContent' >From {$form.LAST_MODIFICATION_F} To {$form.LAST_MODIFICATION_T}</td-->
+              <td class='FormFieldContent' >
+              	<table cellspacing="0" cellpadding="0" border="0" width="50%">
+              		<tr>
+              		<td  width="20">From</td>
+              		<td  width="{$form_labelWidth}">{$form.LAST_MODIFICATION_F}</td>
+              		<td  width="20">To</td>
+              		<td  width="{$form_labelWidth}">{$form.LAST_MODIFICATION_T}</td>
+              	</tr>
+              </table>
+              </td>
               </tr>
                            
                                                 <tr>
