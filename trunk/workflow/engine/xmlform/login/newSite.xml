@@ -3,19 +3,19 @@
 <NEW_WORKSPACE type="title">
   <en>New Workspace</en>
 </NEW_WORKSPACE>
-<NW_TITLE type="text" size="30" maxlength="32" validate="Login" defaultValue="sample" style='width:100%;'>
+<NW_TITLE type="text" size="30" maxlength="13" validate="Login" defaultValue="sample" style='width:100%;'>
   <en>Name</en>
 </NW_TITLE>
 <DB type="subtitle">
   <en>Database Options</en>
 </DB>
-<AO_DB_WF type="text" size="30" maxlength="32" validate="Login" defaultValue="wf_sample" style='width:100%;'>
+<AO_DB_WF type="text" size="30" maxlength="16" validate="Login" defaultValue="wf_sample" style='width:100%;'>
   <en>Workflow Database:</en>
 </AO_DB_WF>
-<AO_DB_RB type="text" size="30" maxlength="32" validate="Login" defaultValue="rb_sample" style='width:100%;'>
+<AO_DB_RB type="text" size="30" maxlength="16" validate="Login" defaultValue="rb_sample" style='width:100%;'>
   <en>Rbac Database:</en>
 </AO_DB_RB>
-<AO_DB_RP type="text" size="30" maxlength="32" validate="Login" defaultValue="rp_sample" style='width:100%;'>
+<AO_DB_RP type="text" size="30" maxlength="16" validate="Login" defaultValue="rp_sample" style='width:100%;'>
   <en>Report Database:</en>
 </AO_DB_RP>
 <AO_DB_DROP type="checkbox">
