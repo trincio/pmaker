@@ -151,7 +151,7 @@ var installer=function()
 			),
 			new DOM('td',{innerHTML:"Workflow Database:",className:"inst_td0"},{width:"20%"}),
 			new DOM('td',{className:"inst_td1"},{width:"20%"}).append(
-				this.ao_db_wf = new input({label:this.options.vdef.wf,properties:{onkeyup:this.submit},style:{width:"100%"}}).passed().disable()
+				this.ao_db_wf = new input({label:this.options.vdef.wf,properties:{onkeyup:this.submit},style:{width:"100%"},maxlength:16}).passed().disable()
 			)
 
 		);
@@ -165,7 +165,7 @@ var installer=function()
 			),
 			new DOM('td',{innerHTML:"Rbac Database:",className:"inst_td0"},{width:"20%"}),
 			new DOM('td',{className:"inst_td1"},{width:"20%"}).append(
-				this.ao_db_rb = new input({label:this.options.vdef.rb,properties:{onkeyup:this.submit},style:{width:"100%"}}).passed().disable()
+				this.ao_db_rb = new input({label:this.options.vdef.rb,properties:{onkeyup:this.submit},style:{width:"100%"},maxlength:16}).passed().disable()
 			)
 
 		);
@@ -179,7 +179,7 @@ var installer=function()
 			),
 			new DOM('td',{innerHTML:"Report Database:",className:"inst_td0"},{width:"20%"}),
 			new DOM('td',{className:"inst_td1"},{width:"20%"}).append(
-				this.ao_db_rp = new input({label:this.options.vdef.rp,properties:{onkeyup:this.submit},style:{width:"100%"}}).passed().disable()
+				this.ao_db_rp = new input({label:this.options.vdef.rp,properties:{onkeyup:this.submit},style:{width:"100%"},maxlength:16}).passed().disable()
 			)
 
 		);

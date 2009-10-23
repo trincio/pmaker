@@ -64,7 +64,8 @@ leimnud.Package.Public({
 				this.input = (options && options.tagName)?$(options):(new this.parent.module.dom.create("input",{
 					className:"module_app_input___gray",
 					type	:"text",
-					value	:options.label || ""
+					value	:options.label || "",
+					maxLength :options.maxlength || "30"
 				}.concat(options.properties || {}),(options.style || {})));
 
 				this.input.disable=function()
