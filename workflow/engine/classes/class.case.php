@@ -1840,7 +1840,7 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
           $xmlfile = $filesList[3];
           break;
       case 'cancelled':
-          $c->add($c->getNewCriterion(AppThreadPeer::APP_THREAD_STATUS, 'OPEN')->addAnd($c->getNewCriterion(ApplicationPeer::APP_STATUS, 'CANCELLED')));
+          $c->add($c->getNewCriterion(AppThreadPeer::APP_THREAD_STATUS, 'CLOSED')->addAnd($c->getNewCriterion(ApplicationPeer::APP_STATUS, 'CANCELLED')));       
           $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
           $xmlfile = $filesList[4];
           break;
