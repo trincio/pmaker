@@ -716,16 +716,7 @@ This is a list of all the values from the <code><b><?php echo realpath($ini_file
 /**/-->
 </style>
 <?php
-			// the JS 
-			//
-			?>
-<script type="text/javascript">
-<!--//
-<?php echo join(file(KRUMO_DIR . "krumo.js"));?>
 
-//-->
-</script>
-<?php
 			}
 		
 		return $_css;
