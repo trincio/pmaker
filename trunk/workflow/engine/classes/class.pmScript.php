@@ -560,10 +560,12 @@ function pmSqlEscape($vValue)
 ***************************************************************************/
 
 function handleErrors($errno, $errstr, $errfile, $errline) {
-  if (($errno != 8) && ($errno != 2048)) {
-    $sCode = $_SESSION['_CODE_'];
-    unset($_SESSION['_CODE_']);
-    registerError(1, $errstr, $errline - 1, $sCode);
+  if ($errno != '' && ($errno != 8) && ($errno != 2048)) {
+  	if( isset($_SESSION['_CODE_']) ){
+	  $sCode = $_SESSION['_CODE_'];
+	  unset($_SESSION['_CODE_']);
+	  registerError(1, $errstr, $errline - 1, $sCode);
+  	}
   }
 }
 
