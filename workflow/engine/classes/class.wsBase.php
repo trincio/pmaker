@@ -352,7 +352,7 @@ class wsBase
 
       $pathEmail = PATH_DATA_SITE . 'mailTemplates' . PATH_SEP . $oldFields['PRO_UID'] . PATH_SEP;
       $fileTemplate = $pathEmail . $sTemplate;
-      @mkdir( $pathEmail, 0777,true);
+      G::mk_dir( $pathEmail, 0777,true);
 
       if ( ! file_exists ( $fileTemplate ) ) {
         $result = new wsResponse (28, "Template file '$fileTemplate' does not exist."  );
@@ -697,7 +697,7 @@ class wsBase
 	              $node->value = $oldFields[ $val->name ] ;
 	              $resFields[ ] = $node;
             	}else{
-	            	foreach($oldFields[ $val->name ] as $gridKey => $gridRow){//Spècial Variables like grids or checkgroups
+	            	foreach($oldFields[ $val->name ] as $gridKey => $gridRow){//Spï¿½cial Variables like grids or checkgroups
 			            if(is_array($gridRow)){//Grids
 			                foreach($gridRow as $col => $colValue){
 			                    $node = new stdClass();

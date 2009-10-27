@@ -134,6 +134,10 @@ function saveEmptyFile(){
 	oRPC.make();
 }
 
+function xReaload(){    
+    goToDirectory(CURRENT_PRO_UID, CURRENT_MAIN_DIRECTORY, CURRENT_CURRENT_DIRECTORY);
+}
+
 ]]>
 </JS>
 
