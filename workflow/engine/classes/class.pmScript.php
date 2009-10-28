@@ -314,8 +314,10 @@ class PMScript
 		//echo '<pre>-->'; print_r($this->aFields); echo '<---</pre>';
 		$this->executeAndCatchErrors($sScript, $this->sScript);
 		for($i=0; $i<count($this->affected_fields); $i++){
-			$_SESSION['TRIGGER_DEBUG']['DATA'][$i]['key']   = $this->affected_fields[$i];
-			$_SESSION['TRIGGER_DEBUG']['DATA'][$i]['value'] = isset($this->aFields[$this->affected_fields[$i]]) ? $this->aFields[$this->affected_fields[$i]] : '';
+			$_SESSION['TRIGGER_DEBUG']['DATA'][] = Array(
+				'key' => $this->affected_fields[$i],
+				'value' => isset($this->aFields[$this->affected_fields[$i]]) ? $this->aFields[$this->affected_fields[$i]] : ''
+			);
 		}
 		//echo '<pre>-->'; print_r($_SESSION['TRIGGER_DEBUG']['DATA']); echo '<---</pre>';
 	}

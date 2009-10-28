@@ -98,13 +98,17 @@
 
   if( isset($oProcessFieds['PRO_DEBUG']) && $oProcessFieds['PRO_DEBUG'] ) { #here we must verify if is a debugg session
     $_SESSION['TRIGGER_DEBUG']['ISSET'] = 1;
+    $_SESSION['PMDEBUGGER']= true;
   }
   else {
     $_SESSION['TRIGGER_DEBUG']['ISSET'] = 0;
+    $_SESSION['PMDEBUGGER']= false;
   }
 
   //cleaning debug variables
   if( !isset($_GET['breakpoint']) ) {
+  	if( isset($_SESSION['TRIGGER_DEBUG']['info']) ) unset($_SESSION['TRIGGER_DEBUG']['info']);
+  	
     if (!isset($_SESSION['_NO_EXECUTE_TRIGGERS_'])) {
       $_SESSION['TRIGGER_DEBUG']['ERRORS'] = Array();
     }

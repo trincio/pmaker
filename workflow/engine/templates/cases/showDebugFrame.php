@@ -30,41 +30,47 @@
  * @LastModification 30/05/2008
  */
 
-
-	$triggers_names = '';
-
-	if($_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS'] != 0) {
-		$triggers_onfly = $_SESSION['TRIGGER_DEBUG']['NUM_TRIGGERS']." trigger(s) was executed <font color='#641213'><b>".strtolower($_SESSION['TRIGGER_DEBUG']['TIME'])."</b></font><br/>";
-		$cnt = -1;
-		if(isset($_SESSION['TRIGGER_DEBUG']['TRIGGERS_NAMES']))
-		foreach($_SESSION['TRIGGER_DEBUG']['TRIGGERS_NAMES'] as $name){
-			$t_code = $_SESSION['TRIGGER_DEBUG']['TRIGGERS_VALUES'][++$cnt]['TRI_WEBBOT'];
-			$t_code = str_replace('"', '\'',$t_code);
-			$t_code = addslashes($t_code);
-			//Krumo($t_code);
-			$t_code = Only1br($t_code);
-
-			$triggers_names .= "<li><a href='#' onmouseout='hideTooltip()' onmouseover=\"showTooltip(event,'<b>Trigger code</b><br/><br/>".$t_code."<br/><br/>');return false\">Trigger: $name</a>";
-		}
+	
+	$html = '<div class="ui-widget-header ui-corner-all" width="100%" align="center">Processmaker - Debugger</div>';
+		
+	if( isset($_SESSION['TRIGGER_DEBUG']['info']) ){
+		$aTriggers = $_SESSION['TRIGGER_DEBUG']['info'];
 	} else {
-		$triggers_onfly = " No triggers found <font color='#641213'><b>".strtolower($_SESSION['TRIGGER_DEBUG']['TIME'])."</b></font>";
+		$aTriggers[0] = $_SESSION['TRIGGER_DEBUG'];
 	}
-
-	$html = '<div class="ui-widget-header ui-corner-all" width="100%" align="center">Processmaker - Debugger</div>'.
-	"<div style='font-size:11px; font-weight:bold' align='left'>[Triggers]</div><br/>
-	<table width='100%' cellspacing='0' cellpadding='0' border='1' style='border:0px;'>
-		<tr>
-		<td width='410px' class='treeNode' style='border:0px;background-color:transparent;'>
-
-				<font color='#0B58B6'> $triggers_onfly ...</font><br/>
-				 $triggers_names
-
-		</td>
-		<td width='60px' class='treeNode' style='border:0px;background-color:transparent;'>
-			<div id='status_'></div>
-		</td>
-		</tr>
-	</table>";
+	
+	foreach($aTriggers as $aTrigger){
+		$triggers_names = '';
+		$t_time = $aTrigger['TIME'];
+		if($aTrigger['NUM_TRIGGERS'] != 0) {
+			$triggers_onfly = $aTrigger['NUM_TRIGGERS']." trigger(s) was executed <font color='#641213'><b>".strtolower($aTrigger['TIME'])."</b></font><br/>";
+			$cnt = -1;
+			if(isset($aTrigger['TRIGGERS_NAMES']))
+			foreach($aTrigger['TRIGGERS_NAMES'] as $name){
+				$t_code = $aTrigger['TRIGGERS_VALUES'][++$cnt]['TRI_WEBBOT'];
+				$t_code = str_replace('"', '\'',$t_code);
+				$t_code = addslashes($t_code);
+				$t_code = Only1br($t_code);
+				
+				$triggers_names .= "<li><a href='#' onmouseout='hideTooltip()' onmouseover=\"showTooltip(event,'<b>Trigger code</b><br/><br/>".$t_code."<br/><br/>');return false\">Trigger: $name</a>";
+			}
+		} else {
+			$triggers_onfly = " No triggers found <font color='#641213'><b>".strtolower($t_time)."</b></font>";
+		}
+	
+		$html .= "<table width='100%' cellspacing='0' cellpadding='0' border='1' style='border:0px;'>
+						<tr>
+						  <td width='410px' class='treeNode' style='border:0px;background-color:transparent;'>	
+								<font color='#0B58B6'> $triggers_onfly ...</font><br/>
+					 			$triggers_names
+						  </td>
+						  <td width='60px' class='treeNode' style='border:0px;background-color:transparent;'>
+								<div id='status_'></div>
+						  </td>
+			           </tr>
+		             </table>";
+				 
+	}
 
 
 	$tree->showSign = false;
