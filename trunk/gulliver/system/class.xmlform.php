@@ -2406,6 +2406,25 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
 
   public $showtime;
 
+  function verifyDateFormatk($date,$msk) {
+    $dateTime=explode(" ",$date); //To accept the Hour part
+    $aux = explode ( '-', $dateTime[0] );
+    $axmsk = explode ( '-', $msk );
+    if (count ( $aux ) != 3)
+      return false;
+    if (! (is_numeric ( $aux [0] ) && is_numeric ( $aux [1] ) && is_numeric ( $aux [2] )))
+      return false;
+      
+      $c=0;$sw=1;
+    		while($c<count($axmsk) && $sw){
+    			if(strtoupper($axmsk[$c++])=="Y")
+    				$sw=0;
+    			}
+    if ($aux [$c-1] < 1900 || $aux [$c-1] > 2100)
+      return false;
+    return true;
+  }
+
   function verifyDateFormat($date) {
     $dateTime=explode(" ",$date); //To accept the Hour part
     $aux = explode ( '-', $dateTime[0] );
@@ -2539,14 +2558,14 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
     //echo '---->'.$value;
 	$tmp = str_replace("%", "", $mask);
     if ( trim ($value) == '' or $value == NULL ) {
-      $value = ''; //date ($tmp);
+      $value = '';//date ($tmp);
     } else {
     	switch(strtolower($value)){
     		case 'today':
     			$value = date($tmp);
     		break;
     		default:
-    			if(!$this->verifyDateFormat($value))
+    			if(!$this->verifyDateFormatk($value,$tmp))
     				$value='';
     		break;
     	}
@@ -2566,7 +2585,6 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
   		$valueDate = $this->getSplitDate($value, $mask);
   	}
 
-
     $startDate = $this->getSplitDate($startDate, 'Y-m-d');
 	$endDate = $this->getSplitDate($endDate, 'Y-m-d');
 
@@ -2583,7 +2601,7 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
 
     #the validations field was moved to javascript routines ;)
     if ($this->mode == 'edit') {
-      $html = '<input type="hidden" id="'.$pID.'" name="'.$pID.'" value="'.$value.'"/>
+      $html = '
       <div id="'.$pID.'[div]"
       		name="'.$pID.'[div]"
       		onclick="var oc=new NeyekCalendar(\''.$pID.'\');
@@ -2601,6 +2619,7 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
     } else {
       $html = "<span style='border:1;border-color:#000;width:100px;' name='" . $pID . "'>$value</span>";
     }
+    $html.='<input type="hidden" id="'.$pID.'" name="'.$pID.'" value="'.$value.'"/>';
     return $html;
   }
 
