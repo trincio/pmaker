@@ -331,11 +331,17 @@ var dynaformEditor={
 	refreshJavascripts:function()
 	{
 		var field=getField("JS_LIST","dynaforms_JSEditor");
+		for(j=0; j<field.options.length; j++) {
+			if( field.options[j].value == '___pm_boot_strap___' ){
+				field.remove(j);
+			}
+		}
+		
 		this.currentJS=field.value;
 		var res=this.ajax.get_javascripts(this.A,field.value);
 		if(field.value == ''){
-			if( typeof(res.aOptions[0]) !== "undefined" ){
-				res = this.ajax.get_javascripts(this.A,res.aOptions[0].value);
+			if( typeof(res.aOptions[0]) !== "undefined" && res.aOptions[0].value != '___pm_boot_strap___'){
+				res = this.ajax.get_javascripts(this.A, res.aOptions[0].value);
 				this.currentJS = res.aOptions[0].value;
 			}
 		}
@@ -357,6 +363,14 @@ var dynaformEditor={
 		{
 			G.alert(response.error["*message"],"Error");
 		}
+		
+		var field=getField("JS_LIST","dynaforms_JSEditor");
+		for(j=0; j<field.options.length; j++) {
+			if( field.options[j].value == '___pm_boot_strap___' ){
+				field.options[j].text = '';
+			}
+		}
+	
 	},
 	changeJavascriptCode:function()
 	{

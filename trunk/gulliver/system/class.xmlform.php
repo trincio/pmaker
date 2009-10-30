@@ -575,7 +575,7 @@ class XmlForm_Field_Title extends XmlForm_Field {
    */
   function render($value = NULL, &$owner) {
     $this->label = G::replaceDataField ( $this->label, $owner->values );
-    return $this->htmlentities ( $this->label );
+    return '<span id=\'form[' . $this->name . ']\' name=\'form[' . $this->name . ']\' >' . $this->htmlentities ( $this->label ) . '</span>';
   }
   /* A title node has no value
    */
@@ -599,7 +599,7 @@ class XmlForm_Field_Subtitle extends XmlForm_Field {
    * @return string
    */
   function render($value = NULL) {
-    return $this->htmlentities ( $this->label );
+    return '<span id=\'form[' . $this->name . ']\' name=\'form[' . $this->name . ']\' >' . $this->htmlentities ( $this->label ) . '</span>';
   }
   /* A subtitle node has no value
    */

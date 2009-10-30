@@ -128,7 +128,7 @@ class dynaFormHandler{
 			}
 		} else {
 			$text_node = $childs;
-			$newnode->appendChild($this->dom->createTextNode($text_node));
+			$newnode->appendChild($this->dom->createCDATASection($text_node));
 		}
 		$this->save();
 	}
@@ -230,6 +230,18 @@ class dynaFormHandler{
  	    	}
 		}
 		$this->save();
+	}
+	
+	function nodeExists($node_name){
+
+		$xpath = new DOMXPath($this->dom);
+		$nodeList = $xpath->query("/dynaForm/$node_name");
+		$node = $nodeList->item(0);
+		if($nodeList->length != 0){
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	//new features 
