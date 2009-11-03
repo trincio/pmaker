@@ -36,6 +36,11 @@
 	$sContent = '';
 
 	if ($withWS) {
+	  //creating sys.info;	
+	  $SITE_PUBLIC_PATH = '';
+	  if( file_exists($SITE_PUBLIC_PATH . '') ){
+	  }	
+		
 	  //creating the first file
 	  require_once 'classes/model/Dynaform.php';
 	  $oDynaform = new Dynaform();
