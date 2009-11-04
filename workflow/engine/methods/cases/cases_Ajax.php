@@ -264,6 +264,9 @@ switch($_POST['action']) {
 		//echo '<input type=button onclick="close_pauseCase()" value="Cancel">';
 		$aFields = Array();
 		$G_PUBLISH = new Publisher();
+		
+		$aFields['TIME_STAMP'] = G::getformatedDate(date('Y-m-d'), 'M d, yyyy', SYS_LANG);
+		
 		$G_PUBLISH->AddContent('xmlform', 'xmlform', 'cases/cases_UnpauseDateInput', '', $aFields);
 		G::RenderPage('publish', 'raw');
 		break;

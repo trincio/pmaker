@@ -2086,7 +2086,7 @@ class processMap {
 
       $row = array();
       $c=0;
-      $row[] = array('W_TITLE' => '');
+      $row[] = array('W_TITLE' => '','W_DELETE'=>'');
 
       if(is_dir(PATH_DATA ."sites" . PATH_SEP . SYS_SYS . PATH_SEP . "public" . PATH_SEP . $sProcessUID))
        {  $dir = opendir(PATH_DATA ."sites" . PATH_SEP . SYS_SYS . PATH_SEP . "public" . PATH_SEP . $sProcessUID);
@@ -2103,9 +2103,14 @@ class processMap {
                       $two = count(explode('Post.php',$archivo));
 
                       if($one==1 && $two==1)
-                       {
+                       {//print $link."<hr>";
                           $arlink = "<a href='".$alink."' target='blank'><font color='#9999CC'>".$alink."</font></a>";
-                          $row[] = array('W_TITLE' => $arlink);
+                          $linkdelete=sprintf("<a href='javascript:webEntry_delete(\"%s\",\"%s\",\"%s\");'><font color='red'>delete</font></a>",$alink,$archivo,$sProcessUID);
+                          $row[] = array(
+                          	'W_LINK' => $arlink,
+                          	'W_FILENAME'=> $archivo,
+                          	'W_PRO_UID'=> $sProcessUID
+                          );
                        }
                     }
                  }
@@ -3135,6 +3140,7 @@ function editObjectPermission($sOP_UID)
     G::LoadClass('ArrayPeer');
     $oCriteria = new Criteria('dbarray');
     $oCriteria->setDBArrayTable('objects');
+    $oCriteria->addAscendingOrderByColumn('DOWNLOAD_TEXT');
     global $G_PUBLISH;
     $G_PUBLISH = new Publisher();
     $G_PUBLISH->AddContent('propeltable', 'paged-table', 'processes/processes_FilesList', $oCriteria, array('PRO_UID' => $sProcessUID, 'MAIN_DIRECTORY' => $sMainDirectory, 'CURRENT_DIRECTORY' => $sCurrentDirectory));

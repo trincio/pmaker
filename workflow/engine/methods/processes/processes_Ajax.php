@@ -76,6 +76,14 @@ try {
   	case 'webEntry_generate':
   	  include(PATH_METHODS . 'processes/processes_webEntryGenerate.php');
   	break;
+  	
+  	case 'webEntry_delete':
+  	  $form=$_POST;
+  	  unlink(PATH_DATA ."sites" . PATH_SEP . SYS_SYS . PATH_SEP . "public" . PATH_SEP. $form['PRO_UID']. PATH_SEP.$form['FILENAME']);
+  	  unlink(PATH_DATA ."sites" . PATH_SEP . SYS_SYS . PATH_SEP . "public" . PATH_SEP. $form['PRO_UID']. PATH_SEP .str_replace(".php","Post",$form['FILENAME']).".php");
+  	  $oProcessMap->webEntry($_POST['PRO_UID']);
+  	break;
+  	
   	case 'webEntry_new':
   	  $oProcessMap->webEntry_new($oData->PRO_UID);
   	break;
@@ -408,6 +416,26 @@ try {
     break;
     case 'events':
       $oProcessMap->eventsList($oData->pro_uid);
+    break;
+	
+	case 'saveFile':
+    	global $G_PUBLISH;
+	  	$G_PUBLISH = new Publisher();
+	  	$sDirectory = PATH_DATA_MAILTEMPLATES . $_POST['pro_uid'] . PATH_SEP . $_POST['filename'];
+
+	  	$fp = fopen($sDirectory, 'w');
+	  	$content = stripslashes($_POST['fcontent']);
+	  	$content = str_replace("@amp@", "&", $content);
+	  	fwrite($fp, $content);
+	  	fclose($fp);
+	  	echo 'saved: '. $sDirectory;
+    break;
+    
+    case 'emptyFileOptions':
+    	global $G_PUBLISH;
+	  	$G_PUBLISH = new Publisher();
+	  	$G_PUBLISH->AddContent('xmlform', 'xmlform', 'processes/processes_FileEditCreateEmpty', '');
+	    G::RenderPage('publish', 'raw');
     break;
   }
   if( isset($sOutput) )

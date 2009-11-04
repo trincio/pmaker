@@ -336,46 +336,32 @@ var reactivateCase = function()
 };
 
 var pausecasePanel;
-var pauseCase = function() //we work here @erik
-{
-  /*new leimnud.module.app.confirm().make({
-    label : G_STRINGS.ID_CONFIRM_PAUSE_CASE,
-    action: function() {
-      var oRPC = new leimnud.module.rpc.xmlhttp({
-        url:  'cases_Ajax',
-        args: 'action=pauseCase'
-      });
-      oRPC.callback = function(oRPC) {
-        window.location = 'cases_List';
-      }.extend(this);
-      oRPC.make();
-    }.extend(this)
-  });*/
 
-	oPanel2 = new leimnud.module.panel();
-	pausecasePanel = oPanel2;
-	oPanel2.options = {
-		size    :{w:400,h:120},
+var pauseCase = function() {
+	pausecasePanel = new leimnud.module.panel();
+	
+	pausecasePanel.options = {
+		size    :{w:400,h:150},
 		position:{x:0,y:0,center:true},
 		title   :'',
 		theme   :'processmaker',
-		statusBar:true,
+		statusBar:false,
 		control :{drag: false, resize:false,roll:false,close:true},
 		fx  	:{modal:true,opacity:true,blinkToFront:true,fadeIn:false}
 	};
-	oPanel2.events = {
+	pausecasePanel.events = {
 		remove: function() { delete(oPanel2); }.extend(this)
 	};
-	oPanel2.make();
-	oPanel2.loader.show();
+	pausecasePanel.make();
+	pausecasePanel.loader.show();
 	var oRPC = new leimnud.module.rpc.xmlhttp({
 		url : 'cases_Ajax',
 		args: 'action=showPauseCaseInput'
 	});
 	oRPC.callback = function(rpc){
-		oPanel2.loader.hide();
+		pausecasePanel.loader.hide();
 		//var scs=rpc.xmlhttp.responseText.extractScript();
-		oPanel2.addContent(rpc.xmlhttp.responseText);
+		pausecasePanel.addContent(rpc.xmlhttp.responseText);
 		//scs.evalScript();
 	}.extend(this);
 	oRPC.make();
