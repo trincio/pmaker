@@ -2463,6 +2463,12 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
 
     switch ($part2) {
       case 'd' :
+      	/**
+      	 * fixed for new calendar, this allows to select today setting the property to  e.g "0d"
+      	 * this means that is zero days before so it is today. 
+      	 */
+      	$part1--;   
+
         $res = date ( 'Y-m-d', mktime ( 0, 0, 0, date ( 'm' ), date ( 'd' ) + $part1, date ( 'Y' ) ) );
         break;
       case 'm' :

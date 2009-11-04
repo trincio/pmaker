@@ -52,7 +52,7 @@ $oCriteria->addSelectColumn(UsersPeer::USR_USERNAME);
 $oCriteria->addSelectColumn(UsersPeer::USR_EMAIL);
 $oCriteria->addSelectColumn(UsersPeer::USR_ROLE);
 $oCriteria->addSelectColumn(UsersPeer::USR_DUE_DATE);
-$oCriteria->addAsColumn('USR_VIEW', $sDelimiter . G::LoadTranslation('ID_VIEW') . $sDelimiter);
+$oCriteria->addAsColumn('USR_VIEW', $sDelimiter . G::LoadTranslation('ID_DETAIL') . $sDelimiter);
 $oCriteria->addAsColumn('USR_EDIT', $sDelimiter . G::LoadTranslation('ID_EDIT') . $sDelimiter);
 $oCriteria->addAsColumn('USR_DELETE', $sDelimiter . G::LoadTranslation('ID_DELETE') . $sDelimiter);
 $oCriteria->addAsColumn('USR_AUTH', $sDelimiter . G::LoadTranslation('ID_AUTHENTICATION') . $sDelimiter);

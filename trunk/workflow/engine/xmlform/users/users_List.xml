@@ -16,7 +16,7 @@
 <USR_ROLE type="text" titlealign="left" align="left" colWidth="180">
   <en>Role</en>
 </USR_ROLE>
-<USR_DUE_DATE type="text" titlealign="left" align="left" colWidth="100">
+<USR_DUE_DATE type="text" titlealign="left" align="left" colWidth="65">
   <en>Due Date</en>
 </USR_DUE_DATE>
 <USR_VIEW type="link" colWidth="50" value="@#USR_VIEW" link="users_View?USR_UID=@#USR_UID">
@@ -25,18 +25,21 @@
 <!--<USR_EDIT type="link" colWidth="50" value="@#USR_EDIT" link="users_Edit?USR_UID=@#USR_UID">
   <en></en>
 </USR_EDIT>-->
-<USR_GROUP type="link" colWidth="80" value="@G::LoadTranslation(ID_VIEW_USER_GROUP)" link="#" onclick="viewUserGroups('@#USR_UID');return false;">
+<USR_GROUP type="link" colWidth="25" value="@G::LoadTranslation(ID_VIEW_USER_GROUP)" link="#" onclick="viewUserGroups('@#USR_UID');return false;">
   <en></en>
 </USR_GROUP>
-<USR_DELETE type="link" colWidth="50" value="@#USR_DELETE" link="#" onclick="deleteUser('@#USR_UID');return false;">
-  <en></en>
-</USR_DELETE>
-<USR_AUTH type="link" colWidth="50" value="@#USR_AUTH" link="users_AuthSource?USR_UID=@#USR_UID">
+
+<USR_AUTH type="link" colWidth="25" value="@#USR_AUTH" link="users_AuthSource?USR_UID=@#USR_UID">
   <en></en>
 </USR_AUTH>
-<USR_REASSIGN type="link" colWidth="50" value="@#USR_REASSIGN" link="#" onclick="reassignCases2('@#USR_UID');return false;">
+<USR_REASSIGN type="link" colWidth="100" value="@#USR_REASSIGN" link="#" onclick="reassignCases2('@#USR_UID');return false;">
   <en></en>
 </USR_REASSIGN>
+
+<USR_DELETE type="link" colWidth="25" value="@#USR_DELETE" link="#" onclick="deleteUser('@#USR_UID');return false;">
+  <en></en>
+</USR_DELETE>
+
 <!--<USR_STATUS style="background-color:red;" type="link" titlealign="left" align="left" colWidth="60" value="@#USR_STATUS" link="users_ChangeStatus?USR_UID=@#USR_UID">
   <en></en>
 </USR_STATUS>-->
