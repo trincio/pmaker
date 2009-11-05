@@ -2606,8 +2606,9 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
 
 
     #the validations field was moved to javascript routines ;)
+    $html = '<input type="hidden" id="'.$pID.'" name="'.$pID.'" value="'.$value.'"/>';
     if ($this->mode == 'edit') {
-      $html = '
+      $html .= '
       <div id="'.$pID.'[div]"
       		name="'.$pID.'[div]"
       		onclick="var oc=new NeyekCalendar(\''.$pID.'\');
@@ -2623,9 +2624,9 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
       		class="'.$cClass.'"
       >&nbsp;'.$value.'</div>';
     } else {
-      $html = "<span style='border:1;border-color:#000;width:100px;' name='" . $pID . "'>$value</span>";
+      $html .= "<span style='border:1;border-color:#000;width:100px;' name='" . $pID . "'>$value</span>";
     }
-    $html.='<input type="hidden" id="'.$pID.'" name="'.$pID.'" value="'.$value.'"/>';
+    
     return $html;
   }
 
