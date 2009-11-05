@@ -2571,7 +2571,8 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
     			$value = date($tmp);
     		break;
     		default:
-    			if(!$this->verifyDateFormatk($value,$tmp))
+    		    $mask=($mask == 'yyyy-mm-dd')?$mask = 'Y-m-d':str_replace('%', '', $mask);
+    			if(!$this->verifyDateFormatk($value,$mask))
     				$value='';
     		break;
     	}
@@ -2603,7 +2604,7 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
 		$showTime = 'false';
 	}
 
-
+   
 
     #the validations field was moved to javascript routines ;)
     $html = '<input type="hidden" id="'.$pID.'" name="'.$pID.'" value="'.$value.'"/>';
