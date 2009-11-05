@@ -48,7 +48,7 @@ echo '<?xml version="1.0" encoding="UTF-8" ?>';
 	<script type='text/javascript'>
 	var ifr;
 	var grid,winGrill, leimnud = new maborak();
-	var inWIN = <? echo (PHP_OS=="WINNT")?"true":"false";?>;
+	var inWIN = false;
 	leimnud.make();
 	leimnud.Package.Load("validator,app,rpc,fx,drag,drop,panel,grid,dom,abbr",{Instance:leimnud,Type:"module"});
 	leimnud.Package.Load("json",{Type:"file"});
