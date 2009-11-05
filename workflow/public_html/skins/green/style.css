@@ -1601,6 +1601,12 @@ div.autosuggest ul em
 	text-decoration:none;
 }
 
+.textBlack{
+	font:normal 8pt Tahoma,sans-serif,MiscFixed;
+	color:#808080;
+	text-decoration:none;
+}
+
 /**************************** End -> Suggest Widget by Erik Amaru Ortiz <erik@colosa.com>  *********************************/
 
 .tableGrid_view
@@ -2020,3 +2026,29 @@ table.tableGrid_view td
 	color:#000;
 	font-size: 11px;
 }
+
+/*@start:  PM tooltip -> neyek <erik@colosa.com> */
+#pmtooltip{
+		background-color:#EEE;
+		border:1px solid #000;
+		position:absolute;
+		display:none;
+		z-index:20000;
+		padding:2px;
+		font-size:0.9em;
+		-moz-border-radius:6px;	/* Rounded edges in Firefox */
+		font-family: "Trebuchet MS", "Lucida Sans Unicode", Arial, sans-serif;
+
+}
+#pmtooltipShadow{
+		position:absolute;
+		background-color:#555;
+		display:none;
+		z-index:10000;
+		opacity:0.7;
+		filter:alpha(opacity=70);
+		-khtml-opacity: 0.7;
+		-moz-opacity: 0.7;
+		-moz-border-radius:6px;	/* Rounded edges in Firefox */
+}
+/*@end:  PM tooltip */
