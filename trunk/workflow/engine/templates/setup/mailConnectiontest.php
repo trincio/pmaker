@@ -28,23 +28,20 @@
  * @author Erik Amaru Ortiz <erik@colosa.com>
  * @Date 24/04/2008
  * @LastModification 30/05/2008
+ * @Updated Nov 6th, 2009 bye Eriknyk
  */
 
-	G::LoadClass('tree');
+	
     G::LoadClass('net');
-
-    $tree = new Tree();
     $host = new net($_POST['srv']);
-
-	$tree->name = 'xx';
-	$tree->nodeType = "base";
-	$tree->width = "520px";
-	$tree->value = '
+    $width_content = '550px';
+    
+	$html = '
 	<div class="boxTopBlue"><div class="a"></div><div class="b"></div><div class="c"></div></div>
 	<div class="boxContentBlue">
 		<table width="100%" style="margin:0px;" cellspacing="0" cellpadding="0">
 			<tr>
-				<td class="userGroupTitle">Test SMTP Connection</td>
+				<td class="userGroupTitle"><center>Test SMTP Connection</center></td>
 			</tr>
 		</table>
 	</div>
@@ -70,7 +67,7 @@
 	$n = Array('','uno','dos','tres','cuatro','cinco');
 	for($i=1; $i<count($tests);$i++)
 	{
-		$html = "
+		$html .= "
 		<div id='test_$i' style='display:none'>
 		<table width='100%' cellspacing='0' cellpadding='0' border='1' style='border:0px;'>
 			<tr>
@@ -90,8 +87,18 @@
 			</tr>
 		</table>
 		</div>";
-		$ch = &$tree->addChild($i, $html, array('nodeType' => 'child'));
-		//$ch->point = '<img src="/images/iconoenlace.png" />';
 	}
-	print ($tree->render());
+	echo '<div class="grid" style="width:'.$width_content.'">
+	<div class="boxTop"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+	<div class="content" style="">
+		  <table width="99%">
+	      <tbody><tr>
+	        <td valign="top">
+	           '.$html.'
+	        </td>
+	      </tr>
+	    </tbody></table>
+	</div>
+	<div class="boxBottom"><div class="a"></div><div class="b"></div><div class="c"></div></div>
+	</div>';
 	print ("<div id='bnt_ok' style='display:none'><input type=button class='module_app_button___gray' onclick='jvascript:cancelTestConnection()' value='DONE'></div>");
