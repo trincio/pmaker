@@ -154,4 +154,16 @@ class CaseTrackerObject extends BaseCaseTrackerObject {
 			throw($oError);
 		}
 	}
+
+  function removeByObject($sType, $sObjUid) {
+    try {
+      $oCriteria = new Criteria('workflow');
+      $oCriteria->add(CaseTrackerObjectPeer::CTO_TYPE_OBJ, $sType);
+      $oCriteria->add(CaseTrackerObjectPeer::CTO_UID_OBJ, $sObjUid);
+      CaseTrackerObjectPeer::doDelete($oCriteria);
+    }
+    catch(Exception $e) {
+      throw($e);
+    }
+  }
 } // CaseTrackerObject

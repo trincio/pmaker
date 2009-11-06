@@ -195,4 +195,17 @@ class StepSupervisor extends BaseStepSupervisor {
   		throw $Exception;
   	}
   }
+
+
+ function removeByObject($sType, $sObjUid) {
+    try {
+      $oCriteria = new Criteria('workflow');
+      $oCriteria->add(StepSupervisorPeer::STEP_TYPE_OBJ, $sType);
+      $oCriteria->add(StepSupervisorPeer::STEP_UID_OBJ, $sObjUid);
+      StepSupervisorPeer::doDelete($oCriteria);
+    }
+    catch(Exception $e) {
+      throw($e);
+    }
+  }
 } // StepSupervisor

@@ -25,17 +25,34 @@
 if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Response;
 
 require_once('classes/model/Dynaform.php');
+require_once 'classes/model/ObjectPermission.php';
+require_once 'classes/model/Step.php';
+require_once 'classes/model/StepSupervisor.php';
+require_once 'classes/model/CaseTrackerObject.php';
+
+/* 
+In here we are deleting all datas about this Dynaform into DB
+*/
+
 
 $dynaform = new dynaform();
 
 if (!isset($_POST['DYN_UID'])) return;
-
+//in table dynaform
 $dynaform->remove( $_POST['DYN_UID'] );
 
-require_once 'classes/model/Step.php';
+//in table Step
 $oStep = new Step();
 $oStep->removeStep('DYNAFORM', $_POST['DYN_UID']);
 
-require_once 'classes/model/ObjectPermission.php';
+//in table ObjectPermission
 $oOP = new ObjectPermission();
 $oOP->removeByObject('DYNAFORM', $_POST['DYN_UID']);
+
+//in table Step_supervisor
+$oSS = new StepSupervisor();
+$oSS->removeByObject('DYNAFORM', $_POST['DYN_UID']);
+
+//in table case_tracker_object
+$oCTO = new CaseTrackerObject();                        
+$oCTO->removeByObject('DYNAFORM', $_POST['DYN_UID']);
