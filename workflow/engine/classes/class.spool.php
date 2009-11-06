@@ -35,7 +35,7 @@ class spoolRun {
 		$this->status = 'pending';
 		$this->error = '';
 
-	//$this->getSpoolFilesList();
+		//$this->getSpoolFilesList();
 	}
 
 	public function getSpoolFilesList() {
@@ -129,15 +129,22 @@ class spoolRun {
 
 	}
 
+
+	/**
+	 * Improved for recipients with <name> email@domain.com
+	 * By Neyek
+	 */
 	private function handleFrom() {
-		if(false !== ($pos = strpos($this->fileData['from'], '<'))) {
-			$this->fileData['from_name'] = trim(substr($this->fileData['from'], 0, $pos));
-			$this->fileData['from_email'] = trim(substr($this->fileData['from'], $pos));
-			$this->fileData['from_email'] = str_replace('<', '', str_replace('>', '', $this->fileData['from_email']));
+		if( strpos($this->fileData['from'], '<') !== false ) {
+			preg_match('/([\"\w@\.-_\s]*\s*)?(<(\w+[\.-]?\w+]*@\w+([\.-]?\w+)*\.\w{2,3})+>)/', $this->fileData['from'], $matches);
+            
+			$this->fileData['from_name'] = trim(str_replace('"', '', $matches[1]));
+			$this->fileData['from_email'] = trim($matches[3]);
+            
 		} else {
-			$this->fileData['from'] = '<' . $this->fileData['from'] . '>';
-			$this->fileData['from_name'] = '';
-			$this->fileData['from_email'] = str_replace('<', '', str_replace('>', '', $this->fileData['from']));
+			
+			$this->fileData['from_name'] = 'Processmaker Web boot';
+			$this->fileData['from_email'] = $this->fileData['from'];
 		}
 
 	}
@@ -177,20 +184,19 @@ class spoolRun {
 					$oPHPMailer->FromName = $this->fileData['from_name'];
 					$oPHPMailer->Subject = $this->fileData['subject'];
 					$oPHPMailer->Body = $this->fileData['body'];
-					if(count($this->fileData['envelope_to']) == 1) {
+						
+					foreach($this->fileData['envelope_to'] as $sEmail) {
 						if(strpos($this->fileData['to'], '<') !== false) {
-							$aTo = explode('<', $this->fileData['to']);
-							$sToName = trim($aTo[0]);
-							$sTo = trim(str_replace('>', '', $aTo[1]));
+                            preg_match('/([\"\w@\.-_\s]*\s*)?(<(\w+[\.-]?\w+]*@\w+([\.-]?\w+)*\.\w{2,3})+>)/', $sEmail, $matches);
+							$sTo = trim($matches[3]);
+							$sToName = trim($matches[1]);
+
 							$oPHPMailer->AddAddress($sTo, $sToName);
 						} else {
-							$oPHPMailer->AddAddress($this->fileData['to']);
-						}
-					} else {
-						foreach($this->fileData['envelope_to'] as $sEmail) {
 							$oPHPMailer->AddAddress($sEmail);
 						}
 					}
+						
 					$oPHPMailer->IsHTML(true);
 					if($oPHPMailer->Send()) {
 						$this->error = '';
@@ -213,20 +219,21 @@ class spoolRun {
 					$oPHPMailer->FromName = utf8_decode($this->fileData['from_name']);
 					$oPHPMailer->Subject = utf8_decode($this->fileData['subject']);
 					$oPHPMailer->Body = utf8_decode($this->fileData['body']);
-					if(count($this->fileData['envelope_to']) == 1) {
-						if(strpos($this->fileData['to'], '<') !== false) {
-							$aTo = explode('<', $this->fileData['to']);
-							$sToName = trim($aTo[0]);
-							$sTo = trim(str_replace('>', '', $aTo[1]));
-							$oPHPMailer->AddAddress($sTo, utf8_decode($sToName));
+						//G::pr($this->fileData['envelope_to']); die;
+					foreach($this->fileData['envelope_to'] as $sEmail) {
+						 
+						if(strpos($sEmail, '<') !== false) {
+                            preg_match('/([\"\w@\.-_\s]*\s*)?(<(\w+[\.-]?\w+]*@\w+([\.-]?\w+)*\.\w{2,3})+>)/', $sEmail, $matches);
+							$sTo = trim($matches[3]);
+							$sToName = trim($matches[1]);
+							echo 'x='.$sToName.'='.$sTo.'; <br>';
+							$oPHPMailer->AddAddress($sTo, $sToName);
 						} else {
-							$oPHPMailer->AddAddress($this->fileData['to']);
-						}
-					} else {
-						foreach($this->fileData['envelope_to'] as $sEmail) {
+							echo 'y='.$sToName.'='.$sTo.'; <br>';
 							$oPHPMailer->AddAddress($sEmail);
 						}
 					}
+						
 					$oPHPMailer->IsHTML(true);
 					if($oPHPMailer->Send()) {
 						$this->error = '';

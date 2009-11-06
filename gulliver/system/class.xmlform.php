@@ -1006,7 +1006,7 @@ class XmlForm_Field_Textarea extends XmlForm_Field {
         if ($this->readOnly)
           $result [] = '<textarea class="module_app_input___gray" id="form[' . $owner->name . '][' . $r . '][' . $this->name . ']" name="form[' . $owner->name . '][' . $r . '][' . $this->name . ']"  wrap="hard" rows="' . $this->rows . '"cols="'.$this->cols.'" readOnly="readOnly">'.$this->htmlentities ( $v, ENT_COMPAT, 'utf-8' ).'</textarea>';
         else
-          $result [] = '<textarea class="module_app_input___gray" id="form[' . $owner->name . '][' . $r . '][' . $this->name . ']" name="form[' . $owner->name . '][' . $r . '][' . $this->name . ']"  wrap="hard" rows="' . $this->rows . '"clos="'.$this->cols.'" >'.$this->htmlentities ( $v, ENT_COMPAT, 'utf-8' ).'</textarea>';
+          $result [] = '<textarea class="module_app_input___gray" id="form[' . $owner->name . '][' . $r . '][' . $this->name . ']" name="form[' . $owner->name . '][' . $r . '][' . $this->name . ']"  wrap="hard" rows="' . $this->rows . '"cols="'.$this->cols.'" >'.$this->htmlentities ( $v, ENT_COMPAT, 'utf-8' ).'</textarea>';
       } elseif ($this->mode === 'view') {
         if (stristr ( $_SERVER ['HTTP_USER_AGENT'], 'iPhone' )) {
           //$result[] = '<div style="overflow:hidden;height:25px;padding:0px;margin:0px;">'.$this->htmlentities( $v , ENT_COMPAT, 'utf-8').'</div>';
