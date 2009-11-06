@@ -219,17 +219,14 @@ class spoolRun {
 					$oPHPMailer->FromName = utf8_decode($this->fileData['from_name']);
 					$oPHPMailer->Subject = utf8_decode($this->fileData['subject']);
 					$oPHPMailer->Body = utf8_decode($this->fileData['body']);
-						//G::pr($this->fileData['envelope_to']); die;
+				    
 					foreach($this->fileData['envelope_to'] as $sEmail) {
-						 
 						if(strpos($sEmail, '<') !== false) {
                             preg_match('/([\"\w@\.-_\s]*\s*)?(<(\w+[\.-]?\w+]*@\w+([\.-]?\w+)*\.\w{2,3})+>)/', $sEmail, $matches);
 							$sTo = trim($matches[3]);
 							$sToName = trim($matches[1]);
-							echo 'x='.$sToName.'='.$sTo.'; <br>';
 							$oPHPMailer->AddAddress($sTo, $sToName);
 						} else {
-							echo 'y='.$sToName.'='.$sTo.'; <br>';
 							$oPHPMailer->AddAddress($sEmail);
 						}
 					}
