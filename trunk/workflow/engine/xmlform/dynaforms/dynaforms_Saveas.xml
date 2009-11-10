@@ -35,7 +35,8 @@ function dynaformSaveas ( frm, bOpen ) {
       currentPopupWindow.remove();
     }
     else {
-      alert('the title is empty');return;
+      alert(G_STRINGS.ID_TITLE_EMPTY);
+      return;
     }
   }
 getField('DYN_TITLE').form.onsubmit = function() {return false;};
