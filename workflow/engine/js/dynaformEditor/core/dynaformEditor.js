@@ -42,6 +42,16 @@ var dynaformEditor={
 			G.alert(res["*message"]);
 		}
 	},
+	save_as:function(){
+		/*this.saveProperties();*/
+		try {
+			this.saveCurrentView();
+		} catch (e) {
+			alert(e);
+		}
+	  url='dynaforms_Saveas';
+		popupWindow('Save as', url+'?DYN_UID='+this.dynUid+'&AA='+this.A , 500, 350);
+	},
 	close:function()
 	{
 		var modified=this.ajax.is_modified(this.A,this.dynUid);

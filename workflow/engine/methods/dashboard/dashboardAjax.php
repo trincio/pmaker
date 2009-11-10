@@ -123,6 +123,7 @@ switch ($_POST['action']) {
       $sClassName = $_POST['sDashboardClass'] . 'Class';
       $oInstance  = new $sClassName();
 	    $aConfiguration = $oDashboards->getConfiguration($_SESSION['USER_LOGGED']);
+	    print_r ($_POST);
 	    switch ($_POST['sType']) {
 	      case 'REPORT':
 	        $aConfiguration[] = array('class'   => $_POST['sDashboardClass'],
