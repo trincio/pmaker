@@ -74,10 +74,63 @@
     unset($_SESSION['G_MESSAGE_TYPE']);
   }
 
+  //get the config parameter to show in dropdown or list
+  require_once 'classes/model/Configuration.php';
+  $oConfiguration = new Configuration();
+  $oCriteria      = new Criteria('workflow');
+  $oCriteria->add(ConfigurationPeer::CFG_UID, 'StartNewCase');		  
+  $oCriteria->add(ConfigurationPeer::USR_UID, $_SESSION['USER_LOGGED']);
+
+  if( ConfigurationPeer::doCount($oCriteria) == 0)  {
+    $aData['CFG_UID']   = 'StartNewCase';
+    $aData['OBJ_UID']   = ''; 
+    $aData['CFG_VALUE'] = 'dropdown';
+    $aData['PRO_UID']   = ''; 
+    $aData['USR_UID']   = $_SESSION['USER_LOGGED']; 
+    $aData['APP_UID']   = ''; 
+    
+    $oConfig = new Configuration();		  	  
+    $oConfig->create($aData);  		
+    $listType = 'dropdown';
+  }		
+  else { 
+    $oConfiguration = new Configuration();
+    $oCriteria      = new Criteria('workflow');
+    $oCriteria->add(ConfigurationPeer::CFG_UID, 'StartNewCase');		  
+    $oCriteria->add(ConfigurationPeer::USR_UID, $_SESSION['USER_LOGGED']);
+    $conf = ConfigurationPeer::doSelect($oCriteria);
+
+    $listType = $conf[0]->getCfgValue();
+  }
+  if ( isset($_GET['change'] ) ) {
+  	if ( $listType == 'dropdown' ) 
+  	  $listType = 'link';
+  	else
+  	  $listType = 'dropdown';
+    $aData['CFG_UID']   = 'StartNewCase';
+    $aData['OBJ_UID']   = ''; 
+    $aData['CFG_VALUE'] = $listType;
+    $aData['PRO_UID']   = ''; 
+    $aData['USR_UID']   = $_SESSION['USER_LOGGED']; 
+    $aData['APP_UID']   = ''; 
+    
+    $oConfig = new Configuration();		  	  
+    $oConfig->update($aData);  		
+  }
+  
   /* Render page */
   $G_PUBLISH          = new Publisher;
+  $aFields['CHANGE_LINK'] = '[' . G::LoadTranslation( 'ID_CHANGE_VIEW' ) . ']';
+  
   if ( isset ( $aMessage ) ) {
     $G_PUBLISH->AddContent('xmlform', 'xmlform', 'login/showMessage', '', $aMessage );
   }
-  $G_PUBLISH->AddContent('xmlform', 'xmlform', $sXmlForm, '', $aFields, 'cases_Save');
+  if ( $listType == 'dropdown' ) 
+    $G_PUBLISH->AddContent('xmlform', 'xmlform', $sXmlForm, '', $aFields, 'cases_Save');
+
+  if ( $listType == 'link' )  {
+    if ($bCanStart) $sXmlForm = 'cases/cases_NewRadioGroup.xml';
+    $G_PUBLISH->AddContent('xmlform', 'xmlform', $sXmlForm, '', $aFields, 'cases_Save');
+  }  
+    
   G::RenderPage( 'publish' );

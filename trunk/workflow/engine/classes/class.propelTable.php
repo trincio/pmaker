@@ -657,6 +657,7 @@ $time_end = microtime(true);  $time = $time_end - $time_start;
             }
           }
           $this->tpl->gotoblock("row");
+          if ( !isset($rowName) ) $rowName = array();
           $this->tpl->assign( "rowName" , implode(",",$rowName));
         }
         //End Master Detail: This enable the MasterDEtail view
