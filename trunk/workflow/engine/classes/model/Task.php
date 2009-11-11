@@ -343,6 +343,20 @@ class Task extends BaseTask {
     }
   }
 
+public function kgetassigType($pro_uid){
+	
+        $k = new Criteria();
+        $k->clearSelectColumns();
+        $k->addSelectColumn(TaskPeer::TAS_UID);
+        $k->addSelectColumn(TaskPeer::TAS_ASSIGN_TYPE);
+        $k->add(TaskPeer::PRO_UID, $pro_uid );
+        $rs = TaskPeer::doSelectRS($k);
+        $rs->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+        $rs->next();
+        $row = $rs->getRow();
+	
+	return $row;
+	}
 
   public function load($TasUid)
   {
