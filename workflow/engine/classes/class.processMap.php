@@ -2075,6 +2075,7 @@ class processMap {
   function webEntry($sProcessUID) {
     try {
       global $G_PUBLISH;
+      global $G_FORM;
       $G_PUBLISH = new Publisher;
 
       if (G::is_https())
@@ -2086,32 +2087,47 @@ class processMap {
 
       $row = array();
       $c=0;
-      $row[] = array('W_TITLE' => '','W_DELETE'=>'');
-
+      $row[] = array('W_TITLE' => '','W_DELETE'=>'','TAS_ASSIGN_TYPE'=>'');
+ 
+       	  $oTask    = new Task();
+          $TaskFields = $oTask->kgetassigType($sProcessUID);
+			    if($TaskFields['TAS_ASSIGN_TYPE'] != 'BALANCED' )  {
+			    //throw ( new Exception ( "The task doesn't have a valid assignment type. The task needs to have a 'Cyclical Assignment'.") );
+			    print ( "The task doesn't have a valid assignment type. The task needs to have a 'Cyclical Assignment'.");
+			    
+			   }
+                       	
+ 
+ 
       if(is_dir(PATH_DATA ."sites" . PATH_SEP . SYS_SYS . PATH_SEP . "public" . PATH_SEP . $sProcessUID))
        {  $dir = opendir(PATH_DATA ."sites" . PATH_SEP . SYS_SYS . PATH_SEP . "public" . PATH_SEP . $sProcessUID);
           while($archivo = readdir($dir))
-              {
+              {//print $archivo." **** <hr>";
+              	
                 if($archivo!='.')
                  {
                    if($archivo!='..')
-                    { $one = 0;
+                    { 
+                    	$one = 0;
                       $two = 0;
 
                       $alink = $link.$archivo;
+                      
                       $one = count(explode('wsClient.php',$archivo));
                       $two = count(explode('Post.php',$archivo));
-
+           
                       if($one==1 && $two==1)
-                       {//print $link."<hr>";
+                       {
                           $arlink = "<a href='".$alink."' target='blank'><font color='#9999CC'>".$alink."</font></a>";
                           $linkdelete=sprintf("<a href='javascript:webEntry_delete(\"%s\",\"%s\",\"%s\");'><font color='red'>delete</font></a>",$alink,$archivo,$sProcessUID);
                           $row[] = array(
-                          	'W_LINK' => $arlink,
-                          	'W_FILENAME'=> $archivo,
-                          	'W_PRO_UID'=> $sProcessUID
+                          	'W_LINK'         => $arlink,
+                          	'W_FILENAME'     => $archivo,
+                          	'W_PRO_UID'      => $sProcessUID,
+                          	
                           );
                        }
+                       
                     }
                  }
               }
