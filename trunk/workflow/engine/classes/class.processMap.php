@@ -2092,9 +2092,7 @@ class processMap {
        	  $oTask    = new Task();
           $TaskFields = $oTask->kgetassigType($sProcessUID);
 			    if($TaskFields['TAS_ASSIGN_TYPE'] != 'BALANCED' )  {
-			    //throw ( new Exception ( "The task doesn't have a valid assignment type. The task needs to have a 'Cyclical Assignment'.") );
-			    print ( "The task doesn't have a valid assignment type. The task needs to have a 'Cyclical Assignment'.");
-			    
+			    print ("Web Entry only works with tasks which have Cyclical Assignment Please change the Assignment Rules");
 			   }
                        	
  
