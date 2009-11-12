@@ -13,7 +13,7 @@
   <en>Dynaform Information</en>
 </TITLE>
 
-<DYN_TITLE type="text" maxlength="128" size ="45">
+<DYN_TITLE type="text" maxlength="256" size ="48">
   <en>Title</en>
 </DYN_TITLE>
 
