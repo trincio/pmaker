@@ -80,6 +80,16 @@
   function openDynaform(sUID) {
     dynaformEdit(sUID);
   }
+  
+  function dynaformShowUid( sUID ) {
+    new leimnud.module.app.alert().make({
+    	label: 'UID = ' + sUID,
+    	width: 320,
+    	action:function()
+    	{
+      }.extend(this)
+    });
+  }
   function dynaformDelete ( uid ){
     new leimnud.module.app.confirm().make({
     	label:'@G::LoadTranslation(ID_MSG_CONFIRM_DELETE_DYNAFORM)',
