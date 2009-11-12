@@ -17,11 +17,11 @@
   }
   /* ajax_function
    * Envia una solicitud GET a ajax_server con la variables "function" y las definidas en parameters.
-   * @author       Julio Cesar Laura Avendaño <juliocesar@colosa.com, julces2000@gmail.com>
+   * @author       Julio Cesar Laura Avendano <juliocesar@colosa.com, julces2000@gmail.com>
    * @version 1.0
    * @package ajax
    * @param string ajax_server  url de la pagina servidor
-   * @param string function     función solicitada en el lado del servidor
+   * @param string function     funci�n solicitada en el lado del servidor
    * @param string parameters   variables pasadas por url. Ej. variable=valor&otravariable=suvalor
    */
   function ajax_function(ajax_server, funcion, parameters, method)
@@ -55,11 +55,11 @@
   }
   /* ajax_message
    * Envia una solicitud GET a ajax_server con la variables "function" y las definidas en parameters.
-   * @author       Julio Cesar Laura Avendaño <juliocesar@colosa.com, julces2000@gmail.com>
+   * @author       Julio Cesar Laura Avendano <juliocesar@colosa.com, julces2000@gmail.com>
    * @version 1.0
    * @package ajax
    * @param string ajax_server  url de la pagina servidor
-   * @param string function     función solicitada en el lado del servidor
+   * @param string function     funci�n solicitada en el lado del servidor
    * @param string parameters   variables pasadas por url. Ej. variable=valor&otravariable=suvalor
    */
   function ajax_message(ajax_server, funcion, parameters, method, callback)
@@ -93,11 +93,11 @@
   /* ajax_post
    * Envia una solicitud GET/POST a ajax_server con los parametros definidos
    * o los campos de un formulario
-   * @author       Julio Cesar Laura Avendaño <juliocesar@colosa.com, julces2000@gmail.com>
+   * @author       Julio Cesar Laura Avendano <juliocesar@colosa.com, julces2000@gmail.com>
    * @version 1.0
    * @package ajax
    * @param string ajax_server  url de la pagina servidor
-   * @param string function     función solicitada en el lado del servidor
+   * @param string function     funci�n solicitada en el lado del servidor
    * @param string parameters   variables pasadas por url o formulario.
    * @example: ajax_post('foo.com', document.form[0], "POST", callback )
    */

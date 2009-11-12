@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dynaForm
-  sqlConnection=""
   menu="outputdocs/outputdocs_Options"
-  width="100%"
   rowsPerPage="10"
 >
 
-<OUT_DOC_UID type="hidden" showInTable="0"/>
+<OUT_DOC_UID type="hidden" showInTable="0" />
 
 <OUT_DOC_TITLE type="text" colWidth="350" titleAlign="left" align="left">
   <en>Title</en>
