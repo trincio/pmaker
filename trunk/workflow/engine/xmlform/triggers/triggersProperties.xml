@@ -1,19 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dynaForm
-  name="triggers_Edit"
+  name="triggersProperties"
   type="xmlform"
   width="100%"
-  labelWidth="2px"
+  labelWidth="20%"
 >
-
 <PRO_UID type="hidden"/>
 
+
+<TITLE type="title" group="1">
+  <en>Trigger Information</en>
+</TITLE>
 <TRI_UID type="hidden"/>
+
+<TRI_TITLE type="text" size="80" maxlength="100">
+  <en>Title</en>
+</TRI_TITLE>
 
 <TRI_TYPE type="hidden"/>
 
-<TRI_WEBBOT type="textareapm" class='formLabel' cols='85' rows='23' width="100%" height="380px" showVars="1" process="@#PRO_UID">
-</TRI_WEBBOT>
+<TRI_DESCRIPTION type="textarea" rows="8" cols="77">
+  <en>Description</en>
+</TRI_DESCRIPTION>
 
 <SAVE type="button" onclick="triggerSave(this.form);">
   <en>Save</en>

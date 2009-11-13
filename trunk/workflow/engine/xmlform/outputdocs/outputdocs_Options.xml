@@ -14,7 +14,7 @@
 <js type="javascript" replaceTags="1">
 var currentPagedTable = @#PAGED_TABLE_ID;
   function outputdocsAdd(){
-		popupWindow('@G::LoadTranslation(ID_OUTPUT_DOCUMENTS)', '@G::encryptlink(@#outputdocs_New)?PRO_UID=@%PRO_UID' , 600, 410);
+		popupWindow('@G::LoadTranslation(ID_OUTPUT_DOCUMENTS)', '@G::encryptlink(@#outputdocs_New)?PRO_UID=@%PRO_UID' , 600, 360);
   }
   function outputdocsEdit( uid, typ ) {
     wi=770; he=510;
@@ -22,7 +22,7 @@ var currentPagedTable = @#PAGED_TABLE_ID;
 		popupWindow('@G::LoadTranslation(ID_OUTPUT_DOCUMENTS)', '@G::encryptlink(@#outputdocs_Edit)?OUT_DOC_UID='+ uid , wi, he);
   }
   function outputdocsProperties( uid ) {
-		popupWindow('@G::LoadTranslation(ID_OUTPUT_DOCUMENTS)', '@G::encryptlink(@#outputdocs_Properties)?OUT_DOC_UID='+ uid , 600, 400);
+		popupWindow('@G::LoadTranslation(ID_OUTPUT_DOCUMENTS)', '@G::encryptlink(@#outputdocs_Properties)?OUT_DOC_UID='+ uid , 600, 360);
   }
   
   function outputdocsPropertiesSave( form ) {
@@ -44,6 +44,16 @@ var currentPagedTable = @#PAGED_TABLE_ID;
       
   }
   
+  function ShowUid( sUID ) {
+    new leimnud.module.app.alert().make({
+    	label: 'UID = ' + sUID,
+    	width: 320,
+    	action:function()
+    	{
+      }.extend(this)
+    });
+  }
+
   function outputdocsDelete( uid ) {
     new leimnud.module.app.confirm().make({
     	label:'@G::LoadTranslation(ID_MSG_CONFIRM_DELETE_OUTDOC)',

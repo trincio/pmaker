@@ -620,6 +620,14 @@ form.formDefault textarea.FormTextArea
 	font:normal 11px Arial,Helvetica,sans-serif;
 	overflow:auto;
 }
+form.formDefault textarea.FormTextPM
+{
+	border: 1px solid #CCC;
+	background: #FFFFFF url(/skins/green/images/input_back.gif) repeat-x;
+	color:#333333;
+	font:normal 9px Courier;
+	overflow:auto;
+}
 form.formDefault .FormTitle
 {
 	color:#000;

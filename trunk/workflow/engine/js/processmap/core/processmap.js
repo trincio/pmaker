@@ -14,7 +14,7 @@ var processmap=function(){
 			buildingBlocks:{
 				injector:function(lanzado)
 				{
-					Wx = (lanzado=='dynaforms')?700: (lanzado=='outputs')?600:430;
+					Wx = (lanzado=='dynaforms' || lanzado=='triggers' || lanzado=='outputs' ) ?600 : 500;
 					Hx = 460;
 
 					var bbk = {

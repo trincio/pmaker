@@ -145,17 +145,15 @@ class XmlForm_Field_TextareaPM extends XmlForm_Field
 	var $symbol   = '@@';
   /**
    * Function render
-   * @author Julio Cesar Laura Avenda�o <juliocesar@colosa.com>
+   * @author Julio Cesar Laura Avendao <juliocesar@colosa.com>
    * @access public
    * @parameter string value
    * @return string
    */
   function render( $value = NULL, $owner )
   {
-    $className = ($this->className)? (' class="'.$this->className.'"') : '';
     if ($this->showVars == 1) {
     	$this->process = G::replaceDataField($this->process, $owner->values );
-	  //$sShowVars = '&nbsp;<a href="#" onclick="showDynaformsFormVars(\'form['.$this->name.']\', \'../controls/varsAjax\', \'' . $this->process . '\', \'' . $this->symbol . '\');return false;">' . $this->symbol . '</a>';
 	  	$sShowVars = '&nbsp;<input type="button" value="' . $this->symbol . '" onclick="showDynaformsFormVars(\'form['.$this->name.']\', \'../controls/varsAjax\', \'' . $this->process . '\', \'' . $this->symbol . '\');return false;"/>';
 	  }
 	  else {
@@ -163,11 +161,11 @@ class XmlForm_Field_TextareaPM extends XmlForm_Field
 	  }
     if ($this->mode==='edit') {
 	    if ($this->readOnly)
-    		return '<textarea '.$className.' id="form['.$this->name.']" name="form['.$this->name.']" cols="'.$this->cols.'" rows="'.$this->rows.'" style="'.$this->style.'" wrap="'.htmlentities($this->wrap,ENT_QUOTES,'UTF-8').'" class="FormTextArea" readOnly>'.$this->htmlentities( $value ,ENT_COMPAT,'utf-8').'</textarea>' . $sShowVars;
+    		return '<textarea id="form['.$this->name.']" name="form['.$this->name.']" cols="'.$this->cols.'" rows="'.$this->rows.'" style="'.$this->style.'" wrap="'.htmlentities($this->wrap,ENT_QUOTES,'UTF-8').'" class="FormTextPM" readOnly>'.$this->htmlentities( $value ,ENT_COMPAT,'utf-8').'</textarea>' . $sShowVars;
 	    else
-    		return '<textarea '.$className.' id="form['.$this->name.']" name="form['.$this->name.']" cols="'.$this->cols.'" rows="'.$this->rows.'" style="'.$this->style.'" wrap="'.htmlentities($this->wrap,ENT_QUOTES,'UTF-8').'" class="FormTextArea" >'.$this->htmlentities( $value ,ENT_COMPAT,'utf-8').'</textarea>' . $sShowVars;
+    		return '<textarea id="form['.$this->name.']" name="form['.$this->name.']" cols="'.$this->cols.'" rows="'.$this->rows.'" style="'.$this->style.'" wrap="'.htmlentities($this->wrap,ENT_QUOTES,'UTF-8').'" class="FormTextPM" >'.$this->htmlentities( $value ,ENT_COMPAT,'utf-8').'</textarea>' . $sShowVars;
 		} elseif ($this->mode==='view') {
-  		return '<textarea id="form['.$this->name.']" name="form['.$this->name.']" cols="'.$this->cols.'" rows="'.$this->rows.'" readOnly style="border:0px;backgroud-color:inherit;'.$this->style.'" wrap="'.htmlentities($this->wrap,ENT_QUOTES,'UTF-8').'"  class="FormTextArea" >'.$this->htmlentities( $value ,ENT_COMPAT,'utf-8').'</textarea>';
+  		return '<textarea id="form['.$this->name.']" name="form['.$this->name.']" cols="'.$this->cols.'" rows="'.$this->rows.'" readOnly style="border:0px;backgroud-color:inherit;'.$this->style.'" wrap="'.htmlentities($this->wrap,ENT_QUOTES,'UTF-8').'"  class="FormTextPM" >'.$this->htmlentities( $value ,ENT_COMPAT,'utf-8').'</textarea>';
 		} else {
   		return '<textarea id="form['.$this->name.']" name="form['.$this->name.']" cols="'.$this->cols.'" rows="'.$this->rows.'" style="'.$this->style.'" wrap="'.htmlentities($this->wrap,ENT_QUOTES,'UTF-8').'"  class="FormTextArea" >'.$this->htmlentities( $value ,ENT_COMPAT,'utf-8').'</textarea>';
 		}
