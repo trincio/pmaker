@@ -11,16 +11,17 @@
 
 <USR_FIRSTNAME type="text" colWidth="200" align="left" titleAlign="left">
   <en>First Name</en>
-<es>Nombre</es><pt>Nome</pt></USR_FIRSTNAME>
+</USR_FIRSTNAME>
 
 <USR_LASTNAME type="text" colWidth="200" align="left" titleAlign="left">
   <en>Last Name</en>
-<es>Apellido</es><pt>Sobrenome</pt></USR_LASTNAME>
+</USR_LASTNAME>
 
-<DELETE type="link" colWidth="50" align="center" value="@G::LoadTranslation(ID_DE_ASSIGN)" link="#" onclick="ofToAssignUser(@QGRP_UID, @QUSR_UID);return false;"><pt>Eliminar</pt></DELETE>
+<DELETE type="link" colWidth="50" align="center" value="@G::LoadTranslation(ID_DE_ASSIGN)" link="#" onclick="ofToAssignUser(@QGRP_UID, @QUSR_UID);return false;"></DELETE>
 
+<!--
 <button type="button" onclick="saveGroup( this.form );" showInTable="0">
   <en>Accept</en>
-<es>Aceptar</es><pt>Aceitar</pt></button>
-
+</button>
+!-->
 </dynaForm>
