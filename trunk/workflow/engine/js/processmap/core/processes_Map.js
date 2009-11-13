@@ -112,8 +112,13 @@ var showTriggers = function(sStep, sType)
     async : false,
     method: 'POST',
     args  : 'action=showTriggers&sProcess=' + Pm.options.uid + '&sStep=' + sStep + '&sType=' + sType
-  });
+  });  
+   
   oRPC.make();
+  
+  scs = oRPC.xmlhttp.responseText.extractScript();
+  scs.evalScript();
+  
   document.getElementById('triggersSpan_' + sStep + '_' + sType).innerHTML = oRPC.xmlhttp.responseText;
 
   var tri = document.getElementById('TRIG_'+sStep+'_'+sType);
