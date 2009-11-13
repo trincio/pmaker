@@ -29,16 +29,17 @@ if (isset($_GET['TRI_UID']))
 {
 	$oTrigger = new Triggers();
 	$aFields = $oTrigger->load($_GET['TRI_UID']);
+	$xmlform = 'triggers/triggers_Edit';
 }
 else
 {
 	$aFields['PRO_UID']  = $_GET['PRO_UID'];
-	//$aFields['PRO_UID']  = (isset($_SESSION['PROCESS']) ? $_SESSION['PROCESS'] : '');
 	$aFields['TRI_TYPE'] = 'SCRIPT';
+	$xmlform = 'triggers/triggersProperties';
 }
 
 G::LoadClass('xmlfield_InputPM');
 $G_PUBLISH = new Publisher();
-$G_PUBLISH->AddContent('xmlform', 'xmlform', 'triggers/triggers_Edit', '', $aFields, '../triggers/triggers_Save');
+$G_PUBLISH->AddContent('xmlform', 'xmlform', $xmlform , '', $aFields, '../triggers/triggers_Save');
 G::RenderPage('publish', 'raw');
 ?>

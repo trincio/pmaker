@@ -5,45 +5,68 @@
   <en>New</en>
 </MNU_ADD>
 
-<!--<PAGED_TABLE_FAST_SEARCH type="FastSearch" label="@G::LoadTranslation(ID_SEARCH)"/>-->
-
 <PRO_UID type="private"/>
 
 <triggersEdit type="private" defaultValue="../triggers/triggers_Edit"/>
 
 <triggersDelete type="private" defaultValue="../triggers/triggers_Delete"/>
 
+<triggersProperties type="private" defaultValue="../triggers/triggersProperties"/>
+
 <PAGED_TABLE_ID type="private"/>
 
 <JS type="javascript" replaceTags="1">
-function triggerNew()
-{
-  popupWindow('@G::LoadTranslation(ID_NEW_TRIGGERS)', '@G::encryptlink(@#triggersEdit)?PRO_UID=@%PRO_UID' , 700, 500);
-}
+  function triggerNew() {
+    popupWindow('@G::LoadTranslation(ID_NEW_TRIGGERS)', '@G::encryptlink(@#triggersEdit)?PRO_UID=@%PRO_UID' , 600, 340);
+  }
+  
+  function triggerEdit(sUID) {
+    popupWindow('@G::LoadTranslation(ID_EDIT_TRIGGERS)', '@G::encryptlink(@#triggersEdit)?TRI_UID=' + sUID , 770, 510);
+  }
 
-function triggerEdit(sUID)
-{
-  popupWindow('@G::LoadTranslation(ID_EDIT_TRIGGERS)', '@G::encryptlink(@#triggersEdit)?TRI_UID=' + sUID , 700, 500);
-}
+  function triggerProperties( sUID ) {
+		popupWindow('@G::LoadTranslation(ID_TRIGGERS)', '@G::encryptlink(@#triggersProperties)?TRI_UID='+ sUID , 600, 340);
+  }
+  
+  function triggerPropertiesSave( form ) {
+    var doc = getField("OUT_DOC_FILENAME");    
+    if(doc.value=='')
+     { alert(G_STRINGS.ID_FILEGENERATED);
+     }
+    else  
+     { ajax_post( form.action, form, 'POST' );
+       currentPopupWindow.remove();
+       @#PAGED_TABLE_ID.refresh();
+     }  
+  }  
 
-function triggerSave(form)
-{
-  ajax_post(form.action, form, 'POST');
-  currentPopupWindow.remove();
-  @#PAGED_TABLE_ID.refresh();
-}
+  function triggerSave(form)
+  {
+    ajax_post(form.action, form, 'POST');
+    currentPopupWindow.remove();
+    @#PAGED_TABLE_ID.refresh();
+  }
 
-function triggerDelete(sUID)
-{
-  new leimnud.module.app.confirm().make({
-    label:'@G::LoadTranslation(ID_MSG_CONFIRM_DELETE_TRIGGER)',
-    action:function()
-    {
-      ajax_function('@G::encryptlink(@#triggersDelete)', '', 'TRI_UID=' + sUID, 'POST');
-      @#PAGED_TABLE_ID.refresh();
-    }.extend(this)
-  });
-}
+  function ShowUid( sUID ) {
+    new leimnud.module.app.alert().make({
+    	label: 'UID = ' + sUID,
+    	width: 320,
+    	action:function()
+    	{
+      }.extend(this)
+    });
+  }
+
+  function triggerDelete(sUID) {
+    new leimnud.module.app.confirm().make({
+      label:'@G::LoadTranslation(ID_MSG_CONFIRM_DELETE_TRIGGER)',
+      action:function()
+      {
+        ajax_function('@G::encryptlink(@#triggersDelete)', '', 'TRI_UID=' + sUID, 'POST');
+        @#PAGED_TABLE_ID.refresh();
+      }.extend(this)
+    });
+  }
 </JS>
 
 <!-- Default Search option -->
