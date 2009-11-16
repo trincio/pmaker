@@ -1,10 +1,11 @@
 /* PACKAGE : GULLIVER FORMS
- */
+ */	
   function G_Form ( element, id )
   {
     var me=this;
     this.info = {name:'G_Fom', version :'1.0'};
     /*this.module=RESERVED*/
+    this.formula='';
     this.element=element;
     if (!element) return;
     this.id=id;
@@ -234,8 +235,11 @@
     leimnud.event.add(this.element,'change',this.updateDepententFields);
   }
   G_DropDown.prototype=new G_Field();
-
-  function G_Text( form, element, name )
+	/*
+	function G_Formulation(vvv){
+		alert(vvv)
+		}*/
+	function G_Text( form, element, name )
   {
     var me=this;
     this.parent = G_Field;
@@ -246,8 +250,9 @@
     this.validate = 'Any';
     this.mask='';
     this.required=false;
+    this.formula='';
     var doubleChange=false;
-
+    
     this.setContent=function(content) {
       me.element.value = '';
       if (content.options) {
@@ -462,9 +467,38 @@
     else
       leimnud.event.add(this.element,'keypress',this.validateKey);
     leimnud.event.add(this.element,'change',this.updateDepententFields);
+	
+	
 	this.element.onblur=function()
-	{
-	    	if(this.validate=="Email")
+	{//////////////////////////////////////////
+		
+		
+		if(this.validate == 'Int'|| this.validate == 'Real'){
+    	if(this.formula){
+	    	 operations=this.formula.split(';');
+    	  var resdo=0;
+    	   for (var i=0;i<operations.length;i++){
+             
+    	  	 		var sums=getField(operations[i]);
+    		  	 		
+    	  	 		//getField(operations[i]).addEvent('onBlur',function(){alert(233);});
+    	  	 		if(sums.value!='') 
+    	  	 		  resdo =resdo+parseInt(sums.value);
+							   	/*  	 		
+    	  	 		    getField(operations[i]).onblur=function(){
+    	  	 		    	sumElem(sums,element,operations);
+    	  	 		    	}*/
+    	  	 		
+    	   }
+    	   
+    	   this.element.value=resdo;
+    	 
+    	 }
+    	
+    }
+		///////////////////////////
+	  
+	  if(this.validate=="Email")
 		{
 			var pat=/^[\w\_\-\.çñ]{2,255}@[\w\_\-]{2,255}\.[a-z]{1,3}\.?[a-z]{0,3}$/;
 			if(!pat.test(this.element.value))
@@ -486,6 +520,9 @@
 		    break;
 		  }
 		}
+  
+    	
+	
 		if (this.validate == 'NodeName') {
 		  var pat = /^[a-z\_](.)[a-z\d\_]{1,255}$/i;
 		  if(!pat.test(this.element.value)) {
@@ -591,7 +628,7 @@ function G()
       i=0;
       for(r=r0;r< mask.length;r++) {
         j++;if (j>200) break;
-        e=num.substr(i,1);
+        e=num.substr(i,1);//alert(e+" **** "+i);
         e=(e==='')?false:e;
         m=mask.substr(r,1);
         __parseMask();
@@ -638,6 +675,7 @@ function G()
         //Use direct comparition to increse speed of processing
         if ((e==='0')||(e==='1')||(e==='2')||(e==='3')||(e==='4')||(e==='5')||(e==='6')||(e==='7')||(e==='8')||(e==='9')||(e==='-')) {
           out+=e;i++;
+          //alert(out+" *** "+i);
         } else {
           //loss
           loss++;
@@ -1052,6 +1090,7 @@ var validateForm = function(aRequiredFields) {
 	var invalid_fields = Array();
 	
 	for (var i = 0; i < aRequiredFields.length; i++) {
+		aRequiredFields[i].label=(aRequiredFields[i].label=='')?aRequiredFields[i].name:aRequiredFields[i].label;
 		 if (!notValidateThisFields.inArray(aRequiredFields[i].name)) {
 		 		switch(aRequiredFields[i].type) {
 		 			  case 'text':
@@ -1285,3 +1324,12 @@ function verifyFieldName1(){
   pme_validating=false;
   return valid;
 }
+
+function sumElem(s,ans,fs){
+ 	var sm=0;
+ 	   for(var j=0;j<fs.length;j++){
+ 	    sm+=parseInt(getField(fs[i]).value)
+ 	   }
+ 		ans.value=sm;
+}
+ 
