@@ -38,7 +38,23 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
   //TODO: Improve how to obtain the PRO_UID.
   $aFile=explode('/',str_replace('\\','/',$file));
   $proUid=$aFile[0];
+  $dynUid=str_replace("_tmp0","",$aFile[1]);
+    
+  require_once 'classes/model/Dynaform.php';
+  $k=new Criteria('workflow');
+  $k->addSelectColumn(DynaformPeer::DYN_TYPE);
+  $k->add(DynaformPeer::DYN_UID,$dynUid);
+  $ods=DynaformPeer::doSelectRS($k);
+  $ods->next();
+  $row=$ods->getRow();
+  $dynType=$row[0];
 
+  //session_start(); 
+  $_SESSION['PME_DYN_TYPE']=$dynType; 
+  //$Fields['PME_DYN_TYPE']=$dynType;
+  
+  
+  
   $fields = new DynaFormField( $dbc );
   $fields->Fields['XMLNODE_NAME']=(isset($_GET['XMLNODE_NAME'])) ? urldecode($_GET['XMLNODE_NAME']):'';
   $fields->Load( $fields->Fields['XMLNODE_NAME'] );

@@ -121,6 +121,7 @@ if (typeof(G_Form)==='undefined') return alert('form.js was not loaded');
     {elseif ($field->type==='text')}
       myForm.aElements[i] = new G_Text(myForm, myForm.element.elements['form[{$name}]'],'{$name}');
       myForm.aElements[i].setAttributes({$field->getAttributes()});
+      //alert('{$field->getAttributes()}');
       {$field->attachEvents("myForm.aElements[i].element")}
     {elseif ($field->type==='percentage')}
       myForm.aElements[i] = new G_Percentage(myForm, myForm.element.elements['form[{$name}]'],'{$name}');

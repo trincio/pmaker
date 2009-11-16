@@ -7,6 +7,8 @@
 <PME_A type="hidden" />
 <PME_TYPE type="hidden" />
 <PME_PRO_UID type="hidden" />
+<PME_PRO_UID type="hidden" />
+<!--PME_DYN_TYPE type="hidden" /-->
 <PME_TITLE type="title" enableHTML="1">
   <en>Properties</en>
 </PME_TITLE>
@@ -69,6 +71,12 @@ select XMLNODE_NAME, XMLNODE_NAME AS NAME FROM dynaForm WHERE	XMLNODE_NAME &lt;&
   <en>Default Value</en>
 </PME_DEFAULTVALUE>
 
+<PME_HINTS_MESSAGE type="textarea" cols="47" rows="3">
+  <en>Hints message </en>
+</PME_HINTS_MESSAGE>
+
+
+
 <PME_SUBTITLE type="title" enableHTML="1">
   <en>Appearance</en>
 </PME_SUBTITLE>
@@ -103,6 +111,21 @@ select XMLNODE_NAME, XMLNODE_NAME AS NAME FROM dynaForm WHERE	XMLNODE_NAME &lt;&
   <en>LinkField</en>
 </PME_LINKFIELD>
 -->
+
+<PME_SUBTITLE_OP type="title" enableHTML="1">
+  <en>Operations</en>
+</PME_SUBTITLE_OP>
+<PME_FORMULA type="text" maxlength="50" size="30" defaultvalue="" >
+  <en>Formula</en>
+</PME_FORMULA>
+<PME_FUNCTION type="dropdown">
+  <en>Function
+    <option name="">None</option>
+    <option name="sum">SUM</option>
+    <option name="avg">AVG</option>
+  </en>
+</PME_FUNCTION>
+
 <PME_SUBTITLE2 type="title" enableHTML="1">
   <en>Data</en>
 </PME_SUBTITLE2>
@@ -130,5 +153,24 @@ select XMLNODE_NAME, XMLNODE_NAME AS NAME FROM dynaForm WHERE	XMLNODE_NAME &lt;&
 	fieldName.focus();
 	fieldName.select();
 	leimnud.event.add(fieldName, 'change', {method:dynaformVerifyFieldName, instance:fieldName, event:true});
+	
+	  hideRowById('PME_SUBTITLE_OP');
+    hideRowById('PME_FORMULA');
+    hideRowById('PME_FUNCTION');
+	leimnud.event.add(getField('PME_VALIDATE'), 'change', function() {
+	    if (this.value == 'Int' || this.value == 'Real') {
+	          showRowById('PME_SUBTITLE_OP');
+            showRowById('PME_FORMULA');
+            if(getField("PME_DYN_TYPE").value=='grid')
+              showRowById('PME_FUNCTION');
+             else hideRowById('PME_FUNCTION');
+	    } else {
+	          hideRowById('PME_SUBTITLE_OP');
+            hideRowById('PME_FORMULA');
+            hideRowById('PME_FUNCTION');
+	    }
+	});
+	
+	
 ]]></PME_JS>
 </dynaForm>
