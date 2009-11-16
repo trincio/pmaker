@@ -8,7 +8,7 @@
 <PME_TYPE type="hidden" />
 <PME_PRO_UID type="hidden" />
 <PME_PRO_UID type="hidden" />
-<!--PME_DYN_TYPE type="hidden" /-->
+<PME_DYN_TYPE type="phpvariable"/>
 <PME_TITLE type="title" enableHTML="1">
   <en>Properties</en>
 </PME_TITLE>
@@ -161,7 +161,8 @@ select XMLNODE_NAME, XMLNODE_NAME AS NAME FROM dynaForm WHERE	XMLNODE_NAME &lt;&
 	    if (this.value == 'Int' || this.value == 'Real') {
 	          showRowById('PME_SUBTITLE_OP');
             showRowById('PME_FORMULA');
-            if(getField("PME_DYN_TYPE").value=='grid')
+            var dyntype="@#PME_DYN_TYPE";
+            if(dyntype=='grid')
               showRowById('PME_FUNCTION');
              else hideRowById('PME_FUNCTION');
 	    } else {

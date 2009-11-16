@@ -49,11 +49,7 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
   $row=$ods->getRow();
   $dynType=$row[0];
 
-  //session_start(); 
-  $_SESSION['PME_DYN_TYPE']=$dynType; 
-  //$Fields['PME_DYN_TYPE']=$dynType;
-  
-  
+  $Fields['PME_DYN_TYPE']=$dynType;
   
   $fields = new DynaFormField( $dbc );
   $fields->Fields['XMLNODE_NAME']=(isset($_GET['XMLNODE_NAME'])) ? urldecode($_GET['XMLNODE_NAME']):'';
