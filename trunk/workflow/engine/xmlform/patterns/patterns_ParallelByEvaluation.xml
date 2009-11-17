@@ -131,7 +131,7 @@ Pm.tmp.derivationsPanel.events.remove = function() {
 
 var savePattern = function(oForm) {
 	iRows = Number_Rows_Grid('GRID_PARALLEL_EVALUATION_TYPE', 'ROU_CONDITION');
-	for (i = 1; i < iRows; i++) {
+	for (var i = 1; i < iRows; i++) {
 		aux = getGridField('GRID_PARALLEL_EVALUATION_TYPE', i, 'ROU_CONDITION').value;
 		if (aux == '') {
 			alert(G_STRINGS.ID_REQUIRED);
