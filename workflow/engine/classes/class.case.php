@@ -1707,7 +1707,7 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
     $c->addSelectColumn(AppCacheViewPeer::APP_FINISH_DATE  );
     $c->addSelectColumn(AppCacheViewPeer::APP_UPDATE_DATE  );
 
-	  $c->add(AppCacheViewPeer::USR_UID, $sUIDUserLogged );
+	$c->add(AppCacheViewPeer::USR_UID, $sUIDUserLogged );
     $c->add(AppCacheViewPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
     $c->add(AppCacheViewPeer::APP_STATUS, 'TO_DO');
     $c->add(AppCacheViewPeer::APP_THREAD_STATUS, 'OPEN');
@@ -1724,7 +1724,7 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
   * @return array
   */
 
-  function getConditionCasesList($sTypeList = 'all', $sUIDUserLogged = '')
+  function getConditionCasesList($sTypeList = 'all', $sUIDUserLogged = '', $ClearSession=true)
   {
     $c = new Criteria('workflow');
     $c->clearSelectColumns();
@@ -1898,31 +1898,122 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
           $xmlfile = $filesList[7];
           break;
     }
+    
+    if($ClearSession){
 
-    //OPCION_1: Limpia de $_SESSION los listados no utilizados (solo listado de casos)
-    foreach ($filesList as $file) {
-      $id = G::createUID('', $file . '.xml');
-      unset($_SESSION['pagedTable[' . $id . ']']);
-      unset($_SESSION[$id]);
-    }
-    //OPCION_2: Limpia de $_SESSION todos los listados y xmlforms
-    $cur = array_keys($_SESSION);
-    foreach ($cur as $key) {
-      if (substr($key, 0, 11) === "pagedTable[") {
-        unset($_SESSION[$key]);
-      } else {
-        $xml = G::getUIDName($key, '');
-        if (strpos($xml, '.xml') !== false)
-            unset($_SESSION[$key]);
-      }
-    }
-
+	    //OPCION_1: Limpia de $_SESSION los listados no utilizados (solo listado de casos)
+	    foreach ($filesList as $file) {
+	      $id = G::createUID('', $file . '.xml');
+	      unset($_SESSION['pagedTable[' . $id . ']']);
+	      unset($_SESSION[$id]);
+	    }
+	    //OPCION_2: Limpia de $_SESSION todos los listados y xmlforms
+	    $cur = array_keys($_SESSION);
+	    foreach ($cur as $key) {
+	      if (substr($key, 0, 11) === "pagedTable[") {
+	        unset($_SESSION[$key]);
+	      } else {
+	        $xml = G::getUIDName($key, '');
+	        if (strpos($xml, '.xml') !== false)
+	            unset($_SESSION[$key]);
+	      }
+	    }
+    } 
     return array($c, $xmlfile);
   }
+  
+/*
+  * Get the condition for Cases List
+  * @param string $sTypeList
+  * @param string $sUIDUserLogged
+  * @return array
+  */
+
+  function loadCaseInCurrentDelegation($APP_UID)
+  {
+    $c = new Criteria('workflow');
+    $c->clearSelectColumns();
+    $c->addSelectColumn(ApplicationPeer::APP_UID);
+    $c->addSelectColumn(ApplicationPeer::APP_NUMBER);
+    $c->addSelectColumn(ApplicationPeer::APP_UPDATE_DATE);
+    $c->addSelectColumn(AppDelegationPeer::DEL_PRIORITY);
+    //$c->addSelectColumn(AppDelegationPeer::DEL_TASK_DUE_DATE);
+    $c->addAsColumn('DEL_TASK_DUE_DATE', " IF (" . AppDelegationPeer::DEL_TASK_DUE_DATE . " <= NOW(), CONCAT('<span style=\'color:red\';>', " . AppDelegationPeer::DEL_TASK_DUE_DATE . ", '</span>'), " . AppDelegationPeer::DEL_TASK_DUE_DATE . ") ");
+
+    $c->addSelectColumn(AppDelegationPeer::DEL_INDEX);
+    $c->addSelectColumn(AppDelegationPeer::TAS_UID);
+    $c->addSelectColumn(AppDelegationPeer::DEL_INIT_DATE);
+    $c->addSelectColumn(AppDelegationPeer::DEL_FINISH_DATE);
+    $c->addSelectColumn(UsersPeer::USR_UID);
+    $c->addAsColumn('APP_CURRENT_USER', "CONCAT(USERS.USR_LASTNAME, ' ', USERS.USR_FIRSTNAME)");
+    $c->addSelectColumn(ApplicationPeer::APP_STATUS);
+    $c->addAsColumn('APP_TITLE', 'APP_TITLE.CON_VALUE');
+    $c->addAsColumn('APP_PRO_TITLE', 'PRO_TITLE.CON_VALUE');
+    $c->addAsColumn('APP_TAS_TITLE', 'TAS_TITLE.CON_VALUE');
+    //$c->addAsColumn('APP_DEL_PREVIOUS_USER', 'APP_LAST_USER.USR_USERNAME');
+    $c->addAsColumn('APP_DEL_PREVIOUS_USER', "CONCAT(APP_LAST_USER.USR_LASTNAME, ' ', APP_LAST_USER.USR_FIRSTNAME)");
+
+    $c->addAlias("APP_TITLE", 'CONTENT');
+    $c->addAlias("PRO_TITLE", 'CONTENT');
+    $c->addAlias("TAS_TITLE", 'CONTENT');
+    $c->addAlias("APP_PREV_DEL", 'APP_DELEGATION');
+    $c->addAlias("APP_LAST_USER", 'USERS');
+
+    $c->addJoin(ApplicationPeer::APP_UID, AppDelegationPeer::APP_UID, Criteria::LEFT_JOIN);
+    $c->addJoin(AppDelegationPeer::TAS_UID, TaskPeer::TAS_UID, Criteria::LEFT_JOIN);
+    $appThreadConds[] = array(ApplicationPeer::APP_UID, AppThreadPeer::APP_UID);
+    $appThreadConds[] = array(AppDelegationPeer::DEL_INDEX, AppThreadPeer::DEL_INDEX);
+    $c->addJoinMC($appThreadConds, Criteria::LEFT_JOIN);
+    $c->addJoin(AppDelegationPeer::USR_UID, UsersPeer::USR_UID, Criteria::LEFT_JOIN);
+
+    $del = DBAdapter::getStringDelimiter();
+    $appTitleConds = array();
+    $appTitleConds[] = array(ApplicationPeer::APP_UID, 'APP_TITLE.CON_ID');
+    $appTitleConds[] = array('APP_TITLE.CON_CATEGORY', $del . 'APP_TITLE' . $del);
+    $appTitleConds[] = array('APP_TITLE.CON_LANG', $del . SYS_LANG . $del);
+    $c->addJoinMC($appTitleConds, Criteria::LEFT_JOIN);
+
+    $proTitleConds = array();
+    $proTitleConds[] = array(ApplicationPeer::PRO_UID, 'PRO_TITLE.CON_ID');
+    $proTitleConds[] = array('PRO_TITLE.CON_CATEGORY', $del . 'PRO_TITLE' . $del);
+    $proTitleConds[] = array('PRO_TITLE.CON_LANG', $del . SYS_LANG . $del);
+    $c->addJoinMC($proTitleConds, Criteria::LEFT_JOIN);
+
+    $tasTitleConds = array();
+    $tasTitleConds[] = array(AppDelegationPeer::TAS_UID, 'TAS_TITLE.CON_ID');
+    $tasTitleConds[] = array('TAS_TITLE.CON_CATEGORY', $del . 'TAS_TITLE' . $del);
+    $tasTitleConds[] = array('TAS_TITLE.CON_LANG', $del . SYS_LANG . $del);
+    $c->addJoinMC($tasTitleConds, Criteria::LEFT_JOIN);
+
+    $prevConds = array();
+    $prevConds[] = array(ApplicationPeer::APP_UID, 'APP_PREV_DEL.APP_UID');
+    $prevConds[] = array('APP_PREV_DEL.DEL_INDEX', AppDelegationPeer::DEL_PREVIOUS);
+    $c->addJoinMC($prevConds, Criteria::LEFT_JOIN);
+
+    $usrConds = array();
+    $usrConds[] = array('APP_PREV_DEL.USR_UID', 'APP_LAST_USER.USR_UID');
+    $c->addJoinMC($usrConds, Criteria::LEFT_JOIN);
+
+    $c->add(TaskPeer::TAS_TYPE, 'SUBPROCESS', Criteria::NOT_EQUAL);
+
+    $c->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
+    $c->add(AppThreadPeer::APP_THREAD_STATUS, 'OPEN');
+    $c->add(AppDelegationPeer::DEL_THREAD_STATUS, 'OPEN');
+              
+    $c->add(ApplicationPeer::APP_UID, $APP_UID);
+
+    $oDataset = ApplicationPeer::doSelectRS($c);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    $row = $oDataset->getRow();
+    
+    return $row;
+  }
+  
 
   /**
   *  @Author: erik@colosa.com
-    *  @Description: This method set all cases with the APP_DISABLE_ACTION_DATE for today
+  *  @Description: This method set all cases with the APP_DISABLE_ACTION_DATE for today
   */
   function ThrowUnpauseDaemon()
   {
