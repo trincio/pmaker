@@ -470,17 +470,14 @@
 	
 	
 	this.element.onblur=function()
-	{//////////////////////////////////////////
-		
-		
+	{
+		//////////////////////////////////////////
 		if(this.validate == 'Int'|| this.validate == 'Real'){
     	if(this.formula){
 	    	 operations=this.formula.split(';');
-    	  var resdo=0;
+    	  var resdo=0;//alert(operations.length);
     	   for (var i=0;i<operations.length;i++){
-             
     	  	 		var sums=getField(operations[i]);
-    		  	 		
     	  	 		//getField(operations[i]).addEvent('onBlur',function(){alert(233);});
     	  	 		if(sums.value!='') 
     	  	 		  resdo =resdo+parseInt(sums.value);
@@ -488,13 +485,9 @@
     	  	 		    getField(operations[i]).onblur=function(){
     	  	 		    	sumElem(sums,element,operations);
     	  	 		    	}*/
-    	  	 		
     	   }
-    	   
     	   this.element.value=resdo;
-    	 
     	 }
-    	
     }
 		///////////////////////////
 	  
@@ -604,7 +597,6 @@ function G()
       mask=invertir(mask);
       num=invertir(num);
     }
-
     var minAdd=-1;
     var minLoss=-1;
     var newCursorPosition=cursor;
@@ -628,7 +620,7 @@ function G()
       i=0;
       for(r=r0;r< mask.length;r++) {
         j++;if (j>200) break;
-        e=num.substr(i,1);//alert(e+" **** "+i);
+        e=num.substr(i,1);
         e=(e==='')?false:e;
         m=mask.substr(r,1);
         __parseMask();
@@ -665,7 +657,7 @@ function G()
       }
       if ( e!==false ) {
         if (typeof(blocks[m])==='undefined') blocks[m] = e; else blocks[m] += e;
-      }
+      } 
       switch(m) {
       case '0':
         if (e===false) {out+='0';add++; break;}
@@ -675,7 +667,6 @@ function G()
         //Use direct comparition to increse speed of processing
         if ((e==='0')||(e==='1')||(e==='2')||(e==='3')||(e==='4')||(e==='5')||(e==='6')||(e==='7')||(e==='8')||(e==='9')||(e==='-')) {
           out+=e;i++;
-          //alert(out+" *** "+i);
         } else {
           //loss
           loss++;
@@ -696,6 +687,7 @@ function G()
         if ((ok) && (parseInt(dayAnalized)>31)) ok = false;
         if (ok) {
           out+=e;i++;
+          
         } else {
           //loss
           loss++;
@@ -715,13 +707,17 @@ function G()
           i++;r--;
         }
         break;
+      
       default:
         if (e===false) {out+='';break;}
         if (e===m) {
           out+=e;i++;
-        } else {
+        }else {
           //if (m==='.') alert(i.toString() +'.'+ cursor.toString());
-          out+=m;add++;if (i<cursor){cursorPosition++;};
+          //out+=m;add++;if (i<cursor){cursorPosition++;};
+          if(m!='-'){ out+=m;}
+          else {out+='~';}
+       	add++;if (i<cursor){cursorPosition++;};
         }
       }
     }
@@ -729,8 +725,8 @@ function G()
   this.toMask = function (num, mask, cursor)
   {
     if (mask==='') return {'result':new String(num), 'cursor':cursor};
-    var subMasks=mask.split(';');
-    var result = [];
+    var subMasks=mask.split(';');;
+	    var result = [];
     num = new String(num);
     for(var r=0; r<subMasks.length; r++) {
       result[r]=__toMask(num, subMasks[r], cursor);
