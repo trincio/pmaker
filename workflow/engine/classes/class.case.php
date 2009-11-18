@@ -1707,7 +1707,7 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
     $c->addSelectColumn(AppCacheViewPeer::APP_FINISH_DATE  );
     $c->addSelectColumn(AppCacheViewPeer::APP_UPDATE_DATE  );
 
-	$c->add(AppCacheViewPeer::USR_UID, $sUIDUserLogged );
+	  $c->add(AppCacheViewPeer::USR_UID, $sUIDUserLogged );
     $c->add(AppCacheViewPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
     $c->add(AppCacheViewPeer::APP_STATUS, 'TO_DO');
     $c->add(AppCacheViewPeer::APP_THREAD_STATUS, 'OPEN');
@@ -1923,9 +1923,10 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
   }
   
 /*
-  * Get the condition for Cases List
+  * Get a case in its current index
   * @param string $sTypeList
   * @param string $sUIDUserLogged
+  * @Author Erik Amaru Ortiz <erik@colosa.com>
   * @return array
   */
 
