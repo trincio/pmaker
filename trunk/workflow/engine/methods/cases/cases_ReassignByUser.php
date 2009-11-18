@@ -22,140 +22,131 @@
  * Coral Gables, FL, 33134, USA, or email info@colosa.com.
  *
  */
-try {
-  global $RBAC;
-  switch ($RBAC->userCanAccess('PM_REASSIGNCASE')) {
-  	case -2:
-  	  G::SendTemporalMessage('ID_USER_HAVENT_RIGHTS_SYSTEM', 'error', 'labels');
-  	  G::header('location: ../login/login');
-  	  die;
-  	break;
-  	case -1:
-  	  G::SendTemporalMessage('ID_USER_HAVENT_RIGHTS_PAGE', 'error', 'labels');
-  	  G::header('location: ../login/login');
-  	  die;
-  	break;
-  }
 
-  if (!isset($_GET['REASSIGN_USER'])) {
-    $_GET['REASSIGN_USER'] = '';
-  }
-  $_GET['REASSIGN_BY']    = 2;
-  $G_MAIN_MENU            = 'processmaker';
-  $G_SUB_MENU             = 'cases';
-  $G_ID_MENU_SELECTED     = 'CASES';
-  $G_ID_SUB_MENU_SELECTED = 'CASES_TO_REASSIGN';
-  $G_PUBLISH = new Publisher;
-  $G_PUBLISH->AddContent( 'xmlform', 'xmlform', 'cases/cases_ReassignBy', '', $_GET);
-  $G_PUBLISH->AddContent( 'xmlform', 'xmlform', 'cases/cases_ReassignUsers', '', $_GET);
-  if ($_GET['REASSIGN_USER'] != '') {
-    $oTemplatePower = new TemplatePower(PATH_TPL . 'cases/cases_UsersReassignCases.html');
-    $oTemplatePower->prepare();
-    G::LoadClass('tasks');
-    G::LoadClass('groups');
-    $oTasks  = new Tasks();
-    $oGroups = new Groups();
-    $oUser   = new Users();
-    G::LoadClass('case');
-    $oCases = new Cases();
-    list($oCriteriaToDo,$sXMLFile)  = $oCases->getConditionCasesList('to_do', $_GET['REASSIGN_USER']);
-    list($oCriteriaDraft,$sXMLFile) = $oCases->getConditionCasesList('draft', $_GET['REASSIGN_USER']);
-    $oDataset = ApplicationPeer::doSelectRS($oCriteriaToDo);
-    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-    $oDataset->next();
-    while ($aRow = $oDataset->getRow()) {
-      $oTemplatePower->newBlock('cases');
-      $aKeys = array_keys($aRow);
-      foreach ($aKeys as $sKey) {
-        $oTemplatePower->assign($sKey, $aRow[$sKey]);
-      }
-      $aUsers     = array($_GET['REASSIGN_USER']);
-      $aUsersData = array();
-      $aAux1      = $oTasks->getGroupsOfTask($aRow['TAS_UID'], 1);
-      foreach ($aAux1 as $aGroup) {
-    	$aAux2 = $oGroups->getUsersOfGroup($aGroup['GRP_UID']);
-    	foreach ($aAux2 as $aUser) {
-          if (!in_array($aUser['USR_UID'], $aUsers)) {
-            $aUsers[] = $aUser['USR_UID'];
-            $aData    = $oUser->load($aUser['USR_UID']);
-            $aUsersData[$aData['USR_FIRSTNAME'] . ' ' . $aData['USR_LASTNAME'] . ' (' . $aData['USR_USERNAME'] . ')'] = $aData['USR_FIRSTNAME'] . ' ' . $aData['USR_LASTNAME'] . ' (' . $aData['USR_USERNAME'] . ')';
-          }
-        }
-      }
-     $aAux1  = $oTasks->getUsersOfTask($aRow['TAS_UID'], 1);
-      foreach ($aAux1 as $aUser) {
-        if (!in_array($aUser['USR_UID'], $aUsers)) {
-          $aUsers[] = $aUser['USR_UID'];
-          $aData    = $oUser->load($aUser['USR_UID']);
-          $aUsersData[$aData['USR_FIRSTNAME'] . ' ' . $aData['USR_LASTNAME'] . ' (' . $aData['USR_USERNAME'] . ')'] = $aData['USR_FIRSTNAME'] . ' ' . $aData['USR_LASTNAME'] . ' (' . $aData['USR_USERNAME'] . ')';
-        }
-      }
-      ksort($aUsersData);
-      foreach ($aUsersData as $sKey => $sValue) {
-        $oTemplatePower->newBlock('users');
-        $oTemplatePower->assign('USR_UID', $aData['USR_UID']);
-        $oTemplatePower->assign('USR_FULLNAME', $sValue);
-      }
-      $oTemplatePower->gotoBlock('cases');
-      $oTemplatePower->assign('ID_STATUS', G::LoadTranslation('ID_TO_DO'));
-      $oTemplatePower->assign('ID_NO_REASSIGN', G::LoadTranslation('ID_NO_REASSIGN'));
-      $oDataset->next();
-    }
-    $oDataset = ApplicationPeer::doSelectRS($oCriteriaDraft);
-    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-    $oDataset->next();
-    while ($aRow = $oDataset->getRow()) {
-      $oTemplatePower->newBlock('cases');
-      $aKeys = array_keys($aRow);
-      foreach ($aKeys as $sKey) {
-        $oTemplatePower->assign($sKey, $aRow[$sKey]);
-      }
-      $aUsers     = array($_GET['REASSIGN_USER']);
-      $aUsersData = array();
-      $aAux1      = $oTasks->getGroupsOfTask($aRow['TAS_UID'], 1);
-      foreach ($aAux1 as $aGroup) {
-        $aAux2 = $oGroups->getUsersOfGroup($aGroup['GRP_UID']);
-        foreach ($aAux2 as $aUser) {
-          if (!in_array($aUser['USR_UID'], $aUsers)) {
-            $aUsers[] = $aUser['USR_UID'];
-            $aData    = $oUser->load($aUser['USR_UID']);
-            $aUsersData[$aData['USR_FIRSTNAME'] . ' ' . $aData['USR_LASTNAME'] . ' (' . $aData['USR_USERNAME'] . ')'] = $aData['USR_FIRSTNAME'] . ' ' . $aData['USR_LASTNAME'] . ' (' . $aData['USR_USERNAME'] . ')';
-          }
-        }
-      }
-      $aAux1  = $oTasks->getUsersOfTask($aRow['TAS_UID'], 1);
-      foreach ($aAux1 as $aUser) {
-        if (!in_array($aUser['USR_UID'], $aUsers)) {
-          $aUsers[] = $aUser['USR_UID'];
-          $aData    = $oUser->load($aUser['USR_UID']);
-          $aUsersData[$aData['USR_FIRSTNAME'] . ' ' . $aData['USR_LASTNAME'] . ' (' . $aData['USR_USERNAME'] . ')'] = $aData['USR_FIRSTNAME'] . ' ' . $aData['USR_LASTNAME'] . ' (' . $aData['USR_USERNAME'] . ')';
-        }
-      }
-      ksort($aUsersData);
-      foreach ($aUsersData as $sKey => $sValue) {
-        $oTemplatePower->newBlock('users');
-        $oTemplatePower->assign('USR_UID', $aData['USR_UID']);
-        $oTemplatePower->assign('USR_FULLNAME', $sValue);
-      }
-      $oTemplatePower->gotoBlock('cases');
-      $oTemplatePower->assign('ID_STATUS', G::LoadTranslation('ID_DRAFT'));
-      $oTemplatePower->assign('ID_NO_REASSIGN', G::LoadTranslation('ID_NO_REASSIGN'));
-      $oDataset->next();
-    }
-    $oTemplatePower->gotoBlock('_ROOT');
-    $oTemplatePower->assign('ID_NUMBER',      '#');
-    $oTemplatePower->assign('ID_CASE',        G::LoadTranslation('ID_CASE'));
-    $oTemplatePower->assign('ID_TASK',        G::LoadTranslation('ID_TASK'));
-    $oTemplatePower->assign('ID_PROCESS',     G::LoadTranslation('ID_PROCESS'));
-    $oTemplatePower->assign('ID_STATUS',      G::LoadTranslation('ID_STATUS'));
-    $oTemplatePower->assign('ID_REASSIGN_TO', G::LoadTranslation('ID_REASSIGN_TO'));
-    $oTemplatePower->assign('ID_REASSIGN',    G::LoadTranslation('ID_REASSIGN'));
-    $oTemplatePower->assign('USR_UID',        $_GET['REASSIGN_USER']);
-    $G_PUBLISH->AddContent('template', '', '', '', $oTemplatePower);
-  }
-  G::RenderPage('publish');
+/**
+ * Reassign ByUser routines
+ * Author Erik Amaru Ortiz <erik@colosa.com> 
+ */
+
+try {
+	global $RBAC;
+	switch ($RBAC->userCanAccess('PM_REASSIGNCASE')) {
+		case -2:
+			G::SendTemporalMessage('ID_USER_HAVENT_RIGHTS_SYSTEM', 'error', 'labels');
+			G::header('location: ../login/login');
+			die;
+			break;
+		case -1:
+			G::SendTemporalMessage('ID_USER_HAVENT_RIGHTS_PAGE', 'error', 'labels');
+			G::header('location: ../login/login');
+			die;
+			break;
+	}
+
+	if (!isset($_GET['REASSIGN_USER'])) {
+		$_GET['REASSIGN_USER'] = '';
+	}
+	$_GET['REASSIGN_BY']    = 2;
+	$G_MAIN_MENU            = 'processmaker';
+	$G_SUB_MENU             = 'cases';
+	$G_ID_MENU_SELECTED     = 'CASES';
+	$G_ID_SUB_MENU_SELECTED = 'CASES_TO_REASSIGN';
+	$G_PUBLISH = new Publisher;
+	$G_PUBLISH->AddContent( 'xmlform', 'xmlform', 'cases/cases_ReassignBy', '', $_GET);
+
+
+	$sUserToReassign = trim($_GET['REASSIGN_USER']);
+
+	// $G_PUBLISH->AddContent( 'xmlform', 'xmlform', 'cases/cases_ReassignUsers', '', $_GET);
+	if ($_GET['REASSIGN_USER'] != '') {
+
+		
+		
+		G::LoadClass('tasks');
+		G::LoadClass('groups');
+		$oTasks  = new Tasks();
+		$oGroups = new Groups();
+		$oUser   = new Users();
+		G::LoadClass('case');
+		$oCases = new Cases();
+
+		list($oCriteriaToDo,$sXMLFile)  = $oCases->getConditionCasesList('to_do', $sUserToReassign);
+		list($oCriteriaDraft,$sXMLFile) = $oCases->getConditionCasesList('draft', $sUserToReassign);
+
+		$aCasesList = Array();
+		
+		$oDataset = ApplicationPeer::doSelectRS($oCriteriaToDo);
+		$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+
+		while ( $oDataset->next() ) {
+			array_push($aCasesList, $oDataset->getRow());
+		}
+
+		$oDataset = ApplicationPeer::doSelectRS($oCriteriaDraft);
+		$oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+		
+		while ( $oDataset->next() ) {
+			array_push($aCasesList, $oDataset->getRow());
+		}
+        
+		$filedNames = Array (
+	        "APP_UID",
+	        "APP_NUMBER",
+	        "APP_UPDATE_DATE",
+	        "DEL_PRIORITY",
+	        "DEL_INDEX",
+	        "TAS_UID",
+	        "DEL_INIT_DATE", 
+	        "DEL_FINISH_DATE", 
+	        "USR_UID",
+	        "APP_STATUS",
+	        "DEL_TASK_DUE_DATE",
+	        "APP_CURRENT_USER",
+	        "APP_TITLE",
+	        "APP_PRO_TITLE",
+	        "APP_TAS_TITLE",
+	        "APP_DEL_PREVIOUS_USER",
+	    );
+	    
+	    $aCasesList = array_merge(Array($filedNames), $aCasesList);
+	
+	   // G::pr($aCasesList); die;
+	        
+	    
+	    require_once ( 'classes/class.xmlfield_InputPM.php' );
+	    
+	    global $_DBArray;
+	    $_DBArray['reassign_byuser'] = $aCasesList;
+	    $_SESSION['_DBArray'] = $_DBArray;
+	    G::LoadClass('ArrayPeer');
+	    $oCriteria = new Criteria('dbarray');
+	    $oCriteria->setDBArrayTable('reassign_byuser');
+	
+	    $oHeadPublisher =& headPublisher::getSingleton();
+        $oHeadPublisher->addScriptFile('/jscore/cases/reassignByUser.js');
+        
+	    $G_PUBLISH->AddContent('propeltable', 'cases/paged-table-reassigByUser', 'cases/cases_ToReassignByUserList', $oCriteria, Array('FROM_USR_UID'=>$sUserToReassign));
+    
+	}
+	
+	G::RenderPage('publish');
 }
 catch (Exception $oException) {
 	die($oException->getMessage());
 }
-?>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

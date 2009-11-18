@@ -536,6 +536,7 @@ switch($_POST['action']) {
 		$oCase->getAllGeneratedDocumentsCriteria($_SESSION['PROCESS'], $_SESSION['APPLICATION'], $_SESSION['TASK'], $_SESSION['USER_LOGGED']);
 		break;
 
+    /* @Author Erik Amaru Ortiz <erik@colosa.com> */
 	case 'resendMessage':
 		require_once 'classes/model/Configuration.php';
 		G::LoadClass('spool');
@@ -593,6 +594,7 @@ switch($_POST['action']) {
 
 		break;
 
+	/* @Author Erik Amaru Ortiz <erik@colosa.com> */
 	case 'showdebug':
 
 		$G_PUBLISH = new Publisher();
@@ -600,6 +602,111 @@ switch($_POST['action']) {
 		G::RenderPage('publish', 'raw');
 		break;
 
+    /* @Author Erik Amaru Ortiz <erik@colosa.com> */
+	case 'reassignByUserList':
+		 
+		$APP_UIDS = explode(',', $_POST['APP_UIDS']);
+		//G::pr($APP_UIDS);
+		$sReassignFromUser = $_POST['FROM_USR_ID'];
+		 
+		//-----
+		 
+        G::LoadClass('tasks');
+        G::LoadClass('groups');
+        G::LoadClass('case');
+        
+        
+        $oTasks  = new Tasks();
+        $oGroups = new Groups();
+        $oUser   = new Users();
+        $oCases  = new Cases();
+         
+        $aCasesList = Array();
+
+        foreach ( $APP_UIDS as $APP_UID ) {
+        	$aCase  = $oCases->loadCaseInCurrentDelegation($APP_UID);
+        	
+            $aUsersInvolved = Array();
+            $aCaseGroups = $oTasks->getGroupsOfTask($aCase['TAS_UID'], 1);
+
+            foreach ( $aCaseGroups as $aCaseGroup ) {
+                $aCaseUsers = $oGroups->getUsersOfGroup($aCaseGroup['GRP_UID']);
+                foreach ( $aCaseUsers as $aCaseUser ) {
+                    if ( $aCaseUser['USR_UID'] != $sReassignFromUser ) {
+                        $aCaseUserRecord = $oUser->load($aCaseUser['USR_UID']);
+                        $aUsersInvolved[$aCaseUser['USR_UID']] = $aCaseUserRecord['USR_FIRSTNAME'] . ' ' . $aCaseUserRecord['USR_LASTNAME']; // . ' (' . $aCaseUserRecord['USR_USERNAME'] . ')';
+                    }
+                }
+            }
+            
+            $aCaseUsers = $oTasks->getUsersOfTask($aCase['TAS_UID'], 1);
+            foreach ( $aCaseUsers as $aCaseUser ) {
+                if ( $aCaseUser['USR_UID'] != $sReassignFromUser ) {
+                    $aCaseUserRecord = $oUser->load($aCaseUser['USR_UID']);
+                    $aUsersInvolved[$aCaseUser['USR_UID']] = $aCaseUserRecord['USR_FIRSTNAME'] . ' ' . $aCaseUserRecord['USR_LASTNAME']; // . ' (' . $aCaseUserRecord['USR_USERNAME'] . ')';
+                }
+            }
+            $oTmp = new stdClass();
+            $oTmp->items = $aUsersInvolved;
+            $oTmp->id = $aCase['APP_UID'];
+            $aCase['USERS'] = $oTmp;
+            array_push($aCasesList, $aCase);
+        }
+
+        //G::pr($aCasesList);
+        
+        $filedNames = Array (
+            "APP_UID",
+            "APP_NUMBER",
+            "APP_UPDATE_DATE",
+            "DEL_PRIORITY",
+            "DEL_INDEX",
+            "TAS_UID",
+            "DEL_INIT_DATE", 
+            "DEL_FINISH_DATE", 
+            "USR_UID",
+            "APP_STATUS",
+            "DEL_TASK_DUE_DATE",
+            "APP_CURRENT_USER",
+            "APP_TITLE",
+            "APP_PRO_TITLE",
+            "APP_TAS_TITLE",
+            "APP_DEL_PREVIOUS_USER",
+            "USERS"
+        );
+        
+        $aCasesList = array_merge(Array($filedNames), $aCasesList);
+        
+        global $_DBArray;
+        $_DBArray['reassign_byuser'] = $aCasesList;
+        G::LoadClass('ArrayPeer');
+        $oCriteria = new Criteria('dbarray');
+        $oCriteria->setDBArrayTable('reassign_byuser');
+        $G_PUBLISH = new Publisher;
+        $G_PUBLISH->AddContent('propeltable', 'cases/paged-table-reassigByUser2', 'cases/cases_ToReassignByUserList2', $oCriteria);
+        G::RenderPage('publish', 'raw');
+        
+	break;
+	
+	/* @Author Erik Amaru Ortiz <erik@colosa.com> */
+	case 'reassignByUser':
+        G::LoadClass('case');
+
+        $oCases  = new Cases();
+        $aCases = Array();
+        
+		$sItems = $_POST['items'];
+		$aItems = explode(',', $sItems);
+		foreach($aItems as $item){
+		    list($APP_UID, $USR_UID) = explode('|', $item);
+		    $aCase = $oCases->loadCaseInCurrentDelegation($APP_UID);
+		    
+		    $oCase->reassignCase($_POST['APPLICATIONS'][$sKey], $_POST['INDEXES'][$sKey], $_POST['USR_UID'], $sUser);
+		    
+		    array_push($sCases, $aCase); 
+		}
+	break;
+	
 	default:
 		echo 'default';
 }
