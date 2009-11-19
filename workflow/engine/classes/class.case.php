@@ -1835,6 +1835,7 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
           $appDelayConds[] = array(AppDelegationPeer::DEL_INDEX, AppDelayPeer::APP_DEL_INDEX);
           $c->addJoinMC($appDelayConds, Criteria::LEFT_JOIN);
           $c->add(AppDelayPeer::APP_DELAY_UID, null, Criteria::ISNOTNULL);
+          $c->add(AppDelayPeer::APP_TYPE, array("REASSIGN","ADHOC","CANCEL"), Criteria::NOT_IN);
           $c->add($c->getNewCriterion(AppDelayPeer::APP_DISABLE_ACTION_USER, null, Criteria::ISNULL)->addOr($c->getNewCriterion(AppDelayPeer::APP_DISABLE_ACTION_USER, 0)));
           $c->addDescendingOrderByColumn(ApplicationPeer::APP_NUMBER);
           $xmlfile = $filesList[3];
