@@ -52,11 +52,13 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
   var oAux = document.getElementById("publisherContent[0]");
   oAux.id = "publisherContent[666]";
   var currentGroup=false;
+  
   function webServicesSetup(){
-    popupWindow('' , '<?=$link_Edit?>' , 500 , 300 );
-//    refreshTree();
+    popupWindow('' , '<?=$link_Edit?>' , 500 , 225 );
   }
+   
   function showFormWS( uid, element ){
+   
     currentGroup = uid;
     var oRPC = new leimnud.module.rpc.xmlhttp({
       url   : '../setup/webServicesAjax',
@@ -111,8 +113,20 @@ if (($RBAC_Response=$RBAC->userCanAccess("PM_FACTORY"))!=1) return $RBAC_Respons
     currentPopupWindow.remove();
     refreshTree();
   }
+  
   function refreshTree(){
     tree.refresh( document.getElementById("publisherContent[666]") , '<?=$link_List?>');
   }
 
+  function showDetails(){
+	  var oRPC = new leimnud.module.rpc.xmlhttp({
+	      url   : '../setup/webServicesAjax',
+	      async : false,
+	      method: 'POST',
+	      args  : 'action=showDetails'
+	    });
+	    oRPC.make();
+	    document.getElementById('spanUsersList').innerHTML = oRPC.xmlhttp.responseText;
+  }
+  showDetails();
 </script>
