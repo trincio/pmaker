@@ -54,14 +54,10 @@ try {
 	$G_PUBLISH = new Publisher;
 	$G_PUBLISH->AddContent( 'xmlform', 'xmlform', 'cases/cases_ReassignBy', '', $_GET);
 
-
 	$sUserToReassign = trim($_GET['REASSIGN_USER']);
-
-	// $G_PUBLISH->AddContent( 'xmlform', 'xmlform', 'cases/cases_ReassignUsers', '', $_GET);
+	
 	if ($_GET['REASSIGN_USER'] != '') {
 
-		
-		
 		G::LoadClass('tasks');
 		G::LoadClass('groups');
 		$oTasks  = new Tasks();
