@@ -64,7 +64,9 @@ ORDER BY CONTENT.CON_VALUE
 <PME_REQUIRED type="checkbox" falseValue="0" value="1" defaultvalue="0" labelOnRight="0">
 	<en>Required</en>
 </PME_REQUIRED>
-
+<PME_HINTS_MESSAGE type="textarea" cols="47" rows="3">
+  <en>Hints message </en>
+</PME_HINTS_MESSAGE>
 <PME_ACCEPT type="button" onclick="fieldsSave( this.form );">
   <en>Save</en>
 </PME_ACCEPT>

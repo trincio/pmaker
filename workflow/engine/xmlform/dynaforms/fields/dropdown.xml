@@ -45,6 +45,10 @@ select XMLNODE_NAME, XMLNODE_NAME AS NAME FROM dynaForm WHERE XMLNODE_NAME &lt;&
   <en>Save label of selected value in variable</en>
 </PME_SAVELABEL>
 
+<PME_HINTS_MESSAGE type="textarea" cols="47" rows="3">
+  <en>Hints message </en>
+</PME_HINTS_MESSAGE>
+
 <PME_SUBTITLE type="title" enableHTML="1">
   <en>Appearance</en>
 </PME_SUBTITLE>
