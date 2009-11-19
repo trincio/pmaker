@@ -689,16 +689,32 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 	}
 	function close($A)
 	{
+            try
+              {
 		$file = G::decrypt( $A , URL_KEY );
+                //return(array('response'=>PATH_DYNAFORM  . $file . '.xml'));
 		/* Delete the temporal copy */
+                $tmp=self::_getTmpData();
+                $xmlFile = PATH_DYNAFORM  . $file . '.xml';
+                $htmlFile = PATH_DYNAFORM  . $file . '.html';
+                //return(array('response'=>$tmp['useTmpCopy']));
 		if (isset($tmp['useTmpCopy']))
 		{
+                    //return(array('response'=>PATH_DYNAFORM  . $file . '.xml'));
 			if ($file!==dynaformEditor::_getFilename($file))
 			{
-				unlink(PATH_DYNAFORM  . $file . '.xml');
-				unlink(PATH_DYNAFORM  . $file . '.html');
+                      //          return(array('response'=>PATH_DYNAFORM  . $file . '.xml'));
+                          if(file_exists($xmlFile)){
+                                unlink($xmlFile);
+                          }
+                          if(file_exists($htmlFile))
+				unlink($htmlFile);
 			}
 		}
+                return 0;
+              }catch(Exception $e){
+                  return (array) $e;
+              }
 	}
 	function is_modified($A,$DYN_UID)
 	{
@@ -754,6 +770,7 @@ class dynaformEditorAjax extends dynaformEditor implements iDynaformEditorAjax
 		$modFile = ($copy!==$origen) || ($origenHTML && ($copyHTML!==$origenHTML));
 		//Return
 		//return array("*message"=>sprintf("%s, (%s= %s %s):", $modPro?"1":"0" , $modFile?"1":"0", ($copy!==$origen)?"1":"0" , ($origenHTML && ($copyHTML!==$origenHTML))?"1":"0" ));
+                //die("c'est fini");
 		return $modPro || $modFile;
 		}
 		catch(Exception $e)

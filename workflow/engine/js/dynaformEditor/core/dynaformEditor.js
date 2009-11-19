@@ -52,13 +52,31 @@ var dynaformEditor={
 	  url='dynaforms_Saveas';
 		popupWindow('Save as', url+'?DYN_UID='+this.dynUid+'&AA='+this.A , 500, 350);
 	},
+        /*
+         * close function
+         * @author who knows
+         * @modifier Gustavo Cruz
+         * @purpose this function handles the close of a dynaform editor window
+         *          now whenever a dynaform window is close, if the form wasn't
+         *          saved the function also delete the temporal *_tmp0.xml files
+         *          discarding all the changes that were made, bug 3861.
+         */
 	close:function()
 	{
 		var modified=this.ajax.is_modified(this.A,this.dynUid);
 		if (typeof(modified)==="boolean")
 		{
-			if (!modified || confirm(G_STRINGS.ID_EXIT_WITHOUT_SAVING))
+                    if (!modified || confirm(G_STRINGS.ID_EXIT_WITHOUT_SAVING))
 			{
+                                res=this.ajax.close(this.A);
+                                    if (res==0) {
+                                        //alert(G_STRINGS.ID_DYNAFORM_NOT_SAVED);
+                                    }
+                                    else
+                                    {
+                                        //alert(res["response"]);
+                                        alert(res["*message"]);
+                                    }
 				return true;
 			}
 			else
