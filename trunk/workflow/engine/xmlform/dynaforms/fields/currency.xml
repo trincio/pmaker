@@ -51,6 +51,10 @@ SELECT XMLNODE_NAME, TYPE FROM dynaForm WHERE XMLNODE_NAME = @@PME_XMLNODE_NAME
   <en>Default Value</en>
 </PME_DEFAULTVALUE>
 
+<PME_HINTS_MESSAGE type="textarea" cols="47" rows="3">
+  <en>Hints message </en>
+</PME_HINTS_MESSAGE>
+
 <PME_SUBTITLE type="title" enableHTML="1">
   <en>Appearance</en>
 </PME_SUBTITLE>
@@ -69,6 +73,20 @@ SELECT XMLNODE_NAME, TYPE FROM dynaForm WHERE XMLNODE_NAME = @@PME_XMLNODE_NAME
     <option name="view">View</option>
   </en>
 </PME_MODE>
+
+<PME_SUBTITLE_OP type="title" enableHTML="1">
+  <en>Operations</en>
+</PME_SUBTITLE_OP>
+<PME_FORMULA type="text" maxlength="50" size="30" defaultvalue="" >
+  <en>Formula</en>
+</PME_FORMULA>
+<PME_FUNCTION type="dropdown">
+  <en>Function
+    <option name="">None</option>
+    <option name="sum">SUM</option>
+    <option name="avg">AVG</option>
+  </en>
+</PME_FUNCTION>
 <!--
 <PME_ENABLEHTML type="checkbox" falseValue="0" value="1" defaultvalue="0" labelOnRight="0">
 

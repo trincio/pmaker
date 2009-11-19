@@ -28,7 +28,9 @@ SELECT XMLNODE_NAME, TYPE FROM dynaForm WHERE XMLNODE_NAME = @@PME_XMLNODE_NAME
   <en>Value</en>
 <es>Valor</es><pt>Valor</pt></PME_VALUE>
 
-
+<PME_HINTS_MESSAGE type="textarea" cols="47" rows="3">
+  <en>Hints message </en>
+</PME_HINTS_MESSAGE>
 
 
 

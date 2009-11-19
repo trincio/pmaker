@@ -70,12 +70,9 @@ select XMLNODE_NAME, XMLNODE_NAME AS NAME FROM dynaForm WHERE	XMLNODE_NAME &lt;&
 <PME_DEFAULTVALUE type="text" maxlength="" size="30" defaultvalue="" >
   <en>Default Value</en>
 </PME_DEFAULTVALUE>
-
 <PME_HINTS_MESSAGE type="textarea" cols="47" rows="3">
   <en>Hints message </en>
 </PME_HINTS_MESSAGE>
-
-
 
 <PME_SUBTITLE type="title" enableHTML="1">
   <en>Appearance</en>
@@ -89,7 +86,6 @@ select XMLNODE_NAME, XMLNODE_NAME AS NAME FROM dynaForm WHERE	XMLNODE_NAME &lt;&
   <en>Group</en>
 </PME_GROUP>-->
 <PME_MODE type="dropdown" defaultvalue="edit">
-
   <en>Mode
     <option name="edit">Edit</option>
     <option name="view">View</option>

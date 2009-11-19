@@ -87,6 +87,10 @@ select XMLNODE_NAME, XMLNODE_NAME AS NAME FROM dynaForm WHERE XMLNODE_NAME &lt;&
   </en>
 </PME_DEFAULTVALUE_SEL>
 
+<PME_HINTS_MESSAGE type="textarea" cols="47" rows="3">
+  <en>Hints message </en>
+</PME_HINTS_MESSAGE>
+
 <PME_DEFAULTVALUE type="date" beforedate="-10y" afterdate="10y">
   <en></en>
 </PME_DEFAULTVALUE>
