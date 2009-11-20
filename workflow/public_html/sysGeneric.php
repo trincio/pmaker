@@ -110,8 +110,9 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
   $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'maborak/core/module.dashboard.js', true );
   $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'widgets/jscalendar/calendar.js' );
   $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'widgets/suggest/bsn.AutoSuggest_2.1.3.js' );
-
+  $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'widgets/tooltip/pmtooltip.js' );
   $oHeadPublisher->addMaborakFile( PATH_GULLIVER_HOME . 'js' . PATH_SEP . 'thirdparty/krumo/krumo.js' );
+  
   
   $oHeadPublisher->addMaborakFile( PATH_CORE . 'js' . PATH_SEP . 'cases/core/cases.js' , true );
   $oHeadPublisher->addMaborakFile( PATH_CORE . 'js' . PATH_SEP . 'cases/core/cases_Step.js', true );
@@ -487,7 +488,16 @@ $docuroot = explode ( PATH_SEP , $_SERVER['DOCUMENT_ROOT'] );
       header("Cache-Control: no-store, no-cache, must-revalidate");
       header("Cache-Control: post-check=0, pre-check=0", false);
       header("Pragma: no-cache");
-
+      
+      if( defined('SYS_LANG') ){
+	    require_once 'classes/model/Language.php';
+	    $oLang = new Language(); 
+	    $aLang = $oLang->load(SYS_LANG);
+	    if( isset($aLang['LAN_DIRECTION']) ){
+	       define('SYS_LANG_DIRECTION', strtoupper($aLang['LAN_DIRECTION']));
+	    }
+      }
+        
       //if(isset( $_SESSION['USER_LOGGED'] )) {
       if((isset( $_SESSION['USER_LOGGED'] ))&&(!(isset($_GET['sid'])))) {
         $RBAC->initRBAC();

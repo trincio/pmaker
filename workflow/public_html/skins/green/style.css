@@ -2093,7 +2093,6 @@ table.tableGrid_view td
 }
 
 .htmleditor{
-    .module_app_input___gray {
     -x-system-font:none;
     background:#FFFFFF url(../images/input_back.gif) repeat-x scroll 0 0;
     border:1px solid #AAAAAA;
