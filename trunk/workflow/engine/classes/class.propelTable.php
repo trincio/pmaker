@@ -325,7 +325,14 @@ class propelTable
       if (isset($this->style[$r]['onclick']))    $this->tpl->assign( "onclick" , htmlentities( $this->style[$r]['onclick'] , ENT_QUOTES, 'UTF-8' ) );
       if (isset($this->style[$r]['colWidth']))   $this->tpl->assign( "width" ,   $this->style[$r]['colWidth'] );
       if (isset($this->style[$r]['colWidth']))   $this->tpl->assign( "widthPercent" , ($this->style[$r]['colWidth']*100 / $this->totalWidth) . "%" );
+      
+      //Hook for special skin with RTL languajes 
+      if( defined('SYS_SKIN') && SYS_SKIN == 'rtl') {
+        $this->style[$r]['titleAlign'] = 'right';
+      }
+    
       if (isset($this->style[$r]['titleAlign'])) $this->tpl->assign( "align" , 'text-align:'.$this->style[$r]['titleAlign'].';');
+      
       if ($this->style[$r]['titleVisibility']!='0') {
         $sortOrder = (((isset($this->aOrder[$this->fields[$r]['Name']])) && ($this->aOrder[$this->fields[$r]['Name']]==='ASC'))?'▲':'');
         $sortOrder = (((isset($this->aOrder[$this->fields[$r]['Name']])) && ($this->aOrder[$this->fields[$r]['Name']]==='DESC'))?'▼':$sortOrder);
@@ -399,6 +406,9 @@ class propelTable
 
     if ( array_search( 'renderTable', get_class_methods( $fieldClass ) )!== FALSE ) {
       $htmlField = $this->xmlForm->fields[ $fieldName ]->renderTable( $value, $this->xmlForm, true );
+      if(is_object($value)){
+      	$value = '';
+      }
       $this->tpl->assign( "value" , (eregi('^[[:space:]]', $value) && (substr($fieldName,0,3)!="PRO"))? str_ireplace(" ","&nbsp;",$htmlField):$htmlField );
     }
 
