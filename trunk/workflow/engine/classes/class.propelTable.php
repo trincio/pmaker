@@ -454,7 +454,7 @@ class propelTable
       //Align titles
       $this->style[$r]['titleAlign']='center';
       //Align fields
-      if (defined('SYS_LANG_DIRECTION') && SYS_LANG_DIRECTION == 'R1')
+      if (defined('SYS_LANG_DIRECTION') && SYS_LANG_DIRECTION == 'R')
         $this->style[$r]['align']='right';
       else
         $this->style[$r]['align']='left';
