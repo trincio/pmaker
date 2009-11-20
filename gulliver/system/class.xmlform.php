@@ -977,6 +977,7 @@ class XmlForm_Field_Textarea extends XmlForm_Field {
   var $readOnly = false;
   var $wrap = 'OFF';
   var $hints_message='';
+  var $className;
   /**
    * Function render
    * @author David S. Callizaya S. <davidsantos@colosa.com>
@@ -995,13 +996,14 @@ class XmlForm_Field_Textarea extends XmlForm_Field {
       if (isset ( $firstElement ))
         $value = $firstElement;
     }
-
-    $className = ($this->className) ? (' class="' . $this->className . '"') : '';
+    
+    $className = isset($this->className) ?  $this->className : 'module_app_input___gray';
+    
     if ($this->mode === 'edit') {
       if ($this->readOnly)
-        return '<textarea id="form[' . $this->name . ']" name="form[' . $this->name . ']" wrap="hard" cols="' . $this->cols . '" rows="' . $this->rows . '" style="' . $this->style . '" wrap="' . htmlentities ( $this->wrap, ENT_QUOTES, 'UTF-8' ) . '" class="module_app_input___gray" ' . $className . ' readOnly>' . $this->htmlentities ( $value, ENT_COMPAT, 'utf-8' ) . '</textarea>';
+        return '<textarea id="form[' . $this->name . ']" name="form[' . $this->name . ']" wrap="hard" cols="' . $this->cols . '" rows="' . $this->rows . '" style="' . $this->style . '" wrap="' . htmlentities ( $this->wrap, ENT_QUOTES, 'UTF-8' ) . '" class=" ' . $className . '" readOnly>' . $this->htmlentities ( $value, ENT_COMPAT, 'utf-8' ) . '</textarea>';
       else{
-        $html = '<textarea id="form[' . $this->name . ']" name="form[' . $this->name . ']" wrap="hard" cols="' . $this->cols . '" rows="' . $this->rows . '" style="' . $this->style . '" wrap="' . htmlentities ( $this->wrap, ENT_QUOTES, 'UTF-8' ) . '" class="module_app_input___gray" ' . $className . ' >' . $this->htmlentities ( $value, ENT_COMPAT, 'utf-8' ) . '</textarea>';
+        $html = '<textarea id="form[' . $this->name . ']" name="form[' . $this->name . ']" wrap="hard" cols="' . $this->cols . '" rows="' . $this->rows . '" style="' . $this->style . '" wrap="' . htmlentities ( $this->wrap, ENT_QUOTES, 'UTF-8' ) . '" class=" ' . $className . '" >' . $this->htmlentities ( $value, ENT_COMPAT, 'utf-8' ) . '</textarea>';
           if($this->hints_message){
       		 $html .= '<a href="#" onmouseout="hideTooltip()" onmouseover="showTooltip(event, \''.$this->hints_message.'\');return false;">
 	 	    					<image src="/images/help4.gif" width="15" height="15" border="0"/>

@@ -2060,3 +2060,65 @@ table.tableGrid_view td
 		-moz-border-radius:6px;	/* Rounded edges in Firefox */
 }
 /*@end:  PM tooltip */
+
+/**
+ * (init) Dybaform Handler styles */
+
+    #sortable {list-style-type: none;margin: 2; padding: 0; width: 700px;}
+    #sortable li {margin: 1px 1px 1px 1px;padding: 1px;padding-left: 1px;font-size: 13px;height: 28px;}
+    #sortable li:hover {background: orange;}
+    #sortable li span {position: absolute;margin-left: -1.3em;}
+    .dtext{padding-top: 0px;font-size: 13px;color:blue;}
+    .dynalist td{font-size: 10px;color: #000;}
+    body{ background: #fff; font: normal 62.5% "Trebuchet MS", Verdana, Helvetica, Arial,sans-serif !important; color: #000; line-height: 1.4; margin: 0px; padding: 0px;}
+    #jq-siteContain {width: 910px;margin: 0 auto;}
+    #jq-content {background: #181c21 url(images/bg_home_content.gif) top repeat-x;padding: 4em 40px;border-bottom: 1px solid #000;}
+    #jq-intro {padding-top: 1em;width: 515px;margin-bottom: 3.5em;}
+    #jq-intro li {float: left;font-size: 1.4em;}
+    #jq-intro li a { color: #5DB0E6; font-weight: bold; text-decoration: underline; float: left; background: url(images/icon_check_whiteOnDarkBlue.gif) left no-repeat; padding: 0 30px 0 23px;}
+    #jq-intro li p {font-size: .9em;}
+    body.jq-enhanced #jq-intro li {position: relative;}
+    html.js div.jq-checkpointSubhead {display: none;}
+    body.jq-enhanced #jq-intro li div.jq-checkpointSubhead { position: absolute; width: 253px; height: 54px; background: url(/images/bg_ctaTooltip.png) 0 0 no-repeat; top: -1.5em; left: -35%; z-index: 100;}
+    body.jq-enhanced #jq-intro li div.jq-checkpointSubhead p{font-size: 1em; padding: 10px 5px 0 50px; color: #AE0001; font-weight: bold; line-height: 1.3em; margin: 0; cursor: pointer;}
+    .toggler { font-size:10px;height: 200px; position: relative;}
+    #effect { width:180px;font-size:10px;height: 135px; padding: 0.4em; position: relative; background: #fff; }
+    #effect h3 { font-size:10px;margin: 0; padding: 0.4em; text-align: center; }
+/* 
+ *  (end) Dybaform Handler styles **/
+
+/*extendend fields styles*/
+#fieldshandler_items_table{
+    direction: ltr;
+}
+
+.htmleditor{
+    .module_app_input___gray {
+    -x-system-font:none;
+    background:#FFFFFF url(../images/input_back.gif) repeat-x scroll 0 0;
+    border:1px solid #AAAAAA;
+    color:#333333;
+    font-family:sans-serif;
+    font-size:8pt;
+    font-size-adjust:none;
+    font-stretch:normal;
+    font-style:normal;
+    font-variant:normal;
+    font-weight:normal;
+    line-height:normal;
+    padding:1px 1px 1px 3px;
+    direction:ltr;
+}
+
+.FormTextPM{
+    direction: ltr;
+}
+
+.directionSide1{
+    direction: ltr;
+}
+
+.directionSide2{
+    direction: rtl;
+}
+
