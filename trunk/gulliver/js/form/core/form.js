@@ -479,8 +479,11 @@
     	   for (var i=0;i<operations.length;i++){
     	  	 		var sums=getField(operations[i]);
     	  	 		//getField(operations[i]).addEvent('onBlur',function(){alert(233);});
-    	  	 		if(sums.value!='') 
-    	  	 		  resdo =resdo+parseInt(sums.value);
+    	  	 		
+    	  	 		if(sums.value!=''){ 
+    	  	 		  if(isnumberk(sums.value))
+    	  	 		     resdo =resdo+parseInt(sums.value);
+    	  	 		}
 							   	/*  	 		
     	  	 		    getField(operations[i]).onblur=function(){
     	  	 		    	sumElem(sums,element,operations);
@@ -1328,4 +1331,20 @@ function sumElem(s,ans,fs){
  	   }
  		ans.value=sm;
 }
+ 
+ function isnumberk(texto){
+ var numberk="0123456789";	
+ var letters="abcdefghijklmnopqrstuvwxyz";
+ var i=0;
+ var sw=1;
+ 
+   //for(var i=0; i<texto.length; i++){
+   while(i++ < texto.length && sw==1){
+      if (numberk.indexOf(texto.charAt(i),0)==-1){
+         sw=0;
+      }
+   }
+   return sw;
+} 
+ 
  

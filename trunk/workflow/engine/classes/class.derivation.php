@@ -325,7 +325,8 @@ class Derivation
 	    throw ( $e );
     }
   }
-
+  
+  
   /*
    */
   function derivate($currentDelegation=array(), $nextDelegations =array())
@@ -334,12 +335,25 @@ class Derivation
     if ( !defined('TASK_FINISH_PROCESS')) define('TASK_FINISH_PROCESS',-1);
     if ( !defined('TASK_FINISH_TASK'))    define('TASK_FINISH_TASK',   -2);
 
+
     $this->case = new cases();
+/**
+      $openThreads = $this->case->GetOpenThreads( $currentDelegation['APP_UID'] );
+print $openThreads."<hr>";
+    foreach($nextDelegations as $nextDel) { 
+print $nextDel['TAS_UID']." ** ".$currentDelegation['APP_UID']." ** ".$currentDelegation['DEL_INDEX']." ** ".$currentDelegation['TAS_UID']." <hr> ";
+      $siblingThreads = $this->case->getOpenSiblingThreads($nextDel['TAS_UID'], $currentDelegation['APP_UID'], $currentDelegation['DEL_INDEX'], $currentDelegation['TAS_UID']);
+print_r ( $siblingThreads);            
+    }       
+    
+    $canDerivate = count($siblingThreads) == 0;
+//    print "derivate".$canDerivate; 
+die;
+/******/
     //first, we close the current derivation, then we'll try to derivate to each defined route
     $appFields = $this->case->loadCase($currentDelegation['APP_UID'], $currentDelegation['DEL_INDEX'] );
-//krumo ($currentDelegation);
-//krumo ( $nextDelegations ); //*////*/*/*/*/quitar comentario
     $this->case->CloseCurrentDelegation ( $currentDelegation['APP_UID'], $currentDelegation['DEL_INDEX'] );
+
     //Count how many tasks should be derivated.
     //$countNextTask = count($nextDelegations);
     foreach($nextDelegations as $nextDel)
@@ -368,6 +382,7 @@ class Derivation
         }
       }
       $openThreads = $this->case->GetOpenThreads( $currentDelegation['APP_UID'] );
+      //if we are derivating to finish process but there are no more open thread then we are finishing only the task, we are not finishing the whole process
       if (($nextDel['TAS_UID'] == TASK_FINISH_PROCESS) && (($openThreads + 1) > 1)) {
         $nextDel['TAS_UID'] = TASK_FINISH_TASK;
       }
@@ -376,6 +391,7 @@ class Derivation
           /*Close all delegations of $currentDelegation['APP_UID'] */
           $this->case->closeAllDelegations ( $currentDelegation['APP_UID'] );
           $this->case->closeAllThreads ( $currentDelegation['APP_UID']);
+          //I think we need to change the APP_STATUS to completed,
           break;
         case TASK_FINISH_TASK:
           $iAppThreadIndex = $appFields['DEL_THREAD'];
@@ -391,6 +407,7 @@ class Derivation
             $canDerivate = true;
           }
 
+//print $currentDelegation['ROU_TYPE'] . " -- $canDerivate <br>";
           if ( $canDerivate ) {
             if ( $nextDel['TAS_ASSIGN_TYPE'] == 'BALANCED') {
               $this->setTasLastAssigned ($nextDel['TAS_UID'], $nextDel['USR_UID']);
@@ -415,10 +432,13 @@ class Derivation
                    $this->case->closeAppThread ( $currentDelegation['APP_UID'], $iAppThreadIndex);
                    $iNewThreadIndex = $this->case->newAppThread ( $currentDelegation['APP_UID'], $iNewDelIndex, $iAppThreadIndex );
                    $this->case->updateAppDelegation ( $currentDelegation['APP_UID'], $iNewDelIndex, $iNewThreadIndex  );
+//print " this->case->updateAppDelegation ( " . $currentDelegation['APP_UID'] .", " . $iNewDelIndex ." , " .  $iNewThreadIndex . " )<br>";
                    break;
               default :
               $this->case->updateAppThread ( $currentDelegation['APP_UID'], $iAppThreadIndex, $iNewDelIndex );
             }//switch
+            
+            //if there are subprocess.....
             if (isset($aSP)) {
               //Create the new case in the sub-process
               $aNewCase   = $this->case->startCase($aSP['TAS_UID'], $aSP['USR_UID']);
@@ -483,6 +503,7 @@ class Derivation
 			          }
               }
             }
+            
           }
           else {  //when the task doesnt generate a new AppDelegation
             $iAppThreadIndex = $appFields['DEL_THREAD'];
@@ -494,7 +515,6 @@ class Derivation
             }//switch
           }
       }
-
       //SETS THE APP_PROC_CODE
       //if (isset($nextDel['TAS_DEF_PROC_CODE']))
         //$appFields['APP_PROC_CODE'] = $nextDel['TAS_DEF_PROC_CODE'];

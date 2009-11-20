@@ -488,7 +488,7 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
         $x = unserialize($Fields['APP_DATA']);
         if (isset($x[$VAR_PRI])) {
           if ($x[$VAR_PRI] != '') {
-              krumo($x[$VAR_PRI]);
+//              krumo($x[$VAR_PRI]);
             $oDel = new AppDelegation;
             $array = array();
             $array['APP_UID'] = $sAppUid;
@@ -657,105 +657,120 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
   }
 
   /*
-  * getSiblingThreads
+  * getSiblingThreads, 
+  * get an array with all sibling threads open from next task
   * @param string $sAppUid
   * @return
   */
   function getOpenSiblingThreads($sNextTask, $sAppUid, $iDelIndex, $sCurrentTask) {
     try {
       require_once 'classes/model/Route.php';
-      $aPreviousTask = array();
+
+   
+      //Get all tasks that are previous to my NextTask, we want to know if there are pending task for my nexttask
+      //we need to filter only seq joins going to my next task
+      //and we are removing the current task from the search
+      $aThreads = array();
       $oCriteria = new Criteria('workflow');
       $oCriteria->add(RoutePeer::ROU_NEXT_TASK, $sNextTask);
+      $oCriteria->add(RoutePeer::TAS_UID,      $sCurrentTask ,  Criteria::NOT_EQUAL );
+      $oCriteria->add(RoutePeer::ROU_TYPE,      'SEC-JOIN');
       $oDataset = RoutePeer::doSelectRs($oCriteria);
       $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
       $oDataset->next();
       while ($aRow = $oDataset->getRow()) {
-        $aPreviousTask[] = $aRow['TAS_UID'];
-        $oDataset->next();
+      	$aPrevious = $this->searchOpenPreviousTasks( $aRow['TAS_UID'], $sAppUid );
+      	if ( ! (is_array($aPrevious) && count($aPrevious) == 0 ) )
+          $aThreads[] = array_merge ( $aPrevious,  $aThreads );
+       $oDataset->next();
       }
-      $oCriteria = new Criteria('workflow');
-      $aConditions   = array();
-      $aConditions[] = array(AppThreadPeer::APP_UID, AppDelegationPeer::APP_UID);
-      $aConditions[] = array(AppThreadPeer::DEL_INDEX, AppDelegationPeer::DEL_INDEX);
-      $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
-      $oCriteria->add(AppDelegationPeer::TAS_UID, $aPreviousTask, Criteria::IN);
-      $oCriteria->add(AppDelegationPeer::APP_UID, $sAppUid);
-      $oCriteria->add(AppThreadPeer::APP_THREAD_STATUS, 'OPEN');
-      if (AppThreadPeer::doCount($oCriteria) == 1) {
-        $iCounter  = 0;
-        $bContinue = true;
-        $aTaskReviewed = array();
-        do {
-          $aAux = $aPreviousTask;
-          foreach ($aAux as $sTaskUid) {
-            if (!in_array($sTaskUid, $aTaskReviewed)) {
-              $aTaskReviewed[] = $sTaskUid;
-              $oCriteria = new Criteria('workflow');
-              $oCriteria->add(RoutePeer::ROU_NEXT_TASK, $sTaskUid);
-              $oDataset = RoutePeer::doSelectRs($oCriteria);
-              $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-              $oDataset->next();
-              while (($aRow = $oDataset->getRow()) && ($bContinue)) {
-                if (!in_array($aRow['TAS_UID'], $aPreviousTask)) {
-                  $aPreviousTask[] = $aRow['TAS_UID'];
-                }
-                $oCriteria = new Criteria('workflow');
-                $oCriteria->add(AppDelegationPeer::APP_UID, $sAppUid);
-                $oCriteria->add(AppDelegationPeer::TAS_UID, $aRow['TAS_UID']);
-                $oCriteria->add(AppDelegationPeer::DEL_FINISH_DATE, null, Criteria::ISNULL);
-                if (AppDelegationPeer::doCount($oCriteria) == 1) {
-                  if ($aRow['TAS_UID'] != $sCurrentTask) {
-                    $bContinue = false;
-                  }
-                  else {
-                    $bContinue = true;
-                  }
-                }
-                else {
-                  $bContinue = true;
-                }
-                $oDataset->next();
-              }
-            }
-          }
-          $iCounter++;
-        } while (($bContinue) && ($iCounter < 100));
-      }
-      $oCriteria = new Criteria('workflow');
-      $oCriteria->add(AppThreadPeer::APP_UID, $sAppUid);
-      $oCriteria->add(AppThreadPeer::DEL_INDEX, $iDelIndex);
-      $oDataset = AppThreadPeer::doSelectRs($oCriteria);
-      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-      $oDataset->next();
-      $aRow          = $oDataset->getRow();
-      $iParent       = $aRow['APP_THREAD_PARENT'];
-      $aThreads      = array();
-      $oCriteria = new Criteria('workflow');
-      $oCriteria->addSelectColumn('*');
-      $aConditions   = array();
-      $aConditions[] = array(AppThreadPeer::APP_UID, AppDelegationPeer::APP_UID);
-      $aConditions[] = array(AppThreadPeer::DEL_INDEX, AppDelegationPeer::DEL_INDEX);
-      $oCriteria->addJoinMC($aConditions, Criteria::LEFT_JOIN);
-      $oCriteria->add(AppThreadPeer::APP_UID, $sAppUid);
-      $oCriteria->add(AppThreadPeer::APP_THREAD_PARENT, $iParent);
-      $oCriteria->add(AppThreadPeer::APP_THREAD_STATUS, 'OPEN');
-      $oCriteria->add(AppThreadPeer::DEL_INDEX, $iDelIndex, Criteria::NOT_EQUAL);
-      $oCriteria->add(AppDelegationPeer::TAS_UID, $aPreviousTask, Criteria::IN);
-      $oDataset = AppThreadPeer::doSelectRs($oCriteria);
-      $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
-      $oDataset->next();
-      $aRow = $oDataset->getRow();
-      while ($aRow = $oDataset->getRow()) {
-        $aThreads[] = $aRow;
-        $oDataset->next();
-      }
+      
       return $aThreads;
     }
     catch (exception $e) {
       throw ($e);
     }
   }
+  
+  function searchOpenPreviousTasks( $taskUid, $sAppUid ) {
+  	//in this array we are storing all open delegation rows.
+  	$aTaskReviewed = array();  	
+
+   //check if this task ( $taskUid ) has open delegations
+    $oCriteria2 = new Criteria('workflow');
+    $oCriteria2->add(AppDelegationPeer::APP_UID, $sAppUid  );
+    $oCriteria2->add(AppDelegationPeer::TAS_UID, $taskUid  );
+    $oCriteria2->add(AppDelegationPeer::DEL_THREAD_STATUS, 'OPEN');
+    $oDataset2 = AppDelegationPeer::doSelectRs($oCriteria2);
+    $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset2->next();
+    $aRow2 = $oDataset2->getRow();
+    if ( is_array($aRow2) ) {
+    	//there is an open delegation, so we need to return the delegation row
+    	$aTaskReviewed[] = $aRow2;
+      return $aTaskReviewed;    	
+    }
+    else {
+      $oCriteria3 = new Criteria('workflow');
+      $oCriteria3->add(AppDelegationPeer::APP_UID, $sAppUid  );
+      $oCriteria3->add(AppDelegationPeer::TAS_UID, $taskUid );
+      $oDataset3 = AppDelegationPeer::doSelectRs($oCriteria3);
+      $oDataset3->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset3->next();
+      $aRow3 = $oDataset3->getRow();
+      if ( is_array($aRow3) ) {
+        return $aTaskReviewed;  //returning empty array
+      }
+      else { //if not we check previous tasks 
+      }
+    }
+
+
+  	//get all previous task from $taskUid, and return open delegations rows, if there are 
+    $oCriteria = new Criteria('workflow');
+    $oCriteria->add(RoutePeer::ROU_NEXT_TASK, $taskUid);
+    $oDataset = RoutePeer::doSelectRs($oCriteria);
+    $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+    $oDataset->next();
+    $aRow = $oDataset->getRow();
+    while (is_array($aRow ) ) {
+      $aPreviousTask[] = $aRow['TAS_UID'];
+
+      $oCriteria2 = new Criteria('workflow');
+      $oCriteria2->add(AppDelegationPeer::APP_UID, $sAppUid  );
+      $oCriteria2->add(AppDelegationPeer::TAS_UID, $aRow['TAS_UID'] );
+      $oCriteria2->add(AppDelegationPeer::DEL_THREAD_STATUS, 'OPEN');
+      $oDataset2 = AppDelegationPeer::doSelectRs($oCriteria2);
+      $oDataset2->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+      $oDataset2->next();
+      $aRow2 = $oDataset2->getRow();
+      if ( is_array($aRow2) ) {
+      	//there is an open delegation, so we need to return the delegation row
+      	$aTaskReviewed[] = $aRow2;
+      }
+      else {
+        $oCriteria3 = new Criteria('workflow');
+        $oCriteria3->add(AppDelegationPeer::APP_UID, $sAppUid  );
+        $oCriteria3->add(AppDelegationPeer::TAS_UID, $aRow['TAS_UID'] );
+        $oDataset3 = AppDelegationPeer::doSelectRs($oCriteria3);
+        $oDataset3->setFetchmode(ResultSet::FETCHMODE_ASSOC);
+        $oDataset3->next();
+        $aRow3 = $oDataset3->getRow();
+        if ( is_array($aRow3) ) {
+        	//there are closed delegations, so we need to get back without returning delegation rows
+        }
+        else { //if not we start the recursion searching previous open tasks from this task.
+        	$aTaskReviewed[] = searchOpenPreviousTasks( $aRow['TAS_UID'] );
+        }
+      }
+
+      //$this->searchOpenPreviousTasks();
+      $oDataset->next();
+      $aRow = $oDataset->getRow();
+    }
+    return $aTaskReviewed;
+  }
+
 
   /*
   * CountTotalPreviousTasks
@@ -929,7 +944,8 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
   {
     try {
       $appDel = new AppDelegation();
-      $delIndex = $appDel->createAppDelegation($sProUid, $sAppUid, $sTasUid, $sUsrUid, $iAppThreadIndex, $iPriority);
+      //$delIndex = $appDel->createAppDelegation($sProUid, $sAppUid, $sTasUid, $sUsrUid, $iAppThreadIndex, $iPriority);
+        $delIndex = $appDel->createAppDelegation($sProUid, $sAppUid, $sTasUid, $sUsrUid, $iAppThreadIndex);
       $aData = array();
       $aData['APP_UID'] = $sAppUid;
       $aData['DEL_INDEX'] = $delIndex;
