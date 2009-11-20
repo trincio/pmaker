@@ -15,7 +15,12 @@
      <td width="50%" height="16" align="right" valign="top">      
       <!--<div align="right" class="logout"><small>{php}if ((int)$_SESSION['USER_LOGGED'] != 0) {{/php}<a href="../users/myInfo">{$user}</a> | <a href="../login/login" class="tableOption">{php}echo G::LoadTranslation('ID_LOGOUT');{/php}</a>{php}}{/php}</small> &nbsp; &nbsp;</div>
       -->
-      <div align="right" class="logout"><small>{php}if ((int)$_SESSION['USER_LOGGED'] != 0) {{/php}<a href="../users/myInfo">{$user}</a> | <a href="{$linklogout}" class="tableOption">{php}echo G::LoadTranslation('ID_LOGOUT');{/php}</a>{php}}{/php}</small> &nbsp; &nbsp;</div>      
+      <div align="left" class="logout">
+        <small>
+          {php}if ((int)$_SESSION['USER_LOGGED'] != 0) {{/php}
+          <a href="../users/myInfo">{$user}</a> | 
+          <a href="{$linklogout}" class="tableOption">{php}echo G::LoadTranslation('ID_LOGOUT');{/php}</a>{php}}{/php}
+        </small> &nbsp; &nbsp;</div>      
      </td>
     </tr>
     <tr>
