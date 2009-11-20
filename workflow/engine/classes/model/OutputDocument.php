@@ -434,13 +434,16 @@ class OutputDocument extends BaseOutputDocument {
   	  G::verifyPath($sPath, true);
   	  /* Start - Create .doc */
   	  $oFile = fopen($sPath .  $sFilename . '.doc', 'wb');
-  	  fwrite($oFile, "MIME-Version: 1.0\n");
-      fwrite($oFile, "Content-Type: multipart/related; boundary=\"==boundary\"; type=\"text/html;\"\n\n");
-      fwrite($oFile, "--==boundary\nContent-Type: text/html;\n\n");
-      fwrite($oFile, "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /></head><body>\n");
-      fwrite($oFile, $sContent);
-      fwrite($oFile, "\n</body></html>\n\n");
-      fwrite($oFile, "--==boundary--\n");
+          //@TODO: maybe it should be a better aproach using a class or a library
+          //with a better set of functions like MsDoc.
+
+          //fwrite($oFile, "MIME-Version: 1.0\n");
+          //fwrite($oFile, "Content-Type: multipart/related; boundary=\"==boundary\"; type=\"text/html;\"\n\n");
+          //fwrite($oFile, "--==boundary\nContent-Type: text/html;\n\n");
+            fwrite($oFile, "<html><head><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" /></head><body>\n");
+            fwrite($oFile, $sContent);
+            fwrite($oFile, "\n</body></html>\n\n");
+          //fwrite($oFile, "--==boundary--\n");
   	  fclose($oFile);
   	  /* End - Create .doc */
   	  /* Start - Create .pdf */
@@ -450,9 +453,9 @@ class OutputDocument extends BaseOutputDocument {
   	  define('PATH_OUTPUT_FILE_DIRECTORY', PATH_HTML . 'files/' . $_SESSION['APPLICATION'] . '/outdocs/');
   	  G::verifyPath(PATH_OUTPUT_FILE_DIRECTORY, true);
   	  require_once(PATH_THIRDPARTY . 'html2ps_pdf/config.inc.php');
-      require_once(PATH_THIRDPARTY . 'html2ps_pdf/pipeline.factory.class.php');
-      parse_config_file(PATH_THIRDPARTY . 'html2ps_pdf/html2ps.config');
-      $GLOBALS['g_config'] = array('cssmedia'                => 'screen',
+          require_once(PATH_THIRDPARTY . 'html2ps_pdf/pipeline.factory.class.php');
+          parse_config_file(PATH_THIRDPARTY . 'html2ps_pdf/html2ps.config');
+          $GLOBALS['g_config'] = array('cssmedia'                => 'screen',
                                    'media'                   => 'Letter',
                                    'scalepoints'             => true,
                                    'renderimages'            => true,

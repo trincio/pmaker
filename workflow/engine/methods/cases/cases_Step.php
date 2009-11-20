@@ -305,11 +305,12 @@
           $pathOutput = PATH_DOCUMENT . $_SESSION['APPLICATION'] . PATH_SEP . 'outdocs'. PATH_SEP ;
           G::mk_dir ( $pathOutput );
           switch ( $aOD['OUT_DOC_TYPE'] ) {
-            case 'HTML' : $oOutputDocument->generate( $_GET['UID'], $Fields['APP_DATA'], $pathOutput,
-                            $sFilename, $aOD['OUT_DOC_TEMPLATE'], (boolean)$aOD['OUT_DOC_LANDSCAPE'] );
-                          break;
+            case 'HTML' : 
+                $oOutputDocument->generate( $_GET['UID'], $Fields['APP_DATA'], $pathOutput,
+                $sFilename, $aOD['OUT_DOC_TEMPLATE'], (boolean)$aOD['OUT_DOC_LANDSCAPE'] );
+                break;
             case 'JRXML' :
-
+                
 //creating the xml with the application data;
   $xmlData = "<dynaform>\n";
   foreach ( $Fields['APP_DATA'] as $key => $val ) {
@@ -338,9 +339,9 @@
   //$iSize = file_put_contents ( $pathOutput .  $sFilename . '.pdf' , $content );
   copy ( $outputFile, $pathOutput .  $sFilename . '.pdf' );
 //die;
-                          break;
-            case 'ACROFORM' :
-
+  break;
+  case 'ACROFORM' :
+    
 //creating the xml with the application data;
   $xmlData = "<dynaform>\n";
   foreach ( $Fields['APP_DATA'] as $key => $val ) {
@@ -358,7 +359,7 @@
   $util->setOutputPath( $javaOutput );
 
   copy ( PATH_DYNAFORM . $aOD['PRO_UID'] . PATH_SEP . $aOD['OUT_DOC_UID'] . '.pdf', $javaInput .  $aOD['OUT_DOC_UID'] . '.pdf' );
-
+  
   $outputFile = $javaOutput . $sFilename . '.pdf' ;
   print $util->writeVarsToAcroFields( $aOD['OUT_DOC_UID'] . '.pdf' , $xmlData );
 
@@ -421,7 +422,7 @@
           	$sPathName = PATH_DOCUMENT . $_SESSION['APPLICATION'] . PATH_SEP;
 
             $oData['APP_UID']   = $_SESSION['APPLICATION'];
-            $oData['ATTACHMENT_FOLDER'] = true;
+            $oData['ATTACHMENT_FOLDER'] = true;            
             switch($aOD['OUT_DOC_GENERATE']){
                 case "BOTH":
                     $documentData = new uploadDocumentData (
