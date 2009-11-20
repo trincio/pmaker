@@ -1,30 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dynaForm
-  name="outputdocs/outputdocs_Edit"
-  type="xmlform"
-  width="100%"
-  labelWidth="2px"
->
+<dynaForm name="outputdocs/outputdocs_Edit" type="xmlform" width="100%" labelWidth="2px">
 
 <PRO_UID type="hidden"/>
 
 <OUT_DOC_UID type="hidden" showInTable="0"/>
 
-<OUT_DOC_TEMPLATE type="html" width = "100%" height="365px" defaultValue="&lt;br/&gt;">
-  <en></en>
-</OUT_DOC_TEMPLATE>
+<OUT_DOC_TEMPLATE type="html" width="100%" height="365px" defaultValue="&lt;br/&gt;" />
 
-<INSERT_VARIABLE type="button" align="right" style="position:absolute;left:700px;top:420px;border-style:double;" onclick="showDynaformsFormVars('form[TEXT_TEST]','../controls/varsAjax','@#PRO_UID','@#');">
+<INSERT_VARIABLE type="button" align="right" style="position:absolute;left:700px;top:420px;border-style:double;" onclick="showDynaformsFormVars(&#039;form[TEXT_TEST]&#039;,&#039;../controls/varsAjax&#039;,&#039;@#PRO_UID&#039;,&#039;@#&#039;);">
   <en>@#</en>
-  <es>@#</es>
 </INSERT_VARIABLE>
 
 <ACCEPT type="button" onclick="outputdocsSave(this.form);">
   <en>Save</en>
 </ACCEPT>
 
-<JS type="JavaScript">
-<![CDATA[
+<JS type="JavaScript"><![CDATA[
+
 var _oVarsPanel_;
 var showDynaformsFormVars = function(sFieldName, sAjaxServer, sProcess, sSymbol) {
 	_oVarsPanel_ = new leimnud.module.panel();
@@ -117,7 +109,7 @@ var insertFormVar = function(sFieldName, sValue) {
 };
 
 
-]]>
-</JS>
+
+]]></JS>
 
 </dynaForm>

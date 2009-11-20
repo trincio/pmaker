@@ -326,8 +326,8 @@ class propelTable
       if (isset($this->style[$r]['colWidth']))   $this->tpl->assign( "width" ,   $this->style[$r]['colWidth'] );
       if (isset($this->style[$r]['colWidth']))   $this->tpl->assign( "widthPercent" , ($this->style[$r]['colWidth']*100 / $this->totalWidth) . "%" );
       
-      //Hook for special skin with RTL languajes 
-      if( defined('SYS_SKIN') && SYS_SKIN == 'rtl') {
+      //Hook for special skin with RTL languajes
+      if( defined('SYS_LANG_DIRECTION') && SYS_LANG_DIRECTION == 'R') {
         $this->style[$r]['titleAlign'] = 'right';
       }
     
@@ -454,7 +454,7 @@ class propelTable
       //Align titles
       $this->style[$r]['titleAlign']='center';
       //Align fields
-      if (isset($_SESSION['SET_DIRECTION']) && (strcasecmp($_SESSION['SET_DIRECTION'],'rtl')===0))
+      if (defined('SYS_LANG_DIRECTION') && SYS_LANG_DIRECTION == 'R1')
         $this->style[$r]['align']='right';
       else
         $this->style[$r]['align']='left';
