@@ -231,6 +231,13 @@ span.XtreeMinus:hover
 	font		:bold 13pt Tahoma,MiscFixed;
 }
 	/*theme processmap end*/
+
+.pm__toolbar{
+    align:left;
+    font-size:1;
+    line-height:31px;
+}
+
 .processmap_toolbarItem___processmaker
 {
 	margin:0px;
@@ -2070,7 +2077,6 @@ table.tableGrid_view td
     #sortable li span {position: absolute;margin-left: -1.3em;}
     .dtext{padding-top: 0px;font-size: 13px;color:blue;}
     .dynalist td{font-size: 10px;color: #000;}
-    body{ background: #fff; font: normal 62.5% "Trebuchet MS", Verdana, Helvetica, Arial,sans-serif !important; color: #000; line-height: 1.4; margin: 0px; padding: 0px;}
     #jq-siteContain {width: 910px;margin: 0 auto;}
     #jq-content {background: #181c21 url(images/bg_home_content.gif) top repeat-x;padding: 4em 40px;border-bottom: 1px solid #000;}
     #jq-intro {padding-top: 1em;width: 515px;margin-bottom: 3.5em;}
@@ -2115,9 +2121,11 @@ table.tableGrid_view td
 
 .directionSide1{
     direction: ltr;
+    align: left;
 }
 
 .directionSide2{
     direction: rtl;
+    align: right;
 }
 

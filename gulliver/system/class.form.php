@@ -308,7 +308,15 @@ class Form extends XmlForm
             $values[$k] = $_FILES['form']['name'][$k];
           }
 
-          $_POST['INPUTS']['input'] = $v->input;
+          /** 
+           * FIXED for multiple inputs documents related to file type field
+           * By Erik Amaru Ortiz <erik@colosa.com>
+           * Nov 24th, 2009 
+           */
+          if ( isset($v->input) && $v->input != ''){
+            $_POST['INPUTS'][$k] = $v->input;
+          }
+          /**/
         }
       }
     }

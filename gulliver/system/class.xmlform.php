@@ -3324,6 +3324,18 @@ class xmlformTemplate extends Smarty {
 
     $this->assign ( array ('PATH_TPL' => PATH_TPL ) );
     $this->assign ( $result );
+    if( defined('SYS_LANG_DIRECTION') && SYS_LANG_DIRECTION == 'R' ){
+        switch( $form->type ){
+        	case 'toolbar':
+                
+                $form->align = 'right';
+                
+        		break;
+        }	
+    }
+    
+    
+    
     $this->assign ( array ('_form' => $form ) );
     //'mem:defaultTemplate'.$form->name obtains the template generated for the
     //current "form" object, then this resource y saved by Smarty in the
