@@ -240,8 +240,7 @@
 		alert(vvv)
 		}*/
 	function G_Text( form, element, name )
-  {
-    var me=this;
+  { var me=this;
     this.parent = G_Field;
     this.parent( form, element, name );
     if (element) {
@@ -471,19 +470,29 @@
 	
 	this.element.onblur=function()
 	{
+		
 		//////////////////////////////////////////
 		if(this.validate == 'Int'|| this.validate == 'Real'){
-    	if(this.formula){
-	    	 operations=this.formula.split(';');
-    	  var resdo=0;//alert(operations.length);
+		  symOp=typeOperation(this.formula);
+    	if(this.formula){ 		 	
+	    	 operations=this.formula.split(symOp);
+    	   
+    	  var resdo=iniAcum(symOp);
     	   for (var i=0;i<operations.length;i++){
     	  	 		var sums=getField(operations[i]);
     	  	 		//getField(operations[i]).addEvent('onBlur',function(){alert(233);});
     	  	 		
     	  	 		if(sums.value!=''){ 
-    	  	 		  if(isnumberk(sums.value))
-    	  	 		     resdo =resdo+parseInt(sums.value);
-    	  	 		}
+    	  	 		  if(isnumberk(sums.value)){
+		    	  	 		   switch(symOp){
+		    	  	 		    case '+': resdo =resdo+parseInt(sums.value);break;
+		    	  	 		    case '*': resdo =resdo*parseInt(sums.value);break;
+		    	  	 		    case '-': resdo =-resdo-parseInt(sums.value);break;
+		    	  	 		    //case '/': resdo =resdo/parseInt(sums.value);break;		    	  	 		             
+		    	  	 		             
+		    	  	 		    }
+    	  	 		   }
+    	  	 		}else resdo=0;
 							   	/*  	 		
     	  	 		    getField(operations[i]).onblur=function(){
     	  	 		    	sumElem(sums,element,operations);
@@ -1332,7 +1341,7 @@ function sumElem(s,ans,fs){
  		ans.value=sm;
 }
  
- function isnumberk(texto){
+function isnumberk(texto){
  var numberk="0123456789";	
  var letters="abcdefghijklmnopqrstuvwxyz";
  var i=0;
@@ -1347,4 +1356,25 @@ function sumElem(s,ans,fs){
    return sw;
 } 
  
- 
+function typeOperation(cade){
+ var operators=['+','-','*','/'];
+ var sw=1;
+ var i=0;
+
+ while(i < operators.length && sw==1){
+ 	for(var j=0; j< cade.length; j++){
+ 	    if(cade.charAt(j)==operators[i]){
+ 	    	aOp=operators[i];sw=0;
+ 	    }
+ 		}
+ 	i++;
+ 	//alert(operators.indexOf(cade.charAt(i),0));
+ 	}
+	return aOp;
+}
+function iniAcum(sym){
+ if(sym=='+' || sym=='-')
+ 	return 0;
+ else return 1;
+ 	
+}
