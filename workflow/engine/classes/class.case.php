@@ -2632,7 +2632,9 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
     $oCriteria = new Criteria('workflow');
     $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
     $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, array('INPUT'), Criteria::IN);
-    $oCriteria->add(AppDocumentPeer::APP_DOC_UID, $aObjectPermissions['INPUT_DOCUMENTS'], Criteria::IN);
+    //$oCriteria->add(AppDocumentPeer::APP_DOC_UID, $aObjectPermissions['INPUT_DOCUMENTS'], Criteria::IN);
+    $oCriteria->add($oCriteria->getNewCriterion(AppDocumentPeer::APP_DOC_UID, $aObjectPermissions['INPUT_DOCUMENTS'], Criteria::IN)->addOr($oCriteria->getNewCriterion(AppDocumentPeer::USR_UID, $sUserUID, Criteria::EQUAL)));
+    
     $aConditions   = array();
     $aConditions[] = array(AppDocumentPeer::APP_UID, AppDelegationPeer::APP_UID);
     $aConditions[] = array(AppDocumentPeer::DEL_INDEX, AppDelegationPeer::DEL_INDEX);
@@ -2807,7 +2809,9 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
     $oCriteria = new Criteria('workflow');
     $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
     $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, 'OUTPUT');
-    $oCriteria->add(AppDocumentPeer::APP_DOC_UID, $aObjectPermissions['OUTPUT_DOCUMENTS'], Criteria::IN);
+    //$oCriteria->add(AppDocumentPeer::APP_DOC_UID, $aObjectPermissions['OUTPUT_DOCUMENTS'], Criteria::IN);   
+    $oCriteria->add($oCriteria->getNewCriterion(AppDocumentPeer::APP_DOC_UID, $aObjectPermissions['OUTPUT_DOCUMENTS'], Criteria::IN)->addOr($oCriteria->getNewCriterion(AppDocumentPeer::USR_UID, $sUserUID, Criteria::EQUAL)));
+    
     $aConditions   = array();
     $aConditions[] = array(AppDocumentPeer::APP_UID, AppDelegationPeer::APP_UID);
     $aConditions[] = array(AppDocumentPeer::DEL_INDEX, AppDelegationPeer::DEL_INDEX);
