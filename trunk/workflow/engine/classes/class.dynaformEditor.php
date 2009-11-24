@@ -74,7 +74,7 @@ class dynaformEditor extends WebResource
 		);
 	var $panelConf=array(
 			'style'       =>array(
-				'title'=>array('textAlign'=>'left')
+				'title'=>array('textAlign'=>'center')
 			),
 			'width'       =>700,
 			'height'      =>600,

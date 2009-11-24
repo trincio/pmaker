@@ -543,6 +543,7 @@ $time_end = microtime(true);  $time = $time_end - $time_start;
       }
       if (file_exists($this->xmlForm->home . $this->menu . '.xml')) {
         $menu = new xmlMenu( $this->menu , $this->xmlForm->home );
+        
         $this->tpl->newBlock('headerBlock');
         $template = PATH_CORE . 'templates' . PATH_SEP . $menu->type . '.html';
         $menu->setValues($this->xmlForm->values);
@@ -552,6 +553,7 @@ $time_end = microtime(true);  $time = $time_end - $time_start;
         if (isset($filterForm->name)) {
           $menu->setValues(array('SEARCH_FILTER_FORM' => $filterForm->name));
         }
+                
         $this->tpl->assign( 'content' ,  $menu->render( $template , $scriptCode ) );
         $oHeadPublisher->addScriptFile( $menu->scriptURL );
         $oHeadPublisher->addScriptCode( $scriptCode );
