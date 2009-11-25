@@ -200,12 +200,6 @@ if ($trigger_debug_session) {
 $oForm->validatePost ();
 $oJSON = new Services_JSON ( );
 
-echo '<br>';
-G::pr ( $_GET );
-G::pr ( $_POST );
-G::pr ( $_FILES );
-//die ( 'end' );
-
 if ($missing_req_values = $oForm->validateRequiredFields ( $_POST ['form'], $oJSON->decode ( stripslashes ( $_POST ['__notValidateThisFields__'] ) ) )) {
 	$_POST ['next_step'] = $aNextStep;
 	$_POST ['previous_step'] = $oCase->getPreviousStep ( $_SESSION ['PROCESS'], $_SESSION ['APPLICATION'], $_SESSION ['INDEX'], $_SESSION ['STEP_POSITION'] );
