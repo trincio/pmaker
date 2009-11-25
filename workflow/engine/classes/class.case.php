@@ -2631,7 +2631,7 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
     $oAppDocument = new AppDocument();
     $oCriteria = new Criteria('workflow');
     $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
-    $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, array('INPUT'), Criteria::IN);
+    $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, array('INPUT','ATTACHED'), Criteria::IN);
     //$oCriteria->add(AppDocumentPeer::APP_DOC_UID, $aObjectPermissions['INPUT_DOCUMENTS'], Criteria::IN);
     $oCriteria->add($oCriteria->getNewCriterion(AppDocumentPeer::APP_DOC_UID, $aObjectPermissions['INPUT_DOCUMENTS'], Criteria::IN)->addOr($oCriteria->getNewCriterion(AppDocumentPeer::USR_UID, $sUserUID, Criteria::EQUAL)));
     
