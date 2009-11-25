@@ -2631,9 +2631,9 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
     $oAppDocument = new AppDocument();
     $oCriteria = new Criteria('workflow');
     $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
-    $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, array('INPUT','ATTACHED'), Criteria::IN);
+    $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, array('INPUT'), Criteria::IN);
     //$oCriteria->add(AppDocumentPeer::APP_DOC_UID, $aObjectPermissions['INPUT_DOCUMENTS'], Criteria::IN);
-    $oCriteria->add($oCriteria->getNewCriterion(AppDocumentPeer::APP_DOC_UID, $aObjectPermissions['INPUT_DOCUMENTS'], Criteria::IN)->addOr($oCriteria->getNewCriterion(AppDocumentPeer::USR_UID, $sUserUID, Criteria::EQUAL)));
+    $oCriteria->add($oCriteria->getNewCriterion(AppDocumentPeer::APP_DOC_UID, $aObjectPermissions['INPUT_DOCUMENTS'], Criteria::IN)->addOr($oCriteria->getNewCriterion(AppDocumentPeer::USR_UID, array($sUserUID,'-1'), Criteria::IN)));
     
     $aConditions   = array();
     $aConditions[] = array(AppDocumentPeer::APP_UID, AppDelegationPeer::APP_UID);
@@ -2668,7 +2668,8 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
         $sUser = $aAux1['USR_FIRSTNAME'] . ' ' . $aAux1['USR_LASTNAME'];
       }
       catch (Exception $oException) {
-        $sUser = '(USER DELETED)';
+        //$sUser = '(USER DELETED)';
+        $sUser = '***';
       }
       $aFields = array('APP_DOC_UID' => $aAux['APP_DOC_UID'], 'DOC_UID' => $aAux['DOC_UID'], 'APP_DOC_COMMENT' => $aAux['APP_DOC_COMMENT'], 'APP_DOC_FILENAME' => $aAux['APP_DOC_FILENAME'], 'APP_DOC_INDEX' => $aAux['APP_DOC_INDEX'], 'TYPE' => $aAux['APP_DOC_TYPE'], 'ORIGIN' => $aTask['TAS_TITLE'], 'CREATE_DATE' => $aAux['APP_DOC_CREATE_DATE'], 'CREATED_BY' => $sUser);
       if ($aFields['APP_DOC_FILENAME'] != '') {
@@ -2700,7 +2701,7 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
     $oAppDocument = new AppDocument();
     $oCriteria = new Criteria('workflow');
     $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
-    $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, array('ATTACHED'), Criteria::IN);
+    $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, array('ATTACHED'), Criteria::IN);    
     $aConditions   = array();
     $aConditions[] = array(AppDocumentPeer::APP_UID, AppDelegationPeer::APP_UID);
     $aConditions[] = array(AppDocumentPeer::DEL_INDEX, AppDelegationPeer::DEL_INDEX);
