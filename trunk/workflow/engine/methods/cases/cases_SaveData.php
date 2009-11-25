@@ -157,8 +157,7 @@ if (isset ( $_FILES ['form'] )) {
 				    'DEL_INDEX' => $_SESSION ['INDEX'], 
 				    'USR_UID' => $_SESSION ['USER_LOGGED'], 
 				    'DOC_UID' => - 1, 
-				    'APP_DOC_TYPE' => 
-				    'ATTACHED', 
+				    'APP_DOC_TYPE' => 'ATTACHED', 
 				    'APP_DOC_CREATE_DATE' => date ( 'Y-m-d H:i:s' ), 
 				    'APP_DOC_COMMENT' => '', 
 				    'APP_DOC_TITLE' => '', 

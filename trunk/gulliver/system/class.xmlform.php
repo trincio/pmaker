@@ -1559,11 +1559,20 @@ class XmlForm_Field_File extends XmlForm_Field {
     $mode = ($this->mode == 'view') ? ' disabled="disabled"' : '';
     
     $html = '<input class="module_app_input___gray_file" ' . $mode . 'id="form[' . $this->name . ']" name="form[' . $this->name . ']" type=\'file\' value=\'' . $value . '\'/>';
-   if($this->hints_message){
+    
+    if( isset($this->input) && $this->input != ''){
+      require_once 'classes/model/InputDocument.php';
+      $oiDoc = new InputDocument;
+      $aDoc = $oiDoc->load($this->input);
+      $aDoc['INP_DOC_TITLE'] = isset($aDoc['INP_DOC_TITLE'])? $aDoc['INP_DOC_TITLE']: '';
+      $html .= '<label><img src="/images/inputdocument.gif" width="22px" width="22px"/><font size="1">('.trim($aDoc['INP_DOC_TITLE']).')</font></label>';
+    }
+     
+    if($this->hints_message){
       		 $html .= '<a href="#" onmouseout="hideTooltip()" onmouseover="showTooltip(event, \''.$this->hints_message.'\');return false;">
 	 	    					<image src="/images/help4.gif" width="15" height="15" border="0"/>
-	 	 						</a>';
- 		}
+	 	 				   </a>';
+ 	}
     return $html;
   }
 }
