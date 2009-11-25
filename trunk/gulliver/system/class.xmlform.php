@@ -2664,14 +2664,14 @@ class XmlForm_Field_Date extends XmlForm_Field_SimpleText {
       case 'd' :
       	/**
       	 * fixed for new calendar, this allows to select today setting the property to  e.g "0d"
-      	 * this means that is zero days before so it is today. 
+      	 * this means that is zero days before so it is today. that Why -1 for days 
       	 */
       	$part1--;   
 
-        $res = date ( 'Y-m-d', mktime ( 0, 0, 0, date ( 'm' ), date ( 'd' ) + $part1, date ( 'Y' ) ) );
+        $res = date ( 'Y-m-d', mktime ( 0, 0, 0, date ( 'm' ), date ( 'd' ) + $part1 - 1, date ( 'Y' ) ) );
         break;
       case 'm' :
-        $res = date ( 'Y-m-d', mktime ( 0, 0, 0, date ( 'm' ) + $part1, date ( 'd' ), date ( 'Y' ) ) );
+        $res = date ( 'Y-m-d', mktime ( 0, 0, 0, date ( 'm' ) + $part1, date ( 'd' ) - 1, date ( 'Y' ) ) );
         break;
       case 'y' :
         //$res = date ( 'Y-m-d', mktime ( 0, 0, 0, date ( 'm' ), date ( 'd' ), date ( 'Y' ) + $part1) );
