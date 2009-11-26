@@ -29,13 +29,25 @@
   global $RBAC;
   if ( !is_object( $G_PUBLISH ) ) die ("Publisher object is required by this template!");
 ?>
-<table width="100%" cellpadding="5" cellspacing="0" border="0">
-<?
-  if (isset($_SESSION['G_MESSAGE_TYPE']) && isset($_SESSION['G_MESSAGE'])) {
-    echo('<b>' . G::capitalize($_SESSION['G_MESSAGE_TYPE']) . '</b> : ' . $_SESSION['G_MESSAGE']);
+<?php	
+if (isset($_SESSION['G_MESSAGE_TYPE']) && isset($_SESSION['G_MESSAGE'])) {
+    $messageTypes=array("INFO","WARNING","ERROR");
+    if(in_array(strtoupper($_SESSION['G_MESSAGE_TYPE']),$messageTypes)){
+        $msgType=strtoupper($_SESSION['G_MESSAGE_TYPE']);
+    }else{
+        $msgType="WARNING";
+    }
+    echo('<table width="50%" cellpadding="5" cellspacing="0" border="0">');    
+    echo('<tr><td class="temporalMessage'.$msgType.'" align="center"><div id="temporalMessage'.$msgType.'"><strong>' . G::capitalize($_SESSION['G_MESSAGE_TYPE']) . '</strong> : ' . $_SESSION['G_MESSAGE'] . '</div></td></tr>');
+	  echo('</table>');
+
+
     unset($_SESSION['G_MESSAGE_TYPE']);
     unset($_SESSION['G_MESSAGE']);
   }
+  ?>
+<table width="100%" cellpadding="5" cellspacing="0" border="0">
+<?  
   if( is_array( $G_PUBLISH->Parts ) )
   {
     $nplim = count( $G_PUBLISH->Parts );
