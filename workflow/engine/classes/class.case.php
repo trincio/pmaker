@@ -2742,8 +2742,11 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
             $aFields['TITLE'] = $aFields['APP_DOC_COMMENT'];
         }
         $aFields['POSITION'] = $_SESSION['STEP_POSITION'];
-        $aFields['CONFIRM'] = G::LoadTranslation('ID_CONFIRM_DELETE_ELEMENT');
-        $aFields['ID_DELETE'] = G::LoadTranslation('ID_DELETE');
+        
+        $aFields['CONFIRM'] = G::LoadTranslation('ID_CONFIRM_DELETE_ELEMENT');       
+        if (in_array($aRow['APP_DOC_UID'], $aDelete['INPUT_DOCUMENTS'])) {
+            $aFields['ID_DELETE'] = G::LoadTranslation('ID_DELETE');
+        }        
         
         $aFields['DOWNLOAD_LABEL'] = G::LoadTranslation('ID_DOWNLOAD');
         $aFields['DOWNLOAD_LINK'] = "cases_ShowDocument?a=".$aRow['APP_DOC_UID'];
