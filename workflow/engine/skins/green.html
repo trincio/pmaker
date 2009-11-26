@@ -16,8 +16,7 @@
       <div align="right" class="logout">
       	<small>
       	  {php}if ((int)$_SESSION['USER_LOGGED'] != 0) {{/php}
-      	  <label class="textBlue">{php}echo $_SESSION['USR_FULLNAME'] {/php} ({$user})</label> |
-      	  <a href="../users/myInfo">{php}echo G::LoadTranslation('ID_OPTIONS');{/php}</a> |
+      	  <label class="textBlue">{php}echo $_SESSION['USR_FULLNAME'] {/php} <a href="../users/myInfo">({$user})</a></label> |      	  
       	  <a href="{$linklogout}" class="tableOption">{php}echo G::LoadTranslation('ID_LOGOUT');{/php}</a>&nbsp; &nbsp;	
       	  <br/>
           <label class="textBlack">{php} echo G::LoadTranslation('ID_WORKSPACE_USING') .': <u>'.SYS_SYS.'</u> - '.G::getformatedDate(date('Y-m-d'), 'M d, yyyy', SYS_LANG) {/php}</label>&nbsp; &nbsp;
