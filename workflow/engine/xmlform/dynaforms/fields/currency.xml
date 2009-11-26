@@ -7,6 +7,8 @@
 <PME_A type="hidden" />
 <PME_TYPE type="hidden" />
 <PME_PRO_UID type="hidden" />
+<PME_DYN_TYPE type="phpvariable"/>
+
 <PME_TITLE type="title" enableHTML="1">
   <en>Properties</en>
 </PME_TITLE>
@@ -38,7 +40,8 @@ SELECT XMLNODE_NAME, TYPE FROM dynaForm WHERE XMLNODE_NAME = @@PME_XMLNODE_NAME
     <option name="Real">Real Number</option>
   </en>
 </PME_VALIDATE>
-<PME_MASK type="text" maxlength="50" size="30" defaultvalue="_###,###,###,###;###,###,###,###.##" >
+<!-- <PME_MASK type="text" maxlength="50" size="30" defaultvalue="_###,###,###,###;###,###,###,###.##" >-->
+<PME_MASK type="text" maxlength="50" size="50" defaultvalue="###,###,###,###;###,###,###,###.##" >
   <en>Mask</en>
 </PME_MASK>
 <PME_REQUIRED type="checkbox" falseValue="0" value="1" defaultvalue="0" labelOnRight="0">
@@ -146,5 +149,13 @@ function verifyFieldName1(){
   pme_validating=false;
   return valid;
 }
+
+var dyntype="@#PME_DYN_TYPE";
+if(dyntype != 'grid'){
+  hideRowById('PME_SUBTITLE_OP');
+  hideRowById('PME_FORMULA');
+  hideRowById('PME_FUNCTION');
+}
+             
 ]]></PME_JS>
 </dynaForm>
