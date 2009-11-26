@@ -632,7 +632,7 @@ form.formDefault textarea.FormTextPM
 	border: 1px solid #CCC;
 	background: #FFFFFF url(/skins/green/images/input_back.gif) repeat-x;
 	color:#333333;
-	font:normal 9px Courier;
+	font:normal 9px Courier, monospace ;
 	overflow:auto;
 }
 form.formDefault .FormTitle
@@ -2073,7 +2073,7 @@ table.tableGrid_view td
 
     #sortable {list-style-type: none;margin: 2; padding: 0; width: 700px;}
     #sortable li {margin: 1px 1px 1px 1px;padding: 1px;padding-left: 1px;font-size: 13px;height: 28px;}
-    #sortable li:hover {background: orange;}
+    /*#sortable li:hover {background: orange;}*/
     #sortable li span {position: absolute;margin-left: -1.3em;}
     .dtext{padding-top: 0px;font-size: 13px;color:blue;}
     .dynalist td{font-size: 10px;color: #000;}
@@ -2090,6 +2090,17 @@ table.tableGrid_view td
     .toggler { font-size:10px;height: 200px; position: relative;}
     #effect { width:180px;font-size:10px;height: 135px; padding: 0.4em; position: relative; background: #fff; }
     #effect h3 { font-size:10px;margin: 0; padding: 0.4em; text-align: center; }
+    
+    .current_selected_item{
+    	border:2px solid orange;
+    
+        
+       background: #dfeffc url(images/ui-bg_glass_85_dfeffc_1x400.png) 50% 50% repeat-x; 
+       font-weight: bold; 
+       color: #2e6e9e; 
+       outline: none; }
+    
+    }
 /* 
  *  (end) Dybaform Handler styles **/
 
