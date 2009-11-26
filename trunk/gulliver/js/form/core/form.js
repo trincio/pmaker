@@ -173,8 +173,15 @@
     this.setContent = function(newContent) {
 
     }
+    
     this.setAttributes = function (attributes) {
       for(var a in attributes) {
+      	
+      	if(a=='formula' && attributes[a]){
+           //here we called a this function if it has a formula
+      	   sumaformu(this.element,attributes[a]);
+      	  }
+      	
         switch (typeof(attributes[a])) {
           case 'string':
           case 'int':
@@ -195,6 +202,7 @@
             me[a] = attributes[a];
           }
         }
+        
       }
     }
     this.value=function() {
@@ -239,6 +247,7 @@
 	function G_Formulation(vvv){
 		alert(vvv)
 		}*/
+		
 	function G_Text( form, element, name )
   { var me=this;
     this.parent = G_Field;
@@ -375,6 +384,19 @@
       me.prev=me.element.value;
       return true;
     }
+    this.execFormula=function(event) {
+    	
+    	//alert(me.formula); return;
+    	      
+      if(  me.formula != ''){
+      	
+	    	leimnud.event.add(getField('faa'),'keypress',function(){
+				  alert(getField('faa').value);
+				});
+	    }
+      return false;
+      
+    }
     this.validateChange=function(event) {
       if (me.mask ==='') return true;
 		  var sel=me.getSelectionRange();
@@ -468,11 +490,15 @@
     leimnud.event.add(this.element,'change',this.updateDepententFields);
 	
 	
+	
 	this.element.onblur=function()
 	{
-		
 		//////////////////////////////////////////
+		
+		
+		/*
 		if(this.validate == 'Int'|| this.validate == 'Real'){
+			alert(this.formula);
 		  symOp=typeOperation(this.formula);
     	if(this.formula){ 		 	
 	    	 operations=this.formula.split(symOp);
@@ -481,26 +507,29 @@
     	   for (var i=0;i<operations.length;i++){
     	  	 		var sums=getField(operations[i]);
     	  	 		//getField(operations[i]).addEvent('onBlur',function(){alert(233);});
-    	  	 		
     	  	 		if(sums.value!=''){ 
     	  	 		  if(isnumberk(sums.value)){
 		    	  	 		   switch(symOp){
-		    	  	 		    case '+': resdo =resdo+parseInt(sums.value);break;
-		    	  	 		    case '*': resdo =resdo*parseInt(sums.value);break;
-		    	  	 		    case '-': resdo =-resdo-parseInt(sums.value);break;
+		    	  	 		    case '+': resdo =resdo+ parseFloat(sums.value);break;
+		    	  	 		    case '*': resdo =resdo* parseFloat(sums.value);break;
+		    	  	 		    case '-': resdo =-resdo-parseFloat(sums.value);break;
 		    	  	 		    //case '/': resdo =resdo/parseInt(sums.value);break;		    	  	 		             
 		    	  	 		             
 		    	  	 		    }
     	  	 		   }
     	  	 		}else resdo=0;
-							   	/*  	 		
+    	  	 		/***alert(getField(operations[i]).name)
+							   	leimnud.event.add(getField(operations[i]),'change',function(){alert(3434);});
+							   	*********/
+							   	/*
     	  	 		    getField(operations[i]).onblur=function(){
     	  	 		    	sumElem(sums,element,operations);
     	  	 		    	}*/
-    	   }
+    	   /*}
     	   this.element.value=resdo;
     	 }
     }
+    */
 		///////////////////////////
 	  
 	  if(this.validate=="Email")
@@ -548,8 +577,12 @@
     		}
     	}
     }.extend(this));*/
+    
     leimnud.event.add(this.element,'keydown',this.preValidateChange);
+    //leimnud.event.add(this.element,'keypress',this.execFormula); 
   }
+
+  
   G_Text.prototype=new G_Field();
 
   function G_Percentage( form, element, name )
@@ -728,7 +761,7 @@ function G()
           //if (m==='.') alert(i.toString() +'.'+ cursor.toString());
           //out+=m;add++;if (i<cursor){cursorPosition++;};
           if(m!='-'){ out+=m;}
-          else {out+='~';}
+          else {out+=String.fromCharCode(126);}
        	add++;if (i<cursor){cursorPosition++;};
         }
       }
@@ -1333,6 +1366,7 @@ function verifyFieldName1(){
   return valid;
 }
 
+/*
 function sumElem(s,ans,fs){
  	var sm=0;
  	   for(var j=0;j<fs.length;j++){
@@ -1342,7 +1376,7 @@ function sumElem(s,ans,fs){
 }
  
 function isnumberk(texto){
- var numberk="0123456789";	
+ var numberk="0123456789.";	
  var letters="abcdefghijklmnopqrstuvwxyz";
  var i=0;
  var sw=1;
@@ -1377,4 +1411,49 @@ function iniAcum(sym){
  	return 0;
  else return 1;
  	
+}
+*/
+function sumaformu(ee,fma){
+	//copy the formula
+  afma=fma;
+  var operators=['+','-','*','/','(','[','{','}',']',')'];
+  var wos;   
+  //replace the operators symbols for empty space
+  for(var i=0 ; i < operators.length ; i++) {
+   var j=0;
+    	while(j < fma.length){
+    		nfma=fma.replace(operators[i]," ");
+    		nfma=nfma.replace("  "," ");
+    		fma=nfma;
+    	j++;
+    	}
+    	
+  }
+//without spaces in the inicio of the formula
+wos=nfma.replace(/^\s+/g,'');
+nfma=wos.replace(/\s+$/g,'');
+  
+ 	theelemts=nfma.split(" ");
+
+   for (var i=0; i < theelemts.length; i++){ 
+   	leimnud.event.add(getField(theelemts[i]),'keyup',function(){
+   				calValue(afma,nfma,ee); 		
+   		});
+   	
+   } 	
+}
+
+function calValue(afma,nfma,ans){
+	
+	theelemts=nfma.split(" ");
+//to replace the field for the value and to evaluate the formula
+   for (var i=0; i < theelemts.length; i++){ 
+   	  if(getField(theelemts[i]).value){	
+   	  	nfk=afma.replace(theelemts[i],getField(theelemts[i]).value)
+   	  	afma=nfk;
+   	  }
+   	  
+   } 	
+	ans.value=eval(nfk);
+	
 }
