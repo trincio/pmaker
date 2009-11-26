@@ -2599,6 +2599,7 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
     
 
     $aObjectPermissions = $this->getAllObjects($sProcessUID, $sApplicationUID, $sTasKUID, $sUserUID);
+    
     if (!is_array($aObjectPermissions)) {
       $aObjectPermissions = array('DYNAFORMS' => array(-1), 'INPUT_DOCUMENTS' => array(-1), 'OUTPUT_DOCUMENTS' => array(-1));
     }
@@ -3131,6 +3132,7 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
 
   function getAllObjects($PRO_UID, $APP_UID, $TAS_UID = '', $USR_UID)
   {
+    
     $ACTIONS = Array('VIEW', 'BLOCK'); //TO COMPLETE
     $MAIN_OBJECTS = Array();
     $RESULT_OBJECTS = Array();
@@ -3162,6 +3164,7 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
 
   function getAllObjectsFrom($PRO_UID, $APP_UID, $TAS_UID = '', $USR_UID, $ACTION='')
   {
+    
     $aCase=$this->loadCase($APP_UID);
     //if($aCase)
 
@@ -3237,7 +3240,7 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
             $oCriteria->addJoin(StepPeer::STEP_UID_OBJ, DynaformPeer::DYN_UID);
             if($aCase['APP_STATUS']!='COMPLETED')
             {
-              if($TASK_SOURCE != '') {
+              if($TASK_SOURCE != '' ) {
                 $oCriteria->add(StepPeer::TAS_UID, $TASK_SOURCE);
               }
             }
@@ -3264,7 +3267,7 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
             $oCriteria->add(AppDelegationPeer::PRO_UID, $PRO_UID);
             if($aCase['APP_STATUS']!='COMPLETED')
             {
-              if($TASK_SOURCE != '') {
+              if( $TASK_SOURCE != '' && $TASK_SOURCE != "0" ) {
                 $oCriteria->add(AppDelegationPeer::TAS_UID, $TASK_SOURCE);
               }
             }
@@ -3290,7 +3293,7 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
             $oCriteria->add(ApplicationPeer::APP_UID, $APP_UID);
             if($aCase['APP_STATUS']!='COMPLETED')
             {
-              if($TASK_SOURCE != '') {
+              if($TASK_SOURCE != '' && $TASK_SOURCE != "0") {
                 $oCriteria->add(StepPeer::TAS_UID, $TASK_SOURCE);
               }
             }
