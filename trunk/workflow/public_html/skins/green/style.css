@@ -44,12 +44,46 @@ body
 {
 	color:orange;
 }
-.temporalMessage
-{
-	color	:red;
-	font	:normal 8pt Tahoma,sans-serif,MiscFixed;
-	text-decoration:none;
+.temporalMessageERROR
+{	 
+	  background-image: url(/skins/green/images/error.gif);
+	  color	:#ffffff;
+	  border-style:solid;
+	  border-width:1px;
+	  border-color:#ffffff;
+		font	:normal 8pt Tahoma,sans-serif,MiscFixed;
+		text-decoration:none;
+		height:25px;
+		padding:0 20px;
+    vertical-align:middle;
 }
+.temporalMessageWARNING
+{
+	  background-image: url(/skins/green/images/warning.png);
+	  color	:#555555;	 
+	  border-style:solid;
+	  border-width:1px;
+	  border-color:#ffffff;
+		font	:normal 8pt Tahoma,sans-serif,MiscFixed;
+		text-decoration:none;
+		height:25px;
+		padding:0 20px;
+    vertical-align:middle;
+}
+.temporalMessageINFO
+{
+	  background-image: url(/skins/green/images/message.png);
+	  color	:#ffffff;
+	  border-style:solid;
+	  border-width:1px;
+	  border-color:#ffffff;
+		font	:normal 8pt Tahoma,sans-serif,MiscFixed;
+		text-decoration:none;
+		height:25px;
+		padding:0 20px;
+    vertical-align:middle;
+}
+
 .userGroupTitle
 {
 	color	:black;
