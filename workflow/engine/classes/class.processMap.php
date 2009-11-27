@@ -2300,7 +2300,7 @@ class processMap {
       $oCriteria = new Criteria ( 'dbarray' );
       $oCriteria->setDBArrayTable ( 'reports' );
       
-      if ($TaskFields['TAS_ASSIGN_TYPE'] != 'BALANCED') {
+      if ($TaskFields['TAS_ASSIGN_TYPE'] == 'BALANCED') {
       //$G_PUBLISH->AddContent('xmlform', 'xmlform', 'dynaforms/dynaforms_WebEntry', '', array('PRO_UID' => $sProcessUID, 'LANG' => SYS_LANG));
       $G_PUBLISH->AddContent ( 'propeltable', 'paged-table', 'dynaforms/dynaforms_WebEntryList', $oCriteria, array (
         'PRO_UID' => $sProcessUID, 
