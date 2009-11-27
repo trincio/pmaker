@@ -645,7 +645,7 @@ form.formDefault .FormLabel
 {
 	color:#808080;
 	text-align:right;
-	padding-right:10px;
+	padding-right:5px;
 }
 form.formDefault .FormFieldContent
 {
@@ -666,7 +666,9 @@ form.formDefault textarea.FormTextPM
 	border: 1px solid #CCC;
 	background: #FFFFFF url(/skins/green/images/input_back.gif) repeat-x;
 	color:#333333;
-	font:normal 9px Courier, monospace ;
+	font:normal 12 Courier New, monospace ;
+	width: 710px;
+	height: 375px;
 	overflow:auto;
 }
 form.formDefault .FormTitle
