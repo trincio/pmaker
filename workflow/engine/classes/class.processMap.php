@@ -2251,17 +2251,17 @@ class processMap {
       
       $row = array ();
       $c = 0;
-      $row[] = array (
-        'W_TITLE' => '', 
-        'W_DELETE' => '', 
-        'TAS_ASSIGN_TYPE' => ''
-      );
+      
       
       $oTask = new Task ( );
       $TaskFields = $oTask->kgetassigType ( $sProcessUID );
-      if ($TaskFields['TAS_ASSIGN_TYPE'] != 'BALANCED') {
-        print ("Web Entry only works with tasks which have Cyclical Assignment Please change the Assignment Rules") ;
-      }
+      
+      
+      $row[] = array (
+        'W_TITLE' => '', 
+        'W_DELETE' => '', 
+        'TAS_ASSIGN_TYPE' => $TaskFields['TAS_ASSIGN_TYPE']
+      );
       
       if (is_dir ( PATH_DATA . "sites" . PATH_SEP . SYS_SYS . PATH_SEP . "public" . PATH_SEP . $sProcessUID )) {
         $dir = opendir ( PATH_DATA . "sites" . PATH_SEP . SYS_SYS . PATH_SEP . "public" . PATH_SEP . $sProcessUID );
@@ -2301,11 +2301,18 @@ class processMap {
       $oCriteria = new Criteria ( 'dbarray' );
       $oCriteria->setDBArrayTable ( 'reports' );
       
+      if ($TaskFields['TAS_ASSIGN_TYPE'] == 'MANUAL') {
+        $aMessage['MESSAGE'] = "Web Entry only works with tasks which have Cyclical Assignment.<br/> Please change the Assignment Rules";
+        $G_PUBLISH->AddContent ( 'xmlform', 'xmlform', 'login/showMessage', '', $aMessage );
+      }else{
+      
       //$G_PUBLISH->AddContent('xmlform', 'xmlform', 'dynaforms/dynaforms_WebEntry', '', array('PRO_UID' => $sProcessUID, 'LANG' => SYS_LANG));
       $G_PUBLISH->AddContent ( 'propeltable', 'paged-table', 'dynaforms/dynaforms_WebEntryList', $oCriteria, array (
         'PRO_UID' => $sProcessUID, 
         'LANG' => SYS_LANG
       ) );
+      
+    }
       G::RenderPage ( 'publish', 'raw' );
       return true;
     } catch ( Exception $oError ) {
