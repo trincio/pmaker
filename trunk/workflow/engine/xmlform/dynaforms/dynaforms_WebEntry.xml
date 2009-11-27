@@ -25,8 +25,8 @@
 
 <WE_TYPE type="dropdown" defaultvalue="" mode="edit" >
   <en>Method
-    <option name='SINGLE'>Single HTML </option>
     <option name='WS'>PHP pages with Web Services</option>
+    <!--option name='SINGLE'>Single HTML </option-->
   </en>
 </WE_TYPE>
 
@@ -52,10 +52,10 @@
 <js type="javascript">
 var oPanel1;
 
-  hideRowById('WS_USER');
-  hideRowById('WS_PASS');
-  hideRowById('WS_ROUNDROBIN');
-  hideRowById('subtitle2');
+  //hideRowById('WS_USER');
+  //hideRowById('WS_PASS');
+  //hideRowById('WS_ROUNDROBIN');
+  //hideRowById('subtitle2');
 
 leimnud.event.add(getField('WE_TYPE'), 'change', function() {
   if (getField('WE_TYPE').value=='WS') {
@@ -69,7 +69,8 @@ leimnud.event.add(getField('WE_TYPE'), 'change', function() {
     hideRowById('WS_PASS');
     hideRowById('WS_ROUNDROBIN');
     hideRowById('subtitle2');
-  }
+    
+  }hideRowById('WS_ROUNDROBIN');
 }.extend(getField('WE_TYPE')));
 
 var webEntry_generate = function(PRO_UID, TASKS, DYNAFORM) {
@@ -149,7 +150,8 @@ var webEntry_generate = function(PRO_UID, TASKS, DYNAFORM) {
      }
   }
 };
-		
+
+hideRowById('WS_ROUNDROBIN');
 </js>
 
 </dynaForm>
