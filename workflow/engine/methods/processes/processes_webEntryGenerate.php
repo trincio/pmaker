@@ -7,6 +7,7 @@ $sWE_TYPE = $oData->WE_TYPE;
 $sWS_USER = $oData->WS_USER;
 $sWS_PASS = $oData->WS_PASS;
 $sWS_ROUNDROBIN = $oData->WS_ROUNDROBIN;
+$sWE_USR = $oData->WE_USR;
 
 $withWS = $sWE_TYPE == 'WS';
 
@@ -73,6 +74,13 @@ try {
     $template->assign ( 'wsUser', $sWS_USER );
     $template->assign ( 'wsPass', 'md5:' . md5 ( $sWS_PASS ) );
     $template->assign ( 'wsRoundRobin', $sWS_ROUNDROBIN );
+    
+    if($sWE_USR == "2"){
+      $template->assign ( 'USR_VAR', "\$cInfo = ws_getCaseInfo(\$caseId);\n\t  \$USR_UID = \$cInfo->currentUsers->userId;" );
+    } else {
+      $template->assign ( 'USR_VAR', '$USR_UID = -1;' );
+    }
+    
     
     $template->assign ( 'dynaform', $dynTitle );
     $template->assign ( 'timestamp', date ( 'l jS \of F Y h:i:s A' ) );
