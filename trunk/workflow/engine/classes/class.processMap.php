@@ -2293,7 +2293,6 @@ class processMap {
           }
         }
       }
-      
       global $_DBArray;
       $_DBArray['reports'] = $row;
       $_SESSION['_DBArray'] = $_DBArray;
@@ -2301,16 +2300,15 @@ class processMap {
       $oCriteria = new Criteria ( 'dbarray' );
       $oCriteria->setDBArrayTable ( 'reports' );
       
-      if ($TaskFields['TAS_ASSIGN_TYPE'] == 'MANUAL') {
-        $aMessage['MESSAGE'] = "Web Entry only works with tasks which have Cyclical Assignment.<br/> Please change the Assignment Rules";
-        $G_PUBLISH->AddContent ( 'xmlform', 'xmlform', 'login/showMessage', '', $aMessage );
-      }else{
-      
+      if ($TaskFields['TAS_ASSIGN_TYPE'] != 'BALANCED') {
       //$G_PUBLISH->AddContent('xmlform', 'xmlform', 'dynaforms/dynaforms_WebEntry', '', array('PRO_UID' => $sProcessUID, 'LANG' => SYS_LANG));
       $G_PUBLISH->AddContent ( 'propeltable', 'paged-table', 'dynaforms/dynaforms_WebEntryList', $oCriteria, array (
         'PRO_UID' => $sProcessUID, 
         'LANG' => SYS_LANG
       ) );
+      }else{
+      $aMessage['MESSAGE'] = G::loadTranslation(	'WEBEN_ONLY_BALANCED' );
+        $G_PUBLISH->AddContent ( 'xmlform', 'xmlform', 'login/showMessage', '',$aMessage );
       
     }
       G::RenderPage ( 'publish', 'raw' );
