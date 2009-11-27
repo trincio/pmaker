@@ -26,7 +26,7 @@
 <WE_TYPE type="dropdown" defaultvalue="" mode="edit" >
   <en>Method
     <option name='WS'>PHP pages with Web Services</option>
-    <!--option name='SINGLE'>Single HTML </option-->
+    <option name='SINGLE'>Single HTML </option>
   </en>
 </WE_TYPE>
 
