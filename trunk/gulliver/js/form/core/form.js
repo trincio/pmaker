@@ -759,10 +759,10 @@ function G()
           out+=e;i++;
         }else {
           //if (m==='.') alert(i.toString() +'.'+ cursor.toString());
-          //out+=m;add++;if (i<cursor){cursorPosition++;};
-          if(m!='-'){ out+=m;}
-          else {out+=String.fromCharCode(126);}
-       	add++;if (i<cursor){cursorPosition++;};
+          out+=m;add++;if (i<cursor){cursorPosition++;};
+          /*if(m!='-'){ out+=m;}
+          else {out+=String.fromCharCode(45);}
+       	add++;if (i<cursor){cursorPosition++;};*/
         }
       }
     }
