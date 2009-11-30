@@ -21,6 +21,6 @@
     $testItems++;
   }
   $t->diag('class XmlForm_Field_Label' );
-  $t->is(  $testItems , 19,  "class XmlForm_Field_Label " . $testItems . " methods." );
+  $t->is(  $testItems , 18,  "class XmlForm_Field_Label " . $testItems . " methods." );
   $t->todo(  'review all pendings in this class');
 

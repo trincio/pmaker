@@ -21,6 +21,6 @@
     $testItems++;
   }
   $t->diag('class XmlForm_Field_HTML' );
-  $t->is(  $testItems , 19,  "class XmlForm_Field_HTML " . $testItems . " methods." );
+  $t->is(  $testItems , 18,  "class XmlForm_Field_HTML " . $testItems . " methods." );
   $t->is( $obj  , 'XmlForm_Field_HTML',  'class XmlForm_Field_HTML created');
   $t->todo(  'review all pendings in this class');

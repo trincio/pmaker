@@ -63,7 +63,7 @@ foreach ($class_methods as $method_name) {
   $testItems++;
 }
 $t->diag('class xmlMenu' );
-$t->is(  $testItems , 13,  "class xmlMenu " . $testItems . " methods." );
+$t->is(  $testItems , 12,  "class xmlMenu " . $testItems . " methods." );
 $t->isa_ok( $obj  , 'xmlMenu',  'class xmlMenu created');
 $t->can_ok( $obj,      'render',   'render()');
 

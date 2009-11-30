@@ -49,8 +49,8 @@ foreach ($class_methods as $method_name) {
 $t = new lime_test(4, new lime_output_color());
 
 $t->diag('class filterForm' );
-$t->is(  $testItems , 13,  "class filterForm " . $testItems . " methods." );
-
+//$t->is(  $testItems , 13,  "class filterForm " . $testItems . " methods." );
+$t->is(  $testItems , 12,  "class filterForm " . $testItems . " methods." );
 $t->isa_ok( $obj  , 'filterForm',  'class filterForm created');
 
 $t->can_ok( $obj,      'render',   'render()');
