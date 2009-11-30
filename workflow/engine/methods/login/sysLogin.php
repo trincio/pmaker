@@ -102,10 +102,10 @@ $_DBArray['availableWorkspace'] = $availableWorkspaceArray;
 $_SESSION['_DBArray'] = $_DBArray;
 
 
-
+$aField['LOGIN_VERIFY_MSG'] = G::loadTranslation('LOGIN_VERIFY_MSG'); 
 
 $G_PUBLISH = new Publisher;
-$G_PUBLISH->AddContent('xmlform', 'xmlform', 'login/sysLogin', '', '', 'sysLogin');
+$G_PUBLISH->AddContent('xmlform', 'xmlform', 'login/sysLogin', '', $aField, 'sysLogin');
 
 G::RenderPage( "publish" );
 
