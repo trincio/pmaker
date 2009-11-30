@@ -22,5 +22,5 @@
   }
 
   $t->diag('class dynaFormHandler' );
-  $t->is(  $testItems , 15,  "class dynaFormHandler " . $testItems . " methods." );
+  $t->is(  $testItems , 16,  "class dynaFormHandler " . $testItems . " methods." );
   $t->todo(  'review all pendings in this class');

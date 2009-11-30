@@ -66,7 +66,7 @@ G::LoadSystem ( 'htmlArea');
  $t = new lime_test( 3, new lime_output_color());
 
  $t->diag('class XmlForm_Field_HTML' );
- $t->is(  $testItems , 20,  "class XmlForm_Field_HTML " . $testItems . " methods." );
+ $t->is(  $testItems , 18,  "class XmlForm_Field_HTML " . $testItems . " methods." );
 //$t->is( $obj  , 'XmlForm_Field_HTML',  'class XmlForm_Field_HTML created');
 //$t->can_ok( $obj,      'attachEvents',   'attachEvents()');
 $t->todo(  'seems this class is unused.  Fatal error: Call to a member function findNode()');

@@ -41,13 +41,13 @@ foreach ($class_methods as $method_name) {
     $methods[ $testItems ] = $method_name;
     $testItems++;
 }
-//print_r( $testItems );print_r( $methods );die();
+print_r( $testItems );
+print_r( $methods );
 
 $t = new lime_test( 122, new lime_output_color());
 
 $t->diag('class G' );
-  //
-  $t->is(  $testItems , 91,  "class G " . 91 . " methods." );
+$t->is(  $testItems , 92,  "class G " . 92 . " methods." );
 
 $t->isa_ok( $obj  , 'G',  'class G created');
 
@@ -161,6 +161,7 @@ $t->is( G::formatDate( '2001-02-29', 'F Y d', 'fa'  ),      'اردیبهشت 20
 //$t->fail(  'improve the function formatDate !!, the month literal text is defined here!!');
 $t->todo( " the month literal text is defined here!! ");
 $t->can_ok( $obj,      'replaceDataField',   'replaceDataField()');
+
 $t->todo(  'improve the function replaceDataField !!');
 
 $t->can_ok( $obj,      'loadLanguageFile',   'loadLanguageFile()');

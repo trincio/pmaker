@@ -37,35 +37,19 @@
   require_once ( 'classes/model/Translation.php');
 
   require_once (  PATH_CORE . "config/databases.php");
-
   $obj = new Translation ();
-  $t   = new lime_test( 5, new lime_output_color() );
+  $obj = new Translation ();
+	$method = array ( );
+	$testItems = 0;
+	$class_methods = get_class_methods($obj);
+	foreach ($class_methods as $method_name) {
+	$methods[ $testItems ] = $method_name;
+	$testItems++;
+	}
+	
+	$t = new lime_test( 2, new lime_output_color());
+	
+	$t->diag('class filterForm' );
+	$t->is(  $testItems , 37,  "class Translation " . $testItems . " methods." ); 
+	$t->todo(  'review all pendings in this class');
 
-  $t->diag('class Translation' );
-  $t->isa_ok( $obj  , 'Translation',  'class Translation created');
-
-  //method load
-//  $t->can_ok( $obj,      'load',   'load() is callable' );
-    $t->todo(" a: $obj       load    load() is callable ");         //Add
-
-//  $result = $obj->load ( $sUID);
-//  $t->isa_ok( $result,      'NULL',   'call to method load ');
-
-
-  //method save
-    $t->can_ok( $obj,      'save',   'save() is callable' );
-
-//  $result = $obj->save (  );
-//  $t->isa_ok( $result,      'NULL',   'call to method save ');
-
-
-  //method saveContent
-//$t->can_ok( $obj,      'saveContent',   'saveContent() is callable' );
-  $t->todo(" b: $obj     saveContent   saveContent() is callable" ); //Add
-
-//  $result = $obj->saveContent ( $sConCategory, $fields, $sysLang);
-//  $t->isa_ok( $result,      'NULL',   'call to method saveContent ');
-
-
-  //$t->fail(  'review all pendings methods in this class');
-  $t->todo ( "review all pendings methods in this class" );

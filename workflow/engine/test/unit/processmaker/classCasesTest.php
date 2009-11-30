@@ -40,9 +40,7 @@
   $className = ucwords($className);
   $t->diag("class $className" );
 
-   //$t->isa_ok( $obj  , $className,  "class $className created");
-
-  $t->is( count($methods) , 73,  "class $className have " . 73 . ' methods.' );
+  $t->is( count($methods) , 75,  "class $className have " . 73 . ' methods.' );
 
  // Methods
   $aMethods = array_keys ( $methods );

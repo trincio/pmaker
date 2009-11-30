@@ -51,11 +51,11 @@
   $ses = new DBSession( $dbc);
 
   $obj = new Derivation ($dbc);
-  $t   = new lime_test( 6   , new lime_output_color() );
+  $t   = new lime_test( 1  , new lime_output_color() );
 
   $t->diag('class Derivation' );
   $t->isa_ok( $obj  , 'Derivation',  'class Derivation created');
-
+/*
 
   //method startCase
  //$t->can_ok( $obj,      'startCase',   'startCase() is callable' );
