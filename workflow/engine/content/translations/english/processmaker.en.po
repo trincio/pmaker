@@ -2,7 +2,7 @@ msgid ""
 msgstr "" 
 "Project-Id-Version: PM 4.0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-11-30 09:20+0100 \n"
+"PO-Revision-Date: 2009-12-01 09:00+0100 \n"
 "Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
 "Language-Team: Colosa Developers Team <developers@colosa.com>\n"
 "MIME-Version: 1.0\n"
@@ -2008,8 +2008,8 @@ msgstr "Pause"
 # TRANSLATION
 # LABEL/ID_VIEW_USER_GROUP
 #: LABEL/ID_VIEW_USER_GROUP
-msgid "View groups"
-msgstr "View groups"
+msgid "[LABEL/ID_VIEW_USER_GROUP] Groups"
+msgstr "Groups"
 
 # TRANSLATION
 # LABEL/ID_EDIT_VIEW_USER_GROUP
@@ -3474,6 +3474,12 @@ msgstr "Name"
 #: LABEL/WEBEN_ONLY_BALANCED
 msgid "Web Entry only works with tasks which haveCyclical Assignment.<br/> Please change theAssignment Rules"
 msgstr "Web Entry only works with tasks which haveCyclical Assignment.<br/> Please change theAssignment Rules"
+
+# TRANSLATION
+# LABEL/ID_DETAIL
+#: LABEL/ID_DETAIL
+msgid "Detail"
+msgstr "Detail"
 
 # cases/cases_ViewAnyInputDocument.xml?FILENAME
 # cases/cases_ViewAnyInputDocument.xml
@@ -14458,20 +14464,20 @@ msgstr "Single HTML "
 # dynaforms/dynaforms_WebEntry.xml?WE_USR
 # dynaforms/dynaforms_WebEntry.xml
 #: dropdown - WE_USR
-msgid "Access    "
-msgstr "Access    "
+msgid "Input Documents Access    "
+msgstr "Input Documents Access    "
 
 # dynaforms/dynaforms_WebEntry.xml?WE_USR-1
 # dynaforms/dynaforms_WebEntry.xml
 #: dropdown - WE_USR - 1
 msgid "[dynaforms/dynaforms_WebEntry.xml?WE_USR-1]"
-msgstr "Public"
+msgstr "No Restriction"
 
 # dynaforms/dynaforms_WebEntry.xml?WE_USR-2
 # dynaforms/dynaforms_WebEntry.xml
 #: dropdown - WE_USR - 2
 msgid "[dynaforms/dynaforms_WebEntry.xml?WE_USR-2]"
-msgstr "Web Service user defined"
+msgstr "Restricted to process permissions"
 
 # dynaforms/dynaforms_WebEntry.xml?subtitle2
 # dynaforms/dynaforms_WebEntry.xml
@@ -18456,12 +18462,6 @@ msgstr "Group or User"
 #: title - TITLEADD
 msgid "[users/myInfoView.xml?TITLEADD] Profile"
 msgstr "Profile"
-
-# users/myInfoView.xml?USR_PHOTO
-# users/myInfoView.xml
-#: image - USR_PHOTO
-msgid "[users/myInfoView.xml?USR_PHOTO] Photo"
-msgstr "Photo"
 
 # users/myInfoView.xml?USR_RESUME
 # users/myInfoView.xml
