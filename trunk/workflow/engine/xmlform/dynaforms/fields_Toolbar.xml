@@ -8,7 +8,7 @@
 </saveDyna>
 <separators type="toolButton" file="images/dynamicForm/separator.jpg" home="public_html" style="height:25px;" buttonStyle=""/>
 <saveasDyna type="toolButton" onclick="dynaformEditor.save_as()" file="images/dynamicForm/save_as.gif" fileAlt="images/dynamicForm/hover.gif" home="public_html" style="height:25px;width:25px;" buttonStyle="">
-  <en>saveas</en>
+  <en>save as</en>
 </saveasDyna>
 
 <separator2 type="toolButton" file="images/dynamicForm/separator.jpg" home="public_html" style="height:25px;" buttonStyle=""/>
