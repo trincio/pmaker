@@ -42,7 +42,7 @@ leimnud.event.add(document.getElementById('form[BSUBMIT]'), 'click', function() 
     
     var client = getBrowserClient();
     if (client.browser == "msie" || client.browser == "safari"){ 
-        document.login.submit();
+        document.sysLogin.submit();
     } 
 }.extend(document.getElementById('form[BSUBMIT]'))); 
 
