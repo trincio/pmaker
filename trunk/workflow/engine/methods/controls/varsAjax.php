@@ -36,6 +36,8 @@ foreach ($aFields as $aField) {
 }
 
 $sHTML .= '</select>';
+$sHTML = '';
+
 if (!isset($_POST['sNoShowLeyend'])) {
   $sHTML = '<table width="100%">';
   $sHTML .= '<tr><td align="center" class="module_app_input___gray" colspan="2"><b>Variables cast prefix</b></td></tr>';

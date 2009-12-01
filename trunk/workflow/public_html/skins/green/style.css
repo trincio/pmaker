@@ -667,8 +667,6 @@ form.formDefault textarea.FormTextPM
 	background: #FFFFFF url(/skins/green/images/input_back.gif) repeat-x;
 	color:#333333;
 	font:normal 12 Courier New, monospace ;
-	width: 710px;
-	height: 375px;
 	overflow:auto;
 }
 form.formDefault .FormTitle

@@ -24,11 +24,18 @@
 </DYNAFORM>
 
 <WE_TYPE type="dropdown" defaultvalue="" mode="edit" >
-  <en>Method
+  <en>Methodx
     <option name='WS'>PHP pages with Web Services</option>
     <option name='SINGLE'>Single HTML </option>
   </en>
 </WE_TYPE>
+
+<WE_USR type="dropdown" defaultvalue="" mode="edit" >
+  <en>Input Documents Access
+    <option name='1'>No Restriction</option>
+    <option name='2'>Restricted to process permissions</option>
+  </en>
+</WE_USR>
 
 <subtitle2 type="subtitle">
   <en>PHP &amp; Web Service options</en>
@@ -59,6 +66,7 @@ var oPanel1;
 
 leimnud.event.add(getField('WE_TYPE'), 'change', function() {
   if (getField('WE_TYPE').value=='WS') {
+    showRowById('WE_USR');
     showRowById('WS_USER');
     showRowById('WS_PASS');
     showRowById('WS_ROUNDROBIN');
@@ -111,7 +119,7 @@ var webEntry_generate = function(PRO_UID, TASKS, DYNAFORM) {
        	    url   : '../processes/processes_Ajax',
              async : true,
              method: 'POST',
-             args  : "action=webEntry_generate&amp;data="+{PRO_UID:PRO_UID, TASKS:getField('TASKS').value, DYNAFORM:getField('DYNAFORM').value, WE_TYPE:getField('WE_TYPE').value, WS_USER:getField('WS_USER').value, WS_PASS:getField('WS_PASS').value, WS_ROUNDROBIN:getField('WS_ROUNDROBIN').value }.toJSONString()
+             args  : "action=webEntry_generate&amp;data="+{PRO_UID:PRO_UID, TASKS:getField('TASKS').value, DYNAFORM:getField('DYNAFORM').value, WE_TYPE:getField('WE_TYPE').value, WS_USER:getField('WS_USER').value, WS_PASS:getField('WS_PASS').value, WS_ROUNDROBIN:getField('WS_ROUNDROBIN').value, WE_USR:getField('WE_USR').value }.toJSONString()
        });
        oRPC.callback = function(rpc){
        	oPanel1.loader.hide();
@@ -127,7 +135,7 @@ var webEntry_generate = function(PRO_UID, TASKS, DYNAFORM) {
        	    url   : '../processes/processes_Ajax',
              async : true,
              method: 'POST',
-             args  : "action=webEntry_generate&amp;data="+{PRO_UID:PRO_UID, TASKS:getField('TASKS').value, DYNAFORM:getField('DYNAFORM').value, WE_TYPE:getField('WE_TYPE').value, WS_USER:getField('WS_USER').value, WS_PASS:getField('WS_PASS').value, WS_ROUNDROBIN:getField('WS_ROUNDROBIN').value }.toJSONString()
+             args  : "action=webEntry_generate&amp;data="+{PRO_UID:PRO_UID, TASKS:getField('TASKS').value, DYNAFORM:getField('DYNAFORM').value, WE_TYPE:getField('WE_TYPE').value, WS_USER:getField('WS_USER').value, WS_PASS:getField('WS_PASS').value, WS_ROUNDROBIN:getField('WS_ROUNDROBIN').value, WE_USR:getField('WE_USR').value  }.toJSONString()
        	});       	
        	oRPC.make();
        	oPanel.remove();  
