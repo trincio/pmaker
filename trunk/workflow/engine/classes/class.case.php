@@ -2702,7 +2702,10 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
     $oAppDocument = new AppDocument();
     $oCriteria = new Criteria('workflow');
     $oCriteria->add(AppDocumentPeer::APP_UID, $sApplicationUID);
-    $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, array('ATTACHED'), Criteria::IN);    
+    $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, array('ATTACHED'), Criteria::IN);
+
+    $oCriteria->add($oCriteria->getNewCriterion(AppDocumentPeer::APP_DOC_UID, $aObjectPermissions['INPUT_DOCUMENTS'], Criteria::IN)->addOr($oCriteria->getNewCriterion(AppDocumentPeer::USR_UID, array($sUserUID,'-1'), Criteria::IN)));
+    
     $aConditions   = array();
     $aConditions[] = array(AppDocumentPeer::APP_UID, AppDelegationPeer::APP_UID);
     $aConditions[] = array(AppDocumentPeer::DEL_INDEX, AppDelegationPeer::DEL_INDEX);
@@ -3243,7 +3246,7 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
             $oCriteria->addJoin(StepPeer::STEP_UID_OBJ, DynaformPeer::DYN_UID);
             if($aCase['APP_STATUS']!='COMPLETED')
             {
-              if($TASK_SOURCE != '' ) {
+               if( $TASK_SOURCE != '' && $TASK_SOURCE != "0" && $TASK_SOURCE != 0 ) {
                 $oCriteria->add(StepPeer::TAS_UID, $TASK_SOURCE);
               }
             }
@@ -3270,11 +3273,11 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
             $oCriteria->add(AppDelegationPeer::PRO_UID, $PRO_UID);
             if($aCase['APP_STATUS']!='COMPLETED')
             {
-              if( $TASK_SOURCE != '' && $TASK_SOURCE != "0" ) {
+              if( $TASK_SOURCE != '' && $TASK_SOURCE != "0" && $TASK_SOURCE != 0 ) {
                 $oCriteria->add(AppDelegationPeer::TAS_UID, $TASK_SOURCE);
               }
             }
-            $oCriteria->add( $oCriteria->getNewCriterion(AppDocumentPeer::APP_DOC_TYPE, 'INPUT')->addOr($oCriteria->getNewCriterion(AppDocumentPeer::APP_DOC_TYPE, 'OUTPUT')) );
+            $oCriteria->add( $oCriteria->getNewCriterion(AppDocumentPeer::APP_DOC_TYPE, 'INPUT')->addOr($oCriteria->getNewCriterion(AppDocumentPeer::APP_DOC_TYPE, 'OUTPUT'))->addOr($oCriteria->getNewCriterion(AppDocumentPeer::APP_DOC_TYPE, 'ATTACHED')) );
             $aConditions = Array();
             $aConditions[] = array(AppDelegationPeer::APP_UID, AppDocumentPeer::APP_UID);
             $aConditions[] = array(AppDelegationPeer::DEL_INDEX, AppDocumentPeer::DEL_INDEX);
@@ -3284,6 +3287,7 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
             $oDataset->setFetchmode(ResultSet::FETCHMODE_ASSOC);
             $oDataset->next();
             while ($aRow = $oDataset->getRow()) {
+              if($aRow['APP_DOC_TYPE']=="ATTACHED") $aRow['APP_DOC_TYPE']="INPUT";
               if( !in_array($aRow['APP_DOC_UID'], $RESULT[$aRow['APP_DOC_TYPE']]) ) {
                 array_push($RESULT[$aRow['APP_DOC_TYPE']], $aRow['APP_DOC_UID']);
               }
@@ -3337,14 +3341,18 @@ function arrayRecursiveDiff($aArray1, $aArray2) {
             $oCriteria->add(AppDelegationPeer::PRO_UID, $PRO_UID);
             if($aCase['APP_STATUS']!='COMPLETED')
             {
-              if($TASK_SOURCE != '') {
+               if( $TASK_SOURCE != '' && $TASK_SOURCE != "0" && $TASK_SOURCE != 0 ) {
                 $oCriteria->add(AppDelegationPeer::TAS_UID, $TASK_SOURCE);
               }
             }
             if($O_UID != '') {
               $oCriteria->add(AppDocumentPeer::DOC_UID, $O_UID);
             }
-            $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, $obj_type);
+            if( $obj_type == 'INPUT' ){
+                $oCriteria->add($oCriteria->getNewCriterion(AppDocumentPeer::APP_DOC_TYPE, $obj_type)->addOr($oCriteria->getNewCriterion(AppDocumentPeer::APP_DOC_TYPE, 'ATTACHED')));              
+            } else {              
+                $oCriteria->add(AppDocumentPeer::APP_DOC_TYPE, $obj_type);                
+            }
 
             $aConditions = Array();
             $aConditions[] = array(AppDelegationPeer::APP_UID, AppDocumentPeer::APP_UID);
@@ -3928,7 +3936,7 @@ funcion History messages for case tracker by Everth The Answer
       if($sProcess!='')
         $c->add(ApplicationPeer::PRO_UID,$sProcess);
 
-      if($sTask!='')
+      if( $sTask != '' && $sTask != "0" && $sTask != 0 ) 
         $c->add(AppDelegationPeer::TAS_UID,$sTask);
 
       if($sCurrentUser!='')

@@ -22,8 +22,6 @@ SELECT LANG_ID, LANG_NAME FROM langOptions
 <en>Language</en>
 </USER_LANG>
 
-<LOGIN_VERIFY_MSG type="private" showInTable="0" />
-
 <BSUBMIT type="submit">
   <en>Login</en>
 </BSUBMIT>
@@ -34,9 +32,6 @@ SELECT LANG_ID, LANG_NAME FROM langOptions
 setFocus (getField ('USR_USERNAME'));
 
 leimnud.event.add(document.getElementById('form[BSUBMIT]'), 'click', function() { 
-    setNestedProperty(this, Array('disabled'), 'true');
-    setNestedProperty(this, Array('value'), @@LOGIN_VERIFY_MSG);
-    
     ws = getField('USER_ENV').value;
     createCookie('pmos_generik2', '{"ws":"'+ws+'"}', 365);
     
