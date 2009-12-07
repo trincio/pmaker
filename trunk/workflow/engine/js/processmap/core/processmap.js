@@ -1657,7 +1657,7 @@ var processmap=function(){
 					width:201,
 					theme:this.options.theme,
 					menu:[
-					{image:"/images/delete.png",text:G_STRINGS.ID_PROCESSMAP_DELETE_GUIDE,launch:this.parent.closure({instance:this,method:function(index){
+					{image:"/images/delete.png",text:G_STRINGS.ID_PROCESSMAP_DELETE_LINE,launch:this.parent.closure({instance:this,method:function(index){
 						var data = this.data.db.guide[index];
 						this.parent.dom.remove(data.object.elements);
 						var r = new leimnud.module.rpc.xmlhttp({

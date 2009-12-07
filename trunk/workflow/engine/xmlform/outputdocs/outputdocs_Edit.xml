@@ -21,7 +21,9 @@ var _oVarsPanel_;
 var previousRange;
 
 leimnud.event.add(getField('INSERT_VARIABLE'), 'mouseover', function() {
-  previousRange = document.getElementsByTagName('iframe')[3].contentWindow.document.selection.createRange();
+  if(document.getElementsByTagName('iframe')[3]!=null){
+    previousRange = document.getElementsByTagName('iframe')[3].contentWindow.document.selection.createRange();
+  }
 });
 
 var showDynaformsFormVars = function(sFieldName, sAjaxServer, sProcess, sSymbol) {
@@ -67,10 +69,9 @@ var showDynaformsFormVars = function(sFieldName, sAjaxServer, sProcess, sSymbol)
 /*
  *
  * @function insertFormVar
- * @modifier Gustavo Cruz
+ * @addedBy Gustavo Cruz
  * @parameter sFieldName Field objective
  * @parameter sValue Data that mut be inserted
- * @author  unknow
  * @sumary  This function is a variant of the original insertForm
  *          it works exclusively with the htmlarea editor or perhaps
  *          with some iframe based editors, it pass a sValue o symbol to insert.
