@@ -2,7 +2,7 @@ msgid ""
 msgstr "" 
 "Project-Id-Version: PM 4.0.1\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2009-12-01 09:00+0100 \n"
+"PO-Revision-Date: 2009-12-01 17:41+0100 \n"
 "Last-Translator: Fernando Ontiveros<fernando@colosa.com>\n"
 "Language-Team: Colosa Developers Team <developers@colosa.com>\n"
 "MIME-Version: 1.0\n"
@@ -18462,6 +18462,12 @@ msgstr "Group or User"
 #: title - TITLEADD
 msgid "[users/myInfoView.xml?TITLEADD] Profile"
 msgstr "Profile"
+
+# users/myInfoView.xml?USR_PHOTO
+# users/myInfoView.xml
+#: image - USR_PHOTO
+msgid "[users/myInfoView.xml?USR_PHOTO] Photo"
+msgstr "Photo"
 
 # users/myInfoView.xml?USR_RESUME
 # users/myInfoView.xml
